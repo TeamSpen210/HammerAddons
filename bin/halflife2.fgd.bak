@@ -2018,5 +2018,5 @@
 	input StartUnstoppableCommentary(void) : "Start the commentary but don't let the player cancel it."
 	
 	output OnCommentaryStarted(void) : "Triggered when the commentary starts."
-	output OnCommentaryStopped(void) : "Triggered when the commentary stops. If viewposition is set, this triggers after the player's returns to their regular view."
+	output OnCommentaryStopped(void) : "Triggerdd when the commentsry stops. If viewposition is set, this triggers after the player's returns to their regular view."
 ]
