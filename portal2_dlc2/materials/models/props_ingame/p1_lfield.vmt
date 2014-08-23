@@ -1,0 +1,15 @@
+VertexLitGeneric
+{
+$baseTexture "models/props_ingame/p1_lfield"
+$bumpmap "models\props\portal_cleanser_normal"
+$phong 1
+$phongexponenttexture "models\props\portal_cleanser_exponent"
+
+$phongboost 2
+
+$phongfresnelranges "[1 1.5 1]"
+
+
+
+$selfillum 1
+}

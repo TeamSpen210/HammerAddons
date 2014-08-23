@@ -1,0 +1,4 @@
+unlitgeneric
+{
+$model 1 $basetexture "vgui\screens\vgui_signage_blank_bg"
+}

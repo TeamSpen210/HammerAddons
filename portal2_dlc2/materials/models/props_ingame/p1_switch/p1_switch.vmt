@@ -1,0 +1,20 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/props_ingame/p1_switch/p1_switch"
+
+
+	"$bumpmap" "models/props_ingame/p1_switch/p1_switch_normal"
+	"$phong" "1"
+	"$phongexponenttexture" "models/props_ingame/p1_switch/p1_switch_exponent"
+//	"$phongexponent" "25"
+	
+	"$phongboost" "10"	
+	"$lightwarptexture" "models/props_ingame/p1_switch/p1_switch_lightwarp"
+	"$phongfresnelranges"	"[5 1 2]"
+//	"$halflambert" "1"
+
+//	"$envmap" "env_cubemap"
+//  "$normalmapalphaenvmapmask" 1
+	
+    "$selfillum" 1
+}

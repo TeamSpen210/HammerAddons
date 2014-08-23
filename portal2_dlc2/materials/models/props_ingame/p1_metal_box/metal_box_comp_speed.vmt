@@ -1,0 +1,26 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\props_ingame/p1_metal_box/Metal_box_comp"
+
+
+	//"$bumpmap" "models\props_ingame\Metal_box_normal"
+	
+	"$phongexponenttexture" "models\props_ingame\p1_metal_box/Metal_box_exponent"
+
+
+  "$selfillum" 1
+
+
+$bumpmap "paint/prop_paint_normal"
+$envmap "paint/paint_envmap_hdr"
+$envmaptint "[0.05 0.05 0.05]"
+$normalmapalphaenvmapmask 1
+$detail "models/props_ingame/p1_metal_box/box_paint_orange" //Modified version of the original that won't paint the light-strip parts, so you can distinguish the cubes.
+$detailScale 1
+$detailblendmode 2
+$phong 1
+$phongexponent 50
+$phongfresnelranges "[1 2 4]"
+$phongboost 2
+$nodecal 1
+}

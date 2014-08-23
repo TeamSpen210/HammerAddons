@@ -1,0 +1,6 @@
+Unlitgeneric
+{
+$baseTexture "models/editor/ts/portal_outline"
+$model 1
+$translucent 1
+}

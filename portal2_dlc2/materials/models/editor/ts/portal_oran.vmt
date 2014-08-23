@@ -1,0 +1,7 @@
+UnLitGeneric
+{
+$baseTexture "models/editor/ts/portal_oran"
+$model 1
+$translucent 1
+
+}

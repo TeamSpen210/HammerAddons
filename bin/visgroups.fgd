@@ -1,0 +1,618 @@
+//--------------------------- VISGROUPS ---------------------------------
+// Trick: if the "parent" after the equals is the same as another child or a defaul one, it'll be placed below that one - allowing infinite tree depths.
+@MaterialExclusion
+[
+"Erikszeug/Modelle"
+"backpack"
+"editor/"
+"decals/playerlogo"
+"decals/playerlogo01"
+"decals/playerlogo02"
+"decals/playerlogo03"
+"decals/playerlogo04"
+]
+
+@AutoVisGroup = "Test Elements"
+[
+	"Cubes"
+	[
+		"prop_weighted_cube"
+		"prop_monster_box"
+	]
+	"Projectors"
+	[
+		"prop_tractor_beam"
+		"prop_wall_projector"
+		"env_portal_laser"
+	]
+	"Buttons"
+	[
+	    "prop_button"
+	    "prop_floor_button"
+	    "prop_under_button"
+	    "prop_under_floor_button"
+	    "prop_floor_cube_button"
+	    "prop_floor_ball_button"
+	]
+	"Antlines"
+	[
+		"prop_indicator_panel"
+		"env_texturetoggle"
+		"env_overlay"
+	]
+	"Fizzlers"
+	[
+		"trigger_portal_cleanser"
+		"trigger_paint_cleanser"
+	]
+	"Paint"
+	[
+		"prop_paint_bomb"
+		"paint_sphere"
+		"info_paint_sprayer"
+	]
+	"HEPs"
+	[
+		"prop_energy_ball"
+		"prop_combine_ball"
+		"point_energy_ball_launcher"
+		"point_combine_ball_launcher"
+	]
+	"Futbols"
+	[
+		"prop_glass_futbol"
+		"prop_glass_futbol_spawner"
+		"prop_glass_futbol_socket"
+		"prop_exploding_futbol"
+		"prop_exploding_futbol_spawner"
+		"prop_exploding_futbol_socket"
+		"point_futbol_shooter"
+	]
+]
+
+@AutoVisGroup = "Cubes"
+[
+	"Normal"
+	[
+		"prop_weighted_cube"
+	]
+	"FrankenTurrets"
+	[
+		"prop_monster_box"
+	]
+	"Scaled" //Sixense
+	[
+		"prop_scaled_cube"
+	]
+]
+
+@AutoVisGroup = "Futbols"
+[
+	"Glass"
+	[
+		"prop_glass_futbol"
+		"prop_glass_futbol_spawner"
+		"prop_glass_futbol_socket"
+	]
+	"Exploding"
+	[
+		"prop_exploding_futbol"
+		"prop_exploding_futbol_spawner"
+		"prop_exploding_futbol_socket"
+		"point_futbol_shooter"
+	]
+]
+
+@AutoVisGroup = "Projectors"
+[
+	"Lasers"
+	[
+		"env_portal_laser"
+		"prop_laser_catcher"
+		"prop_laser_relay"
+		"point_laser_target"
+	]
+	"Funnels"
+	[
+		"prop_tractor_beam"
+	]
+	"Bridges"
+	[
+		"prop_wall_projector"
+	]
+]
+
+@AutoVisGroup = "Lasers"
+[
+	"Emitter"
+	[
+		"env_portal_laser"
+	]
+	"Catchers"
+	[
+		"prop_laser_catcher"
+	]
+	"Relays"
+	[
+		"prop_laser_relay"
+	]
+	"Targets"
+	[
+		"point_laser_target"
+	]
+]
+
+@AutoVisGroup = "Portals"
+[
+	"Portal"
+	[
+		"prop_portal"
+	]
+	"Portalguns"
+	[
+		"weapon_portalgun"
+	]
+	"Worldportals"
+	[
+		"prop_linked_portal_door"
+		"linked_portal_door"
+	]
+	"Bumpers"
+	[
+		"func_portal_bumper"
+	]
+	"Helpers"
+	[
+		"info_placement_helper"
+		"func_portal_orientation"
+	]
+	"Noportal Volumes"
+	[
+		"func_noportal_volume"
+	]
+	"Portal Detectors"
+	[
+		"func_portal_detector"
+		"func_portalled"
+	]
+]
+	
+@AutoVisGroup = "Auto"
+[
+	"Instances"
+	[
+		"func_instance"
+	]
+]
+
+@AutoVisGroup = "Brush Entities"
+[
+	"Doors"
+	[
+		"func_door"
+		"func_movelinear"
+		"func_door_rotating"
+		"func_rotating"
+		"func_conveyor"
+	]
+	"func_button"
+	[
+		"func_rot_button"
+		"func_button"
+		"momentary_rot_button"
+	]
+	"Trains"
+	[
+		"func_train"
+		"func_tracktrain"
+		"func_tank"
+		"func_trackchange"
+		"func_traincontrols"
+		"func_trackautochange"
+	]
+	"func_brushes"
+	[
+		"func_brush"
+		"func_illusionary"
+		"func_wall"
+		"func_wall_toggle"
+	]
+	"Physboxes"
+	[
+		"func_physbox"
+	]
+	"Breakables"
+	[
+		"func_breakable"
+		"func_breakable_surf"
+	]
+	"Clips"
+	[
+		"func_clip_vphysics"
+	]
+]
+
+@AutoVisGroup = "Point Entities"
+[
+	"Constraints"
+	[
+		"phys_convert"
+		"phys_constraint"
+		"phys_constraintsystem"
+		"phys_magnet"
+		"phys_ballsocket"
+		"phys_keepupright"
+		"phys_hinge"
+		"phys_lengthconstraint"
+		"phys_motor"
+		"phys_pulleyconstraint"
+		"phys_ragdollconstraint"
+		"phys_ragdollmagnet"
+		"phys_slideconstraint"
+		"phys_spring"
+	]
+	"Effects"
+	[
+		"point_spotlight"
+		"env_beam"
+		"env_laser"
+		"point_tesla"
+		"env_lightglow"
+		"env_citadel_energy_core"
+		"env_lightrail_endpoint"
+		"env_portal_path_track"
+		"env_glow"
+	]
+	"Filters"
+	[
+		"filter_activator_class"
+		"filter_activator_name"
+		"filter_activator_mass_greater"
+		"filter_activator_context"
+		"filter_activator_model"
+		"filter_activator_team"
+		"filter_combineball_type"
+		"filter_damage_type"
+		"filter_enemy"
+		"filter_multi"
+		"filter_player_held"
+	]
+	"Globals"
+	[
+		"point_clientcommand"
+		"point_servercommand"
+		"env_fogcontroller"
+		"env_tonemap_controller"
+		"water_lod_control"
+		"env_global"
+		"shadow_control"
+		"logic_autosave"
+		"info_player_spawn"
+		"postprocess_controller"
+		"info_landmark_entry"
+		"info_landmark_exit"
+	]
+	"Templates"
+	[
+		"point_template"
+		"env_entity_maker"
+	]
+	"Sounds"
+	[
+		"logic_choreographed_scene"
+		"scripted_sequence"
+		"ambient_generic"
+		"env_soundscape"
+		"env_soundscape_proxy"
+		"env_soundscape_triggerable"
+		"trigger_soundscape"
+	]
+	"Ropes"
+	[
+		"move_rope"
+		"keyframe_rope"
+	]
+	"Paths"
+	[
+		"path_track"
+		"path_corner"
+		"move_track"
+		"keyframe_track"
+	]
+	"Decals"
+	[
+		"infodecal"
+		"info_projecteddecal"
+	]
+	"Overlays"
+	[
+		"info_overlay"
+		"info_overlay_accessor" //Might as well add this
+		"info_overlay_transition"
+	]
+	"Targets"
+	[
+		"info_target"
+		"info_target_personality_sphere"
+		"scripted_target"
+		"info_target_instructor_hint"
+		"info_teleport_destination"
+	]
+	"Player"
+	[
+		"logic_playerproxy"
+		"info_player_start"
+		"info_coop_spawn"
+		"game_end"
+		"game_text"
+		"game_ui"
+		"game_player_equip"
+		"env_text"
+		
+	]
+	"VGUI"
+	[
+		"prop_portal_stats_display"
+		"vgui_screen"
+		"vgui_level_placard_display"
+		"vgui_mp_lobby_display"
+		"vgui_neutoxin_countdown"
+		"point_camera"
+		"func_monitor"
+	]
+	"Screen"
+	[
+		"env_screeneffect"
+		"env_screenoverlay"
+		"logic_playmovie"
+		"env_portal_viewfinder"
+		"point_viewcontrol"
+		"point_viewcontrol_multiplayer"
+		"point_viewproxy"
+	]
+]
+
+@AutoVisGroup = "Constriants"
+[
+	"Attachments"
+	[
+		"phys_hinge"
+		"phys_ballsocket"
+		"phys_constraint"
+		"phys_constraintsystem"
+		"phys_lengthconstraint"
+		"phys_pulleyconstraint"
+		"phys_ragdollconstraint"
+		"phys_slideconstraint"
+	]
+	"Movement"
+	[
+		"phys_convert"
+		"phys_motor"
+		"phys_spring"
+		"phys_thruster"
+		"phys_torque"
+		"phys_magnet"
+		"phys_ragdollmagnet"
+		"phys_keepupright"
+		"logic_collision_pair"
+	]
+]
+
+@AutoVisGroup = "Sounds"
+[
+	"Choreo"
+	[
+		"logic_choreographed_scene"
+		"scripted_sequence"
+	]
+	"Generic"
+	[
+		"ambient_generic"
+	]
+	"Soundscapes"
+	[
+		"env_soundscape"
+		"env_soundscape_proxy"
+		"env_soundscape_triggerable"
+		"trigger_soundscape"
+	]	
+]
+
+@AutoVisGroup = "Logic"
+[
+	"Math"
+	[
+		"math_counter"
+		"math_remap"
+		"math_colorblend"
+	]
+	"Branches"
+	[
+		"logic_branch"
+		"logic_branch_listener"
+		"logic_coop_manager"
+	]
+	"Other Logic"
+	[
+		"logic_timer"
+		"logic_case"
+		"logic_compare"
+		"logic_multicompare"
+		"logic_lineto"
+		"logic_autosave"
+		"logic_navigation"
+		"logic_measure_movement"
+		"logic_autosave"
+		"material_modify_control"
+		"logic_timescale"
+		"logic_eventlistener"
+	]
+	"Autos"
+	[
+		"logic_auto"
+	]
+	"Relays"
+	[
+		"logic_relay"
+	]
+	"Scripts"
+	[
+		"logic_script"
+	]
+	"Instance Logic"
+	[
+		"func_instance_io_proxy"
+		"func_instance_params"
+		"func_instance_origin"
+	]
+]
+
+@AutoVisGroup = "Props"
+[
+	"Static"
+	[
+		"prop_static"
+		"prop_detail"
+	]
+	"Dynamic"
+	[
+		"prop_dynamic"
+		"prop_dynamic_override"
+		"prop_dynamic_ornament"
+	]
+	"Physics"
+	[
+		"prop_physics"
+		"prop_physics_paintable"
+		"prop_physics_override"
+		"prop_physics_multiplayer"
+		"prop_physics_respawnable"
+		"prop_ragdoll"
+		"simple_physics_prop"
+		"simple_physics_brush"
+	]
+]
+
+@AutoVisGroup = "Triggers"
+[
+	"Multiple"
+	[
+		"trigger_multiple"
+	]
+	"Once"
+	[
+		"trigger_once"
+	]
+	"Catapult"
+	[
+		"trigger_catapult"
+	]
+	"Fizzlers"
+	[
+		"trigger_portal_cleanser"
+		"trigger_paint_cleanser"
+	]
+	"Hurt"
+	[
+		"trigger_hurt"
+		"trigger_remove"
+	]
+	"Pushes"
+	[
+		"trigger_push"
+		"trigger_vphysics_motion"
+		"trigger_gravity"
+		"trigger_impact"
+		"trigger_wind"
+	]
+	"Weapon Strips"
+	[
+		"trigger_weapon_strip"
+	]
+]
+
+@AutoVisGroup = "NPCs"
+[
+	"Turrets"
+	[
+		"npc_portal_turret_floor"
+	]
+	"Cameras"
+	[
+		"npc_security_camera"
+	]
+	"Cores"
+	[
+		"npc_wheatley_boss"
+		"npc_personality_core"
+		"prop_glados_core"
+	]
+	"Bullseyes"
+	[
+		"npc_bullseye"
+	]
+	"Rock. Turrets"
+	[
+		"npc_rocket_turret"
+		"npc_rocket_tripwire"
+		"rocket_turret_projectile"
+	]
+	"Generic"
+	[
+		"generic_actor"
+	]
+]
+
+@AutoVisGroup = "Lights"
+[
+	"Normal"
+	[
+		"light"
+	]
+	"Spots"
+	[
+		"light_spot"
+	]
+	"Proj. Texture"
+	[
+		"env_projectedtexture"
+	]
+	"Dynamic"
+	[
+		"light_dynamic"
+	]
+	"Environment"
+	[
+		"light_environment"
+	]
+	"Info_Lighting"
+	[
+		"info_lighting"
+		"info_lighting_relative"
+		"path_track" // For prop_dynamics this is the suggested entity
+		"info_no_dynamic_shadow"
+	]
+	"Cubemaps"
+	[
+		"env_cubemap"
+	]
+]
+
+@AutoVisGroup = "Propper" //Never appears if you don't have it installed!
+[
+	"Model"
+	[
+		"propper_model"
+		"propper_lod"
+	]
+	"Config"
+	[
+		"propper_physics"
+		"propper_skins"
+		"propper_bodygroup"
+		"propper_physgun_interactions"
+		"propper_particles"
+		"propper_cables"
+	]
+]

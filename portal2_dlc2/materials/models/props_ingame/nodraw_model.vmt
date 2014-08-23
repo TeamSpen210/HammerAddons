@@ -1,0 +1,5 @@
+VertexLitGeneric
+{
+$baseTexture "models/props_ingame/nodraw_model"
+$alphatest 1
+}

@@ -1,0 +1,30 @@
+VertexLitGeneric
+{
+$baseTexture "models/editor/ts/portal_grey"
+$translucent 1
+$model 1
+// $mappingwidth 256
+// $mappingheight 256
+// $translucent 1
+// $Stage 2
+// $PortalOpenAmount "1.0"
+// $PortalStatic "0.0"
+// $UseOnStaticProp 1
+// $PortalMaskTexture "models/portals/noise-blur-256x256"
+// $PortalColorTexture "propper/portal-grey-color"
+// $PortalColorScale "4.0"
+// "<DX90"
+// {
+// $PortalMaskTexture "models/portals/portal-mask-dx8"
+// $PortalColorTexture "propper/portal-grey-color-dx8"
+// $PortalColorScale "1.4"
+// }
+// $time "0.0"
+// Proxies
+// {
+// CurrentTime
+// {
+// resultVar $time
+// }
+// }
+}

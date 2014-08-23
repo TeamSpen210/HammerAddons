@@ -34,3 +34,10 @@ Icon
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+
+# Portal 2 stuff
+*.vmx
+*.log
+*.prt
+*.filelist.txt
+*.bsp
