@@ -1,15 +1,14 @@
 //--------------------------- VISGROUPS ---------------------------------
-// Trick: if the "parent" after the equals is the same as another child or a defaul one, it'll be placed below that one - allowing infinite tree depths.
 @MaterialExclusion
 [
-"Erikszeug/Modelle"
-"backpack"
-"editor/"
-"decals/playerlogo"
-"decals/playerlogo01"
-"decals/playerlogo02"
-"decals/playerlogo03"
-"decals/playerlogo04"
+"	Erikszeug/Modelle"
+	"backpack"
+	"editor/"
+	"decals/playerlogo"
+	"decals/playerlogo01"
+	"decals/playerlogo02"
+	"decals/playerlogo03"
+	"decals/playerlogo04"
 ]
 
 @AutoVisGroup = "Test Elements"
@@ -70,6 +69,21 @@
 	]
 ]
 
+@AutoVisGroup = "Antlines"
+[
+	"Toggles"
+	[
+		"env_texturetoggle"
+	]
+	"Overlays"
+	[
+		"info_overlay"
+	]
+	"Panels"
+	[
+		"prop_indicator_panel"
+	]
+]
 @AutoVisGroup = "Cubes"
 [
 	"Normal"
@@ -372,7 +386,29 @@
 	]
 ]
 
-@AutoVisGroup = "Constriants"
+@AutoVisGroup = "Effects"
+[
+	"Glows"
+	[
+		"env_lightglow"
+		"point_spotlight"
+		"env_glow"
+	]
+	"Beams"
+	[
+		"env_beam"
+		"env_laser"
+		"point_tesla"
+	]
+	"Scaffold Effects"
+	[
+		"env_citadel_energy_core"
+		"env_lightrail_endpoint"
+		"env_portal_path_track"
+	]
+]
+
+@AutoVisGroup = "Constraints"
 [
 	"Attachments"
 	[

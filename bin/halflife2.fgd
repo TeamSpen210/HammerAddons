@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright Â© 1996-2005, Valve Corporation, All rights reserved. =======
 //
 // Purpose: Half-Life 2 game definition file (.fgd) 
 //
@@ -111,8 +111,7 @@
 ]
 
 @PointClass base(BasePropPhysics) studioprop() = prop_combine_ball :
-	"A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges "+
-	"or other constraints. It can also be configured to break when it takes enough damage."
+	"An earlier Half-Life version of the Energy Pellet."
 [
 	// Inputs
 	input Explode(void) : "Explode"
@@ -132,7 +131,11 @@
 @SolidClass base(Trigger) = trigger_weapon_strip :
 	"A volumetric trigger that strips combat characters of all weapons"
 [
-	KillWeapons(boolean) : "Kill Weapons" : "No"
+	KillWeapons(choices) : "Kill Weapons" : "0" : "If No, then the player will drop and be prevented from picking up their weapon. If Yes the weapon will be killed." =
+	[
+		"No" : "Drop on ground"
+		"Yes" : "Kill Weapons"
+	]
 ]
 @SolidClass base(CombineBallSpawners) = func_combine_ball_spawner :
     "Spawns Combine balls."

@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright Â© 1996-2005, Valve Corporation, All rights reserved. =======
 //
 // Purpose: Aperture entity declarations
 //
@@ -9,16 +9,44 @@
  @include "portal.fgd"
  @include "visgroups.fgd" // contains autovisgroup declarations
 
-@SolidClass base(Targetname, worldbase, ResponseContext) = worldspawn : 
+@SolidClass base(Targetname, ResponseContext) = worldspawn : 
 	"This is the world entity. Each map can only contain one, and it's automatically created for you."
 [
-	paintinmap(choices) : "Paint in map" : 0 : "Enable code for spreading paint on surfaces, and bouncing physics objects around." =
+	paintinmap(choices) : "Enable Paint" : 0 : "Enable code for spreading paint on surfaces, and bouncing physics objects around." =
 	[
 		0 : "No"
 		1 : "Yes"
 	]
 	
-	maxblobcount(integer) : "Max number of blobs" : 250 : "Max number of blobs should NOT be exceed 250"
+	maxblobcount(integer) : "Gel Blob Limit" : 250 : "Number of Gel blobs that can exist. Maximum is 250."
+	
+	message(string) : "Map Description / Title"
+	skyname(choices) : "SkyBox" : "sky_black_nofog" : "Texture used for the 2D skybox. Can be changed at runtime with addoutput > 'skyname sky_black'" =
+	[
+		"sky_black_nofog" : "Black (no fog)"
+		"sky_black" : "Black"
+		"sky_white" : "White"
+		"sky_fog" : "Fog"
+		"sky_l4d_c4m1_hdr" : "Cloudy Sunset"
+	]
+	chaptertitle(string) : "Chapter Title Message" : "" : "Chapter Title that appears onscreen when this level starts."
+	startdark(boolean) : "Level Fade In" : 0
+	gametitle(boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts."
+
+	newunit(choices) : "New Level Unit" : 0 : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. Only set it to Yes if the player cannot return to any previous levels." = 
+	[
+		0 : "No, keep current"
+		1 : "Yes, clear previous levels"
+	]
+	maxoccludeearea(float) : "Max occluder area" : "0" : "[Used on PC] Prevents occlusion testing for entities that take up more than X% of the screen." 
+	minoccluderarea(float) : "Min occluder area" : "0" : "[Used on PC] Prevents occluders from being used if they take up less than X% of the screen." 
+	maxpropscreenwidth(float) : "Start Fade Pixels" : -1 : "Number of pixels wide at which all props in the level start to fade (<0 = use fademaxdist). This number is ignored if the prop has a specific fade distance specified."
+	minpropscreenwidth(float) : "End Fade Pixels" : 0 : "Minimum number of pixels wide at which the prop is visible (0 = don't fade out). This number is ignored if the prop has a specific fade distance specified."
+	detailvbsp(string) : "Detail.vbsp file" : "detail.vbsp" : "Detail.vbsp file to use for emitting detail props (found in directory <root>/modname)"
+	detailmaterial(material) : "Detail material file" : "detail/detailsprites" : "Material for detail sprites to use for drawing detail props."
+	coldworld(boolean) : "World is cold" : 0 : "Emit steam from NPC's mouths and similar effects."
+	maxoccludeearea_x360(float) : "Max occlude4 area (Xbox)" : "0" : "[Used on 360] Prevents occlusion testing for entities that take up more than X% of the screen." 
+	minoccluderarea_x360(float) : "Min occluder area (Xbox)" : "0" : "[Used on 360] Prevents occluders from being used if they take up less than X% of the screen."
 ]
 
 @BaseClass = LinkedPortalDoor : "An entity that can be linked to another door and create a passage between them dynamically."
@@ -50,7 +78,7 @@
 	input ClearParent(void) : "Removes this entity from the the movement hierarchy, leaving it free to move independently."
 ]
 
-@BaseClass = BasePortButton : "The base for the various floor buttons - weighted, cube, sphere and Antique weighted"
+@BaseClass = BasePortButton : "The base for the various floor buttons - weighted, cube, sphere and Antique weighted."
 [
 	input PressIn(void) : "Activate the button as if it was pressed, sending it to the bottom position."
 	input PressOut(void) : "Release the button, sending it to the top position."
@@ -92,11 +120,11 @@
 @PointClass base(Targetname) sphere(radius) = info_target_personality_sphere : "Personality Sphere Info Target"
 [
 	sphereLine(string) : "Sphere Line" : "" : "Line sphere will speak when we are looking at this target."
-	radius(float) : "Radius" : 16 : "Radius of this object"
+	radius(float) : "Radius" : 16 : "Radius of this object. "
 ]
 
 @PointClass base(Targetname, Parentname, Angles) studioprop("models/props/tripwire_turret.mdl") = prop_rocket_tripwire : 
-	"A stationary tripwire that fires a rocket when crossed."
+	"A stationary rocket turret that fires a rocket when players walk in front of it."
 [
 	RocketSpeed(float) : "Rocket Speed" : 450 : "Speed the rocket will travel at."
 	RocketLifetime(float) : "Rocket Lifetime" : 20 : "The rocket will automatically detonate after this number of seconds."
@@ -111,8 +139,8 @@
 	output OnTripped(void)		 	: 	"Fires when the laser has been tripped"
 	output OnRocketExplode(void) 	: 	"Fires when the rocket explodes."
 	
-	input EnableTripwire(void) 		: "Enables the rocket tripwire."
-	input DisableTripwire(void)		: "Disables the rocket tripwire."
+	input EnableTripwire(void) 		: "Enables the rocket turret."
+	input DisableTripwire(void)		: "Disables the rocket turret."
 ]
 
 @PointClass base(BasePropPhysics, RenderFields) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics :
@@ -126,8 +154,7 @@
 ]
 
 @PointClass base(BasePropPhysics) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics_override :
-	"A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges "+
-	"or other constraints. It can also be configured to break when it takes enough damage. Health can be overridden on this version."
+	"A variant of prop_physics which will permit using models that do not have physics data compiled into them, like static or dynamic models. Health can be overridden on this version."
 [
 	health(integer) : "Health" : 0 : "Number of points of damage to take before breaking.  0 means don't break."
 	
@@ -139,11 +166,7 @@
 ]
 
 @PointClass base(BasePropPhysics, RenderFields) studioprop() sphere(fademindist) sphere(fademaxdist) = simple_physics_prop :
-	"A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges "+
-	"or other constraints. It can also be configured to break when it takes enough damage. "+
-	"Note that the health of the object will be overridden by the health inside the model, to ensure consistent health game-wide. "+
-	"If the model used by the prop is configured to be used as a prop_dynamic (i.e. it should not be physically simulated) then it CANNOT be "+
-	"used as a prop_physics. Upon level load it will display a warning in the console and remove itself. Use a prop_dynamic instead."
+	"Unknown use. "
 [
 	allowfunnel(boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a portal."
 ]
@@ -183,8 +206,14 @@
 	
 	model(choices) : "[H] Model" : "models/props/switch001.mdl" : "What model to show as." =
 	[
-		"models/props/switch001.mdl"		: "Portal 2 Model"
+		"models/props/switch001.mdl"			: "Portal 2 Model"
 		"models/props_ingame/p1_switch.mdl"	: "Portal 1 Model"
+	]
+	
+	packlist(choices) : "Pack P1 model" : "" : "Set to autopack the Portal 1 model if needed. Requires Fudgepacker or the BEE2 Stylechanger." =
+	[
+		"packer_addfile:packlists/p1_switch.txt"		: "Yes"
+		""											: "No"
 	]
 ]
 
@@ -224,7 +253,7 @@
 	output OnPressedOrange(void) : "Called in Coop when the button has been pressed by P-Body."
 ]
 
-@PointClass base(Targetname, Angles, BaseProjector, ToggleDraw, RenderFields) studio("models/props/wall_emitter.mdl") = prop_wall_projector : "Aperture Science Hard Light Bridge Projector."
+@PointClass base(Targetname, Angles, BaseProjector, ToggleDraw, RenderFields) studio("models/props/wall_emitter.mdl") = prop_wall_projector : "Aperture Science Hard Light Bridge Projector. Note: To avoid lag when it first turns on, place an info_particle_system to precache 'projected_wall_impact'."
 [
 	skin(choices) : "Skin" : 0 : "Which skin to use." =
 	[
@@ -233,7 +262,7 @@
 	]
 ]
 
-@PointClass base(Targetname, Angles) = projected_wall_entity : "A Hard Light Bridge. Probably not spawnable in Hammer."
+@PointClass base(Targetname, Angles) = projected_wall_entity : "A Hard Light Bridge. Probably not spawnable in Hammer. Can be detected with triggers that have the 'Everything' flag set."
 [
 
 ]
@@ -244,15 +273,15 @@
 	proxy_name(target_destination) : "Proxy Entity Name" : : "Name of the entity we want to use for our real placement position."
 	attach_target_name(target_destination) : "Attach Entity Name" : : "Name of the entity we want to force our attachment to. Ensures this applies to the correct brush. Needs parent!"
 
-	snap_to_helper_angles(boolean) : "Use helper's angles" : 0 : "Placed objects will snap to the angles of the placement helper."
+	snap_to_helper_angles(boolean) : "Use helper's angles" : 0 : "Portals will lock to the angles, instead of rotating in all directions.."
 
-	force_placement(boolean) : "Force Placement" : 1 : "Avoids placement rules when placing at this helper."
+	force_placement(boolean) : "Force Placement" : 1 : "Ignores placement rules when placing at this helper."
 
-	output OnObjectPlaced(void) : "An object has been successfully placed using us as a guide."
-	output OnObjectPlacedSize(integer) : "When an object is successfully placed, this sends the scale level as an out value"
+	output OnObjectPlaced(void) : "A portal has been successfully placed using us as a guide."
+	output OnObjectPlacedSize(integer) : "When a portal is successfully placed, this sends the scale level as an out value"
 ]
 
-@PointClass base(Targetname) iconsprite("editor/info_target.vmt") studioprop() = info_player_ping_detector : "Player Ping Detector."
+@PointClass base(Targetname) iconsprite("editor/info_target.vmt") line(255 255 0, tsrgetname, functankname) = info_player_ping_detector : "Player Ping Detector."
 [
 	FuncTankName(target_destination) : "Func_Tank Entity" : : "Name of the func_tank that will be told to look at the ping location when detected."
 	TeamToLookAt(choices) : "Player to Observe" : 2 : "Which player's pings to look at." =
@@ -305,13 +334,13 @@
 		0 : "No"
 	]
 	
-	LethalDamage(choices) : "Deal lethal damage" : 0 =
+	LethalDamage(choices) : "Lethal" : 0 : "Instant kill on contact. Buggy when rediected through cubes/portals." =
 	[
 		0 : "Non-lethal"
 		1 : "Lethal"
 	]
 	
-	AutoAimEnabled(boolean) : "Should auto aim" : 1 : "Default to enabled"
+	AutoAimEnabled(boolean) : "Should auto aim" : 1 : "Allow the laser to bend to activate catchers or relays."
 
 	skin(choices) : "Skin Type" : 0 =
 	[
@@ -368,7 +397,7 @@
 	output OnUnpowered(void) : "Fired when a laser has stopped hitting the target."
 ]
 
-@PointClass base(Targetname, Angles, Reflection, ToggleDraw, RenderFields) studio() = prop_weighted_cube : "Aperture Science Weighted Cube"
+@PointClass base(Targetname, Angles, Reflection, ToggleDraw, RenderFields) studio() = prop_weighted_cube : "Aperture Science Weighted Cube. Presses floor buttons, and can be moved around."
 [
 	skin(integer) : "Skin (OLD)" : 0 : "The old skin property, mainly to show in Hammer. "
 
@@ -409,10 +438,20 @@
 		3 : "Conversion Gel"
 		4 : "None"
 	]
-
-	NewSkins(boolean) readonly : "Use new skins" : 1 : "Use the values in the Cube Type and Skin Type fields instead of the Skin(OLD) field. You shouldn't need to touch this."
-
+	
 	allowfunnel(boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a floor portal."
+	
+	packname(choices) : "Pack model" : "" : "Set to autopack a custom model if needed. Requires Fudgepacker or the BEE2 Stylechanger." =
+	[
+		""												: "None"
+		"packer_addfile:packlists/old_cmp_cube.txt"		: "Antique Companion Cube"
+		"packer_addfile:packlists/p1_cube.txt"			: "P1 Cube"
+		"packer_addfile:packlists/p1_sphere.txt"			: "P1 Ball"
+		"packer_addfile:packlists/rusty_cube.txt"		: "Rusty Weighted Storage Cube"
+		"pavker_addfile:packlists/rusty_reflect.txt"		: "Rusty Weighted Pivot Cube"
+	]
+
+	NewSkins(integer) readonly : "Use new skins" : 1 : "Use the values in the Cube Type and Skin Type fields instead of the Skin(OLD) field. You shouldn't need to touch this."
 
 	input  EnablePortalFunnel(void) : "Enable portal funneling behavior."
 	input  DisablePortalFunnel(void) : "Disable portal funneling behavior."
@@ -506,24 +545,22 @@
 	input Explode(void) : "Explodes the bomb."
 ]
 
-@PointClass base(Targetname) studio( "models/props/axis_helper.mdl" ) = prop_exploding_futbol_socket : "Catches futbols and fires an output."
+@PointClass base(Targetname) studio( "models/props/axis_helper.mdl" ) = prop_exploding_futbol_socket : "Catches (bombs?) and fires an output."
 [
 	// Outputs
 	output OnFutbolReleased(void) : "Player has taken the futbol out of this socket."
 	output OnFutbolCaught(void)	: "This socket has captured a futbol."
 ]
 
-
-
 @PointClass base(Targetname) = portalmp_gamerules : "Proxy entity for Portal 2 Gamerules. Appears nonfunctional."
 [	
-	input AddRedTeamScore(integer) : "Add to the Red team score (can be a negative number)"
-	input AddBlueTeamScore(integer) : "Add to the Blue team score (can be a negative number)"
+	input AddRedTeamScore(integer) : "Add to P-Body's score (can be a negative number)"
+	input AddBlueTeamScore(integer) : "Add to ATLAS's score (can be a negative number)"
 ]
 
 @PointClass base(Parentname, Targetname, Angles) studio("models/effects/cappoint_hologram.mdl") = item_nugget : "Aperture Incentivizing Nugget. Useless."
 [
-	GroupName(string) : "Group Name" : : "Giving nuggets a group name hints the game that they are intended to be a group"
+	GroupName(string) : "Group Name" : "" : "Giving nuggets a group name hints the game that they are intended to be a group"
 	RespawnTime(float) : "Respawn Time" : 30 : "Number of seconds between when a nugget is collected and when it respawns"
 	PointValue(choices) : "Point Value" : 1 =
 	[
@@ -536,15 +573,15 @@
 
 @SolidClass base(func_portal_detector) = func_portalled : "Fires outputs when an entity teleports through a portal in its volume."
 [
-	FireOnDeparture(boolean) : "Fire On Departure" : 1 : "Fire when the entity is entering this portal"
-	FireOnArrival(boolean) : "Fire On Arrival" : 1 : "Fire when the entity is exiting this portal"		
-	FireOnPlayer(boolean) : "Player" : 1 : "Fire when a player has portalled"
+	FireOnDeparture(boolean) : "Fire On Departure" : 1 : "Fire when the entity is entering this portal."
+	FireOnArrival(boolean) : "Fire On Arrival" : 1 : "Fire when the entity is exiting this portal."
+	FireOnPlayer(boolean) : "Player" : 1 : "Fire when a player has portalled."
 	
 	output OnEntityPrePortalled(void)	: "Fires when the entity is about to portal."
 	output OnEntityPostPortalled(void)	: "Fires when the entity is done portalling."
 ]
 
-@PointClass base(Targetname) = logic_player_slowtime : "Start/stops player being in slow time."
+@PointClass base(Targetname) = logic_player_slowtime : "Start/stops player being in slow time. Likely from an earlier Portal test element concept."
 [
 	input StartSlowingTime(float) : "Start slowing time for the player (with a set duration)."
 	input StopSlowingTime(void) : "Stop slowing time for the player."
@@ -571,22 +608,22 @@
 		1 : "Enabled"
 	]
 	
-	StartingTeam(choices) : "Team" : 0 =
+	StartingTeam(choices) : "Player" : 0 : "Which player to spawn." =
 	[
 		0 : "Any"
-		2 : "Orange"
-		3 : "Blue"
+		2 : "P-Body"
+		3 : "ATLAS"
 	]
 	
 	input Enable(void) : "Enable the spawn point to be used."
 	input SetAsActiveSpawn(void) : "Enable the spawn point to be used, disabling all other spawn points that do not share the same name."
 	input Disable(void) : "Disable the spawn point from being used."
-	input SetTeam(integer) : "Set the team this spawn point is for. 0 and 1 are any team. 2 is Orange, 3 is Blue"
+	input SetTeam(integer) : "Set the player this spawn point is for - 0 and 1 are any player, 2 is P-Body, 3 is ATLAS."
 ]
 
-@PointClass base(TalkNPC,Parentname) studio() = npc_personality_core : "Aperture Science Personality Construct. All the different characters."
+@PointClass base(TalkNPC,Parentname) studio(model, modelskin) = npc_personality_core : "Aperture Science Personality Construct. Animated balls with handles."
 [
-	ModelSkin(choices) : "Alt Model Skin" : 0 : "If using the 'alt' skin, this sets the eye color -- If not using the alt skin, (0 = broken) (1=normal)" =
+	ModelSkin(choices) : "Model Skin" : 0 : "If using the 'alt' skin, this sets the eye color -- If not using the alt skin, (0 = broken) (1=normal)" =
 	[
 		0 : "Blue Eye / Broken"
 		1 : "Green Eye / Normal"
@@ -600,13 +637,13 @@
 		1 : "Yes"
 	]
 	
-	model(choices) : "Hammer Alt" : "models/npcs/personality_sphere/personality_sphere.mdl" : "Choose the model to show in hammer. set to the same as Use Alternate Skins." =
+	model(choices) : "[H] Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "Choose the model to show in hammer. set to the same as Use Alternate Skins." =
 	[
 		"models/npcs/personality_sphere/personality_sphere.mdl" : "Original (Wheatley)"
 		"models/npcs/personality_sphere/personality_sphere_skins.mdl" : "Alternate (Corrupt Cores)"
 	]
 	
-	skin(choices) : "Hammer Skin" : 0 : "If using the 'alt' skin, this sets the eye color (in hammer) -- If not using the alt skin, (0 = broken) (1=normal)" =
+	skin(choices) : "[H] Skin" : 0 : "If using the 'alt' skin, this sets the eye color (in hammer) -- If not using the alt skin, (0 = broken) (1=normal)" =
 	[
 		0 : "Blue Eye / Broken"
 		1 : "Green Eye / Normal"
@@ -623,15 +660,15 @@
 	input EnableFlashlight(void) : "Enable the eye flashlight."
 	input DisableFlashlight(void) : "Disable the eye flashlight."
 	
-	input ForcePickup(void) : "Force the player to pickup the sphere. Useful for continuing to hold a core after a level load."
+	input ForcePickup(void) : "Force the player to pickup the sphere immediately."
 	input EnablePickup(void) : "Allow player pickup."
 	input DisablePickup(void) : "Disable player pickup."
 	
-	input PlayAttach(void) : "Play the attach animation, used for syncing with the socket animation."
-	input PlayDetach(void) : "Play the attach animation, used for syncing with the socket animation."
-	input PlayLock(void) : "Play the lock animation, used for syncing with the socket animation."
+	input PlayAttach(void) : "Play the attachment animation, used for syncing with the socket's animation."
+	input PlayDetach(void) : "Play the detachment animation, used for syncing with the socket's animation."
+	input PlayLock(void) : "Play the locking animation, used for syncing with the socket's animation."
 	
-	input SetIdleSequence(string) : "Set a sequence to use as an idle."
+	input SetIdleSequence(string) : "Set a sequence to use as an idle sequence."
 	input ClearIdleSequence(void) : "Return to the default idle animation."
 
 	input Explode(void) : "Explode the sphere."
@@ -643,31 +680,39 @@
 	BoxSwitchSpeed(float) : "Box Switch Speed" : 400 : "Speed to force switch to a box."
 	AllowSilentDissolve(boolean) : "Allow SilentDissolve input" : 0 : "Allow the SilentDissolve input to dissolve this FrankenCube."
 	
-	model(choices) : "Pose" : "models/npcs/monsters/monster_a.mdl" : "What pose to show in Hammer." =
+	model(choices) : "[H] Pose" : "models/npcs/monsters/monster_a.mdl" : "What pose to show in Hammer." =
 	[
 		"models/npcs/monsters/monster_a.mdl" : "Extended"
 		"models/npcs/monsters/monster_a_box.mdl" : "Cube"
 	]
 	
-	input BecomeBox(string) : "Force the FrankenTurret to switch to box form."
+	input BecomeBox(string) : "Force the FrankenTurret to switch to cube form."
 	input BecomeMonster(void) : "Return the FrankenCube to extended form."
-	input BecomeShortcircuit(void) : "Short circuit this FrankenCube and permanently switch to box form. Creates arc particles randomly across the cube."
+	input BecomeShortcircuit(void) : "Short circuit this FrankenCube and permanently switch to cube form. Creates arc particles randomly across the cube, and the turret's eyes flicker randomly."
 	
 	input  Dissolve(void) : "Fizzles the FrankenCube."
-	input  SilentDissolve(void) : "Kills the FrankenCube and fires its OnFizzled output, if the relavant setting is on."
+	input  SilentDissolve(void) : "Kills the FrankenCube and fires its OnFizzled output, if the relevant setting is on."
 	output OnFizzled(void) : "Fired when the FrankenCube gets fizzled."
 ]
 
-@PointClass base(Targetname, Parentname, Angles) studio("models/editor/prop_indicator_panel.mdl") line(255 255 0, targetname, IndicatorLights) = prop_indicator_panel : "Indicator signs for the end of antlines. Shows either a tick/cross, or a circular countdown. Can also function as a env_texturetoggle for indicator lights."
+@PointClass base(Targetname, Parentname, Angles) studio("models/editor/prop_indicator_panel.mdl") line(255 255 0, targetname, IndicatorLights) = prop_indicator_panel : "Indicator signs for the end of modern antlines. Shows either a tick/cross, or a circular countdown. Can also function as a env_texturetoggle for indicator lights."
 [
 	TimerDuration(float) : "Timer Duration" : 0 : "Amount of time the counter will count down"
-	Enabled(boolean) : "Start visible?" : 0 : "Whether the timer should be initially visible."
-	IsTimer(boolean) : "Is a timer" : 0 : "Whether we're a countdown timer or not."
-	IsChecked(boolean) : "Is checked" : 0 : "If this is a binary indicator, whether this is checked or not."
+	Enabled(boolean) : "Start visible?" : 1 : "Appears non-functional."
+	IsTimer(choices) : "Starting State" : 0 : "Does this start as a checkmark or countdown display?" =
+	[
+		0 : "Checkmark"
+		1 : "Timer"
+	]
+	IsChecked(choices) : "Starts checked?" : 0 : "If this is a checkmark sign, whether this starts checked or not." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
 
 	IndicatorLights(target_destination) : "Indicator Lights" : "" : "If supplied, assumes this is a group of indicators lights to toggle when the indicator is toggled."
 	
-	skin (choices) : "Hammer Skin" : 0 : "What to show as in hammer. (Fake keyvalue)" =
+	skin (choices) : "[H] Skin" : 0 : "What kind of indicator to show as." =
 	[
 		0 : "Check"
 		1 : "Cross"
@@ -682,33 +727,33 @@
 	input Reset(void) : "Reset the timer back to its default value."
 ]
 
-@PointClass base(Targetname, Parentname, Angles) studio("models/props/sign_frame01/sign_frame01.mdl") = prop_tic_tac_toe_panel : "Unknown use, likely for some kind of ping detector."
+@PointClass base(Targetname, Parentname, Angles) studio("models/editor/prop_indicator_panel.mdl") = prop_tic_tac_toe_panel : "Unknown use, likely for some kind of ping detector."
 [
 	output OnPlayer1Pinged(void) : "Fired if pinged by Player 1."
 	output OnPlayer2Pinged(void) : "Fired if pinged by Player 2."
 ]
 
-@SolidClass base(Trigger) = trigger_playerteam : "Triggers different outputs for different players touching the trigger."
+@SolidClass base(Trigger) = trigger_playerteam : "Allows distinguishjing which player touched the trigger. Use with a logic_coop_manager to detect when both players are inside."
 [
-	target_team(choices) : "Target Team" : 0 : "Which team (or all) to allow to touch this trigger." =
+	target_team(choices) : "Target Player" : 0 : "Which player (or both) to allow to touch this trigger." =
 	[
 		0 : "Both"
-		3 : "Blue"
-		2 : "Orange"
+		3 : "ATLAS"
+		2 : "P-Body"
 	]	
 
 	trigger_once(boolean) : "Trigger Once" : "No" : "Only trigger once, then remove the trigger."
 
-	output OnStartTouchOrangePlayer(void) : "Orange player has started touching the trigger."
-	output OnStartTouchBluePlayer(void) : "Blue player has started touching the trigger."
-	output OnEndTouchOrangePlayer(void) : "Orange player has stopped touching the trigger."
-	output OnEndTouchBluePlayer(void) : "Blue player has stopped touching the trigger."
+	output OnStartTouchBluePlayer(void) : "ATLAS has started touching the trigger."
+	output OnEndTouchBluePlayer(void) : "ATLAS has stopped touching the trigger."
+	output OnStartTouchOrangePlayer(void) : "P-Body has started touching the trigger."
+	output OnEndTouchOrangePlayer(void) : "P-Body has stopped touching the trigger."
 ]
 
 @SolidClass base(Targetname) = trigger_ping_detector : "Detects whether a player has pinged in its region."
 [
-	output OnOrangePlayerPinged(void) : "Fired when the orange player has pinged inside the trigger."
-	output OnBluePlayerPinged(void) : "Fired when the blue player has pinged inside the trigger."
+	output OnOrangePlayerPinged(void) : "Fired when P-Body has pinged inside the trigger."
+	output OnBluePlayerPinged(void) : "Fired when ATLAS has pinged inside the trigger."
 ]
 
 @PointClass base(Targetname) iconsprite("editor/info_landmark") = info_landmark_entry : "Entry landmark"
@@ -725,7 +770,7 @@
 	output OnChangeLevel(void) : "Fired when the level is about to change."
 ]
 
-@PointClass base(Targetname, Parentname, Angles, BaseProjector, Reflection, Shadow, ToggleDraw, RenderFields) studio(  ) = prop_tractor_beam : "Emitter for an Excursion Funnel."
+@PointClass base(Targetname, Parentname, Angles, BaseProjector, Reflection, Shadow, ToggleDraw, RenderFields) studio() = prop_tractor_beam : "Emitter for an Excursion Funnel."
 [
 	linearForce(choices) : "Funnel Direction" : 250 : "Speed of the Funnel, positive is forward. Defaults to 250/-250." =
 		[
@@ -739,14 +784,14 @@
 		0 : "192 Model"
 		1 : "128 Model"
 	]
-	model(choices) : "Hammer Model" : "models/props/tractor_beam_emitter.mdl" : "Set to the same as above to show in hammer the correct model." =
+	model(choices) : "[H] Model" : "models/props/tractor_beam_emitter.mdl" : "Sets the model to appear as in Hammer." =
     [   
 		"models/props/tractor_beam_emitter.mdl" : "192 Model"
 		"models/props_ingame/tractor_beam_128.mdl" : "128 Model"
 	]
 ]
 
-@PointClass base(Targetname, Parentname, Angles, BasePaintType) studio("models/editor/cone_helper.mdl") = info_paint_sprayer : "An entity that sprays Gel."
+@PointClass base(Targetname, Parentname, Angles, BasePaintType) line(255 255 255, targetname, light_position_name) studio("models/editor/cone_helper.mdl") = info_paint_sprayer : "An entity that sprays Gel."
 [
 	//Paint sprayer
 	maxblobcount(integer) : "Max number of blobs" : 250 : "Max number of blobs that sprayer can spawn in the world (1-250)."
@@ -845,7 +890,7 @@
 [
 ]
 
-@PointClass base(Targetname, Angles) sphere(radius) sphere(inner_radius) = point_push: "Pulls objects to, or pushes them away from point. If a portal is placed nearby, it will transfer the suction and produce a 'broken_tube_suck' effect for Diversity Vents."
+@PointClass base(Targetname, Angles) studio("models/editor/cone_helper.mdl") sphere(radius) sphere(inner_radius) frustum(influence_cone, inner_radius, radius, 255 255 255 10,-1) = point_push: "Pulls objects to, or pushes them away from a point. If a portal is placed nearby, it will transfer the suction and produce a 'broken_tube_suck' effect for Diversity Vents."
 [
 	spawnflags(Flags) = 
 	[
@@ -874,7 +919,7 @@
 	"The starting gel type for the prop." =
 	[
 		0 : "Repulsion Gel"
-		1 : "Reflection Gel / Adhesion Gel"
+		1 : "Adhesion Gel"
 		2 : "Propulsion Gel"
 		3 : "Conversion Gel"
 		4 : "None"
@@ -915,7 +960,7 @@
 ]
 
 
-@PointClass base(Targetname, Parentname, Angles) studio("models/props/portal_door_combined.mdl") = prop_testchamber_door :
+@PointClass base(Targetname, Parentname, Angles) studio("models/props/portal_door_combined.mdl") line(255 255 0, targetname, areaPortalWindow) line(255 255 0, targetname, lightingorigin) = prop_testchamber_door :
 "Portal Door."
 [
 	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select an info_lighting to specify a location to sample lighting from for all gibs spawned by this shooter, instead of their own origins."
