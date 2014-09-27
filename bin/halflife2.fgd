@@ -1419,16 +1419,16 @@
 
 	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator triggers me. See filter_activator_name for more explanation."
 	
-	SetGravityScale(float) : "Scale gravity of objects in the field." : "1.0"
+	SetGravityScale(float) : "Gravity Scale" : "1.0" : "Scale gravity of objects in the field by this amount."
 	input SetGravityScale(float) : "Scale gravity of objects in the field."
 
 	SetAdditionalAirDensity(float) : "Additional air density for drag" : "0"
 	input SetAdditionalAirDensity(float) : "Additional air density for drag"
 
-	SetVelocityLimit(float) : "Max velocity in field (0 disables)" : "0.0"
+	SetVelocityLimit(float) : "Velocity Limit" : "0.0" : "Max velocity in field (0 disables)"
 	input SetVelocityLimit(float) : "Max velocity in field."
 
-	SetVelocityLimitDelta(float) : "Max amount to reduce velocity per second when it exceeds the velocity limit (0 disables)" : "0.0"
+	SetVelocityLimitDelta(float) : "Velocity Limit Force" : "0.0" : "Max amount to reduce velocity per second when it exceeds the velocity limit (0 disables)"
 	input SetVelocityLimitDelta(float) : "Max amount to reduce velocity per second"
 
 	input SetVelocityLimitTime(string) : "Accepts two arguments: the first is the new velocity limit, the second is the time it takes to ramp to that value"
@@ -1436,19 +1436,19 @@
 	SetVelocityScale(float) : "Velocity scale/drag" : "1.0"
 	input SetVelocityScale(float) : "Velocity scale/drag"
 
-	SetAngVelocityLimit(float) : "Max angular velocity in field (degrees/s, 0 disables)" : "0.0"
+	SetAngVelocityLimit(float) : "Angular Velocity Limit" : "0.0" : "Max angular velocity in field (degrees/s, 0 disables)"
 	input SetAngVelocityLimit(float) : "Max angular velocity in field."
 
 	SetAngVelocityScale(float) : "Angular Velocity scale/drag" : "1.0"
 	input SetAngVelocityScale(float) : "Angular Velocity scale/drag"
 
-	SetLinearForce(float) : "Linear force (0 disables)" : "0.0"
+	SetLinearForce(float) : "Linear force" : "0.0" : "Amount of force to apply while in the trigger (0 disables)"
 	input SetLinearForce(float) : "Linear force (0 disables)"
 
-	SetLinearForceAngles(angle) : "Direction of linear force (Pitch Yaw Roll (Y Z X))" : "0 0 0"
+	SetLinearForceAngles(angle) : "Force Direction": "0 0 0": "Direction of linear force (Pitch Yaw Roll or Y Z X)"
 //	input SetLinearForceAngles(angle) : "Direction of linear force (Pitch Yaw Roll (Y Z X))"
 
-	ParticleTrailMaterial(string) : "Particle Trail Material" : : "Name of a material to use for the particle trail, no name means no particle trail"
+	ParticleTrailMaterial(material) : "Particle Trail Material" : : "Name of a material to use for the particle trail, no name means no particle trail"
 	ParticleTrailLifetime(float) : "Particle Trail Lifetime" : 4 : "Lifetime of the particles to emit"
 	ParticleTrailStartSize(float) : "Particle Trail Starting Sprite Size" : 2 : "Starting size of the sprite to emit"
 	ParticleTrailEndSize(float) : "Particle Trail Ending Sprite Size" : 3 : "Ending size of the sprite to emit"
@@ -1456,7 +1456,7 @@
 	// Inputs
 	input	Enable(void) : "Enable the trigger."
 	input	Disable(void): "Disable the trigger."
-	input	Toggle(void) : "Toggle enable/disable."
+	input	Toggle(void) : "Toggle the trigger on or off."
 ]
 
 @PointClass base(Targetname, Angles) size(16 16 16) line(255 255 255, targetname, target) color(247 181 82) = path_corner : "Generic path point"

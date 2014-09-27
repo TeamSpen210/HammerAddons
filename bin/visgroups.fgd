@@ -1,14 +1,8 @@
 //--------------------------- VISGROUPS ---------------------------------
 @MaterialExclusion
 [
-"	Erikszeug/Modelle"
+	"Erikszeug/Modelle"
 	"backpack"
-	"editor/"
-	"decals/playerlogo"
-	"decals/playerlogo01"
-	"decals/playerlogo02"
-	"decals/playerlogo03"
-	"decals/playerlogo04"
 ]
 
 @AutoVisGroup = "Test Elements"
@@ -199,6 +193,18 @@
 	]
 ]
 
+@AutoVisGroup = "Areaportals"
+[
+	"Normal"
+	[
+		"func_areaportal"
+	]
+	"Window"
+	[
+		"func_areaportalwindow"
+	]
+]
+
 @AutoVisGroup = "Brush Entities"
 [
 	"Doors"
@@ -267,6 +273,9 @@
 	]
 	"Effects"
 	[
+		"info_particle_system"
+		"env_particlelight"
+		"env_particlescript"
 		"point_spotlight"
 		"env_beam"
 		"env_laser"
@@ -276,6 +285,13 @@
 		"env_lightrail_endpoint"
 		"env_portal_path_track"
 		"env_glow"
+	]
+	"Sprites"
+	[
+		"env_sprite"
+		"env_sprite_oriented"
+		"env_sprite_clientside"
+		"env_spritetrail"
 	]
 	"Filters"
 	[
@@ -388,6 +404,12 @@
 
 @AutoVisGroup = "Effects"
 [
+	"Particles"
+	[
+		"info_particle_system"
+		"env_particlelight"
+		"env_particlescript"
+	]
 	"Glows"
 	[
 		"env_lightglow"
@@ -408,6 +430,25 @@
 	]
 ]
 
+@AutoVisGroup ="Sprites"
+	[
+		"Sprite"
+		[
+			"env_sprite"
+		]
+		"Oriented"
+		[
+			"env_sprite_oriented"
+		]
+		"Clientside"
+		[
+			"env_sprite_clientside"
+		]
+		"Trails"
+		[
+			"env_spritetrail"
+		]
+	]
 @AutoVisGroup = "Constraints"
 [
 	"Attachments"

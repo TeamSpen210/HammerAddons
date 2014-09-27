@@ -545,12 +545,23 @@
 	input Explode(void) : "Explodes the bomb."
 ]
 
-@PointClass base(Targetname) studio( "models/props/axis_helper.mdl" ) = prop_exploding_futbol_socket : "Catches (bombs?) and fires an output."
+@PointClass base(prop_glass_futbol, prop_exploding_futbol) studio("models/props/futbol.mdl") line(255 255 0,targetname, spawnername) = hot_potato : "This uses the futbol model. It can be carried around, but on impact it explodes, similar to prop_exploding_futbols."
 [
-	// Outputs
-	output OnFutbolReleased(void) : "Player has taken the futbol out of this socket."
-	output OnFutbolCaught(void)	: "This socket has captured a futbol."
+
 ]
+
+@PointClass base(prop_glass_futbol_socket) studio( "models/props/axis_helper.mdl" ) = hot_potato_socket : "Catches (bombs?) and fires an output."
+[
+]
+
+@PointClass base(prop_glass_futbol_spawner) studio("models/props/futbol_dispenser.mdl") = hot_potato_spawner : "Catches 'hot potatos' and fires an output."
+[
+]
+
+@PointClass base(prop_glass_futbol_socket) studio( "models/props/axis_helper.mdl" ) = hot_potato_catcher : "Catches 'hot potatos' and fires an output."
+[
+]
+
 
 @PointClass base(Targetname) = portalmp_gamerules : "Proxy entity for Portal 2 Gamerules. Appears nonfunctional."
 [	
@@ -880,12 +891,12 @@
 	input Unlock(void) : "The checkpoint can be activated."
 ]
 
-@PointClass base(Targetname, Parentname, Angles) studio("models/editor/axis_helper_thick.mdl") = vgui_level_placard_display :
+@PointClass base(Targetname, Parentname, Angles) studio("models/editor/vgui_arrows.mdl") = vgui_level_placard_display :
 "Pre-level display placard entity."
 [
 ]
 
-@PointClass base(Targetname, Parentname, Angles) studio("models/editor/axis_helper_thick.mdl") = vgui_mp_lobby_display :
+@PointClass base(Targetname, Parentname, Angles) studio("models/editor/vgui_arrows.mdl") = vgui_mp_lobby_display :
 "VGUI entity to display Coop levels in the Hub."
 [
 ]

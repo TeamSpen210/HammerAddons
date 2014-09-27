@@ -844,7 +844,7 @@
 	message(sound) report : "Sound Name" : "" : "Name of the GameSound entry for the sound to play. Also supports direct .wav filenames."
 	scenefile(scene) : "[H] Choreo" : "" : "Use to allow keeping the sound name when switching between ambient_generic and logic_choreographed_scene."
 	radius(string) : "Sound Range" : "1250" : "Maximum distance at which this sound is audible."
-	SourceEntityName(target_destination) : "SourceEntityName" : : "If an entity is specified, sound will come from this named entity instead of the location of ambient_generic."
+	SourceEntityName(target_destination) : "Source Entity" : : "If an entity is specified, sound will come from this named entity instead of the location of ambient_generic."
 	health(integer) : "Volume" : 10 : "Sound volume, expressed as a range from 0 to 10, where 10 is the loudest."
 	pitch(integer) : "Pitch" : 100 : "Sound pitch, expressed as a range from 1(low) to 255(high), where 100 is the sound's default pitch."
 	preset(choices) :"Dynamic Presets" : 0 : "If used, overrides many of the below properties (+pitch) to preset values." =
@@ -878,16 +878,16 @@
 		26: "Planet X"
 		27: "Haunted"
 	]
-	null(string) readonly : "-----------------------" : "-----------------------" : "More complex values below."
+	null(string) readonly : "-----------------------" : "" : "More complex values below."
 	volstart(integer) : "Transition Volume" : 0 : "The Volume to start/end with. Use with Fade In and Out times."
 	fadeinsecs(integer) :  "Volume Transition Time - Start (0-100)" : 0: "Time in seconds for the sound to transition from the Transition Volume to the set volume as it starts playing."
 	fadeoutsecs(integer) : "Volume Transition Time - Stop (0-100)" : 0 : "Time in seconds for the sound to transition from the set volume to the Transition Volume as it stops playing."
 	pitchstart(integer) : "Transition Pitch" : 100 :	"Pitch to start with/end. Use with Spin Up and Spin Down."
 	spinup(integer) : "Pitch Transition Time - Start (0-100)" : 0 : "The time taken to change from the Transition Pitch to the final Pitch while the sound starts playing. Simulates the noise powering-up when an object is activated."
 	spindown(integer) : "Pitch Transition Time - Stop (0-100)" : 0 : "The time taken to transition from the Pitch to the Transition pitch while the sound stops playing. Simulates the noise fading out as the object shuts down."
-	lfotype(choices) : "LFO type" : 0 : "The kind of Low Frequency Oscillation to apply to the sound. Allows subtle modification to the sound." =
+	lfotype(choices) : "LFO type" : 0 : "The kind of Low Frequency Oscillation to apply to the sound. Allows subtle modification to the sound. Square waves instantly switch between the high and low values, whereas Triangle Waves gradually switch between the two." =
 	[
-		0 : "Off"
+		0 : "None"
 		1 : "Square Wave"
 		2 : "Triangle Wave"
 		3 : "Random"
@@ -898,9 +898,9 @@
 	cspinup(integer) : "Incremental Spinup Count" : 0 : "Appears broken."
 	spawnflags(flags) =
 	[
-		1: "Play everywhere" : 0
-		16:"Start Silent": 1
-		32:"Is NOT Looped": 1
+		1:  "Infinite Range"	: 0
+		16: "Start Silent"		: 1
+		32: "Is NOT Looped"		: 1
 	]
 
 	// Inputs
@@ -1286,13 +1286,34 @@
 // A Vgui screen in 3D
 //
 //-------------------------------------------------------------------------
-
-@BaseClass base(Targetname, Parentname, Angles) = vgui_screen_base
+@PointClass base(Targetname, Parentname, Angles) studio("models/editor/vgui_arrows.mdl") = vgui_screen : 
+	"A VGUI screen. Useful for in-world monitors." 
 [
-	panelname(string) : "Panel Name"
+	panelname(choices) : "Panel Name" : "" : "The type of display to show." = 
+	[
+		"sp_progress_sign"				: "SP/Workshop Level Placard"
+		"mp_progress_sign"				: "Coop Level Placard"
+		"mp_coop_credts_screen"			: "Coop Credits Screen"
+		"mp_hub_screen_branch_1"		: "Coop Hub: Branch 1"
+		"mp_hub_screen_branch_2"		: "Coop Hub: Branch 2"
+		"mp_hub_screen_branch_3"		: "Coop Hub: Branch 3 "
+		"mp_hub_screen_branch_4"		: "Coop Hub: Branch 4"
+		"mp_hub_screen_branch_5"		: "Coop Hub: Branch 5"
+		"mp_hub_screen_branch_6"		: "Coop Hub: Branch 6"
+		"mp_select_screen_branch_1"		: "Coop Selector: 1"
+		"mp_select_screen_branch_2"		: "Coop Selector: 2"
+		"mp_select_screen_branch_3"		: "Coop Selector: 3"
+		"mp_select_screen_branch_4"		: "Coop Selector: 4"
+		"mp_select_screen_branch_5"		: "Coop Selector: 5"
+		"mp_select_screen_branch_6"		: "Coop Selector: 6"
+		"mp_select_screen_branch_dlc"	: "Coop Selector: Art Therapy"
+		"neurotoxin_countdown_screen"	: "Neurotoxin Countdown"
+		"level_placard_screen" 			: "Level Placard"
+		"indicator_panel"				: "Indicator Panel"
+	]
 	overlaymaterial(material) : "Overlay Material" : "" : "Name of a material to overlay over the top of the VGUI screen. NOTE: This material must write Z for the VGUI screen to work."
-	width(integer) : "Panel Width in World" : 32 : "Width of the panel in units."
-	height(integer) : "Panel Height in World" : 32 : "Height of the panel in units."
+	width(integer) : "Panel Width in World (Green)" : 32 : "Width of the panel in units."
+	height(integer) : "Panel Height in World (Blue)" : 32 : "Height of the panel in units."
 	IsTransparent(boolean) : "Is Transparent?" : 0 : "Set this to true if you would like your background to be invisible instead of a black fill."
 
 	// Inputs
@@ -1300,12 +1321,7 @@
 	input SetInactive(void) : "Make the vgui screen invisible."
 ]
 
-@PointClass base(vgui_screen_base) size(-4 -4 -4, 4 4 4) = vgui_screen : 
-	"A VGUI screen. Useful for in-world monitors." 
-[
-]
-
-@PointClass base(Targetname, Angles, Parentname) studio("models/editor/axis_helper_thick.mdl") = vgui_slideshow_display : "Slideshow Display"
+@PointClass base(Targetname, Angles, Parentname) studio("models/editor/vgui_arrows.mdl") = vgui_slideshow_display : "Slideshow Display"
 [
 	displaytext(string) : "Display Text" : ""
 
@@ -1345,7 +1361,7 @@
 	input SetNoListRepeat(bool) : "Sets if lists can be randomly picked twice in a row."
 ]
 
-@PointClass base(Targetname, Angles, Parentname) studio("models/editor/axis_helper_thick.mdl") = vgui_movie_display : "Movie Display"
+@PointClass base(Targetname, Angles, Parentname) studio("models/editor/vgui_arrows.mdl") = vgui_movie_display : "Movie Display"
 [
 	displaytext(string) : "Display Text" : ""
 	moviefilename(string) : "Movie Filename" : "media/"
@@ -5507,8 +5523,8 @@ line(255 255 0, targetname, targetEntityName)
 		8: "Change mass to keep stable attachment to world" : 0
 		16: "Do not connect entities until turned on" : 0
 	]
-	attach1(target_destination) : "Entity 1 (Yellow)" : "The first entity to constrain. If blank the second entity will be constrained to the World."
-	attach2(target_destination) : "Entity 2 (Blue)" : "The second entity to constrain. If blank the first entity will be constrained to the World."
+	attach1(target_destination) : "Entity 1 (Yellow)" : "" : "The first entity to constrain. If blank the second entity will be constrained to the World."
+	attach2(target_destination) : "Entity 2 (Blue)" : "" : "The second entity to constrain. If blank the first entity will be constrained to the World."
 	constraintsystem(target_destination) : "Constraint System Manager" : "" : "The name of a phys_constraintsystem that this constraint should be a part of. All constraints on a set of entities should be placed in the same system, or they will fight each other during simulation."
 
 	forcelimit(float) : "Force Limit to Break (lbs)" : "0" : "The amount of force an impact must apply to the constraint to break it. A way of calculating this is to set it to the mass of an object that would break this constraint if it were resting on the constrainted objects."
