@@ -1293,7 +1293,7 @@
 	[
 		"sp_progress_sign"				: "SP/Workshop Level Placard"
 		"mp_progress_sign"				: "Coop Level Placard"
-		"mp_coop_credts_screen"			: "Coop Credits Screen"
+		"mp_coop_credits_screen"		: "Coop Credits Screen"
 		"mp_hub_screen_branch_1"		: "Coop Hub: Branch 1"
 		"mp_hub_screen_branch_2"		: "Coop Hub: Branch 2"
 		"mp_hub_screen_branch_3"		: "Coop Hub: Branch 3 "
@@ -1307,9 +1307,6 @@
 		"mp_select_screen_branch_5"		: "Coop Selector: 5"
 		"mp_select_screen_branch_6"		: "Coop Selector: 6"
 		"mp_select_screen_branch_dlc"	: "Coop Selector: Art Therapy"
-		"neurotoxin_countdown_screen"	: "Neurotoxin Countdown"
-		"level_placard_screen" 			: "Level Placard"
-		"indicator_panel"				: "Indicator Panel"
 	]
 	overlaymaterial(material) : "Overlay Material" : "" : "Name of a material to overlay over the top of the VGUI screen. NOTE: This material must write Z for the VGUI screen to work."
 	width(integer) : "Panel Width in World (Green)" : 32 : "Width of the panel in units."
@@ -3043,10 +3040,10 @@ line(255 255 0, targetname, targetEntityName)
 	material(material) : "Material"
 	sides(sidelist) : "Brush faces"
 	RenderOrder(integer) : "Render Order" : 0 : "Higher values render after lower values. This value can be 0-3."
-	StartU(float) : "U Start" : "0.0"
-	EndU(float) : "U End" : "1.0"
-	StartV(float) : "V Start" : "0.0"
-	EndV(float) : "V End" : "1.0"
+	StartU(float) : "U Start" : "0.0" : "A value between 0-1, defining the starting X axis position in the overlay material."
+	EndU(float) : "U End" : "1.0" : "A value between 0-1, defining the ending X axis position in the overlay material."
+	StartV(float) : "V Start" : "0.0" : "A value between 0-1, defining the starting Y axis position in the overlay material."
+	EndV(float) : "V End" : "1.0" : "A value between 0-1, defining the ending Y axis position in the overlay material."
 	BasisOrigin(Vector) readonly : "Overlay Basis Origin(Read-Only)"
 	BasisU(Vector) readonly : "Overlay Basis U(Read-Only)"
 	BasisV(Vector) readonly : "Overlay Basis V(Read-Only)"
@@ -3059,7 +3056,7 @@ line(255 255 0, targetname, targetEntityName)
 	fademaxdist(float) : "End Fade Dist" : 0 : "Maximum distance at which the overlay is visible (0 = don't fade out)."
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) sidelist(sides) sidelist(sides2) overlay_transition() = info_overlay_transition : "Overlay Transition" 
+@PointClass size(-8 -8 -8, 8 8 8) sidelist(sides) sidelist(sides2) overlay_transition() = info_overlay_transition : "This creates a scrolling texture at the instersect between two brushes, for things likw wave effects at water edges." 
 [
 	material(material) : "Material"
 	sides(sidelist) : "Brush faces"
@@ -3070,10 +3067,10 @@ line(255 255 0, targetname, targetEntityName)
 	WidthTexcoordEnd(float) : "Texcoord Width End" : "1.0"
 	Width1(float) : "Width Land" : "25.0"
 	Width2(float) : "Width Water" : "25.0"
-	DebugDraw(integer) : "Show Debug" : 0 : "Boolean value (0 or 1)."
+	DebugDraw(boolean) : "Show Debug" : 0
 ]
 
-@PointClass size(-4 -4 -4, 4 4 4) color(0 180 0) = info_intermission : 
+@PointClass size(-4 -4 -4, 4 4 4) color(0 180 0) line(255 255 0, target) = info_intermission : 
     "An entity that defines an intermission spot where dead players will float until they respawn."
 [
 	target(target_destination) : "Entity to look at" : : "Name of entity that dead players will face while in intermission at this spot."
@@ -3202,19 +3199,19 @@ line(255 255 0, targetname, targetEntityName)
 	input Start(void) : "Tell the particle system to start emitting."
 	input Stop(void) : "Tell the particle system to stop emitting."
 	input StopPlayEndCap(void) : "Tell the particle system to stop emitting and play its End Cap Effect."
-	input DestroyImmediately(void) : "Destroy the particle system and remove all particles immediately."		
+	input DestroyImmediately(void) : "Destroy the particle system and remove all particles immediately."
 ]
 
 
-@PointClass base(Targetname, EnableDisable, Parentname, Angles) iconsprite("editor/info_target.vmt") sphere(radius) = phys_ragdollmagnet : 
+@PointClass base(Targetname, EnableDisable, Parentname, Angles) line(255 255 0, targetname, target) iconsprite("editor/info_target.vmt") sphere(radius) = phys_ragdollmagnet : 
 	"An entity that acts like a magnet for ragdolls. Useful for crafting exaggerated ragdoll behavior (i.e. guys falling over rails on death). If the "+
 	"Bar Magnet spawnflag is set, the magnet works like it was a cylindrical magnet i.e. it attracts ragdolls to the nearest point on a line."
 [
-	axis(vecline) : "Bar Magnet Axis"
+	axis(vecline) : "Bar Magnet Axis" : : "If the Bar Magnet spawnflag is set, ragdolls will be attracted to any point on this line."
 	radius(float) : "Effective Radius" : "512" : "Radius in which ragdolls are affected around this entity's origin."
 	force(float) : "Force" : "5000" : "Magnetic force to apply to ragdolls within the radius. Expressed as kilograms per inch per second. So a force of 1000 will add 10 inches/second to a 100kg man. It will add 100 inches per second to a 10kg headcrab."
 
-	target(string) : "Entity to affect" : "" : "If specified, the phys_ragdollmagnet will only affect the target entity."
+	target(target_destination) : "Entity to affect" : "" : "If specified, the phys_ragdollmagnet will only affect the target entity."
 
 	spawnflags( Flags ) =
 	[
@@ -7295,7 +7292,7 @@ line(255 255 0, targetname, targetEntityName)
 [
 ]
 
-@PointClass base(Targetname) line(255 255 0, targetname, hint_target) = env_instructor_hint : "An entity that allows for creation and control of instructor lessons by map logic"
+@PointClass base(Targetname) iconsprite("editor/scripted_sentence.vmt") line(255 255 0, targetname, hint_target) sphere(hint_range) = env_instructor_hint : "An entity that allows for creation and control of instructor lessons by map logic"
 [
 	hint_replace_key(string) : "Replace Key" : : "Unique name so that messages with the same key will replace each other."
 	hint_target(target_destination) : "Target Entity" : : "The entity to show this hint on top of. The entity used must exist on the client, info_target_instructor_hint can be parented to server only entities for this purpose."
@@ -7314,7 +7311,7 @@ line(255 255 0, targetname, targetEntityName)
 	hint_caption(string) : "Caption" : : "The text of your hint."
 	hint_activator_caption(string) : "Activator Caption" : : "The text of your hint shown to only the activating player."
 	hint_color(color255) : "Caption Color" : "255 255 255" : "The color of the caption text"
-	hint_forcecaption(Choices) : "Force caption" : 0 : "Do we show the caption text even if the hint is occluded by a wall?" =
+	hint_forcecaption(Choices) : "Show through walls" : 0 : "Do we show the caption text even if the hint is occluded by a wall?" =
 	[
 		0 : "No"
 		1 : "Show when occluded"
@@ -7368,7 +7365,7 @@ line(255 255 0, targetname, targetEntityName)
 	hint_nooffscreen(Choices) : "Show offscreen" : 0 : "When the hint is offscreen, do we show an icon and arrow?" =
 	[
 		0 : "Show"
-		1 : "Don't show"		
+		1 : "Don't show"
 	]
 	
 	hint_binding(choices) : "Bound Command" : : "If using 'show key bindings' for the onscreen icon, this field should be the command we want to show bindings for" = 
@@ -7414,17 +7411,17 @@ line(255 255 0, targetname, targetEntityName)
 	hint_local_player_only(boolean) : "Only Local Player" : "No" : "The hint will only be shown to the local player."
 	
 	hint_timeout(integer) : "Timeout" : 0 : "The automatic timeout for the hint. 0 will persist until stopped with EndHint."
-	hint_range(float) : "Display Range" : 0 : "The visible range of the hint."	
+	hint_range(float) : "Display Range" : 0 : "The visible range of the hint."
 	
 	input ShowHint(string) : "Start showing the hint. If an entity name is passed as a parameter, the hint is shown only to that entity."	
 	input EndHint(void) : "Stop showing the hint if it hasn't already timed out."
 ]
 
-@PointClass base(Targetname,Parentname) = info_target_instructor_hint : "A generic target that gets replicated to the client for hud hint targeting"
+@PointClass base(Targetname,Parentname) iconsprite("editor/target.vmt") = info_target_instructor_hint : "A generic target that gets replicated to the client for hud hint targeting."
 [
 ]
 
-@PointClass base(Targetname,EnableDisable) = info_game_event_proxy : "Entity that, when seen, generates a simple game event."
+@PointClass base(Targetname,EnableDisable) sphere(range) = info_game_event_proxy : "Entity that, when seen, generates a simple game event."
 [
 	event_name(string) : "Event Name" : : "The event to trigger by name from modevents.res"
 	range(float) : "Range" : 512 : "Distance that the player must be before the event is generated."
@@ -7471,7 +7468,7 @@ line(255 255 0, targetname, targetEntityName)
 	]
 ]
 
-@SolidClass base( Targetname, EnableDisable ) line(255 255 0, targetname, fogname) = fog_volume : "An entity to control the fog in the map."
+@SolidClass base( Targetname, EnableDisable ) line(255 255 0, targetname, fogname) line(255 255 0, targetname, postprocessname) line(255 255 0, targetname, colorcorrectionname) = fog_volume : "An entity to control the fog in the map."
 [
 	FogName(target_destination) : "Fog Name" : : "The name of the fog entity associated with this volume."
 	PostProcessName(target_destination) : "Postprocess Name" : : "The name of the postprocess entity associated with this volume."

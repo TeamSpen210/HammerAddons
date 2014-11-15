@@ -806,7 +806,7 @@
 [
 	//Paint sprayer
 	maxblobcount(integer) : "Max number of blobs" : 250 : "Max number of blobs that sprayer can spawn in the world (1-250)."
-	light_position_name(string) : "Light Position Name" : : "Name of the entity we want to use as blobs light position."
+	light_position_name(target_destination) : "Light Position Name" : : "Name of the entity we want to use as blobs light position."
 	start_active(boolean) : "Start Active?" : 0
 	silent(boolean) : "Silent?" : "0" : "If this flag is true, blobs will only paint, appearing entirely invisible."
 	DrawOnly(boolean) : "DrawOnly?" : "0" : "If this flag is true, blobs will only render, vanishing on contact with surfaces."
