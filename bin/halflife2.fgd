@@ -133,8 +133,8 @@
 [
 	KillWeapons(choices) : "Kill Weapons" : "0" : "If No, then the player will drop and be prevented from picking up their weapon. If Yes the weapon will be killed." =
 	[
-		"No" : "Drop on ground"
-		"Yes" : "Kill Weapons"
+		"0" : "Drop on ground"
+		"1" : "Kill Weapons"
 	]
 ]
 @SolidClass base(CombineBallSpawners) = func_combine_ball_spawner :
