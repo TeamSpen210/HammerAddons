@@ -5358,7 +5358,7 @@ line(255 255 0, targetname, targetEntityName)
 @PointClass base(Targetname, Parentname, EnableDisable, Angles) line(255 255 255, targetname, target) iconsprite("editor/point_proximity_sensor.vmt") = point_proximity_sensor :
 	"An entity that detects another entity's proximity to a target position."
 [
-	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angles will be sensed."
+	target(target_destination) : "Target Entity Name" : : "Name of the entity whose psition will be sensed."
 
 	spawnflags(Flags) =
 	[
@@ -5397,7 +5397,7 @@ line(255 255 0, targetname, targetEntityName)
 	"An entity that does damage to all entities in a radius around itself, with a specified delay." +
 	"If 'Target Entity' is specified, the damage is only done to that entity."
 [
-	DamageTarget(string) : "Target Entity" : "" : "If specified, only this entity will take damage. Otherwise, all entities within the Radius will take damage."
+	DamageTarget(target_destination) : "Target Entity" :  : "If specified, only this entity will take damage. Otherwise, all entities within the Radius will take damage."
 	
 	DamageRadius(float) : "Radius" : 256 : "All entities within this radius of this entity will take damage. If a 'Target Entity' is specified, only that entity will take damage."
 	Damage(integer) : "Damage" : 5 : "Damage done to all affected entities each time this entity fires."
@@ -5435,7 +5435,7 @@ line(255 255 0, targetname, targetEntityName)
 	input Toggle(void) : "Toggle this entity between On/Off state."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/ts2do/point_playermoveconstraint.vmt") = point_playermoveconstraint : 
+@PointClass base(Targetname) iconsprite("editor/ts2do/point_playermoveconstraint.vmt") sphere(radius) = point_playermoveconstraint : 
 	"An entity that constrains players to a radius around itself, slowing them down the closer they get to the edge of the radius."
 [
 	radius(float) : "Radius" : 256 : "Radius to constrain players to."
@@ -5714,7 +5714,10 @@ line(255 255 0, targetname, targetEntityName)
 	]
 ]
 
-@PointClass halfgridsnap base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl") = phys_slideconstraint : 
+@PointClass halfgridsnap base(TwoObjectPhysics)
+	line(255 255 255, targetname, attach1)  
+	line(255 255 255, targetname, attach2)
+	studio("models/editor/axis_helper.mdl") = phys_slideconstraint : 
 	"A constraint that constrains an entity along a line segment."
 [
 	spawnflags(flags) =
@@ -6181,7 +6184,7 @@ line(255 255 0, targetname, targetEntityName)
 		0: "Not Solid"
 	]	
 
-	InitialOwner(string) : "Target Entity" : : "Name of the entity that this ornament should attach to, at startup."
+	InitialOwner(target_destination) : "Target Entity" : : "Name of the entity that this ornament should attach to, at startup."
 	
 	// Inputs
 	input SetAttached(string) : "Attach the ornament to a different entity. Parameter should be the name of entity to attach to."
@@ -7109,7 +7112,7 @@ line(255 255 0, targetname, targetEntityName)
 	lifetime(float) : "Lifetime" : "0.5"
 	startwidth(float) : "Start Width" : "8.0"
 	endwidth(float) : "End Width" : "1.0"
-	spritename(string) : "Sprite Name" : "sprites/bluelaser1.vmt"
+	spritename(sprite) : "Sprite Name" : "sprites/bluelaser1.vmt"
 
 	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
 	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
@@ -7212,7 +7215,7 @@ line(255 255 0, targetname, targetEntityName)
 
 @PointClass base(BaseNPC, Targetname, Parentname,Studiomodel) studioprop() line(255 255 255, targetname, animationtarget) = npc_puppet : "Puppet entity that mimics the animations of a target NPC."
 [
-	animationtarget(target_source) : "Animation target" : ""
+	animationtarget(target_destination) : "Animation target" : ""
 	attachmentname(string) : "Target attachment point name" : ""
 
 	input SetAnimationTarget(string) : "Set the animation target to use. An empty string will disable the puppet."
