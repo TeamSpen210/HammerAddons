@@ -2899,6 +2899,13 @@ line(255 255 0, targetname, targetEntityName)
 	input Command(string) : "Command to execute."
 ]
 
+@PointClass base(Targetname) iconsprite("editor/point_clientcommand.vmt") = point_broadcastclientcommand : 
+	"An entity that issues commands to all player's client consoles."
+[
+	// Inputs
+	input Command(string) : "Command to execute for all players."
+]
+
 @PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_bonusmaps_accessor : 
 	"An entity that relays bonus maps changes."
 [
