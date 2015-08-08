@@ -799,7 +799,7 @@
 	input DisableHint(void) : "Disable hint."
 ]
 
-@BaseClass base(Targetname, Parentname, Origin, EnableDisable, Global) = TriggerOnce
+@BaseClass base(Targetname, Parentname, Origin, EnableDisable, Global) line(255 255 255, targetname, filtername) = TriggerOnce
 [
 	spawnflags(flags) = 
 	[
@@ -825,7 +825,7 @@
 	output OnStartTouch(void) : "Fired when an entity starts touching this trigger. The touching entity must pass this trigger's filters to cause this output to fire."
 ]
 
-@BaseClass base(Targetname, Parentname, Origin, EnableDisable, TriggerOnce) = Trigger
+@BaseClass base(Targetname, Parentname, Origin, EnableDisable, TriggerOnce) line(255 255 255, targetname, filtername) = Trigger
 [
 	output OnStartTouchAll(void) : "Fired when an entity starts touching this trigger, and no other entities are touching it. Only entities that passed this trigger's filters are considered."
 	output OnEndTouch(void) : "Fired when an entity stops touching this trigger. Only entities that passed this trigger's filters will cause this output to fire."
@@ -5157,7 +5157,17 @@ line(255 255 0, targetname, targetEntityName)
 	output OnFail(void) : "Fired in response to TestActivator input if the activator fails to pass the filter."
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_multiple.vmt") = filter_multi :
+@FilterClass base(BaseFilter) iconsprite("editor/filter_multiple.vmt") 
+	line(255 255 255, targetname, filter01)
+	line(255 255 255, targetname, filter02)
+	line(255 255 255, targetname, filter03)
+	line(255 255 255, targetname, filter04)
+	line(255 255 255, targetname, filter05)
+	line(255 255 255, targetname, filter06)
+	line(255 255 255, targetname, filter07)
+	line(255 255 255, targetname, filter08)
+	line(255 255 255, targetname, filter09)
+	line(255 255 255, targetname, filter10) = filter_multi :
 	"A filter that tests the activator against multiple filters. This allows you to build more complex filters, such as"+
 	"'Allow anyone on Team 1 who is also class engineer', or 'Allow everyone except classes npc_zombie and npc_headcrab'."
 [
@@ -5183,7 +5193,7 @@ line(255 255 0, targetname, targetEntityName)
 	Filter10(filterclass) : "Filter 10" : : "Activator filter to test."
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_name.vmt") = filter_activator_name :
+@FilterClass base(BaseFilter) iconsprite("editor/filter_name.vmt") line(255 255 255, targetname, filtername) = filter_activator_name :
 	"A filter that filters by the name of the activator."
 [
 	filtername(target_destination) : "Filter Name" : : "The name to filter by. If the filter mode is Allow, only entities whose "+
@@ -5279,7 +5289,8 @@ line(255 255 0, targetname, targetEntityName)
 //
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname, Parentname, EnableDisable) = point_anglesensor :
+@PointClass base(Targetname, Parentname, EnableDisable) 
+	line(255 255 255, targetname, target) line(255 255 255, target, lookatname) = point_anglesensor :
 	"An entity that detects if another entity points in a given direction for a period of time."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angles will be sensed."
@@ -5303,7 +5314,7 @@ line(255 255 0, targetname, targetEntityName)
 	output FacingPercentage(float) : "Normalized value (0..1) where 1 is facing directly at target and 0 is at or beyond the angle of tolerance."
 ]
 
-@PointClass base(Targetname) = point_angularvelocitysensor :
+@PointClass base(Targetname) line(255 255 255, targetname, target) = point_angularvelocitysensor :
 	"An entity that detects if another entity's angular velocity meets or exceeds a threshold value."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angular velocity will be sensed."
@@ -5330,7 +5341,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnEqualTo(void) : "Fired when the Target Entity reaches the threshold angular velocity from a different velocity."
 ]
 
-@PointClass base(Targetname) = point_velocitysensor :
+@PointClass base(Targetname) line(255 255 255, targetname, target) = point_velocitysensor :
 	"An entity that detects and outputs an entity's velocity."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose velocity will be sensed."
@@ -5344,7 +5355,7 @@ line(255 255 0, targetname, targetEntityName)
 	input Disable(void) : "Disable the sensor."
 ]
 
-@PointClass base(Targetname, Parentname, EnableDisable, Angles) iconsprite("editor/point_proximity_sensor.vmt") = point_proximity_sensor :
+@PointClass base(Targetname, Parentname, EnableDisable, Angles) line(255 255 255, targetname, target) iconsprite("editor/point_proximity_sensor.vmt") = point_proximity_sensor :
 	"An entity that detects another entity's proximity to a target position."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angles will be sensed."
@@ -5362,7 +5373,7 @@ line(255 255 0, targetname, targetEntityName)
 ]
 
 
-@PointClass base(Targetname, Angles) iconsprite("editor/point_teleport.vmt") = point_teleport : 
+@PointClass base(Targetname, Angles) iconsprite("editor/point_teleport.vmt") line(255 255 255, targetname, target) = point_teleport : 
 	"An entity that teleports a target entity to this position and angles. "+
 	"If 'Teleport Home' spawn flag is set, teleports the target entity to its spawn position instead." +
 	"If object is physically simulated, simulation is turned off when teleported."
@@ -5382,7 +5393,7 @@ line(255 255 0, targetname, targetEntityName)
 	input TeleportEntity(target_destination) : "Teleport the entity specified by the parameter override. Use this to teleport an entity other than the one specified in the Entity To Teleport field."
 ]
 
-@PointClass base(Targetname) sphere(DamageRadius) = point_hurt :
+@PointClass base(Targetname) sphere(DamageRadius) line(255 255 255, targetname, damagetarget) = point_hurt :
 	"An entity that does damage to all entities in a radius around itself, with a specified delay." +
 	"If 'Target Entity' is specified, the damage is only done to that entity."
 [
@@ -5604,7 +5615,10 @@ line(255 255 0, targetname, targetEntityName)
 	target(target_destination) : "Target object" : ""  : "The entity whose mass center will be overridden."
 ]
 
-@PointClass halfgridsnap base(Targetname) = phys_spring : 
+@PointClass halfgridsnap base(Targetname) 
+	line(255 255 255, targetname, attach1)  
+	line(255 255 255, targetname, attach2)
+	sphere(length) sphere(breaklength) = phys_spring : 
 	"A physically simulated spring. "+
 	"'Length' is what's known as the 'natural spring length'. This is how long the spring would "+
 	"be if it was at rest (nothing hanging on it or attached). When you attach something to the "+
@@ -5633,7 +5647,10 @@ line(255 255 0, targetname, targetEntityName)
 	input SetSpringDamping(float) : "Set the Spring Damping."
 ]
 
-@PointClass halfgridsnap size(-8 -8 -8, 8 8 8) base(TwoObjectPhysics) = phys_hinge : 
+@PointClass halfgridsnap size(-8 -8 -8, 8 8 8)
+	line(255 255 255, targetname, attach1)  
+	line(255 255 255, targetname, attach2)
+	base(TwoObjectPhysics) = phys_hinge : 
 	"A physically simulated hinge. Use the helper to define the axis of rotation."
 [
 	hingefriction(float) : "Friction" : "0" : "Resistance/friction in the hinge"
@@ -5661,7 +5678,10 @@ line(255 255 0, targetname, targetEntityName)
 	reversalsoundLarge(sound) : "Reversal sound (large)" : "" : "Play this sound when making a hard reverse over the large threshold"
 ]
 
-@PointClass base(TwoObjectPhysics) iconsprite("editor/phys_ballsocket.vmt") = phys_ballsocket : 
+@PointClass base(TwoObjectPhysics)
+	line(255 255 255, targetname, attach1)  
+	line(255 255 255, targetname, attach2)
+	iconsprite("editor/phys_ballsocket.vmt") = phys_ballsocket : 
 	"A constraint that keeps the position of two objects fixed, relative to the constraint's origin. It does not affect rotation."
 [
 	spawnflags(flags) =
@@ -5669,12 +5689,18 @@ line(255 255 0, targetname, targetEntityName)
 	]
 ]
 
-@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl") = phys_constraint : 
+@PointClass base(TwoObjectPhysics)
+	line(255 255 255, targetname, attach1)  
+	line(255 255 255, targetname, attach2)
+	studio("models/editor/axis_helper.mdl") = phys_constraint : 
 	"A constraint that keeps the relative position and orientation of two objects fixed."
 [
 ]
 
-@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl") = phys_pulleyconstraint : 
+@PointClass base(TwoObjectPhysics)
+	line(255 255 255, targetname, attach1)  
+	line(255 255 255, targetname, attach2)
+	studio("models/editor/axis_helper.mdl") = phys_pulleyconstraint : 
 	"A constraint that is essentially two length constraints and two points. Imagine it as a virtual rope connected to two objects, each suspended from a pulley above them."+
 	"The constraint keeps the sum of the distances between the pulley points and their suspended objects constant."
 [
@@ -5720,7 +5746,11 @@ line(255 255 0, targetname, targetEntityName)
 	reversalsoundLarge(sound) : "Reversal sound (large)" : "" : "Play this sound when making a hard reverse over the large threshold"
 ]
 
-@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl") = phys_lengthconstraint : 
+@PointClass base(TwoObjectPhysics)
+	line(255 255 255, targetname, attach1)  
+	line(255 255 255, targetname, attach2)
+	sphere(minlength)
+	studio("models/editor/axis_helper.mdl") = phys_lengthconstraint : 
 	"A constraint that preserves the distance between two entities. If the 'Keep Rigid' flag is set, think of it as a rod. If not, think off it as a virtual rope."
 [
 	addlength(float) : "Additional Length" : "0" : "Add (or subtract) this amount to the rest length of the rope."
@@ -5733,7 +5763,10 @@ line(255 255 0, targetname, targetEntityName)
 	]
 ]
 
-@PointClass base(TwoObjectPhysics) studio("models/editor/axis_helper.mdl") = phys_ragdollconstraint : 
+@PointClass base(TwoObjectPhysics)
+	line(255 255 255, targetname, attach1)  
+	line(255 255 255, targetname, attach2)
+	studio("models/editor/axis_helper.mdl") = phys_ragdollconstraint : 
 	"A constraint that fixes the position of two entities, relative to this constraint's origin. Also allows for limits on the rotation around each axis, in the space of this constraint."
 [
 	spawnflags(flags) =
@@ -6139,7 +6172,8 @@ line(255 255 0, targetname, targetEntityName)
 	input FadeAndRemove(float) : "Fade out then remove (kill) self. Parameter override = duration of fade"
 ]
 
-@PointClass base(prop_dynamic_base) studioprop() = prop_dynamic_ornament :
+@PointClass base(prop_dynamic_base) studioprop()
+	line(255 255 255, targetname, initalowner) = prop_dynamic_ornament :
 	"A way to attach one studio model to another as an ornament. It will render in the way that player/NPC weapons render."
 [
 	solid(choices) : "Collisions" : 0 =
@@ -6160,7 +6194,8 @@ line(255 255 0, targetname, targetEntityName)
 //
 //-------------------------------------------------------------------------
 
-@SolidClass base(Targetname) color(0 255 255) = func_areaportal :
+@SolidClass base(Targetname)
+	line(255 255 255, targetname, target) color(0 255 255) = func_areaportal :
 	"A portal brush used to manage visibility in maps. Portals define areas, which are spaces " +
 	"that are connected in the map. Both sides of a portal cannot touch the same area, for example, a " +
 	"doughnut shaped map would require at least two portals to divide the map into two areas. A linear map " +
@@ -6493,20 +6528,20 @@ line(255 255 0, targetname, targetEntityName)
 	output OnDeath(void) : "Fired when the tank is killed."
 ]
 
-@SolidClass base(Parentname,Global) = func_traincontrols :
+@SolidClass base(Parentname,Global) line(255 255 255, targetname, target) = func_traincontrols :
 	"When used by the player, this entity overrides the player's controls to let them drive a train."
 [
 	target(target_destination) : "Train Name" : : "The target train to control when the player uses these controls."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/tanktrain_aitarget.vmt") = tanktrain_aitarget : 
+@PointClass base(Targetname) line(255 255 255, targetname, target) line(255 255 255, targetname, newtarget) iconsprite("editor/tanktrain_aitarget.vmt") = tanktrain_aitarget : 
 	"An entity that changes the target of a tanktrain_ai entity."
 [
 	target(target_destination) : "Tank AI Entity" : : "The tanktrain_ai entity to change the target of."
 	newtarget(target_destination) : "New Target Entity" : : "The entity to tell the tanktrain_ai to target."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/tanktrain_ai.vmt") = tanktrain_ai : 
+@PointClass base(Targetname) line(255 255 255, targetname, target) iconsprite("editor/tanktrain_ai.vmt") = tanktrain_ai : 
 	"Train chase AI"			// NEEDHELP
 [
 	target(target_destination) : "Train Name"
@@ -6703,7 +6738,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnNotTouching(void) : "Fired when the TestTouch input is not true (nothing is touching the trigger.)"
 ]
 
-@SolidClass base(TriggerOnce) = trigger_once :
+@SolidClass base(TriggerOnce) line(255 255 255, targetname, filtername) = trigger_once :
 	"A trigger volume that removes itself after it is triggered once."
 [
 	// Outputs
@@ -6734,7 +6769,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnTimeout(void) : "Fired after the timeout interval expires if the player never looked at the target."
 ]
 
-@SolidClass base(Trigger) = trigger_push : 
+@SolidClass base(Trigger) line(255 255 255, targetname, filtername) = trigger_push : 
 	"A trigger volume that pushes entities that touch it."
 [
 	pushdir(angle) : "Push Direction (Pitch Yaw Roll)" : "0 0 0" : "Angles indicating the direction to push touched entities."
@@ -6752,7 +6787,7 @@ line(255 255 0, targetname, targetEntityName)
 	input SetPushDirection(vector) : "Sets the angles indicating the direction to push touched entities."
 ]
 
-@SolidClass base(Trigger, Angles) = trigger_wind : 
+@SolidClass base(Trigger, Angles) line(255 255 255, targetname, filtername) = trigger_wind : 
 	"A trigger volume that pushes physics objects that touch it."
 [
 	Speed(integer) : "Speed" : 200   : "The baseline for how hard the wind blows."
@@ -6765,7 +6800,7 @@ line(255 255 0, targetname, targetEntityName)
 	input SetSpeed(integer) : "Set the baseline for how hard the wind blows."
 ]
 
-@SolidClass base(trigger_multiple) = trigger_hierarchy: 
+@SolidClass base(trigger_multiple) line(255 255 255, targetname, childfiltername) = trigger_hierarchy: 
 	"A trigger volume that can will check if any of trigger's children pass a secondary filter."
 [
 	childfiltername(filterclass) : "Child Filter Name" : : "Filter to use to see if activator's children trigger me. See filter_activator_name for more explanation."
@@ -6787,7 +6822,7 @@ line(255 255 0, targetname, targetEntityName)
 	output ImpactForce(string) : "Fired after an impact. The parameter passed along is the force of the impact that was generated."
 ]
 
-@SolidClass base(Trigger) line(255 255 255, targetname, measuretarget) sphere(radius) = trigger_proximity :
+@SolidClass base(Trigger) line(255 255 255, targetname, filtername) line(255 255 255, targetname, measuretarget) sphere(radius) = trigger_proximity :
 	"Measures the distance of the player within the trigger volume from a given point (and within " +
 	"a given radius). The NearestPlayerDistance output will be 0 when the player is at the center point, " +
 	"and 1 when the player is at the radius."
@@ -6801,7 +6836,7 @@ line(255 255 0, targetname, targetEntityName)
 						"so it will be 0 when the entity is on the point, and 1 when the entity is at the edge of the radius."
 ]
 
-@SolidClass base(Trigger) line(255 255 0, targetname, target) line(0 255 0, target, landmark) = trigger_teleport : 
+@SolidClass base(Trigger) line(255 255 255, targetname, filtername) line(255 255 0, targetname, target) line(0 255 0, target, landmark) = trigger_teleport : 
 	"A trigger volume that teleports entities that touch it. Entities are teleported to the Remote Destination, and have their angles "+
 	"set to that of the Remote Destination's. If a Local Destination Landmark is specified, teleported entities are offset from the target "+
 	"by their initial offset from the landmark, and their angles are left alone."
@@ -6835,7 +6870,7 @@ line(255 255 0, targetname, targetEntityName)
 //
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname,ResponseContext,EnableDisable)  iconsprite("editor/ts2do/ai_speechfilter.vmt") = ai_speechfilter : 
+@PointClass base(Targetname,ResponseContext,EnableDisable) line(255 255 255, targetname, subject)  iconsprite("editor/ts2do/ai_speechfilter.vmt") = ai_speechfilter : 
 	"An entity that can be used to control the idle speech patterns of a set of NPCs."
 [
 	subject(target_destination) : "Subject(s)" : "" : "This is the NPC(s) whose speech we're filtering. May be a targetname or a classname."	
@@ -6850,7 +6885,7 @@ line(255 255 0, targetname, targetEntityName)
 	input SetIdleModifier(float) : "Allows designers to change the idle modifier at runtime"
 ]
 
-@BaseClass base(Targetname) = ai_addon
+@BaseClass base(Targetname) line(255 255 255, targetname, target) = ai_addon
 [
 	target(target_destination) : "Host NPC"
 	input	Install(target_destination) : "Install this AddOn to the specified NPC"
@@ -7175,7 +7210,7 @@ line(255 255 0, targetname, targetEntityName)
 	input StopMeasuring(void) : "Stop measuring particle simulation speed"
 ]
 
-@PointClass base(BaseNPC, Targetname, Parentname,Studiomodel) studioprop() = npc_puppet : "Puppet entity that mimics the animations of a target NPC."
+@PointClass base(BaseNPC, Targetname, Parentname,Studiomodel) studioprop() line(255 255 255, targetname, animationtarget) = npc_puppet : "Puppet entity that mimics the animations of a target NPC."
 [
 	animationtarget(target_source) : "Animation target" : ""
 	attachmentname(string) : "Target attachment point name" : ""
