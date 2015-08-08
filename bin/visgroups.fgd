@@ -400,6 +400,10 @@
 		"point_viewcontrol_multiplayer"
 		"point_viewproxy"
 	]
+	"Null"
+	[
+		"info_null"
+	]
 ]
 
 @AutoVisGroup = "Effects"
