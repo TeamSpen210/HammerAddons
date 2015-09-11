@@ -1991,12 +1991,12 @@ line(255 255 0, targetname, targetEntityName)
 	input ViewPunch(void) : "Performs the view punch."
 ]
 
-@PointClass base(gibshooterbase) iconsprite("editor/gibshooter.vmt") = gibshooter : 
+@PointClass base(gibshooterbase) line(255 255 255, targetname, lightingorigin) iconsprite("editor/gibshooter.vmt") = gibshooter : 
 	"An entity that shoots out gibs. Style of body part depends on language type."
 [
 ]
 
-@PointClass base(gibshooterbase, RenderFields) iconsprite("editor/env_shooter.vmt") = env_shooter : 
+@PointClass base(gibshooterbase, RenderFields) line(255 255 255, targetname, lightingorigin) iconsprite("editor/env_shooter.vmt") = env_shooter : 
 	"An entity that shoots models, or sprites, out of its origin."
 [
 	shootmodel(studio) : "Model" : "" : "Thing to shoot out. Can be a .mdl or a .vmt."
@@ -2031,7 +2031,7 @@ line(255 255 0, targetname, targetEntityName)
 	massoverride(float) : "Mass override" : "0" : "EPISODIC ONLY. Specify an arbitrary mass for the gibs emitted by me."
 ]
 
-@PointClass base(gibshooterbase, RenderFields) iconsprite("editor/env_shooter.vmt") = env_rotorshooter : 
+@PointClass base(gibshooterbase, RenderFields) line(255 255 255, targetname, lightingorigin) iconsprite("editor/env_shooter.vmt") = env_rotorshooter : 
 	"An entity that creates gibs when it's within the influence of a helicopter's rotor wash."
 [
 	shootmodel(studio) : "Model" : "" : "Thing to shoot out.  Can be a .mdl or a .vmt."
@@ -2062,7 +2062,7 @@ line(255 255 0, targetname, targetEntityName)
 	rotortimevariance(float) : "Time variance" : "0.3" : "The random amount to vary the time it has to be under the rotor before it shoots a gib."
 ]
 
-@PointClass base(Targetname,Parentname) sphere() iconsprite("editor/env_soundscape.vmt") = env_soundscape_proxy : 
+@PointClass base(Targetname,Parentname) sphere() line(255 255 255, targetname, MainSoundscapeName) iconsprite("editor/env_soundscape.vmt") = env_soundscape_proxy : 
 	"An entity that acts like a soundscape but gets all of its sound parameters from another env_soundscape entity."
 [
 	MainSoundscapeName(target_destination) : "Soundscape Entity" : "" : "The soundscape to get all sound parameters from."
@@ -2070,7 +2070,17 @@ line(255 255 0, targetname, targetEntityName)
 	radius(integer) : "Radius" : 128					// NEEDHELP: The datadesc doesn't include this entry. Probably not used.
 ]
 
-@PointClass base(Targetname,Parentname,EnableDisable) sphere() iconsprite("editor/env_soundscape.vmt") line(255 255 255, targetname, position0) line(255 255 255, targetname, position1) line(255 255 255, targetname, position2) line(255 255 255, targetname, position3) line(255 255 255, targetname, position4) line(255 255 255, targetname, position5) line(255 255 255, targetname, position6) line(255 255 255, targetname, position7) = env_soundscape : 
+@PointClass base(Targetname,Parentname,EnableDisable)
+	sphere()
+	iconsprite("editor/env_soundscape.vmt")
+	line(255 255 255, targetname, position0)
+	line(255 255 255, targetname, position1)
+	line(255 255 255, targetname, position2)
+	line(255 255 255, targetname, position3)
+	line(255 255 255, targetname, position4)
+	line(255 255 255, targetname, position5)
+	line(255 255 255, targetname, position6)
+	line(255 255 255, targetname, position7) = env_soundscape : 
 	"An entity to control sound in an area. The active soundscape at any time is the last one that had line-of-sight to the player, and was within the radius."
 [
 	radius(integer) : "Radius" : 128 : "If set to -1, then the player can hear the soundscape as long as he can see it (regardless of distance to it)."
@@ -2556,7 +2566,16 @@ line(255 255 0, targetname, targetEntityName)
 	output OnPlay(void) : "Fired when this soundscape becomes the active one."
 ]
 
-@PointClass base(env_soundscape) sphere() iconsprite("editor/env_soundscape.vmt") = env_soundscape_triggerable : 
+@PointClass base(env_soundscape) sphere()
+	line(255 255 255, targetname, position0)
+	line(255 255 255, targetname, position1)
+	line(255 255 255, targetname, position2)
+	line(255 255 255, targetname, position3)
+	line(255 255 255, targetname, position4)
+	line(255 255 255, targetname, position5)
+	line(255 255 255, targetname, position6)
+	line(255 255 255, targetname, position7)
+	iconsprite("editor/env_soundscape.vmt") = env_soundscape_triggerable : 
 	"An entity that works like env_soundscape except that it works in conjunction with trigger_soundscape to determine when a player hears it."
 [
 ]
@@ -2595,7 +2614,11 @@ line(255 255 0, targetname, targetEntityName)
 	input SparkOnce(void) : "Spark once."
 ]
 
-@PointClass base(Targetname, Parentname, RenderFields, SystemLevelChoice) size(-2 -2 -2, 2 2 2) sprite() color(20 140 20) sphere(GlowProxySize) = env_sprite : 
+@PointClass base(Targetname, Parentname, RenderFields, SystemLevelChoice) 
+	size(-2 -2 -2, 2 2 2) 
+	sprite() 
+	color(20 140 20)
+	sphere(GlowProxySize) = env_sprite : 
 	"An entity that controls the drawing of a sprite in the world." 
 [
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
@@ -2626,7 +2649,11 @@ line(255 255 0, targetname, targetEntityName)
 [
 ]
 
-@PointClass base(env_sprite, Angles) sprite() color(20 140 20) sphere(GlowProxySize) = env_sprite_oriented:
+@PointClass base(env_sprite, Angles)
+	studio("models/editor/axis_helper_thick.mdl")
+	sprite() 
+	color(20 140 20)
+	sphere(GlowProxySize) = env_sprite_oriented:
     "A env_sprite that allows orientation."
 [
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
@@ -2674,7 +2701,12 @@ line(255 255 0, targetname, targetEntityName)
 	output OnGustEnd(void) : "Fired when a wind gust ends."
 ]
 
-@PointClass base(Angles) size(-16 -16 -16, 16 16 16) color(0 0 255) = sky_camera : 
+@PointClass base(Angles) 
+	size(-1 -1 -1, 1 1 1) 
+	color(0 0 255) 
+	sphere(fogstart)
+	sphere(fogend)
+	= sky_camera : 
 	"An entity used to control the 3D Skybox. Its origin is used to determine the 3D Skybox's position relative to the map. Place this entity, in the 3D Skybox, at the point where the origin of the map should be."
 [
 	scale(integer) : "3D Skybox scale" : 16 : "Scale of the skybox."
@@ -2828,7 +2860,10 @@ line(255 255 0, targetname, targetEntityName)
 	input Disable(void) : "Stop displaying the message text."
 ]
 
-@PointClass base(Targetname, Parentname, RenderFields, Angles, SystemLevelChoice) studio("models/editor/cone_helper.mdl") = point_spotlight : 
+@PointClass base(Targetname, Parentname, RenderFields, Angles, SystemLevelChoice) 
+	studio("models/editor/cone_helper.mdl")
+	sphere(spotlightlength)
+	sphere(spotlightwidth) = point_spotlight : 
 	"An entity to draw a spotlight. Will draw a beam when the player views it side on, and a halo when it's facing towards the player. "+
 	"Unless the 'No Dynamic Light' spawnflag is checked, it will also create a dynamic light wherever the end of the spotlight rests."
 [
@@ -2855,7 +2890,11 @@ line(255 255 0, targetname, targetEntityName)
 
 ]
 
-@PointClass base(Targetname, Parentname) size(-8 -8 -8, 8 8 8) line(255 255 0, targetname, m_SourceEntityName) sphere(m_flRadius) = point_tesla : 
+@PointClass base(Targetname, Parentname)
+	size(-8 -8 -8, 8 8 8)
+	line(255 255 0, targetname, m_SourceEntityName)
+	sphere(m_flRadius)
+	= point_tesla : 
 	"An entity that creates tesla lightning arcs around its origin."
 [
 	m_SourceEntityName(target_destination) : "Source Entity" : "" : "If specified, tesla lightning will originate from the specified entity. Otherwise, they originate from this entity."
@@ -2958,7 +2997,9 @@ line(255 255 0, targetname, targetEntityName)
 	output Attack2Axis(string) : "An output that fires whenever the state of the player's secondary attack key changes. i.e. 1 when the player has the secondary attack key down, 0 otherwise."
 ]
 
-@PointClass base(Targetname) line(255 255 0, targetname, referencename) = point_entity_finder :
+@PointClass base(Targetname) 
+	line(255 255 0, targetname, referencename)
+	line(255 255 0, targetname, filtername) = point_entity_finder :
 	"An entity that will find an entity and pass it along as the !Caller with the OutEntity output.  Requires using !Caller as the parameter on the input."
 [
 	filtername(filterclass) : "Filter Name" : : "Filter to use to narrow set of findable entities. See filter_activator_name for more explanation."
@@ -3001,9 +3042,9 @@ line(255 255 0, targetname, targetEntityName)
 	"An entity that places a decal on the world. If the decal has no target name, it will immediately apply itself when the level is loaded. "+
 	"If it has a name specified, it won't apply until it receives the 'Activate' input."
 [
-	texture(decal)
+	texture(decal) : "Texture" : "" : "The texture used for the decal."
 
-	LowPriority(boolean) : "Low Priority (can be replaced)" : 0
+	LowPriority(boolean) : "Low Priority" : 1 : "Allow the decal to be overwritten by other decals when needed. This also makes the decal not persist across savegames."
 
 	// Inputs
 	input Activate(void) : "Force the decal to apply itself to the world."
@@ -3015,7 +3056,7 @@ line(255 255 0, targetname, targetEntityName)
 	"An entity that projects a decal onto the world (or props). If the decal has no target name, it will immediately apply itself when "+
 	"the level is loaded. If it has a name specified, it won't apply until it receives the 'Activate' input."
 [
-	texture(decal)
+	texture(decal) : "Texture" : "" : "The texture used for the decal."
 	Distance(float) : "Distance" : 64 : "Distance from the origin to project the decal."
 
 	// Inputs
@@ -3041,11 +3082,18 @@ line(255 255 0, targetname, targetEntityName)
 	]
 ]
 
-@PointClass base(Targetname, Angles) size(-1 -1 0, 1 1 1) color(80 150 225) studio("models/editor/overlay_helper.mdl") sphere(fademindist) sphere(fademaxdist) overlay() = info_overlay : 
+@PointClass base(Targetname, Angles) 
+	size(-1 -1 0, 1 1 1)
+	color(80 150 225)
+	studio("models/editor/overlay_helper.mdl")
+	sphere(fademindist)
+	sphere(fademaxdist)
+	overlay()
+	= info_overlay : 
 	"An entity that places an overlay on the world." 
 [
 	material(material) : "Material"
-	sides(sidelist) : "Brush faces"
+	sides(sidelist) : "Brush faces" : "The brush faces this overlay is applied to."
 	RenderOrder(integer) : "Render Order" : 0 : "Higher values render after lower values. This value can be 0-3."
 	StartU(float) : "U Start" : "0.0" : "A value between 0-1, defining the starting X axis position in the overlay material."
 	EndU(float) : "U End" : "1.0" : "A value between 0-1, defining the ending X axis position in the overlay material."
@@ -3063,7 +3111,11 @@ line(255 255 0, targetname, targetEntityName)
 	fademaxdist(float) : "End Fade Dist" : 0 : "Maximum distance at which the overlay is visible (0 = don't fade out)."
 ]
 
-@PointClass size(-8 -8 -8, 8 8 8) sidelist(sides) sidelist(sides2) overlay_transition() = info_overlay_transition : "This creates a scrolling texture at the instersect between two brushes, for things likw wave effects at water edges." 
+@PointClass size(-8 -8 -8, 8 8 8) 
+	sidelist(sides) 
+	sidelist(sides2) 
+	overlay_transition()
+	= info_overlay_transition : "This creates a scrolling texture at the instersect between two brushes, for things likw wave effects at water edges." 
 [
 	material(material) : "Material"
 	sides(sidelist) : "Brush faces"
@@ -3093,7 +3145,9 @@ line(255 255 0, targetname, targetEntityName)
 [
 ]
 
-@PointClass base(Targetname, Parentname, Angles) iconsprite("editor/info_target.vmt") studio("models/editor/axis_helper.mdl") = info_target : 
+@PointClass base(Targetname, Parentname, Angles) 
+	iconsprite("editor/info_target.vmt") 
+	studio("models/editor/axis_helper.mdl") = info_target : 
 	"An entity that does nothing. Very useful as a positioning entity for other entities to refer to (i.e. the endpoint of an env_beam)"
 [
 	spawnflags( Flags ) =
@@ -3194,13 +3248,13 @@ line(255 255 0, targetname, targetEntityName)
 	cpoint62(target_destination) : "Control Point 62" : : "If set, control point 62 of the effect will be at this entity's location. If control point 61 is not set, this will be ignored."
 	cpoint63(target_destination) : "Control Point 63" : : "If set, control point 63 of the effect will be at this entity's location. If control point 62 is not set, this will be ignored."
 	
-	cpoint1_parent(integer) : "Control Point 1's Parent" : 0 : "If set and nonzero, control point 1 of the effect will use this point for its parent."
-	cpoint2_parent(integer) : "Control Point 2's Parent" : 0 : "If set and nonzero, control point 2 of the effect will use this point for its parent."
-	cpoint3_parent(integer) : "Control Point 3's Parent" : 0 : "If set and nonzero, control point 3 of the effect will use this point for its parent."
-	cpoint4_parent(integer) : "Control Point 4's Parent" : 0 : "If set and nonzero, control point 4 of the effect will use this point for its parent."
-	cpoint5_parent(integer) : "Control Point 5's Parent" : 0 : "If set and nonzero, control point 5 of the effect will use this point for its parent."
-	cpoint6_parent(integer) : "Control Point 6's Parent" : 0 : "If set and nonzero, control point 6 of the effect will use this point for its parent."
-	cpoint7_parent(integer) : "Control Point 7's Parent" : 0 : "If set and nonzero, control point 7 of the effect will use this point for its parent."
+	cpoint1_parent(vecline) : "Control Point 1's Parent" : : "If set and nonzero, control point 1 of the effect will use this point for its parent."
+	cpoint2_parent(vecline) : "Control Point 2's Parent" : : "If set and nonzero, control point 2 of the effect will use this point for its parent."
+	cpoint3_parent(vecline) : "Control Point 3's Parent" : : "If set and nonzero, control point 3 of the effect will use this point for its parent."
+	cpoint4_parent(vecline) : "Control Point 4's Parent" : : "If set and nonzero, control point 4 of the effect will use this point for its parent."
+	cpoint5_parent(vecline) : "Control Point 5's Parent" : : "If set and nonzero, control point 5 of the effect will use this point for its parent."
+	cpoint6_parent(vecline) : "Control Point 6's Parent" : : "If set and nonzero, control point 6 of the effect will use this point for its parent."
+	cpoint7_parent(vecline) : "Control Point 7's Parent" : : "If set and nonzero, control point 7 of the effect will use this point for its parent."
 
 	// Inputs
 	input Start(void) : "Tell the particle system to start emitting."
@@ -3210,7 +3264,11 @@ line(255 255 0, targetname, targetEntityName)
 ]
 
 
-@PointClass base(Targetname, EnableDisable, Parentname, Angles) line(255 255 0, targetname, target) iconsprite("editor/info_target.vmt") sphere(radius) = phys_ragdollmagnet : 
+@PointClass base(Targetname, EnableDisable, Parentname, Angles) 
+	line(255 255 0, targetname, target) 
+	iconsprite("editor/info_target.vmt") 
+	sphere(radius) 
+	= phys_ragdollmagnet : 
 	"An entity that acts like a magnet for ragdolls. Useful for crafting exaggerated ragdoll behavior (i.e. guys falling over rails on death). If the "+
 	"Bar Magnet spawnflag is set, the magnet works like it was a cylindrical magnet i.e. it attracts ragdolls to the nearest point on a line."
 [
