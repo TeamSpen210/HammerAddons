@@ -6709,7 +6709,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnChangeLevel(void) : "Fired when the level changes."
 ]
 
-@SolidClass base(Trigger) = trigger_gravity : 
+@SolidClass base(Trigger) line(255 255 255, targetname, filtername) = trigger_gravity : 
 	"A trigger volume that changes the gravity on any entity that touches it."
 [
 	gravity(integer) : "Gravity (0-1)" : 1
@@ -6729,7 +6729,7 @@ line(255 255 0, targetname, targetEntityName)
 
 
 // NEEDHELP
-@SolidClass base(Trigger) line(255 255 255, targetname, soundscape) = trigger_soundscape : 
+@SolidClass base(Trigger) line(255 255 255, targetname, soundscape) line(255 255 255, targetname, filtername) = trigger_soundscape : 
 	"Soundscape trigger. " +
 	"It is not necessary to create outputs for this trigger. It automatically will trigger the " +
 	"soundscape referred to by its 'Soundscape' property."
@@ -6737,7 +6737,7 @@ line(255 255 0, targetname, targetEntityName)
 	soundscape(target_source) : "Soundscape" 
 ]
 
-@SolidClass base(Trigger, Targetname, MasterEnt) = trigger_hurt :
+@SolidClass base(Trigger, Targetname, MasterEnt) line(255 255 255, targetname, filtername) = trigger_hurt :
 	"A trigger volume that damages entities that touch it."
 [
 	damage(integer) : "Damage" : 100000 : "The amount of damage done to entities that touch this trigger. The damage is done every half-second. See also 'Damage Model' for extra details on how damage can be dealt."
@@ -6783,7 +6783,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnHurtPlayer(void) : "Fired whenever this trigger hurts a player."
 ]
 
-@SolidClass base(Trigger, Targetname) = trigger_remove : 
+@SolidClass base(Trigger, Targetname) line(255 255 255, targetname, filtername) = trigger_remove : 
 	"A trigger volume that removes any entities that touch it. Be careful, removing some entities can cause instability. "+
 	"This is not the same as killing entities. i.e. NPCs removed in this manner will not fire their OnKilled outputs."
 [
@@ -6791,7 +6791,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnRemove(void) : "Fired whenever an entity is removed."
 ]
 
-@SolidClass base(Trigger) = trigger_multiple :
+@SolidClass base(Trigger) line(255 255 255, targetname, filtername) = trigger_multiple :
 	"A trigger volume that can be triggered multiple times."
 [
 	wait(integer) : "Delay Before Reset" : 1 : "Amount of time, in seconds, after the trigger_multiple has triggered before it can be triggered again. If set to -1, it will never trigger again (in which case you should just use a trigger_once)."
@@ -6896,7 +6896,7 @@ line(255 255 0, targetname, targetEntityName)
 	"and 1 when the player is at the radius."
 [
 	measuretarget(target_destination) : "Point to Measure From" : : "The name of a target entity who's origin is the point to measure the player's distance from."
-	radius(string) : "Radius to measure within" : 256 : "The radius to which the distance should be mapped. If the player is outside the radius he will be ignored."
+	radius(integer) : "Radius to measure within" : 256 : "The radius to which the distance should be mapped. If the player is outside the radius he will be ignored."
 	
 	// Outputs
 	output NearestEntityDistance(integer) : "Fired continuously when entities are touching the trigger volume. The output parameter is the distance from the "+
@@ -7424,6 +7424,7 @@ line(255 255 0, targetname, targetEntityName)
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 
 	input ProxyRelay(string) : "This message will get relayed and will be available from the instance."
+	
 	input ProxyRelay1(string) : "Added by the compiler, this is used internally to connect the outputs."
 	input ProxyRelay2(string) : "Added by the compiler, this is used internally to connect the outputs."
 	input ProxyRelay3(string) : "Added by the compiler, this is used internally to connect the outputs."
