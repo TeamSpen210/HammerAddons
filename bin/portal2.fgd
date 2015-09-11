@@ -1027,7 +1027,7 @@
 	]
 ]
 
-@PointClass base(Targetname) studio("models/editor/camera.mdl") = playtest_manager: "PTI entity, don't know what it does. Possibly controls some sort of map completion timer."
+@PointClass base(Targetname, Origin, Angles) iconsprite("editor/info_target.vmt") = playtest_manager: "PTI entity, don't know what it does. Possibly controls some sort of map completion timer."
 [
 	input StartRecording(void) : "Makes this entity start recording whatever it records."
 	input StopRecording(void)  : "Makes this entity stop recording whatever it records."
