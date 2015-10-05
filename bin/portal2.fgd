@@ -419,15 +419,15 @@
 	
 	model(choices) : "[H] Model" : "models/props/metal_box.mdl" : "The model to show in Hammer." =
 	[   
-	"models/props/metal_box.mdl" 				 			 : "Weighted Storage/Companion Cube"
-	"models/props/reflection_cube.mdl" 	 					 : "Weighted Pivot"
-	"models/props_gameplay/mp_ball.mdl"						 : "Edgeless Safety"
+	"models/props/metal_box.mdl" : "Weighted Storage/Companion Cube"
+	"models/props/reflection_cube.mdl" : "Weighted Pivot"
+	"models/props_gameplay/mp_ball.mdl" : "Edgeless Safety"
 	"models/props_underground/underground_weighted_cube.mdl" : "Antique"
-	"models/props_underground/underground_cmpanion_cube.mdl" : "CUST - Antique Companion Cube (Use antique cube type)"
-	"models/props_ingame/p1_metal_box.mdl"					 : "CUST - P1 Cube"
-	"models/props_ingame/p1_ball.mdl"						 : "CUST - P1 Ball"
-	"models/props_ingame/metal_box_rusty.mdl"				 : "CUST - Rusty Weighted Storage Cube (Use clean type)"
-	"models/props_ingame/reflection_cube_rusty.mdl"			 : "CUST - Rusty Weighted Pivot Cube (Use clean type)"
+	"models/BEE2/props_ingame/retro_companion.mdl" : "CUST - Antique Companion Cube (Use antique cube type)"
+	"models/BEE2/props_ingame/p1_metal_box.mdl" : "CUST - P1 Cube"
+	"models/BEE2/props_ingame/p1_ball.mdl" : "CUST - P1 Ball"
+	"models/BEE2/props_ingame/metal_box_rusty.mdl" : "CUST - Rusty Weighted Storage Cube (Use clean type)"
+	"models/BEE2/props_ingame/reflection_cube_rusty.mdl" : "CUST - Rusty Weighted Pivot Cube (Use clean type)"
 	]
 
 	PaintPower(choices) : "Starting paint" : 4 :
@@ -441,16 +441,6 @@
 	]
 	
 	allowfunnel(boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a floor portal."
-	
-	packname(choices) : "Pack model" : "" : "Set to autopack a custom model if needed. Requires Fudgepacker or the BEE2 Stylechanger." =
-	[
-		""												: "None"
-		"packer_addfile:packlists/old_cmp_cube.txt"		: "Antique Companion Cube"
-		"packer_addfile:packlists/p1_cube.txt"			: "P1 Cube"
-		"packer_addfile:packlists/p1_sphere.txt"			: "P1 Ball"
-		"packer_addfile:packlists/rusty_cube.txt"		: "Rusty Weighted Storage Cube"
-		"pavker_addfile:packlists/rusty_reflect.txt"		: "Rusty Weighted Pivot Cube"
-	]
 
 	NewSkins(integer) readonly : "Use new skins" : 1 : "Use the values in the Cube Type and Skin Type fields instead of the Skin(OLD) field. You shouldn't need to touch this."
 
