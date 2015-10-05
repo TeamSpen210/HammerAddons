@@ -124,7 +124,7 @@
 	parentname(target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
 
 	// Inputs
-	input SetParent(string) : "Changes the entity's parent in the movement hierarchy."
+	input SetParent(target_destination) : "Changes the entity's parent in the movement hierarchy."
 	input SetParentAttachment(string) : "Change this entity to attach to a specific attachment point on its parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment."
 	input SetParentAttachmentMaintainOffset(string) : "Change this entity to attach to a specific attachment point on it's parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment. The entity will maintain it's position relative to the parent at the time it is attached."
 	input ClearParent(void) : "Removes this entity from the the movement hierarchy, leaving it free to move independently."
@@ -308,7 +308,7 @@
 @BaseClass = DamageFilter
 [ 
 	damagefilter(target_destination) : "Damage Filter" : "" : "Name of the filter entity that controls which entities can damage us."
-	input SetDamageFilter(string) : "Sets the entity to use as damage filter. Pass in an empty string to clear the damage filter."
+	input SetDamageFilter(target_destination) : "Sets the entity to use as damage filter. Pass in an empty string to clear the damage filter."
 ]
 
 @BaseClass = ResponseContext
@@ -511,7 +511,7 @@
 
 	// Inputs
 	input SetRelationship(string) : "Changes this entity's relationship with another entity or class. Format: <entityname/classname> <D_HT/D_FR/D_LI/D_NU> <priority>"
-	input SetEnemyFilter(string) : "Changes this NPC's enemy filter to the named filter."
+	input SetEnemyFilter(target_destination) : "Changes this NPC's enemy filter to the named filter."
 	input SetHealth(integer) : "Set this NPC's health."
 	input SetBodyGroup(integer) : "HACK: Sets this NPC's body group (from 0 - n). You'd better know what you are doing!"
 	input physdamagescale(float) : "Sets the value that scales damage energy when this character is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility."
@@ -524,7 +524,7 @@
 	input StopScripting(void) : "Exit scripting state."
 	input SetSquad(string) : "Set the name of this NPC's squad. It will be removed from any existing squad automatically. Leaving the parameter blank will remove the NPC from any existing squad."
 	input Wake(void) : "Wakes up the NPC if it is sleeping."
-	input ForgetEntity(string) : "Clears out the NPC's knowledge of a named entity."
+	input ForgetEntity(target_destination) : "Clears out the NPC's knowledge of a named entity."
 	input GagEnable(void) : "Turn on the NPC Gag flag. NPC won't speak outside of choreographed scenes."
 	input GagDisable(void) : "Turn off the NPC Gag flag."
 	input IgnoreDangerSounds(float) : "Ignore danger sounds for the specified number of seconds."
@@ -540,7 +540,7 @@
 	"NPC Spawn Destination. (Consult npc_template_maker help for more info)"
 [
 	ReuseDelay(float) : "Reuse Delay" : 1 : "After an NPC is spawned at this destination, the delay before this destination is eligible for selection again."
-	RenameNPC(string) : "New NPC Name" : "" : "If an NPC spawns at this destination, change that NPC's targetname to this."
+	RenameNPC(target_source) : "New NPC Name" : "" : "If an NPC spawns at this destination, change that NPC's targetname to this."
 
 	// Outputs
 	output OnSpawnNPC(void) : "Fired when an NPC spawns at this destination."

@@ -48,7 +48,7 @@
 	input Toggle(void) : "Toggles activity."
 	input Enable(void) : "Enables activity."
 	input Disable(void) : "Disables activity."
-	input SetTarget(string) : "Sets the target for this turret to attack."
+	input SetTarget(target_destination) : "Sets the target for this turret to attack."
 	input Destroy(void) : "Sets this turret to it's destroyed state."
 
 	output OnFoundTarget(void) 	: 	"Fired when the rocket turret finds an unobstructed target."
@@ -150,7 +150,7 @@
 	output OnReleased(void)		: "Fired when the button was pressed, but weight was removed."
 ]
 
-@SolidClass base(Targetname, Parentname) = func_noportal_volume : "A region which prevents portal placement."
+@SolidClass base(Targetname, Parentname, Origin) = func_noportal_volume : "A region which prevents portal placement."
 [	
 	//Inputs
 	input Deactivate(void)		: "Turn off blocking functionality"
@@ -163,7 +163,7 @@
 	]
 ]
 
-@SolidClass base(Targetname, Parentname) = func_portal_bumper : "A region which 'bumps' portals outside of it, but will still allow portals to be placed on it."
+@SolidClass base(Targetname, Parentname, Origin) = func_portal_bumper : "A region which 'bumps' portals outside of it, but will still allow portals to be placed on it."
 [	
 	//Inputs
 	input Deactivate(void)	: "Turn off bumping functionality"
@@ -244,11 +244,11 @@
 		2 : "Generic Portal"
 	]
 
-	input SetName(string)			: "Naming your portals is fun"
-	input SetActivatedState(bool)	: "An inactive portal will not be drawn and will not teleport entites"
-	input Fizzle(void)				: "Makes a cool visual fizzle and properly shuts down the portal"
-	input NewLocation(string)		: "Sets this portals location and angles. This expects 6 floats with space delimiters, the format is 'x y z pitch yaw roll'"
-	input Resize(string)			: "Resizes the portal. Format is 'halfwidth halfheight'"
+	input SetName(string)           : "Naming your portals is fun"
+	input SetActivatedState(bool)   : "An inactive portal will not be drawn and will not teleport entites"
+	input Fizzle(void)              : "Makes a cool visual fizzle and properly shuts down the portal"
+	input NewLocation(string)       : "Sets this portals location and angles. This expects 6 floats with space delimiters, the format is 'x y z pitch yaw roll'"
+	input Resize(string)            : "Resizes the portal. Format is 'halfwidth halfheight'"
 	input SetLinkageGroupId(integer): "Sets the portal linkage ID.  If portal is open it will close and reopen with new portal linked."	
 ]
 
@@ -425,7 +425,7 @@
 	input Enable(void) : "Enable Thumper"
 	input Disable(void) : "Disable Thumper"
 
-	input SetTarget(string) : "Set the entity to target."
+	input SetTarget(target_destination) : "Set the entity to target."
 	input TargetPlayer(void) : "Set the player as the entity to target."
 
 	output OnFoundTarget(void)  : "Arm has direct LOS to target entity."

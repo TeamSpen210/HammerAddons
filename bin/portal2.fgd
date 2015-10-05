@@ -51,7 +51,7 @@
 
 @BaseClass = LinkedPortalDoor : "An entity that can be linked to another door and create a passage between them dynamically."
 [
-	input SetPartner(string) : "Set a new partner door."
+	input SetPartner(target_destination) : "Set a new partner door."
 	input Open(void) : "Open the door and cause the portal to activate."
 	input Close(void) : "Close the door and cause the portal to deactivate."
 
@@ -72,7 +72,7 @@
 	input Enable(void) : "Enables projection from this projector. This also updates the position of the bridge/funnel if the model was parented."
 	input Disable(void) : "Disables projection from this projector."
 	
-	input SetParent(string) : "Sets the parent for the projector. This will only move the model properly, retrigger the enable input to correct the bridge/funnel position."
+	input SetParent(target_destination) : "Sets the parent for the projector. This will only move the model properly, retrigger the enable input to correct the bridge/funnel position."
 	input SetParentAttachment(string) : "Change this entity to attach to a specific attachment point on its parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment."
 	input SetParentAttachmentMaintainOffset(string) : "Change this entity to attach to a specific attachment point on it's parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment. The entity will maintain it's position relative to the parent at the time it is attached."
 	input ClearParent(void) : "Removes this entity from the the movement hierarchy, leaving it free to move independently."
@@ -211,11 +211,6 @@
 		"models/props_ingame/p1_switch.mdl"	: "Portal 1 Model"
 	]
 	
-	packlist(choices) : "Pack P1 model" : "" : "Set to autopack the Portal 1 model if needed. Requires Fudgepacker or the BEE2 Stylechanger." =
-	[
-		"packer_addfile:packlists/p1_switch.txt"		: "Yes"
-		""											: "No"
-	]
 ]
 
 @PointClass base(Targetname, Parentname, Angles , ToggleDraw, RenderFields, BasePedButton) studio("models/props_underground/underground_testchamber_button.mdl") = prop_under_button :
@@ -521,7 +516,7 @@
 @PointClass base(Targetname, Parentname, Angles) studio("models/editor/angle_helper.mdl") = point_futbol_shooter : 
 	"Fires prop_exploding_futbols at a target entity. Used in Wheatley's boss fight."
 [
-		input SetTarget(string) : "Set new launch target"
+		input SetTarget(target_destination) : "Set new launch target"
 		input ShootFutbol(void) : "Shoot a futbol at the target"
 		
 		output OnShootSuccess(void) : "Called when a futbol is successfully fired."
