@@ -4,7 +4,7 @@
 //
 ///=============================================================================
 
-//@include "halflife2.fgd"
+@include "halflife2.fgd"
 
 ///=============================================================================
 //
@@ -35,19 +35,22 @@
 	input BallCaught(void) : "Trigger the OnBallCaught output for the point_energy_ball_launcher that created this ball, kill the pellet and disable the launcher."
 ]
 
-@PointClass base(Angles, Targetname, Parentname, ResponseContext, Shadow, Reflection, ToggleDraw, RenderFields) studio( "models/props_bts/rocket_sentry.mdl" ) = npc_rocket_turret: "P1 rocket sentry, aims a rocket at a target. The rocket itself will often get stuck inside the model, so that needs to be worked around."
+@PointClass 
+	base(Angles, Targetname, Parentname, ResponseContext, Shadow, Reflection, ToggleDraw, RenderFields) 
+	studioprop( "models/props_bts/rocket_sentry.mdl" ) 
+	= npc_rocket_turret: "P1 rocket sentry, aims a rocket at a target. The rocket itself will often get stuck inside the model, so that needs to be worked around."
 [
 	spawnflags(Flags) =
 	[
-		1:  "Disabled" : 0
+		1:  "Start Retracted" : 0
 	]
 
 	RocketSpeed(float) : "Rocket Speed" : 450 : "Speed the rocket will travel at."
 	RocketLifetime(float) : "Rocket Lifetime" : 20 : "The rocket will automatically detonate after this number of seconds."
 	
-	input Toggle(void) : "Toggles activity."
-	input Enable(void) : "Enables activity."
-	input Disable(void) : "Disables activity."
+	input Toggle(void) : "Toggles between activated and deactivated states."
+	input Enable(void) : "Activate Rocket Turret, and allow it to begin scanning."
+	input Disable(void) : "Deactivate and retract the Rocket Turret."
 	input SetTarget(target_destination) : "Sets the target for this turret to attack."
 	input Destroy(void) : "Sets this turret to it's destroyed state."
 
@@ -56,7 +59,7 @@
 	output OnDeath(void)		:	"Fired after this turret finishes it's destroy think and begins it's death think."
 ]
 
-@PointClass base(Angles, Targetname, Parentname, ResponseContext, Shadow, Reflection, ToggleDraw, RenderFields) studio( "models/props_bts/rocket.mdl") = rocket_turret_projectile : "The rocket the Rocket Sentry fires."
+@PointClass base(Angles, Targetname, Parentname, ResponseContext, Shadow, Reflection, ToggleDraw, RenderFields) studioprop( "models/props_bts/rocket.mdl") = rocket_turret_projectile : "The rocket the Rocket Sentry fires."
 [
 	input RemovePaint(void) : "Cleans the rocket?"
 	output OnIgnite(void) : "On fire?"
@@ -233,7 +236,7 @@
 	HalfHeight(float)		: "Half-Height of the Portal." : 0
 ]
 
-@PointClass base(Targetname, Angles, PortalBase) studio("models/editor/prop_portal.mdl") = prop_portal : "A portal"
+@PointClass base(Targetname, Angles, PortalBase) studio("models/editor/prop_portal.mdl") bbox(-32, -16, -64, 32, 16, 64) = prop_portal : "A portal."
 [
 	LinkageGroupID(integer)		: "Portal Group" : 0 : "Portal pair ID that it belongs to, 0=SP, 1=ATLAS, 2=P-Body"
 	
@@ -252,7 +255,7 @@
 	input SetLinkageGroupId(integer): "Sets the portal linkage ID.  If portal is open it will close and reopen with new portal linked."	
 ]
 
-@PointClass base(Weapon,Targetname, Parentname) studio("models/weapons/w_portalgun.mdl") = weapon_portalgun : "Aperture Science Handheld Portal Device"
+@PointClass base(Weapon,Targetname, Parentname) studioprop("models/weapons/w_portalgun.mdl") = weapon_portalgun : "Aperture Science Handheld Portal Device"
 [
 	CanFirePortal1(boolean)			: "Can Fire Portal 1" : 1 : "Can this portalgun create blue portals?"
 	CanFirePortal2(boolean)			: "Can Fire Portal 2" : 1 : "Can this portalgun create orange portals?"
@@ -285,7 +288,7 @@
 	output OnFiredPortal2(void)			: "Fires when the 'orange' portal is fired."
 ]
 
-@PointClass base(BasePropPhysics) studioprop() studio( "models/npcs/personality_sphere/personality_sphere.mdl" ) = prop_glados_core : "The P1 personality cores for GlaDOS. Resemble little eyeballs with handles. These play lines and look around when near the player. All lines and models would need to be ported for this to work correctly."
+@PointClass base(BasePropPhysics) studioprop() studioprop( "models/npcs/personality_sphere/personality_sphere.mdl" ) = prop_glados_core : "The P1 personality cores for GlaDOS. Resemble little eyeballs with handles. These play lines and look around when near the player. All lines and models would need to be ported for this to work correctly."
 [
 	CoreType(choices) : "Core Personality" : 1 : "Which personality VO set the core is set to." =
 	[
@@ -303,7 +306,7 @@
 	output OnPlayerPickup(void)	: "Player picked up core."
 ]
 
-@PointClass base(Targetname, Angles) studio() sphere(turretRange) frustum(45,16,TurretRange,255 0 0 100,-1) = npc_portal_turret_floor : "Aperture Science Sentry Turret."
+@PointClass base(Targetname, Angles) studioprop() sphere(turretRange) frustum(45,16,TurretRange,255 0 0 100,-1) = npc_portal_turret_floor : "Aperture Science Sentry Turret."
 [
 	spawnflags(Flags) = 
 	[
@@ -337,7 +340,7 @@
 		1 : "Debris"
 	]
 	
-	model(choices) : "[H] Model" : "models/npcs/turret/turret.mdl" : "The model to show as." =
+	model(choices) : "[H] Model" : "models/npcs/turret/turret.mdl" : "The model to show as in Hammer." =
 	[   
 		"models/npcs/turret/turret.mdl" 			: "Normal"
 		"models/npcs/turret/turret_boxed.mdl"		: "Box"
@@ -373,7 +376,10 @@
 	output OnPainted(void)				: "Fires when the turret is first painted or if repainted by a different color."
 ]
 
-@PointClass base(Targetname, Angles, Studiomodel) studio("models/props/security_camera.mdl") = npc_security_camera : "Security Camera. Follows either the player or their pings. When a portal is opened behind it it will fall off the wall. If gestured to in Coop the player's camera will switch to looking out of the camera lens, with a viewfinder effect."
+@PointClass 
+	base(Targetname, Angles, Studiomodel)
+	studioprop("models/props/security_camera.mdl") 
+	= npc_security_camera : "Security Camera. Follows either the player or their pings. When a portal is opened behind it it will fall off the wall. If gestured to in Coop the player's camera will switch to looking out of the camera lens, with a viewfinder effect."
 [
 	spawnflags(Flags) = 
 	[
@@ -420,7 +426,7 @@
 	output OnTauntedOrangeFinished(void) : "P-Body FINISHED taunting the camera."
 ]
 
-@PointClass base(Targetname, Angles, Studiomodel) studio( "models/props/telescopic_arm.mdl" ) = prop_telescopic_arm : "Telescopic Arm. Useless."
+@PointClass base(Targetname, Angles, Studiomodel) studioprop( "models/props/telescopic_arm.mdl" ) = prop_telescopic_arm : "Telescopic Arm. Useless."
 [
 	input Enable(void) : "Enable Thumper"
 	input Disable(void) : "Disable Thumper"
@@ -432,7 +438,7 @@
 	output OnLostTarget(void)   : "Arm has lost direct LOS to target entity."
 ]
 
-@PointClass base(Targetname, Angles, Parentname, Global) studio( "models/props/Round_elevator_body.mdl" ) = prop_portal_stats_display : "Portal Stats Display. For P1's challenge mode."
+@PointClass base(Targetname, Angles, Parentname, Global) studioprop( "models/props/Round_elevator_body.mdl" ) = prop_portal_stats_display : "Portal Stats Display. For P1's challenge mode."
 [
 	input Enable(void) : "Turn on and display the current stats"
 	input Disable(void) : "Turn off stats display"

@@ -98,7 +98,7 @@
 	vscripts(scriptlist) : "Entity Scripts" : "" : "Name(s) of script files that are executed after all entities have spawned."
 	thinkfunction(string) : "Script think function" : "" : "Name of a function in this entity's script scope which will be called automatically."
 
-	input RunScriptFile(script) : "Execute a game script file from disk"
+	input RunScriptFile(string) : "Execute a game script file from disk"
 	input RunScriptCode(string) : "Execute a string of script source code"
 	
 	// Inputs
@@ -121,7 +121,7 @@
 
 @BaseClass = Parentname 
 [ 
-	parentname(target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	parentname(target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent. Set an attachment point via 'parentname, attachment'."
 
 	// Inputs
 	input SetParent(target_destination) : "Changes the entity's parent in the movement hierarchy."
@@ -652,7 +652,9 @@
 	]
 ]
 
-@BaseClass color(0 255 0) = PlayerClass []
+@BaseClass color(0 255 0) = PlayerClass
+[
+]
 
 @BaseClass color(180 10 180) = Light
 [
@@ -805,7 +807,7 @@
 	[
 		1: "Clients" : 1
 		2: "NPCs" : 0
-		4: "Pushables": 0
+		//4: "Pushables": 0 func_pushable - not in P2
 		8: "Physics Objects" : 0
 		16: "Only player ally NPCs" : 0
 		32: "Only clients in vehicles" : 0
@@ -1215,6 +1217,11 @@
 @PointClass base(Targetname) iconsprite("editor/env_tonemap_controller.vmt") = env_tonemap_controller : 
 	"An entity that controls the HDR tonemapping for the player. Think of it as a method of controlling the exposure of the player's eyes."
 [
+	spawnflags(flags) =
+	[
+		1 : "Master (Has priority if multiple env_tonemap_controllers exist)" : 0
+	]
+	
 	// Inputs
 	input SetTonemapScale(void) : "Set the player's tonemap scale. It should be a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
 	input BlendTonemapScale(string) : "Blend from the player's current tonemap scale to a new one. The parameter syntax is as follows: <target tonemap scale> <blend duration>. For example: '0.5 10' would blend from the current tonemap scale to 0.5 over a period of 10 seconds. Tonemap scale is a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
@@ -1223,6 +1230,13 @@
 	input SetAutoExposureMax(float) : "Set a custom tonemap auto exposure maximum."
 	input SetBloomScale(float) : "Set a custom bloom scale."
 	input SetTonemapRate(float) : "Set the rate for autoexposure adjustment."
+	
+	input SetBloomExponent(float): "Set a custom bloom exponent."
+	input SetBloomSaturation(float): "Set a custom bloom saturation."
+	
+	input SetTonemapPercentBrightPixels(float): "Set a target for percentage of pixels above a certain brightness."
+	input SetTonemapPercentTarget(float): "Set a custom brightness target for SetTonemapPercentBrightPixels."
+	input SetTonemapMinAvgLum(float): "Sets custom tonemapping param (ask Alex for details; default: 3)."
 ]
 
 @SolidClass base(Targetname) color(0 128 255) sphere(FadeStartDist) sphere(FadeDist) line(255 255 0, targetname, target) line(255 255 0, targetname, backgroundbmodel) = func_areaportalwindow : 
@@ -1286,7 +1300,7 @@
 // A Vgui screen in 3D
 //
 //-------------------------------------------------------------------------
-@PointClass base(Targetname, Parentname, Angles) studio("models/editor/vgui_arrows.mdl") = vgui_screen : 
+@PointClass base(Targetname, Parentname, Angles) studio("models/editor/vgui_arrows.mdl") sphere(width) sphere(height) = vgui_screen : 
 	"A VGUI screen. Useful for in-world monitors." 
 [
 	panelname(choices) : "Panel Name" : "" : "The type of display to show." = 
@@ -1358,7 +1372,8 @@
 	input SetNoListRepeat(bool) : "Sets if lists can be randomly picked twice in a row."
 ]
 
-@PointClass base(Targetname, Angles, Parentname) studio("models/editor/vgui_arrows.mdl") = vgui_movie_display : "Movie Display"
+@PointClass 
+base(Targetname, Angles, Parentname) studio("models/editor/vgui_arrows.mdl") sphere(width) sphere(height) = vgui_movie_display : "Movie Display"
 [
 	displaytext(string) : "Display Text" : ""
 	moviefilename(string) : "Movie Filename" : "media/"
@@ -1368,9 +1383,9 @@
 	stretch(boolean) : "Stretch to Fill" : 0
 	forcedslave(boolean) : "Forced slave" : 0
 	forceprecache(boolean) : "Force precache" : 0 : "Precache the movie referred to by Movie Filename on entity spawn."
-
-	width(integer) : "Panel width" : 256 : "Width of the panel in units."
-	height(integer) : "Panel height" : 128 : "Height of the panel in units."
+	
+	width(integer) : "Panel Width in World (Green)" : 256 : "Width of the panel in units."
+	height(integer) : "Panel Height in World (Blue)" : 128 : "Height of the panel in units."
 
 	input Enable(void) : "Make movie visible."
 	input Disable(void) : "Make movie invisible."
@@ -1437,10 +1452,10 @@
 ]
 
 @PointClass base(Targetname, Parentname, RenderFxChoices) size(-4 -4 -4, 4 4 4) 
-	line(255 255 255, targetname, LightningStart, targetname, LightningEnd)
-	cylinder(255 255 255, targetname, targetname, radius, targetname, lightningStart)
-	cylinder(255 255 255, targetname, targetname, radius, targetname, lightningEnd)
-	sphere(radius) = env_beam : 
+	cylinder(255 255 255, targetname, LightningStart, Radius, targetname, LightningEnd, Radius)
+	line(64 64 64, targetname, lightningStart)
+	line(64 64 64, targetname, lightningEnd)
+	sphere(Radius) = env_beam : 
 	"An entity that creates a visible beam between two points. The points can be attached to entities to make the beam move around."
 [
 	renderamt(integer) : "Brightness (1 - 255)" : 100
@@ -1777,7 +1792,7 @@ line(255 255 0, targetname, targetEntityName)
 	input Ignite(void) : "Ignite the target entity."
 ]
 
-@PointClass base(Targetname, SystemLevelChoice, Angles) iconsprite("editor/fog_controller.vmt") color(255 255 255) = env_fog_controller : 
+@PointClass base(Targetname, SystemLevelChoice, Angles) studio("models/editor/cone_helper.mdl") iconsprite("editor/fog_controller.vmt") color(255 255 255) = env_fog_controller : 
 	"An entity that controls the fog and view distance in the map."
 [
 	// Inputs
@@ -1820,7 +1835,7 @@ line(255 255 0, targetname, targetEntityName)
 	]
 ]
 
-@PointClass base(Targetname, Parentname, Angles) studioprop("models/editor/spot_cone.mdl") color(255 255 255) = env_steam : 
+@PointClass base(Targetname, Parentname, Angles) studio("models/editor/spot_cone.mdl") color(255 255 255) = env_steam : 
 	"An entity used to create a jet of steam."
 [
 	spawnflags(flags) =
@@ -3248,13 +3263,13 @@ line(255 255 0, targetname, targetEntityName)
 	cpoint62(target_destination) : "Control Point 62" : : "If set, control point 62 of the effect will be at this entity's location. If control point 61 is not set, this will be ignored."
 	cpoint63(target_destination) : "Control Point 63" : : "If set, control point 63 of the effect will be at this entity's location. If control point 62 is not set, this will be ignored."
 	
-	cpoint1_parent(vecline) : "Control Point 1's Parent" : : "If set and nonzero, control point 1 of the effect will use this point for its parent."
-	cpoint2_parent(vecline) : "Control Point 2's Parent" : : "If set and nonzero, control point 2 of the effect will use this point for its parent."
-	cpoint3_parent(vecline) : "Control Point 3's Parent" : : "If set and nonzero, control point 3 of the effect will use this point for its parent."
-	cpoint4_parent(vecline) : "Control Point 4's Parent" : : "If set and nonzero, control point 4 of the effect will use this point for its parent."
-	cpoint5_parent(vecline) : "Control Point 5's Parent" : : "If set and nonzero, control point 5 of the effect will use this point for its parent."
-	cpoint6_parent(vecline) : "Control Point 6's Parent" : : "If set and nonzero, control point 6 of the effect will use this point for its parent."
-	cpoint7_parent(vecline) : "Control Point 7's Parent" : : "If set and nonzero, control point 7 of the effect will use this point for its parent."
+	cpoint1_parent(string) : "Control Point 1's Parent" : : "If set and nonzero, control point 1 of the effect will use this point for its parent."
+	cpoint2_parent(string) : "Control Point 2's Parent" : : "If set and nonzero, control point 2 of the effect will use this point for its parent."
+	cpoint3_parent(string) : "Control Point 3's Parent" : : "If set and nonzero, control point 3 of the effect will use this point for its parent."
+	cpoint4_parent(string) : "Control Point 4's Parent" : : "If set and nonzero, control point 4 of the effect will use this point for its parent."
+	cpoint5_parent(string) : "Control Point 5's Parent" : : "If set and nonzero, control point 5 of the effect will use this point for its parent."
+	cpoint6_parent(string) : "Control Point 6's Parent" : : "If set and nonzero, control point 6 of the effect will use this point for its parent."
+	cpoint7_parent(string) : "Control Point 7's Parent" : : "If set and nonzero, control point 7 of the effect will use this point for its parent."
 
 	// Inputs
 	input Start(void) : "Tell the particle system to start emitting."
@@ -3467,15 +3482,17 @@ line(255 255 0, targetname, targetEntityName)
 @PointClass light() iconsprite("editor/light.vmt") base(Targetname, Light) line(255 255 255, targetname, target) sphere(_fifty_percent_distance) sphere(_zero_percent_distance) sphere(_distance) = light :
 	"An invisible omnidirectional lightsource."
 [
-	target(target_destination) : "Entity To Point At" : : "The name of an entity in the map that the spotlight will point at. This will override the spotlight's angles."
-	spawnflags(Flags) = [ 1 : "Initially dark" : 0 ]
+	spawnflags(Flags) = 
+		[ 
+		1 : "Initially dark" : 0 
+		]
 	_distance(integer) : "Maximum Distance" : 0 : "The distance that light is allowed to cast."
 ]
 
-@PointClass base(Angles) iconsprite("editor/light_env.vmt") = light_environment : 
+@PointClass base(Angles) studio("models/editor/cone_helper.mdl") iconsprite("editor/light_env.vmt") = light_environment : 
 	"Sets the color and angle of the light from the sun and sky."
 [
-	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
+	pitch(angle_negative_pitch) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
 	_light(color255) : "Brightness" : "255 255 255 200"
 	_ambient(color255) : "Ambient light" : "255 255 255 20"
 	_lightHDR(color255) : "BrightnessHDR" : "-1 -1 -1 1"
@@ -3494,7 +3511,10 @@ line(255 255 0, targetname, targetEntityName)
 	_cone(integer) : "Outer (fading) angle" : 45
 	_exponent(integer) : "Focus" : 1
 	_distance(integer) : "Maximum distance" : 0 : "The distance that light is allowed to cast."
-	spawnflags(Flags) = [ 1 : "Initially dark" : 0 ]
+	spawnflags(Flags) = 
+	[
+	 1 : "Initially dark" : 0
+	]
 ]
 
 @PointClass base(Targetname, Parentname, Angles) iconsprite("editor/light.vmt") line(255 255 255, targetname, target) sphere(distance) lightcone() size(-4 -4 -4, 4 4 4) = light_dynamic : 
@@ -3735,7 +3755,7 @@ line(255 255 0, targetname, targetEntityName)
 	"A rotating brush entity."
 [
 	maxspeed(integer) : "Max Rotation Speed" : 100 : "The maximum rotation speed of the brushes, in degrees per second."
-	fanfriction(integer) : "Friction (0 - 100%)" : 20 : "The amount of rotational friction. Value must be between 0 and 100 %."
+	fanfriction(integer) : "Friction (0 - 100%)" : 20 : "The amount of rotational friction. Value must be between 0 and 100 %. Lower values make the brush speed up and slow down faster."
 	message(sound) : "Rotating sound WAV" : : "Sound to play while rotating."
 	volume(integer) : "Volume (10 = loudest)" : 10 : "The volume of the rotation sound."
 	spawnflags(flags) =
@@ -3898,53 +3918,53 @@ line(255 255 0, targetname, targetEntityName)
 	speed(integer) : "Speed" : 5 : "The speed that the button moves, in units per second."
 	health(integer) : "Health (Obsolete)" : 0 : "Legacy method of specifying whether or not the button can be shot to activate it. Use the 'Damage Activates' spawnflag instead."
 	lip(integer) : "Lip" : 0 : "The amount the button will keep overlapping with the original position. The distance moved = the size of the brush on the movement axis - lip."
-	sounds(choices) : "Sounds" : 0 = 
-	[
-		0: "None (Silent)"
-		1: "Big zap & Warmup"
-		2: "Access Denied"
-		3: "Access Granted"
-		4: "Quick Combolock"
-		5: "Power Deadbolt 1"
-		6: "Power Deadbolt 2"
-		7: "Plunger"
-		8: "Small zap"
-		9: "Keycard Sound"
-		10: "Buzz"
-		11: "Buzz Off"
-		12: "latch locked"
-		13: "Latch Unlocked"
-		14: "Lightswitch"
-		15: "small bleek"
-		16: "small deny"
-		17: "small doop"
-		18: "small tech deny"
-		19: "click and combine screen fuzz"
-		20: "roomy beep"
-		21: "lever or wheel: turn + move sqeek"
-		22: "lever or wheel: latch + release gas"
-		23: "lever or wheel: ratchet + sqeek"
-		24: "lever or wheel: large ratchet"
-		25: "lever or wheel: clanky + gas release"
-		26: "lever or wheel: latch + large metal thud"
-		27: "lever or wheel: smaller ratchet"
-		28: "lever or wheel: smaller lever move"
-		31: "shock buzz"
-		32: "clickbeep"
-		33: "tech blip"
-		34: "clickbeepbeep open"
-		35: "small high blip"
-		36: "small tech fuzz blip"
-		37: "small click bleep (change to lightswitch)"
-		40: "combine door lock - locked"
-		41: "combine blip growl"
-		42: "combine squick growl"
-		43: "combine whine purr"
-		44: "combine click talk"
-		45: "combine click growl fizz"
-		46: "combine click fizz (deny)"
-		47: "combine click talker"
-	]	
+	// sounds(choices) : "Sounds" : 0 = 
+	// [
+		// 0: "None (Silent)"
+		// 1: "Big zap & Warmup"
+		// 2: "Access Denied"
+		// 3: "Access Granted"
+		// 4: "Quick Combolock"
+		// 5: "Power Deadbolt 1"
+		// 6: "Power Deadbolt 2"
+		// 7: "Plunger"
+		// 8: "Small zap"
+		// 9: "Keycard Sound"
+		// 10: "Buzz"
+		// 11: "Buzz Off"
+		// 12: "latch locked"
+		// 13: "Latch Unlocked"
+		// 14: "Lightswitch"
+		// 15: "small bleek"
+		// 16: "small deny"
+		// 17: "small doop"
+		// 18: "small tech deny"
+		// 19: "click and combine screen fuzz"
+		// 20: "roomy beep"
+		// 21: "lever or wheel: turn + move sqeek"
+		// 22: "lever or wheel: latch + release gas"
+		// 23: "lever or wheel: ratchet + sqeek"
+		// 24: "lever or wheel: large ratchet"
+		// 25: "lever or wheel: clanky + gas release"
+		// 26: "lever or wheel: latch + large metal thud"
+		// 27: "lever or wheel: smaller ratchet"
+		// 28: "lever or wheel: smaller lever move"
+		// 31: "shock buzz"
+		// 32: "clickbeep"
+		// 33: "tech blip"
+		// 34: "clickbeepbeep open"
+		// 35: "small high blip"
+		// 36: "small tech fuzz blip"
+		// 37: "small click bleep (change to lightswitch)"
+		// 40: "combine door lock - locked"
+		// 41: "combine blip growl"
+		// 42: "combine squick growl"
+		// 43: "combine whine purr"
+		// 44: "combine click talk"
+		// 45: "combine click growl fizz"
+		// 46: "combine click fizz (deny)"
+		// 47: "combine click talker"
+	// ]	
 	wait(integer) : "Delay Before Reset (-1 stay)" : 3 : "Amount of time, in seconds, after the button has been pressed before it returns to the starting position. Once it has returned, it can be used again. If the value is set to -1, the button never returns."
 	spawnflags(flags) =
 	[
@@ -3956,55 +3976,55 @@ line(255 255 0, targetname, targetEntityName)
 		2048: "Starts locked" : 0
 		4096: "Sparks" : 0
 	]
-	locked_sound(choices) : "Locked Sound" : 0 : "Sound played when the player tries to use the button, and fails because it's locked." = 
-	[
-		0: "None"
-		2: "Access Denied"
-		8: "Small zap"
-		10: "Buzz"
-		11: "Buzz Off"
-		12: "Latch Locked"
-	]
-	unlocked_sound(choices) : "Unlocked Sound" : 0 : "Sound played when the button is unlocked." = 
-	[
-		0: "None"
-		1: "Big zap & Warmup"
-		3: "Access Granted"
-		4: "Quick Combolock"
-		5: "Power Deadbolt 1"
-		6: "Power Deadbolt 2"
-		7: "Plunger"
-		8: "Small zap"
-		9: "Keycard Sound"
-		10: "Buzz"
-		13: "Latch Unlocked"
-		14: "Lightswitch"
-	]
-	locked_sentence(choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the button, and fails because it's locked." = 
-	[
-		0: "None"
-		1: "Gen. Access Denied"
-		2: "Security Lockout"
-		3: "Blast Door"
-		4: "Fire Door"
-		5: "Chemical Door"
-		6: "Radiation Door"
-		7: "Gen. Containment"
-		8: "Maintenance Door"
-		9: "Broken Shut Door"
-	]
-	unlocked_sentence(choices) : "Unlocked Sentence" : 0 : "A sentence played when the button is unlocked." = 
-	[
-		0: "None"
-		1: "Gen. Access Granted"
-		2: "Security Disengaged"
-		3: "Blast Door"
-		4: "Fire Door"
-		5: "Chemical Door"
-		6: "Radiation Door"
-		7: "Gen. Containment"
-		8: "Maintenance area"
-	]
+	// locked_sound(choices) : "Locked Sound" : 0 : "Sound played when the player tries to use the button, and fails because it's locked." = 
+	// [
+		// 0: "None"
+		// 2: "Access Denied"
+		// 8: "Small zap"
+		// 10: "Buzz"
+		// 11: "Buzz Off"
+		// 12: "Latch Locked"
+	// ]
+	// unlocked_sound(choices) : "Unlocked Sound" : 0 : "Sound played when the button is unlocked." = 
+	// [
+		// 0: "None"
+		// 1: "Big zap & Warmup"
+		// 3: "Access Granted"
+		// 4: "Quick Combolock"
+		// 5: "Power Deadbolt 1"
+		// 6: "Power Deadbolt 2"
+		// 7: "Plunger"
+		// 8: "Small zap"
+		// 9: "Keycard Sound"
+		// 10: "Buzz"
+		// 13: "Latch Unlocked"
+		// 14: "Lightswitch"
+	// ]
+	// locked_sentence(choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the button, and fails because it's locked." = 
+	// [
+		// 0: "None"
+		// 1: "Gen. Access Denied"
+		// 2: "Security Lockout"
+		// 3: "Blast Door"
+		// 4: "Fire Door"
+		// 5: "Chemical Door"
+		// 6: "Radiation Door"
+		// 7: "Gen. Containment"
+		// 8: "Maintenance Door"
+		// 9: "Broken Shut Door"
+	// ]
+	// unlocked_sentence(choices) : "Unlocked Sentence" : 0 : "A sentence played when the button is unlocked." = 
+	// [
+		// 0: "None"
+		// 1: "Gen. Access Granted"
+		// 2: "Security Disengaged"
+		// 3: "Blast Door"
+		// 4: "Fire Door"
+		// 5: "Chemical Door"
+		// 6: "Radiation Door"
+		// 7: "Gen. Containment"
+		// 8: "Maintenance area"
+	// ]
 ]
 
 @SolidClass base(Targetname, Parentname, Origin, Angles, Global, RenderFields, Button, EnableDisable, MasterEnt, compMinLight) = func_rot_button : 
@@ -4042,24 +4062,24 @@ line(255 255 0, targetname, targetEntityName)
 	"A brush entity that's designed to be used for rotating wheels, where the player can rotate them to arbitrary positions before stopping."
 [
 	speed(integer) : "Speed (deg/sec)" : 50 : "The amount, in degrees, that the wheel turns per second."
-	sounds(choices) : "Sounds" : 0 = 
-	[
-		0: "None"
-		1: "Big zap & Warmup"
-		2: "Access Denied"
-		3: "Access Granted"
-		4: "Quick Combolock"
-		5: "Power Deadbolt 1"
-		6: "Power Deadbolt 2"
-		7: "Plunger"
-		8: "Small zap"
-		9: "Keycard Sound"
-		21: "Squeaky"
-		22: "Squeaky Pneumatic"
-		23: "Ratchet Groan"
-		24: "Clean Ratchet"
-		25: "Gas Clunk"
-	]
+	// sounds(choices) : "Sounds" : 0 = 
+	// [
+		// 0: "None"
+		// 1: "Big zap & Warmup"
+		// 2: "Access Denied"
+		// 3: "Access Granted"
+		// 4: "Quick Combolock"
+		// 5: "Power Deadbolt 1"
+		// 6: "Power Deadbolt 2"
+		// 7: "Plunger"
+		// 8: "Small zap"
+		// 9: "Keycard Sound"
+		// 21: "Squeaky"
+		// 22: "Squeaky Pneumatic"
+		// 23: "Ratchet Groan"
+		// 24: "Clean Ratchet"
+		// 25: "Gas Clunk"
+	// ]
 	distance(integer) : "Distance" : 90 : "The maximum amount, in degrees, that the wheel is allowed to rotate."
 	returnspeed(integer) : "Auto-return speed" : 0 : "If the 'Toggle' spawnflag is not set, the speed at which the wheel auto-returns when left alone, in degrees per second."
 	spawnflags(flags) =
@@ -4140,31 +4160,31 @@ line(255 255 0, targetname, targetEntityName)
 		2048: "Starts locked" : 0
 		4096:	"Door Silent" : 0
 	]
-	locked_sentence(choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the door, and fails because it's locked." =  
-	[
-		0: "None"
-		1: "Gen. Access Denied"
-		2: "Security Lockout"
-		3: "Blast Door"
-		4: "Fire Door"
-		5: "Chemical Door"
-		6: "Radiation Door"
-		7: "Gen. Containment"
-		8: "Maintenance Door"
-		9: "Broken Shut Door"
-	]
-	unlocked_sentence(choices) : "Unlocked Sentence" : 0 : "A sentence played when the door is unlocked." = 
-	[
-		0: "None"
-		1: "Gen. Access Granted"
-		2: "Security Disengaged"
-		3: "Blast Door"
-		4: "Fire Door"
-		5: "Chemical Door"
-		6: "Radiation Door"
-		7: "Gen. Containment"
-		8: "Maintenance area"
-	]	
+	// locked_sentence(choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the door, and fails because it's locked." =  
+	// [
+		// 0: "None"
+		// 1: "Gen. Access Denied"
+		// 2: "Security Lockout"
+		// 3: "Blast Door"
+		// 4: "Fire Door"
+		// 5: "Chemical Door"
+		// 6: "Radiation Door"
+		// 7: "Gen. Containment"
+		// 8: "Maintenance Door"
+		// 9: "Broken Shut Door"
+	// ]
+	// unlocked_sentence(choices) : "Unlocked Sentence" : 0 : "A sentence played when the door is unlocked." = 
+	// [
+		// 0: "None"
+		// 1: "Gen. Access Granted"
+		// 2: "Security Disengaged"
+		// 3: "Blast Door"
+		// 4: "Fire Door"
+		// 5: "Chemical Door"
+		// 6: "Radiation Door"
+		// 7: "Gen. Containment"
+		// 8: "Maintenance area"
+	// ]	
 	// Outputs
 	output OnClose(void) : "Fired when the door starts closing."
 	output OnOpen(void) : "Fired when the door starts opening."
@@ -5862,8 +5882,8 @@ line(255 255 0, targetname, targetEntityName)
 		1: "Convert Asleep" : 0
 		2: "Convert As Debris" : 0
 	]
-	target(target_destination) : "Entity to convert" : : "Name of the entity that will be converted to a physics object when the ConvertTarget input is fired."
-	swapmodel(string) : "Model Swap Entity"
+	target(target_destination) : "Entity to convert" : : "Name of the entity or entities that will be converted to a physics object when the ConvertTarget input is fired. Maximum of 512 entities."
+	swapmodel(target_destination) : "Model Swap Entity" : : "If specified, the entity will be switched to use this entity's model instead of its own. Only one entity will be converted."
 	massoverride(float) : "Mass Override" : "0" : "Sets the mass when the object(s) are converted (0 means auto-calculate)"
 
 	// Outputs
@@ -6083,8 +6103,7 @@ line(255 255 0, targetname, targetEntityName)
 @PointClass base(prop_static_base) color(255 255 0) sphere(fademindist) sphere(fademaxdist) studioprop() = prop_static :
 	"A prop that doesn't move and doesn't animate."
 [
-	RenderMode(choices) : "Render Mode" : 0 :
-	"Visible or not." = 
+	RenderMode(choices) : "Render Mode" : 0 : "Visible or not." = 
 	[
 		0 : "Visible"
 		10 : "Not visible"
@@ -6107,7 +6126,7 @@ line(255 255 0, targetname, targetEntityName)
 	AnimateEveryFrame(boolean) : "Animate Every Frame" : 0 : "Force this prop to animate every frame. Don't use this unless you know what you are doing."	
 ]
 
-@BaseClass base(Targetname, Global, Angles, Studiomodel, BreakableProp, SystemLevelChoice, BaseFadeProp) = BasePropPhysics
+@BaseClass base(Targetname, Global, Angles, BreakableProp, SystemLevelChoice, BaseFadeProp) = BasePresetPropPhysics
 [ 
 	spawnflags(flags) = 
 	[
@@ -6146,10 +6165,6 @@ line(255 255 0, targetname, targetEntityName)
 	damagetoenablemotion(integer) : "Health Level to Override Motion" : 0 : "If specified, this object will start motion disabled. Once its health has dropped below this specified amount, it will enable motion."
 	forcetoenablemotion(float) : "Physics Impact Force to Override Motion" : 0 : "If specified, this object will start motion disabled. Any impact that imparts a force greater than this value on the physbox will enable motion."
 	
-	puntsound(sound) : "Sound to make when punted"
-
-	addon(string) : "AI AddOn" : "" : "If specified this object will use this addon behavior when installed in a composite AI"
-
 	// Inputs
 	input Wake(void) : "Wake up this physics object, if it is sleeping."
 	input Sleep(void) : "Put this physics object to sleep. It will wake if given the Wake input, or if force is applied to it. Note that physics objects go to sleep automatically after coming to rest for a while, so you don't really need to use this."
@@ -6160,8 +6175,8 @@ line(255 255 0, targetname, targetEntityName)
 	input physdamagescale(float) : "Set the Physics Impact Damage Scale for this character. NOTE: 0 means this feature is disabled for backwards compatibility."
 	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
 	input DisableDamageForces(void) : "Damaging the entity does *not* apply physics forces to it."
-	input EnablePuntSound(void) : "Allow this prop to play its own sound when punted"
-	input DisablePuntSound(void) : "Prevent this prop from playing its own sound when punted"
+	//input EnablePuntSound(void) : "Allow this prop to play its own sound when punted"
+	//input DisablePuntSound(void) : "Prevent this prop from playing its own sound when punted"
 
 	// Outputs
 	output OnMotionEnabled(void) : "Fired when motion is enabled on this prop, either via 'Health Level to Override Motion' or from the EnableMotion input."
@@ -6174,6 +6189,12 @@ line(255 255 0, targetname, targetEntityName)
 	output OnPlayerPickup(void) : "Fired whenever the player picks up this prop (with the physcannon or with +USE)."
 	output OnOutOfWorld(void) : "Fired whenever the prop is out of the allowed world bounds."
 ]
+
+@BaseClass base(Studiomodel, BasePresetPropPhysics) = BasePropPhysics
+[ 
+	
+]
+
 
 @PointClass base(BasePropPhysics) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics_override :
 	"A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges "+
@@ -6316,16 +6337,28 @@ line(255 255 0, targetname, targetEntityName)
 		1 : "Physics damage decals" : 0
 		2 : "Take damage from held objects" : 0
 	]
+	
+	lowerleft(vecline) readonly : "Lower Left Corner (readonly)" : : "This is set automatically by Hammer when saving." 
+	lowerright(vecline) readonly : "Lower Right Corner (readonly)" : : "This is set automatically by Hammer when saving." 
+	upperleft(vecline) readonly : "Upper Left Corner (readonly)" : : "This is set automatically by Hammer when saving." 
+	upperright(vecline) readonly : "Upper Right Corner (readonly)" : : "This is set automatically by Hammer when saving." 
+	error(choices) readonly : "Face Error" : 0 : "Set by Hammer to indicate an invalid glass/tile surface." = 
+	[
+		0 : "No Error"
+		1 : "Multiple Textured Faces"
+		2 : "Non-Square Face"
+	]
+	
 	health(integer) : "Health" : 5 : "The amount of damage the surface takes before breaking."
-	fragility(integer) : "Fragility" : 100 : "If the 'Surface Type' is set to Glass, this value sets how fragile the glass pieces are after the surface has been broken."
-	surfacetype(choices) : "Surface Type" : 0 = 
+	fragility(integer) : "Fragility" : 100 : "If the 'Surface Type' is set to Glass, this value sets how fragile the glass pieces are after the surface has been broken. Lower values make glass pieces tend to stay more."
+	surfacetype(choices) : "Surface Type" : 0 : "Sets the behaviour of the brush. Glass shatters in multiple sizes, and easily breaks. Tile only breaks along edges, and is still strong after being shattered." = 
 	[
 		0 : "Glass"
 		1 : "Tile"
 	]
 
 	// Inputs
-	input Shatter(vector) : "Shatter the window. Input a vector. First two coordinates are the X,Y center of the shattering (as values from from 0-1). The third coordinate is the radius of the shatter, in inches."
+	input Shatter(vector) : "Shatter the window. Input a vector. First two coordinates are the X,Y center of the shattering (as values from from 0-1). The third coordinate is the radius of the shatter, in units."
 ]
 
 @SolidClass base(Targetname, Parentname, RenderFields, Shadow, compMinLight) = func_conveyor : 
@@ -6993,7 +7026,11 @@ line(255 255 0, targetname, targetEntityName)
 // Used to allow entities to use point_cameras for their materials
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname) studio("editor/camera.mdl") line(255 255 0, targetname, target) line(255 255 0, targetname, target, targetname, Pointcamera) = info_camera_link :
+@PointClass base(Targetname) 
+	studio("models/editor/camera.mdl")
+	iconsprite("editor/info_camera_link.vmt")
+	line(255 255 0, targetname, target)
+	line(255 255 0, targetname, target, targetname, Pointcamera) = info_camera_link :
 	"An entity that can use point_cameras to render images for materials used by entities. "+
 	"To author the material, use the special identifier _rt_Camera " +
 	"for the $baseTexture (or whatever texture you want, like envmap, etc.) in the .vmt " +
@@ -7096,7 +7133,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnCreditsDone(void)  : "Fired when the credits having finished rolling."
 ]
 
-@PointClass base(Parentname, Targetname) line(255 255 0, targetname, parentname)  iconsprite("editor/ts2do/material_modify_control.vmt") = material_modify_control : 
+@PointClass base(Parentname, Targetname) line(255 255 0, targetname, parentname)  iconsprite("editor/material_modify_control.vmt") = material_modify_control : 
 	"An entity that can be used to directly control material vars. To use it, you need to read the .vmt of the material you "+
 	"intend to change. Parent this entity to a brush model entity who's material you want to control."
 [

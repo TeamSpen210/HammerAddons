@@ -966,9 +966,17 @@
 
 
 
-@PointClass base(Targetname) = ai_script_conditions : "AI Script Conditions"
+@PointClass 
+	base(Targetname) 
+	size(-8 -8 -8, 8 8 8)
+	sphere(PlayerActorProximity)
+	sphere(ActorTargetProximity)
+	sphere(PlayerTargetProximity)
+	line(255 255 0, targetname, actor) 
+	line(255 255 255, targetname, target) 
+	= ai_script_conditions : "AI Script Conditions"
 [
-	Actor(target_destination) : "Actor" : : "NPC Target"
+	Actor(target_destination) : "Actor (optional)" : : "NPC Target"
 	
 	StartDisabled(boolean) : "Start Disabled" : 1
 
@@ -1031,7 +1039,7 @@
 	ActorTargetProximity(float) : "Target distance"  : 0 : "The distance the actor must/must not be to the Target. Negative values for NOT, 0 for ignore."
 	PlayerTargetProximity(float) : "Player distance from Target"  : 0 : "The distance the player must/must not be to the Target. Negative values for NOT, 0 for ignore."
 	PlayerTargetFOV(float) : "Player FOV for Target" : 360 : "Specify angle of view cone in degrees. Negative value = NOT"
-	PlayerTargetFOVTrueCone(choices ) : "Play FOV to Target is a true view cone" : 0 : "Player's view cone is evaluated as a true cone, not pie slice " = 
+	PlayerTargetFOVTrueCone(choices) : "Play FOV to Target is a true view cone" : 0 : "Player's view cone is evaluated as a true cone, not pie slice " = 
 	[
 		0 : "No - Tall pie slice"
 		1 : "Yes - True view cone"
@@ -1374,7 +1382,7 @@
 	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
 	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
 	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7, then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
-												 " This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades." +
+												 " This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades."
 
 	spawnflags(Flags) =
 	[
@@ -1404,7 +1412,7 @@
 	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
 	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
 	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7, then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
-												 " This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades." +
+												 " This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades."
 ]
 
 @SolidClass base(Trigger) = trigger_vphysics_motion :

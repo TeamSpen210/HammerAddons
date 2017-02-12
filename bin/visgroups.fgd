@@ -387,6 +387,7 @@
 		"vgui_level_placard_display"
 		"vgui_mp_lobby_display"
 		"vgui_neutoxin_countdown"
+		"vgui_movie_display"
 		"point_camera"
 		"func_monitor"
 	]
@@ -613,6 +614,27 @@
 	]
 ]
 
+@AutoVisGroup = "VGUI"
+[
+	"Special"
+	[
+		"vgui_screen"
+		"vgui_level_placard_display"
+		"prop_portal_stats_display"
+		"vgui_mp_lobby_display"
+		"vgui_neutoxin_countdown"
+	]
+	"BIK"
+	[
+		"vgui_movie_display"
+	]
+	"Telepresence"
+	[
+		"func_monitor"
+		"point_camera"
+	]
+]  
+	
 @AutoVisGroup = "NPCs"
 [
 	"Turrets"
