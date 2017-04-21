@@ -318,10 +318,16 @@
 	
 	ModelIndex(choices) : "Model" : 0 : "Which model the turret uses. The skeleton turret is still functional." =
 	[
-		0 : "[0] Normal"
-		2 : "[2] Box"
-		3 : "[3] Backwards"
-		4 : "[4] Skeleton"
+		0 : "Normal"
+		1 : "Custom Model"
+		2 : "Box"
+		3 : "Backwards"
+		4 : "Skeleton"
+	]
+	SkinNumber(choices) : "Skin" : 0 : "Set the skin used for the turret. Only useful on normal (for a destroyed variant) or custom turrets." =
+	[
+		0 : "Normal"
+		1 : "Destroyed"
 	]
 
 	Gagged(boolean) : "Gag Turret" : 0 : "Turret will not speak any lines."
@@ -340,7 +346,7 @@
 		1 : "Debris"
 	]
 	
-	model(choices) : "[H] Model" : "models/npcs/turret/turret.mdl" : "The model to show as in Hammer." =
+	model(choices) : "Custom Model" : "models/npcs/turret/turret.mdl" : "The model to show as in Hammer, or a custom model to use." =
 	[   
 		"models/npcs/turret/turret.mdl" 			: "Normal"
 		"models/npcs/turret/turret_boxed.mdl"		: "Box"
