@@ -5478,10 +5478,15 @@ line(255 255 0, targetname, targetEntityName)
 	input TeleportEntity(target_destination) : "Teleport the entity specified by the parameter override. Use this to teleport an entity other than the one specified in the Entity To Teleport field."
 ]
 
-@PointClass base(Targetname) sphere(DamageRadius) line(255 255 255, targetname, damagetarget) = point_hurt :
+@PointClass base(Targetname) sphere(DamageRadius) line(255 255 255, targetname, damagetarget) iconsprite("editor/game_end.vmt") = point_hurt :
 	"An entity that does damage to all entities in a radius around itself, with a specified delay." +
 	"If 'Target Entity' is specified, the damage is only done to that entity."
 [
+	spawnflags(flags) =
+	[
+		1 : "Start Active" : 0
+	]
+	
 	DamageTarget(target_destination) : "Target Entity" :  : "If specified, only this entity will take damage. Otherwise, all entities within the Radius will take damage."
 	
 	DamageRadius(float) : "Radius" : 256 : "All entities within this radius of this entity will take damage. If a 'Target Entity' is specified, only that entity will take damage."

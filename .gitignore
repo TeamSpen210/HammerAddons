@@ -41,3 +41,4 @@ Icon
 *.prt
 *.filelist.txt
 *.bsp
+bin/bee2\.fgd
