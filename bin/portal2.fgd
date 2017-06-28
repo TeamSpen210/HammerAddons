@@ -395,6 +395,7 @@
 		2 : "Weighted Pivot Cube"
 		3 : "Edgeless Safety Cube"
 		4 : "Antique Storage Cube"
+		6 : "Custom - AddOutput to another for gel skins."
 	]
 
 	SkinType(choices) : "Skin Type" : 0 : "Is the cube clean or rusty? Storage and Pivot cubes are the only types with a rusty version." =
