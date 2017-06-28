@@ -1,0 +1,7 @@
+"Sprite"
+{
+	"$spriteorientation" "vp_parallel"
+	"$spriteorigin" "[ 0.50 0.50 ]"
+	"$baseTexture" "editor/math_colorblend"
+	"$no_fullbright" 1
+}

@@ -110,7 +110,7 @@
 	output OnFirstBallReinserted(void) : "Fired when the first combine ball is reinserted into the field (only gets triggered when Combine Power supply is checked)"
 ]
 
-@PointClass base(BasePropPhysics) studioprop() = prop_combine_ball :
+@PointClass base(BasePropPhysics) studio("models/effects/combineball.mdl") = prop_combine_ball :
 	"An earlier Half-Life version of the Energy Pellet."
 [
 	// Inputs
@@ -144,7 +144,7 @@
 	output OnLastBallGrabbed(void) : "Fired when the last combine ball is grabbed from the field by a mega physcannon"
 ]
 
-@PointClass base(CombineBallSpawners) = point_combine_ball_launcher :
+@PointClass base(CombineBallSpawners) studio("models/effects/combineball.mdl") studio("models/editor/cone_helper.mdl") = point_combine_ball_launcher :
 	"Launches Combine balls."
 [
 	launchconenoise(float) : "Noise to launch direction" : "0.0" : "Noise in degrees added to the launch direction."
@@ -968,12 +968,12 @@
 
 @PointClass 
 	base(Targetname) 
-	size(-8 -8 -8, 8 8 8)
 	sphere(PlayerActorProximity)
 	sphere(ActorTargetProximity)
 	sphere(PlayerTargetProximity)
 	line(255 255 0, targetname, actor) 
 	line(255 255 255, targetname, target) 
+	iconsprite("editor/ai_script_conditions.vmt")
 	= ai_script_conditions : "AI Script Conditions"
 [
 	Actor(target_destination) : "Actor (optional)" : : "NPC Target"
@@ -1964,10 +1964,10 @@
 	useattachmenteyes(boolean) : "Use attachment eyes" : 0 : "Should the driver's view use the attachment's orientation and not blend in the player's look."
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_class.vmt") = filter_combineball_type :
+@FilterClass base(BaseFilter) iconsprite("editor/filter_pellet.vmt") = filter_combineball_type :
 	"A filter that filters by combine ball type."
 [
-	balltype(choices) : "Ball Type" : 1 =
+	balltype(choices) : "Ball Type" : 1 : "HEPs validate all settings." =
 	[
 		0 : "Not Thrown (in combine ball field, etc)"
 		2 : "Thrown/Launched by the player's physcannon"

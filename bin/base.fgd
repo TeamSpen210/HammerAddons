@@ -997,7 +997,7 @@
 	input	SetTextureIndex(integer) : "Sets target brush's texture frame to the specified index."
 ]
 
-@PointClass base(Targetname, Angles) = env_splash : 
+@PointClass base(Targetname, Angles) studio("models/editor/angle_helper.mdl") = env_splash : 
 	"An entity that creates a splash effect at its origin. If the 'find water surface' spawnflag is set, it will instead trace down below itself to find the water surface on which to create splashes."
 [
 	scale(float) : "Scale of the splash" : "8.0"
@@ -1012,7 +1012,7 @@
 	]
 ]
 
-@PointClass base(Parentname) color(180 10 180) = env_particlelight : 
+@PointClass base(Parentname) iconsprite("editor/light.vmt") color(180 10 180) = env_particlelight : 
 	"An entity that can be used to light the smoke particles emitted by env_smokestack entities. Does not light any other particle types."
 [
 	Color(color255) : "Color" : "255 0 0" : "Color emitted by this light." 
@@ -1100,7 +1100,9 @@
 	input SetFocusTargetRange(float) : "Set the distance behind the focal point that will remain in focus."
 ]
 
-@PointClass base(Parentname, Targetname, Angles) color(255 128 0) studio("models/editor/axis_helper_thick.mdl") 
+@PointClass base(Parentname, Targetname, Angles) color(255 128 0) 
+	studio("models/editor/axis_helper_thick.mdl") 
+	iconsprite("editor/light.vmt")
 	sphere(minDist) 	 	sphere(maxDist) 
 	sphere(outerMaxDist) 	sphere(GlowProxySize) = env_lightglow : 
 	"An entity that puts an additive glow in the world, mostly used over light sources."
@@ -1936,7 +1938,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnShowMessage(void) : "Fired when the message is activated."
 ]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = env_hudhint : 
+@PointClass base(Targetname) iconsprite("editor/env_hudhint.vmt") = env_hudhint : 
 	"An entity to control the display of HUD hints. HUD hints are used to show the player what key is bound to a particular command."
 [
 	message(string) : "Hint Text (localized)" : "" : "This should be set to match the desired HUD hint entry in the hl2\resource\valve_english.txt."
@@ -2858,7 +2860,7 @@ line(255 255 0, targetname, targetEntityName)
 	targetname(target_source) readonly : "[H] Ignore this" : "" : "Provides 'targetname' for the line drawn to the target prop"
 ]
 
-@PointClass base(Targetname, Parentname) size(-8 -8 -8, 8 8 8) sphere(radius) = point_message : 
+@PointClass base(Targetname, Parentname) studio("models/editor/axis_helper.mdl") iconsprite("editor/ts2do/env_message.vmt") sphere(radius) = point_message : 
 	"An entity that displays a text message in the world, at its origin."
 [
 	spawnflags(flags) =
@@ -3489,7 +3491,7 @@ line(255 255 0, targetname, targetEntityName)
 	_distance(integer) : "Maximum Distance" : 0 : "The distance that light is allowed to cast."
 ]
 
-@PointClass base(Angles) studio("models/editor/cone_helper.mdl") iconsprite("editor/light_env.vmt") = light_environment : 
+@PointClass base(Angles) studio("models/editor/spot.mdl") iconsprite("editor/light_env.vmt") = light_environment : 
 	"Sets the color and angle of the light from the sun and sky."
 [
 	pitch(angle_negative_pitch) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
@@ -5016,7 +5018,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OutValue(float) : "Fired when the InValue input is received, with the remapped input value as the parameter."
 ]
 
-@PointClass base(Targetname) = math_colorblend :
+@PointClass base(Targetname) iconsprite("editor/math_colorblend.vmt") = math_colorblend :
 	"Used to create a blend between two colors for controlling the color of another entity."
 [
 	spawnflags(flags) = 
@@ -5112,7 +5114,7 @@ line(255 255 0, targetname, targetEntityName)
 	input SetMinHitpointsThreshold(integer) : "Set MinimumHitPoints to this."
 ]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = logic_active_autosave :
+@PointClass base(Targetname) iconsprite("editor/logic_active_autosave.vmt") = logic_active_autosave :
 	"An entity that is used to look for opportunities to autosave."
 [
 	MinimumHitPoints(integer): "Initiation Hit Points" : 30 : "Start looking for an opportunity to save if player drops below this hitpoint level."
@@ -5125,7 +5127,7 @@ line(255 255 0, targetname, targetEntityName)
 	input Disable(void) : "Enable the entity"
 ]
 
-@PointClass base(Targetname) = logic_playmovie : "Plays a movie and allows for various playback options"
+@PointClass base(Targetname) studio("models/editor/camera.mdl") = logic_playmovie : "Plays a movie and allows for various playback options"
 [
 	MovieFilename(string) : "Movie to play" : "" : "Filename of the movie to play"
 	allowskip(boolean) : "Allow User to Skip" : 0 : "Whether or not the user may skip the video with common keys"
@@ -5286,7 +5288,7 @@ line(255 255 0, targetname, targetEntityName)
 		"all entities EXCEPT those whose name matches the string will pass the filter."
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_name.vmt") = filter_activator_model :
+@FilterClass base(BaseFilter) iconsprite("editor/filter_model.vmt") = filter_activator_model :
 	"A filter that filters by the model of the activator."
 [
 	model(studio) : "Filter Model" : : "The model to filter by. If the filter mode is Allow, only entities whose "+
@@ -5294,7 +5296,7 @@ line(255 255 0, targetname, targetEntityName)
 		"all entities EXCEPT those whose model matches the string will pass the filter."
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_name.vmt") = filter_activator_context :
+@FilterClass base(BaseFilter) iconsprite("editor/filter_context.vmt") = filter_activator_context :
 	"A filter that filters by a context on the activator."
 [
 	ResponseContext(string) : "Filter Context" : : "The context to filter by. If the filter mode is Allow, only entities that "+
@@ -5310,7 +5312,7 @@ line(255 255 0, targetname, targetEntityName)
 		"all entities EXCEPT those whose class name matches the given string will pass the filter."
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_class.vmt") = filter_activator_mass_greater :
+@FilterClass base(BaseFilter) iconsprite("editor/filter_mass.vmt") = filter_activator_mass_greater :
 	"A filter that filters by the mass of the activator."
 [
 	filtermass(float) : "Filter Mass" : : "The mass to filter by. If the filter mode is Allow, only entities whose "+
@@ -7054,9 +7056,9 @@ line(255 255 0, targetname, targetEntityName)
 // Used to listen to events caled from code
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname) = logic_eventlistener :
+@PointClass base(Targetname) iconsprite("editor/logic_eventlistener.vmt") = logic_eventlistener :
 	"An entity that can listen to events fired from code and fire " +
-	"and output when it happens."
+	"an output when it happens."
 [
 	EventName(string) : "Event Name" : "" : "The name of the event that you want to listen for."
 	IsEnabled(choices) : "Start Enabled" : 1 =

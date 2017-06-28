@@ -1,0 +1,7 @@
+"Sprite"
+{
+	"$spriteorientation" "vp_parallel"
+	"$spriteorigin" "[ .5 .5 ]"
+	"$baseTexture" "editor/logic_eventlistener"
+	"$no_fullbright" 1
+}
