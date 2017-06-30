@@ -1,0 +1,18 @@
+VertexLitGeneric
+{
+
+$baseTexture "models\editor\ts\blob_surface_grey"
+
+$normalMap "paintblobs\blob_surface_normal"
+$bumpstrength "0.4"
+
+$phongexponent 40 
+$phongboost 2 
+$phong 1
+
+$envMap "paint\paint_envmap_hdr"
+$envmapfresnel 1
+
+
+$nocull 1
+}

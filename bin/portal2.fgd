@@ -107,6 +107,14 @@
 		3 : "Conversion Gel"
 		4 : "Cleansing Gel"
 	]
+	skin(choices) : "[H] Paint Type" : 0 : "The type of gel created (for display)." = 
+	[
+		0 : "Repulsion Gel"
+		1 : "Reflection Gel / Adhesion Gel"
+		2 : "Propulsion Gel"
+		3 : "Conversion Gel"
+		4 : "Cleansing Gel"
+	]
 ]
 
 @PointClass base(Targetname) sphere(radius) = info_target_personality_sphere : "Personality Sphere Info Target"
@@ -168,7 +176,11 @@
 [
 ]
 
-@PointClass base(Targetname, Parentname, Angles, LinkedPortalDoor, ToggleDraw, RenderFields) studio("models/editor/axis_helper_thick.mdl") line(255 255 0, targetname, partnername) = linked_portal_door :
+@PointClass 
+	base(Targetname, Parentname, Angles, LinkedPortalDoor, ToggleDraw, RenderFields)
+	line(255 255 0, targetname, partnername)
+	studio("models/editor/axis_helper_thick.mdl")
+	iconsprite("editor/portal_dual.vmt") = linked_portal_door :
 "A door which is linked by a portal to another 'linked_portal_door' entity. Portal shots will pass through, and no effect appears at the edges."
 [
 	partnername(target_destination) : "Linked Partner" : : "Another 'linked_portal_door' entity which will link to this one."
@@ -342,7 +354,9 @@
 ]
 
 
-@PointClass base(Targetname) = point_laser_target : 
+@PointClass base(Targetname)
+	studio("models/editor/axis_helper.mdl")
+	iconsprite("editor/point_laser_target.vmt") = point_laser_target : 
 "Invisible Discouragement Beam detector, for logic use. The entity will fire outputs when struck and unstruck."
 [
 	terminalpoint(boolean) : "Terminal Point" : 1 : "Will lasers auto-aim towards this? It may also make the laser stop here."
@@ -563,7 +577,7 @@
 	output OnEntityPostPortalled(void)	: "Fires when the entity is done portalling."
 ]
 
-@PointClass base(Targetname) = logic_timescale : "Changes the server's timescale."
+@PointClass base(Targetname) color(0 100 250) iconsprite("editor/logic_timescale.vmt") = logic_timescale : "Changes the server's timescale."
 [
 	BlendTime(float) : "Blend Time" : 0 : "The amount of time it takes to ramp to the desired timescale when triggered."
 	input SetDesiredTimescale(float) : "Sets the desired timescale and starts slowing time (will blend to desired using the specified blend time)."
@@ -769,7 +783,9 @@
 	]
 ]
 
-@PointClass base(Targetname, Parentname, Angles, BasePaintType) line(255 255 255, targetname, light_position_name) studio("models/editor/cone_helper.mdl") = info_paint_sprayer : "An entity that sprays Gel."
+@PointClass base(Targetname, Parentname, Angles, BasePaintType) 
+	line(255 255 255, targetname, light_position_name) 
+	studio("models/editor/info_paint_sprayer.mdl") = info_paint_sprayer : "An entity that sprays Gel."
 [
 	//Paint sprayer
 	maxblobcount(integer) : "Max number of blobs" : 250 : "Max number of blobs that sprayer can spawn in the world (1-250)."
@@ -814,7 +830,8 @@
 	input ChangePaintType(integer) : "Change the type of Gel being sprayed. Values between 0-4, higher values are unstable."
 ]
 
-@PointClass base(Targetname,Angles, BasePaintType) studio("models/props/futbol.mdl") = prop_paint_bomb : "Large blob of gel which explodes on impact. Respawn with point_template or env_entity_maker."
+@PointClass base(Targetname,Angles, BasePaintType)
+	studio("models/editor/prop_paint_bomb.mdl") = prop_paint_bomb : "Large blob of gel which explodes on impact. Respawn with a point_template."
 [
 	
 	BombType(choices) : "Bomb Type" : 0 : "The type of explosion." = 
@@ -842,9 +859,11 @@
 [
 ]
 
-@PointClass base(Targetname, Angles) studioprop("models/effects/cappoint_hologram.mdl") = portal_race_checkpoint : "Checkpoint for race maps."
+@PointClass base(Targetname, Angles) studioprop("models/props/stopwatch_finish_line.mdl") = portal_race_checkpoint : "Checkpoint for race maps."
 [
 	ResetTime(float) : "Reset Time" : "5.0" : "The time it takes for the checkpoint to reset after activation"
+	
+	skin(integer) readonly: "<Skin>" : 3 : "Ignore, needed to make the skin lit."
 	
 	output OnCheckpointActivated(void) : "Fired when the checkpoint is activated by the player."
 	output OnCheckpointReset(void) : "Fired when the checkpoint is reset after being activated by the player."

@@ -931,7 +931,7 @@
 	output OnNPCLeftQueue(string) : "Fired when the NPC at the head of the queue leaves. The activator is the NPC, and the string is the name of the NPC."
 ]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = ai_changetarget : "Change Target"
+@PointClass base(Targetname) iconsprite("editor/ai_changetarget.vmt") = ai_changetarget : "Change Target"
 [
 	target(target_destination) : "Target entity" : : "Name of entity whose target will be changed."
 	m_iszNewTarget(string) : "New Target"
@@ -1505,7 +1505,7 @@
 ]
 
 
-@PointClass base(Targetname) size(-16 -16 -16, 16 16 16) = player_weaponstrip : "Strips player's weapons"
+@PointClass base(Targetname) iconsprite("editor/player_weaponstrip.vmt") = player_weaponstrip : "Strips player's weapons"
 [
 	// Inputs
 	input Strip(void) : "Strip player's weapons"

@@ -1457,6 +1457,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	cylinder(255 255 255, targetname, LightningStart, Radius, targetname, LightningEnd, Radius)
 	line(64 64 64, targetname, lightningStart)
 	line(64 64 64, targetname, lightningEnd)
+	iconsprite("editor/env_beam.vmt")
 	sphere(Radius) color(200 200 0) = env_beam : 
 	"An entity that creates a visible beam between two points. The points can be attached to entities to make the beam move around."
 [
@@ -1560,7 +1561,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	]
 ]
 
-@PointClass base(Targetname, Parentname) size(-16 -16 -16, 16 16 16) color(255 0 0) = env_blood : 
+@PointClass base(Targetname, Parentname) color(200 200 0) iconsprite("editor/env_blood.vmt") = env_blood : 
 	"An entity used to spawn blood effects." 
 [
 	spraydir(angle) : "Spray Direction (Pitch Yaw Roll)" : "0 0 0" : "The general direction that the blood should spray and the direction to trace to apply the decal."
@@ -5646,7 +5647,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	output OnBreak(void) : "Fired when the constraint breaks."
 ]
 	
-@PointClass base(Targetname) = phys_constraintsystem : 
+@PointClass base(Targetname) color(128 128 128) iconsprite("editor/phys_constraintsystem.vmt") = phys_constraintsystem : 
 	"An entity used to manage a group of interacting constraints and keep them stable. " +
 	"All constraints on a set of entities should be placed in the same system, or they will fight each other during simulation."
 [
@@ -5897,6 +5898,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 @PointClass base(Targetname)
 	color(128 128 128) 
 	line(255 255 0, targetname, target) 
+	iconsprite("editor/phys_convert.vmt") = phys_convert : 
 	"Turns an arbitrary entity into a physically simulated entity. i.e. brush entities will behave like func_physbox, model entities behave like prop_physics."
 [
 	spawnflags(flags) =
@@ -7178,7 +7180,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 ]
 
 
-@PointClass base(Targetname, DamageFilter) size(-8 -8 -8, 8 8 8) = logic_playerproxy :
+@PointClass base(Targetname, DamageFilter) color(200 0 0) iconsprite("editor/logic_playerproxy.vmt") = logic_playerproxy :
 	"An entity that is used to relay inputs/ouputs to the player and back to the world."
 [
 	output OnStartSlowingTime(void)			: "Fired when a Portal player initiates slow time."
