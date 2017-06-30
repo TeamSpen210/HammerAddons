@@ -501,7 +501,7 @@
 //
 ///=============================================================================
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = env_portal_credits : 
+@PointClass base(Targetname) color(200 0 0) size(-8 -8 -8, 8 8 8) = env_portal_credits : 
 	"An entity to control the rolling credits for portal."
 [
 	// Inputs

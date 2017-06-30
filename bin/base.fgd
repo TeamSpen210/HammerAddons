@@ -926,7 +926,7 @@
 	]
 ]
 
-@PointClass base(Targetname) = env_zoom : 
+@PointClass base(Targetname) color(200 0 0) = env_zoom : 
 	"An entity that can be used to control the player's FOV. Useful for scenes where the player's view is being controlled, or player-usable binoculars/telescopes, etc."
 [
 	Rate(float) : "Seconds to reach target" : "1.0" : "Amount of time it should take to reach the specified FOV."
@@ -942,7 +942,7 @@
 	]
 ]
 
-@PointClass base(Targetname) = env_screenoverlay: 
+@PointClass base(Targetname) color(200 0 0) = env_screenoverlay: 
 	"An entity that can display and control a set of screen overlays, to be displayed over the player's view. Useful for view effects like drunkenness, or teleporter afterimages, etc."
 [
 	OverlayName1(material) : "Overlay Name 1" : "" : "Name of the first overlay material to display."
@@ -972,7 +972,7 @@
 	input	SwitchOverlay(float) : "Switch to displaying a specific overlay. Pass in the desired overlay number in the parameter."
 ]
 
-@PointClass base(Targetname) = env_screeneffect :
+@PointClass base(Targetname) color(200 0 0) = env_screeneffect :
 	"Allows screenspace effects to be played on the player's view."
 [
 	type(choices) : "Effect Type" : 0 : "Which effect to use." =
@@ -997,7 +997,7 @@
 	input	SetTextureIndex(integer) : "Sets target brush's texture frame to the specified index."
 ]
 
-@PointClass base(Targetname, Angles) studio("models/editor/angle_helper.mdl") = env_splash : 
+@PointClass base(Targetname, Angles) color(200 200 0) studio("models/editor/angle_helper.mdl") = env_splash : 
 	"An entity that creates a splash effect at its origin. If the 'find water surface' spawnflag is set, it will instead trace down below itself to find the water surface on which to create splashes."
 [
 	scale(float) : "Scale of the splash" : "8.0"
@@ -1012,7 +1012,7 @@
 	]
 ]
 
-@PointClass base(Parentname) iconsprite("editor/light.vmt") color(180 10 180) = env_particlelight : 
+@PointClass base(Parentname) color(200 200 0) iconsprite("editor/light.vmt") color(180 10 180) = env_particlelight : 
 	"An entity that can be used to light the smoke particles emitted by env_smokestack entities. Does not light any other particle types."
 [
 	Color(color255) : "Color" : "255 0 0" : "Color emitted by this light." 
@@ -1023,7 +1023,7 @@
 	PSName(target_destination) : "Particle System Entity" : "" : "Set this to the name of the env_smokestack that you want this light to affect."
 ]
 
-@PointClass base(Targetname, Angles) iconsprite("editor/env_sun.vmt") line(255 255 0, targetname, target) = env_sun : 
+@PointClass base(Targetname, Angles) color(200 0 0) iconsprite("editor/env_sun.vmt") line(255 255 0, targetname, target) = env_sun : 
 	"An entity to control & draw a sun effect in the sky."
 [
 	target(target_destination) : "Viewer entity" : : "Name of an entity used to determine where the sun is in the skybox. The sun should be lined up on a line from this entity to the env_sun entity."
@@ -1049,7 +1049,7 @@
 	input SetColor(color255) : "Change the sun's color. Format: <Red 0-255> <Green 0-255> <Blue 0-255>"
 ]
 
-@PointClass base(Targetname) = game_ragdoll_manager : 
+@PointClass base(Targetname) color(200 0 0) = game_ragdoll_manager : 
 	"An entity to control the number of ragdolls in the world, for performance reasons." 
 [
 	MaxRagdollCount(integer) : "Max Ragdoll Count" : -1 : "Sets the max number of ragdolls that can be in the world at a time (if they are flagged to fade). Set to -1 if you want to use the default value (g_ragdoll_maxcount)."
@@ -1062,7 +1062,7 @@
 	input SetMaxRagdollCountDX8(integer) : "Set the Max Ragdoll Count on DX8 hardware."
 ]
 
-@PointClass base(Targetname) = game_gib_manager : "An entity to control the number of gibs in the world, for performance reasons." 
+@PointClass base(Targetname) color(200 0 0) = game_gib_manager : "An entity to control the number of gibs in the world, for performance reasons." 
 [
 	maxpieces(integer)	: "Max Gib Count" : -1 : "Sets the max number of gib that can be spawned at a time. (-1=no limit)"
 	maxpiecesdx8(integer)	: "Max Gib Count On DX8" : -1 : "Sets the max number of gib that can be spawned at a time under DX8. (-1=use Max Gib Count setting)"
@@ -1072,7 +1072,7 @@
 	input SetMaxPiecesDX8(integer)	: "Set the max gib count under DX8."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/env_dof_controller.vmt") line(255 255 0, targetname, focus_target) 
+@PointClass base(Targetname) color(200 0 0) iconsprite("editor/env_dof_controller.vmt") line(255 255 0, targetname, focus_target) 
 	sphere(near_blur) sphere(near_focus) sphere(far_blur) sphere(far_radius)
 	= env_dof_controller : 
 	"An entity that controls the depth of field settings for the player. Depth of field simulates camera blur of out-of-focus regions of the scene."
@@ -1102,7 +1102,7 @@
 
 @PointClass base(Parentname, Targetname, Angles) color(255 128 0) 
 	studio("models/editor/axis_helper_thick.mdl") 
-	iconsprite("editor/light.vmt")
+	color(200 200 0) iconsprite("editor/light.vmt")
 	sphere(minDist) 	 	sphere(maxDist) 
 	sphere(outerMaxDist) 	sphere(GlowProxySize) = env_lightglow : 
 	"An entity that puts an additive glow in the world, mostly used over light sources."
@@ -1125,7 +1125,7 @@
 	]
 ]
 
-@PointClass base(Targetname, Parentname, Angles) iconsprite("editor/env_smokestack.vmt") sphere(jetlength) = env_smokestack : 
+@PointClass base(Targetname, Parentname, Angles) color(200 200 0) iconsprite("editor/env_smokestack.vmt") sphere(jetlength) = env_smokestack : 
 	"An entity that spits out a constant stream of smoke. See particlezoo.vmf for sample usage. You can place up to two env_particlelight entities near the smoke stack to add ambient light to its particles."
 [
 	InitialState(choices) : "Initial State" : 0 = 
@@ -1161,7 +1161,7 @@
 	input SpreadSpeed(integer) : "Set the amount of random spread in the velocity of the smoke particles after they're spawned."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/env_fade") = env_fade : 
+@PointClass base(Targetname) color(200 0 0) iconsprite("editor/env_fade") = env_fade : 
 	"An entity that controls screen fades."
 [
 	spawnflags(flags) =
@@ -1185,7 +1185,7 @@
 	output OnBeginFade(void) : "Fired when the fade has begun."
 ]
 
-@PointClass base(Targetname) = env_player_surface_trigger : 
+@PointClass base(Targetname) color(200 0 0) = env_player_surface_trigger : 
 	"An entity that monitors the material of the surface the player is standing on, and fires outputs whenever it changes to/from a specific material."
 [
 	gamematerial(choices) : "Game Material to Watch" : "0" : "The material to watch. When the player stands on/off this material, this entity's outputs will be fired." =
@@ -1216,7 +1216,7 @@
 	output OnSurfaceChangedFromTarget(void) : "Fired when the player moves off the specified game material."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/env_tonemap_controller.vmt") = env_tonemap_controller : 
+@PointClass base(Targetname) color(200 0 0) iconsprite("editor/env_tonemap_controller.vmt") = env_tonemap_controller : 
 	"An entity that controls the HDR tonemapping for the player. Think of it as a method of controlling the exposure of the player's eyes."
 [
 	spawnflags(flags) =
@@ -1302,7 +1302,7 @@
 // A Vgui screen in 3D
 //
 //-------------------------------------------------------------------------
-@PointClass base(Targetname, Parentname, Angles) studio("models/editor/vgui_arrows.mdl") sphere(width) sphere(height) = vgui_screen : 
+@PointClass base(Targetname, Parentname, Angles) color(200 200 0) studio("models/editor/vgui_arrows.mdl") sphere(width) sphere(height) = vgui_screen : 
 	"A VGUI screen. Useful for in-world monitors." 
 [
 	panelname(choices) : "Panel Name" : "" : "The type of display to show." = 
@@ -1334,7 +1334,7 @@
 	input SetInactive(void) : "Make the vgui screen invisible."
 ]
 
-@PointClass base(Targetname, Angles, Parentname) studio("models/editor/vgui_arrows.mdl") = vgui_slideshow_display : "Slideshow Display"
+@PointClass base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui_arrows.mdl") = vgui_slideshow_display : "Slideshow Display"
 [
 	displaytext(string) : "Display Text" : ""
 
@@ -1375,7 +1375,7 @@
 ]
 
 @PointClass 
-base(Targetname, Angles, Parentname) studio("models/editor/vgui_arrows.mdl") sphere(width) sphere(height) = vgui_movie_display : "Movie Display"
+base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui_arrows.mdl") sphere(width) sphere(height) = vgui_movie_display : "Movie Display"
 [
 	displaytext(string) : "Display Text" : ""
 	moviefilename(string) : "Movie Filename" : "media/"
@@ -1453,11 +1453,11 @@ base(Targetname, Angles, Parentname) studio("models/editor/vgui_arrows.mdl") sph
 	input Shoot(void) : "Force the gibshooter to create and shoot a gib."
 ]
 
-@PointClass base(Targetname, Parentname, RenderFxChoices) size(-4 -4 -4, 4 4 4) 
+@PointClass base(Targetname, Parentname, RenderFxChoices) 
 	cylinder(255 255 255, targetname, LightningStart, Radius, targetname, LightningEnd, Radius)
 	line(64 64 64, targetname, lightningStart)
 	line(64 64 64, targetname, lightningEnd)
-	sphere(Radius) = env_beam : 
+	sphere(Radius) color(200 200 0) = env_beam : 
 	"An entity that creates a visible beam between two points. The points can be attached to entities to make the beam move around."
 [
 	renderamt(integer) : "Brightness (1 - 255)" : 100
@@ -1529,7 +1529,7 @@ base(Targetname, Angles, Parentname) studio("models/editor/vgui_arrows.mdl") sph
 	output OnTouchedByEntity(void) : "Fired when an entity touches the beam. Only fired if the entity passes the 'Touch Type' choice."
 ]
 
-@SolidClass base(Targetname, Parentname, Angles) = env_embers : 
+@SolidClass base(Targetname, Parentname, Angles) color(200 200 0) = env_embers : 
 	"An entity used to create a volume in which to spawn fire embers." 
 [
 	particletype(choices) : "Ember type" : 0 =
@@ -1551,7 +1551,7 @@ base(Targetname, Angles, Parentname) studio("models/editor/vgui_arrows.mdl") sph
 	]
 ]
 
-@PointClass base(Targetname, Parentname) size(-16 -16 -16, 16 16 16) = env_funnel : 
+@PointClass base(Targetname, Parentname) color(200 200 0) size(-8 -8 -8, 8 8 8) = env_funnel : 
 	"HL1 Legacy: Large Portal Funnel" 
 [
 	spawnflags(flags) =
@@ -1586,7 +1586,7 @@ base(Targetname, Angles, Parentname) studio("models/editor/vgui_arrows.mdl") sph
 	input EmitBlood(void) : "Triggers the blood effect."
 ]
 
-@SolidClass base(Targetname, Parentname) = env_bubbles : 
+@SolidClass base(Targetname, Parentname) color(200 200 0) = env_bubbles : 
 	"An entity used to create a volume in which to spawn bubbles." 
 [
 	density(integer) : "Bubble density" : 2
@@ -1606,7 +1606,7 @@ base(Targetname, Angles, Parentname) studio("models/editor/vgui_arrows.mdl") sph
 	input SetCurrent(integer) : "Sets current speed in units per second."
 ]
 
-@PointClass base(Targetname, Parentname) iconsprite("editor/env_explosion.vmt") sphere(iRadiusOverride) line(255 255 0, targetname, ignoredEntity) = env_explosion : 
+@PointClass base(Targetname, Parentname) color(200 200 0) iconsprite("editor/env_explosion.vmt") sphere(iRadiusOverride) line(255 255 0, targetname, ignoredEntity) = env_explosion : 
 	"An entity that creates an explosion at its origin." 
 [
 	iMagnitude(Integer) : "Magnitude" : 100 : "The amount of damage done by the explosion."
@@ -1644,7 +1644,7 @@ base(Targetname, Angles, Parentname) studio("models/editor/vgui_arrows.mdl") sph
 	input Explode(void) : "Triggers the explosion."
 ]
 
-@PointClass base(Targetname, Parentname) color(200 50 0)  size(-8 -8 -8, 8 8 8) sphere(spawnradius) = env_smoketrail : 
+@PointClass base(Targetname, Parentname) color(200 200 0) size(-8 -8 -8, 8 8 8) sphere(spawnradius) = env_smoketrail : 
 	"An entity that creates a smoke trail." 
 [
 	opacity(float) : "Sprite Opacity" : "0.75" : "Opacity of the sprites (range from 0 - 1)."
@@ -1665,9 +1665,11 @@ base(Targetname, Angles, Parentname) studio("models/editor/vgui_arrows.mdl") sph
 	smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.spr"
 ]
 
-@PointClass base(Targetname, Parentname) sphere(radius) sphere(inner_radius) 
-line(255 255 0, targetname, targetEntityName) 
-	cylinder(255 0 0, targetname, targetname, radius, targetname, targetentityname) iconsprite("editor/env_physexplosion.vmt") = env_physexplosion : 
+@PointClass base(Targetname, Parentname)
+	sphere(radius) sphere(inner_radius) 
+	line(255 255 0, targetname, targetEntityName) 
+	cylinder(255 0 0, targetname, targetname, radius, targetname, targetentityname) 
+	color(128 128 128) iconsprite("editor/env_physexplosion.vmt") = env_physexplosion : 
 	"An entity that creates an explosion at its origin. If the no-damage spawnflag is set, the explosion won't be visible, but will apply force to any physics objects within its radius."
 [
 	magnitude(string) : "Magnitude" : "100" : "Amount of physics force applied by the explosion."
@@ -1692,7 +1694,9 @@ line(255 255 0, targetname, targetEntityName)
 	output OnPushedPlayer(void) : "Fires when the player is pushed by the explosion."
 ]
 
-@PointClass base(Targetname, Parentname) line(255 255 255, targetname, directionentityname) sphere(distance) iconsprite("editor/env_physexplosion.vmt") = env_physimpact : 
+@PointClass base(Targetname, Parentname) 
+	line(255 255 255, targetname, directionentityname) sphere(distance)
+	color(128 128 128) iconsprite("editor/env_physexplosion.vmt") = env_physimpact : 
 	"An entity that will cause a physics impact on another entity."
 [
 	angles(string) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "Direction to project the impact."
@@ -1713,7 +1717,7 @@ line(255 255 0, targetname, targetEntityName)
 ]
 
 
-@PointClass base(Targetname, Parentname, EnableDisable) iconsprite("editor/env_fire") color(0 180 0) sphere(firesize) = env_fire : 
+@PointClass base(Targetname, Parentname, EnableDisable) color(200 200 0) iconsprite("editor/env_fire") sphere(firesize) = env_fire : 
 	"An entity that handles a single flame at its origin. The flame causes heat 'damage' to other env_fire entities around it, and will eventually ignite non-flaming env_fire entities nearby, causing the fire to spread."
 [
 	health(integer) : "Duration" : 30 : "Amount of time the fire will burn."
@@ -1749,7 +1753,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnExtinguished(void) : "Fires when the fire is fully extinguished."
 ]
 
-@PointClass base(Targetname, Parentname) iconsprite("editor/env_firesource") color(255 255 0) sphere(fireradius) = env_firesource : 
+@PointClass base(Targetname, Parentname) color(200 200 0) iconsprite("editor/env_firesource") sphere(fireradius) = env_firesource : 
 	"An entity that provides heat to all nearby env_fire entities. Cannot be extinguished."
 [
 	spawnflags(flags) =
@@ -1765,7 +1769,7 @@ line(255 255 0, targetname, targetEntityName)
 	input Disable(void) : "Disable fire source."
 ]
 
-@PointClass base(Targetname, Parentname) size(-4 -4 -4, 4 4 4) color(255 255 0) sphere(fireradius) = env_firesensor : 
+@PointClass base(Targetname, Parentname) color(200 200 0) size(-4 -4 -4, 4 4 4) sphere(fireradius) = env_firesensor : 
 	"An entity that detects changes in heat nearby."
 [
 	spawnflags(flags) =
@@ -1784,7 +1788,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnHeatLevelEnd(void) : "Fires when the heat level drops below the target level."
 ]
 
-@PointClass base(Targetname) size(-4 -4 -4, 4 4 4) color(0 180 0) = env_entity_igniter : 
+@PointClass base(Targetname) color(200 200 0) size(-4 -4 -4, 4 4 4) = env_entity_igniter : 
 	"An entity that catches a target entity on fire. If the entity is an animating model, it will have sprite flames attached to its skeleton. Otherwise the entity will emit particle flame puffs."
 [
 	target(target_destination) : "Entity to ignite" : : "Name of the entity to catch on fire."
@@ -1794,7 +1798,7 @@ line(255 255 0, targetname, targetEntityName)
 	input Ignite(void) : "Ignite the target entity."
 ]
 
-@PointClass base(Targetname, SystemLevelChoice, Angles) studio("models/editor/cone_helper.mdl") iconsprite("editor/fog_controller.vmt") color(255 255 255) = env_fog_controller : 
+@PointClass base(Targetname, SystemLevelChoice, Angles) color(200 0 0) studio("models/editor/cone_helper.mdl") iconsprite("editor/fog_controller.vmt") = env_fog_controller : 
 	"An entity that controls the fog and view distance in the map."
 [
 	// Inputs
@@ -1837,7 +1841,7 @@ line(255 255 0, targetname, targetEntityName)
 	]
 ]
 
-@PointClass base(Targetname, Parentname, Angles) studio("models/editor/spot_cone.mdl") color(255 255 255) = env_steam : 
+@PointClass base(Targetname, Parentname, Angles) color(200 200 0) studio("models/editor/spot_cone.mdl") = env_steam : 
 	"An entity used to create a jet of steam."
 [
 	spawnflags(flags) =
@@ -1878,7 +1882,7 @@ line(255 255 0, targetname, targetEntityName)
 	input SpreadSpeed(integer) : "Sets the spread speed in units per second."
 ]
 
-@PointClass base(Targetname, Parentname, RenderFxChoices) size(-4 -4 -4, 4 4 4) line(255 255 255, targetname, LaserTarget) = env_laser : 
+@PointClass base(Targetname, Parentname, RenderFxChoices) size(-4 -4 -4, 4 4 4) color(200 200 0) line(255 255 255, targetname, LaserTarget) = env_laser : 
 	"An entity that creates a laser beam between itself and a given target."
 [
 	LaserTarget(target_destination) : "Target of Laser" : : "Name of entity, or entities, to strike at. The target is randomly chosen if there are multiple entities matching the given name."
@@ -1948,7 +1952,7 @@ line(255 255 0, targetname, targetEntityName)
 	input HideHudHint(void) : "Hides the hint message."
 ]
 
-@PointClass sphere() iconsprite("editor/env_shake.vmt") base(Targetname, Parentname) = env_shake : 
+@PointClass sphere() color(200 0 0) iconsprite("editor/env_shake.vmt") base(Targetname, Parentname) = env_shake : 
 	"An entity to control screen shake on players." 
 [
 	spawnflags(flags) =
@@ -1974,7 +1978,7 @@ line(255 255 0, targetname, targetEntityName)
 	input StopShake(void) : "Stop the shake."
 ]
 
-@PointClass sphere() studio("models/editor/axis_helper_thick.mdl") base(Targetname, Parentname, Angles) = env_tilt : 
+@PointClass sphere() color(200 0 0) studio("models/editor/axis_helper_thick.mdl") base(Targetname, Parentname, Angles) = env_tilt : 
 	"An entity to control screen tilt on players." 
 [
 	spawnflags(flags) =
@@ -1992,7 +1996,7 @@ line(255 255 0, targetname, targetEntityName)
 	input StopTilt(void) : "Stop the tilt."
 ]
 
-@PointClass sphere() size(-4 -4 -4, 4 4 4) base(Targetname, Parentname) = env_viewpunch :
+@PointClass sphere() color(200 200 0) size(-4 -4 -4, 4 4 4) base(Targetname, Parentname) = env_viewpunch :
 	"Causes a view punch on players." 
 [
 	spawnflags(flags) =
@@ -2008,12 +2012,12 @@ line(255 255 0, targetname, targetEntityName)
 	input ViewPunch(void) : "Performs the view punch."
 ]
 
-@PointClass base(gibshooterbase) line(255 255 255, targetname, lightingorigin) iconsprite("editor/gibshooter.vmt") = gibshooter : 
+@PointClass base(gibshooterbase) color(200 200 0) line(255 255 255, targetname, lightingorigin) iconsprite("editor/gibshooter.vmt") = gibshooter : 
 	"An entity that shoots out gibs. Style of body part depends on language type."
 [
 ]
 
-@PointClass base(gibshooterbase, RenderFields) line(255 255 255, targetname, lightingorigin) iconsprite("editor/env_shooter.vmt") = env_shooter : 
+@PointClass base(gibshooterbase, RenderFields) color(200 200 0) line(255 255 255, targetname, lightingorigin) iconsprite("editor/env_shooter.vmt") = env_shooter : 
 	"An entity that shoots models, or sprites, out of its origin."
 [
 	shootmodel(studio) : "Model" : "" : "Thing to shoot out. Can be a .mdl or a .vmt."
@@ -2048,7 +2052,7 @@ line(255 255 0, targetname, targetEntityName)
 	massoverride(float) : "Mass override" : "0" : "EPISODIC ONLY. Specify an arbitrary mass for the gibs emitted by me."
 ]
 
-@PointClass base(gibshooterbase, RenderFields) line(255 255 255, targetname, lightingorigin) iconsprite("editor/env_shooter.vmt") = env_rotorshooter : 
+@PointClass base(gibshooterbase, RenderFields) line(255 255 255, targetname, lightingorigin) iconsprite("editor/env_shooter.vmt") color(200 200 0) = env_rotorshooter : 
 	"An entity that creates gibs when it's within the influence of a helicopter's rotor wash."
 [
 	shootmodel(studio) : "Model" : "" : "Thing to shoot out.  Can be a .mdl or a .vmt."
@@ -2597,7 +2601,7 @@ line(255 255 0, targetname, targetEntityName)
 [
 ]
 
-@PointClass base(Targetname, Parentname, Angles) iconsprite("editor/env_spark.vmt") studio("models/editor/cone_helper.mdl") = env_spark : 
+@PointClass base(Targetname, Parentname, Angles) color(200 200 0) iconsprite("editor/env_spark.vmt") studio("models/editor/cone_helper.mdl") = env_spark : 
 	"An entity used to create sparks at its origin." 
 [
 	MaxDelay(string) : "Max Delay" : "0" : "The longest delay between sparks (in seconds)."
@@ -2697,7 +2701,7 @@ line(255 255 0, targetname, targetEntityName)
 ]
 
 
-@PointClass base(Targetname, Angles) iconsprite("editor/env_wind.vmt") = env_wind : 
+@PointClass base(Targetname, Angles) color(200 0 0) iconsprite("editor/env_wind.vmt") = env_wind : 
 	"An entity to control wind in the map. Partially functional."
 [
 	//gustsound(sound) : "Gust Sound Filename" : "" : "Sound to be played to simulate the gusting wind."
@@ -2720,7 +2724,7 @@ line(255 255 0, targetname, targetEntityName)
 
 @PointClass base(Angles) 
 	size(-1 -1 -1, 1 1 1) 
-	color(0 0 255) 
+	color(200 0 0)
 	sphere(fogstart)
 	sphere(fogend)
 	= sky_camera : 
@@ -2788,7 +2792,7 @@ line(255 255 0, targetname, targetEntityName)
 	]
 ]
 
-@PointClass base(Targetname, MasterEnt) size(-8 -8 -8, 8 8 8) = game_player_team : 
+@PointClass base(Targetname, MasterEnt) size(-8 -8 -8, 8 8 8) color(200 0 0) = game_player_team : 
 	"An entity that changes the team of the player who activates it."
 [
 	spawnflags(flags) =
@@ -2800,7 +2804,7 @@ line(255 255 0, targetname, targetEntityName)
 	target(string) : "game_team_master to use" 
 ]
 
-@PointClass base(Targetname, MasterEnt) size(-8 -8 -8, 8 8 8) = game_score : 
+@PointClass base(Targetname, MasterEnt) size(-8 -8 -8, 8 8 8) color(200 0 0) = game_score : 
 	"An entity that awards/deducts points from the player who activates it." 
 [
 	spawnflags(flags) =
@@ -2815,7 +2819,7 @@ line(255 255 0, targetname, targetEntityName)
 	input ApplyScore(void) : "Add score to player."
 ]
 
-@PointClass base(Targetname, MasterEnt) iconsprite("editor/game_text.vmt") = game_text : 
+@PointClass base(Targetname, MasterEnt) iconsprite("editor/game_text.vmt") color(200 0 0) = game_text : 
 	"An entity that displays text on player's screens." 
 [
 	spawnflags(flags) =
@@ -2860,7 +2864,7 @@ line(255 255 0, targetname, targetEntityName)
 	targetname(target_source) readonly : "[H] Ignore this" : "" : "Provides 'targetname' for the line drawn to the target prop"
 ]
 
-@PointClass base(Targetname, Parentname) studio("models/editor/axis_helper.mdl") iconsprite("editor/ts2do/env_message.vmt") sphere(radius) = point_message : 
+@PointClass base(Targetname, Parentname) studio("models/editor/axis_helper.mdl") color(200 200 0) iconsprite("editor/ts2do/env_message.vmt") sphere(radius) = point_message : 
 	"An entity that displays a text message in the world, at its origin."
 [
 	spawnflags(flags) =
@@ -2908,7 +2912,7 @@ line(255 255 0, targetname, targetEntityName)
 ]
 
 @PointClass base(Targetname, Parentname)
-	size(-8 -8 -8, 8 8 8)
+	size(-8 -8 -8, 8 8 8) color(200 200 0)
 	line(255 255 0, targetname, m_SourceEntityName)
 	sphere(m_flRadius)
 	= point_tesla : 
@@ -2941,28 +2945,28 @@ line(255 255 0, targetname, targetEntityName)
 	input DoSpark(void) : "Force a single arc."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/point_clientcommand.vmt") = point_clientcommand : 
+@PointClass base(Targetname) color(200 0 0) iconsprite("editor/point_clientcommand.vmt") = point_clientcommand : 
 	"An entity that issues commands to the client console, as if it was typed in by the player (if activator is a player, or the local player in single player)."
 [
 	// Inputs
 	input Command(string) : "Command to execute."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/point_servercommand.vmt") = point_servercommand : 
+@PointClass base(Targetname) color(200 0 0) iconsprite("editor/point_servercommand.vmt") = point_servercommand : 
 	"An entity that issues commands to the server console."
 [
 	// Inputs
 	input Command(string) : "Command to execute."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/point_clientcommand.vmt") = point_broadcastclientcommand : 
+@PointClass base(Targetname) color(200 0 0) iconsprite("editor/point_clientcommand.vmt") = point_broadcastclientcommand : 
 	"An entity that issues commands to all player's client consoles."
 [
 	// Inputs
 	input Command(string) : "Command to execute for all players."
 ]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = point_bonusmaps_accessor : 
+@PointClass base(Targetname) color(200 0 0) size(-8 -8 -8, 8 8 8) = point_bonusmaps_accessor : 
 	"An entity that relays bonus maps changes."
 [
 	filename(string) : "File Name" : ""
@@ -2974,7 +2978,7 @@ line(255 255 0, targetname, targetEntityName)
 	input Save(void) : "Saves bonus map data."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/ts2do/game_ui.vmt") = game_ui : 
+@PointClass base(Targetname) color(200 0 0) iconsprite("editor/ts2do/game_ui.vmt") = game_ui : 
 	"An entity used to override player input when the player is looking at it."
 [
 	spawnflags(flags) =
@@ -3016,7 +3020,8 @@ line(255 255 0, targetname, targetEntityName)
 
 @PointClass base(Targetname) 
 	line(255 255 0, targetname, referencename)
-	line(255 255 0, targetname, filtername) = point_entity_finder :
+	line(255 255 0, targetname, filtername)
+	color(0 100 250) = point_entity_finder :
 	"An entity that will find an entity and pass it along as the !Caller with the OutEntity output.  Requires using !Caller as the parameter on the input."
 [
 	filtername(filterclass) : "Filter Name" : : "Filter to use to narrow set of findable entities. See filter_activator_name for more explanation."
@@ -3080,14 +3085,14 @@ line(255 255 0, targetname, targetEntityName)
 	input Activate(void) : "Force the decal to apply itself to the world."
 ]
 
-@PointClass iconsprite("editor/info_no_dynamic_shadow.vmt") = info_no_dynamic_shadow : 
+@PointClass iconsprite("editor/info_no_dynamic_shadow.vmt") color(200 200 0) = info_no_dynamic_shadow : 
 	"Use this entity to mark surfaces that shouldn't receive dynamic shadows. Useful to apply to walls and floors "+
 	"where shadows are drawn improperly, giving away the location of enemies."
 [
 	sides(sidelist) : "Brush faces"
 ]
 
-@PointClass base(PlayerClass, Angles) studio("models/editor/playerstart.mdl") = info_player_start :
+@PointClass base(PlayerClass, Angles) color(200 0 0) studio("models/editor/playerstart.mdl") = info_player_start :
 	"This entity indicates the position and facing direction at which the player will spawn. Any number of "+
 	"info_player_start entities may be placed in a map for when working in cordoned-off portions of the map. "+
 	"When multiple info_player_start entities are present in a map, set the 'Master' spawnflag on one of them "+
@@ -3146,18 +3151,18 @@ line(255 255 0, targetname, targetEntityName)
 	DebugDraw(boolean) : "Show Debug" : 0
 ]
 
-@PointClass size(-4 -4 -4, 4 4 4) color(0 180 0) line(255 255 0, target) = info_intermission : 
+@PointClass size(-4 -4 -4, 4 4 4) color(200 0 0) line(255 255 0, target) = info_intermission : 
     "An entity that defines an intermission spot where dead players will float until they respawn."
 [
 	target(target_destination) : "Entity to look at" : : "Name of entity that dead players will face while in intermission at this spot."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/info_landmark") = info_landmark : 
+@PointClass base(Targetname) color(200 0 0) iconsprite("editor/info_landmark") = info_landmark : 
 	"An entity that acts as a landmark for transitions to another level. There should be a corresponding info_landmark entity in the next map. Entities will be transitioned to the next level relative to the info_landmark entities."
 [
 ]
 
-@PointClass base(Targetname) iconsprite("editor/ts2do/info_null.vmt") = info_null : 
+@PointClass base(Targetname) color(200 0 0) iconsprite("editor/ts2do/info_null.vmt") = info_null : 
 	"An entity that's immediately removed on spawning. Useful as a spotlight target."
 [
 ]
@@ -3174,7 +3179,7 @@ line(255 255 0, targetname, targetEntityName)
 	]
 ]
 
-@PointClass base(Targetname, Parentname, Angles, Reflection) studio("models/editor/cone_helper.mdl") 
+@PointClass base(Targetname, Parentname, Angles, Reflection) color(200 200 0) studio("models/editor/cone_helper.mdl") 
 	line(255 255 255, targetname, cpoint1) line(255 255 255, targetname, cpoint2) line(255 255 255, targetname, cpoint3)
 	line(255 255 255, targetname, cpoint4) line(255 255 255, targetname, cpoint5) line(255 255 255, targetname, cpoint6)
 	line(255 255 255, targetname, cpoint7) line(255 255 255, targetname, cpoint8) line(255 255 255, targetname, cpoint9) 
@@ -3284,7 +3289,7 @@ line(255 255 0, targetname, targetEntityName)
 @PointClass base(Targetname, EnableDisable, Parentname, Angles) 
 	line(255 255 0, targetname, target) 
 	iconsprite("editor/info_target.vmt") 
-	sphere(radius) 
+	sphere(radius) color(128 128 128)
 	= phys_ragdollmagnet : 
 	"An entity that acts like a magnet for ragdolls. Useful for crafting exaggerated ragdoll behavior (i.e. guys falling over rails on death). If the "+
 	"Bar Magnet spawnflag is set, the magnet works like it was a cylindrical magnet i.e. it attracts ragdolls to the nearest point on a line."
@@ -3301,7 +3306,7 @@ line(255 255 0, targetname, targetEntityName)
 	]
 ]
 
-@PointClass base(Targetname) iconsprite("editor/info_lighting.vmt")  = info_lighting : 
+@PointClass base(Targetname) iconsprite("editor/info_lighting.vmt") = info_lighting : 
 	"An entity that can be used to change the lighting origin of a prop_static. Set the prop_static's Lighting Origin to point at this entity to "+
 	"make the prop_static light as if it was at the info_lighting's origin. Good for prop_static entities that are embedded in world geometry (like rocks/windows/etc)."
 [
@@ -3572,7 +3577,7 @@ line(255 255 0, targetname, targetEntityName)
 // Shadow control
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname) iconsprite("editor/shadow_control.vmt") sphere(distance) = shadow_control : 
+@PointClass base(Targetname) color(200 0 0) iconsprite("editor/shadow_control.vmt") sphere(distance) = shadow_control : 
 	"An entity to control the shadows in the map."
 [
 	angles(string) : "Pitch Yaw Roll (Y Z X)" : "80 30 0" : "This is the shadow direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis."
@@ -3598,7 +3603,7 @@ line(255 255 0, targetname, targetEntityName)
 // Sunlight Shadow control
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname, EnableDisable) iconsprite("editor/shadow_control.vmt") frustum(fov,nearz,distance,color,-1) sphere(distance) sphere(nearz) = sunlight_shadow_control : 
+@PointClass base(Targetname, EnableDisable) color(200 0 0) iconsprite("editor/shadow_control.vmt") frustum(fov,nearz,distance,color,-1) sphere(distance) sphere(nearz) = sunlight_shadow_control : 
 	"An entity to control the sunlight that casts shadows in the map."
 [
 	angles(string) : "Pitch Yaw Roll (Y Z X)" : "50 40 0" : "This is the light cast direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis."
@@ -3627,7 +3632,7 @@ line(255 255 0, targetname, targetEntityName)
 // Ambient light control
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname, EnableDisable, SpatialEntity) sphere(minfalloff) sphere(maxfalloff) iconsprite("editor/color_correction.vmt") = env_ambient_light : 
+@PointClass base(Targetname, EnableDisable, SpatialEntity) color(200 0 0) sphere(minfalloff) sphere(maxfalloff) iconsprite("editor/color_correction.vmt") = env_ambient_light : 
 	"An entity to control the color correction in the map."
 [
 	color(color255) : "Color (R G B)" : "255 255 255"
@@ -3812,17 +3817,17 @@ line(255 255 0, targetname, targetEntityName)
 	rotation(integer) : "Spin amount" : 0 : "The amount this platform should rotate as it moves, in degrees."
 ]
 
-@KeyFrameClass base(Targetname, Parentname, Angles, KeyFrame) size(-6 -6 -6, 6 6 6) color(255 200 0) keyframe() = keyframe_track : 
+@KeyFrameClass base(Targetname, Parentname, Angles, KeyFrame) size(-6 -6 -6, 6 6 6) keyframe() = keyframe_track : 
 	"Animation KeyFrame"
 [
 ]
 
-@MoveClass base(Targetname, Parentname, KeyFrame, Mover) size(-8 -8 -8, 8 8 8) color(255 170 0) animator() = move_keyframed : 
+@MoveClass base(Targetname, Parentname, KeyFrame, Mover) size(-8 -8 -8, 8 8 8) animator() = move_keyframed : 
 	"Keyframed Move Behavior"
 [
 ]
 
-@MoveClass base(Targetname, Parentname, Mover, KeyFrame) size(-8 -8 -8, 8 8 8) color(255 0 0) animator() = move_track : 
+@MoveClass base(Targetname, Parentname, Mover, KeyFrame) size(-8 -8 -8, 8 8 8) animator() = move_track : 
 	"Track Move Behavior"
 [
 	WheelBaseLength(integer) : "Distance between the wheels" : 50
@@ -4440,7 +4445,7 @@ line(255 255 0, targetname, targetEntityName)
 //
 //-------------------------------------------------------------------------
 
-@PointClass iconsprite("editor/logic_auto.vmt") = logic_auto : 
+@PointClass color(0 100 250) iconsprite("editor/logic_auto.vmt") = logic_auto : 
 	"Fires outputs when a map spawns. " +
 	"If 'Remove on fire' flag is set the logic_auto is deleted after firing. " +
 	"It can be set to check a global state before firing. This allows you to only fire events based on "+
@@ -4477,7 +4482,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnMultiNewRound(void) : "Fired only in multiplayer, when a new round is started. Only fired in multiplayer games that use round-based gameplay."
 ]
 
-@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") frustum(fov,16,256,255 255 255 10,-1) line(255 255 0, targetname, target) line(255 255 0, targetname, moveto) = point_viewcontrol : 
+@PointClass base(Targetname,Angles,Parentname) color(200 0 0) studioprop("models/editor/camera.mdl") frustum(fov,16,256,255 255 255 10,-1) line(255 255 0, targetname, target) line(255 255 0, targetname, moveto) = point_viewcontrol : 
 	"A camera entity that controls the player's view. While it's active, the player will see out of the camera." 
 [
 	target(target_destination) : "Entity to Look At" : : "Name of the entity that the camera should point at and track while active."
@@ -4524,7 +4529,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnEndFollow(void) : "Fired when the point_viewcontrol deactivates, due to the Disable input being received, the Entity to Look At being destroyed, or the Hold Time expiring."
 ]
 
-@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") frustum(fov,16,256,255 255 255 10,-1) line(255 255 0, targetname, target_entity) = point_viewcontrol_multiplayer : 
+@PointClass base(Targetname,Angles,Parentname) color(200 0 0) studioprop("models/editor/camera.mdl") frustum(fov,16,256,255 255 255 10,-1) line(255 255 0, targetname, target_entity) = point_viewcontrol_multiplayer : 
 	"A camera entity that controls all players' views. While it's active, the players will see out of the camera." 
 [
 	fov(float) : "Field of view" : "90" : "Player FOV"
@@ -4552,7 +4557,7 @@ line(255 255 0, targetname, targetEntityName)
 	input StartMovement(void) : "Start the movement to the target entity."
 ]
 
-@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") line(255 255 0, targetname, proxy) = point_viewproxy : 
+@PointClass base(Targetname,Angles,Parentname) color(200 0 0) studioprop("models/editor/camera.mdl") line(255 255 0, targetname, proxy) = point_viewproxy : 
 	"A camera entity that moves the player's view. Use this if you want the player to retain control of where the player looks but want to move the position to another location." 
 [
 	spawnflags(flags) =
@@ -4620,7 +4625,7 @@ line(255 255 0, targetname, targetEntityName)
 	input RandomizeFMod(float) : "Randomize the frequency modulation by an extremeness of 0.0 to 1.0."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_compare.vmt") = logic_compare :
+@PointClass base(Targetname) color(0 100 250) iconsprite("editor/logic_compare.vmt") = logic_compare :
 	"Compares an input value to another value. " +
 	"If the input value is less than the compare value, the OnLessThan output is fired with the input value. " +
 	"If the input value is equal to the compare value, the OnEqualTo output is fired with the input value. " +	
@@ -4643,7 +4648,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnGreaterThan(float) : "Fired when the input value is greater than the compare value. Sends the input value as data."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_branch.vmt") = logic_branch :
+@PointClass base(Targetname) color(0 100 250) iconsprite("editor/logic_branch.vmt") = logic_branch :
 	"Tests a boolean value and fires an output based on whether the value is true or false. " +
 	"Use this entity to branch between two potential sets of events."
 [
@@ -4663,7 +4668,7 @@ line(255 255 0, targetname, targetEntityName)
 ]
 
 
-@PointClass base(Targetname) iconsprite("editor/logic_branch_listener.vmt")
+@PointClass base(Targetname) color(0 100 250) iconsprite("editor/logic_branch_listener.vmt")
 	line(255 255 0, targetname, branch01) line(255 255 0, targetname, branch09)
 	line(255 255 0, targetname, branch02) line(255 255 0, targetname, branch10)
 	line(255 255 0, targetname, branch03) line(255 255 0, targetname, branch11)
@@ -4700,7 +4705,7 @@ line(255 255 0, targetname, targetEntityName)
 ]
 
 
-@PointClass base(Targetname) iconsprite("editor/logic_case.vmt") = logic_case :
+@PointClass base(Targetname) color(0 100 250) iconsprite("editor/logic_case.vmt") = logic_case :
 	"Compares an input to up to 16 preset values. If the input value is the same as " +
 	"any of the preset values, an output corresponding to that value is fired.\n\n" +
 	"For example: if Case01 is set to 2 and Case02 is set to 5, and the input value is 5, " +
@@ -4768,7 +4773,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnNotEqual(void) : "Fires if the values are not equal"
 ]
 
-@PointClass base(Targetname, EnableDisable) iconsprite("editor/logic_relay.vmt") = logic_relay :
+@PointClass base(Targetname, EnableDisable) color(0 100 250) iconsprite("editor/logic_relay.vmt") = logic_relay :
 	"A message forwarder. Fires an OnTrigger output when triggered, and " +
 	"can be disabled to prevent forwarding outputs.\n\n" +
 	"Useful as an intermediary between one entity and another for turning " +
@@ -4793,7 +4798,7 @@ line(255 255 0, targetname, targetEntityName)
 		"delete itself after firing this output."
 ]
 
-@PointClass base(Targetname, EnableDisable) size(-8 -8 -8, 8 8 8) = logic_register_activator :
+@PointClass base(Targetname, EnableDisable) color(0 100 250) size(-8 -8 -8, 8 8 8) = logic_register_activator :
 	"Stores an entity and sends messages with it as the activator\n" +
 	"Useful for keeping track of entities with mangled names due " +
 	"to template spawners and instances."
@@ -4813,7 +4818,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnRegisteredActivate4(void) : "Fired to send a message using the registered as the activator."
 ]
 
-@PointClass base(Targetname, EnableDisable) iconsprite("editor/logic_random_outputs.vmt") = logic_random_outputs :
+@PointClass base(Targetname, EnableDisable) color(0 100 250) iconsprite("editor/logic_random_outputs.vmt") = logic_random_outputs :
 	"A message forwarder. Fires up to eight separate outputs, each with a different chance of firing."
 [
 	spawnflags(flags) =
@@ -4848,15 +4853,15 @@ line(255 255 0, targetname, targetEntityName)
 	output OnTrigger8(void) : "This output has a chance to fire when the entity is triggered."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_script.vmt") 
-	line(255 255 0, targetname, group00) line(255 255 0, targetname, group08) 
-	line(255 255 0, targetname, group01) line(255 255 0, targetname, group09) 
-	line(255 255 0, targetname, group02) line(255 255 0, targetname, group10) 
-	line(255 255 0, targetname, group03) line(255 255 0, targetname, group11) 
-	line(255 255 0, targetname, group04) line(255 255 0, targetname, group12) 
-	line(255 255 0, targetname, group05) line(255 255 0, targetname, group13) 
-	line(255 255 0, targetname, group06) line(255 255 0, targetname, group14) 
-	line(255 255 0, targetname, group07) line(255 255 0, targetname, group15) = logic_script : "An entity that acts as a container for scripts."
+@PointClass base(Targetname) color(200 200 200) iconsprite("editor/logic_script.vmt") 
+	line(200 200 200, targetname, group00) line(200 200 200, targetname, group08) 
+	line(200 200 200, targetname, group01) line(200 200 200, targetname, group09) 
+	line(200 200 200, targetname, group02) line(200 200 200, targetname, group10) 
+	line(200 200 200, targetname, group03) line(200 200 200, targetname, group11) 
+	line(200 200 200, targetname, group04) line(200 200 200, targetname, group12) 
+	line(200 200 200, targetname, group05) line(200 200 200, targetname, group13) 
+	line(200 200 200, targetname, group06) line(200 200 200, targetname, group14) 
+	line(200 200 200, targetname, group07) line(200 200 200, targetname, group15) = logic_script : "An entity that acts as a container for scripts."
 [
 	Group00(target_destination) : "EntityGroup[0]"
 	Group01(target_destination) : "EntityGroup[1]"
@@ -4876,7 +4881,7 @@ line(255 255 0, targetname, targetEntityName)
 	Group15(target_destination) : "EntityGroup[15]"
 ]
 
-@PointClass base(Targetname, EnableDisable) iconsprite("editor/logic_timer.vmt") = logic_timer :
+@PointClass base(Targetname, EnableDisable) color(0 100 250) iconsprite("editor/logic_timer.vmt") = logic_timer :
 	"An entity that fires a timer event at regular, or random, intervals. It can also be set to oscillate between" + 
 	"a high and low end, in which case it will fire alternating high/low outputs each time it fires."
 [
@@ -4912,7 +4917,7 @@ line(255 255 0, targetname, targetEntityName)
 ]
 
 
-@PointClass base(Targetname) = hammer_updateignorelist :
+@PointClass base(Targetname) color(200 0 0) = hammer_updateignorelist :
 	"Specifies entities that are to be ignored by the hammer_update_safe_entities console command. " + 
 	"Enter the targetnames of entities that you want to exclude into the list of fields here. " +
 	"Several of these may exist in a map."
@@ -4936,7 +4941,7 @@ line(255 255 0, targetname, targetEntityName)
 ]
 
 
-@PointClass base(Targetname) iconsprite("editor/ts2do/logic_collision_pair.vmt") line(255 255 0, attach1, attach2) = logic_collision_pair : 
+@PointClass base(Targetname) color(128 128 128) iconsprite("editor/ts2do/logic_collision_pair.vmt") line(128 128 128, attach1, attach2) = logic_collision_pair : 
 	"An entity that can be used to enables/disable vphysics collisions between two target entities."
 [
 	attach1(target_destination) : "Attachment 1" : "" : "The first entity."
@@ -4998,7 +5003,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnHeardSound(void) : "Fired whenever this microphone hears any sound it cares about."
 ]
 
-@PointClass base(Targetname, EnableDisable ) iconsprite("editor/math_remap.vmt") = math_remap :
+@PointClass base(Targetname, EnableDisable) color(0 100 250)  iconsprite("editor/math_remap.vmt") = math_remap :
 	"An entity that remaps a range of input values to a given range of output values."
 [
 	spawnflags(flags) = 
@@ -5018,7 +5023,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OutValue(float) : "Fired when the InValue input is received, with the remapped input value as the parameter."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/math_colorblend.vmt") = math_colorblend :
+@PointClass base(Targetname) color(0 100 250) iconsprite("editor/math_colorblend.vmt") = math_colorblend :
 	"Used to create a blend between two colors for controlling the color of another entity."
 [
 	spawnflags(flags) = 
@@ -5038,7 +5043,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OutColor(color255) : "Fired when the InValue input is received, with the remapped RGB color as the parameter."
 ]
 
-@PointClass base(Targetname, EnableDisable) iconsprite("editor/math_counter.vmt") = math_counter :
+@PointClass base(Targetname, EnableDisable) color(0 100 250) iconsprite("editor/math_counter.vmt") = math_counter :
 	"Holds a numeric value and performs arithmetic operations upon it. If either the minimum or maximum " +
 	"legal value is nonzero, OutValue will be clamped to the legal range, and the OnHitMin/OnHitMax " +
 	"outputs will be fired at the appropriate times. If both min and max are set to zero, no clamping is " +
@@ -5071,7 +5076,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnGetValue(integer) : "Fired in response to the GetValue input. Used for polling the counter when you don't want constant updates from the OutValue output."
 ]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) line(255 255 0, source, target) = logic_lineto : 
+@PointClass base(Targetname) color(0 100 250) size(-8 -8 -8, 8 8 8) line(255 255 0, source, target) = logic_lineto : 
 	"An entity that calculates and outputs a vector from one entity to another." 
 [
 	source(target_destination) : "Start entity" : : "Name of the entity the line should start from."
@@ -5100,7 +5105,7 @@ line(255 255 0, targetname, targetEntityName)
 	input Toggle(void) : "Toggle on/off."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_autosave.vmt") = logic_autosave :
+@PointClass base(Targetname) color(200 0 0) iconsprite("editor/logic_autosave.vmt") = logic_autosave :
 	"An entity that is used to force an autosave."
 [
 	NewLevelUnit(boolean) : "Force New Level Unit" : 0 : "If set, the save will discard any savedata from previous levels, for the purpose of keeping savegame filesizes down. Can only be safely used if there is no way for the player to return to previous levels."
@@ -5114,7 +5119,7 @@ line(255 255 0, targetname, targetEntityName)
 	input SetMinHitpointsThreshold(integer) : "Set MinimumHitPoints to this."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_active_autosave.vmt") = logic_active_autosave :
+@PointClass base(Targetname) color(200 0 0) iconsprite("editor/logic_active_autosave.vmt") = logic_active_autosave :
 	"An entity that is used to look for opportunities to autosave."
 [
 	MinimumHitPoints(integer): "Initiation Hit Points" : 30 : "Start looking for an opportunity to save if player drops below this hitpoint level."
@@ -5244,17 +5249,17 @@ line(255 255 0, targetname, targetEntityName)
 	output OnFail(void) : "Fired in response to TestActivator input if the activator fails to pass the filter."
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_multiple.vmt") 
-	line(255 255 255, targetname, filter01)
-	line(255 255 255, targetname, filter02)
-	line(255 255 255, targetname, filter03)
-	line(255 255 255, targetname, filter04)
-	line(255 255 255, targetname, filter05)
-	line(255 255 255, targetname, filter06)
-	line(255 255 255, targetname, filter07)
-	line(255 255 255, targetname, filter08)
-	line(255 255 255, targetname, filter09)
-	line(255 255 255, targetname, filter10) = filter_multi :
+@FilterClass base(BaseFilter) color(0 255 0) iconsprite("editor/filter_multiple.vmt") 
+	line(0 255 0, targetname, filter01)
+	line(0 255 0, targetname, filter02)
+	line(0 255 0, targetname, filter03)
+	line(0 255 0, targetname, filter04)
+	line(0 255 0, targetname, filter05)
+	line(0 255 0, targetname, filter06)
+	line(0 255 0, targetname, filter07)
+	line(0 255 0, targetname, filter08)
+	line(0 255 0, targetname, filter09)
+	line(0 255 0, targetname, filter10) = filter_multi :
 	"A filter that tests the activator against multiple filters. This allows you to build more complex filters, such as"+
 	"'Allow anyone on Team 1 who is also class engineer', or 'Allow everyone except classes npc_zombie and npc_headcrab'."
 [
@@ -5280,7 +5285,7 @@ line(255 255 0, targetname, targetEntityName)
 	Filter10(filterclass) : "Filter 10" : : "Activator filter to test."
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_name.vmt") line(255 255 255, targetname, filtername) = filter_activator_name :
+@FilterClass base(BaseFilter) color(0 255 0) iconsprite("editor/filter_name.vmt") line(0 255 0, targetname, filtername) = filter_activator_name :
 	"A filter that filters by the name of the activator."
 [
 	filtername(target_destination) : "Filter Name" : : "The name to filter by. If the filter mode is Allow, only entities whose "+
@@ -5288,7 +5293,7 @@ line(255 255 0, targetname, targetEntityName)
 		"all entities EXCEPT those whose name matches the string will pass the filter."
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_model.vmt") = filter_activator_model :
+@FilterClass base(BaseFilter) color(0 255 0) iconsprite("editor/filter_model.vmt") = filter_activator_model :
 	"A filter that filters by the model of the activator."
 [
 	model(studio) : "Filter Model" : : "The model to filter by. If the filter mode is Allow, only entities whose "+
@@ -5296,7 +5301,7 @@ line(255 255 0, targetname, targetEntityName)
 		"all entities EXCEPT those whose model matches the string will pass the filter."
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_context.vmt") = filter_activator_context :
+@FilterClass base(BaseFilter) color(0 255 0) iconsprite("editor/filter_context.vmt") = filter_activator_context :
 	"A filter that filters by a context on the activator."
 [
 	ResponseContext(string) : "Filter Context" : : "The context to filter by. If the filter mode is Allow, only entities that "+
@@ -5304,7 +5309,7 @@ line(255 255 0, targetname, targetEntityName)
 		"all entities EXCEPT those whose context matches the string will pass the filter."
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_class.vmt") = filter_activator_class :
+@FilterClass base(BaseFilter) color(0 255 0) iconsprite("editor/filter_class.vmt") = filter_activator_class :
 	"A filter that filters by the class name of the activator."
 [
 	filterclass(string) : "Filter Classname" : : "The class name to filter by. If the filter mode is Allow, only entities whose "+
@@ -5312,7 +5317,7 @@ line(255 255 0, targetname, targetEntityName)
 		"all entities EXCEPT those whose class name matches the given string will pass the filter."
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_mass.vmt") = filter_activator_mass_greater :
+@FilterClass base(BaseFilter) color(0 255 0) iconsprite("editor/filter_mass.vmt") = filter_activator_mass_greater :
 	"A filter that filters by the mass of the activator."
 [
 	filtermass(float) : "Filter Mass" : : "The mass to filter by. If the filter mode is Allow, only entities whose "+
@@ -5320,7 +5325,7 @@ line(255 255 0, targetname, targetEntityName)
 		"all entities EXCEPT those whose mass is greater than the given float will pass the filter."
 ]
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_damage_type.vmt") = filter_damage_type :
+@FilterClass base(BaseFilter) color(0 255 0) iconsprite("editor/filter_damage_type.vmt") = filter_damage_type :
 	"A damage filter that filters by the type of damage inflicted. This can only be used as a damage filter, not as an activator filter."
 [
 	damagetype(choices) : "Damage type" : 64 : "The damage type to filter by. If the filter mode is Allow, only damage types that "+
@@ -5376,8 +5381,8 @@ line(255 255 0, targetname, targetEntityName)
 //
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname, Parentname, EnableDisable) 
-	line(255 255 255, targetname, target) line(255 255 255, target, lookatname) = point_anglesensor :
+@PointClass base(Targetname, Parentname, EnableDisable) color(0 100 250)
+	line(0 100 250, targetname, target) line(0 100 250, target, lookatname) = point_anglesensor :
 	"An entity that detects if another entity points in a given direction for a period of time."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angles will be sensed."
@@ -5401,7 +5406,7 @@ line(255 255 0, targetname, targetEntityName)
 	output FacingPercentage(float) : "Normalized value (0..1) where 1 is facing directly at target and 0 is at or beyond the angle of tolerance."
 ]
 
-@PointClass base(Targetname) line(255 255 255, targetname, target) = point_angularvelocitysensor :
+@PointClass base(Targetname) color(0 100 250) line(0 100 250, targetname, target) = point_angularvelocitysensor :
 	"An entity that detects if another entity's angular velocity meets or exceeds a threshold value."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angular velocity will be sensed."
@@ -5428,7 +5433,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnEqualTo(void) : "Fired when the Target Entity reaches the threshold angular velocity from a different velocity."
 ]
 
-@PointClass base(Targetname) line(255 255 255, targetname, target) = point_velocitysensor :
+@PointClass base(Targetname) color(0 100 250) line(0 100 250, targetname, target) = point_velocitysensor :
 	"An entity that detects and outputs an entity's velocity."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose velocity will be sensed."
@@ -5442,7 +5447,7 @@ line(255 255 0, targetname, targetEntityName)
 	input Disable(void) : "Disable the sensor."
 ]
 
-@PointClass base(Targetname, Parentname, EnableDisable, Angles) line(255 255 255, targetname, target) iconsprite("editor/point_proximity_sensor.vmt") = point_proximity_sensor :
+@PointClass base(Targetname, Parentname, EnableDisable, Angles) color(0 100 250) line(0 100 250, targetname, target) iconsprite("editor/point_proximity_sensor.vmt") = point_proximity_sensor :
 	"An entity that detects another entity's proximity to a target position."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose psition will be sensed."
@@ -5648,7 +5653,7 @@ line(255 255 0, targetname, targetEntityName)
 	additionaliterations(integer) : "Additional System Iterations" : 0 : "Adding iterations makes the interactions among constraints in a system tighter.  It will not compensate for errors due to collision, but will help in cases where objects of disparate mass are constrained to each other."
 ]
 
-@PointClass base(Targetname,Angles) iconsprite("editor/ts2do/phys_keepupright.vmt") line(255 255 0, targetname, attach1) = phys_keepupright : "A controller that tries to keep an entity facing a particular direction."
+@PointClass base(Targetname,Angles) color(128 128 128) iconsprite("editor/ts2do/phys_keepupright.vmt") line(255 255 0, targetname, attach1) = phys_keepupright : "A controller that tries to keep an entity facing a particular direction."
 [
 	spawnflags(flags) =
 	[
@@ -5694,22 +5699,23 @@ line(255 255 0, targetname, targetEntityName)
 	output OnAwakened(void) : "Fired when this entity becomes awake (collision/force is applied)."
 ]
 
-@PointClass base(Targetname, Parentname) size(-4 -4 -4, 4 4 4) line(255 255 0, targetname, parentname) = info_constraint_anchor : 
+@PointClass base(Targetname, Parentname) size(-4 -4 -4, 4 4 4) color(128 128 128) line(128 128 128, targetname, parentname) = info_constraint_anchor : 
 	"An entity used to attach constraints to a local position on an entity. Usually constraints will attach to the center of mass of an object. "+
 	"Attach the desired constraint to this entity, and then parent this entity to the entity you want the constraint to apply to."
 [
-	massScale(float) : "Amount to scale the mass of this body in the constraint solver" : "1"
+	massScale(float) : "Mass Scale" : "1" : "Amount to scale the mass of this body in the constraint solver."
 ]
 
-@PointClass size(-4 -4 -4, 4 4 4) line(255 255 0, targetname, target) = info_mass_center :
+@PointClass size(-4 -4 -4, 4 4 4) color(128 128 128) line(128 128 128, targetname, target) = info_mass_center :
 	"An entity that overrides the mass center of the target physics prop, or func_physbox, by moving it to the info_mass_center's location."
 [
 	target(target_destination) : "Target object" : ""  : "The entity whose mass center will be overridden."
 ]
 
-@PointClass halfgridsnap base(Targetname) 
-	line(255 255 255, targetname, attach1)  
-	line(255 255 255, targetname, attach2)
+@PointClass halfgridsnap base(Targetname)
+	color(128 128 128) 
+	line(128 128 128, targetname, attach1)  
+	line(128 128 128, targetname, attach2)
 	sphere(length) sphere(breaklength) = phys_spring : 
 	"A physically simulated spring. "+
 	"'Length' is what's known as the 'natural spring length'. This is how long the spring would "+
@@ -5742,6 +5748,7 @@ line(255 255 0, targetname, targetEntityName)
 @PointClass halfgridsnap size(-8 -8 -8, 8 8 8)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	color(128 128 128)
 	base(TwoObjectPhysics) = phys_hinge : 
 	"A physically simulated hinge. Use the helper to define the axis of rotation."
 [
@@ -5773,6 +5780,7 @@ line(255 255 0, targetname, targetEntityName)
 @PointClass base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	color(128 128 128) 
 	iconsprite("editor/phys_ballsocket.vmt") = phys_ballsocket : 
 	"A constraint that keeps the position of two objects fixed, relative to the constraint's origin. It does not affect rotation."
 [
@@ -5784,6 +5792,7 @@ line(255 255 0, targetname, targetEntityName)
 @PointClass base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	color(128 128 128) 
 	studio("models/editor/axis_helper.mdl") = phys_constraint : 
 	"A constraint that keeps the relative position and orientation of two objects fixed."
 [
@@ -5792,6 +5801,7 @@ line(255 255 0, targetname, targetEntityName)
 @PointClass base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	color(128 128 128) 
 	studio("models/editor/axis_helper.mdl") = phys_pulleyconstraint : 
 	"A constraint that is essentially two length constraints and two points. Imagine it as a virtual rope connected to two objects, each suspended from a pulley above them."+
 	"The constraint keeps the sum of the distances between the pulley points and their suspended objects constant."
@@ -5809,6 +5819,7 @@ line(255 255 0, targetname, targetEntityName)
 @PointClass halfgridsnap base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	color(128 128 128) 
 	studio("models/editor/axis_helper.mdl") = phys_slideconstraint : 
 	"A constraint that constrains an entity along a line segment."
 [
@@ -5845,6 +5856,7 @@ line(255 255 0, targetname, targetEntityName)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
 	sphere(minlength)
+	color(128 128 128) 
 	studio("models/editor/axis_helper.mdl") = phys_lengthconstraint : 
 	"A constraint that preserves the distance between two entities. If the 'Keep Rigid' flag is set, think of it as a rod. If not, think off it as a virtual rope."
 [
@@ -5861,6 +5873,7 @@ line(255 255 0, targetname, targetEntityName)
 @PointClass base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	color(128 128 128) 
 	studio("models/editor/axis_helper.mdl") = phys_ragdollconstraint : 
 	"A constraint that fixes the position of two entities, relative to this constraint's origin. Also allows for limits on the rotation around each axis, in the space of this constraint."
 [
@@ -5881,7 +5894,9 @@ line(255 255 0, targetname, targetEntityName)
 	zfriction(float) : "Z axis friction" : "0"
 ]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) color(0 0 255) line(255 255 0, targetname, target) = phys_convert : 
+@PointClass base(Targetname)
+	color(128 128 128) 
+	line(255 255 0, targetname, target) 
 	"Turns an arbitrary entity into a physically simulated entity. i.e. brush entities will behave like func_physbox, model entities behave like prop_physics."
 [
 	spawnflags(flags) =
@@ -5900,7 +5915,7 @@ line(255 255 0, targetname, targetEntityName)
 	input ConvertTarget(void) : "Converts this entity's target to a physically simulated object." 
 ]
 
-@BaseClass base(Targetname) line(255 255 0, targetname, attach1) = ForceController
+@BaseClass base(Targetname)= ForceController
 [
 	spawnflags(flags) =
 	[
@@ -5924,7 +5939,7 @@ line(255 255 0, targetname, targetEntityName)
 	input Scale(string) : "Set Force Scale"
 ]
 
-@PointClass base(Angles, ForceController) = phys_thruster : 
+@PointClass line(255 255 0, targetname, attach1) color(128 128 128) line(128 128 128, targetname, attach1) base(Angles, ForceController) = phys_thruster : 
 	"An entity used to apply constant acceleration to a physics object. "+
 	"The force and torque is calculated using the position and direction of the thruster as an impulse. So moving those off the object's center "+
 	"will cause torque as well. Torque can be removed by unchecking the 'apply torque' flag. The position of the thruster can be forced to be "+
@@ -5939,7 +5954,7 @@ line(255 255 0, targetname, targetEntityName)
 	force(string) : "Force" : "0" : "Force (will be integrated, units are force kg*in/s^2)"
 ]
 
-@PointClass halfgridsnap base(ForceController) = phys_torque : 
+@PointClass halfgridsnap color(128 128 128) line(128 128 128, targetname, attach1) base(ForceController) = phys_torque : 
 	"An angular thruster. Use it to apply angular force to an entity."
 [
 	// Angular acceleration (units are degress/s^2)
@@ -5947,7 +5962,7 @@ line(255 255 0, targetname, targetEntityName)
 	axis(vecline) : "Rotation Axis" : ""
 ]
 
-@PointClass base(Targetname) halfgridsnap size(-8 -8 -8, 8 8 8) line(255 255 0, targetname, attach1) = phys_motor : 
+@PointClass base(Targetname) halfgridsnap size(-8 -8 -8, 8 8 8) color(128 128 128) line(128 128 128, targetname, attach1) = phys_motor : 
 	"An entity that tries to spin a target entity at a particular speed."
 [
 	speed(string) : "Rotation Speed" : "0" : "Angular speed (units are degress/second)"
@@ -5974,7 +5989,7 @@ line(255 255 0, targetname, targetEntityName)
 	input TurnOff(void) : "Turns motor off"
 ]
 
-@PointClass base(Targetname, Parentname, Angles, Studiomodel) studio() = phys_magnet : 
+@PointClass base(Targetname, Parentname, Angles, Studiomodel) color(128 128 128) studio() = phys_magnet : 
 	"An entity that acts like a magnet, attaching metallic physics objects to itself when they touch it."
 [
 	spawnflags(flags) =
@@ -6110,14 +6125,9 @@ line(255 255 0, targetname, targetEntityName)
 @PointClass base(prop_static_base) color(255 255 0) sphere(fademindist) sphere(fademaxdist) studioprop() = prop_static :
 	"A prop that doesn't move and doesn't animate."
 [
-	RenderMode(choices) : "Render Mode" : 0 : "Visible or not." = 
-	[
-		0 : "Visible"
-		10 : "Not visible"
-	]
 ]
 
-@PointClass base(prop_dynamic_base,EnableDisable) sphere(fademindist) sphere(fademaxdist) studioprop() = prop_dynamic :
+@PointClass base(EnableDisable, prop_dynamic_base) sphere(fademindist) sphere(fademaxdist) studioprop() = prop_dynamic :
 	"A prop that can be placed in hierarchy and can play animations. It can also be configured to break when it takes enough damage. "+
 	"Note that the health of the object will be overridden by the health inside the model, to ensure consistent health game-wide. "+
 	"If the model used by the prop is configured to be used as a prop_physics (i.e. it should be physically simulated) then it CANNOT be "+
@@ -6703,7 +6713,7 @@ line(255 255 0, targetname, targetEntityName)
 //
 //-------------------------------------------------------------------------
 @PointClass base(Angles) size(-16 -16 -16, 16 16 16) color(255 255 255) = test_traceline : 
-	"A debugging tool for testing tracelines."
+	"A debugging tool for testing tracelines. Pretty much useless for other people. This spins wildly, tracing lines to the closest brush."
 [
 ]
 
@@ -6724,7 +6734,7 @@ line(255 255 0, targetname, targetEntityName)
 	MinimumHitPoints(integer): "Minumum Hit Points" : 0 : "Don't save dangerous when player has less than this many hitpoints."
 ]
 
-@SolidClass base(EnableDisable) line(255 255 255,targetname, landmark) = trigger_changelevel : 
+@SolidClass base(EnableDisable) line(255 255 255,targetname, landmark) color(200 0 0) = trigger_changelevel : 
 	"An entity that triggers a level change.\n" +
 	"Place an info_landmark in both maps that marks the 'same' location in each map.\n"+
 	"TIPS & TRICKS: To fire events in the next level, use the OnLevelChange output to turn on "+
@@ -7017,7 +7027,7 @@ line(255 255 0, targetname, targetEntityName)
 // Water LOD control
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname) iconsprite("editor/waterlodcontrol.vmt") sphere(cheapwaterstartdistance) sphere(cheapwaterenddistance) = water_lod_control : 
+@PointClass base(Targetname) iconsprite("editor/waterlodcontrol.vmt") sphere(cheapwaterstartdistance) sphere(cheapwaterenddistance) color(200 0 0) = water_lod_control : 
 	"An entity used to control the LOD behavior of any water in the map. If your map has water, this entity is required."
 [
 	cheapwaterstartdistance(float) : "Start Transition to Cheap Water" : 1000 : "This is the distance from the camera that water will start transitioning to cheap water, in inches."
@@ -7056,7 +7066,7 @@ line(255 255 0, targetname, targetEntityName)
 // Used to listen to events caled from code
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname) iconsprite("editor/logic_eventlistener.vmt") = logic_eventlistener :
+@PointClass base(Targetname) color(200 0 0) iconsprite("editor/logic_eventlistener.vmt") = logic_eventlistener :
 	"An entity that can listen to events fired from code and fire " +
 	"an output when it happens."
 [
@@ -7087,7 +7097,7 @@ line(255 255 0, targetname, targetEntityName)
 // Used to allow entities to mimic the motions of other entities
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname) iconsprite("editor/logic_measure_movement.vmt") 
+@PointClass base(Targetname) color(0 100 250) iconsprite("editor/logic_measure_movement.vmt") 
 	line(255 255 0, targetname, measureReference) line(255 0 255, targetname, measureTarget, targetname, measureReference) 
 	line(255 255 0, targetname, targetReference)  line(255 0 255, targetname, target, targetname TargetReference) = logic_measure_movement :
 	"An entity that can measure the movement of an entity relative to another entity " +
@@ -7140,7 +7150,7 @@ line(255 255 0, targetname, targetEntityName)
 	output OnCreditsDone(void)  : "Fired when the credits having finished rolling."
 ]
 
-@PointClass base(Parentname, Targetname) line(255 255 0, targetname, parentname)  iconsprite("editor/material_modify_control.vmt") = material_modify_control : 
+@PointClass base(Parentname, Targetname) color(0 100 250) line(255 255 0, targetname, parentname) iconsprite("editor/ts2do/material_modify_control.vmt") = material_modify_control : 
 	"An entity that can be used to directly control material vars. To use it, you need to read the .vmt of the material you "+
 	"intend to change. Parent this entity to a brush model entity who's material you want to control."
 [
@@ -7391,36 +7401,36 @@ line(255 255 0, targetname, targetEntityName)
 		2 : "None"
 	]
 
-	replace01(instance_variable) : "Replace Variable(01)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace02(instance_variable) : "Replace Variable(02)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace03(instance_variable) : "Replace Variable(03)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace04(instance_variable) : "Replace Variable(04)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace05(instance_variable) : "Replace Variable(05)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace06(instance_variable) : "Replace Variable(06)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace07(instance_variable) : "Replace Variable(07)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace08(instance_variable) : "Replace Variable(08)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace09(instance_variable) : "Replace Variable(09)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace10(instance_variable) : "Replace Variable(10)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace11(instance_variable) : "Replace Variable(11)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace12(instance_variable) : "Replace Variable(12)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace13(instance_variable) : "Replace Variable(13)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace14(instance_variable) : "Replace Variable(14)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace15(instance_variable) : "Replace Variable(15)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace16(instance_variable) : "Replace Variable(16)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace17(instance_variable) : "Replace Variable(17)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace18(instance_variable) : "Replace Variable(18)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace19(instance_variable) : "Replace Variable(19)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace20(instance_variable) : "Replace Variable(20)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace21(instance_variable) : "Replace Variable(21)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace22(instance_variable) : "Replace Variable(22)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace23(instance_variable) : "Replace Variable(23)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace24(instance_variable) : "Replace Variable(24)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace25(instance_variable) : "Replace Variable(25)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace26(instance_variable) : "Replace Variable(26)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace27(instance_variable) : "Replace Variable(27)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace28(instance_variable) : "Replace Variable(28)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace29(instance_variable) : "Replace Variable(29)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace30(instance_variable) : "Replace Variable(30)" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace01(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace02(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace03(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace04(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace05(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace06(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace07(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace08(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace09(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace10(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace11(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace12(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace13(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace14(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace15(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace16(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace17(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace18(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace19(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace20(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace21(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace22(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace23(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace24(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace25(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace26(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace27(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace28(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace29(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace30(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
 ]
 
 @PointClass iconsprite("editor/func_instance_parms.vmt") = func_instance_parms : 

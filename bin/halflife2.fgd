@@ -1537,7 +1537,17 @@
 // Logic Entities
 //
 //-------------------------------------------------------------------------
-@PointClass color(0 0 255) base(Targetname) iconsprite("editor/choreo_scene.vmt") line(255 255 0, targetname, target1) line(255 255 0, targetname, target2) line(255 255 0, targetname, target3) line(255 255 0, targetname, target4) line(255 255 0, targetname, target5) line(255 255 0, targetname, target6) line(255 255 0, targetname, target7) line(255 255 0, targetname, target8) = logic_choreographed_scene :
+@PointClass 
+	base(Targetname) 
+	color(240 180 250) iconsprite("editor/choreo_scene.vmt") 
+	 line(240 180 250, targetname, target1) 
+	 line(240 180 250, targetname, target2) 
+	 line(240 180 250, targetname, target3) 
+	 line(240 180 250, targetname, target4) 
+	 line(240 180 250, targetname, target5) 
+	 line(240 180 250, targetname, target6) 
+	 line(240 180 250, targetname, target7) 
+	 line(240 180 250, targetname, target8) = logic_choreographed_scene :
 	"Manages a choreographed scene of one or more actors."
 
 [
@@ -1609,7 +1619,26 @@
 	]
 ]
 
-@PointClass color(0 0 255) base(Targetname) iconsprite("editor/choreo_manager.vmt") = logic_scene_list_manager :
+@PointClass 
+	base(Targetname) 
+	color(240 180 250) iconsprite("editor/choreo_manager.vmt") 
+	 line(240 180 250, targetname, scene0)
+	 line(240 180 250, targetname, scene1)
+	 line(240 180 250, targetname, scene2)
+	 line(240 180 250, targetname, scene3)
+	 line(240 180 250, targetname, scene4)
+	 line(240 180 250, targetname, scene5)
+	 line(240 180 250, targetname, scene6)
+	 line(240 180 250, targetname, scene7)
+	 line(240 180 250, targetname, scene8)
+	 line(240 180 250, targetname, scene9)
+	 line(240 180 250, targetname, scene10)
+	 line(240 180 250, targetname, scene11)
+	 line(240 180 250, targetname, scene12)
+	 line(240 180 250, targetname, scene13)
+	 line(240 180 250, targetname, scene14)
+	 line(240 180 250, targetname, scene15)
+	= logic_scene_list_manager :
 	"Manages a list of logic_choreographed_scene entities. Store choreo scenes in them in order that they will be played by other inputs. Whenever a scene plays, the manager will remove all scenes before that one in the list. The name of another logic_scene_list_manager can be entered in a slot instead of an invididual scene, which will cause all scenes in that manager to be removed when a later scene in this list is played."
 [
 	scene0(target_destination) : "Scene 1" : "" : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
@@ -1934,7 +1963,7 @@
 
 
 
-@PointClass base(BaseDriveableVehicle, Parentname) studioprop() = prop_vehicle_choreo_generic :
+@PointClass base(BaseDriveableVehicle, Parentname) color(240 180 250) studioprop() = prop_vehicle_choreo_generic :
 	"Generic Choreo vehicle used for magical events."
 [
 	model(studio) : "World model" : "models/vehicles/prisoner_pod.mdl"

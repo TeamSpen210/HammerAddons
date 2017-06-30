@@ -225,8 +225,8 @@
 @PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton) studioprop() = prop_floor_cube_button :
 "A floor button which is activated by a prop_weighted_cube."
 [
-	model(studio) : "Button model" : "models/props/box_socket.mdl" : ""
-	AcceptsBall(boolean) : "Accepts Balls" : 0 : "Do Edgeless Safety Cubes activate this?"
+	model(studio) : "Button model" : "models/props/box_socket.mdl" : "Model for the Cube Button. Custom models can be used."
+	AcceptsBall(boolean) : "Accepts Balls" : 0 : "Do Edgeless Safety Cubes activate this? Should almost always be No unless no balls are in the map."
 ]
 
 @PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton) studioprop("models/props/ball_button.mdl") = prop_floor_ball_button :
@@ -269,7 +269,7 @@
 	output OnObjectPlacedSize(integer) : "When a portal is successfully placed, this sends the scale level as an out value"
 ]
 
-@PointClass base(Targetname) iconsprite("editor/info_target.vmt") line(255 255 0, tsrgetname, functankname) = info_player_ping_detector : "Player Ping Detector."
+@PointClass base(Targetname) iconsprite("editor/info_target.vmt") line(255 255 0, targetname, functankname) = info_player_ping_detector : "Player Ping Detector."
 [
 	FuncTankName(target_destination) : "Func_Tank Entity" : : "Name of the func_tank that will be told to look at the ping location when detected."
 	TeamToLookAt(choices) : "Player to Observe" : 2 : "Which player's pings to look at." =
@@ -301,7 +301,7 @@
 //
 //-------------------------------------------------------------------------
 
-@FilterClass base(BaseFilter) iconsprite("editor/filter_held.vmt") = filter_player_held :
+@FilterClass base(BaseFilter) color(0 255 0) iconsprite("editor/filter_held.vmt") = filter_player_held :
 	"A filter that only accepts objects held by the player."
 [
 ]
@@ -354,7 +354,7 @@
 @PointClass base(Targetname, Angles, Parentname, Reflection, ToggleDraw, RenderFields) studioprop() = prop_laser_catcher: 
 "Discouragement Beam Catcher that detects a laser, absorbing the beam. The entity will fire outputs when struck and unstruck."
 [
-	SkinType(choices) : "Skin Type" : 0 =
+	SkinType(choices) : "Skin Type" : 0 : "Set the type of catcher to use." =
 	[
 		0 : "Clean"
 		1 : "Rusted"
@@ -388,14 +388,14 @@
 [
 	skin(integer) : "Skin (OLD)" : 0 : "The old skin property, mainly to show in Hammer. "
 
-	CubeType(choices) : "Cube Type" : 0 : "What cube type is this? Use a prop_monster_box for FrankenTurrets." =
+	CubeType(choices) : "Cube Type" : 0 : "What cube type is this? Use a prop_monster_box for FrankenTurrets. If set to Custom, use AddOutput to change it back OnMapSpawn so gel skins behave correctly." =
 	[
-		0 : "Weighted Storage Cube"
-		1 : "Weighted Companion Cube"
-		2 : "Weighted Pivot Cube"
-		3 : "Edgeless Safety Cube"
-		4 : "Antique Storage Cube"
-		6 : "Custom - AddOutput to another for gel skins."
+		0 : "[0] Weighted Storage Cube"
+		1 : "[1] Weighted Companion Cube"
+		2 : "[2] Weighted Pivot Cube"
+		3 : "[3] Edgeless Safety Cube"
+		4 : "[4] Antique Storage Cube"
+		6 : "Custom model"
 	]
 
 	SkinType(choices) : "Skin Type" : 0 : "Is the cube clean or rusty? Storage and Pivot cubes are the only types with a rusty version." =
@@ -563,12 +563,6 @@
 	output OnEntityPostPortalled(void)	: "Fires when the entity is done portalling."
 ]
 
-@PointClass base(Targetname) = logic_player_slowtime : "Start/stops player being in slow time. Likely from an earlier Portal test element concept."
-[
-	input StartSlowingTime(float) : "Start slowing time for the player (with a set duration)."
-	input StopSlowingTime(void) : "Stop slowing time for the player."
-]
-
 @PointClass base(Targetname) = logic_timescale : "Changes the server's timescale."
 [
 	BlendTime(float) : "Blend Time" : 0 : "The amount of time it takes to ramp to the desired timescale when triggered."
@@ -655,7 +649,7 @@
 	input SetIdleSequence(string) : "Set a sequence to use as an idle sequence."
 	input ClearIdleSequence(void) : "Return to the default idle animation."
 
-	input Explode(void) : "Explode the sphere."
+	input Explode(void) : "Explode the sphere, triggering an explosion effect and some gibs."
 ]
 
 @PointClass base(Targetname, Angles, Parentname, RenderFields, ToggleDraw) studioprop() = prop_monster_box : "FrankenCubes, they walk about when oriented correctly but otherwise behave like normal Storage Cubes."
@@ -906,7 +900,7 @@
 	]
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_coop_manager.vmt") = logic_coop_manager :
+@PointClass base(Targetname) color(0 100 250)  iconsprite("editor/logic_coop_manager.vmt") = logic_coop_manager :
 	"Manages two sets of values and can fire outputs based on the state of those values. " +
 	"Useful in coop where you can have players independently setting states on buttons, switches, etc."
 [
@@ -989,7 +983,7 @@
 ]
 
 
-@PointClass base(EnvGlobal) iconsprite("editor/env_global.vmt") = env_global : 
+@PointClass base(EnvGlobal) color(200 0 0) iconsprite("editor/env_global.vmt") = env_global : 
 	"An entity to control a game-specific global states."
 [
 	globalstate(choices) : "Global State to Set" =
