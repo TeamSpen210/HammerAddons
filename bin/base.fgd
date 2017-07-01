@@ -5133,7 +5133,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	input Disable(void) : "Enable the entity"
 ]
 
-@PointClass base(Targetname) studio("models/editor/camera.mdl") = logic_playmovie : "Plays a movie and allows for various playback options"
+@PointClass base(Targetname) iconsprite("editor/logic_playmovie") = logic_playmovie : "Plays a movie and allows for various playback options"
 [
 	MovieFilename(string) : "Movie to play" : "" : "Filename of the movie to play"
 	allowskip(boolean) : "Allow User to Skip" : 0 : "Whether or not the user may skip the video with common keys"
@@ -7490,12 +7490,12 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	output OnProxyRelay(void) : "A message from outside can trigger this to cause something to happen in the instance."
 ]
 
-@PointClass = func_instance_origin : 
-	"This is the center of the instance for rotation."
+@PointClass iconsprite("editor/func_instance_origin.vmt") = func_instance_origin: 
+	"Place to change the center of an instance."
 [
 ]
 
-@PointClass base(Targetname) iconsprite("editor/scripted_sentence.vmt") line(255 255 0, targetname, hint_target) sphere(hint_range) = env_instructor_hint : "An entity that allows for creation and control of instructor lessons by map logic"
+@PointClass base(Targetname) iconsprite("editor/env_instructor_hint.vmt") line(255 255 0, targetname, hint_target) sphere(hint_range) = env_instructor_hint : "An entity that allows for creation and control of instructor lessons by map logic"
 [
 	hint_replace_key(string) : "Replace Key" : : "Unique name so that messages with the same key will replace each other."
 	hint_target(target_destination) : "Target Entity" : : "The entity to show this hint on top of. The entity used must exist on the client, info_target_instructor_hint can be parented to server only entities for this purpose."
@@ -7620,7 +7620,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	input EndHint(void) : "Stop showing the hint if it hasn't already timed out."
 ]
 
-@PointClass base(Targetname,Parentname) iconsprite("editor/target.vmt") = info_target_instructor_hint : "A generic target that gets replicated to the client for hud hint targeting."
+@PointClass base(Targetname,Parentname) iconsprite("editor/info_target.vmt") = info_target_instructor_hint : "A generic target that gets replicated to the client for hud hint targeting."
 [
 ]
 
