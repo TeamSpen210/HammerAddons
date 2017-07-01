@@ -37,7 +37,7 @@
 	detailvbsp(string) : "Detail.vbsp file" : "detail.vbsp" : "Detail.vbsp file to use for emitting detail props (found in directory <root>/modname)"
 	detailmaterial(material) : "Detail material file" : "detail/detailsprites" : "Material for detail sprites to use for drawing detail props."
 	coldworld(boolean) : "World is cold" : 0 : "Emit steam from NPC's mouths and similar effects."
-	maxoccludeearea_x360(float) : "Max occlude4 area (Xbox)" : "0" : "[Used on 360] Prevents occlusion testing for entities that take up more than X% of the screen." 
+	maxoccludeearea_x360(float) : "Max occluder area (Xbox)" : "0" : "[Used on 360] Prevents occlusion testing for entities that take up more than X% of the screen." 
 	minoccluderarea_x360(float) : "Min occluder area (Xbox)" : "0" : "[Used on 360] Prevents occluders from being used if they take up less than X% of the screen."
 ]
 
