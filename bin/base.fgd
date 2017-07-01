@@ -3022,7 +3022,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 @PointClass base(Targetname) 
 	line(255 255 0, targetname, referencename)
 	line(255 255 0, targetname, filtername)
-	color(0 100 250) = point_entity_finder :
+	color(0 100 250) iconsprite("editor/point_entity_finder") = point_entity_finder :
 	"An entity that will find an entity and pass it along as the !Caller with the OutEntity output.  Requires using !Caller as the parameter on the input."
 [
 	filtername(filterclass) : "Filter Name" : : "Filter to use to narrow set of findable entities. See filter_activator_name for more explanation."
