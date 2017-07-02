@@ -2724,8 +2724,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 ]
 
 @PointClass base(Angles) 
-	size(-1 -1 -1, 1 1 1) 
-	color(200 0 0)
+	color(173 223 245) studioprop("models/editor/sky_camera.mdl")
 	sphere(fogstart)
 	sphere(fogend)
 	= sky_camera : 

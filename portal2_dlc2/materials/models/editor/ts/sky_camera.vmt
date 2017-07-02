@@ -1,0 +1,4 @@
+VertexLitGeneric
+	{
+	$baseTexture "models/editor/ts/sky_camera"
+	}
