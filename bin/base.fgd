@@ -7619,7 +7619,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 		"+right" : "strafe Right"
 		"+duck" : "Crouch"
 		"+jump" : "Jump"
-		"+attack1" : "Fire Blue Portal"
+		"+attack" : "Fire Blue Portal"
 		"+attack2" : "Fire Orange Portal"
 		"+use" : "Use Key"
 		"+zoom" : "Zoom In"
