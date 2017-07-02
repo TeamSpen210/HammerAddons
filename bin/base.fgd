@@ -5670,9 +5670,10 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 ]
 
 @PointClass base(Targetname, Angles) sphere(expradius) studioprop() = physics_cannister : 
-	"A physically simulated gas cannister that can have its cap shot off, at which point gas will start escaping and cause the cannister to fly around. If it takes enough damage, it will explode."
+	"A physically simulated gas cannister that can have its cap shot off, at which point gas will start escaping and cause the cannister to fly around. If it takes enough damage, it will explode. " +
+	"The model should have a nozzle attachment point, which is where gas will escape and thrust will be produced from."
 [
-	model(studio) : "World model" : "models/fire_equipment/w_weldtank.mdl"
+	model(studio) : "World model" : "" : "The model used for the cannister. The original model is fire_equipment/w_weldtank.mdl."
 	spawnflags(flags) = 
 	[
 		1 : "Start Asleep" : 0

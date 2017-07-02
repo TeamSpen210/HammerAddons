@@ -432,7 +432,7 @@
 	output OnTauntedOrangeFinished(void) : "P-Body FINISHED taunting the camera."
 ]
 
-@PointClass base(Targetname, Angles, Studiomodel) studioprop( "models/props/telescopic_arm.mdl" ) = prop_telescopic_arm : "Telescopic Arm. Useless."
+@PointClass base(Targetname, Angles, Studiomodel) studioprop() = prop_telescopic_arm : "Telescopic Arm. Useless."
 [
 	input Enable(void) : "Enable Thumper"
 	input Disable(void) : "Disable Thumper"

@@ -615,7 +615,7 @@
 [
 ]
 
-@PointClass size( -4 -4 -4, 4 4 4 ) base(Targetname, Angles, Parentname) studio("models/pigeon.mdl") = ai_battle_line : "Battle line"
+@PointClass size( -4 -4 -4, 4 4 4 ) base(Targetname, Angles, Parentname) = ai_battle_line : "Battle line"
 [																									  
 	// Spawnflags
 	spawnflags(Flags) = 
@@ -2024,7 +2024,7 @@ line(255 255 255, targetname, target) = env_entity_dissolver: "Fizzles the targe
 	]
 ]
 
-@PointClass base(Targetname, Angles) studio("models/props_combine/coreball.mdl") = prop_coreball: "Core Ball" 
+@PointClass base(Targetname, Angles, Angles, RenderFields) studio("models/props_combine/coreball.mdl") = prop_coreball: "Legacy version of prop_scalable, which forces a specific model." 
 [
 	input SetScaleX(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
 	input SetScaleY(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"

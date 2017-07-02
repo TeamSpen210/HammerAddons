@@ -532,10 +532,9 @@
 
 @PointClass base(prop_glass_futbol, prop_exploding_futbol) studioprop("models/props/futbol.mdl") line(255 255 0,targetname, spawnername) = hot_potato : "This uses the futbol model. It can be carried around, but on impact it explodes, similar to prop_exploding_futbols."
 [
-
 ]
 
-@PointClass base(prop_glass_futbol_socket) studio( "models/props/axis_helper.mdl" ) = hot_potato_socket : "Catches (bombs?) and fires an output."
+@PointClass base(prop_glass_futbol_socket) studio( "models/editor/axis_helper.mdl" ) = hot_potato_socket : "Catches (bombs?) and fires an output."
 [
 ]
 
@@ -543,7 +542,7 @@
 [
 ]
 
-@PointClass base(prop_glass_futbol_socket) studio( "models/props/axis_helper.mdl" ) = hot_potato_catcher : "Catches 'hot potatos' and fires an output."
+@PointClass base(prop_glass_futbol_socket) studio( "models/editor/axis_helper.mdl" ) = hot_potato_catcher : "Catches 'hot potatos' and fires an output."
 [
 ]
 
@@ -980,7 +979,7 @@
 
 @PointClass base(BaseNPC, Parentname, RenderFields, Shadow) studioprop() = npc_wheatley_boss : "Wheatley NPC stub"
 [
-	model(studio) : "Model" : "models\npcs\glados\glados_wheatley_boss_screen.mdl"
+	model(studio) : "Model" : "models/npcs/glados/glados_wheatley_boss_screen.mdl"
 ]
 
 
