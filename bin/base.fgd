@@ -7523,47 +7523,85 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	
 	hint_icon_onscreen(Choices) : "Onscreen Icon" : "icon_tip" : "The icon to use when the hint is within the player's view." =
 	[
-		"icon_bulb" : "icon_bulb"
-		"icon_caution" : "icon_caution"
-		"icon_alert" : "icon_alert"
-		"icon_alert_red" : "icon_alert_red"
-		"icon_tip" : "icon_tip"
-		"icon_skull" : "icon_skull"
-		"icon_no" : "icon_no"
-		"icon_run" : "icon_run"
-		"icon_interact" : "icon_interact"
-		"icon_button" : "icon_button"
-		"icon_door" : "icon_door"
-		"icon_arrow_plain" : "icon_arrow_plain"
-		"icon_arrow_plain_white_dn" : "icon_arrow_plain_white_dn"
-		"icon_arrow_plain_white_up" : "icon_arrow_plain_white_up"
-		"icon_arrow_up" : "icon_arrow_up"
-		"icon_arrow_right" : "icon_arrow_right"
-		"icon_fire" : "icon_fire"
-		"icon_present" : "icon_present"
-		"use_binding" : "show key bindings"
+		"use_binding" : "Show controls instead"
+		"icon_blank": "Blank"
+		
+		"icon_bulb" : "Bulb"
+		"icon_caution" : "Caution"
+		"icon_alert" : "White Exclamation Mark"
+		"icon_alert_red" : "Red Exclamation Mark"
+		
+		"icon_tip" : "Information"
+		"icon_skull" : "Eye"
+		
+		"icon_interact" : "Interact/Pickup"
+		"icon_button" : "Button"
+		"icon_door" : "Door"
+		"icon_useable_item": "Joystick"
+		
+		"icon_arrow_plain_white_dn" : "Simple Down Arrow"
+		"icon_arrow_plain_white_up" : "Simple Up Arrow"
+		"icon_arrow_up" : "Up Arrow"
+		"icon_arrow_right" : "Right Arrow"
+		
+		"icon_mouseRight": "Right-Click"
+		"icon_mouseLeft": "Left-Click"
+		"icon_mouseWheel_up": "MouseWheel Up"
+		"icon_mouseWheel_down": "MouseWheel Down"
+		"icon_mouseThree": "Click Scrollwheel"
+		
+		"icon_key_generic": "Empty Key"
+		"icon_key_wide": "Spacebar"
+		
+		"icon_key_right": "Right Key"
+		"icon_key_left": "Left Key"
+		"icon_key_down": "Down Key"
+		"icon_key_up": "Up Key"
+		
+		"icon_dpad": "D-Pad"
+		"icon_fire": "Fire"
+		"icon_present": "Present"
 	]
 	
 	hint_icon_offscreen(Choices) : "Offscreen Icon" : "icon_tip" : "The icon to use when the hint is outside the player's view." =
 	[
-		"icon_bulb" : "icon_bulb"
-		"icon_caution" : "icon_caution"
-		"icon_alert" : "icon_alert"
-		"icon_alert_red" : "icon_alert_red"
-		"icon_tip" : "icon_tip"
-		"icon_skull" : "icon_skull"
-		"icon_no" : "icon_no"
-		"icon_run" : "icon_run"
-		"icon_interact" : "icon_interact"
-		"icon_button" : "icon_button"
-		"icon_door" : "icon_door"
-		"icon_arrow_plain" : "icon_arrow_plain"
-		"icon_arrow_plain_white_dn" : "icon_arrow_plain_white_dn"
-		"icon_arrow_plain_white_up" : "icon_arrow_plain_white_up"
-		"icon_arrow_up" : "icon_arrow_up"
-		"icon_arrow_right" : "icon_arrow_right"
-		"icon_fire" : "icon_fire"
-		"icon_present" : "icon_present"
+		"icon_blank": "Blank"
+		
+		"icon_bulb" : "Bulb"
+		"icon_caution" : "Caution"
+		"icon_alert" : "White Exclamation Mark"
+		"icon_alert_red" : "Red Exclamation Mark"
+		
+		"icon_tip" : "Information"
+		"icon_skull" : "Eye"
+		
+		"icon_interact" : "Interact/Pickup"
+		"icon_button" : "Button"
+		"icon_door" : "Door"
+		"icon_useable_item": "Joystick"
+		
+		"icon_arrow_plain_white_dn" : "Simple Down Arrow"
+		"icon_arrow_plain_white_up" : "Simple Up Arrow"
+		"icon_arrow_up" : "Up Arrow"
+		"icon_arrow_right" : "Right Arrow"
+		
+		"icon_mouseRight": "Right-Click"
+		"icon_mouseLeft": "Left-Click"
+		"icon_mouseWheel_up": "MouseWheel Up"
+		"icon_mouseWheel_down": "MouseWheel Down"
+		"icon_mouseThree": "Click Scrollwheel"
+		
+		"icon_key_generic": "Empty Key"
+		"icon_key_wide": "Spacebar"
+		
+		"icon_key_right": "Right Key"
+		"icon_key_left": "Left Key"
+		"icon_key_down": "Down Key"
+		"icon_key_up": "Up Key"
+		
+		"icon_dpad": "D-Pad"
+		"icon_fire": "Fire"
+		"icon_present": "Present"
 	]
 	
 	hint_nooffscreen(Choices) : "Show offscreen" : 0 : "When the hint is offscreen, do we show an icon and arrow?" =
