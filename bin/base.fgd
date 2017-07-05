@@ -7295,7 +7295,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	colortransitiontime(float)	: "Color Transition Time" : "0.5" : "Amount of time it takes for a color change to occur."
 	cameraspace(integer)		: "Camera Space" : 0 : "Angles are interpreted as being relative to camera."
 
-	texturename(material) : "Texture Name" : "effects/flashlight002"
+	texturename(material) : "Texture Name" : "effects/flashlight001" : "VTF Texture to 'project' onto the enviroment."
 
 	// Inputs
 	input TurnOn(void)		: "Turn on the texture"
