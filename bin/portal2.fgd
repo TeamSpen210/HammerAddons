@@ -832,7 +832,6 @@
 @PointClass base(Targetname,Angles, BasePaintType)
 	studio("models/editor/prop_paint_bomb.mdl") = prop_paint_bomb : "Large blob of gel which explodes on impact. Respawn with a point_template."
 [
-	
 	BombType(choices) : "Bomb Type" : 0 : "The type of explosion." = 
 	[
 		0 : "Dry Bomb"
@@ -843,6 +842,8 @@
 	AllowSilentDissolve(boolean) : "Allow SilentDissolve input" : 0 : "Allow the SilentDissolve input to dissolve this bomb."
 	
 	playspawnsound(boolean) : "Play Spawn Sound" : 1 : "Whether or not this bomb should play a sound on spawn (PaintBlob.Inception)."
+	
+	model(string) readonly: "Model" : "models/error.mdl" : "Paint bombs need a model set to suppress a warning message. This model would be loaded already."
 
 	input  Dissolve(void) : "Dissolves the paint bomb."
 	input  SilentDissolve(void) : "Kills the paint bomb and fires its OnFizzled output."
