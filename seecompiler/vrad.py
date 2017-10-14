@@ -1,5 +1,6 @@
 """Replaces VRAD, to run operations on the final BSP."""
 from seecompiler.logger import init_logging
+from seecompiler.transformation import run_transformations
 
 LOGGER = init_logging('seecompiler/vrad.log')
 
@@ -7,6 +8,7 @@ import sys
 import os
 
 from srctools.bsp import BSP
+from srctools import FileSystemChain, GameID
 
 import seecompiler.run
 
@@ -26,12 +28,19 @@ def main(argv):
     if not path.endswith(".bsp"):
         path += ".bsp"
 
-    seecompiler.run.run_vrad(vrad_args)
+    #seecompiler.run.run_vrad(vrad_args)
 
     LOGGER.info('Reading BSP...')
     bsp_file = BSP(path)
     bsp_file.read_header()
+    vmf = bsp_file.read_ent_data()
     LOGGER.info('Done!')
+
+    LOGGER.info('Running transformations...')
+    run_transformations(vmf, FileSystemChain(), GameID.PORTAL_2)
+
+    bsp_file.write_ent_data(vmf)
+    LOGGER.info('Finished writing entities.')
 
     LOGGER.info("SEEcompiler VRAD hook finished!")
 
