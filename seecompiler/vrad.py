@@ -9,10 +9,10 @@ LOGGER = init_logging('seecompiler/vrad.log')
 import sys
 import os
 import io
+from pkg_resources import resource_stream
 
 from srctools.bsp import BSP, BSP_LUMPS
-from srctools import FileSystemChain, GameID
-from srctools.filesys import RawFileSystem, VPKFileSystem
+from srctools import GameID, FGD
 from lzma import LZMAFile
 from srctools.game import find_gameinfo
 from seecompiler import packlist
@@ -28,6 +28,10 @@ def main(argv):
     fsys = game_info.get_filesystem()
 
     LOGGER.info('Gameinfo: {}\nSearch path: \n{}', game_info.path, '\n'.join([sys[0].path for sys in fsys.systems]))
+
+    # Pull the FGD file we included out, so we don't rely on a local one.
+    with LZMAFile(resource_stream('seecompiler', 'fgd.lzma')) as f:
+        fgd = FGD.unserialise(f)
 
     # The path is the last argument to VRAD
     # Hammer adds wrong slashes sometimes, so fix that.
