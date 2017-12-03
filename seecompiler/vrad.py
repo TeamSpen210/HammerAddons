@@ -13,26 +13,21 @@ import io
 from srctools.bsp import BSP, BSP_LUMPS
 from srctools import FileSystemChain, GameID
 from srctools.filesys import RawFileSystem, VPKFileSystem
-import seecompiler.packlist
+from lzma import LZMAFile
+from srctools.game import find_gameinfo
+from seecompiler import packlist
 
 import seecompiler.run
 
 
 def main(argv):
     LOGGER.info('SEEcompiler VRAD hook started!')
-    vrad_args = argv[1:]
 
-    # TODO: extract this and the game ID from gameinfo.txt
-    fsys = FileSystemChain(
-        VPKFileSystem('../portal2_dlc2/pak01_dir.vpk'),
-        VPKFileSystem('../portal2_dlc1/pak01_dir.vpk'),
-        VPKFileSystem('../portal2/pak01_dir.vpk'),
-        RawFileSystem('../portal2_dlc2/'),
-        RawFileSystem('../portal2_dlc1/'),
-        RawFileSystem('../portal2/'),
-        RawFileSystem('../bee2_dev/'),
-        RawFileSystem('../bee2/'),
-    )
+    game_info = find_gameinfo(argv)
+
+    fsys = game_info.get_filesystem()
+
+    LOGGER.info('Gameinfo: {}\nSearch path: \n{}', game_info.path, '\n'.join([sys[0].path for sys in fsys.systems]))
 
     # The path is the last argument to VRAD
     # Hammer adds wrong slashes sometimes, so fix that.
@@ -62,8 +57,8 @@ def main(argv):
     bsp_file.write_ent_data(vmf)
     LOGGER.info('Finished writing entities.')
 
-    seecompiler.packlist.pack_from_bsp(bsp_file)
-    seecompiler.packlist.eval_dependencies(fsys)
+    packlist.pack_from_bsp(bsp_file)
+    packlist.eval_dependencies(fsys)
 
     pak_file = io.BytesIO(bsp_file.get_lump(BSP_LUMPS.PAKFILE))
 
@@ -75,4 +70,5 @@ def main(argv):
     LOGGER.info("SEEcompiler VRAD hook finished!")
 
 if __name__ == '__main__':
-    main(sys.argv)
+    main(sys.argv[1:])
+
