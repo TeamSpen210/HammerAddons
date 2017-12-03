@@ -25,7 +25,7 @@ def res(cls, *items):
     CLASS_RESOURCES[cls] = list(items)
 
 
-def cls_func(func):
+def cls_func(func: Callable[[Entity], Iterator[str]]):
     """Save a function to do special checks for a classname."""
     CLASS_RESOURCES[func.__name__] = func
     return func
