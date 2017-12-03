@@ -100,7 +100,7 @@ def init_logging(filename: str=None, main_logger='', on_error=None) -> logging.L
             return str(self.msg)
     logging.setLogRecordFactory(NewLogRecord)
 
-    logger = logging.getLogger('SEE')
+    logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
 
     # Put more info in the log file, since it's not onscreen.
