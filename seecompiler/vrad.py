@@ -61,15 +61,13 @@ def main(argv):
     bsp_file.write_ent_data(vmf)
     LOGGER.info('Finished writing entities.')
 
+    packlist.pack_fgd(vmf, fgd)
+
     packlist.pack_from_bsp(bsp_file)
     packlist.eval_dependencies(fsys)
 
-    pak_file = io.BytesIO(bsp_file.get_lump(BSP_LUMPS.PAKFILE))
-
-    with ZipFile(pak_file, 'a') as pak_zip:
+    with bsp_file.packfile() as pak_zip:
         seecompiler.packlist.pack_into_zip(fsys, pak_zip)
-
-    bsp_file.replace_lump(bsp_file.filename, BSP_LUMPS.PAKFILE, pak_file.getvalue())
 
     LOGGER.info("SEEcompiler VRAD hook finished!")
 
