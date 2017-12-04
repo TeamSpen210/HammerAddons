@@ -65,6 +65,12 @@ def comp_trigger_goo(ctx: Context):
         trig.remove()
         outputs = trig.outputs.copy()
         trig.outputs.clear()
+
+        failsafe_delay = conv_float(trig['failsafe_delay'], 0.5)
+        del trig['failsafe_delay']
+        if failsafe_delay < 0.01:
+            failsafe_delay = 0.01
+
         hurt = trig.copy()
         diss = trig.copy()
         ctx.vmf.add_ents([hurt, diss])
@@ -81,10 +87,6 @@ def comp_trigger_goo(ctx: Context):
         diss['spawnflags'] = 1096  # Physics, physics debris, everything
         diss['wait'] = 0  # No delay.
         diss['filtername'] = trig['dissolve_filter']
-
-        failsafe_delay = conv_float(trig['failsafe_delay'], 0.5)
-        if failsafe_delay < 0.01:
-            failsafe_delay = 0.01
 
         diss.add_out(
             Output('OnStartTouch', '!activator', 'SilentDissolve'),
