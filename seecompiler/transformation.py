@@ -1,6 +1,10 @@
 """Infrastructure for calling all the different transformations to the BSP."""
+import pkgutil
+import importlib
+
 from srctools import GameID, FileSystem, VMF
 from seecompiler.logger import get_logger
+import seecompiler
 
 LOGGER = get_logger(__name__)
 
@@ -56,5 +60,6 @@ from seecompiler import (
     trans_antline,
     trans_globals,
     trans_sceneset,
+    trans_p2,
 )
 
