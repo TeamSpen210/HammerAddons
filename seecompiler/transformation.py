@@ -1,5 +1,8 @@
 """Infrastructure for calling all the different transformations to the BSP."""
 from srctools import GameID, FileSystem, VMF
+from seecompiler.logger import get_logger
+
+LOGGER = get_logger(__name__)
 
 # The things 'user' modules want to have access to easily. 
 __all__ = ['Context', 'trans', 'GameID']
@@ -37,11 +40,21 @@ def run_transformations(vmf: VMF, filesys: FileSystem, game_id: GameID):
         vmf,
         game_id,
     )
-    for func in TRANSFORMS.values():
+    for func_name, func in TRANSFORMS.items():
         trans_game = getattr(func, 'game_id', None)
         if trans_game is not None and trans_game is not game_id:
             continue
+
+        LOGGER.info('Running "{}"...', func_name)
+
         func(context)
 
 # Import the modules.
-from seecompiler import trans_brush_ents
+# noinspection PyUnresolvedReferences
+from seecompiler import (
+    trans_brush_ents,
+    trans_antline,
+    trans_globals,
+    trans_sceneset,
+)
+
