@@ -1,0 +1,217 @@
+// Extra entities implemented in the SEEcompiler.
+// These are removed or converted to other entities.
+
+@include "portal2.fgd"
+
+@BaseClass = StaticTargetName:
+    "Just used to provide names for the compiler."
+    [
+    targetname(target_source) : "Name" : : "The name that other entities refer to this entity by. This may not be useable in all situations, since this entity is produced by the compiler."
+    ]
+    
+@PointClass size(-8 -8 -8, 8 8 8) = comp_pack:
+    "Explicitly identify resources to pack into the map."
+    [
+    generic1(string): "Generic" : : "Pack a file, starting in any of the content folders."
+    generic2(string): "Generic" : : "Pack a file, starting in any of the content folders."
+    generic3(string): "Generic" : : "Pack a file, starting in any of the content folders."
+    generic4(string): "Generic" : : "Pack a file, starting in any of the content folders."
+    generic5(string): "Generic" : : "Pack a file, starting in any of the content folders."
+    
+    sound1(sound): "Sound" : : "Pack a raw sound file (not a soundscript)."
+    sound2(sound): "Sound" : : "Pack a raw sound file (not a soundscript)."
+    sound3(sound): "Sound" : : "Pack a raw sound file (not a soundscript)."
+    sound4(sound): "Sound" : : "Pack a raw sound file (not a soundscript)."
+    sound5(sound): "Sound" : : "Pack a raw sound file (not a soundscript)."
+    
+    model1(studio): "Model" : : "Pack a model."
+    model2(studio): "Model" : : "Pack a model."
+    model3(studio): "Model" : : "Pack a model."
+    model4(studio): "Model" : : "Pack a model."
+    model5(studio): "Model" : : "Pack a model."
+    
+    material1(material): "Material" : : "Pack a material."
+    material2(material): "Material" : : "Pack a material."
+    material3(material): "Material" : : "Pack a material."
+    material4(material): "Material" : : "Pack a material."
+    material5(material): "Material" : : "Pack a material."
+    ]
+
+@PointClass base(StaticTargetName) iconsprite("editor/logic_relay.vmt") = comp_relay:
+    "Simplified version of logic_relay which is able to be optimised away by the compiler."+
+    "" +
+    "The various inputs and outputs are useful for bundling commands together, or using more appopriate verbs." +
+    "Inputs only work if given directly from entities (or via instance redirection), not ingame or dynamically."
+    [
+    input Trigger(void): "Trigger the relay and fire the output."
+    
+    input Enable(void): "Fire the OnEnabled output."
+    input Disable(void): "Fire the OnDisabled output."
+    
+    output OnTrigger(void): "Fired when the input is triggered."
+    output OnEnabled(void): "Fired when the input is enabled."
+    output OnDisabled(void): "Fired when the input is disabled."
+]
+    
+@PointClass base(StaticTargetName) iconsprite("editor/math_counter.vmt") = comp_calc:
+	"Performs computations on entity values. Designed mainly for use in instances."
+	[
+	val1(string): "Value 1": "" 
+	val1_type(choices): "Value 1 Type" : "int" : "Treat Value 1 as this type." = [
+		"none" : "Unused"
+		"int"  : "Integer"
+		"float": "Floating-Point"
+		"vec"  : "Vector"
+	]
+]
+	
+@PointClass base(StaticTargetName) iconsprite("editor/choreo_manager.vmt") = comp_choreo_sceneset:
+    "Chains a set of choreographed scenes together."
+[
+    play_dings(boolean): "[Portal 2] Play Dings" : 1 : "Play the blip sounds at the start and end."
+    delay(float): "Delay between each" : "0.1" : "Add a delay between each scene."
+    only_once(boolean): "Clean up after starting" : 1 : "If set, Kill choreo scenes after starting so they only play once." +
+    
+    "If set, the Cancel input will not work properly."
+
+	busyactor(choices) : "If an Actor is talking..." : 1 : "What to do if an actor this scene needs is already talking when this scene is told to start." =
+	[
+		0: "Start immediately"
+		1: "Wait for actor to finish"
+		2: "Interrupt at next interrupt event"
+		3: "Cancel at next interrupt event"
+	]
+
+	onplayerdeath(choices) : "On player death" : 0 : "What should this entity do if the player dies" =
+	[
+		0 : "Do Nothing"
+		1 : "Cancel Script and return to AI"
+	]
+    
+    scene01(scene): "Scene 1" : ""
+    scene02(scene): "Scene 2" : ""
+    scene03(scene): "Scene 3" : ""
+    scene04(scene): "Scene 4" : ""
+    scene05(scene): "Scene 5" : ""
+    scene06(scene): "Scene 6" : ""
+    scene07(scene): "Scene 7" : ""
+    scene08(scene): "Scene 8" : ""
+    scene09(scene): "Scene 9" : ""
+    scene10(scene): "Scene 10" : ""
+    scene11(scene): "Scene 11" : ""
+    scene12(scene): "Scene 12" : ""
+    scene13(scene): "Scene 13" : ""
+    scene14(scene): "Scene 14" : ""
+    scene15(scene): "Scene 15" : ""
+    scene16(scene): "Scene 16" : ""
+    scene17(scene): "Scene 17" : ""
+    scene18(scene): "Scene 18" : ""
+    scene19(scene): "Scene 19" : ""
+    scene20(scene): "Scene 20" : ""
+    
+    input Start(void): "Start the choreo sequence playing."
+    input Cancel(void): "Stop the choreo sequence at any point."
+    output OnStart(void): "Fired when the sequence starts."
+    output OnFinish(void): "Fired when the sequence is complete."
+]   
+
+@SolidClass base(Targetname, Parentname, Origin, EnableDisable) = comp_trigger_p2_goo:
+    "Implements Toxic Goo/Deadly Acid/Hazard Liquid." +
+    "" +
+    "This expands into a trigger_hurt and trigger_multiple with appropriate settings."
+[
+    
+    failsafe_delay(float): "Failsafe delay": "1.0" : "Delay after which non-cube entities will be killed."
+    dissolve_filter(filterclass): "Physics Filter" : : "Set to a filter entity to prevent certain entities from dissolving."
+    
+    output OnKillPlayer(void): "Fired when players touch the trigger."
+    output OnDissolvePhysics(void): "Fired when physics objects touch the trigger (and will be dissolved/killed soon)."
+]
+
+@SolidClass base(trigger_playerteam) = comp_trigger_coop : 
+	"Only activates once both Coop players have reached the trigger."
+[
+	output OnStartTouchBoth(void) : "Both players have entered the trigger."
+	output OnEndTouchBoth(void) : "One player left the trigger."
+]
+
+@BaseClass = SEEIndicator: "Adds an Indicator Name option to toggle overlays."
+[
+    indicatorname(target_destination) : "Indicator Name" : : "Set to the name of a set of info_overlays to toggle when this is activated and deactivated. The name may also point to a prop_indicator_panel, which will also be toggled appropriately."
+]
+
+@PointClass base(Targetname, Parentname, Angles , ToggleDraw, RenderFields, BasePedButton, SEEIndicator) studioprop("models/props/switch001.mdl") = prop_button :
+"A button which is activated by player use or by game inputs. While pressed it can play a tick-tock sound to indicate limited time."
+[	
+	skin(choices) : "Skin" : 0 : "Should it appear dirty or clean?" =
+	[
+		0 : "Clean"
+		1 : "Dirty"
+	]	
+]
+
+@PointClass base(Targetname, Parentname, Angles , ToggleDraw, RenderFields, BasePedButton, SEEIndicator) studioprop("models/props_underground/underground_testchamber_button.mdl") = prop_under_button :
+ "A button which is activated by player use or by game inputs, for use in underground test chambers. Uses different press/release sounds compared to the modern one. The same tick-tock noise is used to indicate limited time."
+[
+]
+
+@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SEEIndicator) studioprop() = prop_floor_button :
+"A 1500 MegaWatt Aperture Science Super-Colliding Super Button, which is pressed by a player or objects."
+[
+	model(choices) : "Button model" : "models/props/portal_button.mdl" : "Choose the amount of damage for the button, or type in a custom model." =
+	[
+		"models/props/portal_button.mdl"			: "Clean"
+		"models/props/portal_button_damaged02.mdl"	: "Slightly Damaged"
+		"models/props/portal_button_damaged01.mdl"	: "Very Damaged"
+	]
+	output OnPressedBlue(void) : "Called in Coop when the button has been pressed by ATLAS."
+	output OnPressedOrange(void) : "Called in Coop when the button has been pressed by P-Body."
+]
+
+@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SEEIndicator) studioprop() = prop_floor_cube_button :
+"A floor button which is activated by a prop_weighted_cube."
+[
+	model(studio) : "Button model" : "models/props/box_socket.mdl" : ""
+	AcceptsBall(boolean) : "Accepts Balls" : 0 : "Do Edgeless Safety Cubes activate this?"
+]
+
+@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SEEIndicator) studioprop("models/props/ball_button.mdl") = prop_floor_ball_button :
+"A floor button which is only activated by a Sphere-type prop_weighted_cube."
+[
+]
+
+@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SEEIndicator) studioprop("models/props_underground/underground_floor_button.mdl") = prop_under_floor_button :
+"A floor button which is activated by a player or objects, for use in the underground test chambers. It plays different sounds, and has a rectangular trigger area."
+[
+	output OnPressedBlue(void) : "Called in Coop when the button has been pressed by ATLAS."
+	output OnPressedOrange(void) : "Called in Coop when the button has been pressed by P-Body."
+]
+
+@PointClass base(Targetname, Angles, Parentname, Reflection, ToggleDraw, RenderFields) studioprop() = prop_laser_catcher: 
+"Discouragement Beam Catcher that detects a laser, absorbing the beam. The entity will fire outputs when struck and unstruck."
+[
+	SkinType(choices) : "Skin Type" : 0 : "Set the type of catcher to use." =
+	[
+		0 : "Clean"
+		1 : "Rusted"
+	]
+	
+	skin(choices) : "[H] Skin Type" : 0 : "The skin to show in Hammer." =
+	[
+		0 : "Clean  - Off"
+		1 : "Clean  - On"
+		2 : "Rusted - Off"
+		3 : "Rusted - On"
+	]
+	
+	model(choices) : "Laser Catcher Model" : "models/props/laser_catcher_center.mdl" : "Is the catcher offset? (You can also add a custom model here.)" =
+	[
+		"models/props/laser_catcher_center.mdl" : "Centered"
+		"models/props/laser_catcher.mdl" 		: "Offset"
+	]
+	
+	see_fix_skins(boolean) "[SEE] Fix Skins" : 1 : "Insert outputs to fix skins after level loads."
+	
+	output OnPowered(void) : "Fired when a laser hits the target."
+	output OnUnpowered(void) : "Fired when a laser has stopped hitting the target."
+]
