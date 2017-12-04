@@ -8,7 +8,6 @@ LOGGER = init_logging('seecompiler/vrad.log')
 
 import sys
 import os
-import io
 from pkg_resources import resource_stream
 
 from srctools.bsp import BSP, BSP_LUMPS
@@ -55,10 +54,14 @@ def main(argv):
     vmf = bsp_file.read_ent_data()
     LOGGER.info('Done!')
 
-    LOGGER.info('Running transformations...')
-    run_transformations(vmf, fsys, GameID.PORTAL_2)
+    run_transformations(vmf, fsys, game_info.app_id)
 
-    bsp_file.write_ent_data(vmf)
+    bsp_file.replace_lump(
+        bsp_file.filename,
+        BSP_LUMPS.ENTITIES,
+        bsp_file.write_ent_data(vmf),
+    )
+
     LOGGER.info('Finished writing entities.')
 
     packlist.pack_fgd(vmf, fgd)
