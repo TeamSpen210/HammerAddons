@@ -1,9 +1,9 @@
 """Implements various brush entities."""
 from seecompiler.transformation import trans, Context
-from srctools import Output, conv_bool, GameID, conv_float
+from srctools import Output, conv_bool, conv_float
 
 
-@trans('Coop Trigger', game_id=GameID.PORTAL_2)
+@trans('P2 Coop Trigger')
 def comp_trigger_coop(ctx: Context):
     """Creates a trigger which only activates with both players."""
     for trig in ctx.vmf.by_class['comp_trigger_coop']:

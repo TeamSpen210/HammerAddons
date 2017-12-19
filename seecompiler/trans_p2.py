@@ -1,6 +1,6 @@
 """Portal-2 specific transformations."""
 from seecompiler.transformation import trans, Context
-from srctools import Output, conv_bool, GameID, conv_float
+from srctools import Output, conv_bool
 
 
 @trans('Fix Laser Catcher Skins')
