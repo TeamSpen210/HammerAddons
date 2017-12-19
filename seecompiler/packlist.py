@@ -1,6 +1,5 @@
 """Handles the list of files which are desired to be packed into the BSP."""
-from collections import deque
-from typing import Container
+from typing import Container, Dict
 from enum import Enum
 from zipfile import ZipFile
 import os.path
@@ -14,8 +13,6 @@ from srctools.vmt import Material, VarType
 from seecompiler.logger import get_logger
 
 LOGGER = get_logger(__name__)
-
-FILES = {}  # List of all the files we are packing.
 
 
 class FileType(Enum):
@@ -54,6 +51,7 @@ EXT_TYPE = {
     if isinstance(filetype.value, str)
 }
 
+# noinspection PyProtectedMember
 from seecompiler._class_resources import CLASS_RESOURCES
 
 
@@ -62,7 +60,7 @@ class PackFile:
     
     data is raw data to pack directly, instead of from the filesystem.
     """
-    __slots__ = ['type', 'filename', 'data', 'virtual']
+    __slots__ = ['type', 'filename', 'data', 'virtual', '_analysed']
     def __init__(
         self, 
         type: FileType,
@@ -73,6 +71,8 @@ class PackFile:
         self.filename = filename
         self.data = data
         self.virtual = data is not None
+        # If we've checked for dependencies
+        self._analysed = False
 
     def __repr__(self):
         text = '<{}{} Packfile "{}"'.format(
@@ -107,285 +107,296 @@ def unify_path(path: str):
     return path.lstrip('/')
 
 
-def pack_file(
-    filename: str,
-    data_type: FileType=FileType.GENERIC, 
-    data: bytes=None,
-):
-    """Queue the given file to be packed. 
-    If data is set, this file will use the given data.
-    This returns the PackFile definition created.
-    """
-    filename = os.fspath(filename)
+class PackList:
+    """Represents a list of resources for a map."""
+    def __init__(self):
+        self._files = {}  # type: Dict[str, PackFile]
 
-    if '\t' in filename:
-        raise ValueError
+    def pack_file(
+        self,
+        filename: str,
+        data_type: FileType=FileType.GENERIC,
+        data: bytes=None,
+    ):
+        """Queue the given file to be packed.
+        If data is set, this file will use the given data.
+        """
+        filename = os.fspath(filename)
 
-    if data_type is FileType.MATERIAL or filename.endswith('.vmt'):
-        if not filename.startswith('materials/'):
-            filename = 'materials/' + filename
-        if not filename.endswith(('.vmt', '.spr')):
-            filename = filename + '.vmt'
-    elif data_type is FileType.TEXTURE or filename.endswith('.vtf'):
-        if not filename.startswith('materials/'):
-            filename = 'materials/' + filename
-        if not filename.endswith('.vtf'):
-            filename = filename + '.vtf'
+        if '\t' in filename:
+            raise ValueError
 
-    path = unify_path(filename)
+        if data_type is FileType.MATERIAL or filename.endswith('.vmt'):
+            if not filename.startswith('materials/'):
+                filename = 'materials/' + filename
+            if not filename.endswith(('.vmt', '.spr')):
+                filename = filename + '.vmt'
+        elif data_type is FileType.TEXTURE or filename.endswith('.vtf'):
+            if not filename.startswith('materials/'):
+                filename = 'materials/' + filename
+            if not filename.endswith('.vtf'):
+                filename = filename + '.vtf'
 
-    try:
-        file = FILES[path]
-    except KeyError:
-        pass
-    else:
-        # It's already here, is that OK?
-        
-        # Allow overriding data on disk with ours..
-        if file.data is None: 
-            if data is not None:
-                file.data = data
-                file.virtual = True
-            # else: no data on either
-        elif data == file.data:
-            pass  # Overrode with the same data, that's fine
-        elif file.data:
-            raise ValueError('"{}": two different data streams!'.format(filename))
-        # else: we have an override, but asked to just pack.          
-        
-        if file.type is data_type:
-            # Same, no problems - just packing on top.
-            return file
-            
-        if file.type is FileType.GENERIC:
-            file.type = data_type  # This is fine, we now know it has behaviour...
-        elif data_type is FileType.GENERIC:
-            return file  # If we know it has behaviour, that trumps generic.
-        
-        if data_type is FileType.WHITELIST:
-            file.type = data_type  # Blindly believe this.
-            
-        raise ValueError('"{}": {} can\'t become a {}!'.format(
-            filename, 
-            file.type.name, 
-            data_type.name,
-        ))
-        
-    start, ext = os.path.splitext(path)
-    
-    # Try to promote generic to other types if known.
-    if data_type is FileType.GENERIC:
+        path = unify_path(filename)
+
         try:
-            data_type = EXT_TYPE[ext]
+            file = self._files[path]
         except KeyError:
             pass
-    elif data_type is FileType.SOUNDSCRIPT:
-        if ext != '.txt':
-            raise ValueError('"{}" cannot be a soundscript!'.format(filename))
-    
-    FILES[path] = file = PackFile(
-        data_type,
-        filename,
-        data,
-    )
-    return file
-
-
-def pack_from_bsp(bsp: BSP):
-    """Pack files found in BSP data (excluding entities)."""
-    for static_prop in bsp.static_prop_models():
-        pack_file(static_prop, FileType.MODEL)
-
-    for mat in bsp.read_texture_names():
-        pack_file('materials/{}.vmt'.format(mat.lower()), FileType.MATERIAL)
-
-
-def pack_fgd(vmf: VMF, fgd: FGD):
-    """Analyse the map to pack files. We use the FGD to easily handle this."""
-    for ent in vmf.entities:
-        classname = ent['classname']
-        try:
-            ent_class = fgd[classname]
-        except KeyError:
-            LOGGER.warning('Unknown class "{}"!', classname)
-            continue
-        for key in set(ent.keys) | set(ent_class.kv):
-            # These are always present on entities, and we don't have to do
-            # any packing for them.
-            # Origin/angles might be set (brushes, instances) even for ents
-            # that don't use them.
-            if key in ('classname', 'hammerid', 'origin', 'angles', 'skin', 'pitch'):
-                continue
-            elif key == 'model':
-                # Models are set on all brush entities, and are always either
-                # a '*37' brush ref, a model, or a sprite.
-                value = ent[key]
-                if value and value[:1] != '*':
-                    pack_file(value)
-                continue
-            try:
-                kv = ent_class.kv[key]  # type: KeyValues
-                val_type = kv.type
-                default = kv.default
-            except KeyError:
-                LOGGER.warning('Unknown keyvalue "{}" for ent of type "{}"!',
-                               key, ent['classname'])
-                val_type = None  # Doesn't match any enum.
-                default = ''
-
-            value = ent[key, default]
-
-            # Ignore blank values, they're not useful.
-            if not value:
-                continue
-
-            if classname == 'env_projectedtexture' and key == 'texturename':
-                # Special case - this is a VTF, not a material.
-                pack_file(value, FileType.TEXTURE)
-                continue
-
-            if val_type is KVTypes.STR_MATERIAL:
-                pack_file(value, FileType.MATERIAL)
-            elif val_type is KVTypes.STR_MODEL:
-                pack_file(value, FileType.MODEL)
-            elif val_type is KVTypes.STR_VSCRIPT:
-                for script in value.split():
-                    pack_file('scripts/vscripts/' + script)
-            elif val_type is KVTypes.STR_SPRITE:
-                pack_file('materials/sprites/' + value, FileType.MATERIAL)
-
-    for classname in vmf.by_class.keys():
-        try:
-            res = CLASS_RESOURCES[classname]
-        except KeyError:
-            continue
-        if callable(res):
-            for ent in vmf.by_class[classname]:
-                for file in res(ent):
-                    pack_file(file)
         else:
-            for file in res:
-                pack_file(file)
+            # It's already here, is that OK?
 
+            # Allow overriding data on disk with ours..
+            if file.data is None:
+                if data is not None:
+                    file.data = data
+                    file.virtual = True
+                # else: no data on either
+            elif data == file.data:
+                pass  # Overrode with the same data, that's fine
+            elif file.data:
+                raise ValueError('"{}": two different data streams!'.format(filename))
+            # else: we have an override, but asked to just pack.
 
-def pack_into_zip(
-    filesys: FileSystemChain, 
-    zip_file: ZipFile, 
-    block_filesys: Container[FileSystem]=(),
-    ignore_vpk=True,
-):
-    """Pack all our files into the given zipfile.
-    
-    The filesys is used to find files to pack.
-    If set, limit_filesys will disallow packing from the listed filesystems.
-    If ignore_vpk is True, files in VPK won't be packed.
-    """
-    existing_names = set(zip_file.namelist())
+            if file.type is data_type:
+                # Same, no problems - just packing on top.
+                return file
 
-    with filesys:
-        for file in FILES.values():
-            if file.virtual:
-                # Always pack.
-                zip_file.writestr(file.filename, file.data)
-                continue
+            if file.type is FileType.GENERIC:
+                file.type = data_type  # This is fine, we now know it has behaviour...
+            elif data_type is FileType.GENERIC:
+                return file  # If we know it has behaviour, that trumps generic.
 
-            if file.filename in existing_names:
-                # Already in the zip - cubemap patch files, or something
-                # else has already added it. Ignore.
-                continue
+            if data_type is FileType.WHITELIST:
+                file.type = data_type  # Blindly believe this.
 
+            raise ValueError('"{}": {} can\'t become a {}!'.format(
+                filename,
+                file.type.name,
+                data_type.name,
+            ))
+
+        start, ext = os.path.splitext(path)
+
+        # Try to promote generic to other types if known.
+        if data_type is FileType.GENERIC:
             try:
-                sys_file = filesys[file.filename]
-            except FileNotFoundError:
-                if file.type is not FileType.OPTIONAL:
-                    print('WARNING: "{}" not packed!'.format(file.filename))
+                data_type = EXT_TYPE[ext]
+            except KeyError:
+                pass
+        elif data_type is FileType.SOUNDSCRIPT:
+            if ext != '.txt':
+                raise ValueError('"{}" cannot be a soundscript!'.format(filename))
+
+        self._files[path] = file = PackFile(
+            data_type,
+            filename,
+            data,
+        )
+        return file
+
+    def pack_from_bsp(self, bsp: BSP):
+        """Pack files found in BSP data (excluding entities)."""
+        for static_prop in bsp.static_prop_models():
+            self.pack_file(static_prop, FileType.MODEL)
+
+        for mat in bsp.read_texture_names():
+            self.pack_file('materials/{}.vmt'.format(mat.lower()), FileType.MATERIAL)
+
+    def pack_fgd(self, vmf: VMF, fgd: FGD):
+        """Analyse the map to pack files. We use the FGD to easily handle this."""
+        for ent in vmf.entities:
+            classname = ent['classname']
+            try:
+                ent_class = fgd[classname]
+            except KeyError:
+                LOGGER.warning('Unknown class "{}"!', classname)
                 continue
+            for key in set(ent.keys) | set(ent_class.kv):
+                # These are always present on entities, and we don't have to do
+                # any packing for them.
+                # Origin/angles might be set (brushes, instances) even for ents
+                # that don't use them.
+                if key in ('classname', 'hammerid', 'origin', 'angles', 'skin', 'pitch'):
+                    continue
+                elif key == 'model':
+                    # Models are set on all brush entities, and are always either
+                    # a '*37' brush ref, a model, or a sprite.
+                    value = ent[key]
+                    if value and value[:1] != '*':
+                        self.pack_file(value)
+                    continue
+                try:
+                    kv = ent_class.kv[key]  # type: KeyValues
+                    val_type = kv.type
+                    default = kv.default
+                except KeyError:
+                    LOGGER.warning('Unknown keyvalue "{}" for ent of type "{}"!',
+                                   key, ent['classname'])
+                    val_type = None  # Doesn't match any enum.
+                    default = ''
 
-            sys = filesys.get_system(sys_file)
+                value = ent[key, default]
 
-            if ignore_vpk and isinstance(sys, VPKFileSystem):
+                # Ignore blank values, they're not useful.
+                if not value:
+                    continue
+
+                if classname == 'env_projectedtexture' and key == 'texturename':
+                    # Special case - this is a VTF, not a material.
+                    self.pack_file(value, FileType.TEXTURE)
+                    continue
+
+                if val_type is KVTypes.STR_MATERIAL:
+                    self.pack_file(value, FileType.MATERIAL)
+                elif val_type is KVTypes.STR_MODEL:
+                    self.pack_file(value, FileType.MODEL)
+                elif val_type is KVTypes.STR_VSCRIPT:
+                    for script in value.split():
+                        self.pack_file('scripts/vscripts/' + script)
+                elif val_type is KVTypes.STR_SPRITE:
+                    self.pack_file('materials/sprites/' + value, FileType.MATERIAL)
+
+        for classname in vmf.by_class.keys():
+            try:
+                res = CLASS_RESOURCES[classname]
+            except KeyError:
                 continue
-            elif sys in block_filesys:
-                continue
-
-            with sys_file.open_bin() as f:
-                zip_file.writestr(file.filename, f.read())
-
-
-def eval_dependencies(filesys: FileSystem):
-    """Add files to the list which need to also be packed.
-    
-    For several files this has the side effect of reading in their data, 
-    which will be saved.
-    """
-    # Run through the deque from start to end, adding dependencies as we go.
-    done = set()
-    todo = deque(FILES.values())
-    with filesys:
-        while todo:
-            file = todo.popleft()
-            done.add(file)
-
-            if file.type is FileType.MATERIAL:
-                deps = get_material_files(filesys, file)
-            elif file.type is FileType.MODEL:
-                deps = get_model_files(filesys, file)
-            elif file.type is FileType.TEXTURE:
-                # Try packing the '.hdr.vtf' file as well if present.
-                deps = [pack_file(file.filename[:-3] + 'hdr.vtf', FileType.OPTIONAL)]
+            if callable(res):
+                for ent in vmf.by_class[classname]:
+                    for file in res(ent):
+                        self.pack_file(file)
             else:
-                deps = ()
+                for file in res:
+                    self.pack_file(file)
 
-            for dep in deps:
-                if dep not in done:
-                    done.add(dep)
-                    todo.append(dep)
+    def pack_into_zip(
+        self,
+        filesys: FileSystemChain,
+        zip_file: ZipFile,
+        block_filesys: Container[FileSystem]=(),
+        ignore_vpk=True,
+    ):
+        """Pack all our files into the given zipfile.
 
+        The filesys is used to find files to pack.
+        If set, limit_filesys will disallow packing from the listed filesystems.
+        If ignore_vpk is True, files in VPK won't be packed.
+        """
+        existing_names = set(zip_file.namelist())
 
-def get_model_files(filesys: FileSystem, file: PackFile):
-    """Find any needed files for a model."""
-    filename, ext = os.path.splitext(file.filename)
-    yield pack_file(filename + '.vvd')  # Must be present.
+        with filesys:
+            for file in self._files.values():
+                if file.virtual:
+                    # Always pack.
+                    zip_file.writestr(file.filename, file.data)
+                    continue
 
-    # Some of these are optional.
-    for ext in ['.phy', '.vtx', '.sw.vtx', '.dx80.vtx', '.dx90.vtx']:
-        component = filename + ext
-        if component in filesys:
-            yield pack_file(component)
+                if file.filename in existing_names:
+                    # Already in the zip - cubemap patch files, or something
+                    # else has already added it. Ignore.
+                    continue
 
-    try:
-        mdl = Model(filesys, filesys[file.filename])
-    except FileNotFoundError:
-        LOGGER.warning('Can\'t find model "{}"!', file.filename)
-        return
+                try:
+                    sys_file = filesys[file.filename]
+                except FileNotFoundError:
+                    if file.type is not FileType.OPTIONAL:
+                        print('WARNING: "{}" not packed!'.format(file.filename))
+                    continue
 
-    for tex in mdl.iter_textures():
-        yield pack_file(tex, FileType.MATERIAL)
+                sys = filesys.get_system(sys_file)
 
+                if ignore_vpk and isinstance(sys, VPKFileSystem):
+                    continue
+                elif sys in block_filesys:
+                    continue
 
-def get_material_files(filesys: FileSystem, file: PackFile):
-    """Find any needed files for a material."""
-    parents = []
-    try:
-        with filesys, filesys.open_str(file.filename) as f:
-            mat = Material.parse(f, file.filename)
-    except FileNotFoundError:
-        print('WARNING: File "{}" does not exist!'.format(file.filename))
-        return
+                with sys_file.open_bin() as f:
+                    zip_file.writestr(file.filename, f.read())
 
-    # For 'patch' shaders, apply the originals.
-    mat = mat.apply_patches(filesys, parent_func=parents.append)
+    def eval_dependencies(self, filesys: FileSystem):
+        """Add files to the list which need to also be packed.
 
-    for vmt in parents:
-        yield pack_file(vmt, FileType.MATERIAL)
+        This requires parsing through many files.
+        """
+        # Run though repeatedly, until all are analysed.
+        todo = True
+        with filesys:
+            while todo:
+                todo = False
+                for file in self._files.values():
+                    if file._analysed:
+                        continue
+                    file._analysed = True
 
-    for param_name, param_type, param_value in mat:
-        param_value = param_value.casefold()
-        if param_type is VarType.TEXTURE:
-            # Skip over reference to cubemaps, or realtime buffers.
-            if param_value == 'env_cubemap' or param_value.startswith('_rt_'):
-                continue
-            yield pack_file(
-                'materials/' + param_value + '.vtf',
-                FileType.TEXTURE,
-            )
+                    if file.type is FileType.MATERIAL:
+                        if self._get_material_files(filesys, file):
+                            todo = True
+                    elif file.type is FileType.MODEL:
+                        self._get_model_files(filesys, file)
+                        todo = True
+                    elif file.type is FileType.TEXTURE:
+                        # Try packing the '.hdr.vtf' file as well if present.
+                        todo = True
+                        self.pack_file(
+                            file.filename[:-3] + 'hdr.vtf',
+                            FileType.OPTIONAL
+                        )
+
+    def _get_model_files(self, filesys: FileSystem, file: PackFile):
+        """Find any needed files for a model."""
+        filename, ext = os.path.splitext(file.filename)
+        self.pack_file(filename + '.vvd')  # Must be present.
+
+        # Some of these are optional.
+        for ext in ['.phy', '.vtx', '.sw.vtx', '.dx80.vtx', '.dx90.vtx']:
+            component = filename + ext
+            if component in filesys:
+                yield self.pack_file(component)
+
+        try:
+            mdl = Model(filesys, filesys[file.filename])
+        except FileNotFoundError:
+            LOGGER.warning('Can\'t find model "{}"!', file.filename)
+            return
+
+        for tex in mdl.iter_textures():
+            self.pack_file(tex, FileType.MATERIAL)
+
+        for file in mdl.included_models:
+            self.pack_file(file.filename, FileType.MODEL)
+
+        return True  # Have dependencies
+
+    def _get_material_files(self, filesys: FileSystem, file: PackFile):
+        """Find any needed files for a material."""
+
+        parents = []
+        try:
+            with filesys, filesys.open_str(file.filename) as f:
+                mat = Material.parse(f, file.filename)
+        except FileNotFoundError:
+            print('WARNING: File "{}" does not exist!'.format(file.filename))
+            return
+
+        # For 'patch' shaders, apply the originals.
+        mat = mat.apply_patches(filesys, parent_func=parents.append)
+
+        for vmt in parents:
+            yield self.pack_file(vmt, FileType.MATERIAL)
+
+        has_deps = bool(parents)
+
+        for param_name, param_type, param_value in mat:
+            param_value = param_value.casefold()
+            if param_type is VarType.TEXTURE:
+                # Skip over reference to cubemaps, or realtime buffers.
+                if param_value == 'env_cubemap' or param_value.startswith('_rt_'):
+                    continue
+                self.pack_file(
+                    'materials/' + param_value + '.vtf',
+                    FileType.TEXTURE,
+                )
+                has_deps = True
+
+        return has_deps

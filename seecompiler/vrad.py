@@ -14,7 +14,7 @@ from srctools.bsp import BSP, BSP_LUMPS
 from srctools import GameID, FGD
 from lzma import LZMAFile
 from srctools.game import find_gameinfo
-from seecompiler import packlist
+from seecompiler.packlist import PackList
 
 import seecompiler.run
 
@@ -25,6 +25,8 @@ def main(argv):
     game_info = find_gameinfo(argv)
 
     fsys = game_info.get_filesystem()
+
+    packlist = PackList()
 
     LOGGER.info('Gameinfo: {}\nSearch path: \n{}', game_info.path, '\n'.join([sys[0].path for sys in fsys.systems]))
 
@@ -70,7 +72,7 @@ def main(argv):
     packlist.eval_dependencies(fsys)
 
     with bsp_file.packfile() as pak_zip:
-        seecompiler.packlist.pack_into_zip(fsys, pak_zip)
+        packlist.pack_into_zip(fsys, pak_zip)
 
     LOGGER.info("SEEcompiler VRAD hook finished!")
 
