@@ -213,7 +213,7 @@
 
 @BaseClass line(255 255 255, targetname, master) = MasterEnt
 [
-	master(target_destination) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
+	//master(target_destination) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
 ]
 
 // Inherit from this to get the ability to only include an object in a range of dx levels.
@@ -2827,27 +2827,27 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 		1: "All Players" : 0
 	]
 
-	message(string) report : "Message Text" : "" : "Message to display onscreen."
-	x(string) : "X (0 - 1.0 = left to right) (-1 centers)" : "-1" : "Horizontal position on the player's screens to draw the text. The value should be between 0 and 1, where 0 is the far left of the screen and 1 is the far right. -1 centers the text."
-	y(string) : "Y (0 - 1.0 = top to bottom) (-1 centers)" : "-1" : "Vertical position on the player's screens to draw the text. The value should be between 0 and 1, where 0 is the top of the screen and 1 is the bottom. -1 centers the text."
+	message(string) report : "Message Text" : "" : "Message to display on the screen."
+	x(string) : "X Position" : "-1" : "Horizontal position on the player's screens to draw the text. The value should be between 0 and 1, where 0 is the far left of the screen and 1 is the far right. -1 centers the text."
+	y(string) : "Y Position" : "-1" : "Vertical position on the player's screens to draw the text. The value should be between 0 and 1, where 0 is the top of the screen and 1 is the bottom. -1 centers the text."
 	effect(Choices) : "Text Effect" : 0 =
 	[
 		0 : "Fade In/Out"
-		1 : "Credits"
+	//	1 : "Credits"
 		2 : "Scan Out"
 	]
-	color(color255) : "Color1" : "100 100 100"
-	color2(color255) : "Color2" : "240 110 0"
-	fadein(string) : "Fade in Time (or character scan time)" : "1.5" : "The time it should take for the text to fully fade in."
+	color(color255) : "Text Color" : "100 100 100" : "The primary color used by all the text effects."
+	color2(color255) : "Scan Out Color" : "240 110 0" : "The color of the letter currently being scanned if the Text Effect keyvalue is set to Scan Out. This is usually a different shade of the main color."
+	fadein(string) : "Fade in Time/Character Scan Time" : "1.5" : "The time it should take for the text to fully fade in, or the time between each character being scanned."
 	fadeout(string) : "Fade Out Time" : "0.5" : "The time it should take for the text to fade out, after the hold time has expired."
 	holdtime(string) : "Hold Time" : "1.2" : "The time the text should stay onscreen, after fading in, before it begins to fade out."
 	fxtime(string) : "Scan time (scan effect only)" : "0.25" : "If the 'Text Effect' is set to Scan Out, this is the time it should take to scan out all the letters in the text."
-	channel(choices) : "Text Channel" : 1 : "You can have up to four individual game_text messages onscreen at once, stored in channels. Select which channel this text should be placed in, which will overwrite any active message already in that channel." =
+	channel(choices) : "Text Channel" : 1 : "You can have up to four individual game_text messages onscreen at once, stored in channels. Select which channel this text should be placed in, which will overwrite any active message already in that channel. This also determines the size of the text." =
 	[
-		1 : "Channel 1"
-		2 : "Channel 2"
-		3 : "Channel 3" 
-		4 : "Channel 4"
+		1 : "Channel 1 (medium text size)"
+		2 : "Channel 2 (small text size)"
+		3 : "Channel 3 (large text size)" 
+		4 : "Channel 4 (medium text size)"
 	]
 	// Inputs
 	input Display(void) : "Display the message text."
@@ -4134,11 +4134,11 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	speed(integer) : "Speed" : 100 : "The speed at which the door moves."
 	noise1(sound) : "Start Sound" : : "Sound to play when the door starts moving."
 	noise2(sound) : "Stop Sound" : : "Sound to play when the door stops moving."
-	startclosesound(sound) : "Start Close Sound" : : "(Optional) Sound to play when the door starts closing."
-	closesound(sound) : "Stop Close Sound" : : "(Optional) Sound to play when the door stops closing."
+	startclosesound(sound) : "Start Close Sound" : : "(Optional) Sound to play when the door starts closing. If not set, the Start Sound will be used instead."
+	closesound(sound) : "Stop Close Sound" : : "(Optional) Sound to play when the door stops closing. If not set, the Stop Sound will be used instead."
 	loopmovesound(boolean) : "Loop Moving Sound?" : 0 : "If set to true, the door's 'Start Sound' will be continually looped until the door finishes moving."
-	wait(integer) : "Delay Before Reset (-1 stay)" : 4 : "Amount of time, in seconds, after the door has opened before it closes. Once it has closed, it can be used again. If the value is set to -1, the door never closes itself."
-	lip(integer) : "Lip" : 0 : "The amount, in inches, of the button to leave sticking out of the wall it recedes into when pressed. Negative values make the button recede even further into the wall."
+	wait(integer) : "Delay Before Reset (-1 stay)" : -1 : "Amount of time, in seconds, after the door has opened before it closes. Once it has closed, it can be used again. If the value is set to -1, the door never closes itself."
+	lip(integer) : "Lip" : 0 : "The amount, in inches, of the door to leave sticking out of the wall it recedes into when pressed. Negative values make the door recede even further into the wall."
 	dmg(integer) : "Blocking Damage" : 0 : "Amount of damage done to entities that block the movement of this door, per frame."
 	forceclosed(boolean) : "Force Closed" : 0 : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects."
 	ignoredebris(boolean) : "Ignore Debris" : 0 : "If set this will change the door's collision group to one that ignore collisions with debris objects (note that this is not compatible with the non-solid-to-player spawnflag)."
@@ -4231,7 +4231,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 		128: "Y Axis" : 0
 		65536: "New func_door +USE rules" : 0
 	]
-	distance(integer) : "Distance" : 90 : "The amount, in degrees, that the button should rotate when it's pressed."
+	distance(integer) : "Distance" : 90 : "The amount, in degrees, that the door should rotate when opened."
 	
 	solidbsp(choices) : "Solid Type" : 0 =
 	[
@@ -5331,26 +5331,27 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	damagetype(choices) : "Damage type" : 64 : "The damage type to filter by. If the filter mode is Allow, only damage types that "+
 		"match will pass the filter. If the filter mode is Disallow, all damage types EXCEPT those who match will pass the filter." =
 	[
-		0 : "GENERIC"
-		1 : "CRUSH"
-		2 : "BULLET"
-		4 : "SLASH"
-		8 : "BURN"
-		16 : "VEHICLE"
-		32 : "FALL"
-		64 : "BLAST"
-		128 : "CLUB"
-		256 : "SHOCK"
-		512 : "SONIC"
-		1024 : "ENERGYBEAM"
-		16384: "DROWN"
-		32768 : "PARALYSE"
-		65536 : "NERVEGAS"
-		131072 : "POISON"
-		262144 : "RADIATION"
-		524288 : "DROWNRECOVER"
-		1048576 : "ACID"
-		2097152 : "SLOWBURN"
+		0 			: "Generic"
+		1 			: "Crush"
+		32 			: "Fall (Bottomless Pits)"
+		1024 		: "Energy Beam (Laserfields)"
+		131072 		: "Poison (Neurotoxin)"
+		1048576 	: "Chemical (Deadly Goo)"
+		2 			: "Bullet"
+		4 			: "Slash"
+		8 			: "Burn"
+		16 			: "Freeze"
+		64 			: "Blast"
+		128 		: "Club"
+		256 		: "Shock"
+		512 		: "Sonic"
+		16384		: "Drown (NOT for Goo!)"
+		32768 		: "Paralyse"
+		65536 		: "Nerve Gas"
+		262144 		: "Radiation"
+		524288 		: "Drown Recover"
+		2097152 	: "Slow Burn"
+		4194304 	: "Slow Freeze"
 	]
 ]
 
@@ -5502,27 +5503,27 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	
 	DamageType(choices) : "Damage Type" : 0 : "Type of damage to inflict on entities damaged." =
 	[
-		0 : "GENERIC"
-		1 : "CRUSH"
-		2 : "BULLET"
-		4 : "SLASH"
-		8 : "BURN"
-		16 : "FREEZE"
-		32 : "FALL"
-		64 : "BLAST"
-		128 : "CLUB"
-		256 : "SHOCK"
-		512 : "SONIC"
-		1024 : "ENERGYBEAM"
-		16384: "DROWN"
-		32768 : "PARALYSE"
-		65536 : "NERVEGAS"
-		131072 : "POISON"
-		262144 : "RADIATION"
-		524288 : "DROWNRECOVER"
-		1048576 : "CHEMICAL"
-		2097152 : "SLOWBURN"
-		4194304 : "SLOWFREEZE"
+		0 			: "Generic"
+		1 			: "Crush"
+		32 			: "Fall (Bottomless Pits)"
+		1024 		: "Energy Beam (Laserfields)"
+		131072 		: "Poison (Neurotoxin)"
+		1048576 	: "Chemical (Deadly Goo)"
+		2 			: "Bullet"
+		4 			: "Slash"
+		8 			: "Burn"
+		16 			: "Freeze"
+		64 			: "Blast"
+		128 		: "Club"
+		256 		: "Shock"
+		512 		: "Sonic"
+		16384		: "Drown (NOT for Goo!)"
+		32768 		: "Paralyse"
+		65536 		: "Nerve Gas"
+		262144 		: "Radiation"
+		524288 		: "Drown Recover"
+		2097152 	: "Slow Burn"
+		4194304 	: "Slow Freeze"
 	]
 
 	// Inputs
@@ -6793,33 +6794,33 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	"A trigger volume that damages entities that touch it."
 [
 	damage(integer) : "Damage" : 100000 : "The amount of damage done to entities that touch this trigger. The damage is done every half-second. See also 'Damage Model' for extra details on how damage can be dealt."
-	damagecap(integer) : "Damage Cap" : 20 : "Maximum damage dealt per second. This field is only used if you select the Doubling w/Forgiveness damage model, via the spawnflag."
-	damagetype(choices) : "Damage Type" : 0 =
+	damagecap(integer) : "Damage Cap" : 100000 : "The maximum amount of damage that can be dealt when using the Doubling w/Forgiveness damage model."
+	damagetype(choices) : "Damage Type" : 0 : "Type of damage to inflict on entities damaged." =
 	[
-		0 : "GENERIC"
-		1 : "CRUSH"
-		2 : "BULLET"
-		4 : "SLASH"
-		8 : "BURN"
-		16 : "FREEZE"
-		32 : "FALL"
-		64 : "BLAST"
-		128 : "CLUB"
-		256 : "SHOCK"
-		512 : "SONIC"
-		1024 : "ENERGYBEAM"
-		16384: "DROWN"
-		32768 : "PARALYSE"
-		65536 : "NERVEGAS"
-		131072 : "POISON"
-		262144 : "RADIATION"
-		524288 : "DROWNRECOVER"
-		1048576 : "CHEMICAL"
-		2097152 : "SLOWBURN"
-		4194304 : "SLOWFREEZE"
+		0 			: "Generic"
+		1 			: "Crush"
+		32 			: "Fall (Bottomless Pits)"
+		1024 		: "Energy Beam (Laserfields)"
+		131072 		: "Poison (Neurotoxin)"
+		1048576 	: "Chemical (Deadly Goo)"
+		2 			: "Bullet"
+		4 			: "Slash"
+		8 			: "Burn"
+		16 			: "Freeze"
+		64 			: "Blast"
+		128 		: "Club"
+		256 		: "Shock"
+		512 		: "Sonic"
+		16384		: "Drown (NOT for Goo!)"
+		32768 		: "Paralyse"
+		65536 		: "Nerve Gas"
+		262144 		: "Radiation"
+		524288 		: "Drown Recover"
+		2097152 	: "Slow Burn"
+		4194304 	: "Slow Freeze"
 	]
 
-	damagemodel(choices) : "Damage Model" : 0 : "How damage is dealt. Normal always does the specified amount of damage each half second. Doubling starts with the specified amount and doubles it each time it hurts the toucher. Forgiveness means that if the toucher gets out of the trigger the damage will reset to the specified value. Good for making triggers that are deadly over time without having to cause massive damage on each touch." =
+	damagemodel(choices) : "Damage Model" : 0 : "How damage is dealt. Normal always does the specified amount of damage each half second. Doubling w/Forgiveness starts with the specified amount and doubles it each time it hurts the toucher, resetting when they leave the trigger. Good for making triggers that are deadly over time, without having to cause massive damage on each touch." =
 	[
 		0 : "Normal"
 		1 : "Doubling w/forgiveness"
