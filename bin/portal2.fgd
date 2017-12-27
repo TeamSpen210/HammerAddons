@@ -328,7 +328,7 @@
 		"models/props/laser_emitter.mdl" 		: "Offset"
 	]
 	
-	StartState(choices) : "Start off?" : 0 =
+	StartState(choices) : "Start Disabled" : 0 =
 	[
 		1 : "Yes"
 		0 : "No"
@@ -557,12 +557,20 @@
 [
 	GroupName(string) : "Group Name" : "" : "Giving nuggets a group name hints the game that they are intended to be a group"
 	RespawnTime(float) : "Respawn Time" : 30 : "Number of seconds between when a nugget is collected and when it respawns"
-	PointValue(choices) : "Point Value" : 1 =
+	PointValue(choices) : "Point Value" : 1 : "The amount of 'points' given when the nugget is collected. Any value can be set here but only the included options will appear correctly in-game." =
 	[
 		1 : "1"
 		5 : "5"
 		10 : "10"
 		25 : "25"
+	]
+	
+	skin(choices) : "[H] Point Value" : 1 : "The point value shown on the model in Hammer." =
+	[
+		1 : "1"
+		2 : "5"
+		3 : "10"
+		4 : "25"
 	]
 ]
 
@@ -589,7 +597,7 @@
 	input HideViewFinder(void) : "Hides the view finder screen overlay."
 ]
 
-@PointClass base(Targetname, PlayerClass, Angles) studioprop("models/editor/playerstart.mdl") = info_coop_spawn : "Player spawns for cooperative mode."
+@PointClass base(Targetname, PlayerClass, Angles) studioprop() = info_coop_spawn : "Player spawns for cooperative mode."
 [
 	Enabled(choices) : "Initial State" : 0 =
 	[
@@ -602,6 +610,13 @@
 		0 : "Any"
 		2 : "P-Body"
 		3 : "ATLAS"
+	]
+	
+	model(choices) : "[H] Player" : "models/editor/playerstart.mdl" : "The player model to show in Hammer." =
+	[
+		"models/editor/playerstart.mdl" 	: "Player Start"
+		"models/player/ballbot/ballbot.mdl"	: "ATLAS"
+		"models/player/eggbot/eggbot.mdl"	: "P-Body"
 	]
 	
 	ForceGunOnSpawn(boolean) : "Force Gun On Spawn" : 0 : "Give the player a Portal Gun on spawn."
@@ -1012,4 +1027,13 @@
 		"no_taunting_blue" : "Prevent Taunting ATLAS"
 		"no_taunting_orange" : "Prevent Taunting P-Body"
 	]
+]
+
+@PointClass base(Targetname) = point_survey : "Shows the player a survey."
+[
+	surveyname(string) : "Survey Script Name" : "end_puzzle_survey" : "Name of a survey script, from the 'scripts/surveys' folder."
+	
+	input ShowSurvey(void) : "Shows the survey."
+	
+	output OnSurveyComplete(void) : "Fired when the player completes or cancels the survey."
 ]
