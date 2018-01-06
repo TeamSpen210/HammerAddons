@@ -112,6 +112,18 @@ class PackList:
     def __init__(self, fsys: FileSystemChain):
         self._files = {}  # type: Dict[str, PackFile]
         self.fsys = fsys
+    def __getitem__(self, path: str):
+        """Look up a packfile by filename."""
+        return self._files[unify_path(path)]
+
+    def __len__(self):
+        return len(self._files)
+
+    def __iter__(self):
+        return iter(self._files.values())
+
+    def __contains__(self, path):
+        return unify_path(path) in self._files
 
     def pack_file(
         self,
