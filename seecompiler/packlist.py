@@ -109,8 +109,9 @@ def unify_path(path: str):
 
 class PackList:
     """Represents a list of resources for a map."""
-    def __init__(self):
+    def __init__(self, fsys: FileSystemChain):
         self._files = {}  # type: Dict[str, PackFile]
+        self.fsys = fsys
 
     def pack_file(
         self,
@@ -272,7 +273,6 @@ class PackList:
 
     def pack_into_zip(
         self,
-        filesys: FileSystemChain,
         zip_file: ZipFile,
         block_filesys: Container[FileSystem]=(),
         ignore_vpk=True,
@@ -285,7 +285,7 @@ class PackList:
         """
         existing_names = set(zip_file.namelist())
 
-        with filesys:
+        with self.fsys:
             for file in self._files.values():
                 if file.virtual:
                     # Always pack.
@@ -298,13 +298,13 @@ class PackList:
                     continue
 
                 try:
-                    sys_file = filesys[file.filename]
+                    sys_file = self.fsys[file.filename]
                 except FileNotFoundError:
                     if file.type is not FileType.OPTIONAL:
                         print('WARNING: "{}" not packed!'.format(file.filename))
                     continue
 
-                sys = filesys.get_system(sys_file)
+                sys = self.fsys.get_system(sys_file)
 
                 if ignore_vpk and isinstance(sys, VPKFileSystem):
                     continue
@@ -314,26 +314,26 @@ class PackList:
                 with sys_file.open_bin() as f:
                     zip_file.writestr(file.filename, f.read())
 
-    def eval_dependencies(self, filesys: FileSystem):
+    def eval_dependencies(self):
         """Add files to the list which need to also be packed.
 
         This requires parsing through many files.
         """
         # Run though repeatedly, until all are analysed.
         todo = True
-        with filesys:
+        with self.fsys:
             while todo:
                 todo = False
-                for file in self._files.values():
+                for file in list(self._files.values()):
                     if file._analysed:
                         continue
                     file._analysed = True
 
                     if file.type is FileType.MATERIAL:
-                        if self._get_material_files(filesys, file):
+                        if self._get_material_files(file):
                             todo = True
                     elif file.type is FileType.MODEL:
-                        self._get_model_files(filesys, file)
+                        self._get_model_files(file)
                         todo = True
                     elif file.type is FileType.TEXTURE:
                         # Try packing the '.hdr.vtf' file as well if present.
@@ -343,7 +343,7 @@ class PackList:
                             FileType.OPTIONAL
                         )
 
-    def _get_model_files(self, filesys: FileSystem, file: PackFile):
+    def _get_model_files(self, file: PackFile):
         """Find any needed files for a model."""
         filename, ext = os.path.splitext(file.filename)
         self.pack_file(filename + '.vvd')  # Must be present.
@@ -351,11 +351,11 @@ class PackList:
         # Some of these are optional.
         for ext in ['.phy', '.vtx', '.sw.vtx', '.dx80.vtx', '.dx90.vtx']:
             component = filename + ext
-            if component in filesys:
+            if component in self.fsys:
                 yield self.pack_file(component)
 
         try:
-            mdl = Model(filesys, filesys[file.filename])
+            mdl = Model(self.fsys, self.fsys[file.filename])
         except FileNotFoundError:
             LOGGER.warning('Can\'t find model "{}"!', file.filename)
             return
@@ -368,19 +368,19 @@ class PackList:
 
         return True  # Have dependencies
 
-    def _get_material_files(self, filesys: FileSystem, file: PackFile):
+    def _get_material_files(self, file: PackFile):
         """Find any needed files for a material."""
 
         parents = []
         try:
-            with filesys, filesys.open_str(file.filename) as f:
+            with self.fsys, self.fsys.open_str(file.filename) as f:
                 mat = Material.parse(f, file.filename)
         except FileNotFoundError:
             print('WARNING: File "{}" does not exist!'.format(file.filename))
             return
 
         # For 'patch' shaders, apply the originals.
-        mat = mat.apply_patches(filesys, parent_func=parents.append)
+        mat = mat.apply_patches(self.fsys, parent_func=parents.append)
 
         for vmt in parents:
             yield self.pack_file(vmt, FileType.MATERIAL)

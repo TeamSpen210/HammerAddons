@@ -25,8 +25,9 @@ def main(argv):
     game_info = find_gameinfo(argv)
 
     fsys = game_info.get_filesystem()
+    fsys.open_ref()
 
-    packlist = PackList()
+    packlist = PackList(fsys)
 
     LOGGER.info('Gameinfo: {}\nSearch path: \n{}', game_info.path, '\n'.join([sys[0].path for sys in fsys.systems]))
 
@@ -69,10 +70,10 @@ def main(argv):
     packlist.pack_fgd(vmf, fgd)
 
     packlist.pack_from_bsp(bsp_file)
-    packlist.eval_dependencies(fsys)
+    packlist.eval_dependencies()
 
     with bsp_file.packfile() as pak_zip:
-        packlist.pack_into_zip(fsys, pak_zip)
+        packlist.pack_into_zip(pak_zip)
 
     LOGGER.info("SEEcompiler VRAD hook finished!")
 
