@@ -3,7 +3,6 @@
 """Implements various brush entities."""
 from seecompiler.transformation import trans, Context
 from seecompiler.logger import get_logger
-from seecompiler.packlist import pack_file, FileType
 
 LOGGER = get_logger(__name__)
 
