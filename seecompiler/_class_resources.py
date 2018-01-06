@@ -11,7 +11,8 @@ __all__ = ['CLASS_RESOURCES']
 
 #  For various entity classes, we know they require hardcoded files.
 # List them here - classname -> [(file, type), ...]
-
+# Alternatively it's a function to call with the entity to do class-specific
+# behaviour, yielding files to pack.
 _cls_res_type = Dict[str, Union[
     List[Union[str, Tuple[str, FileType]]],
     Callable[[Entity], Iterator[str]],
@@ -113,14 +114,18 @@ def func_breakable_surf(ent: Entity):
 
 @cls_func
 def move_rope(ent: Entity):
+    """Implement move_rope and keyframe_rope resources."""
     old_shader_type = conv_int(ent['RopeShader'])
     if old_shader_type == 0:
         yield 'materials/cable/cable.vmt'
     elif old_shader_type == 1:
-        yield 'materials/cable / rope.vmt'
+        yield 'materials/cable/rope.vmt'
     else:
         yield 'materials/cable/chain.vmt'
     yield 'materials/cable/rope_shadowdepth.vmt'
+
+# These classes are identical.
+CLASS_RESOURCES['keyframe_rope'] = CLASS_RESOURCES['move_rope']
 
 
 res('npc_vehicledriver',
