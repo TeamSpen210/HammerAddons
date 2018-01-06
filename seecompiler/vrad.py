@@ -35,6 +35,10 @@ def main(argv):
     with LZMAFile(resource_stream('seecompiler', 'fgd.lzma')) as f:
         fgd = FGD.unserialise(f)
 
+    LOGGER.info('Loading soundscripts...')
+    packlist.load_soundscript_manifest('see_sndscript_data.vdf')
+    LOGGER.info('Done! ({} sounds)', len(packlist.soundscripts))
+
     # The path is the last argument to VRAD
     # Hammer adds wrong slashes sometimes, so fix that.
     path = os.path.normpath(argv[-1])
@@ -45,8 +49,6 @@ def main(argv):
 
     if not path.endswith(".bsp"):
         path += ".bsp"
-
-    #seecompiler.run.run_vrad(vrad_args)
 
     LOGGER.info('Reading BSP...')
     bsp_file = BSP(path)

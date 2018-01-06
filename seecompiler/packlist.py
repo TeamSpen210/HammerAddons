@@ -1,15 +1,16 @@
 """Handles the list of files which are desired to be packed into the BSP."""
-from typing import Container, Dict
+from typing import Container, Dict, Tuple, List, Mapping
 from enum import Enum
 from zipfile import ZipFile
 import os.path
 
-from srctools import VMF
+from srctools import VMF, Property
 from srctools.fgd import FGD, ValueTypes as KVTypes, KeyValues
 from srctools.bsp import BSP
-from srctools.filesys import FileSystem, VPKFileSystem, FileSystemChain
+from srctools.filesys import FileSystem, VPKFileSystem, FileSystemChain, File
 from srctools.mdl import Model
 from srctools.vmt import Material, VarType
+from srctools.sndscript import Sound
 from seecompiler.logger import get_logger
 
 LOGGER = get_logger(__name__)
@@ -112,6 +113,11 @@ class PackList:
     def __init__(self, fsys: FileSystemChain):
         self._files = {}  # type: Dict[str, PackFile]
         self.fsys = fsys
+        # Soundscript name -> soundscript path, raw WAVs
+        self.soundscripts = {}  # type: Dict[str, Tuple[str, List[str]]]
+        # List of filenames of soundscripts - used to generate the manifest.
+        self.soundscript_files = []
+
     def __getitem__(self, path: str):
         """Look up a packfile by filename."""
         return self._files[unify_path(path)]
@@ -138,6 +144,10 @@ class PackList:
 
         if '\t' in filename:
             raise ValueError
+
+        if data_type is FileType.GAME_SOUND:
+            self.pack_soundscript(filename)
+            return
 
         if data_type is FileType.MATERIAL or filename.endswith('.vmt'):
             if not filename.startswith('materials/'):
@@ -207,6 +217,114 @@ class PackList:
             data,
         )
 
+    def pack_soundscript(self, sound_name: str):
+        """Pack a soundscript or raw sound file."""
+        sound_name = sound_name.casefold()
+        # Check for raw sounds first.
+        if sound_name.endswith(('.wav', '.mp3')):
+            self.pack_file('sound/' + sound_name)
+            return
+
+        try:
+            script_path, sound = self.soundscripts[sound_name]
+        except KeyError:
+            LOGGER.warning('Unknown sound "{}"!', sound_name)
+            return
+
+        self.pack_file(script_path)
+
+        for raw_file in sound:
+            self.pack_file('sound/' + raw_file)
+
+    def load_soundscript(self, file: File):
+        """Read in a soundscript and record which files use it."""
+        with file.sys, file.open_str() as f:
+            props = Property.parse(f, file.path)
+
+        scripts = Sound.parse(props)
+
+        for name, sound in scripts.items():
+            self.soundscripts[name] = file.path, [
+                snd.lstrip('*@#<>^)}$!?').replace('\\', '/')
+                for snd in sound.sounds
+            ]
+
+        return scripts.keys()
+
+    def load_soundscript_manifest(self, cache_file: str=None):
+        """Read the soundscript manifest, and read all mentioned scripts.
+
+        If cache_file is provided, it should be a path to a file used to
+        cache the file reading for later use."""
+        try:
+            man = self.fsys.read_prop('scripts/game_sounds_manifest.txt')
+        except FileNotFoundError:
+            return
+
+        cache_data = {}  # type: Dict[str, Property]
+        if cache_file is not None:
+            try:
+                f = open(cache_file)
+            except FileNotFoundError:
+                pass
+            else:
+                with f:
+                    old_cache = Property.parse(f, cache_file)
+                for cache_prop in old_cache:
+                    cache_data[cache_prop.name] = (
+                        cache_prop.int('cache_key'),
+                        cache_prop.find_key('files')
+                    )
+
+            # Regenerate from scratch each time - that way we remove old files
+            # from the list.
+            new_cache_data = Property(None, [])
+        else:
+            new_cache_data = None
+
+        with self.fsys:
+            for prop in man.find_children('game_sounds_manifest'):
+                if not prop.name.endswith('_file'):
+                    continue
+                self.soundscript_files.append(prop.value)
+                try:
+                    cache_key, cache_files = cache_data[prop.value.casefold()]
+                except KeyError:
+                    cache_key = -1
+                    cache_files = None
+
+                file = self.fsys[prop.value]
+                cur_key = file.cache_key()
+
+                if cache_key != cur_key or cache_key == -1:
+                    sounds = self.load_soundscript(file)
+                else:
+                    # Read from cache.
+                    sounds = []
+                    for cache_prop in cache_files:
+                        sounds.append(cache_prop.real_name)
+                        self.soundscripts[cache_prop.real_name] = (prop.value, [
+                            snd.value
+                            for snd in cache_prop
+                        ])
+                if new_cache_data is not None:
+                    new_cache_data.append(Property(prop.value, [
+                        Property('cache_key', str(cur_key)),
+                        Property('Files', [
+                            Property(snd, [
+                                Property('snd', raw)
+                                for raw in self.soundscripts[snd][1]
+                            ])
+                            for snd in sounds
+                        ])
+                    ]))
+
+        if cache_file is not None:
+            # Write back out our new cache with updated data.
+            with open(cache_file, 'w') as f:
+                for line in new_cache_data.export():
+                    f.write(line)
+
     def pack_from_bsp(self, bsp: BSP):
         """Pack files found in BSP data (excluding entities)."""
         for static_prop in bsp.static_prop_models():
@@ -268,6 +386,8 @@ class PackList:
                         self.pack_file('scripts/vscripts/' + script)
                 elif val_type is KVTypes.STR_SPRITE:
                     self.pack_file('materials/sprites/' + value, FileType.MATERIAL)
+                elif val_type is KVTypes.STR_SOUND:
+                    self.pack_soundscript(value)
 
         for classname in vmf.by_class.keys():
             try:
