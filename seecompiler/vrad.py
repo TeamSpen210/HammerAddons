@@ -57,7 +57,7 @@ def main(argv):
     vmf = bsp_file.read_ent_data()
     LOGGER.info('Done!')
 
-    run_transformations(vmf, fsys, game_info.app_id)
+    run_transformations(vmf, fsys)
 
     bsp_file.replace_lump(
         bsp_file.filename,
