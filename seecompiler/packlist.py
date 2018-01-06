@@ -21,7 +21,7 @@ class FileType(Enum):
     SOUNDSCRIPT = 1  # Should be added to the manifest
 
     GAME_SOUND = 2  # 'world.blah' sound - lookup the soundscript, and raw files.
-    
+
     # Assume these files are present even
     # if we can't find them. (rt_ textures for example.)
     # also don't bother looking for dependencies.
@@ -173,12 +173,12 @@ class PackList:
 
             if file.type is data_type:
                 # Same, no problems - just packing on top.
-                return file
+                return
 
             if file.type is FileType.GENERIC:
                 file.type = data_type  # This is fine, we now know it has behaviour...
             elif data_type is FileType.GENERIC:
-                return file  # If we know it has behaviour, that trumps generic.
+                return  # If we know it has behaviour, that trumps generic.
 
             if data_type is FileType.WHITELIST:
                 file.type = data_type  # Blindly believe this.
@@ -201,12 +201,11 @@ class PackList:
             if ext != '.txt':
                 raise ValueError('"{}" cannot be a soundscript!'.format(filename))
 
-        self._files[path] = file = PackFile(
+        self._files[path] = PackFile(
             data_type,
             filename,
             data,
         )
-        return file
 
     def pack_from_bsp(self, bsp: BSP):
         """Pack files found in BSP data (excluding entities)."""
