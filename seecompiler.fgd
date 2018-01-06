@@ -210,7 +210,7 @@
 		"models/props/laser_catcher.mdl" 		: "Offset"
 	]
 	
-	see_fix_skins(boolean) "[SEE] Fix Skins" : 1 : "Insert outputs to fix skins after level loads."
+	see_fix_skins(boolean): "[SEE] Fix Skins" : 1 : "Insert outputs to fix skins after level loads."
 	
 	output OnPowered(void) : "Fired when a laser hits the target."
 	output OnUnpowered(void) : "Fired when a laser has stopped hitting the target."
