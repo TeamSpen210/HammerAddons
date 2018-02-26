@@ -16,7 +16,12 @@ from lzma import LZMAFile
 from srctools.game import find_gameinfo
 from seecompiler.packlist import PackList
 
-import seecompiler.run
+
+def load_fgd() -> FGD:
+    """Extract the local copy of FGD data."""
+    # Pull the FGD file we included out, so we don't rely on a local one.
+    with LZMAFile(resource_stream('seecompiler', 'fgd.lzma')) as f:
+        return FGD.unserialise(f)
 
 
 def main(argv):
@@ -31,9 +36,7 @@ def main(argv):
 
     LOGGER.info('Gameinfo: {}\nSearch path: \n{}', game_info.path, '\n'.join([sys[0].path for sys in fsys.systems]))
 
-    # Pull the FGD file we included out, so we don't rely on a local one.
-    with LZMAFile(resource_stream('seecompiler', 'fgd.lzma')) as f:
-        fgd = FGD.unserialise(f)
+    fgd = load_fgd()
 
     LOGGER.info('Loading soundscripts...')
     packlist.load_soundscript_manifest('see_sndscript_data.vdf')
