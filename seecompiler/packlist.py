@@ -1,5 +1,6 @@
 """Handles the list of files which are desired to be packed into the BSP."""
 from typing import Container, Dict, Tuple, List, Mapping
+from collections import OrderedDict
 from enum import Enum
 from zipfile import ZipFile
 import os.path
@@ -106,8 +107,11 @@ class PackList:
         self.fsys = fsys
         # Soundscript name -> soundscript path, raw WAVs
         self.soundscripts = {}  # type: Dict[str, Tuple[str, List[str]]]
-        # List of filenames of soundscripts - used to generate the manifest.
-        self.soundscript_files = []
+        # Filenames of soundscripts - used to generate the manifest.
+        # Ordered dictionary to keep the order intact, with
+        # filename keys mapping to a bool value indicating if it's included
+        # in the map.
+        self.soundscript_files = OrderedDict()
 
     def __getitem__(self, path: str):
         """Look up a packfile by filename."""
@@ -134,7 +138,9 @@ class PackList:
         filename = os.fspath(filename)
 
         if '\t' in filename:
-            raise ValueError
+            raise ValueError(
+                'No tabs are allowed in filenames ({!r})'.format(filename)
+            )
 
         if data_type is FileType.GAME_SOUND:
             self.pack_soundscript(filename)
@@ -226,10 +232,17 @@ class PackList:
         for raw_file in sound:
             self.pack_file('sound/' + raw_file)
 
-    def load_soundscript(self, file: File):
-        """Read in a soundscript and record which files use it."""
+    def load_soundscript(self, file: File, *, always_include: bool=False):
+        """Read in a soundscript and record which files use it.
+
+        If always_include is True, it will be included in the manifests even
+        if it isn't used.
+        """
         with file.sys, file.open_str() as f:
             props = Property.parse(f, file.path)
+
+        if always_include or file.path not in self.soundscript_files:
+            self.soundscript_files[file.path] = always_include
 
         scripts = Sound.parse(props)
 
@@ -245,7 +258,8 @@ class PackList:
         """Read the soundscript manifest, and read all mentioned scripts.
 
         If cache_file is provided, it should be a path to a file used to
-        cache the file reading for later use."""
+        cache the file reading for later use.
+        """
         try:
             man = self.fsys.read_prop('scripts/game_sounds_manifest.txt')
         except FileNotFoundError:
@@ -276,7 +290,6 @@ class PackList:
             for prop in man.find_children('game_sounds_manifest'):
                 if not prop.name.endswith('_file'):
                     continue
-                self.soundscript_files.append(prop.value)
                 try:
                     cache_key, cache_files = cache_data[prop.value.casefold()]
                 except KeyError:
@@ -287,7 +300,7 @@ class PackList:
                 cur_key = file.cache_key()
 
                 if cache_key != cur_key or cache_key == -1:
-                    sounds = self.load_soundscript(file)
+                    sounds = self.load_soundscript(file, always_include=True)
                 else:
                     # Read from cache.
                     sounds = []
@@ -297,6 +310,12 @@ class PackList:
                             snd.value
                             for snd in cache_prop
                         ])
+
+                # The soundscripts in the manifests are always included,
+                # since many would be part of the core code (physics, weapons,
+                # ui, etc). Just keep those loaded, no harm since vanilla does.
+                self.soundscript_files[file.path] = True
+
                 if new_cache_data is not None:
                     new_cache_data.append(Property(prop.value, [
                         Property('cache_key', str(cur_key)),
@@ -314,6 +333,32 @@ class PackList:
             with open(cache_file, 'w') as f:
                 for line in new_cache_data.export():
                     f.write(line)
+
+    def write_manifest(self, map_name: str=None):
+        """Produce and pack a manifest file for this map.
+
+        If map_name is provided, the script in the custom content position
+        to be automatically loaded for that name. Otherwise, it will be packed
+        such that it can override the master manifest with
+        sv_soundemitter_flush.
+        """
+        manifest = Property('game_sounds_manifest', [])
+        for snd, is_enabled in self.soundscript_files.items():
+            if not is_enabled:
+                continue
+            manifest.append(Property('precache_file', snd))
+
+        buf = bytearray()
+        for line in manifest.export():
+            buf.append(line.encode('utf8'))
+
+        self.pack_file(
+            'map/{}_level_sounds.txt'.format(map_name)
+            if map_name else
+            'scripts/game_sounds_manifest.txt',
+            FileType.SOUNDSCRIPT,
+            bytes(buf),
+        )
 
     def pack_from_bsp(self, bsp: BSP):
         """Pack files found in BSP data (excluding entities)."""
