@@ -1,6 +1,6 @@
 """Handles the list of files which are desired to be packed into the BSP."""
-from typing import Container, Dict, Tuple, List, Mapping
 from collections import OrderedDict
+from typing import Iterable, Dict, Tuple, List
 from enum import Enum
 from zipfile import ZipFile
 import os.path
@@ -440,16 +440,36 @@ class PackList:
     def pack_into_zip(
         self,
         zip_file: ZipFile,
-        block_filesys: Container[FileSystem]=(),
+        *,
+        whitelist: Iterable[FileSystem]=(),
+        blacklist: Iterable[FileSystem]=(),
         ignore_vpk=True,
     ):
         """Pack all our files into the given zipfile.
 
         The filesys is used to find files to pack.
-        If set, limit_filesys will disallow packing from the listed filesystems.
-        If ignore_vpk is True, files in VPK won't be packed.
+        Filesystems must be in the whitelist and not in the blacklist, if provided.
+        If ignore_vpk is True, files in VPK won't be packed unless that system
+        is in allow_filesys.
         """
         existing_names = set(zip_file.namelist())
+
+        all_systems = {
+            sys for sys, prefix in
+            self.fsys.systems
+        }
+
+        allowed = set(all_systems)
+
+        if ignore_vpk:
+            for fsys in all_systems:
+                if isinstance(fsys, VPKFileSystem):
+                    allowed.discard(fsys)
+
+        # Add these on top, so this overrides ignore_vpk.
+        allowed.update(whitelist)
+        # Then remove blacklisted systems.
+        allowed.difference_update(blacklist)
 
         with self.fsys:
             for file in self._files.values():
@@ -470,15 +490,9 @@ class PackList:
                         print('WARNING: "{}" not packed!'.format(file.filename))
                     continue
 
-                sys = self.fsys.get_system(sys_file)
-
-                if ignore_vpk and isinstance(sys, VPKFileSystem):
-                    continue
-                elif sys in block_filesys:
-                    continue
-
-                with sys_file.open_bin() as f:
-                    zip_file.writestr(file.filename, f.read())
+                if self.fsys.get_system(sys_file) in allowed:
+                    with sys_file.open_bin() as f:
+                        zip_file.writestr(file.filename, f.read())
 
     def eval_dependencies(self):
         """Add files to the list which need to also be packed.
