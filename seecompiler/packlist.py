@@ -61,7 +61,7 @@ class PackFile:
     
     data is raw data to pack directly, instead of from the filesystem.
     """
-    __slots__ = ['type', 'filename', 'data', 'virtual', '_analysed']
+    __slots__ = ['type', 'filename', 'data', '_analysed']
     def __init__(
         self, 
         type: FileType,
@@ -71,9 +71,12 @@ class PackFile:
         self.type = type
         self.filename = filename
         self.data = data
-        self.virtual = data is not None
         # If we've checked for dependencies
         self._analysed = False
+
+    @property
+    def virtual(self) -> bool:
+        return self.data is not None
 
     def __repr__(self):
         text = '<{}{} Packfile "{}"'.format(
@@ -86,18 +89,6 @@ class PackFile:
         else:
             text += '>'
         return text
-
-    def get_data(self, filesys: FileSystem) -> bytes:
-        """Read this file in. 
-        
-        If we have associated data, that is returned.
-        Otherwise the filesystem is consulted for this file,
-        and that is returned as well as cached.
-        """
-        if self.data is None:
-            with filesys, filesys.open_bin(self.filename) as f:
-                self.data = f.read()
-        return self.data
 
 
 def unify_path(path: str):
@@ -173,7 +164,6 @@ class PackList:
             if file.data is None:
                 if data is not None:
                     file.data = data
-                    file.virtual = True
                 # else: no data on either
             elif data == file.data:
                 pass  # Overrode with the same data, that's fine
