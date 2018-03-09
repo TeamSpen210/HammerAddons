@@ -98,8 +98,9 @@
 	vscripts(scriptlist) : "Entity Scripts" : "" : "Name(s) of script files that are executed after all entities have spawned."
 	thinkfunction(string) : "Script think function" : "" : "Name of a function in this entity's script scope which will be called automatically."
 
-	input RunScriptFile(string) : "Execute a game script file from disk"
-	input RunScriptCode(string) : "Execute a string of script source code"
+	input RunScriptFile(string) : "Execute a game script file from disk."
+	input RunScriptCode(string) : "Execute a string of script source code."
+	input CallScriptFunction(string) : "Execute the given function name."
 	
 	// Inputs
 	input Kill(void) : "Removes this entity from the world."
