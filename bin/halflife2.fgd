@@ -1743,7 +1743,7 @@
 	input Launch(float) : "Launch the flare forward with the specified speed."
 ]
 
-@PointClass base(Targetname, Parentname, Angles) = env_muzzleflash : "Muzzle Flash" 
+@PointClass base(Targetname, Parentname, Angles) size( -4 -4 -4, 4 4 4 ) iconsprite("editor/env_muzzleflash.vmt") = env_muzzleflash : "Muzzle Flash" 
 [
 	parentattachment(string) : "Parent Attachment" : "" : "The name of an attachment on the parent to hierarchically attach to."
 	scale(float) : "Scale" : "1" : "Size of the muzzle flash."
