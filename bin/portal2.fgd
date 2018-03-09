@@ -443,6 +443,8 @@
 	input  DisablePortalFunnel(void) : "Disable portal funneling behavior."
 	input  EnableMotion(void) : "Allow physics simulation."
 	input  DisableMotion(void) : "Prevent Physics simulation, freezing the cube in place."
+	
+	input SetPaint(integer) : "Force the cube to be painted with 0 (Repulsion), 2 (Propulsion), or 4 (No) gel."
 
 	input  Dissolve(void) : "Fizzles the cube, firing the OnFizzled output."
 	input  SilentDissolve(void) : "Kills the cube immediately and fires its OnFizzled output."
