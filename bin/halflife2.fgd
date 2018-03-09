@@ -1799,14 +1799,13 @@
 // Camera/monitor entities
 //
 //-------------------------------------------------------------------------
-@PointClass base(Parentname, Angles) studioprop("models/editor/camera.mdl") = point_camera : "Camera"
+@PointClass base(Targetname, Parentname, Angles) studioprop("models/editor/camera.mdl") = point_camera : "Camera"
 [
 	spawnflags(Flags) =
 	[
 		1 : "Start Off" : 0 
 	]
 
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	FOV(float) : "FOV" : 90 : "Field of view in degrees"
 //	resolution(float) : "resolution" : 256 : "width/height of the render target for the camera"
 	UseScreenAspectRatio(boolean) : "Screen Aspect Ratio" : 0
