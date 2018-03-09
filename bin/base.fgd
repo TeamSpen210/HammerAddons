@@ -4591,10 +4591,10 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	input TeleportPlayerToProxy(void) : "Move the player to the view proxy."
 ]
 
-@PointClass base(Targetname) line(255 255 0, targetname, propname) = point_posecontroller : 
+@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) line(255 255 0, targetname, propname) = point_posecontroller : 
 	"An entity that controls a pose parameter of a prop and cycles the pose clientside." 
 [
-	PropName(string) : "Prop Name" : : "Name of the prop to control."
+	PropName(target_destination) : "Prop Name" : : "Name of the prop to control."
 	PoseParameterName(string) : "Pose Parameter Name" : : "Name of the pose parameter to control."
 	PoseValue(float) : "Pose Parameter Value" : "0.0" : "Normalized value for the pose parameter from 0.0 and 1.0 (maps to min and max range)."
 	InterpolationTime(float) : "Interpolation Time" : "0.0" : "Number of seconds (0.0 to 10.0) for client to match absolue pose values."
