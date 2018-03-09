@@ -1493,7 +1493,7 @@
 //
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname) size(-16 -16 -16, 16 16 16) = player_loadsaved : "Load Auto-Saved game" 
+@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = player_loadsaved : "Load Auto-Saved game" 
 [
 	duration(string) : "Fade Duration (seconds)" : "2"
 	holdtime(string) : "Hold Fade (seconds)" : "0"

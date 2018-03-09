@@ -5993,7 +5993,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	input TurnOff(void) : "Turns motor off"
 ]
 
-@PointClass base(Targetname, Parentname, Angles, Studiomodel) color(128 128 128) studio() = phys_magnet : 
+@PointClass base(Targetname, Parentname, Angles, Studiomodel) color(128 128 128) studio() iconsprite("editor/phys_magnet") = phys_magnet : 
 	"An entity that acts like a magnet, attaching metallic physics objects to itself when they touch it."
 [
 	spawnflags(flags) =
