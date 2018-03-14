@@ -5735,8 +5735,9 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 
 @PointClass halfgridsnap base(Targetname)
 	color(128 128 128) 
-	line(128 128 128, targetname, attach1)  
+	line(128 128 128, targetname, attach1)
 	line(128 128 128, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	sphere(length) sphere(breaklength) = phys_spring : 
 	"A physically simulated spring. "+
 	"'Length' is what's known as the 'natural spring length'. This is how long the spring would "+
@@ -5769,6 +5770,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 @PointClass halfgridsnap size(-8 -8 -8, 8 8 8)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	color(128 128 128)
 	base(TwoObjectPhysics) = phys_hinge : 
 	"A physically simulated hinge. Use the helper to define the axis of rotation."
@@ -5801,6 +5803,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 @PointClass base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	color(128 128 128) 
 	iconsprite("editor/phys_ballsocket.vmt") = phys_ballsocket : 
 	"A constraint that keeps the position of two objects fixed, relative to the constraint's origin. It does not affect rotation."
@@ -5813,6 +5816,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 @PointClass base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	color(128 128 128) 
 	studio("models/editor/axis_helper.mdl") = phys_constraint : 
 	"A constraint that keeps the relative position and orientation of two objects fixed."
@@ -5822,6 +5826,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 @PointClass base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	color(128 128 128) 
 	studio("models/editor/axis_helper.mdl") = phys_pulleyconstraint : 
 	"A constraint that is essentially two length constraints and two points. Imagine it as a virtual rope connected to two objects, each suspended from a pulley above them."+
@@ -5840,6 +5845,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 @PointClass halfgridsnap base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	color(128 128 128) 
 	studio("models/editor/axis_helper.mdl") = phys_slideconstraint : 
 	"A constraint that constrains an entity along a line segment."
@@ -5876,6 +5882,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 @PointClass base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	sphere(minlength)
 	color(128 128 128) 
 	studio("models/editor/axis_helper.mdl") = phys_lengthconstraint : 
@@ -5894,6 +5901,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 @PointClass base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	color(128 128 128) 
 	studio("models/editor/axis_helper.mdl") = phys_ragdollconstraint : 
 	"A constraint that fixes the position of two entities, relative to this constraint's origin. Also allows for limits on the rotation around each axis, in the space of this constraint."
@@ -5961,7 +5969,10 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	input Scale(string) : "Set Force Scale"
 ]
 
-@PointClass line(255 255 0, targetname, attach1) color(128 128 128) line(128 128 128, targetname, attach1) base(Angles, ForceController) = phys_thruster : 
+@PointClass base(Angles, ForceController) 
+	line(255 255 255, targetname, attach1)
+	color(128 128 128) 
+= phys_thruster : 
 	"An entity used to apply constant acceleration to a physics object. "+
 	"The force and torque is calculated using the position and direction of the thruster as an impulse. So moving those off the object's center "+
 	"will cause torque as well. Torque can be removed by unchecking the 'apply torque' flag. The position of the thruster can be forced to be "+
@@ -5976,7 +5987,10 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	force(string) : "Force" : "0" : "Force (will be integrated, units are force kg*in/s^2)"
 ]
 
-@PointClass halfgridsnap color(128 128 128) line(128 128 128, targetname, attach1) base(ForceController) = phys_torque : 
+@PointClass halfgridsnap base(ForceController)
+	line(255 255 255, targetname, attach1)
+	color(128 128 128) 
+ = phys_torque : 
 	"An angular thruster. Use it to apply angular force to an entity."
 [
 	// Angular acceleration (units are degress/s^2)
