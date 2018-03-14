@@ -5720,7 +5720,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	output OnAwakened(void) : "Fired when this entity becomes awake (collision/force is applied)."
 ]
 
-@PointClass base(Targetname, Parentname) size(-4 -4 -4, 4 4 4) color(128 128 128) line(128 128 128, targetname, parentname) = info_constraint_anchor : 
+@PointClass halfgridsnap base(Targetname, Parentname) iconsprite("editor/info_constraint_anchor.vmt") color(128 128 128) line(128 128 128, targetname, parentname) = info_constraint_anchor : 
 	"An entity used to attach constraints to a local position on an entity. Usually constraints will attach to the center of mass of an object. "+
 	"Attach the desired constraint to this entity, and then parent this entity to the entity you want the constraint to apply to."
 [
