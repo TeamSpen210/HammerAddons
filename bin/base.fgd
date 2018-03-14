@@ -444,9 +444,9 @@
 	pressuredelay(float) : "Pressure Delay" : 0 : "Delay, in seconds, after 'broken' by pressure before breaking apart (allows for sound to play before breaking apart)."
 ]
 
-@BaseClass base(Targetname, Angles, RenderFields, DamageFilter, ResponseContext, Shadow, ToggleDraw) color(0 200 200) = BaseNPC
+// Added - NPC which is not visible
+@BaseClass base(Targetname, Angles, DamageFilter) color(0 200 200) = BaseLogicalNPC
 [
-	target(target_destination) : "Target Path Corner" : : "If set, the name of a path corner entity that this NPC will walk to, after spawning."
 	squadname(String) : "Squad Name" : : "NPCs that are in the same squad (i.e. have matching squad names) will share information about enemies, and will take turns attacking and covering each other."
 	hintgroup(String) : "Hint Group" : "" : "Hint groups are used by NPCs to restrict their hint-node searching to a subset of the map's hint nodes. Only hint nodes with matching hint group names will be considered by this NPC."
 	hintlimiting(boolean) : "Hint Limit Nav" : 0 : "Limits NPC to using specified hint group for navigation requests, but does not limit local navigation."
@@ -514,7 +514,6 @@
 	input SetRelationship(string) : "Changes this entity's relationship with another entity or class. Format: <entityname/classname> <D_HT/D_FR/D_LI/D_NU> <priority>"
 	input SetEnemyFilter(target_destination) : "Changes this NPC's enemy filter to the named filter."
 	input SetHealth(integer) : "Set this NPC's health."
-	input SetBodyGroup(integer) : "HACK: Sets this NPC's body group (from 0 - n). You'd better know what you are doing!"
 	input physdamagescale(float) : "Sets the value that scales damage energy when this character is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility."
 	input Ignite(void) : "Ignite, burst into flames"
 	input IgniteLifetime(float) : "Ignite, with a parameter lifetime."
@@ -535,6 +534,12 @@
 	input ForceInteractionWithNPC(string) : "Force the NPC to use a dynamic interaction with another NPC. Parameter format: <target NPC name> <dynamic interaction name>"
 	input UpdateEnemyMemory(string) : "Update (or Create) this NPC's memory of an enemy and its location"
 	input BecomeRagdoll(void) : "This NPC will instantly become a ragdoll with ZERO force (just go limp). OnDeath, OnHalfHealth, etc. Outputs will **NOT** BE FIRED."
+]
+
+@BaseClass base(BaseLogicalNPC, RenderFields, DamageFilter, ResponseContext, Shadow, ToggleDraw) color(0 200 200) = BaseNPC
+[
+	target(target_destination) : "Target Path Corner" : : "If set, the name of a path corner entity that this NPC will walk to, after spawning."
+	input SetBodyGroup(integer) : "HACK: Sets this NPC's body group (from 0 - n). You'd better know what you are doing!"
 ]
 
 @PointClass base(Targetname, Parentname, Angles) iconsprite("editor/info_target.vmt") = info_npc_spawn_destination : 

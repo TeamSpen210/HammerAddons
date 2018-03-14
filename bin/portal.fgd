@@ -538,7 +538,7 @@
 	PhysicsEnabled(boolean) : "Physics" : 0 : "Move physically"
 ]
 
-@NPCClass base(Parentname, BaseNPC) iconsprite("editor/bullseye.vmt") color(255 0 0) = npc_bullseye : "Dummy NPC for targeting or other behavior."
+@NPCClass base(Parentname, BaseLogicalNPC) iconsprite("editor/bullseye.vmt") color(255 0 0) = npc_bullseye : "Dummy NPC for targeting or other behavior."
 [
 	health(Integer) : "Health" : 35 : "Unlike other NPCs level designers are allowed to set the health on bullseyes."
 
