@@ -162,6 +162,9 @@
 ]
 
 @NPCClass base(Parentname, BaseLogicalNPC) 
+iconsprite("editor/npc_enemyfinder.vmt")
+sphere(MinSearchDist)
+sphere(MaxSearchDist)
 = npc_enemyfinder : "EnemyFinder"
 [
 	spawnflags(flags) =
