@@ -7247,7 +7247,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	input SetMotionBlurAmount(float) : "Forces the motion blur effect on the player. Set to < 0 to disable this override."
 ]
 
-@PointClass base(Parentname, Targetname) size(-8 -8 -8, 8 8 8 ) sphere(startwidth) sphere(endwidth) = env_spritetrail : 
+@PointClass base(Parentname, Targetname) iconsprite("editor/env_spritetrail.vmt") sphere(startwidth) sphere(endwidth) = env_spritetrail : 
 	"A magical trail you can parent to anything you heart desires."
 [
 	lifetime(float) : "Lifetime" : "0.5"
