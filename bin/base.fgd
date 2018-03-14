@@ -7669,7 +7669,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 [
 ]
 
-@PointClass base(Targetname,EnableDisable) sphere(range) = info_game_event_proxy : "Entity that, when seen, generates a simple game event."
+@PointClass base(Targetname,EnableDisable) iconsprite("editor/info_game_event_proxy.vmt") sphere(range) = info_game_event_proxy : "Entity that, when seen, generates a simple game event."
 [
 	event_name(string) : "Event Name" : : "The event to trigger by name from modevents.res"
 	range(float) : "Range" : 512 : "Distance that the player must be before the event is generated."
