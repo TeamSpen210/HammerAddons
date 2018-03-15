@@ -53,6 +53,8 @@ EXT_TYPE = {
     if isinstance(filetype.value, str)
 }
 
+INJECT_FORMAT = "{}/INJECT_{:X}.{ext}"
+
 # noinspection PyProtectedMember
 from seecompiler._class_resources import CLASS_RESOURCES
 
@@ -112,6 +114,9 @@ class PackList:
         # filename keys mapping to a bool value indicating if it's included
         # in the map.
         self.soundscript_files = OrderedDict()
+
+        # folder, ext, data -> filename used
+        self._inject_files = {}  # type: Dict[Tuple[str, str, bytes], str]
 
     def __getitem__(self, path: str):
         """Look up a packfile by filename."""
@@ -212,6 +217,30 @@ class PackList:
             filename,
             data,
         )
+
+    def inject_file(self, data: bytes, folder: str, ext: str) -> str:
+        """Inject a generated file into the map and return the full name.
+
+        The file will be named using the format "INJECT_<hex>".
+        If the same file is requested twice (same folder,
+        extension and data), only one will be included.
+        """
+        folder = folder.rstrip('\\/').replace('\\', '/')
+        ext = ext.lstrip('.')
+        try:
+            return self._inject_files[folder, ext, data]
+        except KeyError:
+            pass
+        name_hash = data
+        while True:
+            # Repeatedly hashing permutes the data, until we stop colliding.
+            name_hash = format(hash(name_hash), 'x')
+            full_name = INJECT_FORMAT.format(folder, name_hash, ext)
+            if full_name not in self._files:
+                break
+        self.pack_file(full_name, data=data)
+        self._inject_files[folder, ext, data] = full_name
+        return full_name
 
     def pack_soundscript(self, sound_name: str):
         """Pack a soundscript or raw sound file."""
