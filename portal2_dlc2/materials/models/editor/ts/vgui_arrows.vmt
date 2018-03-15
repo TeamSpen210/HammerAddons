@@ -1,6 +1,5 @@
-UnLitGeneric
+VertexLitGeneric
 {
-	$model 1
 	$baseTexture "models/editor/ts/vgui_arrows"
 	$translucent 1
 }
