@@ -2880,7 +2880,6 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 @PointClass base(Parentname, Angles) size(-2 -2 -2, 2 2 2) line(255 255 255, targetname, parentname) = point_enable_motion_fixup : 
 	"An entity used to move a motion-disabled prop when it enables motion. Parent this entity to the prop, and when the prop has its motion enabled, it will immediately teleport to the origin of this entity."
 [
-	targetname(target_source) readonly : "[H] Ignore this" : "" : "Provides 'targetname' for the line drawn to the target prop"
 ]
 
 @PointClass base(Targetname, Parentname) studio("models/editor/axis_helper.mdl") color(200 200 0) iconsprite("editor/ts2do/env_message.vmt") sphere(radius) = point_message : 
@@ -4975,7 +4974,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 ]
 
 
-@PointClass base(Targetname, Parentname, EnableDisable) iconsprite("editor/env_microphone.vmt") sphere(MaxRange) color(0 0 255) line(255 255 0, target, speakername) line(255 255 0, targetname, target) = env_microphone :
+@PointClass base(Targetname, Parentname, EnableDisable) iconsprite("editor/env_microphone.vmt") sphere(MaxRange) color(0 0 255) line(64 64 64, targetname, target) line(255 255 0, targetname, target, targetname, SpeakerName) = env_microphone :
 	"An entity that acts as a microphone. It works in one of two modes. If it has a 'Speaker' set, it picks up all sounds within the specified sound range, " +
 	"and rebroadcasts them through the Speaker entity. In this Speaker mode, it ignores the Hears X spawnflags and does not fire the SoundLevel output. " +
 	"If it has no Speaker set, it measures the sound level at a point, and outputs the sound level as a value between 0 and 1. In Measuring mode, it only hears sounds that match the Hear X spawnflags."
@@ -5096,7 +5095,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	output OnGetValue(integer) : "Fired in response to the GetValue input. Used for polling the counter when you don't want constant updates from the OutValue output."
 ]
 
-@PointClass base(Targetname) color(0 100 250) size(-8 -8 -8, 8 8 8) line(255 255 0, source, target) = logic_lineto : 
+@PointClass base(Targetname) color(0 100 250) size(-8 -8 -8, 8 8 8) line(255 255 0, targetname, source, targetname, target) = logic_lineto : 
 	"An entity that calculates and outputs a vector from one entity to another." 
 [
 	source(target_destination) : "Start entity" : : "Name of the entity the line should start from."
@@ -5402,8 +5401,12 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 //
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname, Parentname, EnableDisable) color(0 100 250)
-	line(0 100 250, targetname, target) line(0 100 250, target, lookatname) = point_anglesensor :
+@PointClass base(Targetname, Parentname, EnableDisable)
+	size(-8 -8 -8, 8 8 8) 
+	color(0 100 250)
+	line(0 100 250, targetname, target) 
+	line(0 100 250, targetname, target, targetname, lookatname) 
+= point_anglesensor :
 	"An entity that detects if another entity points in a given direction for a period of time."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angles will be sensed."
@@ -5427,7 +5430,11 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	output FacingPercentage(float) : "Normalized value (0..1) where 1 is facing directly at target and 0 is at or beyond the angle of tolerance."
 ]
 
-@PointClass base(Targetname) color(0 100 250) line(0 100 250, targetname, target) = point_angularvelocitysensor :
+@PointClass base(Targetname) 
+	size(-8 -8 -8, 8 8 8) 
+	color(0 100 250) 
+	line(0 100 250, targetname, target) 
+= point_angularvelocitysensor :
 	"An entity that detects if another entity's angular velocity meets or exceeds a threshold value."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angular velocity will be sensed."
@@ -5454,7 +5461,11 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	output OnEqualTo(void) : "Fired when the Target Entity reaches the threshold angular velocity from a different velocity."
 ]
 
-@PointClass base(Targetname) color(0 100 250) line(0 100 250, targetname, target) = point_velocitysensor :
+@PointClass base(Targetname)
+	size(-8 -8 -8, 8 8 8) 
+	color(0 100 250) 
+	line(0 100 250, targetname, target) 
+= point_velocitysensor :
 	"An entity that detects and outputs an entity's velocity."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose velocity will be sensed."
@@ -5468,10 +5479,14 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	input Disable(void) : "Disable the sensor."
 ]
 
-@PointClass base(Targetname, Parentname, EnableDisable, Angles) color(0 100 250) line(0 100 250, targetname, target) iconsprite("editor/point_proximity_sensor.vmt") = point_proximity_sensor :
+@PointClass base(Targetname, Parentname, EnableDisable, Angles) 
+	color(0 100 250) 
+	line(0 100 250, targetname, target) 
+	iconsprite("editor/point_proximity_sensor.vmt") 
+= point_proximity_sensor :
 	"An entity that detects another entity's proximity to a target position."
 [
-	target(target_destination) : "Target Entity Name" : : "Name of the entity whose psition will be sensed."
+	target(target_destination) : "Target Entity Name" : : "Name of the entity whose position will be sensed."
 
 	spawnflags(Flags) =
 	[
@@ -5486,7 +5501,10 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 ]
 
 
-@PointClass base(Targetname, Angles) iconsprite("editor/point_teleport.vmt") line(255 255 255, targetname, target) = point_teleport : 
+@PointClass base(Targetname, Angles) 
+	iconsprite("editor/point_teleport.vmt") 
+	line(255 255 255, targetname, target) 
+= point_teleport : 
 	"An entity that teleports a target entity to this position and angles. "+
 	"If 'Teleport Home' spawn flag is set, teleports the target entity to its spawn position instead." +
 	"If object is physically simulated, simulation is turned off when teleported."
@@ -5506,7 +5524,11 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	input TeleportEntity(target_destination) : "Teleport the entity specified by the parameter override. Use this to teleport an entity other than the one specified in the Entity To Teleport field."
 ]
 
-@PointClass base(Targetname) sphere(DamageRadius) line(255 255 255, targetname, damagetarget) iconsprite("editor/game_end.vmt") = point_hurt :
+@PointClass base(Targetname) 
+	sphere(DamageRadius) 
+	line(255 255 255, targetname, damagetarget) 
+	iconsprite("editor/game_end.vmt") 
+= point_hurt :
 	"An entity that does damage to all entities in a radius around itself, with a specified delay." +
 	"If 'Target Entity' is specified, the damage is only done to that entity."
 [
@@ -5553,7 +5575,10 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	input Toggle(void) : "Toggle this entity between On/Off state."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/ts2do/point_playermoveconstraint.vmt") sphere(radius) = point_playermoveconstraint : 
+@PointClass base(Targetname)
+	iconsprite("editor/ts2do/point_playermoveconstraint.vmt") 
+	sphere(radius) 
+= point_playermoveconstraint : 
 	"An entity that constrains players to a radius around itself, slowing them down the closer they get to the edge of the radius."
 [
 	radius(float) : "Radius" : 256 : "Radius to constrain players to."
@@ -5674,7 +5699,11 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	additionaliterations(integer) : "Additional System Iterations" : 0 : "Adding iterations makes the interactions among constraints in a system tighter.  It will not compensate for errors due to collision, but will help in cases where objects of disparate mass are constrained to each other."
 ]
 
-@PointClass base(Targetname,Angles) color(128 128 128) iconsprite("editor/ts2do/phys_keepupright.vmt") line(255 255 0, targetname, attach1) = phys_keepupright : "A controller that tries to keep an entity facing a particular direction."
+@PointClass base(Targetname,Angles) 
+	color(128 128 128) 
+	iconsprite("editor/ts2do/phys_keepupright.vmt") 
+	line(255 255 0, targetname, attach1) 
+= phys_keepupright : "A controller that tries to keep an entity facing a particular direction."
 [
 	spawnflags(flags) =
 	[
@@ -5721,7 +5750,12 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	output OnAwakened(void) : "Fired when this entity becomes awake (collision/force is applied)."
 ]
 
-@PointClass halfgridsnap base(Targetname, Parentname) iconsprite("editor/info_constraint_anchor.vmt") color(128 128 128) line(128 128 128, targetname, parentname) = info_constraint_anchor : 
+@PointClass base(Targetname, Parentname)
+	halfgridsnap 
+	iconsprite("editor/info_constraint_anchor.vmt") 
+	color(128 128 128) 
+	line(128 128 128, targetname, parentname) 
+= info_constraint_anchor : 
 	"An entity used to attach constraints to a local position on an entity. Usually constraints will attach to the center of mass of an object. "+
 	"Attach the desired constraint to this entity, and then parent this entity to the entity you want the constraint to apply to."
 [
