@@ -5106,18 +5106,19 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	output Line(vector) : "Fired when the vector, from the start entity to the end entity, changes. Passes along the vector as a parameter."
 ]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = logic_navigation : 
+@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) line(128, 128, 128, targetname, target) = logic_navigation : 
 	"An entity that is used to set navigation properties on other entities. Useful to make NPCs ignore physics props in their way that they can easily push." 
 [
-	target(target_destination) : "Navigation Entity" : "Name of the entity to set navigation properties on."
+	target(target_destination) : "Navigation Entity" : : "Name of the entity to set navigation properties on."
 	spawnflags(flags) =
 	[
 		1 : "Start On" : 1
 	]
-	navprop(choices) : "Nav Property" : "Ignore" =
-	[
-		"Ignore" : "NPCs Ignore this when navigating (they'll bump into it)"
-	]
+	navprop(string) readonly : "Nav Property" : "Ignore" : "The only valid property is to ignore this entity, so NPCs will bump into it."
+	// navprop(choices) : "Nav Property" : "Ignore" =
+	// [
+		// "Ignore" : "NPCs Ignore this when navigating (they'll bump into it)"
+	// ]
 	
 	// Inputs
 	input TurnOn(void) : "Turn on. The Navigation Entity will have its navigation properties set."
