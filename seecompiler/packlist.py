@@ -152,11 +152,13 @@ class PackList:
             return
 
         if data_type is FileType.MATERIAL or filename.endswith('.vmt'):
+            data_type = FileType.MATERIAL
             if not filename.startswith('materials/'):
                 filename = 'materials/' + filename
             if not filename.endswith(('.vmt', '.spr')):
                 filename = filename + '.vmt'
         elif data_type is FileType.TEXTURE or filename.endswith('.vtf'):
+            data_type = FileType.TEXTURE
             if not filename.startswith('materials/'):
                 filename = 'materials/' + filename
             if not filename.endswith('.vtf'):
