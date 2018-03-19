@@ -19,11 +19,11 @@
 	
 	maxblobcount(integer) : "Gel Blob Limit" : 250 : "Number of Gel blobs that can exist. Maximum is 250."
 	
-	message(string) : "Map Description / Title"
+	message(string) : "Map Description / Title" : : "Doesn't seem to be used anywhere."
 	skyname(string) : "SkyBox" : "sky_black_nofog" : "Texture used for the 2D skybox."
-	chaptertitle(string) : "Chapter Title Message" : "" : "Chapter Title that appears onscreen when this level starts."
+	chaptertitle(string) : "Chapter Title Message" : "" : "Chapter Title that appears onscreen when this level starts. Appears non-functional."
 	startdark(boolean) : "Level Fade In" : 0
-	gametitle(boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts."
+	//gametitle(boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts. Non-functional, crashes the game when used."
 
 	newunit(choices) : "New Level Unit" : 0 : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. Only set it to Yes if the player cannot return to any previous levels." = 
 	[
@@ -107,7 +107,7 @@
 		3 : "Conversion Gel"
 		4 : "Cleansing Gel"
 	]
-	skin(choices) : "[H] Paint Type" : 0 : "The type of gel created (for display)." = 
+	skin(choices) : "[H] Paint Type" : 0 : "The type of gel displayed in Hammer." = 
 	[
 		0 : "Repulsion Gel"
 		1 : "Reflection Gel / Adhesion Gel"
@@ -179,7 +179,7 @@
 @PointClass 
 	base(Targetname, Parentname, Angles, LinkedPortalDoor, ToggleDraw, RenderFields)
 	line(255 255 0, targetname, partnername)
-	studio("models/editor/axis_helper_thick.mdl")
+	studio("models/editor/angle_helper.mdl")
 	iconsprite("editor/portal_dual.vmt") = linked_portal_door :
 "A door which is linked by a portal to another 'linked_portal_door' entity. Portal shots will pass through, and no effect appears at the edges."
 [
@@ -980,6 +980,8 @@
 	UseAreaPortalFade(boolean) : "Fade Area Portal?" : 0 : "If the area portal should use the specified fade distances to fade out."
 	AreaPortalFadeStart(float) : "Fade Start Distance" : 0 : "The distance at which the area portal starts fading out."
 	AreaPortalFadeEnd(float) : "Fade End Distance" : 0 : "The distance at which the area portal turns completely opaque."
+	
+	DefaultAnim(string) readonly: "<Default Animation>" : "idleclose" : "Ignore, needed to stop the door from looping the close animation in Hammer."
 
 	input Open(void) : "Open the door and cause the portal to activate."
 	input Close(void) : "Close the door and cause the portal to deactivate."

@@ -1493,7 +1493,7 @@
 //
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname) size(-16 -16 -16, 16 16 16) = player_loadsaved : "Load Auto-Saved game" 
+@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = player_loadsaved : "Load Auto-Saved game" 
 [
 	duration(string) : "Fade Duration (seconds)" : "2"
 	holdtime(string) : "Hold Fade (seconds)" : "0"
@@ -1513,7 +1513,7 @@
 	input StripWeaponsAndSuit(void) : "Strip player's weapons and his suit"
 ]
 
-@PointClass base(Targetname) size(-16 -16 -16, 16 16 16) = player_speedmod: "Speeds up or slows down player velocity over time (slow mo/fast forward)"
+@PointClass base(Targetname) iconsprite("editor/player_speedmod.vmt") = player_speedmod: "Speeds up or slows down player velocity over time (slow mo/fast forward)"
 [
 	spawnflags(Flags) =
 	[
@@ -1522,7 +1522,7 @@
 		4: "Suppress jump" : 0
 		8: "Suppress duck" : 0
 		16: "Suppress use" : 0
-		32: "Suppress sprint" : 0
+		//32: "Suppress sprint" : 0
 		64: "Suppress attack" : 0
 		128: "Suppress zoom" : 0
 	]
@@ -2024,19 +2024,19 @@ line(255 255 255, targetname, target) = env_entity_dissolver: "Fizzles the targe
 	]
 ]
 
-@PointClass base(Targetname, Angles, Angles, RenderFields) studio("models/props_combine/coreball.mdl") = prop_coreball: "Legacy version of prop_scalable, which forces a specific model." 
-[
-	input SetScaleX(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
-	input SetScaleY(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
-	input SetScaleZ(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
-]
+// @PointClass base(Targetname, Angles, Angles, RenderFields) studio("models/props_combine/coreball.mdl") = prop_coreball: "Legacy version of prop_scalable, which forces a specific model." 
+// [
+	// input SetScaleX(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
+	// input SetScaleY(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
+	// input SetScaleZ(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
+// ]
 
-@PointClass base(Targetname, Studiomodel, Angles, RenderFields) studioprop() = prop_scalable : "Scalable Prop" 
-[
-	input SetScaleX(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
-	input SetScaleY(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
-	input SetScaleZ(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
-]
+// @PointClass base(Targetname, Studiomodel, Angles, RenderFields) studioprop() = prop_scalable : "Scalable Prop" 
+// [
+	// input SetScaleX(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
+	// input SetScaleY(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
+	// input SetScaleZ(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
+// ]
 
 @PointClass base(Targetname, Parentname) sphere(radius) = point_flesh_effect_target : "Flesh Effect Target"
 [

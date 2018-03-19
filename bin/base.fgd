@@ -73,6 +73,7 @@
 [
 	model(studio) report : "World Model"
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
+	modelscale(float) : "Scale" : "1.0" : "Sets the scale of the model. This can be quite buggy at times, use with caution."
 
 	// Inputs
 	input Skin(integer) : "Changes the model skin to the specified number."
@@ -1038,8 +1039,8 @@
 	size(integer) : "Size" : 16
 	overlaysize(integer) : "Overlay Size" : -1 : "A value of -1 means the overlay will act the old way."
 	
-	material(sprite) : "Material Name" : "sprites/light_glow02_add_noz" : "Material of the inner glow."
-	overlaymaterial(sprite) : "Overlay Material Name" : "sprites/light_glow02_add_noz" : "Material of the overlay glow."
+	material(material) : "Material Name" : "sprites/light_glow02_add_noz" : "Material of the inner glow."
+	overlaymaterial(material) : "Overlay Material Name" : "sprites/light_glow02_add_noz" : "Material of the overlay glow."
 
 	HDRColorScale(float) : "HDR color scale." : "1.0" : "float value to multiply sprite color by when running in HDR mode."
 
@@ -1306,7 +1307,7 @@
 // A Vgui screen in 3D
 //
 //-------------------------------------------------------------------------
-@PointClass base(Targetname, Parentname, Angles) color(200 200 0) studio("models/editor/vgui_arrows.mdl") sphere(width) sphere(height) = vgui_screen : 
+@PointClass base(Targetname, Parentname, Angles) color(200 200 0) studioprop("models/editor/vgui_arrows.mdl") sphere(width) sphere(height) = vgui_screen : 
 	"A VGUI screen. Useful for in-world monitors." 
 [
 	panelname(choices) : "Panel Name" : "" : "The type of display to show." = 
@@ -1338,7 +1339,7 @@
 	input SetInactive(void) : "Make the vgui screen invisible."
 ]
 
-@PointClass base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui_arrows.mdl") = vgui_slideshow_display : "Slideshow Display"
+@PointClass base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/vgui_arrows.mdl") = vgui_slideshow_display : "Slideshow Display"
 [
 	displaytext(string) : "Display Text" : ""
 
@@ -1379,10 +1380,10 @@
 ]
 
 @PointClass 
-base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui_arrows.mdl") sphere(width) sphere(height) = vgui_movie_display : "Movie Display"
+base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/vgui_arrows.mdl") sphere(width) sphere(height) = vgui_movie_display : "Movie Display"
 [
 	displaytext(string) : "Display Text" : ""
-	moviefilename(choices) : "Movie to display" : "media/aperture_logo.bik" : "The movie to display. You can also type in the filename of a custom movie here." =
+	MovieFilename(choices) : "Movie to display" : "media/aperture_logo.bik" : "The movie to display. You can also type in the filename of a custom movie here." =
 	[
 		"media/coop_black_screen.bik"		: "Black Screen"
 		"media/aperture_logo.bik"			: "Aperture Logo"
@@ -1534,7 +1535,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	life(string) : "Life (seconds 0 = infinite)" : "1" : "Amount of time before the beam dies. Setting to zero will make the beam stay forever."
 	BoltWidth(float) : "Width of beam" : 2 : "Pixel width of the beam."
 	NoiseAmplitude(float) : "Amount of noise (0-64)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
-	texture(sprite) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the beam."
+	texture(material) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the beam."
 	TextureScroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
 	framerate(integer) : "Frames per 10 seconds" : 0 : "Framerate at which the beam texture should animate, if it has multiple frames."
 	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
@@ -1680,7 +1681,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	iMagnitude(Integer) : "Magnitude" : 100 : "The amount of damage done by the explosion."
 	// If no radius override, magnitude will determine radius.
 	iRadiusOverride(Integer) : "Radius Override" : 0 : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude."
-	fireballsprite(sprite) : "Fireball Sprite" : "sprites/zerogxplode.spr"
+	fireballsprite(material) : "Fireball Sprite" : "sprites/zerogxplode.spr"
 	rendermode(choices) : "Render Mode" : 5 =
 	[
 		0: "Normal"
@@ -1729,8 +1730,8 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	endsize(float) : "Ending particle size" : "50" : "Ending particle size."
 	spawnradius(float) : "Spawn radius" : "15" : "Distance from env_smoketrail at which particles are emitted."
 
-	firesprite(sprite) : "Fire Sprite" : "sprites/firetrail.spr"
-	smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.spr"
+	firesprite(material) : "Fire Sprite" : "sprites/firetrail.spr"
+	smokesprite(material) : "Smoke Puff" : "sprites/whitepuff.spr"
 ]
 
 @PointClass base(Targetname, Parentname)
@@ -1958,8 +1959,8 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255"
 	width(float) : "Width of Beam" : 2 : "The width of the laser beam, in pixels."
 	NoiseAmplitude(integer) : "Amount of noise (0-255)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
-	texture(sprite) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the laser beam."
-	EndSprite(sprite) : "End Sprite" : "" : "If specified, this sprite will be drawn at the end of the laser beam."
+	texture(material) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the laser beam."
+	EndSprite(material) : "End Sprite" : "" : "If specified, this sprite will be drawn at the end of the laser beam."
 	TextureScroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
 	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
 	damage(string) : "Damage / second" : "100" : "How much damage this laser does. per second. to things it hits."
@@ -2711,7 +2712,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	"An entity that controls the drawing of a sprite in the world." 
 [
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
-	model(sprite) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
+	model(material) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
 	scale(string) : "Scale" : "" : "Scale multiplier of the sprite."
 	spawnflags(flags) =
 	[
@@ -2746,7 +2747,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
     "A env_sprite that allows orientation."
 [
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
-	model(sprite) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
+	model(material) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
 	scale(string) : "Scale" : "" : "Scale multiplier of the sprite."
 	spawnflags(flags) =
 	[
@@ -2988,7 +2989,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	m_SourceEntityName(target_destination) : "Source Entity" : "" : "If specified, tesla lightning will originate from the specified entity. Otherwise, they originate from this entity."
 	m_SoundName(sound) : "Sound Name" : "DoSpark" : "Sound to be played whenever lightning is created."
 
-	texture(sprite) : "Sprite Name" : "sprites/physbeam.vmt" : "Material to use for the tesla lightning beams."
+	texture(material) : "Sprite Name" : "sprites/physbeam.vmt" : "Material to use for the tesla lightning beams."
 
 	m_Color(color255) : "Color" : "255 255 255"
 
@@ -3131,7 +3132,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	"An entity that places a decal on the world. If the decal has no target name, it will immediately apply itself when the level is loaded. "+
 	"If it has a name specified, it won't apply until it receives the 'Activate' input."
 [
-	texture(decal) : "Texture" : "" : "The texture used for the decal."
+	texture(material) : "Texture" : "" : "The texture used for the decal."
 
 	LowPriority(boolean) : "Low Priority" : 1 : "Allow the decal to be overwritten by other decals when needed. This also makes the decal not persist across savegames."
 
@@ -3145,7 +3146,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	"An entity that projects a decal onto the world (or props). If the decal has no target name, it will immediately apply itself when "+
 	"the level is loaded. If it has a name specified, it won't apply until it receives the 'Activate' input."
 [
-	texture(decal) : "Texture" : "" : "The texture used for the decal."
+	texture(material) : "Texture" : "" : "The texture used for the decal."
 	Distance(float) : "Distance" : 64 : "Distance from the origin to project the decal."
 
 	// Inputs
@@ -4205,7 +4206,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	closesound(sound) : "Stop Close Sound" : : "(Optional) Sound to play when the door stops closing. If not set, the Stop Sound will be used instead."
 	loopmovesound(boolean) : "Loop Moving Sound?" : 0 : "If set to true, the door's 'Start Sound' will be continually looped until the door finishes moving."
 	wait(integer) : "Delay Before Reset (-1 stay)" : -1 : "Amount of time, in seconds, after the door has opened before it closes. Once it has closed, it can be used again. If the value is set to -1, the door never closes itself."
-	lip(integer) : "Lip" : 0 : "The amount, in inches, of the door to leave sticking out of the wall it recedes into when pressed. Negative values make the door recede even further into the wall."
+	lip(integer) : "Lip" : 0 : "The amount the door will keep overlapping with the original position. The distance moved = the size of the brush on the movement axis - lip."
 	dmg(integer) : "Blocking Damage" : 0 : "Amount of damage done to entities that block the movement of this door, per frame."
 	forceclosed(boolean) : "Force Closed" : 0 : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects."
 	ignoredebris(boolean) : "Ignore Debris" : 0 : "If set this will change the door's collision group to one that ignore collisions with debris objects (note that this is not compatible with the non-solid-to-player spawnflag)."
@@ -4657,14 +4658,14 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	input TeleportPlayerToProxy(void) : "Move the player to the view proxy."
 ]
 
-@PointClass base(Targetname) line(255 255 0, targetname, propname) = point_posecontroller : 
+@PointClass base(Targetname) line(255 255 0, targetname, propname) size(-8 -8 -8, 8 8 8) = point_posecontroller : 
 	"An entity that controls a pose parameter of a prop and cycles the pose clientside." 
 [
-	PropName(string) : "Prop Name" : : "Name of the prop to control."
+	PropName(target_destination) : "Prop Name" : : "Name of the prop to control."
 	PoseParameterName(string) : "Pose Parameter Name" : : "Name of the pose parameter to control."
 	PoseValue(float) : "Pose Parameter Value" : "0.0" : "Normalized value for the pose parameter from 0.0 and 1.0 (maps to min and max range)."
 	InterpolationTime(float) : "Interpolation Time" : "0.0" : "Number of seconds (0.0 to 10.0) for client to match absolue pose values."
-	InterpolationWrap(boolean) : "Should wrap from 0.0 to 1.0 when interpolating." : 0
+	InterpolationWrap(boolean) : "Interpolation Wrap" : 0 : "Should wrap from 0.0 to 1.0 when interpolating."
 
 	CycleFrequency(float) : "Cycle Frequency" : "0.0" : "Base cycles per second from -10.0 to 10.0."
 	FModulationType(choices) : "Frequency Modulation Type" : 0 = 
@@ -5596,12 +5597,13 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 ]
 
 
-@PointClass base(Targetname, Angles) iconsprite("editor/point_teleport.vmt") line(255 255 255, targetname, target) = point_teleport : 
+@PointClass base(Targetname, Angles) iconsprite("editor/point_teleport.vmt") line(255 255 255, targetname, target) studioprop() = point_teleport : 
 	"An entity that teleports a target entity to this position and angles. "+
 	"If 'Teleport Home' spawn flag is set, teleports the target entity to its spawn position instead." +
 	"If object is physically simulated, simulation is turned off when teleported."
 [
 	target(target_destination) : "Entity To Teleport" : : "Name of the entity that will be teleported."
+	model(studio) : "[H] Model" : "models/editor/angle_helper.mdl" : "The model shown in Hammer. Mainly useful for positioning the entity."
 	spawnflags(flags) =
 	[
 		1 : "Teleport Home" : 0
@@ -7344,7 +7346,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	lifetime(float) : "Lifetime" : "0.5"
 	startwidth(float) : "Start Width" : "8.0"
 	endwidth(float) : "End Width" : "1.0"
-	spritename(sprite) : "Sprite Name" : "sprites/bluelaser1.vmt"
+	spritename(material) : "Sprite Name" : "sprites/bluelaser1.vmt"
 
 	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
 	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
