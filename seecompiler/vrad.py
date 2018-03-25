@@ -14,7 +14,7 @@ from srctools.bsp import BSP, BSP_LUMPS
 from srctools import GameID, FGD
 from lzma import LZMAFile
 from srctools.game import find_gameinfo
-from seecompiler.packlist import PackList
+from srctools.packlist import PackList
 
 
 def load_fgd() -> FGD:
