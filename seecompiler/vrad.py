@@ -1,18 +1,17 @@
 """Replaces VRAD, to run operations on the final BSP."""
-from zipfile import ZipFile
 
 from seecompiler.logger import init_logging
-from seecompiler.transformation import run_transformations
 
 LOGGER = init_logging('seecompiler/vrad.log')
 
 import sys
 import os
+from lzma import LZMAFile
 from pkg_resources import resource_stream
 
 from srctools.bsp import BSP, BSP_LUMPS
-from srctools import GameID, FGD
-from lzma import LZMAFile
+from srctools.bsp_transform import run_transformations
+from srctools import FGD
 from srctools.game import find_gameinfo
 from srctools.packlist import PackList
 

@@ -1,5 +1,5 @@
 """Implements various brush entities."""
-from seecompiler.transformation import trans, Context
+from srctools.bsp_transform import trans, Context
 from srctools import Output, conv_bool, conv_float
 
 

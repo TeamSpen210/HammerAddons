@@ -1,4 +1,4 @@
-"""Infrastructure for calling all the different transformations to the BSP."""
+"""Transformations that can be applied to the BSP file."""
 from srctools import FileSystem, VMF
 from seecompiler.logger import get_logger
 
@@ -38,11 +38,10 @@ def run_transformations(vmf: VMF, filesys: FileSystem):
 
 # Import the modules.
 # noinspection PyUnresolvedReferences
-from seecompiler import (
-    trans_brush_ents,
-    trans_antline,
-    trans_globals,
-    trans_sceneset,
-    trans_p2,
+from srctools.bsp_transform import (
+    antline,
+    brush_ents,
+    globals,
+    portal2,
+    sceneset,
 )
-

@@ -1,6 +1,6 @@
 """Implement comp_choreo_sceneset."""
-from seecompiler.transformation import trans, Context
-from srctools import Output, conv_bool, GameID, conv_float
+from srctools.bsp_transform import trans, Context
+from srctools import Output, conv_bool, conv_float
 from seecompiler.logger import get_logger
 
 LOGGER = get_logger(__name__)

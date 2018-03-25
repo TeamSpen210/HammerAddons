@@ -1,7 +1,7 @@
 """Apply transformations that work on (almost) all entities."""
 
 """Implements various brush entities."""
-from seecompiler.transformation import trans, Context
+from srctools.bsp_transform import trans, Context
 from seecompiler.logger import get_logger
 
 LOGGER = get_logger(__name__)
