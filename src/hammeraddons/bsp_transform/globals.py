@@ -2,7 +2,7 @@
 
 """Implements various brush entities."""
 from srctools.bsp_transform import trans, Context
-from seecompiler.logger import get_logger
+from srctools.logger import get_logger
 
 LOGGER = get_logger(__name__)
 

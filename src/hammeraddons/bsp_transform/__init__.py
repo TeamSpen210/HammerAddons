@@ -1,6 +1,6 @@
 """Transformations that can be applied to the BSP file."""
 from srctools import FileSystem, VMF
-from seecompiler.logger import get_logger
+from srctools.logger import get_logger
 
 LOGGER = get_logger(__name__)
 
