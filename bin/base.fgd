@@ -1194,7 +1194,7 @@
 @PointClass base(Targetname) iconsprite("editor/env_player_surface_trigger.vmt") color(200 0 0) = env_player_surface_trigger : 
 	"An entity that monitors the material of the surface the player is standing on, and fires outputs whenever it changes to/from a specific material."
 [
-	// These are A indexes.
+	// These are ASCII char codes.
 	gamematerial(choices) : "Game Material to Watch" : 0 : "The material to watch. When the player stands on/off this material, this entity's outputs will be fired." =
 	[
 		// Code disables detecting this value
@@ -3133,7 +3133,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	"An entity that places an overlay on the world." 
 [
 	material(material) : "Material"
-	sides(sidelist) : "Brush faces" : "The brush faces this overlay is applied to."
+	sides(sidelist) : "Brush faces" : : "The brush faces this overlay is applied to."
 	RenderOrder(integer) : "Render Order" : 0 : "Higher values render after lower values. This value can be 0-3."
 	StartU(float) : "U Start" : "0.0" : "A value between 0-1, defining the starting X axis position in the overlay material."
 	EndU(float) : "U End" : "1.0" : "A value between 0-1, defining the ending X axis position in the overlay material."
@@ -5770,6 +5770,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 
 @PointClass halfgridsnap base(Targetname)
 	color(128 128 128) 
+	size(-8 -8 -8, 8 8 8)
 	line(128 128 128, targetname, attach1)
 	line(128 128 128, targetname, attach2)
 	line(128 128 128, targetname, attach1, targetname, attach2)
