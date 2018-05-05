@@ -3407,7 +3407,12 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 [
 ]
 
-@PointClass base(Targetname) color(220 180 0) size(-8 -8 -8, 8 8 8) line(255 255 255, nodeid, StartNode, nodeid, EndNode) = info_node_link :
+@PointClass 
+	base(Targetname) 
+	color(220 180 0)
+	iconsprite("editor/info_node_link.vmt")
+	line(255 255 255, nodeid, StartNode, nodeid, EndNode)
+= info_node_link :
 	"A dynamic connection between two navigation nodes. You specify the node IDs of the start and end nodes, and then you can use entity I/O " +
 	"to turn on and off the connection. This could be used to create or destroy a connection in the nodegraph because of some event in your map " +
 	"(a bridge being created/destroyed, etc)."
@@ -3457,7 +3462,12 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	input TurnOff(void) : "Turn the link off."
 ]
 
-@PointClass wirebox(mins, maxs) base(Targetname) = info_node_link_controller :
+@PointClass 
+	base(Targetname)
+	wirebox(mins, maxs) 
+	color(220 180 0)
+	iconsprite("editor/info_node_link_controller.vmt")
+= info_node_link_controller :
 	"An entity that controls all connections between nodes that intersect the controller's volume. "+
 	"This allows for mass enabling/disabling of all node connections through a volume."
 [
@@ -3488,10 +3498,15 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	input SetInvert(integer) : "Change the invert exclusion rule"
 ]
 
-@PointClass sphere(radius) base(Targetname, Parentname) = info_radial_link_controller :
+@PointClass  
+	base(Targetname, Parentname) 
+	color(220 180 0)
+	sphere(radius)
+	iconsprite("editor/info_radial_link_controller.vmt")
+= info_radial_link_controller :
 	"This entity automatically severs node connections that pass through its radius. If it moves, it will restore those connections."
 [
-	radius(float) : "Radius (Use Helper!)" : 120
+	radius(float) : "Radius" : 120
 ]
 
 @PointClass base(Targetname, Angles, HintNode) studio("models/editor/climb_node.mdl") sphere(radius) color(153 215 103) = info_node_climb : 
@@ -3515,7 +3530,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	_distance(integer) : "Maximum Distance" : 0 : "The distance that light is allowed to cast."
 ]
 
-@PointClass base(Angles) studio("models/editor/spot.mdl") iconsprite("editor/light_env.vmt") = light_environment : 
+@PointClass base(Angles) lightprop("models/editor/spot.mdl") iconsprite("editor/light_env.vmt") = light_environment : 
 	"Sets the color and angle of the light from the sun and sky."
 [
 	pitch(angle_negative_pitch) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
@@ -7242,7 +7257,11 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 //	  at the position of every devshot camera in the level.
 //-------------------------------------------------------------------------
 
-@PointClass base(Angles) studioprop("models/editor/camera.mdl") frustum(fov,16,256,255 255 255 10,-1) = point_devshot_camera : 
+@PointClass base(Angles) 
+	iconsprite("editor/point_devshot_camera.vmt") 
+	studioprop("models/editor/camera.mdl") 
+	frustum(fov,16,256,255 255 255 10,-1) 
+= point_devshot_camera : 
 	"An entity used by the -makedevshots system, which automatically takes screenshots at the position of every devshot camera in the level."
 [
 	cameraname(string) : "Camera Name" : "" : "Used as the name of the directory to store screenshots from this camera. Must be unique within the level."

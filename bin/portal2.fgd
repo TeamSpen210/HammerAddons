@@ -685,7 +685,10 @@
 	
 	input  Dissolve(void) : "Fizzles the FrankenCube."
 	input  SilentDissolve(void) : "Kills the FrankenCube and fires its OnFizzled output, if the relevant setting is on."
-	output OnFizzled(void) : "Fired when the FrankenCube gets fizzled."
+	output OnFizzled(void) : "Fired when a cube is fizzled."
+	output OnPlayerUse(void) : "Any player +USEd the cube."
+	output OnPlayerPickup(void) : "Any player picked up the cube."
+	output OnPhysGunDrop(void) : "Any player dropped the cube."
 ]
 
 @PointClass base(Targetname, Parentname, Angles) studioprop("models/editor/prop_indicator_panel.mdl") line(255 255 0, targetname, IndicatorLights) = prop_indicator_panel : "Indicator signs for the end of modern antlines. Shows either a tick/cross, or a circular countdown. Can also function as a env_texturetoggle for indicator lights."
@@ -786,6 +789,7 @@
 
 @PointClass base(Targetname, Parentname, Angles, BasePaintType) 
 	line(255 255 255, targetname, light_position_name) 
+	radius(blob_spread_radius)
 	studio("models/editor/info_paint_sprayer.mdl") = info_paint_sprayer : "An entity that sprays Gel."
 [
 	//Paint sprayer
@@ -812,7 +816,7 @@
 	blobs_per_second(float) : "Blobs per second" : "1" : "The number of paint blobs sprayed per second."
 	min_speed(float) : "Min blob speed" : "100" : "The minimum speed of the sprayed blobs."
 	max_speed(float) : "Max blob speed" : "100" : "The maximum speed of the sprayed blobs."
-	blob_spread_radius(float) : "Blob spread radius" : "0" : "The starting radius of the spread of the blobs."
+	blob_spread_radius(float) : "Blob spread radius" : "0" : "Blobs will spawn randomly within this radius."
 	blob_spread_angle(float) : "Blob spread angle" : "0" : "The spread of the blobs along its direction vector (in degrees)."
 	blob_streak_percentage(float) : "Blob streak percentage" : "0" : "The percentage of blobs that will streak (0 - 100)."
 	min_streak_time(float) : "Blob min streak time" : "0.2" : "The minimum time that the blobs will streak for."
@@ -986,7 +990,7 @@
 ]
 
 
-@PointClass base(Targetname) sphere(radius) studio("models/editor/cone_helper.mdl") = paint_sphere : "Paint brushes inside the sphere."
+@PointClass base(Targetname) sphere(radius) iconsprite("editor/paint_sphere.vmt") = paint_sphere : "Paint brushes inside the sphere."
 [
 	paint_type(choices) : "Paint Type" : 0 : "The type of Gel created." = 
 	[
