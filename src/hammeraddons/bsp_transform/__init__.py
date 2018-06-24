@@ -54,4 +54,5 @@ from srctools.bsp_transform import (
     globals,
     portal2,
     sceneset,
+    instancing,
 )
