@@ -1,8 +1,9 @@
 """Transformations that can be applied to the BSP file."""
-from typing import Callable, TypeVar
-
+from typing import Callable
 from srctools import FileSystem, VMF
 from srctools.logger import get_logger
+from srctools.packlist import PackList
+
 
 LOGGER = get_logger(__name__, 'bsp_trans')
 
@@ -20,9 +21,11 @@ class Context:
         self, 
         filesys: FileSystem,
         vmf: VMF,
+        pack: PackList,
     ):
         self.sys = filesys
         self.vmf = vmf
+        self.pack = pack
 
 
 TransFunc = Callable[[Context], None]
@@ -37,11 +40,16 @@ def trans(name: str) -> Callable[[TransFunc], TransFunc]:
     return deco
 
 
-def run_transformations(vmf: VMF, filesys: FileSystem) -> None:
+def run_transformations(
+    vmf: VMF,
+    filesys: FileSystem,
+    pack: PackList,
+) -> None:
     """Run all transformations."""
     context = Context(
         filesys,
         vmf,
+        pack,
     )
     for func_name, func in TRANSFORMS.items():
         LOGGER.info('Running "{}"...', func_name)
