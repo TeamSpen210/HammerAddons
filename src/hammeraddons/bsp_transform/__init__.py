@@ -4,7 +4,7 @@ from typing import Callable, TypeVar
 from srctools import FileSystem, VMF
 from srctools.logger import get_logger
 
-LOGGER = get_logger(__name__)
+LOGGER = get_logger(__name__, 'bsp_trans')
 
 __all__ = ['Context', 'trans', 'run_transformations']
 
