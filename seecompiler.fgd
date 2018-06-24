@@ -1,16 +1,21 @@
 // Extra entities implemented in the SEEcompiler.
 // These are removed or converted to other entities.
 
-@include "portal2.fgd"
-
 @BaseClass = StaticTargetName:
     "Just used to provide names for the compiler."
     [
     targetname(target_source) : "Name" : : "The name that other entities refer to this entity by. This may not be useable in all situations, since this entity is produced by the compiler."
     ]
-    
+
+@PointClass base(Angles) studioprop() = comp_precache_model:
+    "Force a specific model to load, for runtime switching. Duplicates will be removed."
+    [
+    model(studio): "Model": : "The model to load."
+    skin(integer): "Skin": : "Skin to show."
+    ]
+
 @PointClass size(-8 -8 -8, 8 8 8) = comp_pack:
-    "Explicitly identify resources to pack into the map."
+    "Explicitly identify resources to pack into the map. If more are needed, add additional keyvalues with SmartEdit off."
     [
     generic1(string): "Generic" : : "Pack a file, starting in any of the content folders."
     generic2(string): "Generic" : : "Pack a file, starting in any of the content folders."
@@ -18,11 +23,11 @@
     generic4(string): "Generic" : : "Pack a file, starting in any of the content folders."
     generic5(string): "Generic" : : "Pack a file, starting in any of the content folders."
     
-    sound1(sound): "Sound" : : "Pack a raw sound file (not a soundscript)."
-    sound2(sound): "Sound" : : "Pack a raw sound file (not a soundscript)."
-    sound3(sound): "Sound" : : "Pack a raw sound file (not a soundscript)."
-    sound4(sound): "Sound" : : "Pack a raw sound file (not a soundscript)."
-    sound5(sound): "Sound" : : "Pack a raw sound file (not a soundscript)."
+    sound1(sound): "Sound" : : "Pack a raw sound file or a soundscript."
+    sound2(sound): "Sound" : : "Pack a raw sound file or a soundscript."
+    sound3(sound): "Sound" : : "Pack a raw sound file or a soundscript."
+    sound4(sound): "Sound" : : "Pack a raw sound file or a soundscript."
+    sound5(sound): "Sound" : : "Pack a raw sound file or a soundscript."
     
     model1(studio): "Model" : : "Pack a model."
     model2(studio): "Model" : : "Pack a model."
@@ -35,6 +40,12 @@
     material3(material): "Material" : : "Pack a material."
     material4(material): "Material" : : "Pack a material."
     material5(material): "Material" : : "Pack a material."
+
+    particle1(particlesystem): "Particle" : : "Pack a particle system, and include in the manifest."
+    particle2(particlesystem): "Particle" : : "Pack a particle system, and include in the manifest."
+    particle3(particlesystem): "Particle" : : "Pack a particle system, and include in the manifest."
+    particle4(particlesystem): "Particle" : : "Pack a particle system, and include in the manifest."
+    particle5(particlesystem): "Particle" : : "Pack a particle system, and include in the manifest."
     ]
 
 @PointClass base(StaticTargetName) iconsprite("editor/logic_relay.vmt") = comp_relay:

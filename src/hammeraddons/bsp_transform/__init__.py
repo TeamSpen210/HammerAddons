@@ -68,5 +68,6 @@ def _load() -> None:
         portal2,
         sceneset,
         instancing,
+        packing,
     )
 _load()
