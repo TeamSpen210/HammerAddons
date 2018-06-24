@@ -55,12 +55,18 @@ def run_transformations(
         LOGGER.info('Running "{}"...', func_name)
         func(context)
 
-# Import the modules.
-from srctools.bsp_transform import (
-    antline,
-    brush_ents,
-    globals,
-    portal2,
-    sceneset,
-    instancing,
-)
+
+def _load() -> None:
+    """Import all submodules.
+
+    This loads the transformations.
+    """
+    from srctools.bsp_transform import (
+        antline,
+        brush_ents,
+        globals,
+        portal2,
+        sceneset,
+        instancing,
+    )
+_load()
