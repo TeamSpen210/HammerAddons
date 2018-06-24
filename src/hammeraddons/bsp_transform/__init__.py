@@ -1,15 +1,21 @@
 """Transformations that can be applied to the BSP file."""
+from typing import Callable, TypeVar
+
 from srctools import FileSystem, VMF
 from srctools.logger import get_logger
 
 LOGGER = get_logger(__name__)
 
-# The things 'user' modules want to have access to easily. 
-__all__ = ['Context', 'trans']
+__all__ = ['Context', 'trans', 'run_transformations']
 
 TRANSFORMS = {}
 
+
 class Context:
+    """Bundles information useful for each transformation.
+
+    This allows them to ignore data they don't use.
+    """
     def __init__(
         self, 
         filesys: FileSystem,
@@ -19,15 +25,20 @@ class Context:
         self.vmf = vmf
 
 
-def trans(name):
+TransFunc = Callable[[Context], None]
+
+
+def trans(name: str) -> Callable[[TransFunc], TransFunc]:
     """Add a transformation procedure to the list."""
-    def deco(func):
+    def deco(func: TransFunc) -> TransFunc:
+        """Stores the transformation."""
         TRANSFORMS[name] = func
         return func
     return deco
 
 
-def run_transformations(vmf: VMF, filesys: FileSystem):
+def run_transformations(vmf: VMF, filesys: FileSystem) -> None:
+    """Run all transformations."""
     context = Context(
         filesys,
         vmf,
@@ -37,7 +48,6 @@ def run_transformations(vmf: VMF, filesys: FileSystem):
         func(context)
 
 # Import the modules.
-# noinspection PyUnresolvedReferences
 from srctools.bsp_transform import (
     antline,
     brush_ents,
