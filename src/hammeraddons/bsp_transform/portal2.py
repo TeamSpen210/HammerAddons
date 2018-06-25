@@ -7,7 +7,7 @@ from srctools import Output, conv_bool
 def laser_catcher_skins(ctx: Context):
     """Fix Valve's bug where reloading saves causes lasers to get their skin wrong."""
     for ent in ctx.vmf.by_class['prop_laser_catcher']:
-        if not conv_bool(ent['see_fix_skins'], True):
+        if not conv_bool(ent['src_fix_skins'], True):
             continue
 
         deact_skin, act_skin = '23' if ent['SkinType'] == '1' else '01'

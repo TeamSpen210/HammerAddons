@@ -1,4 +1,4 @@
-// Extra entities implemented in the SEEcompiler.
+// Extra entities implemented in VRAD transformations.
 // These are removed or converted to other entities.
 
 @BaseClass = StaticTargetName:
@@ -146,12 +146,12 @@
 	output OnEndTouchBoth(void) : "One player left the trigger."
 ]
 
-@BaseClass = SEEIndicator: "Adds an Indicator Name option to toggle overlays."
+@BaseClass = SRCIndicator: "Adds an Indicator Name option to toggle overlays."
 [
     indicatorname(target_destination) : "Indicator Name" : : "Set to the name of a set of info_overlays to toggle when this is activated and deactivated. The name may also point to a prop_indicator_panel, which will also be toggled appropriately."
 ]
 
-@PointClass base(Targetname, Parentname, Angles , ToggleDraw, RenderFields, BasePedButton, SEEIndicator) studioprop("models/props/switch001.mdl") = prop_button :
+@PointClass base(Targetname, Parentname, Angles , ToggleDraw, RenderFields, BasePedButton, SRCIndicator) studioprop("models/props/switch001.mdl") = prop_button :
 "A button which is activated by player use or by game inputs. While pressed it can play a tick-tock sound to indicate limited time."
 [	
 	skin(choices) : "Skin" : 0 : "Should it appear dirty or clean?" =
@@ -161,12 +161,12 @@
 	]	
 ]
 
-@PointClass base(Targetname, Parentname, Angles , ToggleDraw, RenderFields, BasePedButton, SEEIndicator) studioprop("models/props_underground/underground_testchamber_button.mdl") = prop_under_button :
+@PointClass base(Targetname, Parentname, Angles , ToggleDraw, RenderFields, BasePedButton, SRCIndicator) studioprop("models/props_underground/underground_testchamber_button.mdl") = prop_under_button :
  "A button which is activated by player use or by game inputs, for use in underground test chambers. Uses different press/release sounds compared to the modern one. The same tick-tock noise is used to indicate limited time."
 [
 ]
 
-@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SEEIndicator) studioprop() = prop_floor_button :
+@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SRCIndicator) studioprop() = prop_floor_button :
 "A 1500 MegaWatt Aperture Science Super-Colliding Super Button, which is pressed by a player or objects."
 [
 	model(choices) : "Button model" : "models/props/portal_button.mdl" : "Choose the amount of damage for the button, or type in a custom model." =
@@ -179,19 +179,19 @@
 	output OnPressedOrange(void) : "Called in Coop when the button has been pressed by P-Body."
 ]
 
-@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SEEIndicator) studioprop() = prop_floor_cube_button :
+@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SRCIndicator) studioprop() = prop_floor_cube_button :
 "A floor button which is activated by a prop_weighted_cube."
 [
 	model(studio) : "Button model" : "models/props/box_socket.mdl" : ""
 	AcceptsBall(boolean) : "Accepts Balls" : 0 : "Do Edgeless Safety Cubes activate this?"
 ]
 
-@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SEEIndicator) studioprop("models/props/ball_button.mdl") = prop_floor_ball_button :
+@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SRCIndicator) studioprop("models/props/ball_button.mdl") = prop_floor_ball_button :
 "A floor button which is only activated by a Sphere-type prop_weighted_cube."
 [
 ]
 
-@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SEEIndicator) studioprop("models/props_underground/underground_floor_button.mdl") = prop_under_floor_button :
+@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SRCIndicator) studioprop("models/props_underground/underground_floor_button.mdl") = prop_under_floor_button :
 "A floor button which is activated by a player or objects, for use in the underground test chambers. It plays different sounds, and has a rectangular trigger area."
 [
 	output OnPressedBlue(void) : "Called in Coop when the button has been pressed by ATLAS."
@@ -221,7 +221,7 @@
 		"models/props/laser_catcher.mdl" 		: "Offset"
 	]
 	
-	see_fix_skins(boolean): "[SEE] Fix Skins" : 1 : "Insert outputs to fix skins after level loads."
+	src_fix_skins(boolean): "[SRC] Fix Skins" : 1 : "Insert outputs to fix skins after level loads."
 	
 	output OnPowered(void) : "Fired when a laser hits the target."
 	output OnUnpowered(void) : "Fired when a laser has stopped hitting the target."
