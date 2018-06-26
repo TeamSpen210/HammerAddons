@@ -19,19 +19,19 @@ def comp_precache_model(ctx: Context):
             continue
         already_done.add(os.path.normcase(model))
 
-        model['classname'] = 'prop_dynamic_override'
+        ent['classname'] = 'prop_dynamic_override'
 
         # Disable shadows and similar things on this to make it as cheap
         # as possible.
-        model['rendermode'] = '10'
-        model['disableshadowdepth'] = '1'
-        model['disableshadows'] = '1'
-        model['solid'] = '0'
-        model['shadowdepthnocache'] = '2'
-        model['spawnflags'] = '256'  # Start with collision off.
+        ent['rendermode'] = '10'
+        ent['disableshadowdepth'] = '1'
+        ent['disableshadows'] = '1'
+        ent['solid'] = '0'
+        ent['shadowdepthnocache'] = '2'
+        ent['spawnflags'] = '256'  # Start with collision off.
 
         # Move to a corner of the map, so it won't be in PVS generally.
-        model['origin'] = '-15872 -15872 -15872'
+        ent['origin'] = '-15872 -15872 -15872'
 
 # Keyvalue -> filetype.
 PACK_TYPES = {
