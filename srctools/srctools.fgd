@@ -48,6 +48,41 @@
     particle5(particlesystem): "Particle" : : "Pack a particle system, and include in the manifest."
     ]
 
+@PointClass size(-8 -8 -8, 8 8 8) = comp_pack_data:
+    "Pack a file into the BSP, with custom contents. This should NOT be edited manaually." +
+    "Data is stored as dataXXX keyvalues, with incremented hex digits. Each value is 192 base64 characters (using +/), and more keys may be used than the ones defined." +
+    "No values may be skipped."
+    [
+    filename(string): "Filename": : "Filename to pack under."
+    filetype(choices): "File Type": "GENERIC" : "File type to record it as." = [
+        "GENERIC": "Generic"
+        "SOUNDSCRIPT": "SoundScript file (add to manifest)"
+        "PARTICLE_FILE": "Particle System (add to manifest)"
+        "VSCRIPT_SQUIRREL": "VScript (Squirrel)"
+        "MATERIAL": "Material"
+        "TEXTURE": "Texture"
+        "MODEL": "Model"
+    ]
+
+    data000(string) readonly: "000"
+    data001(string) readonly: "001"
+    data002(string) readonly: "002"
+    data003(string) readonly: "003"
+    data004(string) readonly: "004"
+    data005(string) readonly: "005"
+    data006(string) readonly: "006"
+    data007(string) readonly: "007"
+    data008(string) readonly: "008"
+    data009(string) readonly: "009"
+    data00a(string) readonly: "00A"
+    data00b(string) readonly: "00B"
+    data00c(string) readonly: "00C"
+    data00d(string) readonly: "00D"
+    data00e(string) readonly: "00E"
+    data00f(string) readonly: "00F"
+    // Code supports infinite number.
+    ]
+
 @PointClass base(StaticTargetName) iconsprite("editor/logic_relay.vmt") = comp_relay:
     "Simplified version of logic_relay which is able to be optimised away by the compiler."+
     "" +
@@ -75,7 +110,7 @@
 		"vec"  : "Vector"
 	]
 ]
-	
+
 @PointClass base(StaticTargetName) iconsprite("editor/choreo_manager.vmt") = comp_choreo_sceneset:
     "Chains a set of choreographed scenes together."
 [
@@ -149,80 +184,4 @@
 @BaseClass = SRCIndicator: "Adds an Indicator Name option to toggle overlays."
 [
     indicatorname(target_destination) : "Indicator Name" : : "Set to the name of a set of info_overlays to toggle when this is activated and deactivated. The name may also point to a prop_indicator_panel, which will also be toggled appropriately."
-]
-
-@PointClass base(Targetname, Parentname, Angles , ToggleDraw, RenderFields, BasePedButton, SRCIndicator) studioprop("models/props/switch001.mdl") = prop_button :
-"A button which is activated by player use or by game inputs. While pressed it can play a tick-tock sound to indicate limited time."
-[	
-	skin(choices) : "Skin" : 0 : "Should it appear dirty or clean?" =
-	[
-		0 : "Clean"
-		1 : "Dirty"
-	]	
-]
-
-@PointClass base(Targetname, Parentname, Angles , ToggleDraw, RenderFields, BasePedButton, SRCIndicator) studioprop("models/props_underground/underground_testchamber_button.mdl") = prop_under_button :
- "A button which is activated by player use or by game inputs, for use in underground test chambers. Uses different press/release sounds compared to the modern one. The same tick-tock noise is used to indicate limited time."
-[
-]
-
-@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SRCIndicator) studioprop() = prop_floor_button :
-"A 1500 MegaWatt Aperture Science Super-Colliding Super Button, which is pressed by a player or objects."
-[
-	model(choices) : "Button model" : "models/props/portal_button.mdl" : "Choose the amount of damage for the button, or type in a custom model." =
-	[
-		"models/props/portal_button.mdl"			: "Clean"
-		"models/props/portal_button_damaged02.mdl"	: "Slightly Damaged"
-		"models/props/portal_button_damaged01.mdl"	: "Very Damaged"
-	]
-	output OnPressedBlue(void) : "Called in Coop when the button has been pressed by ATLAS."
-	output OnPressedOrange(void) : "Called in Coop when the button has been pressed by P-Body."
-]
-
-@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SRCIndicator) studioprop() = prop_floor_cube_button :
-"A floor button which is activated by a prop_weighted_cube."
-[
-	model(studio) : "Button model" : "models/props/box_socket.mdl" : ""
-	AcceptsBall(boolean) : "Accepts Balls" : 0 : "Do Edgeless Safety Cubes activate this?"
-]
-
-@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SRCIndicator) studioprop("models/props/ball_button.mdl") = prop_floor_ball_button :
-"A floor button which is only activated by a Sphere-type prop_weighted_cube."
-[
-]
-
-@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton, SRCIndicator) studioprop("models/props_underground/underground_floor_button.mdl") = prop_under_floor_button :
-"A floor button which is activated by a player or objects, for use in the underground test chambers. It plays different sounds, and has a rectangular trigger area."
-[
-	output OnPressedBlue(void) : "Called in Coop when the button has been pressed by ATLAS."
-	output OnPressedOrange(void) : "Called in Coop when the button has been pressed by P-Body."
-]
-
-@PointClass base(Targetname, Angles, Parentname, Reflection, ToggleDraw, RenderFields) studioprop() = prop_laser_catcher: 
-"Discouragement Beam Catcher that detects a laser, absorbing the beam. The entity will fire outputs when struck and unstruck."
-[
-	SkinType(choices) : "Skin Type" : 0 : "Set the type of catcher to use." =
-	[
-		0 : "Clean"
-		1 : "Rusted"
-	]
-	
-	skin(choices) : "[H] Skin Type" : 0 : "The skin to show in Hammer." =
-	[
-		0 : "Clean  - Off"
-		1 : "Clean  - On"
-		2 : "Rusted - Off"
-		3 : "Rusted - On"
-	]
-	
-	model(choices) : "Laser Catcher Model" : "models/props/laser_catcher_center.mdl" : "Is the catcher offset? (You can also add a custom model here.)" =
-	[
-		"models/props/laser_catcher_center.mdl" : "Centered"
-		"models/props/laser_catcher.mdl" 		: "Offset"
-	]
-	
-	src_fix_skins(boolean): "[SRC] Fix Skins" : 1 : "Insert outputs to fix skins after level loads."
-	
-	output OnPowered(void) : "Fired when a laser hits the target."
-	output OnUnpowered(void) : "Fired when a laser has stopped hitting the target."
 ]
