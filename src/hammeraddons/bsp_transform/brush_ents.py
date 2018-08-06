@@ -27,7 +27,7 @@ def comp_trigger_coop(ctx: Context):
             # Should make it die if the trigger does.
             parentname=trig_name,
         )
-        for out in trig.outputs[:]:
+        for out in list(trig.outputs):
             folded_out = out.output.casefold()
             if folded_out == 'onstarttouchboth':
                 out.output = 'OnChangeToAllTrue'
@@ -51,7 +51,7 @@ def comp_trigger_coop(ctx: Context):
             )
             # Only keep OnChangeToAllTrue outputs, and remove
             # them once they've fired.
-            for out in manager.outputs[:]:
+            for out in list(manager):
                 if out.output.casefold() == 'onchangetoalltrue':
                     out.only_once = True
                 else:
