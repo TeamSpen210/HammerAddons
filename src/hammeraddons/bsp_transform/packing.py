@@ -1,9 +1,10 @@
 """Transformations for packing and precaching resources."""
+import os
+from typing import Set
+
 from srctools.bsp_transform import trans, Context
 from srctools.packlist import FileType
 from srctools.logger import get_logger
-from typing import Set
-import os
 
 LOGGER = get_logger(__name__, 'trans.packing')
 
@@ -32,6 +33,47 @@ def comp_precache_model(ctx: Context):
 
         # Move to a corner of the map, so it won't be in PVS generally.
         ent['origin'] = '-15872 -15872 -15872'
+
+SND_CACHE_FUNC = b'''\
+function Precache() {
+%s
+}
+'''
+
+
+@trans('comp_precache_sound')
+def comp_precache_sound(ctx: Context):
+    """Force precaching a set of sounds."""
+    pos = '0 0 0'
+    sounds = set()
+    for ent in ctx.vmf.by_class['comp_precache_sound']:
+        ent.remove()
+        pos = ent['origin']
+
+        for key, sound in ent.keys.items():
+            if not key.startswith('sound'):
+                continue
+            sound = sound.casefold().replace('\\', '/')
+            if sound.endswith(('.wav', '.mp3')) and not sound.startswith('sound/'):
+                sound = 'sound/' + sound
+            sounds.add(sound)
+
+    if not sounds:
+        return
+
+    # This VScript function forces a script to be precached.
+    lines = SND_CACHE_FUNC % b'\n'.join([
+        b'\tself.PrecacheSoundScript("%s")' % snd.encode('utf8')
+        for snd in sorted(sounds)
+    ])
+
+    ctx.vmf.create_ent(
+        'info_target',
+        targetname='@precache',
+        origin='-1000 -1000 -1000',  # Should be outside the map.
+        # We don't include scripts/vscripts
+        vscripts=ctx.pack.inject_file(lines, 'scripts/vscripts/inject', 'nut')[17:],
+    )
 
 # Keyvalue -> filetype.
 PACK_TYPES = {
