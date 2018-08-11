@@ -98,6 +98,13 @@
     // Code supports infinite number.
     ]
 
+@PointClass size(-8 -8 -8, 8 8 8) = comp_pack_replace_soundscript:
+    "Replace a soundscript with a different one."
+    [
+    original(string): "Original SoundScript" : : "Prevent this soundscript from being included."
+    replacement(string): "New SoundScript" : : "Force this soundscript to be included."
+    ]
+
 @PointClass base(StaticTargetName) iconsprite("editor/logic_relay.vmt") = comp_relay:
     "Simplified version of logic_relay which is able to be optimised away by the compiler."+
     "" +

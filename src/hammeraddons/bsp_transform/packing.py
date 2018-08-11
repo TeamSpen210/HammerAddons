@@ -3,8 +3,9 @@ import os
 from typing import Set
 
 from srctools.bsp_transform import trans, Context
-from srctools.packlist import FileType
 from srctools.logger import get_logger
+from srctools.packlist import FileType, SoundScriptMode
+
 
 LOGGER = get_logger(__name__, 'trans.packing')
 
@@ -74,6 +75,32 @@ def comp_precache_sound(ctx: Context):
         # We don't include scripts/vscripts
         vscripts=ctx.pack.inject_file(lines, 'scripts/vscripts/inject', 'nut')[17:],
     )
+
+
+@trans('comp_pack_replace_soundscript')
+def comp_pack_replace_soundscript(ctx: Context):
+    """Replace a soundscript with a different one."""
+    old_scripts = set()
+    new_scripts = set()
+    for ent in ctx.vmf.by_class['comp_pack_replace_soundscript']:
+        ent.remove()
+        old_scripts.add(ent['original', ''].casefold())
+        new_scripts.add(ent['replacement', ''].casefold())
+
+    old_scripts.discard('')
+    new_scripts.discard('')
+    # Old takes priority over new.
+    new_scripts.difference_update(old_scripts)
+
+    for script in old_scripts:
+        ctx.pack.soundscript_files[script] = SoundScriptMode.EXCLUDE
+    for script in new_scripts:
+        try:
+            ctx.pack.load_soundscript(ctx.sys[script], always_include=True)
+        except FileNotFoundError:
+            LOGGER.warning('No soundscript file "{}"!', script)
+        ctx.pack.pack_file(script, FileType.SOUNDSCRIPT)
+
 
 # Keyvalue -> filetype.
 PACK_TYPES = {
