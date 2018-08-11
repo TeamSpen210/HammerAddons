@@ -64,7 +64,7 @@ def proxy_limits(ctx: Context):
                     new_index = cur_num = 1
                 else:
                     new_index = cur_num
-                    cur_num += 1
+                cur_num += 1
                 cur_proxy = newest_proxy
                 proxy_nums[index] = cur_proxy, new_index
 
