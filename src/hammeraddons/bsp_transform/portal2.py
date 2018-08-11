@@ -70,3 +70,28 @@ def force_paintinmap(ctx: Context):
         # Ensure we have some blobs.
         if conv_int(ctx.vmf.spawn['maxblobcount']) == 0:
             ctx.vmf.spawn['maxblobcount'] = '250'
+
+
+@trans('Precache P2 Light Bridge')
+def precache_light_bridge(ctx: Context):
+    """Ensure light bridges have the particle precached."""
+
+    for bridge in ctx.vmf.by_class['prop_wall_projector']:
+        if conv_bool(bridge['StartEnabled', '0']):
+            return  # Starts on, no need.
+        break
+    else:
+        # No bridges in the map.
+        return
+
+    for part in ctx.vmf.by_class['info_particle_system']:
+        # Check for users already fixing the problem.
+        if part['effect_name'].casefold() == 'projected_wall_impact':
+            return
+
+    ctx.vmf.create_ent(
+        classname='info_particle_system',
+        origin='-15872 -15872 -15872',
+        effect_name='projected_wall_impact',
+        start_active='0',
+    )
