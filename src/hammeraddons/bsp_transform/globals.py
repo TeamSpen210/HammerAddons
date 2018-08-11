@@ -1,8 +1,11 @@
 """Apply transformations that work on (almost) all entities."""
+from collections import defaultdict
+from typing import Dict, Tuple, List
 
-"""Implements various brush entities."""
 from srctools.bsp_transform import trans, Context
 from srctools.logger import get_logger
+from srctools import Output
+
 
 LOGGER = get_logger(__name__)
 
@@ -65,3 +68,29 @@ def vscript_runscriptcode_strings(ctx: Context):
                 'nut'
             )[17:]  # Don't include scripts/vscripts/
             out.input = 'RunScriptFile'
+
+
+@trans('Optimise logic_auto')
+def optimise_logic_auto(ctx: Context):
+    """Merge logic_auto entities to simplify the map."""
+
+    # (global state) -> outputs
+    states = defaultdict(list)  # type: Dict[Tuple[str, bool], List[Output]]
+
+    for auto in ctx.vmf.by_class['logic_auto']:
+        auto.remove()
+        state = auto['globalstate', '']
+        only_once = auto['spawnflags', '0'] == '1'
+        for out in auto.outputs:
+            # We know OnMapSpawn only happens once.
+            if out.output.casefold() == 'onmapspawn' or only_once:
+                out.only_once = True
+            states[state, out.only_once].append(out)
+
+    for (state, only_once), outputs in states.items():
+        ctx.vmf.create_ent(
+            classname='logic_auto',
+            globalstate=state,
+            origin='0 0 0',
+            spawnflags=int(only_once),
+        ).outputs = outputs

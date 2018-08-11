@@ -74,7 +74,7 @@ def comp_precache_sound(ctx: Context):
     ctx.vmf.create_ent(
         'info_target',
         targetname='@precache',
-        origin='-1000 -1000 -1000',  # Should be outside the map.
+        origin='-15872 -15872 -15872',  # Should be outside the map.
         # We don't include scripts/vscripts
         vscripts=ctx.pack.inject_file(lines, 'scripts/vscripts/inject', 'nut')[17:],
     )
