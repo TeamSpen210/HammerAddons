@@ -31,6 +31,9 @@ def comp_precache_model(ctx: Context):
         ent['solid'] = '0'
         ent['shadowdepthnocache'] = '2'
         ent['spawnflags'] = '256'  # Start with collision off.
+        ent['SuppressAnimSounds'] = '1'
+        ent['DisableBoneFollowers'] = '1'  # Bone followers are extra ents, no thanks.
+        ent['PerformanceMode'] = '2'  # "Full gibs on all platforms."
 
         # Move to a corner of the map, so it won't be in PVS generally.
         ent['origin'] = '-15872 -15872 -15872'
