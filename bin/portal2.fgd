@@ -1020,3 +1020,7 @@
 		"no_taunting_orange" : "Prevent Taunting P-Body"
 	]
 ]
+
+
+// BEE 2 EDIT FLAG = 0
+// Above forces BEE2 to not write to this file.
