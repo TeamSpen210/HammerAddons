@@ -1220,10 +1220,21 @@
 		72 : "H - Alien Flesh"
 		75 : "K - Snow"
 		76 : "L - Plastic"
-		82 : "R - Reflective"
+		82 : "R - Reflective / Brick"
 		88 : "X - Fake surfaces"
 		90 : "Z - Warp Shield" 
-		11 : "11: Steam Pipe"
+
+		1: "1 - Clay"
+	    2: "2 - Plaster"
+	    3: "3 - Rock"
+	    4: "4 - Rubber"
+	    5: "5 - Sheet Rock"
+	    6: "6 - Cloth"
+	    7: "7 - Carpet"
+	    8: "8 - Paper"
+	    9: "9 - Upholstery"
+	    0: "0 - Puddle"
+	    11: "11 - Steam Pipe"
 	]
 	
 	// Inputs
@@ -4895,7 +4906,8 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	line(200 200 200, targetname, group04) line(200 200 200, targetname, group12) 
 	line(200 200 200, targetname, group05) line(200 200 200, targetname, group13) 
 	line(200 200 200, targetname, group06) line(200 200 200, targetname, group14) 
-	line(200 200 200, targetname, group07) line(200 200 200, targetname, group15) = logic_script : "An entity that acts as a container for scripts."
+	line(200 200 200, targetname, group07) line(200 200 200, targetname, group15)
+ = logic_script : "An entity that acts as a container for scripts."
 [
 	Group00(target_destination) : "EntityGroup[0]"
 	Group01(target_destination) : "EntityGroup[1]"
