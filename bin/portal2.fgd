@@ -30,7 +30,7 @@
 		0 : "No, keep current"
 		1 : "Yes, clear previous levels"
 	]
-	maxoccludeearea(float) : "Max occluder area" : "0" : "[Used on PC] Prevents occlusion testing for entities that take up more than X% of the screen." 
+	maxoccludeearea(float): "Max occluder area" : "0" : "[Used on PC] Prevents occlusion testing for entities that take up more than X% of the screen." 
 	minoccluderarea(float) : "Min occluder area" : "0" : "[Used on PC] Prevents occluders from being used if they take up less than X% of the screen." 
 	maxpropscreenwidth(float) : "Start Fade Pixels" : -1 : "Number of pixels wide at which all props in the level start to fade (<0 = use fademaxdist). This number is ignored if the prop has a specific fade distance specified."
 	minpropscreenwidth(float) : "End Fade Pixels" : 0 : "Minimum number of pixels wide at which the prop is visible (0 = don't fade out). This number is ignored if the prop has a specific fade distance specified."
@@ -789,7 +789,7 @@
 
 @PointClass base(Targetname, Parentname, Angles, BasePaintType) 
 	line(255 255 255, targetname, light_position_name) 
-	radius(blob_spread_radius)
+	sphere(blob_spread_radius)
 	studio("models/editor/info_paint_sprayer.mdl") = info_paint_sprayer : "An entity that sprays Gel."
 [
 	//Paint sprayer
