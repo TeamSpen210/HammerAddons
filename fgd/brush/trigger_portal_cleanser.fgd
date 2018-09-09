@@ -11,6 +11,5 @@
 	// Outputs
 	output OnDissolve(void) : "Fired whenever an entity is dissolved."
 	output OnFizzle(void) : "Fired whenever an portals are fizzled."
-	output OnDissolveBox(void) : "This cleanser disolved an entity with targetname=Box."
-	output OnDissolveBox[P2](void) : "This cleanser dissolved an entity with targetname equal to 'Box.'"
+	output OnDissolveBox(void) : "This cleanser dissolved an entity with a targetname of	'Box.'"
 	]

@@ -9,6 +9,5 @@
 	input Toggle(void) : "Toggle - If on, turn off, if off, turn on."
 	input Enable(void) : "Enable."
 	input Disable(void) : "Disable."
-	input SetCamera(string) : "Sets the camera to use for this monitor. Takes the name of a point_camera entity in the map."
-	input SetCamera[P2](target_destination) : "Sets the camera to use for this monitor. Takes the name of a point_camera entity in the map."
+	input SetCamera(target_destination) : "Sets the camera to use for this monitor. Takes the name of a point_camera entity in the map."
 	]

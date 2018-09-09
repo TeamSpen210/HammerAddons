@@ -1,6 +1,5 @@
 
 @SolidClass base(Trigger) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	line(255 255 255, targetname, filtername) = trigger_push: "A trigger volume that pushes entities that touch it."
 	[
 	pushdir(angle) : "Push Direction (Pitch Yaw Roll)" : "0 0 0" : "Angles indicating the direction to push touched entities."

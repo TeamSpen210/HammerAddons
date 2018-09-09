@@ -1,11 +1,9 @@
 
 @SolidClass base(Targetname, Parentname, RenderFields, Global, compMinLight) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	line(255 255 0, targetname, target) = func_guntarget: "This is a moving target that moves along a path of path_tracks. It can be shot and killed."
 	[
 	speed(integer) : "Speed (units per second)" : 100 : "The speed at which the target moves along its path."
-	target(target_destination) : "First stop target" : : "The name of the first path_track entity in the path that this target should follow."
-	target[P2](target_destination) : "Spawn Track" : : "The name of the first path_track entity in the path that this target should follow."
+	target(target_destination) : "Spawn Track" : : "The name of the first path_track entity in the path that this target should follow."
 	health(integer) : "Damage to Take" : 0 : "The amount of damage taken before this target is killed."
 	_minlight[!P2](string) : "Minimum Light Level" : : "The minimum level of ambient light that hits this brush."
 

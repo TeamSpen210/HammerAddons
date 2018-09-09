@@ -1,6 +1,5 @@
 
 @SolidClass base(Trigger) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	line(255 255 255, targetname, soundscape) 
 	line(255 255 255, targetname, filtername) = trigger_soundscape: "Soundscape trigger. It is not necessary to create outputs for this trigger. It automatically will trigger the soundscape referred to by its 'Soundscape' property."
 	[

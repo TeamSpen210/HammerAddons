@@ -1,13 +1,12 @@
 
 @SolidClass base(Targetname, Parentname, Origin, Angles, RenderFields, Shadow, Reflection, compMinLight) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = func_rotating: "A rotating brush entity."
+= func_rotating: "A rotating brush entity."
 	[
 	maxspeed(integer) : "Max Rotation Speed" : 100 : "The maximum rotation speed of the brushes, in degrees per second."
-	fanfriction(integer) : "Friction (0 - 100%)" : 20 : "The amount of rotational friction. Value must be between 0 and 100 %."
-	fanfriction[P2](integer) : "Friction (0 - 100%)" : 20 : "The amount of rotational friction. Value must be between 0 and 100 %. Lower values make the brush speed up and slow down faster."
+	fanfriction(integer) : "Friction (0 - 100%)" : 20 : "The amount of rotational friction. Value must be between 0 and 100 %. Lower values make the brush speed up and slow down faster."
 	message(sound) : "Rotating sound WAV" : : "Sound to play while rotating."
 	volume(integer) : "Volume (10 = loudest)" : 10 : "The volume of the rotation sound."
-	spawnflags(flags) : "spawnflags" =
+	spawnflags[!ASW](flags) : "spawnflags" =
 		[
 		1: "Start ON" : 0
 		2: "Reverse Direction" : 0
@@ -46,15 +45,12 @@
 
 
 	// Inputs
-	input SetSpeed(integer) : "Set the speed as a ratio of the specified Max Rotation Speed, where 0 is stopped and 1 is the Max Rotation Speed.."
-	input SetSpeed[ASW](integer) : "Set the speed as a ratio of the specified Max Rotation Speed, where 0 is stopped and 1 is the Max Rotation Speed. Negative values rotate backwards."
+	input SetSpeed(integer) : "Set the speed as a ratio of the specified Max Rotation Speed, where 0 is stopped and 1 is the Max Rotation Speed. Negative values rotate backwards."
 	input Start(void) : "Start the rotator rotating."
 	input Stop(void) : "Stop the rotator from rotating."
 	input StopAtStartPos(void) : "Stop the rotator from rotating when it gets around to the start position again (on its rotation axis)."
-	input StartForward(void) : "Start the rotator rotating forward."
-	input StartForward[ASW](void) : "Start the rotator rotating forward at maximum speed."
-	input StartBackward(void) : "Start the rotator rotating backward."
-	input StartBackward[ASW](void) : "Start the rotator rotating backward at maximum speed."
+	input StartForward(void) : "Start the rotator rotating forward at maximum speed."
+	input StartBackward(void) : "Start the rotator rotating backward at maximum speed."
 	input Toggle(void) : "Toggle the rotator between rotating and not rotating."
 	input Reverse(void) : "Reverse the direction of rotation of the rotator."
 	input Reverse[ASW](void) : "Reverse the direction of rotation of the rotator, preserving the current speed."

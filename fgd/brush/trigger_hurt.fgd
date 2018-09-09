@@ -1,6 +1,5 @@
 
 @SolidClass base(Trigger, Targetname, MasterEnt) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	line(255 255 255, targetname, filtername) = trigger_hurt: "A trigger volume that damages entities that touch it."
 	[
 	master[!P2](string) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
@@ -44,8 +43,7 @@
 		1: "Yes"
 		]
 
-	nodmgforce[ASW](boolean) : "Zero Damage Force" : 0 : "Should the damaged entity receive no physics force from this trigger."
-	nodmgforce[P2](boolean) : "No Damage Force" : 0 : "Should the damaged entity receive no physics force from this trigger."
+	nodmgforce(boolean) : "Zero Damage Force" : 0 : "Should the damaged entity receive no physics force from this trigger."
 
 	// Inputs
 	input SetDamage(float) : "Set a new amount of damage for this trigger."
