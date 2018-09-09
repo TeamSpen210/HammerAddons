@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, EnableDisable, Targetname, EnableDisable) 
+@PointClass base(Targetname, EnableDisable) 
 	appliesto(ASW, EP1, EP2, HL2, P2) = logic_achievement: "Sends an achievement system related event from the map to the achievement system."
 	[
 	achievementevent[!P2](choices) : "Achievement Event" : "0" : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =

@@ -1,5 +1,5 @@
 
-@SolidClass base(BaseTrain, BaseTrain) 
+@SolidClass base(BaseTrain) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = func_tanktrain: "A moving train that follows a path of path_track entities, shoots at the player, and can be killed.\nNOTE: Build your train so that the front of the train is facing down the X axis. When it spawns it will automatically rotate to face the next path_track on the path."
 	[
 	health(integer) : "Health" : 100

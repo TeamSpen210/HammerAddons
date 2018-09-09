@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Targetname) 
+@PointClass base(Targetname) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	iconsprite("editor/shadow_control.vmt") 
 	color(200 0 0) 
@@ -15,7 +15,7 @@
 		]
 
 	disableallshadows[ASW](boolean) : "All Shadows Disabled" : 0
-	enableshadowsfromlocallights[!CSGO, P2, !TF2](choices) : "Enable Shadows From Local Lights" : "1" =
+	enableshadowsfromlocallights[!CSGO, !TF2, P2](choices) : "Enable Shadows From Local Lights" : "1" =
 		[
 		0: "No"
 		1: "Yes"

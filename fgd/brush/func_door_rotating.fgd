@@ -1,5 +1,5 @@
 
-@SolidClass base(Door, Origin, Angles, Door, Origin, Angles) 
+@SolidClass base(Door, Origin, Angles) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = func_door_rotating: "A brush entity for use as a rotating player-useable door."
 	[
 	spawnflags(flags) : "spawnflags" =

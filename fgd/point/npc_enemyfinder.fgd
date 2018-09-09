@@ -1,5 +1,5 @@
 
-@NpcClass base(Parentname, BaseNPC, Parentname, BaseLogicalNPC) 
+@NpcClass base(Parentname, BaseNPC, BaseLogicalNPC) 
 	appliesto(ASW, EP1, EP2, HL2, P2) 
 	size(-16 -16 -16, 16 16 16) 
 	color(255 150 0) 

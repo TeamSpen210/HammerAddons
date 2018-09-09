@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, EnableDisable, Targetname, EnableDisable) 
+@PointClass base(Targetname, EnableDisable) 
 	appliesto(P2, CSGO) 
 	iconsprite("editor/info_game_event_proxy.vmt") 
 	sphere(range) = info_game_event_proxy: "Entity that, when seen, generates a simple game event."

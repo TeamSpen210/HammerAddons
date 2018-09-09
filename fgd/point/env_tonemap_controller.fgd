@@ -1,10 +1,10 @@
 
-@PointClass base(Targetname, Targetname) 
+@PointClass base(Targetname) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	iconsprite("editor/env_tonemap_controller.vmt") 
 	color(200 0 0) = env_tonemap_controller: "An entity that controls the HDR tonemapping for the player. Think of it as a method of controlling the exposure of the player's eyes."
 	[
-	spawnflags[!CSGO, P2, !TF2](flags) : "spawnflags" =
+	spawnflags[!CSGO, !TF2, P2](flags) : "spawnflags" =
 		[
 		1: "Master (Has priority if multiple env_tonemap_controllers exist)" : 0
 		]
@@ -18,11 +18,11 @@
 	input SetAutoExposureMax(float) : "Set a custom tonemap auto exposure maximum."
 	input SetBloomScale(float) : "Set a custom bloom scale."
 	input SetTonemapRate(float) : "Set the rate for autoexposure adjustment."
-	input SetBloomExponent[P2, !TF2](float) : "Set a custom bloom exponent."
-	input SetBloomSaturation[P2, !TF2](float) : "Set a custom bloom saturation."
-	input SetTonemapPercentBrightPixels[P2, !TF2](float) : "Set a target for percentage of pixels above a certain brightness."
+	input SetBloomExponent[!TF2, P2](float) : "Set a custom bloom exponent."
+	input SetBloomSaturation[!TF2, P2](float) : "Set a custom bloom saturation."
+	input SetTonemapPercentBrightPixels[!TF2, P2](float) : "Set a target for percentage of pixels above a certain brightness."
 	input SetTonemapPercentBrightPixels[CSGO](float) : "Set a target for percentage of pixels above a certain brightness. (default: 2)"
-	input SetTonemapPercentTarget[P2, !TF2](float) : "Set a custom brightness target for SetTonemapPercentBrightPixels."
+	input SetTonemapPercentTarget[!TF2, P2](float) : "Set a custom brightness target for SetTonemapPercentBrightPixels."
 	input SetTonemapPercentTarget[CSGO](float) : "Set a custom brightness target for SetTonemapPercentBrightPixels. (default: 60)"
-	input SetTonemapMinAvgLum[P2, !TF2](float) : "Sets custom tonemapping param (ask Alex for details; default: 3)."
+	input SetTonemapMinAvgLum[!TF2, P2](float) : "Sets custom tonemapping param (ask Alex for details; default: 3)."
 	]

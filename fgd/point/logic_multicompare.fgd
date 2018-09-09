@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Targetname) 
+@PointClass base(Targetname) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	iconsprite("editor/logic_multicompare.vmt") = logic_multicompare: "Compares a set of inputs to each other. If they are all the same, fires an OnEqual output. If any are different, fires the OnNotEqual output.|||Compares a set of inputs to each other. If they are all the same, fires an OnEqual output. If any are different, fires the OnNotEqual output. It is not possible to clear the memory, so this only works once."
 	[

@@ -1,5 +1,5 @@
 
-@SolidClass base(trigger_multiple, trigger_multiple) 
+@SolidClass base(trigger_multiple) 
 	appliesto(ASW, P2, CSGO) 
 	line(255 255 255, targetname, childfiltername) = trigger_hierarchy: "A trigger volume that can will check if any of trigger's children pass a secondary filter."
 	[

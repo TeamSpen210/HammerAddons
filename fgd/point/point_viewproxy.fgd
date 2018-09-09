@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Angles, Parentname, Targetname, Angles, Parentname) 
+@PointClass base(Targetname, Angles, Parentname) 
 	appliesto(P2, CSGO) 
 	color(200 0 0) 
 	studioprop("models/editor/camera.mdl") 

@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, EnableDisable, Targetname, EnableDisable) 
+@PointClass base(Targetname, EnableDisable) 
 	appliesto(P2, CSGO) 
 	color(0 100 250) 
 	size(-8 -8 -8, 8 8 8) = logic_register_activator: "Stores an entity and sends messages with it as the activator\nUseful for keeping track of entities with mangled names due to template spawners and instances."

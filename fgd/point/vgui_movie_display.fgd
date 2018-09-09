@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Angles, Parentname, Targetname, Angles, Parentname) 
+@PointClass base(Targetname, Angles, Parentname) 
 	appliesto(ASW, P2, CSGO) 
 	studio("models/editor/axis_helper_thick.mdl") 
 	color(200 200 0) 

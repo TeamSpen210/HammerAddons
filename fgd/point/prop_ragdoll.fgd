@@ -1,5 +1,5 @@
 
-@PointClass base(Angles, Targetname, Studiomodel, DXLevelChoice, BaseFadeProp, EnableDisable, SystemLevelChoice, Angles, Targetname, Studiomodel, SystemLevelChoice, BaseFadeProp, EnableDisable) 
+@PointClass base(Angles, Targetname, Studiomodel, DXLevelChoice, BaseFadeProp, EnableDisable, SystemLevelChoice) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	sphere(fademindist) 
 	sphere(fademaxdist) 

@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, RenderFxChoices, Targetname, Parentname, RenderFxChoices) 
+@PointClass base(Targetname, Parentname, RenderFxChoices) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	size(-4 -4 -4, 4 4 4) 
 	line(255 255 255, targetname, LaserTarget) 

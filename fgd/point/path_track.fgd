@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, Angles, Targetname, Parentname, Angles) 
+@PointClass base(Targetname, Parentname, Angles) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	cylinder(255 255 255, targetname, target, radius, targetname, targetname, radius) 
 	color(255 192 0) 
@@ -51,5 +51,5 @@
 
 	// Outputs
 	output OnPass(void) : "Fired when any entity following this path passes this path_track node."
-	output OnTeleport[!ASW, !CSGO, !P2](void) : "Fired when any entity following this path teleports directly to this path_track node."
+	output OnTeleport[!CSGO, !ASW, !P2](void) : "Fired when any entity following this path teleports directly to this path_track node."
 	]

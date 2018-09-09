@@ -1,5 +1,5 @@
 
-@SolidClass base(Trigger, Trigger) 
+@SolidClass base(Trigger) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	line(255 255 255, targetname, filtername) 
 	line(255 255 0, targetname, target) 
@@ -7,7 +7,7 @@
 	[
 	target(target_destination) : "Remote Destination" : : "The entity specifying the point to which entities should be teleported."
 	landmark(target_destination) : "Local Destination Landmark" : : "If specified, then teleported entities are offset from the target by their initial offset from the landmark."
-	spawnflags[!ASW, !CSGO, !P2](flags) : "spawnflags" =
+	spawnflags[!CSGO, !ASW, !P2](flags) : "spawnflags" =
 		[
 		32: "Preserve angles even when a local landmark is not specified" : 0
 		]
@@ -16,5 +16,5 @@
 	checkdestifclearforplayer[CSGO](boolean) : "Only Spawn-Valid Destinations" : 0 : "Only teleport if there is a clear teleport destination."
 
 	// Inputs
-	input SetRemoteDestination[P2, !TF2](string) : "Set a new target to teleport to."
+	input SetRemoteDestination[!TF2, P2](string) : "Set a new target to teleport to."
 	]

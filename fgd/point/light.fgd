@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Light, light, Targetname, Light) 
+@PointClass base(Targetname, Light) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	light() 
 	iconsprite("editor/light.vmt") 

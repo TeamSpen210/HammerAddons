@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, EnableDisable, Targetname, Parentname, EnableDisable) 
+@PointClass base(Targetname, Parentname, EnableDisable) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	iconsprite("editor/env_fire") 
 	color(0 180 0) 
@@ -44,11 +44,11 @@
 
 	ignitionpoint(float) : "Ignition Point" : 32 : "Amount of heat 'damage' to take before this flame should ignite."
 	damagescale(float) : "Damage Scale" : 1.0 : "Multiplier of the burn damage done by the flame."
-	lightradiusscale[!P2, !CSGO, ASW, !TF2](float) : "Light Radius Scale" : 1.0 : "Multiplier for the glow radius."
-	lightbrightness[!P2, !CSGO, ASW, !TF2](integer) : "Light Brightness" : 1 : "Integer exponent for the glow brightness."
-	lightcolor[!P2, !CSGO, ASW, !TF2](color255) : "Light Color" : "255 255 255" : "R G B 0-255 values describing the color of the dynamic light for this fire."
-	loopsound[!P2, !CSGO, ASW, !TF2](sound) : "Loop sound" : "d1_town.LargeFireLoop" : "Looping sound to play while this fire is burning."
-	ignitesound[!P2, !CSGO, ASW, !TF2](sound) : "Ignite sound" : "ASW_Flare.IgniteFlare" : "One shot sound to play when the fire starts."
+	lightradiusscale[!CSGO, ASW, !P2, !TF2](float) : "Light Radius Scale" : 1.0 : "Multiplier for the glow radius."
+	lightbrightness[!CSGO, ASW, !P2, !TF2](integer) : "Light Brightness" : 1 : "Integer exponent for the glow brightness."
+	lightcolor[!CSGO, ASW, !P2, !TF2](color255) : "Light Color" : "255 255 255" : "R G B 0-255 values describing the color of the dynamic light for this fire."
+	loopsound[!CSGO, ASW, !P2, !TF2](sound) : "Loop sound" : "d1_town.LargeFireLoop" : "Looping sound to play while this fire is burning."
+	ignitesound[!CSGO, ASW, !P2, !TF2](sound) : "Ignite sound" : "ASW_Flare.IgniteFlare" : "One shot sound to play when the fire starts."
 
 	// Inputs
 	input StartFire(void) : "Start the fire."

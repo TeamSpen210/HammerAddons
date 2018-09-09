@@ -1,5 +1,5 @@
 
-@SolidClass base(Trigger, Trigger) 
+@SolidClass base(Trigger) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	line(255 255 0, targetname, target) = trigger_look: "An entity used to trigger something when the player looks at something. It fires 'OnTrigger' when the player looks at a target entity for the given amount of time, while within the trigger volume. If the player leaves the trigger or looks away from the target entity the clock resets. If the 'Use Velocity instead of facing' spawnflag is checked, the trigger uses the player's velocity instead of the player's view, so it determines whenever the player is moving toward the target entity. Useful for triggering when players are driving a vehicle at something.NOTE: Only designed for single-player game. "
 	[

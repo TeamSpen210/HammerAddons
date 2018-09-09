@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Targetname) 
+@PointClass base(Targetname) 
 	appliesto(ASW, P2, CSGO) 
 	iconsprite("editor/env_dof_controller.vmt") 
 	color(200 0 0) 

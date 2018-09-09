@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Targetname) 
+@PointClass base(Targetname) 
 	appliesto(ASW, P2, CSGO) 
 	iconsprite("editor/env_instructor_hint.vmt") 
 	line(255 255 0, targetname, hint_target) 

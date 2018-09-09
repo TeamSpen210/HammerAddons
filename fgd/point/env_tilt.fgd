@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, Angles, Targetname, Parentname, Angles) 
+@PointClass base(Targetname, Parentname, Angles) 
 	appliesto(ASW, P2, CSGO) 
 	sphere() 
 	studio("models/editor/axis_helper_thick.mdl") 

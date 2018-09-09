@@ -1,5 +1,5 @@
 
-@SolidClass base(Targetname, Parentname, RenderFields, Global, compMinLight, Targetname, Parentname, RenderFields, Global) 
+@SolidClass base(Targetname, Parentname, RenderFields, Global, compMinLight) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	line(255 255 0, targetname, target) = func_guntarget: "This is a moving target that moves along a path of path_tracks. It can be shot and killed."
 	[

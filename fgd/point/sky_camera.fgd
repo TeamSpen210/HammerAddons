@@ -1,5 +1,5 @@
 
-@PointClass base(Angles, Angles) 
+@PointClass base(Angles) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	size(-16 -16 -16, 16 16 16) 
 	color(0 0 255) 
@@ -36,10 +36,10 @@
 	fogdir[CSGO](string) : "Primary Fog Direction" : "1 0 0"
 	fogstart(string) : "Fog Start" : "500.0" : "Distance at which the skybox fog should start."
 	fogend(string) : "Fog End" : "2000.0" : "Distance at which the skybox fog should be fully opaque."
-	targetname[!P2, !CSGO, ASW, !TF2](target_source) : "Name" : : "The name that other entities refer to this entity by."
+	targetname[!CSGO, ASW, !P2, !TF2](target_source) : "Name" : : "The name that other entities refer to this entity by."
 	fogmaxdensity[CSGO](float) : "Fog Max Density [0..1]" : 1
 	hdrcolorscale[CSGO](float) : "HDR color scale." : 1.0 : "float value to multiply fog color by when running in HDR mode."
 
 	// Inputs
-	input ActivateSkybox[!P2, !CSGO, ASW, !TF2](void) : "Make this skybox the active one."
+	input ActivateSkybox[!CSGO, ASW, !P2, !TF2](void) : "Make this skybox the active one."
 	]

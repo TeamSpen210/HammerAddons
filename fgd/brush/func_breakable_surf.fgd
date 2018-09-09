@@ -1,5 +1,5 @@
 
-@SolidClass base(BreakableBrush, RenderFields, Shadow, Reflection, BreakableBrush, RenderFields, Shadow, Reflection) 
+@SolidClass base(BreakableBrush, RenderFields, Shadow, Reflection) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	quadbounds() = func_breakable_surf: "A breakable surface, for partially breakable glass / tile / etc.  All faces but the desired visible one must be marked as NODRAW and thatface must be 4 sided.  The material applied to the visible face must be set up to be breakable."
 	[
@@ -24,11 +24,11 @@
 		1: "Tile"
 		]
 
-	lowerleft[!CSGO, P2, !TF2](vecline) : "Lower Left Corner (readonly)" : : "This is set automatically by Hammer when saving."
-	lowerright[!CSGO, P2, !TF2](vecline) : "Lower Right Corner (readonly)" : : "This is set automatically by Hammer when saving."
-	upperleft[!CSGO, P2, !TF2](vecline) : "Upper Left Corner (readonly)" : : "This is set automatically by Hammer when saving."
-	upperright[!CSGO, P2, !TF2](vecline) : "Upper Right Corner (readonly)" : : "This is set automatically by Hammer when saving."
-	error[!CSGO, P2, !TF2](choices) : "Face Error" : "0" : "Set by Hammer to indicate an invalid glass/tile surface." =
+	lowerleft[!CSGO, !TF2, P2](vecline) : "Lower Left Corner (readonly)" : : "This is set automatically by Hammer when saving."
+	lowerright[!CSGO, !TF2, P2](vecline) : "Lower Right Corner (readonly)" : : "This is set automatically by Hammer when saving."
+	upperleft[!CSGO, !TF2, P2](vecline) : "Upper Left Corner (readonly)" : : "This is set automatically by Hammer when saving."
+	upperright[!CSGO, !TF2, P2](vecline) : "Upper Right Corner (readonly)" : : "This is set automatically by Hammer when saving."
+	error[!CSGO, !TF2, P2](choices) : "Face Error" : "0" : "Set by Hammer to indicate an invalid glass/tile surface." =
 		[
 		0: "No Error"
 		1: "Multiple Textured Faces"

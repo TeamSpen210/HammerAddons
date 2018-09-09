@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Targetname) 
+@PointClass base(Targetname) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	iconsprite("editor/env_fade") 
 	color(200 0 0) = env_fade: "An entity that controls screen fades."
@@ -23,11 +23,11 @@
 	holdtime(string) : "Hold Fade (seconds)" : "0" : "The time to hold the faded in/out state."
 	renderamt(integer) : "Fade Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
 	rendercolor(color255) : "Fade Color (R G B)" : "0 0 0"
-	reversefadeduration[P2, !TF2](float) : "Reverse Fade Duration (seconds)" : 2 : "The duration of the reverse fade."
+	reversefadeduration[!TF2, P2](float) : "Reverse Fade Duration (seconds)" : 2 : "The duration of the reverse fade."
 
 	// Inputs
 	input Fade(void) : "Start the screen fade."
-	input FadeReverse[P2, !TF2](void) : "Begin doing the reverse of the current fade."
+	input FadeReverse[!TF2, P2](void) : "Begin doing the reverse of the current fade."
 
 	// Outputs
 	output OnBeginFade(void) : "Fired when the fade has begun."

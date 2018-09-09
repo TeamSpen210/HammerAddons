@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, ResponseContext, EnableDisable, Targetname, ResponseContext, EnableDisable) 
+@PointClass base(Targetname, ResponseContext, EnableDisable) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	line(255 255 255, targetname, subject) 
 	iconsprite("editor/ts2do/ai_speechfilter.vmt") = ai_speechfilter: "An entity that can be used to control the idle speech patterns of a set of NPCs."

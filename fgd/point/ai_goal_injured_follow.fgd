@@ -1,5 +1,5 @@
 
-@PointClass base(FollowGoal, FollowGoal) 
+@PointClass base(FollowGoal) 
 	appliesto(ASW, EP1, EP2, HL2, P2) 
 	iconsprite("editor/ai_goal_follow.vmt") = ai_goal_injured_follow: "AI Goal Injured Follow"
 	[

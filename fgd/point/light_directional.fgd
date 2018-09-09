@@ -1,5 +1,5 @@
 
-@PointClass base(Angles, Angles) 
+@PointClass base(Angles) 
 	appliesto(ASW, CSGO) 
 	iconsprite("editor/light_directional.vmt") = light_directional: "A directional light with no falloff. Similar to sunlight in light_environment."
 	[

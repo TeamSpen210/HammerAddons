@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, Targetname, Parentname) 
+@PointClass base(Targetname, Parentname) 
 	appliesto(ASW, P2, CSGO) 
 	halfgridsnap() 
 	halfgridsnap("editor/info_target.vmt") = info_target_instructor_hint: "A generic target that gets replicated to the client for hud hint targeting|||A generic target that gets replicated to the client for hud hint targeting."

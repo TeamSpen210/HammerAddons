@@ -1,5 +1,5 @@
 
-@NpcClass base(BaseNPC, BaseNPC) 
+@NpcClass base(BaseNPC) 
 	appliesto(ASW, EP1, EP2, HL2, P2) = npc_spotlight: "Spotlight"
 	[
 	spawnflags(flags) : "spawnflags" =

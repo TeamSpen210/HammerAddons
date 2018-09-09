@@ -1,5 +1,5 @@
 
-@SolidClass base(Targetname, Parentname, Origin, Angles, RenderFields, Shadow, Reflection, compMinLight, Targetname, Parentname, Origin, Angles, RenderFields, Shadow, Reflection) 
+@SolidClass base(Targetname, Parentname, Origin, Angles, RenderFields, Shadow, Reflection, compMinLight) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = func_rotating: "A rotating brush entity."
 	[
 	maxspeed(integer) : "Max Rotation Speed" : 100 : "The maximum rotation speed of the brushes, in degrees per second."
@@ -58,8 +58,8 @@
 	input Toggle(void) : "Toggle the rotator between rotating and not rotating."
 	input Reverse(void) : "Reverse the direction of rotation of the rotator."
 	input Reverse[ASW](void) : "Reverse the direction of rotation of the rotator, preserving the current speed."
-	input GetSpeed[P2, !TF2](void) : "Causes the func_rotating to fire its OnGetSpeed output with its current speed."
+	input GetSpeed[!TF2, P2](void) : "Causes the func_rotating to fire its OnGetSpeed output with its current speed."
 
 	// Outputs
-	output OnGetSpeed[P2, !TF2](integer) : "Fired when the GetSpeed input is called.  The current speed of the func_rotating is passed with this output."
+	output OnGetSpeed[!TF2, P2](integer) : "Fired when the GetSpeed input is called.  The current speed of the func_rotating is passed with this output."
 	]

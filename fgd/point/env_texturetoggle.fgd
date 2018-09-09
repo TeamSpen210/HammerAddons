@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Targetname) 
+@PointClass base(Targetname) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	iconsprite("editor/env_texturetoggle.vmt") 
 	line(255 255 0, targetname, target) = env_texturetoggle: "An entity that allows you to change the textures on other brush-built entities.|||An entity that allows you to change the textures on other brush-built entities, or on overlays."

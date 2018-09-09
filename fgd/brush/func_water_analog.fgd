@@ -1,5 +1,5 @@
 
-@SolidClass base(Targetname, Parentname, Origin, Targetname, Parentname, Origin) 
+@SolidClass base(Targetname, Parentname, Origin) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = func_water_analog: "A water brush entity that moves linearly along a given distance, in a given direction"
 	[
 	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction the water will move, when told to 'Open'."

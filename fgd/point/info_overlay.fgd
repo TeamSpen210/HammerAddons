@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Angles, Targetname) 
+@PointClass base(Targetname, Angles) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	size(-1 -1 0, 1 1 1) 
 	color(80 150 225) 

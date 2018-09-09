@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, EnableDisable, Targetname, EnableDisable) 
+@PointClass base(Targetname, EnableDisable) 
 	appliesto(ASW, P2, CSGO) = ai_addon_builder
 	[
 	npcname(string) : "NPC name" : : "Name to give built NPCs"

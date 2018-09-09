@@ -1,5 +1,5 @@
 
-@BaseClass base(Targetname, Targetname) 
+@BaseClass base(Targetname) 
 	appliesto(ASW, P2, CSGO) 
 	line(255 255 255, targetname, target) = ai_addon
 	[

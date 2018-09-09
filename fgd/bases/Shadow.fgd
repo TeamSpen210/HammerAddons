@@ -9,19 +9,19 @@
 		]
 
 	disableshadows[ASW](boolean) : "Disable shadows" : 0
-	disableshadowdepth[P2, !TF2](boolean) : "Disable ShadowDepth" : 0 : "Used to disable rendering into shadow depth (for flashlight) for this entity."
-	shadowdepthnocache[P2, !TF2](choices) : "Projected Texture Cache" : "0" : "Used to hint projected texture system whether it is sufficient to cache shadow volume of this entity or to force render it every frame instead." =
+	disableshadowdepth[!TF2, P2](boolean) : "Disable ShadowDepth" : 0 : "Used to disable rendering into shadow depth (for flashlight) for this entity."
+	shadowdepthnocache[!TF2, P2](choices) : "Projected Texture Cache" : "0" : "Used to hint projected texture system whether it is sufficient to cache shadow volume of this entity or to force render it every frame instead." =
 		[
 		0: "Default"
 		1: "No cache = render every frame"
 		2: "Cache it = render only once"
 		]
 
-	disableflashlight[P2, !TF2](boolean) : "Disable flashlight" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
+	disableflashlight[!TF2, P2](boolean) : "Disable flashlight" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
 
 	// Inputs
 	input DisableShadow(void) : "Turn shadow off."
 	input EnableShadow(void) : "Turn shadow on."
-	input DisableReceivingFlashlight[P2, !TF2](void) : "This object will not recieve light or shadows from projected textures (flashlights)."
-	input EnableReceivingFlashlight[P2, !TF2](void) : "This object may recieve light or shadows from projected textures (flashlights)."
+	input DisableReceivingFlashlight[!TF2, P2](void) : "This object will not recieve light or shadows from projected textures (flashlights)."
+	input EnableReceivingFlashlight[!TF2, P2](void) : "This object may recieve light or shadows from projected textures (flashlights)."
 	]

@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, RenderFields, Angles, DXLevelChoice, SystemLevelChoice, Targetname, Parentname, RenderFields, Angles, SystemLevelChoice) 
+@PointClass base(Targetname, Parentname, RenderFields, Angles, DXLevelChoice, SystemLevelChoice) 
 	appliesto(ASW, P2, CSGO) 
 	studio("models/editor/cone_helper.mdl") 
 	sphere(spotlightlength) 

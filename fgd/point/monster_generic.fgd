@@ -1,5 +1,5 @@
 
-@PointClass base(BaseNPC, RenderFields, Shadow, BaseNPC, RenderFields, Shadow) 
+@PointClass base(BaseNPC, RenderFields, Shadow) 
 	appliesto(ASW, EP1, EP2, HL2, P2) 
 	studio() = monster_generic: "Generic Script NPC"
 	[

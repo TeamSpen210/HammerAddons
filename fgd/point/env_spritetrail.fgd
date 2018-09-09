@@ -1,5 +1,5 @@
 
-@PointClass base(Parentname, Targetname, Parentname, Targetname) 
+@PointClass base(Parentname, Targetname) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	size(-8 -8 -8, 8 8 8) 
 	iconsprite("editor/env_spritetrail.vmt") 

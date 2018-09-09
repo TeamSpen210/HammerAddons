@@ -11,6 +11,6 @@
 	input SetParentAttachment(string) : "Change this entity to attach to a specific attachment point on its parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment."
 	input SetParentAttachmentMaintainOffset(string) : "Change this entity to attach to a specific attachment point on it's parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment. The entity will maintain it's position relative to the parent at the time it is attached."
 	input ClearParent(void) : "Removes this entity from the the movement hierarchy, leaving it free to move independently."
-	input SetLocalAngles[!CSGO, P2, !TF2](string) : "Sets the rotation of the entity relative to the parent's rotation."
-	input SetLocalOrigin[!CSGO, P2, !TF2](string) : "Sets the position of the entity relative to the parent's position."
+	input SetLocalAngles[!CSGO, !TF2, P2](string) : "Sets the rotation of the entity relative to the parent's rotation."
+	input SetLocalOrigin[!CSGO, !TF2, P2](string) : "Sets the position of the entity relative to the parent's position."
 	]

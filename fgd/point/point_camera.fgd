@@ -1,5 +1,5 @@
 
-@PointClass base(Parentname, Angles, Targetname, Parentname, Angles) 
+@PointClass base(Parentname, Angles, Targetname) 
 	appliesto(ASW, EP1, EP2, HL2, P2) 
 	studioprop("models/editor/camera.mdl") = point_camera: "Camera"
 	[
@@ -34,6 +34,6 @@
 	input SetOnAndTurnOthersOff(void) : "Turn the camera on, and turn all other cameras off."
 	input SetOn(void) : "Turn the camera on."
 	input SetOff(void) : "Turn the camera off."
-	input Activate[!P2, ASW](void) : "Turn the camera on, activate it and deactivate all other cameras."
-	input Deactivate[!P2, ASW](void) : "Turn the camera off, deactivate it."
+	input Activate[ASW, !P2](void) : "Turn the camera on, activate it and deactivate all other cameras."
+	input Deactivate[ASW, !P2](void) : "Turn the camera off, deactivate it."
 	]

@@ -1,5 +1,5 @@
 
-@BaseClass base(Targetname, Parentname, Targetname, Parentname) 
+@BaseClass base(Targetname, Parentname) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = gibshooterbase
 	[
 	angles(string) : "Gib Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction the gibs will fly."

@@ -1,5 +1,5 @@
 
-@SolidClass base(Targetname, Targetname) 
+@SolidClass base(Targetname) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	sphere(DisappearDist) = func_lod: "Brush-built model that fades out over a specified distance. Useful for creating world detail that doesn't need to be drawn far away, for performance reasons."
 	[

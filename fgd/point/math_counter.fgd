@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, EnableDisable, Targetname, EnableDisable) 
+@PointClass base(Targetname, EnableDisable) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	iconsprite("editor/math_counter.vmt") 
 	color(0 100 250) = math_counter: "Holds a numeric value and performs arithmetic operations upon it. If either the minimum or maximum legal value is nonzero, OutValue will be clamped to the legal range, and the OnHitMin/OnHitMax outputs will be fired at the appropriate times. If both min and max are set to zero, no clamping is performed and only the OutValue output will be fired."
@@ -18,8 +18,8 @@
 	input SetHitMax(integer) : "Set the upper bound of the counter and fire the OutValue output with the current value."
 	input SetHitMin(integer) : "Set the lower bound of the counter and fire the OutValue output with the current value."
 	input GetValue(void) : "Causes the counter fire its OnGetValue output with the current value of the counter. Used for polling the counter when you don't want constant updates from the OutValue output."
-	input SetMaxValueNoFire[P2, !TF2](integer) : "Set the MaxValue without firing any outputs."
-	input SetMinValueNoFire[P2, !TF2](integer) : "Set the MinValue without firing any outputs."
+	input SetMaxValueNoFire[!TF2, P2](integer) : "Set the MaxValue without firing any outputs."
+	input SetMinValueNoFire[!TF2, P2](integer) : "Set the MinValue without firing any outputs."
 
 	// Outputs
 	output OutValue(integer) : "Fired when the counter value changes."

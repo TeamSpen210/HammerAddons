@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Targetname) 
+@PointClass base(Targetname) 
 	appliesto(ASW, EP1, EP2, HL2, P2) 
 	size(-16 -16 -16, 16 16 16) 
 	iconsprite("editor/player_weaponstrip.vmt") = player_weaponstrip: "Strips player's weapons"

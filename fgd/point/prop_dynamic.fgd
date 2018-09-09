@@ -1,5 +1,5 @@
 
-@PointClass base(prop_dynamic_base, EnableDisable, prop_dynamic_base, EnableDisable) 
+@PointClass base(prop_dynamic_base, EnableDisable) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	sphere(fademindist) 
 	sphere(fademaxdist) 

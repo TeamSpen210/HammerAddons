@@ -1,5 +1,5 @@
 
-@PointClass base(Parentname, Parentname) 
+@PointClass base(Parentname) 
 	appliesto(ASW, EP1, EP2, HL2, TF2, CSGO) 
 	size(-16 -16 0, 16 16 4) 
 	color(255 128 255) = info_ladder_dismount: "An entity to handle endpoints for multiple ladders that are too close to each other."

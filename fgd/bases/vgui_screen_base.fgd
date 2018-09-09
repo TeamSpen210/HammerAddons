@@ -1,5 +1,5 @@
 
-@BaseClass base(Targetname, Parentname, Angles, Targetname, Parentname, Angles) 
+@BaseClass base(Targetname, Parentname, Angles) 
 	appliesto(ASW, EP1, EP2, HL2, TF2, CSGO) = vgui_screen_base
 	[
 	panelname(string) : "Panel Name"

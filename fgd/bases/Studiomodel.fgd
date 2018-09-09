@@ -1,17 +1,17 @@
 
-@BaseClass base(Reflection, ToggleDraw, Shadow, Reflection, ToggleDraw, Shadow) 
+@BaseClass base(Reflection, ToggleDraw, Shadow) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = Studiomodel
 	[
 	model(studio) : "World Model"
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
-	modelscale[!ASW, !CSGO, !P2](float) : "Model Scale" : 1.0 : "A multiplier for the size of the model."
+	modelscale[!CSGO, !ASW, !P2](float) : "Model Scale" : 1.0 : "A multiplier for the size of the model."
 	disableshadows[!P2](choices) : "Disable Shadows" : "0" : "Used to disable dynamic shadows on this entity." =
 		[
 		0: "No"
 		1: "Yes"
 		]
 
-	disableshadows[!P2, ASW](boolean) : "Disable Shadows" : 0 : "Used to disable dynamic shadows on this entity."
+	disableshadows[ASW, !P2](boolean) : "Disable Shadows" : 0 : "Used to disable dynamic shadows on this entity."
 	body[CSGO](integer) : "Body" : 0 : "Some models have multiple bodygroups. Set this to a number other than 0 to use that bodygroup instead of the default."
 
 	// Inputs
@@ -19,7 +19,7 @@
 	input DisableShadow(void) : "Turn shadow off."
 	input EnableShadow(void) : "Turn shadow on."
 	input AlternativeSorting(boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
-	input SetModelScale[!ASW, !CSGO, !P2](string) : "Takes two values separated by a space. The first is the target model scale. The second value is the number of seconds the change in scale will be spread over."
+	input SetModelScale[!CSGO, !ASW, !P2](string) : "Takes two values separated by a space. The first is the target model scale. The second value is the number of seconds the change in scale will be spread over."
 
 	// Outputs
 	output OnIgnite(void) : "Fired when this object catches fire."

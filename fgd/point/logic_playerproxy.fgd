@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, DamageFilter, Targetname, DamageFilter) 
+@PointClass base(Targetname, DamageFilter) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	size(-8 -8 -8, 8 8 8) 
 	color(200 0 0) 
@@ -16,13 +16,13 @@
 	input EnableCappedPhysicsDamage(void) : "Cause player to take less damage from physics objects, and never more than 30 points from any individual strike."
 	input DisableCappedPhysicsDamage(void) : "Undo effects of EnableCappedPhysicsDamage"
 	input SetLocatorTargetEntity(string) : "Set the entity that the HUD locator should track. (Usually a vehicle)"
-	input AddPotatosToPortalgun[P2, !TF2](void) : "Change portalgun bodygroup to show potatos."
-	input RemovePotatosFromPortalgun[P2, !TF2](void) : "Change portalgun bodygroup to not show potatos."
-	input SetDropEnabled[P2, !TF2](boolean) : "Set wether the player is allowed to drop a carried object."
-	input ForceVMGrabController[P2, !TF2](void) : "Force the player to use the view model grab controller for all objects that are picked up."
-	input ForcePhysicsGrabController[P2, !TF2](void) : "Force the player to use the physics grab controller for all objects that are picked up."
-	input ResetGrabControllerBehavior[P2, !TF2](void) : "Resets the grab controller used by the player to its default behavior."
-	input SetMotionBlurAmount[P2, !TF2](float) : "Forces the motion blur effect on the player. Set to < 0 to disable this override."
+	input AddPotatosToPortalgun[!TF2, P2](void) : "Change portalgun bodygroup to show potatos."
+	input RemovePotatosFromPortalgun[!TF2, P2](void) : "Change portalgun bodygroup to not show potatos."
+	input SetDropEnabled[!TF2, P2](boolean) : "Set wether the player is allowed to drop a carried object."
+	input ForceVMGrabController[!TF2, P2](void) : "Force the player to use the view model grab controller for all objects that are picked up."
+	input ForcePhysicsGrabController[!TF2, P2](void) : "Force the player to use the physics grab controller for all objects that are picked up."
+	input ResetGrabControllerBehavior[!TF2, P2](void) : "Resets the grab controller used by the player to its default behavior."
+	input SetMotionBlurAmount[!TF2, P2](float) : "Forces the motion blur effect on the player. Set to < 0 to disable this override."
 
 	// Outputs
 	output OnFlashlightOn(float) : "Fired when the player turns on his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
@@ -34,9 +34,9 @@
 	output PlayerDied(void) : "Fires when the player dies."
 	output OnStartSlowingTime[ASW, !TF2](void) : "Fired when a Portal player initiates slow time."
 	output OnStopSlowingTime[ASW, !TF2](void) : "Fired when a Portal player stops slowing time."
-	output OnPrimaryPortalPlaced[P2, !TF2](void) : "Fired when a Portal player successfully places the primary portal."
-	output OnSecondaryPortalPlaced[P2, !TF2](void) : "Fired when a Portal player successfully places the secondary portal."
-	output OnDuck[P2, !TF2](void) : "Fired when a player starts to duck."
-	output OnUnDuck[P2, !TF2](void) : "Fired when a player releases the duck button."
-	output OnJump[P2, !TF2](void) : "Fired when a player jumps."
+	output OnPrimaryPortalPlaced[!TF2, P2](void) : "Fired when a Portal player successfully places the primary portal."
+	output OnSecondaryPortalPlaced[!TF2, P2](void) : "Fired when a Portal player successfully places the secondary portal."
+	output OnDuck[!TF2, P2](void) : "Fired when a player starts to duck."
+	output OnUnDuck[!TF2, P2](void) : "Fired when a player releases the duck button."
+	output OnJump[!TF2, P2](void) : "Fired when a player jumps."
 	]

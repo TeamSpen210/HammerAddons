@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, Targetname, Parentname) 
+@PointClass base(Targetname, Parentname) 
 	appliesto(ASW, EP1, EP2, HL2, TF2, CSGO) 
 	sweptplayerhull() = func_useableladder: "A Half-Life 2 ladder. Handles player auto mount/unmount, as well as +use to get onto the ladder. \n\nSee also 'info_ladder_dismount', used to specify ladder auto-dismount points.\n\nNote: This entity is non-functional in Counter-Strike: Source. Use func_ladder instead."
 	[

@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Targetname) 
+@PointClass base(Targetname) 
 	appliesto(ASW, P2, CSGO) 
 	iconsprite("editor/logic_playmovie") = logic_playmovie: "Plays a movie and allows for various playback options"
 	[

@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, Targetname, Parentname) 
+@PointClass base(Targetname, Parentname) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	size(-8 -8 -8, 8 8 8) 
 	color(200 200 0) 

@@ -1,5 +1,5 @@
 
-@PointClass base(prop_dynamic_base, prop_dynamic_base) 
+@PointClass base(prop_dynamic_base) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	studioprop() 
 	line(255 255 255, targetname, initalowner) = prop_dynamic_ornament: "A way to attach one studio model to another as an ornament. It will render in the way that player/NPC weapons render."

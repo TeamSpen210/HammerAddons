@@ -1,5 +1,5 @@
 
-@FilterClass base(BaseFilter, BaseFilter) 
+@FilterClass base(BaseFilter) 
 	appliesto(ASW, EP1, EP2, HL2, P2) 
 	iconsprite("editor/filter_class.vmt") 
 	iconsprite("editor/filter_pellet.vmt") = filter_combineball_type: "A filter that filters by combine ball type."

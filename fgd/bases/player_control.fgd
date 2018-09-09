@@ -1,5 +1,5 @@
 
-@BaseClass base(Targetname, Targetname) 
+@BaseClass base(Targetname) 
 	appliesto(ASW, EP1, EP2, HL2, P2) 
 	size(-10 -10 -10, 10 10 10) 
 	color(255 0 255) = player_control

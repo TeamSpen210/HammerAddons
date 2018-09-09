@@ -1,5 +1,5 @@
 
-@BaseClass base(Angles, DXLevelChoice, SystemLevelChoice, Reflection, Shadow, Angles, SystemLevelChoice, Reflection, Shadow) 
+@BaseClass base(Angles, DXLevelChoice, SystemLevelChoice, Reflection, Shadow) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = prop_static_base
 	[
 	model(studio) : "World Model"
@@ -17,7 +17,7 @@
 		1: "Yes"
 		]
 
-	disableshadows[!P2, ASW](boolean) : "Disable Shadows" : 0
+	disableshadows[ASW, !P2](boolean) : "Disable Shadows" : 0
 	screenspacefade(choices) : "Screen Space Fade" : "0" : "The method by which the fading distance should be determined. If 'No', the fade distances is the distance from the player's view to the object, in inches. If 'Yes', the fade distance is the size of the object onscreen, in pixels." =
 		[
 		0: "No"

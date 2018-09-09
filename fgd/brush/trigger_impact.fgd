@@ -1,5 +1,5 @@
 
-@SolidClass base(Targetname, Origin, Angles, Targetname, Origin, Angles) 
+@SolidClass base(Targetname, Origin, Angles) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = trigger_impact: "A trigger volume that can be told to push all physics objects that are inside of it in the direction specified by this trigger's angles.\nAlso outputs the force at the time of impact for anyone else that wants to use it."
 	[
 	magnitude(float) : "Magnitude" : 200 : "The strength of the impact. Negative values reverse the direction."

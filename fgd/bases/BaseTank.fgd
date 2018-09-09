@@ -1,5 +1,5 @@
 
-@BaseClass base(Targetname, Parentname, Origin, Angles, RenderFields, Global, Shadow, Targetname, Parentname, Origin, Angles, RenderFields, Global, Shadow) 
+@BaseClass base(Targetname, Parentname, Origin, Angles, RenderFields, Global, Shadow) 
 	appliesto(ASW, EP1, EP2, HL2, P2, CSGO) = BaseTank
 	[
 	spawnflags(flags) : "spawnflags" =

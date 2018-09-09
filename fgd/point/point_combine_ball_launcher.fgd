@@ -1,5 +1,5 @@
 
-@PointClass base(CombineBallSpawners, CombineBallSpawners) 
+@PointClass base(CombineBallSpawners) 
 	appliesto(ASW, EP1, EP2, HL2, P2) 
 	studio("models/effects/combineball.mdl") 
 	studio("models/editor/cone_helper.mdl") = point_combine_ball_launcher: "Launches Combine balls."

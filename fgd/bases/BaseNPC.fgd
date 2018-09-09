@@ -1,5 +1,5 @@
 
-@BaseClass base(Targetname, Angles, RenderFields, DamageFilter, ResponseContext, Shadow, BaseLogicalNPC, ToggleDraw, Targetname, Angles, RenderFields, DamageFilter, ResponseContext, Shadow, ToggleDraw) 
+@BaseClass base(Targetname, Angles, RenderFields, DamageFilter, ResponseContext, Shadow, BaseLogicalNPC, ToggleDraw) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	color(0 200 200) = BaseNPC
 	[
@@ -12,7 +12,7 @@
 		1: "Yes"
 		]
 
-	hintlimiting[!P2, ASW](boolean) : "Hint Limit Nav" : 0 : "Limits NPC to using specified hint group for navigation requests, but does not limit local navigation."
+	hintlimiting[ASW, !P2](boolean) : "Hint Limit Nav" : 0 : "Limits NPC to using specified hint group for navigation requests, but does not limit local navigation."
 	spawnflags[!P2](flags) : "spawnflags" =
 		[
 		1: "Wait Till Seen" : 0
@@ -47,7 +47,7 @@
 		1: "Yes"
 		]
 
-	wakesquad[!P2, ASW](boolean) : "Wake Squad" : 0 : "Wake all of the NPCs squadmates if the NPC is woken"
+	wakesquad[ASW, !P2](boolean) : "Wake Squad" : 0 : "Wake all of the NPCs squadmates if the NPC is woken"
 	enemyfilter[!P2](target_destination) : "Enemy Filter" : : "Filter by which to filter potential enemies"
 	ignoreunseenenemies[!P2](choices) : "Ignore unseen enemies" : "0" : "Prefer visible enemies, regardless of distance or relationship priority" =
 		[
@@ -55,7 +55,7 @@
 		1: "Yes"
 		]
 
-	ignoreunseenenemies[!P2, ASW](boolean) : "Ignore unseen enemies" : 0 : "Prefer visible enemies, regardless of distance or relationship priority"
+	ignoreunseenenemies[ASW, !P2](boolean) : "Ignore unseen enemies" : 0 : "Prefer visible enemies, regardless of distance or relationship priority"
 	physdamagescale[!P2](float) : "Physics Impact Damage Scale" : 1.0 : "Scales damage energy when this character is hit by a physics object. With a value of 0 the NPC will take no damage from physics."
 
 	// Inputs

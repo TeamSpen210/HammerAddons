@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, EnableDisable, SpatialEntity, Targetname, EnableDisable, SpatialEntity) 
+@PointClass base(Targetname, EnableDisable, SpatialEntity) 
 	appliesto(ASW, P2, CSGO) 
 	sphere(minfalloff) 
 	sphere(maxfalloff) 

@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Targetname) 
+@PointClass base(Targetname) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	color(128 128 128) 
 	iconsprite("editor/phys_constraintsystem.vmt") = phys_constraintsystem: "An entity used to manage a group of interacting constraints and keep them stable. All constraints on a set of entities should be placed in the same system, or they will fight each other during simulation."

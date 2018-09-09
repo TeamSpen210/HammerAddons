@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, EnableDisable, Targetname, EnableDisable) 
+@PointClass base(Targetname, EnableDisable) 
 	appliesto(ASW, P2, CSGO) 
 	iconsprite("editor/shadow_control.vmt") 
 	color(200 0 0) 

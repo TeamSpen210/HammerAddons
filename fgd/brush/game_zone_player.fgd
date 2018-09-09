@@ -1,5 +1,5 @@
 
-@SolidClass base(Targetname, Parentname, Targetname, Parentname) 
+@SolidClass base(Targetname, Parentname) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = game_zone_player: "An entity used to count the number of players within a zone."
 	[
 

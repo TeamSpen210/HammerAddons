@@ -1,5 +1,5 @@
 
-@SolidClass base(DXLevelChoice, SystemLevelChoice, SystemLevelChoice) 
+@SolidClass base(DXLevelChoice, SystemLevelChoice) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	color(0 180 0) = func_detail: "An entity that turns its brushes into detail brushes. Detail brushes do NOT contribute to visibility in the PVS. World geometry is not clipped to detail brushes, so if you have a small detail clump attached to a wall, the wall won't be cut up by the detail brush.func_detail is great for high-frequency brush geometry that's visual detail only. It is also ideal for reducing map VIS time."
 	[

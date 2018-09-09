@@ -1,20 +1,20 @@
 
-@PointClass base(Targetname, Parentname, RenderFields, DXLevelChoice, env_sprite, env_sprite, Angles) 
+@PointClass base(Targetname, Parentname, RenderFields, DXLevelChoice, env_sprite, Angles) 
 	appliesto(ASW, P2, CSGO) 
 	size(-2 -2 -2, 2 2 2) 
 	sprite() 
 	color(20 140 20) 
 	sphere(GlowProxySize) = env_sprite_clientside: "An entity that controls the drawing of a sprite in the world, created clientside so cannot be parented to moving things and will use up no network bandwidth or CPU.|||An env_sprite that only exists on the client (much lower overhead!)|||A env_sprite thats only clientside."
 	[
-	framerate[!P2, !CSGO](string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
-	model[!P2, !CSGO](sprite) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
-	scale[!P2, !CSGO](string) : "Scale" : : "Scale multiplier of the sprite."
-	spawnflags[!P2, !CSGO](flags) : "spawnflags" =
+	framerate[!CSGO, !P2](string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
+	model[!CSGO, !P2](sprite) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
+	scale[!CSGO, !P2](string) : "Scale" : : "Scale multiplier of the sprite."
+	spawnflags[!CSGO, !P2](flags) : "spawnflags" =
 		[
 		1: "Start on" : 0
 		2: "Play Once" : 0
 		]
 
-	glowproxysize[!P2, !CSGO](float) : "Size of Glow Proxy Geometry." : 2.0 : "Size of the glow to be rendered for visibility testing. Must be larger than the distance from the sprite center to empty space.  So if this glow is inside geometry (like a light bulb), set this value to be bigger than the bulb's radius. Any time a sphere of this radius would be visible (poking through any nearby geometry), the glow will be rendered."
-	hdrcolorscale[!P2, !CSGO](float) : "HDR color scale." : 1.0 : "float value to multiply sprite color by when running in HDR mode."
+	glowproxysize[!CSGO, !P2](float) : "Size of Glow Proxy Geometry." : 2.0 : "Size of the glow to be rendered for visibility testing. Must be larger than the distance from the sprite center to empty space.  So if this glow is inside geometry (like a light bulb), set this value to be bigger than the bulb's radius. Any time a sphere of this radius would be visible (poking through any nearby geometry), the glow will be rendered."
+	hdrcolorscale[!CSGO, !P2](float) : "HDR color scale." : 1.0 : "float value to multiply sprite color by when running in HDR mode."
 	]

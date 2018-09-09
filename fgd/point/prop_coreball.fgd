@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Angles, Targetname, Angles, RenderFields) 
+@PointClass base(Targetname, Angles, RenderFields) 
 	appliesto(ASW, EP1, EP2, HL2, P2) 
 	studio("models/props_combine/coreball.mdl") = prop_coreball: "Core Ball|||Legacy version of prop_scalable, which forces a specific model."
 	[

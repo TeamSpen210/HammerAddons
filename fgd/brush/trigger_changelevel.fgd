@@ -1,5 +1,5 @@
 
-@SolidClass base(EnableDisable, EnableDisable) 
+@SolidClass base(EnableDisable) 
 	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
 	line(255 255 255, targetname, landmark) 
 	color(200 0 0) = trigger_changelevel: "An entity that triggers a level change.\nPlace an info_landmark in both maps that marks the 'same' location in each map.\nTIPS & TRICKS: To fire events in the next level, use the OnLevelChange output to turn on an env_global in the current level.  Create a logic_auto in the next level that checks for the state set by the env_global.\n\nTo control which entities go through the level transition, create one or more trigger_transitions and give them the same name as the landmark. Any entities within the trigger_transition(s) will go to the next map."
