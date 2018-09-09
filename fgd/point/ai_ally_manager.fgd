@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname) 
-	appliesto(EP1, EP2, HL2, ASW) = ai_ally_manager: "AI Ally Manager"
+	appliesto(EP1, EP2, HL2, P1, ASW) = ai_ally_manager: "AI Ally Manager"
 	[
 	maxallies(integer) : "Maximum number of allies" : 5
 	maxmedics(integer) : "Maximum number of medics" : 1

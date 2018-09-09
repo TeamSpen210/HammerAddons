@@ -1,6 +1,6 @@
 
 @BaseClass base(Targetname, Global, Angles, Studiomodel, BreakableProp, DXLevelChoice, BaseFadeProp, BasePresetPropPhysics, SystemLevelChoice) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = BasePropPhysics
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = BasePropPhysics
 	[
 	spawnflags[!P2](flags) : "spawnflags" =
 		[
@@ -18,7 +18,7 @@
 		1048576: "Physgun can ALWAYS pick up. No matter what." : 0
 		]
 
-	spawnflags[ASW, !P2](flags) : "spawnflags" =
+	spawnflags[!P2, ASW](flags) : "spawnflags" =
 		[
 		1: "Start Asleep" : 0
 		2: "Don't take physics damage" : 0
@@ -51,14 +51,14 @@
 		1: "Yes"
 		]
 
-	nodamageforces[ASW, !P2](boolean) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move."
+	nodamageforces[!P2, ASW](boolean) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move."
 	inertiascale[!P2](float) : "Scale Factor For Inertia" : 1.0 : "Scales the angular mass of an object. Used to hack angular damage and collision response."
 	massscale[!P2](float) : "Mass Scale" : 0 : "A scale multiplier for the object's mass."
 	overridescript[!P2](string) : "Override Parameters" : : "A list of physics key/value pairs that are usually in a physics prop .qc file. Format is 'key,value,key,value,etc'."
 	damagetoenablemotion[!P2](integer) : "Health Level to Override Motion" : 0 : "If specified, this object will start motion disabled. Once its health has dropped below this specified amount, it will enable motion."
 	forcetoenablemotion[!P2](float) : "Physics Impact Force to Override Motion" : 0 : "If specified, this object will start motion disabled. Any impact that imparts a force greater than this value on the physbox will enable motion."
 	puntsound[!P2](sound) : "Sound to make when punted"
-	addon[ASW, !P2, !TF2](string) : "AI AddOn" : : "If specified this object will use this addon behavior when installed in a composite AI"
+	addon[!TF2, ASW, !P2](string) : "AI AddOn" : : "If specified this object will use this addon behavior when installed in a composite AI"
 
 	// Inputs
 	input Wake[!P2](void) : "Wake up this physics object, if it is sleeping."

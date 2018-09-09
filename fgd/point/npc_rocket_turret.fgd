@@ -1,21 +1,31 @@
 
-@PointClass base(Angles, Targetname, Parentname, ResponseContext, Shadow, Reflection, ToggleDraw, RenderFields) 
-	appliesto(P2) 
-	studioprop("models/props_bts/rocket_sentry.mdl") = npc_rocket_turret: "P1 rocket sentry, aims a rocket at a target. The rocket itself will often get stuck inside the model, so that needs to be worked around."
+@PointClass base(Parentname, Targetname, Angles, ResponseContext, Shadow, Reflection, ToggleDraw, RenderFields) 
+	appliesto(P1, P2) 
+	studio("models/props_bts/rocket_sentry.mdl") 
+	studioprop("models/props_bts/rocket_sentry.mdl") = npc_rocket_turret: "Aims a rocket at a target.|||P1 rocket sentry, aims a rocket at a target. The rocket itself will often get stuck inside the model, so that needs to be worked around."
 	[
 	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Disabled" : 0
+		]
+
+	spawnflags[P2](flags) : "spawnflags" =
 		[
 		1: "Start Retracted" : 0
 		]
 
-	rocketspeed(float) : "Rocket Speed" : 450 : "Speed the rocket will travel at."
-	rocketlifetime(float) : "Rocket Lifetime" : 20 : "The rocket will automatically detonate after this number of seconds."
+	rocketspeed[P2](float) : "Rocket Speed" : 450 : "Speed the rocket will travel at."
+	rocketlifetime[P2](float) : "Rocket Lifetime" : 20 : "The rocket will automatically detonate after this number of seconds."
 
 	// Inputs
-	input Toggle(void) : "Toggles between activated and deactivated states."
-	input Enable(void) : "Activate Rocket Turret, and allow it to begin scanning."
-	input Disable(void) : "Deactivate and retract the Rocket Turret."
-	input SetTarget(target_destination) : "Sets the target for this turret to attack."
+	input Toggle(void) : "Toggles activity."
+	input Toggle[P2](void) : "Toggles between activated and deactivated states."
+	input Enable(void) : "Enables activity."
+	input Enable[P2](void) : "Activate Rocket Turret, and allow it to begin scanning."
+	input Disable(void) : "Disables activity."
+	input Disable[P2](void) : "Deactivate and retract the Rocket Turret."
+	input SetTarget(string) : "Sets the target for this turret to attack."
+	input SetTarget[P2](target_destination) : "Sets the target for this turret to attack."
 	input Destroy(void) : "Sets this turret to it's destroyed state."
 
 	// Outputs

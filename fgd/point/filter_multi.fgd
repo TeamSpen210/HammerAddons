@@ -1,6 +1,6 @@
 
 @FilterClass base(BaseFilter) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	iconsprite("editor/filter_multiple.vmt") 
 	color(0 255 0) 
 	line(0 255 0, targetname, filter01) 
@@ -32,9 +32,9 @@
 	filter03(filterclass) : "Filter 3" : : "Activator filter to test."
 	filter04(filterclass) : "Filter 4" : : "Activator filter to test."
 	filter05(filterclass) : "Filter 5" : : "Activator filter to test."
-	filter06[ASW, !TF2](filterclass) : "Filter 6" : : "Activator filter to test."
-	filter07[ASW, !TF2](filterclass) : "Filter 7" : : "Activator filter to test."
-	filter08[ASW, !TF2](filterclass) : "Filter 8" : : "Activator filter to test."
-	filter09[ASW, !TF2](filterclass) : "Filter 9" : : "Activator filter to test."
-	filter10[ASW, !TF2](filterclass) : "Filter 10" : : "Activator filter to test."
+	filter06[!TF2, ASW](filterclass) : "Filter 6" : : "Activator filter to test."
+	filter07[!TF2, ASW](filterclass) : "Filter 7" : : "Activator filter to test."
+	filter08[!TF2, ASW](filterclass) : "Filter 8" : : "Activator filter to test."
+	filter09[!TF2, ASW](filterclass) : "Filter 9" : : "Activator filter to test."
+	filter10[!TF2, ASW](filterclass) : "Filter 10" : : "Activator filter to test."
 	]

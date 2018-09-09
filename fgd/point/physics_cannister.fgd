@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, Angles) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	sphere(expradius) 
 	studioprop() = physics_cannister: "A physically simulated gas cannister that can have its cap shot off, at which point gas will start escaping and cause the cannister to fly around. If it takes enough damage, it will explode.|||A physically simulated gas cannister that can have its cap shot off, at which point gas will start escaping and cause the cannister to fly around. If it takes enough damage, it will explode. The model should have a nozzle attachment point, which is where gas will escape and thrust will be produced from."
 	[

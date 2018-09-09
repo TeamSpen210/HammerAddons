@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, Parentname, RenderFields, Angles, DXLevelChoice, SystemLevelChoice) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	studio("models/editor/cone_helper.mdl") 
 	sphere(spotlightlength) 
 	sphere(spotlightwidth) = point_spotlight: "An entity to draw a spotlight. Will draw a beam when the player views it side on, and a halo when it's facing towards the player. Unless the 'No Dynamic Light' spawnflag is checked, it will also create a dynamic light wherever the end of the spotlight rests."
@@ -15,7 +15,7 @@
 	spotlightwidth(integer) : "Spotlight Width" : 50 : "Width of the spotlight beam."
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
 	hdrcolorscale(float) : "HDR color scale." : 1.0 : "float value to multiply sprite color by when running in HDR mode."
-	ignoresolid[!CSGO, TF2](choices) : "Ignore Solid" : "0" : "If set, this spotlight won't trace for solids." =
+	ignoresolid[TF2, !CSGO](choices) : "Ignore Solid" : "0" : "If set, this spotlight won't trace for solids." =
 		[
 		0: "No"
 		1: "Yes"
@@ -25,8 +25,8 @@
 	// Inputs
 	input LightOn(void) : "Turn the spotlight on."
 	input LightOff(void) : "Turn the spotlight off"
-	input SetColor[ASW, !TF2](color255) : "Change the color of the spotlight"
-	input ForceUpdate[ASW, !TF2](void) : "Force an update of the spotlight position and orientation"
+	input SetColor[!TF2, ASW](color255) : "Change the color of the spotlight"
+	input ForceUpdate[!TF2, ASW](void) : "Force an update of the spotlight position and orientation"
 
 	// Outputs
 	output OnLightOn(void) : "Fires when light turns on."

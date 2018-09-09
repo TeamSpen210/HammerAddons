@@ -1,6 +1,6 @@
 
 @PointClass base(Angles, Targetname, Parentname) 
-	appliesto(P2) = env_lightrail_endpoint: "Special effects for the endpoints of the Unstationary Scaffold."
+	appliesto(P1, P2) = env_lightrail_endpoint: "Special effects for the endpoints of the lightrail.|||Special effects for the endpoints of the Unstationary Scaffold."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

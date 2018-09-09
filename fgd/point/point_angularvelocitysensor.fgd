@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	size(-8 -8 -8, 8 8 8) 
 	color(0 100 250) 
 	line(0 100 250, targetname, target) = point_angularvelocitysensor: "An entity that detects if another entity's angular velocity meets or exceeds a threshold value."

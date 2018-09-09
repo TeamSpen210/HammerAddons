@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, Parentname, Angles, Studiomodel) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	studio() 
 	color(128 128 128) 
 	iconsprite("editor/phys_magnet") = phys_magnet: "An entity that acts like a magnet, attaching metallic physics objects to itself when they touch it."

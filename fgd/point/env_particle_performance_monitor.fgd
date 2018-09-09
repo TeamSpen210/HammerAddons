@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = env_particle_performance_monitor: "An entity for turning on and off measuring and display of particle throughput."
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = env_particle_performance_monitor: "An entity for turning on and off measuring and display of particle throughput."
 	[
 
 	// Inputs

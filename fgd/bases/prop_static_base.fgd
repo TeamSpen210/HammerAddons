@@ -1,6 +1,6 @@
 
 @BaseClass base(Angles, DXLevelChoice, SystemLevelChoice, Reflection, Shadow) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = prop_static_base
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = prop_static_base
 	[
 	model(studio) : "World Model"
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
@@ -17,7 +17,7 @@
 		1: "Yes"
 		]
 
-	disableshadows[ASW, !P2](boolean) : "Disable Shadows" : 0
+	disableshadows[!P2, ASW](boolean) : "Disable Shadows" : 0
 	screenspacefade(choices) : "Screen Space Fade" : "0" : "The method by which the fading distance should be determined. If 'No', the fade distances is the distance from the player's view to the object, in inches. If 'Yes', the fade distance is the size of the object onscreen, in pixels." =
 		[
 		0: "No"
@@ -51,16 +51,16 @@
 		]
 
 	ignorenormals[ASW](boolean) : "Ignore Surface Normal" : 0 : "When vertex lighting is enabled, ignore the surface normal of faces when calculating the vertex lighting. Useful for thin, translucent objects such as leaves on foliage props."
-	renderamt[ASW, !TF2](integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
-	rendercolor[ASW, !TF2](color255) : "Color (R G B)" : "255 255 255"
-	generatelightmaps[!CSGO, TF2](choices) : "Generate (and use) lightmaps for this static prop" : "0" =
+	renderamt[!TF2, ASW](integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
+	rendercolor[!TF2, ASW](color255) : "Color (R G B)" : "255 255 255"
+	generatelightmaps[TF2, !CSGO](choices) : "Generate (and use) lightmaps for this static prop" : "0" =
 		[
 		0: "No"
 		1: "Yes"
 		]
 
-	lightmapresolutionx[!CSGO, TF2](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
-	lightmapresolutiony[!CSGO, TF2](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
+	lightmapresolutionx[TF2, !CSGO](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
+	lightmapresolutiony[TF2, !CSGO](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
 	enablelightbounce[CSGO](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
 	preventpropcombine[CSGO](boolean) : "Disable Prop Combine" : 0 : "Prevent this static prop from combining with any other static props in vbsp."
 	uniformscale[CSGO](float) : "Uniform Scale Override" : 1 : "Resize the static prop."

@@ -1,18 +1,18 @@
 
 @SolidClass base(Trigger) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	line(255 255 255, targetname, filtername) 
 	line(255 255 0, targetname, target) 
 	line(0 255 0, target, landmark) = trigger_teleport: "A trigger volume that teleports entities that touch it. Entities are teleported to the Remote Destination, and have their angles set to that of the Remote Destination's. If a Local Destination Landmark is specified, teleported entities are offset from the target by their initial offset from the landmark, and their angles are left alone."
 	[
 	target(target_destination) : "Remote Destination" : : "The entity specifying the point to which entities should be teleported."
 	landmark(target_destination) : "Local Destination Landmark" : : "If specified, then teleported entities are offset from the target by their initial offset from the landmark."
-	spawnflags[!CSGO, !ASW, !P2](flags) : "spawnflags" =
+	spawnflags[!P2, !ASW, !CSGO](flags) : "spawnflags" =
 		[
 		32: "Preserve angles even when a local landmark is not specified" : 0
 		]
 
-	uselandmarkangles[ASW, !TF2](boolean) : "Use Landmark Angles" : 0 : "Forces the teleported object to snap to the angles of the destination landmark."
+	uselandmarkangles[!TF2, ASW](boolean) : "Use Landmark Angles" : 0 : "Forces the teleported object to snap to the angles of the destination landmark."
 	checkdestifclearforplayer[CSGO](boolean) : "Only Spawn-Valid Destinations" : 0 : "Only teleport if there is a clear teleport destination."
 
 	// Inputs

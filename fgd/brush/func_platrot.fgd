@@ -1,6 +1,6 @@
 
 @SolidClass base(Targetname, Parentname, Origin, Angles, RenderFields, BasePlat, Shadow, Reflection, compMinLight) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = func_platrot: "A brush entity that moves vertically, and can rotate while doing so."
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = func_platrot: "A brush entity that moves vertically, and can rotate while doing so."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

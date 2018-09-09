@@ -1,6 +1,6 @@
 
 @SolidClass base(Trigger) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	line(255 255 255, targetname, filtername) 
 	line(255 255 255, targetname, measuretarget) 
 	sphere(radius) = trigger_proximity: "Measures the distance of the player within the trigger volume from a given point (and within a given radius). The NearestPlayerDistance output will be 0 when the player is at the center point, and 1 when the player is at the radius."

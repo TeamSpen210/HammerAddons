@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, Parentname, Angles, Reflection) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	studio("models/editor/cone_helper.mdl") 
 	line(255 255 255, targetname, cpoint1) 
 	line(255 255 255, targetname, cpoint2) 
@@ -76,7 +76,7 @@
 		]
 
 	start_active[ASW](boolean) : "Start Active?" : 0
-	flag_as_weather[!CSGO, !ASW, !P2](choices) : "Flag as Weather?" : "0" : "Is this particle system going to be used as a weather effect?" =
+	flag_as_weather[!P2, !ASW, !CSGO](choices) : "Flag as Weather?" : "0" : "Is this particle system going to be used as a weather effect?" =
 		[
 		0: "No"
 		1: "Yes"
@@ -163,6 +163,6 @@
 	// Inputs
 	input Start(void) : "Tell the particle system to start emitting."
 	input Stop(void) : "Tell the particle system to stop emitting."
-	input StopPlayEndCap[ASW, !TF2](void) : "Tell the particle system to stop emitting and play its End Cap Effect."
-	input DestroyImmediately[ASW, !TF2](void) : "Destroy the particle system and remove all particles immediately."
+	input StopPlayEndCap[!TF2, ASW](void) : "Tell the particle system to stop emitting and play its End Cap Effect."
+	input DestroyImmediately[!TF2, ASW](void) : "Destroy the particle system and remove all particles immediately."
 	]

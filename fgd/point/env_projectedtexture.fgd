@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, Parentname, Angles, SystemLevelChoice) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	size(-2 -2 -2, 2 2 2) 
 	frustum(lightfov, nearz, farz, lightcolor, -1) 
 	studio("models/editor/cone_helper.mdl") 
@@ -60,9 +60,9 @@
 	lightworld[P2](boolean) : "Light World" : 0 : "Control whether flashlight effects static world geometry."
 	lightcolor(color255) : "Light Color" : "255 255 255 200" : "Light Color RGB-Intensity"
 	cameraspace(integer) : "Camera Space" : 0 : "Angles are interpreted as being relative to camera."
-	brightnessscale[ASW, !TF2](float) : "Brightness Scale" : 1.0 : "Scale the light color by this brightness"
-	colortransitiontime[ASW, !TF2](float) : "Color Transition Time" : 0.5 : "Amount of time it takes for a color change to occur."
-	texturename[ASW, !TF2](material) : "Texture Name" : "effects/flashlight001"
+	brightnessscale[!TF2, ASW](float) : "Brightness Scale" : 1.0 : "Scale the light color by this brightness"
+	colortransitiontime[!TF2, ASW](float) : "Color Transition Time" : 0.5 : "Amount of time it takes for a color change to occur."
+	texturename[!TF2, ASW](material) : "Texture Name" : "effects/flashlight001"
 	texturename[!TF2, P2](material) : "Texture Name" : "effects/flashlight001" : "VTF Texture to 'project' onto the enviroment."
 	style[!TF2, P2](choices) : "Appearance" : "0" =
 		[
@@ -87,14 +87,14 @@
 	input TurnOn(void) : "Turn on the texture"
 	input TurnOff(void) : "Turn off the texture"
 	input SetFOV[!P2](float) : "Set FOV"
-	input AlwaysUpdateOn[ASW, !TF2](void) : "Turn on per frame updating (for moving lights)"
-	input AlwaysUpdateOff[ASW, !TF2](void) : "Turn off per frame updating (for moving lights)"
-	input SpotlightTexture[!CSGO, ASW, !P2, !TF2](string) : "Set the spotlight texture"
-	input EnableShadows[ASW, !TF2](boolean) : "Set the if shadows are enabled"
-	input LightColor[ASW, !TF2](color255) : "Change the light color/brightness"
-	input FOV[!CSGO, !TF2, P2](float) : "Set FOV of projection."
+	input AlwaysUpdateOn[!TF2, ASW](void) : "Turn on per frame updating (for moving lights)"
+	input AlwaysUpdateOff[!TF2, ASW](void) : "Turn off per frame updating (for moving lights)"
+	input SpotlightTexture[!TF2, ASW, !CSGO, !P2](string) : "Set the spotlight texture"
+	input EnableShadows[!TF2, ASW](boolean) : "Set the if shadows are enabled"
+	input LightColor[!TF2, ASW](color255) : "Change the light color/brightness"
+	input FOV[!TF2, P2, !CSGO](float) : "Set FOV of projection."
 	input SetLightStyle[!TF2, P2](integer) : "Change the lightstyle (see Appearance field for possible values)."
 	input SetPattern[!TF2, P2](string) : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
-	input SetNearZ[!CSGO, !TF2, P2](float) : "Sets the near Z distance."
-	input SetFarZ[!CSGO, !TF2, P2](float) : "Sets the far Z distance."
+	input SetNearZ[!TF2, P2, !CSGO](float) : "Sets the near Z distance."
+	input SetFarZ[!TF2, P2, !CSGO](float) : "Sets the far Z distance."
 	]

@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, Parentname, RenderFxChoices) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	size(-4 -4 -4, 4 4 4) 
 	line(255 255 255, targetname, LightningStart, targetname, LightningEnd) 
 	cylinder(255 255 255, targetname, LightningStart, Radius, targetname, LightningEnd, Radius) 
@@ -54,9 +54,9 @@
 
 	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator triggers me. See filter_activator_name for more explanation."
 	filtername[P2](filterclass) : "Filter Name" : : "Filter to use to determine what triggers the output."
-	targetpoint[ASW, !TF2](vecline) : "Endpoint handle" : "0 0 0" : "If a LightningEnd entity is not specified, use this point as the destination instead. If the env_beam moves, the destination point will move along with it."
+	targetpoint[!TF2, ASW](vecline) : "Endpoint handle" : "0 0 0" : "If a LightningEnd entity is not specified, use this point as the destination instead. If the env_beam moves, the destination point will move along with it."
 	targetpoint[!TF2, P2](vecline) : "Ending Location" : "0 0 0" : "If an Ending Entity is not specified, use this point as the destination instead. It is relative to the beam origin."
-	clipstyle[ASW, !TF2](choices) : "Beam clipping" : "0" : "Select whether you want the beam to clip against geometry or characters" =
+	clipstyle[!TF2, ASW](choices) : "Beam clipping" : "0" : "Select whether you want the beam to clip against geometry or characters" =
 		[
 		0: "Do not clip (default)"
 		1: "Clip to geometry"

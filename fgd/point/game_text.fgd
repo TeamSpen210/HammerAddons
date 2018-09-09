@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, MasterEnt) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	iconsprite("editor/game_text.vmt") 
 	color(200 0 0) = game_text: "An entity that displays text on player's screens."
 	[
@@ -37,9 +37,9 @@
 
 	// Inputs
 	input Display(void) : "Display the message text."
-	input SetText[ASW, !TF2](string) : "Set the text to display."
-	input SetPosX[!CSGO, !TF2, P2](float) : "Set the X position of the text. (0 - 1.0 = left to right) (-1 centers)"
-	input SetPosY[!CSGO, !TF2, P2](float) : "Set the Y position of the text. (0 - 1.0 = top to bottom) (-1 centers)"
-	input SetTextColor[!CSGO, !TF2, P2](color255) : "Set color of the front text."
-	input SetTextColor2[!CSGO, !TF2, P2](color255) : "Set color of the transition text."
+	input SetText[!TF2, ASW](string) : "Set the text to display."
+	input SetPosX[!TF2, P2, !CSGO](float) : "Set the X position of the text. (0 - 1.0 = left to right) (-1 centers)"
+	input SetPosY[!TF2, P2, !CSGO](float) : "Set the Y position of the text. (0 - 1.0 = top to bottom) (-1 centers)"
+	input SetTextColor[!TF2, P2, !CSGO](color255) : "Set color of the front text."
+	input SetTextColor2[!TF2, P2, !CSGO](color255) : "Set color of the transition text."
 	]

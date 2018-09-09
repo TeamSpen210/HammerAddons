@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, Parentname, Angles) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	size(-8 -8 -8, 8 8 8) = env_particlescript: "An entity that has special animation events that can be fired by a model with an animation inside its .qc designed foruse by this entity."
 	[
 	model(studio) : "Script Model" : "models/Ambient_citadel_paths.mdl" : "Model to use for animation sequences."

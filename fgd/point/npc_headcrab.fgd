@@ -1,6 +1,6 @@
 
 @NpcClass base(BaseHeadcrab, Parentname) 
-	appliesto(EP1, EP2, HL2, ASW) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio("models/Headcrabclassic.mdl") = npc_headcrab: "Headcrab"
 	[
 	]

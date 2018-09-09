@@ -1,6 +1,6 @@
 
 @PointClass 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	iconsprite("editor/logic_auto.vmt") 
 	color(0 100 250) = logic_auto: "Fires outputs when a map spawns. If 'Remove on fire' flag is set the logic_auto is deleted after firing. It can be set to check a global state before firing. This allows you to only fire events based on what took place in a previous map."
 	[

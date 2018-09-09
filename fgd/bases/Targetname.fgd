@@ -1,10 +1,10 @@
 
 @BaseClass 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = Targetname
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = Targetname
 	[
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	vscripts[ASW, !TF2](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
-	thinkfunction[ASW, !TF2](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
+	vscripts[!TF2, ASW](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
+	thinkfunction[!TF2, ASW](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
 
 	// Inputs
 	input Kill(void) : "Removes this entity from the world."
@@ -17,12 +17,12 @@ or 'keyvalue newval'. Very dangerous, use with care."
 	input FireUser2(void) : "Causes this entity's OnUser2 output to be fired."
 	input FireUser3(void) : "Causes this entity's OnUser3 output to be fired."
 	input FireUser4(void) : "Causes this entity's OnUser4 output to be fired."
-	input RunScriptFile[ASW, !TF2](script) : "Execute a game script file from disk"
+	input RunScriptFile[!TF2, ASW](script) : "Execute a game script file from disk"
 	input RunScriptFile[!TF2, P2](string) : "Execute a game script file from disk."
-	input RunScriptCode[ASW, !TF2](string) : "Execute a string of script source code"
+	input RunScriptCode[!TF2, ASW](string) : "Execute a string of script source code"
 	input RunScriptCode[!TF2, P2](string) : "Execute a string of script source code."
-	input CallScriptFunction[!CSGO, ASW, !TF2](string) : "Call a named function from this entity's Activation Script"
-	input CallScriptFunction[!CSGO, !TF2, P2](string) : "Execute the given function name."
+	input CallScriptFunction[!TF2, ASW, !CSGO](string) : "Call a named function from this entity's Activation Script"
+	input CallScriptFunction[!TF2, P2, !CSGO](string) : "Execute the given function name."
 
 	// Outputs
 	output OnUser1(void) : "Fired in response to FireUser1 input."

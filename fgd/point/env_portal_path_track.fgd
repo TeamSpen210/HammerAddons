@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, Parentname, Angles) 
-	appliesto(P2) 
+	appliesto(P1, P2) 
 	cylinder(255 255 255, targetname, target, radius, targetname, targetname, radius) 
 	color(255 192 0) 
 	size(16 16 16) = env_portal_path_track: "An entity used to build paths for other entities to follow. Each path_track is a node on the path, each holding the name of the next path_track in the path."

@@ -17,7 +17,7 @@
 	height[P2](integer) : "Panel Height in World (Blue)" : 128 : "Height of the panel in units."
 	stretch[P2](boolean) : "Stretch to Fill" : 0
 	forcedslave[P2](boolean) : "Forced slave" : 0
-	forceprecache[!CSGO, P2](boolean) : "Force precache" : 0 : "Precache the movie referred to by Movie Filename on entity spawn."
+	forceprecache[P2, !CSGO](boolean) : "Force precache" : 0 : "Precache the movie referred to by Movie Filename on entity spawn."
 
 	// Inputs
 	input Enable(void) : "Make movie visible."

@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P2) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	color(0 0 255) 
 	iconsprite("editor/choreo_manager.vmt") 
 	color(240 180 250) 

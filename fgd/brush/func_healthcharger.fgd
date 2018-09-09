@@ -1,6 +1,6 @@
 
 @SolidClass base(EnableDisable, Parentname, Origin, Global) 
-	appliesto(EP1, EP2, HL2, ASW) = func_healthcharger: "Wall health recharger"
+	appliesto(EP1, EP2, HL2, P1, ASW) = func_healthcharger: "Wall health recharger"
 	[
 	_minlight(string) : "Minimum light level"
 

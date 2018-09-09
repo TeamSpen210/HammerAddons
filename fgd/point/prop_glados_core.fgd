@@ -1,8 +1,9 @@
 
 @PointClass base(BasePropPhysics) 
-	appliesto(P2) 
+	appliesto(P1, P2) 
 	studioprop() 
-	studioprop("models/npcs/personality_sphere/personality_sphere.mdl") = prop_glados_core: "The P1 personality cores for GlaDOS. Resemble little eyeballs with handles. These play lines and look around when near the player. All lines and models would need to be ported for this to work correctly."
+	studio("models/props_bts/glados_ball_reference.mdl") 
+	studioprop("models/npcs/personality_sphere/personality_sphere.mdl") = prop_glados_core: "Core of GlaDOS computer.|||The P1 personality cores for GlaDOS. Resemble little eyeballs with handles. These play lines and look around when near the player. All lines and models would need to be ported for this to work correctly."
 	[
 	coretype(choices) : "Core Personality" : "1" : "Which personality VO set the core is set to." =
 		[

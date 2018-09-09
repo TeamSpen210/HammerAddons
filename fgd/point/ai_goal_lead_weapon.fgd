@@ -1,6 +1,6 @@
 
 @PointClass base(LeadGoalBase) 
-	appliesto(ASW, EP1, EP2, HL2, P2) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	iconsprite("editor/ai_goal_lead.vmt") = ai_goal_lead_weapon: "AI Goal Lead (Weapon). A version of the ai_goal_lead entity that requires the player to have the specified weapon before the Actor(s) will lead the player to their target."
 	[
 	weaponname(choices) : "Weapon" : "weapon_bugbait" =

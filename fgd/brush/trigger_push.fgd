@@ -1,6 +1,6 @@
 
 @SolidClass base(Trigger) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	line(255 255 255, targetname, filtername) = trigger_push: "A trigger volume that pushes entities that touch it."
 	[
 	pushdir(angle) : "Push Direction (Pitch Yaw Roll)" : "0 0 0" : "Angles indicating the direction to push touched entities."
@@ -14,5 +14,5 @@
 	alternateticksfix(float) : "Scale force for alternate ticks" : 0 : "If nonzero, scale the force by this amount when running with alternate ticks. This fixes problems with an overly large force due to the longer frametime on when running with sv_alternateticks 1."
 
 	// Inputs
-	input SetPushDirection[ASW, !TF2](vector) : "Sets the angles indicating the direction to push touched entities."
+	input SetPushDirection[!TF2, ASW](vector) : "Sets the angles indicating the direction to push touched entities."
 	]

@@ -1,6 +1,6 @@
 
 @SolidClass base(BaseTank) 
-	appliesto(ASW, EP1, EP2, HL2, P2, CSGO) = func_tank: "Brush Gun Turret"
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, CSGO) = func_tank: "Brush Gun Turret"
 	[
 	ammotype(choices) : "Ammo type" =
 		[

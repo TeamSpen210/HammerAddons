@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, DamageFilter) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	size(-8 -8 -8, 8 8 8) 
 	color(200 0 0) 
 	iconsprite("editor/logic_playerproxy.vmt") = logic_playerproxy: "An entity that is used to relay inputs/ouputs to the player and back to the world."
@@ -32,8 +32,8 @@
 	output PlayerHasAmmo(void) : "Fired by request if the player has any ammo."
 	output PlayerHasNoAmmo(void) : "Fired by request if the player doesn't have any ammo."
 	output PlayerDied(void) : "Fires when the player dies."
-	output OnStartSlowingTime[ASW, !TF2](void) : "Fired when a Portal player initiates slow time."
-	output OnStopSlowingTime[ASW, !TF2](void) : "Fired when a Portal player stops slowing time."
+	output OnStartSlowingTime[!TF2, ASW](void) : "Fired when a Portal player initiates slow time."
+	output OnStopSlowingTime[!TF2, ASW](void) : "Fired when a Portal player stops slowing time."
 	output OnPrimaryPortalPlaced[!TF2, P2](void) : "Fired when a Portal player successfully places the primary portal."
 	output OnSecondaryPortalPlaced[!TF2, P2](void) : "Fired when a Portal player successfully places the secondary portal."
 	output OnDuck[!TF2, P2](void) : "Fired when a player starts to duck."

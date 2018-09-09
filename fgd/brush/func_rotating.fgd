@@ -1,6 +1,6 @@
 
 @SolidClass base(Targetname, Parentname, Origin, Angles, RenderFields, Shadow, Reflection, compMinLight) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = func_rotating: "A rotating brush entity."
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = func_rotating: "A rotating brush entity."
 	[
 	maxspeed(integer) : "Max Rotation Speed" : 100 : "The maximum rotation speed of the brushes, in degrees per second."
 	fanfriction(integer) : "Friction (0 - 100%)" : 20 : "The amount of rotational friction. Value must be between 0 and 100 %."

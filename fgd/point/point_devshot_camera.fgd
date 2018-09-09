@@ -1,6 +1,6 @@
 
 @PointClass base(Angles) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	studioprop("models/editor/camera.mdl") 
 	iconsprite("editor/point_devshot_camera.vmt") 
 	frustum(fov, 16, 256, 255 255 255 10, -1) = point_devshot_camera: "An entity used by the -makedevshots system, which automatically takes screenshots at the position of every devshot camera in the level."

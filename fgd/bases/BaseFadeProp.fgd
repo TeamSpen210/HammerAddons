@@ -1,6 +1,6 @@
 
 @BaseClass 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = BaseFadeProp
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = BaseFadeProp
 	[
 	fademindist(float) : "Start Fade Dist" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist)."
 	fademaxdist(float) : "End Fade Dist" : 0 : "Max fade distance at which the prop is visible (0 = don't fade out)"

@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, Parentname, EnableDisable) 
-	appliesto(ASW, EP1, EP2, HL2, CSGO) = env_gunfire: "Gunfire Effect"
+	appliesto(ASW, EP1, EP2, HL2, P1, CSGO) = env_gunfire: "Gunfire Effect"
 	[
 	target(target_destination) : "Target" : : "Shoot at this target. REMEMBER - this is an effect only! It does not do damage!"
 	target[CSGO](target_destination) : "Target" : : "Shoot at this target."

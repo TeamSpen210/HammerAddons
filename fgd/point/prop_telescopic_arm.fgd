@@ -1,13 +1,15 @@
 
 @PointClass base(Targetname, Angles, Studiomodel) 
-	appliesto(P2) 
-	studioprop() = prop_telescopic_arm: "Telescopic Arm. Useless."
+	appliesto(P1, P2) 
+	studio("models/props/telescopic_arm.mdl") 
+	studioprop() = prop_telescopic_arm: "Telescopic Arm|||Telescopic Arm. Useless."
 	[
 
 	// Inputs
 	input Enable(void) : "Enable Thumper"
 	input Disable(void) : "Disable Thumper"
-	input SetTarget(target_destination) : "Set the entity to target."
+	input SetTarget(string) : "Set the entity to target."
+	input SetTarget[P2](target_destination) : "Set the entity to target."
 	input TargetPlayer(void) : "Set the player as the entity to target."
 
 	// Outputs

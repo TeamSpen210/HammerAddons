@@ -1,6 +1,6 @@
 
 @NpcClass base(BaseNPC, RappelNPC) 
-	appliesto(EP1, EP2, HL2, ASW) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio("models/Police.mdl") = npc_metropolice: "MetroPolice"
 	[
 	additionalequipment(choices) : "Weapons" : "weapon_pistol" =

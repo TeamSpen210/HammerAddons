@@ -1,6 +1,6 @@
 
 @NpcClass base(Parentname, BaseNPC, BaseLogicalNPC) 
-	appliesto(ASW, EP1, EP2, HL2, P2) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	iconsprite("editor/bullseye.vmt") 
 	color(255 0 0) = npc_bullseye: "Bullseye|||Dummy NPC for targeting or other behavior."
 	[

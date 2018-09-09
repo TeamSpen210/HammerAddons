@@ -1,6 +1,6 @@
 
 @PointClass base(Angles, Targetname, Studiomodel, DXLevelChoice, BaseFadeProp, EnableDisable, SystemLevelChoice) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	sphere(fademindist) 
 	sphere(fademaxdist) 
 	studioprop() = prop_ragdoll: "A prop that physically simulates and can be articulated with internal joints. The joint constraints are part of the physics model."

@@ -1,6 +1,6 @@
 
 @NpcClass base(Parentname, BaseNPC) 
-	appliesto(EP1, EP2, HL2, ASW) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
 	size(-16 -16 -16, 16 16 16) 
 	color(255 150 0) = npc_enemyfinder_combinecannon: "EnemyFinder Specifically for use with func_tank_combine_cannon"
 	[

@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	iconsprite("editor/ambient_generic.vmt") 
 	sphere() 
 	line(255 255 0, targetname, sourceEntityName) 
@@ -121,8 +121,8 @@
 
 	sourceentityname(target_destination) : "SourceEntityName" : : "If an entity is specified, sound will come from this named entity instead of the location of ambient_generic."
 	sourceentityname[P2](target_destination) : "Source Entity" : : "If an entity is specified, sound will come from this named entity instead of the location of ambient_generic."
-	scenefile[!CSGO, !TF2, P2](scene) : "[H] Choreo" : : "Use to allow keeping the sound name when switching between ambient_generic and logic_choreographed_scene."
-	null[!CSGO, !TF2, P2](string) : "-----------------------" : : "More complex values below."
+	scenefile[!TF2, P2, !CSGO](scene) : "[H] Choreo" : : "Use to allow keeping the sound name when switching between ambient_generic and logic_choreographed_scene."
+	null[!TF2, P2, !CSGO](string) : "-----------------------" : : "More complex values below."
 
 	// Inputs
 	input Pitch(integer) : "Sets the sound pitch, expressed as a range from 1 to 255, where 100 is the sound's default pitch."

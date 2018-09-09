@@ -1,6 +1,6 @@
 
 @PointClass base(BaseActBusy) 
-	appliesto(ASW, EP1, EP2, HL2, P2) = ai_goal_actbusy: "AI Goal Act Busy"
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) = ai_goal_actbusy: "AI Goal Act Busy"
 	[
 	seeentity(target_name_or_class) : "Sight Entity" : : "The Sight Entity (if you provide one) is an entity that will leave the current ActBusy if the Actor playing the ActBusy loses sight of it for the amount of time specified in 'Sight Entity Timeout'. THIS MAY ONLY BE A TARGET NAME. NO CLASSNAMES."
 	seeentitytimeout(string) : "Sight Entity Timeout" : "1" : "If you provide a Sight Entity, the Actor will leave the current ActBusy if the Actor has lost sight of Sight Entity for this many seconds."

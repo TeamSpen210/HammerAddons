@@ -1,6 +1,6 @@
 
 @SolidClass base(Targetname, Parentname, Origin) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = func_water_analog: "A water brush entity that moves linearly along a given distance, in a given direction"
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = func_water_analog: "A water brush entity that moves linearly along a given distance, in a given direction"
 	[
 	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction the water will move, when told to 'Open'."
 	startposition(float) : "Start Position" : 0 : "Position of the water brush when spawned. The range is a value between 0.0 and 1.0, where 0 is the starting position and 1 is the starting position + (move direction * move distance)."

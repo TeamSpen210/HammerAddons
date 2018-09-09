@@ -1,6 +1,6 @@
 
 @PointClass 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	iconsprite("editor/info_no_dynamic_shadow.vmt") 
 	color(200 200 0) = info_no_dynamic_shadow: "Use this entity to mark surfaces that shouldn't receive dynamic shadows. Useful to apply to walls and floors where shadows are drawn improperly, giving away the location of enemies."
 	[

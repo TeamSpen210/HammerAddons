@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = game_weapon_manager: "An entity used to limit the number of a particular weapon type in the world. Useful in places where NPCs are spawning rapidly, dying, and dropping weapons."
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = game_weapon_manager: "An entity used to limit the number of a particular weapon type in the world. Useful in places where NPCs are spawning rapidly, dying, and dropping weapons."
 	[
 	weaponname(string) : "Weapon Classname" : : "Classname of the weapon type to limit."
 	maxpieces(integer) : "Max Allowed in Level" : 0 : "The maximum amount of the specified weapon type allowed in the world."

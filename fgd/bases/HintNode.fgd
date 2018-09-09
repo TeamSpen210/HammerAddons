@@ -1,6 +1,6 @@
 
 @BaseClass base(Node) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = HintNode
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = HintNode
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -161,8 +161,8 @@
 		3: "Combat"
 		]
 
-	generictype[ASW, !TF2](string) : "Generic Hint" : : "String identifying what the hint type is, if generic."
-	radius[ASW, !TF2](integer) : "Radius" : 0 : "How close an NPC must be to consider this hint. 0 means infinite."
+	generictype[!TF2, ASW](string) : "Generic Hint" : : "String identifying what the hint type is, if generic."
+	radius[!TF2, ASW](integer) : "Radius" : 0 : "How close an NPC must be to consider this hint. 0 means infinite."
 
 	// Inputs
 	input EnableHint(void) : "Enable hint."

@@ -8,11 +8,11 @@
 
 	// Inputs
 	input ProxyRelay(string) : "This message will get relayed and will be available from the instance."
-	input ProxyRelay1[!CSGO, P2](string) : "Added by the compiler, this is used internally to connect the outputs."
-	input ProxyRelay2[!CSGO, P2](string) : "Added by the compiler, this is used internally to connect the outputs."
-	input ProxyRelay3[!CSGO, P2](string) : "Added by the compiler, this is used internally to connect the outputs."
-	input ProxyRelay4[!CSGO, P2](string) : "Added by the compiler, this is used internally to connect the outputs."
-	input ProxyRelay5[!CSGO, P2](string) : "Added by the compiler, this is used internally to connect the outputs."
+	input ProxyRelay1[P2, !CSGO](string) : "Added by the compiler, this is used internally to connect the outputs."
+	input ProxyRelay2[P2, !CSGO](string) : "Added by the compiler, this is used internally to connect the outputs."
+	input ProxyRelay3[P2, !CSGO](string) : "Added by the compiler, this is used internally to connect the outputs."
+	input ProxyRelay4[P2, !CSGO](string) : "Added by the compiler, this is used internally to connect the outputs."
+	input ProxyRelay5[P2, !CSGO](string) : "Added by the compiler, this is used internally to connect the outputs."
 
 	// Outputs
 	output OnProxyRelay(void) : "A message from outside can trigger this to cause something to happen in the instance."

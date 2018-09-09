@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, Parentname, Angles) 
-	appliesto(ASW, EP1, EP2, HL2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, TF2, CSGO) 
 	size(-16 -16 0, 16 16 72) 
 	color(127 127 127) = func_ladderendpoint: "An entity used to specify the endpoints of a ladder. This entity is functional, but has been replaced by the easier-to-use func_useableladder entity. Left in only for backwards-compatibility!\n\nTo be valid, a full sized player hull traced between the start and end points must not be obstructed at level activation time. The angle determines in which direction the player leaves the ladder if the player presses the +jump button.\n\nNote: This entity is non-functional in Counter-Strike: Source. In CS:S, use func_ladder instead."
 	[

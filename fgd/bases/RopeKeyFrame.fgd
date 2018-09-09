@@ -1,6 +1,6 @@
 
 @BaseClass base(DXLevelChoice, SystemLevelChoice, Angles) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = RopeKeyFrame
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = RopeKeyFrame
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -47,7 +47,7 @@
 
 	breakable[ASW](boolean) : "Breakable" : 0 : "When set to yes, the rope can be detached from either endpoint when shot."
 	ropematerial(material) : "Rope Material" : "cable/cable.vmt" : "The material to use when rendering the rope."
-	nowind[!CSGO, !ASW, !P2](choices) : "Disable Wind" : "0" : "When set to Yes, the rope will no longer act as though it's being affected by wind." =
+	nowind[!P2, !ASW, !CSGO](choices) : "Disable Wind" : "0" : "When set to Yes, the rope will no longer act as though it's being affected by wind." =
 		[
 		0: "No"
 		1: "Yes"

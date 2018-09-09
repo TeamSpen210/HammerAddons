@@ -1,6 +1,6 @@
 
 @NpcClass base(BaseCombine) 
-	appliesto(EP1, EP2, HL2, ASW) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio("models/Combine_Soldier.mdl") = npc_combine_s: "Combine Soldier"
 	[
 	model(choices) : "Model" : "models/combine_soldier.mdl" : "Regular Soldier" =

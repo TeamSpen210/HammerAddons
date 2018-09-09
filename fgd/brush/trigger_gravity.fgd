@@ -1,6 +1,6 @@
 
 @SolidClass base(Trigger) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	line(255 255 255, targetname, filtername) = trigger_gravity: "A trigger volume that changes the gravity on any entity that touches it."
 	[
 	gravity(integer) : "Gravity (0-1)" : 1

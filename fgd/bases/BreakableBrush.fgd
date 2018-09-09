@@ -1,6 +1,6 @@
 
 @BaseClass base(Breakable, Parentname, Global) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = BreakableBrush
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = BreakableBrush
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

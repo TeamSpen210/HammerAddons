@@ -1,6 +1,6 @@
 
 @NpcClass base(TalkNPC) 
-	appliesto(EP1, EP2, HL2, ASW) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio("models/Monk.mdl") = npc_monk: "Monk"
 	[
 	additionalequipment(choices) : "Weapons" : "weapon_annabelle" =

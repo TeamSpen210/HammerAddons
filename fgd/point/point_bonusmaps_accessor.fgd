@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	size(-8 -8 -8, 8 8 8) 
 	color(200 0 0) = point_bonusmaps_accessor: "An entity that relays bonus maps changes."
 	[

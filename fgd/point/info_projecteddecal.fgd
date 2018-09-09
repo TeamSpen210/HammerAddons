@@ -1,6 +1,6 @@
 
 @PointClass base(Angles, Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	decal() 
 	studio("models/editor/axis_helper_thick.mdl") 
 	sphere(distance) = info_projecteddecal: "An entity that projects a decal onto the world (or props). If the decal has no target name, it will immediately apply itself when the level is loaded. If it has a name specified, it won't apply until it receives the 'Activate' input."

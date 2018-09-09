@@ -1,6 +1,6 @@
 
 @NpcClass base(BaseNPC, TalkNPC, PlayerCompanion) 
-	appliesto(EP1, EP2, HL2, ASW) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio() = npc_vortigaunt: "Vortigaunt"
 	[
 	model(studio) : "World model" : "models/vortigaunt.mdl"

@@ -1,6 +1,6 @@
 
 @SolidClass base(BaseTank) 
-	appliesto(EP1, EP2, HL2, ASW) = func_tankphyscannister: "PhysCannister Turret"
+	appliesto(EP1, EP2, HL2, P1, ASW) = func_tankphyscannister: "PhysCannister Turret"
 	[
 	barrel_volume(target_destination) : "Barrel Volume" : : "Name of a trigger the specifies the volume in which cannisters must be placed."
 	]

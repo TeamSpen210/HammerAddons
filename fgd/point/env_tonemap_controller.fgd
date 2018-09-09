@@ -1,10 +1,10 @@
 
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	iconsprite("editor/env_tonemap_controller.vmt") 
 	color(200 0 0) = env_tonemap_controller: "An entity that controls the HDR tonemapping for the player. Think of it as a method of controlling the exposure of the player's eyes."
 	[
-	spawnflags[!CSGO, !TF2, P2](flags) : "spawnflags" =
+	spawnflags[!TF2, P2, !CSGO](flags) : "spawnflags" =
 		[
 		1: "Master (Has priority if multiple env_tonemap_controllers exist)" : 0
 		]

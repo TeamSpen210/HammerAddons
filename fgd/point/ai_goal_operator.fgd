@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, EnableDisable) 
-	appliesto(EP1, EP2, HL2, ASW) = ai_goal_operator: "Indicates items in the world that some NPCs may operate upon"
+	appliesto(EP1, EP2, HL2, P1, ASW) = ai_goal_operator: "Indicates items in the world that some NPCs may operate upon"
 	[
 	actor(target_name_or_class) : "Actor to affect" : : "NPC that should perform this operation"
 	target(target_destination) : "Position entity" : : "Name of the entity that the NPC should move to in order to perform the operation."

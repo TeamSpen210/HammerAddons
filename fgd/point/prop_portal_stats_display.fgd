@@ -1,7 +1,8 @@
 
 @PointClass base(Targetname, Angles, Parentname, Global) 
-	appliesto(P2) 
-	studioprop("models/props/Round_elevator_body.mdl") = prop_portal_stats_display: "Portal Stats Display. For P1's challenge mode."
+	appliesto(P1, P2) 
+	studio("models/props/Round_elevator_body.mdl") 
+	studioprop("models/props/Round_elevator_body.mdl") = prop_portal_stats_display: "Portal Stats Display|||Portal Stats Display. For P1's challenge mode."
 	[
 
 	// Inputs

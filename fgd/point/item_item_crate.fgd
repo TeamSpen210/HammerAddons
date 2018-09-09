@@ -1,6 +1,6 @@
 
 @PointClass base(BasePropPhysics, Targetname, Angles, DamageFilter, BaseFadeProp) 
-	appliesto(EP1, EP2, HL2, ASW) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio("models/items/item_item_crate.mdl") = item_item_crate: "Item Crate"
 	[
 	cratetype(choices) : "Crate Contains" : "0" =

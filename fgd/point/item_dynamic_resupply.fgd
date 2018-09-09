@@ -1,6 +1,6 @@
 
 @PointClass base(Item) 
-	appliesto(EP1, EP2, HL2, ASW) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio("models/items/healthkit.mdl") = item_dynamic_resupply: "A dynamic item. When the player enters the PVS of this entity, it will determine the item most needed by the player, spawn one of those items, and remove itself. To determine which item the player most needs, it calculates which of the Desired Health/Armor/Ammo ratios the player is farthest from.\n\nIf the player is above all the desired levels, then no item will be spawned, unless this item_dynamic_resupply was created by an item_item_crate. In that case, a random piece of ammo used by a weapon, that the player has, will be spawned. If the 'Fallback to Health Vial' spawnflag is set, a health vial will be spawned instead of the ammo.\n\nBy default, the item_dynamic_resupply uses the values inside the Master resupply, instead of using it's own values. This makes it easy to tweak the desired loadout of many resupplies. The BecomeMaster input allows you to switch Masters dynamically as the level progresses."
 	[
 	spawnflags(flags) : "spawnflags" =

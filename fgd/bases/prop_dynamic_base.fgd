@@ -1,6 +1,6 @@
 
 @BaseClass base(Parentname, Global, Angles, Studiomodel, BreakableProp, DXLevelChoice, BaseFadeProp, RenderFields, SystemLevelChoice, Shadow) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = prop_dynamic_base
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = prop_dynamic_base
 	[
 	solid(choices) : "Collisions" : "6" =
 		[
@@ -35,9 +35,9 @@
 
 	disablebonefollowers[ASW](boolean) : "Disable Bone Followers" : 0 : "If set, the prop will not use bone followers, even if it has them defined."
 	lightingorigin(target_destination) : "Lighting Origin" : : "Select a path_corner entity to specify a location to sample lighting from, instead of using this entity's origin."
-	holdanimation[ASW, !TF2](boolean) : "Hold Animation" : 0 : "If set, the prop will not loop its animation, but hold the last frame."
-	rendercolor[ASW, !TF2](color255) : "Color (R G B)" : "255 255 255"
-	suppressanimsounds[!CSGO, !TF2, P2](boolean) : "Suppress Anim Sounds" : 0 : "If set, the prop will not play any sounds that are embedded in animations it plays."
+	holdanimation[!TF2, ASW](boolean) : "Hold Animation" : 0 : "If set, the prop will not loop its animation, but hold the last frame."
+	rendercolor[!TF2, ASW](color255) : "Color (R G B)" : "255 255 255"
+	suppressanimsounds[!TF2, P2, !CSGO](boolean) : "Suppress Anim Sounds" : 0 : "If set, the prop will not play any sounds that are embedded in animations it plays."
 	is_autoaim_target[CSGO](boolean) : "Is Autoaim Target" : 0 : "If set, this prop will use the autoaim feature on consoles (slower look movement when this prop is directly under the crosshair)."
 
 	// Inputs
@@ -49,7 +49,7 @@
 	input TurnOff(void) : "Make the prop invisible."
 	input EnableCollision(void) : "Enable collision on the prop."
 	input DisableCollision(void) : "Disable collision on the prop."
-	input SetAnimationNoReset[ASW, !TF2](string) : "Force the prop to play an animation unless the prop is already playing the animation. The parameter should be the name of the animation."
+	input SetAnimationNoReset[!TF2, ASW](string) : "Force the prop to play an animation unless the prop is already playing the animation. The parameter should be the name of the animation."
 	input BecomeRagdoll[!TF2, P2](void) : "Change into a ragdoll immediately."
 	input FadeAndKill[!TF2, P2](void) : "Fade out then remove this prop."
 

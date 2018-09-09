@@ -1,6 +1,6 @@
 
 @FilterClass base(BaseFilter) 
-	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	color(0 255 0) 
 	iconsprite("editor/filter_damage_type.vmt") = filter_damage_type: "A damage filter that filters by the type of damage inflicted. This can only be used as a damage filter, not as an activator filter."
 	[

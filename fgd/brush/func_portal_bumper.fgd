@@ -1,6 +1,6 @@
 
 @SolidClass base(Targetname, Parentname, Origin) 
-	appliesto(P2) = func_portal_bumper: "A region which 'bumps' portals outside of it, but will still allow portals to be placed on it."
+	appliesto(P1, P2) = func_portal_bumper: "A region that portals trace to fit outside of but can be place on|||A region which 'bumps' portals outside of it, but will still allow portals to be placed on it."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
