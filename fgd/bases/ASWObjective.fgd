@@ -1,6 +1,5 @@
 
-@BaseClass 
-	appliesto(ASW) = ASWObjective
+@BaseClass = ASWObjective
 	[
 	objectivedescription1(string) : "Objective Description Line 1" : : "First 255 characters of the detail description for this objective"
 	objectivedescription2(string) : "Objective Description Line 2" : : "Second 255 characters of the detail description for this objective"

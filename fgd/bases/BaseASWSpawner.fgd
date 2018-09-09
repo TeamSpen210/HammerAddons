@@ -1,18 +1,10 @@
 
 @BaseClass 
-	appliesto(ASW) = BaseASWSpawner
+line(255 255 255, targetname, alienordertargetname) = BaseASWSpawner
 	[
-	spawnifmarinesarenear(choices) : "Allow spawn if marines are near" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	spawnifmarinesarenear(boolean) : "Allow spawn if marines are near" : 0
 
-	startburrowed(choices) : "Start Burrowed" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	startburrowed(boolean) : "Start Burrowed" : 0
 
 	unburrowidleactivity(string) : "Unburrow Idle Activity" : : "If alien starts burrowed, he'll play this activity while waiting for the burrow point to be clear."
 	unburrowactivity(string) : "Unburrow Activity" : : "If alien starts burrowed, he'll play this activity while unburrowing."
@@ -32,15 +24,26 @@
 		]
 
 	alienordertargetname(target_destination) : "Alien Orders Target Name" : : "Name of the target object for our orders (used by move to and move to ignoring marines orders)."
-	aliennametag(string) : "Name to give spawned aliens" : : "All aliens spawned by this spawner will be given this Name."
-	clearcheck(choices) : "Check Spawn Point Is Clear" : "1" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	minskilllevel(integer) : "Min Skill Level" : 0 : "The minimum skill level for this spawner to function.  Skill levels are: 1=easy 2=normal 3=hard 4=insane 5=imba"
-	maxskilllevel(integer) : "Max Skill Level" : 0 : "The maximum skill level for this spawner to function.  Skill levels are: 1=easy 2=normal 3=hard 4=insane 5=imba"
+	aliennametag(target_source) : "Name to give spawned aliens" : : "All aliens spawned by this spawner will be given this Name."
+	clearcheck(boolean) : "Check Spawn Point Is Clear" : 1
+	minskilllevel(choices) : "Min Skill Level" : 0 : "The minimum skill level for this spawner to function." = 
+	[
+		0: "0: None"
+		1: "1: Easy"
+		2: "2: Normal"
+		3: "3: Hard"
+		4: "4: Imsane"
+		5: "5: IMBA"
+	]
+	maxskilllevel(choices) : "Max Skill Level" : 0 : "The maximum skill level for this spawner to function." = 
+	[
+		0: "0: None"
+		1: "1: Easy"
+		2: "2: Normal"
+		3: "3: Hard"
+		4: "4: Imsane"
+		5: "5: IMBA"
+	]
 
 	// Inputs
 	input ToggleEnabled(void) : "Toggles the spawner between enabled and disabled."

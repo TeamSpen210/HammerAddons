@@ -1,53 +1,10 @@
 
-@BaseClass base(Targetname, Angles, RenderFields, DamageFilter, ResponseContext, Shadow, BaseLogicalNPC, ToggleDraw) 
+@BaseClass base(Targetname, Angles, RenderFields, DamageFilter, ResponseContext, Shadow, BaseLogicalNPC, ToggleDraw)
 	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	color(0 200 200) = BaseNPC
+	color(0 200 200) = BaseNPC: "Behaviour only applicable to visible NPCs."
 	[
 	target(target_destination) : "Target Path Corner" : : "If set, the name of a path corner entity that this NPC will walk to, after spawning."
-	squadname[!P2](string) : "Squad Name" : : "NPCs that are in the same squad (i.e. have matching squad names) will share information about enemies, and will take turns attacking and covering each other."
-	hintgroup[!P2](string) : "Hint Group" : : "Hint groups are used by NPCs to restrict their hint-node searching to a subset of the map's hint nodes. Only hint nodes with matching hint group names will be considered by this NPC."
-	hintlimiting[!P2](choices) : "Hint Limit Nav" : "0" : "Limits NPC to using specified hint group for navigation requests, but does not limit local navigation." =
-		[
-		0: "No"
-		1: "Yes"
-		]
 
-	hintlimiting[!P2, ASW](boolean) : "Hint Limit Nav" : 0 : "Limits NPC to using specified hint group for navigation requests, but does not limit local navigation."
-	spawnflags[!P2](flags) : "spawnflags" =
-		[
-		1: "Wait Till Seen" : 0
-		2: "Gag (No IDLE sounds until angry)" : 0
-		4: "Fall to ground (unchecked means *teleport* to ground)" : 1
-		8: "Drop Healthkit" : 0
-		16: "Efficient - Don't acquire enemies or avoid obstacles" : 0
-		128: "Wait For Script" : 0
-		256: "Long Visibility/Shoot" : 0
-		512: "Fade Corpse" : 1
-		1024: "Think outside PVS" : 0
-		2048: "Template NPC (used by npc_maker, will not spawn)" : 0
-		4096: "Do Alternate collision for this NPC (player avoidance)" : 0
-		8192: "Don't drop weapons" : 0
-		16384: "Ignore player push (dont give way to player)" : 0
-		]
-
-	sleepstate[!P2](choices) : "Sleep State" : "0" : "Holds the NPC in stasis until specified condition. See also 'Wake Radius' and 'Wake Squad'." =
-		[
-		0: "None"
-		1: "Waiting for threat"
-		2: "Waiting for PVS"
-		3: "Waiting for input, ignore PVS"
-		4: "Auto PVS"
-		5: "Auto PVS after PVS"
-		]
-
-	wakeradius[!P2](float) : "Wake Radius" : 0 : "Auto-wake if player within this distance"
-	wakesquad[!P2](choices) : "Wake Squad" : "0" : "Wake all of the NPCs squadmates if the NPC is woken" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	wakesquad[!P2, ASW](boolean) : "Wake Squad" : 0 : "Wake all of the NPCs squadmates if the NPC is woken"
 	enemyfilter[!P2](target_destination) : "Enemy Filter" : : "Filter by which to filter potential enemies"
 	ignoreunseenenemies[!P2](choices) : "Ignore unseen enemies" : "0" : "Prefer visible enemies, regardless of distance or relationship priority" =
 		[
@@ -56,53 +13,8 @@
 		]
 
 	ignoreunseenenemies[!P2, ASW](boolean) : "Ignore unseen enemies" : 0 : "Prefer visible enemies, regardless of distance or relationship priority"
-	physdamagescale[!P2](float) : "Physics Impact Damage Scale" : 1.0 : "Scales damage energy when this character is hit by a physics object. With a value of 0 the NPC will take no damage from physics."
-
+	
 	// Inputs
-	input SetRelationship[!P2](string) : "Changes this entity's relationship with another entity or class. Format: <entityname/classname> <D_HT/D_FR/D_LI/D_NU> <priority>"
-	input SetEnemyFilter[!P2](string) : "Changes this NPC's enemy filter to the named filter."
-	input SetHealth[!P2](integer) : "Set this NPC's health."
 	input SetBodyGroup(integer) : "HACK: Sets this NPC's body group (from 0 - n). You'd better know what you are doing!"
-	input physdamagescale[!P2](float) : "Sets the value that scales damage energy when this character is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility."
-	input Ignite[!P2](void) : "Ignite, burst into flames"
-	input IgniteLifetime[!P2](float) : "Ignite, with a parameter lifetime."
-	input IgniteNumHitboxFires[!P2](integer) : "Ignite, with a parameter number of hitbox fires."
-	input IgniteHitboxFireScale[!P2](float) : "Ignite, with a parameter hitbox fire scale."
-	input Break[!P2](void) : "Break, smash into pieces"
-	input StartScripting[!P2](void) : "Enter scripting state. In this state, NPCs ignore a variety of stimulus that would make them break out of their scripts: They ignore danger sounds, ignore +USE, don't idle speak or respond to other NPC's idle speech, and so on."
-	input StopScripting[!P2](void) : "Exit scripting state."
-	input SetSquad[!P2](string) : "Set the name of this NPC's squad. It will be removed from any existing squad automatically. Leaving the parameter blank will remove the NPC from any existing squad."
-	input Wake[!P2](void) : "Wakes up the NPC if it is sleeping."
-	input ForgetEntity[!P2](string) : "Clears out the NPC's knowledge of a named entity."
-	input GagEnable[!P2](void) : "Turn on the NPC Gag flag. NPC won't speak outside of choreographed scenes."
-	input GagDisable[!P2](void) : "Turn off the NPC Gag flag."
-	input IgnoreDangerSounds[!P2](float) : "Ignore danger sounds for the specified number of seconds."
-	input HolsterWeapon[!P2](void) : "Force the NPC to holster their weapon. Ignored if the NPC is scripting, if the NPC's weapon is already holstered, or if the NPC doesn't use weapons."
-	input HolsterAndDestroyWeapon[!P2](void) : "Identical to HolsterWeapon, except the weapon is destroyed once it has been holstered and concealed."
-	input UnholsterWeapon[!P2](void) : "Force the NPC to draw their weapon. Ignored if the NPC is scripting, if the NPC's weapon is already drawn, or if the NPC doesn't use weapons."
-	input ForceInteractionWithNPC[!P2](string) : "Force the NPC to use a dynamic interaction with another NPC. Parameter format: <target NPC name> <dynamic interaction name>"
-	input UpdateEnemyMemory[!P2](string) : "Update (or Create) this NPC's memory of an enemy and its location"
-	input BecomeRagdoll[!P2](void) : "This NPC will instantly become a ragdoll with ZERO force (just go limp). OnDeath, OnHalfHealth, etc. Outputs will **NOT** BE FIRED."
 
-	// Outputs
-	output OnDamaged[!P2](void) : "Fired when this NPC takes damage."
-	output OnDeath[!P2](void) : "Fired when this NPC is killed."
-	output OnHalfHealth[!P2](void) : "Fired when this NPC reaches half of its maximum health."
-	output OnHearWorld[!P2](void) : "Fired when this NPC hears a sound (other than combat or the player)."
-	output OnHearPlayer[!P2](void) : "Fired when this NPC hears the player."
-	output OnHearCombat[!P2](void) : "Fired when this NPC hears combat sounds."
-	output OnFoundEnemy[!P2](string) : "Fired when this NPC establishes line of sight to its enemy (outputs entity)."
-	output OnLostEnemyLOS[!P2](void) : "Fired when this NPC loses line of sight to its enemy."
-	output OnLostEnemy[!P2](void) : "Fired when this NPC loses its enemy. Usually due to the enemy being killed/removed, or because this NPC has selected a newer, more dangerous enemy."
-	output OnFoundPlayer[!P2](string) : "Fired when this NPC establishes line of sight to its enemy, and that enemy is a player (outputs player entity)."
-	output OnLostPlayerLOS[!P2](void) : "Fired when this NPC loses line of sight to its enemy, and that enemy is a player."
-	output OnLostPlayer[!P2](void) : "Fired when this NPC loses its enemy, and that enemy was a player. Usually due to the enemy being killed/removed, or because this NPC has selected a newer, more dangerous enemy."
-	output OnDamagedByPlayer[!P2](void) : "Fired when this NPC is hurt by a player."
-	output OnDamagedByPlayerSquad[!P2](void) : "Fired when this NPC is hurt by a player OR by one of the player's squadmates."
-	output OnDenyCommanderUse[!P2](void) : "Fired when this NPC has refused to join the player's squad."
-	output OnSleep[!P2](void) : "Fired when this NPC enters a sleep state."
-	output OnWake[!P2](void) : "Fired when this NPC comes out of a sleep state."
-	output OnForcedInteractionStarted[!P2](void) : "Fired when the NPC starts a forced interaction."
-	output OnForcedInteractionAborted[!P2](void) : "Fired when the NPC aborts a forced interaction for some reason (target NPC died, couldn't be pathed to, etc)"
-	output OnForcedInteractionFinished[!P2](void) : "NPCs in actbusies can no longer perform dynamic interactions."
 	]

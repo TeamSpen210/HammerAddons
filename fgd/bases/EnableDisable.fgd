@@ -1,14 +1,8 @@
 
 @BaseClass 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = EnableDisable
+= EnableDisable
 	[
-	startdisabled(choices) : "Start Disabled" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	startdisabled[ASW](boolean) : "Start Disabled" : 0
+	startdisabled(boolean) : "Start Disabled" : 0
 
 	// Inputs
 	input Enable(void) : "Enable this entity."

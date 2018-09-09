@@ -79,15 +79,8 @@
 		]
 
 	gibdir(angle) : "Precise Gib Direction" : "0 0 0" : "Specifies the direction to throw gibs when this breakable breaks. Be sure to select Use Precise Gib Dir in the Gibs Direction field!"
-	nodamageforces(choices) : "Damaging it Doesn't Push It" : "0" : "Used to determine whether or not damage should cause the brush to move." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	nodamageforces[ASW](boolean) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move."
-	gibmodel(string) : "Gib Model" : : "Used by HL1Port to specify a custom gib model to break into, overriding the 'Material Type'."
-	gibmodel[P2](studio) : "Gib Model" : : "Used by HL1Port to specify a custom gib model to break into, overriding the 'Material Type'."
+	nodamageforces(boolean) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move."
+	gibmodel(studio) : "Gib Model" : : "Used by HL1Port to specify a custom gib model to break into, overriding the 'Material Type'."
 	spawnobject[!P2](choices) : "Spawn On Break" : "0" : "When broken, an entity of the selected type will be created." =
 		[
 		1: "item_battery"

@@ -1,6 +1,5 @@
 
 @BaseClass base(Item) 
-	appliesto(ASW) 
 	color(0 0 200) = ASWPickup
 	[
 	freezepickup(choices) : "Stay in air on startup" : "No" : "If set, this pickup won't fall to the ground when the map starts." =

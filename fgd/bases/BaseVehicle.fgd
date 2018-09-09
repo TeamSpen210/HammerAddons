@@ -1,6 +1,6 @@
 
 @BaseClass base(Targetname, Origin, Global, prop_static_base) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, CSGO) = BaseVehicle
+= BaseVehicle
 	[
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/jeep_test.txt"
 	actionscale(float) : "Scale of action input / framerate" : 1

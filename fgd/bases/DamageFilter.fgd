@@ -1,10 +1,9 @@
 
 @BaseClass 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = DamageFilter
+line(255 0 0, targetname, damagefilter) = DamageFilter
 	[
 	damagefilter(target_destination) : "Damage Filter" : : "Name of the filter entity that controls which entities can damage us."
 
 	// Inputs
-	input SetDamageFilter(string) : "Sets the entity to use as damage filter. Pass in an empty string to clear the damage filter."
-	input SetDamageFilter[P2](target_destination) : "Sets the entity to use as damage filter. Pass in an empty string to clear the damage filter."
+	input SetDamageFilter(target_destination) : "Sets the entity to use as damage filter. Pass in an empty string to clear the damage filter."
 	]

@@ -1,6 +1,5 @@
 
 @BaseClass base(Targetname) 
-	appliesto(ASW, P2, CSGO) 
 	line(255 255 255, targetname, target) = ai_addon
 	[
 	target(target_destination) : "Host NPC"

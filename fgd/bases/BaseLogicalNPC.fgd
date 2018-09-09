@@ -1,11 +1,11 @@
 
 @BaseClass base(Targetname, Angles, DamageFilter) 
-	appliesto(P2) 
 	color(0 200 200) = BaseLogicalNPC
 	[
 	squadname(string) : "Squad Name" : : "NPCs that are in the same squad (i.e. have matching squad names) will share information about enemies, and will take turns attacking and covering each other."
 	hintgroup(string) : "Hint Group" : : "Hint groups are used by NPCs to restrict their hint-node searching to a subset of the map's hint nodes. Only hint nodes with matching hint group names will be considered by this NPC."
 	hintlimiting(boolean) : "Hint Limit Nav" : 0 : "Limits NPC to using specified hint group for navigation requests, but does not limit local navigation."
+	
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Wait Till Seen" : 0

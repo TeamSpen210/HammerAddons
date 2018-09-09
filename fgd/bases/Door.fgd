@@ -3,7 +3,6 @@
 	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = Door
 	[
 	speed(integer) : "Speed" : 100 : "The speed at which the door moves."
-	master[!P2](string) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this button cannot be used."
 	noise1(sound) : "Start Sound" : : "Sound to play when the door starts moving."
 	noise2(sound) : "Stop Sound" : : "Sound to play when the door stops moving."
 	startclosesound(sound) : "Start Close Sound" : : "(Optional) Sound to play when the door starts closing."
@@ -86,15 +85,8 @@
 		7: "Gen. Containment"
 		8: "Maintenance area"
 		]
-
-	_minlight[!P2](string) : "Minimum Light Level" : : "The minimum level of ambient light that hits this brush."
-	loopmovesound(choices) : "Loop Moving Sound?" : "0" : "If set to true, the door's 'Start Sound' will be continually looped until the door finishes moving." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	loopmovesound[ASW](boolean) : "Loop Moving Sound?" : 0 : "If set to true, the door's 'Start Sound' will be continually looped until the door finishes moving."
+	
+	loopmovesound(boolean) : "Loop Moving Sound?" : 0 : "If set to true, the door's 'Start Sound' will be continually looped until the door finishes moving."
 
 	// Inputs
 	input Open(void) : "Open the door, if it is not fully open."

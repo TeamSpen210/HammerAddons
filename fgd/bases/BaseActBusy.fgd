@@ -1,15 +1,9 @@
 
 @BaseClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) = BaseActBusy
+line(255 255 255, targetname, actor) = BaseActBusy
 	[
 	actor(target_name_or_class) : "Actor(s) to affect" : : "NPC's that should act busy"
-	startactive(choices) : "Start Active" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	startactive[P2](boolean) : "Start Active" : 0
+	startactive(boolean) : "Start Active" : 0
 	searchtype(choices) : "Search Type" : "0" : "How to search for the entities using the targetname." =
 		[
 		0: "Entity Name"
@@ -17,13 +11,7 @@
 		]
 
 	busysearchrange(float) : "Search Range for Busy Hints" : 2048
-	visibleonly(choices) : "Visible Busy Hints Only" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	visibleonly[P2](boolean) : "Visible Busy Hints Only" : 0
+	visibleonly(boolean) : "Visible Busy Hints Only" : 0
 
 	// Inputs
 	input Activate(void) : "Begin acting busy"

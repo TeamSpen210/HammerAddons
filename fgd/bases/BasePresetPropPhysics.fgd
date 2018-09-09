@@ -1,6 +1,6 @@
 
 @BaseClass base(Targetname, Global, Angles, BreakableProp, SystemLevelChoice, BaseFadeProp) 
-	appliesto(P2) = BasePresetPropPhysics
+= BasePresetPropPhysics: "For prop_physics-like entities that cannot have a model set."a
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -15,6 +15,7 @@
 		1024: "Prevent motion enable on player bump" : 0
 		4096: "Debris with trigger interaction" : 0
 		8192: "Force server-side (Multiplayer only)" : 0
+		32768: "Autoaim target" : 0
 		1048576: "Physgun can ALWAYS pick up. No matter what." : 0
 		]
 
@@ -27,17 +28,15 @@
 		1: "Sharp"
 		]
 
-	nodamageforces(choices) : "Damaging it Doesn't Push It" : "0" : "Used to determine whether or not damage should cause the brush to move." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	nodamageforces(boolean) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move."
 	inertiascale(float) : "Scale Factor For Inertia" : 1.0 : "Scales the angular mass of an object. Used to hack angular damage and collision response."
 	massscale(float) : "Mass Scale" : 0 : "A scale multiplier for the object's mass."
 	overridescript(string) : "Override Parameters" : : "A list of physics key/value pairs that are usually in a physics prop .qc file. Format is 'key,value,key,value,etc'."
 	damagetoenablemotion(integer) : "Health Level to Override Motion" : 0 : "If specified, this object will start motion disabled. Once its health has dropped below this specified amount, it will enable motion."
 	forcetoenablemotion(float) : "Physics Impact Force to Override Motion" : 0 : "If specified, this object will start motion disabled. Any impact that imparts a force greater than this value on the physbox will enable motion."
+	
+	addon[!TF2, ASW, !P2](string) : "AI AddOn" : : "If specified this object will use this addon behavior when installed in a composite AI"
+
 
 	// Inputs
 	input Wake(void) : "Wake up this physics object, if it is sleeping."

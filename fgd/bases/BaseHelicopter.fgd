@@ -1,8 +1,8 @@
 
 @BaseClass base(BaseNPC) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = BaseHelicopter
+line(255 255 255, targetname, target) = BaseHelicopter
 	[
-	initialspeed(string) : "Initial Speed" : "0" : "Sets the helicopter's desired speed that it should try to reach as soon as it's spawned."
+	initialspeed(float) : "Initial Speed" : 0 : "Sets the helicopter's desired speed that it should try to reach as soon as it's spawned."
 	target(target_destination) : "Target path_track" : : "(Optional) The name of a path_track entity that this NPC will fly to after spawning."
 	spawnflags(flags) : "spawnflags" =
 		[
