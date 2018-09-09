@@ -1,6 +1,5 @@
 
 @PointClass base(Angles, Targetname, EnableDisable, Parentname) 
-	appliesto(P2) 
 	studio("models/extras/info_speech.mdl") = point_commentary_node: "Commentary node for the developer commentary. Usually added after-the-fact by the commentary system, but can also be placed manually."
 	[
 	commentaryfile(sound) : "Commentary File" : : "The sound that will play when this is triggered."

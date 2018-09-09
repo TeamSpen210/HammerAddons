@@ -17,8 +17,7 @@
 	yaw_speed(integer) : "New Train rot. Speed" : 0
 
 	// Inputs
-	input SetNextPathCorner(string) : "Sets next pathcorner"
-	input SetNextPathCorner[P2](target_destination) : "Sets next pathcorner"
+	input SetNextPathCorner(target_destination) : "Sets next pathcorner"
 
 	// Outputs
 	output OnPass(void) : "Fires when a path follower passes this point"

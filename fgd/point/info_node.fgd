@@ -1,6 +1,5 @@
 
 @PointClass base(Node) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	studio("models/editor/ground_node.mdl") 
 	color(232 219 8) = info_node: "A navigation node for ground moving NPCs. Navigation nodes are baked into the nodegraph so that NPCs can move to them. Ground nodes fall to the ground when they spawn."
 	[
@@ -9,7 +8,7 @@
 		1: "Force human permission" : 0
 		2: "Force small_centered permission" : 0
 		4: "Force wide_human permission" : 0
-		8: "Force tiny permissiont" : 0
+		8: "Force tiny permission" : 0
 		16: "Force wide_short permission" : 0
 		32: "Force medium permission" : 0
 		64: "Force tiny_centered permission" : 0

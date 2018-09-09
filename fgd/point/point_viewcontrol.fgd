@@ -1,6 +1,5 @@
 
 @PointClass base(Targetname, Angles, Parentname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	studioprop("models/editor/camera.mdl") 
 	color(200 0 0) 
 	frustum(fov, 16, 256, 255 255 255 10, -1) 
@@ -17,7 +16,7 @@
 		1: "Yes"
 		]
 
-	interpolatepositiontoplayer[ASW](boolean) : "Interpolate Position To Player" : 0 : "Gradually interpolate player's position to here on start. (Episodic only)"
+	interpolatepositiontoplayer[EP1, EP2, ASW](boolean) : "Interpolate Position To Player" : 0 : "Gradually interpolate player's position to here on start. (Episodic only)"
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Start At Player" : 1

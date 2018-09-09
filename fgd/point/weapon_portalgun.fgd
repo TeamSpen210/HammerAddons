@@ -1,23 +1,11 @@
 
 @PointClass base(Weapon, Targetname, Parentname) 
 	appliesto(P1, P2) 
-	studio("models/weapons/w_portalgun.mdl") 
-	studioprop("models/weapons/w_portalgun.mdl") = weapon_portalgun: "Portalgun|||Aperture Science Handheld Portal Device"
+	studioprop("models/weapons/w_portalgun.mdl") = weapon_portalgun: "Aperture Science Handheld Portal Device"
 	[
-	canfireportal1(choices) : "Can Fire Portal 1" : "1" : "Can this portalgun create blue portals?" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	canfireportal1[P2](boolean) : "Can Fire Portal 1" : 1 : "Can this portalgun create blue portals?"
-	canfireportal2(choices) : "Can Fire Portal 2" : "1" : "Can this portalgun create red portals?" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	canfireportal2[P2](boolean) : "Can Fire Portal 2" : 1 : "Can this portalgun create orange portals?"
+	canfireportal1(boolean) : "Can Fire Blue Portals" : 1 : "Can this portalgun create blue portals?"
+	canfireportal2(boolean) : "Can Fire Orange Portals" : 1 : "Can this portalgun create orange portals?"
+	
 	showingpotatos[P2](boolean) : "Show PoTaToS" : 0 : "Show PoTaToS on the portal gun."
 	startingteamnum[P2](choices) : "Player" : "0" : "Which player this gun belongs to.  Will decide which portals it fires before being picked up, as well as the skin." =
 		[
@@ -35,22 +23,16 @@
 
 
 	// Inputs
-	input ChargePortal1(void) : "Does charge up effect for mounted portalgun."
+	input ChargePortal1[P1](void) : "Does charge up effect for mounted portalgun."
 	input ChargePortal1[P2](void) : "Does charge up effect for mounted portalgun. Missing particles and sounds."
-	input ChargePortal2(void) : "Does charge up effect for mounted portalgun."
+	input ChargePortal2[P1](void) : "Does charge up effect for mounted portalgun."
 	input ChargePortal2[P2](void) : "Does charge up effect for mounted portalgun. Missing particles and sounds."
-	input FirePortal1(void) : "Projects portal 1 onto a wall in the facing direction of the gun."
-	input FirePortal1[P2](void) : "Projects 'blue' portal onto a wall in the facing direction of the gun."
-	input FirePortal2(void) : "Projects portal 2 onto a wall in the facing direction of the gun."
-	input FirePortal2[P2](void) : "Projects the 'orange' portal onto a wall in the facing direction of the gun."
-	input FirePortalDirection1(vector) : "Fires portal 1 in the specified direction."
-	input FirePortalDirection1[P2](vector) : "Fires the 'blue' portal in the specified direction."
-	input FirePortalDirection2(vector) : "Fires portal 1 in the specified direction."
-	input FirePortalDirection2[P2](vector) : "Fires the 'orange' portal in the specified direction."
+	input FirePortal1(void) : "Projects the	'blue' portal onto a wall in the facing direction of the gun."
+	input FirePortal2(void) : "Projects the 'orange' portal onto a wall in the facing direction of the gun."
+	input FirePortalDirection1(vector) : "Fires the 'blue' portal in the specified direction."
+	input FirePortalDirection2(vector) : "Fires the 'orange' portal in the specified direction."
 
 	// Outputs
-	output OnFiredPortal1(void) : "Fires when the first (blue) portal is fired."
-	output OnFiredPortal1[P2](void) : "Fires when the 'blue' portal is fired."
-	output OnFiredPortal2(void) : "Fires when the second (red) portal is fired."
-	output OnFiredPortal2[P2](void) : "Fires when the 'orange' portal is fired."
+	output OnFiredPortal1(void) : "Fires when the 'blue' portal is fired."
+	output OnFiredPortal2(void) : "Fires when the 'orange' portal is fired."
 	]

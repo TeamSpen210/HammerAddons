@@ -1,6 +1,5 @@
 
 @PointClass base(Targetname, Angles, HintNode) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	studio("models/editor/ground_node_hint.mdl") 
 	color(232 219 8) 
 	sphere(radius) = info_node_hint: "A navigation node for ground moving NPCs that includes some context information for NPCs that are interested in it. The hint might indicate a window that could be looked out of, or an item of interest that could be commented on. Many hint nodes are NPC-specific, so it's helpful to use naming conventions like 'Crow: Fly to point' in the hint choices list. The angles of a hint node indicate what direction the NPC should face to perform the hint behavior.\n\nIt's important to understand the distinction between scripts, such as scripted_sequence and scripted_schedule, and info_hint entities. Scripts summon NPCs to specific cue points to play their parts, while hints provide context information to the AI that they use to perform their behaviors. Hints require code support in the NPC, while scripts are generic and may require only animations to play. Use a hint if the behavior is driven by the AI, use a script if the behavior is driven by the map."

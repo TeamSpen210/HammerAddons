@@ -4,15 +4,9 @@
 	studio("models/props/turret_01.mdl") 
 	studioprop() 
 	sphere(turretRange) 
-	frustum(45, 16, TurretRange, 255 0 0 100, -1) = npc_portal_turret_floor: "Combine (Portal) Floor Turret|||Aperture Science Sentry Turret."
+	frustum(45, 16, TurretRange, 255 0 0 100, -1) = npc_portal_turret_floor: "Aperture Science Sentry Turret."
 	[
-	damageforce(choices) : "Damage pushes player" : "1" : "Being hit by this turret will push the player back." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	damageforce[P2](boolean) : "Damage Pushes Player" : 0 : "Being hit by this turret will push the player back."
+	damageforce(boolean) : "Damage Pushes Player" : 0 : "Being hit by this turret will push the player back."
 	spawnflags[P2](flags) : "spawnflags" =
 		[
 		32: "Start Active" : 0

@@ -1,12 +1,11 @@
 
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	color(0 100 250) 
 	iconsprite("editor/logic_measure_movement.vmt") 
 	line(255 255 0, targetname, measureReference) 
 	line(255 0 255, targetname, measureTarget, targetname, measureReference) 
 	line(255 255 0, targetname, targetReference) 
-	line(255 0 255, targetname, target, targetname TargetReference) = logic_measure_movement: "An entity that can measure the movement of an entity relative to another entity and apply that movement to a third entity."
+	line(255 0 255, targetname, target, targetname, TargetReference) = logic_measure_movement: "An entity that can measure the movement of an entity relative to another entity and apply that movement to a third entity."
 	[
 	measuretarget(target_destination) : "Entity to Measure" : : "Entity whose movement you want to measure."
 	measurereference(target_destination) : "Measure Reference" : : "The movement of Entity to Measure will be measured relative to this entity."

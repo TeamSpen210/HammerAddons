@@ -1,6 +1,5 @@
 
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	size(-8 -8 -8, 8 8 8) 
 	color(0 100 250) 
 	line(0 100 250, targetname, target) = point_angularvelocitysensor: "An entity that detects if another entity's angular velocity meets or exceeds a threshold value."
@@ -9,13 +8,8 @@
 	threshold(float) : "Threshold Velocity" : 0 : "The threshold angular velocity to compare against, in degrees per second."
 	fireinterval(float) : "Fire Interval" : 0.2 : "Angular velocity must cross the threshold for at least this long to fire."
 	axis(vecline) : "Axis"
-	usehelper(choices) : "Use Axis Helper" : "0" : "Use axis helper to determine rotation values (clockwise/counter-clockwise)." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	usehelper[ASW](boolean) : "Use Axis Helper" : 0 : "Use axis helper to determine rotation values (clockwise/counter-clockwise)."
+	
+	usehelper(boolean) : "Use Axis Helper" : 0 : "Use axis helper to determine rotation values (clockwise/counter-clockwise)."
 
 	// Inputs
 	input Test(void) : "Checks to see if the Target Entity's angular velocity meets or exceeds the Threshold Velocity, firing either the OnGreaterThanOrEqualTo or OnLessThan output based on the result."

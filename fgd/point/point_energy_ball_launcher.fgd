@@ -2,12 +2,10 @@
 @PointClass base(CombineBallSpawners, Parentname, Targetname) 
 	appliesto(P1, P2) 
 	studio("models/effects/combineball.mdl") 
-	studio("models/editor/cone_helper.mdl") = point_energy_ball_launcher: "Launches energy balls.|||Launches Aperture Science High Energy Pellets. "
+	studio("models/editor/cone_helper.mdl") = point_energy_ball_launcher: "Launches Aperture Science High Energy Pellets. "
 	[
-	balllifetime(float) : "Ball Lifetime" : 12 : "The time in seconds the ball will live before self-destructing. A negative value will give infinite life."
-	balllifetime[P2](float) : "Ball Lifetime" : 12 : "The time in seconds the ball will live before self-destructing. A negative value will give infinite life, appearing green."
-	minlifeafterportal(float) : "Min life after portal transition" : 6 : "When energy balls created by this launcher pass through a portal and their life is refreshed to be this number at minimum."
-	minlifeafterportal[P2](float) : "Min life after portal transition" : 6 : "When energy balls created by this launcher pass through a portal their life is refreshed to be this number at minimum."
+	balllifetime(float) : "Ball Lifetime" : 12 : "The time in seconds the ball will live before self-destructing. A negative value will give infinite life, appearing green."
+	minlifeafterportal(float) : "Min life after portal transition" : 6 : "When energy balls created by this launcher pass through a portal their life is refreshed to be this number at minimum."
 
 	// Inputs
 	input LaunchBall(void) : "Launch a ball from the spawner."

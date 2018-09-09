@@ -1,19 +1,13 @@
 
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	size(-8 -8 -8, 8 8 8) 
 	color(0 100 250) 
 	line(0 100 250, targetname, target) = point_velocitysensor: "An entity that detects and outputs an entity's velocity."
 	[
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose velocity will be sensed."
 	axis(vecline) : "Measurement Axis"
-	enabled(choices) : "Start Enabled" : "1" : "Whether or not to start enabled and active." =
-		[
-		0: "No"
-		1: "Yes"
-		]
 
-	enabled[ASW](boolean) : "Start Enabled" : 1 : "Whether or not to start enabled and active."
+	enabled(boolean) : "Start Enabled" : 1 : "Whether or not to start enabled and active."
 
 	// Inputs
 	input Enable(void) : "Enable the sensor."

@@ -5,8 +5,7 @@
 	line(0 100 250, targetname, target) 
 	iconsprite("editor/point_proximity_sensor.vmt") = point_proximity_sensor: "An entity that detects another entity's proximity to a target position."
 	[
-	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angles will be sensed."
-	target[P2](target_destination) : "Target Entity Name" : : "Name of the entity whose position will be sensed."
+	target(target_destination) : "Target Entity Name" : : "Name of the entity whose position will be sensed."
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Test the distance as measured along the axis specified by our direction." : 0

@@ -9,17 +9,12 @@
 	overlay() = info_overlay: "An entity that places an overlay on the world."
 	[
 	material(material) : "Material"
-	sides(sidelist) : "Brush faces"
-	sides[P2](sidelist) : "Brush faces" : : "The brush faces this overlay is applied to."
+	sides(sidelist) : "Brush faces" : : "The brush faces this overlay is applied to."
 	renderorder(integer) : "Render Order" : 0 : "Higher values render after lower values. This value can be 0-3."
-	startu(float) : "U Start" : 0.0
-	startu[P2](float) : "U Start" : 0.0 : "A value between 0-1, defining the starting X axis position in the overlay material."
-	endu(float) : "U End" : 1.0
-	endu[P2](float) : "U End" : 1.0 : "A value between 0-1, defining the ending X axis position in the overlay material."
-	startv(float) : "V Start" : 0.0
-	startv[P2](float) : "V Start" : 0.0 : "A value between 0-1, defining the starting Y axis position in the overlay material."
-	endv(float) : "V End" : 1.0
-	endv[P2](float) : "V End" : 1.0 : "A value between 0-1, defining the ending Y axis position in the overlay material."
+	startu(float) : "U Start" : 0.0 : "A value between 0-1, defining the starting X axis position in the overlay material."
+	endu(float) : "U End" : 1.0 : "A value between 0-1, defining the ending X axis position in the overlay material."
+	startv(float) : "V Start" : 0.0 : "A value between 0-1, defining the starting Y axis position in the overlay material."
+	endv(float) : "V End" : 1.0 : "A value between 0-1, defining the ending Y axis position in the overlay material."
 	basisorigin(vector) : "Overlay Basis Origin(Read-Only)"
 	basisu(vector) : "Overlay Basis U(Read-Only)"
 	basisv(vector) : "Overlay Basis V(Read-Only)"
