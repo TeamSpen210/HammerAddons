@@ -1,0 +1,80 @@
+
+@PointClass base(Targetname, Parentname, EnableDisable) 
+	appliesto(ASW, EP1, EP2, HL2, CSGO) = env_gunfire: "Gunfire Effect"
+	[
+	target(target_destination) : "Target" : : "Shoot at this target. REMEMBER - this is an effect only! It does not do damage!"
+	target[CSGO](target_destination) : "Target" : : "Shoot at this target."
+	minburstsize(integer) : "Min Burst Size" : 2 : "Minimum number of rounds in a burst."
+	maxburstsize(integer) : "Max Burst Size" : 7 : "Maximum number of rounds in a burst."
+	minburstdelay(float) : "Min Delay Between Bursts" : 2 : "Minimum delay between bursts. (seconds)"
+	maxburstdelay(float) : "Max Delay Between Bursts" : 5 : "Maximum delay between bursts. (seconds)"
+	rateoffire[!CSGO](float) : "Rate of fire" : 10 : "Expressed as rounds per second"
+	spread(choices) : "Bullet spread" : "5" : "The 'cone of inaccuracy' of the shots fired by this entity." =
+		[
+		1: "1 Degree"
+		5: "5 Degrees"
+		10: "10 Degrees"
+		15: "15 Degrees"
+		]
+
+	bias(choices) : "Bullet distribution should be..." : "1" : "How to distribute bullets within the spread. Even distribution is a true scatter throughout the spread. Biased towards the outside makes the shots 'miss' the target by tending towards the outside of the spread." =
+		[
+		1: "Evenly distributed"
+		-1: "Biased towards the outside"
+		]
+
+	collisions[!CSGO](choices) : "Collision detection" : "0" : "Whether/how to handle bullet collision detection. NOTE: If you select NONE, this entity will be very cheap to use, but all bullets will stop short at their target's position in space and there will be no impact effects. Normal collision detection does the same things NPCs do when they fire their guns (except harm anything)." =
+		[
+		0: "None. Cheap for performance."
+		1: "Normal collision detection."
+		]
+
+	shootsound[!CSGO](choices) : "Shoot Sound" : "Weapon_AR2.NPC_Single" : "Gunfire sound to make" =
+		[
+		"Weapon_AR2.NPC_Single": "AR2"
+		"Weapon_SMG1.NPC_Single": "SMG1"
+		]
+
+	tracertype[!CSGO](choices) : "Tracer" : "AR2TRACER" : "Type of tracer to display" =
+		[
+		"Tracer": "Default"
+		"AR2TRACER": "AR2"
+		]
+
+	weaponname[CSGO](choices) : "Weapon" : "weapon_ak47" : "The weapon that this entity emulates when it shoots." =
+		[
+		"weapon_deagle": "Deagle"
+		"weapon_elite": "Elites"
+		"weapon_fiveseven": "FiveSeven"
+		"weapon_glock": "Glock"
+		"weapon_p228": "p228"
+		"weapon_usp": "USP"
+		"weapon_ak47": "AK47"
+		"weapon_aug": "Aug"
+		"weapon_awp": "AWP"
+		"weapon_famas": "Famas"
+		"weapon_g3sg1": "g3sg1"
+		"weapon_galil": "Galil"
+		"weapon_m249": "M249"
+		"weapon_m4a1": "m4a4"
+		"weapon_mac10": "Mac10"
+		"weapon_p90": "P90"
+		"weapon_ump45": "Ump45"
+		"weapon_xm1014": "XM1014"
+		"weapon_bizon": "Bizon"
+		"weapon_mag7": "Mag7"
+		"weapon_negev": "Negev"
+		"weapon_sawedoff": "Sawedoff"
+		"weapon_tec9": "Tec9"
+		"weapon_mp7": "Mp7"
+		"weapon_mp9": "Mp9"
+		"weapon_nova": "Nova"
+		"weapon_p250": "p250"
+		"weapon_scar20": "Scar20"
+		"weapon_sg556": "sg556"
+		"weapon_ssg08": "ssg08"
+		"weapon_usp_silencer": "USP"
+		"weapon_m4a1_silencer": "M4A1 Silencer"
+		]
+
+	]

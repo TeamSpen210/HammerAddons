@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_pist_223_dropped.mdl") = weapon_usp_silencer: "USP Silenced"
+	[
+	]

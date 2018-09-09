@@ -1,0 +1,9 @@
+
+@PointClass base(Targetname) 
+	appliesto(ASW) 
+	iconsprite("editor/asw_tech_marine_req.vmt") = asw_equip_req: "Equipment Requirement - requires at least one of each class to be selected before mission can begin."
+	[
+	equipclass1(string) : "Equipment class 1" : : "First equipment class that needs to be selected before mission can begin."
+	equipclass2(string) : "Equipment class 2" : : "Second equipment class that needs to be selected before mission can begin."
+	equipclass3(string) : "Equipment class 3" : : "Third equipment class that needs to be selected before mission can begin."
+	]

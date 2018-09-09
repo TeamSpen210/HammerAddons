@@ -1,0 +1,14 @@
+
+@PointClass base(Targetname) 
+	appliesto(CSGO) 
+	size(-8 -8 -8, 8 8 8) = game_coopmission_manager: "An entity that keeps track of the coop wave/phase and fires outputs when players complete them."
+	[
+
+	// Outputs
+	output OnWaveCompleted(void) : "When players kill all enemies in this wave/section"
+	output OnRoundReset(void) : "Called when the round resets"
+	output OnSpawnsReset(void) : "Called right before the level restarts, so the spawns can be set up"
+	output OnRoundLostKilled(void) : "Called when the round is lost and the players are killed"
+	output OnRoundLostTime(void) : "Called when the round is lost because time ran out"
+	output OnMissionCompleted(void) : "Called when the mission is completed"
+	]

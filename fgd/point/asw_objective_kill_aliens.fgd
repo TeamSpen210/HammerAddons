@@ -1,0 +1,24 @@
+
+@PointClass base(Targetname, ASWObjective) 
+	appliesto(ASW) 
+	iconsprite("editor/asw_objective_kill_aliens.vmt") = asw_objective_kill_aliens: "Alien Swarm Mission Objective"
+	[
+	numkills(integer) : "Num Kills" : 1 : "How many aliens have to be killed for this objective to be complete."
+	alienclass(choices) : "Alien Class" : "0" : "Which type of alien must be killed" =
+		[
+		0: "asw_drone"
+		1: "asw_buzzer"
+		2: "asw_parasite"
+		3: "asw_shieldbug"
+		4: "asw_grub"
+		5: "asw_drone_jumper"
+		6: "asw_harvester"
+		7: "asw_parasite_defanged"
+		8: "asw_queen"
+		9: "asw_boomer"
+		10: "asw_ranger"
+		11: "asw_mortarbug"
+		12: "asw_shaman"
+		]
+
+	]

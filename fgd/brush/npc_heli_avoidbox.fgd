@@ -1,0 +1,11 @@
+
+@SolidClass base(Origin, Angles, Parentname) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	color(255 255 0) = npc_heli_avoidbox: "Helicopter avoidance box"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Avoid the box above and below" : 0
+		]
+
+	]

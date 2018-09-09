@@ -1,0 +1,18 @@
+
+@PointClass base(EnableDisable) 
+	appliesto(TF2) = tf_glow
+	[
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	target(target_destination) : "Target - ONE TARGET ONLY"
+	glowcolor(color255) : "Glow Color" : "255 0 0 255" : "<r> <g> <b> <a> 0-255"
+	mode(choices) : "Visibility Mode" : "0" : "When the glow should be visible" =
+		[
+		0: "Always"
+		1: "Only when model is occluded"
+		2: "Only when model is visible"
+		]
+
+
+	// Inputs
+	input SetGlowColor(color255) : "<r> <g> <b> <a> 0-255"
+	]

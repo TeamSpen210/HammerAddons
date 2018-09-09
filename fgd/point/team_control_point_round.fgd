@@ -1,0 +1,22 @@
+
+@PointClass base(Targetname, EnableDisable) 
+	appliesto(TF2) = team_control_point_round: "Control Point Round (you may have as many of these in the map as you would like)."
+	[
+	cpr_printname(string) : "Print Name" : : "LOCALIZED name to print on the RoundInfo panel"
+	cpr_priority(integer) : "Priority" : 0 : "The priority value for this round (must be >= 0). Higher priority rounds will be picked first. If multiple rounds have the same priority value, a random selection will be used."
+	cpr_cp_names(string) : "Control points in this round" : : "Names of the control points included in this round (space delimited). Control points may belong to more than one control point round.  The names of the control points (and the rounds) should all be unique."
+	cpr_restrict_team_cap_win(choices) : "Restrict team from winning" : "0" : "Prevent this team from winning by capping all the points" =
+		[
+		0: "Neither"
+		1: "Both"
+		2: "Red"
+		3: "Blue"
+		]
+
+
+	// Outputs
+	output OnStart(void) : "Sent when this round is selected to be played."
+	output OnEnd(void) : "Sent when this round is finished."
+	output OnWonByTeam1(void) : "Sent when RED wins this round."
+	output OnWonByTeam2(void) : "Sent when BLUE wins this round."
+	]

@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_defuser.mdl") = item_defuser: "Defuse Kit"
+	[
+	]

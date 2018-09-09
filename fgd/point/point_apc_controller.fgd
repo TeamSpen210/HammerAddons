@@ -1,0 +1,28 @@
+
+@PointClass base(Targetname, Angles) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio() = point_apc_controller: "APC Controller"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Active" : 0
+		]
+
+	yawrate(string) : "Yaw rate" : "30"
+	yawtolerance(string) : "Yaw tolerance" : "15"
+	pitchrate(string) : "Pitch rate" : "0"
+	pitchtolerance(string) : "Pitch tolerance" : "20"
+	rotatestartsound(sound) : "Rotate Start Sound"
+	rotatesound(sound) : "Rotate Loop Sound"
+	rotatestopsound(sound) : "Rotate Stop Sound"
+	minrange(string) : "Minmum target range" : "0"
+	maxrange(string) : "Maximum target range" : "0"
+	targetentityname(string) : "Name of entity I should follow/attack"
+
+	// Inputs
+	input Activate(void) : "Turn the APC rockets on"
+	input Deactivate(void) : "Turn the APC rockets off (go dormant)"
+
+	// Outputs
+	output OnFireAtTarget(void) : "Fires when a valid target is found and the APC should shoot rockets"
+	]

@@ -1,0 +1,45 @@
+
+@PointClass base(Targetname, MasterEnt, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	iconsprite("editor/game_text.vmt") 
+	color(200 0 0) = game_text: "An entity that displays text on player's screens."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "All Players" : 0
+		]
+
+	message(string) : "Message Text" : : "Message to display onscreen."
+	x(string) : "X (0 - 1.0 = left to right) (-1 centers)" : "-1" : "Horizontal position on the player's screens to draw the text. The value should be between 0 and 1, where 0 is the far left of the screen and 1 is the far right. -1 centers the text."
+	y(string) : "Y (0 - 1.0 = top to bottom) (-1 centers)" : "-1" : "Vertical position on the player's screens to draw the text. The value should be between 0 and 1, where 0 is the top of the screen and 1 is the bottom. -1 centers the text."
+	effect(choices) : "Text Effect" : "0" =
+		[
+		0: "Fade In/Out"
+		1: "Credits"
+		2: "Scan Out"
+		]
+
+	color(color255) : "Color1" : "100 100 100"
+	color2(color255) : "Color2" : "240 110 0"
+	fadein(string) : "Fade in Time (or character scan time)" : "1.5" : "The time it should take for the text to fully fade in."
+	fadeout(string) : "Fade Out Time" : "0.5" : "The time it should take for the text to fade out, after the hold time has expired."
+	holdtime(string) : "Hold Time" : "1.2" : "The time the text should stay onscreen, after fading in, before it begins to fade out."
+	fxtime(string) : "Scan time (scan effect only)" : "0.25" : "If the 'Text Effect' is set to Scan Out, this is the time it should take to scan out all the letters in the text."
+	channel(choices) : "Text Channel" : "1" : "You can have up to four individual game_text messages onscreen at once, stored in channels. Select which channel this text should be placed in, which will overwrite any active message already in that channel." =
+		[
+		1: "Channel 1"
+		2: "Channel 2"
+		3: "Channel 3"
+		4: "Channel 4"
+		]
+
+	master[!P2](string) : "Master" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
+
+	// Inputs
+	input Display(void) : "Display the message text."
+	input SetText[ASW, !TF2](string) : "Set the text to display."
+	input SetPosX[!CSGO, P2, !TF2](float) : "Set the X position of the text. (0 - 1.0 = left to right) (-1 centers)"
+	input SetPosY[!CSGO, P2, !TF2](float) : "Set the Y position of the text. (0 - 1.0 = top to bottom) (-1 centers)"
+	input SetTextColor[!CSGO, P2, !TF2](color255) : "Set color of the front text."
+	input SetTextColor2[!CSGO, P2, !TF2](color255) : "Set color of the transition text."
+	]

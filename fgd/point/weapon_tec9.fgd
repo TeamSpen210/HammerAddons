@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_pist_tec9_dropped.mdl") = weapon_tec9: "Tec-9"
+	[
+	]

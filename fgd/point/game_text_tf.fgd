@@ -1,0 +1,25 @@
+
+@PointClass base(Targetname) 
+	appliesto(TF2) 
+	iconsprite("editor/game_text.vmt") = game_text_tf: "An entity that displays text on player's screens, in pretty tf hud format"
+	[
+	message(string) : "Message Text" : : "Message to display onscreen."
+	icon(string) : "Icon" : : "Hud icon ( from mod_textures.res ) to display."
+	display_to_team(choices) : "Audience" : "0" =
+		[
+		0: "Everyone"
+		2: "Red Team Only"
+		3: "Blue Team Only"
+		]
+
+	background(choices) : "Background Panel Color" : "0" =
+		[
+		0: "Grey"
+		2: "Red"
+		3: "Blue"
+		]
+
+
+	// Inputs
+	input Display(void) : "Display the message text."
+	]

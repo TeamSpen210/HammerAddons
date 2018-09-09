@@ -1,0 +1,8 @@
+
+@PointClass base(Targetname) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	size(16 16 16) 
+	color(255 0 0) = path_corner_crash: "Helicopter Crash Path"
+	[
+	target(target_destination) : "Next stop target"
+	]

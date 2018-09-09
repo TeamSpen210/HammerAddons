@@ -1,0 +1,15 @@
+
+@BaseClass 
+	appliesto(P2) = BaseProjector: "The base for all the different projectors (wall & tractor beam)."
+	[
+	startenabled(boolean) : "Start Enabled" : 1 : "If the projector should start enabled."
+	disablehelper(boolean) : "Disable Placement Helper" : 0 : "Disable the automatically created placement helper to prevent it from fighting with a custom one."
+
+	// Inputs
+	input Enable(void) : "Enables projection from this projector. This also updates the position of the bridge/funnel if the model was parented."
+	input Disable(void) : "Disables projection from this projector."
+	input SetParent(target_destination) : "Sets the parent for the projector. This will only move the model properly, retrigger the enable input to correct the bridge/funnel position."
+	input SetParentAttachment(string) : "Change this entity to attach to a specific attachment point on its parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment."
+	input SetParentAttachmentMaintainOffset(string) : "Change this entity to attach to a specific attachment point on it's parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment. The entity will maintain it's position relative to the parent at the time it is attached."
+	input ClearParent(void) : "Removes this entity from the the movement hierarchy, leaving it free to move independently."
+	]

@@ -1,0 +1,17 @@
+
+@PointClass base(prop_physics) 
+	appliesto(P2) 
+	sphere(fademindist) 
+	sphere(fademaxdist) 
+	studioprop() = prop_physics_paintable: "A version of prop_physics that can be painted by Gel. Does not appear to show up on the model."
+	[
+	paintpower(choices) : "Paint Power" : "4" : "The starting gel type for the prop." =
+		[
+		0: "Repulsion Gel"
+		1: "Adhesion Gel"
+		2: "Propulsion Gel"
+		3: "Conversion Gel"
+		4: "None"
+		]
+
+	]

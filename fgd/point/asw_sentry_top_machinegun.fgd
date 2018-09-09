@@ -1,0 +1,7 @@
+
+@PointClass base(Targetname, Parentname, Angles, Studiomodel, Origin) 
+	appliesto(ASW) 
+	studioprop("models/sentry_gun/machinegun_top.mdl") = asw_sentry_top_machinegun
+	[
+	turretrange(float) : "Turret Range" : 525 : "Maximum distance that it will pick targets."
+	]

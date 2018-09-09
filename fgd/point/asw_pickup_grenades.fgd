@@ -1,0 +1,9 @@
+
+@PointClass base(ASWPickup) 
+	appliesto(ASW) 
+	studio("models/swarm/grenades/grenadebox.mdl") = asw_pickup_grenades: "Cluster Grenades"
+	[
+	bulletsingun(integer) : "Bullets In Gun" : 5
+	clips(integer) : "Clips" : 0
+	secondarybullets(integer) : "Secondary Bullets" : 0
+	]

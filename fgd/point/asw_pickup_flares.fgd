@@ -1,0 +1,9 @@
+
+@PointClass base(ASWPickup) 
+	appliesto(ASW) 
+	studio("models/swarm/Flare/flarebox.mdl") = asw_pickup_flares: "Flares"
+	[
+	bulletsingun(integer) : "Bullets In Gun" : 9
+	clips(integer) : "Clips" : 0
+	secondarybullets(integer) : "Secondary Bullets" : 0
+	]

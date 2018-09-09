@@ -1,0 +1,13 @@
+
+@PointClass base(Weapon) 
+	appliesto(EP1, EP2, HL2, ASW) = weapon_brickbat: "Brickbat"
+	[
+	brickbattype(choices) : "BrickbatType" : "Rock" =
+		[
+		0: "Rock"
+		1: "Beer Bottle"
+		2: "Headcrab"
+		3: "Cremator Head"
+		]
+
+	]

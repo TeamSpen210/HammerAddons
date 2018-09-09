@@ -1,0 +1,20 @@
+
+@PointClass base(Targetname, MasterEnt) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	size(-8 -8 -8, 8 8 8) 
+	color(200 0 0) = game_score: "An entity that awards/deducts points from the player who activates it.|||An entity that awards/deducts points from the player who activates it or to a specific team."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Allow Negative" : 0
+		2: "Team Points" : 0
+		]
+
+	points(integer) : "Points to add (+/-)" : 1
+	master[!P2](string) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
+
+	// Inputs
+	input ApplyScore(void) : "Add score to player."
+	input AddScoreTerrorist[CSGO](void) : "Add score to team TERRORIST."
+	input AddScoreCT[CSGO](void) : "Add score to team COUNTER TERRORIST."
+	]

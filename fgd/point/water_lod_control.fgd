@@ -1,0 +1,15 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	iconsprite("editor/waterlodcontrol.vmt") 
+	sphere(cheapwaterstartdistance) 
+	sphere(cheapwaterenddistance) 
+	color(200 0 0) = water_lod_control: "An entity used to control the LOD behavior of any water in the map. If your map has water, this entity is required."
+	[
+	cheapwaterstartdistance(float) : "Start Transition to Cheap Water" : 1000 : "This is the distance from the camera that water will start transitioning to cheap water, in inches."
+	cheapwaterenddistance(float) : "End Transition to Cheap Water" : 2000 : "This is the distance from the camera that water will finish transitioning to cheap water, in inches."
+
+	// Inputs
+	input SetCheapWaterStartDistance(float) : "Set the distance that water starts transitioning to cheap water."
+	input SetCheapWaterEndDistance(float) : "Set the distance that water finishes transitioning to cheap water."
+	]

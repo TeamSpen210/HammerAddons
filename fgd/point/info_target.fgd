@@ -1,0 +1,20 @@
+
+@PointClass base(Targetname, Parentname, Angles, Targetname, Parentname, Angles) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	iconsprite("editor/info_target.vmt") 
+	studio("models/editor/axis_helper.mdl") 
+	halfgridsnap() 
+	halfgridsnap("editor/info_target.vmt") = info_target: "An entity that does nothing. Very useful as a positioning entity for other entities to refer to (i.e. the endpoint of an env_beam)"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Transmit to client" : 0
+		]
+
+	spawnflags[ASW](flags) : "spawnflags" =
+		[
+		1: "Transmit to client (respect PVS)" : 0
+		2: "Always transmit to client (ignore PVS)" : 0
+		]
+
+	]

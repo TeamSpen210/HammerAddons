@@ -1,0 +1,6 @@
+
+@PointClass base(Item) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/items/AR2_Grenade.mdl") = item_ammo_smg1_grenade: "SMG1 Grenade"
+	[
+	]

@@ -1,0 +1,47 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	color(0 100 250) 
+	iconsprite("editor/logic_branch_listener.vmt") 
+	line(255 255 0, targetname, branch01) 
+	line(255 255 0, targetname, branch09) 
+	line(255 255 0, targetname, branch02) 
+	line(255 255 0, targetname, branch10) 
+	line(255 255 0, targetname, branch03) 
+	line(255 255 0, targetname, branch11) 
+	line(255 255 0, targetname, branch04) 
+	line(255 255 0, targetname, branch12) 
+	line(255 255 0, targetname, branch05) 
+	line(255 255 0, targetname, branch13) 
+	line(255 255 0, targetname, branch06) 
+	line(255 255 0, targetname, branch14) 
+	line(255 255 0, targetname, branch07) 
+	line(255 255 0, targetname, branch15) 
+	line(255 255 0, targetname, branch08) 
+	line(255 255 0, targetname, branch16) = logic_branch_listener: "Contains a list of logic_branch entities and fires outputs when the state of any of the logic_branches changes.\n\nThis entity is used to fire an event when a set of conditions are all satisfied."
+	[
+	branch01(target_destination) : "Logic Branch 01" : : "The name of one or more logic_branches (wildcards allowed)."
+	branch02(target_destination) : "Logic Branch 02" : : "The name of one or more logic_branches (wildcards allowed)."
+	branch03(target_destination) : "Logic Branch 03" : : "The name of one or more logic_branches (wildcards allowed)."
+	branch04(target_destination) : "Logic Branch 04" : : "The name of one or more logic_branches (wildcards allowed)."
+	branch05(target_destination) : "Logic Branch 05" : : "The name of one or more logic_branches (wildcards allowed)."
+	branch06(target_destination) : "Logic Branch 06" : : "The name of one or more logic_branches (wildcards allowed)."
+	branch07(target_destination) : "Logic Branch 07" : : "The name of one or more logic_branches (wildcards allowed)."
+	branch08(target_destination) : "Logic Branch 08" : : "The name of one or more logic_branches (wildcards allowed)."
+	branch09(target_destination) : "Logic Branch 09" : : "The name of one or more logic_branches (wildcards allowed)."
+	branch10(target_destination) : "Logic Branch 10" : : "The name of one or more logic_branches (wildcards allowed)."
+	branch11(target_destination) : "Logic Branch 11" : : "The name of one or more logic_branches (wildcards allowed)."
+	branch12(target_destination) : "Logic Branch 12" : : "The name of one or more logic_branches (wildcards allowed)."
+	branch13(target_destination) : "Logic Branch 13" : : "The name of one or more logic_branches (wildcards allowed)."
+	branch14(target_destination) : "Logic Branch 14" : : "The name of one or more logic_branches (wildcards allowed)."
+	branch15(target_destination) : "Logic Branch 15" : : "The name of one or more logic_branches (wildcards allowed)."
+	branch16(target_destination) : "Logic Branch 16" : : "The name of one or more logic_branches (wildcards allowed)."
+
+	// Inputs
+	input Test(void) : "Tests the state of all the logic_branches in the list and fires the appropriate output."
+
+	// Outputs
+	output OnAllTrue(void) : "Fired when all the logic_branches in the list become true."
+	output OnAllFalse(void) : "Fired when all the logic_branches in the list become false."
+	output OnMixed(void) : "Fired when one of the logic branches in the list changes, but some are true and some are false."
+	]

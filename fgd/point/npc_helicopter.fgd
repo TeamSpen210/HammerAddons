@@ -1,0 +1,64 @@
+
+@NpcClass base(BaseHelicopter) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/combine_helicopter.mdl") = npc_helicopter: "Helicopter"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Loud rotor wash sound" : 0
+		131072: "Electrical drone" : 0
+		262144: "Helicopter lights" : 0
+		524288: "Ignore avoid spheres+boxes" : 0
+		1048576: "More aggressive attacks" : 0
+		2097152: "Cast long shadow" : 0
+		]
+
+	initialspeed(string) : "Initial Speed" : "0"
+	graceperiod(float) : "Grace Period" : 2.0 : "Time in seconds the helicopter has to see the player before he starts shooting"
+	patrolspeed(float) : "Patrol Speed" : 0 : "Speed at which the helicopter moves if he has no enemy."
+	noncombat(choices) : "Non-combat (Do not precache gibs)" : "No" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+
+	// Inputs
+	input GunOn(void) : "GunOn"
+	input GunOff(void) : "GunOff"
+	input MissileOn(void) : "MissileOn"
+	input MissileOff(void) : "MissileOff"
+	input EnableRotorWash(void) : "Turns on rotor wash effects"
+	input DisableRotorWash(void) : "Turns off rotor wash effects"
+	input EnableRotorSound(void) : "Turns on rotor sounds"
+	input DisableRotorSound(void) : "Turns off rotor sounds"
+	input StartBombingVehicle(void) : "Starts the chopper leading enemy vehicles and dropping bombs on them."
+	input StartTrailingVehicle(void) : "Starts the chopper trailing enemy vehicles and shooting at them."
+	input StartDefaultBehavior(void) : "Starts the chopper in the mode where he always stops at nav points instead of stopping anywhere in between nav points."
+	input StartAlwaysLeadingVehicle(void) : "Starts the chopper *always* leading enemy vehicles (regardless of how they are moving w/respect to the path) and dropping bombs on them. This mode is different from StartBombingVehicle in that it never uses the machine gun."
+	input StartSprinkleBehavior(void) : "Starts the chopper dropping bombs randomly + shooting at the player."
+	input StartBullrushBehavior(void) : "Starts the chopper bullrushing the player."
+	input SetHealthFraction(float) : "Sets the chopper health as a percentage of max health"
+	input EnableDeadlyShooting(void) : "Starts the chopper being deadly to on-foot players"
+	input DisableDeadlyShooting(void) : "Stops the chopper being deadly to on-foot players"
+	input StartNormalShooting(void) : "The chopper will fire in short bursts. Good for on-foot experiences"
+	input StartLongCycleShooting(void) : "The chopper fires in long bursts"
+	input StartContinuousShooting(void) : "The chopper fires continuously."
+	input StartFastShooting(void) : "The chopper fires normal bursts, but does not 'charge up' the gun. Fires immediately."
+	input ResetIdleTime(void) : "Allows the helicopter to fire immediately if he's not in the middle of charging or firing"
+	input SetAngles(string) : "Instantly snaps the orientation of the helicopter (Pitch Yaw Roll)"
+	input DropBomb(void) : "Immediately drops a bomb based on normal bomb dropping rules"
+	input DropBombStraightDown(void) : "Immediately drops a bomb directly downwards"
+	input DropBombAtTarget(target_destination) : "Immediately drops a bomb directly at the target destination, but only if the player isn't right there"
+	input DropBombAtTargetAlways(target_destination) : "Immediately drops a bomb directly at the target destination, no matter whether it's fair or not."
+	input DropBombDelay(float) : "Add a delay before the next bomb is dropped"
+	input BecomeIndestructible(void) : "Makes the helicopter take no more damage"
+	input DisablePathVisibilityTests(void) : "When the helicopter moves, he will not check for visibility from the path_track to the enemy to cull out path_tracks"
+	input EnablePathVisibilityTests(void) : "When the helicopter moves, he will only move to path_tracks that have line-of-sight to the enemy"
+	input StartCarpetBombing(void) : "Starts the helicopter constantly dropping megabombs until StopCarpetBombing input"
+	input StopCarpetBombing(void) : "Stop the carpet bombing behavior"
+
+	// Outputs
+	output OnHealthChanged(integer) : "Fires when the helicopter health changes. The integer is the percentage of health the chopper has from 0-100."
+	output OnShotDown(void) : "Fires the instant the helicopter is killed"
+	]

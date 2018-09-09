@@ -1,0 +1,15 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	size(-8 -8 -8, 8 8 8) 
+	iconsprite("editor/ts2do/env_credits.vmt") = env_credits: "An entity to control the rolling credits."
+	[
+
+	// Inputs
+	input RollCredits(void) : "Start the intro credits rolling."
+	input RollOutroCredits(void) : "Start the outro credits rolling."
+	input ShowLogo(void) : "Show the HL2 logo."
+
+	// Outputs
+	output OnCreditsDone(void) : "Fired when the credits having finished rolling."
+	]

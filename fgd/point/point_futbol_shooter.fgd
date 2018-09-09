@@ -1,0 +1,15 @@
+
+@PointClass base(Targetname, Parentname, Angles) 
+	appliesto(P2) 
+	studio("models/editor/angle_helper.mdl") = point_futbol_shooter: "Fires prop_exploding_futbols at a target entity. Used in Wheatley's boss fight."
+	[
+	launchspeed(float) : "Launch speed" : 100 : "Speed to launch the futbol."
+
+	// Inputs
+	input SetTarget(target_destination) : "Set new launch target"
+	input ShootFutbol(void) : "Shoot a futbol at the target"
+
+	// Outputs
+	output OnShootSuccess(void) : "Called when a futbol is successfully fired."
+	output OnShootFail(void) : "Called when a futbol fails to fire."
+	]

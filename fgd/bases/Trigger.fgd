@@ -1,0 +1,14 @@
+
+@BaseClass base(Targetname, Parentname, Origin, EnableDisable, TriggerOnce, Targetname, Parentname, Origin, EnableDisable, TriggerOnce) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	line(255 255 255, targetname, filtername) = Trigger
+	[
+
+	// Inputs
+	input DisableAndEndTouch[!CSGO, TF2](void) : "Disables this trigger and calls EndTouch on all currently-touching entities."
+
+	// Outputs
+	output OnStartTouchAll(void) : "Fired when an entity starts touching this trigger, and no other entities are touching it. Only entities that passed this trigger's filters are considered."
+	output OnEndTouch(void) : "Fired when an entity stops touching this trigger. Only entities that passed this trigger's filters will cause this output to fire."
+	output OnEndTouchAll(void) : "Fires when an entity stops touching this trigger, and no other entities are touching it. Only entities that passed this trigger's filters are considered."
+	]

@@ -1,0 +1,22 @@
+
+@PointClass base(BasePropPhysics, RenderFields, BasePropPhysics, RenderFields) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	studioprop() 
+	sphere(fademindist) 
+	sphere(fademaxdist) = prop_physics: "A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges or other constraints. It can also be configured to break when it takes enough damage. Note that the health of the object will be overridden by the health inside the model, to ensure consistent health game-wide. If the model used by the prop is configured to be used as a prop_dynamic (i.e. it should not be physically simulated) then it CANNOT be used as a prop_physics. Upon level load it will display a warning in the console and remove itself. Use a prop_dynamic instead.|||A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges or other constraints. It can also be configured to break when it takes enough damage. Note that the health of the object will be overridden by the health inside the model, to ensure consistent health game-wide. If the model used by the prop is configured to be used as a prop_dynamic (i.e. it should not be physically simulated) then it CANNOT be used as a prop_physics. Upon level load it will display a warning in the console and remove itself. Use a prop_physics_override instead."
+	[
+	bulletforceimmune[!P2, !CSGO, ASW, !TF2](boolean) : "Immune to bullet forces" : 0 : "Used to determine whether or not bullet damage should cause the prop to move."
+	allowfunnel[!CSGO, P2, !TF2](boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a portal."
+	exploitablebyplayer[CSGO](choices) : "Exploitable by Player" : "0" =
+		[
+		0: "Default"
+		1: "Explosive"
+		]
+
+
+	// Inputs
+	input Ignite[!P2](void) : "Ignite, burst into flames."
+	input IgniteLifetime[!P2](float) : "Ignite, with a parameter lifetime."
+	input IgniteNumHitboxFires[!P2](integer) : "Ignite, with a parameternumber of hitbox fires."
+	input IgniteHitboxFireScale[!P2](float) : "Ignite, with a parameter hitbox fire scale."
+	]

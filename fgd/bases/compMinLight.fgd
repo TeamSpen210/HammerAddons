@@ -1,0 +1,6 @@
+
+@BaseClass 
+	appliesto(P2) = compMinLight
+	[
+	_minlight(string) : "Minimum Light Level" : : "The minimum level of ambient light that hits this brush."
+	]

@@ -1,0 +1,42 @@
+
+@SolidClass base(Trigger) 
+	appliesto(ASW) = trigger_asw_jump: "A trigger volume that causes Swarm Drones to jump when they come into contact with it"
+	[
+	jumpdestname(target_destination) : "Jump Destination Name" : : "The name of the item Drones should jump to (use an info_target)."
+	minmarinedist(float) : "Min. Marine Distance" : 400 : "If a marine is within this distance from the Drone, the Drone will not jump."
+	clearorders(choices) : "Clear Orders" : "1" : "Clear the jumpers orders when he jumps." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	checkenemydirection(choices) : "Check enemy direction" : "1" : "If the alien has an enemy, check it's in the direction of the jump, else don't jump." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	checktriggerjumped(choices) : "Check Trigger Jumped Already" : "1" : "Don't jump if the alien has trigger jumped already." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	retryfailedjumps(choices) : "Retry Failed Jumps" : "0" : "If set and the alien can't make the jump, the alien will stand and wait until he can make the jump." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	forcejump(choices) : "Force Jump" : "0" : "Forces alien to jump with the Force Angle and Speed, without using the jump target and without checking for a valid jump or enemy." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	forceangle(angle) : "Force Jump Pitch Yaw Roll (Y Z X)" : "90 0 0" : "Direction the alien should do a forced jump."
+	forcespeed(float) : "Force Jump Speed" : 400 : "Speed of forced jump."
+
+	// Outputs
+	output OnTrigger(void) : "Fired whenever the trigger is activated."
+	]

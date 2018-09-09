@@ -1,0 +1,9 @@
+
+@SolidClass base(Trigger) 
+	appliesto(TF2) = trigger_ignite: "Ignite the player and burn the player over time."
+	[
+	burn_duration(float) : "Burn duration" : 5 : "Duration of the after burn effect on the player after leaving the trigger."
+	damage_percent_per_second(float) : "Damage(%) per second" : 10 : "Damage per second while inside the trigger."
+	ignite_particle_name(string) : "Ignite particle name" : : "Name of the particle that plays when player first touch the trigger."
+	ignite_sound_name(string) : "Ignite sound name" : : "Name of the sound script that plays when player first touch the trigger."
+	]

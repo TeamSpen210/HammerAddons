@@ -1,0 +1,18 @@
+
+@PointClass base(Targetname, Angles) 
+	appliesto(P2) 
+	studioprop("models/props/stopwatch_finish_line.mdl") = portal_race_checkpoint: "Checkpoint for race maps."
+	[
+	resettime(float) : "Reset Time" : 5.0 : "The time it takes for the checkpoint to reset after activation"
+	skin(integer) : "<Skin>" : 3 : "Ignore, needed to make the skin lit."
+
+	// Inputs
+	input Activate(void) : "Activates the checkpoint."
+	input CancelActivate(void) : "Cancels the checkpoint's activated state."
+	input Lock(void) : "Locks the checkpoint from being activated."
+	input Unlock(void) : "The checkpoint can be activated."
+
+	// Outputs
+	output OnCheckpointActivated(void) : "Fired when the checkpoint is activated by the player."
+	output OnCheckpointReset(void) : "Fired when the checkpoint is reset after being activated by the player."
+	]

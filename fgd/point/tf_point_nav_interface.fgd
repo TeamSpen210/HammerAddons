@@ -1,0 +1,8 @@
+
+@PointClass base(Targetname) 
+	appliesto(TF2) = tf_point_nav_interface: "Entity interface to the TF nav mesh."
+	[
+
+	// Inputs
+	input RecomputeBlockers(void) : "Recompute blocks in the nav mesh.  Call this after blockers change state (ie. a door opens or closes)."
+	]

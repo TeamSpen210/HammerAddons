@@ -1,0 +1,73 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	iconsprite("editor/env_player_surface_trigger.vmt") 
+	color(200 0 0) = env_player_surface_trigger: "An entity that monitors the material of the surface the player is standing on, and fires outputs whenever it changes to/from a specific material."
+	[
+	gamematerial(choices) : "Game Material to Watch" : "0" : "The material to watch. When the player stands on/off this material, this entity's outputs will be fired." =
+		[
+		0: "None (player's in the air)"
+		67: "Concrete"
+		77: "Metal"
+		68: "Dirt"
+		86: "Vent"
+		71: "Grate"
+		84: "Tile"
+		83: "Slosh"
+		87: "Wood"
+		80: "Computer"
+		89: "Glass"
+		70: "Flesh"
+		73: "Clip"
+		79: "Foliage"
+		78: "Sand"
+		]
+
+	gamematerial[P2](choices) : "Game Material to Watch" : "0" : "The material to watch. When the player stands on/off this material, this entity's outputs will be fired." =
+		[
+		0: "Nonfunctional (air)"
+		67: "C - Concrete"
+		77: "M - Metal"
+		68: "D - Dirt"
+		86: "V - Vent"
+		71: "G - Grate"
+		84: "T - Tile"
+		83: "S - Slosh"
+		87: "W - Wood"
+		80: "P - Computer"
+		89: "Y - Glass"
+		70: "F - Flesh"
+		73: "I - Clip"
+		79: "O - Foliage"
+		78: "N - Sand"
+		65: "A - Antlion"
+		66: "B - Bloody Flesh"
+		69: "E - Eggshell"
+		72: "H - Alien Flesh"
+		75: "K - Snow"
+		76: "L - Plastic"
+		82: "R - Reflective / Brick"
+		88: "X - Fake surfaces"
+		90: "Z - Warp Shield"
+		1: "1 - Clay"
+		2: "2 - Plaster"
+		3: "3 - Rock"
+		4: "4 - Rubber"
+		5: "5 - Sheet Rock"
+		6: "6 - Cloth"
+		7: "7 - Carpet"
+		8: "8 - Paper"
+		9: "9 - Upholstery"
+		0: "0 - Puddle"
+		11: "11 - Steam Pipe"
+		]
+
+
+	// Inputs
+	input Enable(void) : "Start watching the player's surface."
+	input Disable(void) : "Stop watching the player's surface."
+
+	// Outputs
+	output OnSurfaceChangedToTarget(void) : "Fired when the player moves onto the specified game material."
+	output OnSurfaceChangedFromTarget(void) : "Fired when the player moves off the specified game material."
+	]

@@ -1,0 +1,6 @@
+
+@NpcClass base(TalkNPC) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/gman.mdl") = npc_gman: "The G-Man"
+	[
+	]

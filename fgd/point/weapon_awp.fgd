@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_snip_awp_dropped.mdl") = weapon_awp: "AWP"
+	[
+	]

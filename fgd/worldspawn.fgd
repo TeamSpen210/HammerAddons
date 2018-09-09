@@ -1,0 +1,32 @@
+
+@SolidClass base(Targetname, worldbase, ResponseContext, Targetname, worldbase, ResponseContext) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = worldspawn: "This is the world entity. Each map can only contain one, and it's automatically created for you."
+	[
+	paintinmap[!CSGO, P2, !TF2](choices) : "Enable Paint" : "0" : "Enable code for spreading paint on surfaces, and bouncing physics objects around." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	maxblobcount[!CSGO, P2, !TF2](integer) : "Gel Blob Limit" : 250 : "Number of Gel blobs that can exist. Maximum is 250."
+	message[!CSGO, P2, !TF2](string) : "Map Description / Title"
+	skyname[!CSGO, P2, !TF2](string) : "SkyBox" : "sky_black_nofog" : "Texture used for the 2D skybox."
+	chaptertitle[!CSGO, P2, !TF2](string) : "Chapter Title Message" : : "Chapter Title that appears onscreen when this level starts."
+	startdark[!CSGO, P2, !TF2](boolean) : "Level Fade In" : 0
+	gametitle[!CSGO, P2, !TF2](boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts."
+	newunit[!CSGO, P2, !TF2](choices) : "New Level Unit" : "0" : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. Only set it to Yes if the player cannot return to any previous levels." =
+		[
+		0: "No, keep current"
+		1: "Yes, clear previous levels"
+		]
+
+	maxoccludeearea[!CSGO, P2, !TF2](float) : "Max occluder area" : 0 : "[Used on PC] Prevents occlusion testing for entities that take up more than X% of the screen."
+	minoccluderarea[!CSGO, P2, !TF2](float) : "Min occluder area" : 0 : "[Used on PC] Prevents occluders from being used if they take up less than X% of the screen."
+	maxpropscreenwidth[!CSGO, P2, !TF2](float) : "Start Fade Pixels" : -1 : "Number of pixels wide at which all props in the level start to fade (<0 = use fademaxdist). This number is ignored if the prop has a specific fade distance specified."
+	minpropscreenwidth[!CSGO, P2, !TF2](float) : "End Fade Pixels" : 0 : "Minimum number of pixels wide at which the prop is visible (0 = don't fade out). This number is ignored if the prop has a specific fade distance specified."
+	detailvbsp[!CSGO, P2, !TF2](string) : "Detail.vbsp file" : "detail.vbsp" : "Detail.vbsp file to use for emitting detail props (found in directory <root>/modname)"
+	detailmaterial[!CSGO, P2, !TF2](material) : "Detail material file" : "detail/detailsprites" : "Material for detail sprites to use for drawing detail props."
+	coldworld[!CSGO, P2, !TF2](boolean) : "World is cold" : 0 : "Emit steam from NPC's mouths and similar effects."
+	maxoccludeearea_x360[!CSGO, P2, !TF2](float) : "Max occluder area (Xbox)" : 0 : "[Used on 360] Prevents occlusion testing for entities that take up more than X% of the screen."
+	minoccluderarea_x360[!CSGO, P2, !TF2](float) : "Min occluder area (Xbox)" : 0 : "[Used on 360] Prevents occluders from being used if they take up less than X% of the screen."
+	]

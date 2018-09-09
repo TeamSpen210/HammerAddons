@@ -1,0 +1,24 @@
+
+@PointClass base(Targetname, EnableDisable, Targetname, EnableDisable) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	sphere(minfalloff) 
+	sphere(maxfalloff) 
+	iconsprite("editor/color_correction.vmt") = color_correction: "An entity to control the color correction in the map."
+	[
+	minfalloff(float) : "Lookup Falloff Start Distance" : 0.0 : "This is the distance to the start of the falloff region (-1 = everywhere)"
+	maxfalloff(float) : "Lookup Falloff End Distance" : 200.0 : "This is the distance to the end of the falloff region (-1 = everywhere)"
+	maxweight(float) : "Maximum Weight" : 1.0 : "This is the maximum weight for this lookup"
+	filename(string) : "Lookup Table Filename" : : "This is the lookup table filename"
+	fadeinduration(float) : "Lookup Fade In Duration" : 0.0 : "Duration of fade in on when enabled."
+	fadeoutduration(float) : "Lookup Fade out Duration" : 0.0 : "Dration of fade out on when disabled."
+	spawnflags[ASW, !TF2](flags) : "spawnflags" =
+		[
+		1: "Master" : 0
+		2: "Client-side simulation" : 0
+		]
+
+
+	// Inputs
+	input SetFadeInDuration(float) : "Sets the 'fadeInDuration' variable, used to fade cc lookup usage when entity is enabled."
+	input SetFadeOutDuration(float) : "Sets the 'fadeOutDuration' variable, used to fade cc lookup usage when entity is disabled."
+	]

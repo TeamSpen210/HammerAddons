@@ -1,0 +1,17 @@
+
+@PointClass base(Targetname, Parentname) 
+	appliesto(TF2) 
+	iconsprite("editor/bullseye.vmt") = halloween_zapper: "Halloween Hell Zapper"
+	[
+	touch_trigger(target_destination) : "Custom Touch Trigger"
+	particleeffect(string) : "Particle Effect" : : "The particle effect to be played when we fired."
+	zappertype(choices) : "Zapper Type" : "0" : "Type of zapper." =
+		[
+		0: "Zap on touch"
+		1: "Zap only on input"
+		]
+
+
+	// Inputs
+	input ZapTouching(void) : "Zap all touching players."
+	]

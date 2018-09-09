@@ -1,0 +1,17 @@
+
+@PointClass base(Targetname, Parentname, Angles, RenderFxChoices, RenderFields, Targetname, Parentname, Angles, RenderFxChoices, RenderFields) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	studio() = cycler: "An entity used to display a model for testing purposes. Shooting it with cycle through the model's animations."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Not Solid" : 0
+		]
+
+	model(studio) : "Model"
+	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
+	sequence(integer) : "Sequence" : 0 : "Default animation sequence for the model to be playing after spawning."
+
+	// Inputs
+	input SetSequence(string) : "Sets the cycler's sequence."
+	]

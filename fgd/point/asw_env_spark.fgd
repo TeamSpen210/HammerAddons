@@ -1,0 +1,34 @@
+
+@PointClass base(Targetname, Parentname, Angles) 
+	appliesto(ASW) 
+	iconsprite("editor/env_spark.vmt") = asw_env_spark: "An entity used to create particle sparks at its origin."
+	[
+	rendercolor(color255) : "Color (R G B)" : "231 194 149"
+	mindelay(string) : "Min Delay" : "0.15" : "The shortest delay between sparks (in seconds)."
+	maxdelay(string) : "Max Delay" : "1" : "The longest delay between sparks (in seconds).  If the max delay is shorter than the min delay, the delay will equal the max."
+	magnitude(choices) : "Magnitude" : "50" : "The size of the sparks." =
+		[
+		25: "Tiny"
+		50: "Small"
+		100: "Medium"
+		200: "Large"
+		400: "Huge"
+		]
+
+	percentcollide(float) : "Percent Collide" : 10 : "What percentage of the sparks will collide with the world (0-100)"
+	spawnflags(flags) : "spawnflags" =
+		[
+		64: "Start ON" : 0
+		128: "Silent" : 0
+		256: "Electrical" : 1
+		]
+
+
+	// Inputs
+	input StartSpark(void) : "Start the spark effect."
+	input StopSpark(void) : "Stop the spark effect."
+	input ToggleSpark(void) : "Toggle the on/off state of the spark effect."
+	input SparkOnce(void) : "Spark once."
+	input SetMinDelay(float) : "Set the min delay that a spark will shoot."
+	input SetMaxDelay(float) : "Set the max delay that a spark will shoot."
+	]

@@ -1,0 +1,24 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/hunter.mdl") = npc_hunter: "A smaller, faster, strider that can pursue the player into buildings."
+	[
+	followtarget(target_destination) : "Strider to Follow" : : "The name of the strider that this hunter should follow."
+
+	// Inputs
+	input FollowStrider(target_destination) : "Sets the name of the strider that this hunter should follow."
+	input SetMinigunTime(float) : "Time to shoot at any set minigun target."
+	input SetMinigunTarget(string) : "Hunter will shoot minigun at the named target."
+	input DisableShooting(void) : "Forces the hunter to be melee-only."
+	input EnableShooting(void) : "Allows the hunter to use range attacks or melee attacks."
+	input DisableSquadShootDelay(void) : "Disables the delay between range attacks for squads of hunters, allowing them to shoot as frequently as they wish."
+	input EnableSquadShootDelay(void) : "Enables the delay between range attacks for squads of hunters."
+	input EnableUnplantedShooting(void) : "Used mainly for scripted attacks against bullseyes. Enables the hunter to shoot without having to plant first."
+	input DisableUnplantedShooting(void) : "Returns the hunter to normal after a call to EnableUnplantedShooting."
+	input DoPhysicsBlast(void) : "Hunter will instantly do the defensive physics blast."
+	input Crouch(void) : "Crouch down."
+	input Stand(void) : "Stand up from crouch."
+	input DisableCrouchWalk(void) : "UNUSED: Prevents the hunter from crouch walking."
+	input EnableCrouchWalk(void) : "UNUSED: Allows the hunter to crouch walk."
+	input UseSiegeTargets(string) : "Pass in the name of info_targets to shoot at when I can't shoot at the player."
+	]

@@ -1,0 +1,10 @@
+
+@SolidClass base(Targetname) 
+	appliesto(P2) = func_weight_button: "A button which activates after a specified amount of weight is applied. Likely useless."
+	[
+	weighttoactivate(float) : "Amount of weight required before this button activates."
+
+	// Outputs
+	output OnPressed(void) : "Fired when the button is touching enough weight."
+	output OnReleased(void) : "Fired when the button was pressed, but weight was removed."
+	]

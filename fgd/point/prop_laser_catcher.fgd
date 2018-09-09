@@ -1,0 +1,30 @@
+
+@PointClass base(Targetname, Angles, Parentname, Reflection, ToggleDraw, RenderFields) 
+	appliesto(P2) 
+	studioprop() = prop_laser_catcher: "Discouragement Beam Catcher that detects a laser, absorbing the beam. The entity will fire outputs when struck and unstruck."
+	[
+	skintype(choices) : "Skin Type" : "0" : "Set the type of catcher to use." =
+		[
+		0: "Clean"
+		1: "Rusted"
+		]
+
+	skin(choices) : "[H] Skin Type" : "0" : "The skin to show in Hammer." =
+		[
+		0: "Clean  - Off"
+		1: "Clean  - On"
+		2: "Rusted - Off"
+		3: "Rusted - On"
+		]
+
+	model(choices) : "Laser Catcher Model" : "models/props/laser_catcher_center.mdl" : "Is the catcher offset? (You can also add a custom model here.)" =
+		[
+		"models/props/laser_catcher_center.mdl": "Centered"
+		"models/props/laser_catcher.mdl": "Offset"
+		]
+
+
+	// Outputs
+	output OnPowered(void) : "Fired when a laser hits the target."
+	output OnUnpowered(void) : "Fired when a laser has stopped hitting the target."
+	]

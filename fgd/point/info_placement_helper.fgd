@@ -1,0 +1,18 @@
+
+@PointClass base(Targetname, Parentname, Angles, EnableDisable) 
+	appliesto(P2) 
+	line(255 255 0, targetname, proxy_name) 
+	line(255 255 0, targetname, attach_target_name) 
+	sphere(radius, 255 128 0) 
+	studio("models/editor/placement_helper.mdl") = info_placement_helper: "Portal Placement Helper, indicates where portals will snap to. The arrow points to the 'up' diection for the portal."
+	[
+	radius(float) : "Radius" : 16 : "Radius in which to influence placement."
+	proxy_name(target_destination) : "Proxy Entity Name" : : "Name of the entity we want to use for our real placement position."
+	attach_target_name(target_destination) : "Attach Entity Name" : : "Name of the entity we want to force our attachment to. Ensures this applies to the correct brush. Needs parent!"
+	snap_to_helper_angles(boolean) : "Use helper's angles" : 0 : "Portals will lock to the angles, instead of rotating in all directions.."
+	force_placement(boolean) : "Force Placement" : 1 : "Ignores placement rules when placing at this helper."
+
+	// Outputs
+	output OnObjectPlaced(void) : "A portal has been successfully placed using us as a guide."
+	output OnObjectPlacedSize(integer) : "When a portal is successfully placed, this sends the scale level as an out value"
+	]

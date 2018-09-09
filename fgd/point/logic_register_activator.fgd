@@ -1,0 +1,21 @@
+
+@PointClass base(Targetname, EnableDisable, Targetname, EnableDisable) 
+	appliesto(P2, CSGO) 
+	color(0 100 250) 
+	size(-8 -8 -8, 8 8 8) = logic_register_activator: "Stores an entity and sends messages with it as the activator\nUseful for keeping track of entities with mangled names due to template spawners and instances."
+	[
+
+	// Inputs
+	input Toggle(void) : "Toggle between enabled and disabled."
+	input FireRegisteredAsActivator1(void) : "Start a message from this entity using the matching OnRegisteredActivating - but the activator is the registered entity."
+	input FireRegisteredAsActivator2(void) : "Start a message from this entity using the matching OnRegisteredActivating - but the activator is the registered entity."
+	input FireRegisteredAsActivator3(void) : "Start a message from this entity using the matching OnRegisteredActivating - but the activator is the registered entity."
+	input FireRegisteredAsActivator4(void) : "Start a message from this entity using the matching OnRegisteredActivating - but the activator is the registered entity."
+	input RegisterEntity(string) : "Stores an entity to later be used as an activator."
+
+	// Outputs
+	output OnRegisteredActivate1(void) : "Fired to send a message using the registered as the activator."
+	output OnRegisteredActivate2(void) : "Fired to send a message using the registered as the activator."
+	output OnRegisteredActivate3(void) : "Fired to send a message using the registered as the activator."
+	output OnRegisteredActivate4(void) : "Fired to send a message using the registered as the activator."
+	]

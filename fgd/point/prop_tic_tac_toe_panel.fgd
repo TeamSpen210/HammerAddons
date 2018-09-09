@@ -1,0 +1,10 @@
+
+@PointClass base(Targetname, Parentname, Angles) 
+	appliesto(P2) 
+	studioprop("models/editor/prop_indicator_panel.mdl") = prop_tic_tac_toe_panel: "Unknown use, likely for some kind of ping detector."
+	[
+
+	// Outputs
+	output OnPlayer1Pinged(void) : "Fired if pinged by Player 1."
+	output OnPlayer2Pinged(void) : "Fired if pinged by Player 2."
+	]

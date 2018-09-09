@@ -1,0 +1,6 @@
+
+@PointClass base(prop_glass_futbol_socket) 
+	appliesto(P2) 
+	studio("models/editor/axis_helper.mdl") = hot_potato_catcher: "Catches 'hot potatos' and fires an output."
+	[
+	]

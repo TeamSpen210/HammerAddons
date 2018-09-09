@@ -1,0 +1,6 @@
+
+@SolidClass base(Targetname, Origin, Angles, EnableDisable) 
+	appliesto(EP1, EP2, HL2, ASW) = info_apc_missile_hint: "Something that helps APC missiles guide. If the missile can hit the associated target entitybetween the time it takes the current enemy to enter + leave the hint, then the missile will guide to the entity."
+	[
+	target(target_destination) : "Target Entity" : : "The entity that the missile will guide towards if the conditions are met."
+	]

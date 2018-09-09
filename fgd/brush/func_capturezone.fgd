@@ -1,0 +1,21 @@
+
+@SolidClass base(Targetname, EnableDisable, TeamNum) 
+	appliesto(TF2) = func_capturezone: "TF flag capture zone (set Team to 'any' for Territory Control maps)."
+	[
+	capturepoint(integer) : "Capture Point" : 1 : "Used for Attack/Defend and Territory Control maps ONLY. This is ignored for CTF maps. Set this value to the Capture Point number for this entity."
+	capture_delay(float) : "Capture Delay" : 1.1 : "Only used on Player Destruction maps, this is the default number of seconds between captures when the player is touching the area."
+	capture_delay_offset(float) : "Capture Delay Offset" : 0.025 : "Only used on Player Destruction maps, this is amount of time to reduce the Capture Delay per player on the server."
+	shouldblock(choices) : "Capture Blocking" : "1" : "Only used on Player Destruction maps, this determines whether multiple teams in the zone will block each other from captures." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+
+	// Outputs
+	output OnCapture(void) : "Sent when a flag is captured in this zone."
+	output OnCapTeam1(void) : "Sent when RED captures a flag in this zone."
+	output OnCapTeam2(void) : "Sent when BLU captures a flag in this zone."
+	output OnCapTeam1_PD(void) : "Sent when RED captures a point in this zone during Player Destruction mode."
+	output OnCapTeam2_PD(void) : "Sent when BLU captures a point in this zone during Player Destruction mode."
+	]

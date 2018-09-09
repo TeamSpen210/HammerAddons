@@ -1,0 +1,14 @@
+
+@PointClass base(Targetname) 
+	appliesto(ASW) 
+	iconsprite("editor/info_target.vmt") = asw_marines_past_area: "Entity that can be told when marines go past a certain point and will fire an output when the specified number of marines are past.  Can be told when a marine has backtracked to account for that also."
+	[
+	nummarines(integer) : "Num Marines" : 3 : "How many marines must pass this area for the 'MarinesPast' output to fire."
+
+	// Inputs
+	input MarineInFront(void) : "A trigger should send this input when a marine is past this point."
+	input MarineBehind(void) : "A trigger should send this input when a marine is behind this point (to detect marines that walk past here but then backtrack)."
+
+	// Outputs
+	output MarinesPast(void) : "Fired when the desired number of marines are past here"
+	]

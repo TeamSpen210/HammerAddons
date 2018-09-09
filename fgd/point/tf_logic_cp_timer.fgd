@@ -1,0 +1,14 @@
+
+@PointClass base(Targetname) 
+	appliesto(TF2) = tf_logic_cp_timer: "Control Point Timer Entity."
+	[
+	controlpoint(target_destination) : "Control Point" : : "The team_control_point associated with this timer."
+	timer_length(integer) : "Timer length (in seconds)" : 60 : "Length of the timer that runs when the control point becomes available for capture."
+
+	// Outputs
+	output OnCountdownStart(void) : "Sent when the timer starts."
+	output OnCountdown15SecRemain(void) : "Sent when 15 seconds remain."
+	output OnCountdown10SecRemain(void) : "Sent when 10 seconds remain."
+	output OnCountdown5SecRemain(void) : "Sent when 5 seconds remain."
+	output OnCountdownEnd(void) : "Sent when the timer expires and the point is not being captured."
+	]

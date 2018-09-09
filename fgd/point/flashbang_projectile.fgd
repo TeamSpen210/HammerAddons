@@ -1,0 +1,9 @@
+
+@PointClass base(Targetname, Angles) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_eq_flashbang_thrown.mdl") = flashbang_projectile: "Flashbang Projectile"
+	[
+
+	// Inputs
+	input SetTimer(float) : "Specify how many seconds before it explodes."
+	]

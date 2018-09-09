@@ -1,0 +1,18 @@
+
+@BaseClass 
+	appliesto(P2) = LinkedPortalDoor: "An entity that can be linked to another door and create a passage between them dynamically."
+	[
+
+	// Inputs
+	input SetPartner(target_destination) : "Set a new partner door."
+	input Open(void) : "Open the door and cause the portal to activate."
+	input Close(void) : "Close the door and cause the portal to deactivate."
+
+	// Outputs
+	output OnOpen(void) : "Called when the door has started its open animation."
+	output OnClose(void) : "Called when the door has started its close animation."
+	output OnEntityTeleportFromMe(void) : "When any entity is teleported from this portal to the linked partner."
+	output OnPlayerTeleportFromMe(void) : "When the player is teleported from this portal to the linked partner."
+	output OnEntityTeleportToMe(void) : "When any entity is teleported from this linked partner to the portal."
+	output OnPlayerTeleportToMe(void) : "When the player is teleported from this linked partner to the portal."
+	]

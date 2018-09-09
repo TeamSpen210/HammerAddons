@@ -1,0 +1,5 @@
+
+@SolidClass base(Targetname, EnableDisable, TeamNum) 
+	appliesto(TF2) = func_passtime_goalie_zone
+	[
+	]

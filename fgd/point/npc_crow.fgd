@@ -1,0 +1,15 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/crow.mdl") = npc_crow: "Crow"
+	[
+	deaf(choices) : "Deaf?" : "0" =
+		[
+		0: "No."
+		1: "Yes. Ignore sounds."
+		]
+
+
+	// Inputs
+	input FlyAway(string) : "Forces the crow to fly to the nearest crow flyto hint node."
+	]

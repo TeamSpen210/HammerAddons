@@ -1,0 +1,55 @@
+
+@PointClass base(Targetname, Parentname, Angles, Targetname, Parentname, Angles) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	cylinder(255 255 255, targetname, target, radius, targetname, targetname, radius) 
+	color(255 192 0) 
+	size(16 16 16) 
+	studio("models/editor/angle_helper.mdl") 
+	cylinder(255 255 255, targetname, altpath, radius, targetname, targetname, radius) 
+	sphere(radius) 
+	studio("models/editor/cone_helper.mdl") = path_track: "An entity used to build paths for other entities to follow. Each path_track is a node on the path, each holding the name of the next path_track in the path."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Disabled" : 0
+		2: "Fire once" : 0
+		4: "Branch Reverse" : 0
+		8: "Disable train" : 0
+		16: "Teleport to THIS path track" : 0
+		32: "Part of an uphill path" : 0
+		64: "Part of a downhill path" : 0
+		]
+
+	spawnflags[ASW](flags) : "spawnflags" =
+		[
+		1: "Disabled" : 0
+		2: "Fire once" : 0
+		4: "Branch Reverse" : 0
+		8: "Disable train" : 0
+		16: "Teleport to THIS path track" : 0
+		]
+
+	target(target_destination) : "Next Stop Target" : : "The next path_track in the path."
+	altpath(target_destination) : "Branch Path" : : "An alternative path_track to be the next node in the path. Useful for making branching paths. Use the ToggleAlternatePath / EnableAlternatePath inputs to make the alternative path active."
+	speed(float) : "New Train Speed" : 0 : "When the train reaches this path_track, it will set its speed to this speed. This speed must be a positive value that is less than the train's max speed. A value of 0 will cause no change in the train's speed."
+	radius(float) : "Path radius" : 0 : "Used by NPCs who follow track paths (attack chopper/gunship). This tells them the maximum distance they're allowed to be from the path at this node."
+	orientationtype(choices) : "Orientation Type" : "1" : "The way that the path follower faces as it moves through this path track." =
+		[
+		0: "No change"
+		1: "Face direction of motion"
+		2: "Face this path_track's angles"
+		]
+
+
+	// Inputs
+	input ToggleAlternatePath(void) : "Cause the track to toggle to/from its alternate path."
+	input EnableAlternatePath(void) : "Enable the alternate path of the track."
+	input DisableAlternatePath(void) : "Disable the alternate path of the track."
+	input TogglePath(void) : "Cause the track to toggle on/off/"
+	input EnablePath(void) : "Enable the track."
+	input DisablePath(void) : "Disable the track."
+
+	// Outputs
+	output OnPass(void) : "Fired when any entity following this path passes this path_track node."
+	output OnTeleport[!ASW, !CSGO, !P2](void) : "Fired when any entity following this path teleports directly to this path_track node."
+	]

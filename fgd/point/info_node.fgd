@@ -1,0 +1,38 @@
+
+@PointClass base(Node, Node) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	studio("models/editor/ground_node.mdl") 
+	color(232 219 8) = info_node: "A navigation node for ground moving NPCs. Navigation nodes are baked into the nodegraph so that NPCs can move to them. Ground nodes fall to the ground when they spawn."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Force human permission" : 0
+		2: "Force small_centered permission" : 0
+		4: "Force wide_human permission" : 0
+		8: "Force tiny permissiont" : 0
+		16: "Force wide_short permission" : 0
+		32: "Force medium permission" : 0
+		64: "Force tiny_centered permission" : 0
+		128: "Force large permission" : 0
+		256: "Force large_centered permission" : 0
+		512: "Keep editor position" : 0
+		]
+
+	spawnflags[ASW](flags) : "spawnflags" =
+		[
+		1: "Force human permission" : 0
+		2: "Force small_centered permission" : 0
+		4: "Force wide_human permission" : 0
+		8: "Force tiny permissiont" : 0
+		16: "Force wide_short permission" : 0
+		32: "Force medium permission" : 0
+		64: "Force tiny_centered permission" : 0
+		128: "Force large permission" : 0
+		256: "Force large_centered permission" : 0
+		512: "Keep editor position" : 0
+		1024: "Force medium tall permission" : 0
+		2048: "Force tiny fluid permission" : 0
+		4096: "Force medium big (Swarm Drone) permission" : 0
+		]
+
+	]

@@ -1,0 +1,23 @@
+
+@SolidClass base(Targetname, TeamNum, EnableDisable, Toggle) 
+	appliesto(TF2) = func_nobuild: "Engineer no-build area."
+	[
+	allowsentry(choices) : "Allow Sentries" : "0" : "Sentries are allowed to be built in this volume" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	allowdispenser(choices) : "Allow Dispensers" : "0" : "Dispensers are allowed to be built in this volume" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	allowteleporters(choices) : "Allow Teleporters" : "0" : "Teleporters are allowed to be built in this volume" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	]

@@ -1,0 +1,23 @@
+
+@PointClass base(Targetname, Parentname, Angles) 
+	appliesto(P2) 
+	studioprop("models/props/tripwire_turret.mdl") = prop_rocket_tripwire: "A stationary rocket turret that fires a rocket when players walk in front of it."
+	[
+	rocketspeed(float) : "Rocket Speed" : 450 : "Speed the rocket will travel at."
+	rocketlifetime(float) : "Rocket Lifetime" : 20 : "The rocket will automatically detonate after this number of seconds."
+	startdisabled(choices) : "Initial State" : "0" =
+		[
+		0: "Enabled"
+		1: "Disabled"
+		]
+
+
+	// Inputs
+	input ForceFire(void) : "Forces the rocket turret to fire."
+	input EnableTripwire(void) : "Enables the rocket turret."
+	input DisableTripwire(void) : "Disables the rocket turret."
+
+	// Outputs
+	output OnTripped(void) : "Fires when the laser has been tripped"
+	output OnRocketExplode(void) : "Fires when the rocket explodes."
+	]

@@ -1,0 +1,59 @@
+
+@BaseClass base(Parentname, Global, Angles, Studiomodel, BreakableProp, DXLevelChoice, BaseFadeProp, RenderFields, SystemLevelChoice, Shadow, Parentname, Global, Angles, Studiomodel, BreakableProp, SystemLevelChoice, BaseFadeProp, RenderFields, Shadow) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = prop_dynamic_base
+	[
+	solid(choices) : "Collisions" : "6" =
+		[
+		0: "Not Solid"
+		2: "Use Bounding Box"
+		6: "Use VPhysics"
+		]
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		64: "Use Hitboxes for Renderbox" : 0
+		256: "Start with collision disabled" : 0
+		]
+
+	defaultanim(string) : "Default Animation" : : "The name of the idle animation that this prop will revert to whenever it finishes a random or forced animation."
+	randomanimation(choices) : "Randomly Animate" : "0" : "If set, this prop will randomly choose and play animations, based upon the times specified in 'Min/Max Random Anim Time'. Inbetween the random animations, it will revert to playing the 'Default Animation'." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	randomanimation[ASW](boolean) : "Randomly Animate" : 0 : "If set, this prop will randomly choose and play animations, based upon the times specified in 'Min/Max Random Anim Time'. Inbetween the random animations, it will revert to playing the 'Default Animation'."
+	minanimtime(float) : "Min Random Anim Time" : 5 : "Minimum time between random animations."
+	maxanimtime(float) : "Max Random Anim Time" : 10 : "Maximum time between random animations."
+	setbodygroup(integer) : "Body Group" : 0
+	setbodygroup[P2](integer) : "Body Group" : 0 : "Body Groups allow turning on and off parts of a model, so sections can be shown or hidden dynamically."
+	disablebonefollowers(choices) : "Disable Bone Followers" : "0" : "If set, this prop won't generate bone followers, even if they're listed in the model's .qc" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	disablebonefollowers[ASW](boolean) : "Disable Bone Followers" : 0 : "If set, the prop will not use bone followers, even if it has them defined."
+	lightingorigin(target_destination) : "Lighting Origin" : : "Select a path_corner entity to specify a location to sample lighting from, instead of using this entity's origin."
+	holdanimation[ASW, !TF2](boolean) : "Hold Animation" : 0 : "If set, the prop will not loop its animation, but hold the last frame."
+	rendercolor[ASW, !TF2](color255) : "Color (R G B)" : "255 255 255"
+	suppressanimsounds[!CSGO, P2, !TF2](boolean) : "Suppress Anim Sounds" : 0 : "If set, the prop will not play any sounds that are embedded in animations it plays."
+	is_autoaim_target[CSGO](boolean) : "Is Autoaim Target" : 0 : "If set, this prop will use the autoaim feature on consoles (slower look movement when this prop is directly under the crosshair)."
+
+	// Inputs
+	input SetAnimation(string) : "Force the prop to play an animation. The parameter should be the name of the animation."
+	input SetDefaultAnimation(string) : "Set the Default Animation to the one specified in the parameter."
+	input SetPlaybackRate(float) : "Set the playback rate for the animation."
+	input SetBodyGroup(integer) : "Set the visible bodygroup, by index."
+	input TurnOn(void) : "Make the prop visible."
+	input TurnOff(void) : "Make the prop invisible."
+	input EnableCollision(void) : "Enable collision on the prop."
+	input DisableCollision(void) : "Disable collision on the prop."
+	input SetAnimationNoReset[ASW, !TF2](string) : "Force the prop to play an animation unless the prop is already playing the animation. The parameter should be the name of the animation."
+	input BecomeRagdoll[P2, !TF2](void) : "Change into a ragdoll immediately."
+	input FadeAndKill[P2, !TF2](void) : "Fade out then remove this prop."
+
+	// Outputs
+	output OnAnimationBegun(void) : "Fired whenever a new animation has begun playing."
+	output OnAnimationDone(void) : "Fired whenever an animation is complete."
+	]

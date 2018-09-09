@@ -1,0 +1,28 @@
+
+@PointClass base(Targetname, Parentname, Targetname, Parentname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	sphere() 
+	iconsprite("editor/env_shake.vmt") 
+	color(200 0 0) = env_shake: "An entity to control screen shake on players."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "GlobalShake" : 0
+		4: "In Air" : 0
+		8: "Physics" : 0
+		16: "Ropes" : 0
+		32: "DON'T shake view (for shaking ropes or physics only)" : 0
+		64: "DON'T Rumble Controller" : 0
+		]
+
+	amplitude(float) : "Amplitude (0-16)" : 4 : "The amount of noise in the screen shake. Should be a range between 0 and 16."
+	radius(float) : "Effect Radius" : 500 : "The radius around this entity in which to affect players."
+	duration(float) : "Duration (seconds)" : 1 : "The length of time in which to shake the player's screens."
+	frequency(float) : "Frequency" : 2.5 : "The frequency used to apply the screen shake. Should be a value between 0 and 255, where 0.1 = jerk, and 255.0 = rumble."
+
+	// Inputs
+	input Amplitude(string) : "Set the amplitude (0-16)"
+	input Frequency(string) : "Set the frequence. Should be a value between 0 and 255, where 0.1 = jerk, and 255.0 = rumble."
+	input StartShake(void) : "Start the shake."
+	input StopShake(void) : "Stop the shake."
+	]

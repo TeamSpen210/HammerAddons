@@ -1,0 +1,11 @@
+
+@SolidClass base(BaseTank) 
+	appliesto(EP1, EP2, HL2, ASW) = func_tankpulselaser: "Brush Pulse Laser"
+	[
+	pulsespeed(float) : "Pulse Speed" : 1000 : "How fast does pulse travel"
+	pulsecolor(color255) : "Pulse Color" : "255 0 0" : "Color of the pulse"
+	pulsewidth(float) : "Pulse Width" : 20 : "Width of the pulse"
+	pulselife(float) : "Pulse Life" : 2 : "(Seconds)  How long the pulse lasts"
+	pulselag(float) : "Pulse Lag" : 0.05 : "(Seconds)  How far behind is pulse tail"
+	pulsefiresound(sound) : "Pulse Fire Sound" : : "Sound played when pulse fires"
+	]

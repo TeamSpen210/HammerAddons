@@ -1,0 +1,49 @@
+
+@BaseClass base(RenderFxChoices, RenderFxChoices) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = RenderFields
+	[
+	rendermode(choices) : "Render Mode" : "0" : "Used to set a non-standard rendering mode on this entity. See also 'FX Amount' and 'FX Color'." =
+		[
+		0: "Normal"
+		1: "Color"
+		2: "Texture"
+		3: "Glow"
+		4: "Solid"
+		5: "Additive"
+		7: "Additive Fractional Frame"
+		9: "World Space Glow"
+		10: "Dont Render"
+		]
+
+	rendermode[P2](choices) : "Render Mode" : "0" : "Used to set a non-standard rendering mode on this entity. See also 'FX Amount' and 'FX Color'." =
+		[
+		0: "Normal"
+		1: "Color"
+		2: "Texture"
+		3: "Glow"
+		4: "Solid"
+		5: "Additive"
+		7: "Additive Fractional Frame"
+		9: "World Space Glow"
+		10: "Don't Render"
+		]
+
+	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
+	renderamt[P2](integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode. Often affects opacity."
+	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
+	rendercolor[P2](color255) : "FX Color (R G B)" : "255 255 255" : "A color to mix with the model/sprite"
+	disablereceiveshadows(choices) : "Disable Receiving Shadows" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	disablereceiveshadows[ASW](boolean) : "Disable Receiving Shadows" : 0
+	fademindist[CSGO](float) : "Start Fade Dist" : -1 : "Distance at which the overlay starts to fade (<0 = subtract from fademaxdist)."
+	fademaxdist[CSGO](float) : "End Fade Dist" : 0 : "Maximum distance at which the overlay is visible (0 = don't fade out)."
+	fadescale[CSGO](float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under low end/medium end/XBox360, then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified. This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades. Numbers smaller than 1 cause the prop to fade out at further distances, and greater than 1 cause it to fade out at closer distances."
+
+	// Inputs
+	input Alpha(integer) : "Set the sprite's alpha (0 - 255)."
+	input Color(color255) : "Set the sprite's color (R G B)."
+	]

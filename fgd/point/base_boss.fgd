@@ -1,0 +1,31 @@
+
+@PointClass base(Targetname, Parentname, Angles, TeamNum) 
+	appliesto(TF2) = base_boss: "A Basic Boss"
+	[
+	health(integer) : "Boss' starting health" : 1000 : "The Boss' starting health."
+	model(string) : "Model" : "models/bots/boss_bot/boss_tank.mdl" : "The model to be used for this entity."
+	speed(float) : "Boss' max movement speed" : 75 : "Boss' max movement speed"
+	start_disabled(choices) : "Start Disabled" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+
+	// Inputs
+	input Enable(void) : "Enable the Boss"
+	input Disable(void) : "Disable the Boss"
+	input SetSpeed(float) : "Change the speed of the Boss"
+
+	// Outputs
+	output OnHealthBelow90Percent(void) : "Sent when the Boss' health drops below 90 percent."
+	output OnHealthBelow80Percent(void) : "Sent when the Boss' health drops below 80 percent."
+	output OnHealthBelow70Percent(void) : "Sent when the Boss' health drops below 70 percent."
+	output OnHealthBelow60Percent(void) : "Sent when the Boss' health drops below 60 percent."
+	output OnHealthBelow50Percent(void) : "Sent when the Boss' health drops below 50 percent."
+	output OnHealthBelow40Percent(void) : "Sent when the Boss' health drops below 40 percent."
+	output OnHealthBelow30Percent(void) : "Sent when the Boss' health drops below 30 percent."
+	output OnHealthBelow20Percent(void) : "Sent when the Boss' health drops below 20 percent."
+	output OnHealthBelow10Percent(void) : "Sent when the Boss' health drops below 10 percent."
+	output OnKilled(void) : "Sent when the Boss is killed."
+	]

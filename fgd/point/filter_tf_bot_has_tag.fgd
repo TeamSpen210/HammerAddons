@@ -1,0 +1,12 @@
+
+@FilterClass base(BaseFilter) 
+	appliesto(TF2) = filter_tf_bot_has_tag: "A filter that filters based on the touching bot having specific tags."
+	[
+	tags(string) : "Tags" : : "Tags required to pass this filter"
+	require_all_tags(choices) : "Require all tags?" : "1" : "Does this filter require all specified tags?" =
+		[
+		1: "Yes"
+		0: "No"
+		]
+
+	]

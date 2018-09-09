@@ -1,0 +1,7 @@
+
+@NpcClass base(TalkNPC, Parentname) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio() = npc_eli: "Eli Vance"
+	[
+	model(studio) : "World model" : "models/eli.mdl"
+	]

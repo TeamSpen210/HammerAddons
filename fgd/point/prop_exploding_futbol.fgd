@@ -1,0 +1,10 @@
+
+@PointClass base(BasePresetPropPhysics) 
+	appliesto(P2) 
+	studioprop("models/npcs/personality_sphere_angry.mdl") = prop_exploding_futbol: "The bombs used by Wheatley."
+	[
+	explodeontouch(boolean) : "Explode on touch" : 1 : "If the bomb should explode when it touches something."
+
+	// Inputs
+	input Explode(void) : "Explodes the bomb."
+	]

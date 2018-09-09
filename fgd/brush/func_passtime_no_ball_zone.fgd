@@ -1,0 +1,5 @@
+
+@SolidClass base(Targetname) 
+	appliesto(TF2) = func_passtime_no_ball_zone: "Cant use the ball here."
+	[
+	]

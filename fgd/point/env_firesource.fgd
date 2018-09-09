@@ -1,0 +1,20 @@
+
+@PointClass base(Targetname, Parentname, Targetname, Parentname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	iconsprite("editor/env_firesource") 
+	color(255 255 0) 
+	sphere(fireradius) 
+	color(200 200 0) = env_firesource: "An entity that provides heat to all nearby env_fire entities. Cannot be extinguished."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Start On" : 0
+		]
+
+	fireradius(float) : "Radius" : 128 : "The radius around this entity in which to provide heat."
+	firedamage(float) : "Intensity / Damage" : 10 : "Amount of heat 'damage' to apply to env_fire entities within the radius."
+
+	// Inputs
+	input Enable(void) : "Enable fire source."
+	input Disable(void) : "Disable fire source."
+	]

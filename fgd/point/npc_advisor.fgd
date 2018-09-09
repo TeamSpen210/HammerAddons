@@ -1,0 +1,29 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio() = npc_advisor: "An adorable sluglike alien with benevolent psychic powers."
+	[
+	model(studio) : "World model" : "models/advisor.mdl"
+	levitationarea(string) : "Levitation Area" : : "Trigger volume inside which levitated objects reside"
+	levitategoal_bottom(target_destination) : "Levitation Goal Bottom" : : "Objects will levitate at least this high"
+	levitategoal_top(target_destination) : "Levitation Goal Top" : : "Objects will levitate at least this high"
+	staging_ent_names(string) : "Staging Position Names" : : "All entities with this name will be considered staging positions for the throw behavior."
+	priority_grab_name(string) : "Priority Name For Grabbing" : : "If any entities named this are present, the advisor will preferentially pick them up for throwing at the player."
+
+	// Inputs
+	input SetThrowRate(float) : "Advisor will throw an object once per this many seconds (plus a little more)"
+	input WrenchImmediate(string) : "Advisor will immediately start levitating all objects with this name"
+	input SetStagingNum(integer) : "Advisor will stage this many objects at once, then barrage the player."
+	input PinPlayer(string) : "Advisor will wrench the player to this point in the air. Use a null param to let go."
+	input BeamOn(string) : "Start a psychic-TK effect beam from the advisor to the specified object. You must remember to turn it off later."
+	input BeamOff(string) : "Turn off a psychic-TK effect beam from the advisor to the specified object."
+	input ELightOn(void) : "Turn on an entity light at my location. Please remember to turn this off."
+	input ELightOff(void) : "Turn off my entity light."
+	input DoNothing(void)
+
+	// Outputs
+	output OnPickingThrowable(void) : "Fires just before I pick something to hurl"
+	output OnThrowWarn(void) : "Fires when I trigger the warning green glow before tossing"
+	output OnThrow(void) : "Fires just after I throw something"
+	output OnHealthIsNow(integer) : "When I am damaged, my hitpoints thereafter"
+	]

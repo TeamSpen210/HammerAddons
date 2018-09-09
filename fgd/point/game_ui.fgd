@@ -1,0 +1,41 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	size(-8 -8 -8, 8 8 8) 
+	color(200 0 0) 
+	iconsprite("editor/ts2do/game_ui.vmt") = game_ui: "An entity used to override player input when the player is looking at it."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		32: "Freeze Player" : 1
+		64: "Hide Weapon" : 1
+		128: "+Use Deactivates" : 1
+		256: "Jump Deactivates" : 1
+		]
+
+	fieldofview(float) : "FieldOfView" : -1.0 : "The amount of tolerance in the view checking when determining whether the player's input is still under control. 1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions. If the player isn't within the tolerance, the player regains control."
+
+	// Inputs
+	input Deactivate(void) : "Return Player Control."
+	input Activate(string) : "Take Player Control."
+
+	// Outputs
+	output PlayerOn(void) : "Fired whenever this entity starts controlling the player's input."
+	output PlayerOff(void) : "Fired whenever this entity stops controlling the player's input."
+	output PressedMoveLeft(void) : "Fired whenever the player presses the moveleft key."
+	output PressedMoveRight(void) : "Fired whenever the player presses the moveright key."
+	output PressedForward(void) : "Fired whenever the player presses the forward key."
+	output PressedBack(void) : "Fired whenever the player presses the backward key."
+	output PressedAttack(void) : "Fired whenever the player presses the attack key."
+	output PressedAttack2(void) : "Fired whenever the player presses the secondary attack key."
+	output UnpressedMoveLeft(void) : "Fired whenever the player releases the moveleft key."
+	output UnpressedMoveRight(void) : "Fired whenever the player releases the moveright key."
+	output UnpressedForward(void) : "Fired whenever the player releases the forward key."
+	output UnpressedBack(void) : "Fired whenever the player releases the backward key."
+	output UnpressedAttack(void) : "Fired whenever the player releases the attack key."
+	output UnpressedAttack2(void) : "Fired whenever the player releases the secondary attack key."
+	output XAxis(string) : "An output that fires whenever the X axis of the player's input changes. i.e. -1 when the player has moveleft key down, 1 when the player has moveright key down, and 0 if neither."
+	output YAxis(string) : "An output that fires whenever the Y axis of the player's input changes. i.e. -1 when the player has backward key down, 1 when the player has forward key down, and 0 if neither."
+	output AttackAxis(string) : "An output that fires whenever the state of the player's attack key changes. i.e. 1 when the player has the attack key down, 0 otherwise."
+	output Attack2Axis(string) : "An output that fires whenever the state of the player's secondary attack key changes. i.e. 1 when the player has the secondary attack key down, 0 otherwise."
+	]

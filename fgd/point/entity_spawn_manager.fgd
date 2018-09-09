@@ -1,0 +1,20 @@
+
+@PointClass base(Targetname) 
+	appliesto(TF2) = entity_spawn_manager: "An entity that spawns stuff at spawn points."
+	[
+	entity_name(string) : "Entity Name" : : "Name of the entity class we are supposed to spawn."
+	entity_count(integer) : "Count" : 0 : "Max number of entities to have spawned at one time, if points are available."
+	respawn_time(integer) : "Respawn Time" : 0 : "Time to wait before we spawn a new entity when one is destroyed."
+	drop_to_ground(choices) : "Drop to Ground" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	random_rotation(choices) : "Random Rotation" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	]

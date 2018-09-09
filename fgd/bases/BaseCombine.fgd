@@ -1,0 +1,45 @@
+
+@BaseClass base(BaseNPC, RappelNPC) 
+	appliesto(EP1, EP2, HL2, ASW) = BaseCombine
+	[
+	additionalequipment(choices) : "Weapons" : "weapon_smg1" =
+		[
+		"weapon_ar2": "AR2"
+		"weapon_shotgun": "Shotgun"
+		"weapon_smg1": "SMG1"
+		"weapon_stunstick": "Stun Stick"
+		0: "Nothing"
+		]
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Start LookOff" : 0
+		131072: "Don't drop grenades" : 0
+		262144: "Don't drop ar2 alt fire (elite only) " : 0
+		]
+
+	numgrenades(choices) : "Number of Grenades" : "5" =
+		[
+		0: "None"
+		1: "1"
+		2: "2"
+		3: "3"
+		4: "4"
+		5: "5"
+		999999: "Unlimited"
+		]
+
+	teleportgrenades[ASW](choices) : "Teleportation" : "0" =
+		[
+		0: "Disabled"
+		1: "Teleport Grenades"
+		]
+
+
+	// Inputs
+	input LookOn(void) : "Look normally"
+	input LookOff(void) : "Don't look for myself, use other squad member's eyes"
+	input StartPatrolling(void) : "Patrol whenever I'm idle or alert."
+	input StopPatrolling(void) : "Stop patrolling when I'm idle or alert."
+	input ThrowGrenadeAtTarget(target_destination) : "Throw a grenade at the specified target."
+	]

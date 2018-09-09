@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_shot_nova_dropped.mdl") = weapon_nova: "Nova"
+	[
+	]

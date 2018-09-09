@@ -1,0 +1,30 @@
+
+@PointClass base(Targetname, Parentname, Angles, Studiomodel, Targetname, Parentname, Angles, Studiomodel) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	studio() 
+	color(128 128 128) 
+	iconsprite("editor/phys_magnet") = phys_magnet: "An entity that acts like a magnet, attaching metallic physics objects to itself when they touch it."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Start Asleep" : 0
+		2: "Motion Disabled" : 0
+		4: "Suck On Touch" : 0
+		8: "Allow Attached Rotation" : 0
+		16: "Coast jeep pickup hack" : 0
+		]
+
+	forcelimit(float) : "Force Limit to Break (lbs)" : 0 : "The amount of force necessary to break a stuck object off the magnet. A way of calculating this is to set it to the mass of an object that would break this constraint if it were resting on the magnet."
+	torquelimit(float) : "Torque Limit to Break (lbs * distance)" : 0 : "The amount of torque necessary to break a stuck object off the magnet. A way of calculating this is to multiply any reference mass by the resting distance (from the center of mass of the object) needed to break the constraint."
+	massscale(float) : "Mass Scale" : 0 : "A scale multiplier for the object's mass."
+	overridescript(string) : "Override parameters" : : "A list of physics key/value pairs that are usually in a physics prop .qc file. Format is 'key,value,key,value,etc'."
+	maxobjects(integer) : "Maximum Attached Objects" : 0 : "The maximum number of physics objects that can be stuck to the magnet at once. 0 = no limit."
+
+	// Inputs
+	input TurnOn(void) : "Turn the magnet on."
+	input TurnOff(void) : "The the magnet off. This will detach anything current stuck to the magnet."
+
+	// Outputs
+	output OnAttach(void) : "Fired when an entity is grabbed by the magnet."
+	output OnDetach(void) : "Fired when an entity is released by the magnet."
+	]

@@ -1,0 +1,19 @@
+
+@PointClass base(Targetname) 
+	appliesto(TF2) = tf_spawner: "An entity that spawns templatized entities."
+	[
+	count(integer) : "Count" : 1 : "Total number of entities to spawn over the lifetime of this spawner."
+	maxactive(integer) : "Max Active" : 1 : "Maximum number of simultaneous active entities created by this spawner."
+	interval(float) : "Interval" : 0 : "Time (in seconds) between spawns"
+	template(target_destination) : "Template to spawn entities from"
+
+	// Inputs
+	input Enable(void) : "Begin spawning entities"
+	input Disable(void) : "Stop spawning entities"
+	input Reset(void) : "Reset spawner to initial state"
+
+	// Outputs
+	output OnSpawned(void) : "Sent when an entity has spawned into the environment"
+	output OnExpended(void) : "Sent when the spawner has reached its allowed total of entities spawned"
+	output OnKilled(void) : "Sent when en entity spawned by this spawner has died/been destroyed"
+	]

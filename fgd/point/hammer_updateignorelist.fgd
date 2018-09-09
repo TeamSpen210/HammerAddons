@@ -1,0 +1,22 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	color(200 0 0) = hammer_updateignorelist: "Specifies entities that are to be ignored by the hammer_update_safe_entities console command. Enter the targetnames of entities that you want to exclude into the list of fields here. Several of these may exist in a map."
+	[
+	ignoredname01(target_destination) : "IgnoredName 01" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	ignoredname02(target_destination) : "IgnoredName 02" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	ignoredname03(target_destination) : "IgnoredName 03" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	ignoredname04(target_destination) : "IgnoredName 04" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	ignoredname05(target_destination) : "IgnoredName 05" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	ignoredname06(target_destination) : "IgnoredName 06" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	ignoredname07(target_destination) : "IgnoredName 07" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	ignoredname08(target_destination) : "IgnoredName 08" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	ignoredname09(target_destination) : "IgnoredName 09" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	ignoredname10(target_destination) : "IgnoredName 10" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	ignoredname11(target_destination) : "IgnoredName 11" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	ignoredname12(target_destination) : "IgnoredName 12" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	ignoredname13(target_destination) : "IgnoredName 13" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	ignoredname14(target_destination) : "IgnoredName 14" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	ignoredname15(target_destination) : "IgnoredName 15" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	ignoredname16(target_destination) : "IgnoredName 16" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
+	]

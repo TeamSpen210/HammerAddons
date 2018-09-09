@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_mach_negev_dropped.mdl") = weapon_negev: "Negev"
+	[
+	]

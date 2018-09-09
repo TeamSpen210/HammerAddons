@@ -1,0 +1,12 @@
+
+@PointClass base(Targetname, Parentname, Targetname, Parentname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	size(-4 -4 -4, 4 4 4) 
+	halfgridsnap() 
+	halfgridsnap("editor/info_constraint_anchor.vmt") 
+	color(128 128 128) 
+	line(128 128 128, targetname, parentname) = info_constraint_anchor: "An entity used to attach constraints to a local position on an entity. Usually constraints will attach to the center of mass of an object. Attach the desired constraint to this entity, and then parent this entity to the entity you want the constraint to apply to."
+	[
+	massscale(float) : "Amount to scale the mass of this body in the constraint solver" : 1
+	massscale[P2](float) : "Mass Scale" : 1 : "Amount to scale the mass of this body in the constraint solver."
+	]

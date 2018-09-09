@@ -1,0 +1,7 @@
+
+@BaseClass 
+	appliesto(TF2) = FadeDistance
+	[
+	fademindist(float) : "Start Fade Dist" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist)."
+	fademaxdist(float) : "End Fade Dist" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out)."
+	]

@@ -1,0 +1,21 @@
+
+@PointClass base(Targetname, Parentname, Angles, Targetname, Parentname, Angles) 
+	appliesto(ASW, P2, CSGO) 
+	sphere() 
+	studio("models/editor/axis_helper_thick.mdl") 
+	color(200 0 0) = env_tilt: "An entity to control screen tilt on players."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "GlobalTilt" : 0
+		128: "Ease in/out" : 0
+		]
+
+	radius(float) : "Effect Radius" : 500 : "The radius around this entity in which to affect players."
+	duration(float) : "Duration (seconds)" : 1 : "The length of time in which to tilt the player's screens."
+	tilttime(float) : "Tilt time (seconds)" : 2.5 : "How long it takes to reach full tilt."
+
+	// Inputs
+	input StartTilt(void) : "Start the shake."
+	input StopTilt(void) : "Stop the tilt."
+	]

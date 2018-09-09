@@ -1,0 +1,31 @@
+
+@PointClass base(EnvGlobal) 
+	appliesto(ASW, EP1, EP2, HL2, P2) 
+	size(-8 -8 -8, 8 8 8) 
+	color(200 0 0) 
+	iconsprite("editor/env_global.vmt") = env_global: "An entity to control a game-specific global states."
+	[
+	globalstate(choices) : "Global State to Set" =
+		[
+		"gordon_precriminal": "Gordon pre-criminal"
+		"antlion_allied": "Antlions are player allies"
+		"suit_no_sprint": "Suit sprint function not yet enabled"
+		"super_phys_gun": "Super phys gun is enabled"
+		"friendly_encounter": "Friendly encounter sequence (lower weapons, etc.)"
+		"gordon_invulnerable": "Gordon is invulnerable"
+		"no_seagulls_on_jeep": "Don't spawn seagulls on the jeep"
+		"ep2_alyx_injured": "Episode 2: Alyx injured"
+		"ep_alyx_darknessmode": "Episodic: Alyx darkness mode"
+		"hunters_to_run_over": "Ep2 Counter: Hunters to run over before they dodge"
+		]
+
+	globalstate[P2](choices) : "Global State to Set" =
+		[
+		"portalgun_nospawn": "Spawn without Portalgun"
+		"no_pinging_blue": "Prevent Pinging ATLAS"
+		"no_pinging_orange": "Prevent Pinging P-Body"
+		"no_taunting_blue": "Prevent Taunting ATLAS"
+		"no_taunting_orange": "Prevent Taunting P-Body"
+		]
+
+	]

@@ -1,0 +1,7 @@
+
+@PointClass base(BaseNPC, Parentname, RenderFields, Shadow) 
+	appliesto(P2) 
+	studioprop() = npc_wheatley_boss: "Wheatley NPC stub"
+	[
+	model(studio) : "Model" : "models/npcs/glados/glados_wheatley_boss_screen.mdl"
+	]

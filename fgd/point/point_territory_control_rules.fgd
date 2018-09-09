@@ -1,0 +1,7 @@
+
+@PointClass base(Targetname) 
+	appliesto(CSGO) 
+	size(-8 -8 -8, 8 8 8) = point_territory_control_rules: "The Territory Control rules entity (VERY IMPORTANT!)"
+	[
+	respawntime(float) : "Wave Respawn Time" : 30 : "Respawn time in seconds."
+	]

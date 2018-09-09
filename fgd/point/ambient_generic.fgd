@@ -1,0 +1,137 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	iconsprite("editor/ambient_generic.vmt") 
+	sphere() 
+	line(255 255 0, targetname, sourceEntityName) 
+	sphere(radius) = ambient_generic: "Universal ambient sound. Use it to play and control a single sound."
+	[
+	message(sound) : "Sound Name" : : "Name of the GameSound entry for the sound to play. Also supports direct .wav filenames."
+	health(integer) : "Volume" : 10 : "Sound volume, expressed as a range from 0 to 10, where 10 is the loudest."
+	preset(choices) : "Dynamic Presets" : "0" =
+		[
+		0: "None"
+		1: "Huge Machine"
+		2: "Big Machine"
+		3: "Machine"
+		4: "Slow Fade in"
+		5: "Fade in"
+		6: "Quick Fade in"
+		7: "Slow Pulse"
+		8: "Pulse"
+		9: "Quick pulse"
+		10: "Slow Oscillator"
+		11: "Oscillator"
+		12: "Quick Oscillator"
+		13: "Grunge pitch"
+		14: "Very low pitch"
+		15: "Low pitch"
+		16: "High pitch"
+		17: "Very high pitch"
+		18: "Screaming pitch"
+		19: "Oscillate spinup/down"
+		20: "Pulse spinup/down"
+		21: "Random pitch"
+		22: "Random pitch fast"
+		23: "Incremental Spinup"
+		24: "Alien"
+		25: "Bizzare"
+		26: "Planet X"
+		27: "Haunted"
+		]
+
+	preset[P2](choices) : "Dynamic Presets" : "0" : "If used, overrides many of the below properties (+pitch) to preset values." =
+		[
+		0: "None"
+		1: "Huge Machine"
+		2: "Big Machine"
+		3: "Machine"
+		4: "Slow Fade in"
+		5: "Fade in"
+		6: "Quick Fade in"
+		7: "Slow Pulse"
+		8: "Pulse"
+		9: "Quick pulse"
+		10: "Slow Oscillator"
+		11: "Oscillator"
+		12: "Quick Oscillator"
+		13: "Grunge pitch"
+		14: "Very low pitch"
+		15: "Low pitch"
+		16: "High pitch"
+		17: "Very high pitch"
+		18: "Screaming pitch"
+		19: "Oscillate spinup/down"
+		20: "Pulse spinup/down"
+		21: "Random pitch"
+		22: "Random pitch fast"
+		23: "Incremental Spinup"
+		24: "Alien"
+		25: "Bizzare"
+		26: "Planet X"
+		27: "Haunted"
+		]
+
+	volstart(integer) : "Start Volume" : 0
+	volstart[P2](integer) : "Transition Volume" : 0 : "The Volume to start/end with. Use with Fade In and Out times."
+	fadeinsecs(integer) : "Fade in time in seconds (0-100)" : 0
+	fadeinsecs[P2](integer) : "Volume Transition Time - Start (0-100)" : 0 : "Time in seconds for the sound to transition from the Transition Volume to the set volume as it starts playing."
+	fadeoutsecs(integer) : "Fade out time in seconds (0-100)" : 0
+	fadeoutsecs[P2](integer) : "Volume Transition Time - Stop (0-100)" : 0 : "Time in seconds for the sound to transition from the set volume to the Transition Volume as it stops playing."
+	pitch(integer) : "Pitch" : 100 : "Sound pitch, expressed as a range from 1 to 255, where 100 is the sound's default pitch."
+	pitch[P2](integer) : "Pitch" : 100 : "Sound pitch, expressed as a range from 1(low) to 255(high), where 100 is the sound's default pitch."
+	pitchstart(integer) : "Start Pitch" : 100
+	pitchstart[P2](integer) : "Transition Pitch" : 100 : "Pitch to start with/end. Use with Spin Up and Spin Down."
+	spinup(integer) : "Spin up time (0-100)" : 0
+	spinup[P2](integer) : "Pitch Transition Time - Start (0-100)" : 0 : "The time taken to change from the Transition Pitch to the final Pitch while the sound starts playing. Simulates the noise powering-up when an object is activated."
+	spindown(integer) : "Spin down time (0-100)" : 0
+	spindown[P2](integer) : "Pitch Transition Time - Stop (0-100)" : 0 : "The time taken to transition from the Pitch to the Transition pitch while the sound stops playing. Simulates the noise fading out as the object shuts down."
+	lfotype(integer) : "LFO type 0)off 1)sqr 2)tri 3)rnd" : 0
+	lfotype[P2](choices) : "LFO type" : "0" : "The kind of Low Frequency Oscillation to apply to the sound. Allows subtle modification to the sound. Square waves instantly switch between the high and low values, whereas Triangle Waves gradually switch between the two." =
+		[
+		0: "None"
+		1: "Square Wave"
+		2: "Triangle Wave"
+		3: "Random"
+		]
+
+	lforate(integer) : "LFO rate (0-1000)" : 0
+	lforate[P2](integer) : "LFO rate (0-1000)" : 0 : "How often the LFO repeats itself"
+	lfomodpitch(integer) : "LFO mod pitch (0-100)" : 0
+	lfomodpitch[P2](integer) : "LFO Effect On Pitch (0-100)" : 0 : "The amount the LFO affects the pitch."
+	lfomodvol(integer) : "LFO mod vol (0-100)" : 0
+	lfomodvol[P2](integer) : "LFO Effect On Volume (0-100)" : 0 : "The amount the LFO affects the volume."
+	cspinup(integer) : "Incremental Spinup Count" : 0
+	cspinup[P2](integer) : "Incremental Spinup Count" : 0 : "Appears broken."
+	radius(string) : "Max Audible Distance" : "1250" : "Maximum distance at which this sound is audible."
+	radius[P2](string) : "Sound Range" : "1250" : "Maximum distance at which this sound is audible."
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Play everywhere" : 0
+		16: "Start Silent" : 1
+		32: "Is NOT Looped" : 1
+		]
+
+	spawnflags[P2](flags) : "spawnflags" =
+		[
+		1: "Infinite Range" : 0
+		16: "Start Silent" : 1
+		32: "Is NOT Looped" : 1
+		]
+
+	sourceentityname(target_destination) : "SourceEntityName" : : "If an entity is specified, sound will come from this named entity instead of the location of ambient_generic."
+	sourceentityname[P2](target_destination) : "Source Entity" : : "If an entity is specified, sound will come from this named entity instead of the location of ambient_generic."
+	scenefile[!CSGO, P2, !TF2](scene) : "[H] Choreo" : : "Use to allow keeping the sound name when switching between ambient_generic and logic_choreographed_scene."
+	null[!CSGO, P2, !TF2](string) : "-----------------------" : : "More complex values below."
+
+	// Inputs
+	input Pitch(integer) : "Sets the sound pitch, expressed as a range from 1 to 255, where 100 is the sound's default pitch."
+	input PlaySound(void) : "Starts the sound."
+	input PlaySound[P2](void) : "Starts the sound or restart from beginning."
+	input StopSound(void) : "Stops the sound if it is playing."
+	input StopSound[P2](void) : "Stops the sound if it is playing. Only works properly if the looped flag is checked."
+	input ToggleSound(void) : "Toggles the sound between playing and stopping."
+	input Volume(integer) : "Sets the sound volume, expressed as a range from 0 to 10, where 10 is the loudest."
+	input FadeIn(integer) : "Fades the sound up to full volume over a specified number of seconds, with a range from 0 to 100 seconds."
+	input FadeOut(integer) : "Fades the sound to silence over a specified number of seconds, with a range from 0 to 100 seconds."
+	]

@@ -1,0 +1,33 @@
+
+@SolidClass base(Targetname, Parentname, Origin, RenderFields, Global, Inputfilter, EnableDisable, Shadow) 
+	appliesto(TF2) = func_respawnroomvisualizer: "Brushes that become visible to enemy players when they get close. Use them to mark areas that they're unable to enter (i.e. respawn rooms)."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		2: "Ignore player +USE" : 1
+		]
+
+	respawnroomname(target_destination) : "Associated Respawn Room" : : "The func_respawnroom that this entity is visualizing. This entity will have its team matched to that for the func_respawnroom, and will have it updated if the func_respawnroom ever changes team."
+	solidity(choices) : "Solidity" : "1" : "Used to control the solidity/collision of these brushes." =
+		[
+		0: "Toggle"
+		1: "Never Solid"
+		2: "Always Solid"
+		]
+
+	vrad_brush_cast_shadows(choices) : "Shadows" : "0" : "Set this if this brush casts lightmap shadows." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	solid_to_enemies(choices) : "Solid to Enemies" : "1" : "Determines if this area is solid to enemy players." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+
+	// Inputs
+	input SetSolid(boolean) : "Set whether this area is solid to enemy players or not. 0 = No, 1 = Yes"
+	]

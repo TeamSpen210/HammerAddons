@@ -1,0 +1,49 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	sphere(DamageRadius) 
+	line(255 255 255, targetname, damagetarget) 
+	iconsprite("editor/game_end.vmt") = point_hurt: "An entity that does damage to all entities in a radius around itself, with a specified delay.If 'Target Entity' is specified, the damage is only done to that entity."
+	[
+	damagetarget(string) : "Target Entity" : : "If specified, only this entity will take damage. Otherwise, all entities within the Radius will take damage."
+	damagetarget[P2](target_destination) : "Target Entity" : : "If specified, only this entity will take damage. Otherwise, all entities within the Radius will take damage."
+	damageradius(float) : "Radius" : 256 : "All entities within this radius of this entity will take damage. If a 'Target Entity' is specified, only that entity will take damage."
+	damage(integer) : "Damage" : 5 : "Damage done to all affected entities each time this entity fires."
+	damagedelay(float) : "Delay" : 1 : "Delay between refires, in seconds."
+	damagetype(choices) : "Damage Type" : "0" : "Type of damage to inflict on entities damaged." =
+		[
+		0: "GENERIC"
+		1: "CRUSH"
+		2: "BULLET"
+		4: "SLASH"
+		8: "BURN"
+		16: "FREEZE"
+		32: "FALL"
+		64: "BLAST"
+		128: "CLUB"
+		256: "SHOCK"
+		512: "SONIC"
+		1024: "ENERGYBEAM"
+		16384: "DROWN"
+		32768: "PARALYSE"
+		65536: "NERVEGAS"
+		131072: "POISON"
+		262144: "RADIATION"
+		524288: "DROWNRECOVER"
+		1048576: "CHEMICAL"
+		2097152: "SLOWBURN"
+		4194304: "SLOWFREEZE"
+		]
+
+	spawnflags[!CSGO, P2, !TF2](flags) : "spawnflags" =
+		[
+		1: "Start Active" : 0
+		]
+
+
+	// Inputs
+	input Hurt(void) : "Force a single fire, damaging either the Target Entity or all entities within the radius."
+	input TurnOn(void) : "Enable this entity. It will start damaging entities everytime it fires, and refire based upon the specified Delay."
+	input TurnOff(void) : "Disable this entity. It will stop damaging entities."
+	input Toggle(void) : "Toggle this entity between On/Off state."
+	]

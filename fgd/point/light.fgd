@@ -1,0 +1,19 @@
+
+@PointClass base(Targetname, Light, light, Targetname, Light) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	light() 
+	iconsprite("editor/light.vmt") 
+	sphere(_fifty_percent_distance) 
+	sphere(_zero_percent_distance) 
+	sphere(_distance) 
+	line(255 255 255, targetname, target) = light: "An invisible omnidirectional lightsource."
+	[
+	target[!P2](target_destination) : "Entity To Point At" : : "The name of an entity in the map that the spotlight will point at. This will override the spotlight's angles."
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Initially dark" : 0
+		]
+
+	_distance(integer) : "Maximum Distance" : 0 : "This is the distance that light is allowed to cast, in inches."
+	_distance[P2](integer) : "Maximum Distance" : 0 : "The distance that light is allowed to cast."
+	]

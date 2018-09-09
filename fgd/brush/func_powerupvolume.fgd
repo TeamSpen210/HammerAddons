@@ -1,0 +1,5 @@
+
+@SolidClass base(Trigger, Targetname, TeamNum, EnableDisable, Toggle) 
+	appliesto(TF2) = func_powerupvolume: "Players touching this volume will get a temporary, powerful upgrade."
+	[
+	]

@@ -1,0 +1,99 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	color(220 180 0) 
+	size(-8 -8 -8, 8 8 8) 
+	line(255 255 255, nodeid, StartNode, nodeid, EndNode) 
+	iconsprite("editor/info_node_link.vmt") = info_node_link: "A dynamic connection between two navigation nodes. You specify the node IDs of the start and end nodes, and then you can use entity I/O to turn on and off the connection. This could be used to create or destroy a connection in the nodegraph because of some event in your map (a bridge being created/destroyed, etc)."
+	[
+	startnode(node_dest) : "Start node ID" : : "The node ID of one end of the node connection."
+	endnode(node_dest) : "End node ID" : : "The node ID of one end of the node connection."
+	initialstate(choices) : "Initial State" : "1" =
+		[
+		0: "Off"
+		1: "On"
+		]
+
+	linktype(choices) : "Type of Connection" : "1" =
+		[
+		1: "Ground"
+		2: "Jump"
+		4: "Fly"
+		8: "Climb"
+		]
+
+	linktype[ASW](choices) : "Type of Connection" : "1" =
+		[
+		1: "Ground"
+		2: "Jump"
+		4: "Fly"
+		8: "Climb"
+		16: "Crawl"
+		]
+
+	allowuse(string) : "Allow Pass When Off" : : "Entity or class to allow passage even when node is off"
+	invertallow(choices) : "Invert exclusion rules" : "0" : "Allowed entity is the only entity NOT allowed when this is set to 'yes'" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	invertallow[ASW](boolean) : "Invert exclusion rules" : 0 : "Allowed entity is the only entity NOT allowed when this is set to 'yes'"
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Force human connect" : 0
+		2: "Force small_centered connect" : 0
+		4: "Force wide_human connect" : 0
+		8: "Force tiny connect" : 0
+		16: "Force wide_short connect" : 0
+		32: "Force medium connect" : 0
+		64: "Force tiny_centered connect" : 0
+		128: "Force large connect" : 0
+		256: "Force large_centered connect" : 0
+		512: "Force medium_tall connect" : 0
+		]
+
+	spawnflags[ASW](flags) : "spawnflags" =
+		[
+		1: "Force human connect" : 0
+		2: "Force small_centered connect" : 0
+		4: "Force wide_human connect" : 0
+		8: "Force tiny connect" : 0
+		16: "Force wide_short connect" : 0
+		32: "Force medium connect" : 0
+		64: "Force tiny_centered connect" : 0
+		128: "Force large connect" : 0
+		256: "Force large_centered connect" : 0
+		512: "(Don't drop placeholder)" : 0
+		1024: "Force medium tall connect" : 0
+		2048: "Force tiny fluid connect" : 0
+		4096: "Force medium big (Swarm Drone) connect" : 0
+		]
+
+	spawnflags[P2](flags) : "spawnflags" =
+		[
+		1: "Force human connect" : 0
+		2: "Force small_centered connect" : 0
+		4: "Force wide_human connect" : 0
+		8: "Force tiny connect" : 0
+		16: "Force wide_short connect" : 0
+		32: "Force medium connect" : 0
+		64: "Force tiny_centered connect" : 0
+		128: "Force large connect" : 0
+		256: "Force large_centered connect" : 0
+		512: "Force medium_tall connect" : 0
+		1024: "Force tiny_fluid connect" : 0
+		]
+
+	precisemovement[ASW, !TF2](boolean) : "Precise Movement" : 0 : "Movement through this link must be precise. Used for NPCs that have sloppy movement characteristics to move through things like doors or windows"
+	priority[ASW, !TF2](choices) : "Priority" : "0" =
+		[
+		0: "Normal"
+		1: "Use As Last Resort"
+		]
+
+
+	// Inputs
+	input TurnOn(void) : "Turn the link on."
+	input TurnOff(void) : "Turn the link off."
+	]

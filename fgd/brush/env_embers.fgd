@@ -1,0 +1,23 @@
+
+@SolidClass base(Targetname, Parentname, Angles, Targetname, Parentname, Angles) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	color(200 200 0) = env_embers: "An entity used to create a volume in which to spawn fire embers."
+	[
+	particletype(choices) : "Ember type" : "0" =
+		[
+		0: "Normal"
+		1: "Smooth Fade"
+		2: "Pulled"
+		]
+
+	density(integer) : "Density (particles per second)" : 50
+	lifetime(integer) : "Particle Lifetime (seconds)" : 4
+	speed(integer) : "Particle Speed (units per second)" : 32
+	rendercolor(color255) : "Ember Color (R G B)" : "255 255 255"
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Start On" : 0
+		2: "Toggle" : 0
+		]
+
+	]

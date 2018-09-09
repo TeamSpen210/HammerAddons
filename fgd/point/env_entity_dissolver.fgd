@@ -1,0 +1,26 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2) 
+	iconsprite("editor/env_particles.vmt") 
+	line(255 255 255, targetname, target) = env_entity_dissolver: "Entity Dissolver|||Fizzles the target entity."
+	[
+	target(target_destination) : "Target to Dissolve" : : "Targetname of the entity you want to dissolve."
+	magnitude(integer) : "Magnitude" : 250 : "How strongly to push away from the center."
+	dissolvetype(choices) : "Dissolve Type" : "Energy" =
+		[
+		0: "Energy"
+		1: "Heavy electrical"
+		2: "Light electrical"
+		3: "Core Effect"
+		]
+
+	dissolvetype[P2](choices) : "Dissolve Type" : "Energy" : "The type of effect to use." =
+		[
+		0: "Empancipation"
+		3: "Vanish, with fizzler ash particles"
+		]
+
+
+	// Inputs
+	input Dissolve(string) : "Dissolve target, if no target is passed it'll use the target specified in the target field."
+	]

@@ -1,0 +1,10 @@
+
+@SolidClass base(Parentname, Targetname, Global, Parentname, Targetname, Global) 
+	appliesto(ASW, EP1, EP2, HL2, P2) = func_vehicleclip: "Vehicle Clip"
+	[
+
+	// Inputs
+	input Kill(void) : "Removes this entity from the world"
+	input Enable(void) : "Enable collisions with vehicles"
+	input Disable(void) : "Disable collisions with vehicles"
+	]

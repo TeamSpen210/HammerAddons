@@ -1,0 +1,19 @@
+
+@PointClass base(Targetname, Parentname, Angles) 
+	appliesto(CSGO) 
+	worldtext() = point_worldtext: "An entity that displays a text message oriented in the world, at its origin."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Start Disabled" : 0
+		]
+
+	message(string) : "Entity Message"
+	textsize(float) : "Text Size" : 10 : "Text Size."
+	color(color255) : "Color" : "255 255 255"
+
+	// Inputs
+	input Enable(void) : "Start displaying the message text, if the player is within the message radius."
+	input Disable(void) : "Stop displaying the message text."
+	input SetMessage(string) : "Set the message text."
+	]

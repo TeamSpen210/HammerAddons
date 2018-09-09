@@ -1,0 +1,18 @@
+
+@PointClass 
+	appliesto(P2) 
+	iconsprite("editor/ts_book.vmt") 
+	line(255 255 255, targetname, linename1) 
+	line(255 0 0, targetname, linename2) 
+	line(0 255 0, targetname, linename3) 
+	line(0 0 255, targetname, linename4) = hammer_notes: "Fake entity to store notes and comments inside. Won`t spawn."
+	[
+	linename1(target_destination) : "White Related Entity" : : "Add entity names to have lines drawn to them."
+	linename2(target_destination) : "Red Related Entity" : : "Add entity names to have lines drawn to them."
+	linename3(target_destination) : "Green Related Entity" : : "Add entity names to have lines drawn to them."
+	linename4(target_destination) : "Blue Related Entity" : : "Add entity names to have lines drawn to them."
+	mat(material) : "Material Chooser" : : "Has the material browser for easier editing."
+	part(particlesystem) : "Particle Chooser" : : "Has the particle system chooser for easier editing."
+	model(studio) : "Model Chooser" : : "Has the model chooser for easier editing."
+	sound(sound) : "Sound Chooser" : : "Has the sound chooser for easier editing."
+	]

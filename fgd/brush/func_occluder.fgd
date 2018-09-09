@@ -1,0 +1,17 @@
+
+@SolidClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	color(0 255 255) = func_occluder: "A occluder brush used to manage dynamic visibility in maps. Occluders are used to dynamically determine what things are behind them, to prevent trying to draw them at all."
+	[
+	startactive(choices) : "Initial State" : "1" =
+		[
+		0: "Inactive"
+		1: "Active"
+		]
+
+
+	// Inputs
+	input Deactivate(void) : "Deactivate the occluder, When inactive, it can be seen through."
+	input Activate(void) : "Activate the occluder. When active, it cannot be seen through."
+	input Toggle(void) : "Toggle the active/inactive state of the occluder."
+	]

@@ -1,0 +1,20 @@
+
+@PointClass base(Targetname, TeamNum, Angles, EnableDisable, Parentname) 
+	appliesto(TF2) 
+	studioprop("models/editor/camera.mdl") = info_observer_point: "Observer Point"
+	[
+	associated_team_entity(target_destination) : "Associated Team Entity" : : "An entity associated with this point that can be owned by a team (such as a flag or control point). Players will only be able to use this observer point if their team owns the associated team entity."
+	defaultwelcome(choices) : "Welcome Point" : "0" : "This marks this point as a welcome point. Players use this when connectig to servers the first time." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	fov(float) : "FOV" : 0
+	match_summary(choices) : "Match Summary" : "0" : "Marks this point as a camera for the match summary." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	]

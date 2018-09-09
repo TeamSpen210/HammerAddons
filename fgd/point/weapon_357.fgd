@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/weapons/w_357.mdl") = weapon_357: "357"
+	[
+	]

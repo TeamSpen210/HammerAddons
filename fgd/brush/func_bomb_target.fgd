@@ -1,0 +1,12 @@
+
+@SolidClass base(Targetname, Parentname) 
+	appliesto(CSGO) = func_bomb_target: "Bomb Target. The terrorists can place C4 explosives while standing in this zone.\n\nWhen the bomb is planted and explodes inside this area, the BombExplode outputs are fired. The game handles all of the bomb planting and scoring logic – the BombExplode outputs are provided to add visual and damage effects."
+	[
+	heistbomb(boolean) : "Heist Mode bomb target" : 0 : "This is a Bomb Target designed for the Heist game mode."
+	bomb_mount_target(string) : "Bomb Mount Target"
+
+	// Outputs
+	output BombExplode(void) : "Fires when C4 explodes"
+	output BombPlanted(void) : "Fires when a C4 is planted"
+	output BombDefused(void) : "Fires when a C4 is defused"
+	]

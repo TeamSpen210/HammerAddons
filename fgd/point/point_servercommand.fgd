@@ -1,0 +1,11 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	size(-8 -8 -8, 8 8 8) 
+	color(200 0 0) 
+	iconsprite("editor/point_servercommand.vmt") = point_servercommand: "An entity that issues commands to the server console."
+	[
+
+	// Inputs
+	input Command(string) : "Command to execute."
+	]

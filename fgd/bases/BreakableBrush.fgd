@@ -1,0 +1,127 @@
+
+@BaseClass base(Breakable, Parentname, Global, Breakable, Parentname, Global) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = BreakableBrush
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Only Break on Trigger" : 0
+		2: "Break on Touch" : 0
+		4: "Break on Pressure" : 0
+		512: "Break immediately on Physics" : 0
+		1024: "Don't take physics damage" : 0
+		2048: "Don't allow bullet penetration" : 0
+		]
+
+	propdata(choices) : "Prop Data" : "0" : "Set to the best approximation of the size and material of this entity's brushes. If set, it will override this entity's health and damage taken from various weapons. See the propdata.txt file in the scripts directory of your MOD to get a detailed list of what each entry specifies." =
+		[
+		0: "None"
+		1: "Wooden.Tiny"
+		2: "Wooden.Small"
+		3: "Wooden.Medium"
+		4: "Wooden.Large"
+		5: "Wooden.Huge"
+		6: "Metal.Small"
+		7: "Metal.Medium"
+		8: "Metal.Large"
+		9: "Cardboard.Small"
+		10: "Cardboard.Medium"
+		11: "Cardboard.Large"
+		12: "Stone.Small"
+		13: "Stone.Medium"
+		14: "Stone.Large"
+		15: "Stone.Huge"
+		16: "Glass.Small"
+		17: "Plastic.Small"
+		18: "Plastic.Medium"
+		19: "Plastic.Large"
+		20: "Pottery.Small"
+		21: "Pottery.Medium"
+		22: "Pottery.Large"
+		23: "Pottery.Huge"
+		24: "Glass.Window"
+		]
+
+	health(integer) : "Strength" : 1 : "Number of points of damage to take before breaking. 0 means don't break."
+	material(choices) : "Material Type" : "0" : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken." =
+		[
+		0: "Glass"
+		1: "Wood"
+		2: "Metal"
+		3: "Flesh"
+		4: "CinderBlock"
+		5: "Ceiling Tile"
+		6: "Computer"
+		7: "Unbreakable Glass"
+		8: "Rocks"
+		10: "None"
+		]
+
+	material[P2](choices) : "Material Type" : "0" : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken." =
+		[
+		0: "Glass"
+		1: "Wood"
+		2: "Metal"
+		3: "Flesh"
+		4: "CinderBlock"
+		5: "Ceiling Tile"
+		6: "Computer"
+		7: "Unbreakable Glass"
+		8: "Rocks"
+		9: "Metal Panel"
+		10: "None"
+		]
+
+	explosion(choices) : "Gibs Direction" : "0" : "Used to decide which direction to throw gibs when broken." =
+		[
+		0: "Random"
+		1: "Relative to Attack"
+		2: "Use Precise Gib Dir"
+		]
+
+	gibdir(angle) : "Precise Gib Direction" : "0 0 0" : "Specifies the direction to throw gibs when this breakable breaks. Be sure to select Use Precise Gib Dir in the Gibs Direction field!"
+	nodamageforces(choices) : "Damaging it Doesn't Push It" : "0" : "Used to determine whether or not damage should cause the brush to move." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	nodamageforces[ASW](boolean) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move."
+	gibmodel(string) : "Gib Model" : : "Used by HL1Port to specify a custom gib model to break into, overriding the 'Material Type'."
+	gibmodel[P2](studio) : "Gib Model" : : "Used by HL1Port to specify a custom gib model to break into, overriding the 'Material Type'."
+	spawnobject[!P2](choices) : "Spawn On Break" : "0" : "When broken, an entity of the selected type will be created." =
+		[
+		1: "item_battery"
+		2: "item_healthkit"
+		3: "item_ammo_pistol"
+		4: "item_ammo_pistol_large"
+		5: "item_ammo_smg1"
+		6: "item_ammo_smg1_large"
+		7: "item_ammo_ar2"
+		8: "item_ammo_ar2_large"
+		9: "item_box_buckshot"
+		10: "item_flare_round"
+		11: "item_box_flare_rounds"
+		12: "item_ml_grenade"
+		13: "item_smg1_grenade"
+		14: "item_box_sniper_rounds"
+		15: "unused1"
+		16: "weapon_stunstick"
+		17: "weapon_ar1"
+		18: "weapon_ar2"
+		19: "unused2"
+		20: "weapon_ml"
+		21: "weapon_smg1"
+		22: "weapon_smg2"
+		23: "weapon_slam"
+		24: "weapon_shotgun"
+		25: "weapon_molotov"
+		26: "item_dynamic_resupply"
+		]
+
+	explodemagnitude(integer) : "Explode Magnitude" : 0 : "If non-zero, when this entity breaks it will create an explosion that causes the specified amount of damage."
+	pressuredelay(float) : "Pressure Delay" : 0 : "Delay, in seconds, after 'broken' by pressure before breaking apart (allows for sound to play before breaking apart)."
+
+	// Inputs
+	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
+	input DisableDamageForces(void) : "Damaging the entity does *not* apply physics forces to it."
+	]

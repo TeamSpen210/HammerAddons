@@ -1,0 +1,21 @@
+
+@PointClass base(Angles, Targetname, Parentname) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	size(-4 -4 -4, 4 4 4) 
+	color(0 0 255) 
+	line(0 0 255, targetname, EndTargetName) = env_alyxemp: "Special effect for the Alyx's EMP device."
+	[
+	type(choices) : "EMP Type" : "0" =
+		[
+		0: "Small"
+		1: "Large"
+		]
+
+	endtargetname(target_destination) : "Target Entity" : : "Entity to use as a target endpoint."
+
+	// Inputs
+	input StartCharge(float) : "Start charging the effect over specified number of seconds."
+	input StartDischarge(void) : "Start discharging the effect over specified number of seconds."
+	input Stop(float) : "Stops the effect at any point."
+	input SetTargetEnt(string) : "Sets the target entity for the effect."
+	]

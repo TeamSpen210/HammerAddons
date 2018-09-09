@@ -1,0 +1,9 @@
+
+@PointClass base(Targetname) 
+	appliesto(ASW) 
+	iconsprite("editor/asw_debrief_info.vmt") = asw_debrief_info: "Mission debrief text"
+	[
+	debrieftext1(string) : "Debrief Text 1" : : "First paragraph of mission debrief text."
+	debrieftext2(string) : "Debrief Text 2" : : "Second paragraph of mission debrief text."
+	debrieftext3(string) : "Debrief Text 3" : : "Third paragraph of mission debrief text."
+	]

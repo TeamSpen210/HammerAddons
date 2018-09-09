@@ -1,0 +1,36 @@
+
+@NpcClass base(BaseNPC, BaseNPC) 
+	appliesto(ASW, EP1, EP2, HL2, P2) = npc_spotlight: "Spotlight"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Start Track On" : 1
+		131072: "Start Light On" : 1
+		262144: "No Dynamic Light" : 0
+		524288: "Never Move" : 0
+		]
+
+	health(integer) : "Health" : 100
+	yawrange(integer) : "YawRange" : 90
+	pitchmin(integer) : "PitchMin" : 35
+	pitchmax(integer) : "PitchMax" : 50
+	idlespeed(integer) : "IdleSpeed" : 2
+	alertspeed(integer) : "AlertSpeed" : 5
+	spotlightlength(integer) : "SpotlightLength" : 500
+	spotlightwidth(integer) : "SpotlightWidth" : 50
+	rendercolor(color255) : "Color (R G B)" : "255 255 255"
+
+	// Inputs
+	input LightOn(void) : "LightOn"
+	input LightOff(void) : "LightOff"
+	input TrackOn(void) : "TrackOn"
+	input TrackOff(void) : "TrackOff"
+
+	// Outputs
+	output OnAlert(void) : "Fires when the spotlight alerted by sound"
+	output DetectedEnemy(string) : "Outputs enemy entity when spotlight finds and starts tracking enemy"
+	output LostEnemy(string) : "Outputs enemy entity when spotlight loses enemy that it's tracking, if enemy still exists"
+	output SquadDetectedEnemy(string) : "Outputs enemy entity when squad finds and starts tracking enemy"
+	output SquadLostEnemy(string) : "Outputs enemy entity when squad loses enemy that it's tracking, if entity still exists"
+	output LightPosition(string) : "Position of the end of the spotlight beam"
+	]

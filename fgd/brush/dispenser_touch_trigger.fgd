@@ -1,0 +1,5 @@
+
+@SolidClass base(Parentname, Targetname, Trigger) 
+	appliesto(TF2) = dispenser_touch_trigger: "Trigger for dispenser healing bounds"
+	[
+	]

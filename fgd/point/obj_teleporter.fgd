@@ -1,0 +1,28 @@
+
+@PointClass base(Targetname, Parentname, BaseObject, Angles) 
+	appliesto(TF2) 
+	studio("models/buildables/teleporter_light.mdl") = obj_teleporter: "TF2 Teleporter"
+	[
+	defaultupgrade(choices) : "Starting Upgrade Level" : "0" =
+		[
+		0: "Level 1"
+		1: "Level 2"
+		2: "Level 3"
+		]
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		4: "Upgradable" : 0
+		]
+
+	teleportertype(choices) : "Type" : "1" =
+		[
+		1: "Entrance"
+		2: "Exit"
+		]
+
+	matchingteleporter(target_destination) : "Matching Teleporter" : : "The teleporter linked to this one."
+
+	// Outputs
+	output OnDestroyed(void) : "Fired when this entity is destroyed."
+	]

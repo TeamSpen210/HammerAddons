@@ -1,0 +1,15 @@
+
+@PointClass base(Targetname, ASWObjective) 
+	appliesto(ASW) 
+	iconsprite("editor/asw_objective_countdown.vmt") = asw_objective_countdown: "Alien Swarm Countdown Objective - counts down to 0 then explodes the level"
+	[
+	objectivetitle(string) : "Objective Title" : : "Title to use for this objective in the list on the briefing screen, or in-game for the current objective HUD display."
+	countdownlength(float) : "Countdown Length" : 60 : "How many seconds before the level explodes."
+
+	// Inputs
+	input StartCountdown(void) : "Start Countdown"
+	input CancelCountdown(void) : "Cancel Countdown"
+
+	// Outputs
+	output OnCountdownFailed(void) : "Fired when the countdown timer reaches 0."
+	]

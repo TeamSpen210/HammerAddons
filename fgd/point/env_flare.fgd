@@ -1,0 +1,21 @@
+
+@PointClass base(Targetname, Parentname, Angles, Targetname, Parentname, Angles) 
+	appliesto(ASW, EP1, EP2, HL2, P2) 
+	size(-4 -4 -4, 4 4 4) = env_flare: "Flare"
+	[
+	scale(float) : "Scale" : 1
+	duration(float) : "Duration" : 30
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "No DLight" : 0
+		2: "No Smoke" : 0
+		4: "Infinite" : 0
+		8: "Start off" : 0
+		]
+
+
+	// Inputs
+	input Start(float) : "Starts the flare burning. The flare will burn for the specified number of seconds (0 = infinite)."
+	input Die(float) : "Causes the flare to fade out over the specified number of seconds, and then die (0 = die instantly)."
+	input Launch(float) : "Launch the flare forward with the specified speed."
+	]

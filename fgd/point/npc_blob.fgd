@@ -1,0 +1,10 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, HL2, EP2) 
+	studio("models/combine_soldier.mdl") = npc_blob: "Blob"
+	[
+
+	// Inputs
+	input FormPathShape(string) : "Tells the group to go distribute themselves along a shape defined by path corner entities"
+	input SetRadius(float) : "Force the group to change the radius (density)"
+	]

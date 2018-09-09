@@ -1,0 +1,16 @@
+
+@PointClass base(Targetname, MasterEnt, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	size(-8 -8 -8, 8 8 8) 
+	color(200 0 0) = game_player_team: "An entity that changes the team of the player who activates it."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Remove On fire" : 0
+		2: "Kill Player" : 0
+		4: "Gib Player" : 0
+		]
+
+	target(string) : "game_team_master to use"
+	master[!P2](string) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
+	]

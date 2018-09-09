@@ -1,0 +1,18 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	size(-8 -8 -8, 8 8 8) 
+	iconsprite("editor/ts2do/point_playermoveconstraint.vmt") 
+	sphere(radius) = point_playermoveconstraint: "An entity that constrains players to a radius around itself, slowing them down the closer they get to the edge of the radius."
+	[
+	radius(float) : "Radius" : 256 : "Radius to constrain players to."
+	width(float) : "Constraint Width" : 75.0 : "Width of the constraint edge. This is the distance in which to start slowing players down as they approach the edge of the radius."
+	speedfactor(float) : "Speed Factor" : 0.15 : "Factor applied to the player's max speed as they approach the radius edge."
+
+	// Inputs
+	input TurnOn(void) : "Start constraining any players within the radius."
+	input TurnOff(void) : "Stop constraining any players previously constrained."
+
+	// Outputs
+	output OnConstraintBroken(void) : "Fired when a player breaks through the constraint."
+	]

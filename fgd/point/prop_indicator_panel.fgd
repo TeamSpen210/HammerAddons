@@ -1,0 +1,36 @@
+
+@PointClass base(Targetname, Parentname, Angles) 
+	appliesto(P2) 
+	studioprop("models/editor/prop_indicator_panel.mdl") 
+	line(255 255 0, targetname, IndicatorLights) = prop_indicator_panel: "Indicator signs for the end of modern antlines. Shows either a tick/cross, or a circular countdown. Can also function as a env_texturetoggle for indicator lights."
+	[
+	timerduration(float) : "Timer Duration" : 0 : "Amount of time the counter will count down"
+	enabled(boolean) : "Start visible?" : 1 : "Appears non-functional."
+	istimer(choices) : "Starting State" : "0" : "Does this start as a checkmark or countdown display?" =
+		[
+		0: "Checkmark"
+		1: "Timer"
+		]
+
+	ischecked(choices) : "Starts checked?" : "0" : "If this is a checkmark sign, whether this starts checked or not." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	indicatorlights(target_destination) : "Indicator Lights" : : "If supplied, assumes this is a group of indicators lights to toggle when the indicator is toggled."
+	skin(choices) : "[H] Skin" : "0" : "What kind of indicator to show as in Hammer" =
+		[
+		0: "Check"
+		1: "Cross"
+		2: "Timer"
+		]
+
+
+	// Inputs
+	input Check(void) : "Sets the indicator state to be 'checked', switching the screen to tick/cross mode."
+	input Uncheck(void) : "Sets the indicator state to be 'unchecked'."
+	input Start(void) : "Start counting down, switching the screen to timer mode."
+	input Stop(void) : "Stop the counter at its current value."
+	input Reset(void) : "Reset the timer back to its default value."
+	]

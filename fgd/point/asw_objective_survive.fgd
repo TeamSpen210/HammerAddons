@@ -1,0 +1,7 @@
+
+@PointClass base(Targetname, ASWObjective) 
+	appliesto(ASW) 
+	iconsprite("editor/asw_objective_survive.vmt") = asw_objective_survive: "Alien Swarm all marines must survive objective"
+	[
+	objectivetitle(string) : "Objective Title" : "#asw_all_survive" : "Title to use for this objective in the list on the briefing screen, or in-game for the current objective HUD display."
+	]

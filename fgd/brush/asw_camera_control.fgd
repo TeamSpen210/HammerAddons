@@ -1,0 +1,11 @@
+
+@SolidClass base(Targetname, Origin) 
+	appliesto(ASW) = asw_camera_control: "The camera will change when marines are inside this volume."
+	[
+	angtype(choices) : "Angle Type" : "0" : "Camera angle to use when marines are in this volume." =
+		[
+		0: "Top-down"
+		1: "40 degree"
+		]
+
+	]

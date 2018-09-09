@@ -1,0 +1,201 @@
+
+@PointClass base(Targetname, Angles) 
+	appliesto(CSGO) 
+	studio("models/Characters/hostage_04.mdl") = hostage_entity: "Hostage. A hostage NPC will spawn at this point.\n\nThere are usually four hostages placed in each hostage rescue map. The model for each Hostage is randomly chosen."
+	[
+	hostagetype(choices) : "Hostage Model (int)" : "0" : "Not used. Hostage models are chosen randomly by the game." =
+		[
+		0: "A"
+		1: "B"
+		1: "C"
+		1: "D"
+		]
+
+	hostagespawnrandomfactor(integer) : "Hostage Spawn Random Factor (int)" : 1 : "Allows to increase probability of this hostage being picked during random spawn selection process, essentially considering this spawn point specified number of times."
+	hostagespawnexclusiongroup1(choices) : "Hostage Spawn Exclusion Group 1" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup2(choices) : "Hostage Spawn Exclusion Group 2" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup3(choices) : "Hostage Spawn Exclusion Group 3" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup4(choices) : "Hostage Spawn Exclusion Group 4" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup5(choices) : "Hostage Spawn Exclusion Group 5" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup6(choices) : "Hostage Spawn Exclusion Group 6" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup7(choices) : "Hostage Spawn Exclusion Group 7" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup8(choices) : "Hostage Spawn Exclusion Group 8" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup9(choices) : "Hostage Spawn Exclusion Group 9" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup10(choices) : "Hostage Spawn Exclusion Group 10" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup11(choices) : "Hostage Spawn Exclusion Group 11" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup12(choices) : "Hostage Spawn Exclusion Group 12" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup13(choices) : "Hostage Spawn Exclusion Group 13" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup14(choices) : "Hostage Spawn Exclusion Group 14" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup15(choices) : "Hostage Spawn Exclusion Group 15" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup16(choices) : "Hostage Spawn Exclusion Group 16" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup17(choices) : "Hostage Spawn Exclusion Group 17" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup18(choices) : "Hostage Spawn Exclusion Group 18" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup19(choices) : "Hostage Spawn Exclusion Group 19" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup20(choices) : "Hostage Spawn Exclusion Group 20" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup21(choices) : "Hostage Spawn Exclusion Group 21" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup22(choices) : "Hostage Spawn Exclusion Group 22" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup23(choices) : "Hostage Spawn Exclusion Group 23" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup24(choices) : "Hostage Spawn Exclusion Group 24" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup25(choices) : "Hostage Spawn Exclusion Group 25" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup26(choices) : "Hostage Spawn Exclusion Group 26" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup27(choices) : "Hostage Spawn Exclusion Group 27" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup28(choices) : "Hostage Spawn Exclusion Group 28" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup29(choices) : "Hostage Spawn Exclusion Group 29" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+	hostagespawnexclusiongroup30(choices) : "Hostage Spawn Exclusion Group 30" : "0" : "Hostages sharing same spawn exclusion group will never spawn together." =
+		[
+		0: "n/a"
+		1: "Do not spawn together"
+		]
+
+
+	// Outputs
+	output OnHostageBeginGrab(void) : "Fires when a player starts to use a hostage"
+	output OnFirstPickedUp(void) : "Fires when the hostage is first picked up"
+	output OnDroppedNotRescued(void) : "Fires when the hostage is dropped, but not rescued"
+	output OnRescued(void) : "Fires when the hostage is rescued"
+	]

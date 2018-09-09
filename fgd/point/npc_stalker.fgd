@@ -1,0 +1,13 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/Stalker.mdl") = npc_stalker: "Stalker"
+	[
+	beampower(choices) : "Beam Power" : "Low" =
+		[
+		0: "Low"
+		1: "Medium"
+		2: "High"
+		]
+
+	]

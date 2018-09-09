@@ -1,0 +1,18 @@
+
+@PointClass base(Angles, Angles) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	iconsprite("editor/light_env.vmt") 
+	lightprop("models/editor/spot.mdl") = light_environment: "Sets the color and angle of the light from the sun and sky."
+	[
+	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
+	pitch[P2](angle_negative_pitch) : "Pitch" : "0" : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
+	_light(color255) : "Brightness" : "255 255 255 200"
+	_ambient(color255) : "Ambient" : "255 255 255 20"
+	_ambient[P2](color255) : "Ambient light" : "255 255 255 20"
+	_lighthdr(color255) : "BrightnessHDR" : "-1 -1 -1 1"
+	_lightscalehdr(float) : "BrightnessScaleHDR" : 1 : "Amount to scale the light by when compiling for HDR."
+	_ambienthdr(color255) : "AmbientHDR" : "-1 -1 -1 1"
+	_ambientscalehdr(float) : "AmbientScaleHDR" : 1 : "Amount to scale the ambient light by when compiling for hdr."
+	sunspreadangle(float) : "SunSpreadAngle" : 0 : "The angular extent of the sun for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
+	sunspreadangle[P2](float) : "SunSpreadAngle" : 5 : "The angular extent of the sun for casting soft shadows. Higher numbers are more diffuse."
+	]

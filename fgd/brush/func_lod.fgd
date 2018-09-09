@@ -1,0 +1,13 @@
+
+@SolidClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	sphere(DisappearDist) = func_lod: "Brush-built model that fades out over a specified distance. Useful for creating world detail that doesn't need to be drawn far away, for performance reasons."
+	[
+	disappeardist(integer) : "Disappear Distance" : 2000 : "Distance at which these brushes should fade out."
+	solid(choices) : "Solid" : "0" : "Set whether or not these brushes should collide with other entities." =
+		[
+		0: "Solid"
+		1: "Nonsolid"
+		]
+
+	]

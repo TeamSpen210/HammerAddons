@@ -1,0 +1,13 @@
+
+@PointClass base(BaseNPC, Parentname, AlyxInteractable) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/combine_turrets/ground_turret.mdl") = npc_turret_ground: "Combine ground turret"
+	[
+
+	// Inputs
+	input Enable(void) : "Turn turret on."
+	input Disable(void) : "Turn turret off."
+
+	// Outputs
+	output OnAreaClear(void) : "Fires when the turret can't find any more enemies (7 second delay)"
+	]

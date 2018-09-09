@@ -1,0 +1,82 @@
+
+@PointClass base(Targetname, Angles) 
+	appliesto(P2) 
+	studioprop() 
+	sphere(turretRange) 
+	frustum(45, 16, TurretRange, 255 0 0 100, -1) = npc_portal_turret_floor: "Aperture Science Sentry Turret."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		32: "Start Active" : 0
+		64: "Start Inactive" : 0
+		128: "Fast Retire" : 0
+		256: "Out of Ammo" : 0
+		]
+
+	modelindex(choices) : "Model" : "0" : "Which model the turret uses. The skeleton turret is still functional." =
+		[
+		0: "Normal"
+		1: "Custom Model"
+		2: "Box"
+		3: "Backwards"
+		4: "Skeleton"
+		]
+
+	skinnumber(choices) : "Skin" : "0" : "Set the skin used for the turret. Only useful on normal (for a destroyed variant) or custom turrets." =
+		[
+		0: "Normal"
+		1: "Destroyed"
+		]
+
+	gagged(boolean) : "Gag Turret" : 0 : "Turret will not speak any lines."
+	usedasactor(boolean) : "Used As Actor" : 0 : "Turret will not run the standard floor turret code so it can be used as an actor."
+	pickupenabled(boolean) : "Turret Pickup Allowed" : 1 : "Disables pickup by player."
+	disablemotion(boolean) : "Disable Motion" : 0 : "Set for turrets that can't move in the world."
+	allowshootthroughportals(boolean) : "Allow Shooting Through Portals" : 0 : "Turrets will not try to shoot through portals unless this is set."
+	turretrange(float) : "Maximum Range" : 1024 : "How far the turret will be able to see targets."
+	loadalternativemodels(boolean) : "Load Defective Models" : 0 : "Should this turret precache the defective models? Needed for late switching."
+	usesuperdamagescale(boolean) : "Use Super Damage" : 0 : "Setting this to true will scale the turret's damage by a very large amount."
+	damageforce(boolean) : "Damage Pushes Player" : 0 : "Being hit by this turret will push the player back."
+	collisiontype(choices) : "Collision Type" : "0" : "Allow collision with the player to be turned off for very special cases." =
+		[
+		0: "Normal"
+		1: "Debris"
+		]
+
+	model(choices) : "Custom Model" : "models/npcs/turret/turret.mdl" : "The model to show as in Hammer, or a custom model to use." =
+		[
+		"models/npcs/turret/turret.mdl": "Normal"
+		"models/npcs/turret/turret_boxed.mdl": "Box"
+		"models/npcs/turret/turret_backwards.mdl": "Backwards"
+		"models/npcs/turret/turret_skeleton.mdl": "Skeleton"
+		]
+
+	skin(integer) : "[H] Skin" : 0 : "The skin to show, mainly for the normal model."
+
+	// Inputs
+	input Toggle(void) : "Toggle enabled state."
+	input Enable(void) : "Enable the turret."
+	input Disable(void) : "Disable the turret."
+	input DepleteAmmo(void) : "Depletes all the ammo from a turret, causing it to dry-fire."
+	input RestoreAmmo(void) : "Restores ammo to a turret, allowing it to fire live rounds again."
+	input FireBullet(string) : "Causes the turret to instantly fire at the specified entity."
+	input EnableGagging(void) : "Prevents the turret from speaking any lines."
+	input DisableGagging(void) : "Allows the turret to speak again."
+	input EnablePickup(void) : "Enables player pickup of the turret."
+	input DisablePickup(void) : "Disables player pickup of the turret."
+	input SelfDestruct(void) : "Causes the turret to play lines, ignite and then explode."
+	input SelfDestructImmediately(void) : "Cause the turret to explode immediately."
+	input SetAsBouncePainted(void) : "Force this turret to be painted with bounce paint."
+	input EnableMotion(void) : "Enable physics motion."
+	input DisableMotion(void) : "Disable physics motion."
+	input SetModel(integer) : "Change the model, where the parameter is an integer from 0-4. Requires the Load Defective Models keyvalue to be true!"
+
+	// Outputs
+	output OnDeploy(void) : "Turret has seen the player and is deploying its arms."
+	output OnRetire(void) : "Turret has lost sight of the player and is returning to sleep mode."
+	output OnTipped(void) : "Turret has been tipped over and 'died'."
+	output OnExplode(void) : "Turret has exploded."
+	output OnPhysGunPickup(void) : "Turret was picked up by player."
+	output OnPhysGunDrop(void) : "Turret was dropped by player."
+	output OnPainted(void) : "Fires when the turret is first painted or if repainted by a different color."
+	]

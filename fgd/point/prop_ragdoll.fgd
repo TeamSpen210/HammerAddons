@@ -1,0 +1,24 @@
+
+@PointClass base(Angles, Targetname, Studiomodel, DXLevelChoice, BaseFadeProp, EnableDisable, SystemLevelChoice, Angles, Targetname, Studiomodel, SystemLevelChoice, BaseFadeProp, EnableDisable) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	sphere(fademindist) 
+	sphere(fademaxdist) 
+	studioprop() = prop_ragdoll: "A prop that physically simulates and can be articulated with internal joints. The joint constraints are part of the physics model."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		4: "Debris - Don't collide with the player or other debris" : 1
+		8192: "Allow Dissolve" : 0
+		16384: "Motion Disabled" : 0
+		32768: "Allow stretch" : 0
+		65536: "Start asleep" : 0
+		]
+
+	angleoverride(string) : "Override Animation" : : "Filled in by the engine via wc_update_entity, do not edit by hand except to clear."
+
+	// Inputs
+	input StartRagdollBoogie(void) : "Begins ragdoll boogie effect. Parameter override = number of seconds to boogie."
+	input EnableMotion(void) : "Enable physics motion/collision response."
+	input DisableMotion(void) : "Disable physics motion/collision response."
+	input FadeAndRemove(float) : "Fade out then remove (kill) self. Parameter override = duration of fade"
+	]

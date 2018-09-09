@@ -1,0 +1,21 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	iconsprite("editor/logic_compare.vmt") 
+	color(0 100 250) = logic_compare: "Compares an input value to another value. If the input value is less than the compare value, the OnLessThan output is fired with the input value. If the input value is equal to the compare value, the OnEqualTo output is fired with the input value. If the input value is greater than the compare value, the OnGreaterThan output is fired with the input value."
+	[
+	initialvalue(integer) : "Initial value" : : "Initial value for the input value."
+	comparevalue(integer) : "Compare value" : : "The value to compare against."
+
+	// Inputs
+	input SetValue(float) : "Set the value that will be compared against the compare value."
+	input SetValueCompare(float) : "Set the value that will be compared against the compare value and performs the comparison."
+	input SetCompareValue(float) : "Set the compare value."
+	input Compare(void) : "Force a compare of the input value with the compare value."
+
+	// Outputs
+	output OnLessThan(float) : "Fired when the input value is less than the compare value. Sends the input value as data."
+	output OnEqualTo(float) : "Fired when the input value is equal to the compare value. Sends the input value as data."
+	output OnNotEqualTo(float) : "Fired when the input value is different from the compare value. Sends the input value as data."
+	output OnGreaterThan(float) : "Fired when the input value is greater than the compare value. Sends the input value as data."
+	]

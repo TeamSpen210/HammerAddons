@@ -1,0 +1,6 @@
+
+@PointClass 
+	appliesto(P2, CSGO) 
+	iconsprite("editor/func_instance_origin.vmt") = func_instance_origin: "Place to change the center of an instance.|||This is the center of the instance for rotation."
+	[
+	]

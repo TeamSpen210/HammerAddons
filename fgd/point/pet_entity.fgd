@@ -1,0 +1,6 @@
+
+@PointClass base(Angles) 
+	appliesto(CSGO) 
+	studio("models/chicken/chicken.mdl") = pet_entity: "Pet. A pet animal will spawn at this point.\n"
+	[
+	]

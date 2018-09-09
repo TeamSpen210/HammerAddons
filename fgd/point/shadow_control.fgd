@@ -1,0 +1,31 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	iconsprite("editor/shadow_control.vmt") 
+	color(200 0 0) 
+	sphere(distance) = shadow_control: "An entity to control the shadows in the map."
+	[
+	angles(string) : "Pitch Yaw Roll (Y Z X)" : "80 30 0" : "This is the shadow direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis."
+	color(color255) : "Shadow Color" : "128 128 128" : "This is the color of the shadows."
+	distance(float) : "Maximum Distance" : 75 : "This is the maximum distance the shadow is allowed to cast, in inches."
+	disableallshadows(choices) : "All Shadows Disabled" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	disableallshadows[ASW](boolean) : "All Shadows Disabled" : 0
+	enableshadowsfromlocallights[!CSGO, P2, !TF2](choices) : "Enable Shadows From Local Lights" : "1" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+
+	// Inputs
+	input color(color255) : "Set the shadow color."
+	input direction(vector) : "Set the shadow direction."
+	input SetDistance(float) : "Set the maximum shadow cast distance."
+	input SetAngles(string) : "Set the shadow direction."
+	input SetShadowsDisabled(integer) : "Set shadows disabled state."
+	]

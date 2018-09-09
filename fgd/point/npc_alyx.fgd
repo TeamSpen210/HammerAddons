@@ -1,0 +1,42 @@
+
+@NpcClass base(TalkNPC, Parentname, PlayerCompanion) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio() = npc_alyx: "Alyx"
+	[
+	model(studio) : "World model" : "models/alyx.mdl"
+	additionalequipment(choices) : "Weapons" : "weapon_alyxgun" =
+		[
+		"weapon_alyxgun": "Alyx Gun"
+		"weapon_shotgun": "Shotgun"
+		0: "Nothing"
+		]
+
+	dontpickupweapons(choices) : "Prevent picking up weapons?" : "1" : "If yes, this NPC will NOT be allowed to pick up weapons they find on the ground." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	shouldhaveemp(choices) : "Should alyx have her EMP?" : "1" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+
+	// Inputs
+	input AllowInteraction(void) : "Allow Alyx's 'hacking' AI to run."
+	input DisallowInteraction(void) : "Disallow Alyx's 'hacking' AI."
+	input AllowDarknessSpeech(boolean) : "Enables or disables Alyx's darkness speech ('where are you', etc)."
+	input SetAnimLockedEntity(string) : "Sets Alyx to take her animation and cycle position from another entity."
+	input ClearAnimLockedEntity(void) : "Stops Alyx from taking her animation locking from another character."
+	input GiveEMP(boolean) : "Gives or removes the EMP tool."
+	input EnterVehicle(string) : "Make Alyx enter the vehicle specified by name."
+	input EnterVehicleImmediately(string) : "Make Alyx enter the vehicle specified by name immediately via teleportation."
+	input ExitVehicle(void) : "Make Alyx exit the vehicle she's in."
+	input CancelEnterVehicle(void) : "Stops Alyx from trying to enter the vehicle if she's outside of it."
+
+	// Outputs
+	output OnFinishInteractWithObject(void) : "Fires when Alyx finishes interacting with an object (usually hacking it)."
+	output OnPlayerUse(void) : "Fires when a player +USEs Alyx"
+	]

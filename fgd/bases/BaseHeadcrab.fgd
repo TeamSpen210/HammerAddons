@@ -1,0 +1,21 @@
+
+@BaseClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, ASW) = BaseHeadcrab
+	[
+	startburrowed(choices) : "Start burrowed" : "No" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Start hidden" : 0
+		131072: "Start hanging from ceiling" : 0
+		]
+
+
+	// Inputs
+	input StartHangingFromCeiling(void) : "Start hanging from ceiling."
+	input DropFromCeiling(void) : "Drop if hanging from ceiling."
+	]

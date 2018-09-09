@@ -1,0 +1,6 @@
+
+@PointClass base(Targetname, Angles, EnableDisable) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	iconsprite("editor/info_target.vmt") = info_target_vehicle_transition: "Vehicle Transition Point"
+	[
+	]

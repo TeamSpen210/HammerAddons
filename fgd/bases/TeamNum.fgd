@@ -1,0 +1,24 @@
+
+@BaseClass 
+	appliesto(TF2, CSGO) = TeamNum
+	[
+	teamnum(choices) : "Team" : "0" : "Team" =
+		[
+		0: "Any"
+		2: "Red"
+		3: "Blue"
+		]
+
+	teamnum[CSGO](choices) : "Team Number (int)" : "0" =
+		[
+		-1: "None"
+		0: "All Teams"
+		2: "Terrorist"
+		3: "Counter-Terrorist"
+		]
+
+
+	// Inputs
+	input SetTeam(integer) : "Changes the entity's team."
+	input SetTeam[CSGO](integer) : "Changes the entity's team"
+	]

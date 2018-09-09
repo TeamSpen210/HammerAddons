@@ -1,0 +1,15 @@
+
+@PointClass base(Targetname, Parentname, Studiomodel, Angles, Targetname, Parentname, Studiomodel, Angles) 
+	appliesto(ASW, CSGO) 
+	studioprop() = prop_hallucination: "A prop that players can't get a good look at, hopefully making them unsure if it's there at all"
+	[
+	enabledchance(float) : "Enabled Chance" : 100.0 : "Percentage chance the hallucination starts enabled. 0 is always off, 100 is always on"
+	visibletime(float) : "Visible Time" : 0.215 : "Number of seconds the hallucination stays visible from the first frame it can be seen"
+	rechargetime(float) : "Recharge Time" : 0.0 : "Number of seconds the hallucination stays invisible before it can be seen again. 0 to disable recharging"
+
+	// Inputs
+	input Enable(void) : "Enable the hallucination algorithm"
+	input Disable(void) : "Disable the hallucination algorithm"
+	input SetVisibleTime(float) : "Set Visible Time"
+	input SetRechargeTime(float) : "Set Recharge Time"
+	]

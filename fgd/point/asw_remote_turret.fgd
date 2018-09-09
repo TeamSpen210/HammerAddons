@@ -1,0 +1,13 @@
+
+@PointClass base(Targetname, Angles, Studiomodel, Origin) 
+	appliesto(ASW) 
+	studioprop("models/swarm/SentryGun/remoteturret.mdl") = asw_remote_turret
+	[
+	viewlimits(angle) : "Turn range (Pitch Yaw Roll)" : "20 40 0" : "How many degrees this turret can turn either side of its initial facing."
+	upsidedown(choices) : "Ceiling Turret" : "1" : "If set, this turret will be oriented upside down, as if attached to the ceiling." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	]

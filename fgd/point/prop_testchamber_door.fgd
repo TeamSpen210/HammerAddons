@@ -1,0 +1,27 @@
+
+@PointClass base(Targetname, Parentname, Angles) 
+	appliesto(P2) 
+	studioprop("models/props/portal_door_combined.mdl") 
+	line(255 255 0, targetname, areaPortalWindow) 
+	line(255 255 0, targetname, lightingorigin) 
+	sphere(AreaPortalFadeStart) 
+	sphere(AreaPortalFadeEnd) = prop_testchamber_door: "Portal Door."
+	[
+	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from for all gibs spawned by this shooter, instead of their own origins."
+	areaportalwindow(target_destination) : "Area Portal Window Name" : : "The name of an area portal window that is controlled by the door."
+	useareaportalfade(boolean) : "Fade Area Portal?" : 0 : "If the area portal should use the specified fade distances to fade out."
+	areaportalfadestart(float) : "Fade Start Distance" : 0 : "The distance at which the area portal starts fading out."
+	areaportalfadeend(float) : "Fade End Distance" : 0 : "The distance at which the area portal turns completely opaque."
+
+	// Inputs
+	input Open(void) : "Open the door and cause the portal to activate."
+	input Close(void) : "Close the door and cause the portal to deactivate."
+	input Lock(void) : "Locking a door will prevent the Open or Close inputs from doing anything."
+	input Unlock(void) : "If locked, unlocking a door will allow the Open or Close inputs to function."
+
+	// Outputs
+	output OnOpen(void) : "Called when the door has started its open animation."
+	output OnClose(void) : "Called when the door has started its close animation."
+	output OnFullyOpen(void) : "Called when the door has finished its open animation."
+	output OnFullyClosed(void) : "Called when the door has finished its close animation."
+	]

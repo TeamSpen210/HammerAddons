@@ -1,0 +1,15 @@
+
+@SolidClass base(BaseTank) 
+	appliesto(EP1, EP2, HL2, ASW) = func_tankmortar: "Brush Mortar Turret"
+	[
+	imagnitude(integer) : "Explosion Magnitude" : 100
+	firedelay(string) : "Shell travel time" : "2" : "How long after the turret fires before the shell impacts"
+	firestartsound(sound) : "Firing start sound" : : "Sound of the mortar firing"
+	fireendsound(sound) : "Firing end sound"
+	incomingsound(sound) : "Incoming Shell Sound" : : "Sound of the shell falling on the target"
+	warningtime(float) : "Incoming warning time" : 1 : "How long before the shell impacts to play the warning sound"
+	firevariance(float) : "Fire time variance" : 0 : "How much variability to add to fire rate (time +-)"
+
+	// Inputs
+	input FireAtWill(void) : "Allow tank to fire next shot as soon as ready."
+	]

@@ -1,0 +1,9 @@
+
+@PointClass base(ASWPickup) 
+	appliesto(ASW) 
+	studio("models/swarm/Mine/mine.mdl") = asw_pickup_mines: "Mines"
+	[
+	bulletsingun(integer) : "Bullets In Gun" : 5
+	clips(integer) : "Clips" : 0
+	secondarybullets(integer) : "Secondary Bullets" : 0
+	]

@@ -1,0 +1,13 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/Zombie/Poison.mdl") = npc_poisonzombie: "A bloated, disgusting, fluid-spurting zombie created by a poison headcrab."
+	[
+	crabcount(choices) : "Crabs in nest" : "3" =
+		[
+		1: "1 Crab"
+		2: "2 Crabs"
+		3: "3 Crabs"
+		]
+
+	]

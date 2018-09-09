@@ -1,0 +1,9 @@
+
+@PointClass base(Targetname, Parentname, Angles, Global, Studiomodel, Origin) 
+	appliesto(ASW) 
+	studioprop() = asw_polytest
+	[
+	sequence(integer) : "Sequence" : 0
+	cycle(float) : "Cycle" : 0
+	playbackrate(float) : "Playback rate" : 0
+	]

@@ -1,0 +1,22 @@
+
+@NpcClass base(VehicleDriverNPC) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/roller.mdl") = npc_apcdriver: "NPC used to drive an APC vehicle."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "No Rocket Attacks" : 0
+		131072: "No Gun Attacks" : 0
+		]
+
+	drivermaxspeed(float) : "Maxspeed (percentage of vehicle's maxspeed)." : 1
+	driverminspeed(float) : "MinSpeed (percentage of vehicle's maxspeed)." : 0
+
+	// Inputs
+	input SetDriversMaxSpeed(float) : "Set the Maxspeed (percentage of vehicle's maxspeed)."
+	input SetDriversMinSpeed(float) : "Set the Minspeed (percentage of vehicle's maxspeed)."
+	input StartForward(void) : "Tell the driver to start driving."
+	input Stop(void) : "Tell the driver to stop driving."
+	input DisableFiring(float) : "Disables firing from happening"
+	input EnableFiring(float) : "Enables firing to start. Firing is enabled by default"
+	]

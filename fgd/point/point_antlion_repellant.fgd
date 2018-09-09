@@ -1,0 +1,12 @@
+
+@PointClass base(Targetname) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	sphere(repelradius) 
+	color(0 0 255) = point_antlion_repellant: "Antlion Repellant"
+	[
+	repelradius(float) : "Repell radius" : 512 : "Antlions aren't allowed to be inside this radius"
+
+	// Inputs
+	input Enable(void) : "Enable"
+	input Disable(void) : "Disable"
+	]

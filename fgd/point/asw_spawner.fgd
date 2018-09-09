@@ -1,0 +1,59 @@
+
+@PointClass base(Targetname, Angles, BaseASWSpawner) 
+	appliesto(ASW) 
+	studioprop("models/editor/asw_spawner/asw_spawner.mdl") 
+	color(0 0 255) = asw_spawner
+	[
+	maxlivealiens(integer) : "Max Num. of live aliens" : 1 : "Maximum number of live aliens that can be present in the level from this spawner at any given time."
+	numaliens(integer) : "Num. aliens we can create" : 1 : "The number of aliens that can spawn before the spawner is exhausted."
+	infinitealiens(choices) : "Infinitely spawn aliens" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	spawninterval(float) : "Spawn interval" : 4 : "Time in seconds between each alien spawning."
+	spawnintervaljitter(float) : "Spawn interval variation" : 25 : "Percentage variation applied randomly to the spawn interval each time an alien spawns.  Value must be between 0 and 100.  The default 25 will give a 25% variation to the spawn interval, so a 1 second spawn interval would actually be randomly between 0.75 seconds and 1.25 seconds."
+	alienclass(choices) : "Alien Class" : "0" : "Which type of alien to produce from this spawner." =
+		[
+		0: "asw_drone"
+		1: "asw_buzzer"
+		2: "asw_parasite"
+		3: "asw_shieldbug"
+		4: "asw_grub"
+		5: "asw_drone_jumper"
+		6: "asw_harvester"
+		7: "asw_parasite_defanged"
+		8: "asw_queen"
+		9: "asw_boomer"
+		10: "asw_ranger"
+		11: "asw_mortarbug"
+		12: "asw_shaman"
+		]
+
+	healthscale(float) : "Alien health scale" : 1 : "Multiplies the alien's default health by this amount."
+	speedscale(float) : "Alien speed scale" : 1 : "Multiplies the alien's default speed by this amount."
+	spawnerstate(choices) : "Spawner State" : "0" : "Spawner's initial state" =
+		[
+		0: "Start spawning on mission start"
+		1: "Wait for inputs"
+		]
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Infinite even on Easy mode" : 0
+		2: "Don't spawn Uber aliens here" : 0
+		4: "Spawned aliens never sleep" : 0
+		]
+
+
+	// Inputs
+	input SpawnOneAlien(void) : "Spawns an alien."
+	input ToggleSpawning(void) : "Toggles the spawner between spawning and waiting for inputs state."
+	input StartSpawning(void) : "Makes the spawner start creating aliens."
+	input StopSpawning(void) : "Stops the spawner from spawning, putting it into the 'Wait for inputs' state."
+
+	// Outputs
+	output OnAllSpawned(void) : "Fires when all children have been spawned"
+	output OnAllSpawnedDead(void) : "Fires when all the children have been spawned and have died."
+	]

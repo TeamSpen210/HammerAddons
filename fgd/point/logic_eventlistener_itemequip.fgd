@@ -1,0 +1,41 @@
+
+@PointClass base(Targetname) 
+	appliesto(CSGO) = logic_eventlistener_itemequip: "An entity that can listen to the item_equip event fired from code and fire and output when it happens and the weapon class or type defined, match."
+	[
+	weapontype(choices) : "Weapon Type" : "-1" =
+		[
+		-1: "Don't care"
+		0: "Knife"
+		1: "Pistol"
+		2: "Submachinegun"
+		3: "Rifle"
+		4: "Shotgun"
+		5: "Sniper Rifle"
+		6: "Machinegun"
+		7: "C4"
+		8: "Grenade"
+		]
+
+	weaponclassname(string) : "Weapon Classname" : : "The exact weapon class name you want to check for.  i.e. weapon_deagle, weapon_awp, weapon_knife, etc."
+	isenabled(choices) : "Start Enabled" : "1" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	teamnum(choices) : "Team Number" : "-1" : "If set, will only fire its output if the event is generated from someone of the specified team." =
+		[
+		-1: "Don't care"
+		1: "Team 1"
+		2: "Team 2 (ORANGE)"
+		3: "Team 3 (BLUE)"
+		]
+
+
+	// Inputs
+	input Enable(void) : "Enable the logic_measure_movement."
+	input Disable(void) : "Disable the logic_measure_movement."
+
+	// Outputs
+	output OnEventFired(void) : "Fired when the event has been detected."
+	]

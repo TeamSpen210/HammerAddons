@@ -1,0 +1,24 @@
+
+@PointClass base(Targetname, Parentname, Angles) 
+	appliesto(TF2) 
+	studio("models/bots/bot_worker/bot_worker_a.mdl") = tf_robot_destruction_robot_spawn: "Robot Destruction Robot spawn point."
+	[
+	health(integer) : "Health" : 500 : "The health for the robot"
+	gibs(integer) : "Gibs" : 0 : "The number of point-giving gibs to spawn on death"
+	type(choices) : "Robot Style" : "0" =
+		[
+		0: "Frustum"
+		1: "Sphere"
+		2: "King"
+		3: "Finale"
+		]
+
+	spawngroup(target_source) : "Spawn Group" : : "Which group this spawn belongs to"
+	startpath(target_source) : "Start Path" : : "Which path_track to head towards first"
+
+	// Inputs
+	input SpawnRobot(void) : "Spawn a robot on this spawnpoint.  Does nothing if there's already a robot."
+
+	// Outputs
+	output OnRobotKilled(void) : "Sent when this spawn point's robot dies."
+	]

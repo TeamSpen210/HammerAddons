@@ -1,0 +1,10 @@
+
+@SolidClass base(EnableDisable, Parentname, Origin, Global) 
+	appliesto(EP1, EP2, HL2, ASW) = func_healthcharger: "Wall health recharger"
+	[
+	_minlight(string) : "Minimum light level"
+
+	// Outputs
+	output OutRemainingHealth(float) : "Remaining Health."
+	output OnPlayerUse(void) : "Fired when the player +USEs the charger."
+	]

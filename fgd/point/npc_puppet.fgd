@@ -1,0 +1,13 @@
+
+@PointClass base(BaseNPC, Targetname, Parentname, Studiomodel, BaseNPC, Targetname, Parentname, Studiomodel) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	studioprop() 
+	line(255 255 255, targetname, animationtarget) = npc_puppet: "Puppet entity that mimics the animations of a target NPC."
+	[
+	animationtarget(target_source) : "Animation target"
+	animationtarget[P2](target_destination) : "Animation target"
+	attachmentname(string) : "Target attachment point name"
+
+	// Inputs
+	input SetAnimationTarget(string) : "Set the animation target to use. An empty string will disable the puppet."
+	]

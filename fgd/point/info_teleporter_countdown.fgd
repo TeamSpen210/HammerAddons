@@ -1,0 +1,12 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2) 
+	iconsprite("editor/info_target.vmt") = info_teleporter_countdown: "Countdown timer for the teleporter. The status of the teleporter will appear on vgui_screen entities whose panel is 'teleport_countdown_screen'."
+	[
+
+	// Inputs
+	input StartCountdown(float) : "Starts the teleporter countdown. Requires an argument which is the number of seconds for the countdown."
+	input StopCountdown(void) : "Stops the countdown permanently"
+	input Disable(void) : "Pauses the countdown due to a temporary malfunction. A warning sign will appear on the linked vgui screens."
+	input Enable(void) : "Restarts the countdown since the malfunction is finished."
+	]

@@ -1,0 +1,15 @@
+
+@PointClass base(Targetname) 
+	appliesto(ASW) = point_event_proxy: "An entity that allows fires simple game events from map logic"
+	[
+	eventname(string) : "Event Name" : : "Name of the event fired"
+	activatorasuserid(choices) : "Activator as 'userid' field" : "1" : "Use the input activator as the userid field in the event fired" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+
+	// Inputs
+	input GenerateEvent(void) : "Generate the game event."
+	]

@@ -1,0 +1,10 @@
+
+@PointClass base(BaseDriveableVehicle) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studioprop() = prop_vehicle_crane: "Driveable studiomodel crane."
+	[
+	magnetname(target_destination) : "Magnet entity"
+
+	// Inputs
+	input ForcePlayerIn(void) : "Force the player to get into the crane. Only works in singleplayer."
+	]

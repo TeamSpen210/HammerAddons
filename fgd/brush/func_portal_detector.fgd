@@ -1,0 +1,29 @@
+
+@SolidClass base(Targetname, Origin, Parentname) 
+	appliesto(P2) = func_portal_detector: "A region that fires an output if a portal is placed inside it."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Start inactive" : 0
+		]
+
+	linkagegroupid(integer) : "Portal pair ID that it detects" : 0
+	checkallids(boolean) : "Check all portals" : 0 : "Ignore the Group ID and check for all portals."
+
+	// Inputs
+	input Disable(void) : "Turn off detecting functionality"
+	input Enable(void) : "Turn on detecting functionality"
+	input Toggle(void) : "Toggle detecting functionality"
+
+	// Outputs
+	output OnStartTouchPortal(void) : "Fired when any portal touches the detector."
+	output OnEndTouchPortal(void) : "Fired when any portal leaves the detector bounds."
+	output OnStartTouchPortal1(void) : "Fired when the Blue portal is placed intersecting the portal detector."
+	output OnStartTouchPortal2(void) : "Fired when the Orange portal is placed intersecting the portal detector."
+	output OnStartTouchLinkedPortal(void) : "Fired when linked portal is placed intersecting the portal detector."
+	output OnStartTouchBothLinkedPortals(void) : "Fired when both of a pair of portals is placed intersecting the portal detector."
+	output OnEndTouchPortal1(void) : "Fired when the Blue portal has left the volume of the detector"
+	output OnEndTouchPortal2(void) : "Fired when the Orange portal has left the volume of the detector"
+	output OnEndTouchLinkedPortal(void) : "Fired when a portal with a linked partner has left the volume of the detector"
+	output OnEndTouchBothLinkedPortals(void) : "Fired when both portals have left the volume of the detector"
+	]

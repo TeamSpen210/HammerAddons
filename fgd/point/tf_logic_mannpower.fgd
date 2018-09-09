@@ -1,0 +1,5 @@
+
+@PointClass base(Targetname, EnableDisable) 
+	appliesto(TF2) = tf_logic_mannpower: "Logic specifically for Mannpower Mode."
+	[
+	]

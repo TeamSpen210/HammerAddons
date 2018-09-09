@@ -1,0 +1,56 @@
+
+@SolidClass base(Trigger, Targetname, MasterEnt, Trigger, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	line(255 255 255, targetname, filtername) = trigger_hurt: "A trigger volume that damages entities that touch it."
+	[
+	master[!P2](string) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
+	damage(integer) : "Damage" : 10 : "The amount of damage done to entities that touch this trigger. The damage is done every half-second. See also 'Damage Model' for extra details on how damage can be dealt."
+	damage[P2](integer) : "Damage" : 100000 : "The amount of damage done to entities that touch this trigger. The damage is done every half-second. See also 'Damage Model' for extra details on how damage can be dealt."
+	damagecap(integer) : "Damage Cap" : 20 : "Maximum damage dealt per second. This field is only used if you select the Doubling w/Forgiveness damage model, via the spawnflag."
+	damagetype(choices) : "Damage Type" : "0" =
+		[
+		0: "GENERIC"
+		1: "CRUSH"
+		2: "BULLET"
+		4: "SLASH"
+		8: "BURN"
+		16: "FREEZE"
+		32: "FALL"
+		64: "BLAST"
+		128: "CLUB"
+		256: "SHOCK"
+		512: "SONIC"
+		1024: "ENERGYBEAM"
+		16384: "DROWN"
+		32768: "PARALYSE"
+		65536: "NERVEGAS"
+		131072: "POISON"
+		262144: "RADIATION"
+		524288: "DROWNRECOVER"
+		1048576: "CHEMICAL"
+		2097152: "SLOWBURN"
+		4194304: "SLOWFREEZE"
+		]
+
+	damagemodel(choices) : "Damage Model" : "0" : "How damage is dealt. Normal always does the specified amount of damage each half second. Doubling starts with the specified amount and doubles it each time it hurts the toucher. Forgiveness means that if the toucher gets out of the trigger the damage will reset to the specified value. Good for making triggers that are deadly over time without having to cause massive damage on each touch." =
+		[
+		0: "Normal"
+		1: "Doubling w/forgiveness"
+		]
+
+	nodmgforce(choices) : "Zero Damage Force" : "0" : "Should the damaged entity receive no physics force from this trigger." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	nodmgforce[ASW](boolean) : "Zero Damage Force" : 0 : "Should the damaged entity receive no physics force from this trigger."
+	nodmgforce[P2](boolean) : "No Damage Force" : 0 : "Should the damaged entity receive no physics force from this trigger."
+
+	// Inputs
+	input SetDamage(float) : "Set a new amount of damage for this trigger."
+
+	// Outputs
+	output OnHurt(void) : "Fired whenever this trigger hurts something other than a player."
+	output OnHurtPlayer(void) : "Fired whenever this trigger hurts a player."
+	]

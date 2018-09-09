@@ -1,0 +1,12 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2) 
+	size(-4 -4 -4, 4 4 4) 
+	iconsprite("editor/ts2do/env_starfield.vmt") = env_starfield: "Starfield effect"
+	[
+
+	// Inputs
+	input TurnOn(void) : "Turn on"
+	input TurnOff(void) : "Turn off"
+	input SetDensity(float) : "Set the density of the starfield. It's a multiplier, so 1 is the default."
+	]

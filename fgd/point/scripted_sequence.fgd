@@ -1,0 +1,26 @@
+
+@PointClass base(BaseScripted, Angles, DXLevelChoice, BaseScripted, Angles, SystemLevelChoice) 
+	appliesto(ASW, EP1, EP2, HL2, P2) 
+	studio("models/editor/scriptedsequence.mdl") 
+	sphere(m_flRadius) = scripted_sequence: "Grabs an NPC and makes them play a specified set of animations. The NPC can be told to move to the scripted sequence position or can be told to play the script wherever they currently are. Multiple scripted sequences of the same name will frame-synchronize in the action animation once all the actors have moved to position. This allows tight interaction between actors (one actor grabbing another, hitting them, etc.) The flow is as follows:\n\n1) Move to position using the specified movement animation. If 'Move to Position' is set to NONE, skip to step 2.\n2) If forced to wait for another actor to move to position, play the pre-action idle animation, otherwise skip to step 3. If there is no pre-action idle specified, ACT_IDLE is used.\n3) Fire the OnBeginSequence output.\n4) Play the action animation. If no action animation is specified, skip to step 5.\n5) Play the post-action idle animation. If none is specified, skip to step 6. If the 'Loop in Post Idle' spawnflag is set, keep playing the post-action idle until the script is cancelled. If no post-action idle animation is specified, ACT_IDLE is used.\n6) Fire the OnEndSequence output.\n7) If a next script to play is specified, hand the NPC to the next script and repeat this process for that script.\n\nThe MoveToPosition input runs steps 1 and 2, then waits while playing the pre-action idle animation until the BeginSequence input is received.\n\nIf the sequence has motion extraction in it, set the 'Don't Teleport NPC On End' spawnflag."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		4: "Repeatable" : 0
+		8: "Leave Corpse" : 0
+		16: "Start on Spawn" : 0
+		32: "No Interruptions" : 0
+		64: "Override AI" : 0
+		128: "Don't Teleport NPC On End" : 0
+		256: "Loop in Post Idle" : 0
+		512: "Priority Script" : 0
+		4096: "Allow actor death" : 0
+		]
+
+	onplayerdeath(choices) : "On player death" : "0" : "What should this entity do if the player dies" =
+		[
+		0: "Do Nothing"
+		1: "Cancel Script and return to AI"
+		]
+
+	]

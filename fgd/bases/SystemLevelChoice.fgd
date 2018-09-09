@@ -1,0 +1,45 @@
+
+@BaseClass 
+	appliesto(P2, CSGO) = SystemLevelChoice
+	[
+	mincpulevel(choices) : "Minimum CPU Level" : "0" =
+		[
+		0: "default (low)"
+		1: "low"
+		2: "medium"
+		3: "high"
+		]
+
+	maxcpulevel(choices) : "Maximum CPU Level" : "0" =
+		[
+		0: "default (high)"
+		1: "low"
+		2: "medium"
+		3: "high"
+		]
+
+	mingpulevel(choices) : "Minimum GPU Level" : "0" =
+		[
+		0: "default (very low)"
+		1: "very low"
+		2: "low"
+		3: "medium"
+		4: "high"
+		]
+
+	maxgpulevel(choices) : "Maximum GPU Level" : "0" =
+		[
+		0: "default (high)"
+		1: "very low"
+		2: "low"
+		3: "medium"
+		4: "high"
+		]
+
+	disablex360(choices) : "Disable X360" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	]

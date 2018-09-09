@@ -1,0 +1,16 @@
+
+@PointClass base(Targetname) 
+	appliesto(P2) 
+	color(200 0 0) 
+	size(-8 -8 -8, 8 8 8) = env_portal_credits: "An entity to control the rolling credits for portal."
+	[
+
+	// Inputs
+	input RollCredits(void) : "Start the intro credits rolling."
+	input RollOutroCredits(void) : "Start the outro credits rolling."
+	input ShowLogo(void) : "Show the HL2 logo."
+	input RollPortalOutroCredits(void) : "Start the Portal greenscreen outro credits."
+
+	// Outputs
+	output OnCreditsDone(void) : "Fired when the credits having finished rolling."
+	]

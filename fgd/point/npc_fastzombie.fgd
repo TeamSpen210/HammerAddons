@@ -1,0 +1,9 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/Zombie/fast.mdl") = npc_fastzombie: "Fast Zombie"
+	[
+
+	// Inputs
+	input AttachToVehicle(string) : "Attach to a specified vehicle entity"
+	]

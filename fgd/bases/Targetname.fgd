@@ -1,0 +1,32 @@
+
+@BaseClass 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = Targetname
+	[
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	vscripts[ASW, !TF2](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
+	thinkfunction[ASW, !TF2](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
+
+	// Inputs
+	input Kill(void) : "Removes this entity from the world."
+	input KillHierarchy(void) : "Removes this entity and all its children from the world."
+	input AddOutput(string) : "Adds an entity I/O connection to this entity. Format: <output name> <targetname>:<inputname>:<parameter>:<delay>:<max times to fire (-1 == infinite)>. Very dangerous, use with care."
+	input AddOutput[P2](string) : "Adds an entity I/O connection to this entity or changes keyvalues dynamically. Format:
+'<output name> <targetname>:<inputname>:<parameter>:<delay>:<max times to fire (-1 == infinite)>'
+or 'keyvalue newval'. Very dangerous, use with care."
+	input FireUser1(void) : "Causes this entity's OnUser1 output to be fired."
+	input FireUser2(void) : "Causes this entity's OnUser2 output to be fired."
+	input FireUser3(void) : "Causes this entity's OnUser3 output to be fired."
+	input FireUser4(void) : "Causes this entity's OnUser4 output to be fired."
+	input RunScriptFile[ASW, !TF2](script) : "Execute a game script file from disk"
+	input RunScriptFile[P2, !TF2](string) : "Execute a game script file from disk."
+	input RunScriptCode[ASW, !TF2](string) : "Execute a string of script source code"
+	input RunScriptCode[P2, !TF2](string) : "Execute a string of script source code."
+	input CallScriptFunction[!CSGO, ASW, !TF2](string) : "Call a named function from this entity's Activation Script"
+	input CallScriptFunction[!CSGO, P2, !TF2](string) : "Execute the given function name."
+
+	// Outputs
+	output OnUser1(void) : "Fired in response to FireUser1 input."
+	output OnUser2(void) : "Fired in response to FireUser2 input."
+	output OnUser3(void) : "Fired in response to FireUser3 input."
+	output OnUser4(void) : "Fired in response to FireUser4 input."
+	]

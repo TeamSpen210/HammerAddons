@@ -1,0 +1,6 @@
+
+@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePedButton) 
+	appliesto(P2) 
+	studioprop("models/props_underground/underground_testchamber_button.mdl") = prop_under_button: "A button which is activated by player use or by game inputs, for use in underground test chambers. Uses different press/release sounds compared to the modern one. The same tick-tock noise is used to indicate limited time."
+	[
+	]

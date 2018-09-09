@@ -1,0 +1,31 @@
+
+@SolidClass base(Targetname, Parentname, Targetname, Parentname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = func_precipitation: "A brush entity that creates rain and snow inside its volume."
+	[
+	renderamt(integer) : "Density (0-100%)" : 5
+	renderamt[ASW](integer) : "Density (0-100%)" : 100
+	rendercolor(color255) : "Color (R G B)" : "100 100 100"
+	preciptype(choices) : "Precipitation Type" : "0" =
+		[
+		0: "Rain"
+		1: "Snow"
+		2: "Ash"
+		3: "Snowfall"
+		]
+
+	preciptype[ASW](choices) : "Precipitation Type" : "0" =
+		[
+		0: "Rain"
+		1: "Snow"
+		2: "Ash"
+		3: "Snowfall"
+		4: "Particle Rain"
+		5: "Particle Ash"
+		6: "Particle Rainstorm"
+		7: "Particle Snow"
+		]
+
+	snowdustamt[!P2, !CSGO, ASW, !TF2](float) : "Amount of snow dusting (1-100)" : 50
+	minspeed[P2, !TF2](float) : "Minimum speed (snowfall only)" : 25
+	maxspeed[P2, !TF2](float) : "Maximum speed (snowfall only)" : 35
+	]

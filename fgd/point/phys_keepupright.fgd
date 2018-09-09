@@ -1,0 +1,19 @@
+
+@PointClass base(Targetname, Angles, Targetname, Angles) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	color(128 128 128) 
+	iconsprite("editor/ts2do/phys_keepupright.vmt") 
+	line(255 255 0, targetname, attach1) = phys_keepupright: "A controller that tries to keep an entity facing a particular direction."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Start inactive" : 0
+		]
+
+	attach1(target_destination) : "Target Entity" : : "The entity to align to the desired angles."
+	angularlimit(float) : "Angular Limit" : 15 : "The maximum angular velocity that this controller can compensate for, in degrees per second."
+
+	// Inputs
+	input TurnOn(void) : "Enable the controller."
+	input TurnOff(void) : "Disable the controller."
+	]

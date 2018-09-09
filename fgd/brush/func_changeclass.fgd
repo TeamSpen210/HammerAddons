@@ -1,0 +1,5 @@
+
+@SolidClass base(Targetname, TeamNum, EnableDisable, Toggle) 
+	appliesto(TF2) = func_changeclass: "ChangeClass zone for players."
+	[
+	]

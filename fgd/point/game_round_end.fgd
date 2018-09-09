@@ -1,0 +1,14 @@
+
+@PointClass base(Targetname) 
+	appliesto(CSGO) 
+	iconsprite("editor/game_end.vmt") = game_round_end: "An entity that ends a multiplayer game ROUND."
+	[
+
+	// Inputs
+	input EndRound_Draw(float) : "End the round in a draw after x seconds."
+	input EndRound_TerroristsWin(float) : "End the round, terrorists win after x seconds."
+	input EndRound_CounterTerroristsWin(float) : "End the round, CTs win after x seconds."
+
+	// Outputs
+	output OnRoundEnded(void) : "Fires when the round ends regardless of it ended via input to this entity or not."
+	]

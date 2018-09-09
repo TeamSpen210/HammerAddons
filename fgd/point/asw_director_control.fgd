@@ -1,0 +1,35 @@
+
+@PointClass base(Targetname) 
+	appliesto(ASW) 
+	iconsprite("editor/info_target.vmt") = asw_director_control: "Alien Swarm Director Control"
+	[
+	targetname(target_source) : "Name" : "@director" : "The name that other entities refer to this entity by."
+	wanderers(choices) : "Wandering Aliens" : "0" : "Whether to spawn random drones around the players." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	hordes(choices) : "Hordes" : "1" : "Whether to spawn large groups of drones periodically." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	controlspawners(choices) : "Control Spawners" : "0" : "If enabled, asw_spawners will only work when the director is in an active spawning state." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+
+	// Inputs
+	input EnableHordes(void) : "Enable random horde spawning."
+	input DisableHordes(void) : "Disable random horde spawning."
+	input EnableWanderers(void) : "Enable random wandering aliens."
+	input DisableWanderers(void) : "Disable random wandering aliens."
+	input StartFinale(void) : "Enables wanderers, hordes and sends director into crazy spawning mode."
+
+	// Outputs
+	output OnEscapeRoomStart(void) : "Fired when marine enters the escape room with all objectives (except for escape) complete.  NOTE: If you rely on this output, you must ship the .layout file along with your map."
+	]

@@ -1,0 +1,26 @@
+
+@BaseClass 
+	appliesto(P2) = PortalBase
+	[
+	activated(choices) : "Start Activated" : "0" : "An inactive portal will not be drawn and will not teleport entities." =
+		[
+		0: "Inactive"
+		1: "Active"
+		]
+
+	portaltwo(choices) : "Portal Number" : "0" : "Which of the pair is this portal?" =
+		[
+		0: "Portal 1 (Blue)"
+		1: "Portal 2 (Orange)"
+		]
+
+	halfwidth(float) : "Half-Width of the Portal." : 0
+	halfheight(float) : "Half-Height of the Portal." : 0
+
+	// Outputs
+	output OnPlacedSuccessfully(void) : "When a portal is placed without failure, this output is fired."
+	output OnEntityTeleportFromMe(void) : "When any entity is teleported from this portal to the linked partner."
+	output OnPlayerTeleportFromMe(void) : "When the player is teleported from this portal to the linked partner."
+	output OnEntityTeleportToMe(void) : "When any entity is teleported from this linked partner to the portal."
+	output OnPlayerTeleportToMe(void) : "When the player is teleported from this linked partner to the portal."
+	]

@@ -1,0 +1,17 @@
+
+@FilterClass base(BaseFilter) 
+	appliesto(TF2) = filter_tf_damaged_by_weapon_in_slot: "A filter that filters damage by a weapon in a certain slot.Used for training purposes"
+	[
+	weaponslot(choices) : "Weapon Slot" : "0" : "Damaged by weapon in slot." =
+		[
+		0: "Primary"
+		1: "Secondary"
+		2: "Melee"
+		3: "Grenade"
+		4: "Building"
+		5: "PDA"
+		6: "Item 1"
+		7: "Item 2"
+		]
+
+	]

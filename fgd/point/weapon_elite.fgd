@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_pist_elite_dropped.mdl") = weapon_elite: "Dual Berettas"
+	[
+	]

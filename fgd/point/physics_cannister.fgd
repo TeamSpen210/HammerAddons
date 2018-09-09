@@ -1,0 +1,33 @@
+
+@PointClass base(Targetname, Angles, Targetname, Angles) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	sphere(expradius) 
+	studioprop() = physics_cannister: "A physically simulated gas cannister that can have its cap shot off, at which point gas will start escaping and cause the cannister to fly around. If it takes enough damage, it will explode.|||A physically simulated gas cannister that can have its cap shot off, at which point gas will start escaping and cause the cannister to fly around. If it takes enough damage, it will explode. The model should have a nozzle attachment point, which is where gas will escape and thrust will be produced from."
+	[
+	model(studio) : "World model" : "models/fire_equipment/w_weldtank.mdl"
+	model[P2](studio) : "World model" : : "The model used for the cannister. The original model is fire_equipment/w_weldtank.mdl."
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Start Asleep" : 0
+		2: "Explodes" : 1
+		]
+
+	expdamage(string) : "Explosion Damage" : "200.0" : "The amount of damage done by the explosion created when the cannister blows up."
+	expradius(string) : "Explosion Radius" : "250.0" : "The radius of the explosion to create when the cannister blows up."
+	health(integer) : "Health" : 25 : "The amount of damage the cannister takes before exploding."
+	thrust(string) : "Thrust" : "3000.0" : "When the cap has been blown off, and the escaping gas is thrusting the cannister about, this is the amount of thrust generated."
+	fuel(string) : "Fuel Seconds" : "12.0" : "The amount of time that gas leaks from the cannister before being considered empty."
+	rendercolor(color255) : "Smoke Color (R G B)" : "255 255 255"
+	renderamt(integer) : "Smoke Alpha (0 - 255)" : 128
+	gassound(sound) : "Thruster Sound" : "ambient/objects/cannister_loop.wav" : "The sound played when the gas is escaping from the cannister."
+
+	// Inputs
+	input Activate(string) : "Start gas escaping from the cannister."
+	input Deactivate(string) : "Stop gas escaping from the cannister."
+	input Explode(string) : "Force the cannister to explode."
+	input Wake(void) : "Wakes up the cannister, if it is sleeping."
+
+	// Outputs
+	output OnActivate(void) : "Fired when gas starts to escape from the cannister."
+	output OnAwakened(void) : "Fired when this entity becomes awake (collision/force is applied)."
+	]

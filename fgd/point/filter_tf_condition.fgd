@@ -1,0 +1,5 @@
+
+@FilterClass base(BaseFilter, Condition) 
+	appliesto(TF2) = filter_tf_condition: "A filter that filters by conditions on a player"
+	[
+	]

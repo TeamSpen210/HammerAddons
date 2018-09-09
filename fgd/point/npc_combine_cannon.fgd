@@ -1,0 +1,8 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	sphere(sightdist) 
+	studio("models/combine_soldier.mdl") = npc_combine_cannon: "Combine Cannon"
+	[
+	sightdist(float) : "Sight radius" : 1024 : "Radius distance at which the cannon is able to aquire enemies."
+	]

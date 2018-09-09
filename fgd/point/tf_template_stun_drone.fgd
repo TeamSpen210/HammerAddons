@@ -1,0 +1,5 @@
+
+@PointClass base(Targetname, Angles, EnableDisable) 
+	appliesto(TF2) = tf_template_stun_drone: "A template to spawn a Stun Drone"
+	[
+	]

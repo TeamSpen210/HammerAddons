@@ -1,0 +1,16 @@
+
+@PointClass base(BaseNPC, Parentname, RenderFields, Shadow) 
+	appliesto(ASW, EP1, EP2, HL2, P2, CSGO) 
+	studio() = generic_actor: "Generic Actor NPC"
+	[
+	model(studio) : "Model"
+	hull_name(choices) : "Hull type" : "Human" =
+		[
+		"HUMAN_HULL": "Human"
+		"WIDE_HUMAN_HULL": "Wide"
+		"TINY_HULL": "Tiny"
+		"MEDIUM_HULL": "Medium"
+		"LARGE_HULL": "Large"
+		]
+
+	]

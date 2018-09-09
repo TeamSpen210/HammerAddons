@@ -1,0 +1,90 @@
+
+@PointClass base(Targetname, Parentname, RenderFxChoices, Targetname, Parentname, RenderFxChoices) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	size(-4 -4 -4, 4 4 4) 
+	line(255 255 255, targetname, LightningStart, targetname, LightningEnd) 
+	cylinder(255 255 255, targetname, LightningStart, Radius, targetname, LightningEnd, Radius) 
+	line(64 64 64, targetname, lightningStart) 
+	line(64 64 64, targetname, lightningEnd) 
+	iconsprite("editor/env_beam.vmt") 
+	sphere(Radius) 
+	color(200 200 0) = env_beam: "An entity that creates a visible beam between two points. The points can be attached to entities to make the beam move around."
+	[
+	renderamt(integer) : "Brightness (1 - 255)" : 100
+	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255"
+	radius(integer) : "Radius" : 256 : "If the 'Random Strike' spawnflag is set, this radius determines the area within which the endpoints will randomly strike."
+	radius[P2](integer) : "Radius" : 16 : "If the 'Random Strike' spawnflag is set, this radius determines the area within which the endpoints will randomly strike."
+	life(string) : "Life (seconds 0 = infinite)" : "1" : "Amount of time before the beam dies. Setting to zero will make the beam stay forever."
+	boltwidth(float) : "Width of beam" : 2 : "Pixel width of the beam."
+	noiseamplitude(float) : "Amount of noise (0-255)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
+	noiseamplitude[P2](float) : "Amount of noise (0-64)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
+	texture(sprite) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the beam."
+	texturescroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
+	framerate(integer) : "Frames per 10 seconds" : 0 : "Framerate at which the beam texture should animate, if it has multiple frames."
+	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
+	striketime(string) : "Strike again time (secs)" : "1" : "Refire time between random strikes of the beam. Only used if the 'Random Strike' spawnflag is set."
+	damage(string) : "Damage / second" : "0" : "How much damage this beam does per second to things it hits when it is continually on, or instantaneously if it strikes. For continuous damage, the value should be greater than 10 or it may not work."
+	lightningstart(target_destination) : "Start Entity" : : "Entity that the beam starts at."
+	lightningend(target_destination) : "Ending Entity" : : "Entity that the beam ends at."
+	lightningend[P2](target_destination) : "Ending Entity" : : "Entity that the beam ends at. If not set, the Ending Location will be used instead."
+	decalname(string) : "Decal Name" : "Bigshot" : "Decal to be applied at the end of the beam"
+	hdrcolorscale(float) : "HDR color scale." : 1.0 : "float value to multiply sprite color by when running in HDR mode."
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Start On" : 0
+		2: "Toggle" : 0
+		4: "Random Strike" : 0
+		8: "Ring" : 0
+		16: "StartSparks" : 0
+		32: "EndSparks" : 0
+		64: "Decal End" : 0
+		128: "Shade Start" : 0
+		256: "Shade End" : 0
+		512: "Taper Out" : 0
+		]
+
+	touchtype(choices) : "Touch Type (tripwire)" : "0" : "If you want the beam to fire an output when touched by entities, choose the entity type here." =
+		[
+		0: "Not a tripwire"
+		1: "Player Only"
+		2: "NPC Only"
+		3: "Player or NPC"
+		4: "Player or NPC or Physprop"
+		]
+
+	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator triggers me. See filter_activator_name for more explanation."
+	filtername[P2](filterclass) : "Filter Name" : : "Filter to use to determine what triggers the output."
+	targetpoint[ASW, !TF2](vecline) : "Endpoint handle" : "0 0 0" : "If a LightningEnd entity is not specified, use this point as the destination instead. If the env_beam moves, the destination point will move along with it."
+	targetpoint[P2, !TF2](vecline) : "Ending Location" : "0 0 0" : "If an Ending Entity is not specified, use this point as the destination instead. It is relative to the beam origin."
+	clipstyle[ASW, !TF2](choices) : "Beam clipping" : "0" : "Select whether you want the beam to clip against geometry or characters" =
+		[
+		0: "Do not clip (default)"
+		1: "Clip to geometry"
+		2: "Clip to everything solid"
+		]
+
+	clipstyle[P2, !TF2](choices) : "Beam clipping" : "0" : "Select whether you want the beam to clip against geometry or characters, making it stop prematurely." =
+		[
+		0: "Do not clip (default)"
+		1: "Clip to geometry"
+		2: "Clip to everything solid"
+		]
+
+
+	// Inputs
+	input TurnOn(void) : "Turns the beam on."
+	input TurnOff(void) : "Turns the beam off."
+	input Toggle(void) : "Toggles the beam between on and off."
+	input StrikeOnce(void) : "Causes the beam to strike once. It will stay on for its set Life and then turn off (it will never turn off if Life is set to zero)."
+	input Alpha(integer) : "Sets the beam's alpha (0 - 255)."
+	input Color(color255) : "Sets the beam's render color (R G B)."
+	input ColorRedValue(float) : "Sets the red color channel's value (0 - 255)."
+	input ColorGreenValue(float) : "Sets the green color channel's value (0 - 255)."
+	input ColorBlueValue(float) : "Sets the blue color channel's value (0 - 255)."
+	input Amplitude(float) : "Set the amplitude of beam noise (0 - 255)."
+	input ScrollSpeed(float) : "Set the scroll speed in units per second (0 - 100)."
+	input Width(float) : "Set the width of the beam, in pixels."
+
+	// Outputs
+	output OnTouchedByEntity(void) : "Fired when an entity touches the beam. Only fired if the entity passes the 'Touch Type' choice."
+	]

@@ -1,0 +1,16 @@
+
+@PointClass base(Targetname, Parentname) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	iconsprite("editor/info_target.vmt") = info_snipertarget: "Sniper Target"
+	[
+	speed(integer) : "Sweep to speed" : 2
+	groupname(string) : "Group Name"
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Shoot Me" : 0
+		2: "No Interruptions" : 0
+		8: "Resume if Interrupted" : 0
+		16: "Snap to me" : 0
+		]
+
+	]

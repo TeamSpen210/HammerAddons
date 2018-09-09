@@ -1,0 +1,47 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	iconsprite("editor/logic_case.vmt") 
+	color(0 100 250) = logic_case: "Compares an input to up to 16 preset values. If the input value is the same as any of the preset values, an output corresponding to that value is fired.\n\nFor example: if Case01 is set to 2 and Case02 is set to 5, and the input value is 5, the OnCase02 output will be fired.\n\nThis entity can also be used to select from a number of random targets via the PickRandom input. One of the OnCase outputs that is connected to another entity will be picked at random and fired."
+	[
+	case01(string) : "Case 01"
+	case02(string) : "Case 02"
+	case03(string) : "Case 03"
+	case04(string) : "Case 04"
+	case05(string) : "Case 05"
+	case06(string) : "Case 06"
+	case07(string) : "Case 07"
+	case08(string) : "Case 08"
+	case09(string) : "Case 09"
+	case10(string) : "Case 10"
+	case11(string) : "Case 11"
+	case12(string) : "Case 12"
+	case13(string) : "Case 13"
+	case14(string) : "Case 14"
+	case15(string) : "Case 15"
+	case16(string) : "Case 16"
+
+	// Inputs
+	input InValue(string) : "Compares the Input value to the case values, and fires the appropriate output, if any."
+	input PickRandom(void) : "Fires a random OnCase output with at least one connection."
+	input PickRandomShuffle(void) : "Fires a random OnCase output with at least one connection, with no repeats until all cases have been picked, at which point the shuffle starts over."
+
+	// Outputs
+	output OnCase01(void) : "Fired when the input value equals the Case01 value."
+	output OnCase02(void) : "Fired when the input value equals the Case02 value."
+	output OnCase03(void) : "Fired when the input value equals the Case03 value."
+	output OnCase04(void) : "Fired when the input value equals the Case04 value."
+	output OnCase05(void) : "Fired when the input value equals the Case05 value."
+	output OnCase06(void) : "Fired when the input value equals the Case06 value."
+	output OnCase07(void) : "Fired when the input value equals the Case07 value."
+	output OnCase08(void) : "Fired when the input value equals the Case08 value."
+	output OnCase09(void) : "Fired when the input value equals the Case09 value."
+	output OnCase10(void) : "Fired when the input value equals the Case10 value."
+	output OnCase11(void) : "Fired when the input value equals the Case11 value."
+	output OnCase12(void) : "Fired when the input value equals the Case12 value."
+	output OnCase13(void) : "Fired when the input value equals the Case13 value."
+	output OnCase14(void) : "Fired when the input value equals the Case14 value."
+	output OnCase15(void) : "Fired when the input value equals the Case15 value."
+	output OnCase16(void) : "Fired when the input value equals the Case16 value."
+	output OnDefault(void) : "Fired when the input value does not equal any of the Case values."
+	]

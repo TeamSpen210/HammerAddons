@@ -1,0 +1,31 @@
+
+@PointClass base(Targetname, Angles, Parentname, Targetname, Angles, Parentname) 
+	appliesto(ASW, EP1, EP2, HL2, P2) 
+	size(-4 -4 -4, 4 4 4) 
+	studio("models/pigeon.mdl") = ai_battle_line: "Battle line"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Use parent's orientation" : 0
+		]
+
+	actor(target_name_or_class) : "Actor(s) or squad to affect"
+	active(choices) : "Active" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	active[P2](boolean) : "Active" : 0
+	strict(choices) : "Strict" : "1" : "Player orders can override, applies to allies only" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	strict[P2](boolean) : "Strict" : 1 : "Player orders can override, applies to allies only"
+
+	// Inputs
+	input Activate(void)
+	input Deactivate(void)
+	]

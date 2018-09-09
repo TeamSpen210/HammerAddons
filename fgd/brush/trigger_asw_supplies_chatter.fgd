@@ -1,0 +1,15 @@
+
+@SolidClass base(Trigger) 
+	appliesto(ASW) = trigger_asw_supplies_chatter: "A trigger volume that will occasionally make a marine comment about a supply stash."
+	[
+	wait(integer) : "Delay Before Reset" : -1 : "Amount of time, in seconds, after the trigger has triggered before it can be triggered again. If set to -1, it will never trigger again."
+	noammo(choices) : "Supply Type" : "0" : "The type of objects in the nearby supply stash." =
+		[
+		0: "Mixed"
+		1: "No ammo pickups"
+		]
+
+
+	// Outputs
+	output OnTrigger(void) : "Fired whenever the trigger is activated."
+	]

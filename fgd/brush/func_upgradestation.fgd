@@ -1,0 +1,5 @@
+
+@SolidClass base(Targetname, EnableDisable) 
+	appliesto(TF2) = func_upgradestation: "Where players go to buy upgrades for weapons and items."
+	[
+	]

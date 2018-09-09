@@ -1,0 +1,5 @@
+
+@PointClass base(Targetname) 
+	appliesto(TF2) = tf_logic_medieval: "Medieval Mode Entity. This is used to detect a Medieval map."
+	[
+	]

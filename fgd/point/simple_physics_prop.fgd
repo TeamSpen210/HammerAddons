@@ -1,0 +1,9 @@
+
+@PointClass base(BasePropPhysics, RenderFields) 
+	appliesto(P2) 
+	studioprop() 
+	sphere(fademindist) 
+	sphere(fademaxdist) = simple_physics_prop: "Unknown use. "
+	[
+	allowfunnel(boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a portal."
+	]

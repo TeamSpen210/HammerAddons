@@ -1,0 +1,11 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	iconsprite("editor/tanktrain_ai.vmt") 
+	line(255 255 255, targetname, target) = tanktrain_ai: "Train chase AI"
+	[
+	target(target_destination) : "Train Name"
+	startsound(sound) : "Start Moving Sound" : "vehicles/diesel_start1.wav"
+	enginesound(sound) : "Engine Loop Sound" : "vehicles/diesel_turbo_loop1.wav"
+	movementsound(sound) : "Vehicle Movement Sound" : "vehicles/tank_treads_loop1.wav"
+	]

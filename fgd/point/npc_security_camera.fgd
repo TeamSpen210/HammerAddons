@@ -1,0 +1,50 @@
+
+@PointClass base(Targetname, Angles, Studiomodel) 
+	appliesto(P2) 
+	studioprop("models/props/security_camera.mdl") = npc_security_camera: "Security Camera. Follows either the player or their pings. When a portal is opened behind it it will fall off the wall. If gestured to in Coop the player's camera will switch to looking out of the camera lens, with a viewfinder effect."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		32: "Start Active" : 1
+		]
+
+	lookatplayerpings(choices) : "Target" : "0" : "Target to follow: the player, or their pings (co-op mode only)" =
+		[
+		0: "Players"
+		1: "Pings"
+		]
+
+	teamtolookat(choices) : "Ping Type To Follow" : "1" : "Which player's pings to look at." =
+		[
+		1: "Both"
+		2: "P-Body"
+		3: "ATLAS"
+		]
+
+	teamplayertolookat(choices) : "Player To Follow" : "0" : "Which player the camera should follow." =
+		[
+		0: "Both"
+		2: "P-Body"
+		3: "ATLAS"
+		]
+
+
+	// Inputs
+	input Enable(void) : "Start following players."
+	input Disable(void) : "Stop following players, freezing in place."
+	input Toggle(void) : "Toggle following players."
+	input Ragdoll(void) : "Knock the camera off the wall."
+	input LookAtBlue(void) : "Make the camera only follow ATLAS."
+	input LookAtOrange(void) : "Make the camera only follow P-Body."
+	input LookAllTeams(void) : "Make the camera follow all players."
+
+	// Outputs
+	output OnDeploy(void) : "Camera is becoming active and dangerous."
+	output OnRetire(void) : "Camera is becoming inactive and harmless."
+	output OnTaunted(void) : "A player STARTED taunting the camera."
+	output OnTauntedBlue(void) : "ATLAS STARTED taunting the camera."
+	output OnTauntedOrange(void) : "P-Body STARTED taunting the camera."
+	output OnTauntedFinished(void) : "A player FINISHED taunting the camera."
+	output OnTauntedBlueFinished(void) : "ATLAS FINISHED taunting the camera."
+	output OnTauntedOrangeFinished(void) : "P-Body FINISHED taunting the camera."
+	]

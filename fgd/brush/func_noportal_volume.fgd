@@ -1,0 +1,15 @@
+
+@SolidClass base(Targetname, Parentname, Origin) 
+	appliesto(P2) = func_noportal_volume: "A region which prevents portal placement."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Start inactive" : 0
+		]
+
+
+	// Inputs
+	input Deactivate(void) : "Turn off blocking functionality"
+	input Activate(void) : "Turn on blocking functionality"
+	input Toggle(void) : "Toggle blocking functionality"
+	]

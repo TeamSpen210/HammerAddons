@@ -1,0 +1,6 @@
+
+@NpcClass base(BaseHeadcrab) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/Headcrabblack.mdl") = npc_headcrab_black: "Black Headcrab"
+	[
+	]

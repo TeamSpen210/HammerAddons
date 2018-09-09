@@ -1,0 +1,18 @@
+
+@SolidClass base(Targetname, Parentname, Origin, Angles, RenderFields, BasePlat, Shadow, Reflection, compMinLight, Targetname, Parentname, Origin, Angles, RenderFields, BasePlat, Shadow, Reflection) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = func_platrot: "A brush entity that moves vertically, and can rotate while doing so."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Toggle" : 1
+		64: "X Axis" : 0
+		128: "Y Axis" : 0
+		]
+
+	noise1(sound) : "Movement Sound" : : "The sound to play when the brush moves."
+	noise2(sound) : "Stop Sound" : : "The sound to play when the brush stops moving."
+	speed(integer) : "Speed of Rotation" : 50 : "Speed at which the brush rotates, in degrees per second."
+	height(integer) : "Travel Altitude" : 0 : "The vertical distance from the starting position that this platform moves. If negative, the platform will lower."
+	rotation(integer) : "Spin amount" : 0 : "The amount this platform should rotate as it moves, in degrees."
+	_minlight[!P2](string) : "Minimum Light Level" : : "The minimum level of ambient light that hits this brush."
+	]

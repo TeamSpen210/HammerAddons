@@ -1,0 +1,6 @@
+
+@PointClass base(Item) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/items/LargeBoxMRounds.mdl") = item_ammo_smg1_large: "Large Box of SMG1 ammo"
+	[
+	]

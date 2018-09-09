@@ -1,0 +1,8 @@
+
+@SolidClass base(Trigger) 
+	appliesto(EP1, EP2, HL2, ASW) = trigger_rpgfire: "A volumetric trigger that triggers whenever an RPG is fired within it."
+	[
+
+	// Outputs
+	output OnTrigger(void) : "Fires while the trigger is activated"
+	]

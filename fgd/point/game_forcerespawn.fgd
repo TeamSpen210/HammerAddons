@@ -1,0 +1,13 @@
+
+@PointClass base(Targetname) 
+	appliesto(TF2) = game_forcerespawn: "Removes buildings, grenades, etc., from the world and forces all players to respawn (without being killed)."
+	[
+
+	// Inputs
+	input ForceRespawn(void) : "Force players to respawn and remove buildings, grenades, etc., from the world.."
+	input ForceRespawnSwitchTeams(void) : "Switch all players to the opposite team, and then respawn all players (and remove buildings, grenades, etc., from the world)."
+	input ForceTeamRespawn(integer) : "Force players on a specific team to respawn. 2 for Red, 3 for Blue. This does NOT remove buildings, grenades, etc., from the world..."
+
+	// Outputs
+	output OnForceRespawn(void) : "Sent when the entity respawns the players."
+	]

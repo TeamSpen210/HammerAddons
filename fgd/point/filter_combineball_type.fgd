@@ -1,0 +1,21 @@
+
+@FilterClass base(BaseFilter, BaseFilter) 
+	appliesto(ASW, EP1, EP2, HL2, P2) 
+	iconsprite("editor/filter_class.vmt") 
+	iconsprite("editor/filter_pellet.vmt") = filter_combineball_type: "A filter that filters by combine ball type."
+	[
+	balltype(choices) : "Ball Type" : "1" =
+		[
+		0: "Not Thrown (in combine ball field, etc)"
+		2: "Thrown/Launched by the player's physcannon"
+		3: "Launched by point_combine_ball_launcher"
+		]
+
+	balltype[P2](choices) : "Ball Type" : "1" : "HEPs validate all settings." =
+		[
+		0: "Not Thrown (in combine ball field, etc)"
+		2: "Thrown/Launched by the player's physcannon"
+		3: "Launched by point_combine_ball_launcher"
+		]
+
+	]

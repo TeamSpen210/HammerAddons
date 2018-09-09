@@ -1,0 +1,32 @@
+
+@PointClass base(BasePropPhysics, Targetname, Angles, DamageFilter, BaseFadeProp) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/items/item_item_crate.mdl") = item_item_crate: "Item Crate"
+	[
+	cratetype(choices) : "Crate Contains" : "0" =
+		[
+		0: "Contains specified item"
+		]
+
+	crateappearance(choices) : "Crate Appearance" : "0" =
+		[
+		0: "Default Appearance"
+		1: "Radar Beacon Crate"
+		]
+
+	itemclass(pointentityclass) : "Item Type" : "item_dynamic_resupply" : "Class name of the entity to spawn when the crate is broken"
+	itemcount(integer) : "Item Count" : 1 : "Number of items to emit upon breakage"
+	specificresupply(target_destination) : "Specific resupply" : : "If item type is item_dynamic_resupply, specify a specific one to use instead of the master"
+
+	// Inputs
+	input Kill(void) : "Remove the item crate"
+	input Break(void) : "Breaks the breakable."
+	input SetHealth(integer) : "Sets a new value for health. If the breakable's health reaches zero it will break."
+	input AddHealth(integer) : "Adds health to the breakable. If the breakable's health reaches zero it will break."
+	input RemoveHealth(integer) : "Removes health from the breakable. If the breakable's health reaches zero it will break."
+
+	// Outputs
+	output OnBreak(void) : "Fires when broken."
+	output OnHealthChanged(float) : "Fires when the health of this breakable changes, passing the new value of health as a percentage of max health, from [0..1]."
+	output OnCacheInteraction(void) : "This output fires when the player proves they have 'found' this crate. Fires on: Picked up by +USE, Picked up by Physcannon, Punted by Physcannon, Broken."
+	]

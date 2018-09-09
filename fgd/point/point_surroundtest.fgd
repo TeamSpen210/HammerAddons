@@ -1,0 +1,14 @@
+
+@PointClass base(Targetname) 
+	appliesto(CSGO) 
+	size(-8 -8 -8, 8 8 8) = point_surroundtest: "Surround Sound Test"
+	[
+
+	// Inputs
+	input FireCorrectOutput(void) : "Fire output based on snd_surround_speaker cvar value"
+
+	// Outputs
+	output On2Speakers(void) : "Fired if player is using 2 speakers."
+	output On4Speakers(void) : "Fired if player is using 4 speakers."
+	output On51Speakers(void) : "Fired if player is using 5.1 speakers."
+	]

@@ -1,0 +1,14 @@
+
+@PointClass base(Targetname, Parentname) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	size(-4 -4 -4, 4 4 4) = env_rotorwash: "Rotorwash Effect"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Ignore solid" : 0
+		]
+
+
+	// Inputs
+	input DoEffect(void) : "Make a rotor puff"
+	]

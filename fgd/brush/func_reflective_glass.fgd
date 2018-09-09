@@ -1,0 +1,5 @@
+
+@SolidClass base(func_brush, func_brush) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = func_reflective_glass: "Used to produce perfectly reflective glass that renders world + entities. Typically, you want your glass brush to have nodraw on all non-reflective surfaces and you want to use a shader like lightmappedreflective in your material applied to the non-nodraw surfaces. See hl2/materials/glass/reflectiveglass001.vmt for an example. NOTE: currently, you cannot use reflective glass in scenes with water, and you can only have 1 reflective glass in your view frustum ( + pvs ) at a time."
+	[
+	]

@@ -1,0 +1,5 @@
+
+@SolidClass base(Targetname) 
+	appliesto(CSGO) = func_territory_respawn_area: "Players will respawn inside this area."
+	[
+	]

@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/weapons/W_annabelle.mdl") = weapon_annabelle: "Annabelle (Grigori)"
+	[
+	]

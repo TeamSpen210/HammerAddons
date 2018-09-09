@@ -1,0 +1,11 @@
+
+@BaseClass 
+	appliesto(TF2) = MiniGame
+	[
+
+	// Inputs
+	input ReturnFromMinigame(void) : "Force players to return from the current minigame."
+	input TeleportToMinigame(integer) : "Teleport to a specific minigame."
+	input TeleportToRandomMinigame(void) : "Teleport to a random minigame"
+	input SetAdvantageTeam(string) : "Set which team has the advantage."
+	]

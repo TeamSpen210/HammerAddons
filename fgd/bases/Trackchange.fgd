@@ -1,0 +1,22 @@
+
+@BaseClass base(Targetname, Parentname, RenderFields, Global, PlatSounds, Targetname, Parentname, RenderFields, Global, PlatSounds) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	line(255 255 255, targetname, train) = Trackchange
+	[
+	height(integer) : "Travel Altitude" : 0 : "The vertical height above the track that the train moves. Negative values moves the train below."
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Auto Activate train" : 0
+		2: "Relink track" : 0
+		8: "Start at Bottom" : 0
+		16: "Rotate Only" : 0
+		64: "X Axis" : 0
+		128: "Y Axis" : 0
+		]
+
+	rotation(integer) : "Spin amount" : 0 : "The amount this platform should rotate as it moves, in degrees."
+	train(target_destination) : "Train to Switch"
+	toptrack(target_destination) : "Top Track"
+	bottomtrack(target_destination) : "Bottom Track"
+	speed(integer) : "Move/Rotate Speed" : 0
+	]

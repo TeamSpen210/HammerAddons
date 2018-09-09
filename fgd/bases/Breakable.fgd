@@ -1,0 +1,35 @@
+
+@BaseClass base(Targetname, DamageFilter, Shadow, Reflection, Targetname, DamageFilter, Shadow, Reflection) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = Breakable
+	[
+	explodedamage(float) : "Explosion Damage" : 0 : "If non-zero, when this entity breaks it will create an explosion that causes the specified amount of damage. See also 'Explosion Radius'."
+	exploderadius(float) : "Explosion Radius" : 0 : "If non-zero, when this entity breaks it will create an explosion with a radius of the specified amount. See also 'Explosion Damage'."
+	performancemode(choices) : "Performance Mode" : "0" : "Used to limit the amount of gibs produced when this entity breaks, for performance reasons." =
+		[
+		0: "Normal"
+		1: "No Gibs"
+		2: "Full Gibs on All Platforms"
+		3: "Reduced gibs"
+		]
+
+	breakmodelmessage[!ASW, !CSGO, !P2](string) : "Break Model Message" : : "If set, will use this break model message instead of the normal break behavior."
+
+	// Inputs
+	input Break(void) : "Breaks the breakable."
+	input SetHealth(integer) : "Sets a new value for the breakable's health. If the breakable's health reaches zero it will break."
+	input AddHealth(integer) : "Adds health to the breakable. If the breakable's health reaches zero it will break."
+	input RemoveHealth(integer) : "Removes health from the breakable. If the breakable's health reaches zero it will break."
+	input EnablePhyscannonPickup(void) : "Makes the breakable able to picked up by the physcannon."
+	input DisablePhyscannonPickup(void) : "Makes the breakable not able to picked up by the physcannon."
+	input SetMass(float) : "Set mass of this object."
+
+	// Outputs
+	output OnBreak(void) : "Fired when this breakable breaks."
+	output OnTakeDamage(void) : "Fired each time this breakable takes any damage."
+	output OnHealthChanged(float) : "Fired when the health of this breakable changes, passing the new value of health as a percentage of max health, from [0..1]."
+	output OnPhysCannonDetach(void) : "Fired when the physcannon has ripped this breakable off of the wall. Only fired if ACT_PHYSCANNON_DETACH is defined in the model this breakable is using."
+	output OnPhysCannonAnimatePreStarted(void) : "Fired when this prop starts playing the Pre physcannon-pull activity, caused by the player trying to grab this prop with the physcannon. Only fired if the ACT_PHYSCANNON_ANIMATE_PRE activity is defined in the model this breakable is using."
+	output OnPhysCannonAnimatePullStarted(void) : "Fired when this prop starts playing the physcannon-pull activity, caused by the player trying to grab this prop with the physcannon. Only fired if the ACT_PHYSCANNON_ANIMATE activity is defined in the model this breakable is using. If the prop has Pre pull anim, this will be fired after the Pre anim has finished playing."
+	output OnPhysCannonPullAnimFinished(void) : "Fired when this prop has finished playing the physcannon-pull activity, caused by the player trying to grab this prop with the physcannon. Only fired if the ACT_PHYSCANNON_ANIMATE activity is defined in the model this breakable is using. If the prop has Pre & Post pull anims, this will be fired after the Post anim has finished playing."
+	output OnPhysCannonAnimatePostStarted(void) : "Fired when this prop starts playing the Post physcannon-pull activity. Only fired if the ACT_PHYSCANNON_ANIMATE_POST activity is defined in the model this breakable is using."
+	]

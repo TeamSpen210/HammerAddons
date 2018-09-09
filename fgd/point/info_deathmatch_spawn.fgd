@@ -1,0 +1,12 @@
+
+@PointClass base(Targetname, Angles) 
+	appliesto(CSGO) 
+	studio("models/player/tm_pirate.mdl") = info_deathmatch_spawn: "This entity marks a deathmatch spawn point. This is the entity that populates the map when mp_random_spawn is used.Manually adding them to the map will guarantee that these spawn points are included in the set"
+	[
+	enabled(boolean) : "Enabled by default?" : 1
+
+	// Inputs
+	input SetEnabled(void) : "Sets this spawn point as enabled."
+	input SetDisabled(void) : "Sets this spawn point as disabled."
+	input ToggleEnabled(void) : "Toggle the enabled/disabled state of this spawn point."
+	]

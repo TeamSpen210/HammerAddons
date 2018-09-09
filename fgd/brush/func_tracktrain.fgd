@@ -1,0 +1,29 @@
+
+@SolidClass base(BaseTrain, PaintableBrush, BaseTrain, PaintableBrush) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	line(255 255 255, targetname, target) = func_tracktrain: "A moving platform that the player can ride. It follows a path of path_track entities.\nNOTE: Build your train so that the front of the train is facing down the X axis. When it spawns it will automatically rotate to face the next path_track on the path."
+	[
+	manualspeedchanges[!ASW, !CSGO, !P2](choices) : "Manual Train Speed" : "0" : "Train Speed is controlled through IO, handles accel, decel times." =
+		[
+		0: "Off"
+		1: "On"
+		]
+
+	manualaccelspeed[!ASW, !CSGO, !P2](float) : "Manual Accel Speed" : 0 : "Units per second to accelerate to target speed."
+	manualdecelspeed[!ASW, !CSGO, !P2](float) : "Manual Decel Speed" : 0 : "Units per second to decelerate to target speed."
+
+	// Inputs
+	input SetSpeedDirAccel[!ASW, !CSGO, !P2](float) : "Accel/Decel to the specified speed, as a ratio of max speed. Negative values reverse the direction [-1, 1]"
+	input TeleportToPathTrack[!ASW, !CSGO, !P2](string) : "Teleport train to the designated path track."
+	input SetSpeedForwardModifier[!ASW, !CSGO, !P2](float) : "Applies the given modifier to all forward speeds. [0, 1]"
+	input MoveToPathNode[P2, !TF2](string) : "Start moving to a destination and stop when you get there. This must be in the same path."
+	input TeleportToPathNode[P2, !TF2](string) : "Teleport to a destination and stop there. This can be in a new path."
+	input LockOrientation[P2, !TF2](void) : "Lock the current orientation of the train."
+	input UnlockOrientation[P2, !TF2](void) : "Unlock the current orientation of the train."
+	input SetMaxSpeed[P2, !TF2](float) : "Set a new max speed for the train."
+
+	// Outputs
+	output OnStart(void) : "Fired when the train starts moving in either direction."
+	output OnNext(string) : "Fires when this train picks a new point to move towards (and just after OnStart)."
+	output OnArrivedAtDestinationNode[P2, !TF2](void) : "Fired when this train arrives at a destination that was specified by the MoveToPathNode Input."
+	]

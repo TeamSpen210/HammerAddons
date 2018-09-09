@@ -1,0 +1,9 @@
+
+@PointClass base(ASWPickup) 
+	appliesto(ASW) 
+	studio("models/swarm/flashlight/flashlightpickup.mdl") = asw_pickup_flashlight: "Flashlight"
+	[
+	bulletsingun(integer) : "Bullets In Gun" : 0
+	clips(integer) : "Clips" : 0
+	secondarybullets(integer) : "Secondary Bullets" : 0
+	]

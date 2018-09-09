@@ -1,0 +1,18 @@
+
+@SolidClass base(Targetname, Parentname, RenderFields, Shadow, compMinLight, Targetname, Parentname, RenderFields, Shadow) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = func_conveyor: "Conveyor Belt"
+	[
+	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction conveyor moves."
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "No Push" : 0
+		2: "Not Solid" : 0
+		]
+
+	speed(string) : "Conveyor Speed" : "100"
+	_minlight[!P2](string) : "Minimum Light Level" : : "The minimum level of ambient light that hits this brush."
+
+	// Inputs
+	input ToggleDirection(void) : "ToggleDirection"
+	input SetSpeed(integer) : "SetSpeed"
+	]

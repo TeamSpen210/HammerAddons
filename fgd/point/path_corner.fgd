@@ -1,0 +1,25 @@
+
+@PointClass base(Targetname, Angles, Targetname, Angles) 
+	appliesto(ASW, EP1, EP2, HL2, P2) 
+	size(16 16 16) 
+	line(255 255 255, targetname, target) 
+	color(247 181 82) = path_corner: "Generic path point"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Wait for retrigger" : 0
+		2: "Teleport to THIS path_corner" : 0
+		]
+
+	target(target_destination) : "Next stop target"
+	wait(integer) : "Wait here (secs)" : 0
+	speed(integer) : "New Train Speed" : 0
+	yaw_speed(integer) : "New Train rot. Speed" : 0
+
+	// Inputs
+	input SetNextPathCorner(string) : "Sets next pathcorner"
+	input SetNextPathCorner[P2](target_destination) : "Sets next pathcorner"
+
+	// Outputs
+	output OnPass(void) : "Fires when a path follower passes this point"
+	]

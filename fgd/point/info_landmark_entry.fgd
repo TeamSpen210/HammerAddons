@@ -1,0 +1,6 @@
+
+@PointClass base(Targetname) 
+	appliesto(P2) 
+	iconsprite("editor/info_landmark") = info_landmark_entry: "Entry landmark"
+	[
+	]

@@ -1,0 +1,12 @@
+
+@PointClass base(Targetname) 
+	appliesto(P2) 
+	iconsprite("editor/game_end.vmt") = point_changelevel: "Level Change Entity"
+	[
+
+	// Inputs
+	input ChangeLevel(string) : "Changes the level to the map name supplied as a parameter."
+
+	// Outputs
+	output OnChangeLevel(void) : "Fired when the level is about to change."
+	]

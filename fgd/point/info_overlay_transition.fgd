@@ -1,0 +1,20 @@
+
+@PointClass 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	size(-8 -8 -8, 8 8 8) 
+	sidelist(sides) 
+	sidelist(sides2) 
+	overlay_transition() = info_overlay_transition: "Overlay Transition|||This creates a scrolling texture at the instersect between two brushes, for things likw wave effects at water edges."
+	[
+	material(material) : "Material"
+	sides(sidelist) : "Brush faces"
+	sides2(sidelist) : "Water faces"
+	lengthtexcoordstart(float) : "Texcoord Length Start" : 0.0
+	lengthtexcoordend(float) : "Texcoord Length End" : 1.0
+	widthtexcoordstart(float) : "Texcoord Width Start" : 0.0
+	widthtexcoordend(float) : "Texcoord Width End" : 1.0
+	width1(float) : "Width Land" : 25.0
+	width2(float) : "Width Water" : 25.0
+	debugdraw(integer) : "Show Debug" : 0 : "Boolean value (0 or 1)."
+	debugdraw[P2](boolean) : "Show Debug" : 0
+	]

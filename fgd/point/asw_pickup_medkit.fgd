@@ -1,0 +1,9 @@
+
+@PointClass base(ASWPickup) 
+	appliesto(ASW) 
+	studio("models/items/personalMedkit/personalMedkit.mdl") = asw_pickup_medkit: "Medkit"
+	[
+	bulletsingun(integer) : "Bullets In Gun" : 1
+	clips(integer) : "Clips" : 0
+	secondarybullets(integer) : "Secondary Bullets" : 0
+	]

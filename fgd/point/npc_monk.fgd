@@ -1,0 +1,30 @@
+
+@NpcClass base(TalkNPC) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/Monk.mdl") = npc_monk: "Monk"
+	[
+	additionalequipment(choices) : "Weapons" : "weapon_annabelle" =
+		[
+		"weapon_annabelle": "Annabelle"
+		"weapon_smg1": "SMG1"
+		"weapon_ar2": "AR2"
+		"weapon_stunstick": "Stun Stick"
+		"weapon_crowbar": "Crow Bar"
+		"weapon_shotgun": "Shotgun"
+		"weapon_beerbottle": "Beer Bottle"
+		"weapon_beerbottle2": "Beer Bottle2"
+		"weapon_rpg": "RPG"
+		0: "Nothing"
+		]
+
+	hasgun(choices) : "Has Gun" : "1" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+
+	// Inputs
+	input PerfectAccuracyOn(void) : "Make every shot at a zombie a headshot"
+	input PerfectAccuracyOff(void) : "Return to normal accuracy"
+	]

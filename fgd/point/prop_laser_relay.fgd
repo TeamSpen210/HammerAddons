@@ -1,0 +1,11 @@
+
+@PointClass base(Targetname, Angles, Parentname, Reflection, ToggleDraw, RenderFields) 
+	appliesto(P2) 
+	studioprop() = prop_laser_relay: "Discouragement Beam Relay that detects lasers, whilst allowing it to pass through and hit other Relays. The entity will fire outputs when struck and unstruck."
+	[
+	model(studio) : "Laser Relay Model" : "models/props/laser_receptacle.mdl" : "Choose a custom model for the relay."
+
+	// Outputs
+	output OnPowered(void) : "Fired when a laser hits the target."
+	output OnUnpowered(void) : "Fired when a laser has stopped hitting the target."
+	]

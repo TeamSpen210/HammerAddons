@@ -1,0 +1,40 @@
+
+@PointClass base(Targetname) 
+	appliesto(TF2) = bot_controller: "An entity used to create a bot, and then issue commands to it."
+	[
+	teamnum(choices) : "Team" : "2" : "Team" =
+		[
+		2: "Red"
+		3: "Blue"
+		]
+
+	bot_class(choices) : "Class" : "0" : "The class the bot will spawn as." =
+		[
+		0: "Random"
+		1: "Scout"
+		2: "Sniper"
+		3: "Soldier"
+		4: "Demoman"
+		5: "Medic"
+		6: "Heavy"
+		7: "Pyro"
+		8: "Spy"
+		9: "Engineer"
+		]
+
+	bot_name(string) : "Name of the bot."
+
+	// Inputs
+	input CreateBot(void) : "Create the bot for this controller."
+	input RespawnBot(void) : "Force the bot to respawn."
+	input AddCommandMoveToEntity(target_destination) : "Add a command to the bot's queue, telling it to move to the specified entity."
+	input AddCommandAttackEntity(target_destination) : "Add a command to the bot's queue, telling it to attack the specified entity."
+	input AddCommandSwitchWeapon(integer) : "Add a command to the bot's queue, telling it to switch to the specified weapon slot."
+	input AddCommandDefend(float) : "Add a command to the bot's queue, telling it to defend the position it's standing at. The parameter specifies the distance from the point that the Bot is allowed to move to fight enemies."
+	input SetIgnoreHumans(integer) : "Set whether or not the Bot should ignore human players. 1 = ignore, 0 = don't ignore."
+	input PreventMovement(integer) : "Set whether or not the Bot is allowed to move. 1 = prevent movement, 0 = allow movement."
+	input ClearQueue(void) : "Clear the bot's command queue."
+
+	// Outputs
+	output OnForceRespawn(void) : "Sent when the entity respawns the players."
+	]

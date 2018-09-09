@@ -1,0 +1,19 @@
+
+@PointClass base(Targetname, Parentname, Targetname, Parentname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	sphere() 
+	size(-4 -4 -4, 4 4 4) 
+	color(200 200 0) = env_viewpunch: "Causes a view punch on players."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Punch all players (ignore radius)" : 0
+		2: "Punch players in the air" : 0
+		]
+
+	punchangle(angle) : "Punch angles" : "0 0 90" : "The punch angles to apply."
+	radius(float) : "Effect Radius" : 500 : "The radius around this entity in which to affect players."
+
+	// Inputs
+	input ViewPunch(void) : "Performs the view punch."
+	]

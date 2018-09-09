@@ -1,0 +1,31 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	color(0 100 250) 
+	iconsprite("editor/logic_measure_movement.vmt") 
+	line(255 255 0, targetname, measureReference) 
+	line(255 0 255, targetname, measureTarget, targetname, measureReference) 
+	line(255 255 0, targetname, targetReference) 
+	line(255 0 255, targetname, target, targetname TargetReference) = logic_measure_movement: "An entity that can measure the movement of an entity relative to another entity and apply that movement to a third entity."
+	[
+	measuretarget(target_destination) : "Entity to Measure" : : "Entity whose movement you want to measure."
+	measurereference(target_destination) : "Measure Reference" : : "The movement of Entity to Measure will be measured relative to this entity."
+	target(target_destination) : "Entity to Move" : : "This entity will be moved to mimic the motions of Entity to Measure."
+	targetreference(target_destination) : "Movement Reference" : : "The Entity to Move will move relative to this entity."
+	targetscale(float) : "Movement scale" : 1 : "A scale to divide the measured movements by, before applying those movements to the Entity to Move. 1 = target entity moves as much as the measured entity, 2 = target entity moves half as far as the measured entity, and 0.5 = target entity moves twice as far as the measured entity."
+	measuretype(choices) : "Measurement Type" : "0" =
+		[
+		0: "Position"
+		1: "Eye position"
+		]
+
+
+	// Inputs
+	input SetMeasureTarget(string) : "Set the Entity to Measure, whose movement should be measured."
+	input SetMeasureReference(string) : "Set the Measure Reference entity."
+	input Target(string) : "Set the Entity to Move, which will be moved to mimic the measured entity."
+	input SetTargetReference(string) : "Set the Movement Reference entity."
+	input SetTargetScale(float) : "Set the scale to divide the measured movements by."
+	input Enable(void) : "Enable the logic_measure_movement."
+	input Disable(void) : "Disable the logic_measure_movement."
+	]

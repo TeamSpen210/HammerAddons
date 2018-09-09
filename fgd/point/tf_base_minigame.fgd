@@ -1,0 +1,39 @@
+
+@PointClass base(Targetname) 
+	appliesto(TF2) = tf_base_minigame: "Base minigame"
+	[
+	redspawn(target_source) : "Red Spawn Name" : : "The name of the spawnpoints for RED for this minigame"
+	bluespawn(target_source) : "Blue Spawn Name" : : "The name of the spawnpoints for BLUE for this minigame"
+	inrandompool(choices) : "Put in Random Pool" : "1" : "If Yes, allowed to be chosen when told to go to a random minigame" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	maxscore(integer) : "Max Score" : 5 : "When a team hits this score, the On<Team>HitMaxScore output will be fired"
+	hud_res_file(string) : "HUD Res File" : : "Res file to use for this minigame"
+	your_team_score_sound(string) : "Your Team Score Sound" : : "Sound file to play when your team scores a point"
+	enemy_team_score_sound(string) : "Enemy Team Score Sound" : : "Sound file to play when the enemy team scores a point"
+	scoretype(choices) : "Scoring Type" : "0" : "What to use for scoring" =
+		[
+		0: "Points"
+		1: "Players alive"
+		]
+
+	suddendeathtime(float) : "Sudden Death Time" : -1 : "Time til sudden death starts (-1 for sudden death)"
+
+	// Inputs
+	input ScoreTeamRed(integer) : "Give points to team RED"
+	input ScoreTeamBlue(integer) : "Give points to team BLUE"
+	input ReturnFromMinigame(void) : "Force players to return from the current minigame."
+	input ChangeHudResFile(string) : "Change the HUD resource file."
+
+	// Outputs
+	output OnReturnFromMinigame(void) : "Sent when players return from this minigame."
+	output OnTeleportToMinigame(void) : "Sent when players arrive in this minigame."
+	output OnRedHitMaxScore(void) : "Sent RED hits the max score for this minigame."
+	output OnBlueHitMaxScore(void) : "Sent BLUE hits the max score for this minigame."
+	output OnAllRedDead(void) : "Sent when the entire RED team is dead."
+	output OnAllBlueDead(void) : "Send when the entire BLUE team is dead."
+	output OnSuddenDeathStart(void) : "Sent when sudden death starts."
+	]

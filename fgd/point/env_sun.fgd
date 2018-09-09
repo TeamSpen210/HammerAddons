@@ -1,0 +1,31 @@
+
+@PointClass base(Targetname, Angles, Targetname, Angles) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	color(255 0 0) 
+	color(200 0 0) 
+	iconsprite("editor/env_sun.vmt") 
+	line(255 255 0, targetname, target) = env_sun: "An entity to control & draw a sun effect in the sky."
+	[
+	target(target_destination) : "Viewer entity" : : "Name of an entity used to determine where the sun is in the skybox. The sun should be lined up on a line from this entity to the env_sun entity."
+	use_angles(choices) : "UseAngles" : "0" : "The old way to orient env_sun is to point it at a target. The new way is to specify the angles. If you use the new way, set this property to YES." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	use_angles[ASW](boolean) : "UseAngles" : 0 : "The old way to orient env_sun is to point it at a target. The new way is to specify the angles. If you use the new way, set this property to YES."
+	pitch(integer) : "Pitch" : 0
+	rendercolor(color255) : "Sun Color (R G B)" : "100 80 80"
+	overlaycolor(color255) : "Overlay Color (R G B)" : "0 0 0" : "A value of 0 0 0 will act the old way."
+	size(integer) : "Size" : 16
+	overlaysize(integer) : "Overlay Size" : -1 : "A value of -1 means the overlay will act the old way."
+	material(sprite) : "Material Name" : "sprites/light_glow02_add_noz" : "Material of the inner glow."
+	overlaymaterial(sprite) : "Overlay Material Name" : "sprites/light_glow02_add_noz" : "Material of the overlay glow."
+	hdrcolorscale(float) : "HDR color scale." : 1.0 : "float value to multiply sprite color by when running in HDR mode."
+	glowdistancescale[CSGO](float) : "Glow Distance Scale" : 0.99 : "Scales the distance used to test for sun glow occlusion, 0.99 will act the old way."
+
+	// Inputs
+	input TurnOn(void) : "Enable sun rendering."
+	input TurnOff(void) : "Disable sun rendering."
+	input SetColor(color255) : "Change the sun's color. Format: <Red 0-255> <Green 0-255> <Blue 0-255>"
+	]

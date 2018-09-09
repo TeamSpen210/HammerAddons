@@ -1,0 +1,9 @@
+
+@PointClass base(Weapon, TeamNum) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_eq_fraggrenade.mdl") = hegrenade_projectile: "HE Grenade Projectile"
+	[
+
+	// Inputs
+	input InitializeSpawnFromWorld(void) : "If spawned from a env_entity_maker, you need to call this after spawn for it to work properly."
+	]

@@ -1,0 +1,11 @@
+
+@PointClass base(prop_dynamic) 
+	appliesto(TF2) 
+	studioprop() = training_prop_dynamic: "Same a prop_dynamic, but with additional flags for training."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		512: "Custom collision with grenades and sticky bombs" : 0
+		]
+
+	]

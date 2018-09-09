@@ -1,0 +1,8 @@
+
+@BaseClass base(Targetname, Angles) 
+	appliesto(CSGO) 
+	studio("models/props/cs_assault/consolepanelloadingbay.mdl") = Territory
+	[
+	respawn_area(string) : "Respawn area name"
+	buyzone(string) : "Buy Zone name"
+	]

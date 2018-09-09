@@ -1,0 +1,19 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	iconsprite("editor/logic_branch.vmt") 
+	color(0 100 250) = logic_branch: "Tests a boolean value and fires an output based on whether the value is true or false. Use this entity to branch between two potential sets of events."
+	[
+	initialvalue(integer) : "Initial value" : : "Initial value for the boolean value (0 or 1)."
+
+	// Inputs
+	input SetValue(boolean) : "Set the boolean value without performing the comparison. Use this to hold a value for a future test."
+	input SetValueTest(boolean) : "Set the boolean value and test it, firing OnTrue or OnFalse based on the new value."
+	input Toggle(void) : "Toggle the boolean value between true and false."
+	input ToggleTest(void) : "Toggle the boolean value and tests it, firing OnTrue or OnFalse based on the new value."
+	input Test(void) : "Test the input value and fire OnTrue or OnFalse based on the value."
+
+	// Outputs
+	output OnTrue(boolean) : "Fired when the input value is true (nonzero)."
+	output OnFalse(boolean) : "Fired when the input value is false (zero)."
+	]

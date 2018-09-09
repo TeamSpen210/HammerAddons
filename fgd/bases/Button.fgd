@@ -1,0 +1,19 @@
+
+@BaseClass 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) = Button
+	[
+
+	// Inputs
+	input Lock(void) : "Lock the button, preventing it from functioning."
+	input Unlock(void) : "Unlock the button, allowing it to function."
+	input Press(void) : "Activate the button as if it was pressed."
+	input PressIn(void) : "Activate the button as if it was pressed, sending it to the bottom position."
+	input PressOut(void) : "Unpress the button, sending it to the top position."
+
+	// Outputs
+	output OnDamaged(void) : "Fired when the button is damaged."
+	output OnPressed(void) : "Fired when the button is pressed."
+	output OnUseLocked(void) : "Fired when the button is used while locked."
+	output OnIn(void) : "Fired when the button reaches the in/pressed position."
+	output OnOut(void) : "Fired when the button reaches the out/released position."
+	]

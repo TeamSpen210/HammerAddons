@@ -1,0 +1,40 @@
+
+@BaseClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2) = BaseActBusy
+	[
+	actor(target_name_or_class) : "Actor(s) to affect" : : "NPC's that should act busy"
+	startactive(choices) : "Start Active" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	startactive[P2](boolean) : "Start Active" : 0
+	searchtype(choices) : "Search Type" : "0" : "How to search for the entities using the targetname." =
+		[
+		0: "Entity Name"
+		1: "Classname"
+		]
+
+	busysearchrange(float) : "Search Range for Busy Hints" : 2048
+	visibleonly(choices) : "Visible Busy Hints Only" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	visibleonly[P2](boolean) : "Visible Busy Hints Only" : 0
+
+	// Inputs
+	input Activate(void) : "Begin acting busy"
+	input Deactivate(void) : "Cease acting busy"
+	input SetBusySearchRange(float) : "Update the busy search range for all actors."
+	input ForceNPCToActBusy(string) : "Force an NPC to act busy. Takes parameters, separated by spaces: <Targetname> <hint node targetname> <optional:teleport> <optional:$customactivityorsequence> <maximum time to actbusy>. If no hint node targetname is specified, it'll search for a random one. If no max time is specified, it'll use the default. Specifying 0 as the max time will make the NPC act busy until disturbed. If the optional teleport parameter is specified, the NPC will teleport to the act busy point. A custom move animation can be specified by prepending $ to the name of it. i.e. $ACT_RUN will make the NPC Run. Sequence names can be used instead of activities."
+	input ForceThisNPCToActBusy(string) : "Force an NPC outputted from another entity to act busy. (only usable from an output that specifies an entity)"
+	input ForceThisNPCToLeave(string) : "Force an NPC outputted from another entity to find a HINT_NPC_EXIT_POINT hintnode and vanish."
+
+	// Outputs
+	output OnNPCStartedBusy(string) : "Fired when an NPC targeted by this goal starts an ActBusy animation."
+	output OnNPCFinishedBusy(string) : "Fired when an NPC targeted by this goal finishes an ActBusy."
+	output OnNPCLeft(string) : "Fired when an NPC target by this goal finishes a forced Leave."
+	]

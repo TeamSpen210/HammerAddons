@@ -1,0 +1,15 @@
+
+@PointClass base(Targetname, EnableDisable) 
+	appliesto(TF2) 
+	studio("models/pickups/pickup_powerup_regen.mdl") 
+	sphere(fademindist) 
+	sphere(fademaxdist) = info_powerup_spawn: "Powerup spawn location. Only one of each type of Powerup will spawn in a game, so some Powerup spawn locations may not be used in some rounds. Locations and Powerup types are chosen at random. Will only spawn if tf_powerup_mode is set"
+	[
+	team(choices) : "Owner Team" : "-2" : "Teams can own spawn points. When Powerups are dropped, they resposition themselves after timing out. They will try to pick a spawn point based on what team designation they had when they repositioned. Set to Everyone to have no team bias in spawn positioning" =
+		[
+		-2: "Everyone"
+		2: "Red"
+		3: "Blue"
+		]
+
+	]

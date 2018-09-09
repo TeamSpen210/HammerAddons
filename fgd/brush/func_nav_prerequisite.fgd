@@ -1,0 +1,24 @@
+
+@SolidClass base(Trigger, Targetname) 
+	appliesto(TF2) = func_nav_prerequisite: "A trigger volume that requires bots to do perform a task before they can move through it."
+	[
+	task(choices) : "Task" : "1" : "What must be done to move through this volume" =
+		[
+		1: "Destroy Entity (Value = max range to attack from. -1 for no range restriction)"
+		2: "Move to Entity"
+		3: "Wait (Value = seconds to wait)"
+		]
+
+	entity(target_destination) : "Task Entity" : : "The subject entity of the Task"
+	value(float) : "Task Value" : 0 : "A Task-specific value"
+	start_disabled(choices) : "Start Disabled" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+
+	// Inputs
+	input Enable(void) : "Enable"
+	input Disable(void) : "Disable"
+	]

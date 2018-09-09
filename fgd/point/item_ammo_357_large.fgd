@@ -1,0 +1,6 @@
+
+@PointClass base(Item) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/items/357ammobox.mdl") = item_ammo_357_large: "Large Box of 357 ammo"
+	[
+	]

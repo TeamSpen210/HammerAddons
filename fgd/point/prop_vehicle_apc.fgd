@@ -1,0 +1,17 @@
+
+@PointClass base(BaseDriveableVehicle) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studioprop() = prop_vehicle_apc: "APC with mounted guns, can only be driven by a vehicle driver or a npc_apcdriver."
+	[
+	missilehint(target_destination) : "Missile Hint Target" : : "Name of one or more info_apc_missile_hint entities to use to determine what to hit."
+
+	// Inputs
+	input FireMissileAt(target_destination) : "A target to fire a missile at"
+	input Destroy(void) : "Causes the APC to blow up."
+
+	// Outputs
+	output OnFiredMissile(void) : "Fired when the APC shoots a missile."
+	output OnDeath(void) : "Fired when the APC is killed."
+	output OnDamaged(void) : "Fired when the APC is damaged."
+	output OnDamagedByPlayer(void) : "Fired when the APC is damaged by the player."
+	]

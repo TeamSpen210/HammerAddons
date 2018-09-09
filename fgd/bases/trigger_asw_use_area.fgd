@@ -1,0 +1,19 @@
+
+@BaseClass base(trigger_multiple) 
+	appliesto(ASW) = trigger_asw_use_area: "A trigger volume that is used to define areas for using various things."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		2: "Marines and Aliens" : 1
+		4: "Pushables" : 0
+		8: "Physics Objects" : 0
+		16: "Only marines" : 0
+		64: "Everything" : 0
+		]
+
+	usetargetname(target_destination) : "UseTarget" : : "The name of the item this use area is connected to."
+	playersrequired(integer) : "Players Required" : 1 : "Number of players that must be present for the trigger to work when used. Setting this higher than the number of players currently playing will make the total number of players the actual requirement."
+
+	// Outputs
+	output OnRequirementFailed(void) : "Fired whenever a marine uses this button panel but the player requirement hasn't been met."
+	]

@@ -1,0 +1,16 @@
+
+@PointClass base(prop_physics, prop_physics) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	studioprop() 
+	sphere(fademindist) 
+	sphere(fademaxdist) = prop_physics_multiplayer: "This class is the same as prop_physics, except the runtime collisions use a more bouncy method that avoids the prediction errors normal physics objects get."
+	[
+	physicsmode(choices) : "Physics Mode" : "0" =
+		[
+		0: "Auto Detect"
+		1: "Solid, Server-side"
+		2: "Non-Solid, Server-side"
+		3: "Non-Solid, Client-side"
+		]
+
+	]

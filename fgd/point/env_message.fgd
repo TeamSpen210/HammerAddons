@@ -1,0 +1,30 @@
+
+@PointClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	size(-8 -8 -8, 8 8 8) 
+	iconsprite("editor/ts2do/env_message.vmt") = env_message: "An entity that draws a text message on player's HUDs."
+	[
+	message(string) : "Message Text"
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Play Once" : 0
+		2: "All Clients" : 0
+		]
+
+	messagesound(sound) : "Sound Effect" : : "When the message is shown, this sound effect will be played, originating from this entity."
+	messagevolume(string) : "Volume 0-10" : "10" : "Volume of the sound effect."
+	messageattenuation(choices) : "Sound Radius" : "0" =
+		[
+		0: "Small Radius"
+		1: "Medium Radius"
+		2: "Large  Radius"
+		3: "Play Everywhere"
+		]
+
+
+	// Inputs
+	input ShowMessage(void) : "Shows the message and plays the sound."
+
+	// Outputs
+	output OnShowMessage(void) : "Fired when the message is activated."
+	]

@@ -1,0 +1,16 @@
+
+@BaseClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, ASW) = VehicleDriverNPC
+	[
+	vehicle(target_destination) : "Vehicle to drive"
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Start Inactive" : 1
+		]
+
+
+	// Inputs
+	input StartFiring(void) : "Tell the driver to attack nearby enemies with the vehicle's weaponry (if any)"
+	input StopFiring(void) : "Tell the driver to stop attacking nearby enemies with the vehicle's weaponry."
+	input GotoPathCorner(string) : "Tell the driver to go to a specific path corner and continue from there."
+	]

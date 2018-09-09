@@ -1,0 +1,6 @@
+
+@PointClass base(BaseDriveableVehicle) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studioprop() = prop_vehicle_cannon: "Driveable studiomodel cannon."
+	[
+	]

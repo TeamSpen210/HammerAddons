@@ -1,0 +1,11 @@
+
+@PointClass base(Targetname) 
+	appliesto(TF2) = point_populator_interface: "Entity interface to the populator."
+	[
+
+	// Inputs
+	input PauseBotSpawning(void) : "Pause the spawning of all bots."
+	input UnpauseBotSpawning(void) : "Resume spawning of all bots."
+	input ChangeBotAttributes(string) : "All bots with matching event name will apply the attribute changes."
+	input ChangeDefaultEventAttributes(string) : "Change default event name to spawn bots. The default name is Default"
+	]

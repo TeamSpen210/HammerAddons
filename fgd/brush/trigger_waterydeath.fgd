@@ -1,0 +1,5 @@
+
+@SolidClass base(Trigger) 
+	appliesto(EP1, EP2, HL2, ASW) = trigger_waterydeath: "A trigger volume that spawns leeches around entities inside it, and does damage to them until they die. Used to prevent players entering deep water."
+	[
+	]

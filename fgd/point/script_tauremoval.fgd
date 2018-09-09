@@ -1,0 +1,10 @@
+
+@PointClass base(Angles, Targetname, Parentname) 
+	appliesto(EP1, EP2, HL2, ASW) = script_tauremoval: "Script: Custom entity used to handle the tau removal sequence in coast. (unused)"
+	[
+	vortigaunt(target_destination) : "Vortigaunt to use"
+
+	// Inputs
+	input StartScript(void) : "Start the script."
+	input RemoveTau(void) : "Start removing the Tau cannon now."
+	]

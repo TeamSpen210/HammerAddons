@@ -1,0 +1,6 @@
+
+@PointClass base(Targetname) 
+	appliesto(TF2) = entity_spawn_point: "A spawn location associated with a spawn manager."
+	[
+	spawn_manager_name(string) : "Spawn Manager Name" : : "Name of the spawn manager entity we are associated with."
+	]

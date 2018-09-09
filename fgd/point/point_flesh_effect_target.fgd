@@ -1,0 +1,10 @@
+
+@PointClass base(Targetname, Parentname, Targetname, Parentname) 
+	appliesto(ASW, EP1, EP2, HL2, P2) 
+	sphere(radius) = point_flesh_effect_target: "Flesh Effect Target"
+	[
+	radius(float) : "Radius" : 8 : "Radius of the effect when active"
+
+	// Inputs
+	input SetRadius(vector) : "Sets a new radius and time to interpolate to it(as a vector <Size> <Time in Seconds>)."
+	]

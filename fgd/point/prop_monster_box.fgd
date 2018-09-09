@@ -1,0 +1,28 @@
+
+@PointClass base(Targetname, Angles, Parentname, RenderFields, ToggleDraw) 
+	appliesto(P2) 
+	studioprop() = prop_monster_box: "FrankenCubes, they walk about when oriented correctly but otherwise behave like normal Storage Cubes."
+	[
+	startasbox(boolean) : "Start As Box" : 0 : "Start as an Box."
+	boxswitchspeed(float) : "Box Switch Speed" : 400 : "Speed to force switch to a box."
+	allowsilentdissolve(boolean) : "Allow SilentDissolve input" : 0 : "Allow the SilentDissolve input to dissolve this FrankenCube."
+	model(choices) : "[H] Pose" : "models/npcs/monsters/monster_a.mdl" : "What pose to show in Hammer." =
+		[
+		"models/npcs/monsters/monster_a.mdl": "Extended"
+		"models/npcs/monsters/monster_a_box.mdl": "Cube"
+		]
+
+
+	// Inputs
+	input BecomeBox(string) : "Force the FrankenTurret to switch to cube form."
+	input BecomeMonster(void) : "Return the FrankenCube to extended form."
+	input BecomeShortcircuit(void) : "Short circuit this FrankenCube and permanently switch to cube form. Creates arc particles randomly across the cube, and the turret's eyes flicker randomly."
+	input Dissolve(void) : "Fizzles the FrankenCube."
+	input SilentDissolve(void) : "Kills the FrankenCube and fires its OnFizzled output, if the relevant setting is on."
+
+	// Outputs
+	output OnFizzled(void) : "Fired when a cube is fizzled."
+	output OnPlayerUse(void) : "Any player +USEd the cube."
+	output OnPlayerPickup(void) : "Any player picked up the cube."
+	output OnPhysGunDrop(void) : "Any player dropped the cube."
+	]

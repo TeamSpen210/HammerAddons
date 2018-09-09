@@ -1,0 +1,23 @@
+
+@PointClass base(Targetname, Studiomodel, Origin, Angles) 
+	appliesto(TF2) 
+	studioprop() = tf_generic_bomb: "Generic Bomb"
+	[
+	damage(float) : "Explosion Damage" : 50 : "Amount of damage to do when exploding."
+	radius(float) : "Explosion Radius" : 100 : "Explosion radius."
+	health(integer) : "Health" : 1 : "Health of the bomb."
+	explode_particle(string) : "Explosion Particle" : : "Name of the particle effect to play when exploding."
+	sound(sound) : "Explosion Sound" : : "Name of the sound effect to play when exploding."
+	friendlyfire(choices) : "Friendly Fire" : "0" =
+		[
+		0: "Damage attacker and enemies"
+		1: "Damage everyone"
+		]
+
+
+	// Inputs
+	input Detonate(void) : "Force detonation."
+
+	// Outputs
+	output OnDetonate(void) : "Fired when this bomb detonates."
+	]

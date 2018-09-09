@@ -1,0 +1,23 @@
+
+@SolidClass base(Targetname) 
+	appliesto(TF2) = func_nav_prefer: "Influence bots to prefer this region by decreasing the pathfinding cost within it."
+	[
+	tags(string) : "Tags" : : "A space delimited list of tags. A tag is a label with no spaces. If a TFBot has at least one matching tag, it will pay attention to this entity. Tags that are automatically set on TFBots include bomb_carrier, common, mission_sniper, mission_spy, mission_sentry_buster, or any class name."
+	team(choices) : "Team" : "-2" : "Which team will prefer this region" =
+		[
+		-2: "Everyone"
+		2: "Red"
+		3: "Blue"
+		]
+
+	start_disabled(choices) : "Start Disabled" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+
+	// Inputs
+	input Enable(void) : "Enable"
+	input Disable(void) : "Disable"
+	]

@@ -1,0 +1,68 @@
+
+@PointClass base(Targetname, EnableDisable) 
+	appliesto(TF2) = team_round_timer: "Round Timer. Timer starts paused by default."
+	[
+	timer_length(integer) : "Timer length (in seconds)" : 600 : "Initial timer length."
+	max_length(integer) : "Max timer length (in seconds)" : 0 : "Maximum timer length (0 = no max). This value is used to ensure the timer never goes above this value when SetTime and AddTime are used."
+	start_paused(choices) : "Start paused" : "1" : "Should the timer start paused? (will need to send a Resume input to start the timer if this is set)." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	show_time_remaining(choices) : "Show Time Remaining" : "1" : "Should we show how much time is remaining.  If no, this will display how much time has passed." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	setup_length(integer) : "Setup timer length (in seconds)" : 0 : "Length of setup time before the round begins and the timer starts to countdown the normal time. (0 = no setup time)  Setup time is run at the beginning of every round before the normal time begins."
+	reset_time(choices) : "Reset time on round restart" : "0" : "Reset the timer time after a round restart.  This is not the setup time, but the normal round time." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	auto_countdown(choices) : "Use countdown sounds" : "1" : "Let the timer automatically count down the end of a round." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	show_in_hud(choices) : "Show timer in the HUD" : "1" : "Note: You can only show one timer in the HUD at a time." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+
+	// Inputs
+	input Pause(void) : "Pause the timer."
+	input Resume(void) : "Resume the timer."
+	input SetTime(integer) : "Set the timer to this value (in seconds)."
+	input AddTime(integer) : "Add time to the timer (in seconds). Added time cannot excede the max timer length."
+	input AddTeamTime(string) : "Input takes a string (space delimited) with the team number and the time to be added (in seconds) because of the team (2 for red, 3 for blue, and 0 for no team...but you could just use AddTime for that). Added time cannot excede the max timer length. Example: 2 600 (adds 10 minutes because of team red)"
+	input Restart(void) : "Restart the timer."
+	input ShowInHUD(integer) : "Show this timer in the HUD (0 no, 1 Yes)."
+	input SetMaxTime(integer) : "Set the max timer length to this value (in seconds). The timer's time will never excede this value."
+	input AutoCountdown(integer) : "Turn off/on the auto countdown feature (0 no, 1 Yes)."
+	input SetSetupTime(integer) : "Set the setup time length to this value (in seconds)."
+
+	// Outputs
+	output On5MinRemain(void) : "Sent when 5 minutes remain."
+	output On4MinRemain(void) : "Sent when 4 minutes remain."
+	output On3MinRemain(void) : "Sent when 3 minutes remain."
+	output On2MinRemain(void) : "Sent when 2 minutes remain."
+	output On1MinRemain(void) : "Sent when 1 minutes remain."
+	output On30SecRemain(void) : "Sent when 30 seconds remain."
+	output On10SecRemain(void) : "Sent when 10 seconds remain."
+	output On5SecRemain(void) : "Sent when 5 seconds remain."
+	output On4SecRemain(void) : "Sent when 4 seconds remain."
+	output On3SecRemain(void) : "Sent when 3 seconds remain."
+	output On2SecRemain(void) : "Sent when 2 seconds remain."
+	output On1SecRemain(void) : "Sent when 1 second remains."
+	output OnRoundStart(void) : "Sent when the round starts."
+	output OnFinished(void) : "Sent when the timer is finished."
+	output OnSetupStart(void) : "Sent when the setup time begins."
+	output OnSetupFinished(void) : "Sent when the setup time is finished."
+	]

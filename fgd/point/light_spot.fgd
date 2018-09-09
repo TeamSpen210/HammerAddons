@@ -1,0 +1,23 @@
+
+@PointClass base(Targetname, Angles, light, Targetname, Angles, light) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	lightprop("models/editor/spot.mdl") 
+	lightcone() 
+	sphere(_fifty_percent_distance) 
+	sphere(_zero_percent_distance) 
+	line(255 255 255, targetname, target) 
+	sphere(_distance) = light_spot: "An invisible and directional spotlight."
+	[
+	target(target_destination) : "Entity to point at" : : "The name of an entity in the map that the spotlight will point at. This will override the spotlight's angles."
+	_inner_cone(integer) : "Inner (bright) angle" : 30
+	_cone(integer) : "Outer (fading) angle" : 45
+	_exponent(integer) : "Focus" : 1
+	_distance(integer) : "Maximum distance" : 0 : "This is the distance that light is allowed to cast, in inches."
+	_distance[P2](integer) : "Maximum distance" : 0 : "The distance that light is allowed to cast."
+	pitch(angle_negative_pitch) : "Pitch" : "-90"
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Initially dark" : 0
+		]
+
+	]

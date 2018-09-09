@@ -1,0 +1,9 @@
+
+@PointClass base(ASWPickup) 
+	appliesto(ASW) 
+	studio("models/weapons/pistol/Pistol.mdl") = asw_pickup_pistol: "Pistol"
+	[
+	bulletsingun(integer) : "Bullets In Gun" : 16
+	clips(integer) : "Clips" : 10
+	secondarybullets(integer) : "Secondary Bullets" : 0
+	]

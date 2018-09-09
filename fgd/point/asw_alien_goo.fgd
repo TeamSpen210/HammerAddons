@@ -1,0 +1,26 @@
+
+@PointClass base(Targetname, Angles, Studiomodel, Origin) 
+	appliesto(ASW) 
+	studioprop() = asw_alien_goo
+	[
+	model(studio) : "World model" : "models/swarm/AlienGoo/TendrilFat.mdl"
+	pulsestrength(float) : "Pulse Strength" : 0.8 : "Controls the amplitude of the pulsating goo (ranges from 0 to 1.0)."
+	pulsespeed(float) : "Pulse Speed" : 1.0 : "Controls how quickly the goo pulsates (1.0 is normal, can be set higher or lower)."
+	burninglinkname(string) : "Burning Link Name" : : "Alien goo/Grub sacs that share the same Burning Link Name will all be set on fire when one of those alien goo's is set on fire."
+	hasambientsound(choices) : "Has Ambient Sound" : "1" : "Whether the goo has a slimey ambient sound effect loop or not." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	requiredbyobjective(choices) : "Required By Objective" : "1" : "Whether the goo must be destroyed for an objective. (supresses burn hint if no)" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+
+	// Outputs
+	output OnIgnite(void) : "Fired when the goo catches fire"
+	output OnGooDestroyed(void) : "Fired when the goo is destroyed"
+	]

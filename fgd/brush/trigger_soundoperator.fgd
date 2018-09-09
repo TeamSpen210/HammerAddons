@@ -1,0 +1,11 @@
+
+@SolidClass base(Trigger) 
+	appliesto(CSGO) = trigger_soundoperator: "An entity that can control sound operator parameters."
+	[
+	sosvar(choices) : "Sound Operator" : "0" =
+		[
+		0: "Custom Sound Volume 1"
+		1: "Custom Sound Volume 2"
+		]
+
+	]

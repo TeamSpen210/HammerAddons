@@ -1,0 +1,10 @@
+
+@BaseClass 
+	appliesto(P2, CSGO) = Reflection
+	[
+	drawinfastreflection(boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
+
+	// Inputs
+	input DisableDrawInFastReflection(void) : "Turns off rendering of this entity in reflections when using $reflectonlymarkedentities in water material."
+	input EnableDrawInFastReflection(void) : "Turn on rendering of this entity in reflections when using $reflectonlymarkedentities in water material."
+	]

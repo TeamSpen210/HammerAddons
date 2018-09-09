@@ -1,0 +1,20 @@
+
+@SolidClass base(Trigger, Trigger) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	line(255 255 0, targetname, target) = trigger_look: "An entity used to trigger something when the player looks at something. It fires 'OnTrigger' when the player looks at a target entity for the given amount of time, while within the trigger volume. If the player leaves the trigger or looks away from the target entity the clock resets. If the 'Use Velocity instead of facing' spawnflag is checked, the trigger uses the player's velocity instead of the player's view, so it determines whenever the player is moving toward the target entity. Useful for triggering when players are driving a vehicle at something.NOTE: Only designed for single-player game. "
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		128: "Fire Once" : 1
+		256: "Use Velocity instead of facing" : 0
+		]
+
+	target(target_destination) : "Look Target" : : "The name of the entity to be looked at."
+	looktime(string) : "LookTime" : "0.5" : "The time, in seconds, that the player must look the target before firing the output. Resets if player leaves trigger, or looks outside the Field of View threshold."
+	fieldofview(string) : "FieldOfView" : "0.9" : "How close the player has to be looking at the target. 1.0 = straight ahead\n 0.0 = +/- 90 degrees\n -1.0 = all directions)."
+	timeout(float) : "Timeout" : 0 : "The time, in seconds, to wait after player enters the trigger before firing the OnTimeout output, 0 = never."
+
+	// Outputs
+	output OnTrigger(void) : "Fired when the trigger is activated."
+	output OnTimeout(void) : "Fired after the timeout interval expires if the player never looked at the target."
+	]

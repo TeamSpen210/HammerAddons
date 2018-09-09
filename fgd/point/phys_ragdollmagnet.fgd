@@ -1,0 +1,20 @@
+
+@PointClass base(Targetname, EnableDisable, Parentname, Angles, Targetname, EnableDisable, Parentname, Angles) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	iconsprite("editor/info_target.vmt") 
+	sphere(radius) 
+	line(255 255 0, targetname, target) 
+	color(128 128 128) = phys_ragdollmagnet: "An entity that acts like a magnet for ragdolls. Useful for crafting exaggerated ragdoll behavior (i.e. guys falling over rails on death). If the Bar Magnet spawnflag is set, the magnet works like it was a cylindrical magnet i.e. it attracts ragdolls to the nearest point on a line."
+	[
+	axis(vecline) : "Bar Magnet Axis"
+	axis[P2](vecline) : "Bar Magnet Axis" : : "If the Bar Magnet spawnflag is set, ragdolls will be attracted to any point on this line."
+	radius(float) : "Effective Radius" : 512 : "Radius in which ragdolls are affected around this entity's origin."
+	force(float) : "Force" : 5000 : "Magnetic force to apply to ragdolls within the radius. Expressed as kilograms per inch per second. So a force of 1000 will add 10 inches/second to a 100kg man. It will add 100 inches per second to a 10kg headcrab."
+	target(string) : "Entity to affect" : : "If specified, the phys_ragdollmagnet will only affect the target entity."
+	target[P2](target_destination) : "Entity to affect" : : "If specified, the phys_ragdollmagnet will only affect the target entity."
+	spawnflags(flags) : "spawnflags" =
+		[
+		2: "Bar Magnet (use axis helper)" : 0
+		]
+
+	]

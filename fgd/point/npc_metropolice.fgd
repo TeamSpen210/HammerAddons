@@ -1,0 +1,50 @@
+
+@NpcClass base(BaseNPC, RappelNPC) 
+	appliesto(EP1, EP2, HL2, ASW) 
+	studio("models/Police.mdl") = npc_metropolice: "MetroPolice"
+	[
+	additionalequipment(choices) : "Weapons" : "weapon_pistol" =
+		[
+		"weapon_pistol": "Pistol"
+		"weapon_smg1": "SMG1"
+		"weapon_stunstick": "Stun Stick"
+		"weapon_shotgun": "Shotgun"
+		0: "Nothing"
+		]
+
+	manhacks(choices) : "Number of Manhacks" : "0" =
+		[
+		0: "None"
+		1: "1"
+		2: "2"
+		]
+
+	weapondrawn(choices) : "Pistol starts drawn" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		131072: "Simple cops" : 0
+		262144: "Rappel (UNCHECK THIS IF IT IS CHECKED!)" : 0
+		524288: "Always stitch" : 0
+		1048576: "No chatter" : 0
+		2097152: "Arrest enemies" : 0
+		4194304: "No far stitching" : 0
+		8388608: "Prevent manhack toss" : 0
+		16777216: "Allowed to respond to thrown objects" : 0
+		33554432: "Mid-range attacks (halfway between normal + long-range)" : 0
+		]
+
+
+	// Inputs
+	input EnableManhackToss(void) : "Enables manhack toss (which had been disabled by the spawnflag)"
+	input SetPoliceGoal(string) : "Causes the NPC to police the area defined by an ai_goal_police"
+	input ActivateBaton(void) : "Set the baton to active"
+
+	// Outputs
+	output OnStunnedPlayer(void) : "Fires when the player is hit by a stunstick by this NPC."
+	output OnCupCopped(void) : "Fires if the player hits me with the cupcop can. ONLY use for x360 achievement."
+	]

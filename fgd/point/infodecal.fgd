@@ -1,0 +1,20 @@
+
+@PointClass base(Targetname, Angles, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	decal() 
+	studio("models/editor/axis_helper_thick.mdl") = infodecal: "An entity that places a decal on the world. If the decal has no target name, it will immediately apply itself when the level is loaded. If it has a name specified, it won't apply until it receives the 'Activate' input."
+	[
+	texture(decal) : "texture"
+	texture[P2](decal) : "Texture" : : "The texture used for the decal."
+	lowpriority(choices) : "Low Priority (can be replaced)" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	lowpriority[ASW](boolean) : "Low Priority (can be replaced)" : 0
+	lowpriority[P2](boolean) : "Low Priority" : 1 : "Allow the decal to be overwritten by other decals when needed. This also makes the decal not persist across savegames."
+
+	// Inputs
+	input Activate(void) : "Force the decal to apply itself to the world."
+	]

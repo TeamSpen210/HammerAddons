@@ -1,0 +1,19 @@
+
+@SolidClass base(Trigger) 
+	appliesto(P2) = trigger_playerteam: "Allows distinguishing which player touched the trigger. Use with a logic_coop_manager to detect when both players are inside."
+	[
+	target_team(choices) : "Target Player" : "0" : "Which player (or both) to allow to touch this trigger." =
+		[
+		0: "Both"
+		3: "ATLAS"
+		2: "P-Body"
+		]
+
+	trigger_once(boolean) : "Trigger Once" : No : "Only trigger once, then remove the trigger."
+
+	// Outputs
+	output OnStartTouchBluePlayer(void) : "ATLAS has started touching the trigger."
+	output OnEndTouchBluePlayer(void) : "ATLAS has stopped touching the trigger."
+	output OnStartTouchOrangePlayer(void) : "P-Body has started touching the trigger."
+	output OnEndTouchOrangePlayer(void) : "P-Body has stopped touching the trigger."
+	]

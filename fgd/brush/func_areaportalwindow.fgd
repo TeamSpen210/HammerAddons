@@ -1,0 +1,21 @@
+
+@SolidClass base(Targetname, Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P2, TF2, CSGO) 
+	color(0 128 255) 
+	sphere(FadeStartDist) 
+	sphere(FadeDist) 
+	line(255 255 0, targetname, target) 
+	line(255 255 0, targetname, backgroundbmodel) = func_areaportalwindow: "An entity that can be used to optimize the visibility in a map. If you seal off an area with them, when the viewer moves the specified distance away from them, they will go opaque and the parts inside the area will not be drawn. The 'target' brush model should enclose the func_areaportal window so no parts of it are culled by the window. If you use the optional foreground brush model, then it should enclose the 'target' brush model.|||An entity that can be used to optimize the visibility in a map. If you seal off an area with them, when the viewer moves the specified distance away from them, they will go opaque and the parts inside the area will not be drawn. The window brush should enclose the func_areaportal window so no parts of it are culled by the window. If you use the optional foreground brush, then it should enclose the window brush. Both brush models will have their drawing disabled as the areaportal will render them itself."
+	[
+	target(target_destination) : "Rendered Window" : : "The name of a brush model to render as the window."
+	fadestartdist(integer) : "Fade Start Distance" : 128 : "When the viewer is closer than this distance, the alpha is set to 'TranslucencyLimit'."
+	fadedist(integer) : "Fade End Distance" : 512 : "When the viewer is at this distance, the portal becomes solid and closes off."
+	translucencylimit(string) : "Translucency limit" : "0.2" : "This value limits the translucency of the bmodel and prevents it from becoming invisible when the viewer is right on top of it."
+	backgroundbmodel(string) : "Foreground bmodel" : : "(Optional) brush model that is drawn after the fading brush model. This model should have alpha in its textures so you can see through it."
+	backgroundbmodel[P2](target_destination) : "Foreground Brush" : : "(Optional) brush model that is drawn after the fading brush model. This model should have alpha in its textures so you can see through it."
+	portalversion(integer) : "Portal Version" : 1 : "(Don't change). Differentiates between shipping HL2 maps and maps using new engine features."
+
+	// Inputs
+	input SetFadeStartDistance(integer) : "Set fade start distance."
+	input SetFadeEndDistance(integer) : "Set fade end distance."
+	]

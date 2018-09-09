@@ -1,0 +1,13 @@
+
+@PointClass base(Targetname, Angles) 
+	appliesto(CSGO) 
+	studio("models/player/tm_phoenix.mdl") = info_player_terrorist: "This entity marks the start point for terrorists. One of these needs to be placed for each team member. 20 start points is typical. Should be placed at least 128 units away from each other and surrounding walls."
+	[
+	priority(integer) : "Spawn Priority (int)" : 0 : "Determines which spawn points get used first.  Smaller numbers are used before larger numbers."
+	enabled(boolean) : "Enabled by default?" : 1
+
+	// Inputs
+	input SetEnabled(void) : "Sets this spawn point as enabled."
+	input SetDisabled(void) : "Sets this spawn point as disabled."
+	input ToggleEnabled(void) : "Toggle the enabled/disabled state of this spawn point."
+	]

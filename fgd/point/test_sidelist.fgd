@@ -1,0 +1,6 @@
+
+@PointClass 
+	appliesto(EP1, EP2, HL2, ASW) = test_sidelist: "Test entity for Ken!"
+	[
+	sides(sidelist) : "Sides"
+	]
