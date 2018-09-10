@@ -16,8 +16,7 @@
 	far_blur(float) : "Far blur depth" : 1000 : "Distance where blurriness is at its peak far from the viewpoint."
 	far_focus(float) : "Far focus depth" : 500 : "Distance that the focus is in full effect far from the viewpoint."
 	far_radius(float) : "Far blur radius" : 8 : "Radius (in pixels) to blur the surrounding pixels."
-	focus_target(target_source) : "Focus target" : : "Entity to use as a focal point."
-	focus_target[P2](target_destination) : "Focus target" : : "Entity to use as a focal point."
+	focus_target(target_destination) : "Focus target" : : "Entity to use as a focal point."
 	focus_range(float) : "Focus target range" : 200 : "Distance behind the focal plane to remain in focus."
 
 	// Inputs

@@ -1,6 +1,5 @@
 
 @PointClass base(Targetname, Parentname, Angles, RenderFxChoices, RenderFields) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	studio() = cycler: "An entity used to display a model for testing purposes. Shooting it with cycle through the model's animations."
 	[
 	spawnflags(flags) : "spawnflags" =

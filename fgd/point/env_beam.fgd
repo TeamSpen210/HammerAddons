@@ -12,12 +12,10 @@
 	[
 	renderamt(integer) : "Brightness (1 - 255)" : 100
 	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255"
-	radius(integer) : "Radius" : 256 : "If the 'Random Strike' spawnflag is set, this radius determines the area within which the endpoints will randomly strike."
-	radius[P2](integer) : "Radius" : 16 : "If the 'Random Strike' spawnflag is set, this radius determines the area within which the endpoints will randomly strike."
+	radius(integer) : "Radius" : 16 : "If the 'Random Strike' spawnflag is set, this radius determines the area within which the endpoints will randomly strike."
 	life(string) : "Life (seconds 0 = infinite)" : "1" : "Amount of time before the beam dies. Setting to zero will make the beam stay forever."
 	boltwidth(float) : "Width of beam" : 2 : "Pixel width of the beam."
-	noiseamplitude(float) : "Amount of noise (0-255)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
-	noiseamplitude[P2](float) : "Amount of noise (0-64)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
+	noiseamplitude(float) : "Amount of noise (0-64)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
 	texture(sprite) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the beam."
 	texturescroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
 	framerate(integer) : "Frames per 10 seconds" : 0 : "Framerate at which the beam texture should animate, if it has multiple frames."
@@ -25,8 +23,7 @@
 	striketime(string) : "Strike again time (secs)" : "1" : "Refire time between random strikes of the beam. Only used if the 'Random Strike' spawnflag is set."
 	damage(string) : "Damage / second" : "0" : "How much damage this beam does per second to things it hits when it is continually on, or instantaneously if it strikes. For continuous damage, the value should be greater than 10 or it may not work."
 	lightningstart(target_destination) : "Start Entity" : : "Entity that the beam starts at."
-	lightningend(target_destination) : "Ending Entity" : : "Entity that the beam ends at."
-	lightningend[P2](target_destination) : "Ending Entity" : : "Entity that the beam ends at. If not set, the Ending Location will be used instead."
+	lightningend(target_destination) : "Ending Entity" : : "Entity that the beam ends at. If not set, the Ending Location will be used instead."
 	decalname(string) : "Decal Name" : "Bigshot" : "Decal to be applied at the end of the beam"
 	hdrcolorscale(float) : "HDR color scale." : 1.0 : "float value to multiply sprite color by when running in HDR mode."
 	spawnflags(flags) : "spawnflags" =
@@ -52,18 +49,9 @@
 		4: "Player or NPC or Physprop"
 		]
 
-	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator triggers me. See filter_activator_name for more explanation."
-	filtername[P2](filterclass) : "Filter Name" : : "Filter to use to determine what triggers the output."
-	targetpoint[!TF2, ASW](vecline) : "Endpoint handle" : "0 0 0" : "If a LightningEnd entity is not specified, use this point as the destination instead. If the env_beam moves, the destination point will move along with it."
-	targetpoint[!TF2, P2](vecline) : "Ending Location" : "0 0 0" : "If an Ending Entity is not specified, use this point as the destination instead. It is relative to the beam origin."
-	clipstyle[!TF2, ASW](choices) : "Beam clipping" : "0" : "Select whether you want the beam to clip against geometry or characters" =
-		[
-		0: "Do not clip (default)"
-		1: "Clip to geometry"
-		2: "Clip to everything solid"
-		]
-
-	clipstyle[!TF2, P2](choices) : "Beam clipping" : "0" : "Select whether you want the beam to clip against geometry or characters, making it stop prematurely." =
+	filtername(filterclass) : "Filter Name" : : "Filter to use to determine what triggers the output."
+	targetpoint(vecline) : "Ending Location" : "0 0 0" : "If an Ending Entity is not specified, use this point as the destination instead. It is relative to the beam origin."
+	clipstyle(choices) : "Beam clipping" : "0" : "Select whether you want the beam to clip against geometry or characters, making it stop prematurely." =
 		[
 		0: "Do not clip (default)"
 		1: "Clip to geometry"

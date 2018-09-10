@@ -1,12 +1,9 @@
 
-@PointClass base(Angles, Studiomodel) 
+@PointClass base(Angles, Studiomodel, FadeDistance) 
 	appliesto(ASW) 
-	studioprop("models/swarm/colonist/male/malecolonist.mdl") = asw_client_corpse: "A clientside only prop that physically simulates and can be articulated with internal joints. The joint constraints are part of the physics model."
+= asw_client_corpse: "A clientside only prop that physically simulates and can be articulated with internal joints. The joint constraints are part of the physics model."
 	[
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "90 0 0" : "This entity's orientation in the world. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, roll is the rotation around the X axis."
-	fademindist(float) : "Start Fade Dist" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist)"
-	fademaxdist(float) : "End Fade Dist" : 0 : "Max fade distance at which the prop is visible (0 = don't fade out)"
-	fadescale(float) : "fade scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7, or the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified. This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades. Numbers smaller than 1 cause the prop to fade out at further distances, and greater than 1 cause it to fade out at closer distances."
 	model(studio) : "World Model" : "models/swarm/colonist/male/malecolonist.mdl"
 	ragdollsequence(string) : "Ragdoll Sequence" : : "Ragdoll's pose will come from the first frame of this sequence.  Note: NOT WORKING CURRENTLY"
 	]

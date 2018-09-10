@@ -1,7 +1,8 @@
 
 @PointClass base(Targetname, Parentname, Angles) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	size(-8 -8 -8, 8 8 8) = env_effectscript: "An entity that allows you to script special visual effects via a script file."
+	size(-8 -8 -8, 8 8 8) 
+	studioprop()
+= env_effectscript: "An entity that allows you to script special visual effects via a script file."
 	[
 	model(studio) : "Script Model" : "models/Effects/teleporttrail.mdl" : "Model to use for animation sequences."
 	scriptfile(string) : "Script File" : "scripts/effects/testeffect.txt" : "Name of the script to use for this model."

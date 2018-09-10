@@ -1,10 +1,10 @@
 
 @PointClass base(Targetname, Parentname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	line(255 255 255, targetname, directionentityname) 
 	iconsprite("editor/env_physexplosion.vmt") 
 	sphere(distance) 
-	color(128 128 128) = env_physimpact: "An entity that will cause a physics impact on another entity."
+	color(128 128 128) 
+= env_physimpact: "An entity that will cause a physics impact on another entity."
 	[
 	angles(string) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "Direction to project the impact."
 	magnitude(integer) : "Magnitude" : 100 : "Strength of the impact."

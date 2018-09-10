@@ -5,7 +5,8 @@
 	sphere(MaxRange) 
 	color(0 0 255) 
 	line(64 64 64, targetname, target) 
-	line(255 255 0, targetname, target, targetname, SpeakerName) = env_microphone: "An entity that acts as a microphone. It works in one of two modes. If it has a 'Speaker' set, it picks up all sounds within the specified sound range, and rebroadcasts them through the Speaker entity. In this Speaker mode, it ignores the Hears X spawnflags and does not fire the SoundLevel output. If it has no Speaker set, it measures the sound level at a point, and outputs the sound level as a value between 0 and 1. In Measuring mode, it only hears sounds that match the Hear X spawnflags."
+	line(255 255 0, targetname, target, targetname, SpeakerName) 
+= env_microphone: "An entity that acts as a microphone. It works in one of two modes. If it has a 'Speaker' set, it picks up all sounds within the specified sound range, and rebroadcasts them through the Speaker entity. In this Speaker mode, it ignores the Hears X spawnflags and does not fire the SoundLevel output. If it has no Speaker set, it measures the sound level at a point, and outputs the sound level as a value between 0 and 1. In Measuring mode, it only hears sounds that match the Hear X spawnflags."
 	[
 	target(target_destination) : "Measure target" : : "If the speaker is in Measuring mode, this is the name of the entity where the sound level is to be measured."
 	speakername(target_destination) : "Speaker target" : : "The name of an info_target entity through which to play any sounds heard by this microphone. If specified, the microphone will consider itself in Speaker mode."

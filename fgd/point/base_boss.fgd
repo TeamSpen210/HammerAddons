@@ -1,5 +1,6 @@
 
 @PointClass base(Targetname, Parentname, Angles, TeamNum) 
+	studioprop()
 	appliesto(TF2) = base_boss: "A Basic Boss"
 	[
 	health(integer) : "Boss' starting health" : 1000 : "The Boss' starting health."

@@ -3,7 +3,8 @@
 	appliesto(ASW, P2, CSGO) 
 	studio("models/editor/cone_helper.mdl") 
 	sphere(spotlightlength) 
-	sphere(spotlightwidth) = beam_spotlight: "An entity to draw a spotlight. Will draw a beam when the player views it side on, and a halo when it's facing towards the player. Unless the 'No Dynamic Light' spawnflag is checked, it will also create a dynamic light wherever the end of the spotlight rests.This spotlight is entirely client side, it is not sync'd across clients."
+	sphere(spotlightwidth)
+= beam_spotlight: "An entity to draw a spotlight. Will draw a beam when the player views it side on, and a halo when it's facing towards the player. Unless the 'No Dynamic Light' spawnflag is checked, it will also create a dynamic light wherever the end of the spotlight rests.This spotlight is entirely client side, it is not sync'd across clients."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

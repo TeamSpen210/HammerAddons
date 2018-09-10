@@ -2,7 +2,8 @@
 @PointClass base(Targetname, Parentname, Angles) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	size(-4 -4 -4, 4 4 4) 
-	iconsprite("editor/env_muzzleflash.vmt") = env_muzzleflash: "Muzzle Flash"
+	iconsprite("editor/env_muzzleflash.vmt") 
+= env_muzzleflash: "Muzzle Flash"
 	[
 	parentattachment(string) : "Parent Attachment" : : "The name of an attachment on the parent to hierarchically attach to."
 	scale(float) : "Scale" : 1 : "Size of the muzzle flash."

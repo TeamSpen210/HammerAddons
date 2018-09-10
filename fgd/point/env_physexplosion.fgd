@@ -1,13 +1,13 @@
 
 @PointClass base(Targetname, Parentname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	sphere() 
 	sphere(inner_radius) 
 	iconsprite("editor/env_physexplosion.vmt") 
 	sphere(radius) 
 	line(255 255 0, targetname, targetEntityName) 
 	cylinder(255 0 0, targetname, targetname, radius, targetname, targetentityname) 
-	color(128 128 128) = env_physexplosion: "An entity that creates an explosion at its origin. If the no-damage spawnflag is set, the explosion won't be visible, but will apply force to any physics objects within its radius."
+	color(128 128 128) 
+= env_physexplosion: "An entity that creates an explosion at its origin. If the no-damage spawnflag is set, the explosion won't be visible, but will apply force to any physics objects within its radius."
 	[
 	magnitude(string) : "Magnitude" : "100" : "Amount of physics force applied by the explosion."
 	radius(string) : "Clamp Radius (0 = auto)" : "0" : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude."
