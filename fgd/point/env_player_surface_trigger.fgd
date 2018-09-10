@@ -8,40 +8,47 @@
 	gamematerial(choices) : "Game Material to Watch" : "0" : "The material to watch. When the player stands on/off this material, this entity's outputs will be fired." =
 		[
 		0: "Nonfunctional (air)"
-		67: "C - Concrete"
-		77: "M - Metal"
-		68: "D - Dirt"
-		86: "V - Vent"
-		71: "G - Grate"
-		84: "T - Tile"
-		83: "S - Slosh"
-		87: "W - Wood"
-		80: "P - Computer"
-		89: "Y - Glass"
-		70: "F - Flesh"
-		73: "I - Clip"
-		79: "O - Foliage"
-		78: "N - Sand"
+
 		65: "A - Antlion"
 		66: "B - Bloody Flesh"
-		69: "E - Eggshell"
+		67: "C - Concrete"
+		68: "D - Dirt"
+		69: "E - Eggshell" [since_EP2]
+		70: "F - Flesh"
+		71: "G - Grate"
 		72: "H - Alien Flesh"
+		73: "I - Clip"
+		74: "J - Grass" [since_L4D] 
 		75: "K - Snow"
 		76: "L - Plastic"
-		82: "R - Reflective / Brick"
+		77: "M - Metal"
+		78: "N - Sand"
+		79: "O - Foliage"
+		80: "P - Computer"
+		81: "Q - Asphalt" [since_L4D]
+		82: "R - Reflective" [until_P1, P1, P2]
+		83: "S - Slosh"
+		84: "T - Tile"
+		85: "U - Cardboard" [since_L4D]
+		86: "V - Vent"
+		87: "W - Wood"
 		88: "X - Fake surfaces"
-		90: "Z - Warp Shield"
-		1: "1 - Clay"
-		2: "2 - Plaster"
-		3: "3 - Rock"
-		4: "4 - Rubber"
-		5: "5 - Sheet Rock"
-		6: "6 - Cloth"
-		7: "7 - Carpet"
-		8: "8 - Paper"
-		9: "9 - Upholstery"
-		0: "0 - Puddle"
-		11: "11 - Steam Pipe"
+		89: "Y - Glass"
+		90: "Z - Warp Shield" [since_EP1]
+
+		1: "1 - Clay" [since_L4D]
+		2: "2 - Plaster" [since_L4D]
+		3: "3 - Rock" [since_L4D]
+		4: "4 - Rubber" [since_L4D]
+		5: "5 - Sheet Rock" [since_L4D]
+		6: "6 - Cloth" [since_L4D]
+		7: "7 - Carpet" [since_L4D]
+		8: "8 - Paper" [since_L4D]
+		9: "9 - Upholstery" [since_L4D]
+
+		11: "11 - Mud" [L4D, L4D2]
+		11: "11 - Steam Pipe" [since_ASW]
+		12: "12 - Sand Barrel" [since_CSGO]
 		]
 
 
