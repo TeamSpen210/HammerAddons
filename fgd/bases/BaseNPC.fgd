@@ -1,18 +1,15 @@
 
 @BaseClass base(Targetname, Angles, RenderFields, DamageFilter, ResponseContext, Shadow, BaseLogicalNPC, ToggleDraw)
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	color(0 200 200) = BaseNPC: "Behaviour only applicable to visible NPCs."
+	color(0 200 200) 
+	line(255 255 255, targetname, target)
+	line(255 0 0, targetname, enemyfilter)
+= BaseNPC: "Behaviour only applicable to visible NPCs."
 	[
 	target(target_destination) : "Target Path Corner" : : "If set, the name of a path corner entity that this NPC will walk to, after spawning."
 
 	enemyfilter[!P2](target_destination) : "Enemy Filter" : : "Filter by which to filter potential enemies"
-	ignoreunseenenemies[!P2](choices) : "Ignore unseen enemies" : "0" : "Prefer visible enemies, regardless of distance or relationship priority" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	ignoreunseenenemies[!P2, ASW](boolean) : "Ignore unseen enemies" : 0 : "Prefer visible enemies, regardless of distance or relationship priority"
+	
+	ignoreunseenenemies(boolean) : "Ignore unseen enemies" : 0 : "Prefer visible enemies, regardless of distance or relationship priority"
 	
 	// Inputs
 	input SetBodyGroup(integer) : "HACK: Sets this NPC's body group (from 0 - n). You'd better know what you are doing!"

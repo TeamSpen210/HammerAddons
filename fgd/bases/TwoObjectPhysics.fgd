@@ -1,8 +1,10 @@
-
 @BaseClass base(Targetname) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	line(255 255 0, targetname, attach1) 
-	line(0 0 255, targetname, attach2) = TwoObjectPhysics
+	line(0 0 255, targetname, attach2) 
+	line(128 128 128, targetname, constraintsystem)
+	sphere(teleportfollowdistance)
+= TwoObjectPhysics
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -12,10 +14,8 @@
 		16: "Do not connect entities until turned on" : 0
 		]
 
-	attach1(target_destination) : "Entity 1"
-	attach1[P2](target_destination) : "Entity 1 (Yellow)" : : "The first entity to constrain. If blank the second entity will be constrained to the World."
-	attach2(target_destination) : "Entity 2"
-	attach2[P2](target_destination) : "Entity 2 (Blue)" : : "The second entity to constrain. If blank the first entity will be constrained to the World."
+	attach1(target_destination) : "Entity 1 (Yellow)" : : "The first entity to constrain. If blank the second entity will be constrained to the World."
+	attach2(target_destination) : "Entity 2 (Blue)" : : "The second entity to constrain. If blank the first entity will be constrained to the World."
 	constraintsystem(target_destination) : "Constraint System Manager" : : "The name of a phys_constraintsystem that this constraint should be a part of. All constraints on a set of entities should be placed in the same system, or they will fight each other during simulation."
 	forcelimit(float) : "Force Limit to Break (lbs)" : 0 : "The amount of force an impact must apply to the constraint to break it. A way of calculating this is to set it to the mass of an object that would break this constraint if it were resting on the constrainted objects."
 	torquelimit(float) : "Torque Limit to Break (lbs * distance)" : 0 : "The amount of torque required to break the constraint. A way of calculating this is to multiply any reference mass by the resting distance (from the center of mass of the object) needed to break the constraint."

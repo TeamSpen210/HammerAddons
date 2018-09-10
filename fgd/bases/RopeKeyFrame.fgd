@@ -1,6 +1,5 @@
 
-@BaseClass base(DXLevelChoice, SystemLevelChoice, Angles) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = RopeKeyFrame
+@BaseClass base(DXLevelChoice, SystemLevelChoice, Angles) = RopeKeyFrame
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -16,41 +15,18 @@
 		]
 
 	subdiv(integer) : "Subdivision" : 2 : "Number of subdivisions between each rope segment. Maximum value is 8. Higher values make smoother ropes, but are slower to render."
-	barbed(choices) : "Barbed" : "0" : "Test effect that makes the rope look sharper and more barbed." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	barbed[ASW](boolean) : "Barbed" : 0 : "Test effect that makes the rope look sharper and more barbed."
+	barbed(boolean) : "Barbed" : 0 : "Test effect that makes the rope look sharper and more barbed."
 	width(string) : "Width (1-64)" : "2" : "Width of the rope."
 	texturescale(string) : "Texture Scale" : "1" : "This changes the texture resolution. The default resolution is 4 pixels per inch. Larger values stretch the texture and smaller values scrunch it up."
-	collide(choices) : "Collide with world" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	collide[ASW](boolean) : "Collide with world" : 0
-	dangling(choices) : "Start Dangling" : "0" : "When set to Yes, the rope starts out detached from its target endpoint." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	dangling[ASW](boolean) : "Start Dangling" : 0 : "When set to Yes, the rope starts out detached from its target endpoint."
-	breakable(choices) : "Breakable" : "0" : "When set to yes, the rope can be detached from either endpoint when shot." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	breakable[ASW](boolean) : "Breakable" : 0 : "When set to yes, the rope can be detached from either endpoint when shot."
+	collide(boolean) : "Collide with world" : 0
+	dangling(boolean) : "Start Dangling" : 0 : "When set to Yes, the rope starts out detached from its target endpoint."
+	breakable(boolean) : "Breakable" : 0 : "When set to yes, the rope can be detached from either endpoint when shot."
 	ropematerial(material) : "Rope Material" : "cable/cable.vmt" : "The material to use when rendering the rope."
-	nowind[!P2, !ASW, !CSGO](choices) : "Disable Wind" : "0" : "When set to Yes, the rope will no longer act as though it's being affected by wind." =
+	
+	usewind(choices) : "Wind" : "0" : "Is the rope affected by wind?" =
 		[
-		0: "No"
-		1: "Yes"
+		0: "Ignore Wind"
+		1: "Affected by Wind"
 		]
 
 

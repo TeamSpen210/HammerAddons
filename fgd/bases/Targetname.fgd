@@ -9,20 +9,16 @@
 	// Inputs
 	input Kill(void) : "Removes this entity from the world."
 	input KillHierarchy(void) : "Removes this entity and all its children from the world."
-	input AddOutput(string) : "Adds an entity I/O connection to this entity. Format: <output name> <targetname>:<inputname>:<parameter>:<delay>:<max times to fire (-1 == infinite)>. Very dangerous, use with care."
-	input AddOutput[P2](string) : "Adds an entity I/O connection to this entity or changes keyvalues dynamically. Format:
+	input AddOutput(string) : "Adds an entity I/O connection to this entity or changes keyvalues dynamically. Format:
 '<output name> <targetname>:<inputname>:<parameter>:<delay>:<max times to fire (-1 == infinite)>'
 or 'keyvalue newval'. Very dangerous, use with care."
 	input FireUser1(void) : "Causes this entity's OnUser1 output to be fired."
 	input FireUser2(void) : "Causes this entity's OnUser2 output to be fired."
 	input FireUser3(void) : "Causes this entity's OnUser3 output to be fired."
 	input FireUser4(void) : "Causes this entity's OnUser4 output to be fired."
-	input RunScriptFile[!TF2, ASW](script) : "Execute a game script file from disk"
-	input RunScriptFile[!TF2, P2](string) : "Execute a game script file from disk."
-	input RunScriptCode[!TF2, ASW](string) : "Execute a string of script source code"
-	input RunScriptCode[!TF2, P2](string) : "Execute a string of script source code."
-	input CallScriptFunction[!TF2, ASW, !CSGO](string) : "Call a named function from this entity's Activation Script"
-	input CallScriptFunction[!TF2, P2, !CSGO](string) : "Execute the given function name."
+	input RunScriptFile[VSCRIPT](script) : "Execute a game script file from disk."
+	input RunScriptCode[VSCRIPT](string) : "Execute a string of script source code."
+	input CallScriptFunction[VSCRIPT](string) : "Execute the given function name."
 
 	// Outputs
 	output OnUser1(void) : "Fired in response to FireUser1 input."

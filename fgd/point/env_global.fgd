@@ -1,11 +1,13 @@
 
-@PointClass base(EnvGlobal) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+@PointClass base(Targetname)
 	size(-8 -8 -8, 8 8 8) 
 	color(200 0 0) 
 	iconsprite("editor/env_global.vmt") = env_global: "An entity to control a game-specific global states."
 	[
-	globalstate(choices) : "Global State to Set" =
+	
+	globalstate(string) : "Global State to Set"
+	
+	globalstate[HL2, EP1, EP2](choices) : "Global State to Set" =
 		[
 		"gordon_precriminal": "Gordon pre-criminal"
 		"antlion_allied": "Antlions are player allies"
@@ -28,4 +30,29 @@
 		"no_taunting_orange": "Prevent Taunting P-Body"
 		]
 
+	initialstate(choices) : "Initial State" : "0" =
+		[
+		0: "Off"
+		1: "On"
+		2: "Dead"
+		]
+
+	counter(integer) : "Counter" : 0 : "An integer counter value associated with this global."
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Set Initial State" : 0
+		]
+
+
+	// Inputs
+	input TurnOn(void) : "Set state of global to ON."
+	input TurnOff(void) : "Set state of global to OFF."
+	input Toggle(void) : "Toggles state of global between ON and OFF."
+	input Remove(void) : "Set state of global to DEAD."
+	input SetCounter(integer) : "Sets the counter value of this global."
+	input AddToCounter(integer) : "Adds to the counter value of this global. Negative numbers subtract."
+	input GetCounter(void) : "Causes the Counter output to be fired, passing the current counter value for this global."
+
+	// Outputs
+	output Counter(integer) : "Fired in response to the GetCounter input, passing the current value of the counter."
 	]

@@ -1,32 +1,35 @@
 
-@SolidClass base(Targetname, worldbase, ResponseContext) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = worldspawn: "This is the world entity. Each map can only contain one, and it's automatically created for you."
+@SolidClass base(Targetname, ResponseContext) = worldspawn: "This is the world entity. Each map can only contain one, and it's automatically created for you."
 	[
-	paintinmap[!TF2, P2, !CSGO](choices) : "Enable Paint" : "0" : "Enable code for spreading paint on surfaces, and bouncing physics objects around." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	maxblobcount[!TF2, P2, !CSGO](integer) : "Gel Blob Limit" : 250 : "Number of Gel blobs that can exist. Maximum is 250."
-	message[!TF2, P2, !CSGO](string) : "Map Description / Title"
-	skyname[!TF2, P2, !CSGO](string) : "SkyBox" : "sky_black_nofog" : "Texture used for the 2D skybox."
-	chaptertitle[!TF2, P2, !CSGO](string) : "Chapter Title Message" : : "Chapter Title that appears onscreen when this level starts."
-	startdark[!TF2, P2, !CSGO](boolean) : "Level Fade In" : 0
-	gametitle[!TF2, P2, !CSGO](boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts."
-	newunit[!TF2, P2, !CSGO](choices) : "New Level Unit" : "0" : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. Only set it to Yes if the player cannot return to any previous levels." =
+	message(string) : "Map Description / Title"
+	
+	skyname(string) : "SkyBox Texture Name" : "sky_day01_01": "Texture used for the 2D skybox."
+	skyname[P2](string) : "SkyBox Texture Name" : "sky_black_nofog" : "Texture used for the 2D skybox."
+	skyname[ASW](string) : "SkyBox Texture Name" : "blacksky": "Texture used for the 2D skybox."
+	skyname[CSGO](string) : "SkyBox Texture Name" : "sky_dust": "Texture used for the 2D skybox."
+	
+	chaptertitle(string) : "Chapter Title Message" : : "Chapter Title that appears onscreen when this level starts."
+	startdark(boolean) : "Level Fade In" : 0
+	gametitle(boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts."
+	newunit(choices) : "New Level Unit" : "0" : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. Only set it to Yes if the player cannot return to any previous levels." =
 		[
 		0: "No, keep current"
 		1: "Yes, clear previous levels"
 		]
 
-	maxoccludeearea[!TF2, P2, !CSGO](float) : "Max occluder area" : 0 : "[Used on PC] Prevents occlusion testing for entities that take up more than X% of the screen."
-	minoccluderarea[!TF2, P2, !CSGO](float) : "Min occluder area" : 0 : "[Used on PC] Prevents occluders from being used if they take up less than X% of the screen."
-	maxpropscreenwidth[!TF2, P2, !CSGO](float) : "Start Fade Pixels" : -1 : "Number of pixels wide at which all props in the level start to fade (<0 = use fademaxdist). This number is ignored if the prop has a specific fade distance specified."
-	minpropscreenwidth[!TF2, P2, !CSGO](float) : "End Fade Pixels" : 0 : "Minimum number of pixels wide at which the prop is visible (0 = don't fade out). This number is ignored if the prop has a specific fade distance specified."
-	detailvbsp[!TF2, P2, !CSGO](string) : "Detail.vbsp file" : "detail.vbsp" : "Detail.vbsp file to use for emitting detail props (found in directory <root>/modname)"
-	detailmaterial[!TF2, P2, !CSGO](material) : "Detail material file" : "detail/detailsprites" : "Material for detail sprites to use for drawing detail props."
-	coldworld[!TF2, P2, !CSGO](boolean) : "World is cold" : 0 : "Emit steam from NPC's mouths and similar effects."
-	maxoccludeearea_x360[!TF2, P2, !CSGO](float) : "Max occluder area (Xbox)" : 0 : "[Used on 360] Prevents occlusion testing for entities that take up more than X% of the screen."
-	minoccluderarea_x360[!TF2, P2, !CSGO](float) : "Min occluder area (Xbox)" : 0 : "[Used on 360] Prevents occluders from being used if they take up less than X% of the screen."
+	maxoccludeearea(float) : "Max occludee area" : 0 : "[Used on PC] Prevents occlusion testing for entities that take up more than X% of the screen."
+	minoccluderarea(float) : "Min occluder area" : 0 : "[Used on PC] Prevents occluders from being used if they take up less than X% of the screen."
+	maxoccludeearea_x360(float) : "Max occludee area (Xbox)" : 0 : "[Used on 360] Prevents occlusion testing for entities that take up more than X% of the screen."
+	minoccluderarea_x360(float) : "Min occluder area (Xbox)" : 0 : "[Used on 360] Prevents occluders from being used if they take up less than X% of the screen."
+	maxpropscreenwidth(float) : "Start Fade Pixels" : -1 : "Number of pixels wide at which all props in the level start to fade (<0 = use fademaxdist). This number is ignored if the prop has a specific fade distance specified."
+	minpropscreenwidth(float) : "End Fade Pixels" : 0 : "Minimum number of pixels wide at which the prop is visible (0 = don't fade out). This number is ignored if the prop has a specific fade distance specified."
+	
+	detailvbsp(string) : "Detail.vbsp file" : "detail.vbsp" : "Detail.vbsp file to use for emitting detail props (found in directory <root>/modname)"
+	detailmaterial(material) : "Detail material file" : "detail/detailsprites" : "Material for detail sprites to use for drawing detail props"
+	
+	coldworld(boolean) : "World is cold" : 0 : "Emit steam from NPC's mouths and similar effects."
+	
+	paintinmap[P2](boolean) : "Enable Paint" : 0 : "Enable code for spreading paint on surfaces, and bouncing physics objects around."
+	maxblobcount[P2](integer) : "Gel Blob Limit" : 250 : "Number of Gel blobs that can exist. Maximum is 250."
+
 	]

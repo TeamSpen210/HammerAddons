@@ -1,6 +1,8 @@
 
 @BaseClass 
-	appliesto(P2) = LinkedPortalDoor: "An entity that can be linked to another door and create a passage between them dynamically."
+	appliesto(P2) 
+	line(255 255 0, targetname, partnername) 
+= LinkedPortalDoor: "An entity that can be linked to another door and create a passage between them dynamically."
 	[
 
 	// Inputs

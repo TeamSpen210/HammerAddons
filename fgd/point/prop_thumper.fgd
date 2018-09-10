@@ -1,7 +1,7 @@
 
 @PointClass base(Targetname, Angles) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
-	studio() = prop_thumper: "Thumper"
+	studio() = prop_thumper: "Combine Thumper device, used to scare Antlions away."
 	[
 	model(studio) : "World model" : "models/props_combine/CombineThumper002.mdl"
 	dustscale(choices) : "Dust Scale" : "Small Thumper" =
@@ -10,7 +10,7 @@
 		256: "Large Thumper"
 		]
 
-	effectradius(integer) : "Effect Radius" : 1000 : "Radius of the thumper's sound. EPISODIC ONLY."
+	effectradius[EP1, EP2](integer) : "Effect Radius" : 1000 : "Radius of the thumper's sound. EPISODIC ONLY."
 
 	// Inputs
 	input Enable(void) : "Enable Thumper"

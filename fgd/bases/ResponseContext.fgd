@@ -1,6 +1,5 @@
 
-@BaseClass 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = ResponseContext
+@BaseClass	= ResponseContext
 	[
 	responsecontext(string) : "Response Contexts" : : "Response system context(s) for this entity. Format should be: 'key:value,key2:value2,etc'. When this entity speaks, the list of keys & values will be passed to the response rules system."
 

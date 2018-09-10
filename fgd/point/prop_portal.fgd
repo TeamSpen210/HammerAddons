@@ -1,31 +1,33 @@
 
 @PointClass base(Targetname, Angles, PortalBase) 
 	appliesto(P1, P2) 
-	studio("models/portals/portal1.mdl") 
 	studio("models/editor/prop_portal.mdl") 
-	bbox(-32, -16, -64, 32, 16, 64) = prop_portal: "A portal|||A portal."
+	bbox(-32, -16, -64, 32, 16, 64) = prop_portal: "A portal."
 	[
-	activated[!P2](choices) : "Start Activated" : "1" : "An inactive portal will not be drawn and will not teleport entites" =
+
+	activated(choices) : "Start Activated" : "1" : "An inactive portal will not be drawn and will not teleport entites" =
 		[
 		0: "Inactive"
 		1: "Active"
 		]
 
-	portaltwo[!P2](choices) : "Portal Number" : "0" : "A portal has to logically be either portal 1 or portal 2" =
+	portaltwo(choices) : "Portal Number" : "0" : "Which of the pair is this portal?" =
 		[
-		0: "Portal 1"
-		1: "Portal 2"
+		0: "Portal 1 (Blue)"
+		1: "Portal 2 (Orange)"
 		]
 
-	linkagegroupid(integer) : "Portal pair ID that it belongs to" : 0
-	linkagegroupid[P2](integer) : "Portal Group" : 0 : "Portal pair ID that it belongs to, 0=SP, 1=ATLAS, 2=P-Body"
-	skin[P2](choices) : "Hammer Skin" : "1" : "Which portal to show as?" =
+	linkagegroupid(integer) : "Portal Group" : 0 : "Portal pair ID that it belongs to, 0=SP, 1=ATLAS, 2=P-Body"
+	skin(choices) : "Hammer Skin" : "1" : "Which portal to show as?" =
 		[
 		0: "Blue Portal"
 		1: "Orange Portal"
 		2: "Generic Portal"
 		]
 
+	halfwidth[P2](float) : "Half-Width of the Portal." : 0
+	halfheight[P2](float) : "Half-Height of the Portal." : 0
+	
 
 	// Inputs
 	input SetName(string) : "Naming your portals is fun"
@@ -36,5 +38,9 @@
 	input SetLinkageGroupId[P2](integer) : "Sets the portal linkage ID.  If portal is open it will close and reopen with new portal linked."
 
 	// Outputs
-	output OnPlacedSuccessfully[!P2](void) : "When a portal is placed without failure, this output is fired."
+	output OnPlacedSuccessfully(void) : "When a portal is placed without failure, this output is fired."
+	output OnEntityTeleportFromMe[P2](void) : "When any entity is teleported from this portal to the linked partner."
+	output OnPlayerTeleportFromMe[P2](void) : "When the player is teleported from this portal to the linked partner."
+	output OnEntityTeleportToMe[P2](void) : "When any entity is teleported from this linked partner to the portal."
+	output OnPlayerTeleportToMe[P2](void) : "When the player is teleported from this linked partner to the portal."
 	]
