@@ -1,10 +1,8 @@
-
-@BaseClass 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = Targetname
+@BaseClass = Targetname
 	[
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	vscripts[!TF2, ASW](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
-	thinkfunction[!TF2, ASW](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
+	vscripts[VSCRIPT](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
+	thinkfunction[VSCRIPT](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
 
 	// Inputs
 	input Kill(void) : "Removes this entity from the world."
@@ -25,4 +23,6 @@ or 'keyvalue newval'. Very dangerous, use with care."
 	output OnUser2(void) : "Fired in response to FireUser2 input."
 	output OnUser3(void) : "Fired in response to FireUser3 input."
 	output OnUser4(void) : "Fired in response to FireUser4 input."
+
+	output OnKilled[L4D](void) : "Fired when the entity was killed."
 	]

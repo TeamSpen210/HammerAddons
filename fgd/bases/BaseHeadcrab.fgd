@@ -1,7 +1,7 @@
 
 @BaseClass base(BaseNPC) = BaseHeadcrab
 	[
-	startburrowed(boolean) : "Start burrowed" : 0 =
+	startburrowed(boolean) : "Start burrowed" : 0
 
 	spawnflags(flags) : "spawnflags" =
 		[

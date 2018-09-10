@@ -21,6 +21,6 @@
 	// Inputs
 	input DisableShadow(void) : "Turn shadow off."
 	input EnableShadow(void) : "Turn shadow on."
-	input DisableReceivingFlashlight[!TF2](void) : "This object will not recieve light or shadows from projected textures (flashlights)."
-	input EnableReceivingFlashlight[!TF2, P2](void) : "This object may recieve light or shadows from projected textures (flashlights)."
+	input DisableReceivingFlashlight[since_P2](void) : "This object will not recieve light or shadows from projected textures (flashlights)."
+	input EnableReceivingFlashlight[since_P2](void) : "This object may recieve light or shadows from projected textures (flashlights)."
 	]

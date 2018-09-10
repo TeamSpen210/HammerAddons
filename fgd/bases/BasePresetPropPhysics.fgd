@@ -1,6 +1,6 @@
 
 @BaseClass base(Targetname, Global, Angles, BreakableProp, SystemLevelChoice, BaseFadeProp) 
-= BasePresetPropPhysics: "For prop_physics-like entities that cannot have a model set."a
+= BasePresetPropPhysics: "For prop_physics-like entities that cannot have a model set."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
