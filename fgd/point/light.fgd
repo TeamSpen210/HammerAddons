@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Light) 
+@PointClass base(Targetname) 
 	light() 
 	iconsprite("editor/light.vmt") 
 	sphere(_fifty_percent_distance) 
