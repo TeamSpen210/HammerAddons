@@ -1,18 +1,18 @@
 
 @PointClass 
-	appliesto(ASW, P2, CSGO) 
-	iconsprite("editor/func_instance_parms.vmt") 
-	iconsprite("editor/func_instance_io_proxy.vmt") = func_instance_io_proxy: "Place one copy of this entity inside of an instance.  Sending messages to entities inside the instance from the Proxy's OnProxyRelay output will allow you to trigger these entities from outside the instance by sending messages to the func_instance.  Send the ProxyRelay message from entities inside the instance to the proxy and you will be able to use these events to send messages to other entities outside the instance from the func_instance. NOTE: The instance, the proxy, and all entities involved should be named descriptively."
+	appliesto(+INSTANCING, +INST_IO)
+	iconsprite("editor/func_instance_io_proxy.vmt") 
+= func_instance_io_proxy: "Place one copy of this entity inside of an instance.  Sending messages to entities inside the instance from the Proxy's OnProxyRelay output will allow you to trigger these entities from outside the instance by sending messages to the func_instance.  Send the ProxyRelay message from entities inside the instance to the proxy and you will be able to use these events to send messages to other entities outside the instance from the func_instance. NOTE: The instance, the proxy, and all entities involved should be named descriptively."
 	[
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 
 	// Inputs
 	input ProxyRelay(string) : "This message will get relayed and will be available from the instance."
-	input ProxyRelay1[P2, !CSGO](string) : "Added by the compiler, this is used internally to connect the outputs."
-	input ProxyRelay2[P2, !CSGO](string) : "Added by the compiler, this is used internally to connect the outputs."
-	input ProxyRelay3[P2, !CSGO](string) : "Added by the compiler, this is used internally to connect the outputs."
-	input ProxyRelay4[P2, !CSGO](string) : "Added by the compiler, this is used internally to connect the outputs."
-	input ProxyRelay5[P2, !CSGO](string) : "Added by the compiler, this is used internally to connect the outputs."
+	input ProxyRelay1(string) : "Added by the compiler, this is used internally to connect the outputs."
+	input ProxyRelay2(string) : "Added by the compiler, this is used internally to connect the outputs."
+	input ProxyRelay3(string) : "Added by the compiler, this is used internally to connect the outputs."
+	input ProxyRelay4(string) : "Added by the compiler, this is used internally to connect the outputs."
+	input ProxyRelay5(string) : "Added by the compiler, this is used internally to connect the outputs."
 
 	// Outputs
 	output OnProxyRelay(void) : "A message from outside can trigger this to cause something to happen in the instance."
