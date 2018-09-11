@@ -34,8 +34,8 @@
 		1: "Yes"
 		]
 
-	lightmapresolutionx[TF2, !CSGO](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
-	lightmapresolutiony[TF2, !CSGO](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
+	lightmapresolutionx[TF2](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
+	lightmapresolutiony[TF2](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
 	enablelightbounce[PROPCOMBINE](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
 	preventpropcombine[PROPCOMBINE](boolean) : "Disable Prop Combine" : 0 : "Prevent this static prop from combining with any other static props in vbsp."
 	uniformscale[CSGO](float) : "Uniform Scale Override" : 1 : "Resize the static prop."

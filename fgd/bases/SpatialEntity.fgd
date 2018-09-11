@@ -1,8 +1,8 @@
 
 @BaseClass 
-sphere(minfalloff)
-sphere(maxfalloff)
-	appliesto(ASW, P2, CSGO) = SpatialEntity
+	sphere(minfalloff)
+	sphere(maxfalloff)
+= SpatialEntity
 	[
 	minfalloff(float) : "Lookup Falloff Start Distance" : 0.0 : "This is the distance to the start of the falloff region (-1 = everywhere)"
 	maxfalloff(float) : "Lookup Falloff End Distance" : 200.0 : "This is the distance to the end of the falloff region (-1 = everywhere)"

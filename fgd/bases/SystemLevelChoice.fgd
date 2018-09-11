@@ -1,6 +1,5 @@
 
-@BaseClass 
-	appliesto(P2, CSGO) = SystemLevelChoice
+@BaseClass = SystemLevelChoice
 	[
 	mincpulevel(choices) : "Minimum CPU Level" : "0" =
 		[

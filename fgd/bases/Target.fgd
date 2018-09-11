@@ -1,6 +1,5 @@
 
-@BaseClass 
-	appliesto(CSGO) = Target
+@BaseClass = Target
 	[
 	target(target_destination) : "Target"
 	]
