@@ -1,10 +1,10 @@
 
 @PointClass base(Targetname, Parentname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	iconsprite("editor/env_explosion.vmt") 
 	color(200 200 0) 
 	sphere(iRadiusOverride) 
-	line(255 255 0, targetname, ignoredEntity) = env_explosion: "An entity that creates an explosion at its origin."
+	line(255 255 0, targetname, ignoredEntity)
+= env_explosion: "An entity that creates an explosion at its origin."
 	[
 	imagnitude(integer) : "Magnitude" : 100 : "The amount of damage done by the explosion."
 	iradiusoverride(integer) : "Radius Override" : 0 : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude."

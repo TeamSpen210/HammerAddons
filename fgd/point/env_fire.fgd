@@ -4,7 +4,8 @@
 	iconsprite("editor/env_fire") 
 	color(0 180 0) 
 	color(200 200 0) 
-	sphere(firesize) = env_fire: "An entity that handles a single flame at its origin. The flame causes heat 'damage' to other env_fire entities around it, and will eventually ignite non-flaming env_fire entities nearby, causing the fire to spread."
+	sphere(firesize)
+= env_fire: "An entity that handles a single flame at its origin. The flame causes heat 'damage' to other env_fire entities around it, and will eventually ignite non-flaming env_fire entities nearby, causing the fire to spread."
 	[
 	health(integer) : "Duration" : 30 : "Amount of time the fire will burn."
 	firesize(integer) : "Size" : 64 : "Height (in world units) of the flame."
@@ -24,31 +25,20 @@
 		16: "Don't drop" : 0
 		32: "No glow" : 0
 		128: "Delete when out" : 0
-		256: "Visible from above" : 0
-		]
-
-	spawnflags[ASW](flags) : "spawnflags" =
-		[
-		1: "Infinite Duration" : 0
-		2: "Smokeless" : 0
-		4: "Start On" : 0
-		8: "Start Full" : 0
-		16: "Don't drop" : 0
-		32: "No glow" : 0
-		128: "Delete when out" : 0
-		256: "No sound" : 0
+		256: "Visible from above" : 0 [!ASW]
+		256: "No sound" : 0 [ASW]
 		512: "No ignite sound" : 0
-		1024: "No fuelling once lit" : 0
-		2048: "Fast burn think" : 0
+		1024: "No fuelling once lit" : 0 [ASW]
+		2048: "Fast burn think" : 0 [ASW]
 		]
 
 	ignitionpoint(float) : "Ignition Point" : 32 : "Amount of heat 'damage' to take before this flame should ignite."
 	damagescale(float) : "Damage Scale" : 1.0 : "Multiplier of the burn damage done by the flame."
-	lightradiusscale[!TF2, ASW, !CSGO, !P2](float) : "Light Radius Scale" : 1.0 : "Multiplier for the glow radius."
-	lightbrightness[!TF2, ASW, !CSGO, !P2](integer) : "Light Brightness" : 1 : "Integer exponent for the glow brightness."
-	lightcolor[!TF2, ASW, !CSGO, !P2](color255) : "Light Color" : "255 255 255" : "R G B 0-255 values describing the color of the dynamic light for this fire."
-	loopsound[!TF2, ASW, !CSGO, !P2](sound) : "Loop sound" : "d1_town.LargeFireLoop" : "Looping sound to play while this fire is burning."
-	ignitesound[!TF2, ASW, !CSGO, !P2](sound) : "Ignite sound" : "ASW_Flare.IgniteFlare" : "One shot sound to play when the fire starts."
+	lightradiusscale[ASW](float) : "Light Radius Scale" : 1.0 : "Multiplier for the glow radius."
+	lightbrightness[ASW](integer) : "Light Brightness" : 1 : "Integer exponent for the glow brightness."
+	lightcolor[ASW](color255) : "Light Color" : "255 255 255" : "R G B 0-255 values describing the color of the dynamic light for this fire."
+	loopsound[ASW](sound) : "Loop sound" : "d1_town.LargeFireLoop" : "Looping sound to play while this fire is burning."
+	ignitesound[ASW](sound) : "Ignite sound" : "ASW_Flare.IgniteFlare" : "One shot sound to play when the fire starts."
 
 	// Inputs
 	input StartFire(void) : "Start the fire."

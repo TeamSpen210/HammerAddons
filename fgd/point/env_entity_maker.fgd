@@ -17,13 +17,7 @@
 	postspawnspeed(float) : "PostSpawn Movement Speed" : 0 : "If specified, all the entities created in the template will move this fast in the specified PostSpawn Movement Direction."
 	postspawndirection(angle) : "PostSpawn Movement Direction" : "0 0 0" : "If a PostSpawn Movement Speed is specified, all the entities created in the template will move in this direction."
 	postspawndirectionvariance(float) : "PostSpawn Direction Variance" : 0.15 : "This variance is applied to the PostSpawn Movement Direction for each spawned entity in the template. Use it to apply some randomness to the directions."
-	postspawninheritangles(choices) : "PostSpawn Inherit Angles" : "0" : "If in hierarchy, is spawn direction in world space, or object local space of parent" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	postspawninheritangles[ASW](boolean) : "PostSpawn Inherit Angles" : 0 : "If in hierarchy, is spawn direction in world space, or object local space of parent"
+	postspawninheritangles(boolean) : "PostSpawn Inherit Angles" : 0 : "If in hierarchy, is spawn direction in world space, or object local space of parent."
 
 	// Inputs
 	input ForceSpawn(void) : "Spawn an instance of the template at this origin and angle."
