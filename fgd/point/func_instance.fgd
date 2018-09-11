@@ -1,6 +1,6 @@
 
 @PointClass base(Angles) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+	appliesto(INSTANCING)
 	size(-8 -8 -8, 8 8 8) 
 	instance() 
 	size(-2 -2 -2, 2 2 2) = func_instance: "An entity for placing an instance of a map file.  You may translate and rotate this entity. You can use the replace keys to do parameter changes on the instance contents.  In a $ at the beginning of a variable name.  Then just use the $variable name inside of the instance contents on any value portion of a key/value pair."

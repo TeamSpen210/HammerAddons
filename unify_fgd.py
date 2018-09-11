@@ -46,11 +46,12 @@ GAME_NAME = dict(GAMES)
 # Specific features that are backported to various games.
 
 FEATURES = {
-    'TF2': ('PROP_SCALING',),
-    'ASW': ('VSCRIPT', ),
-    'P2': ('VSCRIPT', ),
-    'CSGO': ('PROP_SCALING', 'VSCRIPT'),
-    'P2DES': ('PROP_SCALING', 'VSCRIPT')
+    'L4D': 'INSTANCING'.split(), 
+    'TF2': 'INSTANCING PROP_SCALING'.split(),
+    'ASW': 'INSTANCING VSCRIPT'.split(),
+    'P2': 'INSTANCING VSCRIPT'.split(),
+    'CSGO': 'INSTANCING PROP_SCALING VSCRIPT'.split(),
+    'P2DES': 'INSTANCING PROP_SCALING VSCRIPT'.split(),
 }
 
 ALL_TAGS = set()  # type: Set[str]
