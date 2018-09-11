@@ -1,9 +1,8 @@
 
 @FilterClass base(BaseFilter) 
 	appliesto(ASW, P2, CSGO) 
-	iconsprite("editor/filter_name.vmt") 
-	color(0 255 0) 
-	iconsprite("editor/filter_context.vmt") = filter_activator_context: "A filter that filters by a context on the activator."
+	iconsprite("editor/filter_context.vmt") 
+= filter_activator_context: "A filter that filters by a context on the activator."
 	[
 	responsecontext(string) : "Filter Context" : : "The context to filter by. If the filter mode is Allow, only entities that have a context matching the given string, of any value, will pass the filter. If the filter mode is Disallow, all entities EXCEPT those whose context matches the string will pass the filter."
 	]

@@ -1,9 +1,8 @@
 
 @FilterClass base(BaseFilter) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	iconsprite("editor/filter_name.vmt") 
-	color(0 255 0) 
-	line(0 255 0, targetname, filtername) = filter_activator_name: "A filter that filters by the name of the activator."
+	line(0 255 0, targetname, filtername)
+= filter_activator_name: "A filter that filters by the name of the activator."
 	[
 	filtername(target_destination) : "Filter Name" : : "The name to filter by. If the filter mode is Allow, only entities whose name matches the given string will pass the filter. If the filter mode is Disallow, all entities EXCEPT those whose name matches the string will pass the filter."
 	]

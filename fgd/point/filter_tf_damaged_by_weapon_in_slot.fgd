@@ -1,6 +1,7 @@
 
 @FilterClass base(BaseFilter) 
-	appliesto(TF2) = filter_tf_damaged_by_weapon_in_slot: "A filter that filters damage by a weapon in a certain slot.Used for training purposes"
+	appliesto(TF2) 
+= filter_tf_damaged_by_weapon_in_slot: "A filter that filters damage by a weapon in a certain slot.Used for training purposes"
 	[
 	weaponslot(choices) : "Weapon Slot" : "0" : "Damaged by weapon in slot." =
 		[

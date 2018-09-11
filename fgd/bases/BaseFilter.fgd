@@ -1,5 +1,7 @@
 
-@BaseClass base(Targetname) = BaseFilter
+@BaseClass base(Targetname) 
+	color(0 255 0)
+= BaseFilter
 	[
 	negated(choices) : "Filter mode" : "Allow entities that match criteria" : "If set to Allow, only entities who match the criteria will pass the filter. If set to Disallow, only entities who do NOT match the criteria will pass the filter." =
 		[

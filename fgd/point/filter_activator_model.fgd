@@ -1,9 +1,8 @@
 
 @FilterClass base(BaseFilter) 
 	appliesto(ASW, P2, CSGO) 
-	iconsprite("editor/filter_name.vmt") 
-	color(0 255 0) 
-	iconsprite("editor/filter_model.vmt") = filter_activator_model: "A filter that filters by the model of the activator."
+	iconsprite("editor/filter_model.vmt")
+= filter_activator_model: "A filter that filters by the model of the activator."
 	[
 	model(studio) : "Filter Model" : : "The model to filter by. If the filter mode is Allow, only entities whose model matches the given string will pass the filter. If the filter mode is Disallow, all entities EXCEPT those whose model matches the string will pass the filter."
 	]
