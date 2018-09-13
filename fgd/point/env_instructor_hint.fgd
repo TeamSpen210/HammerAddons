@@ -1,9 +1,9 @@
 
 @PointClass base(Targetname) 
-	appliesto(ASW, P2, CSGO) 
+	appliesto(since_ASW) 
 	iconsprite("editor/env_instructor_hint.vmt") 
 	line(255 255 0, targetname, hint_target) 
-	sphere(hint_range) = env_instructor_hint: "An entity that allows for creation and control of instructor lessons by map logic"
+	sphere(hint_range) = env_instructor_hint: "An entity that allows for creation and control of instructor lessons by map logic."
 	[
 	hint_replace_key(string) : "Replace Key" : : "Unique name so that messages with the same key will replace each other."
 	hint_target(target_destination) : "Target Entity" : : "The entity to show this hint on top of. The entity used must exist on the client, info_target_instructor_hint can be parented to server only entities for this purpose."
@@ -13,13 +13,7 @@
 		1: "Show on the hud"
 		]
 
-	hint_allow_nodraw_target(choices) : "Allow invisible target" : "1" : "Do we allow the hint to follow entites with nodraw set?" =
-		[
-		0: "End immediately on nodraw"
-		1: "Yes"
-		]
-
-	hint_allow_nodraw_target[P2](choices) : "Allow invisible target" : "1" : "Do we allow the hint to follow entities with nodraw set?" =
+	hint_allow_nodraw_target(choices) : "Allow invisible target" : "1" : "Do we allow the hint to follow entities with nodraw set?" =
 		[
 		0: "End immediately on nodraw"
 		1: "Yes"
@@ -28,13 +22,7 @@
 	hint_caption(string) : "Caption" : : "The text of your hint."
 	hint_activator_caption(string) : "Activator Caption" : : "The text of your hint shown to only the activating player."
 	hint_color(color255) : "Caption Color" : "255 255 255" : "The color of the caption text"
-	hint_forcecaption(choices) : "Force caption" : "0" : "Do we show the caption text even if the hint is occluded by a wall?" =
-		[
-		0: "No"
-		1: "Show when occluded"
-		]
-
-	hint_forcecaption[P2](choices) : "Show through walls" : "0" : "Do we show the caption text even if the hint is occluded by a wall?" =
+	hint_forcecaption(choices) : "Show through walls" : "0" : "Do we show the caption text even if the hint is occluded by a wall?" =
 		[
 		0: "No"
 		1: "Show when occluded"
@@ -42,29 +30,7 @@
 
 	hint_icon_onscreen(choices) : "Onscreen Icon" : "icon_tip" : "The icon to use when the hint is within the player's view." =
 		[
-		"icon_bulb": "icon_bulb"
-		"icon_caution": "icon_caution"
-		"icon_alert": "icon_alert"
-		"icon_alert_red": "icon_alert_red"
-		"icon_tip": "icon_tip"
-		"icon_skull": "icon_skull"
-		"icon_no": "icon_no"
-		"icon_run": "icon_run"
-		"icon_interact": "icon_interact"
-		"icon_button": "icon_button"
-		"icon_door": "icon_door"
-		"icon_arrow_plain": "icon_arrow_plain"
-		"icon_arrow_plain_white_dn": "icon_arrow_plain_white_dn"
-		"icon_arrow_plain_white_up": "icon_arrow_plain_white_up"
-		"icon_arrow_up": "icon_arrow_up"
-		"icon_arrow_right": "icon_arrow_right"
-		"icon_fire": "icon_fire"
-		"icon_present": "icon_present"
-		"use_binding": "show key bindings"
-		]
-
-	hint_icon_onscreen[P2](choices) : "Onscreen Icon" : "icon_tip" : "The icon to use when the hint is within the player's view." =
-		[
+		// Todo: cross-check with CSGO and ASW
 		"use_binding": "Show controls instead"
 		"icon_blank": "Blank"
 		"icon_bulb": "Bulb"
@@ -96,30 +62,8 @@
 		"icon_fire": "Fire"
 		"icon_present": "Present"
 		]
-
+		
 	hint_icon_offscreen(choices) : "Offscreen Icon" : "icon_tip" : "The icon to use when the hint is outside the player's view." =
-		[
-		"icon_bulb": "icon_bulb"
-		"icon_caution": "icon_caution"
-		"icon_alert": "icon_alert"
-		"icon_alert_red": "icon_alert_red"
-		"icon_tip": "icon_tip"
-		"icon_skull": "icon_skull"
-		"icon_no": "icon_no"
-		"icon_run": "icon_run"
-		"icon_interact": "icon_interact"
-		"icon_button": "icon_button"
-		"icon_door": "icon_door"
-		"icon_arrow_plain": "icon_arrow_plain"
-		"icon_arrow_plain_white_dn": "icon_arrow_plain_white_dn"
-		"icon_arrow_plain_white_up": "icon_arrow_plain_white_up"
-		"icon_arrow_up": "icon_arrow_up"
-		"icon_arrow_right": "icon_arrow_right"
-		"icon_fire": "icon_fire"
-		"icon_present": "icon_present"
-		]
-
-	hint_icon_offscreen[P2](choices) : "Offscreen Icon" : "icon_tip" : "The icon to use when the hint is outside the player's view." =
 		[
 		"icon_blank": "Blank"
 		"icon_bulb": "Bulb"
@@ -158,8 +102,7 @@
 		1: "Don't show"
 		]
 
-	hint_binding(string) : "Bound Command" : : "If using 'show key bindings' for the onscreen icon, this field should be the command we want to show bindings for"
-	hint_binding[P2](choices) : "Bound Command" : : "If using 'show key bindings' for the onscreen icon, this field should be the command we want to show bindings for" =
+	hint_binding(choices) : "Bound Command" : : "If using 'show key bindings' for the onscreen icon, this field should be the command we want to show bindings for." =
 		[
 		"": "Unused"
 		"+forward": "Forward"
@@ -168,8 +111,10 @@
 		"+right": "strafe Right"
 		"+duck": "Crouch"
 		"+jump": "Jump"
-		"+attack": "Fire Blue Portal"
-		"+attack2": "Fire Orange Portal"
+		"+attack": "Primary Attack" [!P2]
+		"+attack2": "Secondary Attack" [!P2]
+		"+attack": "Fire Blue Portal" [P2]
+		"+attack2": "Fire Orange Portal" [P2]
 		"+use": "Use Key"
 		"+zoom": "Zoom In"
 		"-zoom": "Zoom Out"
@@ -199,9 +144,10 @@
 		2: "Wide Shake"
 		]
 
-	hint_local_player_only(boolean) : "Only Local Player" : No : "The hint will only be shown to the local player."
+	hint_local_player_only(boolean) : "Only Local Player" : 0 : "The hint will only be shown to the local player."
 	hint_timeout(integer) : "Timeout" : 0 : "The automatic timeout for the hint. 0 will persist until stopped with EndHint."
 	hint_range(float) : "Display Range" : 0 : "The visible range of the hint."
+	
 	hint_gamepad_binding[P2](string) : "Gamepad Bound Command" : : "If using 'show key bindings' for the onscreen icon, this field should be the command we want to show bindings for when gamepad is enabled (and PS3/X360)"
 
 	// Inputs
