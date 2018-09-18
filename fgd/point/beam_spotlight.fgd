@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, Parentname, RenderFields, Angles, DXLevelChoice, SystemLevelChoice) 
-	appliesto(ASW, P2, CSGO) 
+	appliesto(since_L4D2) 
 	studio("models/editor/cone_helper.mdl") 
 	sphere(spotlightlength) 
 	sphere(spotlightwidth)

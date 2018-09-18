@@ -2,33 +2,16 @@
 @PointClass base(Targetname, Parentname, Angles) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	iconsprite("editor/assault_point.vmt") 
+	sphere(allowdiversionradius)
 	line(255 255 255, targetname, nextassaultpoint) = assault_assaultpoint: "(Assault) assault point"
 	[
 	assaultgroup(string) : "Assault Hint Group" : : "NPC's movements are constrained to this hint group once assault has begun"
 	nextassaultpoint(target_destination) : "Next assault point (optional)"
 	assaulttimeout(float) : "Assault time out" : 3.0 : "This point is cleared when no enemies are seen for this long (seconds)"
-	clearoncontact(choices) : "Clear on contact with enemies" : "0" : "If you come in contact with enemies while approaching the assault point, clear our assault point" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	clearoncontact[P2](boolean) : "Clear on contact with enemies" : 0 : "If you come in contact with enemies while approaching the assault point, clear our assault point"
-	allowdiversion(choices) : "Allow diversion" : "0" : "If you come in contact with enemies while approaching the assault point, divert to kill them. Resume the assault once contact is lost." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	allowdiversion[P2](boolean) : "Allow diversion" : 0 : "If you come in contact with enemies while approaching the assault point, divert to kill them. Resume the assault once contact is lost."
+	clearoncontact(boolean) : "Clear on contact with enemies" : 0 : "If you come in contact with enemies while approaching the assault point, clear our assault point"
+	allowdiversion(boolean) : "Allow diversion" : 0 : "If you come in contact with enemies while approaching the assault point, divert to kill them. Resume the assault once contact is lost."
 	allowdiversionradius(float) : "Diversion Proximity" : 0 : "If Allow Diversion is set, NPC will only divert from assault to attack an enemy that is within this distance of the assault point. 0 = No limit."
-	nevertimeout(choices) : "Never Timeout" : "0" : "If set, the assault never ends for NPCs assaulting this point. Useful for forcing NPCs back to a point." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	nevertimeout[P2](boolean) : "Never Timeout" : 0 : "If set, the assault never ends for NPCs assaulting this point. Useful for forcing NPCs back to a point."
+	nevertimeout(boolean) : "Never Timeout" : 0 : "If set, the assault never ends for NPCs assaulting this point. Useful for forcing NPCs back to a point."
 	strict(choices) : "Strict?" : "0" =
 		[
 		0: "No, NPC may move from point to attack"
@@ -40,20 +23,8 @@
 		1: "Clear this point upon arrival, UNCONDITIONALLY" : 0
 		]
 
-	forcecrouch(choices) : "Force Crouch" : "0" : "NPCs using this assault point are forced into crouching while holding it." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	forcecrouch[P2](boolean) : "Force Crouch" : 0 : "NPCs using this assault point are forced into crouching while holding it."
-	urgent(choices) : "Urgent" : "0" : "If true, NPCs will consider movement to this assault point as Urgent Navigation." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	urgent[P2](boolean) : "Urgent" : 0 : "If true, NPCs will consider movement to this assault point as Urgent Navigation."
+	forcecrouch(boolean) : "Force Crouch" : 0 : "NPCs using this assault point are forced into crouching while holding it."
+	urgent(boolean) : "Urgent" : 0 : "If true, NPCs will consider movement to this assault point as Urgent Navigation."
 	assaulttolerance(choices) : "Attack Tolerance" : "36" : "How far this NPC may move from the assault point to try to attack an enemy." =
 		[
 		36: "Tight (3ft)"
@@ -64,7 +35,7 @@
 
 	// Inputs
 	input SetClearOnContact(integer) : "Set the clear on contact flag. NPCs who spot enemies while running to the assault point, or while waiting at it, will immediately Clear it."
-	input SetAllowDiversion(integer) : "Set the allow diversion flag. NPCs who spot enemies whil running to the assault point, or while waiting on it, will divert away (leave Assault mode) to deal with the enemies. Upon losing enemies, they'll go back to Assault mode, and return to this assault point."
+	input SetAllowDiversion(integer) : "Set the allow diversion flag. NPCs who spot enemies while running to the assault point, or while waiting on it, will divert away (leave Assault mode) to deal with the enemies. Upon losing enemies, they'll go back to Assault mode, and return to this assault point."
 	input SetForceClear(integer) : "Set the Force Clear flag. NPCs who are currently running to the assault point will Clear it immediately. NPCs who acquire it in the future will Clear it automatically."
 
 	// Outputs
