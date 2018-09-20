@@ -16,11 +16,12 @@
 		2: "Backward"
 		]
 
-	nolistrepeat(choices) : "No List Repeat" : "0" =
+	nolistrepeat(choices) : "No List Repeat" : 0 =
 		[
 		0: "Allow List Repeats"
 		1: "No List Repeats"
 		]
+	nolistrepeat[engine](boolean): "No List Repeat" : 0
 
 	width(integer) : "Panel width" : 256 : "Width of the panel in units."
 	height(integer) : "Panel height" : 128 : "Height of the panel in units."

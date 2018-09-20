@@ -5,12 +5,7 @@
 	[
 	model(studio) : "World model" : "models/airboat.mdl"
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/airboat.txt"
-	enablegun(choices) : "Has Gun" : "0" : "Whether the airboat's gun is enabled or disabled." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	enablegun(boolean) : "Has Gun" : "0" : "Whether the airboat's gun is enabled or disabled."
 
 	// Inputs
 	input EnableGun(boolean) : "Enables or disables the airboat gun and associated crosshair."

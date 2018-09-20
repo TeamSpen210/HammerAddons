@@ -23,6 +23,8 @@
 		"models/props/laser_catcher.mdl": "Offset"
 		]
 
+	model[engine](studio): "Laser Catcher model" : "models/props/laser_catcher.mdl"
+
 
 	// Outputs
 	output OnPowered(void) : "Fired when a laser hits the target."
