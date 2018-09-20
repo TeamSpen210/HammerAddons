@@ -1,13 +1,14 @@
 
 @PointClass base(vgui_screen_base, Targetname, Parentname, Angles) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	size(-4 -4 -4, 4 4 4) 
 	color(200 200 0) 
 	studio("models/editor/vgui_arrows.mdl") 
 	sphere(width) 
-	sphere(height) = vgui_screen: "A VGUI screen. Useful for in-world monitors."
+	sphere(height) 
+= vgui_screen: "A VGUI screen. Useful for in-world monitors."
 	[
-	panelname[!TF2, P2, !CSGO](choices) : "Panel Name" : : "The type of display to show." =
+	panelname(string): "Panel Name" : : "The type of display to show."
+	panelname[P2](choices) : "Panel Name" : : "The type of display to show." =
 		[
 		"sp_progress_sign": "SP/Workshop Level Placard"
 		"mp_progress_sign": "Coop Level Placard"
@@ -27,12 +28,12 @@
 		"mp_select_screen_branch_dlc": "Coop Selector: Art Therapy"
 		]
 
-	overlaymaterial[!TF2, P2, !CSGO](material) : "Overlay Material" : : "Name of a material to overlay over the top of the VGUI screen. NOTE: This material must write Z for the VGUI screen to work."
-	width[!TF2, P2, !CSGO](integer) : "Panel Width in World (Green)" : 32 : "Width of the panel in units."
+	overlaymaterial[P2](material) : "Overlay Material" : : "Name of a material to overlay over the top of the VGUI screen. NOTE: This material must write Z for the VGUI screen to work."
+	width[P2](integer) : "Panel Width in World (Green)" : 32 : "Width of the panel in units."
 	height[!TF2, P2, !CSGO](integer) : "Panel Height in World (Blue)" : 32 : "Height of the panel in units."
-	istransparent[!TF2, P2, !CSGO](boolean) : "Is Transparent?" : 0 : "Set this to true if you would like your background to be invisible instead of a black fill."
+	istransparent[P2](boolean) : "Is Transparent?" : 0 : "Set this to true if you would like your background to be invisible instead of a black fill."
 
 	// Inputs
-	input SetActive[!TF2, P2, !CSGO](void) : "Make the vgui screen visible."
-	input SetInactive[!TF2, P2, !CSGO](void) : "Make the vgui screen invisible."
+	input SetActive[P2](void) : "Make the vgui screen visible."
+	input SetInactive[P2](void) : "Make the vgui screen invisible."
 	]

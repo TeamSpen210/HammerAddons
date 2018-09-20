@@ -3,7 +3,8 @@
 	color(220 180 0) 
 	size(-8 -8 -8, 8 8 8) 
 	line(255 255 255, nodeid, StartNode, nodeid, EndNode) 
-	iconsprite("editor/info_node_link.vmt") = info_node_link: "A dynamic connection between two navigation nodes. You specify the node IDs of the start and end nodes, and then you can use entity I/O to turn on and off the connection. This could be used to create or destroy a connection in the nodegraph because of some event in your map (a bridge being created/destroyed, etc)."
+	iconsprite("editor/info_node_link.vmt") 
+= info_node_link: "A dynamic connection between two navigation nodes. You specify the node IDs of the start and end nodes, and then you can use entity I/O to turn on and off the connection. This could be used to create or destroy a connection in the nodegraph because of some event in your map (a bridge being created/destroyed, etc)."
 	[
 	startnode(node_dest) : "Start node ID" : : "The node ID of one end of the node connection."
 	endnode(node_dest) : "End node ID" : : "The node ID of one end of the node connection."
@@ -19,15 +20,7 @@
 		2: "Jump"
 		4: "Fly"
 		8: "Climb"
-		]
-
-	linktype[ASW](choices) : "Type of Connection" : "1" =
-		[
-		1: "Ground"
-		2: "Jump"
-		4: "Fly"
-		8: "Climb"
-		16: "Crawl"
+		16: "Crawl" [ASW]
 		]
 
 	allowuse(string) : "Allow Pass When Off" : : "Entity or class to allow passage even when node is off"

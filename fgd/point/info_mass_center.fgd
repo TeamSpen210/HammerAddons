@@ -1,11 +1,10 @@
 
 @PointClass 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	size(-4 -4 -4, 4 4 4) 
-	halfgridsnap() 
-	halfgridsnap(-4 -4 -4, 4 4 4) 
+	halfgridsnap
 	color(128 128 128) 
-	line(128 128 128, targetname, target) = info_mass_center: "An entity that overrides the mass center of the target physics prop, or func_physbox, by moving it to the info_mass_center's location."
+	line(128 128 128, targetname, target) 
+= info_mass_center: "An entity that overrides the mass center of the target physics prop, or func_physbox, by moving it to the info_mass_center's location."
 	[
 	target(target_destination) : "Target object" : : "The entity whose mass center will be overridden."
 	]
