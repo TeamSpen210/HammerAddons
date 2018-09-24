@@ -11,7 +11,8 @@
 	line(240 180 250, targetname, target5) 
 	line(240 180 250, targetname, target6) 
 	line(240 180 250, targetname, target7) 
-	line(240 180 250, targetname, target8) = logic_choreographed_scene: "Manages a choreographed scene of one or more actors."
+	line(240 180 250, targetname, target8) 
+= logic_choreographed_scene: "Manages a choreographed scene of one or more actors."
 	[
 	scenefile(scene) : "Scene file"
 	scenefile[P2](scene) : "Scene file" : : "The scene that will play when this entity is triggered."
@@ -36,8 +37,6 @@
 		0: "Do Nothing"
 		1: "Cancel Script and return to AI"
 		]
-
-	message[P2](sound) : "[H] Sound" : : "Use to allow keeping the sound name when switching between ambient_generic and logic_choreographed_scene."
 
 	// Inputs
 	input Start(void) : "Starts playback of the scene file"

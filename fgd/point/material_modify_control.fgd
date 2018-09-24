@@ -1,10 +1,10 @@
 
-@PointClass base(Parentname, Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(Parentname, Targetname)  
 	size(-8 -8 -8, 8 8 8) 
 	color(0 100 250) 
 	line(255 255 0, targetname, parentname) 
-	iconsprite("editor/ts2do/material_modify_control.vmt") = material_modify_control: "An entity that can be used to directly control material vars. To use it, you need to read the .vmt of the material you intend to change. Parent this entity to a brush model entity who's material you want to control."
+	iconsprite("editor/ts2do/material_modify_control.vmt")
+ = material_modify_control: "An entity that can be used to directly control material vars. To use it, you need to read the .vmt of the material you intend to change. Parent this entity to a brush model entity who's material you want to control."
 	[
 	materialname(string) : "Material to modify."
 	materialvar(string) : "Material variable to modify."

@@ -1,7 +1,7 @@
 
-@PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	color(200 0 0) = env_screeneffect: "Allows screenspace effects to be played on the player's view."
+@PointClass base(Targetname)
+	color(200 0 0)
+= env_screeneffect: "Allows screenspace effects to be played on the player's view."
 	[
 	type(choices) : "Effect Type" : "0" : "Which effect to use." =
 		[

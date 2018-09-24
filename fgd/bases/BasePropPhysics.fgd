@@ -1,5 +1,4 @@
 
-@BaseClass base(BasePresetPropPhysics, Studiomodel, DXLevelChoice) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = BasePropPhysics
+@BaseClass base(BasePresetPropPhysics, Studiomodel, DXLevelChoice) = BasePropPhysics
 	[
 	]

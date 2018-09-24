@@ -12,8 +12,8 @@
 		8: "Stay Out" : 0
 		]
 		
-	duration(string) : "Duration (seconds)" : "2" : "The time that it will take to fade the screen in or out."
-	holdtime(string) : "Hold Fade (seconds)" : "0" : "The time to hold the faded in/out state."
+	duration(float) : "Duration (seconds)" : "2" : "The time that it will take to fade the screen in or out."
+	holdtime(float) : "Hold Fade (seconds)" : "0" : "The time to hold the faded in/out state."
 	renderamt(integer) : "Fade Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
 	rendercolor(color255) : "Fade Color (R G B)" : "0 0 0"
 	reversefadeduration[since_P2](float) : "Reverse Fade Duration (seconds)" : 2 : "The duration of the reverse fade."

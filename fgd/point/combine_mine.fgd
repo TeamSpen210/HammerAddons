@@ -4,24 +4,10 @@
 	size(-4 -4 -4, 4 4 4) 
 	studio("models/props_combine/combine_mine01.mdl") = combine_mine: "Combine Land Mine"
 	[
-	bounce(choices) : "Bounce" : "1" : "Whether the mine should bounce up in the air before exploding." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	locksilently(choices) : "Lock Silently" : "1" : "If yes, mine plays no sound when clamps close" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	startdisarmed(choices) : "Start Disarmed" : "0" : "If yes, mine begins dormant." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	bounce(boolean) : "Bounce" : 1 : "Whether the mine should bounce up in the air before exploding." 
+	locksilently(boolean) : "Lock Silently" : 1 : "If yes, mine plays no sound when clamps close"
+	startdisarmed(boolean) : "Start Disarmed" : 0: "If yes, mine begins dormant."
+	
 	modification[since_EP2](choices) : "Citizen modified" : "0" : "'Normal' is default Combine behavior. 'Cavern' detonates earlier in its jump, and has a different default skin." =
 		[
 		0: "Normal"

@@ -1,9 +1,9 @@
 
 @PointClass base(Targetname, Parentname, Angles) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	iconsprite("editor/env_spark.vmt") 
 	color(200 200 0) 
-	studio("models/editor/cone_helper.mdl") = env_spark: "An entity used to create sparks at its origin."
+	studio("models/editor/cone_helper.mdl") 
+= env_spark: "An entity used to create sparks at its origin."
 	[
 	maxdelay(string) : "Max Delay" : "0" : "The longest delay between sparks (in seconds)."
 	magnitude(choices) : "Magnitude" : "1" : "The size of the sparks." =

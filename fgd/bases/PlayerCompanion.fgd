@@ -2,27 +2,9 @@
 @BaseClass base(BaseNPC) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) = PlayerCompanion
 	[
-	alwaystransition(choices) : "Always transition" : "No" : "If yes, this NPC will always teleport to a Player Squad Transition Point if they're not within the trigger_transition volume." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	alwaystransition[P2](boolean) : "Always transition" : No : "If yes, this NPC will always teleport to a Player Squad Transition Point if they're not within the trigger_transition volume."
-	dontpickupweapons(choices) : "Prevent picking up weapons?" : "No" : "If yes, this NPC will NOT be allowed to pick up weapons they find on the ground." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	dontpickupweapons[P2](boolean) : "Prevent picking up weapons?" : No : "If yes, this NPC will NOT be allowed to pick up weapons they find on the ground."
-	gameendally(choices) : "Is this a vital ally?" : "No" : "If yes, this NPC will cause the game to end if killed." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	gameendally[P2](boolean) : "Is this a vital ally?" : No : "If yes, this NPC will cause the game to end if killed."
+	alwaystransition(boolean) : "Always transition" : 0 : "If yes, this NPC will always teleport to a Player Squad Transition Point if they're not within the trigger_transition volume."
+	dontpickupweapons(boolean) : "Prevent picking up weapons?" : 0 : "If yes, this NPC will NOT be allowed to pick up weapons they find on the ground."
+	gameendally(boolean) : "Is this a vital ally?" : 0 : "If yes, this NPC will cause the game to end if killed."
 
 	// Inputs
 	input OutsideTransition(void) : "Use this input to teleport the NPC to a hintnode with the Player Squad Transition Point hint type."

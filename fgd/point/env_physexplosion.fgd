@@ -1,6 +1,5 @@
 
 @PointClass base(Targetname, Parentname) 
-	sphere() 
 	sphere(inner_radius) 
 	iconsprite("editor/env_physexplosion.vmt") 
 	sphere(radius) 

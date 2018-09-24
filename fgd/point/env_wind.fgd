@@ -1,8 +1,8 @@
 
 @PointClass base(Targetname, Angles) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	iconsprite("editor/env_wind.vmt") 
-	color(200 0 0) = env_wind: "An entity to control wind in the map. Partially functional."
+	color(200 0 0) 
+= env_wind: "An entity to control wind in the map. Partially functional."
 	[
 	minwind(integer) : "Min normal speed" : 20 : "Minimum speed of the wind while idling."
 	maxwind(integer) : "Max normal speed" : 50 : "Maximum speed of the wind while idling."

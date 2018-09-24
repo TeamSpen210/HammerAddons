@@ -19,7 +19,8 @@
 	line(240 180 250, targetname, scene12) 
 	line(240 180 250, targetname, scene13) 
 	line(240 180 250, targetname, scene14) 
-	line(240 180 250, targetname, scene15) = logic_scene_list_manager: "Manages a list of logic_choreographed_scene entities. Store choreo scenes in them in order that they will be played by other inputs. Whenever a scene plays, the manager will remove all scenes before that one in the list. The name of another logic_scene_list_manager can be entered in a slot instead of an invididual scene, which will cause all scenes in that manager to be removed when a later scene in this list is played."
+	line(240 180 250, targetname, scene15) 
+= logic_scene_list_manager: "Manages a list of logic_choreographed_scene entities. Store choreo scenes in them in order that they will be played by other inputs. Whenever a scene plays, the manager will remove all scenes before that one in the list. The name of another logic_scene_list_manager can be entered in a slot instead of an invididual scene, which will cause all scenes in that manager to be removed when a later scene in this list is played."
 	[
 	scene0(target_destination) : "Scene 1" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
 	scene1(target_destination) : "Scene 2" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."

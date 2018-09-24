@@ -1,7 +1,9 @@
 
 @PointClass base(Targetname, Parentname, BaseObject, Angles) 
 	appliesto(TF2) 
-	studio("models/buildables/teleporter_light.mdl") = obj_teleporter: "TF2 Teleporter"
+	studio("models/buildables/teleporter_light.mdl") 
+	line(255 255 255, targetname, matchingteleporter)
+= obj_teleporter: "TF2 Teleporter"
 	[
 	defaultupgrade(choices) : "Starting Upgrade Level" : "0" =
 		[
