@@ -121,7 +121,11 @@ def comp_pack(ctx: Context):
     """Force packing resources."""
     for ent in ctx.vmf.by_class['comp_pack']:
         ent.remove()
-        for key, value in ent.keys.items():  # type: str, str
+        for key, value in ent.keys.items():
+            # Not important.
+            if key in {'classname', 'origin', 'angles', 'hammerid'}:
+                continue
+
             # We allow numeric suffixes for multiple - generic45.
             try:
                 res_type = PACK_TYPES[key.rstrip('0123456789').casefold()]
