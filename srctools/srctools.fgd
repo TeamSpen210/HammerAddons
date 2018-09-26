@@ -38,11 +38,11 @@
     generic4(string): "Generic" : : "Pack a file, starting in any of the content folders."
     generic5(string): "Generic" : : "Pack a file, starting in any of the content folders."
     
-    sound1(sound): "Sound" : : "Pack a raw sound file or a soundscript."
-    sound2(sound): "Sound" : : "Pack a raw sound file or a soundscript."
-    sound3(sound): "Sound" : : "Pack a raw sound file or a soundscript."
-    sound4(sound): "Sound" : : "Pack a raw sound file or a soundscript."
-    sound5(sound): "Sound" : : "Pack a raw sound file or a soundscript."
+    sound1(sound): "Sound" : : "Pack a raw sound file or a game sound."
+    sound2(sound): "Sound" : : "Pack a raw sound file or a game sound."
+    sound3(sound): "Sound" : : "Pack a raw sound file or a game sound."
+    sound4(sound): "Sound" : : "Pack a raw sound file or a game sound."
+    sound5(sound): "Sound" : : "Pack a raw sound file or a game sound."
     
     model1(studio): "Model" : : "Pack a model."
     model2(studio): "Model" : : "Pack a model."
@@ -61,7 +61,30 @@
     particle3(particlesystem): "Particle" : : "Pack a particle system, and include in the manifest."
     particle4(particlesystem): "Particle" : : "Pack a particle system, and include in the manifest."
     particle5(particlesystem): "Particle" : : "Pack a particle system, and include in the manifest."
+
+    soundscript1(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
+    soundscript2(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
+    soundscript3(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
+    soundscript4(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
+    soundscript5(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
     ]
+
+@PointClass size(-8 -8 -8, 8 8 8) = comp_pack_rename:
+    "Pack a file into the BSP, under a different name than it starts with."
+    [
+    filesrc(string): "Source Filename": : "Filename to read data from."
+    filedest(string): "Destination Filename": : "Filename to pack under."
+    filetype(choices): "File Type": "GENERIC" : "File type to record it as." = [
+        "GENERIC": "Generic"
+        "SOUNDSCRIPT": "SoundScript file (add to manifest)"
+        "PARTICLE_FILE": "Particle System (add to manifest)"
+        "VSCRIPT_SQUIRREL": "VScript (Squirrel)"
+        "MATERIAL": "Material"
+        "TEXTURE": "Texture"
+        "MODEL": "Model"
+        ]
+    ]
+
 
 @PointClass size(-8 -8 -8, 8 8 8) = comp_pack_data:
     "Pack a file into the BSP, with custom contents. This should NOT be edited manaually." +
@@ -77,7 +100,7 @@
         "MATERIAL": "Material"
         "TEXTURE": "Texture"
         "MODEL": "Model"
-    ]
+        ]
 
     data000(string) readonly: "000"
     data001(string) readonly: "001"

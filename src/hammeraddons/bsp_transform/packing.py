@@ -4,7 +4,7 @@ from typing import Set
 
 from srctools.bsp_transform import trans, Context
 from srctools.logger import get_logger
-from srctools.packlist import FileType, SoundScriptMode
+from srctools.packlist import FileType, SoundScriptMode, unify_path
 
 
 LOGGER = get_logger(__name__, 'trans.packing')
@@ -112,6 +112,7 @@ PACK_TYPES = {
     'model': FileType.MODEL,
     'material': FileType.MATERIAL,
     'particle': FileType.PARTICLE_FILE,
+    'soundscript': FileType.SOUNDSCRIPT,
 }
 
 
@@ -132,3 +133,46 @@ def comp_pack(ctx: Context):
                 )
                 res_type = FileType.GENERIC
             ctx.pack.pack_file(value, res_type)
+
+
+@trans('comp_pack_rename')
+def comp_pack_rename(ctx: Context):
+    """Pack a file, under a different name."""
+
+    # Optimisation, don't re-read files multiple times.
+    # We're storing the data anyway.
+    file_data = {}
+
+    for ent in ctx.vmf.by_class['comp_pack_rename']:
+        ent.remove()
+        name_src = unify_path(ent['filesrc'])
+        name_dest = ent['filedest']
+        file_type_name = ent['filetype']
+
+        try:
+            file = ctx.sys[name_src]
+        except FileNotFoundError:
+            LOGGER.warning(
+                'File cannot be loaded to pack! \n{} -> {}',
+                name_src,
+                name_dest,
+            )
+            continue
+
+        try:
+            res_type = PACK_TYPES[file_type_name.casefold()]
+        except KeyError:
+            LOGGER.warning(
+                'Unknown resource type: "{}" @ {}',
+                file_type_name,
+                ent['origin'],
+            )
+            res_type = FileType.GENERIC
+
+        try:
+            data = file_data[name_src]
+        except KeyError:
+            with ctx.sys, ctx.sys.open_bin(file) as f:
+                data = file_data[name_src] = f.read()
+
+        ctx.pack.pack_file(name_dest, res_type, data)
