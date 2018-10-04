@@ -85,42 +85,6 @@
         ]
     ]
 
-
-@PointClass size(-8 -8 -8, 8 8 8) = comp_pack_data:
-    "Pack a file into the BSP, with custom contents. This should NOT be edited manaually." +
-    "Data is stored as dataXXX keyvalues, with incremented hex digits. Each value is 192 base64 characters (using +/), and more keys may be used than the ones defined." +
-    "No values may be skipped."
-    [
-    filename(string): "Filename": : "Filename to pack under."
-    filetype(choices): "File Type": "GENERIC" : "File type to record it as." = [
-        "GENERIC": "Generic"
-        "SOUNDSCRIPT": "SoundScript file (add to manifest)"
-        "PARTICLE_FILE": "Particle System (add to manifest)"
-        "VSCRIPT_SQUIRREL": "VScript (Squirrel)"
-        "MATERIAL": "Material"
-        "TEXTURE": "Texture"
-        "MODEL": "Model"
-        ]
-
-    data000(string) readonly: "000"
-    data001(string) readonly: "001"
-    data002(string) readonly: "002"
-    data003(string) readonly: "003"
-    data004(string) readonly: "004"
-    data005(string) readonly: "005"
-    data006(string) readonly: "006"
-    data007(string) readonly: "007"
-    data008(string) readonly: "008"
-    data009(string) readonly: "009"
-    data00a(string) readonly: "00A"
-    data00b(string) readonly: "00B"
-    data00c(string) readonly: "00C"
-    data00d(string) readonly: "00D"
-    data00e(string) readonly: "00E"
-    data00f(string) readonly: "00F"
-    // Code supports infinite number.
-    ]
-
 @PointClass size(-8 -8 -8, 8 8 8) = comp_pack_replace_soundscript:
     "Replace a soundscript with a different one."
     [
