@@ -326,7 +326,8 @@ def action_export(
         print('Collapsing bases...')
         fgd.collapse_bases()
 
-        empty_set = frozenset()
+        tags_empty = frozenset()
+        tags_engine = frozenset({'ENGINE'})
 
         print('Merging tags...')
         for ent in fgd:
@@ -345,8 +346,8 @@ def action_export(
                 for key, tag_map in category.items():
                     if len(tag_map) == 1:
                         [value] = tag_map.values()
-                    elif 'ENGINE' in tag_map:
-                        value = tag_map['ENGINE']
+                    elif tags_engine in tag_map:
+                        value = tag_map[tags_engine]
                         if value.type is ValueTypes.CHOICES:
                             raise ValueError(
                                 '{}.{}: Engine tags cannot be '
@@ -374,11 +375,21 @@ def action_export(
                             'provide ENGINE '
                             'tag!'.format(ent.classname, key)
                         )
+                        if isinstance(value, KeyValues):
+                            try:
+                                for choice_val, name, tag in value.val_list:
+                                    int(choice_val)
+                            except ValueError:
+                                # Not all are ints, it's a string.
+                                value.type = ValueTypes.STRING
+                            else:
+                                value.type = ValueTypes.INT
+                            value.val_list = None
 
                     # Blank this, it's not that useful.
                     value.desc = ''
 
-                    category[key] = {empty_set: value}
+                    category[key] = {tags_empty: value}
 
     else:
         print('Culling incompatible entities...')
