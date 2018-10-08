@@ -14,12 +14,7 @@
 		]
 
 	powerup_model[TF2](string) : "Model" : : "Change the model to something other than the default model."
-	automaterialize[TF2](choices) : "Auto-Materialize" : "1" : "The pickup should automatically materialize after being picked up." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	automaterialize[TF2](boolean) : "Auto-Materialize" : 1 : "The pickup should automatically materialize after being picked up."
 
 	// Outputs
 	output OnPlayerTouch[!TF2](void) : "Fires when the player touches this object"

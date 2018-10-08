@@ -5,10 +5,10 @@
 	sphere(fademindist) 
 	sphere(fademaxdist) = tf_spell_pickup: "Spell"
 	[
-	tier(choices) : "Spell Tier" : "0" : "Tier of spells that would be randomly assigned to the player" =
+	tier[engine](integer) : "Spell Tier" : 0
+	tier(choices) : "Spell Tier" : 0 : "Tier of spells that would be randomly assigned to the player" =
 		[
 		0: "Common"
 		1: "Rare"
 		]
-
 	]

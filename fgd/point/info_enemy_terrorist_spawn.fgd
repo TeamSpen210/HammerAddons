@@ -2,7 +2,8 @@
 @PointClass base(Targetname, Angles) 
 	appliesto(CSGO) 
 	studio("models/player/tm_phoenix.mdl") 
-	sphere(hide_radius) = info_enemy_terrorist_spawn: "This entity marks the start point for enemy terrorists in a coop game. Should be placed at least 80 units away from each other and surrounding walls."
+	sphere(hide_radius)
+= info_enemy_terrorist_spawn: "This entity marks the start point for enemy terrorists in a coop game. Should be placed at least 80 units away from each other and surrounding walls."
 	[
 	priority(integer) : "Spawn Priority (int)" : 0 : "Determines which spawn points get used first.  Smaller numbers are used before larger numbers."
 	enabled(boolean) : "Enabled by default?" : 1

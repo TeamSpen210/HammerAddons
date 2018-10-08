@@ -11,6 +11,7 @@
 		0: "Small"
 		1: "Large"
 		]
+	type(integer) : "EMP Type" : 0
 
 	endtargetname(target_destination) : "Target Entity" : : "Entity to use as a target endpoint."
 

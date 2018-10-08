@@ -13,6 +13,7 @@
 		1: "Semi-rigid"
 		2: "Rigid"
 		]
+	type[engine](integer): "Type": 0
 
 	subdiv(integer) : "Subdivision" : 2 : "Number of subdivisions between each rope segment. Maximum value is 8. Higher values make smoother ropes, but are slower to render."
 	barbed(boolean) : "Barbed" : 0 : "Test effect that makes the rope look sharper and more barbed."
@@ -28,6 +29,7 @@
 		0: "Ignore Wind"
 		1: "Affected by Wind"
 		]
+	usewind[engine](boolean): "Use Wind": 0
 
 
 	// Inputs

@@ -1,6 +1,5 @@
 
 @PointClass base(Targetname, Parentname, EnableDisable) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	sphere() 
 	iconsprite("editor/env_soundscape.vmt") 
 	line(255 255 255, targetname, position0) 
@@ -10,10 +9,13 @@
 	line(255 255 255, targetname, position4) 
 	line(255 255 255, targetname, position5) 
 	line(255 255 255, targetname, position6) 
-	line(255 255 255, targetname, position7) = env_soundscape: "An entity to control sound in an area. The active soundscape at any time is the last one that had line-of-sight to the player, and was within the radius."
+	line(255 255 255, targetname, position7) 
+ = env_soundscape: "An entity to control sound in an area. The active soundscape at any time is the last one that had line-of-sight to the player, and was within the radius."
 	[
 	radius(integer) : "Radius" : 128 : "If set to -1, then the player can hear the soundscape as long as he can see it (regardless of distance to it)."
-	soundscape(choices) : "Soundscape" : "Nothing" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the hl2\scripts directory." =
+
+	soundscape[engine](string) : "Soundscape" : "" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the scripts/ directory." 
+	soundscape(choices) : "Soundscape" : "Nothing" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the scripts/ directory." =
 		[
 		"Nothing": "Nothing"
 		"Automatic": "Automatic"
@@ -22,7 +24,7 @@
 		"GenericOutdoor": "Outdoor"
 		]
 
-	soundscape[P2](choices) : "Soundscape" : "Nothing" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the hl2\scripts directory." =
+	soundscape[P2](choices) : "Soundscape" : "Nothing" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the portal2/scripts/ directory." =
 		[
 		"TestChamber_Destruction.DestructionBase": "Dest - Destruction Base"
 		"TestChamber_Destruction.DestructionBeauty": "Dest - Destruction Beauty"

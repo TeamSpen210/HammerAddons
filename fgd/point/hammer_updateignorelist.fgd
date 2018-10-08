@@ -1,7 +1,25 @@
 
 @PointClass base(Targetname) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	color(200 0 0) = hammer_updateignorelist: "Specifies entities that are to be ignored by the hammer_update_safe_entities console command. Enter the targetnames of entities that you want to exclude into the list of fields here. Several of these may exist in a map."
+	color(200 0 0) 
+	
+	line(200 0 0, targetname, ignoredname01)
+	line(200 0 0, targetname, ignoredname02)
+	line(200 0 0, targetname, ignoredname03)
+	line(200 0 0, targetname, ignoredname04)
+	line(200 0 0, targetname, ignoredname05)
+	line(200 0 0, targetname, ignoredname06)
+	line(200 0 0, targetname, ignoredname07)
+	line(200 0 0, targetname, ignoredname08)
+	line(200 0 0, targetname, ignoredname09)
+	line(200 0 0, targetname, ignoredname10)
+	line(200 0 0, targetname, ignoredname11)
+	line(200 0 0, targetname, ignoredname12)
+	line(200 0 0, targetname, ignoredname13)
+	line(200 0 0, targetname, ignoredname14)
+	line(200 0 0, targetname, ignoredname15)
+	line(200 0 0, targetname, ignoredname16)
+= hammer_updateignorelist: "Specifies entities that are to be ignored by the hammer_update_safe_entities console command. Enter the targetnames of entities that you want to exclude into the list of fields here. Several of these may exist in a map."
 	[
 	ignoredname01(target_destination) : "IgnoredName 01" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"
 	ignoredname02(target_destination) : "IgnoredName 02" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities"

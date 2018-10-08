@@ -6,7 +6,9 @@
 	color(200 200 0) = env_rotorshooter: "An entity that creates gibs when it's within the influence of a helicopter's rotor wash."
 	[
 	shootmodel(studio) : "Model" : : "Thing to shoot out.  Can be a .mdl or a .vmt."
-	shootsounds(choices) : "Material Sound" : "-1" =
+
+	shootsounds[engine](integer) : "Material Sound": -1
+	shootsounds(choices) : "Material Sound" : -1 =
 		[
 		-1: "None"
 		0: "Glass"
@@ -16,7 +18,8 @@
 		4: "Concrete"
 		]
 
-	simulation(choices) : "Simulate" : "0" =
+	simulation[engine](integer) : "Simulation Type" : 0
+	simulation(choices) : "Simulation Type" : "0" =
 		[
 		0: "Point"
 		1: "Physics"

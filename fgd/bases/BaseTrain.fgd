@@ -12,18 +12,7 @@
 		128: "HL1 Train" : 0
 		256: "Use max speed for pitch shifting move sound" : 0
 		512: "Is unblockable by player" : 0
-		]
-
-	spawnflags[P2](flags) : "spawnflags" =
-		[
-		1: "No Pitch (X-rot)" : 0
-		2: "No User Control" : 0
-		8: "Passable" : 0
-		16: "Fixed Orientation" : 0
-		128: "HL1 Train" : 0
-		256: "Use max speed for pitch shifting move sound" : 0
-		512: "Is unblockable by player" : 0
-		1024: "Allow Roll (Z-rot)" : 0
+		1024: "Allow Roll (Z-rot)" : 0 [P2]
 		]
 
 	target(target_destination) : "Spawn path_track" : : "The name of the first path_track in the train's path. The train will spawn at this path_track. It will also turn to face direction indicated by the 'Orientation Type' setting."
@@ -56,10 +45,8 @@
 	volume(integer) : "Volume (10 = loudest)" : 10
 	movesoundminpitch(integer) : "Min pitch (1-255, > 100 = higher)" : 60 : "The sound pitch value that the train will approach as it comes to a stop."
 	movesoundmaxpitch(integer) : "Max pitch (1-255, > 100 = higher)" : 200 : "The sound pitch value that the train will approach as it approaches its max speed (or 1000 inches/second if the 'Use max speed for pitch shifting move sound' flag is not set)."
-	movesoundmintime(float) : "Min move sound interval" : 0 : "Minimum interval at which to play the move ping sound."
-	movesoundmintime[P2](float) : "Min ping sound interval" : 0 : "Minimum interval at which to play the move ping sound."
-	movesoundmaxtime(float) : "Max move sound interval" : 0 : "Maximum interval at which to play the move ping sound."
-	movesoundmaxtime[P2](float) : "Max ping sound interval" : 0 : "Maximum interval at which to play the move ping sound."
+	movesoundmintime(float) : "Min ping sound interval" : 0 : "Minimum interval at which to play the move ping sound."
+	movesoundmaxtime(float) : "Max ping sound interval" : 0 : "Maximum interval at which to play the move ping sound."
 
 	// Inputs
 	input SetSpeed(float) : "Set the speed of the train, as a ratio of max speed [0, 1]"

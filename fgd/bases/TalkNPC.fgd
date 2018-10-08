@@ -8,6 +8,7 @@
 		0: "No (Use speech semaphore)"
 		1: "Yes (Don't use speech semaphore)"
 		]
+	dontusespeechsemaphore[engine](boolean): "Don't Use Speech Semaphore": 0
 
 
 	// Inputs

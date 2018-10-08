@@ -1,7 +1,7 @@
 
 @BaseClass = SystemLevelChoice
 	[
-	mincpulevel(choices) : "Minimum CPU Level" : "0" =
+	mincpulevel(choices) : "Minimum CPU Level" : 0 =
 		[
 		0: "default (low)"
 		1: "low"
@@ -9,7 +9,7 @@
 		3: "high"
 		]
 
-	maxcpulevel(choices) : "Maximum CPU Level" : "0" =
+	maxcpulevel(choices) : "Maximum CPU Level" : 0 =
 		[
 		0: "default (high)"
 		1: "low"
@@ -17,7 +17,7 @@
 		3: "high"
 		]
 
-	mingpulevel(choices) : "Minimum GPU Level" : "0" =
+	mingpulevel(choices) : "Minimum GPU Level" : 0 =
 		[
 		0: "default (very low)"
 		1: "very low"
@@ -26,7 +26,7 @@
 		4: "high"
 		]
 
-	maxgpulevel(choices) : "Maximum GPU Level" : "0" =
+	maxgpulevel(choices) : "Maximum GPU Level" : 0 =
 		[
 		0: "default (high)"
 		1: "very low"
@@ -35,10 +35,11 @@
 		4: "high"
 		]
 
-	disablex360(choices) : "Disable X360" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	disablex360(boolean) : "Disable X360" : 0
 
+
+	mingpulevel[engine](integer): "Minimum CPU Level": 0
+	maxcpulevel[engine](integer): "Maximum CPU Level": 0
+	mingpulevel[engine](integer): "Minimum GPU Level": 0
+	maxgpulevel[engine](integer): "Maximum GPU Level": 0
 	]

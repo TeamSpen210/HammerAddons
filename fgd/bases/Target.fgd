@@ -1,5 +1,7 @@
 
-@BaseClass = Target
+@BaseClass 
+	line(255 255 255, targetname, target)
+= Target
 	[
 	target(target_destination) : "Target"
 	]

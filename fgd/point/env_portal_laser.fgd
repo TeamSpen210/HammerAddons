@@ -4,26 +4,26 @@
 	studioprop() = env_portal_laser: " A Thermal Discouragement Beam that will move through portals, redirect using Redirection Cubes and reflect off of Reflection Gel."
 	[
 	noplacementhelper(boolean) : "No placement helper" : 0 : "Don't automatically create a portal placement helper at the end of the laser."
+	
+	model[engine](studio) : "Laser Position" : "models/props/laser_emitter_center.mdl"
 	model(choices) : "Laser Position" : "models/props/laser_emitter_center.mdl" : "Is the laser offset? (You can also add a custom model here.)" =
 		[
 		"models/props/laser_emitter_center.mdl": "Centered"
 		"models/props/laser_emitter.mdl": "Offset"
 		]
 
-	startstate(choices) : "Start off?" : "0" =
-		[
-		1: "Yes"
-		0: "No"
-		]
+	startstate(boolean) : "Start off?" : 0
 
-	lethaldamage(choices) : "Lethal" : "0" : "Instant kill on contact. Buggy when rediected through cubes/portals." =
+	lethaldamage[engine](boolean) : "Lethal" : 0
+	lethaldamage(choices) : "Lethal" : 0 : "Instant kill on contact. Buggy when rediected through cubes/portals." =
 		[
 		0: "Non-lethal"
 		1: "Lethal"
 		]
 
 	autoaimenabled(boolean) : "Should auto aim" : 1 : "Allow the laser to bend to activate catchers or relays."
-	skin(choices) : "Skin Type" : "0" =
+	skin[engine](integer) : "Skin Type": 0
+	skin(choices) : "Skin Type" : 0 =
 		[
 		0: "Clean"
 		1: "Rusted"

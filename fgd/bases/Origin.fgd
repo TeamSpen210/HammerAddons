@@ -1,6 +1,5 @@
 
-@BaseClass 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = Origin
+@BaseClass = Origin
 	[
 	origin(origin) : "Origin (X Y Z)" : : "The position of this entity's center in the world. Rotating entities typically rotate around their origin."
 	]

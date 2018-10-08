@@ -1,21 +1,15 @@
 
 @PointClass base(Targetname, EnableDisable) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	iconsprite("editor/logic_timer.vmt") 
-	color(0 100 250) = logic_timer: "An entity that fires a timer event at regular, or random, intervals. It can also be set to oscillate betweena high and low end, in which case it will fire alternating high/low outputs each time it fires."
+	color(0 100 250) = logic_timer: "An entity that fires a timer event at regular, or random, intervals. It can also be set to oscillate between a high and low end, in which case it will fire alternating high/low outputs each time it fires."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Oscillator (alternates between OnTimerHigh and OnTimerLow outputs)" : 0
 		]
 
-	userandomtime(choices) : "Use Random Time" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	userandomtime[ASW](boolean) : "Use Random Time" : 0
+	userandomtime(boolean) : "Use Random Time" : 0
+	
 	lowerrandombound(string) : "Minimum Random Interval" : : "If 'Use Random Time' is set, this is the minimum time between timer fires. The time will be a random number between this and the 'Maximum Random Interval'."
 	upperrandombound(string) : "Maximum Random Interval" : : "If 'Use Random Time' is set, this is the maximum time between timer fires. The time will be a random number between the 'Minimum Random Interval' and this."
 	refiretime(string) : "Refire Interval" : : "If 'Use Random Time' isn't set, this is the time between timer fires, in seconds."

@@ -2,18 +2,10 @@
 @PointClass base(Targetname, TeamNum, EnableDisable) 
 	appliesto(TF2) = team_train_watcher: "Entity that tracks the train progress through train escort maps"
 	[
-	train_can_recede(choices) : "Can the train recede?" : "1" : "Used to hide the HUD countdown." =
-		[
-		1: "Yes"
-		0: "No"
-		]
+	train_can_recede(boolean) : "Can the train recede?" : "1" : "Used to hide the HUD countdown."
 
 	train_recede_time(integer) : "Train recede time (in seconds)" : 0 : "Length of time before the train begins to recede. 0 = use TF2 default setting of 30 seconds."
-	handle_train_movement(choices) : "Handle train movement?" : "0" : "Should the train watcher handle all train movement?" =
-		[
-		1: "Yes"
-		0: "No"
-		]
+	handle_train_movement(boolean) : "Handle train movement?" : 0 : "Should the train watcher handle all train movement?"
 
 	speed_forward_modifier(float) : "Speed Forward Modifier" : 1 : "Applies the given modifier to all forward speeds. Only used if the watcher is handling the train movement. [0, 1]"
 	env_spark_name(string) : "Train spark sprites" : : "Name of the env_spark entities used under the train for backward movement. They should all have the same entity name. Only used if the watcher is handling the train movement."

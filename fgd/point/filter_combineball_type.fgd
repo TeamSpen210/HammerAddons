@@ -7,7 +7,9 @@
 	balltype(choices) : "Ball Type" : "1" =
 		[
 		0: "Not Thrown (in combine ball field, etc)"
+		1: "Held by player"
 		2: "Thrown/Launched by the player's physcannon"
 		3: "Launched by point_combine_ball_launcher"
 		]
+	balltype[engine](integer): "Ball Type": 0
 	]

@@ -9,23 +9,13 @@
 	m_iszplay(string) : "Action Animation" : : "The name of the main sequence (such as 'reload02') or activity (such as 'ACT_RELOAD') to play."
 	m_iszpostidle(string) : "Post Action Idle Animation" : : "The name of the sequence (such as 'idle01') or activity (such as 'ACT_IDLE') to play after the action animation."
 	m_iszcustommove(string) : "Custom Move Animation" : : "Used in conjunction with the 'Custom movement' setting for the 'Move to Position' property, specifies the sequence (such as 'crouch_run01') or activity (such as 'ACT_RUN') to use while moving to the scripted position."
-	m_bloopactionsequence(choices) : "Loop Action Animation?" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	m_bloopactionsequence[P2](boolean) : "Loop Action Animation?" : 0
-	m_bsynchpostidles(choices) : "Synch Post Idles?" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	m_bsynchpostidles[P2](boolean) : "Synch Post Idles?" : 0
+	m_bloopactionsequence(boolean) : "Loop Action Animation?" : 0
+	m_bsynchpostidles(boolean) : "Synch Post Idles?" : 0
 	m_flradius(integer) : "Search Radius (0=everywhere)" : 0 : "Radius to search within for an NPC to use. 0 searches everywhere."
 	m_flrepeat(integer) : "Repeat Rate ms" : 0
-	m_fmoveto(choices) : "Move to Position" : "1" =
+
+	m_fmoveto[engine](integer) : "Move to Position": 1
+	m_fmoveto(choices) : "Move to Position" : 1 =
 		[
 		0: "No"
 		1: "Walk"
@@ -36,20 +26,8 @@
 		]
 
 	m_isznextscript(target_destination) : "Next Script" : : "The name of the script to run immediately after this script completes. The NPC will not return to AI between the two scripts."
-	m_bignoregravity(choices) : "Ignore Gravity on NPC during script" : "0" : "If this is set to 'Yes', the NPC will not be subject to gravity while playing this script." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	m_bignoregravity[P2](boolean) : "Ignore Gravity on NPC during script" : 0 : "If this is set to 'Yes', the NPC will not be subject to gravity while playing this script."
-	m_bdisablenpccollisions(choices) : "Disable NPC collisions during script" : "0" : "Useful for when NPCs playing scripts must interpenetrate while riding on trains, elevators, etc. This only disables collisions between the NPCs in the script and must be enabled on BOTH scripted_sequences." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	m_bdisablenpccollisions[P2](boolean) : "Disable NPC collisions during script" : 0 : "Useful for when NPCs playing scripts must interpenetrate while riding on trains, elevators, etc. This only disables collisions between the NPCs in the script and must be enabled on BOTH scripted_sequences."
+	m_bignoregravity(boolean) : "Ignore Gravity on NPC during script" : 0 : "If this is set to 'Yes', the NPC will not be subject to gravity while playing this script."
+	m_bdisablenpccollisions(boolean) : "Disable NPC collisions during script" : 0 : "Useful for when NPCs playing scripts must interpenetrate while riding on trains, elevators, etc. This only disables collisions between the NPCs in the script and must be enabled on BOTH scripted_sequences."
 
 	// Inputs
 	input BeginSequence(void) : "Summons an NPC to act out the scripted sequence."

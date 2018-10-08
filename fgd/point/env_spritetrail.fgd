@@ -1,16 +1,15 @@
 
 @PointClass base(Parentname, Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	size(-8 -8 -8, 8 8 8) 
 	iconsprite("editor/env_spritetrail.vmt") 
 	sphere(startwidth) 
-	sphere(endwidth) = env_spritetrail: "A magical trail you can parent to anything you heart desires."
+	sphere(endwidth) 
+= env_spritetrail: "A magical trail you can parent to anything you heart desires."
 	[
 	lifetime(float) : "Lifetime" : 0.5
 	startwidth(float) : "Start Width" : 8.0
 	endwidth(float) : "End Width" : 1.0
-	spritename(string) : "Sprite Name" : "sprites/bluelaser1.vmt"
-	spritename[P2](sprite) : "Sprite Name" : "sprites/bluelaser1.vmt"
+	spritename(sprite) : "Sprite Name" : "sprites/bluelaser1.vmt"
 	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
 	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
 	rendermode(choices) : "Render Mode" : "5" =

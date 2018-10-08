@@ -15,13 +15,14 @@
 	texturescroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
 	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
 	damage(string) : "Damage / second" : "100" : "How much damage this laser does. per second. to things it hits."
-	dissolvetype(choices) : "Dissolve Type" : "None" =
+	dissolvetype(choices) : "Dissolve Type" : -1 =
 		[
 		-1: "None"
 		0: "Energy"
 		1: "Heavy electrical"
 		2: "Light electrical"
 		]
+	dissolvetype[engine](integer): "Dissolve Type": 0
 
 	spawnflags(flags) : "spawnflags" =
 		[

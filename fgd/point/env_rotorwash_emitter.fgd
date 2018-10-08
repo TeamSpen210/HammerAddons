@@ -1,6 +1,5 @@
 
-@PointClass base(Targetname, Parentname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, TF2, CSGO) = env_rotorwash_emitter: "Creates rotorwash."
+@PointClass base(Targetname, Parentname) = env_rotorwash_emitter: "Creates rotorwash."
 	[
 	altitude(float) : "Altitude" : 1024 : "Altitude the rotorwash will show up."
 	]

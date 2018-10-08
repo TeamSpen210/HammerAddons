@@ -18,7 +18,8 @@
 	line(200 200 200, targetname, group06) 
 	line(200 200 200, targetname, group14) 
 	line(200 200 200, targetname, group07) 
-	line(200 200 200, targetname, group15) = logic_script: "An entity that acts as a container for scripts|||An entity that acts as a container for scripts."
+	line(200 200 200, targetname, group15) 
+= logic_script: "An entity that acts as a container for scripts."
 	[
 	group00(target_destination) : "EntityGroup[0]"
 	group01(target_destination) : "EntityGroup[1]"

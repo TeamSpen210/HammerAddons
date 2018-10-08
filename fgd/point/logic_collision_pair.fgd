@@ -1,22 +1,14 @@
 
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	size(-4 -4 -4, 4 4 4) 
-	color(0 255 0) 
 	color(128 128 128) 
 	iconsprite("editor/ts2do/logic_collision_pair.vmt") 
-	line(128 128 128, attach1, attach2) = logic_collision_pair: "An entity that can be used to enables/disable vphysics collisions between two target entities."
+	line(128 128 128, attach1, attach2) 
+= logic_collision_pair: "An entity that can be used to enables/disable vphysics collisions between two target entities."
 	[
 	attach1(target_destination) : "Attachment 1" : : "The first entity."
 	attach2(target_destination) : "Attachment 2" : : "The second entity."
-	startdisabled(choices) : "Start with collisions disabled" : "1" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	startdisabled[ASW](boolean) : "Start with collisions disabled" : 1
-
+	startdisabled(boolean) : "Start with collisions disabled" : 1
+	
 	// Inputs
 	input EnableCollisions(void) : "Enable collisions between the first and second entity."
 	input DisableCollisions(void) : "Disable collisions between the first and second entity."

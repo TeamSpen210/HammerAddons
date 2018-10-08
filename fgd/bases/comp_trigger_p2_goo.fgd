@@ -1,0 +1,14 @@
+@SolidClass base(Targetname, Parentname, Origin, EnableDisable)
+	appliesto(P2, +srctools)
+= comp_trigger_p2_goo:
+	"Implements Toxic Goo/Deadly Acid/Hazard Liquid." +
+	"" +
+	"This expands into a trigger_hurt and trigger_multiple with appropriate settings."
+	[
+	
+	failsafe_delay(float): "Failsafe delay": "1.0" : "Delay after which non-cube entities will be killed."
+	dissolve_filter(filterclass): "Physics Filter" : : "Set to a filter entity to prevent certain entities from dissolving."
+	
+	output OnKillPlayer(void): "Fired when players touch the trigger."
+	output OnDissolvePhysics(void): "Fired when physics objects touch the trigger (and will be dissolved/killed soon)."
+	]

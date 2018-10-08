@@ -23,4 +23,6 @@
 		95: "dx9 SM3.0"
 		]
 
+	mindxlevel[engine](integer): "Minimum DX Level": 0
+	maxdxlevel[engine](integer): "Maximum DX Level": 0
 	]

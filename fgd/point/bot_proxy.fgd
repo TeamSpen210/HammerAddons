@@ -3,6 +3,8 @@
 	appliesto(TF2) = bot_proxy: "An entity that spawns a TFBot and relays events to/from it"
 	[
 	bot_name(string) : "Bot Name" : "TFBot" : "The bot's player name"
+
+	team[engine](string) : "Team" : "auto"
 	team(choices) : "Team" : "auto" : "Team" =
 		[
 		"auto": "Any"
@@ -10,6 +12,7 @@
 		"blue": "Blue"
 		]
 
+	class[engine](string) : "Class" : "auto"
 	class(choices) : "Class" : "auto" : "Class" =
 		[
 		"auto": "Any"
@@ -24,11 +27,7 @@
 		"engineer": "Engineer"
 		]
 
-	spawn_on_start(choices) : "Spawn on start" : "0" : "Spawn this bot when the round starts" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	spawn_on_start(boolean) : "Spawn on start" : "0" : "Spawn this bot when the round starts"
 
 	respawn_interval(float) : "Respawn delay" : 0 : "If nonzero, respawn this bot N seconds after it dies"
 	action_point(target_destination) : "Action Point" : : "Put the name of a bot_action_point here to tell the bot to move to it when it spawns in."

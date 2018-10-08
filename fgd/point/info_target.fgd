@@ -7,11 +7,6 @@
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
-		1: "Transmit to client" : 0
-		]
-
-	spawnflags[ASW](flags) : "spawnflags" =
-		[
 		1: "Transmit to client (respect PVS)" : 0
 		2: "Always transmit to client (ignore PVS)" : 0
 		]

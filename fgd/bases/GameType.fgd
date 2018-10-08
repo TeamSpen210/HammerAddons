@@ -11,5 +11,5 @@
 		4: "Resource Control"
 		5: "Robot Destruction"
 		]
-
+	gametype[engine](int) : "Game Type" : 0
 	]

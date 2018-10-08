@@ -9,43 +9,44 @@
 	leaddistance(float) : "Lead Distance" : 64 : "The player is considered to be lagging if he's beyond this distance.  The Actor will consider retrieving when the player is 4x 'Lead Distance' away."
 	retrievedistance(float) : "Retrieve Distance" : 96 : "The distance from the player that the NPC should return to when retrieving a lagging player. Must be between ('Lead Distance' + 24) and ('Lead Distance' * 4) to avoid the leader ping-ponging."
 	successdistance(float) : "Success Distance" : 0 : "The distance from the player (to the NPC) that the player must be within for the Lead to succeed, once the NPC has reached the goal. If set to 0, it'll use the lead distance instead (for legacy support)."
-	run(choices) : "Run instead of Walk" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	run(boolean) : "Run instead of Walk" : 0
 
-	run[P2](boolean) : "Run instead of Walk" : 0
-	retrieve(choices) : "Retrieve player?" : "1" =
+	retrieve[engine](boolean) : "Retrieve player?" : 1
+	retrieve(choices) : "Retrieve player?" : 1 =
 		[
 		0: "No, just idle and wait"
 		1: "Yes, move to retrieve"
 		]
 
-	comingbackwaitforspeak(choices) : "Before Coming Back, Wait for speech?" : "1" =
+	comingbackwaitforspeak[engine](boolean) :  "Before Coming Back, Wait for speech?" : 1
+	comingbackwaitforspeak(choices) : "Before Coming Back, Wait for speech?" : 1 =
 		[
 		0: "No, come back while speaking"
 		1: "Yes, wait for speech to finish"
 		]
 
-	retrievewaitforspeak(choices) : "On Retrieve, Wait for speech?" : "1" =
+	retrievewaitforspeak[engine](boolean) :  "On Retrieve, Wait for speech?" : 1
+	retrievewaitforspeak(choices) : "On Retrieve, Wait for speech?" : 1 =
 		[
 		0: "No, start leading while speaking"
 		1: "Yes, wait for speech to finish"
 		]
 
-	dontspeakstart(choices) : "Speak start greeting?" : "0" =
+	dontspeakstart[engine](boolean) :  "Speak start greeting?" : 1
+	dontspeakstart(choices) : "Speak start greeting?" : 0 =
 		[
 		0: "Yes, speak the start greeting"
 		1: "No, don't speak the greeting"
 		]
 
-	leadduringcombat(choices) : "Lead during combat?" : "0" =
+	leadduringcombat[engine](boolean) : "Lead during combat?" : 0
+	leadduringcombat(choices) : "Lead during combat?" : 0 =
 		[
 		0: "No. Stop to fight, resume leading when safe."
 		1: "Yes, lead while fighting."
 		]
 
+	gagleader[engine](boolean) : "Gag Leader?" : 0
 	gagleader(choices) : "Gag Leader?" : "0" =
 		[
 		0: "No. Speak lead concepts normally, respecting other lead speech settings."
@@ -60,6 +61,7 @@
 	failureconceptmodifier(string) : "Failure concept modifier" : : "Appended to the keyvalues passed into the response rules when the 'lead_fail' concept is spoken."
 	comingbackconceptmodifier(string) : "Coming Back concept modifier" : : "Appended to the keyvalues passed into the response rules when the 'TLK_LEAD_RETRIEVE' concept is spoken. Spoken as the NPC starts returning to the player to retrieve him."
 	retrieveconceptmodifier(string) : "Retrieve concept modifier" : : "Appended to the keyvalues passed into the response rules when the 'TLK_LEAD_COMINGBACK' concept is spoken. Spoken when NPC has finally reached the player to retrieve him."
+	
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "No def success" : 0

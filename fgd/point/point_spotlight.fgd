@@ -2,7 +2,8 @@
 @PointClass base(Targetname, Parentname, RenderFields, Angles, DXLevelChoice, SystemLevelChoice) 
 	studio("models/editor/cone_helper.mdl") 
 	sphere(spotlightlength) 
-	sphere(spotlightwidth) = point_spotlight: "An entity to draw a spotlight. Will draw a beam when the player views it side on, and a halo when it's facing towards the player. Unless the 'No Dynamic Light' spawnflag is checked, it will also create a dynamic light wherever the end of the spotlight rests."
+	sphere(spotlightwidth) 
+= point_spotlight: "An entity to draw a spotlight. Will draw a beam when the player views it side on, and a halo when it's facing towards the player. Unless the 'No Dynamic Light' spawnflag is checked, it will also create a dynamic light wherever the end of the spotlight rests."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

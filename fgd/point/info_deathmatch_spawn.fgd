@@ -1,7 +1,8 @@
 
 @PointClass base(Targetname, Angles) 
 	appliesto(CSGO) 
-	studio("models/player/tm_pirate.mdl") = info_deathmatch_spawn: "This entity marks a deathmatch spawn point. This is the entity that populates the map when mp_random_spawn is used.Manually adding them to the map will guarantee that these spawn points are included in the set"
+	studio("models/player/tm_pirate.mdl") 
+= info_deathmatch_spawn: "This entity marks a deathmatch spawn point. This is the entity that populates the map when mp_random_spawn is used.Manually adding them to the map will guarantee that these spawn points are included in the set"
 	[
 	enabled(boolean) : "Enabled by default?" : 1
 

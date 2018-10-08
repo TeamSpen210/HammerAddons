@@ -11,7 +11,8 @@
 	line(240 180 250, targetname, target5) 
 	line(240 180 250, targetname, target6) 
 	line(240 180 250, targetname, target7) 
-	line(240 180 250, targetname, target8) = logic_choreographed_scene: "Manages a choreographed scene of one or more actors."
+	line(240 180 250, targetname, target8) 
+= logic_choreographed_scene: "Manages a choreographed scene of one or more actors."
 	[
 	scenefile(scene) : "Scene file"
 	scenefile[P2](scene) : "Scene file" : : "The scene that will play when this entity is triggered."
@@ -23,7 +24,9 @@
 	target6(target_destination) : "Target 6"
 	target7(target_destination) : "Target 7"
 	target8(target_destination) : "Target 8"
-	busyactor(choices) : "If an Actor is talking..." : "1" : "What to do if an actor this scene needs is already talking when this scene is told to start." =
+
+	busyactor[engine](integer) : "If an Actor is talking..." : 1
+	busyactor(choices) : "If an Actor is talking..." : 1 : "What to do if an actor this scene needs is already talking when this scene is told to start." =
 		[
 		0: "Start immediately"
 		1: "Wait for actor to finish"
@@ -31,13 +34,12 @@
 		3: "Cancel at next interrupt event"
 		]
 
-	onplayerdeath(choices) : "On player death" : "0" : "What should this entity do if the player dies" =
+	onplayerdeath[engine](boolean) : "On Player Death" : 0
+	onplayerdeath(choices) : "On Player Death" : 0 : "What should this entity do if the player dies" =
 		[
 		0: "Do Nothing"
 		1: "Cancel Script and return to AI"
 		]
-
-	message[P2](sound) : "[H] Sound" : : "Use to allow keeping the sound name when switching between ambient_generic and logic_choreographed_scene."
 
 	// Inputs
 	input Start(void) : "Starts playback of the scene file"

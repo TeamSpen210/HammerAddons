@@ -14,16 +14,16 @@
 	minspeed[P2](float) : "Min ball speed" : 150.0 : "The minimum starting speed."
 	maxspeed(float) : "Max ball speed" : 600.0 : "The maximum speed of balls that fly in the spawner"
 	maxspeed[P2](float) : "Max ball speed" : 150.0 : "The maximum starting speed."
-	ballradius(float) : "Ball radius" : 20.0 : "The radius of the energy balls"
-	ballradius[P2](float) : "Ball radius" : 20.0 : "The radius of the energy balls."
+	ballradius(float) : "Ball radius" : 20.0 : "The radius of the energy balls."
 	balltype(choices) : "Ball Type" : "Combine Energy Ball 1" =
 		[
 		0: "Combine Energy Ball 1"
 		1: "Combine Energy Ball 2"
 		2: "Combine Energy Ball 3"
 		]
+	balltype[engine](integer): "Ball Type": 0
 
-	ballrespawntime(float) : "Ball Respawn Time" : 4.0f : "The energy balls respawn time"
+	ballrespawntime(float) : "Ball Respawn Time" : 4.0 : "The energy balls respawn time"
 
 	// Inputs
 	input Enable(void) : "Enable spawning of combine balls"
