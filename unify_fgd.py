@@ -54,7 +54,6 @@ FEATURES = {
     'P2DES': 'INSTANCING PROP_SCALING VSCRIPT'.split(),
 }
 
-
 ALL_FEATURES = {
     tag.upper() 
     for t in FEATURES.values() 
@@ -75,6 +74,21 @@ ALL_TAGS.update(TAGS_SPECIAL)
 ALL_TAGS.update('SINCE_' + t.upper() for t in GAME_ORDER)
 ALL_TAGS.update('UNTIL_' + t.upper() for t in GAME_ORDER)
 
+def format_all_tags():
+    """Append a formatted description of all allowed tags to a message."""
+    
+    return (
+        '- Games: {}\n'
+        '- SINCE_<game>\n'
+        '- UNTIL_<game>\n'
+        '- Features: {}\n'
+        '- Special: {}\n'
+     ).format(
+         ', '.join(GAME_ORDER),
+         ', '.join(ALL_FEATURES),
+        ', '.join(TAGS_SPECIAL),
+     )
+
 def expand_tags(tags: FrozenSet[str]) -> FrozenSet[str]:
     """Expand the given tags, producing the full list of tags these will search.
 
@@ -87,8 +101,8 @@ def expand_tags(tags: FrozenSet[str]) -> FrozenSet[str]:
         except KeyError: 
             pass
         try:
-            pos = GAME_ORDER.index(tag)
-        except IndexError:
+            pos = GAME_ORDER.index(tag.upper())
+        except ValueError:
             pass
         else:
             exp_tags.update(
@@ -292,32 +306,43 @@ def action_export(
     dbase: Path,
     tags: FrozenSet[str],
     output_path: Path,
+    as_binary: bool,
+    engine_mode: bool,
 ) -> None:
     """Create an FGD file using the given tags."""
-    tags = expand_tags(tags)
+    
+    if engine_mode:
+        tags = frozenset({'ENGINE'})
+    else:
+        tags = expand_tags(tags)
 
     print('Tags expanded to: {}'.format(', '.join(tags)))
 
     fgd = load_database(dbase)
-
-    print('Culling incompatible entities...')
-
+    
     ents = list(fgd.entities.values())
     fgd.entities.clear()
 
-    for ent in ents:
-        applies_to = get_appliesto(ent)
-        if match_tags(tags, applies_to):
-            fgd.entities[ent.classname] = ent
+    if engine_mode:
+        # In engine mode, we don't care about specific games.
+        for ent in ents:
+            pass
+    else:
+        print('Culling incompatible entities...')
 
-            # Strip applies-to helper.
-            ent.helpers[:] = [
-                helper for helper in ent.helpers
-                if helper[0] is not HelperTypes.EXT_APPLIES_TO
-            ]
-            ent.strip_tags(tags)
+        for ent in ents:
+            applies_to = get_appliesto(ent)
+            if match_tags(tags, applies_to):
+                fgd.entities[ent.classname] = ent
+    
+                # Strip applies-to helper.
+                ent.helpers[:] = [
+                    helper for helper in ent.helpers
+                    if helper[0] is not HelperTypes.EXT_APPLIES_TO
+                ]
+                ent.strip_tags(tags)
 
-    print('Culled entities, merging bases...')
+    print('Processed entities, merging bases...')
 
     fgd.collapse_bases()
 
@@ -329,9 +354,12 @@ def action_export(
         if ent.type is not EntityTypes.BASE
     }
 
-    with open(output_path, 'w') as f:
-        fgd.export(f)
-
+    if as_binary:
+        with open(output_path, 'wb') as f:
+            fgd.serialise(f)
+    else:
+        with open(output_path, 'w') as f:
+            fgd.export(f)
 
 def main(args: List[str]=None):
     """Entry point."""
@@ -350,7 +378,7 @@ def main(args: List[str]=None):
     parser_exp = subparsers.add_parser(
         "export",
         help=action_export.__doc__,
-        aliases=["exp", "e"],
+        aliases=["exp", "i"],
     )
 
     parser_exp.add_argument(
@@ -359,10 +387,23 @@ def main(args: List[str]=None):
         help="Destination FGD filename."
     )
     parser_exp.add_argument(
+        "-e", "--engine",
+        action="store_true",
+        help="If set, produce FGD for parsing by script. "
+             "This includes all keyvalues regardless of tags, "
+             "to allow parsing VMF/BSP files. Overrides tags if "
+             " provided.",
+    )
+    parser_exp.add_argument(
+        "-b", "--binary",
+        action="store_true",
+        help="If set, produce a binary format used by Srctools.",
+    )
+    parser_exp.add_argument(
         "tags",
-        choices=ALL_TAGS,
-        nargs="+",
+        nargs="*",
         help="Tags to include in the output.",
+        default=None,
     )
 
     parser_imp = subparsers.add_parser(
@@ -399,18 +440,37 @@ def main(args: List[str]=None):
             result.fgd,
         )
     elif result.mode in ("export", "exp", "e"):
+        # Engine means tags are ignored.
+        # Non-engine means tags must be specified!
+        if result.engine:
+            if result.tags:
+                print("Tags ignored in --engine mode...", file=sys.stderr)
+            result.tags = ['ENGINE']
+        elif not result.tags:
+            parser.error("At least one tag must be specified!")
+            
+        tags = validate_tags(result.tags)
+        
+        for tag in tags:
+            if tag not in ALL_TAGS:
+                parser.error(
+                    'Invalid tag "{}"! Allowed tags: \n'.format(tag) +
+                    format_all_tags()
+                )
         action_export(
             dbase,
-            validate_tags(result.tags),
+            tags,
             result.output,
+            result.binary,
+            result.engine,
         )
     else:
         raise AssertionError("Unknown mode! (" + result.mode + ")")
 
 
 if __name__ == '__main__':
-    # main(sys.argv[1:])
+    main(sys.argv[1:])
 
-    for game in GAME_ORDER:
-        print('\n'+ game + ':')
-        main(['export', '-o', 'fgd_out/' + game + '.fgd', game])
+    #for game in GAME_ORDER:
+    #    print('\n'+ game + ':')
+    #    main(['export', '-o', 'fgd_out/' + game + '.fgd', game])
