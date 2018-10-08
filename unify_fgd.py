@@ -54,9 +54,24 @@ FEATURES = {
     'P2DES': 'INSTANCING PROP_SCALING VSCRIPT'.split(),
 }
 
+
+ALL_FEATURES = {
+    tag.upper() 
+    for t in FEATURES.values() 
+    for tag in t
+}
+
+# Specially handled tags.
+TAGS_SPECIAL = {
+  'ENGINE',  # Tagged on entries that specify machine-oriented types and defaults.
+  'SRCTOOLS', # Implemented by the srctools post-compiler.
+}
+
+
 ALL_TAGS = set()  # type: Set[str]
 ALL_TAGS.update(GAME_ORDER)
-ALL_TAGS.update(tag.upper() for t in FEATURES.values() for tag in t)
+ALL_TAGS.update(ALL_FEATURES)
+ALL_TAGS.update(TAGS_SPECIAL)
 ALL_TAGS.update('SINCE_' + t.upper() for t in GAME_ORDER)
 ALL_TAGS.update('UNTIL_' + t.upper() for t in GAME_ORDER)
 
