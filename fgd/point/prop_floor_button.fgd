@@ -11,9 +11,6 @@
 		"models/props/portal_button_damaged01.mdl": "Very Damaged"
 		]
 
-	model[engine](studio): "Button model" : "models/props/portal_button.mdl"
-
-
 	// Outputs
 	output OnPressedBlue(void) : "Called in Coop when the button has been pressed by ATLAS."
 	output OnPressedOrange(void) : "Called in Coop when the button has been pressed by P-Body."
