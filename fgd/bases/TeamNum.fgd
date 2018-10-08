@@ -1,7 +1,7 @@
 
 @BaseClass = TeamNum
 	[
-	teamnum[TF2](choices) : "Team" : 0 : =
+	teamnum[TF2](choices) : "Team" : 0 =
 		[
 		0: "Any"
 		2: "Red"

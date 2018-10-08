@@ -9,7 +9,7 @@
 	lifetime(float) : "Lifetime" : 0.5
 	startwidth(float) : "Start Width" : 8.0
 	endwidth(float) : "End Width" : 1.0
-	spritenamesprite) : "Sprite Name" : "sprites/bluelaser1.vmt"
+	spritename(sprite) : "Sprite Name" : "sprites/bluelaser1.vmt"
 	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
 	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
 	rendermode(choices) : "Render Mode" : "5" =

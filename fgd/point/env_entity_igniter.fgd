@@ -1,4 +1,3 @@
-
 @PointClass base(Targetname) 
 	size(-4 -4 -4, 4 4 4) 
 	color(0 180 0) 
@@ -12,4 +11,3 @@
 	// Inputs
 	input Ignite(void) : "Ignite the target entity."
 	]
-j j 
