@@ -1,7 +1,7 @@
 
 @SolidClass base(Parentname, Global) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	line(255 255 255, targetname, target) = func_traincontrols: "When used by the player, this entity overrides the player's controls to let them drive a train."
+	line(255 255 255, targetname, target) 
+= func_traincontrols: "When used by the player, this entity overrides the player's controls to let them drive a train."
 	[
 	target(target_destination) : "Train Name" : : "The target train to control when the player uses these controls."
 	]
