@@ -24,7 +24,9 @@
 	target6(target_destination) : "Target 6"
 	target7(target_destination) : "Target 7"
 	target8(target_destination) : "Target 8"
-	busyactor(choices) : "If an Actor is talking..." : "1" : "What to do if an actor this scene needs is already talking when this scene is told to start." =
+
+	busyactor[engine](integer) : "If an Actor is talking..." : 1
+	busyactor(choices) : "If an Actor is talking..." : 1 : "What to do if an actor this scene needs is already talking when this scene is told to start." =
 		[
 		0: "Start immediately"
 		1: "Wait for actor to finish"
@@ -32,7 +34,8 @@
 		3: "Cancel at next interrupt event"
 		]
 
-	onplayerdeath(choices) : "On player death" : "0" : "What should this entity do if the player dies" =
+	onplayerdeath[engine](boolean) : "On Player Death" : 0
+	onplayerdeath(choices) : "On Player Death" : 0 : "What should this entity do if the player dies" =
 		[
 		0: "Do Nothing"
 		1: "Cancel Script and return to AI"

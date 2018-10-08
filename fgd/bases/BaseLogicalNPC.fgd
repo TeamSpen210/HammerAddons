@@ -32,6 +32,7 @@
 		4: "Auto PVS"
 		5: "Auto PVS after PVS"
 		]
+	sleepstate[engine](integer) : "Sleep State" : 0
 
 	wakeradius(float) : "Wake Radius" : 0 : "Auto-wake if player within this distance"
 	wakesquad(boolean) : "Wake Squad" : 0 : "Wake all of the NPCs squadmates if the NPC is woken"

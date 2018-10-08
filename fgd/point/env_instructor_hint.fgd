@@ -7,12 +7,16 @@
 	[
 	hint_replace_key(string) : "Replace Key" : : "Unique name so that messages with the same key will replace each other."
 	hint_target(target_destination) : "Target Entity" : : "The entity to show this hint on top of. The entity used must exist on the client, info_target_instructor_hint can be parented to server only entities for this purpose."
+
+
+	hint_static[engine](integer): "Positioning" : 0
 	hint_static(choices) : "Positioning" : "0" : "Either show at the position of the Target Entity. Or show the hint directly on the hud at a fixed position." =
 		[
 		0: "Follow the Target Entity"
 		1: "Show on the hud"
 		]
 
+	hint_allow_nodraw_target[engine](integer): "Allow invisible target" : 1
 	hint_allow_nodraw_target(choices) : "Allow invisible target" : "1" : "Do we allow the hint to follow entities with nodraw set?" =
 		[
 		0: "End immediately on nodraw"
@@ -22,12 +26,15 @@
 	hint_caption(string) : "Caption" : : "The text of your hint."
 	hint_activator_caption(string) : "Activator Caption" : : "The text of your hint shown to only the activating player."
 	hint_color(color255) : "Caption Color" : "255 255 255" : "The color of the caption text"
-	hint_forcecaption(choices) : "Show through walls" : "0" : "Do we show the caption text even if the hint is occluded by a wall?" =
+
+	hint_icon_onscreen[engine](integer): "Show through walls" : 0
+	hint_forcecaption(choices) : "Show through walls" : 0 : "Do we show the caption text even if the hint is occluded by a wall?" =
 		[
 		0: "No"
 		1: "Show when occluded"
 		]
 
+	hint_icon_onscreen[engine](string): "Onscreen Icon" : "icon_tip"
 	hint_icon_onscreen(choices) : "Onscreen Icon" : "icon_tip" : "The icon to use when the hint is within the player's view." =
 		[
 		// Todo: cross-check with CSGO and ASW
@@ -63,6 +70,7 @@
 		"icon_present": "Present"
 		]
 		
+	hint_icon_offscreen[engine](string): "Offscreen Icon" : "icon_tip"
 	hint_icon_offscreen(choices) : "Offscreen Icon" : "icon_tip" : "The icon to use when the hint is outside the player's view." =
 		[
 		"icon_blank": "Blank"
@@ -96,12 +104,14 @@
 		"icon_present": "Present"
 		]
 
-	hint_nooffscreen(choices) : "Show offscreen" : "0" : "When the hint is offscreen, do we show an icon and arrow?" =
+	hint_nooffscreen[engine](boolean): "Show offscreen" : 0
+	hint_nooffscreen(choices) : "Show offscreen" : 0 : "When the hint is offscreen, do we show an icon and arrow?" =
 		[
 		0: "Show"
 		1: "Don't show"
 		]
 
+	hint_binding[engine](string) : "Bound Command": ""
 	hint_binding(choices) : "Bound Command" : : "If using 'show key bindings' for the onscreen icon, this field should be the command we want to show bindings for." =
 		[
 		"": "Unused"
@@ -121,7 +131,8 @@
 		]
 
 	hint_icon_offset(float) : "Icon Height Offset" : 0 : "A height offset from the target entity's origin to display the hint"
-	hint_pulseoption(choices) : "Size Pulsing" : "0" : "The icon size can pulsate" =
+	hint_pulseoption[engine](integer) : "Size Pulsing" : 0
+	hint_pulseoption(choices) : "Size Pulsing" : 0 : "The icon size can pulsate" =
 		[
 		0: "No Pulse"
 		1: "Slow Pulse"
@@ -129,7 +140,8 @@
 		3: "Urgent Pulse"
 		]
 
-	hint_alphaoption(choices) : "Alpha Pulsing" : "0" : "The icon alpha can pulsate" =
+	hint_alphaoption[engine](integer) : "Alpha Pulsing" : 0
+	hint_alphaoption(choices) : "Alpha Pulsing" : 0 : "The icon alpha can pulsate" =
 		[
 		0: "No Pulse"
 		1: "Slow Pulse"
@@ -137,7 +149,8 @@
 		3: "Urgent Pulse"
 		]
 
-	hint_shakeoption(choices) : "Shaking" : "0" : "The icon can shake" =
+	hint_shakeoption[engine](integer) : "Shaking" : 0
+	hint_shakeoption(choices) : "Shaking" : 0 : "The icon can shake" =
 		[
 		0: "No Shaking"
 		1: "Narrow Shake"

@@ -7,6 +7,7 @@
 		65536: "Allow jump up" : 0
 		]
 
+	hinttype[engine](integer) : "Hint" : 0
 	hinttype(choices) : "Hint" : "0" =
 		[
 		0: "None"
@@ -123,7 +124,9 @@
 		]
 
 	hintactivity(string) : "Hint Activity" : : "Activity associated with this hint node. Various parts of the NPC AI play this activity at times. i.e. Actbusy nodes will play this activity when an NPC acts busy on the node."
-	nodefov(choices) : "Node FOV" : "180" : "Imagine this node requires that an NPC be in the node's field of view in order to use this hint." =
+
+	nodefov[engine](integer) : "Node FOV" : 180
+	nodefov(choices) : "Node FOV" : 180 : "Imagine this node requires that an NPC be in the node's field of view in order to use this hint." =
 		[
 		45: "45 Degrees"
 		90: "90 Degrees"
@@ -131,30 +134,28 @@
 		360: "360 Degrees"
 		]
 
-	starthintdisabled(choices) : "Start Hint Disabled" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	starthintdisabled[ASW](boolean) : "Start Hint Disabled" : 0
+	starthintdisabled(boolean) : "Start Hint Disabled" : 0
 	group(string) : "Hint Group" : : "If specified, gives the hint a specific group name.  Useful for hint nodes that need to be logically grouped together. NPCs may also refuse to use hint nodes that don't match their hint group."
 	targetnode(node_dest) : "Target node" : "-1" : "The node ID of an associated target node, if any."
-	ignorefacing(choices) : "Ignore Facing" : "2" : "Don't pay attention to the facing of the node. May not apply to a given hint type." =
+
+	ignorefacing[engine](integer) : "Ignore Facing" : 2
+	ignorefacing(choices) : "Ignore Facing" : 2 : "Don't pay attention to the facing of the node. May not apply to a given hint type." =
 		[
 		0: "No"
 		1: "Yes"
 		2: "Default"
 		]
 
-	minimumstate(choices) : "Minimum State" : "1" : "Require an NPC have a minimum state to use the hint." =
+	minimumstate[engine](integer) : "Minimum State" : 1
+	minimumstate(choices) : "Minimum State" : 1 : "Require an NPC have a minimum state to use the hint." =
 		[
 		1: "Idle"
 		2: "Alert"
 		3: "Combat"
 		]
 
-	maximumstate(choices) : "Maximum State" : "3" : "Require an NPC have a maximum state to use the hint." =
+	maximumstate[engine](integer) : "Maximum State" : 3
+	maximumstate(choices) : "Maximum State" : 3 : "Require an NPC have a maximum state to use the hint." =
 		[
 		1: "Idle"
 		2: "Alert"

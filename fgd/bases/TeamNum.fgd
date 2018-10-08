@@ -24,6 +24,7 @@
 		]
 		
 	teamnum(integer) : "Team"
+	teamnum[engine](integer): "Team": 0
 
 
 	// Inputs

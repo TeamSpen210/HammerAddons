@@ -27,6 +27,7 @@
 		0: "Blunt"
 		1: "Sharp"
 		]
+	damagetype[engine](int): "Impact damage type": 0
 
 	nodamageforces(boolean) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move."
 	inertiascale(float) : "Scale Factor For Inertia" : 1.0 : "Scales the angular mass of an object. Used to hack angular damage and collision response."
@@ -35,7 +36,8 @@
 	damagetoenablemotion(integer) : "Health Level to Override Motion" : 0 : "If specified, this object will start motion disabled. Once its health has dropped below this specified amount, it will enable motion."
 	forcetoenablemotion(float) : "Physics Impact Force to Override Motion" : 0 : "If specified, this object will start motion disabled. Any impact that imparts a force greater than this value on the physbox will enable motion."
 	
-	addon[!TF2, ASW, !P2](string) : "AI AddOn" : : "If specified this object will use this addon behavior when installed in a composite AI"
+	// Incomplete ASW feature.
+	addon[since_ASW](string) : "AI AddOn" : : "If specified this object will use this addon behavior when installed in a composite AI"
 
 
 	// Inputs

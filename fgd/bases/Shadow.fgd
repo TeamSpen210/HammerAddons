@@ -1,13 +1,7 @@
 
 @BaseClass = Shadow
 	[
-	disableshadows(choices) : "Disable shadows" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	disableshadows[ASW](boolean) : "Disable shadows" : 0
+	disableshadows(boolean) : "Disable shadows" : 0
 	disableshadowdepth[since_L4D](boolean) : "Disable ShadowDepth" : 0 : "Used to disable rendering into shadow depth (for flashlight) for this entity."
 	shadowdepthnocache[since_L4D](choices) : "Projected Texture Cache" : "0" : "Used to hint projected texture system whether it is sufficient to cache shadow volume of this entity or to force render it every frame instead." =
 		[
@@ -15,6 +9,7 @@
 		1: "No cache = render every frame"
 		2: "Cache it = render only once"
 		]
+	shadowdepthnocache[engine](integer): "": 0
 
 	disableflashlight[since_L4D](boolean) : "Disable flashlight" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
 

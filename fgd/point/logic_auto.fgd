@@ -9,6 +9,7 @@
 		1: "Remove on fire" : 1
 		]
 
+	globalstate[engine](string) : "Global State to Read" : ""
 	globalstate(choices) : "Global State to Read" : : "If set, this specifies a global state to check before firing. The OnMapSpawn output will only fire if the global state is set." =
 		[
 		"": "--- None ---"

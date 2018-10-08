@@ -2,7 +2,8 @@
 @PointClass base(Targetname, tf_base_minigame) 
 	appliesto(TF2) = tf_halloween_minigame: "Halloween 2014 Minigame"
 	[
-	minigametype(choices) : "Minigame Type" : "1" : "Which minigame is this" =
+	minigametype[engine](integer) : "Minigame Type" : 1
+	minigametype(choices) : "Minigame Type" : 1 : "Which minigame is this" =
 		[
 		1: "Halloween Collection"
 		2: "Halloween Platforms"

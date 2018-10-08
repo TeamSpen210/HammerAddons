@@ -3,12 +3,12 @@
 	color(0 255 0)
 = BaseFilter
 	[
-	negated(choices) : "Filter mode" : "Allow entities that match criteria" : "If set to Allow, only entities who match the criteria will pass the filter. If set to Disallow, only entities who do NOT match the criteria will pass the filter." =
+	negated(choices) : "Filter Mode" : 0 : "If set to Allow, only entities who match the criteria will pass the filter. If set to Disallow, only entities who do NOT match the criteria will pass the filter." =
 		[
 		0: "Allow entities that match criteria"
 		1: "Disallow entities that match criteria"
 		]
-
+	negated[engine](boolean) : "Filter Mode" : 0
 
 	// Inputs
 	input TestActivator(void) : "Test the activator against the filter and fires OnPass or OnFail output."

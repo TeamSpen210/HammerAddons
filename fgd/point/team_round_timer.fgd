@@ -4,37 +4,13 @@
 	[
 	timer_length(integer) : "Timer length (in seconds)" : 600 : "Initial timer length."
 	max_length(integer) : "Max timer length (in seconds)" : 0 : "Maximum timer length (0 = no max). This value is used to ensure the timer never goes above this value when SetTime and AddTime are used."
-	start_paused(choices) : "Start paused" : "1" : "Should the timer start paused? (will need to send a Resume input to start the timer if this is set)." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	start_paused(boolean) : "Start paused" : "1" : "Should the timer start paused? (will need to send a Resume input to start the timer if this is set)."
 
-	show_time_remaining(choices) : "Show Time Remaining" : "1" : "Should we show how much time is remaining.  If no, this will display how much time has passed." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	show_time_remaining(boolean) : "Show Time Remaining" : "1" : "Should we show how much time is remaining.  If no, this will display how much time has passed."
 	setup_length(integer) : "Setup timer length (in seconds)" : 0 : "Length of setup time before the round begins and the timer starts to countdown the normal time. (0 = no setup time)  Setup time is run at the beginning of every round before the normal time begins."
-	reset_time(choices) : "Reset time on round restart" : "0" : "Reset the timer time after a round restart.  This is not the setup time, but the normal round time." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	auto_countdown(choices) : "Use countdown sounds" : "1" : "Let the timer automatically count down the end of a round." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	show_in_hud(choices) : "Show timer in the HUD" : "1" : "Note: You can only show one timer in the HUD at a time." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	reset_time(boolean) : "Reset time on round restart" : "0" : "Reset the timer time after a round restart.  This is not the setup time, but the normal round time."
+	auto_countdown(boolean) : "Use countdown sounds" : "1" : "Let the timer automatically count down the end of a round."
+	show_in_hud(boolean) : "Show timer in the HUD" : "1" : "Note: You can only show one timer in the HUD at a time."
 
 	// Inputs
 	input Pause(void) : "Pause the timer."

@@ -10,8 +10,9 @@
 		4: "Freeze Player" : 0
 		32: "Make Player non-solid" : 0
 		]
-
-	offsettype(choices) : "Offset type " : "0" : "How the player's view moves to the view of the camera." =
+		
+	offsettype[engine](integer) : "Offset type " : 0 : "How the player's view moves to the view of the camera."
+	offsettype(choices) : "Offset type " : 0 : "How the player's view moves to the view of the camera." =
 		[
 		0: "Snap to camera"
 		1: "Ease to camera"

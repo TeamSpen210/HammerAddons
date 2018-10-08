@@ -13,6 +13,8 @@
 		9: "World Space Glow"
 		10: "Don't Render"
 		]
+	rendermode[engine](integer): "Render Mode": 0
+
 	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode. Often affects opacity."
 	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "A color to mix with the model/sprite"
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows" : 0

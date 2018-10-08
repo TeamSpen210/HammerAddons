@@ -18,7 +18,8 @@
 		524288: "No impact effects" : 0
 		]
 
-	headcrabtype(choices) : "Which headcrab to spawn?" : "0" =
+	headcrabtype[engine](integer) : "Which headcrab to spawn?" : 0
+	headcrabtype(choices) : "Which headcrab to spawn?" : 0 =
 		[
 		0: "Normal headcrabs"
 		1: "Fast Headcrabs"

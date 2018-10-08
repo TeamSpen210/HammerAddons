@@ -3,6 +3,7 @@
 	color(200 0 0)
 = env_screeneffect: "Allows screenspace effects to be played on the player's view."
 	[
+	type[engine](integer) : "Effect Type" : 0
 	type(choices) : "Effect Type" : "0" : "Which effect to use." =
 		[
 		0: "Advisor Stun"
