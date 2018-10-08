@@ -11,7 +11,7 @@ from srctools.fgd import (
     FGD, validate_tags, match_tags,
     EntityDef, EntityTypes,
     HelperTypes, IODef,
-    KeyValues,
+    KeyValues, ValueTypes,
 )
 from srctools.filesys import RawFileSystem
 
@@ -46,12 +46,12 @@ GAME_NAME = dict(GAMES)
 # Specific features that are backported to various games.
 
 FEATURES = {
-    'L4D': 'INSTANCING'.split(), 
-    'TF2': 'INSTANCING PROP_SCALING'.split(),
-    'ASW': 'INSTANCING VSCRIPT'.split(),
-    'P2': 'INSTANCING VSCRIPT'.split(),
-    'CSGO': 'INSTANCING PROP_SCALING VSCRIPT'.split(),
-    'P2DES': 'INSTANCING PROP_SCALING VSCRIPT'.split(),
+    'L4D': {'INSTANCING'},
+    'TF2': {'INSTANCING', 'PROP_SCALING'},
+    'ASW': {'INSTANCING', 'VSCRIPT'},
+    'P2': {'INSTANCING', 'VSCRIPT'},
+    'CSGO': {'INSTANCING', 'PROP_SCALING', 'VSCRIPT'},
+    'P2DES': {'INSTANCING', 'PROP_SCALING', 'VSCRIPT'},
 }
 
 ALL_FEATURES = {
@@ -66,7 +66,6 @@ TAGS_SPECIAL = {
   'SRCTOOLS', # Implemented by the srctools post-compiler.
 }
 
-
 ALL_TAGS = set()  # type: Set[str]
 ALL_TAGS.update(GAME_ORDER)
 ALL_TAGS.update(ALL_FEATURES)
@@ -74,7 +73,8 @@ ALL_TAGS.update(TAGS_SPECIAL)
 ALL_TAGS.update('SINCE_' + t.upper() for t in GAME_ORDER)
 ALL_TAGS.update('UNTIL_' + t.upper() for t in GAME_ORDER)
 
-def format_all_tags():
+
+def format_all_tags() -> str:
     """Append a formatted description of all allowed tags to a message."""
     
     return (
@@ -88,6 +88,7 @@ def format_all_tags():
          ', '.join(ALL_FEATURES),
         ', '.join(TAGS_SPECIAL),
      )
+
 
 def expand_tags(tags: FrozenSet[str]) -> FrozenSet[str]:
     """Expand the given tags, producing the full list of tags these will search.
@@ -319,16 +320,71 @@ def action_export(
     print('Tags expanded to: {}'.format(', '.join(tags)))
 
     fgd = load_database(dbase)
-    
-    ents = list(fgd.entities.values())
-    fgd.entities.clear()
 
     if engine_mode:
         # In engine mode, we don't care about specific games.
-        for ent in ents:
-            pass
+        print('Collapsing bases...')
+        fgd.collapse_bases()
+
+        empty_set = frozenset()
+
+        print('Merging tags...')
+        for ent in fgd:
+            # Strip applies-to helper and ordering helper.
+            ent.helpers[:] = [
+                helper for helper in ent.helpers
+                if helper[0] is not HelperTypes.EXT_APPLIES_TO and
+                   helper[0] is not HelperTypes.EXT_ORDERBY
+            ]
+            for category in [ent.inputs, ent.outputs, ent.keyvalues]:
+                # For each category, check for what value we want to keep.
+                # If only one, we keep that.
+                # If there's an "ENGINE" tag, that's specifically for us.
+                # Otherwise, warn if there's a type conflict.
+                # If the final value is choices, warn too (not really a type).
+                for key, tag_map in category.items():
+                    if len(tag_map) == 1:
+                        [value] = tag_map.values()
+                    elif 'ENGINE' in tag_map:
+                        value = tag_map['ENGINE']
+                        if value.type is ValueTypes.CHOICES:
+                            raise ValueError(
+                                '{}.{}: Engine tags cannot be '
+                                'CHOICES!'.format(ent.classname, key)
+                            )
+                    else:
+                        # More than one tag.
+                        # IODef and KeyValues have a type attr.
+                        types = {val.type for val in tag_map.values()}
+                        if len(types) > 2:
+                            print('{}.{} has multiple types! ({})'.format(
+                                ent.classname,
+                                key,
+                                ', '.join([typ.value for typ in types])
+                            ))
+                        # Pick the one with shortest tags arbitrarily.
+                        value = sorted(
+                            tag_map.items(),
+                            key=lambda t: len(t[0]),
+                        )[0][1]  # type: Union[IODef, KeyValues]
+
+                    if value.type is ValueTypes.CHOICES:
+                        print(
+                            '{}.{} uses CHOICES type, '
+                            'provide ENGINE '
+                            'tag!'.format(ent.classname, key)
+                        )
+
+                    # Blank this, it's not that useful.
+                    value.desc = ''
+
+                    category[key] = {empty_set: value}
+
     else:
         print('Culling incompatible entities...')
+
+        ents = list(fgd.entities.values())
+        fgd.entities.clear()
 
         for ent in ents:
             applies_to = get_appliesto(ent)
@@ -342,12 +398,13 @@ def action_export(
                 ]
                 ent.strip_tags(tags)
 
-    print('Processed entities, merging bases...')
+        print('Culled entities, merging bases...')
 
-    fgd.collapse_bases()
+        fgd.collapse_bases()
 
     print('Exporting...')
 
+    # Remove all base entities.
     fgd.entities = {
         clsname: ent
         for clsname, ent in fgd.entities.items()
