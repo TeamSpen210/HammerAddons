@@ -1,0 +1,21 @@
+@PointClass 
+    size(-8 -8 -8, 8 8 8)
+    appliesto(srctools)
+= comp_pack_rename:
+	"Pack a file into the BSP, under a different name than it starts with."
+	[
+	filesrc(string): "Source Filename": : "Filename to read data from."
+	filedest(string): "Destination Filename": : "Filename to pack under."
+	
+	filetype[engine](string): "File Type": "GENERIC" : "File type to record it as."
+	filetype(choices): "File Type": "GENERIC" : "File type to record it as." = 
+		[
+		"GENERIC": "Generic"
+		"SOUNDSCRIPT": "SoundScript file (add to manifest)"
+		"PARTICLE_FILE": "Particle System (add to manifest)"
+		"VSCRIPT_SQUIRREL": "VScript (Squirrel)"
+		"MATERIAL": "Material"
+		"TEXTURE": "Texture"
+		"MODEL": "Model"
+		]
+	]

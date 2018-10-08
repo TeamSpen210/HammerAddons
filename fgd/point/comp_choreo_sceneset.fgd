@@ -1,0 +1,52 @@
+@PointClass base(Targetname) 
+	iconsprite("editor/choreo_manager.vmt")
+= comp_choreo_sceneset:
+"Chains a set of choreographed scenes together."
+	[
+	play_dings[P2](boolean): "Play Dings" : 1 : "Play the Aperture blip sounds at the start and end."
+	delay(float): "Delay between each" : "0.1" : "Add a delay between each scene."
+	only_once(boolean): "Clean up after starting" : 1 : "If set, Kill choreo scenes after starting so they only play once." +
+	"If set, the Cancel input will not work properly."
+	
+	busyactor[engine](integer) : "If an Actor is talking..." : 1 : "What to do if an actor this scene needs is already talking when this scene is told to start."
+	busyactor(choices) : "If an Actor is talking..." : 1 : "What to do if an actor this scene needs is already talking when this scene is told to start." =
+	[
+		0: "Start immediately"
+		1: "Wait for actor to finish"
+		2: "Interrupt at next interrupt event"
+		3: "Cancel at next interrupt event"
+	]
+	
+	onplayerdeath[engine](integer) : "On player death" : 0 : "What should this entity do if the player dies"
+	onplayerdeath(choices) : "On player death" : 0 : "What should this entity do if the player dies" =
+	[
+		0 : "Do Nothing"
+		1 : "Cancel Script and return to AI"
+	]
+	
+	scene01(scene): "Scene 1" : ""
+	scene02(scene): "Scene 2" : ""
+	scene03(scene): "Scene 3" : ""
+	scene04(scene): "Scene 4" : ""
+	scene05(scene): "Scene 5" : ""
+	scene06(scene): "Scene 6" : ""
+	scene07(scene): "Scene 7" : ""
+	scene08(scene): "Scene 8" : ""
+	scene09(scene): "Scene 9" : ""
+	scene10(scene): "Scene 10" : ""
+	scene11(scene): "Scene 11" : ""
+	scene12(scene): "Scene 12" : ""
+	scene13(scene): "Scene 13" : ""
+	scene14(scene): "Scene 14" : ""
+	scene15(scene): "Scene 15" : ""
+	scene16(scene): "Scene 16" : ""
+	scene17(scene): "Scene 17" : ""
+	scene18(scene): "Scene 18" : ""
+	scene19(scene): "Scene 19" : ""
+	scene20(scene): "Scene 20" : ""
+	
+	input Start(void): "Start the choreo sequence playing."
+	input Cancel(void): "Stop the choreo sequence at any point."
+	output OnStart(void): "Fired when the sequence starts."
+	output OnFinish(void): "Fired when the sequence is complete."
+	]   

@@ -1,0 +1,42 @@
+@PointClass 
+	size(-8 -8 -8, 8 8 8) 
+	appliesto(srctools)
+= comp_pack:
+	"Explicitly identify resources to pack into the map. If more are needed, add additional keyvalues with SmartEdit off."
+	[
+	generic1(string): "Generic" : : "Pack a file, starting in any of the content folders."
+	generic2(string): "Generic" : : "Pack a file, starting in any of the content folders."
+	generic3(string): "Generic" : : "Pack a file, starting in any of the content folders."
+	generic4(string): "Generic" : : "Pack a file, starting in any of the content folders."
+	generic5(string): "Generic" : : "Pack a file, starting in any of the content folders."
+	
+	sound1(sound): "Sound" : : "Pack a raw sound file or a soundscript."
+	sound2(sound): "Sound" : : "Pack a raw sound file or a soundscript."
+	sound3(sound): "Sound" : : "Pack a raw sound file or a soundscript."
+	sound4(sound): "Sound" : : "Pack a raw sound file or a soundscript."
+	sound5(sound): "Sound" : : "Pack a raw sound file or a soundscript."
+	
+	model1(studio): "Model" : : "Pack a model."
+	model2(studio): "Model" : : "Pack a model."
+	model3(studio): "Model" : : "Pack a model."
+	model4(studio): "Model" : : "Pack a model."
+	model5(studio): "Model" : : "Pack a model."
+	
+	material1(material): "Material" : : "Pack a material."
+	material2(material): "Material" : : "Pack a material."
+	material3(material): "Material" : : "Pack a material."
+	material4(material): "Material" : : "Pack a material."
+	material5(material): "Material" : : "Pack a material."
+	
+	particle1(particlesystem): "Particle" : : "Pack a particle system, and include in the manifest."
+	particle2(particlesystem): "Particle" : : "Pack a particle system, and include in the manifest."
+	particle3(particlesystem): "Particle" : : "Pack a particle system, and include in the manifest."
+	particle4(particlesystem): "Particle" : : "Pack a particle system, and include in the manifest."
+	particle5(particlesystem): "Particle" : : "Pack a particle system, and include in the manifest."
+	
+	soundscript1(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
+	soundscript2(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
+	soundscript3(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
+	soundscript4(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
+	soundscript5(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
+	]
