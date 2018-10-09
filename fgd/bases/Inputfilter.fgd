@@ -1,13 +1,12 @@
 
-@BaseClass 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = Inputfilter
+@BaseClass = Inputfilter
 	[
-	inputfilter(choices) : "Input Filter" : "0" : "Used to specify which inputs this entity will accept." =
+	inputfilter[engine](integer) : "Input Filter" : 0
+	inputfilter(choices) : "Input Filter" : 0 : "Used to specify which inputs this entity will accept." =
 		[
 		0: "Allow all inputs"
 		8: "Ignore Touch/Untouch"
 		16: "Ignore Use"
 		32: "Ignore All"
 		]
-
 	]

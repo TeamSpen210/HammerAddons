@@ -1,6 +1,6 @@
 
 @SolidClass base(Targetname, Parentname, Origin) 
-	appliesto(P1, P2) = func_portal_detector: "A region that fires an output if a portal is placed in it|||A region that fires an output if a portal is placed inside it."
+	appliesto(P1, P2) = func_portal_detector: "A region that fires an output if a portal is placed inside it."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

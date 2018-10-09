@@ -1,6 +1,6 @@
 
 @SolidClass base(Targetname) 
-	appliesto(P1, P2) = func_weight_button: "A button which activates after a specified amount of weight is applied|||A button which activates after a specified amount of weight is applied. Likely useless."
+	appliesto(P1, P2) = func_weight_button: "A button which activates after a specified amount of weight is applied."
 	[
 	weighttoactivate(float) : "Amount of weight required before this button activates."
 

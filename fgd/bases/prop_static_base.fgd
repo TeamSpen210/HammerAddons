@@ -6,7 +6,9 @@
 	[
 	model(studio) : "World Model"
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
-	solid(choices) : "Collisions" : "6" =
+	
+	solid[engine](integer) : "Collisions" : 6
+	solid(choices) : "Collisions" : 6 =
 		[
 		0: "Not Solid"
 		2: "Use Bounding Box"
@@ -18,7 +20,6 @@
 	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
 	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
 	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7 [hl2/ep1/portal] or dx8 [ep2/tf], then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified. This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades. Numbers smaller than 1 cause the prop to fade out at further distances, and greater than 1 cause it to fade out at closer distances."
-	fadescale[ASW](float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7 [hl2/ep1/portal] or dx8 [ep2/tf], then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified. This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades. Numbers smaller than 1 cause the prop to fade out at further distances,and greater than 1 cause it to fade out at closer distances."
 	
 	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's origin."
 
@@ -26,16 +27,13 @@
 	disableselfshadowing(boolean) : "Disable Self-Shadowing" : 0 : "When vertex lighting is enabled, prevent the geometry from self-shadowing -- casting shadows onto itself."
 	ignorenormals(boolean) : "Ignore Surface Normal" : 0 : "When vertex lighting is enabled, ignore the surface normal of faces when calculating the vertex lighting. Useful for thin, translucent objects such as leaves on foliage props."
 	
-	renderamt[ASW](integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
-	rendercolor[ASW, P2, CSGO](color255) : "Color (R G B)" : "255 255 255"
-	generatelightmaps[TF2](choices) : "Generate (and use) lightmaps for this static prop" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	renderamt[since_L4D](integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
+	rendercolor[since_L4D](color255) : "Color (R G B)" : "255 255 255"
+	
+	generatelightmaps[TF2](boolean) : "Generate (and use) lightmaps for this static prop" : 0
 	lightmapresolutionx[TF2](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
 	lightmapresolutiony[TF2](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
+	
 	enablelightbounce[PROPCOMBINE](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
 	preventpropcombine[PROPCOMBINE](boolean) : "Disable Prop Combine" : 0 : "Prevent this static prop from combining with any other static props in vbsp."
 	uniformscale[CSGO](float) : "Uniform Scale Override" : 1 : "Resize the static prop."

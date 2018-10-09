@@ -16,11 +16,11 @@
 		]
 
 	defaultanim(string) : "Default Animation" : : "The name of the idle animation that this prop will revert to whenever it finishes a random or forced animation."
-	randomanimation[ASW](boolean) : "Randomly Animate" : 0 : "If set, this prop will randomly choose and play animations, based upon the times specified in 'Min/Max Random Anim Time'. Inbetween the random animations, it will revert to playing the 'Default Animation'."
+	randomanimation[since_ASW](boolean) : "Randomly Animate" : 0 : "If set, this prop will randomly choose and play animations, based upon the times specified in 'Min/Max Random Anim Time'. Inbetween the random animations, it will revert to playing the 'Default Animation'."
 	minanimtime(float) : "Min Random Anim Time" : 5 : "Minimum time between random animations."
 	maxanimtime(float) : "Max Random Anim Time" : 10 : "Maximum time between random animations."
 	setbodygroup(integer) : "Body Group" : 0 : "Body Groups allow turning on and off parts of a model, so sections can be shown or hidden dynamically."
-	disablebonefollowers[ASW](boolean) : "Disable Bone Followers" : 0 : "If set, the prop will not use bone followers, even if it has them defined."
+	disablebonefollowers[since_ASW](boolean) : "Disable Bone Followers" : 0 : "If set, the prop will not use bone followers, even if it has them defined."
 	lightingorigin(target_destination) : "Lighting Origin" : : "Select a path_corner entity to specify a location to sample lighting from, instead of using this entity's origin."
 	holdanimation[since_ASW](boolean) : "Hold Animation" : 0 : "If set, the prop will not loop its animation, but hold the last frame."
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
@@ -36,7 +36,7 @@
 	input TurnOff(void) : "Make the prop invisible."
 	input EnableCollision(void) : "Enable collision on the prop."
 	input DisableCollision(void) : "Disable collision on the prop."
-	input SetAnimationNoReset[!TF2, ASW](string) : "Force the prop to play an animation unless the prop is already playing the animation. The parameter should be the name of the animation."
+	input SetAnimationNoReset[since_ASW](string) : "Force the prop to play an animation unless the prop is already playing the animation. The parameter should be the name of the animation."
 	input BecomeRagdoll[since_P2](void) : "Change into a ragdoll immediately."
 	input FadeAndKill[since_P2](void) : "Fade out then remove this prop."
 

@@ -2,6 +2,7 @@
 @BaseClass 
 	appliesto(TF2) = Condition
 	[
+	condition[engine](integer) : "Condition" : -1 : "The condition to use."
 	condition(choices) : "Condition" : "-1" : "The condition to use." =
 		[
 		-1: "TF_COND_INVALID"

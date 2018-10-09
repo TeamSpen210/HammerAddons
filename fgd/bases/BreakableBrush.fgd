@@ -12,7 +12,8 @@
 		2048: "Don't allow bullet penetration" : 0
 		]
 
-	propdata(choices) : "Prop Data" : "0" : "Set to the best approximation of the size and material of this entity's brushes. If set, it will override this entity's health and damage taken from various weapons. See the propdata.txt file in the scripts directory of your MOD to get a detailed list of what each entry specifies." =
+	propdata(integer) : "Prop Data" : 0 : "Set to the best approximation of the size and material of this entity's brushes. If set, it will override this entity's health and damage taken from various weapons. See the propdata.txt file in the scripts directory of your MOD to get a detailed list of what each entry specifies."
+	propdata(choices) : "Prop Data" : 0 : "Set to the best approximation of the size and material of this entity's brushes. If set, it will override this entity's health and damage taken from various weapons. See the propdata.txt file in the scripts directory of your MOD to get a detailed list of what each entry specifies." =
 		[
 		0: "None"
 		1: "Wooden.Tiny"
@@ -42,7 +43,9 @@
 		]
 
 	health(integer) : "Strength" : 1 : "Number of points of damage to take before breaking. 0 means don't break."
-	material(choices) : "Material Type" : "0" : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken." =
+	
+	material[engine](integer) : "Material Type" : 0 : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken."
+	material(choices) : "Material Type" : 0 : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken." =
 		[
 		0: "Glass"
 		1: "Wood"
@@ -53,25 +56,12 @@
 		6: "Computer"
 		7: "Unbreakable Glass"
 		8: "Rocks"
+		9: "Metal Panel"[P2]
 		10: "None"
 		]
-
-	material[P2](choices) : "Material Type" : "0" : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken." =
-		[
-		0: "Glass"
-		1: "Wood"
-		2: "Metal"
-		3: "Flesh"
-		4: "CinderBlock"
-		5: "Ceiling Tile"
-		6: "Computer"
-		7: "Unbreakable Glass"
-		8: "Rocks"
-		9: "Metal Panel"
-		10: "None"
-		]
-
-	explosion(choices) : "Gibs Direction" : "0" : "Used to decide which direction to throw gibs when broken." =
+		
+	explosion(integer) : "Gibs Direction" : 0 : "Used to decide which direction to throw gibs when broken." =
+	explosion(choices) : "Gibs Direction" : 0 : "Used to decide which direction to throw gibs when broken." =
 		[
 		0: "Random"
 		1: "Relative to Attack"
@@ -81,6 +71,8 @@
 	gibdir(angle) : "Precise Gib Direction" : "0 0 0" : "Specifies the direction to throw gibs when this breakable breaks. Be sure to select Use Precise Gib Dir in the Gibs Direction field!"
 	nodamageforces(boolean) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move."
 	gibmodel(studio) : "Gib Model" : : "Used by HL1Port to specify a custom gib model to break into, overriding the 'Material Type'."
+	
+	spawnobject[engine](integer) : "Spawn On Break" : "0" : "When broken, an entity of the selected type will be created." 
 	spawnobject[!P2](choices) : "Spawn On Break" : "0" : "When broken, an entity of the selected type will be created." =
 		[
 		1: "item_battery"
