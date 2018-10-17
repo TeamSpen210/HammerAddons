@@ -44,8 +44,6 @@ def main(argv):
 
     LOGGER.info('Reading BSP...')
     bsp_file = BSP(path)
-    bsp_file.read_header()
-    bsp_file.read_game_lumps()
 
     LOGGER.info('Reading entities...')
     vmf = bsp_file.read_ent_data()
@@ -53,13 +51,7 @@ def main(argv):
 
     run_transformations(vmf, fsys, packlist)
 
-    bsp_file.replace_lump(
-        bsp_file.filename,
-        BSP_LUMPS.ENTITIES,
-        bsp_file.write_ent_data(vmf),
-    )
-
-    LOGGER.info('Finished writing entities.')
+    bsp_file.lumps[BSP_LUMPS.ENTITIES].data = bsp_file.write_ent_data(vmf)
 
     packlist.pack_fgd(vmf, fgd)
 
@@ -68,6 +60,9 @@ def main(argv):
 
     with bsp_file.packfile() as pak_zip:
         packlist.pack_into_zip(pak_zip)
+
+    LOGGER.info('Writing BSP...')
+    bsp_file.save()
 
     LOGGER.info("srctools VRAD hook finished!")
 
