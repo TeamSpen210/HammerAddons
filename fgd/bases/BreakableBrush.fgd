@@ -73,7 +73,7 @@
 	gibmodel(studio) : "Gib Model" : : "Used by HL1Port to specify a custom gib model to break into, overriding the 'Material Type'."
 	
 	spawnobject[engine](integer) : "Spawn On Break" : "0" : "When broken, an entity of the selected type will be created." 
-	spawnobject[!P2](choices) : "Spawn On Break" : "0" : "When broken, an entity of the selected type will be created." =
+	spawnobject[HL2, EP1, EP2, P1](choices) : "Spawn On Break" : "0" : "When broken, an entity of the selected type will be created." =
 		[
 		1: "item_battery"
 		2: "item_healthkit"
@@ -105,6 +105,14 @@
 
 	explodemagnitude(integer) : "Explode Magnitude" : 0 : "If non-zero, when this entity breaks it will create an explosion that causes the specified amount of damage."
 	pressuredelay(float) : "Pressure Delay" : 0 : "Delay, in seconds, after 'broken' by pressure before breaking apart (allows for sound to play before breaking apart)."
+	
+	breakabletype[engine](int): "Breakable By" : 0 : "Who can break this?"
+	breakabletype[L4D, L4D2](choices): "Breakable By" : 0 : "Who can break this?" =
+	[
+	0: "Everyone"
+	1: "All Infected"
+	2: "Only Tanks"
+	]
 
 	// Inputs
 	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
