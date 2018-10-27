@@ -63,6 +63,15 @@ triangles
 end
 '''
 
+MDL_EXTS = [
+    '.mdl',
+    '.phy',
+    '.dx90.vtx',
+    '.dx80.vtx',
+    '.sw.vtx',
+    '.vvd',
+]
+
 
 class DynamicModel(Exception):
     """Used as flow control."""
@@ -158,6 +167,7 @@ def merge_props(
     qc_map: Dict[str, QC],
     mdl_map: Dict[str, Model],
     game: Game,
+    pack: PackList,
     map_name: str,
     props: List[StaticProp],
     counter: int,
@@ -169,12 +179,17 @@ def merge_props(
         center_pos += prop.origin
     center_pos = round(center_pos / len(props))  # type: Vec
 
+    # Unify these properties.
     surfprops = set()
     cdmats = set()
+    visleafs = set()
+
+
     for prop in props:
         mdl = mdl_map[unify_mdl(prop.model)]
         surfprops.add(mdl.surfaceprop.casefold())
         cdmats.update(mdl.cdmaterials)
+        visleafs.update(prop.visleafs)
 
     if len(surfprops) > 1:
         raise ValueError('Multiple surfaceprops? Should be filtered out.')
@@ -184,7 +199,7 @@ def merge_props(
     if counter > 0xFFFF:
         raise ValueError('More than 65K models, how??')
 
-    prop_name = 'models/maps/{}/propcombine/merge_{:04X}.mdl'.format(map_name, counter)
+    prop_name = 'maps/{}/propcombine/merge_{:04X}'.format(map_name, counter)
 
     with TemporaryDirectory(prefix='autocomb_') as temp_dir:
         with open(temp_dir + '/blank.smd', 'wb') as f:
@@ -248,6 +263,43 @@ def merge_props(
         ]
         subprocess.run(args)
 
+    full_model_path = game.path / 'models' / prop_name
+    for ext in MDL_EXTS:
+        try:
+            with open(str(full_model_path) + ext, 'rb') as f:
+                pack.pack_file(
+                    'models/{}{}'.format(prop_name, ext),
+                    data=f.read(),
+                )
+        except FileNotFoundError:
+            pass
+
+    # Many of these we require to be the same, so we can read them
+    # from any of the component props.
+    return StaticProp(
+        model='models/{}.mdl'.format(prop_name),
+        origin=center_pos,
+        angles=Vec(0, 0, 0),
+        scaling=1.0,
+        visleafs=sorted(visleafs),
+        solidity=props[0].solidity,
+        flags=props[0].flags,
+        skin=0,
+        min_fade=-1,
+        max_fade=-1,
+        lighting_origin=center_pos,
+        fade_scale=1.0,
+        min_dx_level=0,
+        max_dx_level=0,
+        min_cpu_level=0,
+        max_cpu_level=0,
+        min_gpu_level=0,
+        max_gpu_level=0,
+        tint=props[0].tint,
+        renderfx=props[0].renderfx,
+        disable_on_xbox=False,
+    )
+
 
 def combine(
     bsp: BSP,
@@ -269,7 +321,12 @@ def combine(
         """Compute a grouping key for this prop.
 
         Only props with matching key can be possibly combined.
+        If None it cannot be combined.
         """
+        # If a lighting origin was specified, that overrides the default.
+        if prop.flags & StaticPropFlags.HAS_LIGHTING_ORIGIN:
+            return None
+
         key = unify_mdl(prop.model)
         try:
             model = mdl_map[key]
@@ -281,20 +338,30 @@ def combine(
                 return None
             model = mdl_map[key] = Model(pack.fsys, mdl_file)
 
+        try:
+            skinset = model.skins[prop.skin]
+        except IndexError:
+            skinset = model.skins[0]
+
         return (
             model.flags,
             prop.flags,
             model.contents,
             model.surfaceprop,
             prop.solidity,
+            prop.renderfx,
             *prop.tint,
-            *model.iter_textures({prop.skin}),
+            *model.skins[0],
+            *skinset,
         )
+
+    prop_count = 0
 
     # First, construct groups of props that can possibly be combined.
     prop_groups = defaultdict(list)  # type: Dict[object, List[StaticProp]]
     for prop in bsp.static_props():
         prop_groups[get_grouping_key(prop)].append(prop)
+        prop_count += 1
 
     LOGGER.info('Prop combine: \n')
     for group, props in prop_groups.items():
@@ -314,17 +381,21 @@ def combine(
                 final_props.append(prop)
                 props.remove(prop)
 
-        if not props:
+        if len(props) < 2:
+            # No point combining that.
+            final_props.extend(props)
             continue
-
-        # Grab the first prop's model file, they'll all have the same settings.
-        rep_model = mdl_map[props[0].model]
 
         final_props.append(merge_props(
             qc_map,
             mdl_map,
             game,
+            pack,
             map_name,
             props,
             ind,
         ))
+
+    LOGGER.info('Combined {} props to {} props', prop_count, len(final_props))
+
+    bsp.write_static_props(final_props)
