@@ -6,7 +6,7 @@ draw call.
 import subprocess
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Dict, List, Iterator, Optional
+from typing import Dict, List
 
 from srctools import Vec
 from srctools.tokenizer import Tokenizer, Token
@@ -15,7 +15,7 @@ from srctools.game import Game
 
 from srctools.logger import get_logger
 from srctools.packlist import PackList
-from srctools.bsp import BSP, BSP_LUMPS, StaticProp, StaticPropFlags
+from srctools.bsp import BSP, StaticProp, StaticPropFlags
 from srctools.mdl import Model
 from collections import defaultdict, namedtuple
 
@@ -256,7 +256,7 @@ def merge_props(
                         )
                 f.write('}\n')
         args = [
-            'F:/Git/Desolation/game/bin/win32/studiomdl.exe',
+            str(game.bin_folder() / 'studiomdl.exe'),
             '-nop4',
             '-game', str(game.path), temp_dir + '/model.qc',
         ]
