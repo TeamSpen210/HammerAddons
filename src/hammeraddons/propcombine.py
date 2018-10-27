@@ -306,6 +306,10 @@ def combine(
     game: Game,
 ):
     """Combine props in this map."""
+    if not (game.bin_folder() / 'studiomdl.exe').exists():
+        LOGGER.warning('No studioMDL! Cannot propcombine!')
+        return
+    
     # Parse through all the QC files.
     LOGGER.info('Parsing QC files...')
     qc_map = load_qcs(game)

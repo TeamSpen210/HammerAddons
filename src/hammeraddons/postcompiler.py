@@ -1,5 +1,5 @@
 """Replaces VRAD, to run operations on the final BSP."""
-
+from srctools.compiler import propcombine
 from srctools.logger import init_logging
 
 LOGGER = init_logging('srctools/vrad.log')
@@ -39,7 +39,9 @@ def main(argv):
     if path == "":
         raise Exception("No map passed!")
 
-    if not path.endswith(".bsp"):
+    if path.endswith(('.vmf', '.vmm')):
+        path = path[:-4] + ".bsp"
+    elif not path.endswith(".bsp"):
         path += ".bsp"
 
     LOGGER.info('Reading BSP...')
@@ -51,8 +53,13 @@ def main(argv):
 
     run_transformations(vmf, fsys, packlist)
 
+    LOGGER.info('Combining props...')
+    propcombine.combine(bsp_file, packlist, game_info)
+    LOGGER.info('Done!')
+
     bsp_file.lumps[BSP_LUMPS.ENTITIES].data = bsp_file.write_ent_data(vmf)
 
+    LOGGER.info('Analysing packable resources...')
     packlist.pack_fgd(vmf, fgd)
 
     packlist.pack_from_bsp(bsp_file)
@@ -60,6 +67,8 @@ def main(argv):
 
     with bsp_file.packfile() as pak_zip:
         packlist.pack_into_zip(pak_zip)
+
+    LOGGER.info('Packed files: \n{}'.format('\n'.join(pak_zip.namelist())))
 
     LOGGER.info('Writing BSP...')
     bsp_file.save()
