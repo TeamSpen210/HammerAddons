@@ -43,7 +43,8 @@ $sequence idle blank act_idle 1
 
 QC_COLL_TEMPLATE = '''
 $collisionmodel "blank" {
-    $maxconvexpieces 64
+    $maxconvexpieces 2048
+    $concaveperjoint
     $automass
     $remove2d
     $concave
@@ -129,7 +130,7 @@ def load_qcs(game: Game) -> Dict[str, QC]:
                                 elif body_type is not Token.NEWLINE:
                                     raise tok.error(body_type)
 
-                        elif token_value in '$collisionmodel':
+                        elif token_value == '$collisionmodel':
                             phy_smd = qc_loc / tok.expect(Token.STRING)
                             phy_scale = scale_factor
 
@@ -156,7 +157,7 @@ def load_qcs(game: Game) -> Dict[str, QC]:
         qc_map[unify_mdl(model_name)] = QC(
             str(qc_path).replace('\\', '/'),
             str(ref_smd).replace('\\', '/'),
-            str(phy_smd).replace('\\', '/'),
+            str(phy_smd).replace('\\', '/') if phy_smd else None,
             ref_scale,
             phy_scale,
         )
@@ -174,16 +175,14 @@ def merge_props(
 ) -> StaticProp:
     """Given a set of props, merge them together to produce a new prop."""
 
-    center_pos = Vec()
-    for prop in props:
-        center_pos += prop.origin
-    center_pos = round(center_pos / len(props))  # type: Vec
+    bbox_min, bbox_max = Vec.bbox(prop.origin for prop in props)
+
+    center_pos = (bbox_min + bbox_max) / 2
 
     # Unify these properties.
     surfprops = set()
     cdmats = set()
     visleafs = set()
-
 
     for prop in props:
         mdl = mdl_map[unify_mdl(prop.model)]
@@ -245,14 +244,14 @@ def merge_props(
                             'angle[ {:.3f} {:.3f} {:.3f} ] '
                             'scale[ {:.3f} '
                             ']"\n'.format(
-                                qc.ref_smd,
+                                qc.phy_smd,
                                 prop.origin.x - center_pos.x,
                                 prop.origin.y - center_pos.y,
                                 prop.origin.z - center_pos.z,
                                 prop.angles.x,
                                 prop.angles.y,
                                 prop.angles.z,
-                                qc.ref_scale
+                                qc.phy_scale
                             )
                         )
                 f.write('}\n')
@@ -279,7 +278,7 @@ def merge_props(
     return StaticProp(
         model='models/{}.mdl'.format(prop_name),
         origin=center_pos,
-        angles=Vec(0, 0, 0),
+        angles=Vec(0, 270, 0),
         scaling=1.0,
         visleafs=sorted(visleafs),
         solidity=props[0].solidity,
@@ -362,11 +361,6 @@ def combine(
     for prop in bsp.static_props():
         prop_groups[get_grouping_key(prop)].append(prop)
         prop_count += 1
-
-    LOGGER.info('Prop combine: \n')
-    for group, props in prop_groups.items():
-        LOGGER.info(group)
-        LOGGER.info('\n'.join(map(repr, props)))
 
     # Don't worry about distance.
 
