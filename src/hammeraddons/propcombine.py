@@ -120,3 +120,38 @@ def combine(
     LOGGER.info('Parsing QC files...')
     qc_map = load_qcs(game)
     LOGGER.info('Done! {} props.', len(qc_map))
+
+    # Don't re-parse models continually.
+    cache = {}  # type: Dict[str, Model]
+
+    def get_grouping_key(
+        prop: StaticProp,
+    ) -> object:
+        """Compute a grouping key for this prop.
+
+        Only props with matching key can be possibly combined.
+        """
+        try:
+            model = cache[prop.model]
+        except KeyError:
+            try:
+                mdl_file = pack.fsys[prop.model]
+            except FileNotFoundError:
+                # We don't have this model, we can't combine...
+                return None
+            model = cache[prop.model] = Model(pack.fsys, mdl_file)
+
+        return (
+            model.flags,
+            prop.flags,
+            model.contents,
+            model.surfaceprop,
+            prop.solidity,
+            *prop.tint,
+            *model.iter_textures({prop.skin}),
+        )
+
+    # First, construct groups of props that can possibly be combined.
+    prop_groups = defaultdict(list)
+    for prop in bsp.static_props():
+        prop_groups[get_grouping_key(prop)].append(prop)
