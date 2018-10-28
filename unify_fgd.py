@@ -5,6 +5,7 @@ This allows sharing definitions among different engine versions.
 import sys
 import argparse
 from pathlib import Path
+from lzma import LZMAFile
 from typing import List, Tuple, Set, FrozenSet, Union, Dict
 
 from srctools.fgd import (
@@ -423,8 +424,8 @@ def action_export(
     }
 
     if as_binary:
-        with open(output_path, 'wb') as f:
-            fgd.serialise(f)
+        with open(output_path, 'wb') as f, LZMAFile(f, 'w') as comp:
+            fgd.serialise(comp)
     else:
         with open(output_path, 'w') as f:
             fgd.export(f)
