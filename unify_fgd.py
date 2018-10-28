@@ -4,6 +4,7 @@ This allows sharing definitions among different engine versions.
 """
 import sys
 import argparse
+from collections import Callable
 from pathlib import Path
 from lzma import LZMAFile
 from typing import List, Tuple, Set, FrozenSet, Union, Dict
@@ -64,7 +65,7 @@ ALL_FEATURES = {
 # Specially handled tags.
 TAGS_SPECIAL = {
   'ENGINE',  # Tagged on entries that specify machine-oriented types and defaults.
-  'SRCTOOLS', # Implemented by the srctools post-compiler.
+  'SRCTOOLS',  # Implemented by the srctools post-compiler.
 }
 
 ALL_TAGS = set()  # type: Set[str]
@@ -73,6 +74,45 @@ ALL_TAGS.update(ALL_FEATURES)
 ALL_TAGS.update(TAGS_SPECIAL)
 ALL_TAGS.update('SINCE_' + t.upper() for t in GAME_ORDER)
 ALL_TAGS.update('UNTIL_' + t.upper() for t in GAME_ORDER)
+
+
+# If the tag is present, run to backport newer FGD syntax to older engines.
+POLYFILLS = []  # type: List[Tuple[str, Callable[[FGD], None]]]
+
+
+def _polyfill(tag):
+    def deco(func):
+        POLYFILLS.append((tag.upper(), func))
+        return func
+    return deco
+
+@_polyfill('until_p1')
+def polyfill_boolean(fgd: FGD):
+    """Before Alien Swarm's Hammer, boolean was not available as a keyvalue type.
+
+    Substitute with choices.
+    """
+    for ent in fgd.entities.values():
+        for tag_map in ent.keyvalues.values():
+            for kv in tag_map.values():
+                if kv.type is ValueTypes.BOOL:
+                    kv.type = ValueTypes.CHOICES
+                    kv.val_list = [
+                        ('0', 'No', frozenset()),
+                        ('1', 'Yes', frozenset())
+                    ]
+
+@_polyfill('until_p1')
+def polyfill_node_id(fgd: FGD):
+    """Before Alien Swarm's Hammer, node_id was not available as a keyvalue type.
+
+    Substitute with integer.
+    """
+    for ent in fgd.entities.values():
+        for tag_map in ent.keyvalues.values():
+            for kv in tag_map.values():
+                if kv.type is ValueTypes.TARG_NODE_SOURCE:
+                    kv.type = ValueTypes.INT
 
 
 def format_all_tags() -> str:
@@ -129,7 +169,7 @@ def ent_path(ent: EntityDef) -> str:
     elif ent.type is EntityTypes.BRUSH:
         folder = 'brush'
     else:
-        folder = 'point/'
+        folder = 'point'
 
     # if '_' in ent.classname:
     #     folder += '/' + ent.classname.split('_', 1)[0]
@@ -370,6 +410,8 @@ def action_export(
                             key=lambda t: len(t[0]),
                         )[0][1]  # type: Union[IODef, KeyValues]
 
+                    # If it's CHOICES, we can't know what type it is.
+                    # Guess either int or string, if we can convert.
                     if value.type is ValueTypes.CHOICES:
                         print(
                             '{}.{} uses CHOICES type, '
@@ -413,6 +455,10 @@ def action_export(
         print('Culled entities, merging bases...')
 
         fgd.collapse_bases()
+
+    for poly_tag, polyfill in POLYFILLS:
+        if poly_tag in tags:
+            polyfill(fgd)
 
     print('Exporting...')
 
