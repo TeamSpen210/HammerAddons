@@ -1,9 +1,8 @@
 
-@PointClass base(Targetname, Angles, Light) 
+@PointClass base(Targetname, Angles, BaseLight) 
 	lightprop("models/editor/spot.mdl") 
 	lightcone() 
-	sphere(_fifty_percent_distance) 
-	sphere(_zero_percent_distance) 
+	sphere(_distance)
 	line(255 255 255, targetname, target) 
 	sphere(_distance) = light_spot: "An invisible and directional spotlight."
 	[
@@ -11,8 +10,7 @@
 	_inner_cone(integer) : "Inner (bright) angle" : 30
 	_cone(integer) : "Outer (fading) angle" : 45
 	_exponent(integer) : "Focus" : 1
-	_distance(integer) : "Maximum distance" : 0 : "This is the distance that light is allowed to cast, in inches."
-	_distance[P2](integer) : "Maximum distance" : 0 : "The distance that light is allowed to cast."
+	_distance(integer) : "Maximum distance" : 0 : "The is the distance that light is allowed to cast."
 	pitch(angle_negative_pitch) : "Pitch" : "-90"
 	spawnflags(flags) : "spawnflags" =
 		[

@@ -1,9 +1,7 @@
 
-@PointClass base(Targetname) 
+@PointClass base(Targetname, BaseLight) 
 	light() 
 	iconsprite("editor/light.vmt") 
-	sphere(_fifty_percent_distance) 
-	sphere(_zero_percent_distance) 
 	sphere(_distance) 
 	line(255 255 255, targetname, target) = light: "An invisible omnidirectional lightsource."
 	[
