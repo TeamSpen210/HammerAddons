@@ -25,6 +25,7 @@
 
 	model[engine](studio): "Laser Catcher model" : "models/props/laser_catcher.mdl"
 
+	src_fix_skins[srctools](boolean) : "Fix Skins Logic" : 1 : "If set, add extra outputs to fix the bug with skins not changing after a reload from save."
 
 	// Outputs
 	output OnPowered(void) : "Fired when a laser hits the target."
