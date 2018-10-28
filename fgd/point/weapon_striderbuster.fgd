@@ -11,11 +11,7 @@
 		8388608: "Don't use game_weapon_manager" : 0
 		]
 
-	dud(choices) : "Dud Bomb" : "0" : "This striderbuster is not armed (to be used for training)." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	dud(boolean) : "Dud Bomb" : 0 : "This striderbuster is not armed (to be used for training)."
 
 
 	// Outputs

@@ -11,30 +11,11 @@
 
 	spotlightlength(integer) : "SpotlightLength" : 500
 	spotlightwidth(integer) : "SpotlightWidth" : 50
-	spotlightdisabled(choices) : "SpotlightDisabled" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
 
-	shouldinspect(choices) : "Should inspect" : "1" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	onlyinspectplayers(choices) : "Only Inspect Players" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	neverinspectplayers(choices) : "Never Inspect Players" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	spotlightdisabled(boolean) : "SpotlightDisabled" : 0
+	shouldinspect(boolean) : "Should inspect" : 1
+	onlyinspectplayers(boolean) : "Only Inspect Players" : 0
+	neverinspectplayers(boolean) : "Never Inspect Players" : 0
 
 	// Inputs
 	input DisableSpotlight(void) : "DisableSpotlight"

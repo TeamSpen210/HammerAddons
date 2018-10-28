@@ -5,7 +5,9 @@
 	line(255, 255, 255, targetname, slavename) = prop_door_rotating: "An entity used to place a door in the world."
 	[
 	slavename(target_destination) : "Slave Name" : : "The name of any doors that should be slaved to this door (i.e. should open when this one opens, and close when this one closes)."
-	hardware(choices) : "Hardware Type" : "1" =
+
+	hardware[engine](integer) : "Hardware Type" : 1
+	hardware(choices) : "Hardware Type" : 1 =
 		[
 		0: "<None>"
 		1: "Lever"
@@ -14,7 +16,9 @@
 		]
 
 	ajarangles(angle) : "Ajar Angles (Pitch Yaw Roll)" : "0 0 0" : "If the door 'Spawn Position' is set to Ajar, these are the angles to spawn at, instead of being open or closed."
-	spawnpos(choices) : "Spawn Position" : "0" =
+
+	spawnpos[engine](integer) : "Spawn Position" : 0
+	spawnpos(choices) : "Spawn Position" : 0 =
 		[
 		0: "Closed"
 		1: "Open forward"
@@ -31,15 +35,12 @@
 	returndelay(integer) : "Delay Before close (-1 stay open)" : -1 : "Amount of time, in seconds, after the door has opened before it closes. If the value is set to -1, the door never closes itself."
 	dmg(integer) : "Damage Inflicted When Blocked" : 0 : "Amount of damage done to entities that block the movement of this door, per frame."
 	health(integer) : "Health (0 = Unbreakable)" : 0
+
 	soundlockedoverride(sound) : "Locked Sound" : : "Sound played when the player tries to open the door, and fails because it's locked."
 	soundunlockedoverride(sound) : "Unlocked Sound" : : "Sound played when the door is unlocked."
-	forceclosed(choices) : "Force Closed" : "0" : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects." =
-		[
-		0: "No"
-		1: "Yes"
-		]
 
-	forceclosed[ASW](boolean) : "Force Closed" : 0 : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects."
+	forceclosed(boolean) : "Force Closed" : "0" : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects."
+
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Starts Open" : 0
@@ -48,20 +49,11 @@
 		8192: "Use closes" : 1
 		16384: "Door silent to NPCS (Does not alert NPCs)" : 0
 		32768: "Ignore player +USE" : 0
+		524288: "Start Breakable" : 0 [CSGO]
 		]
 
-	spawnflags[CSGO](flags) : "spawnflags" =
-		[
-		1: "Starts Open" : 0
-		2048: "Starts locked" : 0
-		4096: "Door silent (No sound, and does not alert NPCs)" : 0
-		8192: "Use closes" : 1
-		16384: "Door silent to NPCS (Does not alert NPCs)" : 0
-		32768: "Ignore player +USE" : 0
-		524288: "Start Breakable" : 0
-		]
-
-	opendir(choices) : "Open Direction" : "0" : "Force the door to open only forwards or only backwards. Both directions is the standard door behavior." =
+	opendir[engine](integer) : "Open Direction" : 0
+	opendir(choices) : "Open Direction" : 0 : "Force the door to open only forwards or only backwards. Both directions is the standard door behavior." =
 		[
 		0: "Open Both Directions"
 		1: "Open Forward Only"
@@ -95,5 +87,5 @@
 	output OnUnblockedClosing(void) : "Fired when the door is unblocked while closing."
 	output OnUnblockedOpening(void) : "Fired when the door is unblocked while opening."
 	output OnLockedUse(void) : "Fired when the player uses the door, but it is locked."
-	output OnRotationDone[!TF2, P2](void) : "Fired when the door arrives at it's goal angle."
+	output OnRotationDone[P2](void) : "Fired when the door arrives at it's goal angle."
 	]

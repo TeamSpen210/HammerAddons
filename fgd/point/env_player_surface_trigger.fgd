@@ -4,7 +4,7 @@
 	color(200 0 0) 
 = env_player_surface_trigger: "An entity that monitors the material of the surface the player is standing on, and fires outputs whenever it changes to/from a specific material."
 	[
-
+	gamematerial[engine](integer) : "Game Material to Watch" : 0
 	gamematerial(choices) : "Game Material to Watch" : "0" : "The material to watch. When the player stands on/off this material, this entity's outputs will be fired." =
 		[
 		0: "Nonfunctional (air)"

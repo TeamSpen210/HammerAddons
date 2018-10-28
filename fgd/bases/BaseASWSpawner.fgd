@@ -9,13 +9,16 @@ line(255 255 255, targetname, alienordertargetname) = BaseASWSpawner
 	unburrowidleactivity(string) : "Unburrow Idle Activity" : : "If alien starts burrowed, he'll play this activity while waiting for the burrow point to be clear."
 	unburrowactivity(string) : "Unburrow Activity" : : "If alien starts burrowed, he'll play this activity while unburrowing."
 	neardistance(float) : "Prevent spawn if marines are this close" : 740 : "If 'Allow spawn if marines are near' option is set to 'No' this distance is used for the nearby marine check."
-	longrange(choices) : "Long sight range" : "0" : "If set to 'yes', aliens from this spawner will be able to see and sense enemies twice as far away as normal." =
+
+	longrange[engine](boolean) : "Long sight range" : 0
+	longrange(choices) : "Long sight range" : 0 : "If set to 'yes', aliens from this spawner will be able to see and sense enemies twice as far away as normal." =
 		[
 		0: "No"
 		1: "Yes"
 		]
 
-	alienorders(choices) : "Alien Orders" : "0" : "Orders given to each alien spawned." =
+	alienorders[engine](integer) : "Alien Orders" : 0
+	alienorders(choices) : "Alien Orders" : 0 : "Orders given to each alien spawned." =
 		[
 		0: "Spread Then Hibernate"
 		1: "Move To"
@@ -26,6 +29,8 @@ line(255 255 255, targetname, alienordertargetname) = BaseASWSpawner
 	alienordertargetname(target_destination) : "Alien Orders Target Name" : : "Name of the target object for our orders (used by move to and move to ignoring marines orders)."
 	aliennametag(target_source) : "Name to give spawned aliens" : : "All aliens spawned by this spawner will be given this Name."
 	clearcheck(boolean) : "Check Spawn Point Is Clear" : 1
+
+	minskilllevel[engine](integer) : "Min Skill Level" : 0
 	minskilllevel(choices) : "Min Skill Level" : 0 : "The minimum skill level for this spawner to function." = 
 	[
 		0: "0: None"
@@ -35,6 +40,8 @@ line(255 255 255, targetname, alienordertargetname) = BaseASWSpawner
 		4: "4: Imsane"
 		5: "5: IMBA"
 	]
+
+	maxskilllevel[engine](integer) : "Max Skill Level" : 0
 	maxskilllevel(choices) : "Max Skill Level" : 0 : "The maximum skill level for this spawner to function." = 
 	[
 		0: "0: None"

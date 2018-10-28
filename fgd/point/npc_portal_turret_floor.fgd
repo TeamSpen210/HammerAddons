@@ -15,7 +15,8 @@
 		256: "Out of Ammo" : 0
 		]
 
-	modelindex[P2](choices) : "Model" : "0" : "Which model the turret uses. The skeleton turret is still functional." =
+	modelindex[engine](integer) : "Model" : 0 
+	modelindex[P2](choices) : "Model" : 0 : "Which model the turret uses. The skeleton turret is still functional." =
 		[
 		0: "Normal"
 		1: "Custom Model"
@@ -24,6 +25,7 @@
 		4: "Skeleton"
 		]
 
+	skinnumber[engine](boolean) : "Skin" : 0 
 	skinnumber[P2](choices) : "Skin" : "0" : "Set the skin used for the turret. Only useful on normal (for a destroyed variant) or custom turrets." =
 		[
 		0: "Normal"
@@ -38,12 +40,15 @@
 	turretrange[P2](float) : "Maximum Range" : 1024 : "How far the turret will be able to see targets."
 	loadalternativemodels[P2](boolean) : "Load Defective Models" : 0 : "Should this turret precache the defective models? Needed for late switching."
 	usesuperdamagescale[P2](boolean) : "Use Super Damage" : 0 : "Setting this to true will scale the turret's damage by a very large amount."
-	collisiontype[P2](choices) : "Collision Type" : "0" : "Allow collision with the player to be turned off for very special cases." =
+
+	collisiontype[engine](integer) : "Collision Type" : 0
+	collisiontype[P2](choices) : "Collision Type" : 0 : "Allow collision with the player to be turned off for very special cases." =
 		[
 		0: "Normal"
 		1: "Debris"
 		]
 
+	model[engine](studio) : "Custom Model" : "models/npcs/turret/turret.mdl"
 	model[P2](choices) : "Custom Model" : "models/npcs/turret/turret.mdl" : "The model to show as in Hammer, or a custom model to use." =
 		[
 		"models/npcs/turret/turret.mdl": "Normal"

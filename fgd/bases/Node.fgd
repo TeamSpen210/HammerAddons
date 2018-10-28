@@ -1,6 +1,5 @@
 
 @BaseClass = Node
 	[
-	nodeid(integer) : "Node ID"
-	nodeid[ASW](node_id) : "Node ID"
+	nodeid(node_id) : "Node ID"
 	]

@@ -7,7 +7,7 @@
 	timerduration(float) : "Timer Duration" : 0 : "Amount of time the counter will count down."
 	enabled(boolean) : "Start visible?" : 1 : "Appears non-functional."
 
-	istimer[enigne](boolean) : "Starting State" : 0 : "Does this start as a checkmark or countdown display?"
+	istimer[engine](boolean) : "Starting State" : 0 : "Does this start as a checkmark or countdown display?"
 	istimer(choices) : "Starting State" : 0 : "Does this start as a checkmark or countdown display?" =
 		[
 		0: "Checkmark"

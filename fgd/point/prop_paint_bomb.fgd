@@ -3,7 +3,8 @@
 	appliesto(P2) 
 	studio("models/editor/prop_paint_bomb.mdl") = prop_paint_bomb: "Large blob of gel which explodes on impact. Respawn with a point_template."
 	[
-	bombtype(choices) : "Bomb Type" : "0" : "The type of explosion." =
+	cubetype[engine](boolean) : "Bomb Type" : 0
+	bombtype(choices) : "Bomb Type" : 0 : "The type of explosion." =
 		[
 		0: "Dry Bomb"
 		1: "Wet Bomb"
@@ -12,7 +13,8 @@
 	allowfunnel(boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a portal."
 	allowsilentdissolve(boolean) : "Allow SilentDissolve input" : 0 : "Allow the SilentDissolve input to dissolve this bomb."
 	playspawnsound(boolean) : "Play Spawn Sound" : 1 : "Whether or not this bomb should play a sound on spawn (PaintBlob.Inception)."
-	model(string) : "Model" : "models/error.mdl" : "Paint bombs need a model set to suppress a warning message. This model would be loaded already."
+	
+	model(studio) readonly : "Model" : "models/error.mdl" : "Paint bombs need a model set to suppress a warning message. This model would be loaded already."
 
 	// Inputs
 	input Dissolve(void) : "Dissolves the paint bomb."

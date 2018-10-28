@@ -16,7 +16,8 @@
 		16777216: "Use RenderBox in ActBusies" : 0
 		]
 
-	additionalequipment(choices) : "Weapons" : "0" =
+    additionalequipment[engine](string) : "Weapons" : 0
+	additionalequipment(choices) : "Weapons" : 0 =
 		[
 		"weapon_smg1": "SMG1"
 		"weapon_ar2": "AR2"
@@ -26,9 +27,10 @@
 		"weapon_beerbottle": "Beer Bottle"
 		"weapon_beerbottle2": "Beer Bottle2"
 		"weapon_rpg": "RPG"
-		0: "Nothing"
+		"0": "Nothing"
 		]
 
+    ammosupply[engine](string) : "Ammo to Resupply" : 0
 	ammosupply(choices) : "Ammo to Resupply (if spawnflag set)" : "SMG1" =
 		[
 		"Pistol": "Pistol"
@@ -42,6 +44,8 @@
 		]
 
 	ammoamount(integer) : "Amount of ammo to give" : 1
+
+    citizentype[engine](integer) : "Type" : 0
 	citizentype(choices) : "Type" : "Default" =
 		[
 		0: "Default"
@@ -51,6 +55,7 @@
 		4: "Unique"
 		]
 
+    expressiontype[engine](integer) : "Expression Type" : 0
 	expressiontype(choices) : "Expression Type" : "Random" =
 		[
 		0: "Random"
@@ -59,6 +64,7 @@
 		3: "Angry"
 		]
 
+    model[engine](string) : "Model" : "models/humans/group01/male_01.mdl"
 	model(choices) : "Model" : "models/humans/group01/male_01.mdl" =
 		[
 		"models/humans/group01/male_01.mdl": "Male 1"
@@ -81,13 +87,11 @@
 		]
 
 	expressionoverride(string) : "Facial expression override"
-	notifynavfailblocked(choices) : "Fire output when Nav is blocked?" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
 
-	neverleaveplayersquad(choices) : "Permanent squad member?" : "0" : "A permanent squad member cannot leave the player's squad unless killed or explicity removed by entity I/O. Only use this if you're sure you want to override the default AI." =
+	notifynavfailblocked(boolean) : "Fire output when Nav is blocked?" : "0"
+
+	neverleaveplayersquad[engine](boolean) : "Permanent squad member?" : 0
+	neverleaveplayersquad(choices) : "Permanent squad member?" : 0 : "A permanent squad member cannot leave the player's squad unless killed or explicity removed by entity I/O. Only use this if you're sure you want to override the default AI." =
 		[
 		0: "No. This is default behavior."
 		1: "Yes, stay in squad until death."

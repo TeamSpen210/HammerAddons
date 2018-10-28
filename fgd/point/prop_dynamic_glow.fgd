@@ -6,7 +6,9 @@
 	glowdist(integer) : "Glow Distance" : 1024
 	glowenabled(boolean) : "Does the prop glow by default?" : 1
 	glowcolor(color255) : "Glow Color (R G B)" : "255 255 255" : "The color of the glow (if enabled)."
-	glowstyle(choices) : "Glow Style" : "0" : "What style of glow should be used." =
+
+	glowstyle[engine](integer) : "Glow Style" : 0
+	glowstyle(choices) : "Glow Style" : 0 : "What style of glow should be used." =
 		[
 		0: "Default (through walls)"
 		1: "Shimmer (doesn't glow through walls)"

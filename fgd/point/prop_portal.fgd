@@ -4,21 +4,24 @@
 	studio("models/editor/prop_portal.mdl") 
 	bbox(-32, -16, -64, 32, 16, 64) = prop_portal: "A portal."
 	[
-
-	activated(choices) : "Start Activated" : "1" : "An inactive portal will not be drawn and will not teleport entites" =
+	activated[engine](boolean) : "Start Activated" : 1
+	activated(choices) : "Start Activated" : 1 : "An inactive portal will not be drawn and will not teleport entites" =
 		[
 		0: "Inactive"
 		1: "Active"
 		]
 
-	portaltwo(choices) : "Portal Number" : "0" : "Which of the pair is this portal?" =
+	portaltwo[engine](boolean) : "Portal Number" : 0
+	portaltwo(choices) : "Portal Number" : 0 : "Which of the pair is this portal?" =
 		[
 		0: "Portal 1 (Blue)"
 		1: "Portal 2 (Orange)"
 		]
 
 	linkagegroupid(integer) : "Portal Group" : 0 : "Portal pair ID that it belongs to, 0=SP, 1=ATLAS, 2=P-Body"
-	skin(choices) : "Hammer Skin" : "1" : "Which portal to show as?" =
+
+	skin[engine](integer) : "Hammer Skin" : 1
+	skin(choices) : "Hammer Skin" : 1 : "Which portal to show as?" =
 		[
 		0: "Blue Portal"
 		1: "Orange Portal"

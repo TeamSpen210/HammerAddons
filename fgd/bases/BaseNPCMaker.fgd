@@ -3,13 +3,7 @@
 	iconsprite("editor/npc_maker.vmt") 
 	color(0 0 255) = BaseNPCMaker
 	[
-	startdisabled(choices) : "Start Disabled" : "1" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	startdisabled[ASW](boolean) : "Start Disabled" : 1
+	startdisabled(boolean) : "Start Disabled" : 1
 	spawnflags(flags) : "spawnflags" =
 		[
 		16: "Fade Corpse" : 0
@@ -21,7 +15,9 @@
 	maxnpccount(integer) : "Num. of NPCs" : 1 : "Number of NPCs that will spawn before this spawner is exhausted."
 	spawnfrequency(string) : "Frequency" : "5" : "How often (in seconds) a new NPC will be spawned. If set to -1, a new NPC will be made when the last NPC dies."
 	maxlivechildren(integer) : "Max Live NPCs" : 5 : "Maximum number of live children allowed at any one time (new ones will not be made until one dies). If set to -1, no limit is applied."
-	hullcheckmode[!TF2, ASW](choices) : "Hull Check Mode" : "0" : "How NPC's hull should be checked at spawn destination?" =
+
+	hullcheckmode[engine](boolean) : "Hull Check Mode" : 0
+	hullcheckmode[ASW](choices) : "Hull Check Mode" : 0 : "How NPC's hull should be checked at spawn destination?" =
 		[
 		0: "Default"
 		1: "No hull check"

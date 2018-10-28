@@ -2,8 +2,7 @@
 @PointClass base(Targetname, Parentname, EnableDisable) 
 	appliesto(ASW, EP1, EP2, HL2, P1, CSGO) = env_gunfire: "Gunfire Effect"
 	[
-	target(target_destination) : "Target" : : "Shoot at this target. REMEMBER - this is an effect only! It does not do damage!"
-	target[CSGO](target_destination) : "Target" : : "Shoot at this target."
+	target(target_destination) : "Target" : : "Shoot at this target."
 	minburstsize(integer) : "Min Burst Size" : 2 : "Minimum number of rounds in a burst."
 	maxburstsize(integer) : "Max Burst Size" : 7 : "Maximum number of rounds in a burst."
 	minburstdelay(float) : "Min Delay Between Bursts" : 2 : "Minimum delay between bursts. (seconds)"
@@ -17,30 +16,35 @@
 		15: "15 Degrees"
 		]
 
-	bias(choices) : "Bullet distribution should be..." : "1" : "How to distribute bullets within the spread. Even distribution is a true scatter throughout the spread. Biased towards the outside makes the shots 'miss' the target by tending towards the outside of the spread." =
+	bias[engine](integer) : "Bullet Bias" : 1
+	bias(choices) : "Bullet distribution should be..." : 1 : "How to distribute bullets within the spread. Even distribution is a true scatter throughout the spread. Biased towards the outside makes the shots 'miss' the target by tending towards the outside of the spread." =
 		[
 		1: "Evenly distributed"
 		-1: "Biased towards the outside"
 		]
 
-	collisions[!CSGO](choices) : "Collision detection" : "0" : "Whether/how to handle bullet collision detection. NOTE: If you select NONE, this entity will be very cheap to use, but all bullets will stop short at their target's position in space and there will be no impact effects. Normal collision detection does the same things NPCs do when they fire their guns (except harm anything)." =
+	collisions[engine](integer) : "Collision detection" : 0
+	collisions[!CSGO](choices) : "Collision detection" : 0 : "Whether/how to handle bullet collision detection. NOTE: If you select NONE, this entity will be very cheap to use, but all bullets will stop short at their target's position in space and there will be no impact effects. Normal collision detection does the same things NPCs do when they fire their guns (except harm anything)." =
 		[
 		0: "None. Cheap for performance."
 		1: "Normal collision detection."
 		]
 
+	shootsound[engine](string) : "Shoot Sound" : "Weapon_AR2.NPC_Single"
 	shootsound[!CSGO](choices) : "Shoot Sound" : "Weapon_AR2.NPC_Single" : "Gunfire sound to make" =
 		[
 		"Weapon_AR2.NPC_Single": "AR2"
 		"Weapon_SMG1.NPC_Single": "SMG1"
 		]
 
+	tracertype[engine](string) : "Tracer" : "AR2TRACER"
 	tracertype[!CSGO](choices) : "Tracer" : "AR2TRACER" : "Type of tracer to display" =
 		[
 		"Tracer": "Default"
 		"AR2TRACER": "AR2"
 		]
 
+	weaponname[engine](string) : "Weapon" : "weapon_ak47"
 	weaponname[CSGO](choices) : "Weapon" : "weapon_ak47" : "The weapon that this entity emulates when it shoots." =
 		[
 		"weapon_deagle": "Deagle"

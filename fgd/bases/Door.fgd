@@ -10,22 +10,13 @@
 	wait(integer) : "Delay Before Reset (-1 stay)" : 4 : "Amount of time, in seconds, after the door has opened before it closes. Once it has closed, it can be used again. If the value is set to -1, the door never closes itself."
 	lip(integer) : "Lip" : 0 : "The amount, in inches, of the button to leave sticking out of the wall it recedes into when pressed. Negative values make the button recede even further into the wall."
 	dmg(integer) : "Blocking Damage" : 0 : "Amount of damage done to entities that block the movement of this door, per frame."
-	forceclosed(choices) : "Force Closed" : "0" : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects." =
-		[
-		0: "No"
-		1: "Yes"
-		]
 
-	forceclosed[ASW](boolean) : "Force Closed" : 0 : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects."
-	ignoredebris(choices) : "Ignore Debris" : "0" : "If set this will change the door's collision group to one that ignore collisions with debris objects (note that this is not compatible with the non-solid-to-player spawnflag)." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	forceclosed(boolean) : "Force Closed" : 0 : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects."
+	ignoredebris(boolean) : "Ignore Debris" : 0 : "If set this will change the door's collision group to one that ignore collisions with debris objects (note that this is not compatible with the non-solid-to-player spawnflag)."
 
-	ignoredebris[ASW](boolean) : "Ignore Debris" : 0 : "If set this will change the door's collision group to one that ignore collisions with debris objects (note that this is not compatible with the non-solid-to-player spawnflag)."
 	message(string) : "Message If Triggered"
 	health(integer) : "Health (shoot open)" : 0
+
 	locked_sound(sound) : "Locked Sound" : : "Sound played when the player tries to use the door, and fails because it's locked."
 	unlocked_sound(sound) : "Unlocked Sound" : : "Sound played when the button is door."
 	spawnpos(choices) : "Spawn Position" : "0" =
@@ -47,19 +38,7 @@
 		4096: "Door Silent" : 0
 		]
 
-	spawnflags[P2](flags) : "spawnflags" =
-		[
-		4: "Non-solid to Player" : 0
-		8: "Passable" : 0
-		32: "Toggle" : 0
-		256: "Use Opens" : 0
-		512: "NPCs Can't" : 1
-		1024: "Touch Opens" : 0
-		2048: "Starts locked" : 0
-		4096: "Door Silent" : 0
-		]
-
-	locked_sentence[!P2](choices) : "Locked Sentence" : "0" : "A sentence played when the player tries to use the door, and fails because it's locked." =
+	locked_sentence(choices) : "Locked Sentence" : "0" : "A sentence played when the player tries to use the door, and fails because it's locked." =
 		[
 		0: "None"
 		1: "Gen. Access Denied"
@@ -73,7 +52,7 @@
 		9: "Broken Shut Door"
 		]
 
-	unlocked_sentence[!P2](choices) : "Unlocked Sentence" : "0" : "A sentence played when the door is unlocked." =
+	unlocked_sentence(choices) : "Unlocked Sentence" : "0" : "A sentence played when the door is unlocked." =
 		[
 		0: "None"
 		1: "Gen. Access Granted"

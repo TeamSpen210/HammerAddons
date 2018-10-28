@@ -4,6 +4,8 @@
 	studioprop() = prop_weighted_cube: "Aperture Science Weighted Cube. Presses floor buttons, and can be moved around."
 	[
 	skin(integer) : "Skin (OLD)" : 0 : "The old skin property, mainly to show in Hammer. "
+
+	cubetype[engine](integer) : "Cube Type" : 0
 	cubetype(choices) : "Cube Type" : "0" : "What cube type is this? Use a prop_monster_box for FrankenTurrets. If set to Custom, use AddOutput to change it back OnMapSpawn so gel skins behave correctly." =
 		[
 		0: "[0] Weighted Storage Cube"
@@ -14,12 +16,14 @@
 		6: "Custom model"
 		]
 
+	skintype[engine](boolean) : "Skin Type" : 0
 	skintype(choices) : "Skin Type" : "0" : "Is the cube clean or rusty? Storage and Pivot cubes are the only types with a rusty version." =
 		[
 		0: "Clean"
 		1: "Rusted"
 		]
 
+	model[engine](studio) : "Model" : ""
 	model(choices) : "[H] Model" : "models/props/metal_box.mdl" : "The model to show in Hammer." =
 		[
 		"models/props/metal_box.mdl": "Weighted Storage/Companion Cube"
@@ -28,6 +32,7 @@
 		"models/props_underground/underground_weighted_cube.mdl": "Antique"
 		]
 
+	paintpower[engine](integer) : "Starting Paint" : 4
 	paintpower(choices) : "Starting paint" : "4" : "The cube starts painted with the set gel." =
 		[
 		0: "Repulsion Gel"

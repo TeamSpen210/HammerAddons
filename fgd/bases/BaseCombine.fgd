@@ -1,13 +1,14 @@
 
 @BaseClass base(BaseNPC, RappelNPC) = BaseCombine
 	[
+	additionalequipment[engine](string) : "Weapons" : "weapon_smg1"
 	additionalequipment(choices) : "Weapons" : "weapon_smg1" =
 		[
 		"weapon_ar2": "AR2"
 		"weapon_shotgun": "Shotgun"
 		"weapon_smg1": "SMG1"
 		"weapon_stunstick": "Stun Stick"
-		0: "Nothing"
+		"0": "Nothing"
 		]
 
 	spawnflags(flags) : "spawnflags" =
@@ -17,7 +18,8 @@
 		262144: "Don't drop ar2 alt fire (elite only) " : 0
 		]
 
-	numgrenades(choices) : "Number of Grenades" : "5" =
+	numgrenades[engine](integer) : "Number of Grenades" : 5
+	numgrenades(choices) : "Number of Grenades" : 5 =
 		[
 		0: "None"
 		1: "1"
@@ -28,7 +30,8 @@
 		999999: "Unlimited"
 		]
 
-	teleportgrenades[ASW](choices) : "Teleportation" : "0" =
+	teleportgrenades[engine](boolean) : "Teleportation" : 0
+	teleportgrenades[ASW](choices) : "Teleportation" : 0 =
 		[
 		0: "Disabled"
 		1: "Teleport Grenades"

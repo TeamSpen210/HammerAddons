@@ -1,6 +1,5 @@
 
-@PointClass base(BaseNPCMaker) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(BaseNPCMaker)  
 	iconsprite("editor/npc_maker.vmt") 
 	line(255 255 0, targetname, templatename) 
 	sphere(radius) 
@@ -15,20 +14,24 @@
 	templatename(target_destination) : "Name of template NPC" : : "Template NPC that this maker should be creating clones of."
 	radius(float) : "Radius" : 256 : "Radius around this maker within which NPCs are to be placed. Spawned NPCs will try and find empty space within this radius to spawn."
 	destinationgroup(target_destination) : "Name of Destination Group" : : "If you'd like spawned NPCs to be created at an info_npc_spawn_destination entity, enter the name of that entity here. If you have more than one destination entity by that name, the Destination Criteria will be used to select one from the group."
-	criterionvisibility(choices) : "Dest. Criterion: Visible to player?" : "2" : "Should the NPC try to spawn at a destination that the player can see? Only applicable if a Destination Group is being used." =
+
+	criterionvisibility[engine](integer) : "Dest. Criterion: Visible to player?" : 2
+	criterionvisibility(choices) : "Dest. Criterion: Visible to player?" : 2 : "Should the NPC try to spawn at a destination that the player can see? Only applicable if a Destination Group is being used." =
 		[
 		0: "Yes"
 		1: "No"
 		2: "Don't Care"
 		]
 
-	criteriondistance(choices) : "Dest. Criterion: Distance to player?" : "2" : "Should the NPC try to spawn nearest to or farthest from the player's current location? Only applicable if a Destination Group is being used." =
+	criteriondistance[engine](integer) : "Dest. Criterion: Distance to player?" : 2
+	criteriondistance(choices) : "Dest. Criterion: Distance to player?" : 2 : "Should the NPC try to spawn nearest to or farthest from the player's current location? Only applicable if a Destination Group is being used." =
 		[
 		0: "Nearest"
 		1: "Farthest"
 		2: "Don't Care"
 		]
 
+	minspawndistance[engine](integer) : "Minimum spawn distance from player" : 0
 	minspawndistance(integer) : "Minimum spawn distance from player" : 0 : "The spawn destination node distance to the player will have to be further or equal than this value."
 
 	// Inputs

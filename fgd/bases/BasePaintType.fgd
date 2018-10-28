@@ -2,7 +2,8 @@
 @BaseClass 
 	appliesto(P2) = BasePaintType: "Paint Type property."
 	[
-	painttype(choices) : "Paint Type" : "0" : "The type of Gel created." =
+	painttype[engine](integer) : "Paint Type" : 0
+	painttype(choices) : "Paint Type" : 0 : "The type of Gel created." =
 		[
 		0: "Repulsion Gel"
 		1: "Reflection Gel / Adhesion Gel"
@@ -11,7 +12,9 @@
 		4: "Cleansing Gel"
 		]
 
-	skin(choices) : "[H] Paint Type" : "0" : "The type of gel created (for display)." =
+	skin[engine](integer) : "Skin" : 0
+	
+	skin(choices) : "[H] Paint Type" : 0 : "The type of gel created (for display)." =
 		[
 		0: "Repulsion Gel"
 		1: "Reflection Gel / Adhesion Gel"

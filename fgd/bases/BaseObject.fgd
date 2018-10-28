@@ -2,7 +2,8 @@
 @BaseClass 
 	appliesto(TF2) = BaseObject
 	[
-	teamnum(choices) : "Team" : "2" : "Team" =
+	teamnum[engine](integer) : "Team" : 2
+	teamnum(choices) : "Team" : 2 : "Team" =
 		[
 		2: "Red"
 		3: "Blue"

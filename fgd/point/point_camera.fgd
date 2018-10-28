@@ -10,20 +10,8 @@
 
 	targetname[!P2](target_source) : "Name" : : "The name that other entities refer to this entity by."
 	fov(float) : "FOV" : 90 : "Field of view in degrees"
-	usescreenaspectratio(choices) : "Screen Aspect Ratio" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	usescreenaspectratio[P2](boolean) : "Screen Aspect Ratio" : 0
-	fogenable(choices) : "Fog Enable" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	fogenable[P2](boolean) : "Fog Enable" : 0
+	usescreenaspectratio(boolean) : "Screen Aspect Ratio" : 0
+	fogenable(boolean) : "Fog Enable" : 0
 	fogcolor(color255) : "Fog Color" : "0 0 0"
 	fogstart(float) : "Fog Start" : 2048 : "The near fog plane."
 	fogend(float) : "Fog End" : 4096 : "The far fog/clipping plane."

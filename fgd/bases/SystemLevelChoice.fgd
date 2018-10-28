@@ -38,7 +38,7 @@
 	disablex360(boolean) : "Disable X360" : 0
 
 
-	mingpulevel[engine](integer): "Minimum CPU Level": 0
+	mincpulevel[engine](integer): "Minimum CPU Level": 0
 	maxcpulevel[engine](integer): "Maximum CPU Level": 0
 	mingpulevel[engine](integer): "Minimum GPU Level": 0
 	maxgpulevel[engine](integer): "Maximum GPU Level": 0

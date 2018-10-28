@@ -3,6 +3,7 @@
 	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio("models/Monk.mdl") = npc_monk: "Monk"
 	[
+	additionalequipment[engine](string) : "Weapons" : "weapon_annabelle"
 	additionalequipment(choices) : "Weapons" : "weapon_annabelle" =
 		[
 		"weapon_annabelle": "Annabelle"
@@ -14,10 +15,11 @@
 		"weapon_beerbottle": "Beer Bottle"
 		"weapon_beerbottle2": "Beer Bottle2"
 		"weapon_rpg": "RPG"
-		0: "Nothing"
+		"0": "Nothing"
 		]
 
-	hasgun(choices) : "Has Gun" : "1" =
+	hasgun[engine](boolean) : "Has Gun": 1
+	hasgun(choices) : "Has Gun" : 1 =
 		[
 		0: "No"
 		1: "Yes"

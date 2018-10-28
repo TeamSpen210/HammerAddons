@@ -3,6 +3,7 @@
 	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio("models/Combine_Soldier.mdl") = npc_combine_s: "Combine Soldier"
 	[
+	model[engine](studio) : "Model" : "models/combine_soldier.mdl"
 	model(choices) : "Model" : "models/combine_soldier.mdl" : "Regular Soldier" =
 		[
 		"models/combine_soldier.mdl": "Regular Soldier"
@@ -10,14 +11,16 @@
 		"models/combine_super_soldier.mdl": "Elite Soldier"
 		]
 
-	tacticalvariant(choices) : "Tactical Variant" : "0" =
+	tacticalvariant[engine](integer) : "Tactical Variant" : 0
+	tacticalvariant(choices) : "Tactical Variant" : 0 =
 		[
 		0: "Normal Tactics"
 		1: "Pressure the enemy (Keep advancing)"
 		2: "Pressure until within 30ft, then normal"
 		]
 
-	usemarch(choices) : "Walk Easy" : "0" : "When true, will use a variety of more casual walking animations instead of the standard walk. For use in crowds. WARNING: this animation only has a north component. For use under very special circumstances only." =
+	usemarch[engine](integer) : "Walk Easy" : 0
+	usemarch(choices) : "Walk Easy" : 0 : "When true, will use a variety of more casual walking animations instead of the standard walk. For use in crowds. WARNING: this animation only has a north component. For use under very special circumstances only." =
 		[
 		0: "No"
 		2: "Yes"

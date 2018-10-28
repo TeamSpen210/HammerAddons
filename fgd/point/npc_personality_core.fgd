@@ -3,7 +3,8 @@
 	appliesto(P2) 
 	studioprop() = npc_personality_core: "Aperture Science Personality Construct. Animated balls with handles."
 	[
-	modelskin(choices) : "Model Skin" : "0" : "If using the 'alt' skin, this sets the eye color -- If not using the alt skin, (0 = broken) (1=normal)" =
+	modelskin[engine](integer) : "Model Skin" : 0
+	modelskin(choices) : "Model Skin" : 0 : "If using the 'alt' skin, this sets the eye color -- If not using the alt skin, (0 = broken) (1=normal)" =
 		[
 		0: "Blue Eye / Broken"
 		1: "Green Eye / Normal"
@@ -11,19 +12,22 @@
 		3: "Purple Eye / NA"
 		]
 
-	altmodel(choices) : "Use Alternate Skins" : "0" : "Use the model with corrupted skins, instead of the skins in the original model. " =
+	altmodel[engine](boolean) : "Use Alternate Skins" : 0
+	altmodel(choices) : "Use Alternate Skins" : 0 : "Use the model with corrupted skins, instead of the skins in the original model. " =
 		[
 		0: "No"
 		1: "Yes"
 		]
 
+	model[engine](string) : "Model" : "models/npcs/personality_sphere/personality_sphere.mdl" 
 	model(choices) : "[H] Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "Choose the model to show in hammer. Set to the same as Use Alternate Skins." =
 		[
 		"models/npcs/personality_sphere/personality_sphere.mdl": "Original (Wheatley)"
 		"models/npcs/personality_sphere/personality_sphere_skins.mdl": "Alternate (Corrupt Cores)"
 		]
 
-	skin(choices) : "[H] Skin" : "0" : "If using the 'alt' skin, this sets the eye color (in hammer) -- If not using the alt skin, (0 = broken) (1=normal)" =
+	skin[engine](integer) : "Skin" : 0
+	skin(choices) : "[H] Skin" : 0 : "If using the 'alt' skin, this sets the eye color (in hammer) -- If not using the alt skin, (0 = broken) (1=normal)" =
 		[
 		0: "Blue Eye / Broken"
 		1: "Green Eye / Normal"

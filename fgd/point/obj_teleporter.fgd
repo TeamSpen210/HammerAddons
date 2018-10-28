@@ -5,6 +5,7 @@
 	line(255 255 255, targetname, matchingteleporter)
 = obj_teleporter: "TF2 Teleporter"
 	[
+	defaultupgrade[engine](integer) : "Starting Upgrade Level" : 0
 	defaultupgrade(choices) : "Starting Upgrade Level" : "0" =
 		[
 		0: "Level 1"
@@ -17,7 +18,8 @@
 		4: "Upgradable" : 0
 		]
 
-	teleportertype(choices) : "Type" : "1" =
+	teleportertype[engine](integer) : "Type" : 1
+	teleportertype(choices) : "Type" : 1 =
 		[
 		1: "Entrance"
 		2: "Exit"

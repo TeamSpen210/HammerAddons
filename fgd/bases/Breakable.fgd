@@ -1,10 +1,11 @@
 
-@BaseClass base(Targetname, DamageFilter, Shadow, Reflection) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = Breakable
+@BaseClass base(Targetname, DamageFilter, Shadow, Reflection) = Breakable
 	[
 	explodedamage(float) : "Explosion Damage" : 0 : "If non-zero, when this entity breaks it will create an explosion that causes the specified amount of damage. See also 'Explosion Radius'."
 	exploderadius(float) : "Explosion Radius" : 0 : "If non-zero, when this entity breaks it will create an explosion with a radius of the specified amount. See also 'Explosion Damage'."
-	performancemode(choices) : "Performance Mode" : "0" : "Used to limit the amount of gibs produced when this entity breaks, for performance reasons." =
+
+	performancemode[engine](integer) : "Performance Mode" : 0
+	performancemode(choices) : "Performance Mode" : 0 : "Used to limit the amount of gibs produced when this entity breaks, for performance reasons." =
 		[
 		0: "Normal"
 		1: "No Gibs"
@@ -12,7 +13,7 @@
 		3: "Reduced gibs"
 		]
 
-	breakmodelmessage[!P2, !ASW, !CSGO](string) : "Break Model Message" : : "If set, will use this break model message instead of the normal break behavior."
+	breakmodelmessage[until_ASW](string) : "Break Model Message" : : "If set, will use this break model message instead of the normal break behavior."
 
 	// Inputs
 	input Break(void) : "Breaks the breakable."

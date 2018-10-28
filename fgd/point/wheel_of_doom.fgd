@@ -4,12 +4,7 @@
 	studio("models/editor/cone_helper.mdl") = wheel_of_doom: "Wheel of Doom"
 	[
 	effect_duration(float) : "Effect Duration" : 30 : "How long effects should last before they are automatically removed."
-	has_spiral(choices) : "Has Spiral" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	has_spiral(boolean) : "Has Spiral" : 0
 
 	// Inputs
 	input Spin(void) : "Spin the wheel."

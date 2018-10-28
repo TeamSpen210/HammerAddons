@@ -2,7 +2,8 @@
 @BaseClass base(Parentname, Global, Angles, Studiomodel, BreakableProp, DXLevelChoice, BaseFadeProp, RenderFields, SystemLevelChoice, Shadow) 
 = prop_dynamic_base
 	[
-	solid(choices) : "Collisions" : "6" =
+	solid[engine](integer) : "Collisions" : 6
+	solid(choices) : "Collisions" : 6 =
 		[
 		0: "Not Solid"
 		2: "Use Bounding Box"

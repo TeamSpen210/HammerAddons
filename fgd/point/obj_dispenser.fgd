@@ -3,6 +3,7 @@
 	appliesto(TF2) 
 	studio("models/buildables/dispenser_light.mdl") = obj_dispenser: "TF2 Dispenser"
 	[
+	defaultupgrade[engine](integer) : "Starting Upgrade Level" : 0
 	defaultupgrade(choices) : "Starting Upgrade Level" : "0" =
 		[
 		0: "Level 1"

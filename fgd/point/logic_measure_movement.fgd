@@ -12,7 +12,9 @@
 	target(target_destination) : "Entity to Move" : : "This entity will be moved to mimic the motions of Entity to Measure."
 	targetreference(target_destination) : "Movement Reference" : : "The Entity to Move will move relative to this entity."
 	targetscale(float) : "Movement scale" : 1 : "A scale to divide the measured movements by, before applying those movements to the Entity to Move. 1 = target entity moves as much as the measured entity, 2 = target entity moves half as far as the measured entity, and 0.5 = target entity moves twice as far as the measured entity."
-	measuretype(choices) : "Measurement Type" : "0" =
+
+	measuretype[engine](boolean) : "Measurement Type" : 0
+	measuretype(choices) : "Measurement Type" : 0 =
 		[
 		0: "Position"
 		1: "Eye position"

@@ -3,22 +3,25 @@
 	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio("models/Police.mdl") = npc_metropolice: "MetroPolice"
 	[
+	additionalequipment[engine](string) : "Weapons": "weapon_pistol"
 	additionalequipment(choices) : "Weapons" : "weapon_pistol" =
 		[
 		"weapon_pistol": "Pistol"
 		"weapon_smg1": "SMG1"
 		"weapon_stunstick": "Stun Stick"
 		"weapon_shotgun": "Shotgun"
-		0: "Nothing"
+		"0": "Nothing"
 		]
 
-	manhacks(choices) : "Number of Manhacks" : "0" =
+	manhacks[engine](integer) : "Number of Manhacks" : 0
+	manhacks(choices) : "Number of Manhacks" : 0 =
 		[
 		0: "None"
 		1: "1"
 		2: "2"
 		]
 
+	weapondrawn[engine](boolean) : "Number of Manhacks" : 0
 	weapondrawn(choices) : "Pistol starts drawn" : "0" =
 		[
 		0: "No"

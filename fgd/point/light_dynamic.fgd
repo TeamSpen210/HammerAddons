@@ -14,7 +14,9 @@
 	pitch(integer) : "Pitch" : -90
 	distance(float) : "Maximum distance" : 120 : "This is the distance that light is allowed to cast, in inches."
 	spotlight_radius(float) : "Spotlight end radius" : 80 : "This is the radius of the light, in inches, at the object that it is hitting."
-	style(choices) : "Appearance" : "0" =
+
+	style[engine](integer) : "Appearance" : 0
+	style(choices) : "Appearance" : 0 =
 		[
 		0: "Normal"
 		10: "Fluorescent flicker"

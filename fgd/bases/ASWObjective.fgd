@@ -14,12 +14,13 @@
 	objectiveinfoicon5(string) : "Icon 5" : : "Icon displayed next to the map on the briefing."
 	objectiveicon(string) : "HUD Icon" : : "Icon displayed next to the objective name on the HUD."
 	mapmarkings(string) : "Map Markings" : : "Used to mark areas on the map per objective.  Follows this format: BRACKETS [x] [y] [w] [h]"
+
+	visible[engine](boolean) : "Visible" : 1
 	visible(choices) : "Visible" : "1" : "Whether this objective is visible or hidden" =
 		[
 		0: "Hidden"
 		1: "Visible"
 		]
-
 
 	// Inputs
 	input SetVisible(boolean) : "Hide or show the objective"

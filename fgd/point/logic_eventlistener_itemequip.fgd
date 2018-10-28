@@ -20,6 +20,7 @@
 	weaponclassname(string) : "Weapon Classname" : : "The exact weapon class name you want to check for.  i.e. weapon_deagle, weapon_awp, weapon_knife, etc."
 	isenabled(boolean) : "Start Enabled" : 1
 
+	teamnum[engine](integer) : "Team Number" : -1
 	teamnum(choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
 		[
 		-1: "Don't care"

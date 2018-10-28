@@ -12,7 +12,7 @@
 		2048: "Don't allow bullet penetration" : 0
 		]
 
-	propdata(integer) : "Prop Data" : 0 : "Set to the best approximation of the size and material of this entity's brushes. If set, it will override this entity's health and damage taken from various weapons. See the propdata.txt file in the scripts directory of your MOD to get a detailed list of what each entry specifies."
+	propdata[engine](integer) : "Prop Data" : 0 : "Set to the best approximation of the size and material of this entity's brushes. If set, it will override this entity's health and damage taken from various weapons. See the propdata.txt file in the scripts directory of your MOD to get a detailed list of what each entry specifies."
 	propdata(choices) : "Prop Data" : 0 : "Set to the best approximation of the size and material of this entity's brushes. If set, it will override this entity's health and damage taken from various weapons. See the propdata.txt file in the scripts directory of your MOD to get a detailed list of what each entry specifies." =
 		[
 		0: "None"
@@ -60,7 +60,7 @@
 		10: "None"
 		]
 		
-	explosion(integer) : "Gibs Direction" : 0 : "Used to decide which direction to throw gibs when broken." =
+	explosion[engine](integer) : "Gibs Direction" : 0 : "Used to decide which direction to throw gibs when broken."
 	explosion(choices) : "Gibs Direction" : 0 : "Used to decide which direction to throw gibs when broken." =
 		[
 		0: "Random"
