@@ -114,9 +114,22 @@ def load_qcs(game: Game) -> Dict[str, QC]:
                             scale_factor = float(tok.expect(Token.STRING))
                         elif token_value == '$modelname':
                             model_name = tok.expect(Token.STRING)
-                        elif token_value == "$bodygroup":
+                        elif token_value in ('$bodygroup', '$body', '$model'):
                             tok.expect(Token.STRING)  # group name.
-                            tok.expect(Token.BRACE_OPEN)
+                            body_type, body_value = tok()
+                            if body_type is Token.STRING:
+                                # $body name "file.smd"
+                                if ref_smd:
+                                    raise DynamicModel
+                                else:
+                                    ref_smd = qc_loc / body_value
+                                    ref_scale = scale_factor
+                                continue
+                            elif body_type is Token.NEWLINE:
+                                tok.expect(Token.BRACE_OPEN)
+                            elif body_type is not Token.BRACE_OPEN:
+                                raise tok.error(body_type)
+
                             for body_type, body_value in tok:
                                 if body_type is Token.BRACE_CLOSE:
                                     break
@@ -152,6 +165,7 @@ def load_qcs(game: Game) -> Dict[str, QC]:
             continue
         if model_name is None or ref_smd is None:
             # Malformed...
+            LOGGER.warning('Cannot parse "{}"... ({}, {})', qc_path, model_name, ref_smd)
             continue
 
         qc_map[unify_mdl(model_name)] = QC(
