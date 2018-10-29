@@ -1,7 +1,6 @@
 
 @PointClass 
 	appliesto(INSTANCING) 
-	size(-8 -8 -8, 8 8 8) 
 	iconsprite("editor/func_instance_parms.vmt")
 = func_instance_parms: "Place one copy of this entity inside of an instance.  Whenever you add a $parameter for the instance, get the properties of this entity.  It will auto-populate it with the variables and allow you to indicate the variable type."
 	[

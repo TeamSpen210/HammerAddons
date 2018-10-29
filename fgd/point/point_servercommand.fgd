@@ -1,6 +1,5 @@
 
 @PointClass base(Targetname) 
-	size(-8 -8 -8, 8 8 8) 
 	color(200 0 0) 
 	iconsprite("editor/point_servercommand.vmt") = point_servercommand: "An entity that issues commands to the server console."
 	[

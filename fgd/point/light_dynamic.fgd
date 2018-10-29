@@ -3,7 +3,6 @@
 	iconsprite("editor/light.vmt") 
 	sphere(distance) 
 	lightcone() 
-	size(-4 -4 -4, 4 4 4) 
 	line(255 255 255, targetname, target) = light_dynamic: "An invisible lightsource that changes in some way over time."
 	[
 	target(target_destination) : "Entity to point at" : : "The name of an entity in the map that the dynamic light will point at."

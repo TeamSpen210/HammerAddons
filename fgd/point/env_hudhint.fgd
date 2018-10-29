@@ -1,7 +1,5 @@
 
-@PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	size(-8 -8 -8, 8 8 8) 
+@PointClass base(Targetname)
 	iconsprite("editor/env_hudhint.vmt") = env_hudhint: "An entity to control the display of HUD hints. HUD hints are used to show the player what key is bound to a particular command."
 	[
 	spawnflags[!P2, !ASW, !CSGO](flags) : "spawnflags" =

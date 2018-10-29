@@ -1,6 +1,5 @@
 
 @PointClass base(Targetname, Parentname) 
-	size(-16 -16 -16, 16 16 16) 
 	color(255 0 0) 
 	iconsprite("editor/env_blood.vmt")
  = env_blood: "An entity used to spawn blood effects."

@@ -1,7 +1,6 @@
 
 @PointClass base(Targetname, Parentname, Angles) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
-	size(-4 -4 -4, 4 4 4) 
 	iconsprite("editor/env_muzzleflash.vmt") 
 = env_muzzleflash: "Muzzle Flash"
 	[

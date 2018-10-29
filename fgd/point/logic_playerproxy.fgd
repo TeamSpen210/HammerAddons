@@ -1,6 +1,5 @@
 
 @PointClass base(Targetname, DamageFilter) 
-	size(-8 -8 -8, 8 8 8) 
 	color(200 0 0) 
 	iconsprite("editor/logic_playerproxy.vmt") = logic_playerproxy: "An entity that is used to relay inputs/ouputs to the player and back to the world."
 	[

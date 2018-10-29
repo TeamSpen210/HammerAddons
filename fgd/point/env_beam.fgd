@@ -1,7 +1,5 @@
 
 @PointClass base(Targetname, Parentname, RenderFxChoices) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	size(-4 -4 -4, 4 4 4) 
 	line(255 255 255, targetname, LightningStart, targetname, LightningEnd) 
 	cylinder(255 255 255, targetname, LightningStart, Radius, targetname, LightningEnd, Radius) 
 	line(64 64 64, targetname, lightningStart) 

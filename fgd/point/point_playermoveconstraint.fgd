@@ -1,7 +1,5 @@
 
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	size(-8 -8 -8, 8 8 8) 
 	iconsprite("editor/ts2do/point_playermoveconstraint.vmt") 
 	sphere(radius) = point_playermoveconstraint: "An entity that constrains players to a radius around itself, slowing them down the closer they get to the edge of the radius."
 	[

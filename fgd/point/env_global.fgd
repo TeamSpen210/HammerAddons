@@ -1,6 +1,5 @@
 
 @PointClass base(Targetname)
-	size(-8 -8 -8, 8 8 8) 
 	color(200 0 0) 
 	iconsprite("editor/env_global.vmt") = env_global: "An entity to control a game-specific global states."
 	[

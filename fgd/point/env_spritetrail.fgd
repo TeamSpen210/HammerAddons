@@ -1,6 +1,5 @@
 
 @PointClass base(Parentname, Targetname) 
-	size(-8 -8 -8, 8 8 8) 
 	iconsprite("editor/env_spritetrail.vmt") 
 	sphere(startwidth) 
 	sphere(endwidth) 
