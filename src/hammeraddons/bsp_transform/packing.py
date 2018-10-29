@@ -16,6 +16,10 @@ def comp_precache_model(ctx: Context):
     already_done = set()  # type: Set[str]
     for ent in ctx.vmf.by_class['comp_precache_model']:
         model = ent['model']
+
+        # Precaching implies packing it.
+        ctx.pack.pack_file(model, FileType.MODEL)
+
         if os.path.normcase(model) in already_done:
             ent.remove()
             continue
@@ -48,11 +52,9 @@ function Precache() {
 @trans('comp_precache_sound')
 def comp_precache_sound(ctx: Context):
     """Force precaching a set of sounds."""
-    pos = '0 0 0'
     sounds = set()
     for ent in ctx.vmf.by_class['comp_precache_sound']:
         ent.remove()
-        pos = ent['origin']
 
         for key, sound in ent.keys.items():
             if not key.startswith('sound'):
@@ -60,6 +62,10 @@ def comp_precache_sound(ctx: Context):
             sound = sound.casefold().replace('\\', '/')
             if sound.endswith(('.wav', '.mp3')) and not sound.startswith('sound/'):
                 sound = 'sound/' + sound
+
+            # Precaching implies packing it.
+            ctx.pack.pack_file(sound, FileType.GAME_SOUND)
+
             sounds.add(sound)
 
     if not sounds:
@@ -75,7 +81,7 @@ def comp_precache_sound(ctx: Context):
         'info_target',
         targetname='@precache',
         origin='-15872 -15872 -15872',  # Should be outside the map.
-        # We don't include scripts/vscripts
+        # We don't include scripts/vscripts in the filename.
         vscripts=ctx.pack.inject_file(lines, 'scripts/vscripts/inject', 'nut')[17:],
     )
 
