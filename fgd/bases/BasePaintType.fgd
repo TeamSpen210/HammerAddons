@@ -1,6 +1,5 @@
 
-@BaseClass 
-	appliesto(P2) = BasePaintType: "Paint Type property."
+@BaseClass = BasePaintType: "Paint Type property."
 	[
 	painttype[engine](integer) : "Paint Type" : 0
 	painttype(choices) : "Paint Type" : 0 : "The type of Gel created." =

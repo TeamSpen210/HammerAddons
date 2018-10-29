@@ -1,12 +1,11 @@
 
-@BaseClass base(Targetname, Parentname, Angles) 
-	appliesto(ASW, EP1, EP2, HL2, P1, TF2, CSGO) = vgui_screen_base
+@BaseClass base(Targetname, Parentname, Angles) = vgui_screen_base
 	[
 	panelname(string) : "Panel Name"
 	overlaymaterial(string) : "Overlay Material" : : "Name of a material to overlay over the top of the VGUI screen. NOTE: This material must write Z for the VGUI screen to work."
 	width(integer) : "Panel Width in World" : 32 : "Width of the panel in units."
 	height(integer) : "Panel Height in World" : 32 : "Height of the panel in units."
-	istransparent[CSGO](boolean) : "Is Transparent?" : 0 : "Set this to true if you would like your background to be invisible instead of a black fill."
+	istransparent(boolean) : "Is Transparent?" : 0 : "Set this to true if you would like your background to be invisible instead of a black fill."
 
 	// Inputs
 	input SetActive(void) : "Make the vgui screen visible."

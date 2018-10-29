@@ -1,6 +1,5 @@
 
-@BaseClass 
-	appliesto(P2) = BaseProjector: "The base for all the different projectors (wall & tractor beam)."
+@BaseClass  = BaseProjector: "The base for all the different projectors (wall & tractor beam)."
 	[
 	startenabled(boolean) : "Start Enabled" : 1 : "If the projector should start enabled."
 	disablehelper(boolean) : "Disable Placement Helper" : 0 : "Disable the automatically created placement helper to prevent it from fighting with a custom one."

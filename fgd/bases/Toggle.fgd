@@ -1,6 +1,5 @@
 
-@BaseClass 
-	appliesto(TF2) = Toggle
+@BaseClass = Toggle
 	[
 
 	// Inputs

@@ -1,5 +1,4 @@
 
-@BaseClass 
-	appliesto(TF2) = RobotDestruction
+@BaseClass = RobotDestruction
 	[
 	]

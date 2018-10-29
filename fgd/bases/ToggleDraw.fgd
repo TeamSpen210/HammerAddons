@@ -1,8 +1,6 @@
 
-@BaseClass 
-	appliesto(P2, CSGO) = ToggleDraw
+@BaseClass = ToggleDraw
 	[
-
 	// Inputs
 	input DisableDraw(void) : "Add the EF_NODRAW flag to this entity. Some entities manage this on their own so be aware you can override that value."
 	input EnableDraw(void) : "Remove the EF_NODRAW flag to this entity. Some entities manage this on their own so be aware you can override that value."

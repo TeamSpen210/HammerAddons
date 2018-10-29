@@ -1,6 +1,5 @@
 
-@BaseClass 
-	appliesto(TF2) = BaseObject
+@BaseClass = BaseObject
 	[
 	teamnum[engine](integer) : "Team" : 2
 	teamnum(choices) : "Team" : 2 : "Team" =
@@ -13,7 +12,6 @@
 		[
 		2: "Invulnerable" : 0
 		]
-
 
 	// Inputs
 	input SetBuilder(string) : "Sets the builder of this object to the player given (from an output)"
