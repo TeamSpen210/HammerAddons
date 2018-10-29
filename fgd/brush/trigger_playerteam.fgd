@@ -11,7 +11,7 @@
 		2: "P-Body"
 		]
 
-	trigger_once(boolean) : "Trigger Once" : No : "Only trigger once, then remove the trigger."
+	trigger_once(boolean) : "Trigger Once" : 0 : "Only trigger once, then remove the trigger."
 
 	// Outputs
 	output OnStartTouchBluePlayer(void) : "ATLAS has started touching the trigger."
