@@ -51,9 +51,9 @@ FEATURES = {
     'L4D': {'INSTANCING'},
     'TF2': {'INSTANCING', 'PROP_SCALING'},
     'ASW': {'INSTANCING', 'VSCRIPT'},
-    'P2': {'INSTANCING', 'VSCRIPT'},
-    'CSGO': {'INSTANCING', 'PROP_SCALING', 'VSCRIPT'},
-    'P2DES': {'INSTANCING', 'PROP_SCALING', 'VSCRIPT'},
+    'P2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
+    'CSGO': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT'},
+    'P2DES': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT'},
 }
 
 ALL_FEATURES = {
@@ -113,6 +113,19 @@ def polyfill_node_id(fgd: FGD):
             for kv in tag_map.values():
                 if kv.type is ValueTypes.TARG_NODE_SOURCE:
                     kv.type = ValueTypes.INT
+
+@_polyfill('')
+def polyfill_bool_io(fgd: FGD):
+    """Boolean types cannot be used for IO events."""
+    for ent in fgd.entities.values():
+        for tag_map in ent.outputs.values():
+            for iodef in tag_map.values():
+                if iodef.type is ValueTypes.BOOL:
+                    iodef.type = ValueTypes.INT
+        for tag_map in ent.inputs.values():
+            for iodef in tag_map.values():
+                if iodef.type is ValueTypes.BOOL:
+                    iodef.type = ValueTypes.INT
 
 
 def format_all_tags() -> str:
@@ -462,7 +475,7 @@ def action_export(
         fgd.collapse_bases()
 
     for poly_tag, polyfill in POLYFILLS:
-        if poly_tag in tags:
+        if not poly_tag or poly_tag in tags:
             polyfill(fgd)
 
     print('Exporting...')
