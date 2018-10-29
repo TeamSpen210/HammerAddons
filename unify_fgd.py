@@ -452,6 +452,11 @@ def action_export(
                 ]
                 ent.strip_tags(tags)
 
+            # Remove bases that don't apply.
+            for base in ent.bases[:]:
+                if not match_tags(tags, get_appliesto(base)):
+                    ent.bases.remove(base)
+
         print('Culled entities, merging bases...')
 
         fgd.collapse_bases()
@@ -475,6 +480,7 @@ def action_export(
     else:
         with open(output_path, 'w') as f:
             fgd.export(f)
+
 
 def main(args: List[str]=None):
     """Entry point."""
