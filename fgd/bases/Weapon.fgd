@@ -1,6 +1,5 @@
 
 @BaseClass base(Targetname, Angles, RenderFields, FadeDistance) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, CSGO) 
 	color(0 0 200) 
 	sphere(fademindist) 
 	sphere(fademaxdist) = Weapon
@@ -8,13 +7,8 @@
 	spawnflags[!CSGO](flags) : "spawnflags" =
 		[
 		1: "Start constrained" : 0
-		2: "Deny player pickup (reserve for NPC)" : 0
-		4: "Not puntable by Gravity Gun" : 0
-		]
-
-	spawnflags[CSGO](flags) : "spawnflags" =
-		[
-		1: "Start constrained" : 0
+		2: "Deny player pickup (reserve for NPC)" : 0 [!CSGO]
+		4: "Not puntable by Gravity Gun" : 0 [!CSGO]
 		]
 
 	canbepickedup[CSGO](boolean) : "Is this weapon allowed to be picked up?" : 1

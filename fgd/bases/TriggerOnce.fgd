@@ -1,51 +1,26 @@
 
 @BaseClass base(Targetname, Parentname, Origin, EnableDisable, Global) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	line(255 255 255, targetname, filtername) 
 = TriggerOnce
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Clients" : 1
-		2: "NPCs" : 0
+		2: "NPCs" : 0 [!ASW]
+		2: "Marines and Aliens" : 0 [ASW]
 		4: "Pushables" : 0
 		8: "Physics Objects" : 0
-		16: "Only player ally NPCs" : 0
+		16: "Only player ally NPCs" : 0 [!ASW]
+		16: "Only marines" : 1 [ASW]
 		32: "Only clients in vehicles" : 0
 		64: "Everything (not including physics debris)" : 0
-		512: "Only clients *not* in vehicles" : 0
+		512: "Only clients *not* in vehicles" : 0 [!ASW]
 		1024: "Physics debris" : 0
 		2048: "Only NPCs in vehicles (respects player ally flag)" : 0
-		4096: "Disallow Bots" : 0
+		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 1 [!CSGO]
+		4096: "Disallow Bots" : 0 [CSGO]
 		]
-
-	spawnflags[ASW](flags) : "spawnflags" =
-		[
-		2: "Marines and Aliens" : 0
-		4: "Pushables" : 0
-		8: "Physics Objects" : 0
-		16: "Only marines" : 1
-		64: "Everything (not including physics debris)" : 0
-		1024: "Physics debris" : 0
-		2048: "Only NPCs in vehicles (respects player ally flag)" : 0
-		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 0
-		]
-
-	spawnflags(flags) : "spawnflags" =
-		[
-		1: "Clients" : 1
-		2: "NPCs" : 0
-		4: "Pushables" : 0
-		8: "Physics Objects" : 0
-		16: "Only player ally NPCs" : 0
-		32: "Only clients in vehicles" : 0
-		64: "Everything (not including physics debris)" : 0
-		512: "Only clients *not* in vehicles" : 0
-		1024: "Physics debris" : 0
-		2048: "Only NPCs in vehicles (respects player ally flag)" : 0
-		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 1
-		]
-
+		
 	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator triggers me. See filter_activator_name for more explanation."
 
 	// Inputs
