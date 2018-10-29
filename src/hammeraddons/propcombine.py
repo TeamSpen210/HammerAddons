@@ -8,7 +8,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Dict, List
 
-from srctools import Vec
+from srctools import Vec, partition
 from srctools.tokenizer import Tokenizer, Token
 
 from srctools.game import Game
@@ -72,6 +72,8 @@ MDL_EXTS = [
     '.sw.vtx',
     '.vvd',
 ]
+
+MAX_GROUP = 24  # Studiomdl does't allow more than this...
 
 
 class DynamicModel(Exception):
@@ -314,6 +316,61 @@ def merge_props(
     )
 
 
+def group_props(
+    prop_groups: Dict[object, List[StaticProp]],
+    rejected: List[StaticProp],
+    dist,
+    min_cluster,
+):
+    """Given the groups of props, find close props to merge."""
+    # Each of these groups cannot be merged with other ones.
+
+    # These are models we cannot merge no matter what -
+    # no source files etc.
+    if None in prop_groups:
+        rejected.extend(prop_groups.pop(None))
+
+    dist_sq = dist * dist
+    large_dist_sq = 4 * dist_sq
+
+    for key, group in prop_groups.items():
+        # No point merging single/empty groups.
+        if len(group) < 2:
+            rejected.extend(group)
+            continue
+
+        todo = set(group)
+        while todo:
+            center = todo.pop()
+            cluster = {center}
+
+            for prop in todo:
+                if (center.origin - prop.origin).mag_sq() <= large_dist_sq:
+                    cluster.add(prop)
+                    if len(cluster) > MAX_GROUP:
+                        # Limit the number of maximum props that can be used.
+                        break
+
+            if len(cluster) < min_cluster:
+                rejected.append(center)
+                continue
+
+            bbox_min, bbox_max = Vec.bbox(prop.origin for prop in cluster)
+            center_pos = (bbox_min + bbox_max) / 2
+
+            cluster = [
+                prop for prop in cluster
+                if (center_pos - prop.origin).mag_sq() <= dist_sq
+            ]
+
+            if len(cluster) >= min_cluster:
+                todo.difference_update(cluster)
+                for part in partition(cluster, MAX_GROUP):
+                    yield part
+            else:
+                rejected.append(center)
+
+
 def combine(
     bsp: BSP,
     pack: PackList,
@@ -345,6 +402,11 @@ def combine(
             return None
 
         key = unify_mdl(prop.model)
+
+        if key not in qc_map:
+            # We don't have source for this...
+            return None
+
         try:
             model = mdl_map[key]
         except KeyError:
@@ -361,8 +423,8 @@ def combine(
             skinset = model.skins[0]
 
         return (
-            model.flags,
-            prop.flags,
+            model.flags.value,
+            prop.flags.value,
             model.contents,
             model.surfaceprop,
             prop.solidity,
@@ -380,31 +442,18 @@ def combine(
         prop_groups[get_grouping_key(prop)].append(prop)
         prop_count += 1
 
-    # Don't worry about distance.
-
+    # This holds the list of all props we want in the map -
+    # combined ones, and any we reject for whatever reason.
     final_props = []
-    for ind, (key, props) in enumerate(prop_groups.items()):
-        # First remove props that aren't actually mergeable.
-        if key is None:
-            final_props.extend(props)
-            continue
-        for prop in props[:]:
-            if unify_mdl(prop.model) not in qc_map:
-                final_props.append(prop)
-                props.remove(prop)
 
-        if len(props) < 2:
-            # No point combining that.
-            final_props.extend(props)
-            continue
-
+    for ind, group in enumerate(group_props(prop_groups, final_props, 128, 2)):
         final_props.append(merge_props(
             qc_map,
             mdl_map,
             game,
             pack,
             map_name,
-            props,
+            group,
             ind,
         ))
 
