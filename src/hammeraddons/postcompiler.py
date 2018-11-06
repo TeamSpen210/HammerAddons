@@ -1,8 +1,7 @@
 """Replaces VRAD, to run operations on the final BSP."""
-from srctools.compiler import propcombine
 from srctools.logger import init_logging
 
-LOGGER = init_logging('srctools/vrad.log')
+LOGGER = init_logging('srctools/postcompiler.log')
 
 import sys
 import os
@@ -11,6 +10,7 @@ from srctools.bsp import BSP, BSP_LUMPS
 from srctools.bsp_transform import run_transformations
 from srctools.game import find_gameinfo
 from srctools.packlist import PackList, load_fgd
+from srctools.compiler import propcombine
 
 
 def main(argv):
@@ -23,7 +23,11 @@ def main(argv):
 
     packlist = PackList(fsys)
 
-    LOGGER.info('Gameinfo: {}\nSearch path: \n{}', game_info.path, '\n'.join([sys[0].path for sys in fsys.systems]))
+    LOGGER.info('Gameinfo: {}', game_info.path)
+    LOGGER.info(
+        'Search paths: \n{}',
+        '\n'.join([sys[0].path for sys in fsys.systems]),
+    )
 
     fgd = load_fgd()
 
