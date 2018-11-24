@@ -4,10 +4,10 @@ This allows sharing definitions among different engine versions.
 """
 import sys
 import argparse
-from collections import Callable
+from collections import Counter, defaultdict
 from pathlib import Path
 from lzma import LZMAFile
-from typing import List, Tuple, Set, FrozenSet, Union, Dict
+from typing import List, Tuple, Set, FrozenSet, Union, Dict, Callable
 
 from srctools.fgd import (
     FGD, validate_tags, match_tags,
@@ -251,6 +251,90 @@ def add_tag(tags: FrozenSet[str], new_tag: str) -> FrozenSet[str]:
             tag_set.add(new_tag.upper())
 
     return frozenset(tag_set)
+
+
+def action_count(
+    dbase: Path,
+) -> None:
+    """Output a count of all entities in the database per game."""
+    fgd = load_database(Path('fgd/'))
+
+    games = set(GAME_ORDER)
+
+    count_base = Counter()
+    count_point = Counter()
+    count_brush = Counter()
+
+    all_tags = set()
+
+    for ent in fgd:
+        all_tags.update(get_appliesto(ent))
+
+    games = {
+        game for game
+        in GAME_ORDER
+        if game in all_tags
+    }
+
+    print('Done.\nGames: ' + ', '.join(sorted(games)))
+
+    expanded = {
+        game: expand_tags(frozenset({game}))
+        for game in GAME_ORDER
+    }
+    expanded['ALL'] = frozenset()
+
+    game_classes = defaultdict(set)
+
+    for ent in fgd:
+        if ent.type is EntityTypes.BASE:
+            counter = count_base
+            typ = 'Base'
+        elif ent.type is EntityTypes.BRUSH:
+            counter = count_brush
+            typ = 'Brush'
+        else:
+            counter = count_point
+            typ = 'Point'
+        appliesto = get_appliesto(ent)
+
+        has_ent = set()
+
+        for game, tags in expanded.items():
+            if match_tags(appliesto, tags):
+                counter[game] += 1
+                game_classes[game, typ].add(ent.classname)
+                has_ent.add(game)
+
+        has_ent.discard('ALL')
+
+        if has_ent == games:
+            # Applies to all, strip.
+            game_classes['ALL', typ].add(ent.classname)
+            counter['ALL'] += 1
+            if appliesto:
+                print('ALL game: ', ent.classname)
+            for game in games:
+                counter[game] -= 1
+                game_classes[game, typ].discard(ent.classname)
+
+    all_games = set().union(count_base, count_point, count_brush)
+
+    game_order = ['ALL'] + sorted(all_games - {'ALL'})
+
+    row_temp = '{:<5} | {:^6} | {:^6} | {:^6}'
+    header = row_temp.format('Game', 'Base', 'Point', 'Brush')
+
+    print(header)
+    print('-' * len(header))
+
+    for game in game_order:
+        print(row_temp.format(
+            game,
+            count_base[game],
+            count_point[game],
+            count_brush[game],
+        ))
 
 
 def action_import(
@@ -509,6 +593,12 @@ def main(args: List[str]=None):
     )
     subparsers = parser.add_subparsers(dest="mode")
 
+    parser_count = subparsers.add_parser(
+        "count",
+        help=action_count.__doc__,
+        aliases=["c"],
+    )
+
     parser_exp = subparsers.add_parser(
         "export",
         help=action_export.__doc__,
@@ -598,6 +688,8 @@ def main(args: List[str]=None):
             result.binary,
             result.engine,
         )
+    elif result.mode in ("c", "count"):
+        action_count(dbase)
     else:
         raise AssertionError("Unknown mode! (" + result.mode + ")")
 
