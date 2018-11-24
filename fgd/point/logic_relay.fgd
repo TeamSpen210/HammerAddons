@@ -1,6 +1,5 @@
 
-@PointClass base(Targetname, EnableDisable) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(Targetname, EnableDisable)
 	iconsprite("editor/logic_relay.vmt") 
 	color(0 100 250) = logic_relay: "A message forwarder. Fires an OnTrigger output when triggered, and can be disabled to prevent forwarding outputs.\n\nUseful as an intermediary between one entity and another for turning on or off an I/O connection, or as a container for holding a set of outputs that can be triggered from multiple places."
 	[
