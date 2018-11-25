@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(Targetname)
 	iconsprite("editor/point_template.vmt") 
 	line(255 255 0, targetname, Template01) 
 	line(255 255 0, targetname, Template09) 
@@ -16,9 +15,17 @@
 	line(255 255 0, targetname, Template07) 
 	line(255 255 0, targetname, Template15) 
 	line(255 255 0, targetname, Template08) 
-	line(255 255 0, targetname, Template16) = point_template: "Turns an entity, or set of entities, into a single template that can be instanced anywhere, and multiple times. If there are interdependencies (entity I/O, hierarchy, or other name references) between the entities in the template, the entities in the template will have their names changed and the interdependencies will be reconnected to the changes names. The name change format is as follows: '<original name>&0000', where the 0000 will be replaced with the current global template instance, so wildcard searches for '<original name>*' will still find them.\nIf you don't want the name fixup to happen, because you're only spawning the template once, or you want inputs to trigger all instances of the template, check the 'Preserve entity names' spawnflag. \nTo spawn the template in other places, use an env_entity_maker."
+	line(255 255 0, targetname, Template16) 
+	size(-8 -8 -8, 8 8 8) 
+= point_template: "Turns an entity, or set of entities, into a single template that can be instanced anywhere, and multiple times. " +
+"If there are interdependencies (entity I/O, hierarchy, " +
+"or other name references) between the entities in the template, the entities in the template will have their names changed and the " +
+"interdependencies will be reconnected to the changes names. " +
+"The name change format is as follows: '<original name>&0000', where the 0000 will be replaced with the current global template instance, so wildcard searches for '<original name>*' will still find them.\n" +
+"If you don't want the name fixup to happen, because you're only spawning the template once, or you want inputs to trigger all instances of the template, check the 'Preserve entity names' spawnflag. \n" +
+"To spawn the template in other places, use an env_entity_maker."
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Don't remove template entities" : 0
 		2: "Preserve entity names (Don't do name fixup)" : 1

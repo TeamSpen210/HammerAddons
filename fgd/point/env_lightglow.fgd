@@ -1,6 +1,4 @@
-
 @PointClass base(Parentname, Targetname, Angles) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	color(255 128 0) 
 	studio("models/editor/axis_helper_thick.mdl") 
 	color(200 200 0) 
@@ -8,17 +6,28 @@
 	sphere(minDist) 
 	sphere(maxDist) 
 	sphere(outerMaxDist) 
-	sphere(GlowProxySize) = env_lightglow: "An entity that puts an additive glow in the world, mostly used over light sources."
+	sphere(GlowProxySize) 
+= env_lightglow: "An entity that puts an additive glow in the world, mostly used over light sources."
 	[
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
 	verticalglowsize(integer) : "Vertical Size" : 30
 	horizontalglowsize(integer) : "Horizontal Size" : 30
+
 	mindist(integer) : "Minimum Distance" : 500 : "The distance at which this effect will be fully translucent."
 	maxdist(integer) : "Maximum Distance" : 2000 : "The distance at which this effect will be at full intensity."
-	outermaxdist(integer) : "Outer Maximum Distance" : 0 : "If larger than the maximum distance, this is the length at which the glow will fade completely out, between the span of the maximum distance and this length."
-	glowproxysize(float) : "Glow Proxy Geometry Size" : 2.0 : "Size of the glow to be rendered for visibility testing. Must be larger than the distance from the sprite center to empty space. So if this glow is inside geometry (like a light bulb), set this value to be bigger than the bulb's radius. Any time a sphere of this radius would be visible (poking through any nearby geometry), the glow will be rendered."
-	hdrcolorscale(float) : "HDR color scale." : 1.0 : "float value to multiply sprite color by when running in HDR mode."
-	spawnflags(flags) : "spawnflags" =
+
+	outermaxdist(integer) : "Outer Maximum Distance" : 0 : "If larger than the maximum distance, " +
+		"this is the length at which the glow will fade completely out, " +
+		"between the span of the maximum distance and this length."
+
+	glowproxysize(float) : "Glow Proxy Geometry Size" : 2 : "Size of the glow to be rendered for visibility testing. " +
+		"Must be larger than the distance from the sprite center to empty space. " + 
+		"So if this glow is inside geometry (like a light bulb), set this value to be bigger than the bulb's radius. " +
+		"Any time a sphere of this radius would be visible (poking through any nearby geometry), the glow will be rendered."
+
+	hdrcolorscale(float) : "HDR color scale." : "0.5" : "float value to multiply sprite color by when running in HDR mode."
+
+	spawnflags(flags)  =
 		[
 		1: "Visible only from front" : 0
 		]
@@ -26,5 +35,4 @@
 
 	// Inputs
 	input Color(color255) : "Change the render color of the glow. Format: <Red 0-255> <Green 0-255> <Blue 0-255>"
-	input Color[P2](color255) : "Change the color of the glow. Format: <Red 0-255> <Green 0-255> <Blue 0-255>"
 	]

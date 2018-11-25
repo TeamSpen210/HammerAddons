@@ -1,12 +1,11 @@
-
-@PointClass base(Targetname, Parentname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(Targetname, Parentname)
 	size(-4 -4 -4, 4 4 4) 
 	color(255 255 0) 
 	sphere(fireradius) 
-	color(200 200 0) = env_firesensor: "An entity that detects changes in heat nearby."
+	color(200 200 0) 
+= env_firesensor: "An entity that detects changes in heat nearby."
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags) =
 		[
 		1: "Start On" : 1
 		]

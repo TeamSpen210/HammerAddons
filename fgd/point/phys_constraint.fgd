@@ -1,10 +1,9 @@
-
-@PointClass base(TwoObjectPhysics) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	studio("models/editor/axis_helper.mdl") 
-	line(255 255 255, targetname, attach1) 
-	line(255 255 255, targetname, attach2) 
-	line(128 128 128, targetname, attach1, targetname, attach2) 
-	color(128 128 128) = phys_constraint: "A constraint that keeps the relative position and orientation of two objects fixed."
+@PointClass base(TwoObjectPhysics)
+	studio("models/editor/axis_helper.mdl")
+	line(255 255 255, targetname, attach1)
+	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
+	color(128 128 128)
+= phys_constraint: "A constraint that keeps the relative position and orientation of two objects fixed."
 	[
 	]

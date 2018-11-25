@@ -1,9 +1,12 @@
-
-@PointClass base(PlayerClass, Angles) 
+@PointClass base(PlayerClass, Angles)
 	studio("models/editor/playerstart.mdl") 
-	color(200 0 0) = info_player_start: "This entity indicates the position and facing direction at which the player will spawn. Any number of info_player_start entities may be placed in a map for when working in cordoned-off portions of the map. When multiple info_player_start entities are present in a map, set the 'Master' spawnflag on one of them to indicate which one should be used when running the entire map."
+	color(200 0 0) 
+= info_player_start: "This entity indicates the position and facing direction at which the player will spawn. " +
+	"Any number of info_player_start entities may be placed in a map for when working in cordoned-off portions of the map. " +
+	"When multiple info_player_start entities are present in a map, " +
+	"set the 'Master' spawnflag on one of them to indicate which one should be used when running the entire map."
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Master (Has priority if multiple info_player_starts exist)" : 0
 		]

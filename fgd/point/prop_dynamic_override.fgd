@@ -1,8 +1,8 @@
-
-@PointClass base(prop_dynamic_base) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	studioprop() = prop_dynamic_override: "A prop that can be placed in hierarchy and can play animations. It can also be configured to break when it takes enough damage.\nprop_dynamic_override is a prototyping entity only. It will allow the use of models designed to be used as prop_physics."
+@PointClass base(prop_dynamic_base)
+	studioprop() 
+= prop_dynamic_override: "A prop that can be placed in hierarchy and can play animations. It can also be configured to break when it takes enough damage. \n" + 
+	"prop_dynamic_override is a prototyping entity only. It will allow the use of models designed to be used as prop_physics."
 	[
 	health(integer) : "Health" : 0 : "Number of points of damage to take before breaking.  0 means don't break."
-	animateeveryframe[!TF2, P2](boolean) : "Animate Every Frame" : 0 : "Force this prop to animate every frame. Don't use this unless you know what you are doing."
+	animateeveryframe[P2](boolean) : "Animate Every Frame" : 0 : "Force this prop to animate every frame. Don't use this unless you know what you are doing."
 	]

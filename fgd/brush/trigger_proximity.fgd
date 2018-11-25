@@ -1,13 +1,16 @@
-
-@SolidClass base(Trigger) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@SolidClass base(Trigger)
 	line(255 255 255, targetname, filtername) 
 	line(255 255 255, targetname, measuretarget) 
-	sphere(radius) = trigger_proximity: "Measures the distance of the player within the trigger volume from a given point (and within a given radius). The NearestPlayerDistance output will be 0 when the player is at the center point, and 1 when the player is at the radius."
+	sphere(radius) 
+= trigger_proximity: "Measures the distance of the player within the trigger volume from a given point (and within a given radius). " +
+	"The NearestPlayerDistance output will be 0 when the player is at the center point, and 1 when the player is at the radius."
 	[
 	measuretarget(target_destination) : "Point to Measure From" : : "The name of a target entity who's origin is the point to measure the player's distance from."
-	radius(integer) : "Radius to measure within" : 256 : "The radius to which the distance should be mapped. If the player is outside the radius he will be ignored."
+	radius(float) : "Radius to measure within" : 256 : "The radius to which the distance should be mapped. If the player is outside the radius he will be ignored."
 
 	// Outputs
-	output NearestEntityDistance(integer) : "Fired continuously when entities are touching the trigger volume. The output parameter is the distance from the Point to Measure From to the nearest entity that passed the trigger filters. The distance is mapped to the radius distance, so it will be 0 when the entity is on the point, and 1 when the entity is at the edge of the radius."
+	output NearestEntityDistance(float) : "Fired continuously when entities are touching the trigger volume. " +
+		"The output parameter is the distance from the Point to Measure From to the nearest entity that passed the trigger filters. " +
+		"The distance is mapped to the radius distance, so it will be 0 when the entity is on the point, and 1 when the entity is at the edge of the radius." +
+		"!activator is the closest entity."
 	]

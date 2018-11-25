@@ -1,5 +1,4 @@
-
-@FilterClass base(BaseFilter) 
+@FilterClass base(BaseFilter)
 	iconsprite("editor/filter_multiple.vmt") 
 	line(0 255 0, targetname, filter01) 
 	line(0 255 0, targetname, filter02) 
@@ -10,8 +9,10 @@
 	line(0 255 0, targetname, filter07) 
 	line(0 255 0, targetname, filter08) 
 	line(0 255 0, targetname, filter09) 
-	line(0 255 0, targetname, filter10)
-= filter_multi: "A filter that tests the activator against multiple filters. This allows you to build more complex filters, such as'Allow anyone on Team 1 who is also class engineer', or 'Allow everyone except classes npc_zombie and npc_headcrab'."
+	line(0 255 0, targetname, filter10) 
+= filter_multi: "A filter that tests the activator against multiple filters. " +
+	"This allows you to build more complex filters, such as'Allow anyone on Team 1 who is also class engineer', " +
+	"or 'Allow everyone except classes npc_zombie and npc_headcrab'."
 	[
 	filtertype(choices) : "Logic Type" : "0" =
 		[
@@ -19,14 +20,16 @@
 		1: "OR (any filter must pass)"
 		]
 
-	negated(boolean) : "Negate Outcome" : 0 : "Whether to negate the result of the subfilters, after combining them using the Logic Type chosen.\nNegating the outcome using the AND logic type means that any subfilter must fail for this filter to pass.\nNegating the outcome using the OR logic type means that all subfilters must fail for this filter to pass."
+	negated(boolean) : "Negate Outcome" : 0 : "Whether to negate the result of the subfilters, " +
+		"after combining them using the Logic Type chosen.\n" +
+		"Negating the outcome using the AND logic type means that any subfilter must fail for this filter to pass.\n" +
+		"Negating the outcome using the OR logic type means that all subfilters must fail for this filter to pass."
 
 	filter01(filterclass) : "Filter 1" : : "Activator filter to test."
 	filter02(filterclass) : "Filter 2" : : "Activator filter to test."
 	filter03(filterclass) : "Filter 3" : : "Activator filter to test."
 	filter04(filterclass) : "Filter 4" : : "Activator filter to test."
 	filter05(filterclass) : "Filter 5" : : "Activator filter to test."
-	
 	filter06[since_L4D](filterclass) : "Filter 6" : : "Activator filter to test."
 	filter07[since_L4D](filterclass) : "Filter 7" : : "Activator filter to test."
 	filter08[since_L4D](filterclass) : "Filter 8" : : "Activator filter to test."

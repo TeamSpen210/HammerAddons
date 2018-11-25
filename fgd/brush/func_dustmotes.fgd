@@ -5,5 +5,5 @@
 	sizemin(string) : "Minimum Particle Size" : "10"
 	sizemax(string) : "Maximum Particle Size" : "20"
 	alpha(integer) : "Alpha" : 255
-	affectedbywind[CSGO](boolean) : "Affected By Wind" : 1 : "When set, the dust will be affected by any env_wind entity settings in the map."
+	affectedbywind[since_CSGO](boolean) : "Affected By Wind" : 1 : "When set, the dust will be affected by any env_wind entity settings in the map."
 	]

@@ -1,9 +1,8 @@
-
-@SolidClass base(Targetname, EnableDisable) 
-	appliesto(ASW, P2, CSGO) 
+@SolidClass base(Targetname, EnableDisable) appliesto(since_L4D) 
 	line(255 255 0, targetname, fogname) 
 	line(255 255 0, targetname, postprocessname) 
-	line(255 255 0, targetname, colorcorrectionname) = fog_volume: "An entity to control the fog in the map."
+	line(255 255 0, targetname, colorcorrectionname) 
+= fog_volume: "An entity to control the fog in the map."
 	[
 	fogname(target_destination) : "Fog Name" : : "The name of the fog entity associated with this volume."
 	postprocessname(target_destination) : "Postprocess Name" : : "The name of the postprocess entity associated with this volume."

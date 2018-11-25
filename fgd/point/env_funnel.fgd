@@ -1,13 +1,10 @@
-
 @PointClass base(Targetname, Parentname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	size(-16 -16 -16, 16 16 16) 
-	color(200 200 0) 
-	size(-8 -8 -8, 8 8 8) = env_funnel: "HL1 Legacy: Large Portal Funnel"
+	color(200 200 0)
+= env_funnel: "HL1 Legacy: Large Portal Funnel"
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Reverse" : 0
 		]
-
 	]

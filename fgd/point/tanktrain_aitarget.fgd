@@ -1,9 +1,8 @@
-
-@PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(Targetname)
 	iconsprite("editor/tanktrain_aitarget.vmt") 
 	line(255 255 255, targetname, target) 
-	line(255 255 255, targetname, newtarget) = tanktrain_aitarget: "An entity that changes the target of a tanktrain_ai entity."
+	line(255 255 255, targetname, newtarget) 
+= tanktrain_aitarget: "An entity that changes the target of a tanktrain_ai entity."
 	[
 	target(target_destination) : "Tank AI Entity" : : "The tanktrain_ai entity to change the target of."
 	newtarget(target_destination) : "New Target Entity" : : "The entity to tell the tanktrain_ai to target."

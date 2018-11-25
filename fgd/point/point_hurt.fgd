@@ -1,16 +1,16 @@
-
-@PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(Targetname)
 	sphere(DamageRadius) 
-	line(255 255 255, targetname, damagetarget) 
-	iconsprite("editor/game_end.vmt") = point_hurt: "An entity that does damage to all entities in a radius around itself, with a specified delay.If 'Target Entity' is specified, the damage is only done to that entity."
+	line(255 0 0, targetname, damagetarget) 
+	iconsprite("editor/game_end.vmt") 
+= point_hurt: "An entity that does damage to all entities in a radius around itself, with a specified delay.If 'Target Entity' is specified, th" + "e damage is only done to that entity."
 	[
-	damagetarget(string) : "Target Entity" : : "If specified, only this entity will take damage. Otherwise, all entities within the Radius will take damage."
-	damagetarget[P2](target_destination) : "Target Entity" : : "If specified, only this entity will take damage. Otherwise, all entities within the Radius will take damage."
-	damageradius(float) : "Radius" : 256 : "All entities within this radius of this entity will take damage. If a 'Target Entity' is specified, only that entity will take damage."
+	damagetarget(target_destination) : "Target Entity" : : "If specified, only this entity will take damage. Otherwise, all entities within the Radius will take damage."
+	damageradius(float) : "Radius" : 256 : "All entities within this radius of this entity will take damage. If a 'Target Entity' is specified, only that entity will take d" + "amage."
 	damage(integer) : "Damage" : 5 : "Damage done to all affected entities each time this entity fires."
 	damagedelay(float) : "Delay" : 1 : "Delay between refires, in seconds."
-	damagetype(choices) : "Damage Type" : "0" : "Type of damage to inflict on entities damaged." =
+
+	damagetype[engine](integer): "Damage Type"
+	damagetype(choices) : "Damage Type" : 0 : "Type of damage to inflict on entities damaged. Differerent types can be ORed together." =
 		[
 		0: "GENERIC"
 		1: "CRUSH"
@@ -35,7 +35,7 @@
 		4194304: "SLOWFREEZE"
 		]
 
-	spawnflags[!TF2, P2, !CSGO](flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Start Active" : 0
 		]

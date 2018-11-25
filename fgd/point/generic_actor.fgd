@@ -1,7 +1,6 @@
-
-@PointClass base(BaseNPC, Parentname, RenderFields, Shadow) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, CSGO) 
-	studio() = generic_actor: "Generic Actor NPC"
+@PointClass base(BaseNPC, Parentname, RenderFields, Shadow)
+	studio() 
+= generic_actor: "Generic Actor NPC"
 	[
 	model(studio) : "Model"
 	hull_name(choices) : "Hull type" : "Human" =

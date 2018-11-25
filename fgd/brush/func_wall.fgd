@@ -1,6 +1,6 @@
-
-@SolidClass base(Targetname, RenderFields, Global, Shadow, compMinLight) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = func_wall: "Legacy support. Use func_brush instead."
+@SolidClass base(Targetname, RenderFields, Global, Shadow, compMinLight)
+	sphere(fademindist) 
+	sphere(fademaxdist) 
+= func_wall: "Legacy support. Use func_brush instead."
 	[
-	_minlight[!P2](string) : "Minimum Light Level" : : "The minimum level of ambient light that hits this brush."
 	]

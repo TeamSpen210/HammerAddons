@@ -1,20 +1,23 @@
-
-@PointClass base(Targetname, Angles) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(Targetname, Angles)
 	studio("models/editor/axis_helper_thick.mdl") 
 	iconsprite("editor/point_teleport.vmt") 
-	line(255 255 255, targetname, target) = point_teleport: "An entity that teleports a target entity to this position and angles. If 'Teleport Home' spawn flag is set, teleports the target entity to its spawn position instead.If object is physically simulated, simulation is turned off when teleported."
+	line(255 255 255, targetname, target) 
+= point_teleport: "An entity that teleports a target entity to this position and angles. " +
+	"If 'Teleport Home' spawn flag is set, teleports the target entity to its spawn position instead. " +
+	"If object is physically simulated, simulation is turned off when teleported."
 	[
 	target(target_destination) : "Entity To Teleport" : : "Name of the entity that will be teleported."
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Teleport Home" : 0
 		2: "Into Duck (episodic)" : 0
 		]
 
-
 	// Inputs
 	input Teleport(void) : "Teleport the target entity."
-	input TeleportToCurrentPos[!TF2, ASW](void) : "Teleport the target entity to wherever the point_teleport entity is currently. The Teleport input teleports to the initial position of the point_teleport, so this input was added to avoid breaking old content."
-	input TeleportEntity[!TF2, ASW](target_destination) : "Teleport the entity specified by the parameter override. Use this to teleport an entity other than the one specified in the Entity To Teleport field."
+	input TeleportToCurrentPos[since_ASW](void) : "Teleport the target entity to wherever the point_teleport entity is currently. " +
+		"The Teleport input teleports to the initial position of the point_teleport, " +
+		"so this input was added to avoid breaking old content."
+	input TeleportEntity[since_ASW](target_destination) : "Teleport the entity specified by the parameter override. " +
+		"Use this to teleport an entity other than the one specified in the Entity To Teleport field."
 	]

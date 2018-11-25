@@ -1,6 +1,7 @@
-
-@SolidClass base(Targetname) 
-	color(0 255 255) = func_occluder: "A occluder brush used to manage dynamic visibility in maps. Occluders are used to dynamically determine what things are behind them, to prevent trying to draw them at all."
+@SolidClass base(Targetname)
+	color(0 255 255) 
+= func_occluder: "A occluder brush used to manage dynamic visibility in maps. " +
+	"Occluders are used to dynamically determine what things are behind them, to prevent trying to draw them at all."
 	[
 	startactive(choices) : "Initial State" : "1" =
 		[

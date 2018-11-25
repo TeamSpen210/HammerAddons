@@ -1,7 +1,7 @@
-
 @KeyframeClass base(Targetname, Parentname, Angles, KeyFrame) 
 	size(-6 -6 -6, 6 6 6) 
 	color(255 200 0) 
-	keyframe() = keyframe_track: "Animation KeyFrame"
+	keyframe() 
+= keyframe_track: "Animation KeyFrame"
 	[
 	]

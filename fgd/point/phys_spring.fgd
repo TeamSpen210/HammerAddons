@@ -1,17 +1,19 @@
 
-@PointClass 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	halfgridsnap() 
-	halfgridsnap(Targetname) 
+@PointClass base(Targetname) 
+	halfgridsnap
 	color(128 128 128) 
 	size(-8 -8 -8, 8 8 8) 
 	line(128 128 128, targetname, attach1) 
 	line(128 128 128, targetname, attach2) 
 	line(128 128 128, targetname, attach1, targetname, attach2) 
 	sphere(length) 
-	sphere(breaklength) = phys_spring: "A physically simulated spring. 'Length' is what's known as the 'natural spring length'. This is how long the spring would be if it was at rest (nothing hanging on it or attached). When you attach something to the spring, it will stretch longer than its 'natural length'. The amount of stretch is determined by the 'Sprint Constant'. The larger the spring constant the less stretch the spring."
+	sphere(breaklength) 
+= phys_spring: "A physically simulated spring. 'Length' is what's known as the 'natural spring length'. " +
+	"This is how long the spring would be if it was at rest (nothing hanging on it or attached). " +
+	"When you attach something to the spring, it will stretch longer than its 'natural length'. " +
+	"The amount of stretch is determined by the 'Sprint Constant'. The larger the spring constant the less stretch the spring."
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Force only on stretch" : 0
 		]
@@ -19,11 +21,11 @@
 	attach1(target_destination) : "Entity 1"
 	attach2(target_destination) : "Entity 2"
 	springaxis(vecline) : "Spring Axis" : : "Use the helper. Drag it out to match the virtual spring."
-	length(string) : "Spring Length" : "0" : "How long the spring would be if it was at rest (nothing hanging on it or attached). 0 means the length of the brush."
-	constant(string) : "Spring Constant" : "50" : "Stiffness of the spring.  The larger the number the less the spring will stretch."
+	length(string) : "Spring Length" : 0 : "How long the spring would be if it was at rest (nothing hanging on it or attached). 0 means the length of the brush."
+	constant(string) : "Spring Constant" : 50 : "Stiffness of the spring.  The larger the number the less the spring will stretch."
 	damping(string) : "Damping Constant" : "2.0" : "How much energy the spring loses.  The larger the number, the less bouncy the spring."
 	relativedamping(string) : "Relative Damping Constant" : "0.1" : "The amount of energy the spring loses proportional to the relative velocity of the two objects the spring is attached to."
-	breaklength(string) : "Break on Length" : "0" : "If the spring's length ever exceeds this length, the spring breaks."
+	breaklength(string) : "Break on Length" : 0 : "If the spring's length ever exceeds this length, the spring breaks."
 
 	// Inputs
 	input SetSpringConstant(float) : "Set the Spring Constant."

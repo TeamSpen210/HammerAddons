@@ -1,8 +1,6 @@
-
-@BaseClass base(Node) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = HintNode
+@BaseClass base(Node) = HintNode
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		65536: "Allow jump up" : 0
 		]
@@ -123,8 +121,8 @@
 		1003: "HL1 World: Alien Blood"
 		]
 
-	hintactivity(string) : "Hint Activity" : : "Activity associated with this hint node. Various parts of the NPC AI play this activity at times. i.e. Actbusy nodes will play this activity when an NPC acts busy on the node."
-
+	hintactivity(string) : "Hint Activity" : : "Activity associated with this hint node. " +
+		"Various parts of the NPC AI play this activity at times. i.e. Actbusy nodes will play this activity when an NPC acts busy on the node."
 	nodefov[engine](integer) : "Node FOV" : 180
 	nodefov(choices) : "Node FOV" : 180 : "Imagine this node requires that an NPC be in the node's field of view in order to use this hint." =
 		[
@@ -135,11 +133,15 @@
 		]
 
 	starthintdisabled(boolean) : "Start Hint Disabled" : 0
-	group(string) : "Hint Group" : : "If specified, gives the hint a specific group name.  Useful for hint nodes that need to be logically grouped together. NPCs may also refuse to use hint nodes that don't match their hint group."
-	targetnode(node_dest) : "Target node" : "-1" : "The node ID of an associated target node, if any."
+
+	group(string) : "Hint Group" : : "If specified, gives the hint a specific group name.  " +
+		"Useful for hint nodes that need to be logically grouped together. " +
+		"NPCs may also refuse to use hint nodes that don't match their hint group."
+
+	targetnode(node_dest) : "Target node" : -1 : "The node ID of an associated target node, if any."
 
 	ignorefacing[engine](integer) : "Ignore Facing" : 2
-	ignorefacing(choices) : "Ignore Facing" : 2 : "Don't pay attention to the facing of the node. May not apply to a given hint type." =
+	ignorefacing(choices) : "Ignore Facing" : "2" : "Don't pay attention to the facing of the node. May not apply to a given hint type." =
 		[
 		0: "No"
 		1: "Yes"
@@ -147,7 +149,7 @@
 		]
 
 	minimumstate[engine](integer) : "Minimum State" : 1
-	minimumstate(choices) : "Minimum State" : 1 : "Require an NPC have a minimum state to use the hint." =
+	minimumstate(choices) : "Minimum State" : "1" : "Require an NPC have a minimum state to use the hint." =
 		[
 		1: "Idle"
 		2: "Alert"
@@ -155,15 +157,15 @@
 		]
 
 	maximumstate[engine](integer) : "Maximum State" : 3
-	maximumstate(choices) : "Maximum State" : 3 : "Require an NPC have a maximum state to use the hint." =
+	maximumstate(choices) : "Maximum State" : "3" : "Require an NPC have a maximum state to use the hint." =
 		[
 		1: "Idle"
 		2: "Alert"
 		3: "Combat"
 		]
 
-	generictype[!TF2, ASW](string) : "Generic Hint" : : "String identifying what the hint type is, if generic."
-	radius[!TF2, ASW](integer) : "Radius" : 0 : "How close an NPC must be to consider this hint. 0 means infinite."
+	generictype[ASW](string) : "Generic Hint" : : "String identifying what the hint type is, if generic."
+	radius[ASW](integer) : "Radius" : 0 : "How close an NPC must be to consider this hint. 0 means infinite."
 
 	// Inputs
 	input EnableHint(void) : "Enable hint."

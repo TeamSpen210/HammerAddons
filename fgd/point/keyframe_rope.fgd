@@ -1,6 +1,6 @@
-
 @KeyframeClass base(Targetname, Parentname, KeyFrame, RopeKeyFrame) 
 	studio("models/editor/axis_helper_thick.mdl") 
-	keyframe() = keyframe_rope: "A node entity that marks a point in a rope. The first node in the rope should be a move_rope, followed by 1 or more keyframe_ropes."
+	keyframe() 
+= keyframe_rope: "A node entity that marks a point in a rope. The first node in the rope should be a move_rope, followed by 1 or more keyframe_ropes."
 	[
 	]

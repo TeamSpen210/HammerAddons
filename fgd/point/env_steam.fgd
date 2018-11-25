@@ -1,22 +1,18 @@
-
 @PointClass base(Targetname, Parentname, Angles) 
 	color(255 255 255) 
 	color(200 200 0) 
-	studio("models/editor/spot_cone.mdl") 
+	studio("models/editor/spot_cone.mdl")
 = env_steam: "An entity used to create a jet of steam."
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Emissive" : 0
 		]
 
-	initialstate(choices) : "Initial State" : "0" =
-		[
-		0: "Off"
-		1: "On"
-		]
+	initialstate(boolean) : "Initial State" : 0
 
-	type(choices) : "Particle Type" : "0" =
+	type[engine](integer) : "Particle Type"
+	type(choices) : "Particle Type" : 0 =
 		[
 		0: "Normal"
 		1: "Heat Wave"
@@ -31,6 +27,8 @@
 	jetlength(integer) : "Length of steam jet" : 80 : "The length of the jet determines the lifetime of each particle."
 	renderamt(integer) : "Translucency" : 255
 	rollspeed(float) : "How fast does the particles spin" : 8
+
+	startnoise[L4D](sound) : "Start Sound" : : "Sound to play when starting emission."
 
 	// Inputs
 	input TurnOn(void) : "Turns the steam jet on."

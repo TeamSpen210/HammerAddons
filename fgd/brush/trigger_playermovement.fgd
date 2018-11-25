@@ -1,20 +1,14 @@
 
 @SolidClass base(Trigger) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = trigger_playermovement: "An entity that can be used to disable player's automatic ducking/unducking when jumping."
+= trigger_playermovement: "An entity that can be used to disable player's automatic ducking/unducking when jumping."
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		16: "(OBSOLETE, Uncheck me)" : 0
 		128: "Disable auto player movement" : 1
 		2048: "Auto-duck while in trigger" : 0
-		]
-
-	spawnflags[CSGO](flags) : "spawnflags" =
-		[
-		16: "(OBSOLETE, Uncheck me)" : 0
-		128: "Disable auto player movement" : 1
-		2048: "Auto-duck while in trigger" : 0
-		4096: "Auto-walk while in trigger" : 0
+		4096: "Auto-walk while in trigger" : 0 [since_L4D]
+		8192 : "Disable jump while in trigger" [since_L4D2]
 		]
 
 	]

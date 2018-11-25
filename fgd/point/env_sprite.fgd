@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname, RenderFields, DXLevelChoice, SystemLevelChoice) 
+@PointClass base(Targetname, Parentname, RenderFields, DXLevelChoice, SystemLevelChoice)
 	size(-2 -2 -2, 2 2 2) 
 	sprite() 
 	color(20 140 20) 
@@ -9,14 +8,17 @@
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
 	model(sprite) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
 	scale(string) : "Scale" : : "Scale multiplier of the sprite."
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Start on" : 0
 		2: "Play Once" : 0
 		]
 
-	glowproxysize(float) : "Size of Glow Proxy Geometry." : 2.0 : "Size of the glow to be rendered for visibility testing. Must be larger than the distance from the sprite center to empty space.  So if this glow is inside geometry (like a light bulb), set this value to be bigger than the bulb's radius. Any time a sphere of this radius would be visible (poking through any nearby geometry), the glow will be rendered."
-	hdrcolorscale(float) : "HDR color scale." : 1.0 : "float value to multiply sprite color by when running in HDR mode."
+	glowproxysize(float) : "Size of Glow Proxy Geometry." : "2.0" : "Size of the glow to be rendered for visibility testing. " + 
+		"Must be larger than the distance from the sprite center to empty space. " + 
+		"So if this glow is inside geometry (like a light bulb), set this value to be bigger than the bulb's radius. " +
+		"Any time a sphere of this radius would be visible (poking through any nearby geometry), the glow will be rendered."
+	hdrcolorscale(float) : "HDR color scale." : "0.7" : "float value to multiply sprite color by when running in HDR mode."
 
 	// Inputs
 	input ColorRedValue(float) : "Sets the red color channel's value (0 - 255)."

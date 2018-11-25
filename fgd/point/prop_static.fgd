@@ -1,9 +1,8 @@
-
-@PointClass base(prop_static_base) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(prop_static_base)
 	color(255 255 0) 
 	sphere(fademindist) 
 	sphere(fademaxdist) 
-	studioprop() = prop_static: "A prop that doesn't move and doesn't animate."
+	studioprop() 
+= prop_static: "A prop that doesn't move and doesn't animate."
 	[
 	]

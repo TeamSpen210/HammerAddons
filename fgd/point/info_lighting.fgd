@@ -1,8 +1,8 @@
-
-@PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(Targetname)
 	iconsprite("editor/info_lighting.vmt") 
-	halfgridsnap() 
-	halfgridsnap("editor/info_lighting.vmt") = info_lighting: "An entity that can be used to change the lighting origin of a prop_static. Set the prop_static's Lighting Origin to point at this entity to make the prop_static light as if it was at the info_lighting's origin. Good for prop_static entities that are embedded in world geometry (like rocks/windows/etc)."
+	halfgridsnap
+= info_lighting: "An entity that can be used to change the lighting origin of a prop_static. " +
+	"Set the prop_static's Lighting Origin to point at this entity to make the prop_static light as if it was at the info_lighting's origin. " +
+	" Good for prop_static entities that are embedded in world geometry (like rocks/windows/etc)."
 	[
 	]

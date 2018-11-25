@@ -1,11 +1,12 @@
-
-@PointClass base(gibshooterbase, RenderFields) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(gibshooterbase, RenderFields)
 	iconsprite("editor/env_shooter.vmt") 
 	color(200 200 0) 
-	line(255 255 255, targetname, lightingorigin) = env_shooter: "An entity that shoots models, or sprites, out of its origin."
+	line(255 255 255, targetname, lightingorigin) 
+= env_shooter: "An entity that shoots models, or sprites, out of its origin."
 	[
 	shootmodel(studio) : "Model" : : "Thing to shoot out. Can be a .mdl or a .vmt."
+
+	shootsounds[engine](integer): "Material Sound" : -1
 	shootsounds(choices) : "Material Sound" : "-1" =
 		[
 		-1: "None"
@@ -16,6 +17,7 @@
 		4: "Concrete"
 		]
 
+	simulation[engine](integer) : "Simulate"
 	simulation(choices) : "Simulate" : "0" =
 		[
 		0: "Point"
@@ -23,16 +25,15 @@
 		2: "Ragdoll"
 		]
 
-	skin(integer) : "Gib Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin on all gibs produced by this shooter."
-	spawnflags(flags) : "spawnflags" =
+	skin(integer) : "Gib Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin on all gi" + "bs produced by this shooter."
+	spawnflags(flags)  =
 		[
 		2: "On fire" : 0
 		4: "strict remove after lifetime" : 0
 		]
 
 	nogibshadows(boolean) : "Disable Shadows on Gibs" : 0
-
 	gibgravityscale(float) : "Gib gravity scale" : 1 : "ONLY WORKS FOR POINT GIBS. This field allows you to scale gravity so that gibs fall faster, slower, or not at all."
-	
+
 	massoverride(float) : "Mass override" : 0 : "EPISODIC ONLY. Specify an arbitrary mass for the gibs emitted by me."
 	]

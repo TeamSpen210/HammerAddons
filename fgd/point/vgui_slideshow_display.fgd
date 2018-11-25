@@ -1,14 +1,13 @@
-
-@PointClass base(Targetname, Angles, Parentname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(Targetname, Angles, Parentname)
 	studio("models/editor/axis_helper_thick.mdl") 
 	color(200 200 0) 
-	studio("models/editor/vgui_arrows.mdl") = vgui_slideshow_display: "Slideshow Display"
+	studio("models/editor/vgui_arrows.mdl") 
+= vgui_slideshow_display: "Slideshow Display"
 	[
 	displaytext(string) : "Display Text"
 	directory(string) : "Image Directory (materials/vgui/...)" : "slideshow"
-	minslidetime(float) : "Min Slide Time" : 0.5 : "Minimum amount of random time that a slide is displayed."
-	maxslidetime(float) : "Max Slide Time" : 0.5 : "Maximum amount of random time that a slide is displayed."
+	minslidetime(float) : "Min Slide Time" : "0.5" : "Minimum amount of random time that a slide is displayed."
+	maxslidetime(float) : "Max Slide Time" : "0.5" : "Maximum amount of random time that a slide is displayed."
 
 	cycletype[engine](integer) : "Cycle Type" : 0
 	cycletype(choices) : "Cycle Type" : 0 =
@@ -23,7 +22,7 @@
 		0: "Allow List Repeats"
 		1: "No List Repeats"
 		]
-	nolistrepeat[engine](boolean): "No List Repeat" : 0
+	nolistrepeat[engine](boolean) : "No List Repeat" : 0
 
 	width(integer) : "Panel width" : 256 : "Width of the panel in units."
 	height(integer) : "Panel height" : 128 : "Height of the panel in units."

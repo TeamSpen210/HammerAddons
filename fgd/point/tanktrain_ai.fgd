@@ -1,8 +1,7 @@
-
-@PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(Targetname)
 	iconsprite("editor/tanktrain_ai.vmt") 
-	line(255 255 255, targetname, target) = tanktrain_ai: "Train chase AI"
+	line(255 255 255, targetname, target) 
+= tanktrain_ai: "Train chase AI"
 	[
 	target(target_destination) : "Train Name"
 	startsound(sound) : "Start Moving Sound" : "vehicles/diesel_start1.wav"

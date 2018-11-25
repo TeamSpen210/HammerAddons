@@ -1,6 +1,4 @@
-
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	color(0 0 255) 
 	iconsprite("editor/choreo_manager.vmt") 
 	color(240 180 250) 
@@ -20,7 +18,11 @@
 	line(240 180 250, targetname, scene13) 
 	line(240 180 250, targetname, scene14) 
 	line(240 180 250, targetname, scene15) 
-= logic_scene_list_manager: "Manages a list of logic_choreographed_scene entities. Store choreo scenes in them in order that they will be played by other inputs. Whenever a scene plays, the manager will remove all scenes before that one in the list. The name of another logic_scene_list_manager can be entered in a slot instead of an invididual scene, which will cause all scenes in that manager to be removed when a later scene in this list is played."
+= logic_scene_list_manager: "Manages a list of logic_choreographed_scene entities. " +
+	"Store choreo scenes in them in order that they will be played by other inputs. " +
+	"Whenever a scene plays, the manager will remove all scenes before that one in the list. " +
+	"The name of another logic_scene_list_manager can be entered in a slot instead of an invididual scene, " +
+	"which will cause all scenes in that manager to be removed when a later scene in this list is played."
 	[
 	scene0(target_destination) : "Scene 1" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
 	scene1(target_destination) : "Scene 2" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
@@ -40,5 +42,6 @@
 	scene15(target_destination) : "Scene 16" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
 
 	// Inputs
-	input Shutdown(void) : "Remove the manager and all scenes referenced by it (and all scenes referenced by logic_scene_list_manager's embedded in this one)."
+	input Shutdown(void) : "Remove the manager and all scenes referenced by it " +
+		"(and all scenes referenced by logic_scene_list_manager's embedded in this one)."
 	]

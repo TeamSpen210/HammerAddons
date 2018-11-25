@@ -1,6 +1,4 @@
-
 @PointClass base(Targetname, Parentname, Angles, Global, Studiomodel, BaseFadeProp) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
 	studioprop() 
 	line(255, 255, 255, targetname, slavename) = prop_door_rotating: "An entity used to place a door in the world."
 	[
@@ -50,6 +48,7 @@
 		16384: "Door silent to NPCS (Does not alert NPCs)" : 0
 		32768: "Ignore player +USE" : 0
 		524288: "Start Breakable" : 0 [CSGO]
+		524288 : "Start Unbreakable" : 0 [L4D]
 		]
 
 	opendir[engine](integer) : "Open Direction" : 0

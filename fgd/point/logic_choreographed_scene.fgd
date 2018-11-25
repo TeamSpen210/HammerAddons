@@ -1,6 +1,4 @@
-
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	color(0 0 255) 
 	iconsprite("editor/choreo_scene.vmt") 
 	color(240 180 250) 
@@ -14,8 +12,7 @@
 	line(240 180 250, targetname, target8) 
 = logic_choreographed_scene: "Manages a choreographed scene of one or more actors."
 	[
-	scenefile(scene) : "Scene file"
-	scenefile[P2](scene) : "Scene file" : : "The scene that will play when this entity is triggered."
+	scenefile(scene) : "Scene file" : : "The scene that will play when this entity is triggered."
 	target1(target_destination) : "Target 1"
 	target2(target_destination) : "Target 2"
 	target3(target_destination) : "Target 3"

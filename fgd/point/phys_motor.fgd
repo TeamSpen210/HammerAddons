@@ -1,16 +1,16 @@
 
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	halfgridsnap() 
-	halfgridsnap(-8 -8 -8, 8 8 8) 
+	halfgridsnap
 	color(128 128 128) 
-	line(128 128 128, targetname, attach1) = phys_motor: "An entity that tries to spin a target entity at a particular speed."
+	line(128 128 128, targetname, attach1) 
+	size(-8 -8 -8, 8 8 8) 
+= phys_motor: "An entity that tries to spin a target entity at a particular speed."
 	[
-	speed(string) : "Rotation Speed" : "0" : "Angular speed (units are degress/second)"
-	spinup(string) : "Spin up time" : "1" : "spin up time in seconds (also affects the rate at which speed changes happen)"
-	inertiafactor(float) : "System Interia Scale" : 1.0 : "Make this larger if the object being driven is constrained to a set of heavier objects."
+	speed(string) : "Rotation Speed" : 0 : "Angular speed (units are degress/second)"
+	spinup(string) : "Spin up time" : 1 : "spin up time in seconds (also affects the rate at which speed changes happen)"
+	inertiafactor(float) : "System Interia Scale" : "1.0" : "Make this larger if the object being driven is constrained to a set of heavier objects."
 	axis(vecline) : "Rotation Axis"
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Start On" : 1
 		2: "No world collision" : 0

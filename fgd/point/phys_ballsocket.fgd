@@ -1,14 +1,9 @@
-
-@PointClass base(TwoObjectPhysics) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(TwoObjectPhysics)
 	iconsprite("editor/phys_ballsocket.vmt") 
 	line(255 255 255, targetname, attach1) 
 	line(255 255 255, targetname, attach2) 
 	line(128 128 128, targetname, attach1, targetname, attach2) 
-	color(128 128 128) = phys_ballsocket: "A constraint that keeps the position of two objects fixed, relative to the constraint's origin. It does not affect rotation."
+	color(128 128 128) 
+= phys_ballsocket: "A constraint that keeps the position of two objects fixed, relative to the constraint's origin. It does not affect rotation."
 	[
-	spawnflags(flags) : "spawnflags" =
-		[
-		]
-
 	]

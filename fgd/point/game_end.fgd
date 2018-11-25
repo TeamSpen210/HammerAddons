@@ -1,10 +1,7 @@
-
-@PointClass base(Targetname, MasterEnt) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	iconsprite("editor/game_end.vmt") = game_end: "An entity that ends a multiplayer game."
+@PointClass base(Targetname, MasterEnt)
+	iconsprite("editor/game_end.vmt") 
+= game_end: "An entity that ends a multiplayer game."
 	[
-	master[!P2](string) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
-
 	// Inputs
 	input EndGame(void) : "End the multiplayer game."
 	]

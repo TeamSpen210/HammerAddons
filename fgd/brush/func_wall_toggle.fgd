@@ -1,8 +1,7 @@
-
-@SolidClass base(func_wall) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = func_wall_toggle: "A brush entity that can be toggled on/off. When off, the brush will be non-solid and invisible. Does not cast lightmap shadows."
+@SolidClass base(func_wall)
+= func_wall_toggle: "A brush entity that can be toggled on/off. When off, the brush will be non-solid and invisible. Does not cast lightmap shadows."
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Starts Invisible" : 0
 		]

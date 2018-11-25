@@ -1,5 +1,6 @@
 
 @SolidClass base(Targetname, Parentname) 
-	appliesto(CSGO) = func_detail_blocker: "A brush entity that prevents detail sprites from being placed inside its volume."
+	appliesto(since_L4D) 
+= func_detail_blocker: "A brush entity that prevents detail sprites from being placed inside its volume."
 	[
 	]

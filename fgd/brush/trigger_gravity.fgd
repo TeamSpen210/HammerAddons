@@ -1,6 +1,6 @@
-
-@SolidClass base(Trigger) 
-	line(255 255 255, targetname, filtername) = trigger_gravity: "A trigger volume that changes the gravity on any entity that touches it."
+@SolidClass base(Trigger)
+	line(255 255 255, targetname, filtername) 
+= trigger_gravity: "A trigger volume that changes the gravity on any entity that touches it."
 	[
 	gravity(integer) : "Gravity (0-1)" : 1
 	]
