@@ -1,0 +1,26 @@
+
+@PointClass base(prop_dynamic) 
+	appliesto(L4D) 
+	studioprop() 
+	sphere(fademindist) 
+	sphere(fademaxdist) 
+= prop_glowing_object: "A dynamic prop that can glow through walls"
+	[
+	startglowing(choices) : "Start Glowing" : "1" : "Whether this objkect glows when the map starts" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	glowforteam(choices) : "Glow For Team" : "-1" : "Team(s) this entity should glow for" =
+		[
+		-1: "Everyone"
+		2: "Survivors"
+		3: "Infected"
+		]
+
+
+	// Inputs
+	input StartGlowing(void) : "Turns on glowing for this object"
+	input StopGlowing(void) : "Turns off glowing for this object"
+	]

@@ -1,0 +1,17 @@
+
+@SolidClass base(Targetname) 
+	appliesto(L4D) 
+= func_nav_stairs_toggle: "This will add or remove the 'STAIRS' attribute from all nav areas that overlap the brush"
+	[
+	initialsetting(choices) : "Initial Setting" : "0" =
+		[
+		0: "Leave Default Value"
+		1: "Add Attribute"
+		-1: "Remove Attribute"
+		]
+
+
+	// Inputs
+	input AddStairsAttribute(void) : "Adds the STAIRS attribute to overlapping nav areas"
+	input RemoveStairsAttribute(void) : "Removes the STAIRS attribute from overlapping nav areas"
+	]

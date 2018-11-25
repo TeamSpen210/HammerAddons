@@ -1,0 +1,19 @@
+
+@PointClass base(Targetname, Angles) 
+	appliesto(L4D) 
+= info_map_parameters_versus: "L4D-specific map parameters for versus games."
+	[
+	painpilldensity(float) : "Pain Pill density" : "6.48" : "Pain Pill density per sq 100 yards"
+	molotovdensity(float) : "Molotov density" : "6.48" : "Molotov density per sq 100 yards"
+	pipebombdensity(float) : "Pipe Bomb density" : "6.48" : "Pipe Bomb density per sq 100 yards"
+	pistoldensity(float) : "Pistol density" : "6.48" : "Pistol density per sq 100 yards"
+	weapondensity(float) : "Weapon density" : "6.48" : "Weapon (non-pistol) density per sq 100 yards"
+	gascandensity(float) : "Gas Can density" : "6.48" : "Gas Can density per sq 100 yards"
+	oxygentankdensity(float) : "Oxygen Tank density" : "6.48" : "Oxygen Tank density per sq 100 yards"
+	propanetankdensity(float) : "Propane Tank density" : "6.48" : "Propane Tank density per sq 100 yards"
+	itemclusterrange(float) : "Item Cluster Range" : "50" : "Scavenge items of the same kind that are this close to each other are considered a single 'cluster' for population purposes"
+	finaleitemclustercount(integer) : "Finale Item Cluster Count" : 3 : "How many clusters of items will be populated in the finale"
+
+	// Inputs
+	input UpdateCvars(void) : "Stuff values from this entity into cvars for tweaking"
+	]

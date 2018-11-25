@@ -1,0 +1,9 @@
+
+@PointClass base(Targetname, PlayerClass, Angles) 
+	appliesto(L4D) 
+	studio("models/survivors/survivor_biker.mdl") 
+= info_survivor_rescue: "Survivor rescue point"
+	[
+	rescueeyepos(vecline) : "Eye position of survivors waiting for rescue"
+	model(studio) : "World model" : "models/editor/playerstart.mdl"
+	]

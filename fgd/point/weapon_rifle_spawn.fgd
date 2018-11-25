@@ -1,0 +1,7 @@
+
+@PointClass base(WeaponSpawnOptionalScavenge) 
+	appliesto(L4D) 
+	studioprop("models/w_models/Weapons/w_rifle_m16a2.mdl") 
+= weapon_rifle_spawn: "Assault Rifle"
+	[
+	]

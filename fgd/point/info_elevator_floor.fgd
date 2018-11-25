@@ -1,0 +1,10 @@
+
+@PointClass base(Targetname, Parentname, Angles) 
+	appliesto(L4D) 
+	iconsprite("editor/info_target.vmt") 
+= info_elevator_floor: "Elevator floor height target."
+	[
+
+	// Outputs
+	output OnReachedFloor(void) : "Fired when an elevator reaches this floor."
+	]

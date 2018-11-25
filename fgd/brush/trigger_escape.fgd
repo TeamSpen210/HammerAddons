@@ -1,0 +1,10 @@
+
+@SolidClass base(Trigger) 
+	appliesto(L4D) 
+= trigger_escape: "Indicates if there are Survivors in the volume who can escape the finale"
+	[
+
+	// Outputs
+	output OnEscapePossible(void) : "Fired if there is at least 1 survivor standing in the trigger"
+	output OnEscapeImpossible(void) : "Fired if there are no survivors standing in the trigger"
+	]

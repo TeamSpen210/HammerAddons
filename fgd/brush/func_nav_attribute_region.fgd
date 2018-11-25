@@ -1,0 +1,17 @@
+
+@SolidClass base(Targetname) 
+	appliesto(L4D) 
+= func_nav_attribute_region: "A brush entity that holds attributes to be applied to regions of nav areas during generation."
+	[
+	spawnflags(flags)  =
+		[
+		2: "Empty (no wanderers)" : 0
+		32: "Battlestation" : 0
+		64: "Finale" : 0
+		128: "Mission Start" : 0
+		256: "Battlefield" : 0
+		2048: "Checkpoint" : 0
+		8192: "No mobs" : 0
+		]
+
+	]

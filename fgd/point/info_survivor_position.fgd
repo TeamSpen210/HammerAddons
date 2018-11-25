@@ -1,0 +1,13 @@
+
+@PointClass base(Targetname, Angles, Parentname) 
+	appliesto(L4D) 
+	color(255 100 100) 
+	studio("models/survivors/survivor_biker.mdl") 
+= info_survivor_position: "A point where survivors are placed when escaping the finale"
+	[
+	order(integer) : "Order" : 1 : "Index of spot based on order people got on board. (1-4)"
+	survivorname(string) : "Survivor Name" : : "Force this survivor to use this position (Zoey, Louis, etc.)"
+
+	// Inputs
+	input SetViewControl(string) : "If a survivor is assigned to this position, set his view to a point_viewcontrol"
+	]

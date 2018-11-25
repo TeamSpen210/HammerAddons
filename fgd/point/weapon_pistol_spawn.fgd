@@ -1,0 +1,7 @@
+
+@PointClass base(WeaponSpawn) 
+	appliesto(L4D) 
+	studioprop("models/w_models/Weapons/w_pistol_1911.mdl") 
+= weapon_pistol_spawn: "Pistols"
+	[
+	]

@@ -1,0 +1,15 @@
+
+@PointClass base(Targetname) 
+	appliesto(L4D) 
+= logic_game_event: "Allows firing game events. no params for now."
+	[
+	eventname(string) : "Game Event Name" : : "event name ( from ModEvents.res ) to fire. no params for now"
+	spawnflags(flags)  =
+		[
+		1: "userid field with activator" : 0
+		]
+
+
+	// Inputs
+	input FireEvent(void) : "Fire the event"
+	]

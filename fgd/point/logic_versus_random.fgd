@@ -1,0 +1,28 @@
+
+@PointClass base(Targetname) 
+	appliesto(L4D) 
+	iconsprite("editor/logic_auto.vmt") 
+= logic_versus_random: "Fires random outputs in the first round of a versus map, and then repeats those outputs in the second round of a versus map. "
+	[
+
+	// Inputs
+	input PickRandom(void) : "Fires a random output with at least one connection."
+
+	// Outputs
+	output OnRandom01(void) : "Fired when the input value equals the Random01 value."
+	output OnRandom02(void) : "Fired when the input value equals the Random02 value."
+	output OnRandom03(void) : "Fired when the input value equals the Random03 value."
+	output OnRandom04(void) : "Fired when the input value equals the Random04 value."
+	output OnRandom05(void) : "Fired when the input value equals the Random05 value."
+	output OnRandom06(void) : "Fired when the input value equals the Random06 value."
+	output OnRandom07(void) : "Fired when the input value equals the Random07 value."
+	output OnRandom08(void) : "Fired when the input value equals the Random08 value."
+	output OnRandom09(void) : "Fired when the input value equals the Random09 value."
+	output OnRandom10(void) : "Fired when the input value equals the Random10 value."
+	output OnRandom11(void) : "Fired when the input value equals the Random11 value."
+	output OnRandom12(void) : "Fired when the input value equals the Random12 value."
+	output OnRandom13(void) : "Fired when the input value equals the Random13 value."
+	output OnRandom14(void) : "Fired when the input value equals the Random14 value."
+	output OnRandom15(void) : "Fired when the input value equals the Random15 value."
+	output OnRandom16(void) : "Fired when the input value equals the Random16 value."
+	]

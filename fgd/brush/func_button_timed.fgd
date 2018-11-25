@@ -1,0 +1,42 @@
+
+@SolidClass base(Targetname, Parentname, Origin, RenderFields, DamageFilter) 
+	appliesto(L4D) 
+= func_button_timed: "An entity that takes time to use."
+	[
+	use_time(integer) : "Use Time" : 5
+	use_string(string) : "Use String" : "Using...."
+	glow(target_destination) : "Glow Entity" : : "The name of an entity that will get the +use glow for this button."
+	auto_disable(choices) : "Auto-Disable On Time Up" : "1" : "When the use timer is up, disable the button. (Can be enabled with an input)" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	spawnflags(flags)  =
+		[
+		2048: "Starts locked" : 0
+		]
+
+	locked_sound(choices) : "Locked Sound" : "0" : "Sound played when the player tries to use the button, and fails because it's locked." =
+		[
+		0: "None"
+		2: "Access Denied"
+		8: "Small zap"
+		10: "Buzz"
+		11: "Buzz Off"
+		12: "Latch Locked"
+		]
+
+
+	// Inputs
+	input Lock(void) : "Lock the button, preventing it from functioning and playing a locked sound."
+	input Unlock(void) : "Unlock the button, allowing it to function."
+	input Enable(void) : "Enable the button, so it glows and can be used."
+	input Disable(void) : "Disable the button, so it can't be used and doesn't glow."
+
+	// Outputs
+	output OnPressed(void) : "Fired when the button is pressed."
+	output OnUnPressed(void) : "Fired when the button is unpressed."
+	output OnTimeUp(void) : "Fired when the button has been held more than the required amount of time."
+	output OnUseLocked(void) : "Fired when the button is used while locked."
+	]

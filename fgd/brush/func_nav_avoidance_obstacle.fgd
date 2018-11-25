@@ -1,0 +1,6 @@
+
+@SolidClass base(Targetname, EnableDisable) 
+	appliesto(L4D) 
+= func_nav_avoidance_obstacle: "A brush entity that tells bots to avoid nav areas touching its AABB."
+	[
+	]

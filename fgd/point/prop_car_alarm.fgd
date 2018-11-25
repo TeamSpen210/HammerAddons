@@ -1,0 +1,15 @@
+
+@PointClass base(prop_physics) 
+	appliesto(L4D) 
+	studioprop() 
+	sphere(fademindist) 
+	sphere(fademaxdist) 
+= prop_car_alarm: "This class is the same as prop_physics, with a car alarm."
+	[
+
+	// Outputs
+	output OnCarAlarmStart(void) : "Car alarm should go off"
+	output OnCarAlarmEnd(void) : "Car alarm has shut off"
+	output OnCarAlarmChirpStart(void)
+	output OnCarAlarmChirpEnd(void)
+	]

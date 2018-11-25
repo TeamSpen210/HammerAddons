@@ -1,0 +1,26 @@
+
+@PointClass base(Targetname, Angles, Studiomodel) 
+	appliesto(L4D) 
+	studioprop() 
+	sphere(fademindist) 
+	sphere(fademaxdist) 
+= prop_fuel_barrel: "A physics prop that acts like a barrel of fuel when shot"
+	[
+	spawnflags(flags)  =
+		[
+		1: "Start Asleep" : 0
+		]
+
+	fademindist(float) : "Start Fade Dist/Pixels" : "-1" : "Distance at which the prop starts to fade (<0 = subtract from fademaxdist)."
+	fademaxdist(float) : "End Fade Dist/Pixels" : "0" : "Maximum distance at which the prop is visible (0 = don't fade out)."
+	fadescale(float) : "Fade Scale" : "1" : "If you specify a fade in the worldspawn, or if the engine is running under low end/medium end/XBox360, then the engine will forc" + "ibly fade out props even if fademindist/fademaxdist isn't specified. This scale factor gives you some control over the fade. Usi" + "ng 0 here turns off the forcible fades. Numbers smaller than 1 cause the prop to fade out at further distances, and greater than" + " 1 cause it to fade out at closer distances."
+	model(studio) : "World model" : "models/props_industrial/barrel_fuel.mdl"
+	basepiece(studio) : "Base Piece" : "models/props_industrial/barrel_fuel_partb.mdl"
+	flyingpiece01(studio) : "Flying Piece 1" : "models/props_industrial/barrel_fuel_parta.mdl"
+	flyingpiece02(studio) : "Flying Piece 2"
+	flyingpiece03(studio) : "Flying Piece 3"
+	flyingpiece04(studio) : "Flying Piece 4"
+	detonateparticles(string) : "Detonation Particles" : "weapon_pipebomb"
+	flyingparticles(string) : "Flying Piece Particles" : "barrel_fly"
+	detonatesound(sound) : "Sound played when the object explodes." : "BaseGrenade.Explode"
+	]

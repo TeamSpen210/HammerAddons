@@ -1,0 +1,14 @@
+@PointClass base(Targetname, Angles, Parentname) 
+	appliesto(L4D) 
+	studio("models/infected/smoker.mdl") 
+= commentary_zombie_spawner: "Zombie Manual Spawning Point"
+	[
+
+	// Inputs
+	input SpawnZombie(string) : "Spawn a specific zombie now. String format is zombie type followed by an optional target name " +
+		"(e.g. 'smoker,BostonJoe' or 'common_male_suit'). " +
+		"Zombie types: boomer, common_*, hunter, smoker, tank, witch"
+
+	// Outputs
+	output OnSpawnedZombieDeath(void) : "One of the zombies spawned by this entity has died"
+	]

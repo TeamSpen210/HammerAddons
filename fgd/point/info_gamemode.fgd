@@ -1,0 +1,11 @@
+
+@PointClass base(Targetname, Angles) 
+	appliesto(L4D) 
+= info_gamemode: "Game mode trigger."
+	[
+
+	// Outputs
+	output OnCoop(void) : "Fired when the map spawns in coop games."
+	output OnVersus(void) : "Fired when the map spawns in versus games."
+	output OnSurvival(void) : "Fired when the map spawns in survival games."
+	]

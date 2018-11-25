@@ -1,0 +1,7 @@
+
+@PointClass base(WeaponSpawn) 
+	appliesto(L4D) 
+	studioprop() 
+= weapon_ammo_spawn: "Ammo"
+	[
+	]

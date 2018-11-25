@@ -1,0 +1,7 @@
+
+@PointClass base(env_tonemap_controller) 
+	appliesto(L4D) 
+	iconsprite("editor/env_tonemap_controller.vmt") 
+= env_tonemap_controller_infected: "An entity that controls the HDR tonemapping for infected players."
+	[
+	]

@@ -1,0 +1,7 @@
+
+@PointClass base(WeaponSpawnOptionalScavenge) 
+	appliesto(L4D) 
+	studioprop("models/w_models/Weapons/w_sniper_mini14.mdl") 
+= weapon_hunting_rifle_spawn: "Hunting Rifle"
+	[
+	]

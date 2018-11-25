@@ -1,0 +1,23 @@
+
+@BaseClass base(Parentname, Global, Targetname, Angles, Studiomodel) 
+	appliesto(L4D) 
+	color(0 0 200) 
+= WeaponSpawnSingle
+	[
+	solid(choices) : "Collisions" : "6" =
+		[
+		0: "Not Solid"
+		2: "Use Bounding Box"
+		6: "Use VPhysics"
+		]
+
+	spawnflags(flags)  =
+		[
+		1: "Enable Physics" : 0
+		2: "Must Exist" : 0
+		]
+
+
+	// Outputs
+	output OnItemSpawn(void) : "Fired if this object is spawned on the map. If the weapon is removed during the weapon spawn pass, this will not fire."
+	]

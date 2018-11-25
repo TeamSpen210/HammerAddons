@@ -1,0 +1,9 @@
+
+@PointClass base(prop_dynamic_base, EnableDisable) 
+	appliesto(L4D) 
+	studioprop() 
+= prop_health_cabinet: "Health Cabinet"
+	[
+	model(studio) : "World model" : "models/props_interiors/medicalcabinet02.mdl"
+	healthcount(integer) : "Number of pain pills" : 1 : "Number of pain pills/first aid kits inside (1-4)"
+	]

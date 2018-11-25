@@ -1,0 +1,13 @@
+
+@BaseClass base(WeaponSpawnSingle) 
+	appliesto(L4D) 
+	color(0 0 200) 
+= WeaponSpawn
+	[
+	count(integer) : "Count" : 4 : "Max number of weapons given before disappearing."
+	spawnflags(flags)  =
+		[
+		131072: "Don't Cluster With Similar Items" : 0
+		]
+
+	]

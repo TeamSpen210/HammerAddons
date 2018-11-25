@@ -1,0 +1,15 @@
+
+@PointClass base(prop_dynamic_base, EnableDisable) 
+	appliesto(L4D) 
+	studioprop("models/w_models/weapons/50cal.mdl") 
+= prop_mounted_machine_gun: "50 caliber mounted gun (+USE)"
+	[
+	model(studio) : "World model" : "models/w_models/weapons/50cal.mdl"
+	maxyaw(float) : "Max yaw" : "90" : "Max yaw the gun can be turned."
+	maxpitch(float) : "Max pitch" : "60" : "Max pitch the gun can be depressed."
+	minpitch(float) : "Min pitch" : "-30" : "Min pitch the gun can be raised."
+
+	// Outputs
+	output OnFireStart(void) : "Fired when the machine gun has starting firing."
+	output OnFireStop(void) : "Fired when the machine gun has stopped firing."
+	]

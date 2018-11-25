@@ -1,0 +1,15 @@
+
+@PointClass base(Targetname, Parentname, Angles, RenderFxChoices, RenderFields, Studiomodel) 
+	appliesto(L4D) 
+	studioprop() 
+= func_orator: "A very simple model entity that has animations and response rules."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Not Solid" : 0
+		]
+
+
+	// Inputs
+	input SpeakResponseConcept(string) : "Speak the specified response concept"
+	]
