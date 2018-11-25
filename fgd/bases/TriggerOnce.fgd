@@ -1,9 +1,8 @@
-
-@BaseClass base(Targetname, Parentname, Origin, EnableDisable, Global) 
+@BaseClass base(Targetname, Parentname, Origin, EnableDisable, Global)
 	line(255 255 255, targetname, filtername) 
 = TriggerOnce
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Clients" : 1
 		2: "NPCs" : 0 [!ASW]
@@ -20,12 +19,13 @@
 		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 1 [!CSGO]
 		4096: "Disallow Bots" : 0 [CSGO]
 		]
-		
+
 	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator triggers me. See filter_activator_name for more explanation."
 
 	// Inputs
 	input Toggle(void) : "Toggles this trigger between enabled and disabled states."
 
 	// Outputs
-	output OnStartTouch(void) : "Fired when an entity starts touching this trigger. The touching entity must pass this trigger's filters to cause this output to fire."
+	output OnStartTouch(void) : "Fired when an entity starts touching this trigger. " +
+		"The touching entity must pass this trigger's filters to cause this output to fire."
 	]

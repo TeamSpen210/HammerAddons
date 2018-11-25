@@ -1,6 +1,5 @@
-
 @SolidClass base(Targetname, Parentname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = func_precipitation: "A brush entity that creates rain and snow inside its volume."
+= func_precipitation: "A brush entity that creates rain and snow inside its volume."
 	[
 	renderamt(integer) : "Density (0-100%)" : 5
 	renderamt[ASW](integer) : "Density (0-100%)" : 100
@@ -20,6 +19,6 @@
 		]
 
 	snowdustamt[ASW](float) : "Amount of snow dusting (1-100)" : 50
-	minspeed[!TF2, P2](float) : "Minimum speed (snowfall only)" : 25
-	maxspeed[!TF2, P2](float) : "Maximum speed (snowfall only)" : 35
+	minspeed[P2](float) : "Minimum speed (snowfall only)" : 25
+	maxspeed[P2](float) : "Maximum speed (snowfall only)" : 35
 	]

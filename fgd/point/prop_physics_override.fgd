@@ -1,8 +1,9 @@
-
-@PointClass base(BasePropPhysics)
+@PointClass base(BasePropPhysics, BaseFadeProp) 
 	studioprop() 
 	sphere(fademindist) 
-	sphere(fademaxdist) = prop_physics_override: "A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges or other constraints. It can also be configured to break when it takes enough damage. Health can be overridden on this version.|||A variant of prop_physics which will permit using models that do not have physics data compiled into them, like static or dynamic models. Health can be overridden on this version."
+	sphere(fademaxdist) 
+= prop_physics_override: "A variant of prop_physics which will permit using models that do not have physics data compiled into them, " +
+	"like static or dynamic models. Health and physics data can be overridden on this version, to subsitute for the missing info."
 	[
 	health(integer) : "Health" : 0 : "Number of points of damage to take before breaking.  0 means don't break."
 

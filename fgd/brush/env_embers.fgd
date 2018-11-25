@@ -1,8 +1,9 @@
-
-@SolidClass base(Targetname, Parentname, Angles) 
-	color(200 200 0) = env_embers: "An entity used to create a volume in which to spawn fire embers."
+@SolidClass base(Targetname, Parentname, Angles)
+	color(200 200 0) 
+= env_embers: "An entity used to create a volume in which to spawn fire embers."
 	[
-	particletype(choices) : "Ember type" : "0" =
+	particletype[engine](integer) : "Ember type" : 0
+	particletype(choices) : "Ember type" : 0 =
 		[
 		0: "Normal"
 		1: "Smooth Fade"
@@ -13,7 +14,7 @@
 	lifetime(integer) : "Particle Lifetime (seconds)" : 4
 	speed(integer) : "Particle Speed (units per second)" : 32
 	rendercolor(color255) : "Ember Color (R G B)" : "255 255 255"
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Start On" : 0
 		2: "Toggle" : 0

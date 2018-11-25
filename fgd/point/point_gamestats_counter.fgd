@@ -1,8 +1,7 @@
-
-@PointClass base(Origin, Targetname, EnableDisable) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(Origin, Targetname, EnableDisable)
 	size(-2 -2 -2, 2 2 2) 
-	color(0 255 0) = point_gamestats_counter: "Generic game statistics counter."
+	color(0 255 0) 
+= point_gamestats_counter: "Generic game statistics counter."
 	[
 	name(string) : "Name of statistic counter"
 

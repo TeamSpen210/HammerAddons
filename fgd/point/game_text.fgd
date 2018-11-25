@@ -1,17 +1,18 @@
-
-@PointClass base(Targetname, MasterEnt) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(Targetname, MasterEnt)
 	iconsprite("editor/game_text.vmt") 
-	color(200 0 0) = game_text: "An entity that displays text on player's screens."
+	color(200 0 0) 
+= game_text: "An entity that displays text on player's screens."
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "All Players" : 0
 		]
 
 	message(string) : "Message Text" : : "Message to display onscreen."
-	x(string) : "X (0 - 1.0 = left to right) (-1 centers)" : "-1" : "Horizontal position on the player's screens to draw the text. The value should be between 0 and 1, where 0 is the far left of the screen and 1 is the far right. -1 centers the text."
-	y(string) : "Y (0 - 1.0 = top to bottom) (-1 centers)" : "-1" : "Vertical position on the player's screens to draw the text. The value should be between 0 and 1, where 0 is the top of the screen and 1 is the bottom. -1 centers the text."
+	x(string) : "X (0 - 1.0 = left to right) (-1 centers)" : "-1" : "Horizontal position on the player's screens to draw the text. " +
+		"The value should be between 0 and 1, where 0 is the far left of the screen and 1 is the far right. -1 centers the text."
+	y(string) : "Y (0 - 1.0 = top to bottom) (-1 centers)" : "-1" : "Vertical position on the player's screens to draw the text. " +
+		"The value should be between 0 and 1, where 0 is the top of the screen and 1 is the bottom. -1 centers the text."
 	effect(choices) : "Text Effect" : "0" =
 		[
 		0: "Fade In/Out"
@@ -24,22 +25,25 @@
 	fadein(string) : "Fade in Time (or character scan time)" : "1.5" : "The time it should take for the text to fully fade in."
 	fadeout(string) : "Fade Out Time" : "0.5" : "The time it should take for the text to fade out, after the hold time has expired."
 	holdtime(string) : "Hold Time" : "1.2" : "The time the text should stay onscreen, after fading in, before it begins to fade out."
-	fxtime(string) : "Scan time (scan effect only)" : "0.25" : "If the 'Text Effect' is set to Scan Out, this is the time it should take to scan out all the letters in the text."
-	channel(choices) : "Text Channel" : "1" : "You can have up to four individual game_text messages onscreen at once, stored in channels. Select which channel this text should be placed in, which will overwrite any active message already in that channel." =
+	fxtime(string) : "Scan time (scan effect only)" : "0.25" : "If the 'Text Effect' is set to Scan Out, this is the time " +
+		"it should take to scan out all the letters in the text."
+	channel(choices) : "Text Channel" : "1" : "You can have up to four individual game_text messages onscreen at once, " +
+		"stored in channels. Select which channel this text should be placed in, " +
+		"which will overwrite any active message already in that channel." =
 		[
+		0: "Channel 0 (unused)"
 		1: "Channel 1"
 		2: "Channel 2"
 		3: "Channel 3"
 		4: "Channel 4"
+		5: "Channel 5 (unused)"
 		]
-
-	master[!P2](string) : "Master" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
 
 	// Inputs
 	input Display(void) : "Display the message text."
-	input SetText[!TF2, ASW](string) : "Set the text to display."
-	input SetPosX[!TF2, P2, !CSGO](float) : "Set the X position of the text. (0 - 1.0 = left to right) (-1 centers)"
-	input SetPosY[!TF2, P2, !CSGO](float) : "Set the Y position of the text. (0 - 1.0 = top to bottom) (-1 centers)"
-	input SetTextColor[!TF2, P2, !CSGO](color255) : "Set color of the front text."
-	input SetTextColor2[!TF2, P2, !CSGO](color255) : "Set color of the transition text."
+	input SetText[since_ASW](string) : "Set the text to display."
+	input SetPosX[since_P2](float) : "Set the X position of the text. (0 - 1.0 = left to right) (-1 centers)"
+	input SetPosY[since_P2](float) : "Set the Y position of the text. (0 - 1.0 = top to bottom) (-1 centers)"
+	input SetTextColor[since_P2](color255) : "Set color of the front text."
+	input SetTextColor2[since_P2](color255) : "Set color of the transition text."
 	]

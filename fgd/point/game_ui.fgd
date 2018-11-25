@@ -1,9 +1,10 @@
-
-@PointClass base(Targetname) 
+@PointClass base(Targetname)
 	color(200 0 0) 
-	iconsprite("editor/ts2do/game_ui.vmt") = game_ui: "An entity used to override player input when the player is looking at it."
+	iconsprite("editor/ts2do/game_ui.vmt") 
+	size(-8 -8 -8, 8 8 8) 
+= game_ui: "An entity used to override player input when the player is looking at it."
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		32: "Freeze Player" : 1
 		64: "Hide Weapon" : 1
@@ -11,7 +12,10 @@
 		256: "Jump Deactivates" : 1
 		]
 
-	fieldofview(float) : "FieldOfView" : -1.0 : "The amount of tolerance in the view checking when determining whether the player's input is still under control. 1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions. If the player isn't within the tolerance, the player regains control."
+	fieldofview(float) : "FieldOfView" : "-1.0" : "The amount of tolerance in the view checking when determining whether the " +
+		"player's input is still under control. 1.0 = straight " + 
+		"ahead, 0.0 = +/- 90 degrees, -1.0 = all directions. " +
+		"If the player isn't within the tolerance, the player regains control."
 
 	// Inputs
 	input Deactivate(void) : "Return Player Control."
@@ -32,8 +36,8 @@
 	output UnpressedBack(void) : "Fired whenever the player releases the backward key."
 	output UnpressedAttack(void) : "Fired whenever the player releases the attack key."
 	output UnpressedAttack2(void) : "Fired whenever the player releases the secondary attack key."
-	output XAxis(string) : "An output that fires whenever the X axis of the player's input changes. i.e. -1 when the player has moveleft key down, 1 when the player has moveright key down, and 0 if neither."
-	output YAxis(string) : "An output that fires whenever the Y axis of the player's input changes. i.e. -1 when the player has backward key down, 1 when the player has forward key down, and 0 if neither."
-	output AttackAxis(string) : "An output that fires whenever the state of the player's attack key changes. i.e. 1 when the player has the attack key down, 0 otherwise."
-	output Attack2Axis(string) : "An output that fires whenever the state of the player's secondary attack key changes. i.e. 1 when the player has the secondary attack key down, 0 otherwise."
+	output XAxis(string) : "An output that fires whenever the X axis of the player's input changes. i.e. -1 when the player has moveleft key down, 1 when th" + "e player has moveright key down, and 0 if neither."
+	output YAxis(string) : "An output that fires whenever the Y axis of the player's input changes. i.e. -1 when the player has backward key down, 1 when th" + "e player has forward key down, and 0 if neither."
+	output AttackAxis(string) : "An output that fires whenever the state of the player's attack key changes. i.e. 1 when the player has the attack key down, 0 ot" + "herwise."
+	output Attack2Axis(string) : "An output that fires whenever the state of the player's secondary attack key changes. i.e. 1 when the player has the secondary a" + "ttack key down, 0 otherwise."
 	]

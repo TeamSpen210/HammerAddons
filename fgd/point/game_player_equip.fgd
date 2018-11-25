@@ -1,21 +1,20 @@
 
-@PointClass base(Targetname, MasterEnt) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	size(-8 -8 -8, 8 8 8) = game_player_equip: "An entity that gives equipment to the player who activates it. To use, add new keys to this entity, where each key is the classname of a weapon/item, and the corresponding value is the number of those weapons/items to give to the player who uses this entity. If the 'Use Only' spawnflag isn't set, then players can just touch this entity to get the equipment.|||An entity that gives equipment to the player who activates it. To use, add new keys to this entity, where each key is the classname of a weapon/item, and the corresponding value is the number of those weapons/items to give to the player who uses this entity. If the 'Use Only' spawnflag isn't set, then players can just touch this entity to get the equipment (or the TriggerForAllPlayers input can be used).  If the Strip Player First flag is set, the player will be stripped of all weapons and items (including armor) before being given the items specified in this entity."
+@PointClass base(Targetname, MasterEnt)
+	size(-8 -8 -8, 8 8 8) 
+= game_player_equip:
+	"An entity that gives equipment to the player who activates it. " + 
+	"To use, add new keys to this entity, where each key is the classname of a weapon/item, " + 
+	"and the corresponding value is the number of those weapons/items to give to the player who uses this entity. " + 
+	"\n\nCSGO:\nIf the 'Use Only' spawnflag isn't set, then players can just touch this entity to get the equipment (or the TriggerForAllPlayers input can be used)." + 
+	"If the Strip Player First flag is set, the player will be stripped of all weapons and items (including armor) " +
+	"before being given the items specified in this entity."
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Use Only" : 0
+		2: "Strip All Weapons First" : 0 [CSGO]
+		4: "Only Strip Same Weapon Type" : 0 [CSGO]
 		]
-
-	spawnflags[CSGO](flags) : "spawnflags" =
-		[
-		1: "Use Only" : 0
-		2: "Strip All Weapons First" : 0
-		4: "Only Strip Same Weapon Type" : 0
-		]
-
-	master[!P2](string) : "Team Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
 
 	// Inputs
 	input TriggerForAllPlayers[CSGO](void) : "This will force all connected players to take the weapon(s) specified."

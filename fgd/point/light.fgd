@@ -1,14 +1,12 @@
-
-@PointClass base(Targetname, BaseLight) 
+@PointClass base(Targetname, BaseLight)
 	light() 
 	iconsprite("editor/light.vmt") 
 	sphere(_distance) 
-	line(255 255 255, targetname, target) = light: "An invisible omnidirectional lightsource."
+	line(255 255 255, targetname, target)
+= light: "An invisible omnidirectional lightsource."
 	[
-	target[!P2](target_destination) : "Entity To Point At" : : "The name of an entity in the map that the spotlight will point at. This will override the spotlight's angles."
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Initially dark" : 0
 		]
-	_distance(integer) : "Maximum Distance" : 0 : "The distance that light is allowed to cast."
 	]

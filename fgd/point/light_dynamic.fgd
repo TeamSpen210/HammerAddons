@@ -1,9 +1,10 @@
-
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(Targetname, Parentname, Angles)  
 	iconsprite("editor/light.vmt") 
 	sphere(distance) 
 	lightcone() 
-	line(255 255 255, targetname, target) = light_dynamic: "An invisible lightsource that changes in some way over time."
+	line(255 255 255, targetname, target) 
+	size(-4 -4 -4, 4 4 4) 
+= light_dynamic: "An invisible lightsource that changes in some way over time."
 	[
 	target(target_destination) : "Entity to point at" : : "The name of an entity in the map that the dynamic light will point at."
 	_light(color255) : "Light color" : "255 255 255 200"
@@ -11,11 +12,12 @@
 	_inner_cone(integer) : "Inner (bright) angle" : 30
 	_cone(integer) : "Outer (fading) angle" : 45
 	pitch(integer) : "Pitch" : -90
+
 	distance(float) : "Maximum distance" : 120 : "This is the distance that light is allowed to cast, in inches."
 	spotlight_radius(float) : "Spotlight end radius" : 80 : "This is the radius of the light, in inches, at the object that it is hitting."
 
 	style[engine](integer) : "Appearance" : 0
-	style(choices) : "Appearance" : 0 =
+	style(choices) : "Appearance" : "0" =
 		[
 		0: "Normal"
 		10: "Fluorescent flicker"
@@ -31,7 +33,7 @@
 		9: "Slow strobe"
 		]
 
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Do not light world (better perf)" : 0
 		2: "Do not light models" : 0

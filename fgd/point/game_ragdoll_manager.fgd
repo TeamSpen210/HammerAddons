@@ -1,17 +1,12 @@
-
-@PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	color(200 0 0) = game_ragdoll_manager: "An entity to control the number of ragdolls in the world, for performance reasons."
+@PointClass base(Targetname)
+	color(200 0 0) 
+= game_ragdoll_manager: "An entity to control the number of ragdolls in the world, for performance reasons."
 	[
-	maxragdollcount(integer) : "Max Ragdoll Count" : -1 : "Sets the max number of ragdolls that can be in the world at a time (if they are flagged to fade). Set to -1 if you want to use the default value (g_ragdoll_maxcount)."
-	maxragdollcountdx8(integer) : "Max Ragdoll Count DX8" : -1 : "Sets the max number of ragdolls that can be in the world at a time on DX8 hardware (if they are flagged to fade). Set to -1 if you want to use the 'Max Ragdoll Count' value."
-	saveimportant(choices) : "Save Important Ragdolls" : "0" : "Should the ragdoll manager make sure ally ragdolls aren't deleted?" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	saveimportant[ASW](boolean) : "Save Important Ragdolls" : 0 : "Should the ragdoll manager make sure ally ragdolls aren't deleted?"
+	maxragdollcount(integer) : "Max Ragdoll Count" : -1 : "Sets the max number of ragdolls that can be in the world at a time (if they are flagged to fade). " +
+		"Set to -1 if you want to use the default value (g_ragdoll_maxcount)."
+	maxragdollcountdx8(integer) : "Max Ragdoll Count DX8" : -1 : "Sets the max number of ragdolls that can be in the world at a time on DX8 hardware (if they are flagged to fade). " +
+		"Set to -1 if you want to use the 'Max Ragdoll Count' value."
+	saveimportant(boolean) : "Save Important Ragdolls" : 0 : "Should the ragdoll manager make sure ally ragdolls aren't deleted?"
 
 	// Inputs
 	input SetMaxRagdollCount(integer) : "Set the Max Ragdoll Count."

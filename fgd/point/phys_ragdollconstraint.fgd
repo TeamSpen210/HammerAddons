@@ -1,13 +1,13 @@
-
-@PointClass base(TwoObjectPhysics) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(TwoObjectPhysics)
 	studio("models/editor/axis_helper.mdl") 
 	line(255 255 255, targetname, attach1) 
 	line(255 255 255, targetname, attach2) 
 	line(128 128 128, targetname, attach1, targetname, attach2) 
-	color(128 128 128) = phys_ragdollconstraint: "A constraint that fixes the position of two entities, relative to this constraint's origin. Also allows for limits on the rotation around each axis, in the space of this constraint."
+	color(128 128 128) 
+= phys_ragdollconstraint: "A constraint that fixes the position of two entities, relative to this constraint's origin. " +
+	"Also allows for limits on the rotation around each axis, in the space of this constraint."
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "No Collision until break" : 1
 		2: "Only limit rotation (free movement)" : 0

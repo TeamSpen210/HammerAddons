@@ -1,15 +1,15 @@
-
-@PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	color(200 0 0) = env_zoom: "An entity that can be used to control the player's FOV. Useful for scenes where the player's view is being controlled, or player-usable binoculars/telescopes, etc."
+@PointClass base(Targetname)
+	color(200 0 0)
+= env_zoom: "An entity that can be used to control the player's FOV. " +
+	"Useful for scenes where the player's view is being controlled, " +
+	"or player-usable binoculars/telescopes, etc."
 	[
-	rate(float) : "Seconds to reach target" : 1.0 : "Amount of time it should take to reach the specified FOV."
+	rate(float) : "Seconds to reach target" : "1.0" : "Amount of time it should take to reach the specified FOV."
 	fov(integer) : "Target FOV" : 75 : "FOV that this entity should set the player's FOV to when active."
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Allow Suit Zoom" : 0
 		]
-
 
 	// Inputs
 	input Zoom(void) : "Start controlling the player's FOV."

@@ -1,9 +1,8 @@
-
-@PointClass base(Targetname, Parentname, RenderFxChoices) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
+@PointClass base(Targetname, Parentname, RenderFxChoices)
 	size(-4 -4 -4, 4 4 4) 
 	line(255 255 255, targetname, LaserTarget) 
-	color(200 200 0) = env_laser: "An entity that creates a laser beam between itself and a given target."
+	color(200 200 0) 
+= env_laser: "An entity that creates a laser beam between itself and a given target."
 	[
 	lasertarget(target_destination) : "Target of Laser" : : "Name of entity, or entities, to strike at. The target is randomly chosen if there are multiple entities matching the given name."
 	renderamt(integer) : "Brightness (1 - 255)" : 100
@@ -15,6 +14,8 @@
 	texturescroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
 	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
 	damage(string) : "Damage / second" : "100" : "How much damage this laser does. per second. to things it hits."
+
+	dissolvetype[engine](integer) : "Dissolve Type" : 0
 	dissolvetype(choices) : "Dissolve Type" : -1 =
 		[
 		-1: "None"
@@ -22,9 +23,8 @@
 		1: "Heavy electrical"
 		2: "Light electrical"
 		]
-	dissolvetype[engine](integer): "Dissolve Type": 0
 
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Start On" : 0
 		16: "StartSparks" : 0

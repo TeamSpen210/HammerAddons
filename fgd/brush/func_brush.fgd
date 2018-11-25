@@ -1,6 +1,6 @@
 
 @SolidClass base(Targetname, Parentname, Origin, RenderFields, Global, Inputfilter, EnableDisable, Shadow, Reflection, PaintableBrush, compMinLight) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = func_brush: "An brush built entity with various features."
+= func_brush: "An brush built entity with various features."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

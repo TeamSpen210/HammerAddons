@@ -1,16 +1,23 @@
 
-@SolidClass base(Targetname)
+@SolidClass base(Targetname) 
+	appliesto(L4D) 
 	color(0 255 255) 
-	line(255 255 255, targetname, target) = func_areaportal: "A portal brush used to manage visibility in maps. Portals define areas, which are spaces that are connected in the map. Both sides of a portal cannot touch the same area, for example, a doughnut shaped map would require at least two portals to divide the map into two areas. A linear map could be divided into two areas with a single area portal."
+	line(255 255 255, targetname, target) 
+= func_areaportal: "A portal brush used to manage visibility in maps. " +
+	"Portals define areas, which are spaces that are connected in the map. " +
+	"Both sides of a portal cannot touch the same area, for example, a doughnut shaped map would require at least two portals to divide the map into two areas. " +
+	"A linear map could be divided into two areas with a single area portal."
 	[
 	target(target_destination) : "Name of Linked Door" : : "(Optional) The name of a door whose open/closed state controls the on/off state of this area portal."
-	startopen(choices) : "Initial State" : "1" =
+
+	startopen(boolean): "Start Open?": 1
+	startopen(choices) : "Initial State" : 1 =
 		[
 		0: "Closed"
 		1: "Open"
 		]
 
-	portalversion(integer) : "Portal Version" : 1 : "(Don't change). Differentiates between shipping HL2 maps and maps using new engine features."
+	portalversion(integer) readonly: "Portal Version" : 1 : "(Don't change). Differentiates between shipping HL2 maps and maps using new engine features."
 
 	// Inputs
 	input Open(void) : "Open the portal. When the portal is open is can be seen through."

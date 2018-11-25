@@ -1,12 +1,10 @@
-
-@PointClass base(TwoObjectPhysics) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) 
-	halfgridsnap() 
-	halfgridsnap(-8 -8 -8, 8 8 8) 
-	line(255 255 255, targetname, attach1) 
-	line(255 255 255, targetname, attach2) 
+@PointClass base(TwoObjectPhysics)
+	line(128 128 128, targetname, attach1) 
+	line(128 128 128, targetname, attach2) 
 	line(128 128 128, targetname, attach1, targetname, attach2) 
-	color(128 128 128) = phys_hinge: "A physically simulated hinge. Use the helper to define the axis of rotation."
+	color(128 128 128)
+	size(-8 -8 -8, 8 8 8) 
+= phys_hinge: "A physically simulated hinge. Use the helper to define the axis of rotation."
 	[
 	hingefriction(float) : "Friction" : 0 : "Resistance/friction in the hinge"
 	hingeaxis(vecline) : "Hinge Axis"
