@@ -8,6 +8,7 @@
 	skyname[P2](string) : "SkyBox Texture Name" : "sky_black_nofog" : "Texture used for the 2D skybox."
 	skyname[ASW](string) : "SkyBox Texture Name" : "blacksky": "Texture used for the 2D skybox."
 	skyname[CSGO](string) : "SkyBox Texture Name" : "sky_dust": "Texture used for the 2D skybox."
+	skyname[L4D](string) : "SkyBox Texture Name" : "sky_l4d_urban01_hdr": "Texture used for the 2D skybox."
 	
 	chaptertitle(string) : "Chapter Title Message" : : "Chapter Title that appears onscreen when this level starts."
 	startdark(boolean) : "Level Fade In" : 0
