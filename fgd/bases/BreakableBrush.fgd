@@ -1,8 +1,7 @@
-
-@BaseClass base(Breakable, Parentname, Global) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = BreakableBrush
+@BaseClass base(Breakable, Parentname, Global)
+= BreakableBrush
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Only Break on Trigger" : 0
 		2: "Break on Touch" : 0
@@ -12,8 +11,10 @@
 		2048: "Don't allow bullet penetration" : 0
 		]
 
-	propdata[engine](integer) : "Prop Data" : 0 : "Set to the best approximation of the size and material of this entity's brushes. If set, it will override this entity's health and damage taken from various weapons. See the propdata.txt file in the scripts directory of your MOD to get a detailed list of what each entry specifies."
-	propdata(choices) : "Prop Data" : 0 : "Set to the best approximation of the size and material of this entity's brushes. If set, it will override this entity's health and damage taken from various weapons. See the propdata.txt file in the scripts directory of your MOD to get a detailed list of what each entry specifies." =
+	propdata[engine](integer) : "Prop Data" : 0
+	propdata(choices) : "Prop Data" : "0" : "Set to the best approximation of the size and material of this entity's brushes. " +
+		"If set, it will override this entity's health and damage taken from various weapons. " +
+		"See the propdata.txt file in the scripts directory of your MOD to get a detailed list of what each entry specifies." =
 		[
 		0: "None"
 		1: "Wooden.Tiny"
@@ -40,12 +41,12 @@
 		22: "Pottery.Large"
 		23: "Pottery.Huge"
 		24: "Glass.Window"
+		25: "Wooden.Medium.NoStand" [L4D]
 		]
 
 	health(integer) : "Strength" : 1 : "Number of points of damage to take before breaking. 0 means don't break."
-	
-	material[engine](integer) : "Material Type" : 0 : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken."
-	material(choices) : "Material Type" : 0 : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken." =
+	material[ENGINE](integer) : "Material Type" : 0 : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken."
+	material(choices) : "Material Type" : "0" : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken." =
 		[
 		0: "Glass"
 		1: "Wood"
@@ -56,10 +57,10 @@
 		6: "Computer"
 		7: "Unbreakable Glass"
 		8: "Rocks"
-		9: "Metal Panel"[P2]
+		9: "Metal Panel" [P2]
 		10: "None"
 		]
-		
+
 	explosion[engine](integer) : "Gibs Direction" : 0 : "Used to decide which direction to throw gibs when broken."
 	explosion(choices) : "Gibs Direction" : 0 : "Used to decide which direction to throw gibs when broken." =
 		[
@@ -68,12 +69,14 @@
 		2: "Use Precise Gib Dir"
 		]
 
-	gibdir(angle) : "Precise Gib Direction" : "0 0 0" : "Specifies the direction to throw gibs when this breakable breaks. Be sure to select Use Precise Gib Dir in the Gibs Direction field!"
+	gibdir(angle) : "Precise Gib Direction" : "0 0 0" : "Specifies the direction to throw gibs when this breakable breaks. " +
+		"Be sure to select Use Precise Gib Dir in the Gibs Direction field!"
 	nodamageforces(boolean) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move."
+
 	gibmodel(studio) : "Gib Model" : : "Used by HL1Port to specify a custom gib model to break into, overriding the 'Material Type'."
-	
-	spawnobject[engine](integer) : "Spawn On Break" : "0" : "When broken, an entity of the selected type will be created." 
-	spawnobject[HL2, EP1, EP2, P1](choices) : "Spawn On Break" : "0" : "When broken, an entity of the selected type will be created." =
+	gibmodel[L4D](string) : "Gib Model" : : "Used by HL1Port to specify a custom gib model to break into, overriding the 'Material Type'."
+	spawnobject[ENGINE](integer) : "Spawn On Break" : 0 : "When broken, an entity of the selected type will be created."
+	spawnobject[EP2, HL2, P1, EP1](choices) : "Spawn On Break" : 0 : "When broken, an entity of the selected type will be created." =
 		[
 		1: "item_battery"
 		2: "item_healthkit"
@@ -105,14 +108,15 @@
 
 	explodemagnitude(integer) : "Explode Magnitude" : 0 : "If non-zero, when this entity breaks it will create an explosion that causes the specified amount of damage."
 	pressuredelay(float) : "Pressure Delay" : 0 : "Delay, in seconds, after 'broken' by pressure before breaking apart (allows for sound to play before breaking apart)."
-	
-	breakabletype[engine](int): "Breakable By" : 0 : "Who can break this?"
-	breakabletype[L4D, L4D2](choices): "Breakable By" : 0 : "Who can break this?" =
-	[
-	0: "Everyone"
-	1: "All Infected"
-	2: "Only Tanks"
-	]
+
+	breakabletype[engine](integer) : "Breakable By" : 0 : "Who can break this?"
+	breakabletype[L4D, L4D2](choices) : "Breakable By" : 0 : "Who can break this?" =
+		[
+		0: "Everyone"
+		1: "All Infected"
+		2: "Only Tanks"
+		]
+
 
 	// Inputs
 	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."

@@ -1,4 +1,3 @@
-
 @PointClass base(Targetname, PlayerClass, Angles) 
 	appliesto(P2) 
 	studioprop("models/editor/playerstart.mdl") = info_coop_spawn: "Player spawns for cooperative mode."

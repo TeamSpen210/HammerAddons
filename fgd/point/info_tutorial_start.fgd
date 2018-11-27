@@ -1,4 +1,3 @@
-
 @PointClass base(PlayerClass, Angles) 
 	appliesto(ASW) 
 	studio("models/editor/playerstart.mdl") = info_tutorial_start: "Indicates the starting point of the marines for the tutorial for each marine.  Multiple start points can be placed for each marine and the one matching the save stage the player has reached will be used.Mapper should set the asw_tutorial_save_stage ConVar with triggers as the player progresses through the tutorial."

@@ -1,21 +1,26 @@
-
 @BaseClass base(Targetname, Parentname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = gibshooterbase
+	line(255 255 255, targetname, lightingorigin)
+= gibshooterbase
 	[
-	angles(string) : "Gib Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction the gibs will fly."
+	angles(angle) : "Gib Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction the gibs will fly."
 	m_igibs(integer) : "Number of Gibs" : 3 : "Total number of gibs to shoot each time it's activated."
-	delay(string) : "Delay between shots" : "0" : "Delay (in seconds) between shooting each gib. If 0, all gibs shoot at once."
-	gibangles(string) : "Gib Angles (Pitch Yaw Roll)" : "0 0 0" : "The orientation of the spawned gibs."
-	gibanglevelocity(string) : "Max angular velocity" : "0" : "How fast (degrees/sec) the gib pieces should spin. They will spin on x and y axis at between 10% and 100% of this speed."
-	m_flvelocity(integer) : "Gib Velocity" : 200 : "Speed of the fired gibs"
-	m_flvariance(string) : "Course Variance" : "0.15" : "How much variance in the direction gibs are fired."
-	m_flgiblife(string) : "Gib Life" : "4" : "Time in seconds for gibs to live +/- 5%"
-	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from for all gibs spawned by this shooter, instead of their own origins."
-	spawnflags(flags) : "spawnflags" =
+	delay(float) : "Delay between shots" : 0 : "Delay (in seconds) between shooting each gib. If 0, all gibs shoot at once."
+
+	gibangles(angle) : "Gib Angles (Pitch Yaw Roll)" : "0 0 0" : "The orientation of the spawned gibs."
+
+	gibanglevelocity(float) : "Max angular velocity" : 0 : "How fast (degrees/sec) the gib pieces should spin. " +
+		"They will spin on x and y axis at between 10% and 100% of this speed."
+
+	m_flvelocity(integer) : "Gib Velocity" : 200 : "Speed of the fired gibs."
+	m_flvariance(float) : "Course Variance" : "0.15" : "How much variance in the direction gibs are fired."
+	m_flgiblife(float) : "Gib Life" : 4 : "Time in seconds for gibs to live +/- 5%."
+
+	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from " +
+		"for all gibs spawned by this shooter, instead of their own origins."
+	spawnflags(flags)  =
 		[
 		1: "Repeatable" : 0
 		]
-
 
 	// Inputs
 	input Shoot(void) : "Force the gibshooter to create and shoot a gib."

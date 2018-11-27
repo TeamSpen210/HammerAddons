@@ -1,6 +1,5 @@
 @PointClass base(PlayerClass, Angles)
-	studio("models/editor/playerstart.mdl") 
-	color(200 0 0) 
+	studio("models/editor/playerstart.mdl")
 = info_player_start: "This entity indicates the position and facing direction at which the player will spawn. " +
 	"Any number of info_player_start entities may be placed in a map for when working in cordoned-off portions of the map. " +
 	"When multiple info_player_start entities are present in a map, " +

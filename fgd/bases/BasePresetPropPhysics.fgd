@@ -35,6 +35,7 @@
 	overridescript(string) : "Override Parameters" : : "A list of physics key/value pairs that are usually in a physics prop .qc file. Format is 'key,value,key,value,etc'."
 	damagetoenablemotion(integer) : "Health Level to Override Motion" : 0 : "If specified, this object will start motion disabled. Once its health has dropped below this specified amount, it will enable motion."
 	forcetoenablemotion(float) : "Physics Impact Force to Override Motion" : 0 : "If specified, this object will start motion disabled. Any impact that imparts a force greater than this value on the physbox will enable motion."
+	puntsound(sound) : "Sound to make when punted."
 	
 	// Incomplete ASW feature.
 	addon[since_ASW](string) : "AI AddOn" : : "If specified this object will use this addon behavior when installed in a composite AI"
@@ -50,6 +51,8 @@
 	input physdamagescale(float) : "Set the Physics Impact Damage Scale for this character. NOTE: 0 means this feature is disabled for backwards compatibility."
 	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
 	input DisableDamageForces(void) : "Damaging the entity does *not* apply physics forces to it."
+	input EnablePuntSound(void) : "Allow this prop to play its own sound when punted."
+	input DisablePuntSound(void) : "Prevent this prop from playing its own sound when punted."
 
 	// Outputs
 	output OnMotionEnabled(void) : "Fired when motion is enabled on this prop, either via 'Health Level to Override Motion' or from the EnableMotion input."

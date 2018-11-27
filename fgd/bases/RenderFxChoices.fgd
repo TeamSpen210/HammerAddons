@@ -1,6 +1,6 @@
-
 @BaseClass = RenderFxChoices
 	[
+	renderfx[engine](integer) : "Render FX" : 0
 	renderfx(choices) : "Render FX" : "0" =
 		[
 		0: "Normal"
@@ -18,11 +18,10 @@
 		7: "Slow Become Solid"
 		8: "Fast Become Solid"
 		14: "Constant Glow"
-		15: "Distort"
-		16: "Hologram (Distort + fade)"
-		23: "Cull By Distance (TEST)"
-		24: "Spotlight FX"
-		26: "Fade Near"
+		15: "Distort" [!L4D]
+		16: "Hologram (Distort + fade)" [!L4D]
+		23: "Cull By Distance (TEST)" [!L4D]
+		24: "Spotlight FX" [!L4D]
+		26: "Fade Near" [!L4D]
 		]
-	renderfx[engine](integer): "Render FX": 0
 	]

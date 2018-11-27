@@ -1,10 +1,10 @@
-
-@SolidClass base(Targetname, Parentname, Origin, Angles, RenderFields, MasterEnt, compMinLight) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = momentary_rot_button: "A brush entity that's designed to be used for rotating wheels, where the player can rotate them to arbitrary positions before stopping."
+@SolidClass base(Targetname, Parentname, Origin, Angles, RenderFields, MasterEnt, compMinLight)
+= momentary_rot_button: "A brush entity that's designed to be used for rotating wheels, " +
+	"where the player can rotate them to arbitrary positions before stopping."
 	[
-	speed(integer) : "Speed (deg/sec)" : 50 : "The amount, in degrees, that the wheel turns per second."
-	master[!P2](string) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this button cannot be used."
-	sounds[!P2](choices) : "Sounds" : "0" =
+	speed(float) : "Speed (deg/sec)" : 50 : "The amount, in degrees, that the wheel turns per second."
+
+	sounds(choices) : "Sounds" : "0" =
 		[
 		0: "None"
 		1: "Big zap & Warmup"
@@ -23,9 +23,11 @@
 		25: "Gas Clunk"
 		]
 
-	distance(integer) : "Distance" : 90 : "The maximum amount, in degrees, that the wheel is allowed to rotate."
-	returnspeed(integer) : "Auto-return speed" : 0 : "If the 'Toggle' spawnflag is not set, the speed at which the wheel auto-returns when left alone, in degrees per second."
-	spawnflags(flags) : "spawnflags" =
+	distance(float) : "Distance" : 90 : "The maximum amount, in degrees, that the wheel is allowed to rotate."
+	returnspeed(float) : "Auto-return speed" : 0 : "If the 'Toggle' spawnflag is not set, " +
+		"the speed at which the wheel auto-returns when left alone, in degrees per second."
+
+	spawnflags(flags)  =
 		[
 		1: "Not Solid" : 1
 		32: "Toggle (Disable Auto Return)" : 1
@@ -36,34 +38,39 @@
 		8192: "Jiggle when used while locked" : 0
 		]
 
-	_minlight[!P2](string) : "Minimum Light Level" : : "The minimum level of ambient light that hits this brush."
-	startposition(float) : "Start Position" : 0 : "Postion when spawned. The value is a range between 0.0 and 1.0, where 0 is the unrotated position and 1 is the rotated position + 'Distance'."
-	startposition[P2](float) : "Start Position" : 0 : "Postion when spawned, where 0 is the unrotated position and 1 is the rotated position + 'Distance'."
-	startdirection(choices) : "Start Direction" : "Forward" =
+	startposition(float) : "Start Position" : "0" : "Postion when spawned. " +
+		"The value is a range between 0.0 and 1.0, where 0 is the unrotated position and 1 is the rotated position + 'Distance'."
+
+	// From original FGD: Reverses upon USE, so are reversed here.
+	startdirection[engine](integer): "Start Direction" : -1
+	startdirection(choices) : "Start Direction" : -1 : "Specify the direction the button will move when first used. Ignored if Start Position is 0 or 1." =
 		[
 		-1: "Forward"
 		1: "Backward"
 		]
 
-	solidbsp(choices) : "Solid BSP" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	solidbsp[ASW](boolean) : "Solid BSP" : 0 : "If set, use the SOLID_BSP collision type."
 
-	solidbsp[ASW](boolean) : "Solid BSP" : 0
+	glow[L4D](target_destination) : "Glow Entity" : : "The name of an entity that will get the +use glow for this button."
 
 	// Inputs
 	input Lock(void) : "Lock the button, preventing it from functioning."
 	input Unlock(void) : "Unlock the button, allowing it to function."
-	input SetPosition(string) : "Move to a position. The parameter must be a value between 0 and 1, where 0 is the unrotated position and 1 is the rotated position + 'Distance'."
-	input SetPositionImmediately(string) : "Immediately teleport to a position. The parameter must be a value between 0 and 1, where 0 is the unrotated position and 1 is the rotated position + 'Distance'."
+	input SetPosition(string) : "Move to a position. " +
+		"The parameter must be a value between 0 and 1, where 0 is the unrotated position and 1 is the rotated position + 'Distance'."
+	input SetPositionImmediately(string) : "Immediately teleport to a position. " +
+		"The parameter must be a value between 0 and 1, where 0 is the unrotated position and 1 is the rotated position + 'Distance'."
+
+	input _DisableUpdateTarget(void): "Prevent the Position output from firing. Used when lock jiggling is triggered."
+	input _EnableUpdateTarget(void): "Allow the Position output to fire again. Used when lock jiggling is triggered."
 
 	// Outputs
-	output Position(integer) : "Fired whenever the button moves. The output is the position of button from 0 to 1, where 0 is the unrotated position and 1 is the rotated position + 'Distance'."
+	output Position(integer) : "Fired whenever the button moves. " +
+		"The output is the position of button from 0 to 1, where 0 is the unrotated position and 1 is the rotated position + 'Distance'."
 	output OnPressed(integer) : "Fired when the button is first pressed."
 	output OnUnpressed(integer) : "Fired when the button is first released from being pressed."
 	output OnFullyClosed(void) : "Fired when the button has reached position 1, the rotated position + 'Distance'."
 	output OnFullyOpen(void) : "Fired when the button has reached position 0, the unrotated starting position."
-	output OnReachedPosition(void) : "Fired whenever the button reaches a goal position: i.e. when it becomes open, becomes closed, or reaches the point specified by a 'SetPosition' input."
+	output OnReachedPosition(void) : "Fired whenever the button reaches a goal position: i.e. when it becomes open, becomes closed, " +
+		"or reaches the point specified by a 'SetPosition' input."
 	]

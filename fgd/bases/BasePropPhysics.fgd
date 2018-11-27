@@ -1,4 +1,5 @@
 
-@BaseClass base(BasePresetPropPhysics, Studiomodel, DXLevelChoice) = BasePropPhysics
+@BaseClass base(BasePresetPropPhysics, Studiomodel, DXLevelChoice) 
+= BasePropPhysics : "Prop_physics-like entities that can set their model."
 	[
 	]

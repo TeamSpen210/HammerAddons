@@ -1,5 +1,4 @@
-
-@BaseClass	= PlatSounds
+@BaseClass = PlatSounds
 	[
 	movesnd(choices) : "Move Sound" : "0" : "The sound played whenever the platform starts moving." =
 		[
