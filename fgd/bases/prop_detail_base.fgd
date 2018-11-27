@@ -1,5 +1,0 @@
-
-@BaseClass studioprop() = prop_detail_base
-	[
-	model(studio) : "World model"
-	]
