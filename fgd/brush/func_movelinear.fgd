@@ -12,7 +12,7 @@
 		"Negatives will position it in the opposite direction."
 	speed(integer) : "Speed" : 100 : "The speed that the brush moves, in units per second."
 	movedistance(float) : "Move Distance" : 100 : "The distance from the starting point that the brush should move."
-	blockdamage(float) : "Block Damage" : 0" : "The amount of damage to do to any entity that blocks the brushes, per frame."
+	blockdamage(float) : "Block Damage" : 0 : "The amount of damage to do to any entity that blocks the brushes, per frame."
 	startsound(sound) : "Sound played when the brush starts moving."
 	stopsound(sound) : "Sound played when the brush stops moving."
 

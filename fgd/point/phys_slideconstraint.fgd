@@ -1,5 +1,4 @@
-
-@PointClass Base(TwoObjectPhysics)  
+@PointClass base(TwoObjectPhysics)  
 	halfgridsnap
 	studio("models/editor/axis_helper.mdl") 
 	line(255 255 255, targetname, attach1) 
