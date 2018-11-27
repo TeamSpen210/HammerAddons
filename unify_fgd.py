@@ -259,11 +259,9 @@ def add_tag(tags: FrozenSet[str], new_tag: str) -> FrozenSet[str]:
     return frozenset(tag_set)
 
 
-def action_count(
-    dbase: Path,
-) -> None:
+def action_count(dbase: Path) -> None:
     """Output a count of all entities in the database per game."""
-    fgd = load_database(Path('fgd/'))
+    fgd = load_database(dbase)
 
     games = set(GAME_ORDER)
 
@@ -292,6 +290,8 @@ def action_count(
 
     game_classes = defaultdict(set)
 
+    base_uses = defaultdict(set)
+
     for ent in fgd:
         if ent.type is EntityTypes.BASE:
             counter = count_base
@@ -305,6 +305,9 @@ def action_count(
         appliesto = get_appliesto(ent)
 
         has_ent = set()
+
+        for base in ent.bases:
+            base_uses[base.classname].add(ent.classname)
 
         for game, tags in expanded.items():
             if match_tags(appliesto, tags):
@@ -341,6 +344,11 @@ def action_count(
             count_point[game],
             count_brush[game],
         ))
+
+    print('\n\nBases:')
+    for base, count in sorted(base_uses.items(), key=lambda x: (len(x[1]), x[0])):
+        if fgd[base].type is EntityTypes.BASE:
+            print(base, len(count), count if len(count) == 1 else '...')
 
 
 def action_import(
