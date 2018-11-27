@@ -240,8 +240,14 @@ def get_appliesto(ent: EntityDef) -> List[str]:
 
 def add_tag(tags: FrozenSet[str], new_tag: str) -> FrozenSet[str]:
     """Modify these tags such that they allow the new tag."""
+    is_inverted = new_tag.startswith(('!', '-'))
+
+    # Already allowed/disallowed.
+    if match_tags(expand_tags(frozenset({new_tag})), tags) != is_inverted:
+        return tags
+
     tag_set = set(tags)
-    if new_tag.startswith(('!', '-')):
+    if is_inverted:
         tag_set.discard(new_tag[1:])
         tag_set.add(new_tag)
     else:
@@ -346,6 +352,8 @@ def action_import(
     new_fgd = FGD()
     print('Using tag "{}"'.format(engine_tag))
 
+    expanded = expand_tags(frozenset({engine_tag}))
+
     print('Reading FGDs:'.format(len(fgd_paths)))
     for path in fgd_paths:
         print(path)
@@ -431,7 +439,7 @@ def action_import(
             to_export = new_ent
 
         applies_to = get_appliesto(ent)
-        if engine_tag not in applies_to:
+        if not match_tags(expanded, applies_to):
             applies_to.append(engine_tag)
 
         with open(path, 'w') as f:
