@@ -1,6 +1,5 @@
-
-@PointClass base(Targetname, EnableDisable, SpatialEntity) 
-	appliesto(ASW, P2, CSGO) 
+@PointClass base(Targetname, EnableDisable) 
+	appliesto(since_ASW) 
 	sphere(minfalloff) 
 	sphere(maxfalloff) 
 	iconsprite("editor/color_correction.vmt") 
@@ -8,6 +7,14 @@
 	[
 	color(color255) : "Color (R G B)" : "255 255 255"
 
+	minfalloff(float) : "Lookup Falloff Start Distance" : 0.0 : "This is the distance to the start of the falloff region (-1 = everywhere)"
+	maxfalloff(float) : "Lookup Falloff End Distance" : 200.0 : "This is the distance to the end of the falloff region (-1 = everywhere)"
+	maxweight(float) : "Maximum Weight" : 1.0 : "This is the maximum weight for this lookup"
+	fadeinduration(float) : "Lookup Fade In Duration" : 0.0 : "Duration of fade in on when enabled."
+	fadeoutduration(float) : "Lookup Fade out Duration" : 0.0 : "Duration of fade out on when disabled."
+
 	// Inputs
 	input SetColor(color255) : "Sets the color."
+	input SetFadeInDuration(float) : "Sets the 'fadeInDuration' variable, used to fade cc lookup usage when entity is enabled."
+	input SetFadeOutDuration(float) : "Sets the 'fadeOutDuration' variable, used to fade cc lookup usage when entity is disabled."
 	]

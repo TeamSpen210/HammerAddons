@@ -1,9 +1,0 @@
-
-@BaseClass = BasePlat
-	[
-
-	// Inputs
-	input Toggle(void) : "Toggles the platform's state."
-	input GoUp(void) : "Tells the platform to go up."
-	input GoDown(void) : "Tells the platform to go down."
-	]

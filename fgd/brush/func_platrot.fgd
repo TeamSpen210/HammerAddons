@@ -1,4 +1,4 @@
-@SolidClass base(Targetname, Parentname, Origin, Angles, RenderFields, BasePlat, Shadow, Reflection, compMinLight)
+@SolidClass base(Targetname, Parentname, Origin, Angles, RenderFields, Shadow, Reflection, compMinLight)
 = func_platrot: "A brush entity that moves vertically, and can rotate while doing so."
 	[
 	spawnflags(flags)  =
@@ -13,4 +13,9 @@
 	speed(integer) : "Speed of Rotation" : 50 : "Speed at which the brush rotates, in degrees per second."
 	height(integer) : "Travel Altitude" : 0 : "The vertical distance from the starting position that this platform moves. If negative, the platform will lower."
 	rotation(integer) : "Spin amount" : 0 : "The amount this platform should rotate as it moves, in degrees."
+
+	// Inputs
+	input Toggle(void) : "Toggles the platform's state."
+	input GoUp(void) : "Tells the platform to go up."
+	input GoDown(void) : "Tells the platform to go down."
 	]
