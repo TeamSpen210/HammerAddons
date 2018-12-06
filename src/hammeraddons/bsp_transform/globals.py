@@ -1,4 +1,5 @@
 """Apply transformations that work on (almost) all entities."""
+import itertools
 from collections import defaultdict
 from typing import Dict, Tuple, List
 
@@ -34,11 +35,20 @@ def vscript_init_code(ctx: Context):
     """Add vscript_init_code keyvalues.
 
     The specified code is appended as a script file to the end of the scripts.
+    vscript_init_code2, 3 etc will also be added in order if they exist.
     """
     for ent in ctx.vmf.entities:
-        code = ent['vscript_init_code']
+        code = ent.keys.pop('vscript_init_code', '')
+
         if not code:
             continue
+
+        for i in itertools.count(2):
+            extra = ent.keys.pop('vscript_init_code' + str(i), '')
+            if not extra:
+                break
+            code += '\n' + extra
+
         init_scripts = ent['vscripts'].split()
         init_scripts.append(ctx.pack.inject_file(
             code.replace('`', '"').encode('utf8'),
@@ -46,7 +56,6 @@ def vscript_init_code(ctx: Context):
             'nut'
         )[17:])  # Don't include scripts/vscripts/
         ent['vscripts'] = ' '.join(init_scripts)
-        del ent['vscript_init_code']
 
 
 @trans('VScript RunScriptCode Strings')
