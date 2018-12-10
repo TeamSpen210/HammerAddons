@@ -4,18 +4,9 @@
 	studio("models/aliens/egg/egg.mdl") = asw_egg: "Egg"
 	[
 	parasiteclass(string) : "Parasite Class" : "asw_parasite"
-	fixedjumpdir(choices) : "Fixed Jump Direction" : "0" : "If set, our parasite will always jump out in the direction the egg is facing." =
-		[
-		0: "No"
-		1: "Yes"
-		]
 
-	skipeggchatter(choices) : "Avoid Egg Chatter" : "0" : "If set, marines won't shout out about this egg." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	fixedjumpdir(boolean) : "Fixed Jump Direction" : 0 : "If set, our parasite will always jump out in the direction the egg is facing."
+	skipeggchatter(boolean) : "Avoid Egg Chatter" : 0 : "If set, marines won't shout out about this egg."
 
 	// Inputs
 	input EggOpen(void) : "Makes the top of the egg open, the parasite will hatch shortly after."
