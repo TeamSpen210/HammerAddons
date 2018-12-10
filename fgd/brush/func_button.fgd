@@ -1,60 +1,61 @@
-
 @SolidClass base(Targetname, Parentname, Origin, RenderFields, DamageFilter, Button, MasterEnt, compMinLight) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2, CSGO) = func_button: "A brush entity that's designed to be used for a player-useable button. When used by the player, it moves to a pressed position."
+= func_button: "A brush entity that's designed to be used for a player-useable button. When used by the player, it moves to a pressed position."
 	[
 	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "Specifies the direction of motion to move when the button is used."
-	speed(integer) : "Speed" : 5 : "The speed that the button moves, in inches per second."
-	speed[P2](integer) : "Speed" : 5 : "The speed that the button moves, in units per second."
+
+	speed(integer) : "Speed" : 5 : "The speed that the button moves, in units per second."
+
 	health(integer) : "Health (Obsolete)" : 0 : "Legacy method of specifying whether or not the button can be shot to activate it. Use the 'Damage Activates' spawnflag instead."
-	lip(integer) : "Lip" : 0 : "The amount, in inches, of the button to leave sticking out of the wall it recedes into when pressed. Negative values make the button recede even further into the wall."
-	lip[P2](integer) : "Lip" : 0 : "The amount the button will keep overlapping with the original position. The distance moved = the size of the brush on the movement axis - lip."
-	master[!P2](string) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this button cannot be pressed."
-	sounds[!P2](choices) : "Sounds" : "0" =
+
+	lip(integer) : "Lip" : 0 : "The amount the button will keep overlapping with the original position. The distance moved = the size of the brush on the movement axis - lip."
+
+	sounds[engine](integer) : "Sounds" : 0
+	sounds(choices) : "Sounds" : 0 : "Sound played when pressed. Choose from sounds in the Buttons.snd* category." =
 		[
 		0: "None (Silent)"
-		1: "Big zap & Warmup"
-		2: "Access Denied"
-		3: "Access Granted"
-		4: "Quick Combolock"
-		5: "Power Deadbolt 1"
-		6: "Power Deadbolt 2"
-		7: "Plunger"
-		8: "Small zap"
-		9: "Keycard Sound"
-		10: "Buzz"
-		11: "Buzz Off"
-		12: "latch locked"
-		13: "Latch Unlocked"
-		14: "Lightswitch"
-		15: "small bleek"
-		16: "small deny"
-		17: "small doop"
-		18: "small tech deny"
-		19: "click and combine screen fuzz"
-		20: "roomy beep"
-		21: "lever or wheel: turn + move sqeek"
-		22: "lever or wheel: latch + release gas"
-		23: "lever or wheel: ratchet + sqeek"
-		24: "lever or wheel: large ratchet"
-		25: "lever or wheel: clanky + gas release"
-		26: "lever or wheel: latch + large metal thud"
-		27: "lever or wheel: smaller ratchet"
-		28: "lever or wheel: smaller lever move"
-		31: "shock buzz"
-		32: "clickbeep"
-		33: "tech blip"
-		34: "clickbeepbeep open"
-		35: "small high blip"
-		36: "small tech fuzz blip"
-		37: "small click bleep (change to lightswitch)"
-		40: "combine door lock - locked"
-		41: "combine blip growl"
-		42: "combine squick growl"
-		43: "combine whine purr"
-		44: "combine click talk"
-		45: "combine click growl fizz"
-		46: "combine click fizz (deny)"
-		47: "combine click talker"
+		1: "Buttons.snd1: Big zap & Warmup"
+		2: "Buttons.snd2: Access Denied"
+		3: "Buttons.snd3: Access Granted"
+		4: "Buttons.snd4: Quick Combolock"
+		5: "Buttons.snd5: Power Deadbolt 1"
+		6: "Buttons.snd6: Power Deadbolt 2"
+		7: "Buttons.snd7: Plunger"
+		8: "Buttons.snd8: Small zap"
+		9: "Buttons.snd9: Keycard Sound"
+		10: "Buttons.snd10: Buzz"
+		11: "Buttons.snd11: Buzz Off"
+		12: "Buttons.snd12: Latch locked"
+		13: "Buttons.snd13: Latch Unlocked"
+		14: "Buttons.snd14: Lightswitch"
+		15: "Buttons.snd15: Small bleek"
+		16: "Buttons.snd16: Small deny"
+		17: "Buttons.snd17: Small doop"
+		18: "Buttons.snd18: Small tech deny"
+		19: "Buttons.snd19: Click and combine screen fuzz"
+		20: "Buttons.snd20: Roomy beep"
+		21: "Buttons.snd21: Lever or Wheel: turn + move sqeek"
+		22: "Buttons.snd22: Lever or Wheel: latch + release gas"
+		23: "Buttons.snd23: Lever or Wheel: ratchet + sqeek"
+		24: "Buttons.snd24: Lever or Wheel: large ratchet"
+		25: "Buttons.snd25: Lever or Wheel: clanky + gas release"
+		26: "Buttons.snd26: Lever or Wheel: latch + large metal thud"
+		27: "Buttons.snd27: Lever or Wheel: smaller ratchet"
+		28: "Buttons.snd28: Lever or Wheel: smaller lever move"
+		31: "Buttons.snd31: Shock buzz"
+		32: "Buttons.snd32: Clickbeep"
+		33: "Buttons.snd33: Tech blip"
+		34: "Buttons.snd34: Clickbeepbeep open"
+		35: "Buttons.snd35: Small high blip"
+		36: "Buttons.snd36: Small tech fuzz blip"
+		37: "Buttons.snd37: Small click bleep (change to lightswitch)"
+		40: "Buttons.snd40: Combine door lock - locked"
+		41: "Buttons.snd41: Combine blip growl"
+		42: "Buttons.snd42: Combine squick growl"
+		43: "Buttons.snd43: Combine whine purr"
+		44: "Buttons.snd44: Combine click talk"
+		45: "Buttons.snd45: Combine click growl fizz"
+		46: "Buttons.snd46: Combine click fizz (deny)"
+		47: "Buttons.snd47: Combine click talker"
 		]
 
 	wait(integer) : "Delay Before Reset (-1 stay)" : 3 : "Amount of time, in seconds, after the button has been pressed before it returns to the starting position. Once it has returned, it can be used again. If the value is set to -1, the button never returns."
@@ -67,73 +68,136 @@
 		1024: "Use Activates" : 1
 		2048: "Starts locked" : 0
 		4096: "Sparks" : 0
+		16384: "Non-solid" : 0 [CSGO]
 		]
 
-	spawnflags[CSGO](flags) : "spawnflags" =
+	locked_sound[engine](integer) : "Locked Sound" : 0
+	locked_sound(choices) : "Locked Sound" : 0 : "Sound played when the player tries to use the button, " +
+		"and fails because it's locked. These are sounds in the Buttons.snd* category." =
 		[
-		1: "Don't move" : 0
-		32: "Toggle" : 0
-		256: "Touch Activates" : 0
-		512: "Damage Activates" : 0
-		1024: "Use Activates" : 1
-		2048: "Starts locked" : 0
-		4096: "Sparks" : 0
-		16384: "Non-solid" : 0
+		0: "None (Silent)"
+		1: "Buttons.snd1: Big zap & Warmup"
+		2: "Buttons.snd2: Access Denied"
+		3: "Buttons.snd3: Access Granted"
+		4: "Buttons.snd4: Quick Combolock"
+		5: "Buttons.snd5: Power Deadbolt 1"
+		6: "Buttons.snd6: Power Deadbolt 2"
+		7: "Buttons.snd7: Plunger"
+		8: "Buttons.snd8: Small zap"
+		9: "Buttons.snd9: Keycard Sound"
+		10: "Buttons.snd10: Buzz"
+		11: "Buttons.snd11: Buzz Off"
+		12: "Buttons.snd12: Latch locked"
+		13: "Buttons.snd13: Latch Unlocked"
+		14: "Buttons.snd14: Lightswitch"
+		15: "Buttons.snd15: Small bleek"
+		16: "Buttons.snd16: Small deny"
+		17: "Buttons.snd17: Small doop"
+		18: "Buttons.snd18: Small tech deny"
+		19: "Buttons.snd19: Click and combine screen fuzz"
+		20: "Buttons.snd20: Roomy beep"
+		21: "Buttons.snd21: Lever or Wheel: turn + move sqeek"
+		22: "Buttons.snd22: Lever or Wheel: latch + release gas"
+		23: "Buttons.snd23: Lever or Wheel: ratchet + sqeek"
+		24: "Buttons.snd24: Lever or Wheel: large ratchet"
+		25: "Buttons.snd25: Lever or Wheel: clanky + gas release"
+		26: "Buttons.snd26: Lever or Wheel: latch + large metal thud"
+		27: "Buttons.snd27: Lever or Wheel: smaller ratchet"
+		28: "Buttons.snd28: Lever or Wheel: smaller lever move"
+		31: "Buttons.snd31: Shock buzz"
+		32: "Buttons.snd32: Clickbeep"
+		33: "Buttons.snd33: Tech blip"
+		34: "Buttons.snd34: Clickbeepbeep open"
+		35: "Buttons.snd35: Small high blip"
+		36: "Buttons.snd36: Small tech fuzz blip"
+		37: "Buttons.snd37: Small click bleep (change to lightswitch)"
+		40: "Buttons.snd40: Combine door lock - locked"
+		41: "Buttons.snd41: Combine blip growl"
+		42: "Buttons.snd42: Combine squick growl"
+		43: "Buttons.snd43: Combine whine purr"
+		44: "Buttons.snd44: Combine click talk"
+		45: "Buttons.snd45: Combine click growl fizz"
+		46: "Buttons.snd46: Combine click fizz (deny)"
+		47: "Buttons.snd47: Combine click talker"
 		]
 
-	locked_sound[!P2](choices) : "Locked Sound" : "0" : "Sound played when the player tries to use the button, and fails because it's locked." =
+	unlocked_sound[engine](integer) : "Unlocked Sound" : 0
+	unlocked_sound(choices) : "Unlocked Sound" : 0 : "Sound played when the button is unlocked. These are sounds in the Buttons.snd* category." =
+		[
+		0: "None (Silent)"
+		1: "Buttons.snd1: Big zap & Warmup"
+		2: "Buttons.snd2: Access Denied"
+		3: "Buttons.snd3: Access Granted"
+		4: "Buttons.snd4: Quick Combolock"
+		5: "Buttons.snd5: Power Deadbolt 1"
+		6: "Buttons.snd6: Power Deadbolt 2"
+		7: "Buttons.snd7: Plunger"
+		8: "Buttons.snd8: Small zap"
+		9: "Buttons.snd9: Keycard Sound"
+		10: "Buttons.snd10: Buzz"
+		11: "Buttons.snd11: Buzz Off"
+		12: "Buttons.snd12: Latch locked"
+		13: "Buttons.snd13: Latch Unlocked"
+		14: "Buttons.snd14: Lightswitch"
+		15: "Buttons.snd15: Small bleek"
+		16: "Buttons.snd16: Small deny"
+		17: "Buttons.snd17: Small doop"
+		18: "Buttons.snd18: Small tech deny"
+		19: "Buttons.snd19: Click and combine screen fuzz"
+		20: "Buttons.snd20: Roomy beep"
+		21: "Buttons.snd21: Lever or Wheel: turn + move sqeek"
+		22: "Buttons.snd22: Lever or Wheel: latch + release gas"
+		23: "Buttons.snd23: Lever or Wheel: ratchet + sqeek"
+		24: "Buttons.snd24: Lever or Wheel: large ratchet"
+		25: "Buttons.snd25: Lever or Wheel: clanky + gas release"
+		26: "Buttons.snd26: Lever or Wheel: latch + large metal thud"
+		27: "Buttons.snd27: Lever or Wheel: smaller ratchet"
+		28: "Buttons.snd28: Lever or Wheel: smaller lever move"
+		31: "Buttons.snd31: Shock buzz"
+		32: "Buttons.snd32: Clickbeep"
+		33: "Buttons.snd33: Tech blip"
+		34: "Buttons.snd34: Clickbeepbeep open"
+		35: "Buttons.snd35: Small high blip"
+		36: "Buttons.snd36: Small tech fuzz blip"
+		37: "Buttons.snd37: Small click bleep (change to lightswitch)"
+		40: "Buttons.snd40: Combine door lock - locked"
+		41: "Buttons.snd41: Combine blip growl"
+		42: "Buttons.snd42: Combine squick growl"
+		43: "Buttons.snd43: Combine whine purr"
+		44: "Buttons.snd44: Combine click talk"
+		45: "Buttons.snd45: Combine click growl fizz"
+		46: "Buttons.snd46: Combine click fizz (deny)"
+		47: "Buttons.snd47: Combine click talker"
+		]
+
+	locked_sentence[engine](integer) : "Locked Sentence" : 0
+	locked_sentence(choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the button, and fails because it's locked." =
 		[
 		0: "None"
-		2: "Access Denied"
-		8: "Small zap"
-		10: "Buzz"
-		11: "Buzz Off"
-		12: "Latch Locked"
-		]
+		1: "[NA] Gen. Access Denied"
+		2: "[ND] Security Lockout"
+		3: "[NF] Blast Door"
+		4: "[NFIRE] Fire Door"
+		5: "[NCHEM] Chemical Door"
+		6: "[NRAD] Radiation Door"
+		7: "[NCON] Gen. Containment"
+		8: "[NH] Maintenance Door"
+		9: "[NG] Broken Shut Door"
+		]		
 
-	unlocked_sound[!P2](choices) : "Unlocked Sound" : "0" : "Sound played when the button is unlocked." =
+	locked_sentence[engine](integer) : "Unlocked Sentence" : 0
+	unlocked_sentence(choices) : "Unlocked Sentence" : 0 : "A sentence played when the button is unlocked." =
 		[
 		0: "None"
-		1: "Big zap & Warmup"
-		3: "Access Granted"
-		4: "Quick Combolock"
-		5: "Power Deadbolt 1"
-		6: "Power Deadbolt 2"
-		7: "Plunger"
-		8: "Small zap"
-		9: "Keycard Sound"
-		10: "Buzz"
-		13: "Latch Unlocked"
-		14: "Lightswitch"
+		1: "[EA] Gen. Access Granted"
+		2: "[ED] Security Disengaged"
+		3: "[EF] Blast Door"
+		4: "[EFIRE] Fire Door"
+		5: "[ECHEM] Chemical Door"
+		6: "[ERAD] Radiation Door"
+		7: "[ECON] gen. Containment"
+		8: "[EH] Maintenance area"
 		]
 
-	locked_sentence[!P2](choices) : "Locked Sentence" : "0" : "A sentence played when the player tries to use the button, and fails because it's locked." =
-		[
-		0: "None"
-		1: "Gen. Access Denied"
-		2: "Security Lockout"
-		3: "Blast Door"
-		4: "Fire Door"
-		5: "Chemical Door"
-		6: "Radiation Door"
-		7: "Gen. Containment"
-		8: "Maintenance Door"
-		9: "Broken Shut Door"
-		]
-
-	unlocked_sentence[!P2](choices) : "Unlocked Sentence" : "0" : "A sentence played when the button is unlocked." =
-		[
-		0: "None"
-		1: "Gen. Access Granted"
-		2: "Security Disengaged"
-		3: "Blast Door"
-		4: "Fire Door"
-		5: "Chemical Door"
-		6: "Radiation Door"
-		7: "Gen. Containment"
-		8: "Maintenance area"
-		]
-
-	_minlight[!P2](string) : "Minimum Light Level" : : "The minimum level of ambient light that hits this brush."
 	min_use_angle[CSGO](float) : "Use Look-At Limit" : 0.8 : "Limit the usable look-at-angle. -1 is looking directly away, 0 is looking perpendicular, 1 is looking directly at."
 	]
