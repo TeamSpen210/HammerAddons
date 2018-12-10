@@ -2,8 +2,8 @@
 @PointClass base(Targetname, EnableDisable) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) = logic_achievement: "Sends an achievement system related event from the map to the achievement system."
 	[
-	achievementname[engine](string) : "Achievement Name" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input."
-	achievementname(string) : "Achievement Name" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input."
+	achievementevent[engine](string) : "Achievement Name" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input."
+	achievementevent(string) : "Achievement Name" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input."
 	
 	achievementevent[HL2](choices) : "Achievement Name" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[

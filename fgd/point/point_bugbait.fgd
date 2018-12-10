@@ -5,11 +5,7 @@
 	sphere() 
 	color(255 255 0) = point_bugbait: "Bugbait sensor point"
 	[
-	enabled(choices) : "Start Enabled" : "1" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	enabled(boolean) : "Start Enabled" : 1
 
 	spawnflags(flags) : "spawnflags" =
 		[

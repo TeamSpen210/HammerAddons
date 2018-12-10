@@ -4,9 +4,11 @@
 	cylinder(255 255 255, targetname, LightningStart, Radius, targetname, LightningEnd, Radius) 
 	line(64 64 64, targetname, lightningStart) 
 	line(64 64 64, targetname, lightningEnd) 
+	line(10 10 10, targetname, filtername)
 	iconsprite("editor/env_beam.vmt") 
-	sphere(Radius) 
-	color(200 200 0) = env_beam: "An entity that creates a visible beam between two points. The points can be attached to entities to make the beam move around."
+	sphere(radius) 
+	color(200 200 0) = env_beam: "An entity that creates a visible beam between two points. " +
+		"The points can be attached to entities to make the beam move around."
 	[
 	renderamt(integer) : "Brightness (1 - 255)" : 100
 	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255"
@@ -38,7 +40,8 @@
 		512: "Taper Out" : 0
 		]
 
-	touchtype(choices) : "Touch Type (tripwire)" : "0" : "If you want the beam to fire an output when touched by entities, choose the entity type here." =
+	touchtype[engine](integer) : "Touch Type (tripwire)" : 0
+	touchtype(choices) : "Touch Type (tripwire)" : 0 : "If you want the beam to fire an output when touched by entities, choose the entity type here." =
 		[
 		0: "Not a tripwire"
 		1: "Player Only"
@@ -48,8 +51,11 @@
 		]
 
 	filtername(filterclass) : "Filter Name" : : "Filter to use to determine what triggers the output."
-	targetpoint(vecline) : "Ending Location" : "0 0 0" : "If an Ending Entity is not specified, use this point as the destination instead. It is relative to the beam origin."
-	clipstyle(choices) : "Beam clipping" : "0" : "Select whether you want the beam to clip against geometry or characters, making it stop prematurely." =
+	targetpoint(vecline) : "Ending Location" : "0 0 0" : "If an Ending Entity is not specified, use this point as the destination instead." +
+		"It is relative to the beam origin."
+
+	clipstyle[engine](integer) : "Beam clipping" : 0
+	clipstyle(choices) : "Beam clipping" : 0 : "Select whether you want the beam to clip against geometry or characters, making it stop prematurely." =
 		[
 		0: "Do not clip (default)"
 		1: "Clip to geometry"

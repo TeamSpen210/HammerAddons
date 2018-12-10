@@ -3,17 +3,17 @@
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	sphere(m_flRadius) 
 	color(255 0 255) 
-	iconsprite("editor/aiscripted_schedule") = aiscripted_schedule: "Issues a command to an NPC without taking the NPC out of its AI. This does not seize control of the NPC as a scripted_sequence does"
+	iconsprite("editor/aiscripted_schedule") 
+	line(255 255 255, targetname, m_iszentity)
+	line(255 255 255, targetname, m_iszentity, targetname, goalent)
+= aiscripted_schedule: "Issues a command to an NPC without taking the NPC out of its AI. " +
+	"This does not seize control of the NPC as a scripted_sequence does."
 	[
 	m_iszentity(target_destination) : "Target NPC" : : "The name or classname of an NPC to use."
 	m_flradius(integer) : "Search Radius (0=everywhere)" : 0 : "Radius to search within for an NPC to use. 0 searches everywhere."
-	graball(choices) : "All in radius" : "0" : "Whether to grab all matching NPCs in the specified radius, instead of just one" =
-		[
-		0: "No"
-		1: "Yes"
-		]
 
-	graball[P2](boolean) : "All in radius" : 0 : "Whether to grab all matching NPCs in the specified radius, instead of just one"
+	graball(boolean) : "All in radius" : 0 : "Whether to grab all matching NPCs in the specified radius, instead of just one."
+
 	spawnflags(flags) : "spawnflags" =
 		[
 		4: "Repeatable" : 1
@@ -21,7 +21,8 @@
 		2048: "Don't Complain" : 0
 		]
 
-	forcestate(choices) : "AI state to set" : "0" =
+	forcestate[engine](integer) : "AI state to set" : 0
+	forcestate(choices) : "AI state to set" : 0 =
 		[
 		0: "<None>"
 		1: "Set state to IDLE"
@@ -29,7 +30,8 @@
 		3: "Set state to COMBAT"
 		]
 
-	schedule(choices) : "Schedule to run" : "1" =
+	schedule[engine](integer) : "Schedule to run" : 1
+	schedule(choices) : "Schedule to run" : 1 =
 		[
 		0: "<None>"
 		1: "Walk to Goal Entity"
@@ -40,7 +42,8 @@
 		6: "Set enemy to Goal Entity AND Run to Goal Entity"
 		]
 
-	interruptability(choices) : "Interruptability" : "0" =
+	interruptability[engine](integer) : "Interruptability" : 0
+	interruptability(choices) : "Interruptability" : 0 =
 		[
 		0: "General"
 		1: "Damage or Death"

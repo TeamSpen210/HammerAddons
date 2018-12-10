@@ -4,6 +4,7 @@
 	color(0 0 200) 
 = WeaponSpawnSingle
 	[
+	solid[engine](integer) : "Collisions" : "6"
 	solid(choices) : "Collisions" : "6" =
 		[
 		0: "Not Solid"

@@ -5,8 +5,10 @@
 	studio("models/editor/cone_helper.mdl") 
 = env_spark: "An entity used to create sparks at its origin."
 	[
-	maxdelay(string) : "Max Delay" : "0" : "The longest delay between sparks (in seconds)."
-	magnitude(choices) : "Magnitude" : "1" : "The size of the sparks." =
+	maxdelay(string) : "Max Delay" : 0 : "The longest delay between sparks (in seconds)."
+
+	magnitude[engine](integer) : "Magnitude" : 1
+	magnitude(choices) : "Magnitude" : 1 : "The size of the sparks." =
 		[
 		1: "Small"
 		2: "Medium"
@@ -14,7 +16,8 @@
 		8: "Huge"
 		]
 
-	traillength(choices) : "Spark Trail Length" : "1" =
+	traillength[engine](integer) : "Spark Trail Length" : 1
+	traillength(choices) : "Spark Trail Length" : 1 =
 		[
 		1: "Short"
 		2: "Medium"

@@ -20,7 +20,8 @@
 
 	sourceentityname(target_destination) : "Source Entity" : : "If an entity is specified, sound will come from this named entity instead of the location of ambient_generic."
 
-	preset(choices) : "Dynamic Presets" : "0" : "If used, overrides many of the below properties (+pitch) to preset values." =
+	preset[engine](integer) : "Dynamic Presets" : 0
+	preset(choices) : "Dynamic Presets" : 0 : "If used, overrides many of the below properties (+pitch) to preset values." =
 		[
 		0: "None"
 		1: "Huge Machine"
@@ -63,7 +64,8 @@
 	spindown(integer) : "Pitch Transition Time - Stop (0-100)" : 0 : "The time taken to transition from the Pitch to the Transition " +
 		"pitch while the sound stops playing. Simulates the noise fading out as the object shuts down."
 	
-	lfotype(choices) : "LFO type" : "0" : "The kind of Low Frequency Oscillation to apply to the sound. " +
+	lfotype[engine](integer) : "LFO type" : 0
+	lfotype(choices) : "LFO type" : 0 : "The kind of Low Frequency Oscillation to apply to the sound. " +
 		"Allows subtle modification to the sound. Square waves instantly switch between the high and low values, " +
 		"whereas Triangle Waves gradually switch between the two." =
 		[

@@ -12,13 +12,7 @@
 
 	message(string) : "Entity Message"
 	radius(integer) : "Show message radius" : 128 : "Distance the player must be within to see this message."
-	developeronly(choices) : "Developer Only?" : "0" : "If set, this message will only be visible when developer mode is on." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	developeronly[ASW](boolean) : "Developer Only?" : 0 : "If set, this message will only be visible when developer mode is on."
+	developeronly(boolean) : "Developer Only?" : 0 : "If set, this message will only be visible when developer mode is on."
 
 	// Inputs
 	input Enable(void) : "Start displaying the message text, if the player is within the message radius."

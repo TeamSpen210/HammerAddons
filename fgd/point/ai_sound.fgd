@@ -2,11 +2,14 @@
 @PointClass base(Targetname, Parentname) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	sphere(volume) 
+	line(255 255 255, targetname, locationproxy)
 	iconsprite("editor/ai_sound.vmt") = ai_sound: "This entity makes sounds or smells that can be sensed by NPCs, butnot by the player. This can be used to cause reactions in nearby NPCs.\n\nSound Types\n  Combat: Will cause most NPCs to become alert\n  World: Will cause most NPCs to become alert\n  Danger: Will cause most NPCs to move away from the position of the sound\n  Bullet Impact: \n  Carcass: \n  Meat: \n  Garbage: \n  Thumper: causes antlions to run away briefly\n  Readiness: (Low, Medium, High) Causes player companions that can hear this sound to change readiness\n"
 	[
 	volume(integer) : "Volume" : 120 : "How far away this sound can be heard. This is a radius."
 	duration(float) : "Duration" : 0.5 : "How long the sound persists each time you insert it."
-	soundtype(choices) : "Sound Type" : "0" : "The type of sound or smell will determine the reaction of NPCs that sense it." =
+
+	soundtype[engine](integer) : "Sound Type" : 0
+	soundtype(choices) : "Sound Type" : 0 : "The type of sound or smell will determine the reaction of NPCs that sense it." =
 		[
 		0: "Select one"
 		1: "Combat"
@@ -23,7 +26,8 @@
 		65536: "Readiness - High"
 		]
 
-	soundcontext(choices) : "Additional sound context (optional)" : "0" : "Optional settings specifying such things as who can or cannot hear the sound." =
+	soundcontext[engine](integer) : "Additional sound context (optional)" : 0
+	soundcontext(choices) : "Additional sound context (optional)" : 0 : "Optional settings specifying such things as who can or cannot hear the sound." =
 		[
 		0: "Select one"
 		8388608: "Only Combine hear"

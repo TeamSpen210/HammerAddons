@@ -2,10 +2,11 @@
 @SolidClass base(Trigger) 
  = trigger_weapon_strip: "A volumetric trigger that strips combat characters of all weapons"
 	[
-	killweapons(choices) : "Kill Weapons" : "0" : "If No, then the player will drop and be prevented from picking up their weapon. If Yes the weapon will be killed." =
+	killweapons[engine](boolean) : "Kill Weapons?" : 0
+	killweapons(choices) : "Kill Weapons" : 0 : "If No, then the player will drop and be prevented from picking up their weapon. " +
+		"If Yes the weapon will be killed." =
 		[
 		0: "Drop on ground"
 		1: "Kill Weapons"
 		]
-
 	]

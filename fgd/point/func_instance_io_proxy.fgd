@@ -2,7 +2,12 @@
 @PointClass 
 	appliesto(+INSTANCING, +INST_IO)
 	iconsprite("editor/func_instance_io_proxy.vmt") 
-= func_instance_io_proxy: "Place one copy of this entity inside of an instance.  Sending messages to entities inside the instance from the Proxy's OnProxyRelay output will allow you to trigger these entities from outside the instance by sending messages to the func_instance.  Send the ProxyRelay message from entities inside the instance to the proxy and you will be able to use these events to send messages to other entities outside the instance from the func_instance. NOTE: The instance, the proxy, and all entities involved should be named descriptively."
+= func_instance_io_proxy: "Place one copy of this entity inside of an instance.  " +
+	"Sending messages to entities inside the instance from the Proxy's OnProxyRelay output will allow you to trigger these " +
+	"entities from outside the instance by sending messages to the func_instance.  " +
+	"Send the ProxyRelay message from entities inside the instance to the proxy and you will be able to use these events to " +
+	"send messages to other entities outside the instance from the func_instance. "+
+	"NOTE: The instance, the proxy, and all entities involved should be named descriptively."
 	[
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 
