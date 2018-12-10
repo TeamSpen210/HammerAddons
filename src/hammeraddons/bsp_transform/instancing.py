@@ -43,7 +43,7 @@ def proxy_limits(ctx: Context):
                 index = int(out.output[12:])
             except ValueError:
                 LOGGER.warning(
-                    '{}:{} has no proxyrelay number?',
+                    '{}:{} has invalid proxyrelay number?',
                     proxy_name,
                     out.output,
                 )
@@ -79,7 +79,7 @@ def proxy_limits(ctx: Context):
             if out.inst_in or not out.input.casefold().startswith('onproxyrelay'):
                 continue
 
-            if len(out.output) == 12:
+            if len(out.input) == 12:
                 # Ignore/remove unused outputs.
                 ent.outputs.remove(out)
                 continue
@@ -88,7 +88,7 @@ def proxy_limits(ctx: Context):
                 index = int(out.input[12:])
             except ValueError:
                 LOGGER.warning(
-                    '{}:{} has no proxyrelay number?',
+                    '{}:{} has invalid proxyrelay number?',
                     ent['targetname'] or ent['classname'],
                     out.input,
                 )
