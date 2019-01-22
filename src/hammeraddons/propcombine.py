@@ -6,7 +6,7 @@ draw call.
 import subprocess
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Dict, List
+from typing import Dict, List, Set
 
 from srctools import Vec, partition
 from srctools.tokenizer import Tokenizer, Token
@@ -196,9 +196,9 @@ def merge_props(
     center_pos = (bbox_min + bbox_max) / 2
 
     # Unify these properties.
-    surfprops = set()
-    cdmats = set()
-    visleafs = set()
+    surfprops = set()  # type: Set[str]
+    cdmats = set()  # type: Set[str]
+    visleafs = set()  # type: Set[int]
 
     for prop in props:
         mdl = mdl_map[unify_mdl(prop.model)]
@@ -209,7 +209,7 @@ def merge_props(
     if len(surfprops) > 1:
         raise ValueError('Multiple surfaceprops? Should be filtered out.')
 
-    [surfprop] = surfprops
+    [surfprop] = surfprops  # type: str
 
     if counter > 0xFFFF:
         raise ValueError('More than 65K models, how??')
@@ -217,8 +217,8 @@ def merge_props(
     prop_name = 'maps/{}/propcombine/merge_{:04X}'.format(map_name, counter)
 
     with TemporaryDirectory(prefix='autocomb_') as temp_dir:
-        with open(temp_dir + '/blank.smd', 'wb') as f:
-            f.write(BLANK_SMD)
+        with open(temp_dir + '/blank.smd', 'wb') as fb:
+            fb.write(BLANK_SMD)
         with open(temp_dir + '/model.qc', 'w') as f:
             f.write(QC_TEMPLATE.format(
                 path=prop_name,
@@ -281,10 +281,10 @@ def merge_props(
     full_model_path = game.path / 'models' / prop_name
     for ext in MDL_EXTS:
         try:
-            with open(str(full_model_path) + ext, 'rb') as f:
+            with open(str(full_model_path) + ext, 'rb') as fb:
                 pack.pack_file(
                     'models/{}{}'.format(prop_name, ext),
-                    data=f.read(),
+                    data=fb.read(),
                 )
         except FileNotFoundError:
             pass
@@ -293,6 +293,7 @@ def merge_props(
     # from any of the component props.
     return StaticProp(
         model='models/{}.mdl'.format(prop_name),
+        prop_id=props[0].id,  # We're replacing this ID so we know it's free.
         origin=center_pos,
         angles=Vec(0, 270, 0),
         scaling=1.0,
@@ -304,12 +305,6 @@ def merge_props(
         max_fade=-1,
         lighting_origin=center_pos,
         fade_scale=1.0,
-        min_dx_level=0,
-        max_dx_level=0,
-        min_cpu_level=0,
-        max_cpu_level=0,
-        min_gpu_level=0,
-        max_gpu_level=0,
         tint=props[0].tint,
         renderfx=props[0].renderfx,
         disable_on_xbox=False,
@@ -358,14 +353,14 @@ def group_props(
             bbox_min, bbox_max = Vec.bbox(prop.origin for prop in cluster)
             center_pos = (bbox_min + bbox_max) / 2
 
-            cluster = [
+            cluster_list = [
                 prop for prop in cluster
                 if (center_pos - prop.origin).mag_sq() <= dist_sq
             ]
 
-            if len(cluster) >= min_cluster:
-                todo.difference_update(cluster)
-                for part in partition(cluster, MAX_GROUP):
+            if len(cluster_list) >= min_cluster:
+                todo.difference_update(cluster_list)
+                for part in partition(cluster_list, MAX_GROUP):
                     yield part
             else:
                 rejected.append(center)
@@ -444,7 +439,7 @@ def combine(
 
     # This holds the list of all props we want in the map -
     # combined ones, and any we reject for whatever reason.
-    final_props = []
+    final_props = []  # type: List[StaticProp]
 
     for ind, group in enumerate(group_props(prop_groups, final_props, 128, 2)):
         final_props.append(merge_props(
