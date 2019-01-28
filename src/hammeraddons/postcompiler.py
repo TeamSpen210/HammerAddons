@@ -1,4 +1,4 @@
-"""Replaces VRAD, to run operations on the final BSP."""
+"""Runs before VRAD, to run operations on the final BSP."""
 from srctools.logger import init_logging
 
 LOGGER = init_logging('srctools/postcompiler.log')
@@ -57,9 +57,9 @@ def main(argv):
 
     run_transformations(vmf, fsys, packlist)
 
-    LOGGER.info('Combining props...')
-    propcombine.combine(bsp_file, packlist, game_info)
-    LOGGER.info('Done!')
+    # LOGGER.info('Combining props...')
+    # propcombine.combine(bsp_file, packlist, game_info)
+    # LOGGER.info('Done!')
 
     bsp_file.lumps[BSP_LUMPS.ENTITIES].data = bsp_file.write_ent_data(vmf)
 
