@@ -4,7 +4,7 @@ A list of options are passed in, which parse each option to a basic type.
 """
 import inspect
 from enum import Enum, EnumMeta
-from typing import TypeVar, Union, Any, List, Type, Optional, Dict
+from typing import TypeVar, Union, Any, List, Type, Optional, Dict, IO
 
 from srctools import Vec, Property, parse_vec_str, conv_bool
 from srctools.logger import get_logger
@@ -64,8 +64,13 @@ class Opt:
 
 
 class Config:
-    def __init__(self, options: List[Opt]):
-        self.defaults = options
+    """Allows parsing a set of Property option blocks."""
+    def __init__(self, defaults: Union[List[Opt], 'Config']) -> None:
+        if isinstance(defaults, Config):
+            self.defaults = defaults.defaults
+        else:
+            self.defaults = defaults
+
         self.settings = {}  # type: Dict[str, Union[str, int, float, bool, Vec]]
 
     def load(self, opt_blocks: Property) -> None:
@@ -198,6 +203,38 @@ class Config:
 
         # Vec is mutable, don't allow modifying the original.
         if expected_type is Vec:
+            assert isinstance(val, Vec)
             return val.copy()
         else:
+            assert isinstance(val, expected_type)
             return val
+
+    def save(self, file: IO[str]) -> None:
+        """Write the current config out to the given file.
+
+        Descriptions are written out as comments.
+        """
+        file.write('"Config"\n\t{\n')
+        for ind, option in enumerate(self.defaults):
+            if ind != 0:
+                file.write('\n\n')
+            for line in option.doc:
+                file.write('\t// {}\n'.format(line))
+
+            default = option.default
+
+            if isinstance(default, bool):
+                default = '1' if default else '0'
+
+            file.write('\t// Default Value: {}\n'.format(default))
+
+            try:
+                value = self.settings[option.id]
+            except KeyError:
+                value = default
+
+            if isinstance(value, bool):
+                value = '1' if value else '0'
+
+            file.write('\t"{}" "{}"\n'.format(option.name, value))
+        file.write('\t}\n')
