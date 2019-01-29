@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Angles) 
+@PointClass base(info_overlay) 
 	appliesto(engine)
 	size(-1 -1 0, 1 1 1) 
 	color(80 150 225) 

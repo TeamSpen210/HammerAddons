@@ -19,6 +19,8 @@
 
 	portalversion(integer) readonly: "Portal Version" : 1 : "(Don't change). Differentiates between shipping HL2 maps and maps using new engine features."
 
+	portalnumber[engine](integer): "Portal Number": : "In compiled maps, links the entity to the relevant visleaf intersection."
+
 	// Inputs
 	input Open(void) : "Open the portal. When the portal is open is can be seen through."
 	input Close(void) : "Close the portal. When the portal is closed it cannot be seen through."
