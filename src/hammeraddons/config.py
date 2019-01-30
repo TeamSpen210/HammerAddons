@@ -2,7 +2,8 @@
 from pathlib import Path
 
 from srctools import Property, logger, AtomicWriter
-from srctools.props_config import Opt, Config
+from srctools.props_config import Opt, Config, TYPE
+
 
 __all__ = [
     'LOGGER',
@@ -55,11 +56,21 @@ def find_conf(path: Path) -> 'Config':
 OPTIONS = [
     Opt(
         'gameinfo', 'portal2/',
-        'The main game folder. portal2/ for Portal 2, '
-        'csgo/ for CSGO, etc.',
-    ),
+        """The main game folder. portal2/ for Portal 2, csgo/ for CSGO, etc.
+    """),
     Opt(
         'pack_vpk', False,
-        'Prevent files in VPKs from being packed into the map.',
-    ),
+        """Prevent files in VPKs from being packed into the map.
+    """),
+    Opt(
+        'searchpaths', TYPE.PROP,
+        """\
+        Add additional search paths to the game. Each key-value pair
+        defines a path, with the value either a folder path or a VPK 
+        filename. The key defines the behaviour:
+        * "prefix" "folder/" adds the path to the start, so it overrides
+            all others.
+        * "path" "vpk_path.vpk" adds the path to the end, so it is checked last.
+        * "nopack" "folder/" prohibits files in this path from being packed.
+    """),
 ]
