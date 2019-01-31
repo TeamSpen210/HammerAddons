@@ -19,6 +19,7 @@ class TYPE(Enum):
     FLOAT = float
     BOOL = bool
     VEC = Vec
+    RAW = Property  # This bypasses parsing, giving you the raw block.
 
     def convert(self, value: str) -> Any:
         """Convert a string to the desired argument type."""
@@ -31,9 +32,10 @@ TYPE_NAMES = {
     TYPE.FLOAT: 'Decimal Number',
     TYPE.BOOL: 'True/False',
     TYPE.VEC: 'Vector',
+    TYPE.RAW: 'Property Block',
 }
 
-OptionT = TypeVar('OptionT')
+OptionT = TypeVar('OptionT', str, int, float, bool, Vec, Property)
 
 
 class Opt:
@@ -48,7 +50,10 @@ class Opt:
     ) -> None:
         if isinstance(default, TYPE):
             self.type = default
-            self.default = None
+            if default is TYPE.RAW:
+                self.default = Property(opt_id, [])
+            else:
+                self.default = None
         else:
             self.type = TYPE(type(default))
             self.default = default
@@ -67,11 +72,11 @@ class Config:
     """Allows parsing a set of Property option blocks."""
     def __init__(self, defaults: Union[List[Opt], 'Config']) -> None:
         if isinstance(defaults, Config):
-            self.defaults = defaults.defaults
+            self.defaults = defaults.defaults  # type: List[Opt]
         else:
             self.defaults = defaults
 
-        self.settings = {}  # type: Dict[str, Union[str, int, float, bool, Vec]]
+        self.settings = {}  # type: Dict[str, Union[str, int, float, bool, Vec, Property]]
 
     def load(self, opt_blocks: Property) -> None:
         """Read settings from the given property block."""
@@ -79,7 +84,7 @@ class Config:
         set_vals = {}
         for opt_block in opt_blocks:
             for prop in opt_block:
-                set_vals[prop.name] = prop.value
+                set_vals[prop.name] = prop
 
         options = {opt.id: opt for opt in self.defaults}
         if len(options) != len(self.defaults):
@@ -95,7 +100,7 @@ class Config:
 
         for opt in self.defaults:
             try:
-                val = set_vals.pop(opt.id)
+                prop = set_vals.pop(opt.id)
             except KeyError:
                 if opt.fallback is not None:
                     fallback_opts.append(opt)
@@ -103,18 +108,29 @@ class Config:
                 else:
                     self.settings[opt.id] = opt.default
                 continue
+            if opt.type is TYPE.RAW:
+                self.settings[opt.id] = prop.copy()
+                continue
+
+            # Non-RAW types cannot have a property block, only a value.
+            if prop.has_children():
+                raise ValueError(
+                    'Cannot use property block for '
+                    '"{}"'.format(opt.name)
+                )
+
             if opt.type is TYPE.VEC:
                 # Pass nones so we can check if it failed..
-                parsed_vals = parse_vec_str(val, x=None)
+                parsed_vals = parse_vec_str(prop.value, x=None)
                 if parsed_vals[0] is None:
                     self.settings[opt.id] = opt.default
                 else:
                     self.settings[opt.id] = Vec(*parsed_vals)
             elif opt.type is TYPE.BOOL:
-                self.settings[opt.id] = conv_bool(val, opt.default)
+                self.settings[opt.id] = conv_bool(prop.value, opt.default)
             else:  # int, float, str - no special handling...
                 try:
-                    self.settings[opt.id] = opt.type.convert(val)
+                    self.settings[opt.id] = opt.type.convert(prop.value)
                 except (ValueError, TypeError):
                     self.settings[opt.id] = opt.default
 
@@ -144,7 +160,14 @@ class Config:
             LOGGER.warning('Invalid option name "{}"!', opt_name)
             return
 
-        if opt.type is TYPE.VEC:
+        if opt.type is TYPE.RAW:
+            if not isinstance(value, Property):
+                raise ValueError(
+                    'The value must be a Property '
+                    'for property blocks!'
+                )
+            self.settings[opt.id] = value
+        elif opt.type is TYPE.VEC:
             # Pass nones so we can check if it failed..
             parsed_vals = parse_vec_str(value, x=None)
             if parsed_vals[0] is None:
@@ -158,10 +181,15 @@ class Config:
             except (ValueError, TypeError):
                 pass
 
-    def get(self, expected_type: Type[OptionT], name: str) -> Optional[OptionT]:
+    def get(
+        self,
+        expected_type: Type[OptionT],
+        name: str,
+    ) -> Optional[OptionT]:
         """Get the given option.
         expected_type should be the class of the value that's expected.
-        The value can be None if unset.
+        The value can be None if unset, except for Property types (which
+        will always have an empty block).
 
         If expected_type is an Enum, this will be used to convert the output.
         If it fails, a warning is produced and the first value in the enum is
@@ -170,10 +198,15 @@ class Config:
         try:
             val = self.settings[name.casefold()]
         except KeyError:
-            raise TypeError('Option "{}" does not exist!'.format(name)) from None
+            raise TypeError(
+                'Option "{}" does not exist!'.format(name)
+            ) from None
 
         if val is None:
-            return None
+            if expected_type is Property:
+                return Property(name, [])
+            else:
+                return None
 
         if isinstance(expected_type, EnumMeta):
             enum_type = expected_type
@@ -202,8 +235,8 @@ class Config:
                 return next(iter(enum_type))
 
         # Vec is mutable, don't allow modifying the original.
-        if expected_type is Vec:
-            assert isinstance(val, Vec)
+        if expected_type is Vec or expected_type is Property:
+            assert isinstance(val, Vec) or isinstance(val, Property)
             return val.copy()
         else:
             assert isinstance(val, expected_type)
@@ -223,10 +256,12 @@ class Config:
 
             default = option.default
 
-            if isinstance(default, bool):
-                default = '1' if default else '0'
+            # PROP types are "raw", so they don't have defaults.
+            if option.type is not TYPE.RAW:
+                if isinstance(default, bool):
+                    default = '1' if default else '0'
 
-            file.write('\t// Default Value: {}\n'.format(default))
+                file.write('\t// Default Value: {}\n'.format(default))
 
             try:
                 value = self.settings[option.id]
@@ -236,5 +271,10 @@ class Config:
             if isinstance(value, bool):
                 value = '1' if value else '0'
 
-            file.write('\t"{}" "{}"\n'.format(option.name, value))
+            if isinstance(value, Property):
+                value.name = option.name
+                for line in value.export():
+                    file.write('\t' + line)
+            else:
+                file.write('\t"{}" "{}"\n'.format(option.name, value))
         file.write('\t}\n')
