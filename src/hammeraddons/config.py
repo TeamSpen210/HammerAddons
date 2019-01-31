@@ -69,11 +69,11 @@ def parse(path: Path) -> Tuple[
         else:
             # Give up, write to working directory.
             folder = Path()
-        path = str(folder / CONF_NAME)
+        file_path = str(folder / CONF_NAME)
 
-        LOGGER.warning('Writing default to "{}"', path)
+        LOGGER.warning('Writing default to "{}"', file_path)
 
-        with AtomicWriter(path) as f:
+        with AtomicWriter(file_path) as f:
             conf.save(f)
 
     game = Game((folder / conf.get(str, 'gameinfo')).resolve())
@@ -87,7 +87,7 @@ def parse(path: Path) -> Tuple[
             if isinstance(fsys, VPKFileSystem):
                 blacklist.add(fsys)
 
-    game_root = game.path.root
+    game_root = game.root
 
     for prop in conf.get(Property, 'searchpaths'):  # type: Property
         if prop.value.endswith('.vpk'):
