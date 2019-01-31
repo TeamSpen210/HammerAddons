@@ -1,13 +1,17 @@
 """Handles user configuration common to the different scripts."""
 from pathlib import Path
+from typing import Tuple, Optional, Set
+
+from srctools.game import Game
 
 from srctools import Property, logger, AtomicWriter
+from srctools.filesys import FileSystemChain, FileSystem, RawFileSystem, VPKFileSystem
 from srctools.props_config import Opt, Config, TYPE
 
 
 __all__ = [
     'LOGGER',
-    'find_conf',
+    'parse',
     'OPTIONS',
 ]
 
@@ -16,15 +20,34 @@ LOGGER = logger.get_logger(__name__)
 CONF_NAME = 'srctools.vdf'
 
 
-def find_conf(path: Path) -> 'Config':
+def parse(path: Path) -> Tuple[
+    Config,
+    Game,
+    FileSystemChain,
+    Set[FileSystem],
+]:
     """From some directory, locate and parse the config file.
+
+    This then constructs and customises each object according to config
+    options.
 
     The first srctools.vdf file found in a parent directory is parsed.
     If none can be found, it tries to find the first subfolder of 'common/' and
     writes a default copy there. FileNotFoundError is raised if none can be
     found.
+
+    This returns:
+        * The config.
+        * Parsed gameinfo.
+        * The chain of filesystems.
+        * A packing blacklist.
     """
     conf = Config(OPTIONS)
+
+    # If the path is a folder, add a dummy folder so parents yields it.
+    # That way we check for a config in this folder.
+    if not path.suffix:
+        path /= 'unused'
 
     for folder in path.parents:
         conf_path = folder / CONF_NAME
@@ -36,6 +59,9 @@ def find_conf(path: Path) -> 'Config':
             break
     else:
         LOGGER.warning('Cannot find a valid config file!')
+        # Apply all the defaults.
+        conf.load(Property(None, []))
+
         # Try to write out a default file in the game folder.
         for folder in path.parents:
             if folder.parent.stem == 'common':
@@ -50,27 +76,76 @@ def find_conf(path: Path) -> 'Config':
         with AtomicWriter(path) as f:
             conf.save(f)
 
-    return conf
+    game = Game((folder / conf.get(str, 'gameinfo')).resolve())
+
+    fsys_chain = game.get_filesystem()
+
+    blacklist = set()  # type: Set[FileSystem]
+
+    if not conf.get(bool, 'pack_vpk'):
+        for fsys, prefix in fsys_chain.systems:
+            if isinstance(fsys, VPKFileSystem):
+                blacklist.add(fsys)
+
+    game_root = game.path.root
+
+    for prop in conf.get(Property, 'searchpaths'):  # type: Property
+        if prop.value.endswith('.vpk'):
+            fsys = VPKFileSystem(str((game_root / prop.value).resolve()))
+        else:
+            fsys = RawFileSystem(str((game_root / prop.value).resolve()))
+
+        if prop.name == 'prefix':
+            fsys_chain.add_sys(fsys, priority=True)
+        elif prop.name == 'nopack':
+            blacklist.add(fsys)
+        elif prop.name == 'path':
+            fsys_chain.add_sys(fsys)
+        else:
+            raise ValueError(
+                'Unknown searchpath '
+                'key "{}"!'.format(prop.real_name)
+            )
+
+    return conf, game, fsys_chain, blacklist
 
 
 OPTIONS = [
     Opt(
         'gameinfo', 'portal2/',
         """The main game folder. portal2/ for Portal 2, csgo/ for CSGO, etc.
+        This is relative to the config file.
     """),
     Opt(
         'pack_vpk', False,
         """Prevent files in VPKs from being packed into the map.
     """),
     Opt(
-        'searchpaths', TYPE.PROP,
+        'searchpaths', TYPE.RAW,
         """\
         Add additional search paths to the game. Each key-value pair
         defines a path, with the value either a folder path or a VPK 
-        filename. The key defines the behaviour:
+        filename relative to the game root. The key defines the behaviour:
         * "prefix" "folder/" adds the path to the start, so it overrides
             all others.
         * "path" "vpk_path.vpk" adds the path to the end, so it is checked last.
         * "nopack" "folder/" prohibits files in this path from being packed.
     """),
+    Opt(
+        'propcombine_studiomdl', TYPE.STR,
+        """Set the path to StudioMDL used to combine static props.
+        
+        If unset combining props is disabled. 
+        This is relative to the game root.
+        """
+    ),
+    Opt(
+        'propcombine_qc_folder', TYPE.STR,
+        """Define where the QC files are for combinable static props.
+        
+        This path is searched recursively. If unset this defaults to 
+        the 'content/' folder, which is adjacent to the game root.
+        This is how Valve sets up their file structure.
+        """
+    )
 ]

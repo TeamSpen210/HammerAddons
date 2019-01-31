@@ -1,24 +1,34 @@
 """Runs before VRAD, to run operations on the final BSP."""
 from srctools.logger import init_logging
-
 LOGGER = init_logging('srctools/postcompiler.log')
 
+
+from pathlib import Path
 import sys
-import os
 
 from srctools.bsp import BSP, BSP_LUMPS
 from srctools.bsp_transform import run_transformations
-from srctools.game import find_gameinfo
 from srctools.packlist import PackList, load_fgd
+from srctools.scripts import config
 from srctools.compiler import propcombine
+from typing import List
 
 
-def main(argv):
+def main(argv: List[str]) -> None:
     LOGGER.info('Srctools VRAD hook started!')
 
-    game_info = find_gameinfo(argv)
+    if len(argv) == 1:
+        raise Exception("No map passed!")
 
-    fsys = game_info.get_filesystem()
+    # The path is the last argument to the compiler.
+    # Hammer adds wrong slashes sometimes, so fix that.
+    # Also if it's the VMF file, make it the BSP.
+    path = Path(argv[-1]).with_suffix('.bsp')
+
+    LOGGER.info("Map path is {}", path)
+
+    conf, game_info, fsys, pack_blacklist = config.parse(path)
+
     fsys.open_ref()
 
     packlist = PackList(fsys)
@@ -26,7 +36,7 @@ def main(argv):
     LOGGER.info('Gameinfo: {}', game_info.path)
     LOGGER.info(
         'Search paths: \n{}',
-        '\n'.join([sys[0].path for sys in fsys.systems]),
+        '\n'.join([sys.path for sys, prefix in fsys.systems]),
     )
 
     fgd = load_fgd()
@@ -34,19 +44,6 @@ def main(argv):
     LOGGER.info('Loading soundscripts...')
     packlist.load_soundscript_manifest('srctools_sndscript_data.vdf')
     LOGGER.info('Done! ({} sounds)', len(packlist.soundscripts))
-
-    # The path is the last argument to VRAD
-    # Hammer adds wrong slashes sometimes, so fix that.
-    path = os.path.normpath(argv[-1])
-
-    LOGGER.info("Map path is " + path)
-    if path == "":
-        raise Exception("No map passed!")
-
-    if path.endswith(('.vmf', '.vmm')):
-        path = path[:-4] + ".bsp"
-    elif not path.endswith(".bsp"):
-        path += ".bsp"
 
     LOGGER.info('Reading BSP...')
     bsp_file = BSP(path)
@@ -57,9 +54,17 @@ def main(argv):
 
     run_transformations(vmf, fsys, packlist)
 
-    # LOGGER.info('Combining props...')
-    # propcombine.combine(bsp_file, packlist, game_info)
-    # LOGGER.info('Done!')
+    studiomdl_loc = conf.get(str, 'propcombine_studiomdl')
+    if studiomdl_loc:
+        LOGGER.info('Combining props...')
+        propcombine.combine(
+            bsp_file,
+            packlist,
+            game_info,
+            game_info.root / studiomdl_loc,
+            game_info.root / conf.get(str, 'propcombine_qc_folder'),
+        )
+        LOGGER.info('Done!')
 
     bsp_file.lumps[BSP_LUMPS.ENTITIES].data = bsp_file.write_ent_data(vmf)
 
@@ -70,7 +75,7 @@ def main(argv):
     packlist.eval_dependencies()
 
     with bsp_file.packfile() as pak_zip:
-        packlist.pack_into_zip(pak_zip)
+        packlist.pack_into_zip(pak_zip, blacklist=pack_blacklist)
 
     LOGGER.info('Packed files: \n{}'.format('\n'.join(pak_zip.namelist())))
 
