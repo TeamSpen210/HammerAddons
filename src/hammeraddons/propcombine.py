@@ -90,15 +90,11 @@ def unify_mdl(path: str):
     return path
 
 
-def load_qcs(game: Game) -> Dict[str, QC]:
+def load_qcs(qc_folder: Path) -> Dict[str, QC]:
     """Parse through all the QC files to match to compiled models."""
-    # If gameinfo is blah/game/hl2/gameinfo.txt,
-    # QCs should be in blah/content/....
-
     qc_map = {}
 
-    content_path = game.path.parent.parent / 'content'
-    for qc_path in content_path.rglob('*.qc'):  # type: Path
+    for qc_path in qc_folder.rglob('*.qc'):  # type: Path
         model_name = ref_smd = phy_smd = None
         scale_factor = ref_scale = phy_scale = 1.0
         qc_loc = qc_path.parent
@@ -184,6 +180,7 @@ def merge_props(
     qc_map: Dict[str, QC],
     mdl_map: Dict[str, Model],
     game: Game,
+    studiomdl_loc: Path,
     pack: PackList,
     map_name: str,
     props: List[StaticProp],
@@ -272,7 +269,7 @@ def merge_props(
                         )
                 f.write('}\n')
         args = [
-            str(game.bin_folder() / 'studiomdl.exe'),
+            str(studiomdl_loc.resolve()),
             '-nop4',
             '-game', str(game.path), temp_dir + '/model.qc',
         ]
@@ -370,15 +367,26 @@ def combine(
     bsp: BSP,
     pack: PackList,
     game: Game,
+    studiomdl_loc: Path=None,
+    qc_folder: Path=None,
 ):
     """Combine props in this map."""
-    if not (game.bin_folder() / 'studiomdl.exe').exists():
+    if studiomdl_loc is None:
+        studiomdl_loc = game.bin_folder() / 'studiomdl.exe'
+
+    if not studiomdl_loc.exists():
         LOGGER.warning('No studioMDL! Cannot propcombine!')
         return
-    
+
+    if qc_folder is None:
+        # If gameinfo is blah/game/hl2/gameinfo.txt,
+        # QCs should be in blah/content/ according to Valve's scheme.
+        # But allow users to override this.
+        qc_folder = game.path.parent.parent / 'content'
+
     # Parse through all the QC files.
     LOGGER.info('Parsing QC files...')
-    qc_map = load_qcs(game)
+    qc_map = load_qcs(qc_folder)
     LOGGER.info('Done! {} props.', len(qc_map))
 
     map_name = Path(bsp.filename).stem
@@ -446,6 +454,7 @@ def combine(
             qc_map,
             mdl_map,
             game,
+            studiomdl_loc,
             pack,
             map_name,
             group,
