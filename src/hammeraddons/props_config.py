@@ -216,7 +216,7 @@ class Config:
 
         # Don't allow subclasses (bool/int)
         if type(val) is not expected_type:
-            raise ValueError('Option "{}" is {} (expected {})'.format(
+            raise ValueError('Option "{}" is {} (code expected {})'.format(
                 name,
                 type(val),
                 expected_type,
@@ -257,11 +257,11 @@ class Config:
             default = option.default
 
             # PROP types are "raw", so they don't have defaults.
-            if option.type is not TYPE.RAW:
+            if option.type is not TYPE.RAW and default is not None:
                 if isinstance(default, bool):
                     default = '1' if default else '0'
 
-                file.write('\t// Default Value: {}\n'.format(default))
+                file.write('\t// Default Value: "{}"\n'.format(default))
 
             try:
                 value = self.settings[option.id]
@@ -271,7 +271,10 @@ class Config:
             if isinstance(value, bool):
                 value = '1' if value else '0'
 
-            if isinstance(value, Property):
+            if value is None:
+                # Comment out the unset value.
+                file.write('\t// "{}" ""\n'.format(option.name))
+            elif isinstance(value, Property):
                 value.name = option.name
                 for line in value.export():
                     file.write('\t' + line)
