@@ -15,9 +15,9 @@ from typing import List
 
 
 def main(argv: List[str]) -> None:
-    LOGGER.info('Srctools VRAD hook started!')
+    LOGGER.info('Srctools postcompiler hook started!')
 
-    if len(argv) == 1:
+    if len(argv) == 0:
         raise Exception("No map passed!")
 
     # The path is the last argument to the compiler.
