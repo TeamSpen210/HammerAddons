@@ -117,6 +117,12 @@ OPTIONS = [
         This is relative to the config file.
     """),
     Opt(
+        'auto_pack', True,
+        """Automatically find and pack files in the map. 
+        If this is disabled, specifically-indicated files will still be 
+        added as well as their dependencies.
+    """),
+    Opt(
         'pack_vpk', False,
         """Prevent files in VPKs from being packed into the map.
     """),
@@ -132,17 +138,15 @@ OPTIONS = [
         * "nopack" "folder/" prohibits files in this path from being packed.
     """),
     Opt(
-        'propcombine_studiomdl', TYPE.STR,
+        'propcombine_studiomdl', '',
         """Set the path to StudioMDL used to combine static props.
-        
         If unset combining props is disabled. 
         This is relative to the game root.
         """
     ),
     Opt(
-        'propcombine_qc_folder', TYPE.STR,
+        'propcombine_qc_folder', '',
         """Define where the QC files are for combinable static props.
-        
         This path is searched recursively. If unset this defaults to 
         the 'content/' folder, which is adjacent to the game root.
         This is how Valve sets up their file structure.

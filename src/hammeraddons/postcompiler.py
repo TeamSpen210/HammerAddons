@@ -68,10 +68,12 @@ def main(argv: List[str]) -> None:
 
     bsp_file.lumps[BSP_LUMPS.ENTITIES].data = bsp_file.write_ent_data(vmf)
 
-    LOGGER.info('Analysing packable resources...')
-    packlist.pack_fgd(vmf, fgd)
+    if conf.get(bool, 'auto_pack'):
+        LOGGER.info('Analysing packable resources...')
+        packlist.pack_fgd(vmf, fgd)
 
-    packlist.pack_from_bsp(bsp_file)
+        packlist.pack_from_bsp(bsp_file)
+
     packlist.eval_dependencies()
 
     with bsp_file.packfile() as pak_zip:
