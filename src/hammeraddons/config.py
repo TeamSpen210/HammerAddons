@@ -55,6 +55,7 @@ def parse(path: Path) -> Tuple[
             LOGGER.info('Config path: "{}"', conf_path.absolute())
             with open(conf_path) as f:
                 props = Property.parse(f, conf_path)
+            conf.path = conf_path
             conf.load(props)
             break
     else:
@@ -70,6 +71,7 @@ def parse(path: Path) -> Tuple[
             # Give up, write to working directory.
             folder = Path()
         file_path = str(folder / CONF_NAME)
+        conf.path = file_path
 
         LOGGER.warning('Writing default to "{}"', file_path)
 

@@ -4,6 +4,7 @@ A list of options are passed in, which parse each option to a basic type.
 """
 import inspect
 from enum import Enum, EnumMeta
+from pathlib import Path
 from typing import TypeVar, Union, Any, List, Type, Optional, Dict, IO
 
 from srctools import Vec, Property, parse_vec_str, conv_bool
@@ -77,6 +78,7 @@ class Config:
             self.defaults = defaults
 
         self.settings = {}  # type: Dict[str, Union[str, int, float, bool, Vec, Property]]
+        self.path = None  # type: Optional[Path]
 
     def load(self, opt_blocks: Property) -> None:
         """Read settings from the given property block."""
