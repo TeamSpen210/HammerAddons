@@ -1,10 +1,10 @@
 """Runs before VRAD, to run operations on the final BSP."""
 from srctools.logger import init_logging
-LOGGER = init_logging('srctools/postcompiler.log')
-
-
 from pathlib import Path
 import sys
+
+# Put the logs in the executable folders.
+LOGGER = init_logging(Path(sys.argv[0]).with_name('postcompiler.log'))
 
 from srctools.bsp import BSP, BSP_LUMPS
 from srctools.bsp_transform import run_transformations
@@ -42,7 +42,9 @@ def main(argv: List[str]) -> None:
     fgd = load_fgd()
 
     LOGGER.info('Loading soundscripts...')
-    packlist.load_soundscript_manifest('srctools_sndscript_data.vdf')
+    packlist.load_soundscript_manifest(
+        conf.path.with_name('srctools_sndscript_data.vdf')
+    )
     LOGGER.info('Done! ({} sounds)', len(packlist.soundscripts))
 
     LOGGER.info('Reading BSP...')
