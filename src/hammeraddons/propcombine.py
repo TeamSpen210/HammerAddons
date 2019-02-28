@@ -6,7 +6,7 @@ draw call.
 import subprocess
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Dict, List, Set
+from typing import Dict, List, Set, Optional, Tuple
 
 from srctools import Vec, partition
 from srctools.tokenizer import Tokenizer, Token
@@ -17,6 +17,7 @@ from srctools.logger import get_logger
 from srctools.packlist import PackList
 from srctools.bsp import BSP, StaticProp, StaticPropFlags
 from srctools.mdl import Model
+from srctools.smd import Mesh
 from collections import defaultdict, namedtuple
 
 
@@ -34,20 +35,18 @@ QC_TEMPLATE = '''\
 $staticprop
 $modelname "{path}"
 $surfaceprop "{surf}"
-$cdmaterials {cdmats}
 
-$body body blank.smd
+$body body "{ref_mesh}"
 
-$sequence idle blank act_idle 1
+$sequence idle anim act_idle 1
 '''
 
 QC_COLL_TEMPLATE = '''
-$collisionmodel "blank" {
+$collisionmodel "{coll_mesh}" {
     $maxconvexpieces 2048
-    $concaveperjoint
     $automass
-    $remove2d
     $concave
+}
 '''
 
 # No bones, no animation, no geometry...
@@ -189,6 +188,8 @@ def load_qcs(qc_folder: Path) -> Dict[str, QC]:
 def merge_props(
     qc_map: Dict[str, QC],
     mdl_map: Dict[str, Model],
+    mesh_cache: Dict[QC, Tuple[Mesh, Optional[Mesh]]],
+    temp_folder: Path,
     game: Game,
     studiomdl_loc: Path,
     pack: PackList,
@@ -216,74 +217,70 @@ def merge_props(
     if len(surfprops) > 1:
         raise ValueError('Multiple surfaceprops? Should be filtered out.')
 
-    [surfprop] = surfprops  # type: str
+    [surfprop] = surfprops
 
     if counter > 0xFFFF:
         raise ValueError('More than 65K models, how??')
 
     prop_name = 'maps/{}/propcombine/merge_{:04X}'.format(map_name, counter)
 
-    with TemporaryDirectory(prefix='autocomb_') as temp_dir:
-        with open(temp_dir + '/blank.smd', 'wb') as fb:
-            fb.write(BLANK_SMD)
-        with open(temp_dir + '/model.qc', 'w') as f:
-            f.write(QC_TEMPLATE.format(
-                path=prop_name,
-                surf=surfprop,
-                cdmats=' '.join('"{}"'.format(mat) for mat in sorted(cdmats))
-            ))
+    ref_mesh = Mesh.blank('static_prop')
+    coll_mesh = None  #  type: Optional[Mesh]
 
-            has_coll = False
+    for prop in props:
+        qc = qc_map[unify_mdl(prop.model)]
+        try:
+            child_ref, child_coll = mesh_cache[qc]
+        except KeyError:
+            LOGGER.info('Parsing ref "{}"', qc.ref_smd)
+            with open(qc.ref_smd, 'rb') as fb:
+                child_ref = Mesh.parse_smd(fb)
+            if qc.phy_smd is not None:
+                LOGGER.info('Parsing coll "{}"', qc.phy_smd)
+                with open(qc.phy_smd, 'rb') as fb:
+                    child_coll = Mesh.parse_smd(fb)
+            else:
+                child_coll = None
+            mesh_cache[qc] = child_ref, child_coll
 
-            for prop in props:
-                qc = qc_map[unify_mdl(prop.model)]
-                f.write(
-                    '$appendsource "{}" "offset '
-                    'pos[ {:.3f} {:.3f} {:.3f} ] '
-                    'angle[ {:.3f} {:.3f} {:.3f} ] '
-                    'scale[ {:.3f} '
-                    ']"\n'.format(
-                        qc.ref_smd,
-                        prop.origin.x - center_pos.x,
-                        prop.origin.y - center_pos.y,
-                        prop.origin.z - center_pos.z,
-                        prop.angles.x,
-                        prop.angles.y,
-                        prop.angles.z,
-                        qc.ref_scale
-                    )
-                )
-                if qc.phy_smd:
-                    has_coll = True
+        offset = prop.origin - center_pos
 
-            if has_coll:
-                f.write(QC_COLL_TEMPLATE)
-                for prop in props:
-                    qc = qc_map[unify_mdl(prop.model)]
-                    if qc.phy_smd:
-                        f.write(
-                            '    $addconvexsrc "{}" "offset '
-                            'pos[ {:.3f} {:.3f} {:.3f} ] '
-                            'angle[ {:.3f} {:.3f} {:.3f} ] '
-                            'scale[ {:.3f} '
-                            ']"\n'.format(
-                                qc.phy_smd,
-                                prop.origin.x - center_pos.x,
-                                prop.origin.y - center_pos.y,
-                                prop.origin.z - center_pos.z,
-                                prop.angles.x,
-                                prop.angles.y,
-                                prop.angles.z,
-                                qc.phy_scale
-                            )
-                        )
-                f.write('}\n')
-        args = [
-            str(studiomdl_loc.resolve()),
-            '-nop4',
-            '-game', str(game.path), temp_dir + '/model.qc',
-        ]
-        subprocess.run(args)
+        ref_mesh.append_model(child_ref, prop.angles, offset)
+
+        if child_coll is not None:
+            if coll_mesh is None:
+                coll_mesh = Mesh.blank('static_prop')
+            coll_mesh.append_model(coll_mesh, prop.angles, offset)
+
+    prefix = str(temp_folder / '{:04X}'.format(counter))
+
+    with open(prefix + '_ref.smd', 'wb') as fb:
+        ref_mesh.export(fb)
+
+    if coll_mesh is not None:
+        with open(prefix + '_phy.smd', 'wb') as fb:
+            coll_mesh.export(fb)
+
+    with open(prefix + '.qc', 'w') as f:
+        f.write(QC_TEMPLATE.format(
+            path=prop_name,
+            surf=surfprop,
+            ref_mesh=prefix + '_ref.smd',
+        ))
+
+        for mat in sorted(cdmats):
+            f.write('$cdmaterials "{}"\n'.format(mat))
+
+        if coll_mesh is not None:
+            f.write(QC_COLL_TEMPLATE.format(prefix + '_phy.smd'))
+
+    args = [
+        str(studiomdl_loc.resolve()),
+        '-nop4',
+        '-game', str(game.path),
+        prefix + '.qc',
+    ]
+    subprocess.run(args)
 
     full_model_path = game.path / 'models' / prop_name
     for ext in MDL_EXTS:
@@ -395,7 +392,7 @@ def combine(
         qc_folder = game.path.parent.parent / 'content'
 
     # Parse through all the QC files.
-    LOGGER.info('Parsing QC files...')
+    LOGGER.info('Parsing QC files. Path: {}', qc_folder)
     qc_map = load_qcs(qc_folder)
     LOGGER.info('Done! {} props.', len(qc_map))
 
@@ -459,17 +456,26 @@ def combine(
     # combined ones, and any we reject for whatever reason.
     final_props = []  # type: List[StaticProp]
 
-    for ind, group in enumerate(group_props(prop_groups, final_props, 128, 2)):
-        final_props.append(merge_props(
-            qc_map,
-            mdl_map,
-            game,
-            studiomdl_loc,
-            pack,
-            map_name,
-            group,
-            ind,
-        ))
+    with TemporaryDirectory(prefix='autocomb_') as temp_dir:
+        mesh_cache = {}
+        temp_path = Path(temp_dir)
+
+        with open(temp_dir + '/anim.smd', 'wb') as f:
+            Mesh.blank('static_prop').export(f)
+
+        for ind, group in enumerate(group_props(prop_groups, final_props, 128, 2)):
+            final_props.append(merge_props(
+                qc_map,
+                mdl_map,
+                mesh_cache,
+                temp_path,
+                game,
+                studiomdl_loc,
+                pack,
+                map_name,
+                group,
+                ind,
+            ))
 
     LOGGER.info('Combined {} props to {} props', prop_count, len(final_props))
 
