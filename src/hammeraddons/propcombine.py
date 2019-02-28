@@ -166,6 +166,16 @@ def load_qcs(qc_folder: Path) -> Dict[str, QC]:
             LOGGER.warning('Cannot parse "{}"... ({}, {})', qc_path, model_name, ref_smd)
             continue
 
+        # We can't parse FBX files right now.
+        if ref_smd.suffix.casefold() not in ('.smd', '.dmx'):
+            LOGGER.warning('Reference mesh not a SMD/DMX:\n{}', ref_smd)
+            continue
+
+        if phy_smd is not None:
+            if phy_smd.suffix.casefold() not in ('.smd', '.dmx'):
+                LOGGER.warning('Collision mesh not a SMD/DMX:\n{}', ref_smd)
+                continue
+
         qc_map[unify_mdl(model_name)] = QC(
             str(qc_path).replace('\\', '/'),
             str(ref_smd).replace('\\', '/'),
