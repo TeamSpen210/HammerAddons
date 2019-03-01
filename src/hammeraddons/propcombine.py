@@ -42,11 +42,11 @@ $sequence idle anim act_idle 1
 '''
 
 QC_COLL_TEMPLATE = '''
-$collisionmodel "{coll_mesh}" {
+$collisionmodel "{}" {{
     $maxconvexpieces 2048
     $automass
     $concave
-}
+}}
 '''
 
 # No bones, no animation, no geometry...
@@ -250,7 +250,7 @@ def merge_props(
         if child_coll is not None:
             if coll_mesh is None:
                 coll_mesh = Mesh.blank('static_prop')
-            coll_mesh.append_model(coll_mesh, prop.angles, offset)
+            coll_mesh.append_model(child_coll, prop.angles, offset)
 
     prefix = str(temp_folder / '{:04X}'.format(counter))
 
