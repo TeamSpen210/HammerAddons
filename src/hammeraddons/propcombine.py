@@ -138,9 +138,10 @@ def load_qcs(qc_folder: Path) -> Dict[str, QC]:
                             '$weightlist',
                             '$poseparameter',
                             '$proceduralbones',
-                            '$lod',
                             '$jigglebone',
                             '$keyvalues',
+                            # Allow LOD models, propcombine is better than that.
+                            # '$lod',
                         ):
                             raise DynamicModel
 
