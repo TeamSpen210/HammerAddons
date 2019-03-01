@@ -239,6 +239,18 @@ def merge_props(
                 ))
                 for tri in child_ref.triangles:
                     tri.mat = swap_skins.get(tri.mat, tri.mat)
+
+            # For some reason all the SMDs are rotated badly...
+            for tri in child_ref.triangles:
+                for vert in tri:
+                    vert.pos.rotate(0, 90, 0, round_vals=False)
+                    vert.norm.rotate(0, 90, 0, round_vals=False)
+            if child_coll is not None:
+                for tri in child_coll.triangles:
+                    for vert in tri:
+                        vert.pos.rotate(0, 90, 0, round_vals=False)
+                        vert.norm.rotate(0, 90, 0, round_vals=False)
+
             mesh_cache[qc, prop.skin] = child_ref, child_coll
 
         offset = prop.origin - center_pos
