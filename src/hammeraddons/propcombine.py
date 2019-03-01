@@ -49,19 +49,6 @@ $collisionmodel "{}" {{
 }}
 '''
 
-# No bones, no animation, no geometry...
-BLANK_SMD  = b'''\
-version 1
-nodes
-  0 "static_prop" -1
-end
-skeleton
-  time 0
-    0 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
-end
-triangles
-end
-'''
 
 MDL_EXTS = [
     '.mdl',
@@ -188,7 +175,7 @@ def load_qcs(qc_folder: Path) -> Dict[str, QC]:
 def merge_props(
     qc_map: Dict[str, QC],
     mdl_map: Dict[str, Model],
-    mesh_cache: Dict[QC, Tuple[Mesh, Optional[Mesh]]],
+    mesh_cache: Dict[Tuple[QC, int], Tuple[Mesh, Optional[Mesh]]],
     temp_folder: Path,
     game: Game,
     studiomdl_loc: Path,
@@ -229,8 +216,9 @@ def merge_props(
 
     for prop in props:
         qc = qc_map[unify_mdl(prop.model)]
+        mdl = mdl_map[unify_mdl(prop.model)]
         try:
-            child_ref, child_coll = mesh_cache[qc]
+            child_ref, child_coll = mesh_cache[qc, prop.skin]
         except KeyError:
             LOGGER.info('Parsing ref "{}"', qc.ref_smd)
             with open(qc.ref_smd, 'rb') as fb:
@@ -241,7 +229,16 @@ def merge_props(
                     child_coll = Mesh.parse_smd(fb)
             else:
                 child_coll = None
-            mesh_cache[qc] = child_ref, child_coll
+
+            if prop.skin != 0 and prop.skin <= len(mdl.skins):
+                # We need to rename the materials to match the skin.
+                swap_skins = dict(zip(
+                    mdl.skins[0],
+                    mdl.skins[prop.skin]
+                ))
+                for tri in child_ref.triangles:
+                    tri.mat = swap_skins.get(tri.mat, tri.mat)
+            mesh_cache[qc, prop.skin] = child_ref, child_coll
 
         offset = prop.origin - center_pos
 
