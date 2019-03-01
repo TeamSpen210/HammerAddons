@@ -367,17 +367,24 @@ def group_props(
             bbox_min, bbox_max = Vec.bbox(prop.origin for prop in cluster)
             center_pos = (bbox_min + bbox_max) / 2
 
+            cluster_list = []
+
+            for prop in cluster:
+                prop_off = (center_pos - prop.origin).mag_sq()
+                if prop_off <= dist_sq:
+                    cluster_list.append((prop, prop_off))
+
+            cluster_list.sort(key=lambda t: t[1])
             cluster_list = [
-                prop for prop in cluster
-                if (center_pos - prop.origin).mag_sq() <= dist_sq
+                prop for prop, off in
+                cluster_list[:MAX_GROUP]
             ]
+            todo.difference_update(cluster_list)
 
             if len(cluster_list) >= min_cluster:
-                todo.difference_update(cluster_list)
-                for part in partition(cluster_list, MAX_GROUP):
-                    yield part
+                yield cluster_list
             else:
-                rejected.append(center)
+                rejected.extend(cluster_list)
 
 
 def combine(
@@ -450,8 +457,7 @@ def combine(
             prop.solidity,
             prop.renderfx,
             *prop.tint,
-            *model.skins[0],
-            *skinset,
+            *sorted(skinset),
         )
 
     prop_count = 0
