@@ -76,7 +76,7 @@ def main(argv: List[str]) -> None:
 
         packlist.pack_from_bsp(bsp_file)
 
-    packlist.eval_dependencies()
+        packlist.eval_dependencies()
 
     with bsp_file.packfile() as pak_zip:
         packlist.pack_into_zip(pak_zip, blacklist=pack_blacklist)
