@@ -3,6 +3,7 @@
 This merges static props together, so they can be drawn with a single
 draw call.
 """
+import os
 import subprocess
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -240,7 +241,8 @@ def merge_props(
                 for tri in child_ref.triangles:
                     tri.mat = swap_skins.get(tri.mat, tri.mat)
 
-            # For some reason all the SMDs are rotated badly...
+            # For some reason all the SMDs are rotated badly, but only
+            # if we append them.
             for tri in child_ref.triangles:
                 for vert in tri:
                     vert.pos.rotate(0, 90, 0, round_vals=False)
@@ -300,6 +302,7 @@ def merge_props(
                     'models/{}{}'.format(prop_name, ext),
                     data=fb.read(),
                 )
+            os.remove(str(full_model_path) + ext)
         except FileNotFoundError:
             pass
 
@@ -307,21 +310,15 @@ def merge_props(
     # from any of the component props.
     return StaticProp(
         model='models/{}.mdl'.format(prop_name),
-        prop_id=props[0].id,  # We're replacing this ID so we know it's free.
         origin=center_pos,
         angles=Vec(0, 270, 0),
         scaling=1.0,
         visleafs=sorted(visleafs),
-        solidity=props[0].solidity,
+        solidity=0 if coll_mesh is None else props[0].solidity,
         flags=props[0].flags,
-        skin=0,
-        min_fade=-1,
-        max_fade=-1,
         lighting_origin=center_pos,
-        fade_scale=1.0,
         tint=props[0].tint,
         renderfx=props[0].renderfx,
-        disable_on_xbox=False,
     )
 
 
@@ -479,7 +476,7 @@ def combine(
         with open(temp_dir + '/anim.smd', 'wb') as f:
             Mesh.blank('static_prop').export(f)
 
-        for ind, group in enumerate(group_props(prop_groups, final_props, 128, 2)):
+        for ind, group in enumerate(group_props(prop_groups, final_props, 384, 2)):
             final_props.append(merge_props(
                 qc_map,
                 mdl_map,
