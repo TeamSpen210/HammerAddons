@@ -13,6 +13,20 @@
 		1: "Start on" : 0
 		2: "Play Once" : 0
 		]
+		
+	rendermode[engine](integer) : "Render Mode" : 9
+	rendermode(choices) : "Render Mode" : 9 : "Specify the sprite rendering behaviour." =
+		[
+		3: "Glow"
+		9: "World Space Glow"
+		0: "Normal"
+		1: "Color"
+		2: "Texture"
+		4: "Solid"
+		5: "Additive"
+		7: "Additive Fractional Frame"
+		10: "Don't Render"
+		]
 
 	glowproxysize(float) : "Size of Glow Proxy Geometry." : "2.0" : "Size of the glow to be rendered for visibility testing. " + 
 		"Must be larger than the distance from the sprite center to empty space. " + 

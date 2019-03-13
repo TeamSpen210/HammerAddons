@@ -2676,6 +2676,20 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
 	model(sprite) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
 	scale(string) : "Scale" : "" : "Scale multiplier of the sprite."
+	
+	rendermode(choices) : "Render Mode" : 9 : "Specify the sprite rendering behaviour." =
+		[
+		3: "Glow"
+		9: "World Space Glow"
+		0: "Normal"
+		1: "Color"
+		2: "Texture"
+		4: "Solid"
+		5: "Additive"
+		7: "Additive Fractional Frame"
+		10: "Don't Render"
+		]
+		
 	spawnflags(flags) =
 	[
 		1: "Start on" : 0
