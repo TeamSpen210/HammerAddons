@@ -1,10 +1,8 @@
 
 @PointClass base(Targetname, Parentname, Angles) 
 	cylinder(255 255 255, targetname, target, radius, targetname, targetname, radius) 
-	color(255 192 0) 
-	size(16 16 16) 
+	color(255 192 0)
 	studio("models/editor/angle_helper.mdl") 
-	cylinder(255 255 255, targetname, altpath, radius, targetname, targetname, radius) 
 	sphere(radius) 
  = path_track: "An entity used to build paths for other entities to follow. Each path_track is a node on the path, each holding the name of the next path_track in the path."
 	[

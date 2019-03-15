@@ -15,8 +15,7 @@
 	line(255 255 0, targetname, Template07) 
 	line(255 255 0, targetname, Template15) 
 	line(255 255 0, targetname, Template08) 
-	line(255 255 0, targetname, Template16) 
-	size(-8 -8 -8, 8 8 8) 
+	line(255 255 0, targetname, Template16)
 = point_template: "Turns an entity, or set of entities, into a single template that can be instanced anywhere, and multiple times. " +
 "If there are interdependencies (entity I/O, hierarchy, " +
 "or other name references) between the entities in the template, the entities in the template will have their names changed and the " +
