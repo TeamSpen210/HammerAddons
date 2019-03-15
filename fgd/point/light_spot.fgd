@@ -1,6 +1,5 @@
 
-@PointClass base(Targetname, Angles, BaseLight) 
-	appliesto(L4D) 
+@PointClass base(Targetname, Angles, BaseLight)
 	lightprop("models/editor/spot.mdl") 
 	lightcone() 
 	sphere(_distance) 
