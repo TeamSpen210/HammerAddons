@@ -568,12 +568,6 @@ def action_export(
             applies_to = get_appliesto(ent)
             if match_tags(tags, applies_to):
                 fgd.entities[ent.classname] = ent
-    
-                # Strip applies-to helper.
-                ent.helpers[:] = [
-                    helper for helper in ent.helpers
-                    if helper[0] is not HelperTypes.EXT_APPLIES_TO
-                ]
                 ent.strip_tags(tags)
 
             # Remove bases that don't apply.
@@ -581,22 +575,39 @@ def action_export(
                 if not match_tags(tags, get_appliesto(base)):
                     ent.bases.remove(base)
 
-        print('Culled entities, merging bases...')
-
-        fgd.collapse_bases()
-
     for poly_tag, polyfill in POLYFILLS:
         if not poly_tag or poly_tag in tags:
             polyfill(fgd)
 
-    print('Exporting...')
+    for ent in fgd.entities.values():
+        # Strip applies-to helper.
+        ent.helpers[:] = [
+            helper for helper in ent.helpers
+            if helper[0] is not HelperTypes.EXT_APPLIES_TO
+        ]
+        # Copy all helpers from bases.
+        # If any are sprite/model, don't add SIZE ones.
+        size_rep = [
+            HelperTypes.MODEL,
+            HelperTypes.MODEL_NEG_PITCH,
+            HelperTypes.MODEL_PROP,
+            HelperTypes.SPRITE,
+            HelperTypes.ENT_SPRITE
+        ]
+        allow_size = all(
+            typ not in size_rep
+            for typ, args in
+            ent.helpers
+        )
 
-    # Remove all base entities.
-    fgd.entities = {
-        clsname: ent
-        for clsname, ent in fgd.entities.items()
-        if ent.type is not EntityTypes.BASE
-    }
+        for base in ent.bases:
+            for helper in base.helpers:
+                if helper not in ent.helpers:
+                    if helper[0] is not HelperTypes.EXT_APPLIES_TO:
+                        if allow_size or helper[0] is not HelperTypes.CUBE:
+                            ent.helpers.append(helper)
+
+    print('Exporting...')
 
     if as_binary:
         with open(output_path, 'wb') as f, LZMAFile(f, 'w') as comp:
