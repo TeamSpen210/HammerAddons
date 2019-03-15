@@ -7,7 +7,7 @@ import argparse
 from collections import Counter, defaultdict
 from pathlib import Path
 from lzma import LZMAFile
-from typing import List, Tuple, Set, FrozenSet, Union, Dict, Callable
+from typing import List, Tuple, Set, FrozenSet, Union, Dict, Callable, Optional
 
 from srctools.fgd import (
     FGD, validate_tags, match_tags,
@@ -53,7 +53,7 @@ FEATURES = {
     'ASW': {'INSTANCING', 'VSCRIPT'},
     'P2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'CSGO': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT'},
-    'P2DES': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT'},
+    'P2DES': {'P2', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT'},
 }
 
 ALL_FEATURES = {
@@ -190,9 +190,9 @@ def ent_path(ent: EntityDef) -> str:
     return '{}/{}.fgd'.format(folder, ent.classname)
 
 
-def load_database(dbase: Path) -> FGD:
+def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
     """Load the entire database from disk."""
-    print('Loading database...')
+    print('Loading database:')
     fgd = FGD()
 
     fgd.map_size_min = -16384
@@ -205,7 +205,19 @@ def load_database(dbase: Path) -> FGD:
                 fsys[str(file.relative_to(dbase))],
                 eval_bases=False,
             )
-            print('.', end='')
+            print('.', end='', flush=True)
+
+    if extra_loc is not None:
+        print('\nLoading extra files:')
+        with RawFileSystem(str(extra_loc)) as fsys:
+            for file in extra_loc.rglob("*.fgd"):
+                fgd.parse_file(
+                    fsys,
+                    fsys[str(file.relative_to(extra_loc))],
+                    eval_bases=False,
+                )
+                print('.', end='', flush=True)
+
     fgd.apply_bases()
     print('\nDone!')
     return fgd
@@ -259,11 +271,9 @@ def add_tag(tags: FrozenSet[str], new_tag: str) -> FrozenSet[str]:
     return frozenset(tag_set)
 
 
-def action_count(dbase: Path) -> None:
+def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
     """Output a count of all entities in the database per game."""
-    fgd = load_database(dbase)
-
-    games = set(GAME_ORDER)
+    fgd = load_database(dbase, extra_db)
 
     count_base = Counter()
     count_point = Counter()
@@ -459,6 +469,7 @@ def action_import(
 
 def action_export(
     dbase: Path,
+    extra_db: Optional[Path],
     tags: FrozenSet[str],
     output_path: Path,
     as_binary: bool,
@@ -473,7 +484,7 @@ def action_export(
 
     print('Tags expanded to: {}'.format(', '.join(tags)))
 
-    fgd = load_database(dbase)
+    fgd = load_database(dbase, extra_db)
 
     if engine_mode:
         # In engine mode, we don't care about specific games.
@@ -607,6 +618,13 @@ def main(args: List[str]=None):
         default="fgd/",
         help="The folder to write the FGD files to or from."
     )
+    parser.add_argument(
+        "--extra",
+        dest="extra_db",
+        default=None,
+        help="If specified, an additional folder to read FGD files from. "
+             "These override the normal database.",
+    )
     subparsers = parser.add_subparsers(dest="mode")
 
     parser_count = subparsers.add_parser(
@@ -673,6 +691,11 @@ def main(args: List[str]=None):
     dbase = Path(result.database).resolve()
     dbase.mkdir(parents=True, exist_ok=True)
 
+    if result.extra_db is not None:
+        extra_db = Path(result.extra_db).resolve()
+    else:
+        extra_db = None
+
     if result.mode in ("import", "imp", "i"):
         action_import(
             dbase,
@@ -699,13 +722,14 @@ def main(args: List[str]=None):
                 )
         action_export(
             dbase,
+            extra_db,
             tags,
             result.output,
             result.binary,
             result.engine,
         )
     elif result.mode in ("c", "count"):
-        action_count(dbase)
+        action_count(dbase, extra_db)
     else:
         raise AssertionError("Unknown mode! (" + result.mode + ")")
 
