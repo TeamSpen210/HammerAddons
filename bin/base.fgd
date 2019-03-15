@@ -73,6 +73,7 @@
 [
 	model(studio) report : "World Model"
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
+	skinset[srctools](string) : "Used Skins": : "If set, these are a list of skins this entity will ever use. This allows the others to not be packed."
 
 	// Inputs
 	input Skin(integer) : "Changes the model skin to the specified number."
