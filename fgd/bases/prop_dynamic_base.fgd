@@ -31,7 +31,7 @@
 	holdanimation[since_ASW](boolean) : "Hold Animation" : 0 : "If set, the prop will not loop its animation, but hold the last frame."
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
 	suppressanimsounds[since_P2](boolean) : "Suppress Anim Sounds" : 0 : "If set, the prop will not play any sounds that are embedded in animations it plays."
-	is_autoaim_target[CSGO](boolean) : "Is Autoaim Target" : 0 : "If set, this prop will use the autoaim feature on consoles (slower look movement when this prop is directly under the crosshair)."
+	is_autoaim_target[since_CSGO](boolean) : "Is Autoaim Target" : 0 : "If set, this prop will use the autoaim feature on consoles (slower look movement when this prop is directly under the crosshair)."
 
 	// Inputs
 	input SetAnimation(string) : "Force the prop to play an animation. The parameter should be the name of the animation."

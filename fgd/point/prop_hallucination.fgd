@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, Parentname, Studiomodel, Angles) 
-	appliesto(ASW, CSGO) 
+	appliesto(since_ASW) 
 	studioprop() = prop_hallucination: "A prop that players can't get a good look at, hopefully making them unsure if it's there at all"
 	[
 	enabledchance(float) : "Enabled Chance" : 100.0 : "Percentage chance the hallucination starts enabled. 0 is always off, 100 is always on"
