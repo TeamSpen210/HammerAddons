@@ -1,5 +1,10 @@
 
-@BaseClass base(Parentname, Global, Angles, Studiomodel, BreakableProp, DXLevelChoice, BaseFadeProp, RenderFields, SystemLevelChoice, Shadow) 
+@BaseClass base(
+	Parentname, Global, Angles, Studiomodel, 
+	BreakableProp, DXLevelChoice, BaseFadeProp, 
+	RenderFields, SystemLevelChoice, Shadow, 
+	CompMinLight
+) 
 = prop_dynamic_base
 	[
 	solid[engine](integer) : "Collisions" : 6
