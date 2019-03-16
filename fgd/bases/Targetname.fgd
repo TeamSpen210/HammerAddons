@@ -4,6 +4,10 @@
 	vscripts[VSCRIPT](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
 	thinkfunction[VSCRIPT](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
 
+	vscript_init_code[+VSCRIPT, +srctools](string) : "Init Code" : : "This code will be executed after the Entity Scripts option."
+	vscript_init_code2[+VSCRIPT, +srctools](string) : "Init Code 2" : : "This code will be executed after the Entity Scripts option."
+	// etc
+
 	// Inputs
 	input Kill(void) : "Removes this entity from the world."
 	input KillHierarchy(void) : "Removes this entity and all its children from the world."
