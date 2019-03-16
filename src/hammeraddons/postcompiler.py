@@ -1,4 +1,6 @@
 """Runs before VRAD, to run operations on the final BSP."""
+import argparse
+
 from srctools.logger import init_logging
 from pathlib import Path
 import sys
@@ -17,13 +19,34 @@ from typing import List
 def main(argv: List[str]) -> None:
     LOGGER.info('Srctools postcompiler hook started!')
 
-    if len(argv) == 0:
-        raise Exception("No map passed!")
+    parser = argparse.ArgumentParser(
+        description="Modifies the BSP file, allowing additional entities "
+                    "and bugfixes.",
+    )
+
+    parser.add_argument(
+        "--nopack",
+        dest="allow_pack",
+        action="store_false",
+        help="Prevent packing of files found in the map."
+    )
+    parser.add_argument(
+        "--propcombine",
+        action="store_true",
+        help="Allow merging static props together.",
+    )
+
+    parser.add_argument(
+        "map",
+        help="The path to the BSP file.",
+    )
+
+    args = parser.parse_args(argv)
 
     # The path is the last argument to the compiler.
     # Hammer adds wrong slashes sometimes, so fix that.
     # Also if it's the VMF file, make it the BSP.
-    path = Path(argv[-1]).with_suffix('.bsp')
+    path = Path(args.map).with_suffix('.bsp')
 
     LOGGER.info("Map path is {}", path)
 
@@ -57,7 +80,7 @@ def main(argv: List[str]) -> None:
     run_transformations(vmf, fsys, packlist)
 
     studiomdl_loc = conf.get(str, 'propcombine_studiomdl')
-    if studiomdl_loc:
+    if studiomdl_loc and args.propcombine:
         LOGGER.info('Combining props...')
         propcombine.combine(
             bsp_file,
@@ -70,7 +93,7 @@ def main(argv: List[str]) -> None:
 
     bsp_file.lumps[BSP_LUMPS.ENTITIES].data = bsp_file.write_ent_data(vmf)
 
-    if conf.get(bool, 'auto_pack'):
+    if conf.get(bool, 'auto_pack') and args.allow_pack:
         LOGGER.info('Analysing packable resources...')
         packlist.pack_fgd(vmf, fgd)
 
