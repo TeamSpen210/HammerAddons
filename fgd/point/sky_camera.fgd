@@ -22,7 +22,7 @@
 	fogend(float) : "Fog End" : 2000 : "Distance at which the skybox fog should be fully opaque."
 
 	fogmaxdensity(float) : "Fog Max Density [0..1]" : 1
-	hdrcolorscale[CSGO](float) : "HDR color scale." : 1 : "float value to multiply fog color by when running in HDR mode."
+	hdrcolorscale[since_CSGO](float) : "HDR color scale." : 1 : "float value to multiply fog color by when running in HDR mode."
 
 	// Inputs
 	input ActivateSkybox[since_ASW](void) : "Make this skybox the active one."

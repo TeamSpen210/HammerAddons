@@ -18,9 +18,7 @@
 		32: "Preserve angles even when a local landmark is not specified" : 0
 		]
 	uselandmarkangles[since_ASW](boolean) : "Use Landmark Angles" : 0 : "Forces the teleported object to snap to the angles of the destination landmark."
-
-
-	checkdestifclearforplayer[CSGO](boolean) : "Only Spawn-Valid Destinations" : 0 : "Only teleport if there is a clear teleport destination."
+	checkdestifclearforplayer[since_CSGO](boolean) : "Only Spawn-Valid Destinations" : 0 : "Only teleport if there is a clear teleport destination."
 
 	// Inputs
 	input SetRemoteDestination[P2](string) : "Set a new target to teleport to."
