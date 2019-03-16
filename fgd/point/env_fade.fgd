@@ -1,6 +1,5 @@
 
-@PointClass base(Targetname) 
-	appliesto(L4D) 
+@PointClass base(Targetname)
 	iconsprite("editor/env_fade") 
 	color(200 0 0) 
 = env_fade: "An entity that controls screen fades."

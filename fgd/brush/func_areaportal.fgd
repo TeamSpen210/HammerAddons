@@ -1,6 +1,5 @@
 
-@SolidClass base(Targetname) 
-	appliesto(L4D) 
+@SolidClass base(Targetname)
 	color(0 255 255) 
 	line(255 255 255, targetname, target) 
 = func_areaportal: "A portal brush used to manage visibility in maps. " +

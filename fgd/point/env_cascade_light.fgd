@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, EnableDisable) 
-	appliesto(CSGO) 
+	appliesto(since_CSGO) 
 	iconsprite("editor/shadow_control.vmt") = env_cascade_light: "An entity to control the sunlight that casts cascaded shadows in the map."
 	[
 	angles(string) : "Pitch Yaw Roll (Y Z X)" : "50 40 0" : "This is the shadow casting direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis. (Note that pitch is negated vs. light_environment's pitch.)"

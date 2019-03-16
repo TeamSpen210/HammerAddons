@@ -1,6 +1,6 @@
 
 @SolidClass base(Targetname, Parentname, RenderFields, Global, Inputfilter, EnableDisable, Shadow) 
-	appliesto(L4D) 
+	appliesto(L4D, L4D2) 
 = func_playerinfected_clip: "Simple Clip brush that blocks player infected movement."
 	[
 	spawnflags(flags)  =

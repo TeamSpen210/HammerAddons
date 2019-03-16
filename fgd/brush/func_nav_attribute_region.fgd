@@ -12,6 +12,11 @@
 		256: "Battlefield" : 0
 		2048: "Checkpoint" : 0
 		8192: "No mobs" : 0
+		32768: "Rescue Vehicle" : 0
+		65536: "Rescue Closet": 0
+		524288: "No Threat" [L4D2]
+		1048576: "Lying Down" [L4D2]
 		]
 
+	input ApplyNavAttributes(void): "Applies attributes."
 	]

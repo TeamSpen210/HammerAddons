@@ -1,6 +1,6 @@
 
 @SolidClass base(Targetname, Parentname, Origin, RenderFields, DamageFilter) 
-	appliesto(L4D) 
+	appliesto(L4D, L4D2) 
 = func_button_timed: "An entity that takes time to use."
 	[
 	use_time(integer) : "Use Time" : 5
