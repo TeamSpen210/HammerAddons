@@ -1,5 +1,6 @@
 
-@BaseClass = BasePedButton: "The base for the prop_button/prop_under_button."
+@BaseClass base(SRCIndicator)
+= BasePedButton: "The base for the prop_button/prop_under_button."
 	[
 	delay(float) : "Delay Before Reset" : 1 : "Amount of time, in seconds, after the button has been pressed before it returns to the starting position. Once it has returned, it can be used again."
 	istimer(boolean) : "Play timer sound?" : 0 : "If set, this button will play timer sounds while button is depressed. This allows fast reset by default - use Prevent fast reset to stop this."

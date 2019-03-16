@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(Targetname, SRCIndicator) 
 	appliesto(P2) 
 	studio("models/editor/axis_helper.mdl") 
 	iconsprite("editor/point_laser_target.vmt") = point_laser_target: "Invisible Discouragement Beam detector, for logic use. The entity will fire outputs when struck and unstruck."

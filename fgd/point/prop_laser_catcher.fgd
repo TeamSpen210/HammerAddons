@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Angles, Parentname, Reflection, ToggleDraw, RenderFields) 
+@PointClass base(Targetname, Angles, Parentname, Reflection, ToggleDraw, RenderFields, SRCIndicator) 
 	appliesto(P2) 
 	studioprop() = prop_laser_catcher: "Discouragement Beam Catcher that detects a laser, absorbing the beam. The entity will fire outputs when struck and unstruck."
 	[
