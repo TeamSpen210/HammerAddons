@@ -491,7 +491,8 @@ def action_export(
         print('Collapsing bases...')
         fgd.collapse_bases()
 
-        tags_empty = frozenset()
+        # Cache these constant sets.
+        tags_empty = frozenset('')
         tags_engine = frozenset({'ENGINE'})
 
         print('Merging tags...')
@@ -532,7 +533,7 @@ def action_export(
                         value = sorted(
                             tag_map.items(),
                             key=lambda t: len(t[0]),
-                        )[0][1]  # type: Union[IODef, KeyValues]
+                        )[0][1]
 
                     # If it's CHOICES, we can't know what type it is.
                     # Guess either int or string, if we can convert.
@@ -579,12 +580,14 @@ def action_export(
         if not poly_tag or poly_tag in tags:
             polyfill(fgd)
 
+    print('Applying helpers to child entities...')
     for ent in fgd.entities.values():
         # Strip applies-to helper.
         ent.helpers[:] = [
             helper for helper in ent.helpers
             if helper[0] is not HelperTypes.EXT_APPLIES_TO
         ]
+
         # Copy all helpers from bases.
         # If any are sprite/model, don't add SIZE ones.
         size_rep = [
@@ -607,14 +610,19 @@ def action_export(
                         if allow_size or helper[0] is not HelperTypes.CUBE:
                             ent.helpers.append(helper)
 
+    # Helpers aren't inherited, so this isn't useful anymore.
+    for ent in fgd.entities.values():
+        if ent.type is EntityTypes.BASE:
+            ent.helpers.clear()
+
     print('Exporting...')
 
     if as_binary:
-        with open(output_path, 'wb') as f, LZMAFile(f, 'w') as comp:
+        with open(output_path, 'wb') as bin_f, LZMAFile(bin_f, 'w') as comp:
             fgd.serialise(comp)
     else:
-        with open(output_path, 'w') as f:
-            fgd.export(f)
+        with open(output_path, 'w') as txt_f:
+            fgd.export(txt_f)
 
 
 def main(args: List[str]=None):
@@ -703,7 +711,7 @@ def main(args: List[str]=None):
     dbase.mkdir(parents=True, exist_ok=True)
 
     if result.extra_db is not None:
-        extra_db = Path(result.extra_db).resolve()
+        extra_db = Path(result.extra_db).resolve()  # type: Optional[Path]
     else:
         extra_db = None
 
