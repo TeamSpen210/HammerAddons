@@ -21,6 +21,11 @@
 		1: "Master (Has priority if multiple env_fog_controllers exist)" : 0
 		]
 
+	heightFogDensity[since_P2](float) : "Height Fog Density" : 0
+	heightFogMaxDensity[since_P2](float) : "Height Fog Max Density": 1
+	heightFogStart[since_P2](float) : "Height Fog Start" : 0
+
+
 	hdrcolorscale(float) : "HDR Color Scale" : "1" : "Float value to multiply fog color by when running in HDR mode."
 	zoomfogscale[since_CSGO](float) : "Zoom Fog Scale" : "1" : "How much the fog min/max values will scale the default value by when players are zoomed in (scoped)."
 
