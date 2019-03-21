@@ -624,6 +624,8 @@ def action_export(
     else:
         with open(output_path, 'w') as txt_f:
             fgd.export(txt_f)
+            # BEE2 compatibility, don't make it run.
+            txt_f.write('\n// BEE 2 EDIT FLAG = 0 \n')
 
 
 def main(args: List[str]=None):
