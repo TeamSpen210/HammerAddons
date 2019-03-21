@@ -1,5 +1,5 @@
 @PointClass base(Targetname, Parentname, RenderFields, DXLevelChoice, SystemLevelChoice)
-	size(-2 -2 -2, 2 2 2) 
+	studio("models/editor/axis_helper.mdl")
 	sprite() 
 	color(20 140 20) 
 	sphere(GlowProxySize) 
