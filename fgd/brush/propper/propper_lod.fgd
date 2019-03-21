@@ -1,0 +1,7 @@
+@SolidClass base(Targetname, Propper, Origin) 
+	appliesto(PROPPER)
+= propper_lod: "A low-res version of the model to show at long distance."
+	[
+	weldvertices(float) : "Welding threshold" : ".01" : "Vertices will be snapped together if within this tolerance. Larger numbers will merge vertices together, and may be useful for o" + "ptimizing your model."
+	distance(integer) : "LOD switch distance" : 0 : "The distance for the LOD to appear. This is actually a combination of how far the player is from the model and their screen reso" + "lution (100*units/pixel). Bigger numbers are farther away."
+	]

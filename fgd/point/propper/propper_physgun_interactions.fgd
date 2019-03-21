@@ -1,0 +1,23 @@
+@PointClass base(Targetname, Angles, Propper) 
+	appliesto()
+	iconsprite("editor/env_physexplosion.vmt")
+	line(255 255 0, targetname, my_model)
+= propper_physgun_interactions: "Defines non-standard interactions with the Gravity Gun/player holding behaviour. Used for physics props only."
+	[
+	preferred_carryangles(boolean) : "Use angles when carrying?" : 0 : "The player will always carry the prop at this entity's angles if possible."
+	bloodsplat(boolean) : "Blood Splatter?" : 0 : "Create blood splatter on surface impact."
+	paintsplat(boolean) "Paint Splatter?" : 0 : "Create paint splatter on surface impact."
+	break(boolean) : "Shatter?" : 0 : "Always break when launched."
+
+	impale(boolean) : "Impale Enemies?" : 0 : "Impale enemies when hit."
+	stick(boolean) : "Stick to walls" : 0 : "Stick into walls when Punted at them."
+	explode_fire(boolean) : "Ignite nearby enemies" : 0 : "When this breaks, NPCs such as combine soldiers and zombies will light on fire."
+
+	onlaunch[engine](string): "Spin on launch?"
+	onlaunch(choices) : "Spin on launch?" : "default" : "When Punted by the Gravity Gun, should this spin (like sawblades)?" =
+		[
+		"default": "Random (default behavior)"
+		"spin_none": "No Spin"
+		"spin_zaxis": "Spin on z-axis (horizontal)"
+		]
+	]

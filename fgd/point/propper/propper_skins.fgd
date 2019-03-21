@@ -1,0 +1,22 @@
+@PointClass base(Targetname, Propper) 
+	appliesto(PROPPER)
+	line(255 255 0, targetname, my_model)
+	iconsprite("editor/color_correction.vmt")
+= propper_skins: "Propper can create alternate skins by replacing a texture that is on your prop. If you have multiple textures on your model that" + " you want to change, you can use this entity more than once."
+	[
+	mat0(material) : "Material to replace" : : "Pick a texture that's present in the original model. This will be skin 0."
+	mat1(material) : "Skin 1" : : "This texture will replace the original when you pick skin 1."
+	mat2(material) : "Skin 2" : : "This texture will replace the original when you pick skin 2."
+	mat3(material) : "Skin 3" : : "This texture will replace the original when you pick skin 3."
+	mat4(material) : "Skin 4" : : "This texture will replace the original when you pick skin 4."
+	mat5(material) : "Skin 5" : : "This texture will replace the original when you pick skin 5."
+	mat6(material) : "Skin 6" : : "This texture will replace the original when you pick skin 6."
+	mat7(material) : "Skin 7" : : "This texture will replace the original when you pick skin 7."
+	mat8(material) : "Skin 8" : : "This texture will replace the original when you pick skin 8."
+	mat9(material) : "Skin 9" : : "This texture will replace the original when you pick skin 9."
+	mat10(material) : "Skin 10" : : "This texture will replace the original when you pick skin 10."
+	mat11(material) : "Skin 11" : : "This texture will replace the original when you pick skin 11."
+	mat12(material) : "Skin 12" : : "This texture will replace the original when you pick skin 12."
+	mat13(material) : "Skin 13" : : "This texture will replace the original when you pick skin 13."
+	mat14(material) : "Skin 14" : : "This texture will replace the original when you pick skin 14."
+	]

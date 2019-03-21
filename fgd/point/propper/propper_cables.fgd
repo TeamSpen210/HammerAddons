@@ -1,0 +1,18 @@
+@PointClass base(Targetname, Propper) 
+	appliesto(PROPPER)
+	iconsprite("editor/multi_manager.vmt")
+	line(255 255 0, targetname, my_model)
+	line(255 255 0, startattachment, endattachment)
+= propper_cables: "Attach a visual cable to the selected prop. Does not work on static props."
+	[
+	startattachment(target_destination) : "Cable Start Point" : : "The name of a propper_attachment"
+	endattachment(target_destination) : "Cable End Point" : : "The name of a propper_attachment"
+	width(float) : "Width" : 3 : "The width of the cable in units "
+	material(material) : "Cable material" : : "The VMT (material) to use. Cable materials are located in 'materials/cables'."
+	numsegments(integer) : "Cable segments" : 4 : "The number of segments in the cable. More segments make the cable more 'smooth'. " +
+		"Should be increased if the cable bends a lot."
+	length(integer) : "Cable Length" : 4 : "The length of cable between the two attachment points. " + 
+		"If the length is shorter than the distance between the two points then the cable will remain permanently straight.  " +
+		"Note:	Finding the optimal length between two points can be a frustrating task. " +
+		"Cables can go from super tight to extremely slack within a difference of just 10 units."
+	]

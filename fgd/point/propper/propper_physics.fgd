@@ -1,0 +1,67 @@
+@PointClass base(Targetname, Origin, Propper) 
+	appliesto(PROPPER)
+	line(255 255 0, targetname, my_model)
+	sphere(explosive_radius)
+	iconsprite("editor/phys_ballsocket.vmt")
+= propper_physics: "Propper configuration for physics props. Using this entity will make your prop suitable for use as prop_physics."
+	[
+	base[engine](string) : "Health Preset": "Stone.Medium"
+	base(choices) : "Health preset" : "Stone.Medium" : "Dictates how strong the prop is vs. different weapons." =
+		[
+		"Cardboard.Small": "Cardboard.Small"
+		"Cardboard.Medium": "Cardboard.Medium"
+		"Cardboard.Large": "Cardboard.Large"
+		"Cloth.Small": "Cloth.Small"
+		"Cloth.Medium": "Cloth.Medium"
+		"Cloth.Large": "Cloth.Large"
+		"Wooden.Tiny": "Wooden.Tiny"
+		"Wooden.Small": "Wooden.Small"
+		"Wooden.Medium": "Wooden.Medium"
+		"Wooden.Large": "Wooden.Large"
+		"Wooden.ExtraLarge": "Wooden.ExtraLarge"
+		"Wooden.Huge": "Wooden.Huge"
+		"Stone.Small": "Stone.Small"
+		"Stone.Medium": "Stone.Medium"
+		"Stone.Large": "Stone.Large"
+		"Stone.Huge": "Stone.Huge"
+		"Glass.Small": "Glass.Small"
+		"Glass.Window": "Glass.Window"
+		"Metal.Small": "Metal.Small"
+		"Metal.Medium": "Metal.Medium"
+		"Plastic.Small": "Plastic.Small"
+		"Item.Small": "Item.Small"
+		"Plastic.Medium": "Plastic.Medium"
+		"Item.Medium": "Item.Medium"
+		"Plastic.Large": "Plastic.Large"
+		"Item.Large": "Item.Large"
+		"Pottery.Small": "Pottery.Small"
+		"Pottery.Medium": "Pottery.Medium"
+		"Pottery.Large": "Pottery.Large"
+		"Pottery.Huge": "Pottery.Huge"
+		"Flesh.Tiny": "Flesh.Tiny"
+		"Flesh.Small": "Flesh.Small"
+		]
+
+	health(integer) : "Health" : -1 : "Overrides the prop's health. Set this to zero to give infinite health."
+
+	flammable(boolean) : "Flammable" : 0 : "Will it burn? Picking this enables the 'ignite' options."
+
+	ignite_at_half_health(boolean) : "Ignite at half-health" : 0 : "Just like those barrels in HL2."
+
+	explosive_resist(boolean) : "Ignite from explosions" : 0 : "Won't break right away if something explodes near it, but will ignite."
+
+	explosive_damage(float) : "Explode damage" : "0.0" : "Damage to do when breaking"
+	explosive_radius(float) : "Explode radius" : "0.0" : "Radius of explosion"
+
+	breakable_model[engine](string) : "Gibs" : "ConcreteChunks"
+	breakable_model(choices) : "Gibs" : "ConcreteChunks" : "Generic shards to spawn when the prop breaks" =
+		[
+		"WoodChunks": "Wood"
+		"GlassChunks": "Glass"
+		"ConcreteChunks": "Concrete"
+		"MetalChunks": "Metal"
+		]
+
+	breakable_count(integer) : "Gib count" : 5 : "How many gibs?"
+	breakable_skin(integer) : "Gib skin" : 0 : "Which skin to use on the gib models, if applicable."
+	]

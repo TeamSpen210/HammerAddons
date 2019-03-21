@@ -1,0 +1,7 @@
+@PointClass base(Targetname, Origin, Angles, Propper) 
+	appliesto(PROPPER)
+	studio("models/editor/axis_helper.mdl")
+	line(255 255 0, targetname, my_model)
+= propper_attachment: "An attachment is an arbitrary point you can define in a model. They have several uses."
+	[
+	]

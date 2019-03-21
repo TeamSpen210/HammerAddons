@@ -66,6 +66,7 @@ ALL_FEATURES = {
 TAGS_SPECIAL = {
   'ENGINE',  # Tagged on entries that specify machine-oriented types and defaults.
   'SRCTOOLS',  # Implemented by the srctools post-compiler.
+  'PROPPER',  # Propper's added pseduo-entities.
 }
 
 ALL_TAGS = set()  # type: Set[str]
