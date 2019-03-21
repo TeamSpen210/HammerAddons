@@ -179,13 +179,14 @@ def ent_path(ent: EntityDef) -> str:
 
     if ent.type is EntityTypes.BASE:
         folder = 'bases'
-    elif ent.type is EntityTypes.BRUSH:
-        folder = 'brush'
     else:
-        folder = 'point'
+        if ent.type is EntityTypes.BRUSH:
+            folder = 'brush'
+        else:
+            folder = 'point'
 
-    # if '_' in ent.classname:
-    #     folder += '/' + ent.classname.split('_', 1)[0]
+        if '_' in ent.classname:
+            folder += '/' + ent.classname.split('_', 1)[0]
 
     return '{}/{}.fgd'.format(folder, ent.classname)
 
