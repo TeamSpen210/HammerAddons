@@ -7,13 +7,16 @@
 	[
 	startnode(node_dest) : "Start node ID" : : "The node ID of one end of the node connection."
 	endnode(node_dest) : "End node ID" : : "The node ID of one end of the node connection."
-	initialstate(choices) : "Initial State" : "1" =
+	
+	initialstate[engine](boolean) : "Initial State" : 1
+	initialstate(choices) : "Initial State" : 1 =
 		[
 		0: "Off"
 		1: "On"
 		]
 
-	linktype(choices) : "Type of Connection" : "1" =
+	linktype[engine](int) : "Type of Connection" : 1
+	linktype(choices) : "Type of Connection" : 1 =
 		[
 		1: "Ground"
 		2: "Jump"

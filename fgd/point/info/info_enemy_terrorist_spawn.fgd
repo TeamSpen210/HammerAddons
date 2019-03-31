@@ -9,7 +9,9 @@
 	enabled(boolean) : "Enabled by default?" : 1
 	model_to_use(studio) : "Override player model" : : "Select a model to override the model used for enemies spawned at this spawn point."
 	weapons_to_give(string) : "Weapons to spawn with" : "glock" : "Weapons and items to give to the bot on spawn. Ex. 'vesthelm, usp, awp, smokegreande, hegrenade'"
-	armor_to_give(choices) : "Armor" : "1" : "What armor should the bot spawn with." =
+	
+	armor_to_give[engine](int) : "Armor" : 1
+	armor_to_give(choices) : "Armor" : 1 : "What armor should the bot spawn with." =
 		[
 		0: "None"
 		1: "Vest and Helmet"
@@ -17,7 +19,9 @@
 		]
 
 	start_asleep(boolean) : "Spawn alseep?" : 1 : "Do the bots that spawn here start alseep? If so, they will wait until they see or hear the player to move."
-	default_behavior(choices) : "Default Behavior" : "0" : "What behavior the bot should have when idle." =
+	
+	default_behaviour[engine](int) : "Default Behaviour" : 0
+	default_behavior(choices) : "Default Behavior" : 0 : "What behavior the bot should have when idle." =
 		[
 		0: "Defend Camp"
 		1: "Hunt"

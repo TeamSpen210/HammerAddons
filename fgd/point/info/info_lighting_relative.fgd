@@ -1,7 +1,8 @@
 
 @PointClass base(Targetname, Parentname) 
-	appliesto(P1, P2) 
-	iconsprite("editor/info_lighting.vmt") = info_lighting_relative
+	iconsprite("editor/info_lighting.vmt") 
+	halfgridsnap
+= info_lighting_relative
 	[
 	lightinglandmark(target_destination) : "Lighting Landmark" : : "Entity at which the reference origin is contained.  If empty, the info_lighting_relative's origin will be used."
 	]

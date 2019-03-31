@@ -2,7 +2,7 @@
 @PointClass base(Targetname, EnableDisable) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
 	sphere(LightRadius) 
-= info_darknessmode_lightsource
+= info_darknessmode_lightsource: "Specifies a lit location for Alyx's EP1 darkness mode."
 	[
 	lightradius(float) : "Light Radius" : 256.0 : "The radius around this lightsource in which Alyx will be able to see enemies."
 	]

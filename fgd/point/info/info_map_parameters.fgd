@@ -1,7 +1,7 @@
 
 @PointClass base(Targetname, Angles) 
 	appliesto(CSGO, L4D) 
-= info_map_parameters: "L4D or CSGO Map parameters. Used to set which teams can buys, and the C4 bomb detonation radius."
+= info_map_parameters: "L4D or CSGO Map parameters. Used to set which teams can buy items, and the C4 bomb detonation radius."
 	[
 	// L4D
 	painpilldensity[L4D](float) : "Pain Pill density" : "6.48" : "Pain Pill density per sq 100 yards."
@@ -19,7 +19,8 @@
 	input UpdateCvars[L4D](void) : "Stuff values from this entity into cvars for tweaking"
 
 	// CSGO
-	buying[CSGO](choices) : "Teams that can buy" : "0" =
+	buying[engine](int) : "Teams that can buy" : 0
+	buying[CSGO](choices) : "Teams that can buy" : 0 =
 		[
 		0: "Everyone"
 		1: "Only Counter-Terrorists"
@@ -34,5 +35,5 @@
 	botmaxvisiondistance[CSGO](float) : "Bot max vision distance" : "-1" : "Sets the maximum distance bots can see enemies. Default is -1, unlimited."
 
 	// Inputs
-	input FireWinCondition[!L4D](integer) : "Fires win conditions for the win."
+	input FireWinCondition[CSGO](integer) : "Fires win conditions for the win."
 	]
