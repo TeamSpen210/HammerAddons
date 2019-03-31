@@ -1,21 +1,24 @@
 @PointClass base(Targetname, PlayerClass, Angles) 
 	appliesto(P2) 
-	studioprop("models/editor/playerstart.mdl") = info_coop_spawn: "Player spawns for cooperative mode."
+	studioprop("models/editor/playerstart.mdl")
+= info_coop_spawn: "Player spawns for cooperative mode."
 	[
-	enabled(choices) : "Initial State" : "0" =
+	enabled[engine](boolean) : "Initial State" : 1
+	enabled(choices) : "Initial State" : 1 =
 		[
 		0: "Disabled"
 		1: "Enabled"
 		]
 
-	startingteam(choices) : "Player" : "0" : "Which player to spawn." =
+	startingteam[engine](int) : "Team" : 0
+	startingteam(choices) : "Player" : 0 : "Which player to spawn." =
 		[
 		0: "Any"
 		2: "P-Body"
 		3: "ATLAS"
 		]
 
-	forcegunonspawn(boolean) : "Force Gun On Spawn" : 0 : "Give the player a Portal Gun on spawn."
+	forcegunonspawn(boolean) : "Force Gun On Spawn" : 0 : "Give the player a Portal Gun on spawn. Coop players always have a Dual Portal Device."
 
 	// Inputs
 	input Enable(void) : "Enable the spawn point to be used."
