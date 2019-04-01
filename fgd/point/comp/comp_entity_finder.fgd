@@ -16,7 +16,7 @@
 	
 	
 	kv1_mode[engine](string): "1 - Mode"
-	kv1_mode(choices): "1 - Mode": "GENERIC" : "The first modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
+	kv1_mode(choices): "1 - Mode": : "The first modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
 		[
 		"": "None"
 		"const2target": "Constant -> Target KV"
@@ -29,8 +29,8 @@
 	kv1_src(string): "1 - Source" : : "Constant value to use or keyvalue name to read from."
 	kv1_dest(string): "1 - Destination" : : "Keyvalue name to write to or !special name to replace."
 	
-	kv2_mode[engine](string): "1 - Mode"
-	kv2_mode(choices): "2 - Mode": "GENERIC" : "The second modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
+	kv2_mode[engine](string): "2 - Mode"
+	kv2_mode(choices): "2 - Mode": : "The second modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
 		[
 		"": "None"
 		"const2target": "Constant -> Target KV"
