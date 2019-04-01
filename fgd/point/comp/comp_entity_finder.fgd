@@ -1,0 +1,47 @@
+@PointClass 
+    size(-8 -8 -8, 8 8 8)
+    sphere(radius)
+    cylinder(255 255 255, targetname, targref, radius)
+    appliesto(srctools)
+= comp_entity_finder:
+	"Finds the closest entity of a given type, then links it to other entities in this instance." +
+	"Outputs from this entity will be moved to the found entity." + 
+	"Further keyvalues can be set manually with SmartEdit off." 
+	[
+	targetname(target_source) readonly: "Targetname" : "<pack_rename>" : "Fake targetname, used to determine how containing instances are configured."
+	
+	targetcls(string): "Target Classname": : "Classname of the entity to find."
+	radius(float): "Search Radius": 64 : "Radius to search inside, or 0 for infinite."
+	targetref(target_destination): "Reference position" : : "If set, look for entities close to this entity instead of the comp_entity_finder."
+	
+	
+	kv1_mode[engine](string): "1 - Mode"
+	kv1_mode(choices): "1 - Mode": "GENERIC" : "The first modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
+		[
+		"": "None"
+		"const2target": "Constant -> Target KV"
+		"const2known": "Constant -> Target KV"
+		"known2target": "Known KV -> Target KV"
+		"target2known": "Target KV -> Known KV"
+		"replacetarget": "Replace Outputs"
+		]
+	kv1_known(target_destination): "1 - Known Entity" : : "The known entity to access."
+	kv1_src(string): "1 - Source" : : "Constant value to use or keyvalue name to read from."
+	kv1_dest(string): "1 - Destination" : : "Keyvalue name to write to or !special name to replace."
+	
+	kv2_mode[engine](string): "1 - Mode"
+	kv2_mode(choices): "2 - Mode": "GENERIC" : "The second modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
+		[
+		"": "None"
+		"const2target": "Constant -> Target KV"
+		"const2known": "Constant -> Target KV"
+		"known2target": "Known KV -> Target KV"
+		"target2known": "Target KV -> Known KV"
+		"replacetarget": "Replace Outputs"
+		]
+	kv2_known(target_destination): "2 - Known Entity" : : "The known entity to access."
+	kv2_src(string): "2 - Source" : : "Constant value or keyvalue name to read from."
+	kv2_dest(string): "2 - Destination" : : "Keyvalue name to write to or !special name to replace."
+	
+	output OutName(void): "Needed to allow Hammer to add outputs to this."
+	]
