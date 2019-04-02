@@ -64,10 +64,11 @@ def _load() -> None:
     from srctools.bsp_transform import (
         antline,
         brush_ents,
+        entfinder,
         globals,
-        portal2,
-        sceneset,
         instancing,
         packing,
+        portal2,
+        sceneset,
     )
 _load()
