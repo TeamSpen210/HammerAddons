@@ -1,7 +1,7 @@
 
 @PointClass base(Angles) 
 	color(255 255 0)
-	appliesto(ASW, CSGO) 
+	appliesto(since_L4D) 
 	iconsprite("editor/light_directional.vmt") = light_directional: "A directional light with no falloff. Similar to sunlight in light_environment."
 	[
 	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
