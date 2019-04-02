@@ -78,8 +78,12 @@ def entity_finder(ctx: Context):
 
         # If the ent has no targetname, give it one.
         if not found_ent['targetname']:
-            found_ent['targetname'] = found_ent['classname']
+            found_ent['targetname'] = '_found_entity_1'
             found_ent.make_unique()
+
+        # If specified, teleport to the item's location.
+        if conv_bool(finder['teleporttarget']):
+            found_ent['origin'] = targ_pos
 
         for ind in itertools.count(1):
             kv_mode_str = finder['kv{}_mode'.format(ind)].casefold()
