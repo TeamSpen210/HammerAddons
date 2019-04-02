@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname) 
-	appliesto(ASW, P2, CSGO) 
+	appliesto(VSCRIPT) 
 	iconsprite("editor/logic_script.vmt") 
 	color(200 200 200) 
 	line(200 200 200, targetname, group00) 
