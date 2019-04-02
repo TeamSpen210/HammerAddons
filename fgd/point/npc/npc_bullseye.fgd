@@ -1,15 +1,11 @@
 
 @NpcClass base(Parentname, BaseNPC, BaseLogicalNPC) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	iconsprite("editor/bullseye.vmt") 
-	color(255 0 0) = npc_bullseye: "Bullseye|||Dummy NPC for targeting or other behavior."
+	color(255 0 0) = npc_bullseye: "Dummy NPC for targeting or other behavior."
 	[
-	health(integer) : "Health" : 35
-	health[P2](integer) : "Health" : 35 : "Unlike other NPCs level designers are allowed to set the health on bullseyes."
-	minangle(string) : "Minimum Angle" : "360" : "Angle from the bullseye required for bullseye to be a valid enemy"
-	minangle[P2](string) : "Minimum Angle" : "360" : "Angle from the bullseye required for bullseye to be a valid enemy."
-	mindist(string) : "Minimum Distance" : "0" : "Distance from the bullseye required for bullseye to be a valid enemy"
-	mindist[P2](string) : "Minimum Distance" : "0" : "Distance from the bullseye required for bullseye to be a valid enemy."
+	health(integer) : "Health" : 35 : "Unlike other NPCs level designers are allowed to set the health on bullseyes."
+	minangle(float) : "Minimum Angle" : 360: "Angle from the bullseye required for bullseye to be a valid enemy."
+	mindist(float) : "Minimum Distance" : 0 : "Distance from the bullseye required for bullseye to be a valid enemy."
 	autoaimradius(float) : "Autoaim Radius" : 0 : "Radius of autoaim influence. Use ent_autoaim <picker> to visualize."
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -22,8 +18,12 @@
 		]
 
 	alwaystransmit[P2](boolean) : "Always Transmit To Client" : 0 : "Always transmit this entity to the client."
+	
+	// Inputs
+	output InputTargeted(void) : "Fires the OnTargeted output."
+	output InputReleased(void) : "Fires the OnReleased output."
 
 	// Outputs
-	output OnTargeted(void) : "Fires when targeted"
-	output OnReleased(void) : "Fires when no longer targeted"
+	output OnTargeted(void) : "Fires when targeted."
+	output OnReleased(void) : "Fires when no longer targeted."
 	]
