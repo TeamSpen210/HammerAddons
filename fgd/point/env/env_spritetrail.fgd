@@ -11,7 +11,8 @@
 	spritename(sprite) : "Sprite Name" : "sprites/bluelaser1.vmt"
 	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
 	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
-	rendermode(choices) : "Render Mode" : "5" =
+	rendermode[engine](integer) : "Render Mode" : 5
+	rendermode(choices) : "Render Mode" : 5 =
 		[
 		0: "Normal"
 		4: "Solid"

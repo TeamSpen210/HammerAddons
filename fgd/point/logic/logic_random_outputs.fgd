@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, EnableDisable) 
-	appliesto(ASW, P2, CSGO) 
+	appliesto(since_ASW) 
 	iconsprite("editor/logic_random_outputs.vmt") 
 	color(0 100 250)
 = logic_random_outputs: "A message forwarder. Fires up to eight separate outputs, each with a different chance of firing."

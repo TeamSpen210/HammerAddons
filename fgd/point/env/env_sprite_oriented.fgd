@@ -1,6 +1,5 @@
 
 @PointClass base(env_sprite, Angles) 
-	studio("models/editor/axis_helper_thick.mdl") 
 = env_sprite_oriented: "A env_sprite that allows orientation."
 	[
 	]

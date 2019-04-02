@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, Parentname, Angles) 
-	appliesto(ASW, P2, CSGO) 
+	appliesto(since_ASW) 
 	sphere() 
 	studio("models/editor/axis_helper_thick.mdl") 
 	color(200 0 0) = env_tilt: "An entity to control screen tilt on players."
