@@ -103,3 +103,17 @@ def optimise_logic_auto(ctx: Context):
             origin='0 0 0',
             spawnflags=int(only_once),
         ).outputs = outputs
+
+@trans('Strip Entities')
+def strip_ents(ctx: Context):
+    """Strip useless entities from the map."""
+    for clsname in [
+        # None of these are defined by the engine itself.
+        # If present they're useless.
+        'hammer_notes',
+        'func_instance_parms',
+        'func_instance_origin',
+    ]:
+        for ent in ctx.vmf.by_class[clsname]:
+            ent.remove()
+            
