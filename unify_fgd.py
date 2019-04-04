@@ -48,9 +48,15 @@ GAME_NAME = dict(GAMES)
 # Specific features that are backported to various games.
 
 FEATURES = {
+    # 2013 engine backports this.
+    'HL2': {'INSTANCING'},
+    'EP1': {'INSTANCING'},
+    'EP2': {'INSTANCING'},
+    
     'L4D': {'INSTANCING'},
+    'L4D2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'TF2': {'INSTANCING', 'PROP_SCALING'},
-    'ASW': {'INSTANCING', 'VSCRIPT'},
+    'ASW': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'P2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'CSGO': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
     'P2DES': {'P2', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
