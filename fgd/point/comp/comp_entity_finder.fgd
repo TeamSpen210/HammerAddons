@@ -18,7 +18,7 @@
 	targetcls(string): "Target Classname": : "Classname of the entity to find."
 	radius(float): "Search Radius": 64 : "Radius to search inside, or 0 for infinite."
 	targetref(target_destination): "Reference position" : : "If set, look for entities close to this entity instead of the comp_entity_finder."
-	
+	teleporttarget(boolean): "Teleport Target" : 0 : "Move the found entity to the location of this entity or that of the reference."
 	
 	kv1_mode[engine](string): "1 - Mode"
 	kv1_mode(choices): "1 - Mode": : "The first modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
