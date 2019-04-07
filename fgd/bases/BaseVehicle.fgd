@@ -1,5 +1,5 @@
 
-@BaseClass base(Targetname, Origin, Global, prop_static_base) 
+@BaseClass base(Targetname, Origin, Global, BasePropPhysics) 
 = BaseVehicle
 	[
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/jeep_test.txt"

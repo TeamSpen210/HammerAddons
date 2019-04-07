@@ -598,15 +598,16 @@ def action_export(
 
         # Copy all helpers from bases.
         # If any are sprite/model, don't add SIZE ones.
+        # But ignore if they have no args - when the keyvalue
+        # is empty you'll see the size value.
         size_rep = [
             HelperTypes.MODEL,
             HelperTypes.MODEL_NEG_PITCH,
             HelperTypes.MODEL_PROP,
             HelperTypes.SPRITE,
-            HelperTypes.ENT_SPRITE
         ]
         allow_size = all(
-            typ not in size_rep
+            typ not in size_rep or not args
             for typ, args in
             ent.helpers
         )
