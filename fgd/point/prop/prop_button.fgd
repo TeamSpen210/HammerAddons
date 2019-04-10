@@ -1,7 +1,8 @@
 
 @PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePedButton) 
 	appliesto(P2) 
-	studioprop() = prop_button: "A button which is activated by player use or by game inputs. While pressed it can play a tick-tock sound to indicate limited time."
+	studioprop("models/props/switch001.mdl") 
+= prop_button: "A button which is activated by player use or by game inputs. While pressed it can play a tick-tock sound to indicate limited time."
 	[
 	skin[engine](integer) : "Skin" : 0 : "Should it appear dirty or clean?"
 	skin(choices) : "Skin" : "0" : "Should it appear dirty or clean?" =
@@ -9,12 +10,4 @@
 		0: "Clean"
 		1: "Dirty"
 		]
-
-	model[engine](studio) : "Model" : "models/props/switch001.mdl"
-	model(choices) : "[H] Model" : "models/props/switch001.mdl" : "What model to show as inside Hammer." =
-		[
-		"models/props/switch001.mdl": "Portal 2 Model"
-		"models/props_ingame/p1_switch.mdl": "Portal 1 Model"
-		]
-
 	]
