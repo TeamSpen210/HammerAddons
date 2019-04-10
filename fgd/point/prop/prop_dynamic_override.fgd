@@ -1,5 +1,4 @@
 @PointClass base(prop_dynamic_base, EnableDisable)
-	studioprop() 
 = prop_dynamic_override: "A prop that can be placed in hierarchy and can play animations. It can also be configured to break when it takes enough damage. \n" + 
 	"prop_dynamic_override is a prototyping entity only. It will allow the use of models designed to be used as prop_physics."
 	[

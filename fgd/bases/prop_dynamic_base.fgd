@@ -5,6 +5,10 @@
 	RenderFields, SystemLevelChoice, Shadow, 
 	CompMinLight
 ) 
+	size(-4 -4 -4, 4 4 4)
+	studioprop()
+	sphere(fademindist) 
+	sphere(fademaxdist) 
 = prop_dynamic_base
 	[
 	solid[engine](integer) : "Collisions" : 6
