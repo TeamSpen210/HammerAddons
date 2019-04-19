@@ -57,6 +57,7 @@ def entity_finder(ctx: Context):
         except KeyError:
             found_ent = None
             cur_dist = float('inf')
+            targ_ent = None
             for targ_ent in ctx.vmf.by_class[targ_class]:
                 dist_to = (Vec.from_str(targ_ent['origin']) - targ_pos).mag()
                 if targ_radius == 0 or dist_to < targ_radius:
