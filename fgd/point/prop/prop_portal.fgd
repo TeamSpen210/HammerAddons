@@ -1,7 +1,7 @@
 
 @PointClass base(Targetname, Angles, PortalBase) 
 	appliesto(P1, P2) 
-	studio("models/editor/prop_portal.mdl") 
+	studioprop("models/editor/prop_portal.mdl") 
 	bbox(-32, -16, -64, 32, 16, 64) = prop_portal: "A portal."
 	[
 	activated[engine](boolean) : "Start Activated" : 1
