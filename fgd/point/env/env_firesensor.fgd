@@ -1,8 +1,7 @@
 @PointClass base(Targetname, Parentname)
-	size(-4 -4 -4, 4 4 4) 
-	color(255 255 0) 
 	sphere(fireradius) 
 	color(200 200 0) 
+	iconsprite("editor/ficool2/env_firesensor.vmt")
 = env_firesensor: "An entity that detects changes in heat nearby."
 	[
 	spawnflags(flags) =

@@ -1,8 +1,7 @@
-@PointClass base(Targetname) 
-	size(-4 -4 -4, 4 4 4) 
-	color(0 180 0) 
+@PointClass base(Targetname)
 	color(200 200 0) 
 	line(255 128 0, targetname, target) 
+	iconsprite("editor/ficool2/env_entity_igniter.vmt")
 = env_entity_igniter: "An entity that catches a target entity on fire. If the entity is an animating model, it will have sprite flames attached to its skeleton. Otherwise the entity will emit particle flame puffs."
 	[
 	target(target_destination) : "Entity to ignite" : : "Name of the entity to catch on fire."

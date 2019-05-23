@@ -1,8 +1,8 @@
-
-@FilterClass base(BaseFilter) 
+@FilterClass base(filter_base) 
 	appliesto(TF2) 
-	iconsprite("editor/filter_class.vmt") 
-= filter_tf_class: "A filter that filters by the class of the activator.  The team number to filter by. If the filter mode is Allow, only entities whose class matches the given class will pass the filter. If the filter mode is Disallow, all entities EXCEPT those whose class matches the given class will pass the filter."
+	iconsprite("editor/ficool2/filter_tf_class.vmt") 
+= filter_tf_class: "A filter that filters by the class of the activator. " +
+"If the filter mode is Allow, only entities whose class matches the given class will pass the filter. If the filter mode is Disallow, all entities EXCEPT those whose class matches the given class will pass the filter."
 	[
 	tfclass(choices) : "Class" : "0" : "Class" =
 		[

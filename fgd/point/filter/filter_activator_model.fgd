@@ -1,8 +1,6 @@
-
-@FilterClass base(BaseFilter) 
+@FilterClass base(filter_base) 
 	appliesto(since_ASW) 
-	iconsprite("editor/filter_model.vmt") 
-	iconsprite("editor/filter_name.vmt") 
+	iconsprite("editor/filter_model.vmt")
 = filter_activator_model: "A filter that filters by the model of the activator."
 	[
 	model(studio) : "Filter Model" : : "The model to filter by. " +

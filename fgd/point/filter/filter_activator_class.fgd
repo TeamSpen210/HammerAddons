@@ -1,4 +1,4 @@
-@FilterClass base(BaseFilter)
+@FilterClass base(filter_base)
 	iconsprite("editor/filter_class.vmt")
 = filter_activator_class: "A filter that filters by the class name of the activator."
 	[

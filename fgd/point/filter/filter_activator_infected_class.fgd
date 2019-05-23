@@ -1,5 +1,4 @@
-
-@FilterClass base(BaseFilter) 
+@FilterClass base(filter_base) 
 	appliesto(L4D) 
 	iconsprite("editor/filter_team.vmt") 
 = filter_activator_infected_class: "A filter that filters by the activator's infected class."

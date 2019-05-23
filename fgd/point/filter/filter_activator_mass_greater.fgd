@@ -1,5 +1,4 @@
-
-@FilterClass base(BaseFilter) 
+@FilterClass base(filter_base) 
 	iconsprite("editor/filter_mass.vmt")
 = filter_activator_mass_greater: "A filter that filters by the mass of the activator."
 	[

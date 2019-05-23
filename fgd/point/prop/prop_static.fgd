@@ -1,13 +1,12 @@
 @PointClass base(Angles, DXLevelChoice, SystemLevelChoice, Reflection, Shadow) 
-	line(255 255 255, targetname, lightingorigin)
-	color(255 255 0) 
-	size(-2 -2 -2, 2 2 2)
+	// line() breaks the studioprop() default box.
+	color(255 255 0)
 	sphere(fademindist) 
 	sphere(fademaxdist) 
 	studioprop() 
 = prop_static: "A prop that doesn't move and doesn't animate."
 	[
-	model(studio) : "World Model"
+	model(studio) : "World Model" : : "Specify the model to place."
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
 	
 	solid[engine](integer) : "Collisions" : 6

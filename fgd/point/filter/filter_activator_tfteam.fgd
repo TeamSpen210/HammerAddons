@@ -1,5 +1,4 @@
-
-@FilterClass base(TeamNum, BaseFilter) 
+@FilterClass base(TeamNum, filter_base) 
 	appliesto(TF2) 
 	iconsprite("editor/filter_team.vmt")
 	line(0 255 0, targetname, controlpoint)

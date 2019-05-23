@@ -1,7 +1,6 @@
-
 @PointClass 
-	size(-4 -4 -4, 4 4 4) 
 	halfgridsnap
+	iconsprite("editor/ficool2/info_mass_center.vmt")
 	color(128 128 128) 
 	line(128 128 128, targetname, target) 
 = info_mass_center: "An entity that overrides the mass center of the target physics prop, or func_physbox, by moving it to the info_mass_center's location."

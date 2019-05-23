@@ -1,9 +1,8 @@
-
 @PointClass base(Targetname) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
-	iconsprite("editor/env_particles.vmt") 
+	iconsprite("editor/env_entity_dissolver.vmt") 
 	line(255 255 255, targetname, target) 
-= env_entity_dissolver: "Entity Dissolver|||Fizzles the target entity."
+= env_entity_dissolver: "Dissolves the target entity when triggered. Only works on model entities. In Portal 2, this uses the Fizzler effects."
 	[
 	target(target_destination) : "Target to Dissolve" : : "Targetname of the entity you want to dissolve."
 	magnitude(integer) : "Magnitude" : 250 : "How strongly to push away from the center."

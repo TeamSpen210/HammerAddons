@@ -1,6 +1,8 @@
-
-@FilterClass base(TeamNum, BaseFilter) 
+@FilterClass base(TeamNum, filter_base) 
 	appliesto(TF2) 
-	iconsprite("editor/filter_team.vmt") = filter_tf_player_can_cap: "A filter that filters players that are allowed to capture objectives.If the filter mode is Allow, only entities whose team number matches the given team andare not disguised, stealthed or invuln will pass the filter.If the filter mode is Disallow, all entities EXCEPT those players will be allowed."
+	iconsprite("editor/ficool2/filter_tf_player_can_cap.vmt") 
+= filter_tf_player_can_cap: "A filter that filters players that are allowed to capture objectives. " +
+"If the filter mode is Allow, only entities whose team number matches the given team and are not disguised, stealthed or invuln will pass the filter. " +
+"If the filter mode is Disallow, all entities EXCEPT those players will be allowed."
 	[
 	]

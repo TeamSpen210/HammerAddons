@@ -1,5 +1,4 @@
-
-@FilterClass base(BaseFilter) 
+@FilterClass base(filter_base) 
 	appliesto(P2) 
 	iconsprite("editor/filter_held.vmt") 
 = filter_player_held: "A filter that only accepts objects held by the player."

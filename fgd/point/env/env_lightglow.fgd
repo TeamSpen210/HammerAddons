@@ -1,8 +1,7 @@
 @PointClass base(Parentname, Targetname, Angles) 
 	color(255 128 0) 
 	studio("models/editor/axis_helper_thick.mdl") 
-	color(200 200 0) 
-	iconsprite("editor/light.vmt") 
+	iconsprite("editor/ficool2/env_lightglow.vmt") 
 	sphere(minDist) 
 	sphere(maxDist) 
 	sphere(outerMaxDist) 
@@ -31,7 +30,6 @@
 		[
 		1: "Visible only from front" : 0
 		]
-
 
 	// Inputs
 	input Color(color255) : "Change the render color of the glow. Format: <Red 0-255> <Green 0-255> <Blue 0-255>"

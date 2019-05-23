@@ -1,5 +1,5 @@
-@FilterClass base(BaseFilter)
-	iconsprite("editor/filter_class.vmt") 
+@FilterClass base(filter_base)
+	iconsprite("editor/ficool2/filter_enemy.vmt") 
 	sphere(filter_radius) 
 	sphere(filter_outer_radius) 
 	line(0 255 0, targetname, filtername) 

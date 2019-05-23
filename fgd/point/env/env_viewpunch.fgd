@@ -1,7 +1,6 @@
-
 @PointClass base(Targetname, Parentname) 
 	sphere() 
-	size(-4 -4 -4, 4 4 4) 
+	iconsprite("editor/ficool/env_viewpunch.vmt")
 	color(200 200 0) 
 = env_viewpunch: "Causes a view punch on players."
 	[

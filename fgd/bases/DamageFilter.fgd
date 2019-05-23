@@ -1,6 +1,4 @@
-
-@BaseClass 
-line(255 0 0, targetname, damagefilter) = DamageFilter
+@BaseClass = DamageFilter
 	[
 	damagefilter(target_destination) : "Damage Filter" : : "Name of the filter entity that controls which entities can damage us."
 

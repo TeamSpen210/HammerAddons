@@ -1,5 +1,5 @@
 @PointClass base(Targetname, Parentname, RenderFxChoices)
-	size(-4 -4 -4, 4 4 4) 
+	iconsprite("editor/ficool2/env_laser.vmt")
 	line(255 255 255, targetname, LaserTarget) 
 	color(200 200 0) 
 = env_laser: "An entity that creates a laser beam between itself and a given target."

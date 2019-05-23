@@ -1,6 +1,4 @@
-
-@FilterClass base(BaseFilter) 
-	appliesto(CSGO) 
+@FilterClass base(filter_base)
 	size(-8 -8 -8, 8 8 8) 
 = filter_activator_team: "A filter that filters by the team of the activator."
 	[

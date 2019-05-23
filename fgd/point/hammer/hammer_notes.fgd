@@ -8,7 +8,7 @@
 	worldtext()
 = hammer_notes: "Fake entity to store notes and comments inside. Won`t spawn."
 	[
-	message(string) : "Display Message" : "Text to display in the 3D view."
+	message(string) : "Display Message" : : "Text to display in the 3D view."
 	textsize(float) : "Text Size" : 10 : "Text Size."
 	color(color255) : "Color" : "255 255 255"
 	

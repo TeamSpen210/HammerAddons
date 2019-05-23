@@ -1,4 +1,4 @@
-@FilterClass base(BaseFilter)
+@FilterClass base(filter_base)
 	iconsprite("editor/filter_multiple.vmt") 
 	line(0 255 0, targetname, filter01) 
 	line(0 255 0, targetname, filter02) 

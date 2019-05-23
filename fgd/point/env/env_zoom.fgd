@@ -1,5 +1,6 @@
 @PointClass base(Targetname)
 	color(200 0 0)
+	iconsprite("editor/ficool2/env_zoom.vmt")
 = env_zoom: "An entity that can be used to control the player's FOV. " +
 	"Useful for scenes where the player's view is being controlled, " +
 	"or player-usable binoculars/telescopes, etc."
