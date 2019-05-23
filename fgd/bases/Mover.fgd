@@ -1,7 +1,6 @@
-
 @BaseClass = Mover
 	[
-	positioninterpolator(choices) : "Position Interpolator" : "0" =
+	positioninterpolator(choices) : "Position Interpolator" : 0 =
 		[
 		0: "Linear"
 		1: "Catmull-Rom Spline"

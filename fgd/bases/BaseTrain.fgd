@@ -1,9 +1,8 @@
-
 @BaseClass base(Targetname, Parentname, Origin, RenderFields, Global, Shadow, Reflection, compMinLight) 
 	line(255 255 0, targetname, target) 
 = BaseTrain
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags) =
 		[
 		1: "No Pitch (X-rot)" : 0
 		2: "No User Control" : 0
@@ -12,20 +11,20 @@
 		128: "HL1 Train" : 0
 		256: "Use max speed for pitch shifting move sound" : 0
 		512: "Is unblockable by player" : 0
-		1024: "Allow Roll (Z-rot)" : 0 [P2]
+		1024: "Allow Roll (Z-rot)" : 0 [since_P2]
 		]
 
 	target(target_destination) : "Spawn path_track" : : "The name of the first path_track in the train's path. The train will spawn at this path_track. It will also turn to face direction indicated by the 'Orientation Type' setting."
 	startspeed(integer) : "Max Speed (units / second)" : 100 : "The maximum speed that this train can move. Any speeds applied to this train, such as by path_tracks or SetSpeed inputs, will be clipped to this maximum value."
 	speed(integer) : "Initial Speed (units / second)" : 0 : "The speed that the train will move at after it spawns, 0 = stopped."
-	velocitytype(choices) : "Change Velocity" : "0" : "The method through which this train changes its velocity as it moves along the path." =
+	velocitytype(choices) : "Change Velocity" : 0 : "The method through which this train changes its velocity as it moves along the path." =
 		[
 		0: "Instantaneously"
 		1: "Linear blend"
 		2: "Ease in/ease out"
 		]
 
-	orientationtype(choices) : "Change angles" : "1" : "The method through which this train changes its orientation as it moves along the path." =
+	orientationtype(choices) : "Change angles" : 1 : "The method through which this train changes its orientation as it moves along the path." =
 		[
 		0: "Never (fixed orientation)"
 		1: "Near path_tracks"
@@ -35,7 +34,7 @@
 
 	wheels(integer) : "Distance Between the Wheels" : 50 : "Used for turning and stopping."
 	height(integer) : "Height above track" : 4 : "The height above the track that this train moves."
-	bank(string) : "Bank Angle on Turns" : "0"
+	bank(string) : "Bank Angle on Turns" : 0
 	dmg(integer) : "Damage on Crush" : 0 : "The amount of damage this train does to entities that block it."
 	_minlight[!P2](string) : "Minimum Light Level" : : "The minimum level of ambient light that hits this brush."
 	movesound(sound) : "Move Sound" : : "A sound that is played (and looped) while the train is moving."
@@ -44,9 +43,10 @@
 	stopsound(sound) : "Stop Sound" : : "A sound played when the train stops moving."
 	volume(integer) : "Volume (10 = loudest)" : 10
 	movesoundminpitch(integer) : "Min pitch (1-255, > 100 = higher)" : 60 : "The sound pitch value that the train will approach as it comes to a stop."
-	movesoundmaxpitch(integer) : "Max pitch (1-255, > 100 = higher)" : 200 : "The sound pitch value that the train will approach as it approaches its max speed (or 1000 inches/second if the 'Use max speed for pitch shifting move sound' flag is not set)."
-	movesoundmintime(float) : "Min ping sound interval" : 0 : "Minimum interval at which to play the move ping sound."
-	movesoundmaxtime(float) : "Max ping sound interval" : 0 : "Maximum interval at which to play the move ping sound."
+	movesoundmaxpitch(integer) : "Max pitch (1-255, > 100 = higher)" : 200 : "The sound pitch value that the train will approach as it approaches its max speed " +
+		" or 1000 units/second if the 'Use max speed for pitch shifting move sound' flag is not set."
+	movesoundmintime(float) : "Min move sound interval" : 0 : "Minimum interval at which to play the move ping sound."
+	movesoundmaxtime(float) : "Max move sound interval" : 0 : "Maximum interval at which to play the move ping sound."
 
 	// Inputs
 	input SetSpeed(float) : "Set the speed of the train, as a ratio of max speed [0, 1]"

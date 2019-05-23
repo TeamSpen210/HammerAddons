@@ -1,5 +1,3 @@
-
-@SolidClass base(Targetname) 
-= trigger_serverragdoll: "A volume that forces any NPC inside it to create a server side ragdoll instead of a client one."
+@SolidClass base(Targetname) = trigger_serverragdoll: "A volume that forces any NPC inside it to create a server side ragdoll instead of a client one."
 	[
 	]

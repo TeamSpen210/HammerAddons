@@ -1,18 +1,15 @@
-
 @NpcClass base(Angles, Targetname) 
-	appliesto(L4D) 
-	studio() 
+	appliesto(L4D, L4D2)
+	studio()
 = commentary_dummy: "Commentary Dummy"
 	[
-	model(studio) : "Dummy Model" : "models/survivors/survivor_biker.mdl"
+	model[L4D](studio) : "Dummy Model" : "models/survivors/survivor_biker.mdl"
+	model[L4D2](studio) : "Dummy Model" : "models/survivors/survivor_coach.mdl"
+
 	eyeheight(integer) : "Eye Height" : 64 : "Eye height relative to origin. Only necessary when staring at players"
 	startinganim(string) : "Starting Animation" : "Idle_Calm_Pistol" : "The name of the starting animation that this dummy will play when it spawns."
 	startingweapons(string) : "Starting Weapons" : "weapon_pistol" : "The names of any weapons the dummy should have when it spawns. Separated by spaces, commas, or semicolons. Last specified weapon" + " will be equipped"
-	lookatplayers(choices) : "Stare at players" : "0" : "Set to true if you want the dummy to attempt to stare at players all the time." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	lookatplayers(boolean) : "Stare at players" : 0 : "Set to true if you want the dummy to attempt to stare at players all the time."
 
 	headyawposeparam(string) : "Head Yaw Pose Parameter" : "Head_Yaw" : "The name of the head yaw pose parameter. Only necessary when staring at players"
 	headpitchposeparam(string) : "Head Pitch Pose Parameter" : "Head_Pitch" : "The name of the head yaw pose parameter. Only necessary when staring at players"

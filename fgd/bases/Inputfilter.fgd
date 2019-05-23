@@ -1,4 +1,3 @@
-
 @BaseClass = Inputfilter
 	[
 	inputfilter[engine](integer) : "Input Filter" : 0

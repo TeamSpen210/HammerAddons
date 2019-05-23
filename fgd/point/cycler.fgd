@@ -1,8 +1,8 @@
-
 @PointClass base(Targetname, Parentname, Angles, RenderFxChoices, RenderFields) 
-	studio() = cycler: "An entity used to display a model for testing purposes. Shooting it with cycle through the model's animations."
+	studio()
+= cycler: "An entity used to display a model for testing purposes. Shooting it with cycle through the model's animations."
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Not Solid" : 0
 		]

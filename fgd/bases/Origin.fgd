@@ -1,4 +1,3 @@
-
 @BaseClass = Origin
 	[
 	origin(origin) : "Origin (X Y Z)" : : "The position of this entity's center in the world. Rotating entities typically rotate around their origin."

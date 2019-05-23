@@ -1,6 +1,5 @@
-
 @SolidClass base(Targetname, Parentname) 
-	appliesto(since_L4D) 
+	appliesto(since_L4D)
 = func_precipitation_blocker: "A brush entity that prevents rain and snow inside its volume."
 	[
 	]

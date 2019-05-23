@@ -1,4 +1,3 @@
-
 @BaseClass base(
 	Parentname, Global, Angles, Studiomodel, 
 	BreakableProp, DXLevelChoice, BaseFadeProp, 
@@ -6,11 +5,11 @@
 	CompMinLight
 )
 	studioprop()
-	sphere(fademindist) 
-	sphere(fademaxdist) 
+	sphere(fademindist)
+	sphere(fademaxdist)
 = prop_dynamic_base
 	[
-	solid[engine](integer) : "Collisions" : 6
+	solid[ENGINE](integer) : "Collisions" : 6
 	solid(choices) : "Collisions" : 6 =
 		[
 		0: "Not Solid"
@@ -18,7 +17,7 @@
 		6: "Use VPhysics"
 		]
 
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		64: "Use Hitboxes for Renderbox" : 0
 		256: "Start with collision disabled" : 0
@@ -28,13 +27,23 @@
 	randomanimation[since_ASW](boolean) : "Randomly Animate" : 0 : "If set, this prop will randomly choose and play animations, based upon the times specified in 'Min/Max Random Anim Time'. Inbetween the random animations, it will revert to playing the 'Default Animation'."
 	minanimtime(float) : "Min Random Anim Time" : 5 : "Minimum time between random animations."
 	maxanimtime(float) : "Max Random Anim Time" : 10 : "Maximum time between random animations."
+
 	setbodygroup(integer) : "Body Group" : 0 : "Body Groups allow turning on and off parts of a model, so sections can be shown or hidden dynamically."
 	disablebonefollowers[since_ASW](boolean) : "Disable Bone Followers" : 0 : "If set, the prop will not use bone followers, even if it has them defined."
+	
 	lightingorigin(target_destination) : "Lighting Origin" : : "Select a path_corner entity to specify a location to sample lighting from, instead of using this entity's origin."
+	
 	holdanimation[since_ASW](boolean) : "Hold Animation" : 0 : "If set, the prop will not loop its animation, but hold the last frame."
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
 	suppressanimsounds[since_P2](boolean) : "Suppress Anim Sounds" : 0 : "If set, the prop will not play any sounds that are embedded in animations it plays."
+
 	is_autoaim_target[since_CSGO](boolean) : "Is Autoaim Target" : 0 : "If set, this prop will use the autoaim feature on consoles (slower look movement when this prop is directly under the crosshair)."
+	lagcompensate[L4D2](boolean) : "Lag Compensation" : 0 : "Set to Yes to lag compensate this prop, should be use very sparingly!"
+	glowbackfacemult[L4D2](float) : "Glow backface Multiplier" : "1.0" : "What to multiply glow by on backfaces,"
+
+	updatechildren(boolean) : "Update children" : 0 : "Update touches for any children that are attached to attachment points as this prop animates. " +
+		"This allows SetParentAttached triggers or func_brushes to touch properly."
+
 
 	// Inputs
 	input SetAnimation(string) : "Force the prop to play an animation. The parameter should be the name of the animation."

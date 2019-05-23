@@ -1,4 +1,3 @@
-
 @BaseClass 
 	sphere(distmax)
 = BModelParticleSpawner

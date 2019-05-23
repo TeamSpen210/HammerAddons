@@ -1,6 +1,6 @@
 @PointClass base(Targetname, Angles, Parentname) 
-	appliesto(L4D) 
-	studio("models/infected/smoker.mdl") 
+	appliesto(L4D, L4D2)
+	studio("models/infected/smoker.mdl")
 = commentary_zombie_spawner: "Zombie Manual Spawning Point"
 	[
 

@@ -1,10 +1,8 @@
-
-@BaseClass base(Targetname, ResponseContext) 
-= BaseSpeaker
+@BaseClass base(Targetname, ResponseContext) = BaseSpeaker
 	[
-	delaymin(string) : "Min Delay Between Announcements" : "15"
-	delaymax(string) : "Max Delay Between Announcements" : "135"
-	spawnflags(flags) : "spawnflags" =
+	delaymin(string) : "Min Delay Between Announcements" : 15
+	delaymax(string) : "Max Delay Between Announcements" : 135
+	spawnflags(flags)  =
 		[
 		1: "Start Silent" : 0
 		2: "Play Everywhere" : 0

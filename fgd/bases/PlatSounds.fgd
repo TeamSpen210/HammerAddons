@@ -1,6 +1,6 @@
 @BaseClass = PlatSounds
 	[
-	movesnd(choices) : "Move Sound" : "0" : "The sound played whenever the platform starts moving." =
+	movesnd(choices) : "Move Sound" : 0 : "The sound played whenever the platform starts moving." =
 		[
 		0: "No Sound"
 		1: "big elev 1"
@@ -18,7 +18,7 @@
 		13: "odd elev 2"
 		]
 
-	stopsnd(choices) : "Stop Sound" : "0" : "The sound played when the platform stops moving." =
+	stopsnd(choices) : "Stop Sound" : 0 : "The sound played when the platform stops moving." =
 		[
 		0: "No Sound"
 		1: "big elev stop1"

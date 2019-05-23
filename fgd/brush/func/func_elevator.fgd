@@ -1,13 +1,12 @@
-
 @SolidClass base(Targetname, Parentname, Origin, RenderFields) 
-	appliesto(L4D, L4D2) 
+	appliesto(L4D, L4D2)
 = func_elevator: "A brush entity that moves vertically."
 	[
 	top(vecline) : "Top floor position"
 	bottom(vecline) : "Bottom floor position"
-	speed(integer) : "Speed" : 100 : "The speed that the elevator moves, in inches per second."
-	acceleration(integer) : "Acceleration" : 100 : "The acceleration at which the elevator approaches its target speed, in inches per second per second."
-	blockdamage(float) : "Block Damage" : "0" : "The amount of damage to do to any entity that blocks the elevator, per frame."
+	speed(integer) : "Speed" : 100 : "The speed that the elevator moves, in units per second."
+	acceleration(integer) : "Acceleration" : 100 : "The acceleration at which the elevator approaches its target speed, in units per second per second."
+	blockdamage(float) : "Block Damage" : 0 : "The amount of damage to do to any entity that blocks the elevator, per frame."
 	startsound(sound) : "Sound played when the elevator starts moving."
 	stopsound(sound) : "Sound played when the elevator stops moving."
 	disablesound(sound) : "Sound played when the elevator is disabled."
@@ -15,6 +14,7 @@
 	// Inputs
 	input MoveToFloor(string) : "Start the elevator moving to the specified floor."
 	input Disable(void) : "Stops the elevator and prevents it from moving again."
+	input SetMaxSpeed[L4D2](float) : "Set the max speed of the elevator."
 
 	// Outputs
 	output OnReachedTop(string) : "Fired when the brush reaches the top."

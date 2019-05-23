@@ -1,6 +1,5 @@
-
 @SolidClass base(Trigger) 
-	appliesto(L4D) 
+	appliesto(L4D, L4D2)
 = trigger_escape: "Indicates if there are Survivors in the volume who can escape the finale"
 	[
 

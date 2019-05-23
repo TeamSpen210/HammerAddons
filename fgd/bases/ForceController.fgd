@@ -1,9 +1,8 @@
-
 @BaseClass base(Targetname) 
 	line(128 128 128, targetname, attach1)
 = ForceController
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Start On" : 0
 		2: "Apply Force" : 1
@@ -13,7 +12,7 @@
 		]
 
 	attach1(target_destination) : "Attached Object" : : "Object to apply the force to."
-	forcetime(string) : "Time of Force (0=inf)" : "0" : "Automatic shut-off after this time has passed (0 = stay on forever or until deactivated)"
+	forcetime(string) : "Time of Force (0=inf)" : 0 : "Automatic shut-off after this time has passed (0 = stay on forever or until deactivated)"
 
 	// Inputs
 	input Activate(void) : "Turn the force on"

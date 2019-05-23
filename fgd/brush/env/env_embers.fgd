@@ -1,5 +1,5 @@
-@SolidClass base(Targetname, Parentname, Angles)
-	color(200 200 0) 
+@SolidClass base(Targetname, Parentname, Angles) 
+	color(200 200 0)
 = env_embers: "An entity used to create a volume in which to spawn fire embers."
 	[
 	particletype[engine](integer) : "Ember type" : 0

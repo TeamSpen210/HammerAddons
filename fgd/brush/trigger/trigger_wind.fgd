@@ -1,6 +1,6 @@
-
 @SolidClass base(Trigger, Angles) 
-	line(255 255 255, targetname, filtername) = trigger_wind: "A trigger volume that pushes physics objects that touch it."
+	line(255 255 255, targetname, filtername)
+= trigger_wind: "A trigger volume that pushes physics objects that touch it."
 	[
 	speed(integer) : "Speed" : 200 : "The baseline for how hard the wind blows."
 	speednoise(integer) : "Speed Noise" : 0 : "Noise added to wind speed +/-"

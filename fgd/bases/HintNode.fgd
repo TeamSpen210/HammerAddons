@@ -15,48 +15,13 @@
 		14: "World: Visually Interesting (Don't aim at)"
 		15: "World: Inhibit Combine Mines within 15 feet"
 		16: "World: Visually Interesting (Stealth mode)"
-		100: "Crouch Cover Medium"
-		101: "Crouch Cover Low"
-		102: "Waste Scanner Spawn"
-		103: "Entrance / Exit Pinch"
-		105: "Enemy Disadvantage Point"
-		106: "Health Kit"
-		400: "Antlion: Burrow Point"
-		401: "Antlion: Thumper Flee Point"
-		450: "Headcrab: Burrow Point"
-		451: "Headcrab: Exit Pod Point"
-		500: "Roller: Patrol Point"
-		501: "Roller: Cleanup Spot"
-		700: "Crow: Fly to point"
-		701: "Crow: Perch point"
-		900: "Follower: Wait point"
-		901: "Override jump permission"
-		902: "Player squad transition point"
-		903: "NPC exit point"
-		904: "Strider node"
-		950: "Player Ally: Push away destination"
-		951: "PLayer Ally: Fear withdrawal destination"
-		1000: "HL1 World: Machinery"
-		1001: "HL1 World: Blinking Light"
-		1002: "HL1 World: Human Blood"
-		1003: "HL1 World: Alien Blood"
-		]
-
-	hinttype[ASW](choices) : "Hint" : "0" =
-		[
-		0: "None"
-		17: "Generic"
-		2: "World: Window"
-		12: "World: Act Busy Hint"
-		13: "World: Visually Interesting"
-		14: "World: Visually Interesting (Don't aim at)"
-		15: "World: Inhibit Combine Mines within 15 feet"
-		16: "World: Visually Interesting (Stealth mode)"
 		100: "Tactical: Crouch Cover Medium"
 		101: "Tactical: Crouch Cover Low"
+		102: "Waste Scanner Spawn" [HL2, EP1, EP2]
 		103: "Tactical: Entrance / Exit Pinch"
 		105: "Tactical: Enemy Disadvantage Point"
-		107: "Tactical: High Ground"
+		106: "Tactical: Health Kit" [HL2, EP1, EP2]
+		107: "Tactical: High Ground" [L4D2]
 		400: "Antlion: Burrow Point"
 		401: "Antlion: Thumper Flee Point"
 		450: "Headcrab: Burrow Point"
@@ -76,49 +41,14 @@
 		1001: "HL1 World: Blinking Light"
 		1002: "HL1 World: Human Blood"
 		1003: "HL1 World: Alien Blood"
-		1200: "Ep3 Blob Shake Position"
-		1201: "Ep3 Blob Fire Cover Position"
-		1202: "Ep3 Blob Brain Cover Position"
-		1203: "Ep3 Blob Brain Regenerate Position"
-		1204: "Ep3 Blob Spit Position"
-		1205: "Ep3 Blob Spawn Regenerator Position"
+
+		1200: "Ep3 Blob Shake Position" [ASW]
+		1201: "Ep3 Blob Fire Cover Position" [ASW]
+		1202: "Ep3 Blob Brain Cover Position" [ASW]
+		1203: "Ep3 Blob Brain Regenerate Position" [ASW]
+		1204: "Ep3 Blob Spit Position" [ASW]
+		1205: "Ep3 Blob Spawn Regenerator Position" [ASW]
 		1300: "Aperture: Nest"
-		]
-
-	hinttype[P2](choices) : "Hint" : "0" =
-		[
-		0: "None"
-		17: "Generic"
-		2: "World: Window"
-		12: "World: Act Busy Hint"
-		13: "World: Visually Interesting"
-		14: "World: Visually Interesting (Don't aim at)"
-		15: "World: Inhibit Combine Mines within 15 feet"
-		16: "World: Visually Interesting (Stealth mode)"
-		100: "Tactical: Crouch Cover Medium"
-		101: "Tactical: Crouch Cover Low"
-		103: "Tactical: Entrance / Exit Pinch"
-		105: "Tactical: Enemy Disadvantage Point"
-		107: "Tactical: High Ground"
-		400: "Antlion: Burrow Point"
-		401: "Antlion: Thumper Flee Point"
-		450: "Headcrab: Burrow Point"
-		451: "Headcrab: Exit Pod Point"
-		500: "Roller: Patrol Point"
-		501: "Roller: Cleanup Spot"
-		700: "Crow: Fly to point"
-		701: "Crow: Perch point"
-		900: "Follower: Wait point"
-		901: "Override jump permission"
-		902: "Player squad transition point"
-		903: "NPC exit point"
-		904: "Strider node"
-		950: "Player Ally: Push away destination"
-		951: "PLayer Ally: Fear withdrawal destination"
-		1000: "HL1 World: Machinery"
-		1001: "HL1 World: Blinking Light"
-		1002: "HL1 World: Human Blood"
-		1003: "HL1 World: Alien Blood"
 		]
 
 	hintactivity(string) : "Hint Activity" : : "Activity associated with this hint node. " +
@@ -141,7 +71,7 @@
 	targetnode(node_dest) : "Target node" : -1 : "The node ID of an associated target node, if any."
 
 	ignorefacing[engine](integer) : "Ignore Facing" : 2
-	ignorefacing(choices) : "Ignore Facing" : "2" : "Don't pay attention to the facing of the node. May not apply to a given hint type." =
+	ignorefacing(choices) : "Ignore Facing" : 2 : "Don't pay attention to the facing of the node. May not apply to a given hint type." =
 		[
 		0: "No"
 		1: "Yes"
@@ -149,7 +79,7 @@
 		]
 
 	minimumstate[engine](integer) : "Minimum State" : 1
-	minimumstate(choices) : "Minimum State" : "1" : "Require an NPC have a minimum state to use the hint." =
+	minimumstate(choices) : "Minimum State" : 1 : "Require an NPC have a minimum state to use the hint." =
 		[
 		1: "Idle"
 		2: "Alert"
@@ -157,7 +87,7 @@
 		]
 
 	maximumstate[engine](integer) : "Maximum State" : 3
-	maximumstate(choices) : "Maximum State" : "3" : "Require an NPC have a maximum state to use the hint." =
+	maximumstate(choices) : "Maximum State" : 3 : "Require an NPC have a maximum state to use the hint." =
 		[
 		1: "Idle"
 		2: "Alert"

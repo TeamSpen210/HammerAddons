@@ -1,12 +1,11 @@
-
 @BaseClass base(Targetname, Parentname, RenderFields, Global, PlatSounds) 
-	line(255 255 255, targetname, train) 
+	line(255 255 255, targetname, train)
 	line(0 255 0, targetname, toptrack)
 	line(0 0 255, targetname, bottomtrack)
 = Trackchange
 	[
 	height(integer) : "Travel Altitude" : 0 : "The vertical height above the track that the train moves. Negative values moves the train below."
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Auto Activate train" : 0
 		2: "Relink track" : 0

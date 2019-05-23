@@ -1,5 +1,5 @@
-@SolidClass base(BaseTrain, PaintableBrush)
-	line(255 255 255, targetname, target) 
+@SolidClass base(BaseTrain, PaintableBrush) 
+	line(255 255 255, targetname, target)
 = func_tracktrain: "A moving platform that the player can ride. It follows a path of path_track entities.\n" +
 	"NOTE: Build your train so that the front of the train is facing down the X axis. " +
 	"When it spawns it will automatically rotate to face the next path_track on the path."
@@ -11,10 +11,11 @@
 
 	// Inputs
 	input SetSpeedDirAccel[until_L4D](float) : "Accel/Decel to the specified speed, as a ratio of max speed. Negative values reverse the direction [-1, 1]"
+	// Todo - when did this get renamed??
 	input TeleportToPathTrack[until_L4D](string) : "Teleport train to the designated path track. This can be in a new path."
-	input TeleportToPathNode[!TF2, !ASW](string) : "Teleport to a destination and stop there. This can be in a new path."
-	input SetSpeedForwardModifier[!ASW](float) : "Applies the given modifier to all forward speeds. [0, 1]"
-	input MoveToPathNode(string) : "Start moving to a destination and stop when you get there. This must be in the same path."
+	input TeleportToPathNode[since_L4D](string) : "Teleport to a destination and stop there. This can be in a new path."
+	input SetSpeedForwardModifier[!ASW, !L4D2](float) : "Applies the given modifier to all forward speeds. [0, 1]"
+	input MoveToPathNode[!L4D2](string) : "Start moving to a destination and stop when you get there. This must be in the same path."
 	input LockOrientation[P2](void) : "Lock the current orientation of the train."
 	input UnlockOrientation[P2](void) : "Unlock the current orientation of the train."
 	input SetMaxSpeed[P2](float) : "Set a new max speed for the train."
@@ -23,5 +24,5 @@
 	output OnStart(void) : "Fired when the train starts moving in either direction."
 	output OnNextPoint(string) : "Fires continuously every frame when the train is moving to its next destination."
 	output OnArrivedAtDestinationNode[P2](void) : "Fired when this train arrives at a destination that was specified by the MoveToPathNode Input."
+	output OnNext[L4D2](string) : "Fires when this train picks a new point to move towards (and just after OnStart)."
 	]
-

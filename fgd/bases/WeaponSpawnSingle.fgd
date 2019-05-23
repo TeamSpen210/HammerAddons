@@ -1,11 +1,10 @@
-
 @BaseClass base(Parentname, Global, Targetname, Angles, Studiomodel) 
-	appliesto(L4D) 
-	color(0 0 200) 
+	appliesto(L4D, L4D2)
+	color(0 0 200)
 = WeaponSpawnSingle
 	[
-	solid[engine](integer) : "Collisions" : "6"
-	solid(choices) : "Collisions" : "6" =
+	solid[engine](integer) : "Collisions" : 6
+	solid(choices) : "Collisions" : 6 =
 		[
 		0: "Not Solid"
 		2: "Use Bounding Box"
@@ -16,9 +15,10 @@
 		[
 		1: "Enable Physics" : 0
 		2: "Must Exist" : 0
+		8: "Infinite items (overrides count)" : 0 [L4D2]
 		]
 
 
 	// Outputs
-	output OnItemSpawn(void) : "Fired if this object is spawned on the map. If the weapon is removed during the weapon spawn pass, this will not fire."
+	output OnItemSpawn[L4D1](void) : "Fired if this object is spawned on the map. If the weapon is removed during the weapon spawn pass, this will not fire."
 	]

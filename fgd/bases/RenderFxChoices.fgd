@@ -1,27 +1,36 @@
 @BaseClass = RenderFxChoices
 	[
+	// See src/public/const.h for the enum list.
 	renderfx[engine](integer) : "Render FX" : 0
-	renderfx(choices) : "Render FX" : "0" =
+	renderfx(choices) : "Render FX" : 0 : "Various somewhat legacy alpha effects. Material Proxies are more modern." =
 		[
 		0: "Normal"
 		1: "Slow Pulse"
 		2: "Fast Pulse"
 		3: "Slow Wide Pulse"
 		4: "Fast Wide Pulse"
+
 		9: "Slow Strobe"
 		10: "Fast Strobe"
 		11: "Faster Strobe"
 		12: "Slow Flicker"
 		13: "Fast Flicker"
+
 		5: "Slow Fade Away"
 		6: "Fast Fade Away"
 		7: "Slow Become Solid"
 		8: "Fast Become Solid"
+
 		14: "Constant Glow"
-		15: "Distort" [!L4D]
-		16: "Hologram (Distort + fade)" [!L4D]
-		23: "Cull By Distance (TEST)" [!L4D]
-		24: "Spotlight FX" [!L4D]
-		26: "Fade Near" [!L4D]
+		15: "Distort" [until_L4D]
+		16: "Hologram (Distort + fade)" [until_L4D]
+		23: "Cull By Distance (TEST)" [until_L4D]
+		24: "Spotlight FX" [until_L4D]
+		26: "Fade Near" [until_L4D]
+
+		15: "Fade Out" [since_L4D]
+		16: "Fade In" [since_L4D]
+		17: "Pulse Fast Wider" [since_L4D]
+		18: "Glow Shell" [since_L4D]
 		]
 	]

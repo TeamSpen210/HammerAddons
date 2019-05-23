@@ -1,11 +1,11 @@
-
 @SolidClass base(Targetname, Parentname) 
-	color(200 200 0) = env_bubbles: "An entity used to create a volume in which to spawn bubbles."
+	color(200 200 0)
+= env_bubbles: "An entity used to create a volume in which to spawn bubbles."
 	[
 	density(integer) : "Bubble density" : 2
 	frequency(integer) : "Bubble frequency" : 2
 	current(integer) : "Speed of Current" : 0 : "The speed of the water current in the volume, used to move the bubbles."
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Start Off" : 0
 		]

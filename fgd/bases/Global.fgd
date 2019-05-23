@@ -1,4 +1,3 @@
-
 @BaseClass = Global
 	[
 	globalname(string) : "Global Entity Name" : : "Name by which this entity is linked to another entity in a different map. " +

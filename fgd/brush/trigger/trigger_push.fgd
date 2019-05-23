@@ -1,5 +1,5 @@
-@SolidClass base(Trigger)
-	line(255 255 255, targetname, filtername) 
+@SolidClass base(Trigger) 
+	line(255 255 255, targetname, filtername)
 = trigger_push: "A trigger volume that pushes entities that touch it."
 	[
 	pushdir(angle) : "Push Direction (Pitch Yaw Roll)" : "0 0 0" : "Angles indicating the direction to push touched entities."
@@ -10,9 +10,10 @@
 		]
 
 	speed(integer) : "Speed of Push" : 40 : "The speed at which to push entities away, in inches / second."
-	alternateticksfix(float) : "Scale force for alternate ticks" : 0 : "If nonzero, scale the force by this amount when running with alternate ticks. " +
-		"This fixes problems with an overly large force due to the longer frametime on when running with sv_alternateticks 1."
+	alternateticksfix(float) : "Scale force for alternate ticks" : 0 : "If nonzero, scale the force by this amount when running with alternate ticks. This fixes problems with an overly large force due" + " to the longer frametime on when running with sv_alternateticks 1."
+	triggeronstarttouch[L4D2](boolean) : "Trigger on Start Touch" : 0 : "Trigger on start touch instead of on touch."
 
 	// Inputs
 	input SetPushDirection[ASW](vector) : "Sets the angles indicating the direction to push touched entities."
+	input SetPushSpeed(integer) : "Set the push speed in inches / second."
 	]

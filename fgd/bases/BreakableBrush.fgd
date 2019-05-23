@@ -1,5 +1,4 @@
-@BaseClass base(Breakable, Parentname, Global)
-= BreakableBrush
+@BaseClass base(Breakable, Parentname, Global) = BreakableBrush
 	[
 	spawnflags(flags)  =
 		[
@@ -41,12 +40,12 @@
 		22: "Pottery.Large"
 		23: "Pottery.Huge"
 		24: "Glass.Window"
-		25: "Wooden.Medium.NoStand" [L4D]
+		25: "Wooden.Medium.NoStand" [since_L4D]
 		]
 
 	health(integer) : "Strength" : 1 : "Number of points of damage to take before breaking. 0 means don't break."
 	material[ENGINE](integer) : "Material Type" : 0 : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken."
-	material(choices) : "Material Type" : "0" : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken." =
+	material(choices) : "Material Type" : 0 : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken." =
 		[
 		0: "Glass"
 		1: "Wood"
@@ -76,7 +75,7 @@
 	gibmodel(studio) : "Gib Model" : : "Used by HL1Port to specify a custom gib model to break into, overriding the 'Material Type'."
 	gibmodel[L4D](string) : "Gib Model" : : "Used by HL1Port to specify a custom gib model to break into, overriding the 'Material Type'."
 	spawnobject[ENGINE](integer) : "Spawn On Break" : 0 : "When broken, an entity of the selected type will be created."
-	spawnobject[EP2, HL2, P1, EP1](choices) : "Spawn On Break" : 0 : "When broken, an entity of the selected type will be created." =
+	spawnobject[EP1, EP2, P1, HL2](choices) : "Spawn On Break" : 0 : "When broken, an entity of the selected type will be created." =
 		[
 		1: "item_battery"
 		2: "item_healthkit"
