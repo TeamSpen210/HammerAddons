@@ -149,6 +149,17 @@ def _polyfill_bool_io(fgd: FGD):
                     iodef.type = ValueTypes.INT
 
 
+@_polyfill('until_csgo')
+def _polyfill_worltext(fgd: FGD):
+    """Strip worldtext(), since this is not available."""
+    for ent in fgd:
+        ent.helpers[:] = [
+            helper
+            for helper in ent.helpers
+            if helper[0] is not HelperTypes.ENT_WORLDTEXT
+        ]
+
+
 def format_all_tags() -> str:
     """Append a formatted description of all allowed tags to a message."""
     
