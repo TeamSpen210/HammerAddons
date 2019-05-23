@@ -600,24 +600,49 @@ def action_export(
         # If any are sprite/model, don't add SIZE ones.
         # But ignore if they have no args - when the keyvalue
         # is empty you'll see the size value.
-        size_rep = [
+        model_helpers = [
             HelperTypes.MODEL,
             HelperTypes.MODEL_NEG_PITCH,
             HelperTypes.MODEL_PROP,
-            HelperTypes.SPRITE,
         ]
+        sprite_helpers = [
+            HelperTypes.SPRITE,
+            HelperTypes.ENT_SPRITE,
+        ]
+        size_overrides = model_helpers + sprite_helpers
         allow_size = all(
-            typ not in size_rep or not args
+            typ not in size_overrides or not args
             for typ, args in
             ent.helpers
+        )
+        has_sprite = any(
+            typ in sprite_helpers
+            for typ, args in ent.helpers
+        )
+        has_model = any(
+            typ in model_helpers
+            for typ, args in ent.helpers
         )
 
         for base in ent.bases:
             for helper in base.helpers:
-                if helper not in ent.helpers:
-                    if helper[0] is not HelperTypes.EXT_APPLIES_TO:
-                        if allow_size or helper[0] is not HelperTypes.CUBE:
-                            ent.helpers.append(helper)
+                if helper in ent.helpers: # No duplicates
+                    continue
+                typ, args = helper
+
+                # Never copy this.
+                if typ is HelperTypes.EXT_APPLIES_TO:
+                    continue
+
+                # Don't inherit models or sprites if the child has those
+                # already.
+                if has_model and typ in model_helpers:
+                    continue
+                if has_sprite and typ in sprite_helpers:
+                    continue
+
+                if allow_size or typ is not HelperTypes.CUBE:
+                    ent.helpers.append(helper)
 
     # Helpers aren't inherited, so this isn't useful anymore.
     for ent in fgd.entities.values():
