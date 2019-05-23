@@ -7,7 +7,14 @@ import argparse
 from collections import Counter, defaultdict
 from pathlib import Path
 from lzma import LZMAFile
-from typing import List, Tuple, Set, FrozenSet, Union, Dict, Callable, Optional
+from typing import (
+    Union, Optional,
+    TypeVar,
+    Callable,
+    Dict, List, Tuple,
+    Set, FrozenSet,
+    MutableMapping,
+)
 
 from srctools.fgd import (
     FGD, validate_tags, match_tags,
@@ -87,14 +94,19 @@ ALL_TAGS.update('UNTIL_' + t.upper() for t in GAME_ORDER)
 POLYFILLS = []  # type: List[Tuple[str, Callable[[FGD], None]]]
 
 
-def _polyfill(tag):
-    def deco(func):
+PolyfillFuncT = TypeVar('PolyfillFuncT', bound=Callable[[FGD], None])
+
+
+def _polyfill(tag: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
+    """Register a polyfill, which backports newer FGD syntax to older engines."""
+    def deco(func: PolyfillFuncT) -> PolyfillFuncT:
         POLYFILLS.append((tag.upper(), func))
         return func
     return deco
 
+
 @_polyfill('until_p1')
-def polyfill_boolean(fgd: FGD):
+def _polyfill_boolean(fgd: FGD):
     """Before Alien Swarm's Hammer, boolean was not available as a keyvalue type.
 
     Substitute with choices.
@@ -109,8 +121,9 @@ def polyfill_boolean(fgd: FGD):
                         ('1', 'Yes', frozenset())
                     ]
 
+
 @_polyfill('until_p1')
-def polyfill_node_id(fgd: FGD):
+def _polyfill_node_id(fgd: FGD):
     """Before Alien Swarm's Hammer, node_id was not available as a keyvalue type.
 
     Substitute with integer.
@@ -121,8 +134,9 @@ def polyfill_node_id(fgd: FGD):
                 if kv.type is ValueTypes.TARG_NODE_SOURCE:
                     kv.type = ValueTypes.INT
 
+
 @_polyfill('')
-def polyfill_bool_io(fgd: FGD):
+def _polyfill_bool_io(fgd: FGD):
     """Boolean types cannot be used for IO events."""
     for ent in fgd.entities.values():
         for tag_map in ent.outputs.values():
@@ -239,7 +253,7 @@ def get_appliesto(ent: EntityDef) -> List[str]:
     returned, so it can be viewed or edited.
     """
     pos = None
-    applies_to = set()
+    applies_to: Set[str] = set()
     for i, (helper_type, args) in enumerate(ent.helpers):
         if helper_type is HelperTypes.EXT_APPLIES_TO:
             if pos is None:
@@ -283,9 +297,9 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
     """Output a count of all entities in the database per game."""
     fgd = load_database(dbase, extra_db)
 
-    count_base = Counter()
-    count_point = Counter()
-    count_brush = Counter()
+    count_base: Dict[str, int] = Counter()
+    count_point: Dict[str, int] = Counter()
+    count_brush: Dict[str, int] = Counter()
 
     all_tags = set()
 
@@ -300,15 +314,14 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
 
     print('Done.\nGames: ' + ', '.join(sorted(games)))
 
-    expanded = {
+    expanded: Dict[str, FrozenSet[str]] = {
         game: expand_tags(frozenset({game}))
         for game in GAME_ORDER
     }
     expanded['ALL'] = frozenset()
 
-    game_classes = defaultdict(set)
-
-    base_uses = defaultdict(set)
+    game_classes: MutableMapping[Tuple[str, str], Set[str]] = defaultdict(set)
+    base_uses: MutableMapping[str, Set[str]] = defaultdict(set)
 
     for ent in fgd:
         if ent.type is EntityTypes.BASE:
@@ -345,7 +358,7 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
                 counter[game] -= 1
                 game_classes[game, typ].discard(ent.classname)
 
-    all_games = set().union(count_base, count_point, count_brush)
+    all_games: Set[str] = {*count_base, *count_point, *count_brush}
 
     game_order = ['ALL'] + sorted(all_games - {'ALL'})
 
@@ -538,10 +551,10 @@ def action_export(
                                 ', '.join([typ.value for typ in types])
                             ))
                         # Pick the one with shortest tags arbitrarily.
-                        value = sorted(
+                        _, value = min(
                             tag_map.items(),
                             key=lambda t: len(t[0]),
-                        )[0][1]
+                        )
 
                     # If it's CHOICES, we can't know what type it is.
                     # Guess either int or string, if we can convert.
