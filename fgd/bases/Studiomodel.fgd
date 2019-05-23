@@ -3,7 +3,7 @@
 	studioprop() 
 = Studiomodel
 	[
-	model(studio) : "World Model" : "The model to use for this entity."
+	model(studio) : "World Model" : : "The model to use for this entity."
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. " +
 		"Set this to a number other than 0 to use that skin instead of the default."
 

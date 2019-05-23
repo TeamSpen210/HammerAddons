@@ -4,8 +4,7 @@
 	BreakableProp, DXLevelChoice, BaseFadeProp, 
 	RenderFields, SystemLevelChoice, Shadow, 
 	CompMinLight
-) 
-	size(-4 -4 -4, 4 4 4)
+)
 	studioprop()
 	sphere(fademindist) 
 	sphere(fademaxdist) 
