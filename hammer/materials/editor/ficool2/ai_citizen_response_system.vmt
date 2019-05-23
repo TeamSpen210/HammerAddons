@@ -1,0 +1,7 @@
+Sprite
+{
+	$baseTexture "editor/ficool2/ai_citizen_response_system"
+	$spriteorientation "vp_parallel"
+	$spriteorigin "[.5 .5]"
+	$no_fullbright 1
+}
