@@ -1,5 +1,5 @@
 @PointClass base(Targetname, Parentname) 
-	size(-4 -4 -4, 4 4 4)
+	iconsprite("editor/ficool2/env_beverage")
 = env_beverage: "HL1 Legacy: Beverage Dispenser."
 	[
 	health(integer) : "Capacity" : 10 : "Number of cans in the dispenser."

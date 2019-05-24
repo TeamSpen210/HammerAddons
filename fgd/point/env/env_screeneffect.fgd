@@ -1,6 +1,6 @@
-
 @PointClass base(Targetname)
 	color(200 0 0)
+	iconsprite("editor/ficool2/env_screeneffect")
 = env_screeneffect: "Allows screenspace effects to be played on the player's view."
 	[
 	type[engine](integer) : "Effect Type" : 0

@@ -1,5 +1,5 @@
-
 @PointClass base(Targetname) 
+	iconsprite("editor/ficool2/env_particle_performance_monitor")
 = env_particle_performance_monitor: "An entity for turning on and off measuring and display of particle throughput."
 	[
 

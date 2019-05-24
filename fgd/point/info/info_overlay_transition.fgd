@@ -1,9 +1,11 @@
-
 @PointClass 
-	size(-8 -8 -8, 8 8 8) 
+	size(-1 -1 0, 1 1 1)
+	color(80 150 225)
+	studio("models/editor/overlay_helper.mdl")
 	sidelist(sides) 
 	sidelist(sides2) 
-	overlay_transition() = info_overlay_transition: "This creates a scrolling texture at the instersect between two brushes, for things like wave effects at water edges."
+	overlay_transition() 
+= info_overlay_transition: "This creates a scrolling texture at the instersect between two brushes, for things like wave effects at water edges."
 	[
 	material(material) : "Material"
 	sides(sidelist) : "Brush faces"

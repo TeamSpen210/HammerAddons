@@ -1,5 +1,5 @@
 @PointClass base(Targetname, EnableDisable, Parentname, Angles)
-	iconsprite("editor/info_target.vmt") 
+	iconsprite("editor/ficool2/phys_ragdollmagnet")
 	sphere(radius) 
 	line(255 255 0, targetname, target) 
 	color(128 128 128) 

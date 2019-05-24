@@ -1,8 +1,9 @@
 
 @PointClass base(Targetname) 
-	size(-8 -8 -8, 8 8 8) 
 	color(0 100 250) 
-	line(0 100 250, targetname, target) = point_velocitysensor: "An entity that detects and outputs an entity's velocity."
+	line(0 100 250, targetname, target) 
+	iconsprite("editor/ficool2/point_velocitysensor")
+= point_velocitysensor: "An entity that detects and outputs an entity's velocity."
 	[
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose velocity will be sensed."
 	axis(vecline) : "Measurement Axis"

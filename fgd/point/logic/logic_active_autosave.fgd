@@ -1,7 +1,6 @@
 @PointClass base(Targetname)
 	color(200 0 0)
 	iconsprite("editor/logic_active_autosave.vmt")
-	size(-8 -8 -8, 8 8 8) 
 = logic_active_autosave: "An entity that is used to look for opportunities to autosave."
 	[
 	minimumhitpoints(integer) : "Initiation Hit Points" : 30 : "Start looking for an opportunity to save if player drops below this hitpoint level."

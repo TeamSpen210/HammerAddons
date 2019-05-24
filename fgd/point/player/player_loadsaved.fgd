@@ -1,8 +1,7 @@
-
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
-	size(-16 -16 -16, 16 16 16) 
-	size(-8 -8 -8, 8 8 8) = player_loadsaved: "Load Auto-Saved game"
+	appliesto(ASW, EP1, EP2, HL2, P1, P2)
+	size(-8 -8 -8, 8 8 8) 
+= player_loadsaved: "Load Auto-Saved game"
 	[
 	duration(string) : "Fade Duration (seconds)" : "2"
 	holdtime(string) : "Hold Fade (seconds)" : "0"

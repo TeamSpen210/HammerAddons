@@ -1,11 +1,11 @@
 @PointClass base(Targetname, Parentname) 
-	size(-8 -8 -8, 8 8 8)
+	iconsprite("editor/ficool2/point_tesla")
 	color(200 200 0)
 	line(255 255 0, targetname, m_SourceEntityName)
 	sphere(m_flRadius)
 = point_tesla: "An entity that creates tesla lightning arcs around its origin."
 	[
-	m_bOn(boolean): "Start Enabled" : : "Should the tesla start active?"
+	m_bOn(boolean): "Start Enabled" : 0 : "Should the tesla start active?"
 	m_sourceentityname(target_destination) : "Source Entity" : : "If specified, tesla lightning will originate from the specified entity. " +
 		"Otherwise, they originate from this entity."
 	m_soundname(sound) : "Sound Name" : "DoSpark" : "Sound to be played whenever lightning is created."

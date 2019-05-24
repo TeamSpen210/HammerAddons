@@ -1,10 +1,10 @@
-
 @PointClass base(Targetname, Parentname, Angles) 
-	size(-8 -8 -8, 8 8 8) 
+	iconsprite("editor/ficool2/env_effectscript")
 	studioprop()
 = env_effectscript: "An entity that allows you to script special visual effects via a script file."
 	[
-	model(studio) : "Script Model" : "models/Effects/teleporttrail.mdl" : "Model to use for animation sequences."
+	model(studio) : "Script Model" : : "Model to use for animation sequences."
+	model[HL2, EP1, EP2](studio) : "Script Model" : "models/Effects/teleporttrail.mdl" : "Model to use for animation sequences."
 	scriptfile(string) : "Script File" : "scripts/effects/testeffect.txt" : "Name of the script to use for this model."
 
 	// Inputs

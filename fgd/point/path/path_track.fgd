@@ -3,7 +3,7 @@
 	color(255 192 0)
 	studio("models/editor/angle_helper.mdl")
 	sphere(radius)
-	size(16 16 16)
+	iconsprite("editor/ficool2/path_track")
 = path_track: "An entity used to build paths for other entities to follow. " +
 	"Each path_track is a node on the path, each holding the name of the next path_track in the path."
 	[

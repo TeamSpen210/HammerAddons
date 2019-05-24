@@ -1,5 +1,5 @@
 @PointClass base(Targetname, Parentname, EnableDisable) 
-	size(-8 -8 -8, 8 8 8) 
+	iconsprite("editor/ficool2/point_anglesensor")
 	color(0 100 250) 
 	line(0 100 250, targetname, target) 
 	line(0 100 250, targetname, target, targetname, lookatname) 

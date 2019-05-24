@@ -3,7 +3,7 @@
 	halfgridsnap
 	color(128 128 128) 
 	line(128 128 128, targetname, attach1) 
-	size(-8 -8 -8, 8 8 8) 
+	iconsprite("editor/ficool2/phys_motor")
 = phys_motor: "An entity that tries to spin a target entity at a particular speed."
 	[
 	speed(string) : "Rotation Speed" : 0 : "Angular speed (units are degress/second)"

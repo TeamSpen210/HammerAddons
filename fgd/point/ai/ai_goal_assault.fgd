@@ -1,43 +1,39 @@
-
 @PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) = ai_goal_assault: "AI Goal Assault"
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	iconsprite("editor/ficool2/ai_goal_assault")
+= ai_goal_assault: "AI Goal Assault"
 	[
 	actor(target_name_or_class) : "Actor(s) to affect" : : "NPC's that should perform this assault"
-	rallypoint(target_destination) : "Rally Point Set" : : "Root name of rally points for this assault. Use an asterisk '*' after the root name to match all with the same root."
-	searchtype(choices) : "Search Type" : "0" : "How to search for the entities using the targetname." =
+	rallypoint(target_destination) : "Rally Point Set" : : "Root name of rally points for this assault. " +
+		"Use an asterisk '*' after the root name to match all with the same root."
+
+	searchtype[engine](integer): "Search Type" : 0
+	searchtype(choices) : "Search Type" : 0 : "How to search for the entities using the targetname." =
 		[
 		0: "Entity Name"
 		1: "Classname"
 		]
 
-	startactive(choices) : "Start Active" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	startactive(boolean) : "Start Active" : 0
 
-	startactive[P2](boolean) : "Start Active" : 0
-	assaultcue(choices) : "Assault Cue" : "1" =
+	assaultcue[engine](integer): "Assault Cue" : 1
+	assaultcue(choices) : "Assault Cue" : 1 =
 		[
 		1: "Entity System Input"
 		2: "Gunfire"
 		3: "Don't wait for a cue."
 		]
 
-	rallyselectmethod(choices) : "Rally Point Selection Method" : "0" =
-		[
-		0: "Priority, Distance (default)"
-		1: "Random"
-		]
-
-	rallyselectmethod[P2](choices) : "Rally Point Selection Method" : "0" =
+	rallyselectmethod[engine](integer) : "Rally Point Selection Method" : 0
+	rallyselectmethod(choices) : "Rally Point Selection Method" : 0 =
 		[
 		0: "Priority, Closest (default)"
 		1: "Random"
 		2: "Priority, Furthest"
 		]
 
-	branchingmethod[P2](choices) : "Branching Assault Selection Method" : "0" =
+	branchingmethod[engine](integer) : "Branching Assault Selection Method" : 0
+	branchingmethod[P2](choices) : "Branching Assault Selection Method" : 0 =
 		[
 		0: "Random (default)"
 		1: "Closest"

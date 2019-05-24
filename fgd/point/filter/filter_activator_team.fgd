@@ -1,5 +1,4 @@
 @FilterClass base(filter_base) 
-	size(-8 -8 -8, 8 8 8)
 	iconsprite("editor/filter_team.vmt")
 = filter_activator_team: "A filter that filters by the team of the activator."
 	[

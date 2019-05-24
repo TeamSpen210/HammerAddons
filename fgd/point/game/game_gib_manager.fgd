@@ -1,4 +1,5 @@
 @PointClass base(Targetname)
+	iconsprite("editor/ficool2/game_gib_manager")
 	color(200 0 0) 
 = game_gib_manager: "An entity to control the number of gibs in the world, for performance reasons."
 	[

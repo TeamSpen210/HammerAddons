@@ -1,6 +1,6 @@
 
 @PointClass base(Targetname, MasterEnt)
-	size(-8 -8 -8, 8 8 8) 
+	iconsprite("editor/ficool2/game_player_equip")
 = game_player_equip:
 	"An entity that gives equipment to the player who activates it. " + 
 	"To use, add new keys to this entity, where each key is the classname of a weapon/item, " + 

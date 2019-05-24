@@ -1,6 +1,5 @@
 @PointClass base(Targetname) 
 	iconsprite("editor/env_hudhint.vmt")
-	size(-8 -8 -8, 8 8 8)
 = env_hudhint: "An entity to control the display of HUD hints. HUD hints are used to show the player what key is bound to a particular command."
 	[
 	spawnflags(flags)  =

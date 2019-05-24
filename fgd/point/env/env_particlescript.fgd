@@ -1,8 +1,10 @@
 @PointClass base(Targetname, Parentname, Angles) 
 	size(-8 -8 -8, 8 8 8)
+	studioprop()
 = env_particlescript: "An entity that has special animation events that can be fired by a model with an animation inside its .qc designed for use by this entity."
 	[
-	model(studio) : "Script Model" : "models/Ambient_citadel_paths.mdl" : "Model to use for animation sequences."
+	model(studio) : "Script Model" : : "Model to use for animation sequences."
+	model[HL2, EP1, EP2](studio) : "Script Model" : "models/Ambient_citadel_paths.mdl" : "Model to use for animation sequences."
 
 	// Inputs
 	input SetSequence(string) : "Sets the script model's sequence."

@@ -1,7 +1,6 @@
 @PointClass base(Targetname)
-	iconsprite("editor/ts2do/point_playermoveconstraint.vmt") 
+	iconsprite("editor/ficool2/point_playermoveconstraint.vmt") 
 	sphere(radius) 
-	size(-8 -8 -8, 8 8 8) 
 = point_playermoveconstraint: "An entity that constrains players to a radius around itself, slowing them down the closer they get to the edge of the radius."
 	[
 	radius(float) : "Radius" : 256 : "Radius to constrain players to."

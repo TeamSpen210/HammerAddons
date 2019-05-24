@@ -1,7 +1,7 @@
 
 @PointClass base(Targetname) 
 	color(128 128 128) 
-	iconsprite("editor/ts2do/logic_collision_pair.vmt") 
+	iconsprite("editor/ficool2/logic_collision_pair.vmt") 
 	line(128 128 128, attach1, attach2) 
 = logic_collision_pair: "An entity that can be used to enables/disable vphysics collisions between two target entities."
 	[

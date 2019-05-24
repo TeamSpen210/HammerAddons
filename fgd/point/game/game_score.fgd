@@ -1,5 +1,5 @@
 @PointClass base(Targetname, MasterEnt)
-	size(-8 -8 -8, 8 8 8)
+	iconsprite("editor/ficool2/game_score")
 	color(200 0 0)
 = game_score: "An entity that awards/deducts points from the player who activates it or to a specific team."
 	[

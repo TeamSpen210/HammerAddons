@@ -1,6 +1,6 @@
 @PointClass base(Targetname, Angles)
 	color(128 128 128) 
-	iconsprite("editor/ts2do/phys_keepupright.vmt") 
+	iconsprite("editor/ficool2/phys_keepupright.vmt") 
 	line(128 128 128, targetname, attach1) 
 = phys_keepupright: "A controller that tries to keep an entity facing a particular direction."
 	[

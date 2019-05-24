@@ -1,8 +1,8 @@
-
 @PointClass base(Targetname) 
-	size(-8 -8 -8, 8 8 8) 
+	iconsprite("editor/ficool2/point_angularvelocitysensor")
 	color(0 100 250) 
-	line(0 100 250, targetname, target) = point_angularvelocitysensor: "An entity that detects if another entity's angular velocity meets or exceeds a threshold value."
+	line(0 100 250, targetname, target) 
+= point_angularvelocitysensor: "An entity that detects if another entity's angular velocity meets or exceeds a threshold value."
 	[
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angular velocity will be sensed."
 	threshold(float) : "Threshold Velocity" : 0 : "The threshold angular velocity to compare against, in degrees per second."

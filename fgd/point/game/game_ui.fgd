@@ -1,7 +1,6 @@
 @PointClass base(Targetname)
 	color(200 0 0) 
 	iconsprite("editor/ficool2/game_ui.vmt") 
-	size(-8 -8 -8, 8 8 8) 
 = game_ui: "An entity used to override player input when the player is looking at it."
 	[
 	spawnflags(flags)  =

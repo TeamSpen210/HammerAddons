@@ -3,7 +3,7 @@
 	line(128 128 128, targetname, attach2) 
 	line(128 128 128, targetname, attach1, targetname, attach2) 
 	color(128 128 128)
-	size(-8 -8 -8, 8 8 8) 
+	iconsprite("editor/ficool2/phys_hinge")
 = phys_hinge: "A physically simulated hinge. Use the helper to define the axis of rotation."
 	[
 	hingefriction(float) : "Friction" : 0 : "Resistance/friction in the hinge"

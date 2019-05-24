@@ -2,7 +2,7 @@
 @PointClass base(Targetname) 
 	halfgridsnap
 	color(128 128 128) 
-	size(-8 -8 -8, 8 8 8) 
+	iconsprite("editor/ficool2/phys_spring")
 	line(128 128 128, targetname, attach1) 
 	line(128 128 128, targetname, attach2) 
 	line(128 128 128, targetname, attach1, targetname, attach2) 
