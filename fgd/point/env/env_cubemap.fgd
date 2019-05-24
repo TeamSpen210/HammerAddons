@@ -1,11 +1,11 @@
-
 @PointClass 
 	color(0 0 255) 
 	sidelist(sides) 
 	iconsprite("editor/env_cubemap.vmt") 
 = env_cubemap: "An entity that creates a sample point for the Cubic Environment Map."
 	[
-	cubemapsize(choices) : "Cubemap Size" : "0" =
+	cubemapsize[engine](integer) : "Cubemap Size" : 0
+	cubemapsize(choices) : "Cubemap Size" : 0 =
 		[
 		0: "Default"
 		1: "1x1"

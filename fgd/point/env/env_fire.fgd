@@ -9,6 +9,7 @@
 	health(integer) : "Duration" : 30 : "Amount of time the fire will burn."
 	firesize(integer) : "Size" : 64 : "Height (in world units) of the flame."
 	fireattack(integer) : "Attack" : 4 : "Amount of time the fire takes to grow to full strength."
+	firetype[engine](integer) : "Type" : 0
 	firetype(choices) : "Type" : 0 =
 		[
 		0: "Natural"

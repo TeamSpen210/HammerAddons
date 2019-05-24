@@ -1,4 +1,5 @@
-@FilterClass appliesto(L4D2) base(BaseFilter) = filter_melee_damage: "A damage filter that filters by the damage, allowing only melee damage. damagetype specifies which types of melee damage are all" + "owed"
+@FilterClass appliesto(L4D2) base(filter_base) 
+= filter_melee_damage: "A damage filter that filters by the damage, allowing only melee damage. damagetype specifies which types of melee damage are all" + "owed"
 	[
 	damagetype(choices) : "Damage type" : 64 : "The damage type to filter by. Allows the specified damage type." =
 		[

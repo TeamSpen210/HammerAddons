@@ -5,6 +5,8 @@
 = env_blood: "An entity used to spawn blood effects."
 	[
 	spraydir(angle) : "Spray Direction (Pitch Yaw Roll)" : "0 0 0" : "The general direction that the blood should spray and the direction to trace to apply the decal."
+
+	color[engine](integer) : "Blood Color" : 0
 	color(choices) : "Blood Color" : 0 =
 		[
 		0: "Red (Human)"
@@ -19,7 +21,6 @@
 		4: "On Player" : 0
 		8: "Spray decals" : 0
 		]
-
 
 	// Inputs
 	input EmitBlood(void) : "Triggers the blood effect."

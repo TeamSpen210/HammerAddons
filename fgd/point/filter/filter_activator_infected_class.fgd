@@ -3,6 +3,7 @@
 	iconsprite("editor/filter_team.vmt")
 = filter_activator_infected_class: "A filter that filters by the activator's infected class."
 	[
+	filterinfectedclass[engine](integer) : "Filter Infected Class" : 2
 	filterinfectedclass(choices) : "Filter Infected Class" : 2 : "The infected class to filter by. " +
 		"If the filter mode is Allow, only entities whose class matches the given team will pass the filter. " +
 		"If the filter mode is Disallow, all entities EXCEPT those whose class matches the given team will pass the filter." =

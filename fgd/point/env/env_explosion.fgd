@@ -8,7 +8,9 @@
 	imagnitude(integer) : "Magnitude" : 100 : "The amount of damage done by the explosion."
 	iradiusoverride(integer) : "Radius Override" : 0 : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude."
 	fireballsprite(sprite) : "Fireball Sprite" : "sprites/zerogxplode.spr"
-	rendermode(choices) : "Render Mode" : "5" =
+
+	rendermode[engine](integer) : "Render Mode" : 5
+	rendermode(choices) : "Render Mode" : 5 =
 		[
 		0: "Normal"
 		4: "Solid"
@@ -35,6 +37,8 @@
 		]
 
 	ignoredentity(target_destination) : "Ignored Entity" : : "Do not harm or affect the named entity."
+
+	ignoredclass[engine](integer) : "Ignored Class" : 0
 	ignoredclass(choices) : "Ignored Class" : 0 : "Do not harm or affect this class." = 
 		[
 		0: "None"

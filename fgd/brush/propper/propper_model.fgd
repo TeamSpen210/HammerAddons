@@ -85,12 +85,9 @@
 
 	physmodel(target_destination) : "Physics mesh" : : "Pick any brush entity (including this one) to represent the physical shape of the model. Leave this field blank for a non-solid " + "model. If you leave this blank while making a physics prop, Propper will automatically use this entity for collisions."
 	mass(float) : "Mass" : "0.0" : "Weight of the prop in kg. Enter zero or lower to automatically calculate mass."
-	concave(choices) : "Concave collisions" : 1 : "Used to make a concave collision model. If you choose no, the model will be 'shrink-wrapped'." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	concave(boolean) : "Concave collisions" : 1 : "Used to make a concave collision model. If you choose no, the model will be 'shrink-wrapped'."
 
+	smoothing[engine](integer) : "Smoothing mode" : 1
 	smoothing(choices) : "Smoothing mode" : 1 : "Determines how vertex normals are computed for lighting" =
 		[
 		0: "completely faceted"
@@ -98,31 +95,21 @@
 		2: "Use Hammer's smoothing groups only"
 		]
 
-	sourcefolder(string) : "Source folder" : "c:/propsource" : "Where you want to keep your .qc and .smd files. The final directory will be <sourcefolder>/<modelname>."
+	sourcefolder(string) : "Source folder" : "c:/propsource" : "Where you want to keep your .qc and .smd files. " +
+		"The final directory will be <sourcefolder>/<modelname>."
+		
 	smoothangle(integer) : "Smoothing threshold" : 45 : "If auto-smooth is enabled, Edges flatter than this angle will appear smooth. Pick from 0 to 180."
-	snaptogrid(choices) : "Snap to Hammer grid" : 0 : "Causes every vertex to be snapped to the nearest grid point." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	snaptogrid(boolean) : "Snap to Hammer grid" : 0 : "Causes every vertex to be snapped to the nearest grid point."
 
-	weldvertices(float) : "Welding threshold" : ".01" : "Vertices will be snapped together if within this tolerance. A value of 0 is not recommended because there may be visible gaps in" + " the mesh. Larger numbers will merge vertices together, and may be useful for optimizing your model."
-	autocenter(choices) : "Auto-Center" : 0 : "The model's origin point defines how it is lit and is how the prop is positioned in a map. Auto-center moves the model's origin " + "to the center of its bounding box and is recommended for physics props. For static props, put the origin somewhere that lets you" + " align the prop easily." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	weldvertices(float) : "Welding threshold" : ".01" : "Vertices will be snapped together if within this tolerance. " +
+		"A value of 0 is not recommended because there may be visible gaps in the mesh. " +
+		"Larger numbers will merge vertices together, and may be useful for optimizing your model."
 
-	mat_nonormal(choices) : "Disable normal mapping" : 0 : "This option removes all bump map info from the converted materials. This is useful if you wish to use -StaticPropLighting to lig" + "ht your props" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	disp_nowarp(choices) : "Don't warp displacement textures" : 0 : "In Hammer, when you move a displacement point, the texture moves with it. If you pick yes, the texture will not move." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	autocenter(boolean) : "Auto-Center" : 0 : "The model's origin point defines how it is lit and is how the prop is positioned in a map. " +
+		"Auto-center moves the model's origin to the center of its bounding box and is recommended for physics props. " +
+		"For static props, put the origin somewhere that lets you align the prop easily."
+	mat_nonormal(boolean) : "Disable normal mapping" : 0 : "This option removes all bump map info from the converted materials. " +
+		"This is useful if you wish to use -StaticPropLighting to light your props."
+	disp_nowarp(boolean) : "Don't warp displacement textures" : 0 : "In Hammer, when you move a displacement point, the texture moves with it. " +
+		"If you pick yes, the texture will not move." 
 	]
