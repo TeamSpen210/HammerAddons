@@ -1,14 +1,14 @@
-
 @PointClass base(Targetname, Parentname, Angles, SystemLevelChoice) 
 	appliesto(since_EP1)
-	size(-2 -2 -2, 2 2 2) 
-	frustum(lightfov, nearz, farz, lightcolor, -1) 
-	studio("models/editor/cone_helper.mdl") 
-	line(255 255 255, targetname, target) 
-	sphere(nearz) 
-	sphere(farz) = env_projectedtexture: "Projected texture entity."
+	size(-2 -2 -2, 2 2 2)
+	frustum(lightfov, nearz, farz, lightcolor, -1)
+	studio("models/editor/cone_helper.mdl")
+	line(255 255 255, targetname, target)
+	sphere(nearz)
+	sphere(farz)
+= env_projectedtexture: "Projected texture entity."
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Enabled" : 1
 		2: "Always Update (moving light)" : 0 [since_ASW]
@@ -36,7 +36,6 @@
 	cameraspace(boolean) : "Camera Space" : 0 : "Angles are interpreted as being relative to camera."
 
 	colortransitiontime[since_ASW](float) : "Color Transition Time" : 0.5 : "Amount of time it takes for a color change to occur."
-	texturename(material) : "Texture Name" : "effects/flashlight001"
 	texturename(material) : "Texture Name" : "effects/flashlight001" : "VTF Texture to 'project' onto the enviroment."
 	textureframe(integer) : "Texture Frame" : 0 : "If the VTF is multi-frame, specify the frame to use."
 

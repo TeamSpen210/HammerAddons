@@ -1,6 +1,6 @@
-
 @PointClass base(Targetname, Parentname, Angles) 
-	size(-8 -8 -8, 8 8 8) = env_dustpuff: "An entity that can emit dust puffs."
+	size(-8 -8 -8, 8 8 8)
+= env_dustpuff: "An entity that can emit dust puffs."
 	[
 	scale(float) : "Scale" : 8 : "Size of the dust puff."
 	speed(float) : "Speed" : 16 : "Speed at which the dust particles should move."

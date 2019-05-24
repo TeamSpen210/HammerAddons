@@ -1,17 +1,18 @@
-
 @PointClass base(Targetname, Parentname) 
-	sphere(inner_radius) 
-	iconsprite("editor/env_physexplosion.vmt") 
-	sphere(radius) 
-	line(255 255 0, targetname, targetEntityName) 
-	cylinder(255 0 0, targetname, targetname, radius, targetname, targetentityname) 
-	color(128 128 128) 
-= env_physexplosion: "An entity that creates an explosion at its origin. If the no-damage spawnflag is set, the explosion won't be visible, but will apply force to any physics objects within its radius."
+	sphere(inner_radius)
+	iconsprite("editor/env_physexplosion.vmt")
+	sphere(radius)
+	line(255 255 0, targetname, targetEntityName)
+	cylinder(255 0 0, targetname, targetname, radius, targetname, targetentityname)
+	color(128 128 128)
+	sphere()
+= env_physexplosion: "An entity that creates an explosion at its origin. If the no-damage spawnflag is set, the explosion won't be visible, " +
+	"but will apply force to any physics objects within its radius."
 	[
-	magnitude(string) : "Magnitude" : "100" : "Amount of physics force applied by the explosion."
-	radius(string) : "Clamp Radius (0 = auto)" : "0" : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude."
+	magnitude(string) : "Magnitude" : 100 : "Amount of physics force applied by the explosion."
+	radius(string) : "Clamp Radius (0 = auto)" : 0 : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude."
 	targetentityname(target_destination) : "Limit to Entity" : : "If specified, the explosion will only affect the matching entity."
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "No Damage - Only Force" : 1
 		2: "Push players" : 0

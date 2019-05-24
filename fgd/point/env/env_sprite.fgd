@@ -1,13 +1,13 @@
-@PointClass base(Targetname, Parentname, RenderFields, DXLevelChoice, SystemLevelChoice)
+@PointClass base(Targetname, Parentname, RenderFields, DXLevelChoice, SystemLevelChoice) 
 	studio("models/editor/axis_helper.mdl")
-	sprite() 
-	color(20 140 20) 
-	sphere(GlowProxySize) 
+	sprite()
+	color(20 140 20)
+	sphere(GlowProxySize)
 = env_sprite: "An entity that controls the drawing of a sprite in the world."
 	[
-	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
+	framerate(float) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
 	model(sprite) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
-	scale(string) : "Scale" : : "Scale multiplier of the sprite."
+	scale(float) : "Scale" : 0.25 : "Scale multiplier of the sprite."
 	spawnflags(flags)  =
 		[
 		1: "Start on" : 0

@@ -1,10 +1,11 @@
 @PointClass base(Targetname, Parentname) 
-	sphere() 
+	sphere()
 	iconsprite("editor/ficool/env_viewpunch.vmt")
-	color(200 200 0) 
+	color(200 200 0)
+	size(-4 -4 -4, 4 4 4)
 = env_viewpunch: "Causes a view punch on players."
 	[
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags)  =
 		[
 		1: "Punch all players (ignore radius)" : 0
 		2: "Punch players in the air" : 0

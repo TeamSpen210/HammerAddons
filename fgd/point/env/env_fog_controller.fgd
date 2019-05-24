@@ -1,13 +1,14 @@
-@PointClass base(Targetname, DXLevelChoice, Angles, SystemLevelChoice)
-	iconsprite("editor/fog_controller.vmt") 
-	color(255 255 255) 
-	color(200 0 0) 
-	studio("models/editor/cone_helper.mdl") 
+@PointClass base(Targetname, DXLevelChoice, Angles, SystemLevelChoice) 
+	iconsprite("editor/fog_controller.vmt")
+	color(255 255 255)
+	color(200 0 0)
+	studio("models/editor/cone_helper.mdl")
 = env_fog_controller: "An entity that controls the fog and view distance in the map."
 	[
 	fogenable(boolean) : "Fog Enable" : 0
 	fogblend(boolean) : "Fog Blend" : 0
 	use_angles(boolean) : "Use Angles for Fog Dir" : 0
+
 	fogcolor(color255) : "Primary Fog Color" : "255 255 255"
 	fogcolor2(color255) : "Secondary Fog Color" : "255 255 255"
 	fogdir(string) : "Primary Fog Direction" : "1 0 0"

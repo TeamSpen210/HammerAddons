@@ -1,28 +1,31 @@
-
 @PointClass base(Targetname, Parentname, Angles, EnableDisable) 
-	appliesto(L4D) 
-	studio("models/editor/cone_helper.mdl") 
+	appliesto(L4D, L4D2)
+	studio("models/editor/cone_helper.mdl")
 = env_weaponfire: "Weapon fire"
 	[
-	targetarc(float) : "Target Arc" : "40" : "The arc that the entity will seach for targets (in degrees)"
-	targetrange(float) : "Target Range" : "3600" : "The distance that the endity will search for targets (in inches)"
+	targetarc(float) : "Target Arc" : 40 : "The arc that the entity will seach for targets (in degrees)"
+	targetrange(float) : "Target Range" : 3600 : "The distance that the endity will search for targets (in inches)"
 	filtername(filterclass) : "Target Filter" : : "Filter to use to determine if an entity is a valid target"
 	damagemod(float) : "Damage Modifier" : "1.0" : "Used to increase or decrease the amount of damage per shot"
-	weapontype(choices) : "Weapon Type" : "1" =
+
+	weapontype[engine](integer) : "Weapon Type" : 1
+	weapontype(choices) : "Weapon Type" : 1 =
 		[
 		1: "Assault Rifle"
 		2: "Hunting Rifle"
 		3: "Auto Shotgun"
 		]
 
-	targetteam(choices) : "Target Team" : "3" =
+	targetteam[engine](integer) : "Target Team" : 3
+	targetteam(choices) : "Target Team" : 3 =
 		[
 		3: "Zombies"
 		2: "Survivors"
 		-1: "Either"
 		]
 
-	ignoreplayers(choices) : "Ignore Players" : "0" =
+	ignoreplayers[engine](boolean) : "Ignore Players" : 0
+	ignoreplayers(choices) : "Ignore Players" : 0 =
 		[
 		0: "No"
 		1: "Yes"

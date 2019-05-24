@@ -1,9 +1,9 @@
-
 @PointClass base(Targetname, Parentname) 
-	size(-4 -4 -4, 4 4 4) = env_beverage: "HL1 Legacy: Beverage Dispenser."
+	size(-4 -4 -4, 4 4 4)
+= env_beverage: "HL1 Legacy: Beverage Dispenser."
 	[
 	health(integer) : "Capacity" : 10 : "Number of cans in the dispenser."
-	beveragetype(choices) : "Beverage Type" : "0" =
+	beveragetype(choices) : "Beverage Type" : 0 =
 		[
 		0: "Coca-Cola"
 		1: "Sprite"

@@ -1,8 +1,8 @@
-@PointClass base(Targetname, Parentname)
-	color(200 50 0) 
-	size(-8 -8 -8, 8 8 8) 
-	color(200 200 0) 
-	sphere(spawnradius) 
+@PointClass base(Targetname, Parentname) 
+	color(200 50 0)
+	size(-8 -8 -8, 8 8 8)
+	color(200 200 0)
+	sphere(spawnradius)
 = env_smoketrail: "An entity that creates a smoke trail."
 	[
 	opacity(float) : "Sprite Opacity" : "0.75" : "Opacity of the sprites (range from 0 - 1)."

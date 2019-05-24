@@ -1,18 +1,17 @@
-
 @PointClass base(Targetname) 
-	appliesto(L4D) 
-	wirebox(mins, maxs) 
+	appliesto(L4D, L4D2)
+	wirebox(mins, maxs)
 = env_player_blocker: "An entity which blocks any PC/NPC from entering of the specified type."
 	[
 	mins(vector) : "Mins" : "-4 -128 -80"
 	maxs(vector) : "Maxs" : "4 128 80"
-	initialstate(choices) : "Initial State" : "1" =
+	initialstate(choices) : "Initial State" : 1 =
 		[
 		0: "Disabled"
 		1: "Enabled"
 		]
 
-	blocktype(choices) : "Blocks" : "0" =
+	blocktype(choices) : "Blocks" : 0 =
 		[
 		0: "Everyone"
 		1: "Survivors"

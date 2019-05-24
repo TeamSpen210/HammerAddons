@@ -2,5 +2,6 @@
 	iconsprite("editor/filter_mass.vmt")
 = filter_activator_mass_greater: "A filter that filters by the mass of the activator."
 	[
-	filtermass(float) : "Filter Mass" : : "The mass to filter by. If the filter mode is Allow, only entities whose mass is greater than the give float will pass the filter. If the filter mode is Disallow, all entities EXCEPT those whose mass is greater than the given float will pass the filter."
+	filtermass(float) : "Filter Mass" : : "The mass to filter by. If the filter mode is Allow, only entities whose mass is greater than the give float will pass the filter. " +
+		"If the filter mode is Disallow, all entities EXCEPT those whose mass is greater than the given float will pass the filter."
 	]

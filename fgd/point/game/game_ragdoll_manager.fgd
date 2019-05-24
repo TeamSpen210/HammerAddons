@@ -1,5 +1,5 @@
-@PointClass base(Targetname)
-	color(200 0 0) 
+@PointClass base(Targetname) 
+	color(200 0 0)
 = game_ragdoll_manager: "An entity to control the number of ragdolls in the world, for performance reasons."
 	[
 	maxragdollcount(integer) : "Max Ragdoll Count" : -1 : "Sets the max number of ragdolls that can be in the world at a time (if they are flagged to fade). " +

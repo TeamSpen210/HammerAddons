@@ -1,9 +1,9 @@
-
 @PointClass base(Targetname) 
-	appliesto(since_ASW) 
-	iconsprite("editor/env_instructor_hint.vmt") 
-	line(255 255 0, targetname, hint_target) 
-	sphere(hint_range) = env_instructor_hint: "An entity that allows for creation and control of instructor lessons by map logic."
+	appliesto(since_L4D2)
+	iconsprite("editor/env_instructor_hint.vmt")
+	line(255 255 0, targetname, hint_target)
+	sphere(hint_range)
+= env_instructor_hint: "An entity that allows for creation and control of instructor lessons by map logic."
 	[
 	hint_replace_key(string) : "Replace Key" : : "Unique name so that messages with the same key will replace each other."
 	hint_target(target_destination) : "Target Entity" : : "The entity to show this hint on top of. The entity used must exist on the client, info_target_instructor_hint can be parented to server only entities for this purpose."
@@ -162,6 +162,20 @@
 	hint_range(float) : "Display Range" : 0 : "The visible range of the hint."
 	
 	hint_gamepad_binding[P2](string) : "Gamepad Bound Command" : : "If using 'show key bindings' for the onscreen icon, this field should be the command we want to show bindings for when gamepad is enabled (and PS3/X360)"
+
+	hint_name[L4D2](string) : "Lesson Name" : : "Hints with the same lesson name use a common base and are treated as instances the same lesson type."
+	hint_display_limit[L4D2](integer) : "Display Limit" : 0 : "The number of times a hint can be seen. 0 means unlimited."
+	hint_instance_type[L4D2](choices) : "Instance Type" : 2 : "How many instances of a single lesson type can be open or active at the same time" =
+		[
+		0: "Multiple"
+		1: "Single Open"
+		2: "Fixed Replace"
+		3: "Single Active"
+		]
+
+	hint_auto_start[L4D2](boolean) : "Show on First Sight" : 1 : "When the player first sees it, it will automatically show for them."
+	hint_suppress_rest[L4D2](boolean) : "Suppress rest before moving" : 0 : "Suppress the initial icon display in center of screen?"
+
 
 	// Inputs
 	input ShowHint(string) : "Start showing the hint. If an entity name is passed as a parameter, the hint is shown only to that entity."
