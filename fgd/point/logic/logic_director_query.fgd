@@ -1,0 +1,22 @@
+@PointClass appliesto(L4D2) base(Targetname) = logic_director_query: "Allows firing of output based on the Director's state"
+	[
+	minangerrange(integer) : "Min Anger Range" : 1 : "Min remapping range of anger"
+	maxangerrange(integer) : "Max Anger Range" : 10 : "Max remapping range of anger"
+	noise(choices) : "Noise" : 0 : "How noisy do you want the anger result?" =
+		[
+		0: "'Pure' anger value. No noise."
+		25: "Some noise"
+		50: "Average mix of random and absolute"
+		75: "Much noise"
+		100: "Complete noise"
+		]
+
+
+	// Inputs
+	input HowAngry(void) : "Ask the director to tell this query how angry it is"
+
+	// Outputs
+	output OutAnger(integer) : "A HowAngry input will cause this output to fire with the anger value remapped."
+	output On20SecondsToMob(void) : "Fires 20 seconds before a mob is spawned."
+	output On60SecondsToMob(void) : "Fires 60 seconds before a mob is spawned."
+	]

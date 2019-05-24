@@ -1,5 +1,6 @@
 @PointClass base(Targetname, PlayerClass, Angles) 
-	studio("models/survivors/survivor_biker.mdl") 
+	studio("models/survivors/survivor_biker.mdl")
+	studio("models/survivors/survivor_coach.mdl")
 = info_survivor_rescue: "Survivor rescue point"
 	[
 	rescueeyepos(vecline) : "Eye position of survivors waiting for rescue"

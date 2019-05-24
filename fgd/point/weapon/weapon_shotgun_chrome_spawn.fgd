@@ -1,0 +1,5 @@
+@PointClass appliesto(L4D2) base(WeaponSpawn) 
+	studioprop("models/w_models/Weapons/w_pumpshotgun_A.mdl")
+= weapon_shotgun_chrome_spawn: "Chrome Shotgun"
+	[
+	]

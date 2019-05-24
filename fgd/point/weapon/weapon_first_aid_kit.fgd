@@ -1,0 +1,5 @@
+@PointClass appliesto(L4D2) base(WeaponSpawnSingle) 
+	studioprop("models/w_models/weapons/w_eq_Medkit.mdl")
+= weapon_first_aid_kit: "Physics First Aid Kit - This entity is intended to be used in scripted events where a single item needs to spawned with physics active."
+	[
+	]

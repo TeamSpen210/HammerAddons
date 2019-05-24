@@ -1,6 +1,6 @@
-@PointClass base(Origin, Targetname, EnableDisable)
-	size(-2 -2 -2, 2 2 2) 
-	color(0 255 0) 
+@PointClass base(Origin, Targetname, EnableDisable) 
+	size(-2 -2 -2, 2 2 2)
+	color(0 255 0)
 = point_gamestats_counter: "Generic game statistics counter."
 	[
 	name(string) : "Name of statistic counter"

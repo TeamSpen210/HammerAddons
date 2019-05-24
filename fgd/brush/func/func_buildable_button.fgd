@@ -1,0 +1,19 @@
+@SolidClass appliesto(L4D2) base(Targetname, Parentname, Origin) = func_buildable_button: "An timed button which calls into its script scope during button-pressing related events."
+	[
+	spawnflags(flags)  =
+		[
+		2048: "Starts locked" : 0
+		]
+
+	is_cumulative_use(boolean) : "Cumulative Use" : 0
+
+	// Inputs
+	input Enable(void) : "Enable the button, so it glows and can be used."
+	input Disable(void) : "Disable the button, so it can't be used and doesn't glow."
+
+	// Outputs
+	output OnPressed(void) : "Fired when the button is pressed."
+	output OnUnPressed(void) : "Fired when the button is unpressed."
+	output OnTimeUp(void) : "Fired when the button has been held more than the required amount of time."
+	output OnUseLocked(void) : "Fired when the button is used while locked."
+	]

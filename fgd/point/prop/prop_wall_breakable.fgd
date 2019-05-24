@@ -1,0 +1,17 @@
+@PointClass appliesto(L4D2) base(Targetname, Parentname, Angles, Global, Studiomodel, BaseFadeProp) 
+	studioprop()
+= prop_wall_breakable: "A section of wall that's breakable just like doors are."
+	[
+	spawnflags(flags)  =
+		[
+		524288: "Start Unbreakable" : 0
+		]
+
+
+	// Inputs
+	input SetUnbreakable(void) : "The wall can't be broken."
+	input SetBreakable(void) : "The wall can be broken."
+
+	// Outputs
+	output OnBreak(void) : "Fired when the wall changes damage states."
+	]

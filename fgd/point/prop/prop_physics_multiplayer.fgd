@@ -1,15 +1,15 @@
-@PointClass base(prop_physics)
+@PointClass base(prop_physics) 
 	studioprop()
 	sphere(fademindist)
 	sphere(fademaxdist)
-= prop_physics_multiplayer: "This class is the same as prop_physics, except the runtime collisions use a more bouncy method " +
-	"that avoids the prediction errors normal physics objects get."
+= prop_physics_multiplayer: "This class is the same as prop_physics, except the runtime collisions use a more bouncy method that avoids the prediction errors" + " normal physics objects get."
 	[
-	physicsmode(choices) : "Physics Mode" : "0" =
+	physicsmode(choices) : "Physics Mode" : 0 =
 		[
 		0: "Auto Detect"
 		1: "Solid, Server-side"
 		2: "Non-Solid, Server-side"
 		3: "Non-Solid, Client-side"
 		]
+
 	]

@@ -1,0 +1,3 @@
+@SolidClass appliesto(L4D2) base(Trigger) = trigger_upgrade_laser_sight: "Gives laser sight upgrade to players that touch"
+	[
+	]

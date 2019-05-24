@@ -10,8 +10,8 @@
 		1: "Remove on fire" : 1
 		]
 
-	globalstate[engine](string) : "Global State to Read" : : "If set, this specifies a global state to check before firing. The OnMapSpawn output will only fire if the global state is set."
-	globalstate(choices) : "Global State to Read" : : "If set, this specifies a global state to check before firing. The OnMapSpawn output will only fire if the global state is set." =
+	globalstate(string) : "Global State to Read" : : "If set, this specifies a global state to check before firing. The OnMapSpawn output will only fire if the global state is set."
+	globalstate[Hl2, EP1, EP2](choices) : "Global State to Read" : : "If set, this specifies a global state to check before firing. The OnMapSpawn output will only fire if the global state is set." =
 		[
 		"": "--- None ---"
 		"gordon_precriminal": "Gordon pre-criminal"
@@ -25,6 +25,7 @@
 		"is_pc": "Game is running on a PC"
 		]
 
+
 	// Outputs
 	output OnMapSpawn(void) : "Fired when the map is loaded for any reason."
 	output OnNewGame(void) : "Fired when the map is loaded to start a new game."
@@ -33,4 +34,5 @@
 	output OnBackgroundMap(void) : "Fired when the map is loaded as a background to the main menu."
 	output OnMultiNewMap(void) : "Fired only in multiplayer, when a new map is loaded."
 	output OnMultiNewRound(void) : "Fired only in multiplayer, when a new round is started. Only fired in multiplayer games that use round-based gameplay."
+	output OnDemoMapSpawn[L4D2](void) : "Fired when the map is loaded in Demo Mode."
 	]

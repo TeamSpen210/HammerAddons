@@ -1,0 +1,22 @@
+@PointClass 
+	base(Origin, Targetname) 
+	appliesto(L4D2)
+= point_prop_use_target: "A use target for carried props. Triggers the prop's use behavior."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Useable by Gas Can" : 1
+		2: "Useable by Cola Bottles" : 0
+		]
+
+	nozzle(target_destination) : "Gas nozzle" : : "The name of the prop_dynamic gas nozzle for this use_target (scavenge mode)."
+
+	// Inputs
+	input Activate(void) : "Activate the use target."
+	input Deactivate(void) : "Deactivate the use target."
+
+	// Outputs
+	output OnUseStarted(void) : "Fired when a player starts using this target."
+	output OnUseCancelled(void) : "Fired when a player use is cancelled."
+	output OnUseFinished(void) : "Fired when a player use is complete."
+	]

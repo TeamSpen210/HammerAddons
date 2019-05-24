@@ -1,0 +1,5 @@
+@PointClass appliesto(L4D2) base(WeaponSpawnSingle) 
+	studioprop("models/w_models/weapons/w_eq_adrenaline.mdl")
+= weapon_adrenaline_spawn: "Adrenaline"
+	[
+	]

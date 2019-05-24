@@ -1,6 +1,6 @@
 @PointClass base(Angles) 
-	size(-16 -16 -16, 16 16 16) 
-	color(255 255 255) 
-= test_traceline: "A debugging tool for testing tracelines. Pretty much useless for other people. This spins wildly, tracing lines to the closest brush."
+	size(-16 -16 -16, 16 16 16)
+	color(255 255 255)
+= test_traceline: "A debugging tool for testing tracelines. Pretty much useless for other people. This spins wildly, tracing lines to the closest b" + "rush."
 	[
 	]

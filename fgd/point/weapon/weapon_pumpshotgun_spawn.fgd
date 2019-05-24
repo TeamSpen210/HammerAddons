@@ -1,7 +1,6 @@
-
 @PointClass base(WeaponSpawn) 
-	appliesto(L4D) 
-	studioprop("models/w_models/Weapons/w_shotgun.mdl") 
+	appliesto(L4D, L4D2)
+	studioprop("models/w_models/Weapons/w_shotgun.mdl")
 = weapon_pumpshotgun_spawn: "Pump Shotgun"
 	[
 	]

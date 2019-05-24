@@ -1,7 +1,6 @@
-
 @PointClass base(Targetname, Angles) 
-	appliesto(L4D) 
-	studioprop() 
+	appliesto(L4D, L4D2)
+	studioprop()
 = trigger_standoff: "Standoff Trigger"
 	[
 	model(studio) : "World model" : "models/props_misc/german_radio.mdl"
@@ -10,14 +9,14 @@
 		512: "Diable +use" : 0
 		]
 
-	disableshadows(choices) : "Disable Shadows" : "0" : "Used to disable dynamic shadows on this entity." =
+	disableshadows(choices) : "Disable Shadows" : 0 : "Used to disable dynamic shadows on this entity." =
 		[
 		0: "No"
 		1: "Yes"
 		]
 
-	useduration(float) : "Use Duration" : "0" : "Seconds a survivor must +use the trigger to start the finale (0 is instantaneous)."
-	usedelay(float) : "Use Delay" : "0" : "Starts the finale this many seconds after a +use."
+	useduration(float) : "Use Duration" : 0 : "Seconds a survivor must +use the trigger to start the finale (0 is instantaneous)."
+	usedelay(float) : "Use Delay" : 0 : "Starts the finale this many seconds after a +use."
 
 	// Inputs
 	input FinaleEscapeFinished(void) : "Give the survivors a victory."

@@ -1,6 +1,4 @@
-
-@PointClass base(Targetname, Parentname) 
-	appliesto(ASW, CSGO, EP1, EP2, HL2, P1, TF2, L4D, P2DES) 
+@PointClass base(Targetname, Parentname)
 	sweptplayerhull() 
 = func_useableladder: "A Half-Life 2 ladder. Handles player auto mount/unmount, as well as +use to get onto the ladder. \n\n" +
 

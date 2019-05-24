@@ -1,0 +1,13 @@
+@PointClass base(Parentname, Targetname) 
+	size(-8 -8 -8, 8 8 8)
+= material_modify_control: "An entity that can be used to directly control material vars. To use it, you need to read the .vmt of the material you intend to" + " change. Parent this entity to a brush model entity who's material you want to control."
+	[
+	materialname(string) : "Material to modify."
+	materialvar(string) : "Material variable to modify."
+
+	// Inputs
+	input SetMaterialVar(string) : "Fire to modify a material variable. The argument is the value to set the variable to."
+	input SetMaterialVarToCurrentTime(void) : "This sets the material variable to the current time on the server."
+	input StartAnimSequence(string) : "Force an animated material with the MaterialModifyAnimated proxy to play a set of animation frames. Format is: <Frame Start> <Fr" + "ame End> <Frame Rate> <Loop>\nSetting <Frame End> to -1 uses the last frame of the texture. <Loop> should be 1 or 0."
+	input StartFloatLerp(string) : "Force a material with the MaterialModifyAnimated proxy to lerp a material var between two floating point values. Format is: <Sta" + "rt Value> <End Value> <Transition Time> <Loop>\n<Loop> should be 1 or 0."
+	]

@@ -1,9 +1,11 @@
-
-@PointClass base(Targetname)
-	iconsprite("editor/player_weaponstrip.vmt") = player_weaponstrip: "Strips player's weapons"
+@PointClass base(Targetname) 
+	iconsprite("editor/player_weaponstrip.vmt")
+= player_weaponstrip: "Removes weapons from the player."
 	[
 
 	// Inputs
-	input Strip(void) : "Strip player's weapons"
-	input StripWeaponsAndSuit(void) : "Strip player's weapons and his suit"
+	input Strip(void) : "Removes all weapons."
+	input StripWeaponsAndSuit[!L4D2](void) : "Strip player's weapons and his suit"
+	input StripActiveWeapon[L4D2](void) : "Removes the active weapon."
+	input StripWeaponByClassname[L4D2](string) : "Removes a weapon by classname, eg 'weapon_dieselcan'"
 	]

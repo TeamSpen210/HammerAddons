@@ -1,0 +1,12 @@
+@SolidClass appliesto(L4D2) base(Targetname, Parentname) = game_zone_player: "An entity used to count the number of players within a zone."
+	[
+
+	// Inputs
+	input CountPlayersInZone(void) : "Count the number of players in the zone, and fire the corresponding outputs."
+
+	// Outputs
+	output OnPlayerInZone(void) : "Fired whenever a count finds a player inside the zone, with the player as the activator."
+	output OnPlayerOutZone(void) : "Fired whenever a count finds a player outside the zone, with the player as the activator."
+	output PlayersInCount(integer) : "Fired after a count, and contains the number of players found inside the zone."
+	output PlayersOutCount(integer) : "Fired after a count, and contains the number of players found outside the zone."
+	]

@@ -1,0 +1,36 @@
+@PointClass appliesto(L4D2) base(WeaponSpawn) 
+	studioprop("models/w_models/Weapons/w_rifle_m16a2.mdl")
+= weapon_spawn: "Configurable Weapon Spawner"
+	[
+	weapon_selection[engine](string) : "Selection"
+	weapon_selection(choices) : "Selection" : "any_primary" : "Spawn the selected weapon or weapon category" =
+		[
+		"any": "Any primary or secondary weapon"
+		"any_pistol": "Any Pistol"
+		"weapon_pistol": "Pistol"
+		"weapon_pistol_magnum": "Magnum Pistol"
+		"any_primary": "Any Primary Weapon"
+		"tier1_any": "Any tier 1 primary"
+		"tier2_any": "Any tier 2 primary"
+		"any_smg": "Any tier 1 SMG"
+		"any_rifle": "Any tier 2 Rifle"
+		"any_sniper_rifle": "Any tier 2 Sniper Rifle"
+		"any_shotgun": "Any Shotgun"
+		"tier1_shotgun": "Any tier 1 Shotgun"
+		"tier2_shotgun": "Any tier 2 Shotgun"
+		"weapon_smg": "SMG"
+		"weapon_smg_silenced": "Silenced SMG"
+		"weapon_pumpshotgun": "Pump Shotgun"
+		"weapon_shotgun_chrome": "Chrome Shotgun"
+		"weapon_autoshotgun": "Auto Shotgun"
+		"weapon_shotgun_spas": "SPAS Shotgun"
+		"weapon_rifle": "M4 Rifle"
+		"weapon_rifle_desert": "Desert Rifle"
+		"weapon_rifle_ak47": "AK47"
+		"weapon_hunting_rifle": "Hunting Rifle"
+		"weapon_sniper_military": "Sniper Military"
+		]
+
+	spawn_without_director(boolean) : "Spawn instantly without director" : 0 : "Bypass the proximity checks that make nearby weapons be the same tier / not the same weapon."
+
+	]

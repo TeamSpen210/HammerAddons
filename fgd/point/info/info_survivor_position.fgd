@@ -1,13 +1,26 @@
-
 @PointClass base(Targetname, Angles, Parentname) 
-	appliesto(L4D) 
-	color(255 100 100) 
-	studio("models/survivors/survivor_biker.mdl") 
+	appliesto(L4D, L4D2)
+	color(255 100 100)
+	studio("models/survivors/survivor_biker.mdl")
+	studio("models/survivors/survivor_coach.mdl")
 = info_survivor_position: "A point where survivors are placed when escaping the finale"
 	[
 	order(integer) : "Order" : 1 : "Index of spot based on order people got on board. (1-4)"
 	survivorname(string) : "Survivor Name" : : "Force this survivor to use this position (Zoey, Louis, etc.)"
+	survivorintrosequence[L4D2](string) : "Survivor Intro Sequence" : : "Sequence to play when the intro starts."
+
+	gamemode[engine](string) : "Game Mode"
+	gamemode[L4D2](choices) : "Game Mode" : : "Use this position for a particular game mode only (coop,versus,survival,scavenge)." =
+		[
+		"coop" : "Cooperative"
+		"versus" : "Versus"
+		"survival" : "Survival"
+		"scavenge" : "Scavenge"
+		]
+
+	survivorconcept[L4D2](string) : "Survivor Concept" : : "Response rule concept to play when survivor is moved here."
+	hideweapons[L4D2](boolean) : "Hide Weapons" : 0 : "Hide Survivor's weapon while locked to this position."
 
 	// Inputs
-	input SetViewControl(string) : "If a survivor is assigned to this position, set his view to a point_viewcontrol"
+	input SetViewControl(string) : "If a survivor is assigned to this position, set their view to a point_viewcontrol."
 	]

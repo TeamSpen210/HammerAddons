@@ -14,12 +14,12 @@
 	vignetteend[L4D](float) : "Vignette end distance [0..x]" : "2"
 
 	vignetteblurstrength(float) : "Vignette blur strength [0..1]" : "0"
-	fadetoblackstrength(float) : "Fade to black strength [0..1]" : "0"
+	fadetoblackstrength[since_L4D2](float) : "Fade to black strength [0..1]" : "0"
 
 	depthblurfocaldistance[since_ASW](float) : "Depth-blur focal plane distance [0..1]" : "0"
 	depthblurstrength[since_ASW](float) : "Depth-blur effect strength [0..x]" : "0"
 	screenblurstrength[since_ASW](float) : "Full-screen blur strength [0..1]" : "0"
-	filmgrainstrength[since_L4D2](float) : "Film grain strength [0..x]" : "0"
+	grainstrength[since_L4D2](float) : "Film grain strength [0..x]" : "0"
 
 	spawnflags(flags)  =
 		[

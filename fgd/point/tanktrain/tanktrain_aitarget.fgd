@@ -1,7 +1,7 @@
-@PointClass base(Targetname)
-	iconsprite("editor/tanktrain_aitarget.vmt") 
-	line(255 255 255, targetname, target) 
-	line(255 255 255, targetname, newtarget) 
+@PointClass base(Targetname) 
+	iconsprite("editor/tanktrain_aitarget.vmt")
+	line(255 255 255, targetname, target)
+	line(255 255 255, targetname, newtarget)
 = tanktrain_aitarget: "An entity that changes the target of a tanktrain_ai entity."
 	[
 	target(target_destination) : "Tank AI Entity" : : "The tanktrain_ai entity to change the target of."

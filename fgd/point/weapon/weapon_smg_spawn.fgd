@@ -1,7 +1,6 @@
-
 @PointClass base(WeaponSpawn) 
-	appliesto(L4D) 
-	studioprop("models/w_models/Weapons/w_smg_uzi.mdl") 
+	appliesto(L4D, L4D2)
+	studioprop("models/w_models/Weapons/w_smg_uzi.mdl")
 = weapon_smg_spawn: "Submachinegun"
 	[
 	]

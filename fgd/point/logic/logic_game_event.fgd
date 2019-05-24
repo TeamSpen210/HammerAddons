@@ -1,6 +1,5 @@
-
 @PointClass base(Targetname) 
-	appliesto(L4D) 
+	appliesto(L4D, L4D2)
 = logic_game_event: "Allows firing game events. no params for now."
 	[
 	eventname(string) : "Game Event Name" : : "event name ( from ModEvents.res ) to fire. no params for now"

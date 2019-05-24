@@ -1,19 +1,17 @@
-
 @PointClass base(Targetname, Angles, Parentname) 
-	appliesto(L4D) 
-	studio("models/infected/common_male01.mdl") 
-= info_zombie_spawn: "An entity used to spawn a zombie"
+	appliesto(L4D, L4D2)
+	studio("models/infected/common_male01.mdl")
+= info_zombie_spawn: "An entity used to spawn a zombie."
 	[
 	population(string) : "Population" : "default" : "Zombie population to choose among."
-	attackonspawn(choices) : "Attack On Spawn" : "0" : "Whether this zombie should always attack on spawn. Note that this only affects tanks and witches at this time, all others always" + " attack on spawn." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	attackonspawn[L4D](boolean) : "Attack On Spawn" : 0 : "Whether this zombie should always attack on spawn. " +
+		"Note that this only affects tanks and witches at this time, all others always attack on spawn."
 
+	offer_tank[L4D2](boolean) : "Offer Spawned Tank to PZs" : 0
 
 	// Inputs
 	input SpawnZombie(void) : "Spawn a zombie now."
+	input StartleZombie[L4D2](string) : "Startle the zombie (witches only). Optionally pass the name of a survivor to attack."
 
 	// Outputs
 	output OnSpawnNormal(void) : "Fired when the spawner creates a normal infected."
@@ -22,4 +20,7 @@
 	output OnSpawnHunter(void) : "Fired when the spawner creates a Hunter."
 	output OnSpawnWitch(void) : "Fired when the spawner creates a Witch."
 	output OnSpawnTank(void) : "Fired when the spawner creates a Tank."
+	output OnSpawnSpitter[L4D2](void) : "Fired when the spawner creates a Spitter."
+	output OnSpawnJockey[L4D2](void) : "Fired when the spawner creates a Jockey."
+	output OnSpawnCharger[L4D2](void) : "Fired when the spawner creates a Charger."
 	]

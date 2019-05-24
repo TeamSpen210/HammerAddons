@@ -1,7 +1,6 @@
-
 @PointClass base(prop_door_rotating) 
-	appliesto(L4D) 
-	studioprop() 
+	appliesto(L4D, L4D2)
+	studioprop()
 = prop_door_rotating_checkpoint: "An entity used to place a special checkpoint door in the world."
 	[
 	]

@@ -1,7 +1,7 @@
 @PointClass base(Targetname) 
-	color(200 0 0) 
-	iconsprite("editor/ts2do/info_null.vmt") 
-	size(-8 -8 -8, 8 8 8) 
+	color(200 0 0)
+	iconsprite("editor/ts2do/info_null.vmt")
+	size(-8 -8 -8, 8 8 8)
 = info_null: "An entity that's immediately removed on spawning. Useful as a spotlight target."
 	[
 	]

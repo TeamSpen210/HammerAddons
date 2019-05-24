@@ -1,6 +1,6 @@
-@PointClass base(Targetname)
-	color(0 100 250) 
-	iconsprite("editor/math_colorblend.vmt") 
+@PointClass base(Targetname) 
+	color(0 100 250)
+	iconsprite("editor/math_colorblend.vmt")
 = math_colorblend: "Used to create a blend between two colors for controlling the color of another entity."
 	[
 	spawnflags(flags)  =

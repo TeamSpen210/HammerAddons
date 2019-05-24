@@ -1,26 +1,41 @@
-
 @PointClass base(Targetname, Angles, EnableDisable) 
-	appliesto(L4D) 
-	studioprop() 
+	appliesto(L4D, L4D2)
+	studioprop()
 = trigger_finale: "Finale Trigger"
 	[
 	model(studio) : "World model" : "models/props_misc/german_radio.mdl"
-	disableshadows(choices) : "Disable Shadows" : "0" : "Used to disable dynamic shadows on this entity." =
+	disableshadows(boolean) : "Disable Shadows" : 0 : "Used to disable dynamic shadows on this entity."
+
+	firstusedelay(float) : "First Use Delay" : 0 : "For two-part finale starts, delays this many seconds before allowing another +use."
+	usedelay(float) : "Use Delay" : 0 : "Starts the finale this many seconds after a +use."
+
+	type[engine](integer): "Finale Type" : 0
+	type(choices) : "Finale Type" : 0 : "Specifies which style of finale to trigger" =
 		[
-		0: "No"
-		1: "Yes"
+		0: "Standard"
+		1: "Gauntlet"
+		2: "Custom"
+		4: "Scavenge"
 		]
 
-	firstusedelay(float) : "First Use Delay" : "0" : "For two-part finale starts, delays this many seconds before allowing another +use."
-	usedelay(float) : "Use Delay" : "0" : "Starts the finale this many seconds after a +use."
+	scriptfile[L4D2](string) : "Script File"
+	versustravelcompletion[L4D2](float) : "Versus Travel" : "0.2" : "How much of the versus score is attained through travel to the finale ( not valid in gauntlet finale )"
+	issacrificefinale[L4D2](boolean) : "Is Sacrifice Finale" : 0 : "If true, one survivor has to be available to perform some action outside the escape vehicle."
+
 
 	// Inputs
 	input FinaleEscapeFinished(void) : "Give the survivors a victory."
 	input FinaleEscapeForceSurvivorPositions(void) : "Make the survivors stand still on the escape vehicle."
-	input FinaleEscapeVehicleReadyForSurvivors(void) : "Make survivors say something about how the vehicle has stopped now."
+	input FinaleEscapeVehicleReadyForSurvivors(void) : "Unlocks the escape vehicle navigation mesh areas, and makes survivors speak out that the vehicle has arrived."
 	input ForceFinaleStart(void) : "Start the finale now."
-	input EnableEscapeSequence(void) : "Allow the escape sequence to happen at the proper phase of the finale."
-	input DisableEscapeSequence(void) : "Block the escape sequence from happening (until re-enabled). Infected will still spawn."
+	input EnableEscapeSequence[L4D](void) : "Allow the escape sequence to happen at the proper phase of the finale."
+	input DisableEscapeSequence[L4D](void) : "Block the escape sequence from happening (until re-enabled). Infected will still spawn."
+	input GauntletStopPanic[L4D2](void) : "Move the gauntlet finale state out of continuous panic mode"
+	input AdvanceFinaleState[L4D2](void) : "Increments the finale state"
+	input SacrificeEscapeFailed[L4D2](void) : "Indicates the survivors failed the escape requirements"
+	input SacrificeEscapeSucceeded[L4D2](void) : "Indicates the surviors met the escape requirements"
+	input SacrificePlayerBeginsRun[L4D2](void) : "A player ( !Activator ) has committed to the sacrifice run"
+	input ForceTankSpawn[L4D2](void): "Possibly only for Gauntlet style finale in-play."
 
 	// Outputs
 	output FinaleEscapeStarted(void) : "Fired when the survivors should start their escape."

@@ -1,10 +1,9 @@
-
 @PointClass base(Targetname, Angles, Parentname) 
-	appliesto(L4D) 
-	studioprop("models/editor/camera.mdl") 
+	appliesto(L4D, L4D2)
+	studioprop("models/editor/camera.mdl")
 = point_viewcontrol_survivor: "A camera entity that controls the player's view. Travels from camera position to a first-person view on input."
 	[
-	fov(float) : "Field of view" : "90" : "Player FOV (if Set FOV spawnflag is set)"
+	fov(float) : "Field of view" : 90 : "Player FOV (if Set FOV spawnflag is set)"
 	fov_rate(float) : "Seconds to reach FOV target" : "1.0" : "Amount of time it should take to reach the specified FOV"
 	spawnflags(flags)  =
 		[
@@ -14,7 +13,8 @@
 
 
 	// Inputs
-	input Enable(void) : "Enable the point_viewcontrol, and start controlling the player's view."
+	input Enable(string) : "Enable the point_viewcontrol, and start controlling the player's view. " +
+		"Pass a survivor name to control that survivor's view.(ie '!zoey')"
 	input Disable(void) : "Disable the point_viewcontrol, and stop controlling the player's view."
 	input StartMovement(void) : "Start the movement to first-person view."
 	]

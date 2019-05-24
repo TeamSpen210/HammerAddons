@@ -16,9 +16,10 @@
 	spotlightlength(integer) : "Spotlight Length" : 500 : "Length of the spotlight beam."
 	spotlightwidth(integer) : "Spotlight Width" : 50 : "Width of the spotlight beam."
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
-	hdrcolorscale(float) : "HDR color scale." : 1 : "float value to multiply sprite color by when running in HDR mode."
-	
-	ignoresolid[!L4D, !CSGO, TF2](boolean) : "Ignore Solid" : 0 : "If set, this spotlight won't trace for solids."
+	hdrcolorscale(float) : "HDR color scale." : "0.7" : "float value to multiply sprite color by when running in HDR mode."
+	haloscale[since_L4D2](float) : "Halo size scale." : 60 : "float value to determine the size of the halo."
+	ignoresolid[TF2](boolean) : "Ignore Solid" : 0 : "If set, this spotlight won't trace for solids."
+
 
 	// Inputs
 	input LightOn(void) : "Turn the spotlight on."

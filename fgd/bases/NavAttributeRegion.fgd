@@ -1,0 +1,38 @@
+@BaseClass = NavAttributeRegion
+	[
+	spawnflags(flags)  =
+		[
+		2: "Empty (no wanderers)" : 0
+		32: "Battlestation" : 0
+		64: "Finale" : 0
+		128: "Mission Start" : 0
+		256: "Battlefield" : 0
+		1024: "Not Clearable" : 0
+		2048: "Checkpoint" : 0
+		4096: "Obscured" : 0
+		8192: "No mobs" : 0
+		32768: "Rescue Vehicle" : 0
+		65536: "Rescue Closet" : 0
+		524288: "No Threat" : 0
+		1048576: "Lying down" : 0
+		]
+
+	precise(choices) : "Precise" : 0 =
+		[
+		0: "Off"
+		1: "On"
+		]
+
+	crouch(choices) : "Crouch" : 0 =
+		[
+		0: "Off"
+		1: "On"
+		]
+
+	stairs(choices) : "Stairs" : 0 =
+		[
+		0: "Off"
+		1: "On"
+		]
+
+	]

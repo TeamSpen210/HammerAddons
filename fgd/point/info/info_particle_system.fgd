@@ -1,4 +1,3 @@
-
 @PointClass base(Targetname, Parentname, Angles, Reflection) 
 	studio("models/editor/cone_helper.mdl") 
 	line(255 255 255, targetname, cpoint1) 
@@ -69,6 +68,7 @@
 	effect_name(particlesystem) : "Particle System Name"
 	start_active(boolean) : "Start Active?" : 0
 	flag_as_weather[TF2](boolean) : "Flag as Weather?" : 0 : "Is this particle system going to be used as a weather effect?"
+	render_in_front[L4D2](boolean) : "Render In Front" : 0 : "Hack to allow particles to render in front of everything else."
 
 	cpoint1(target_destination) : "Control Point 1" : : "If set, control point 1 of the effect will be at this entity's location."
 	cpoint2(target_destination) : "Control Point 2" : : "If set, control point 2 of the effect will be at this entity's location. If control point 1 is not set, this will be ignored."

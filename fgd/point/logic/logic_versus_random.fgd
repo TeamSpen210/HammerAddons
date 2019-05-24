@@ -1,7 +1,6 @@
-
 @PointClass base(Targetname) 
-	appliesto(L4D) 
-	iconsprite("editor/logic_auto.vmt") 
+	appliesto(L4D, L4D2)
+	iconsprite("editor/logic_auto.vmt")
 = logic_versus_random: "Fires random outputs in the first round of a versus map, and then repeats those outputs in the second round of a versus map. "
 	[
 

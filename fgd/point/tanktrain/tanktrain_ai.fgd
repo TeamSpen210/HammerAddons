@@ -1,6 +1,6 @@
-@PointClass base(Targetname)
-	iconsprite("editor/tanktrain_ai.vmt") 
-	line(255 255 255, targetname, target) 
+@PointClass base(Targetname) 
+	iconsprite("editor/tanktrain_ai.vmt")
+	line(255 255 255, targetname, target)
 = tanktrain_ai: "Train chase AI"
 	[
 	target(target_destination) : "Train Name"
