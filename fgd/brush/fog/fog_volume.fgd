@@ -1,6 +1,0 @@
-@SolidClass base(Targetname, EnableDisable) = fog_volume: "An entity to control the fog in the map."
-	[
-	fogname(target_destination) : "Fog Name" : : "The name of the fog entity associated with this volume."
-	postprocessname(target_destination) : "Postprocess Name" : : "The name of the postprocess entity associated with this volume."
-	colorcorrectionname(target_destination) : "ColorCorrection Name" : : "The name of the color_correction entity associated with this volume."
-	]
