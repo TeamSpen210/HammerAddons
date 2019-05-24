@@ -426,7 +426,6 @@ def action_import(
                 ent = old_fgd[new_ent.classname]
             except KeyError:
                 raise ValueError("Classname not present in FGD!")
-            to_export = old_fgd
             # Now merge the two.
 
             if new_ent.desc not in ent.desc:
@@ -485,15 +484,15 @@ def action_import(
         else:
             # No existing one, just set appliesto.
             ent = new_ent
-            # We just write this entity in.
-            to_export = new_ent
 
         applies_to = get_appliesto(ent)
         if not match_tags(expanded, applies_to):
             applies_to.append(engine_tag)
+        if not applies_to:
+            ent.helpers.remove((HelperTypes.EXT_APPLIES_TO, []))
 
         with open(path, 'w') as f:
-            to_export.export(f)
+            ent.export(f)
 
         print('.', end='', flush=True)
     print()
