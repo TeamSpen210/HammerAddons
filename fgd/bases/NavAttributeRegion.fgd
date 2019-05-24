@@ -1,4 +1,4 @@
-@BaseClass = NavAttributeRegion
+@BaseClass appliesto(L4D2) = NavAttributeRegion
 	[
 	spawnflags(flags)  =
 		[
@@ -17,22 +17,7 @@
 		1048576: "Lying down" : 0
 		]
 
-	precise(choices) : "Precise" : 0 =
-		[
-		0: "Off"
-		1: "On"
-		]
-
-	crouch(choices) : "Crouch" : 0 =
-		[
-		0: "Off"
-		1: "On"
-		]
-
-	stairs(choices) : "Stairs" : 0 =
-		[
-		0: "Off"
-		1: "On"
-		]
-
+	precise(boolean) : "Precise" : 0
+	crouch(boolean) : "Crouch" : 0
+	stairs(boolean) : "Stairs" : 0
 	]
