@@ -2,6 +2,7 @@ Sprite
 {
 	$baseTexture "editor/ficool2/path_corner"
 	$spriteorientation "vp_parallel"
-	$spriteorigin "[.5 .5]"
+	// Align 32,48 with the origin.
+	$spriteorigin "[.5 0.75]"
 	$no_fullbright 1
 }

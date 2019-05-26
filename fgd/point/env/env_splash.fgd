@@ -1,8 +1,9 @@
 @PointClass base(Targetname, Angles) 
 	color(32 200 255) 
-	studio("models/editor/angle_helper.mdl") 
-	iconsprite("editor/ficool2/env_splash.vmt")
-= env_splash: "An entity that creates a splash effect at its origin. If the 'find water surface' spawnflag is set, it will instead trace down below itself to find the water surface on which to create splashes."
+	// Special model, so scale doesn't resize the sprite.
+	studio("models/editor/env_splash.mdl") 
+= env_splash: "An entity that creates a splash effect at its origin. " +
+	"If the 'find water surface' spawnflag is set, it will instead trace down below itself to find the water surface on which to create splashes."
 	[
 	scale(float) : "Scale of the splash" : 8.0
 	spawnflags(flags) : "spawnflags" =

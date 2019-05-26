@@ -1,7 +1,6 @@
 @PointClass base(Targetname, Parentname) 
 	color(255 0 0)
 	iconsprite("editor/env_blood.vmt")
-	size(-16 -16 -16, 16 16 16)
 = env_blood: "An entity used to spawn blood effects."
 	[
 	spraydir(angle) : "Spray Direction (Pitch Yaw Roll)" : "0 0 0" : "The general direction that the blood should spray and the direction to trace to apply the decal."

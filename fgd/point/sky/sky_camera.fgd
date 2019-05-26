@@ -1,5 +1,4 @@
 @PointClass base(Targetname, Angles) 
-	size(-16 -16 -16, 16 16 16) 
 	color(0 0 255) 
 	color(173 223 245) 
 	studioprop("models/editor/sky_camera.mdl") 

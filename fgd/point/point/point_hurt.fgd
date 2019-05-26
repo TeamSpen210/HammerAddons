@@ -1,7 +1,7 @@
 @PointClass base(Targetname)
 	sphere(DamageRadius) 
 	line(255 0 0, targetname, damagetarget) 
-	iconsprite("editor/game_end.vmt") 
+	iconsprite("editor/ficool2/point_hurt") 
 = point_hurt: "An entity that does damage to all entities in a radius around itself, with a specified delay.If 'Target Entity' is specified, th" + "e damage is only done to that entity."
 	[
 	damagetarget(target_destination) : "Target Entity" : : "If specified, only this entity will take damage. Otherwise, all entities within the Radius will take damage."

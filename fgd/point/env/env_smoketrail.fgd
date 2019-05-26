@@ -1,7 +1,6 @@
 @PointClass base(Targetname, Parentname) 
 	color(200 50 0)
-	size(-8 -8 -8, 8 8 8)
-	color(200 200 0)
+	iconsprite("editor/ficool2/env_smoketrail")
 	sphere(spawnradius)
 = env_smoketrail: "An entity that creates a smoke trail."
 	[

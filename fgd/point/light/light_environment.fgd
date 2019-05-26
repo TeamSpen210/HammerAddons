@@ -1,6 +1,5 @@
-
 @PointClass base(Angles) 
-	iconsprite("editor/light_env.vmt") 
+	iconsprite("editor/ficool2/light_env.vmt") 
 	color(255 255 0)
 	lightprop("models/editor/spot.mdl") 
 = light_environment: "Sets the color and angle of the light from the sun and sky."

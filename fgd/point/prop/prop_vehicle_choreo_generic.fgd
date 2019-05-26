@@ -1,10 +1,11 @@
-
-@PointClass base(BaseDriveableVehicle, Parentname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+@PointClass base(BaseDriveableVehicle, Parentname)
 	studioprop() 
 	color(240 180 250) = prop_vehicle_choreo_generic: "Generic Choreo vehicle used for magical events."
 	[
-	model(studio) : "World model" : "models/vehicles/prisoner_pod.mdl": "Model to use."
+	// Only default to this model if we know it exists.
+	model(studio) : "World model" : : "Model to use."
+	model[HL2, EP1, EP2](studio) : "World model" : "models/vehicles/prisoner_pod.mdl": "Model to use."
+
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/choreo_vehicle.txt"
 	ignoremoveparent[P2](boolean) : "Ignore Move Parent on Exit" : 0 : "Should the player ignore this vehicle's move parent when performing exit checks?"
 	ignoreplayer(boolean) : "Ignore Player collision" : 0 : "The player won't collide against this vehicle when moving around."

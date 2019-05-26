@@ -1,5 +1,6 @@
 @PointClass base(BaseNPC, Parentname, RenderFields, Shadow)
 	studio() 
+	bbox(-4 -4 -4, 4 4 4)
 = generic_actor: "Generic Actor NPC"
 	[
 	model(studio) : "Model"

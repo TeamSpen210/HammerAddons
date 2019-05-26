@@ -2,6 +2,7 @@ Sprite
 {
 	$baseTexture "editor/ficool2/point_push"
 	$spriteorientation "vp_parallel"
-	$spriteorigin "[.5 .5]"
+	// Put above the model.
+	$spriteorigin "[.5 1.5]"
 	$no_fullbright 1
 }
