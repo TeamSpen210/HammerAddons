@@ -1,4 +1,4 @@
-@BaseClass base(Targetname)
+@BaseClass base(BaseEntityPoint)
 	line(255 255 0, targetname, attach1) 
 	line(0 0 255, targetname, attach2) 
 	line(128 128 128, targetname, constraintsystem)

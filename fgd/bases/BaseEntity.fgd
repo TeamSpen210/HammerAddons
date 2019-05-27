@@ -1,3 +1,4 @@
+// Special case - entities that aren't quite brushes or point ents.
 @BaseClass = BaseEntity
 	[
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."

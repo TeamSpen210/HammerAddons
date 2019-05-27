@@ -1,8 +1,0 @@
-
-@BaseClass 
-	appliesto(P2, CSGO) = PaintableBrush
-	[
-
-	// Inputs
-	input RemovePaint(void) : "Remove paint from the brush entity."
-	]
