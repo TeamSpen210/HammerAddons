@@ -1,4 +1,3 @@
-
 @SolidClass base(Targetname, MasterEnt) 
 = trigger_autosave: "A trigger volume that autosaves when the player touches it."
 	[

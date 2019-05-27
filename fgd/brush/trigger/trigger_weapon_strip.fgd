@@ -1,4 +1,3 @@
-
 @SolidClass base(Trigger) 
  = trigger_weapon_strip: "A volumetric trigger that strips combat characters of all weapons"
 	[

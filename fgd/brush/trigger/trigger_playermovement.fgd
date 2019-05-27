@@ -1,4 +1,3 @@
-
 @SolidClass base(Trigger) 
 = trigger_playermovement: "An entity that can be used to disable player's automatic ducking/unducking when jumping."
 	[
@@ -10,5 +9,4 @@
 		4096: "Auto-walk while in trigger" : 0 [since_L4D]
 		8192 : "Disable jump while in trigger" [since_L4D2]
 		]
-
 	]

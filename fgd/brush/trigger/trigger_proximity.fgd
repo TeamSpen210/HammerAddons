@@ -1,5 +1,4 @@
 @SolidClass base(Trigger)
-	line(255 255 255, targetname, filtername) 
 	line(255 255 255, targetname, measuretarget) 
 	sphere(radius) 
 = trigger_proximity: "Measures the distance of the player within the trigger volume from a given point (and within a given radius). " +

@@ -1,7 +1,7 @@
-
 @SolidClass base(trigger_multiple) 
 	appliesto(since_ASW) 
-	line(255 255 255, targetname, childfiltername) = trigger_hierarchy: "A trigger volume that can will check if any of trigger's children pass a secondary filter."
+	line(255 255 255, targetname, childfiltername) 
+= trigger_hierarchy: "A trigger volume that can will check if any of trigger's children pass a secondary filter."
 	[
 	childfiltername(filterclass) : "Child Filter Name" : : "Filter to use to see if activator's children trigger me. See filter_activator_name for more explanation."
 	]

@@ -1,5 +1,5 @@
-
-@SolidClass base(Trigger, Condition) 
-	appliesto(TF2) = trigger_remove_tf_player_condition: "A trigger that will remove a condition (or all if set to INVALID) from tf players."
+@SolidClass base(Trigger, TFCondition) 
+	appliesto(TF2) 
+= trigger_remove_tf_player_condition: "A trigger that will remove a condition (or all if set to INVALID) from tf players."
 	[
 	]

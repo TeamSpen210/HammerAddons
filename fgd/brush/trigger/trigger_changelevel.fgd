@@ -1,5 +1,4 @@
-
-@SolidClass base(EnableDisable) 
+@SolidClass base(Trigger) 
 	line(255 255 255, targetname, landmark) 
 	color(200 0 0) 
 = trigger_changelevel: "An entity that triggers a level change.\nPlace an info_landmark in both maps that marks the 'same' location in each map.\n" + 
@@ -9,7 +8,6 @@
 "To control which entities go through the level transition, create one or more trigger_transitions and give them the same name as the landmark. " + 
 "Any entities within the trigger_transition(s) will go to the next map."
 	[
-	targetname(target_source) : "Name"
 	map(string) : "New Map Name"
 	landmark(target_destination) : "Landmark Name"
 	spawnflags(flags)  =

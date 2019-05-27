@@ -1,5 +1,16 @@
 
 @SolidClass base(Trigger, Targetname) 
-	appliesto(P2) = trigger_paint_cleanser: "A trigger volume that erases any gel within it. Will destroy prop_paint_bombs and info_paint_sprayer gel, but will not stop gel from streaking under it. It will also clean physics objects like cubes or turrets that touch it. Likely intended to be used with paint_cleanser particle effect (like P1 fizzlers, but red)."
+	appliesto(P2) 
+= trigger_paint_cleanser: "A trigger volume that erases any gel within it. " +
+	"Will destroy prop_paint_bombs and info_paint_sprayer gel, " +
+	"but will not stop gel from streaking under it. " + 
+	"It will also clean physics objects like cubes or turrets that touch it. " +
+	"Likely intended to be used with paint_cleanser particle effect (like P1 fizzlers, but red)."
 	[
+	// Flags, filters aren't functional on this entity.
+	spawnflags(flags) =
+		[
+		]
+
+	filtername(filterclass) readonly : "Filter Name" : : "Filters don't work on trigger_paint_cleanser!"
 	]

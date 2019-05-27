@@ -1,5 +1,4 @@
-@SolidClass base(Trigger, Targetname, MasterEnt) 
-	line(255 255 255, targetname, filtername)
+@SolidClass base(Trigger, MasterEnt, DamageType) 
 = trigger_hurt: "A trigger volume that damages entities that touch it."
 	[
 	damage(integer) : "Damage" : 20 : "The amount of damage done to entities that touch this trigger. " +
@@ -10,42 +9,6 @@
 		"The damage is done every half-second. See also 'Damage Model' for extra details on how damage can be dealt."
 	damagecap(integer) : "Damage Cap" : 20 : "Maximum damage dealt per second. " +
 		"This field is only used if you select the Doubling w/Forgiveness damage model, via the spawnflag."
-
-	damagetype[engine](integer) : "Damage Type" : 0
-	damagetype(choices) : "Damage Type" : 0 : "Kind of damage to apply. These fields can be ORed together. " =
-		[
-		0: "GENERIC"
-		1: "CRUSH"
-		2: "BULLET"
-		4: "SLASH"
-		8: "BURN"
-
-		16: "FREEZE" [!TF2, until_ASW]
-		16: "TRAIN" [TF2]
-		16: "VEHICLE" [since_ASW]
-
-		32: "FALL"
-		64: "BLAST"
-		128: "CLUB"
-		256: "SHOCK"
-		512: "SONIC"
-		1024: "ENERGYBEAM"
-		16384: "DROWN"
-		32768: "PARALYSE"
-		65536: "NERVEGAS" [!TF2]
-		65536: "SAWBLADE" [TF2]
-		131072: "POISON"
-		262144: "RADIATION"
-		524288: "DROWNRECOVER"
-
-		1048576: "CHEMICAL" [!TF2, until_ASW]
-		1048576: "CRITICAL" [TF2]
-		1048576: "ACID" [since_ASW]
-
-		2097152: "SLOWBURN"
-		4194304: "SLOWFREEZE"
-		16777216: "FULLGIB" [L4D2]
-		]
 
 	damagemodel[engine](boolean) : "Damage Model" : 0
 	damagemodel(choices) : "Damage Model" : 0 : "How damage is dealt. Normal always does the specified amount of damage each half second. " +

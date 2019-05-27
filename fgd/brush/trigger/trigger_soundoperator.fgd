@@ -1,4 +1,3 @@
-
 @SolidClass base(Trigger) 
 	appliesto(since_CSGO) = trigger_soundoperator: "An entity that can control sound operator parameters."
 	[

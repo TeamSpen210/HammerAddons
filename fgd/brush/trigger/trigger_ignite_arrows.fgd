@@ -1,5 +1,5 @@
-
-@SolidClass base(Trigger, Parentname, Targetname, Origin) 
-	appliesto(TF2) = trigger_ignite_arrows: "Trigger that ignites arrows on bows held by Snipers who touch the trigger while looking at the origin."
+@SolidClass base(Trigger, Origin) 
+	appliesto(TF2) 
+= trigger_ignite_arrows: "Trigger that ignites arrows on bows held by Snipers who touch the trigger while looking at the origin."
 	[
 	]

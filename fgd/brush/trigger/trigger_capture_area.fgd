@@ -1,5 +1,4 @@
-
-@SolidClass base(Targetname, EnableDisable, Parentname) 
+@SolidClass base(Trigger) 
 	appliesto(TF2) = trigger_capture_area: "Capture Area"
 	[
 	area_cap_point(target_source) : "Control point" : : "Name of the control point this area is linked to."

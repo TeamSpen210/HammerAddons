@@ -1,6 +1,6 @@
-
-@SolidClass base(Trigger, Targetname, TeamNum) 
-	appliesto(TF2) = trigger_rd_vault_trigger: "A trigger used to mark where players can steal credits."
+@SolidClass base(Trigger, TeamNum) 
+	appliesto(TF2) 
+= trigger_rd_vault_trigger: "A trigger used to mark where players can steal credits."
 	[
 
 	// Outputs

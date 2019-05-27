@@ -1,8 +1,7 @@
-
-@SolidClass base(Trigger, Targetname, Reflection) 
+@SolidClass base(Trigger, Reflection) 
 	appliesto(P1, P2) = trigger_portal_cleanser: "A trigger volume that disolves any entities that touch it and fizzles active portals when the player touches it.|||An Aperture Science Material Emancipation Grid."
 	[
-	visible[P2](boolean) : "Visible" : 1 : "If the fizzler is visible."
+	visible[P2](boolean) : "Visible" : 1 : "If the fizzler is visible. This controls whether sounds will play."
 	usescanline[P2](boolean) : "Use Scanline" : 1 : "If the field uses a scanline particle effect."
 
 	// Inputs
@@ -11,5 +10,5 @@
 	// Outputs
 	output OnDissolve(void) : "Fired whenever an entity is dissolved."
 	output OnFizzle(void) : "Fired whenever an portals are fizzled."
-	output OnDissolveBox(void) : "This cleanser dissolved an entity with a targetname of	'Box.'"
+	output OnDissolveBox(void) : "This cleanser dissolved an entity with a targetname of 'Box.'"
 	]

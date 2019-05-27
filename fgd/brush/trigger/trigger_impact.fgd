@@ -1,4 +1,4 @@
-@SolidClass base(Targetname, Origin, Angles)
+@SolidClass base(Trigger, Origin, Angles)
 = trigger_impact: "A trigger volume that can be told to push all physics objects that are inside of it in the direction specified by this " +
 	"trigger's angles.\n" +
 	"Also outputs the force at the time of impact for anyone else that wants to use it."

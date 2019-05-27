@@ -1,5 +1,4 @@
-
-@SolidClass base(Trigger, Targetname) 
+@SolidClass base(Trigger) 
 	appliesto(TF2) = trigger_stun: "A trigger volume that stuns entities that touch it."
 	[
 	trigger_delay(float) : "Trigger Delay" : 0 : "Delay after an entity touches that we fire our first stun."

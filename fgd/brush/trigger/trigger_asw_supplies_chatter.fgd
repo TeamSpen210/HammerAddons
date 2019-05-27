@@ -8,8 +8,4 @@
 		0: "Mixed"
 		1: "No ammo pickups"
 		]
-
-
-	// Outputs
-	output OnTrigger(void) : "Fired whenever the trigger is activated."
 	]

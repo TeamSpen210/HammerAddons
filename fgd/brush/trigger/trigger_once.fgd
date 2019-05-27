@@ -1,8 +1,4 @@
-@SolidClass base(TriggerOnce) 
-	line(255 255 255, targetname, filtername)
+@SolidClass base(TriggerOnce)
 = trigger_once: "A trigger volume that removes itself after it is triggered once."
 	[
-
-	// Outputs
-	output OnTrigger(void) : "Fired whenever the trigger is activated."
 	]

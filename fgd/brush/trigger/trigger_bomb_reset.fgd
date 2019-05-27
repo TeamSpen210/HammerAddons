@@ -1,5 +1,5 @@
-
 @SolidClass base(Trigger) 
-	appliesto(CSGO) = trigger_bomb_reset: "A trigger volume that resets the bomb by teleporting it back into the playable area."
+	appliesto(CSGO) 
+= trigger_bomb_reset: "A trigger volume that resets the bomb by teleporting it back into the playable area."
 	[
 	]

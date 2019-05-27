@@ -1,5 +1,4 @@
-@SolidClass base(Trigger) 
-	line(255 255 255, targetname, filtername)
+@SolidClass base(Trigger)
 = trigger_multiple: "A trigger volume that can be triggered multiple times."
 	[
 	wait(integer) : "Delay Before Reset" : 1 : "Amount of time, in seconds, after the trigger_multiple has triggered before it can be triggered again. " +
@@ -16,13 +15,7 @@
 	allowincap[L4D, L4D2](boolean) : "Incapacitated players can trigger" : 0
 	allowghost[L4D, L4D2](boolean) : "Ghost players can trigger" : 0
 
-	// Inputs
-	input TouchTest(void) : "Tests if the trigger is being touched and fires an output based on whether the value is true or false."
-
 	// Outputs
-	output OnTrigger(void) : "Fired whenever the trigger is activated."
-	output OnTouching(void) : "Fired when the TestTouch input is true (something is touching the trigger.)"
-	output OnNotTouching(void) : "Fired when the TestTouch input is not true (nothing is touching the trigger.)"
 	output OnEntireTeamStartTouch[L4D, L4D2](void) : "Fired when an entire team starts touching the trigger."
 	output OnEntireTeamEndTouch[L4D, L4D2](void) : "Fired when an entire team stops touching the trigger."
 	]

@@ -1,5 +1,4 @@
-@SolidClass base(Trigger) 
-	line(255 255 255, targetname, filtername)
+@SolidClass base(Trigger)
 = trigger_push: "A trigger volume that pushes entities that touch it."
 	[
 	pushdir(angle) : "Push Direction (Pitch Yaw Roll)" : "0 0 0" : "Angles indicating the direction to push touched entities."

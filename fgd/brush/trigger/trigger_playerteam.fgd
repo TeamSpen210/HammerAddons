@@ -1,7 +1,7 @@
-
 @SolidClass base(Trigger) 
 	appliesto(P2) 
-= trigger_playerteam: "Allows distinguishing which player touched the trigger. Use with a logic_coop_manager to detect when both players are inside."
+= trigger_playerteam: "Allows distinguishing which player touched the trigger. " +
+	"Use with a logic_coop_manager to detect when both players are inside."
 	[
 	target_team[engine](integer) : "Target Team" : 0
 	target_team(choices) : "Target Player" : 0 : "Which player (or both) to allow to touch this trigger." =

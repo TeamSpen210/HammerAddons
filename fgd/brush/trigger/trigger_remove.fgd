@@ -1,6 +1,8 @@
-
-@SolidClass base(Trigger, Targetname) 
-	line(255 255 255, targetname, filtername) = trigger_remove: "A trigger volume that removes any entities that touch it. Be careful, removing some entities can cause instability. This is not the same as killing entities. i.e. NPCs removed in this manner will not fire their OnKilled outputs."
+@SolidClass base(Trigger) 
+= trigger_remove: "A trigger volume that removes any entities that touch it. " +
+	"Be careful, removing some entities can cause instability. " +
+	"This is not the same as killing entities. i.e. NPCs removed in this manner " +
+	"will not fire their OnKilled outputs."
 	[
 
 	// Outputs

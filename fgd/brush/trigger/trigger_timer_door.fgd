@@ -1,4 +1,3 @@
-
 @SolidClass base(Trigger) 
 	appliesto(TF2) = trigger_timer_door: "A trigger that will open/close the door base filtered objects."
 	[

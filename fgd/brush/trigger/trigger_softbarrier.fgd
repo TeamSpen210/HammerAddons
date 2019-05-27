@@ -1,6 +1,6 @@
-
 @SolidClass base(Trigger) 
-	appliesto(CSGO) = trigger_softbarrier: "A trigger volume that softly slows player velocity in a given direction."
+	appliesto(CSGO) 
+= trigger_softbarrier: "A trigger volume that softly slows player velocity in a given direction."
 	[
 	pushdir(angle) : "Push Direction (Pitch Yaw Roll)" : "0 0 0" : "Angles indicating the direction to slow player velocity."
 
