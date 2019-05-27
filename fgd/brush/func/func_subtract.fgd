@@ -1,6 +1,6 @@
-
-@SolidClass base(DXLevelChoice) 
-	appliesto(ASW) 
-	color(0 180 0) = func_subtract: "Subtracts geometry from other brushes (use vmf_subtract.exe)"
+@SolidClass 
+appliesto(ASW) 
+	color(0 180 0) 
+= func_subtract: "Subtracts geometry from other brushes (use vmf_subtract.exe)"
 	[
 	]

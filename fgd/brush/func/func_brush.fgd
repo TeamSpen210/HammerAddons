@@ -1,5 +1,4 @@
-
-@SolidClass base(Targetname, Parentname, Origin, RenderFields, Global, Inputfilter, EnableDisable, Shadow, Reflection, PaintableBrush, compMinLight) 
+@SolidClass base(BaseEntityVisBrush, EnableDisable, Toggle) 
 = func_brush: "An brush built entity with various features."
 	[
 	spawnflags(flags) : "spawnflags" =
@@ -20,10 +19,10 @@
 	invert_exclusion(boolean) : "Invert NPC class exclusion" : "0" : "If set, then the excluded NPC class will consider this brush solid, and all other NPC classes will consider it non-solid."
 	
 	solidbsp(boolean) : "Solid BSP" : "0" : "Set this if this brush is in heirarchy with a moving object of some kind, and the player can stand on this brush."
-	
-	vrad_brush_cast_shadows(boolean) : "Shadows" : "0" : "Set this if this brush casts lightmap shadows." 
+
 	// Inputs
-	input Alpha(integer) : "Sets the brush's alpha value."
-	input SetExcluded(string) : "Change the NPC class excluded from collisions"
-	input SetInvert(integer) : "Set the state of invversion for NPC class exclusion (0 or 1)"
+	input SetExcluded(string) : "Change the NPC class excluded from collisions."
+	input SetInvert(boolean) : "Set the state of inversion for NPC class exclusion (0 or 1)."
+
+	input Toggle(void) : "Toggle visibility/solidity of this brush."
 	]

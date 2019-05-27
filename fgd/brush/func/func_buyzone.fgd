@@ -1,5 +1,4 @@
-
-@SolidClass base(Targetname, TeamNum) 
+@SolidClass base(BaseEntityBrush, TeamNum) 
 	appliesto(CSGO) = func_buyzone: "Buy Zone. Players can buy equipment while standing in this zone, if the zone matches their current team.\n\nA single Buy Zone entity must be either terrorist or counter-terrorist, it cannot be both. Should have the toolstrigger material applied to all sides"
 	[
 

@@ -1,5 +1,4 @@
-
-@SolidClass base(Targetname, Origin, EnableDisable, TeamNum) 
+@SolidClass base(Trigger, TeamNum) 
 	appliesto(TF2) = func_passtime_goal: "Players or passtime balls that touch this will cause a score for whichever team touches it. You can limit which teams are allowed to touch it."
 	[
 	points(float) : "Points" : 1 : "How many points the team gets for scoring here."

@@ -1,5 +1,4 @@
-
-@SolidClass base(Targetname) 
+@SolidClass base(BaseEntityVisBrush) 
 	appliesto(P2) = func_camera_target: "Used to produce perfectly reflective glass that renders world + entities."
 	[
 	]

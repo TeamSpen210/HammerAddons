@@ -1,5 +1,5 @@
 
-@SolidClass base(Targetname, EnableDisable, TeamNum) 
-	appliesto(TF2) = func_passtime_goalie_zone
+@SolidClass base(Trigger, TeamNum) 
+	appliesto(TF2) = func_passtime_goalie_zone : "Passtime balls that touch this will count as a goal."
 	[
 	]

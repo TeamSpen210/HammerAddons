@@ -1,3 +1,3 @@
-@SolidClass appliesto(L4D2) base(Targetname, Parentname) = func_nav_connection_blocker: "A brush entity that prevents navigation mesh (on creation) connections to be made through its volume."
+@SolidClass appliesto(L4D2) base(BaseEntityBrush) = func_nav_connection_blocker: "A brush entity that prevents navigation mesh (on creation) connections to be made through its volume."
 	[
 	]

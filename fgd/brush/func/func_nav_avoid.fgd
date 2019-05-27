@@ -1,8 +1,10 @@
 
-@SolidClass base(Targetname) 
+@SolidClass base(BaseEntityBrush, TeamNum) 
 	appliesto(TF2) = func_nav_avoid: "Influence bots to avoid this region by increasing the pathfinding cost within it."
 	[
-	tags(string) : "Tags" : : "A space delimited list of tags. A tag is a label with no spaces. If a TFBot has at least one matching tag, it will pay attention to this entity. Tags that are automatically set on TFBots include bomb_carrier, common, mission_sniper, mission_spy, mission_sentry_buster, or any class name."
+	tags(string) : "Tags" : : "A space delimited list of tags. A tag is a label with no spaces. " +
+	"If a TFBot has at least one matching tag, it will pay attention to this entity. " +
+	"Tags that are automatically set on TFBots include bomb_carrier, common, mission_sniper, mission_spy, mission_sentry_buster, or any class name."
 	team(choices) : "Team" : "-2" : "Which team will avoid this region" =
 		[
 		-2: "Everyone"
@@ -10,12 +12,7 @@
 		3: "Blue"
 		]
 
-	start_disabled(choices) : "Start Disabled" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	start_disabled(boolean) : "Start Disabled" : 0
 
 	// Inputs
 	input Enable(void) : "Enable"

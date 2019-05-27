@@ -1,6 +1,6 @@
 
 @SolidClass base(func_movelinear) 
-	appliesto(!TF2, !CSGO) = func_lookdoor: "A door that moves either when looked by a targeted object or when a target object comes near the door.  Behavior can be either based on viewing direction or proximity alone, or on a combination of both.  If inverted the doors behavior will be the opposite."
+= func_lookdoor: "A door that moves either when looked by a targeted object or when a target object comes near the door.  Behavior can be either based on viewing direction or proximity alone, or on a combination of both.  If inverted the doors behavior will be the opposite."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

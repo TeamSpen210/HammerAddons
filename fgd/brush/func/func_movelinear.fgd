@@ -1,4 +1,4 @@
-@SolidClass base(Targetname, Parentname, Origin, RenderFields, ToggleDraw, Reflection) 
+@SolidClass base(BaseEntityBrush) 
 	sphere(movedistance)
 = func_movelinear: "A brush entity that moves linearly along a given distance, in a given direction."
 	[
@@ -10,7 +10,7 @@
 
 	startposition(float) : "Start Position" : 0 : "Position of brush when spawned, where 0 is the starting position and 1 is the opened position. " +
 		"Negatives will position it in the opposite direction."
-	speed(integer) : "Speed" : 100 : "The speed that the brush moves, in units per second."
+	speed(float) : "Speed" : 100 : "The speed that the brush moves, in units per second."
 	movedistance(float) : "Move Distance" : 100 : "The distance from the starting point that the brush should move."
 	blockdamage(float) : "Block Damage" : 0 : "The amount of damage to do to any entity that blocks the brushes, per frame."
 	startsound(sound) : "Sound played when the brush starts moving."

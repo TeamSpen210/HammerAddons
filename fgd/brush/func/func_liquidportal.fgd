@@ -1,8 +1,8 @@
 
-@SolidClass base(Origin, Angles) 
-	appliesto(P1) = func_liquidportal: "A space that fills with portal liquid and teleports entities when done filling"
+@SolidClass base(BaseEntityBrush) 
+	appliesto(P1) = func_liquidportal: "A space that fills with portal liquid and teleports entities when done filling."
 	[
-	initiallinkedportal(string) : "Linked liquid portal."
+	initiallinkedportal(target_destination) : "Linked liquid portal."
 	filltime(float) : "Fill Time (sec)" : 10 : "How long the volume takes to fill in seconds."
 
 	// Inputs

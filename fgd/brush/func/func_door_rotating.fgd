@@ -1,4 +1,4 @@
-@SolidClass base(Door, Origin, Angles) = func_door_rotating: "A brush entity for use as a rotating player-useable door."
+@SolidClass base(Door) = func_door_rotating: "A brush entity for use as a rotating player-useable door."
 	[
 	spawnflags(flags)  =
 		[
@@ -10,7 +10,9 @@
 		]
 
 	distance(integer) : "Distance" : 90 : "The amount, in degrees, that the button should rotate when it's pressed."
-	solidbsp(choices) : "Solid Type" : 0 =
+
+	solidbsp[engine](boolean) : "Solid BSP Mode"
+	solidbsp(choices) : "Solid Type" : 0 : "How to calculate collisions. BSP is more rudimentarty but allows more stable collision with players."=
 		[
 		0: "VPhysics"
 		1: "BSP"

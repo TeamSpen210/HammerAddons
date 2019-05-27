@@ -1,4 +1,4 @@
-@SolidClass base(Targetname, NavAttributeRegion) 
+@SolidClass base(BaseEntityBrush, NavAttributeRegion) 
 	appliesto(L4D, L4D2)
 = func_nav_attribute_region: "A brush entity that holds attributes to be applied to regions of nav areas during generation."
 	[
@@ -18,5 +18,5 @@
 		]
 
 	// Inputs
-	input ApplyNavAttributes[!L4D2](void) : "Applies attributes."
+	input ApplyNavAttributes[L4D](void) : "Applies attributes."
 	]

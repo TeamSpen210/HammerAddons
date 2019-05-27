@@ -1,4 +1,4 @@
-@SolidClass base(Targetname, EnableDisable, Parentname, Origin)
+@SolidClass base(BaseEntityBrush, EnableDisable)
 = func_clip_vphysics: "A brush entity that's considered solid to vphysics."
 	[
 	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator collides with me. " +

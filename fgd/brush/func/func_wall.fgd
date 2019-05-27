@@ -1,6 +1,4 @@
-@SolidClass base(Targetname, RenderFields, Global, Shadow, compMinLight)
-	sphere(fademindist) 
-	sphere(fademaxdist) 
-= func_wall: "Legacy support. Use func_brush instead."
+@SolidClass base(BaseEntityBrush, Global)
+= func_wall: "Legacy support for Half-Life. Use func_brush instead. A general brush entity." 
 	[
 	]

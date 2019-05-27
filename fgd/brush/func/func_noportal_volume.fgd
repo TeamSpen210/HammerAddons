@@ -1,5 +1,5 @@
 
-@SolidClass base(Targetname, Parentname, Origin) 
+@SolidClass base(BaseEntityBrush, Origin) 
 	appliesto(P1, P2) = func_noportal_volume: "A region which prevents portal placement."
 	[
 	spawnflags(flags) : "spawnflags" =

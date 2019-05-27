@@ -1,7 +1,8 @@
-
-@SolidClass base(BreakableBrush, RenderFields, Shadow, Reflection) 
+@SolidClass base(BreakableBrush) 
 	quadbounds() 
-= func_breakable_surf: "A breakable surface, for partially breakable glass / tile / etc.  All faces but the desired visible one must be marked as NODRAW and that face must be 4 sided.  The material applied to the visible face must be set up to be breakable."
+= func_breakable_surf: "A breakable surface, for partially breakable glass / tile / etc. " +
+	"All faces but the desired visible one must be marked as NODRAW and that face must be 4 sided. " +
+	"The material applied to the visible face must be set up to be breakable."
 	[
 	spawnflags(flags)  =
 		[
@@ -33,5 +34,7 @@
 		]
 
 	// Inputs
-	input Shatter(vector) : "Shatter the window. Input a vector. First two coordinates are the X,Y center of the shattering (as values from from 0-1). The third coordinate is the radius of the shatter, in units."
+	input Shatter(vector) : "Shatter the window. Input a vector. " +
+		"First two coordinates are the X,Y center of the shattering (as values from from 0-1). " +
+		"The third coordinate is the radius of the shatter, in units."
 	]

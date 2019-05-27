@@ -1,5 +1,5 @@
 
-@SolidClass base(Targetname, Origin, EnableDisable) 
+@SolidClass base(BaseEntityBrush, EnableDisable) 
 	appliesto(TF2) = func_tfbot_hint: "Define 'hint' regions for TFBot behaviors"
 	[
 	team(choices) : "Team" : "-1" : "Which team will use this hint" =

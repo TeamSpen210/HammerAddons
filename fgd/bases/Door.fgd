@@ -1,23 +1,30 @@
-@BaseClass base(Targetname, Parentname, RenderFields, Global, Shadow, Reflection, MasterEnt, compMinLight) 
+@BaseClass base(BaseEntityVisBrush, MasterEnt) 
+	line(255 255 255, targetname, chainstodoor)
 = Door
 	[
-	speed(integer) : "Speed" : 100 : "The speed at which the door moves."
+
+
+	speed(float) : "Speed" : 100 : "The speed at which the door moves."
+
 	noise1(sound) : "Start Sound" : : "Sound to play when the door starts moving."
 	noise2(sound) : "Stop Sound" : : "Sound to play when the door stops moving."
 	startclosesound(sound) : "Start Close Sound" : : "(Optional) Sound to play when the door starts closing."
 	closesound(sound) : "Stop Close Sound" : : "(Optional) Sound to play when the door stops closing."
-	wait(integer) : "Delay Before Reset (-1 stay)" : 4 : "Amount of time, in seconds, after the door has opened before it closes. " +
+	loopmovesound(boolean) : "Loop Moving Sound?" : 0 : "If set to true, the door's 'Start Sound' will be continually looped until the door finishes moving."
+
+	wait(integer) : "Delay Before Reset (-1 stay)" : -1 : "Amount of time, in seconds, after the door has opened before it closes. " +
 		"Once it has closed, it can be used again. If the value is set to -1, the door never closes itself."
-	lip(integer) : "Lip" : 0 : "The amount, in inches, of the button to leave sticking out of the wall it recedes into when pressed. " +
+	lip(integer) : "Lip" : 0 : "The amount, in inches, of the door to leave sticking out of the wall it recedes into when pressed. " +
 		"Negative values make the button recede even further into the wall."
 	dmg(integer) : "Blocking Damage" : 0 : "Amount of damage done to entities that block the movement of this door, per frame."
+
+	chainstodoor(target_destination) : "Linked Door" : : "Passes the door's +use inputs and touch events onto a different door, so it also is activated."	
 	forceclosed(boolean) : "Force Closed" : 0 : "If set, this door will close no matter what. Useful for doors that have to close even " +
 		"if the player tries to block them with objects."
 	ignoredebris(boolean) : "Ignore Debris" : 0 : "If set this will change the door's collision group to one that ignore collisions with debris objects " +
 		"(note that this is not compatible with the non-solid-to-player spawnflag)."
 
-	message(string) : "Message If Triggered"
-	health(integer) : "Health (shoot open)" : 0
+	health(integer) : "Door Health" : : "The health of the door (allows someone to shoot it open). 0 means invincible."
 
 	locked_sound(sound) : "Locked Sound" : : "Sound played when the player tries to use the door, and fails because it's locked."
 	unlocked_sound(sound) : "Unlocked Sound" : : "Sound played when the button is door."
@@ -42,6 +49,7 @@
 		4096: "Door Silent" : 0
 		131072: "Block Infected nav when closed" : 0 [L4D, L4D2]
 		262144: "Block Survivor nav when closed" : 0 [L4D, L4D2]
+		65536: "New +USE rules - Allow +USE only when when the door is closed/closing or is open/opening and can be manually closed" : 0
 		]
 
 	locked_sentence(choices) : "Locked Sentence" : "0" : "A sentence played when the player tries to use the door, and fails because it's locked." =
@@ -71,8 +79,6 @@
 		8: "Maintenance area"
 		]
 
-	loopmovesound(boolean) : "Loop Moving Sound?" : 0 : "If set to true, the door's 'Start Sound' will be continually looped until the door finishes moving."
-
 	// Inputs
 	input Open(void) : "Open the door, if it is not fully open."
 	input Close(void) : "Close the door, if it is not fully closed."
@@ -80,6 +86,7 @@
 	input Lock(void) : "Lock the door."
 	input Unlock(void) : "Unlock the door."
 	input SetSpeed(float) : "Set the door speed."
+	input SetToggleState(bool) : "Force the door instantly to currently open or closed."
 
 	// Outputs
 	output OnClose(void) : "Fired when the door starts closing."

@@ -4,6 +4,7 @@
 	"lightmappedreflective in your material applied to the non-nodraw surfaces. " +
 	"See hl2/materials/glass/reflectiveglass001.vmt for an example. " +
 	"NOTE: currently, you cannot use reflective glass in scenes with water, " +
-	"and you can only have 1 reflective glass in your view frustum ( + pvs ) at a time."
+	"and you can only have 1 reflective glass in your view frustum ( + pvs ) at a time. " +
+	"Players will not see their own reflection unless they are in thirdperson mode."
 	[
 	]

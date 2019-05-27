@@ -1,7 +1,11 @@
-@SolidClass base(Targetname, BModelParticleSpawner) = func_dustmotes: "A brush entity that spawns sparkling dust motes within its volume."
+@SolidClass base(BaseEntityBrush, BModelParticleSpawner) = func_dustmotes: "A brush entity that spawns sparkling dust motes within its volume."
 	[
-	sizemin(string) : "Minimum Particle Size" : 10
-	sizemax(string) : "Maximum Particle Size" : 20
-	alpha(integer) : "Alpha" : 255
+	Alpha(integer) : "Particle Translucency (0 - 255)" : 30 : "Translucency of the particles."
+	SizeMin(string) : "Minimum Particle Size" : 100 : "This value determines the minimum size the particles can be."
+	SizeMax(string) : "Maximum Particle Size" : 200 : "This value determines the maximum size the particles can be."
+	FallSpeed(integer) : "Particle Fall Speed" : : "How fast the particles fall to the ground."
 	affectedbywind[since_CSGO](boolean) : "Affected By Wind" : 1 : "When set, the dust will be affected by any env_wind entity settings in the map."
+
+	input TurnOn(void) : "Turn on."
+	input TurnOff(void) : "Turn off."
 	]

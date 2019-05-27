@@ -1,5 +1,8 @@
-
-@SolidClass base(Targetname, TeamNum, EnableDisable, Toggle) 
+@SolidClass base(Trigger, TeamNum) 
 	appliesto(TF2) = func_respawnroom: "Designates a respawn room for a team."
 	[
+	input SetActive(void) : "Sets the respawn room as active."
+	input SetInactive(void) : "Sets the respawn room as inactive."
+	input ToggleActive(void) : "Toggles the respawn room between active and inactive."
+	input RoundActivate(void) : "Forces this entity to activate. Fired automatically at the start of a round."
 	]

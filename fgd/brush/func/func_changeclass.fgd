@@ -1,5 +1,5 @@
 
-@SolidClass base(Targetname, TeamNum, EnableDisable, Toggle) 
-	appliesto(TF2) = func_changeclass: "ChangeClass zone for players."
+@SolidClass base(Trigger, TeamNum) 
+	appliesto(TF2) = func_changeclass: "Obsoleted by func_respawnroom. Allows players to change class without suiciding in its volume."
 	[
 	]

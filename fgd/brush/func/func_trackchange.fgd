@@ -1,5 +1,31 @@
-
-@SolidClass base(Trackchange, compMinLight) 
-= func_trackchange: "An entity that works as a rotating/moving platform that will carry a train to a new track. It must be larger in X-Y planar area than the train, since it must contain the train within these dimensions in order to operate when the train is near it."
+@SolidClass base(BaseEntityVisBrush) 
+	line(255 255 255, targetname, train)
+	line(0 255 0, targetname, toptrack)
+	line(0 0 255, targetname, bottomtrack)
+= func_trackchange: 
+	"An entity that works as a rotating/moving platform that will carry a train to a new track. "+
+	"It must be larger in X-Y planar area than the train, since it must contain the train within "+
+	"these dimensions in order to operate when the train is near it. The track will rotate around its own origin. "+
+	"Similar variant to this entity is func_trackautochange, however you can't trigger func_trackautochange unless the path_track is a dead end. "+
+	"If Auto Activate Train flag is ticked, train isn't paused at the top/bottom of the path after func_trackchange has finished it's movement. Instead, it will continue moving forward and doesn't need to be reactivated by trigger. "+
+	"If selected, the platform only rotates in place of it's origin without travelling specified altitude. The top and the bottom path_tracks should have their origin positioned in the same coordinates."
 	[
+	height(integer) : "Travel Altitude" : 0 : "Travel distance, from top to bottom. If Start at Bottom flag is selected, the travel distance won't change from bottom to top, it will only make the platform start at bottom and awaits for func_tracktrain to arrive."
+	rotation(integer) : "Spin amount" : 0 : "The amount this platform should rotate as it moves, in degrees."
+	train(target_destination) : "Train to Switch" : : "Name of func_tracktrain this platform will transport to top/bottom track."	
+	toptrack(target_destination) : "Top Track" : : "Name of last path_track of the top path (if Start at Bottom flag is selected, this is the name of the first path_track at the top path)."			 	
+	bottomtrack(target_destination) : "Bottom Track" : : "Name of first path_track of the bottom track (if Start at Bottom flag is selected, this is the name of the last path_track at the bottom path)."
+	speed(integer) : "Move/Rotate Speed" : 0 : "Speed in which func_trackchange travel the whole way up/down (units per seconds)."			
+	
+	spawnflags(flags) =
+	[
+		1: "Auto Activate Train - see description" : 0
+		2: "Relink Track" : 0
+		8: "Start at Bottom - Platform starts at the bottom instead at the top path_track if this flag is ticked" : 0
+		16: "Rotate Only - see description" : 0
+		64: "X Axis - Train rotates around X axis instead of Z axis. Can be combined with Y Axis" : 0
+		128: "Y Axis - Train rotates around Y axis instead of Z axis. Can be combined with X Axis" : 0
+	]
+
+	input Trigger(void) : "Trigger the track change."
 	]

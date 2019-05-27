@@ -1,10 +1,11 @@
-@SolidClass base(Targetname) 
+@SolidClass base(BaseEntityVisBrush) 
 	sphere(DisappearDist)
 	sphere(DisappearMinDist)
 	sphere(DisappearMaxDist)
 = func_lod: "Brush-built model that fades out over a specified distance. " +
 	"Useful for creating world detail that doesn't need to be drawn far away, for performance reasons."
 	[
+	solid[engine](boolean) : "Solid" : 0
 	solid(choices) : "Solid" : 0 : "Set whether or not these brushes should collide with other entities." =
 		[
 		0: "Solid"

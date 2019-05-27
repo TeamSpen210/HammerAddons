@@ -1,4 +1,4 @@
-@SolidClass base(Targetname, Parentname, Origin)
+@SolidClass base(func_movelinear)
 = func_water_analog: "A water brush entity that moves linearly along a given distance, in a given direction. This is identical to func_movelinear."
 	[
 	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction the water will move, when told to 'Open'."

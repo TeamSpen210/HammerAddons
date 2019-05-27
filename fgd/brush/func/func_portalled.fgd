@@ -1,10 +1,11 @@
 
 @SolidClass base(func_portal_detector) 
-	appliesto(P2) = func_portalled: "Fires outputs when an entity teleports through a portal in its volume."
+	appliesto(P2) = func_portalled: "Fires outputs when the player teleports through a portal in its volume."
 	[
 	fireondeparture(boolean) : "Fire On Departure" : 1 : "Fire when the entity is entering this portal."
 	fireonarrival(boolean) : "Fire On Arrival" : 1 : "Fire when the entity is exiting this portal."
-	fireonplayer(boolean) : "Player" : 1 : "Fire when a player has portalled."
+	fireonplayer(boolean) readonly: "Player" : 1 : "Fire when a player has portalled. " +
+	"Entities don't get checked, so this is useless to change."
 
 	// Outputs
 	output OnEntityPrePortalled(void) : "Fires when the entity is about to portal."

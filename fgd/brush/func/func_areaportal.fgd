@@ -1,5 +1,4 @@
-
-@SolidClass base(Targetname)
+@SolidClass base(BaseEntity)
 	color(0 255 255) 
 	line(255 255 255, targetname, target) 
 = func_areaportal: "A portal brush used to manage visibility in maps. " +
@@ -7,7 +6,7 @@
 	"Both sides of a portal cannot touch the same area, for example, a doughnut shaped map would require at least two portals to divide the map into two areas. " +
 	"A linear map could be divided into two areas with a single area portal."
 	[
-	target(target_destination) : "Name of Linked Door" : : "(Optional) The name of a door whose open/closed state controls the on/off state of this area portal."
+	target(target_destination) : "Name of Linked Door" : : "(Optional) The name of a prop_door_rotating or func_door whose open/closed state controls the on/off state of this area portal."
 
 	startopen(boolean): "Start Open?": 1
 	startopen(choices) : "Initial State" : 1 =

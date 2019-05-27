@@ -1,4 +1,4 @@
-@SolidClass base(Targetname, Parentname, Origin, RenderFields) 
+@SolidClass base(BaseEntityVisBrush)
 	appliesto(L4D, L4D2)
 = func_elevator: "A brush entity that moves vertically."
 	[

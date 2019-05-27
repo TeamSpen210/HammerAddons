@@ -1,5 +1,4 @@
-
-@SolidClass base(Targetname, EnableDisable) 
+@SolidClass base(BaseEntityBrush, EnableDisable) 
 	appliesto(L4D) 
 = func_fire_extinguisher: "A brush entity that will fade out any ragdolls that touch it"
 	[

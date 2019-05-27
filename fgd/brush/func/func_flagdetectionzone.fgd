@@ -1,13 +1,8 @@
 
-@SolidClass base(Targetname, Parentname, EnableDisable, TeamNum) 
-	appliesto(TF2) = func_flagdetectionzone: "TF flag detection zone."
+@SolidClass base(Trigger, TeamNum) 
+	appliesto(TF2) = func_flagdetectionzone: "Detects when the flag (intelligence/australium/bomb) enters a zone. Compare with func_flag_alert."
 	[
-	alarm(choices) : "Alarm" : "0" : "Trigger bomb alarm." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	alarm(boolean) : "Alarm" : 0 : "Trigger bomb alarm."
 
 	// Inputs
 	input Test(void) : "Send OnStartTouchFlag & OnPickedUpFlag outputs if any player with flag is touching. Send OnEndTouchFlag & OnDroppedFlag outputs if no player with flag is touching."

@@ -1,6 +1,6 @@
-
-@SolidClass base(Targetname, Parentname) 
-	appliesto(since_L4D) 
-= func_detail_blocker: "A brush entity that prevents detail sprites from being placed inside its volume."
+@SolidClass
+	appliesto(since_L4D, TF2) 
+= func_detail_blocker: 
+	"A brush entity that prevents detail sprites from being placed inside its volume."
 	[
 	]

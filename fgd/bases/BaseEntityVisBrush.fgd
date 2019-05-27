@@ -1,7 +1,7 @@
 // All visible Brush entities have these options.
 @BaseClass base(BaseEntityBrush, Render) 
 	sphere(fademindist) sphere(fademaxdist)
-= BaseAnimating
+= BaseEntityVisBrush
 	[
 	effects(choices) : "Effect Flags" : 0 : "For configuring visual effects. If you want to combine effects, turn SmartEdit off and add the effect numbers together, i.e. 64 + 8 = 72." =
 		[

@@ -1,5 +1,7 @@
 
-@SolidClass base(Targetname, Parentname) 
-	appliesto(CSGO) = func_no_defuse: "No Defuse Area.  The counter-terrorists will not be able to defuse bombs while they are touching this trigger volume.\n\nThis is used in map design to prevent players from defusing bombs through walls or floors."
+@SolidClass base(BaseEntityBrush) 
+	appliesto(CSGO) = func_no_defuse: "No Defuse Area.  " +
+		"The counter-terrorists will not be able to defuse bombs while they are touching this trigger volume.\n\n" +
+		"This is used in map design to prevent players from defusing bombs through walls or floors."
 	[
 	]

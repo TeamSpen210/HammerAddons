@@ -1,4 +1,4 @@
-@SolidClass appliesto(L4D2) base(Targetname, EnableDisable) = func_extinguisher: "A brush entity that will delete inferno entities that touch it."
+@SolidClass appliesto(L4D2) base(BaseEntityBrush, EnableDisable) = func_extinguisher: "A brush entity that will delete inferno entities that touch it."
 	[
 	spawnflags(flags)  =
 		[

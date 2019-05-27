@@ -1,4 +1,4 @@
-@SolidClass base(Parentname, Global) 
+@SolidClass base(BaseEntityVisBrush) 
 	line(255 255 255, targetname, target)
 = func_traincontrols: "When used by the player, this entity overrides the player's controls to let them drive a train."
 	[

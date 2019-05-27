@@ -1,9 +1,7 @@
 
-@SolidClass base(Targetname, TeamNum, EnableDisable, Toggle) 
+@SolidClass base(Trigger, TeamNum) 
 	appliesto(TF2) = func_croc: "Crocs live here!"
 	[
-	filtername(filterclass) : "Filter Name" : : "Optional filter to use to see if activator triggers me."
-
 	// Outputs
 	output OnEat(void) : "Sent when the crocs eat a player."
 	output OnEatRed(void) : "Sent when the crocs eat a player on team RED."

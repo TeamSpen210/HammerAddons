@@ -1,4 +1,4 @@
-@SolidClass appliesto(L4D2) base(Targetname, Parentname, Origin) = func_buildable_button: "An timed button which calls into its script scope during button-pressing related events."
+@SolidClass appliesto(L4D2) base(BaseEntityVisBrush, Origin) = func_buildable_button: "An timed button which calls into its script scope during button-pressing related events."
 	[
 	spawnflags(flags)  =
 		[

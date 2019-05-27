@@ -1,23 +1,5 @@
-@SolidClass base(Targetname, Parentname, RenderFields, Global, Inputfilter, EnableDisable, Shadow) 
+@SolidClass base(func_brush) 
 	appliesto(L4D, L4D2)
 = func_playerinfected_clip: "Simple Clip brush that blocks player infected movement."
 	[
-	spawnflags(flags)  =
-		[
-		2: "Ignore player +USE" : 1
-		]
-
-	solidity(choices) : "Solidity" : 2 : "Used to control the solidity/collision of these brushes." =
-		[
-		0: "Toggle"
-		1: "Never Solid"
-		2: "Always Solid"
-		]
-
-	vrad_brush_cast_shadows(choices) : "Shadows" : 0 : "Set this if this brush casts lightmap shadows." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
 	]

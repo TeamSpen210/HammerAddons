@@ -1,11 +1,10 @@
 @SolidClass base(func_wall)
-= func_wall_toggle: "A brush entity that can be toggled on/off. When off, the brush will be non-solid and invisible. Does not cast lightmap shadows."
+= func_wall_toggle: "Legacy Support for Half-Life. Use func_brush instead. A general brush entity which can be toggled on/off When off, the brush will be non-solid and invisible. Does not cast lightmap shadows."
 	[
 	spawnflags(flags)  =
 		[
 		1: "Starts Invisible" : 0
 		]
-
 
 	// Inputs
 	input Toggle(void) : "Toggle the brush on/off. When off, the brush will be non-solid and invisible."

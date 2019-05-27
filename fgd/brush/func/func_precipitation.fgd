@@ -1,9 +1,10 @@
-@SolidClass base(Targetname, Parentname) 
+@SolidClass base(BaseEntityBrush) 
 = func_precipitation: "A brush entity that creates rain and snow inside its volume."
 	[
-	renderamt(integer) : "Density (0-100%)" : 5
+	renderamt(integer) : "Density (0-100%)" : 5 : "This is the amount of particles that fall down from top side of brush. " +
+		"However distance from first particle to second depends on a brush volume size!"
 	renderamt[ASW](integer) : "Density (0-100%)" : 100
-	rendercolor(color255) : "Color (R G B)" : "100 100 100"
+	rendercolor(color255) : "Color (R G B)" : "100 100 100" : "Color added to sprites which are rendered transparently (probably rain and snow particles)"
 	preciptype(choices) : "Precipitation Type" : "0" =
 		[
 		0: "Rain"
@@ -21,4 +22,8 @@
 	snowdustamt[ASW](float) : "Amount of snow dusting (1-100)" : 50
 	minspeed[P2](float) : "Minimum speed (snowfall only)" : 25
 	maxspeed[P2](float) : "Maximum speed (snowfall only)" : 35
+	
+	input Alpha(void) : "Changes the density of the rain, " +
+	"and may add additional particle effects like fog or leafs. " +
+	"Accepts inputs from -1 to 255."
 	]

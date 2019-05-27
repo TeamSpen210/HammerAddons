@@ -1,7 +1,7 @@
 
-@SolidClass base(Targetname) 
+@SolidClass base(BaseEntityBrush) 
 	appliesto(L4D) 
-= func_nav_stairs_toggle: "This will add or remove the 'STAIRS' attribute from all nav areas that overlap the brush"
+= func_nav_stairs_toggle: "This will add or remove the 'STAIRS' attribute from all nav areas that overlap the brush."
 	[
 	initialsetting(choices) : "Initial Setting" : "0" =
 		[

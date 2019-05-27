@@ -1,4 +1,4 @@
-@SolidClass base(Targetname, EnableDisable, NavBlocker) 
+@SolidClass base(BaseEntityBrush, NavBlocker) 
 	appliesto(TF2, L4D, L4D2, CSGO)
 = func_nav_blocker: "A brush entity that can block nav areas touching its AABB."
 	[
@@ -7,8 +7,9 @@
 	teamtoblock[TF2](choices) : "Team(s) to block" : -1 : "Team(s) this entity should block." =
 		[
 		-1: "Everyone"
-		2: "Red"
-		3: "Blue"
+		2: "RED"
+		3: "BLU"
+		5: "Boss"
 		]
 
 	teamtoblock[CSGO](choices) : "Team(s) to block" : -1 : "Team(s) this entity should block" =
@@ -25,10 +26,10 @@
 		3: "Infected"
 		]
 
-	affectsflow[TF2, CSGO](integer) : "Affects Flow?" : 0 : "Does this func_nav_blocker block flow in the level? " +
+	affectsflow[TF2, CSGO](boolean) : "Affects Flow?" : 0 : "Does this func_nav_blocker block flow in the level? " +
 		"Only func_nav_blockers with this enabled will cause flow recomputation on blocking/unblocking."
 
 	// Inputs
-	input BlockNav[!L4D2](string) : "Starts blocking nav areas."
-	input UnblockNav[!L4D2](void) : "Stops blocking nav areas."
+	input BlockNav(string) : "Starts blocking nav areas."
+	input UnblockNav(void) : "Stops blocking nav areas."
 	]

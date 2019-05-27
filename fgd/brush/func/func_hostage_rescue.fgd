@@ -1,4 +1,3 @@
-
 @SolidClass base(Trigger) 
 	appliesto(CSGO) = func_hostage_rescue: "Hostage Rescue Zone. When a hostage is led into this zone, it is marked as rescued."
 	[

@@ -1,5 +1,4 @@
-
-@SolidClass base(Targetname, EnableDisable, Toggle) 
+@SolidClass base(Trigger) 
 	appliesto(TF2) = func_respawnflag: "Designates an area that triggers the flag to reset when it touches the area."
 	[
 	]

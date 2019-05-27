@@ -1,4 +1,7 @@
-@SolidClass base(Targetname, Parentname, RenderFields, Shadow, compMinLight) = func_conveyor
+@SolidClass base(BaseEntityVisBrush) = func_conveyor :
+		"A brush entity that functions as a conveyor belt, with a moving surface. " +
+		"The surface material should have a ConveyorScroll Material Proxy, " +
+		"to synchronize the material movement and push effect."
 	[
 	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction conveyor moves."
 	spawnflags(flags)  =
@@ -7,9 +10,9 @@
 		2: "Not Solid" : 0
 		]
 
-	speed(string) : "Conveyor Speed" : "100"
+	speed(float) : "Conveyor Speed" : "100"
 
 	// Inputs
-	input ToggleDirection(void) : "ToggleDirection"
-	input SetSpeed(integer) : "SetSpeed"
+	input ToggleDirection(void) : "Change direction of conveyor."
+	input SetSpeed(float) : "Sets Conveyor Speed."
 	]

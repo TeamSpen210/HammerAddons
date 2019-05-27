@@ -1,4 +1,4 @@
-@SolidClass base(Targetname, Parentname, Origin, Angles, RenderFields, Shadow, Reflection, compMinLight)
+@SolidClass base(BaseEntityVisBrush)
 = func_platrot: "A brush entity that moves vertically, and can rotate while doing so."
 	[
 	spawnflags(flags)  =

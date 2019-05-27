@@ -1,12 +1,6 @@
-
-@SolidClass base(Targetname, Parentname, EnableDisable) 
-	appliesto(P1, P2) = func_portal_orientation: "Adjusts a portal's rotation to match a specified angle. The 'Bottom' of the portal points in the specified diretion.|||Adjusts a portal's rotation to match a specified angle. The 'Bottom' of the portal points in the specified direction."
+@SolidClass base(BaseEntityBrush, EnableDisable) 
+	appliesto(P1, P2) = func_portal_orientation: "Adjusts a portal's rotation to match a specified angle. The 'Bottom' of the portal points in the specified direction."
 	[
 	anglestoface(angle) : "Angles to face" : "0 0 0" : "The 'floor' of the portal pair linkage will be in this direction."
-	matchlinkedangles(choices) : "Match linked angles." : "0" : "If set, portals placed in this volume will have their angles match their linked portals. This only works for floor or ceiling portals with a currently linked partner." =
-		[
-		0: "False"
-		1: "True"
-		]
-
+	matchlinkedangles(boolean) : "Match linked angles." : "0" : "If set, portals placed in this volume will have their angles match their linked portals. This only works for floor or ceiling portals with a currently linked partner."
 	]
