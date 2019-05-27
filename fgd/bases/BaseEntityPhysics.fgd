@@ -1,0 +1,62 @@
+// Stripped down version of BaseAnimating for physically-simulated objects, which do not have some keyvalues
+
+@BaseClass base(BaseEntityPoint, Render) 
+	sphere(fademindist) sphere(fademaxdist)
+= BaseEntityAnimating
+	[	
+	model(studio) : "Model" :  : "The model this entity should appear as. 128-character limit."
+	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. " +
+		"Set this to a number other than 0 to use that skin instead of the default."
+
+	solid(choices) : "Collisions" : : "Method of collision for this entity. Can be changed at runtime with AddOutput." =
+		[
+		0: "None"
+		1: "BSP (QPhysics)"
+		2: "Bounding Box"
+		3: "Oriented Bounding Box"
+		4: "Oriented Bounding Box, constrained to Yaw only"
+		5: "Custom (defined per-entity, if not defined the entity will have bizarre collision behavior)"
+		6: "VPhysics"
+		]
+
+	body(integer) : "Bodygroup" : 0 : "Sets the body group index for the model, starting with 0, if available."
+	texframeindex(integer) : "Texture Frame" : : "The frame number for any animated textures on this entity."
+
+	LightingOrigin(target_destination) : "Lighting Origin" :  : "Select any entity (not info_lighting!) from which to sample lighting instead of the entity's origin."
+	LightingOriginHack(target_destination) : "Lighting Origin Offset" :  : "The info_lighting_relative from which to sample lighting instead of the entity's origin."
+	
+	damagefilter(target_destination) : "Damage Filter" :  : "When this entity receives damage, it will filter by this entity."
+	fademindist(float) : "Start Fade Distance/Pixels" : : "Distance at which the entity starts fading. If <0, the entity will disappear instantly when end fade is hit. The value will scale appropriately if the entity is in a 3D Skybox."
+	fademaxdist(float) : "End Fade Distance/Pixels" : : "Distance at which the entity ends fading. If <0, the entity won't disappear at all. The value will scale appropriately if the entity is in a 3D Skybox."
+	fadescale(float) : "Fade Scale" : : "If specified in the worldspawn, or if the engine is running below DirectX 8, entities will fade out even if the fade distances above aren't specified. This value gives more control over when this happens: numbers smaller than 1 cause the entity to fade out at further distances, and greater than 1 cause it to fade out at closer distances. Using 0 turns off the forced fade altogether."	
+	shadowcastdist(integer) : "Shadow Cast Distance" : : "Sets how far the entity casts dynamic shadows, in units. 0 means default distance from the shadow_control entity."
+	disableshadows(boolean) : "Disable Shadows?" : 0 : "Prevent the entity from creating cheap render-to-texture/dynamic shadows."
+	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents dynamic shadows (e.g. player and prop shadows) from appearing on this entity."
+	modelscale[EP1, EP2, TF2](float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
+	
+	linedivider_phys(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	// Inputs
+	input Skin(integer) : "Changes the model skin to the specified number."
+	input SetBodyGroup(integer) : "Change the model's bodygroup to the specified index number."
+
+	input Ignite(void) : "Makes the entity catch on fire indefinitely."
+	input IgniteLifetime(float) : "Makes the entity catch on fire for a given amount of time."
+	input IgniteNumHitboxFires(integer) : "Makes the entity catch on fire with a given number of hitbox fire particles."
+	input IgniteHitboxFireScale(float) : "Makes the entity catch on fire with a given scale for hitbox fire particles."
+	input BecomeRagdoll(void) : "Kills the entity and creates a client-side ragdoll from the model. Input is only passed if the model contains ragdolling, for other models phys_convert can be used instead."
+	input SetLightingOrigin(string) : "Sets the entity to use as the entity's lighting origin. Any entity can be used."
+	input SetLightingOriginHack(string) : "Offsets the entity's lighting origin by their distance from an info_lighting_relative."
+	input fademindist(float) : "Sets distance at which the entity starts fading. If <0, the entity will disappear instantly when end fade is hit. The value will scale appropriately if the entity is in a 3D Skybox."
+	input fademaxdist(float) : "Sets distance at which the entity ends fading. If <0, the entity won't disappear at all. The value will scale appropriately if the entity is in a 3D Skybox."
+	input SetDamageFilter(string) : "Sets a filter for this entity for when it receives damage. Pass in an empty string to clear the damage filter."
+	input DisableShadow(void) : "Allows the entity to draw a render target (dynamic) shadow."
+	input EnableShadow(void) : "Prevents the entity from drawing a render target (dynamic) shadow."
+	
+	input AlternativeSorting[SINCE_EP1](boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
+	input SetModelScale[EP1, EP2](vector) : "Takes two values separated by a space. The first is the target model scale. " +
+		"The second value is the number of seconds the change in scale will be spread over."
+
+	// Outputs
+	output OnIgnite(void) : "Fired when this object catches fire."
+	]

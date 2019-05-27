@@ -1,7 +1,5 @@
-
 @BaseClass = Toggle
 	[
-
 	// Inputs
 	input Toggle(void) : "Toggle the enabled/disabled status of this entity."
 	]

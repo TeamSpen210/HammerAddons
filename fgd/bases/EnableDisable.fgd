@@ -1,6 +1,4 @@
-
-@BaseClass 
-= EnableDisable
+@BaseClass = EnableDisable
 	[
 	startdisabled(boolean) : "Start Disabled" : 0
 

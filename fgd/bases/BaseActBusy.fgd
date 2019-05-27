@@ -1,5 +1,4 @@
-
-@BaseClass base(Targetname) 
+@BaseClass 
 line(255 255 255, targetname, actor) = BaseActBusy
 	[
 	actor(target_name_or_class) : "Actor(s) to affect" : : "NPC's that should act busy"

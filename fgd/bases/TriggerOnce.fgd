@@ -1,10 +1,12 @@
-@BaseClass base(Targetname, Parentname, Origin, EnableDisable, Global)
+// Exclude a bunch of outputs and options for trigger_once
+@BaseClass base(BaseEntityBrush)
 	line(255 255 255, targetname, filtername) 
 = TriggerOnce
 	[
 	spawnflags(flags)  =
 		[
-		1: "Clients" : 1
+		1: "Clients/Players/Bots" : 1 [TF2, CSGO, CSS]
+		1: "Clients/Players" : 1 [!TF2, !CSGO, !CSS]
 		2: "NPCs" : 0 [!ASW]
 		2: "Marines and Aliens" : 0 [ASW]
 		4: "Pushables" : 0
@@ -16,16 +18,25 @@
 		512: "Only clients *not* in vehicles" : 0 [!ASW]
 		1024: "Physics debris" : 0
 		2048: "Only NPCs in vehicles (respects player ally flag)" : 0
-		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 1 [!CSGO]
-		4096: "Disallow Bots" : 0 [CSGO]
+		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 1 [!CSGO, !TF2]
+		4096: "Disallow Bots" : 0 [CSGO, TF2]
 		]
 
-	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator triggers me. See filter_activator_name for more explanation."
-
+	StartDisabled(boolean) : "Start Disabled?" : 0
+	filtername(filterclass) : "Filter Name" : : "A filter entity to test potential activators against."
+	
 	// Inputs
-	input Toggle(void) : "Toggles this trigger between enabled and disabled states."
+	input Enable(void) : "Enable this trigger."
+	input Disable(void) : "Disable this trigger, some trigger entities may also fire OnEndTouch when disabled."
+	input Toggle(void) : "Toggles this trigger between enabled and disabled states." 
+	input TouchTest(void) : "Triggers either the OnTouching or OnNotTouching outputs for whether anything is touching this entity."
+
+    input StartTouch(void) : "Fires the OnStartTouch output. " +
+    	"If called by an entity inside the trigger, the OnStartTouch will be fired for them as the activator. Note that this input is passed even if the player is being treated as 'not' touching the trigger while inside it."
 
 	// Outputs
+	output OnTrigger(void) : "Fired whenever the trigger is activated."
 	output OnStartTouch(void) : "Fired when an entity starts touching this trigger. " +
 		"The touching entity must pass this trigger's filters to cause this output to fire."
+    output OnNotTouching(void) : "Fired when the TouchTest input is called. Does not call activators."
 	]

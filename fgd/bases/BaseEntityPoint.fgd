@@ -1,0 +1,53 @@
+@BaseClass = BaseEntityPoint
+	[
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+    angles(angle) : "Pitch Yaw Roll (X Y Z)" : "0 0 0" : "This entity's orientation in the world. Roll is the rotation around the X axis, pitch is rotation around the Y axis and yaw is the rotation around the Z axis."
+
+	parentname[!srctools](target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent. Set an attachment point via 'parentname,attachment'."
+	parentname[srctools](target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	parent_attachment_point[srctools](string) : "Attachment Point" : : "If set, attach to this attachment point on the parent during spawn."
+
+	linedivider_vscript[+VSCRIPT](string) readonly : "-------------------------------------------------------------------------------------------------------" : ""
+
+	vscripts[VSCRIPT](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
+	thinkfunction[VSCRIPT](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
+
+	vscript_init_code[+VSCRIPT, +srctools](string) : "Init Code" : : "This code will be executed after the Entity Scripts option."
+	vscript_init_code2[+VSCRIPT, +srctools](string) : "Init Code 2" : : "This code will be executed after the Entity Scripts option."
+	// etc
+
+	linedivider_base(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	// Inputs
+	input Kill(void) : "Removes this entity from the world."
+	input KillHierarchy(void) : "Removes this entity and all its children from the world."
+
+	input SetParent(target_destination) : "Changes the entity's parent in the movement hierarchy."
+	input SetParentAttachment(string) : "Change this entity to attach to a specific attachment point on its parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment."
+	input SetParentAttachmentMaintainOffset(string) : "Change this entity to attach to a specific attachment point on it's parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment. The entity will maintain it's position relative to the parent at the time it is attached."
+	input ClearParent(void) : "Removes this entity from the the movement hierarchy, leaving it free to move independently."
+	input SetLocalAngles[since_ASW](string) : "Sets the rotation of the entity relative to the parent's rotation."
+	input SetLocalOrigin[since_ASW](string) : "Sets the position of the entity relative to the parent's position."
+	
+	input AddOutput(string) : "Adds an entity I/O connection to this entity or changes keyvalues dynamically. Format:" +
+		"\n'<output name> <targetname>:<inputname>:" + 
+		"<parameter>:<delay>:<max times to fire (-1 == infinite, 1 = only once)>'\n" +
+		"or 'keyvalue newval'. Very dangerous, use with care."
+	input FireUser1(void) : "Causes this entity's OnUser1 output to be fired."
+	input FireUser2(void) : "Causes this entity's OnUser2 output to be fired."
+	input FireUser3(void) : "Causes this entity's OnUser3 output to be fired."
+	input FireUser4(void) : "Causes this entity's OnUser4 output to be fired."
+	input Use(void) : "Same as a player invoking +use; may not do anything. Can also be invoked by creating an output that does not specify an input."
+	input DispatchEffect[until_L4D](string) : "Dispatch an effect from the entity's origin. See https://developer.valvesoftware.com/wiki/List_of_Client_Effects"
+
+	input RunScriptFile[VSCRIPT](script) : "Execute a game script file from disk."
+	input RunScriptCode[VSCRIPT](string) : "Execute a string of script source code."
+	input CallScriptFunction[VSCRIPT](string) : "Execute the given function name."
+
+	// Outputs
+	output OnUser1(void) : "Fired in response to FireUser1 input."
+	output OnUser2(void) : "Fired in response to FireUser2 input."
+	output OnUser3(void) : "Fired in response to FireUser3 input."
+	output OnUser4(void) : "Fired in response to FireUser4 input."
+	output OnKilled[L4D](void) : "Fired when the entity is killed and removed from the game."
+	]
