@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname, Angles, RenderFxChoices, RenderFields) 
+@PointClass base(BaseEntityAnimating) 
 	studio()
 = cycler: "An entity used to display a model for testing purposes. Shooting it with cycle through the model's animations."
 	[

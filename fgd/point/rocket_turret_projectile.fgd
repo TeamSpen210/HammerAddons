@@ -1,5 +1,4 @@
-
-@PointClass base(Angles, Targetname, Parentname, ResponseContext, Shadow, Reflection, ToggleDraw, RenderFields) 
+@PointClass base(BaseEntityPoint,  ResponseContext, ToggleDraw) 
 	appliesto(P1, P2) 
 	studioprop("models/props_bts/rocket.mdl") = rocket_turret_projectile: "The rocket the Rocket Sentry fires."
 	[

@@ -1,13 +1,12 @@
-
-@PointClass base(Targetname, EnableDisable) 
-	appliesto(ASW, P2, CSGO) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	appliesto(since_ASW) 
 	iconsprite("editor/shadow_control.vmt") 
 	color(200 0 0) 
 	frustum(fov, nearz, distance, color, -1) 
 	sphere(distance) 
 	sphere(nearz) = sunlight_shadow_control: "An entity to control the sunlight that casts shadows in the map."
 	[
-	angles(string) : "Pitch Yaw Roll (Y Z X)" : "50 40 0" : "This is the light cast direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis."
+	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "50 40 0" : "This is the light cast direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis."
 	color(color255) : "Light Color" : "255 255 255 1" : "This is the color of the sunlight."
 	colortransitiontime(float) : "Color Transition Time" : 0.5 : "This is the number of seconds it takes to get from 0 to 255."
 	distance(float) : "Distance" : 10000 : "This is the distance of the sun, greater distances produce more orthogonal shadows."

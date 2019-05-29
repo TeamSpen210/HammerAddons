@@ -1,4 +1,4 @@
-@PointClass base(Parentname, Targetname)  
+@PointClass base(BaseEntityPoint)  
 	color(0 100 250) 
 	line(255 255 0, targetname, parentname) 
 	iconsprite("editor/ficool2/material_modify_control.vmt")

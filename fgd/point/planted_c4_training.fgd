@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(CSGO) 
 	studio("models/weapons/w_c4_planted.mdl") = planted_c4_training: "Training C4"
 	[

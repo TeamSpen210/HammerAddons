@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(CSGO) 
 	studio("models/weapons/w_eq_flashbang_thrown.mdl") = flashbang_projectile: "Flashbang Projectile"
 	[

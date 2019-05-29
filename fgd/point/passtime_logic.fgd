@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) 
 	iconsprite("editor/passtime_master.vmt") = passtime_logic: "Passtime Logic"
 	[

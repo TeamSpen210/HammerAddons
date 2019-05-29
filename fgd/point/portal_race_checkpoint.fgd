@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(P2) 
 	studioprop("models/props/stopwatch_finish_line.mdl") = portal_race_checkpoint: "Checkpoint for race maps."
 	[

@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(P2) = projected_wall_entity: "A Hard Light Bridge. Probably not spawnable in Hammer. Can be detected with triggers that have the 'Everything' flag set."
 	[
 	]

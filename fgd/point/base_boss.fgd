@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname, Angles, TeamNum) 
+@PointClass base(BaseEntityPoint, TeamNum) 
 	studioprop()
 	appliesto(TF2) = base_boss: "A Basic Boss"
 	[

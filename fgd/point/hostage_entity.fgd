@@ -1,7 +1,7 @@
-
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(CSGO) 
-	studio("models/Characters/hostage_04.mdl") = hostage_entity: "Hostage. A hostage NPC will spawn at this point.\n\nThere are usually four hostages placed in each hostage rescue map. The model for each Hostage is randomly chosen."
+	studio("models/Characters/hostage_04.mdl") = hostage_entity: "Hostage. A hostage NPC will spawn at this point.\n\n" +
+	"There are usually four hostages placed in each hostage rescue map. The model for each Hostage is randomly chosen."
 	[
 	hostagetype[engine](integer) : "Hostage Model" : 0
 	hostagetype(choices) : "Hostage Model (int)" : "0" : "Not used. Hostage models are chosen randomly by the game." =

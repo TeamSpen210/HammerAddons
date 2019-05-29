@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(P2) 
 	sphere(radius) 
 	iconsprite("editor/paint_sphere.vmt") = paint_sphere: "Paint brushes inside the sphere."

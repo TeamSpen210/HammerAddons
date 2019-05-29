@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname, BaseObject) 
+@PointClass base(BaseEntityPoint, BaseObject) 
 	appliesto(TF2) 
 	iconsprite("editor/bullseye.vmt") = mapobj_cart_dispenser: "TF2 Dispenser"
 	[

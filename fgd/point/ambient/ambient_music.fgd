@@ -1,4 +1,4 @@
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(L4D2)
 	iconsprite("editor/ambient_generic.vmt")
 	sphere()

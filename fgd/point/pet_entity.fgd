@@ -1,6 +1,6 @@
-
-@PointClass base(Angles) 
+// TODO: Apparently internal entity?
+@PointClass base(BaseEntity, Angles) 
 	appliesto(CSGO) 
-	studio("models/chicken/chicken.mdl") = pet_entity: "Pet. A pet animal will spawn at this point.\n"
+	studio("models/chicken/chicken.mdl") = pet_entity: "Pet. A pet animal will spawn at this point."
 	[
 	]

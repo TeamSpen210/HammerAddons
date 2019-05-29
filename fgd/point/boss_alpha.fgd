@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) = boss_alpha: "The Giant Robot Boss"
 	[
 
