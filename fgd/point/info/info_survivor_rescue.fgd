@@ -1,4 +1,4 @@
-@PointClass base(Targetname, PlayerClass, Angles) 
+@PointClass base(BaseEntityPoint, PlayerClass, L4DSurvivorStudio) 
 	appliesto(L4D, L4D2)
 	studio("models/survivors/survivor_biker.mdl")
 	studio("models/survivors/survivor_coach.mdl")
