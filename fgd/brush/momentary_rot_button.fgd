@@ -1,4 +1,4 @@
-@SolidClass base(BaseEntityBrush, Angles, MasterEnt)
+@SolidClass base(BaseEntityVisBrush, Angles, MasterEnt)
 = momentary_rot_button: "A brush entity that's designed to be used for rotating wheels, " +
 	"where the player can rotate them to arbitrary positions before stopping."
 	[
