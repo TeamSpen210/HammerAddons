@@ -1,5 +1,4 @@
-
-@SolidClass base(Targetname, EnableDisable) 
+@SolidClass base(BaseEntityBrush, EnableDisable)
 = color_correction_volume: "An entity to control the color correction in the map."
 	[
 	fadeduration(float) : "Lookup Fade Duration" : 10.0 : "This is the duration for the lookup to fade in/out on extry/exit"

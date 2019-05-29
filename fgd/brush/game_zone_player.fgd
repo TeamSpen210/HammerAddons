@@ -1,4 +1,4 @@
-@SolidClass base(Targetname, Parentname)
+@SolidClass base(BaseEntityBrush)
 = game_zone_player: "An entity used to count the number of players within a zone."
 	[
 
