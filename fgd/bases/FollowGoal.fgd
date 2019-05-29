@@ -1,5 +1,5 @@
 
-@BaseClass base(Targetname) 
+@BaseClass base(BaseEntityPoint) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) = FollowGoal
 	[
 	actor(target_name_or_class) : "Actor(s) to affect"
@@ -10,20 +10,17 @@
 		1: "Classname"
 		]
 
-	startactive(choices) : "Start Active" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	startactive[P2](boolean) : "Start Active" : 0
-	maximumstate(choices) : "Maximum state" : "1" =
+	startactive(boolean) : "Start Active" : 0
+	
+	maximumstate[engine](integer) : "Maximum state" : 1
+	maximumstate(choices) : "Maximum state" : 1 =
 		[
 		1: "Idle"
 		2: "Alert"
 		3: "Combat"
 		]
 
+	formation[engine](integer) : "Maximum state" : 1
 	formation(choices) : "Formation" : "0" =
 		[
 		0: "Close circle"

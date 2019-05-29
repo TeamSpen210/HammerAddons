@@ -1,9 +1,4 @@
-@BaseClass base(
-	Parentname, Global, Angles, Studiomodel, 
-	BreakableProp, DXLevelChoice, BaseFadeProp, 
-	RenderFields, SystemLevelChoice, Shadow, 
-	CompMinLight
-)
+@BaseClass base(BreakableProp, DXLevelChoice, BaseFadeProp)
 	studioprop()
 	sphere(fademindist)
 	sphere(fademaxdist)

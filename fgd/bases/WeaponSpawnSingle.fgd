@@ -1,4 +1,4 @@
-@BaseClass base(Parentname, Global, Targetname, Angles, Studiomodel) 
+@BaseClass base(BaseEntityPhysics) 
 	appliesto(L4D, L4D2)
 	color(0 0 200)
 = WeaponSpawnSingle

@@ -1,13 +1,9 @@
 
-@BaseClass base(Targetname, Angles, Shadow, TeamNum, EnableDisable, Toggle, PlayerTouch, FadeDistance) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, TF2) 
+@BaseClass base(BaseEntityPhysics, TeamNum, EnableDisable, Toggle, FadeDistance) 
 	color(0 0 200) 
 	sphere(fademindist) 
 	sphere(fademaxdist) = Item
 	[
-	fademindist[!TF2](float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
-	fademaxdist[!TF2](float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
-	fadescale[!TF2](float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7, then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified. This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades."
 	spawnflags[!TF2](flags) : "spawnflags" =
 		[
 		1: "Start Constrained" : 0
@@ -17,6 +13,6 @@
 	automaterialize[TF2](boolean) : "Auto-Materialize" : 1 : "The pickup should automatically materialize after being picked up."
 
 	// Outputs
-	output OnPlayerTouch[!TF2](void) : "Fires when the player touches this object"
+	output OnPlayerTouch(void) : "Fires when the player touches this object."
 	output OnCacheInteraction[!TF2](void) : "This output fires when the player proves they have 'found' this item. Fires on: Player Touch (whether or not player actually acquires the item), Picked up by +USE, Picked up by Physcannon, Punted by Physcannon."
 	]
