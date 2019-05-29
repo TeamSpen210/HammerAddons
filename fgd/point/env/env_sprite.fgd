@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname, RenderFields, DXLevelChoice, SystemLevelChoice) 
+@PointClass base(BaseEntityPoint, SystemLevelChoice) 
 	studio("models/editor/axis_helper.mdl")
 	sprite()
 	color(20 140 20)

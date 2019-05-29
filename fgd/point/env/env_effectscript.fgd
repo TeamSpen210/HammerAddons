@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityAnimating, Angles) 
 	iconsprite("editor/ficool2/env_effectscript")
 	studioprop()
 = env_effectscript: "An entity that allows you to script special visual effects via a script file."

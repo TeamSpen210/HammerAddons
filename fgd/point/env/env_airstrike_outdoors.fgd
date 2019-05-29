@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles, Parentname) 
+@PointClass base(BaseEntityPoint, Angles) 
 	studio()
 	appliesto(L4D2)
 = env_airstrike_outdoors: "Airstrike effect for outdoors (exploding roof, ground)"

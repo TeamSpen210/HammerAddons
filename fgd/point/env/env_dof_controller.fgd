@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(since_L4D) 
 	iconsprite("editor/env_dof_controller.vmt") 
 	color(200 0 0) 

@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	sphere()
 	iconsprite("editor/env_shake.vmt")
 	color(200 0 0)

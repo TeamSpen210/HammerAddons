@@ -1,4 +1,4 @@
-@PointClass base(Angles, Targetname) 
+@PointClass base(BaseEntityPoint) 
 	obb(boxmins, boxmaxs)
 	appliesto(L4D2)
 = env_physics_blocker: "An entity which blocks players and physics objects."

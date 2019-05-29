@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/env_wind.vmt")
 	color(200 0 0)
 	sphere(windradius)

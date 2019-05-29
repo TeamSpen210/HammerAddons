@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityPoint, Angles) 
 	iconsprite("editor/ficool2/env_dustpuff")
 = env_dustpuff: "An entity that can emit dust puffs."
 	[

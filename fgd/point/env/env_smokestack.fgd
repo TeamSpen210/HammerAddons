@@ -1,4 +1,4 @@
-@PointClass base(Parentname, Angles, Targetname)
+@PointClass base(BaseEntityPoint)
 	color(255 255 255) 
 	color(200 200 0) 
 	iconsprite("editor/env_smokestack.vmt") 

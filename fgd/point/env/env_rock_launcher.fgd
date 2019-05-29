@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(L4D, L4D2)
 	studio("models/editor/cone_helper.mdl")
 = env_rock_launcher: "Rock launcher"

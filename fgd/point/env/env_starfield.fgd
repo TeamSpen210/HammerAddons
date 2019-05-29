@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/ts2do/env_starfield.vmt") = env_starfield: "Starfield effect"
 	[
 

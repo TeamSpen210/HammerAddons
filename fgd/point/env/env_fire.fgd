@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	iconsprite("editor/env_fire")
 	color(200 200 0)
 	sphere(firesize)

@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname, Angles, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(L4D, L4D2)
 	studio("models/editor/cone_helper.mdl")
 = env_weaponfire: "Weapon fire"

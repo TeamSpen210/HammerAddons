@@ -1,8 +1,7 @@
-
-@PointClass base(Targetname, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	sphere() 
-	iconsprite("editor/env_slomo.vmt") = env_slomo: "Causes slow motion for a while"
+	iconsprite("editor/env_slomo.vmt") = env_slomo: "Causes slow motion for a while."
 	[
 	duration(float) : "Duration (seconds)" : 6 : "How long the slow motion lasts."
 

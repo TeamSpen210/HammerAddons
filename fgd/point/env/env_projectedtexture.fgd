@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname, Angles, SystemLevelChoice) 
+@PointClass base(BaseEntityPoint, SystemLevelChoice) 
 	appliesto(since_EP1)
 	size(-2 -2 -2, 2 2 2)
 	frustum(lightfov, nearz, farz, lightcolor, -1)

@@ -1,4 +1,4 @@
-@PointClass base(Angles) 
+@PointClass base(BaseEntityPoint, Angles) 
 	appliesto(since_L4D2)
 	sphere(fademindist)
 	sphere(fademaxdist)

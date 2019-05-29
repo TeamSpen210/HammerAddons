@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(P1, P2) 
 	cylinder(255 255 255, targetname, target, radius, targetname, targetname, radius) 
 	color(255 192 0) 

@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	sphere() 
 	line(255 255 255, targetname, MainSoundscapeName) 
 	iconsprite("editor/env_soundscape_proxy.vmt") 

@@ -1,4 +1,4 @@
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(L4D, L4D2)
 	wirebox(mins, maxs)
 = env_player_blocker: "An entity which blocks any PC/NPC from entering of the specified type."

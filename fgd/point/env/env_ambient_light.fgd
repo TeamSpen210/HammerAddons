@@ -1,4 +1,4 @@
-@PointClass base(Targetname, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(since_ASW) 
 	sphere(minfalloff) 
 	sphere(maxfalloff) 

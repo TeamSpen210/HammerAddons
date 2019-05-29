@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/env_spark.vmt") 
 	color(200 200 0) 
 	studio("models/editor/cone_helper.mdl") 

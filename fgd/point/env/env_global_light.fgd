@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(ASW) 
 	iconsprite("editor/shadow_control.vmt") = env_global_light: "An entity to control the sunlight that casts shadows in the map."
 	[

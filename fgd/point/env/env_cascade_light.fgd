@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(since_CSGO) 
 	iconsprite("editor/shadow_control.vmt") = env_cascade_light: "An entity to control the sunlight that casts cascaded shadows in the map."
 	[

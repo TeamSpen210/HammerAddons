@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(since_ASW) 
 	sphere() 
 	studio("models/editor/axis_helper_thick.mdl") 

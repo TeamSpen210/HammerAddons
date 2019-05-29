@@ -1,5 +1,4 @@
-
-@PointClass base(Parentname, Targetname) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/env_spritetrail.vmt") 
 	sphere(startwidth) 
 	sphere(endwidth) 

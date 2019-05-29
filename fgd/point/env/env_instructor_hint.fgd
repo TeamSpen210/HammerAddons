@@ -1,4 +1,4 @@
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(since_L4D2)
 	iconsprite("editor/env_instructor_hint.vmt")
 	line(255 255 0, targetname, hint_target)

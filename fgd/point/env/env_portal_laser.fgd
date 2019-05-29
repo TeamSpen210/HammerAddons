@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Angles, Parentname, Reflection, ToggleDraw, RenderFields) 
+@PointClass base(BaseEntityAnimating, ToggleDraw) 
 	appliesto(P2) 
 	studioprop() = env_portal_laser: " A Thermal Discouragement Beam that will move through portals, redirect using Redirection Cubes and reflect off of Reflection Gel."
 	[

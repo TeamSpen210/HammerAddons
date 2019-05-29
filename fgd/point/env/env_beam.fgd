@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, RenderFxChoices) 
+@PointClass base(BaseEntityPoint) 
 	line(255 255 255, targetname, LightningStart, targetname, LightningEnd) 
 	cylinder(255 255 255, targetname, LightningStart, Radius, targetname, LightningEnd, Radius) 
 	line(64 64 64, targetname, lightningStart) 
@@ -7,7 +7,8 @@
 	line(10 10 10, targetname, filtername)
 	iconsprite("editor/env_beam.vmt") 
 	sphere(radius) 
-	color(200 200 0) = env_beam: "An entity that creates a visible beam between two points. " +
+	color(200 200 0) 
+= env_beam: "An entity that creates a visible beam between two points. " +
 		"The points can be attached to entities to make the beam move around."
 	[
 	renderamt(integer) : "Brightness (1 - 255)" : 100

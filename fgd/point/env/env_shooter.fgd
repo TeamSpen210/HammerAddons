@@ -1,4 +1,4 @@
-@PointClass base(gibshooterbase, RenderFields)
+@PointClass base(gibshooterbase)
 	iconsprite("editor/env_shooter.vmt") 
 	color(200 200 0) 
 	line(255 255 255, targetname, lightingorigin) 

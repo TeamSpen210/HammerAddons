@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	sphere()
 	iconsprite("editor/ficool2/env_viewpunch.vmt")
 	color(200 200 0)

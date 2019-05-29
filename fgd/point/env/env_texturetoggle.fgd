@@ -1,4 +1,4 @@
-@PointClass base(Targetname)
+@PointClass base(BaseEntityPoint)
 	iconsprite("editor/env_texturetoggle.vmt") 
 	line(255 255 0, targetname, target) 
 = env_texturetoggle: "An entity that allows you to change the textures on other brush-built entities, or on overlays."

@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/ts2do/env_message.vmt") = env_message: "An entity that draws a text message on player's HUDs."
 	[
 	message(string) : "Message Text"

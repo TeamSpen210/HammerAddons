@@ -1,4 +1,4 @@
-@PointClass base(Parentname, Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	color(255 128 0) 
 	studio("models/editor/axis_helper_thick.mdl") 
 	iconsprite("editor/ficool2/env_lightglow.vmt") 

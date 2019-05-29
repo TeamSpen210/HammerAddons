@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	sphere() 
 	iconsprite("editor/env_soundscape.vmt") 
 	line(255 255 255, targetname, position0) 

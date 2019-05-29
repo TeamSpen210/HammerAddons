@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	size(-16 -16 -16, 16 16 16) 
 	color(200 200 0)
 = env_funnel: "HL1 Legacy: Large Portal Funnel"

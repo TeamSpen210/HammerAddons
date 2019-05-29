@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	color(255 255 255) 
 	color(200 200 0) 
 	studio("models/editor/spot_cone.mdl")

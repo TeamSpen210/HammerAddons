@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	color(200 50 0)
 	iconsprite("editor/ficool2/env_smoketrail")
 	sphere(spawnradius)

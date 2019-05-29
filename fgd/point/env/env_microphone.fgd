@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname, EnableDisable)
+@PointClass base(BaseEntityPoint, EnableDisable)
 	iconsprite("editor/env_microphone.vmt") 
 	sphere(MaxRange) 
 	color(0 0 255) 

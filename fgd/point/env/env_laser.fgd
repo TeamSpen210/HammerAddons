@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname, RenderFxChoices)
+@PointClass base(BaseEntityPoint)
 	iconsprite("editor/ficool2/env_laser.vmt")
 	line(255 255 255, targetname, LaserTarget) 
 	color(200 200 0) 
