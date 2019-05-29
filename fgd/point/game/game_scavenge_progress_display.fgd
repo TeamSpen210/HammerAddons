@@ -1,4 +1,4 @@
-@PointClass appliesto(L4D2) base(Targetname) = game_scavenge_progress_display
+@PointClass appliesto(L4D2) base(BaseEntityPoint) = game_scavenge_progress_display
 	[
 	max(float) : "Max" : 0 : "Number of items to collect."
 

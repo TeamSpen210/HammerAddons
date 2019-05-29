@@ -1,4 +1,4 @@
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	color(200 0 0)
 	iconsprite("editor/ficool2/game_ragdoll_manager")
 = game_ragdoll_manager: "An entity to control the number of ragdolls in the world, for performance reasons."

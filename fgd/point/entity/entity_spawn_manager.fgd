@@ -1,6 +1,6 @@
-
-@PointClass base(Targetname) 
-	appliesto(TF2) = entity_spawn_manager: "An entity that spawns stuff at spawn points."
+@PointClass base(BaseEntityPoint) 
+	appliesto(TF2) 
+= entity_spawn_manager: "An entity that spawns stuff at spawn points."
 	[
 	entity_name(string) : "Entity Name" : : "Name of the entity class we are supposed to spawn."
 	entity_count(integer) : "Count" : 0 : "Max number of entities to have spawned at one time, if points are available."

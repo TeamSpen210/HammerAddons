@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(CSGO) 
 	size(-8 -8 -8, 8 8 8) = game_coopmission_manager: "An entity that keeps track of the coop wave/phase and fires outputs when players complete them."
 	[

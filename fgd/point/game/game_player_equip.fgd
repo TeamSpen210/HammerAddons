@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, MasterEnt)
+@PointClass base(BaseEntityPoint, MasterEnt)
 	iconsprite("editor/ficool2/game_player_equip")
 = game_player_equip:
 	"An entity that gives equipment to the player who activates it. " + 

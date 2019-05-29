@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(CSGO) 
 	iconsprite("editor/game_money.vmt") = game_money: "An entity that awards money to a specific team."
 	[

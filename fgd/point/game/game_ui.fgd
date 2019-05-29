@@ -1,4 +1,4 @@
-@PointClass base(Targetname)
+@PointClass base(BaseEntityPoint)
 	color(200 0 0) 
 	iconsprite("editor/ficool2/game_ui.vmt") 
 = game_ui: "An entity used to override player input when the player is looking at it."

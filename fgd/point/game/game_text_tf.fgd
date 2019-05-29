@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) 
 	iconsprite("editor/game_text.vmt") = game_text_tf: "An entity that displays text on player's screens, in pretty tf hud format"
 	[
