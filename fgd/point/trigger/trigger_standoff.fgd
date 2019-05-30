@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityAnimating) 
 	appliesto(L4D, L4D2)
 	studioprop()
 = trigger_standoff: "Standoff Trigger"
@@ -7,12 +7,6 @@
 	spawnflags(flags)  =
 		[
 		512: "Diable +use" : 0
-		]
-
-	disableshadows(choices) : "Disable Shadows" : 0 : "Used to disable dynamic shadows on this entity." =
-		[
-		0: "No"
-		1: "Yes"
 		]
 
 	useduration(float) : "Use Duration" : 0 : "Seconds a survivor must +use the trigger to start the finale (0 is instantaneous)."

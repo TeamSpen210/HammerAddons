@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, tf_halloween_minigame) 
+@PointClass base(BaseEntityPoint, tf_halloween_minigame) 
 	appliesto(TF2) = tf_halloween_minigame_falling_platforms: "Halloween 2014 Falling Platform Minigame"
 	[
 

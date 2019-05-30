@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) = tf_logic_hybrid_ctf_cp: "Hybrid Map Entity. This is used to detect a map that blends the CTF and CP game modes."
 	[
 	]

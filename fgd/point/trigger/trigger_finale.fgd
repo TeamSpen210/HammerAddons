@@ -1,10 +1,9 @@
-@PointClass base(Targetname, Angles, EnableDisable) 
+@PointClass base(BaseEntityAnimating, EnableDisable) 
 	appliesto(L4D, L4D2)
 	studioprop()
 = trigger_finale: "Finale Trigger"
 	[
 	model(studio) : "World model" : "models/props_misc/german_radio.mdl"
-	disableshadows(boolean) : "Disable Shadows" : 0 : "Used to disable dynamic shadows on this entity."
 
 	firstusedelay(float) : "First Use Delay" : 0 : "For two-part finale starts, delays this many seconds before allowing another +use."
 	usedelay(float) : "Use Delay" : 0 : "Starts the finale this many seconds after a +use."

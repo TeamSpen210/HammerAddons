@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) = tf_logic_mann_vs_machine: "Mann VS Machine Entity. This is used to detect a Mann VS Machine map."
 	[
 	]

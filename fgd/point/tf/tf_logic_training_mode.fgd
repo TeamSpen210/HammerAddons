@@ -1,7 +1,7 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) = tf_logic_training_mode: "Training logic entity. This is used to detect a training map."
 	[
+	nextmap[engine](string) : "Next Map"
 	nextmap(choices) : "Next Map" : : "Next map to load when the current one is finished." =
 		[
 		"": "None"

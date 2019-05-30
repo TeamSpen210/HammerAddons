@@ -1,13 +1,14 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) = tf_robot_destruction_spawn_group: "Robot Destruction spawn group. This groups the Robot Destruction spawn points"
 	[
 	respawn_time(float) : "Respawn Time" : 0 : "Respawn time for this group"
 	group_number(integer) : "Group Number" : 0 : "This group's number.  Affect's UI position and spawn priority"
-	team_number(choices) : "Team Number" : "2" =
+	
+	team_number[engine](integer): "Team Number" : 2
+	team_number(choices) : "Team Number" : 2 =
 		[
-		2: "Red"
-		3: "Blue"
+		2: "RED"
+		3: "BLU"
 		]
 
 	hud_icon(string) : "HUD Icon Name" : "../HUD/hud_bot_worker_outline_blue" : "HUD icon to use for this group"

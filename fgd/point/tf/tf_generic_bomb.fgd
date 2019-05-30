@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Studiomodel, Origin, Angles) 
+@PointClass base(BaseEntityPoint, SetModel) 
 	appliesto(TF2) 
 	studioprop() = tf_generic_bomb: "Generic Bomb"
 	[
@@ -8,7 +8,9 @@
 	health(integer) : "Health" : 1 : "Health of the bomb."
 	explode_particle(string) : "Explosion Particle" : : "Name of the particle effect to play when exploding."
 	sound(sound) : "Explosion Sound" : : "Name of the sound effect to play when exploding."
-	friendlyfire(choices) : "Friendly Fire" : "0" =
+	
+	friendlyfire[engine](boolean) : "Friendly Fire" : 0
+	friendlyfire(choices) : "Friendly Fire" : 0 =
 		[
 		0: "Damage attacker and enemies"
 		1: "Damage everyone"

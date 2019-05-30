@@ -1,7 +1,8 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) 
-	studio("models/extras/info_speech.mdl") = training_annotation: "Training Annotation"
+	studio("models/extras/info_speech.mdl") 
+= training_annotation: "Training Annotation"
 	[
 	display_text(string) : "Displayed Text" : "<Add Text Here>" : "The text to be displayed in the annotation popup."
 	lifetime(float) : "Lifetime" : 0 : "How long you want the annotation popup to stick around.  If set to 0, it will default to the value in code (1 sec).  If it set to -1, it will last forever."

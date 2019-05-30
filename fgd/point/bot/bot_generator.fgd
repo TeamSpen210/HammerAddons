@@ -69,7 +69,7 @@
 
 	spawnonlywhentriggered(boolean) : "Don't spawn bots unless triggered" : "0" : "If this is set, you must use the SpawnBot input to have any bots spawn"
 
-	spawnflags(flags) : =
+	spawnflags(flags) =
 		[
 		1: "Spawned Bots Ignore Enemy Scouts" : 0
 		2: "Spawned Bots Ignore Enemy Soldiers" : 0

@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Origin, Angles) 
+@PointClass base(StaticTargetname, Origin, Angles) 
 	appliesto(TF2) = tf_halloween_gift_spawn_location: "Halloween Gift Spawn Locations - Location saved by GameRules. Deleted after map load"
 	[
 	]

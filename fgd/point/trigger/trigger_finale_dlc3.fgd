@@ -1,15 +1,9 @@
-
-@PointClass base(Targetname, Angles, EnableDisable) 
+@PointClass base(BaseEntityAnimating, EnableDisable) 
 	appliesto(L4D) 
 	studioprop() 
 = trigger_finale_dlc3: "Controller for special DLC3 Finale"
 	[
 	model(studio) : "World model" : "models/props_vehicles/floodlight_generator_switch01.mdl"
-	disableshadows(choices) : "Disable Shadows" : "0" : "Used to disable dynamic shadows on this entity." =
-		[
-		0: "No"
-		1: "Yes"
-		]
 
 
 	// Inputs

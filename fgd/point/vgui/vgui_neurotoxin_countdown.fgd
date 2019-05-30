@@ -1,18 +1,14 @@
 
-@PointClass base(Targetname, Angles, Parentname) 
+@PointClass base(BaseEntityPoint)
 	appliesto(P1, P2) 
-	studio("models/editor/axis_helper_thick.mdl") 
-	studio("models/editor/vgui_arrows.mdl") = vgui_neurotoxin_countdown: "Neurotoxin Countdown|||Neurotoxin Countdown display. AddOutput can be used to change/reset timer countdown."
+	studio("models/editor/vgui_arrows.mdl") 
+= vgui_neurotoxin_countdown: "Neurotoxin Countdown display. AddOutput can be used to change/reset timer countdown."
 	[
-	width(integer) : "Panel width" : 256 : "Width of the panel in units."
-	width[P2](integer) : "Panel width" : 256 : "Width of the screen in units."
-	height(integer) : "Panel height" : 128 : "Height of the panel in units."
-	height[P2](integer) : "Panel height" : 128 : "Height of the screen in units."
+	width(integer) : "Panel width" : 256 : "Width of the screen in units."
+	height(integer) : "Panel height" : 128 : "Height of the screen in units."
 	countdown[P2](integer) : "Countdown time" : 60 : "Countdown time in seconds."
 
 	// Inputs
-	input Enable(void) : "Make slideshow visible."
-	input Enable[P2](void) : "Start/Show countdown."
-	input Disable(void) : "Make slideshow invisible."
-	input Disable[P2](void) : "Hide coundown, will not reset."
+	input Enable(void) : "Start/Show countdown."
+	input Disable(void) : "Hide coundown, will not reset."
 	]

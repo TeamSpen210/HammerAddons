@@ -1,8 +1,9 @@
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/tanktrain_aitarget.vmt")
 	line(255 255 255, targetname, target)
 	line(255 255 255, targetname, newtarget)
-= tanktrain_aitarget: "An entity that changes the target of a tanktrain_ai entity."
+= tanktrain_aitarget: 
+	"An entity that changes the target of a func_tank or tanktrain_ai entity. This simply fires TargetEntity on the tank when this is USEd."
 	[
 	target(target_destination) : "Tank AI Entity" : : "The tanktrain_ai entity to change the target of."
 	newtarget(target_destination) : "New Target Entity" : : "The entity to tell the tanktrain_ai to target."

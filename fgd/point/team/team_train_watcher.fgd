@@ -1,6 +1,8 @@
 
-@PointClass base(Targetname, TeamNum, EnableDisable) 
-	appliesto(TF2) = team_train_watcher: "Entity that tracks the train progress through train escort maps"
+@PointClass base(BaseEntityPoint, TeamNum, EnableDisable) 
+	appliesto(TF2)
+	line(128 128 128, targetname, train)
+= team_train_watcher: "Entity that tracks the train progress through train escort maps"
 	[
 	train_can_recede(boolean) : "Can the train recede?" : "1" : "Used to hide the HUD countdown."
 
@@ -8,26 +10,35 @@
 	handle_train_movement(boolean) : "Handle train movement?" : 0 : "Should the train watcher handle all train movement?"
 
 	speed_forward_modifier(float) : "Speed Forward Modifier" : 1 : "Applies the given modifier to all forward speeds. Only used if the watcher is handling the train movement. [0, 1]"
-	env_spark_name(string) : "Train spark sprites" : : "Name of the env_spark entities used under the train for backward movement. They should all have the same entity name. Only used if the watcher is handling the train movement."
+	env_spark_name(target_destination) : "Train spark sprites" : : "Name of the env_spark entities used under the train for backward movement. They should all have the same entity name. Only used if the watcher is handling the train movement."
 	train(target_destination) : "Train to watch."
 	start_node(target_destination) : "Node that the path starts at."
 	goal_node(target_destination) : "Node that the path ends at."
+	
 	linked_pathtrack_1(target_destination) : "Linked PathTrack 1"
 	linked_cp_1(target_destination) : "Linked CP 1"
+	
 	linked_pathtrack_2(target_destination) : "Linked PathTrack 2"
 	linked_cp_2(target_destination) : "Linked CP 2"
+	
 	linked_pathtrack_3(target_destination) : "Linked PathTrack 3"
 	linked_cp_3(target_destination) : "Linked CP 3"
+	
 	linked_pathtrack_4(target_destination) : "Linked PathTrack 4"
 	linked_cp_4(target_destination) : "Linked CP 4"
+	
 	linked_pathtrack_5(target_destination) : "Linked PathTrack 5"
 	linked_cp_5(target_destination) : "Linked CP 5"
+	
 	linked_pathtrack_6(target_destination) : "Linked PathTrack 6"
 	linked_cp_6(target_destination) : "Linked CP 6"
+	
 	linked_pathtrack_7(target_destination) : "Linked PathTrack 7"
 	linked_cp_7(target_destination) : "Linked CP 7"
+	
 	linked_pathtrack_8(target_destination) : "Linked PathTrack 8"
 	linked_cp_8(target_destination) : "Linked CP 8"
+	
 	hud_min_speed_level_1(float) : "Min Speed for Speed Level 1" : 30
 	hud_min_speed_level_2(float) : "Min Speed for Speed Level 2" : 60
 	hud_min_speed_level_3(float) : "Min Speed for Speed Level 3" : 90

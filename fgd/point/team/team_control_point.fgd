@@ -1,7 +1,8 @@
 
-@PointClass base(Targetname, EnableDisable, Angles, Parentname) 
+@PointClass base(Targetname, EnableDisable) 
 	appliesto(TF2) 
-	studio("models/effects/cappoint_hologram.mdl") = team_control_point: "Control Point"
+	studio("models/effects/cappoint_hologram.mdl") 
+= team_control_point: "Control Point"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -12,23 +13,23 @@
 		16: "Bots should ignore" : 0
 		]
 
-	point_start_locked(choices) : "Start locked" : "0" : "Locked means the point will not be available for capture until it is unlocked via its input." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	point_start_locked(boolean) : "Start locked" : 0 : "Locked means the point will not be available for capture until it is unlocked via its input." 
 
 	point_printname(string) : "Print Name" : "TODO: Set Name" : "LOCALIZED name to print on the HUD."
 	point_group(integer) : "Group Index" : 0 : "Used for grouping points together under a team_control_point_master (not using control point rounds)."
-	point_default_owner(choices) : "Default Owner" : "0" : "Default Owner of the control point." =
+	
+	point_default_owner[engine](integer) : "Default Owner" : 0
+	point_default_owner(choices) : "Default Owner" : 0 : "Default Owner of the control point." =
 		[
 		0: "Neither"
-		2: "Red"
-		3: "Blue"
+		2: "RED"
+		3: "BLU"
 		]
 
 	point_index(integer) : "Index" : 0 : "Index of this point (must be unique)."
-	point_warn_on_cap(choices) : "Warning Type" : "0" : "Type of warning to issue to the team that owns the control point when the opposing team starts to capture it." =
+	
+	point_warm_on_cap[engine](integer) : "Warning Type" : 0
+	point_warn_on_cap(choices) : "Warning Type" : 0 : "Type of warning to issue to the team that owns the control point when the opposing team starts to capture it." =
 		[
 		0: "Normal Announcements"
 		1: "Final Capture Point Warning"
@@ -36,11 +37,7 @@
 		]
 
 	point_warn_sound(string) : "Warning sound" : "ControlPoint.CaptureWarn" : "Sound to be played when this point is being captured (if warn on capture is set)."
-	random_owner_on_restart(choices) : "Randomly set the owner on restart" : "0" : "Randomly set the owner of this point during a full restart of the map. The ratio of default owners among the points with this flag will be kept when selecting random owners." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	random_owner_on_restart(boolean) : "Randomly set the owner on restart" : "0" : "Randomly set the owner of this point during a full restart of the map. The ratio of default owners among the points with this flag will be kept when selecting random owners."
 
 	team_timedpoints_2(integer) : "Time-based point value for RED." : 0
 	team_timedpoints_3(integer) : "Time-based point value for BLUE." : 0

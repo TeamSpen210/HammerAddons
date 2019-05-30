@@ -1,20 +1,22 @@
 
-@PointClass base(Targetname) 
-	appliesto(TF2) = tf_base_minigame: "Base minigame"
+@PointClass base(BaseEntityPoint) 
+	appliesto(TF2) 
+	line(255 32 32, targetname, redspawn)
+	line(32 32 255, targetname, bluespawn)
+= tf_base_minigame: "Base minigame"
 	[
 	redspawn(target_source) : "Red Spawn Name" : : "The name of the spawnpoints for RED for this minigame"
-	bluespawn(target_source) : "Blue Spawn Name" : : "The name of the spawnpoints for BLUE for this minigame"
-	inrandompool(choices) : "Put in Random Pool" : "1" : "If Yes, allowed to be chosen when told to go to a random minigame" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	bluespawn(target_source) : "Blue Spawn Name" : : "The name of the spawnpoints for BLU for this minigame"
+	
+	inrandompool(boolean) : "Put in Random Pool" : 1 : "If Yes, allowed to be chosen when told to go to a random minigame" =
 
 	maxscore(integer) : "Max Score" : 5 : "When a team hits this score, the On<Team>HitMaxScore output will be fired"
 	hud_res_file(string) : "HUD Res File" : : "Res file to use for this minigame"
-	your_team_score_sound(string) : "Your Team Score Sound" : : "Sound file to play when your team scores a point"
-	enemy_team_score_sound(string) : "Enemy Team Score Sound" : : "Sound file to play when the enemy team scores a point"
-	scoretype(choices) : "Scoring Type" : "0" : "What to use for scoring" =
+	your_team_score_sound(sound) : "Your Team Score Sound" : : "Sound file to play when your team scores a point"
+	enemy_team_score_sound(sound) : "Enemy Team Score Sound" : : "Sound file to play when the enemy team scores a point"
+	
+	scoretype[engine](integer) : "Scoring Type" : 0
+	scoretype(choices) : "Scoring Type" : 0 : "What to use for scoring" =
 		[
 		0: "Points"
 		1: "Players alive"

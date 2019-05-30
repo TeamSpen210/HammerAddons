@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(P2) 
 	studio("models/editor/vgui_arrows.mdl") = vgui_level_placard_display: "Pre-level display placard entity."
 	[

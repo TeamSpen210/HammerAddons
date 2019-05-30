@@ -1,11 +1,15 @@
-
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) 
-	studio("models/bots/bot_worker/bot_worker_a.mdl") = tf_robot_destruction_robot_spawn: "Robot Destruction Robot spawn point."
+	studio("models/bots/bot_worker/bot_worker_a.mdl") 
+	line(255 255 255, targetname, startpath)
+	line(255 255 0, targetname, spawngroup)
+= tf_robot_destruction_robot_spawn: "Robot Destruction Robot spawn point."
 	[
 	health(integer) : "Health" : 500 : "The health for the robot"
 	gibs(integer) : "Gibs" : 0 : "The number of point-giving gibs to spawn on death"
-	type(choices) : "Robot Style" : "0" =
+	
+	type[engine](integer) : "Robot Style" : 0
+	type(choices) : "Robot Style" : 0 =
 		[
 		0: "Frustum"
 		1: "Sphere"

@@ -1,10 +1,12 @@
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/tanktrain_ai.vmt")
 	line(255 255 255, targetname, target)
-= tanktrain_ai: "Train chase AI"
+= tanktrain_ai: "Tank movement AI. This takes control of a func_tracktrain, moving it to follow a target."
 	[
-	target(target_destination) : "Train Name"
+	target(target_destination) : "Train Name" : : "The func_tracktrain to control."
 	startsound(sound) : "Start Moving Sound" : "vehicles/diesel_start1.wav"
 	enginesound(sound) : "Engine Loop Sound" : "vehicles/diesel_turbo_loop1.wav"
 	movementsound(sound) : "Vehicle Movement Sound" : "vehicles/tank_treads_loop1.wav"
+	
+	input TargetEntity(string) : "Change the tank to target the specified entity."
 	]

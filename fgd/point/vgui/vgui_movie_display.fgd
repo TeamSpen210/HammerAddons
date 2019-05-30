@@ -1,6 +1,5 @@
-
-@PointClass base(Targetname, Angles, Parentname) 
-	appliesto(ASW, P2, CSGO) 
+@PointClass base(BaseEntityPoint) 
+	appliesto(since_ASW) 
 	studio("models/editor/axis_helper_thick.mdl") 
 	color(200 200 0) 
 	studio("models/editor/vgui_arrows.mdl") 
@@ -11,10 +10,9 @@
 	moviefilename(string) : "Movie Filename" : "media/"
 	groupname(string) : "Group Name"
 	looping(boolean) : "Loop Movie" : 0
-	width(integer) : "Panel width" : 256 : "Width of the panel in units."
-	width[P2](integer) : "Panel Width in World (Green)" : 256 : "Width of the panel in units."
-	height(integer) : "Panel height" : 128 : "Height of the panel in units."
-	height[P2](integer) : "Panel Height in World (Blue)" : 128 : "Height of the panel in units."
+	
+	width(integer) : "Panel Width in World (Green)" : 256 : "Width of the panel in units."
+	height(integer) : "Panel Height in World (Blue)" : 128 : "Height of the panel in units."
 	stretch[P2](boolean) : "Stretch to Fill" : 0
 	forcedslave[P2](boolean) : "Forced slave" : 0
 	forceprecache[P2, !CSGO](boolean) : "Force precache" : 0 : "Precache the movie referred to by Movie Filename on entity spawn."

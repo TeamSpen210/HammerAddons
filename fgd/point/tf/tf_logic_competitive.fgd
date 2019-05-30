@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(TF2) = tf_logic_competitive: "Logic specifically for competitive mode."
 	[
 

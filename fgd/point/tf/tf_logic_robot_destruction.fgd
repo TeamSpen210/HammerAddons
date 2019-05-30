@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, RobotDestruction) 
+@PointClass base(BaseEntityPoint, RobotDestruction) 
 	appliesto(TF2) = tf_logic_robot_destruction: "Robot Destruction Entity. This is used to detect a Robot Destruction map."
 	[
 	score_interval(float) : "Robot Scoring Interval (in seconds)" : 1 : "How often a robot should score a point while hacking."

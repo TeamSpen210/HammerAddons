@@ -1,5 +1,5 @@
 
-@PointClass base(Item, Parentname) 
+@PointClass base(Item) 
 	appliesto(TF2) 
 	studio("models/items/target_duck.mdl") 
 	sphere(fademindist) 

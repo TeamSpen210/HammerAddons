@@ -1,17 +1,15 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) 
-	studio("models/bots/skeleton_sniper/skeleton_sniper.mdl") = tf_zombie_spawner: "Entity that spawns zombies."
+	studio("models/bots/skeleton_sniper/skeleton_sniper.mdl") 
+= tf_zombie_spawner: "Entity that spawns zombies."
 	[
 	zombie_lifetime(float) : "Skeleton Life Time" : 0 : "Skeleton life time in seconds. 0 means skeletons will stay alive until they're dead."
 	max_zombies(integer) : "Skeleton Count" : 1 : "Number of skeletons this point can have active in the world."
-	infinite_zombies(choices) : "Infinite Spawn" : "0" : "If Yes, keep spawning skeletons to have skeleton count in the world. If no, only spawn skeletons up to skeleton count." =
-		[
-		0: "NO"
-		1: "Yes"
-		]
+	
+	infinite_zombies(boolean) : "Infinite Spawn" : "0" : "If Yes, keep spawning skeletons to have skeleton count in the world. If no, only spawn skeletons up to skeleton count."
 
-	zombie_type(choices) : "Skeleton Type" : "0" : "Type of skeleton." =
+	zombie_type[engine](integer) : "Skeleton Type" : 0
+	zombie_type(choices) : "Skeleton Type" : 0 : "Type of skeleton." =
 		[
 		0: "NORMAL"
 		1: "SKELETON KING"

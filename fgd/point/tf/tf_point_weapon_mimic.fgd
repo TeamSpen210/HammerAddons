@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) 
 	studio("models/editor/cone_helper.mdl") = tf_point_weapon_mimic: "An entity that shoots like player weapons."
 	[
@@ -20,12 +19,7 @@
 	damage(float) : "Damage" : 75 : "Damage for the projectile."
 	splashradius(float) : "Splash Radius" : 50 : "Splash radius for the projectile."
 	spreadangle(float) : "Spread Angle" : 0 : "Random spread for each projectile fired."
-	crits(choices) : "Always Crits" : "0" : "All shots are crits." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	crits(boolean) : "Always Crits" : 0 : "All shots are crits."
 
 	// Inputs
 	input FireOnce(void) : "Fire once."

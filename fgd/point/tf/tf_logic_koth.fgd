@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) = tf_logic_koth: "King of the Hill Entity. This is used to detect a KOTH map."
 	[
 	timer_length(integer) : "Timer length (in seconds)" : 180 : "Initial timer length for each team."

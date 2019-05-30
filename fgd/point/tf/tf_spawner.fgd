@@ -1,6 +1,7 @@
-
-@PointClass base(Targetname) 
-	appliesto(TF2) = tf_spawner: "An entity that spawns templatized entities."
+@PointClass base(BaseEntityPoint) 
+	appliesto(TF2) 
+	line(255 255 255, targetname, template)
+= tf_spawner: "An entity that spawns templatized entities."
 	[
 	count(integer) : "Count" : 1 : "Total number of entities to spawn over the lifetime of this spawner."
 	maxactive(integer) : "Max Active" : 1 : "Maximum number of simultaneous active entities created by this spawner."

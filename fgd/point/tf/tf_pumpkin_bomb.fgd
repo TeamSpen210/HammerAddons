@@ -1,4 +1,3 @@
-
 @PointClass base(Item) 
 	appliesto(TF2) 
 	studio("models/props_halloween/pumpkin_explode.mdl") = tf_pumpkin_bomb: "Pumpkin Bomb"

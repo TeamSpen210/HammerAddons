@@ -1,6 +1,7 @@
 
-@PointClass base(Targetname, EnableDisable) 
-	appliesto(TF2) = team_round_timer: "Round Timer. Timer starts paused by default."
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	appliesto(TF2) 
+= team_round_timer: "Round Timer. Timer starts paused by default."
 	[
 	timer_length(integer) : "Timer length (in seconds)" : 600 : "Initial timer length."
 	max_length(integer) : "Max timer length (in seconds)" : 0 : "Maximum timer length (0 = no max). This value is used to ensure the timer never goes above this value when SetTime and AddTime are used."
