@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/info_lighting.vmt") 
 	halfgridsnap
 = info_lighting_relative

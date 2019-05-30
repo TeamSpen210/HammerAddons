@@ -1,4 +1,4 @@
-@PointClass base(Targetname)
+@PointClass base(BaseEntityPoint)
 	iconsprite("editor/info_landmark") 
 	color(200 0 0) 
 = info_landmark: "An entity that acts as a landmark for transitions to another level. " +

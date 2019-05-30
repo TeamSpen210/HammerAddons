@@ -1,4 +1,4 @@
-@PointClass base(Angles, Targetname, HintNode)
+@PointClass base(BaseEntityPoint, HintNode)
 	studio("models/editor/air_node_hint.mdl")
 	color(232 171 8)
 	line(255 255 255, nodeid, TargetNode)

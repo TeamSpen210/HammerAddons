@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityPoint, L4DSurvivorStudio) 
+@PointClass base(BaseEntityPoint, PlayerClass, L4DSurvivorStudio) 
 	appliesto(L4D, L4D2)
 	color(255 100 100)
 = info_survivor_position: "A point where survivors are placed when escaping the finale"

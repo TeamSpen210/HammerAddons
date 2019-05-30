@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(L4D, L4D2)
 	iconsprite("editor/info_target.vmt")
 = info_goal_infected_chase: "An entity that attracts infected like the pipe bomb to give them something to do during outros. " +

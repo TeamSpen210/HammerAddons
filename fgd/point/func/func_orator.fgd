@@ -1,6 +1,6 @@
-@PointClass base(Targetname, Parentname, Angles, RenderFxChoices, RenderFields, Studiomodel) 
+@PointClass base(BaseEntityAnimating, SetModel) 
 	appliesto(L4D, L4D2)
-	studioprop()
+	sphere(maxthenanydispatchdist)
 = func_orator: "A very simple model entity that has animations and response rules."
 	[
 	spawnflags(flags)  =
@@ -8,8 +8,7 @@
 		1: "Not Solid" : 1
 		]
 
-	maxthenanydispatchdist[L4D2](float) : "Max Followup Dist" : 0 : "A 'then ANY' followup on a response from this orator will dispatch to " +
-		"characters up to this many units away. Leave 0 to mean that even an infinitely distant character may respond."
+	maxthenanydispatchdist[L4D2](float) : "Max Followup Dist" : 0 : "A 'then ANY' followup on a response from this orator will dispatch to characters up to this many units away. Leave 0 to mean that even an infinitely distant character may respond."
 
 	// Inputs
 	input SpeakResponseConcept(string) : "Speak the specified response concept"

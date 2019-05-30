@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(since_L4D2)
 	halfgridsnap
 = info_target_instructor_hint: "A generic target that gets replicated to the client for hud hint targeting."

@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(L4D, L4D2)
 	iconsprite("editor/info_gamemode.vmt")
 = info_gamemode: "Game mode trigger."

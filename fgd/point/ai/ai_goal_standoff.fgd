@@ -1,30 +1,29 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	iconsprite("editor/ai_goal_standoff.vmt") = ai_goal_standoff: "AI Goal Standoff"
 	[
 	actor(target_name_or_class) : "Actor(s) to affect"
-	searchtype(choices) : "Search Type" : "0" : "How to search for the entities using the targetname." =
+	
+	searchtype[engine](integer) : "Search Type" : 0
+	searchtype(choices) : "Search Type" : 0 : "How to search for the entities using the targetname." =
 		[
 		0: "Entity Name"
 		1: "Classname"
 		]
 
-	startactive(choices) : "Start Active" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	startactive(boolean) : "Start Active" : 0
 
-	startactive[P2](boolean) : "Start Active" : 0
-	hintgroupchangereaction(choices) : "Reaction to tactical change" : "1" : "What to do if leader moves, threat is neutralized, hint group changes, etc" =
+	hintgroupchangereaction[engine](integer) : "Reaction to tactical change" : 1
+	hintgroupchangereaction(choices) : "Reaction to tactical change" : 1 : "What to do if leader moves, threat is neutralized, hint group changes, etc" =
 		[
 		0: "Move when ready (default AI)"
 		1: "Move when seek cover"
 		2: "Move immediately"
 		]
 
-	aggressiveness(choices) : "Aggressiveness" : "2" =
+	aggressiveness[engine](integer) : "Aggressiveness" : 2
+	aggressiveness(choices) : "Aggressiveness" : 2 =
 		[
 		0: "Very low"
 		1: "Low"
@@ -33,27 +32,9 @@
 		4: "Very High"
 		]
 
-	playerbattleline(choices) : "Player battleline" : "1" : "Player defines a battle line, applies to allies only" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	playerbattleline[P2](boolean) : "Player battleline" : 1 : "Player defines a battle line, applies to allies only"
-	stayatcover(choices) : "Stay at cover location" : "0" : "When have suitable cover, don't change it (disables advancing to battle line)" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	stayatcover[P2](boolean) : "Stay at cover location" : 0 : "When have suitable cover, don't change it (disables advancing to battle line)"
-	abandonifenemyhides(choices) : "Abandon if enemies hide" : "0" : "If no enemy detected recently, stop the standoff" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	abandonifenemyhides[P2](boolean) : "Abandon if enemies hide" : 0 : "If no enemy detected recently, stop the standoff"
+	playerbattleline(boolean) : "Player battleline" : 1 : "Player defines a battle line, applies to allies only"
+	stayatcover(boolean) : "Stay at cover location" : 0 : "When have suitable cover, don't change it (disables advancing to battle line)"
+	abandonifenemyhides(boolean) : "Abandon if enemies hide" : 0 : "If no enemy detected recently, stop the standoff"
 
 	// Inputs
 	input Activate(void) : "Begin contesting position"

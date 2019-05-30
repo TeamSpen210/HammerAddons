@@ -1,4 +1,4 @@
-
+// Internal entity.
 @PointClass 
 	appliesto(INSTANCING)
 	iconsprite("editor/func_instance_origin.vmt") 

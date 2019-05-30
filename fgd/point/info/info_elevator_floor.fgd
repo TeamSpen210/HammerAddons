@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(L4D, L4D2)
 	iconsprite("editor/info_target.vmt")
 = info_elevator_floor: "Elevator floor height target."

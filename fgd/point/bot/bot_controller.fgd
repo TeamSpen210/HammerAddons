@@ -1,14 +1,15 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) = bot_controller: "An entity used to create a bot, and then issue commands to it."
 	[
-	teamnum(choices) : "Team" : "2" : "Team" =
+	teamnum[engine](integer) : "Team" : 2
+	teamnum(choices) : "Team" : 2 : "Team" =
 		[
 		2: "Red"
 		3: "Blue"
 		]
 
-	bot_class(choices) : "Class" : "0" : "The class the bot will spawn as." =
+	bot_class[engine](integer) : "Class" : 0
+	bot_class(choices) : "Class" : 0 : "The class the bot will spawn as." =
 		[
 		0: "Random"
 		1: "Scout"

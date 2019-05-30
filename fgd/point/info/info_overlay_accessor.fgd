@@ -1,4 +1,3 @@
-
 @PointClass base(info_overlay) 
 	appliesto(engine)
 	size(-1 -1 0, 1 1 1) 

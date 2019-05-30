@@ -1,10 +1,10 @@
-@PointClass base(BaseNPC, Parentname, RenderFields, Shadow)
+@PointClass base(BaseNPC, SetModel)
 	studio() 
 	bbox(-4 -4 -4, 4 4 4)
 = generic_actor: "Generic Actor NPC"
 	[
-	model(studio) : "Model"
-	hull_name(choices) : "Hull type" : "Human" =
+	hull_name[engine](string) : "Hull type" "HUMAN_HULL"
+	hull_name(choices) : "Hull type" : "HUMAN_HULL" =
 		[
 		"HUMAN_HULL": "Human"
 		"WIDE_HUMAN_HULL": "Wide"

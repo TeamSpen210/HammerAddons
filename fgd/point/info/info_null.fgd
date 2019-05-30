@@ -1,4 +1,7 @@
-@PointClass base(Targetname) 
+// This is a full entity, with all normal behaviours.
+// However, it kills itself immediately so most are useless
+// TODO: might be useful to strip ones that can't function.
+@PointClass base(BaseEntityPoint) 
 	color(200 0 0)
 	iconsprite("editor/ts2do/info_null.vmt")
 = info_null: "An entity that's immediately removed on spawning. Useful as a spotlight target."

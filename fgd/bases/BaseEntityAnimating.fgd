@@ -21,6 +21,7 @@
 		2048 : "No shadow depth, for use with env_cascade_light" [since_P2]
 		4096 : "No projected textures" [since_P2]
 		]
+		
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. " +
 		"Set this to a number other than 0 to use that skin instead of the default."
 

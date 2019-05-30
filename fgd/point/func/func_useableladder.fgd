@@ -1,8 +1,8 @@
-@PointClass base(Targetname, Parentname)
+@PointClass base(BaseEntityPoint) appliesto(!CSS)
 	sweptplayerhull() 
 = func_useableladder: "A Half-Life 2 ladder. Handles player auto mount/unmount, as well as +use to get onto the ladder. \n\n" +
 
-	"See also 'info_ladder_dismo" + "unt', used to specify ladder auto-dismount points.\n\n" +
+	"See also 'info_ladder_dismount', used to specify ladder auto-dismount points.\n\n" +
 	"Note: This entity is non-functional in Counter-Strike: Source. Use func_ladder instead."
 	[
 	spawnflags(flags)  =

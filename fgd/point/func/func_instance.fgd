@@ -1,3 +1,4 @@
+// Internal entity.
 @PointClass base(Angles) 
 	appliesto(INSTANCING)
 	instance()

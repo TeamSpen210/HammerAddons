@@ -1,4 +1,3 @@
-
 @PointClass base(Node) 
 	appliesto(ASW) 
 	studio("models/editor/ground_node.mdl") 

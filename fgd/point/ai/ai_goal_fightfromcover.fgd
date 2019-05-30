@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(P2) 
 	iconsprite("editor/ai_goal_follow.vmt") = ai_goal_fightfromcover: "AI Fight from Cover"
 	[

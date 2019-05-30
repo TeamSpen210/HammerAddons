@@ -1,4 +1,7 @@
-@PointClass base(Targetname, Angles)
+// Internal entity only. However the named version
+// is converted to info_overlay_accesssor, which is a real
+// entity.
+@PointClass base(BaseEntityPoint)
 	size(-1 -1 0, 1 1 1)
 	color(80 150 225)
 	studio("models/editor/overlay_helper.mdl")
@@ -7,7 +10,7 @@
 	overlay()
 = info_overlay: "An entity that places an overlay on the world."
 	[
-	material(material) : "Material"
+	material(material) : "Material" : : "Material to use for the overlay."
 	sides(sidelist) : "Brush faces" : : "The brush faces this overlay is applied to."
 
 	renderorder[engine](integer) : "Render Order" : 0

@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(L4D, L4D2)
 = info_map_parameters_versus: "L4D-specific map parameters for versus games."
 	[

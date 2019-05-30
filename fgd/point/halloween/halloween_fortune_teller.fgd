@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Origin, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) 
 	studio("models/bots/merasmus/merasmas_misfortune_teller.mdl") = halloween_fortune_teller: "Halloween Fortune Teller trigger"
 	[

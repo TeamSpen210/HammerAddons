@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(L4D, L4D2)
 	studio("models/infected/smoker.mdl")
 = commentary_zombie_spawner: "Zombie Manual Spawning Point"

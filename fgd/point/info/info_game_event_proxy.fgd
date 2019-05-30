@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(since_L4D) 
 	iconsprite("editor/info_game_event_proxy.vmt") 
 	sphere(range) 

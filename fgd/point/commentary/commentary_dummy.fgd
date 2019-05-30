@@ -1,4 +1,4 @@
-@NpcClass base(Angles, Targetname) 
+@NpcClass base(BaseEntityAnimating) 
 	appliesto(L4D, L4D2)
 	studio()
 = commentary_dummy: "Commentary Dummy"

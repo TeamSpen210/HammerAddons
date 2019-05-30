@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles, HintNode) 
+@PointClass base(BaseEntityPoint, HintNode) 
 	studio("models/editor/climb_node.mdl")
 	color(153 215 103)
 	sphere(radius)

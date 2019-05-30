@@ -1,5 +1,5 @@
-@PointClass appliesto(L4D2) base(Targetname, Parentname, Angles) 
+@PointClass appliesto(L4D2) base(BaseEntityPoint) 
 	studio("models/editor/cone_helper.mdl")
-= info_particle_target: "An entity that is a target for particle system control points"
+= info_particle_target: "An entity that is a target for particle system control points."
 	[
 	]

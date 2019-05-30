@@ -1,10 +1,12 @@
-
-@PointClass base(Targetname, TeamNum, MatchSummary, EnableDisable, Angles) 
+@PointClass base(BaseEntityPoint, PlayerClass, TeamNum, MatchSummary, EnableDisable) 
 	appliesto(TF2) 
-	studio("models/editor/playerstart.mdl") = info_player_teamspawn: "This entity marks the spawn point for Team Fortress players."
+	studio("models/editor/playerstart.mdl") 
+= info_player_teamspawn: "This entity marks the spawn point for Team Fortress players."
 	[
 	controlpoint(target_destination) : "Associated Control Point" : : "The team_control_point associated with this spawn. Ownership of control points will control this spawn point's enabled state."
-	spawnmode(choices) : "Spawn Mode" : "0" : "How the game decides when a player can spawn here.  Triggered mode will only allow players sent via a trigger_player_respawn_override (in which case this spawn must be named, and match the trigger)." =
+	
+	spawnmode[engine](integer) : "Spawn Mode" : 0
+	spawnmode(choices) : "Spawn Mode" : 0 : "How the game decides when a player can spawn here.  Triggered mode will only allow players sent via a trigger_player_respawn_override (in which case this spawn must be named, and match the trigger)." =
 		[
 		0: "Normal"
 		1: "Triggered"
@@ -17,7 +19,7 @@
 		4: "Soldier" : 1
 		8: "Demoman" : 1
 		16: "Medic" : 1
-		32: "Heavyweapons" : 1
+		32: "Heavy" : 1
 		64: "Pyro" : 1
 		128: "Spy" : 1
 		256: "Engineer" : 1

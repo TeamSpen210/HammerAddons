@@ -1,4 +1,5 @@
-@PointClass base(Targetname)
+// Not a real entity!
+@PointClass base(StaticTargetname)
 	iconsprite("editor/info_lighting.vmt") 
 	halfgridsnap
 = info_lighting: "An entity that can be used to change the lighting origin of a prop_static. " +

@@ -1,3 +1,4 @@
-@PointClass appliesto(L4D2) base(Targetname) = info_ambient_mob_end: "end location for an ambient mob"
+@PointClass appliesto(L4D2) base(BaseEntityPoint) 
+= info_ambient_mob_end: "End location for an ambient mob."
 	[
 	]

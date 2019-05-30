@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(P2) 
 	sphere(radius) = info_target_personality_sphere: "Personality Sphere Info Target"
 	[

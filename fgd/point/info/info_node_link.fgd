@@ -1,4 +1,4 @@
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	color(220 180 0) 
 	line(255 255 255, nodeid, StartNode, nodeid, EndNode) 
 	iconsprite("editor/info_node_link.vmt") 
@@ -53,6 +53,8 @@
 
 	precisemovement[ASW](boolean) : "Precise Movement" : 0 : "Movement through this link must be precise. " +
 		"Used for NPCs that have sloppy movement characteristics to move through things like doors or windows"
+		
+	priority[engine](integer) "Priority" : 0
 	priority[ASW](choices) : "Priority" : 0 =
 		[
 		0: "Normal"

@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, EnableDisable, TeamNum) 
+@PointClass base(BaseEntityPoint, EnableDisable, TeamNum) 
 	appliesto(TF2) 
 	iconsprite("editor/passtime_ball_spawner.vmt") = info_passtime_ball_spawn: "Just marks a ball spawnpoint. Won't be used if disabled."
 	[

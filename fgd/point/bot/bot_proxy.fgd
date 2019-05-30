@@ -1,6 +1,7 @@
 
-@PointClass base(Targetname) 
-	appliesto(TF2) = bot_proxy: "An entity that spawns a TFBot and relays events to/from it"
+@PointClass base(BaseEntityPoint) 
+	appliesto(TF2)
+= bot_proxy: "An entity that spawns a TFBot and relays events to/from it"
 	[
 	bot_name(string) : "Bot Name" : "TFBot" : "The bot's player name"
 

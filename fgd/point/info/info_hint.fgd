@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles, HintNode) 
+@PointClass base(BaseEntityPoint, HintNode) 
 	studio("models/editor/node_hint.mdl")
 	color(255 255 255)
 	sphere(radius)

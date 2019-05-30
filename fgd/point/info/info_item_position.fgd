@@ -1,4 +1,4 @@
-@PointClass appliesto(L4D2) base(Targetname, Angles, Parentname) 
+@PointClass appliesto(L4D2) base(BaseEntityPoint) 
 	studioprop()
 = info_item_position: "An entity that represents a possible item location in a map. " +
 	"Scripts can search for these entities and use them to spawn objects for different game modes."

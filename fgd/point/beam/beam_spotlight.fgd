@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, RenderFields, Angles, DXLevelChoice, SystemLevelChoice) 
+@PointClass base(BaseEntityPoint, Angles, DXLevelChoice, SystemLevelChoice) 
 	appliesto(since_L4D) 
 	studio("models/editor/cone_helper.mdl") 
 	sphere(spotlightlength) 

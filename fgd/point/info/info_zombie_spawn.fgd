@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(L4D, L4D2)
 	studio("models/infected/common_male01.mdl")
 = info_zombie_spawn: "An entity used to spawn a zombie."

@@ -1,4 +1,6 @@
-
+// This is a true entity, with all the normal operations.
+// But VBSP shuffles outputs around, it's unknown if other keyvalues
+// will be kept.
 @PointClass 
 	appliesto(+INSTANCING, +INST_IO)
 	iconsprite("editor/func_instance_io_proxy.vmt") 

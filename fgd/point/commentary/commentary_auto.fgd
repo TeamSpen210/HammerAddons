@@ -1,4 +1,4 @@
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/logic_auto.vmt") 
 	color(0 100 250)
 = commentary_auto: "Commentary-specific version of logic_auto."

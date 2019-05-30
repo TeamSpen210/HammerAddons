@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	color(200 0 0) 
 
 	line(200 0 0, targetname, ignoredname01)

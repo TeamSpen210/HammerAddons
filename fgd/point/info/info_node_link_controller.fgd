@@ -1,4 +1,4 @@
-@PointClass base(Targetname)
+@PointClass base(BaseEntityPoint)
 	wirebox(mins, maxs) 
 	color(220 180 0) 
 	iconsprite("editor/info_node_link_controller.vmt") 

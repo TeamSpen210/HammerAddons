@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) 
 	sphere(desired_distance) = bot_action_point: "A potential destination for a bot"
 	[

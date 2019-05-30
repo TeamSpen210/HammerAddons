@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) = bot_generator: "Entity spawns <count> TFBots every <interval> seconds, with at most <maxActive> active at once"
 	[
 	team(choices) : "Team" : "auto" : "Team" =
@@ -9,6 +9,7 @@
 		"blue": "Blue"
 		]
 
+	class[engine](string) : "Class" : "auto"
 	class(choices) : "Class" : "auto" : "Class" =
 		[
 		"auto": "Any"
@@ -27,7 +28,9 @@
 	maxactive(integer) : "Max Active" : 1 : "Maximum number of active TFBots spawned at any given time from this generator."
 	interval(float) : "Interval" : 0 : "Time (in seconds) between spawns"
 	action_point(target_destination) : "Action Point" : : "Put the name of a bot_action_point here to tell the spawned bot to move there."
-	initial_command(choices) : "Initial Command" : : "Initial command to give this bot, if any." =
+	
+	initail_command[engine](string) "Initial Command" : "goto action point"
+	initial_command(choices) : "Initial Command" : "goto action point" : "Initial command to give this bot, if any." =
 		[
 		"goto action point": "Go to specified Action Point"
 		"taunt": "Taunt"
@@ -38,44 +41,24 @@
 		"disguise": "If Spy, Disguise"
 		]
 
-	suppressfire(choices) : "Suppress Fire" : "0" : "Newly generated TFBots will suppress their fire if this is set." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	disabledodge(choices) : "Disable Dodge" : "0" : "Newly generated TFBots will not dodge if this is set." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	actionondeath(choices) : "Action on Death" : "1" : "When a TFBot dies, they will either respawn like a normal player, remove themselves, or move to the spectator team." =
+	suppressfire(boolean) : "Suppress Fire" : "0" : "Newly generated TFBots will suppress their fire if this is set."
+	disabledodge(boolean) : "Disable Dodge" : "0" : "Newly generated TFBots will not dodge if this is set."
+	
+	actionondeath[engine](integer) : "Action on Death" : 1
+	actionondeath(choices) : "Action on Death" : 1 : "When a TFBot dies, they will either respawn like a normal player, remove themselves, or move to the spectator team." =
 		[
 		0: "Repawn as usual"
 		1: "Remove self"
 		2: "Move to Spectator team"
 		]
 
-	spectateondeath(choices) : "Move to Spectator Team on Death" : "0" : "TFBots will move to the Spectator team on death.  Use this as a pooling mechanism" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	spectateondeath(boolean) : "Move to Spectator Team on Death" : 0 : "TFBots will move to the Spectator team on death.  Use this as a pooling mechanism"
+	useteamspawnpoint(boolean) : "Use Team Spawn Point" : 0 : "TFBots will use their team spawn point, instead of this point if this is set."
+	
+	retainbuildings(boolean) : "Retain Buildings After Disconnect" : 0: "If set, any buildings (sentries, sappers, etc) built by bots from this generator will not be destroyed when their owners are removed."
 
-	useteamspawnpoint(choices) : "Use Team Spawn Point" : "0" : "TFBots will use their team spawn point, instead of this point if this is set." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	retainbuildings(choices) : "Retain Buildings After Disconnect" : "0" : "If set, any buildings (sentries, sappers, etc) built by bots from this generator will not be destroyed when their owners are removed." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	difficulty(choices) : "Difficulty" : "0" : "The skill level of bots created by this generator." =
+	difficulty[engine](integer) : "Difficulty" : 0
+	difficulty(choices) : "Difficulty" : 0 : "The skill level of bots created by this generator." =
 		[
 		-1: "Default"
 		0: "Easy"
@@ -84,13 +67,9 @@
 		3: "Expert"
 		]
 
-	spawnonlywhentriggered(choices) : "Don't spawn bots unless triggered" : "0" : "If this is set, you must use the SpawnBot input to have any bots spawn" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	spawnonlywhentriggered(boolean) : "Don't spawn bots unless triggered" : "0" : "If this is set, you must use the SpawnBot input to have any bots spawn"
 
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags) : =
 		[
 		1: "Spawned Bots Ignore Enemy Scouts" : 0
 		2: "Spawned Bots Ignore Enemy Soldiers" : 0

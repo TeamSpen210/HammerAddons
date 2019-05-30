@@ -1,4 +1,4 @@
-@PointClass base(Targetname, EnableDisable)
+@PointClass base(BaseEntityPoint, EnableDisable)
 	sphere(minfalloff) 
 	sphere(maxfalloff) 
 	iconsprite("editor/color_correction.vmt") 

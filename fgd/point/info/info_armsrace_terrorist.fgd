@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(CSGO) 
 	studio("models/player/tm_leet_varianta.mdl") = info_armsrace_terrorist: "This entity marks the start point for terrorists in Arms Race. Should be placed at least 128 units away from each other and surrounding walls."
 	[

@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	iconsprite("editor/info_target.vmt") = info_teleporter_countdown: "Countdown timer for the teleporter. The status of the teleporter will appear on vgui_screen entities whose panel is 'teleport_countdown_screen'."
 	[

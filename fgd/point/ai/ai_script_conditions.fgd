@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	sphere(PlayerActorProximity) 
 	sphere(ActorTargetProximity) 
@@ -8,10 +7,11 @@
 	line(255 255 255, targetname, target) 
 	iconsprite("editor/ai_script_conditions.vmt") = ai_script_conditions: "AI Script Conditions"
 	[
-	actor(target_destination) : "Actor" : : "NPC Target"
-	actor[P2](target_destination) : "Actor (optional)" : : "NPC Target"
+	actor(target_destination) : "Actor (optional)" : : "NPC Target"
 
 	startdisabled(boolean) : "Start Disabled" : 1
+	
+	minimumstate[engine](choices) : "Minimum state" : 1
 	minimumstate(choices) : "Minimum state" : 1 =
 		[
 		1: "Idle"

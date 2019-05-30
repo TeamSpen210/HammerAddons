@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) = bot_roster: "Entity specifies what classes TFBots can choose"
 	[
 	team[engine](string) : "Team" : "auto"

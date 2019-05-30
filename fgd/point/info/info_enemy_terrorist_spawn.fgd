@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(CSGO) 
 	studio("models/player/tm_phoenix.mdl") 
 	sphere(hide_radius)

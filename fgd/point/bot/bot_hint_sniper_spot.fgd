@@ -1,8 +1,9 @@
 
-@PointClass base(Targetname, Parentname, BaseObject, Angles) 
+@PointClass base(BaseEntityPoint, BaseObject) 
 	appliesto(TF2) 
 	studio("models/player/sniper.mdl") 
-	sphere(radius) = bot_hint_sniper_spot: "TF2 Sniper Spot Hint for Bots"
+	sphere(radius) 
+= bot_hint_sniper_spot: "TF2 Sniper Spot Hint for Bots"
 	[
 	radius(float) : "Hint Radius" : 100 : "Radius of hint influence."
 	]

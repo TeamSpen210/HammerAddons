@@ -1,7 +1,7 @@
-@PointClass base(Parentname) 
+@PointClass base(BaseEntityPoint) 
 	size(-16 -16 0, 16 16 4)
 	color(255 128 255)
 = info_ladder_dismount: "An entity to handle endpoints for multiple ladders that are too close to each other."
 	[
-	target(target_destination) : "LadderName" : : "If multiple ladders are near multiple endpoints, use this to stop them from interfering with each other."
+	target(target_destination) : "Ladder Name" : : "If multiple ladders are near multiple endpoints, use this to stop them from interfering with each other."
 	]

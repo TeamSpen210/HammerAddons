@@ -1,4 +1,4 @@
-@PointClass base(Targetname)
+@PointClass base(BaseEntityPoint)
 	studio("models/editor/camera.mdl") 
 	iconsprite("editor/info_camera_link.vmt") 
 	line(255 255 0, targetname, target) 

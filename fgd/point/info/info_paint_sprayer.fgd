@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname, Angles, BasePaintType) 
+@PointClass base(BaseEntityPoint, BasePaintType) 
 	appliesto(P2) 
 	line(255 255 255, targetname, light_position_name) 
 	sphere(blob_spread_radius) 
@@ -16,7 +15,8 @@
 		1: "Fast Sphere"
 		]
 
-	ambientsound(choices) : "Ambient Sound" : "0" : "The sound to play when paint is flowing." =
+	ambientsound[engine](integer) "Ambient Sound" : 0
+	ambientsound(choices) : "Ambient Sound" : 0 : "The sound to play when paint is flowing." =
 		[
 		0: "None (silent)"
 		1: "Drip"

@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	sphere(radius) 
 	color(220 180 0) 
 	iconsprite("editor/info_radial_link_controller.vmt") 

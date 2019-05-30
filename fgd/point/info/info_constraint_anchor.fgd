@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname)
+@PointClass base(BaseEntityPoint)
 	halfgridsnap
 	iconsprite("editor/info_constraint_anchor.vmt") 
 	color(128 128 128) 

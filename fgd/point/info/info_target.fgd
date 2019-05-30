@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/info_target.vmt") 
 	studio("models/editor/axis_helper.mdl") 
 	halfgridsnap

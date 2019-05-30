@@ -1,4 +1,4 @@
-@PointClass appliesto(L4D2) base(Targetname, Angles) = func_timescale: "Adjust the time scale of the server and client."
+@PointClass appliesto(L4D2) base(BaseEntityPoint) = func_timescale: "Adjust the time scale of the server and client."
 	[
 	desiredtimescale(float) : "Desired timescale." : "1.0" : "Time scale to blend towards, this is a multiplicative value where 1.0 is normal time, 0.5 is half speed, 2.0 is double speed."
 	acceleration(float) : "Acceleration per second" : "0.05" : "How quickly the change per second goes up to the max."
