@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname, Angles, ToggleDraw, RenderFields, BasePortButton) 
+@PointClass base(BasePortButton) 
 	appliesto(P2) 
 	studioprop("models/props/ball_button.mdl") = prop_floor_ball_button: "A floor button which is only activated by a Sphere-type prop_weighted_cube."
 	[

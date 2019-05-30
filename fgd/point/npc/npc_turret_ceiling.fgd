@@ -1,7 +1,8 @@
 
-@PointClass base(Targetname, Angles, Studiomodel) 
+@PointClass base(BaseEntityAnimating) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
-	studio("models/combine_turrets/ceiling_turret.mdl") = npc_turret_ceiling: "Combine Ceiling Turret"
+	studio("models/combine_turrets/ceiling_turret.mdl") 
+= npc_turret_ceiling: "Combine Ceiling Turret"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -14,9 +15,9 @@
 	minhealthdmg(integer) : "Min req'd damage for hurting turret" : 0
 
 	// Inputs
-	input Enable(void) : "If closed, open."
-	input Disable(void) : "If open, close."
-	input Toggle(void) : "Toggle - If open, close. If closed, open."
+	input Enable(void) : "Activate the turret."
+	input Disable(void) : "Deactivate the turret."
+	input Toggle(void) : "Toggle the turret on or off."
 
 	// Outputs
 	output OnDeploy(void) : "Turret is becoming active and dangerous."

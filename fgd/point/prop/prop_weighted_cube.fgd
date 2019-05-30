@@ -1,12 +1,12 @@
-
-@PointClass base(Targetname, Angles, Reflection, ToggleDraw, RenderFields) 
+@PointClass base(BaseEntityPhysics) 
 	appliesto(P2) 
 	studioprop() = prop_weighted_cube: "Aperture Science Weighted Cube. Presses floor buttons, and can be moved around."
 	[
 	skin(integer) : "Skin (OLD)" : 0 : "The old skin property, mainly to show in Hammer. "
 
 	cubetype[engine](integer) : "Cube Type" : 0
-	cubetype(choices) : "Cube Type" : "0" : "What cube type is this? Use a prop_monster_box for FrankenTurrets. If set to Custom, use AddOutput to change it back OnMapSpawn so gel skins behave correctly." =
+	cubetype(choices) : "Cube Type" : "0" : "What cube type is this? Use a prop_monster_box for FrankenTurrets. " +
+		"If set to Custom, use AddOutput to change it back OnMapSpawn so gel skins behave correctly." =
 		[
 		0: "[0] Weighted Storage Cube"
 		1: "[1] Weighted Companion Cube"

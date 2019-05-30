@@ -1,5 +1,4 @@
-
-@PointClass base(TalkNPC, Parentname) 
+@PointClass base(TalkNPC) 
 	appliesto(P2) 
 	studioprop() = npc_personality_core: "Aperture Science Personality Construct. Animated balls with handles."
 	[

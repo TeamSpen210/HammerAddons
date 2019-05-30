@@ -1,5 +1,5 @@
 // All model entities have this.
-@BaseClass base(BaseEntityPoint, Render) 
+@BaseClass base(BaseEntityPoint, ToggleDraw) 
 	sphere(fademindist) sphere(fademaxdist)
 = BaseEntityAnimating
 	[

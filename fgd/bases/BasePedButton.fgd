@@ -1,5 +1,4 @@
-
-@BaseClass base(SRCIndicator)
+@BaseClass base(BaseEntityAnimating, SRCIndicator)
 = BasePedButton: "The base for the prop_button/prop_under_button."
 	[
 	delay(float) : "Delay Before Reset" : 1 : "Amount of time, in seconds, after the button has been pressed before it returns to the starting position. Once it has returned, it can be used again."

@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityAnimating) 
 	appliesto(P2) 
 	// Non-animating model, which prevents it continually opening 
 	// and fixes collision display.

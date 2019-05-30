@@ -1,4 +1,4 @@
-@BaseClass base(Targetname, Parentname, Origin, RenderFields, Global, Shadow, Reflection, compMinLight) 
+@BaseClass base(BaseEntityBrush, Global)
 	line(255 255 0, targetname, target) 
 = BaseTrain
 	[

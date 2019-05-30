@@ -1,5 +1,5 @@
 // All visible Brush entities have these options.
-@BaseClass base(BaseEntityBrush, Render) 
+@BaseClass base(BaseEntityBrush, ToggleDraw) 
 	sphere(fademindist) sphere(fademaxdist)
 = BaseEntityVisBrush
 	[
@@ -56,7 +56,7 @@
 	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
 	input DisableDamageForces(void) : "Damaging the entity does not apply physics forces to it."
 
-	input AlternativeSorting[SINCE_EP1](boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
-	
-	input RemovePaint[P2, CSGO](void) : "Remove paint from the brush entity."
+	input AlternativeSorting[since_EP1](boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
+
+	input RemovePaint[P2](void) : "Remove paint from the brush entity."
 	]

@@ -1,5 +1,4 @@
-
-@PointClass base(BaseNPC, Parentname, RenderFields, Shadow) 
+@PointClass base(BaseNPC) 
 	appliesto(P2) 
 	studioprop() = npc_wheatley_boss: "Wheatley NPC stub"
 	[

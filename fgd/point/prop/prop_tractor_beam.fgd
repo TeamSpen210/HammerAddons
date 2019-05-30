@@ -1,7 +1,7 @@
-
-@PointClass base(Targetname, Parentname, Angles, BaseProjector, Reflection, Shadow, ToggleDraw, RenderFields) 
+@PointClass base(BaseProjector) 
 	appliesto(P2) 
-	studioprop() = prop_tractor_beam: "Emitter for an Excursion Funnel."
+	studioprop()
+= prop_tractor_beam: "Emitter for an Excursion Funnel."
 	[
 	linearforce[engine](integer) : "Funnel Direction" : 250
 	linearforce(choices) : "Funnel Direction" : 250 : "Speed of the Funnel, positive is forward." =
@@ -26,7 +26,6 @@
 		]
 
 	model[engine](studio): "Funnel model" : "models/props/tractor_beam_emitter.mdl"
-
 
 	// Inputs
 	input SetLinearForce(float) : "Set the speed of the Funnel, and therefore the direction."

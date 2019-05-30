@@ -1,7 +1,7 @@
-
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(P2) 
-	studioprop("models/editor/prop_indicator_panel.mdl") = prop_tic_tac_toe_panel: "Unknown use, likely for some kind of ping detector."
+	studioprop("models/editor/prop_indicator_panel.mdl") 
+= prop_tic_tac_toe_panel: "Unknown use, likely for some kind of ping detector."
 	[
 
 	// Outputs
