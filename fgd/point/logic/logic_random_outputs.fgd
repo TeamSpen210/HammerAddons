@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(since_ASW) 
 	iconsprite("editor/logic_random_outputs.vmt") 
 	color(0 100 250)

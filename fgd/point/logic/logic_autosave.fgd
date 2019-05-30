@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/logic_autosave.vmt") 
 	color(200 0 0) = logic_autosave: "An entity that is used to force an autosave."
 	[

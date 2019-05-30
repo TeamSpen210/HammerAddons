@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/ficool2/logic_lineto")
 	color(0 100 250) 
 	line(255 255 0, targetname, source, targetname, target) = logic_lineto: "An entity that calculates and outputs a vector from one entity to another."

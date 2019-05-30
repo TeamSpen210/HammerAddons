@@ -1,4 +1,4 @@
-@PointClass base(Targetname, EnableDisable)
+@PointClass base(BaseEntityPoint, EnableDisable)
 	color(0 100 250) 
 	iconsprite("editor/math_remap.vmt") 
 = math_remap: "An entity that remaps a range of input values to a given range of output values."
@@ -15,7 +15,7 @@
 	out2(integer) : "Output Value When Input Is Max." : : "When the input value is equal to 'Maximum Valid Input Value', this is the output value."
 
 	// Inputs
-	input InValue(float) : "Input value and fire the output with the remapped value."
+	input InValue(float) : "Input a value and fire the output with the remapped value."
 
 	// Outputs
 	output OutValue(float) : "Fired when the InValue input is received, with the remapped input value as the parameter."

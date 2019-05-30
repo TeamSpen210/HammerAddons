@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(VSCRIPT) 
 	iconsprite("editor/logic_script.vmt") 
 	color(200 200 200) 

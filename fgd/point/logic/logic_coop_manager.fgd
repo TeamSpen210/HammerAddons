@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(P2) 
 	color(0 100 250) 
 	iconsprite("editor/logic_coop_manager.vmt")
@@ -29,8 +28,8 @@
 	input ToggleStateB(void) : "Toggle B"
 
 	// Outputs
-	output OnChangeToAllTrue(void) : "Fires when ALL of the values change to TRUE for the first time"
-	output OnChangeToAnyTrue(void) : "Fires when ANY of the values change to TRUE for the first time"
-	output OnChangeToAllFalse(void) : "Fires when ALL of the values change to FALSE for the first time"
-	output OnChangeToAnyFalse(void) : "Fires when ANY of the values change to FALSE for the first time"
+	output OnChangeToAllTrue(void) : "Fires when ALL of the values change to TRUE for the first time."
+	output OnChangeToAnyTrue(void) : "Fires when ANY of the values change to TRUE for the first time."
+	output OnChangeToAllFalse(void) : "Fires when ALL of the values change to FALSE for the first time."
+	output OnChangeToAnyFalse(void) : "Fires when ANY of the values change to FALSE for the first time."
 	]

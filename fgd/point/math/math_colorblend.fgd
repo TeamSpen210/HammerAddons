@@ -1,4 +1,4 @@
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	color(0 100 250)
 	iconsprite("editor/math_colorblend.vmt")
 = math_colorblend: "Used to create a blend between two colors for controlling the color of another entity."
@@ -14,7 +14,7 @@
 	colormax(color255) : "Output RGB color when input is max." : "255 255 255" : "When the input value is equal to 'Maximum Valid Input Value', this is the output RGB color."
 
 	// Inputs
-	input InValue(float) : "Input value and fire the output with the remapped value."
+	input InValue(float) : "Input a value and fire the output with the remapped value."
 
 	// Outputs
 	output OutColor(color255) : "Fired when the InValue input is received, with the remapped RGB color as the parameter."

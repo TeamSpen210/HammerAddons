@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/ficool2/logic_navigation")
 	line(128, 128, 128, targetname, target) = logic_navigation: "An entity that is used to set navigation properties on other entities. Useful to make NPCs ignore physics props in their way that they can easily push."
 	[

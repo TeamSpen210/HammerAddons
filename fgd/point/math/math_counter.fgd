@@ -1,4 +1,4 @@
-@PointClass base(Targetname, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	iconsprite("editor/math_counter.vmt") 
 	color(0 100 250) 
 = math_counter: "Holds a numeric value and performs arithmetic operations upon it. " +

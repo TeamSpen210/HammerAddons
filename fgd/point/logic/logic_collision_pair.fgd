@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	color(128 128 128) 
 	iconsprite("editor/ficool2/logic_collision_pair.vmt") 
 	line(128 128 128, attach1, attach2) 

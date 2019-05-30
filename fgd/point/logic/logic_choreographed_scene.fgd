@@ -1,4 +1,4 @@
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	color(0 0 255) 
 	iconsprite("editor/choreo_scene.vmt") 
 	color(240 180 250) 

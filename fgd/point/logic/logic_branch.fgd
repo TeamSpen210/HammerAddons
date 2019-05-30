@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/logic_branch.vmt") 
 	color(0 100 250) = logic_branch: "Tests a boolean value and fires an output based on whether the value is true or false. Use this entity to branch between two potential sets of events."
 	[

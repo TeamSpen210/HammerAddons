@@ -1,4 +1,4 @@
-@MoveClass base(Targetname, Parentname, Mover, KeyFrame)
+@MoveClass base(BaseEntityPoint, Mover, KeyFrame)
 	size(-8 -8 -8, 8 8 8) 
 	color(255 0 0) 
 	animator() 

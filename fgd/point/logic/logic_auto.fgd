@@ -1,4 +1,6 @@
+// If 'Remove on Fire' is unchecked, this behaves like any normal entity.
 @PointClass
+	base(BaseEntityPoint)
 	iconsprite("editor/logic_auto.vmt") 
 	color(0 100 250) 
 = logic_auto: "Fires outputs when a map spawns. If 'Remove on fire' flag is set the logic_auto is deleted after firing. " +

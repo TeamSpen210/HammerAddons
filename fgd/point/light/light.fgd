@@ -1,4 +1,4 @@
-@PointClass base(Targetname, BaseLight)
+@PointClass base(BaseEntityPoint, BaseLight)
 	light() 
 	iconsprite("editor/light.vmt") 
 	sphere(_distance) 

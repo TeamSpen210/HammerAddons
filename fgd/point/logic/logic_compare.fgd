@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/logic_compare.vmt") 
 	color(0 100 250) 
 = logic_compare: "Compares an input value to another value. If the input value is less than the compare value, the OnLessThan output is fired with the input value. If the input value is equal to the compare value, the OnEqualTo output is fired with the input value. If the input value is greater than the compare value, the OnGreaterThan output is fired with the input value."

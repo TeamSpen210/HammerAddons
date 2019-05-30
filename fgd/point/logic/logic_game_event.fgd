@@ -1,6 +1,6 @@
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(L4D, L4D2)
-= logic_game_event: "Allows firing game events. no params for now."
+= logic_game_event: "Allows firing game events. No parameters are settabld, for now."
 	[
 	eventname(string) : "Game Event Name" : : "event name ( from ModEvents.res ) to fire. no params for now"
 	spawnflags(flags)  =

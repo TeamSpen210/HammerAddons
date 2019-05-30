@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	color(0 100 250) 
 	iconsprite("editor/logic_measure_movement.vmt") 
 	line(255 255 0, targetname, measureReference) 

@@ -1,4 +1,4 @@
-@MoveClass base(Targetname, Parentname, KeyFrame, RopeKeyFrame) 
+@MoveClass base(BaseEntityPoint, KeyFrame, RopeKeyFrame) 
 	studio("models/editor/axis_helper.mdl")
 	animator()
 = move_rope: "The first node in set of nodes that are used to place ropes in the world. It should connect to 1 or more keyframe_rope entities."

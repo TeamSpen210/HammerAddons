@@ -1,8 +1,11 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/logic_case.vmt") 
 	color(0 100 250) 
-= logic_case: "Compares an input to up to 16 preset values. If the input value is the same as any of the preset values, an output corresponding to that value is fired.\n\nFor example: if Case01 is set to 2 and Case02 is set to 5, and the input value is 5, the OnCase02 output will be fired.\n\nThis entity can also be used to select from a number of random targets via the PickRandom input. One of the OnCase outputs that is connected to another entity will be picked at random and fired."
+= logic_case: "Compares an input to up to 16 preset values. If the input value is the same as any of the preset values, an output corresponding to that value is fired.\n\n" +
+
+	"For example: if Case01 is set to 2 and Case02 is set to 5, and the input value is 5, the OnCase02 output will be fired.\n\n" +
+	
+	"This entity can also be used to select from a number of random targets via the PickRandom input. One of the OnCase outputs that is connected to another entity will be picked at random and fired."
 	[
 	case01(string) : "Case 01"
 	case02(string) : "Case 02"

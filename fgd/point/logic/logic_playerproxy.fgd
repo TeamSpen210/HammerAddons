@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, DamageFilter) 
+@PointClass base(BaseEntityPoint, DamageFilter) 
 	color(200 0 0) 
 	iconsprite("editor/logic_playerproxy.vmt") = logic_playerproxy: "An entity that is used to relay inputs/ouputs to the player and back to the world."
 	[
@@ -14,6 +13,7 @@
 	input EnableCappedPhysicsDamage(void) : "Cause player to take less damage from physics objects, and never more than 30 points from any individual strike."
 	input DisableCappedPhysicsDamage(void) : "Undo effects of EnableCappedPhysicsDamage"
 	input SetLocatorTargetEntity(string) : "Set the entity that the HUD locator should track. (Usually a vehicle)"
+	
 	input AddPotatosToPortalgun[P2](void) : "Change portalgun bodygroup to show potatos."
 	input RemovePotatosFromPortalgun[P2](void) : "Change portalgun bodygroup to not show potatos."
 	input SetDropEnabled[P2](boolean) : "Set wether the player is allowed to drop a carried object."
@@ -30,11 +30,13 @@
 	output PlayerHasAmmo(void) : "Fired by request if the player has any ammo."
 	output PlayerHasNoAmmo(void) : "Fired by request if the player doesn't have any ammo."
 	output PlayerDied(void) : "Fires when the player dies."
+	
 	output OnStartSlowingTime[!TF2, ASW](void) : "Fired when a Portal player initiates slow time."
 	output OnStopSlowingTime[!TF2, ASW](void) : "Fired when a Portal player stops slowing time."
+	
 	output OnPrimaryPortalPlaced[P2](void) : "Fired when a Portal player successfully places the primary portal."
 	output OnSecondaryPortalPlaced[P2](void) : "Fired when a Portal player successfully places the secondary portal."
-	output OnDuck[P2, CSGO](void) : "Fired when a player starts to duck."
-	output OnUnDuck[P2, CSGO](void) : "Fired when a player releases the duck button."
-	output OnJump[P2, CSGO](void) : "Fired when a player jumps."
+	output OnDuck[since_P2](void) : "Fired when a player starts to duck."
+	output OnUnDuck[since_P2](void) : "Fired when a player releases the duck button."
+	output OnJump[since_P2](void) : "Fired when a player jumps."
 	]

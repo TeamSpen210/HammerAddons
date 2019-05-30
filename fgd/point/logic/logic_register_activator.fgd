@@ -1,4 +1,4 @@
-@PointClass base(Targetname, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(since_P2) 
 	color(0 100 250)
 	iconsprite("editor/logic_register_activator")

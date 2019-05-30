@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Angles, BaseLight)
+@PointClass base(BaseEntityPoint, BaseLight)
 	lightprop("models/editor/spot.mdl") 
 	lightcone() 
 	sphere(_distance) 

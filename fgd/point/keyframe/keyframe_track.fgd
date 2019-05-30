@@ -1,4 +1,4 @@
-@KeyframeClass base(Targetname, Parentname, Angles, KeyFrame) 
+@KeyframeClass base(BaseEntityPoint, KeyFrame) 
 	size(-6 -6 -6, 6 6 6)
 	color(255 200 0)
 	keyframe()

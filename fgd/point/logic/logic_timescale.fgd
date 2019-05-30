@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(P2) 
 	color(0 100 250) 
 	iconsprite("editor/logic_timescale.vmt") = logic_timescale: "Changes the server's timescale."
