@@ -1,7 +1,6 @@
-@PointClass base(Targetname, Angles, Propper) 
+@PointClass base(Angles, Propper) 
 	appliesto()
 	iconsprite("editor/env_physexplosion.vmt")
-	line(255 255 0, targetname, my_model)
 = propper_physgun_interactions: "Defines non-standard interactions with the Gravity Gun/player holding behaviour. Used for physics props only."
 	[
 	preferred_carryangles(boolean) : "Use angles when carrying?" : 0 : "The player will always carry the prop at this entity's angles if possible."

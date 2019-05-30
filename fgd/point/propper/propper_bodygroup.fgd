@@ -1,7 +1,6 @@
 @PointClass base(Propper) 
 	appliesto(PROPPER)
 	iconsprite("editor/logic_case.vmt")
-	line(255 255 0, groupname, my_model)
 	line(128 128 128, groupname, body01)
 	line(128 128 128, groupname, body02)
 	line(128 128 128, groupname, body03)

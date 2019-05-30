@@ -1,8 +1,8 @@
-@PointClass base(Targetname, Propper) 
+@PointClass base(Propper) 
 	appliesto(PROPPER)
-	line(255 255 0, targetname, my_model)
 	iconsprite("editor/color_correction.vmt")
-= propper_skins: "Propper can create alternate skins by replacing a texture that is on your prop. If you have multiple textures on your model that" + " you want to change, you can use this entity more than once."
+= propper_skins: "Propper can create alternate skins by replacing a texture that is on your prop. " +
+	"If you have multiple textures on your model that you want to change, you can use this entity more than once."
 	[
 	mat0(material) : "Material to replace" : : "Pick a texture that's present in the original model. This will be skin 0."
 	mat1(material) : "Skin 1" : : "This texture will replace the original when you pick skin 1."

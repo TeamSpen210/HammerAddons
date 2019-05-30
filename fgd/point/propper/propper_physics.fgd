@@ -1,6 +1,5 @@
-@PointClass base(Targetname, Origin, Propper) 
+@PointClass base(Origin, Propper) 
 	appliesto(PROPPER)
-	line(255 255 0, targetname, my_model)
 	sphere(explosive_radius)
 	iconsprite("editor/phys_ballsocket.vmt")
 = propper_physics: "Propper configuration for physics props. Using this entity will make your prop suitable for use as prop_physics."

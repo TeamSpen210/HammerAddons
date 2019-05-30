@@ -1,4 +1,4 @@
-@SolidClass base(Targetname, Propper, Origin) 
+@SolidClass base(Propper, Origin) 
 	appliesto(PROPPER)
 = propper_lod: "A low-res version of the model to show at long distance."
 	[

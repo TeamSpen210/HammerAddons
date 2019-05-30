@@ -1,9 +1,8 @@
-@PointClass base(Targetname, Propper) 
+@PointClass base(Propper) 
 	appliesto(PROPPER)
 	iconsprite("editor/gibshooter.vmt")
 	sphere(fademindist)
 	sphere(fademaxdist)
-	line(255 255 0, targetname, my_model)
 = propper_gibs: "When a prop breaks, You can cause one or more custom-made broken pieces to spawn in its place."
 	[
 	model(studio) : "Gib model"

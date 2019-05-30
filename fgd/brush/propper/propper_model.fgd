@@ -1,4 +1,4 @@
-@SolidClass base(Targetname, Origin) 
+@SolidClass base(StaticTargetname, Origin) 
 	appliesto(PROPPER)
 	line(255 255 0, targetname, physmodel)
 = propper_model: "This will create a model when Propper is run."
@@ -83,8 +83,13 @@
 		"pottery": "Pottery"
 		]
 
-	physmodel(target_destination) : "Physics mesh" : : "Pick any brush entity (including this one) to represent the physical shape of the model. Leave this field blank for a non-solid " + "model. If you leave this blank while making a physics prop, Propper will automatically use this entity for collisions."
+	physmodel(target_destination) : "Physics mesh" : : "Pick any brush entity (including this one) to represent the physical shape of the model. " +
+		"Leave this field blank for a non-solid model. " +
+		"If you leave this blank while making a physics prop, " +
+		"Propper will automatically use this entity for collisions."
+
 	mass(float) : "Mass" : "0.0" : "Weight of the prop in kg. Enter zero or lower to automatically calculate mass."
+
 	concave(boolean) : "Concave collisions" : 1 : "Used to make a concave collision model. If you choose no, the model will be 'shrink-wrapped'."
 
 	smoothing[engine](integer) : "Smoothing mode" : 1

@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, BaseObject, Angles) 
+@PointClass base(BaseEntityPoint, BaseObject) 
 	appliesto(TF2) 
 	studio("models/buildables/dispenser_light.mdl") = obj_dispenser: "TF2 Dispenser"
 	[
