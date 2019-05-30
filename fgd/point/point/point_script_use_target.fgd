@@ -1,7 +1,9 @@
 @PointClass 
-	base(Origin, Targetname) 
+	base(BaseEntityPoint) 
 	appliesto(L4D2)
-= point_script_use_target: "Makes an entity 'usable' by a player. An attached script determines the display text and use time."
+	line(255 255 0, targetname, model)
+= point_script_use_target: "Makes an entity 'usable' by a player. " +
+	"An attached script determines the display text and use time."
 	[
 	model(target_destination) : "Use Model" : : "The name of the entity the player will be using."
 

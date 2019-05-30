@@ -28,7 +28,7 @@
 		]
 
 	overlaymaterial(material) : "Overlay Material" : : "Name of a material to overlay over the top of the VGUI screen. NOTE: This material must write Z for the VGUI screen to work."
-	width(integer) : "Panel Width in World (Green)" : 256: Width of the panel in units."
+	width(integer) : "Panel Width in World (Green)" : 256 : "Width of the panel in units."
 	height(integer) : "Panel Height in World (Blue)" : 128 : "Height of the panel in units."
 	istransparent(boolean) : "Is Transparent?" : 0 : "Set this to true if you would like your background to be invisible instead of a black fill."
 

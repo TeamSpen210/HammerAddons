@@ -1,4 +1,4 @@
-@PointClass base(Angles) 
+@PointClass base(BaseEntityPoint) 
 	studioprop("models/editor/camera.mdl") 
 	iconsprite("editor/point_devshot_camera.vmt") 
 	frustum(fov, 16, 256, 255 255 255 10, -1) 

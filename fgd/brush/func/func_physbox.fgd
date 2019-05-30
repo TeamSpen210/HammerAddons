@@ -1,4 +1,4 @@
-@SolidClass base(BreakableBrush, Targetname, Origin, RenderFields, Shadow, Reflection, compMinLight) = func_physbox: "A brush entity that's physically simulated."
+@SolidClass base(BreakableBrush) = func_physbox: "A brush entity that's physically simulated."
 	[
 	spawnflags(flags)  =
 		[
@@ -48,13 +48,15 @@
 
 	// Inputs
 	input Wake(void) : "Wake up this physics object, if it is sleeping."
-	input Sleep(void) : "Put this physics object to sleep. It will wake if given the Wake input, or if force is applied to it. " +
-		"Note that physics objects go to sleep automatically after coming to rest for a while, so you don't really need to use this."
+	input Sleep(void) : "Put this physics object to sleep. It will wake if given the Wake input, " +
+		"or if force is applied to it. " +
+		"Note that physics objects go to sleep automatically after coming to rest for a while, " +
+		"so you don't really need to use this."
 	input EnableMotion(void) : "Enable physics motion/collision response."
 	input DisableMotion(void) : "Disable physics motion/collision response."
 	input ForceDrop(void) : "If this object is being carried by a player, with the physgun or +USE, force it to be dropped."
-	input Enable[P2](void) : "Show this object and allow it to collide, doesn't override notsolid"
-	input Disable[P2](void) : "Hide this object and stop collisions"
+	input Enable[P2](void) : "Show this object and allow it to collide, doesn't override notsolid."
+	input Disable[P2](void) : "Hide this object and stop collisions."
 	input BecomeDebris[P2](void) : "Change the collision to act like debris"
 
 	// Outputs
@@ -63,7 +65,9 @@
 	output OnMotionEnabled(void) : "Fired when motion is enabled due to damage/physcannon/force."
 	output OnPhysGunPickup(void) : "Fired when a player picks this object up, either with the physgun or +USE."
 	output OnPhysGunPunt(void) : "Fired when a player punts this object with the physgun."
-	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up WITH THE PHYSGUN. +USE pickups do not fire this output."
+	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up WITH THE PHYSGUN. " +
+		"+USE pickups do not fire this output."
 	output OnPhysGunDrop(void) : "Fired when a player drops this object."
-	output OnPlayerUse(void) : "Fired when the player tries to +USE the physbox. This output will fire only if the Generate output on +USE spawnflag is set."
+	output OnPlayerUse(void) : "Fired when the player tries to +USE the physbox. " +
+		"This output will fire only if the Generate output on +USE spawnflag is set."
 	]

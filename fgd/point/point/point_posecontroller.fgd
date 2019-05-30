@@ -1,4 +1,4 @@
-@PointClass base(Targetname)
+@PointClass base(BaseEntityPoint)
 	size(-8 -8 -8, 8 8 8) 
 	line(255 255 0, targetname, propname) 
 = point_posecontroller: "An entity that controls a pose parameter of a prop and cycles the pose clientside."

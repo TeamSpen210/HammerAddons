@@ -13,6 +13,6 @@
 @BaseClass 
 	appliesto(L4D2) 
 	studio("models/survivors/survivor_coach.mdl")
-= _L4DSurvivor1
+= _L4DSurvivor2
 	[
 	]

@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles)
+@PointClass base(BaseEntityPoint)
 	studio("models/editor/axis_helper_thick.mdl") 
 	iconsprite("editor/point_teleport.vmt") 
 	line(255 255 255, targetname, target) 

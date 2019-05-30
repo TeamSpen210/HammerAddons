@@ -1,6 +1,5 @@
-
-@PointClass base(Targetname) 
-	appliesto(CSGO) 
+@PointClass base(BaseEntityPoint) 
+	appliesto(since_CSGO) 
 	size(-8 -8 -8, 8 8 8) = point_surroundtest: "Surround Sound Test"
 	[
 

@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) = point_intermission: "Entity that ends the match and triggers an intermission."
 	[
 

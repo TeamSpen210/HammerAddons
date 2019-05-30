@@ -1,39 +1,14 @@
-@PointClass base(Targetname)
+@PointClass base(BaseEntityPoint, DamageType)
 	sphere(DamageRadius) 
 	line(255 0 0, targetname, damagetarget) 
 	iconsprite("editor/ficool2/point_hurt") 
-= point_hurt: "An entity that does damage to all entities in a radius around itself, with a specified delay.If 'Target Entity' is specified, th" + "e damage is only done to that entity."
+= point_hurt: "An entity that does damage to all entities in a radius around itself, with a specified delay. " +
+	"If 'Target Entity' is specified, the damage is only done to that entity."
 	[
 	damagetarget(target_destination) : "Target Entity" : : "If specified, only this entity will take damage. Otherwise, all entities within the Radius will take damage."
 	damageradius(float) : "Radius" : 256 : "All entities within this radius of this entity will take damage. If a 'Target Entity' is specified, only that entity will take d" + "amage."
 	damage(integer) : "Damage" : 5 : "Damage done to all affected entities each time this entity fires."
 	damagedelay(float) : "Delay" : 1 : "Delay between refires, in seconds."
-
-	damagetype[engine](integer): "Damage Type"
-	damagetype(choices) : "Damage Type" : 0 : "Type of damage to inflict on entities damaged. Differerent types can be ORed together." =
-		[
-		0: "GENERIC"
-		1: "CRUSH"
-		2: "BULLET"
-		4: "SLASH"
-		8: "BURN"
-		16: "FREEZE"
-		32: "FALL"
-		64: "BLAST"
-		128: "CLUB"
-		256: "SHOCK"
-		512: "SONIC"
-		1024: "ENERGYBEAM"
-		16384: "DROWN"
-		32768: "PARALYSE"
-		65536: "NERVEGAS"
-		131072: "POISON"
-		262144: "RADIATION"
-		524288: "DROWNRECOVER"
-		1048576: "CHEMICAL"
-		2097152: "SLOWBURN"
-		4194304: "SLOWFREEZE"
-		]
 
 	spawnflags(flags)  =
 		[

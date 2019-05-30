@@ -1,7 +1,7 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	color(200 0 0) 
-	iconsprite("editor/point_clientcommand.vmt") = point_clientcommand: "An entity that issues commands to the client console, as if it was typed in by the player (if activator is a player, or the local player in single player)."
+	iconsprite("editor/point_clientcommand.vmt") 
+= point_clientcommand: "An entity that issues commands to the client console, as if it was typed in by the player (if activator is a player, or the local player in single player)."
 	[
 
 	// Inputs

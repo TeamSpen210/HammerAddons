@@ -1,4 +1,4 @@
-@PointClass base(Parentname, Angles)
+@PointClass base(BaseEntityPoint)
 	line(255 255 255, targetname, parentname) 
 	iconsprite("editor/ficool2/point_enable_motion_fixup")
 = point_enable_motion_fixup: "An entity used to move a motion-disabled prop when it enables motion. " +

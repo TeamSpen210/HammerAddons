@@ -1,6 +1,6 @@
 
-@BaseClass base(Targetname, Origin, Angles, Global) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) = CombineBallSpawners
+@BaseClass base(BaseEntityPoint, Global) 
+= CombineBallSpawners
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -9,11 +9,9 @@
 		]
 
 	ballcount(integer) : "Ball count" : 3 : "This is how many balls will be bouncing around inside the spawner"
-	ballcount[P2](integer) : "Ball count" : 1 : "The number of Pellets that are alive at once."
 	minspeed(float) : "Min ball speed" : 300.0 : "The minimum speed of balls that fly in the spawner"
-	minspeed[P2](float) : "Min ball speed" : 150.0 : "The minimum starting speed."
 	maxspeed(float) : "Max ball speed" : 600.0 : "The maximum speed of balls that fly in the spawner"
-	maxspeed[P2](float) : "Max ball speed" : 150.0 : "The maximum starting speed."
+
 	ballradius(float) : "Ball radius" : 20.0 : "The radius of the energy balls."
 	balltype(choices) : "Ball Type" : "Combine Energy Ball 1" =
 		[

@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(L4D, L4D2)
 	studioprop("models/editor/camera.mdl")
 = point_deathfall_camera: "A camera entity that players falling to their deaths look through."

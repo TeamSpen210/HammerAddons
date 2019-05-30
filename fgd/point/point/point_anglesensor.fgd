@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	iconsprite("editor/ficool2/point_anglesensor")
 	color(0 100 250) 
 	line(0 100 250, targetname, target) 

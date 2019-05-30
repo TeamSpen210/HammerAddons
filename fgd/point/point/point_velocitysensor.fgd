@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	color(0 100 250) 
 	line(0 100 250, targetname, target) 
 	iconsprite("editor/ficool2/point_velocitysensor")
@@ -15,5 +14,6 @@
 	input Disable(void) : "Disable the sensor."
 
 	// Outputs
-	output Velocity(float) : "Fired when the Target's Velocity changes, passing the new magnitude of the velocity."
+	output Velocity(float) : "Fired when the Target's Velocity changes, " +
+		"passing the new magnitude of the velocity."
 	]

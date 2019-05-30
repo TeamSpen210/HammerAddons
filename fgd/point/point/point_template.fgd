@@ -1,4 +1,4 @@
-@PointClass base(Targetname)
+@PointClass base(BaseEntityPoint)
 	iconsprite("editor/point_template.vmt") 
 	line(255 255 0, targetname, Template01) 
 	line(255 255 0, targetname, Template09) 

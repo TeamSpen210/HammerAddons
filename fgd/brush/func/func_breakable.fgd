@@ -2,7 +2,9 @@
 = func_breakable: "A brush entity that can be broken from damage, or an input."
 	[
 	minhealthdmg(integer) : "Min Damage to Hurt" : 0 : "The prop will ignore any damage events if the damage is less than this amount."
-	physdamagescale(float) : "Physics Impact Damage Scale" : "1.0" : "Scales damage energy when this object is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility." + "\nSet to 1.0 for materials as strong as flesh, smaller numbers indicate stronger materials."
+	physdamagescale(float) : "Physics Impact Damage Scale" : "1.0" : "Scales damage energy when this object is hit by a physics object. " +
+		"NOTE: 0 means this feature is disabled for backwards compatibility.\n" + 
+		"Set to 1.0 for materials as strong as flesh, smaller numbers indicate stronger materials."
 	breakabletype[L4D](choices) : "Breakable by" : "0" =
 		[
 		0: "Everyone"

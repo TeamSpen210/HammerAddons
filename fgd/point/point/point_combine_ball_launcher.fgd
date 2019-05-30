@@ -1,18 +1,18 @@
-
 @PointClass base(CombineBallSpawners) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	studio("models/effects/combineball.mdl") 
-	studio("models/editor/cone_helper.mdl") = point_combine_ball_launcher: "Launches Combine balls."
+	studio("models/editor/cone_helper.mdl") 
+= point_combine_ball_launcher: "Launches Combine balls."
 	[
 	launchconenoise(float) : "Noise to launch direction" : 0.0 : "Noise in degrees added to the launch direction."
-	bullseyename(string) : "Name of bullseye" : : "If you select the Attach Bullseye spawnflag, you may specify a name here which will be given to the bullseye."
+	bullseyename(target_source) : "Name of bullseye" : : "If you select the Attach Bullseye spawnflag, " +
+		"you may specify a name here which will be given to the bullseye."
 	maxballbounces(integer) : "Max number of bounces" : 8 : "Maximum number of bounces the balls are allowed to do before they are removed."
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Attach Bullseye" : 0
 		2: "Balls should collide against player" : 0
 		]
-
 
 	// Inputs
 	input LaunchBall(void) : "Launch a ball from the spawner."

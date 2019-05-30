@@ -1,7 +1,7 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(P2) 
-	iconsprite("editor/game_end.vmt") = point_changelevel: "Level Change Entity"
+	iconsprite("editor/game_end.vmt") 
+= point_changelevel: "Level Change Entity"
 	[
 
 	// Inputs

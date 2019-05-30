@@ -1,4 +1,4 @@
-@PointClass base(Origin, Targetname, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	size(-2 -2 -2, 2 2 2)
 	color(0 255 0)
 = point_gamestats_counter: "Generic game statistics counter."

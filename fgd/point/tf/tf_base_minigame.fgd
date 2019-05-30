@@ -8,7 +8,7 @@
 	redspawn(target_source) : "Red Spawn Name" : : "The name of the spawnpoints for RED for this minigame"
 	bluespawn(target_source) : "Blue Spawn Name" : : "The name of the spawnpoints for BLU for this minigame"
 	
-	inrandompool(boolean) : "Put in Random Pool" : 1 : "If Yes, allowed to be chosen when told to go to a random minigame" =
+	inrandompool(boolean) : "Put in Random Pool" : 1 : "If Yes, allowed to be chosen when told to go to a random minigame"
 
 	maxscore(integer) : "Max Score" : 5 : "When a team hits this score, the On<Team>HitMaxScore output will be fired"
 	hud_res_file(string) : "HUD Res File" : : "Res file to use for this minigame"

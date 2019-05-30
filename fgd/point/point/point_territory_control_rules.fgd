@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(CSGO) 
 	size(-8 -8 -8, 8 8 8) = point_territory_control_rules: "The Territory Control rules entity (VERY IMPORTANT!)"
 	[

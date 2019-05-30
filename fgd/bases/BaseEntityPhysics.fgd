@@ -2,7 +2,7 @@
 
 @BaseClass base(BaseEntityPoint, Render) 
 	sphere(fademindist) sphere(fademaxdist)
-= BaseEntityAnimating
+= BaseEntityPhysics
 	[	
 	model(studio) : "Model" :  : "The model this entity should appear as. 128-character limit."
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. " +

@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles, NavBlocker) 
+@PointClass base(BaseEntityPoint, NavBlocker) 
 	obb(boxmins, boxmaxs)
 	appliesto(L4D2)
 = point_nav_blocker: "A point entity that can block nav areas touching its AABB."

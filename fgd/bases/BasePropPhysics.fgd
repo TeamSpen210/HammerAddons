@@ -1,5 +1,66 @@
-
-@BaseClass base(BasePresetPropPhysics, Studiomodel, DXLevelChoice) 
-= BasePropPhysics : "Prop_physics-like entities that can set their model."
+@BaseClass base(BaseEntityPhysics, Global, BreakableProp, SystemLevelChoice, BaseFadeProp) 
+= BasePropPhysics: "For prop_physics-like entities."
 	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Start Asleep" : 0
+		2: "Don't take physics damage" : 0
+		4: "Debris - Don't collide with the player or other debris" : 0
+		8: "Motion Disabled" : 0
+		64: "Enable motion on Physcannon grab" : 0
+		128: "Not affected by rotor wash" : 0
+		256: "Generate output on +USE " : 1
+		512: "Prevent pickup" : 0
+		1024: "Prevent motion enable on player bump" : 0
+		4096: "Debris with trigger interaction" : 0
+		8192: "Force server-side (Multiplayer only)" : 0
+		32768: "Autoaim target" : 0
+		1048576: "Physgun can ALWAYS pick up. No matter what." : 0
+		]
+
+	minhealthdmg(integer) : "Min Damage to Hurt" : 0 : "The prop will ignore any damage events if the damage is less than this amount."
+	shadowcastdist(integer) : "Shadow Cast Distance" : 0 : "Use this to override how far this object casts shadows. 0 = default distance."
+	physdamagescale(float) : "Physics Impact Damage Scale" : 0.1 : "Scales damage energy when this object is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility.\nSet to 1.0 for materials as strong as flesh, smaller numbers indicate stronger materials."
+	damagetype(choices) : "Impact damage type" : "0" =
+		[
+		0: "Blunt"
+		1: "Sharp"
+		]
+	damagetype[engine](int): "Impact damage type": 0
+
+	nodamageforces(boolean) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move."
+	inertiascale(float) : "Scale Factor For Inertia" : 1.0 : "Scales the angular mass of an object. Used to hack angular damage and collision response."
+	massscale(float) : "Mass Scale" : 0 : "A scale multiplier for the object's mass."
+	overridescript(string) : "Override Parameters" : : "A list of physics key/value pairs that are usually in a physics prop .qc file. Format is 'key,value,key,value,etc'."
+	damagetoenablemotion(integer) : "Health Level to Override Motion" : 0 : "If specified, this object will start motion disabled. Once its health has dropped below this specified amount, it will enable motion."
+	forcetoenablemotion(float) : "Physics Impact Force to Override Motion" : 0 : "If specified, this object will start motion disabled. Any impact that imparts a force greater than this value on the physbox will enable motion."
+	puntsound(sound) : "Sound to make when punted."
+	
+	// Incomplete ASW feature.
+	addon[since_ASW](string) : "AI AddOn" : : "If specified this object will use this addon behavior when installed in a composite AI"
+
+
+	// Inputs
+	input Wake(void) : "Wake up this physics object, if it is sleeping."
+	input Sleep(void) : "Put this physics object to sleep. It will wake if given the Wake input, or if force is applied to it. Note that physics objects go to sleep automatically after coming to rest for a while, so you don't really need to use this."
+	input EnableMotion(void) : "Enable physics motion/collision response."
+	input DisableMotion(void) : "Disable physics motion/collision response."
+	input DisableFloating(void) : "Disable fluid/floating simulation to reduce cost."
+	input SetBodyGroup(integer) : "Set this prop's body group (from 0 - n)."
+	input physdamagescale(float) : "Set the Physics Impact Damage Scale for this character. NOTE: 0 means this feature is disabled for backwards compatibility."
+	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
+	input DisableDamageForces(void) : "Damaging the entity does *not* apply physics forces to it."
+	input EnablePuntSound(void) : "Allow this prop to play its own sound when punted."
+	input DisablePuntSound(void) : "Prevent this prop from playing its own sound when punted."
+
+	// Outputs
+	output OnMotionEnabled(void) : "Fired when motion is enabled on this prop, either via 'Health Level to Override Motion' or from the EnableMotion input."
+	output OnAwakened(void) : "Fired when this entity becomes awake (collision/force is applied to it while it's asleep)."
+	output OnPhysGunPickup(void) : "Fired when the player picks up the prop with the physcannon or +USE."
+	output OnPhysGunPunt(void) : "Fired when a player punts this object with the physgun."
+	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up WITH THE PHYSGUN. +USE pickups do not fire this output."
+	output OnPhysGunDrop(void) : "Fired when the player drops the prop with the physcannon or USE."
+	output OnPlayerUse(void) : "Fired when the player tries to +USE the prop. This output will fire only if the Generate output on +USE spawnflag is set."
+	output OnPlayerPickup(void) : "Fired whenever the player picks up this prop (with the physcannon or with +USE)."
+	output OnOutOfWorld(void) : "Fired whenever the prop is out of the allowed world bounds."
 	]

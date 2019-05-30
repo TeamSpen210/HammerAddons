@@ -1,7 +1,7 @@
-
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(since_CSGO) 
-	worldtext() = point_worldtext: "An entity that displays a text message oriented in the world, at its origin."
+	worldtext() 
+= point_worldtext: "An entity that displays a text message oriented in the world, at its origin."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

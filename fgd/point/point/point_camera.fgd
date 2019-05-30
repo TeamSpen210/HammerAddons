@@ -1,14 +1,11 @@
-
-@PointClass base(Parentname, Angles, Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
-	studioprop("models/editor/camera.mdl") = point_camera: "Camera"
+@PointClass base(BaseEntityPoint)
+	studioprop("models/editor/camera.mdl") 
+= point_camera: "Camera"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Start Off" : 0
 		]
-
-	targetname[!P2](target_source) : "Name" : : "The name that other entities refer to this entity by."
 	fov(float) : "FOV" : 90 : "Field of view in degrees"
 	usescreenaspectratio(boolean) : "Screen Aspect Ratio" : 0
 	fogenable(boolean) : "Fog Enable" : 0
@@ -22,6 +19,6 @@
 	input SetOnAndTurnOthersOff(void) : "Turn the camera on, and turn all other cameras off."
 	input SetOn(void) : "Turn the camera on."
 	input SetOff(void) : "Turn the camera off."
-	input Activate[!P2, ASW](void) : "Turn the camera on, activate it and deactivate all other cameras."
-	input Deactivate[!P2, ASW](void) : "Turn the camera off, deactivate it."
+	input Activate[since_ASW](void) : "Turn the camera on, activate it and deactivate all other cameras."
+	input Deactivate[since_ASW](void) : "Turn the camera off, deactivate it."
 	]

@@ -1,9 +1,14 @@
-
-@PointClass base(CombineBallSpawners, Parentname, Targetname) 
+@PointClass base(CombineBallSpawners) 
 	appliesto(P1, P2) 
 	studio("models/effects/combineball.mdl") 
-	studio("models/editor/cone_helper.mdl") = point_energy_ball_launcher: "Launches Aperture Science High Energy Pellets. "
+	studio("models/editor/cone_helper.mdl")
+= point_energy_ball_launcher: "Launches Aperture Science High Energy Pellets. "
 	[
+	ballcount(integer) : "Ball count" : 1 : "The number of Pellets that are alive at once."
+	maxspeed(float) : "Max ball speed" : 150.0 : "The maximum starting speed."
+	minspeed(float) : "Min ball speed" : 150.0 : "The minimum starting speed."
+	balltype(integer) readonly : "Ball Type" : 0 : "Has no effect."
+
 	balllifetime(float) : "Ball Lifetime" : 12 : "The time in seconds the ball will live before self-destructing. A negative value will give infinite life, appearing green."
 	minlifeafterportal(float) : "Min life after portal transition" : 6 : "When energy balls created by this launcher pass through a portal their life is refreshed to be this number at minimum."
 

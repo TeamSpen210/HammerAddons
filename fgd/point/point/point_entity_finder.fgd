@@ -1,4 +1,4 @@
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(since_L4D2)
 	line(255 255 0, targetname, referencename)
 	line(255 255 0, targetname, filtername)

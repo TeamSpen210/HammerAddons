@@ -1,4 +1,4 @@
-@PointClass base(Targetname)
+@PointClass base(BaseEntityPoint)
 	iconsprite("editor/ficool2/point_playermoveconstraint.vmt") 
 	sphere(radius) 
 = point_playermoveconstraint: "An entity that constrains players to a radius around itself, slowing them down the closer they get to the edge of the radius."

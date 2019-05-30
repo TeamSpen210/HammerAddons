@@ -1,8 +1,10 @@
-
-@BaseClass base(Targetname, DamageFilter, Shadow, Reflection) = Breakable
+// Use BreakableBrush/Prop instead!
+@BaseClass sphere(exploderadius) = _Breakable
 	[
 	explodedamage(float) : "Explosion Damage" : 0 : "If non-zero, when this entity breaks it will create an explosion that causes the specified amount of damage. See also 'Explosion Radius'."
 	exploderadius(float) : "Explosion Radius" : 0 : "If non-zero, when this entity breaks it will create an explosion with a radius of the specified amount. See also 'Explosion Damage'."
+	// Todo - damage vs magnitude
+	explodemagnitude(integer) : "Explode Magnitude" : 0 : "If non-zero, when this entity breaks it will create an explosion that causes the specified amount of damage."
 
 	performancemode[engine](integer) : "Performance Mode" : 0
 	performancemode(choices) : "Performance Mode" : 0 : "Used to limit the amount of gibs produced when this entity breaks, for performance reasons." =
@@ -13,8 +15,13 @@
 		3: "Reduced gibs"
 		]
 
+	pressuredelay(float) : "Pressure Delay" : 0 : "Delay, in seconds, after 'broken' by pressure before breaking apart (allows for sound to play before breaking apart)."
+
 	breakmodelmessage[until_ASW](string) : "Break Model Message" : : "If set, will use this break model message instead of the normal break behavior."
 
+	minhealthdmg(integer) : "Minimum Damage to Hurt" : 0 : "The entity will ignore any damage events if the damage is less than this amount."	
+	health(integer) : "Health" : 0 : "Number of points of damage to take before breaking. 0 means don't break."
+	physdamagescale(float) : "Physics Impact Damage Scale" : "1.0" : "Scales damage energy when this object is hit by a physics object. Set to 1.0 for materials as strong as flesh, smaller numbers indicate stronger materials."
 	// Inputs
 	input Break(void) : "Breaks the breakable."
 	input SetHealth(integer) : "Sets a new value for the breakable's health. If the breakable's health reaches zero it will break."

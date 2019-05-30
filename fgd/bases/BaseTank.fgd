@@ -1,5 +1,5 @@
 
-@BaseClass base(Targetname, Parentname, Origin, Angles, RenderFields, Global, Shadow) 
+@BaseClass base(BaseEntitySolid, Global) 
 line(255 255 255, targetname, control_volume) 
 sphere(minrange) sphere(maxrange)
 = BaseTank

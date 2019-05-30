@@ -1,4 +1,4 @@
-@SolidClass base(Targetname, Parentname) 
+@SolidClass base(BaseEntityBrush) 
 	color(200 200 0)
 = env_bubbles: "An entity used to create a volume in which to spawn bubbles."
 	[
@@ -17,6 +17,5 @@
 	input Toggle(void) : "Toggles the bubbles on and off."
 	input SetDensity(integer) : "Sets the bubble density."
 	input SetFrequency(integer) : "Sets bubble emission rate in bubbles per second."
-	input SetCurrent(integer) : "Sets current speed in inches per second."
-	input SetCurrent[P2](integer) : "Sets current speed in units per second."
+	input SetCurrent(integer) : "Sets current speed in units per second."
 	]

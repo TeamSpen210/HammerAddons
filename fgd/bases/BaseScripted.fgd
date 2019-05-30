@@ -1,5 +1,5 @@
 
-@BaseClass base(Targetname, Parentname, Angles) 
+@BaseClass base(BaseEntityPoint) 
 	color(255 0 255) 
 	sphere(m_flRadius) = BaseScripted
 	[

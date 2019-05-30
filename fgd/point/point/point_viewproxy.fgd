@@ -1,9 +1,11 @@
-
-@PointClass base(Targetname, Angles, Parentname) 
-	appliesto(P2, CSGO) 
+@PointClass base(BaseEntityPoint) 
+	appliesto(since_P2) 
 	color(200 0 0) 
 	studioprop("models/editor/camera.mdl") 
-	line(255 255 0, targetname, proxy) = point_viewproxy: "A camera entity that moves the player's view. Use this if you want the player to retain control of where the player looks but want to move the position to another location.|||A camera entity that moves the player's view. Use this if you want the player to retain control of where the player looks but want to base the position to be based on the proxy."
+	line(255 255 0, targetname, proxy) 
+= point_viewproxy: "A camera entity that moves the player's view. " +
+	"Use this if you want the player to retain control of where the player looks but want " +
+	"to move the position to another location."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

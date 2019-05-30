@@ -1,4 +1,4 @@
-@PointClass base(BasePropPhysics, RenderFields)
+@PointClass base(BasePropPhysics, BreakableProp, SetModel)
 	studioprop() 
 	sphere(fademindist) 
 	sphere(fademaxdist) 

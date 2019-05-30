@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname, Angles, Studiomodel) 
+@PointClass base(BaseEntityAnimating, SetModel) 
 	studio() 
 	color(128 128 128) 
 	iconsprite("editor/phys_magnet") = phys_magnet: "An entity that acts like a magnet, attaching metallic physics objects to itself when they touch it."
@@ -22,6 +21,7 @@
 	// Inputs
 	input TurnOn(void) : "Turn the magnet on."
 	input TurnOff(void) : "The the magnet off. This will detach anything current stuck to the magnet."
+	input Toggle(void) : "Toggle the magnet on or off."
 
 	// Outputs
 	output OnAttach(void) : "Fired when an entity is grabbed by the magnet."

@@ -1,4 +1,4 @@
-@BaseClass base(Breakable, Parentname, Global) = BreakableBrush
+@BaseClass base(BaseEntityVisBrush, _Breakable) = BreakableBrush
 	[
 	spawnflags(flags)  =
 		[
@@ -44,8 +44,10 @@
 		]
 
 	health(integer) : "Strength" : 1 : "Number of points of damage to take before breaking. 0 means don't break."
-	material[ENGINE](integer) : "Material Type" : 0 : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken."
-	material(choices) : "Material Type" : 0 : "Set to the material type of the brush. Used to decide what sounds to make when damaged, and what gibs to produce when broken." =
+	material[ENGINE](integer) : "Material Type" : 0 : "Set to the material type of the brush. " +
+		"Used to decide what sounds to make when damaged, and what gibs to produce when broken."
+	material(choices) : "Material Type" : 0 : "Set to the material type of the brush. " +
+		"Used to decide what sounds to make when damaged, and what gibs to produce when broken." =
 		[
 		0: "Glass"
 		1: "Wood"
@@ -72,8 +74,7 @@
 		"Be sure to select Use Precise Gib Dir in the Gibs Direction field!"
 	nodamageforces(boolean) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move."
 
-	gibmodel(studio) : "Gib Model" : : "Used by HL1Port to specify a custom gib model to break into, overriding the 'Material Type'."
-	gibmodel[L4D](string) : "Gib Model" : : "Used by HL1Port to specify a custom gib model to break into, overriding the 'Material Type'."
+	gibmodel[HLS](studio) : "Gib Model" : : "Used by HL1Port to specify a custom gib model to break into, overriding the 'Material Type'."
 	spawnobject[ENGINE](integer) : "Spawn On Break" : 0 : "When broken, an entity of the selected type will be created."
 	spawnobject[EP1, EP2, P1, HL2](choices) : "Spawn On Break" : 0 : "When broken, an entity of the selected type will be created." =
 		[
@@ -105,8 +106,6 @@
 		26: "item_dynamic_resupply"
 		]
 
-	explodemagnitude(integer) : "Explode Magnitude" : 0 : "If non-zero, when this entity breaks it will create an explosion that causes the specified amount of damage."
-	pressuredelay(float) : "Pressure Delay" : 0 : "Delay, in seconds, after 'broken' by pressure before breaking apart (allows for sound to play before breaking apart)."
 
 	breakabletype[engine](integer) : "Breakable By" : 0 : "Who can break this?"
 	breakabletype[L4D, L4D2](choices) : "Breakable By" : 0 : "Who can break this?" =

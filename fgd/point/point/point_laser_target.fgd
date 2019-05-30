@@ -1,10 +1,12 @@
-
-@PointClass base(Targetname, SRCIndicator) 
+@PointClass base(BaseEntityPoint, SRCIndicator) 
 	appliesto(P2) 
 	studio("models/editor/axis_helper.mdl") 
-	iconsprite("editor/point_laser_target.vmt") = point_laser_target: "Invisible Discouragement Beam detector, for logic use. The entity will fire outputs when struck and unstruck."
+	iconsprite("editor/point_laser_target.vmt")
+	= point_laser_target: "Invisible Discouragement Beam detector, for logic use. " +
+		"The entity will fire outputs when struck and unstruck."
 	[
-	terminalpoint(boolean) : "Terminal Point" : 1 : "Will lasers auto-aim towards this? It may also make the laser stop here."
+	terminalpoint(boolean) : "Terminal Point" : 1 : "Will lasers auto-aim towards this? " +
+		"It may also make the laser stop here."
 
 	// Outputs
 	output OnPowered(void) : "Fired when a laser hits the target."

@@ -1,4 +1,4 @@
-@FilterClass base(filter_base, Condition) 
+@FilterClass base(filter_base, TFCondition) 
 	appliesto(TF2) 
 	iconsprite("editor/ficool2/filter_tf_condition.vmt")
 = filter_tf_condition: 

@@ -11,7 +11,7 @@
 
 	startdisabled(boolean) : "Start Disabled" : 1
 	
-	minimumstate[engine](choices) : "Minimum state" : 1
+	minimumstate[engine](integer) : "Minimum state" : 1
 	minimumstate(choices) : "Minimum state" : 1 =
 		[
 		1: "Idle"

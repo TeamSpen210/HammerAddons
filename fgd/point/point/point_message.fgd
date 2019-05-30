@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	studio("models/editor/axis_helper.mdl") 
 	color(200 200 0) 
 	iconsprite("editor/ts2do/env_message.vmt") 

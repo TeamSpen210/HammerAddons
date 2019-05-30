@@ -1,6 +1,7 @@
-
-@PointClass base(Angles, Targetname, EnableDisable, Parentname) 
-	studio("models/extras/info_speech.mdl") = point_commentary_node: "Commentary node for the developer commentary. Usually added after-the-fact by the commentary system, but can also be placed manually."
+@PointClass base(BaseEntityAnimating, EnableDisable) 
+	studio("models/extras/info_speech.mdl") 
+= point_commentary_node: "Commentary node for the developer commentary. " +
+	"Usually added after-the-fact by the commentary system, but can also be placed manually."
 	[
 	commentaryfile(sound) : "Commentary File" : : "The sound that will play when this is triggered."
 	commentaryfile_nohdr(sound) : "Commentary File (no HDR)" : : "If HDR is off and this exists it will be played instead."
