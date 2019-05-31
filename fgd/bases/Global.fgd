@@ -1,6 +1,0 @@
-@BaseClass = Global
-	[
-	globalname(string) : "Global Entity Name" : : "Name by which this entity is linked to another entity in a different map. " +
-		"When the player transitions to a new map, entities in the new map with globalnames matching entities in the previous map " +
-		"will have the previous map's state copied over their state."
-	]

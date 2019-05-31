@@ -1,7 +1,14 @@
 @BaseClass = BaseEntityPoint
 	[
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-    angles(angle) : "Pitch Yaw Roll (X Y Z)" : "0 0 0" : "This entity's orientation in the world. Roll is the rotation around the X axis, pitch is rotation around the Y axis and yaw is the rotation around the Z axis."
+	globalname(string) : "Global Entity Name" : : "Name by which this entity is linked to another entity in a different map. " +
+		"When the player transitions to a new map, entities in the new map with globalnames matching entities in the previous map " +
+		"will have the previous map's state copied over their state."
+
+    angles(angle) : "Pitch Yaw Roll (X Y Z)" : "0 0 0" : "This entity's orientation in the world. " +
+    	"Roll is the rotation around the X axis, " +
+    	"pitch is rotation around the Y axis and " +
+    	"yaw is the rotation around the Z axis."
 
 	parentname[!srctools](target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent. Set an attachment point via 'parentname,attachment'."
 	parentname[srctools](target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
