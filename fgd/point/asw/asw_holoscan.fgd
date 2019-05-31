@@ -1,6 +1,7 @@
 
-@PointClass base(Targetname, Parentname, Angles, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(ASW) 
-	iconsprite("editor/asw_holoscan.vmt") = asw_holoscan: "Shows a red aiming scan arc, designed for use with the red hologram marines in the tutorial."
+	iconsprite("editor/asw_holoscan.vmt") 
+= asw_holoscan: "Shows a red aiming scan arc, designed for use with the red hologram marines in the tutorial."
 	[
 	]

@@ -4,11 +4,6 @@
 	studio("models/antlion.mdl") 
 	sphere() = npc_antlion: "Antlions will run away from ai_sound, type: Thumper."
 	[
-	startburrowed(choices) : "Start Burrowed" : "No" =
-		[
-		0: "No"
-		1: "Yes"
-		]
 
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -19,17 +14,9 @@
 
 	radius(integer) : "Alert Radius" : 256
 	eludedist(integer) : "Distance until eluded" : 1024 : "Only available when Burrow When Eluded is flagged"
-	ignorebugbait(choices) : "Ignore Bugbait" : "No" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	unburroweffects(choices) : "Suppress unburrow effects" : "No" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	ignorebugbait(boolean) : "Ignore Bugbait" : 0
+	unburroweffects(boolean) : "Suppress unburrow effects" : 0
+	startburrowed(boolean) : "Start Burrowed" : 0
 
 
 	// Inputs

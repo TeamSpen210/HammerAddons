@@ -1,5 +1,4 @@
-
-@NpcClass base(Targetname, Angles, BaseFadeProp, Global) 
+@NpcClass base(BaseEntityPhysics) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio("models/antlion_grub.mdl") 
 	sphere(fademindist) 

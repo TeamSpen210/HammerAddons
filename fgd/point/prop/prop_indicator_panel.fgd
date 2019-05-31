@@ -1,25 +1,27 @@
-
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(P2) 
 	studioprop("models/editor/prop_indicator_panel.mdl") 
-	line(255 255 0, targetname, IndicatorLights) = prop_indicator_panel: "Indicator signs for the end of modern antlines. Shows either a tick/cross, or a circular countdown. Can also function as a env_texturetoggle for indicator lights."
+	line(255 255 0, targetname, IndicatorLights) 
+= prop_indicator_panel: "Indicator signs for the end of modern antlines. Shows either a tick/cross, or a circular countdown. " +
+	"Can also function as a env_texturetoggle for indicator lights."
 	[
 	timerduration(float) : "Timer Duration" : 0 : "Amount of time the counter will count down."
 	enabled(boolean) : "Start visible?" : 1 : "Appears non-functional."
 
-	istimer[engine](boolean) : "Starting State" : 0 : "Does this start as a checkmark or countdown display?"
-	istimer(choices) : "Starting State" : 0 : "Does this start as a checkmark or countdown display?" =
+	istimer[engine](boolean) : "Is Timer?" : 0
+	istimer(choices) : "Starting State" : 0 : "Does this start as a checkmark or countdown display? " +
+		"Firing the appropriate inputs will switch the mode automatically." =
 		[
 		0: "Checkmark"
 		1: "Timer"
 		]
 
-	ischecked(boolean) : "Starts checked?" : "0" : "If this is a checkmark sign, whether this starts checked or not."
+	ischecked(boolean) : "Starts checked?" : 0 : "If this is a checkmark sign, whether this starts checked or not."
 
 	indicatorlights(target_destination) : "Indicator Lights" : : "If supplied, assumes this is a group of indicators lights to toggle when the indicator is toggled."
 
-	skin[engine](integer) : "[H] Skin" : "0" : "What kind of indicator to show as in Hammer"
-	skin(choices) : "[H] Skin" : "0" : "What kind of indicator to show as in Hammer" =
+	skin[engine](integer) : "[H] Skin" : "0" : "What kind of indicator to show as inside Hammer."
+	skin(choices) : "[H] Skin" : "0" : "What kind of indicator to show as inside Hammer." =
 		[
 		0: "Check"
 		1: "Cross"

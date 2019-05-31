@@ -1,6 +1,8 @@
 
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
-	size(-8 -8 -8, 8 8 8) = asw_menu_flashlight: "A flashlight for the main menu that will aim in the direction of the mouse cursor.  Not to be used for normal levels!"
+	size(-8 -8 -8, 8 8 8) 
+= asw_menu_flashlight: "A flashlight for the main menu that will aim in the direction " +
+	"of the mouse cursor.  Not to be used for normal levels!"
 	[
 	]

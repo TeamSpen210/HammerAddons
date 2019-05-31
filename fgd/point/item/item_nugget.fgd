@@ -1,5 +1,4 @@
-
-@PointClass base(Parentname, Targetname, Angles) 
+@PointClass base(BaseEntityAnimating) 
 	appliesto(P2) 
 	studioprop("models/effects/cappoint_hologram.mdl") = item_nugget: "Aperture Incentivizing Nugget. Useless."
 	[

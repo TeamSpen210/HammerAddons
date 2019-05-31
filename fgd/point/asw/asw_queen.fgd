@@ -1,5 +1,5 @@
 
-@NpcClass base(BaseNPC, Studiomodel) 
+@NpcClass base(BaseNPC) 
 	appliesto(ASW) 
 	studio("models/swarm/Queen/queen.mdl") 
 	sphere() = asw_queen: "Swarm Queen"
@@ -12,13 +12,9 @@
 		3: "Waiting for input"
 		]
 
-	visiblewhenasleep(choices) : "Visible when asleep" : "0" : "If true, this alien will still get drawn even when asleep (useful for aliens you see far below you)." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	visiblewhenasleep(boolean) : "Visible when asleep" : "0" : "If true, this alien will still get drawn even when asleep (useful for aliens you see far below you)."
 
-	spawnflags(flags) : "spawnflags" =
+	spawnflags(flags) =
 		[
 		131072: "Use Ground Checks" : 0
 		]

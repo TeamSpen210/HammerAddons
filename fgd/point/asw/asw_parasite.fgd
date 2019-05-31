@@ -2,7 +2,11 @@
 @NpcClass base(BaseNPC) 
 	appliesto(ASW) 
 	studio("models/aliens/parasite/parasite.mdl") 
-	sphere() = asw_parasite: "A lethal parasite Swarm alien, capable of burrowing through an IAF marine's armour and flesh.  Once safely inside the host's body, the parasite will quickly consume the internal organs and multiply at a fanstastic rate, with many more parasites bursting out of the victim shortly after."
+	sphere() = asw_parasite: "A lethal parasite Swarm alien, " +
+		"capable of burrowing through an IAF marine's armour and flesh. " +
+		"Once safely inside the host's body, the parasite will quickly consume the " +
+		"internal organs and multiply at a fanstastic rate, " +
+		"with many more parasites bursting out of the victim shortly after."
 	[
 	sleepstate(choices) : "Sleep State" : "1" : "Holds the NPC in stasis until specified condition. See also 'Wake Radius' and 'Wake Squad'." =
 		[
@@ -12,11 +16,7 @@
 		3: "Waiting for input"
 		]
 
-	visiblewhenasleep(choices) : "Visible when asleep" : "0" : "If true, this alien will still get drawn even when asleep (useful for aliens you see far below you)." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	visiblewhenasleep(boolean) : "Visible when asleep" : "0" : "If true, this alien will still get drawn even when asleep (useful for aliens you see far below you)."
 
 	spawnflags(flags) : "spawnflags" =
 		[

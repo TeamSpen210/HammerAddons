@@ -1,7 +1,8 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	iconsprite("editor/asw_order_nearby_aliens.vmt") 
+	line(255 255 255, targetname, alienordertargetname)
 	color(0 0 255) = asw_order_nearby_aliens
 	[
 	radius(float) : "Order Radius" : 400 : "All aliens within this radius of the specified class will receive orders."
@@ -30,7 +31,7 @@
 		3: "Move To Nearest Marine"
 		]
 
-	alienordertargetname(string) : "Alien Orders Target Name" : : "Name of the target object for our orders (used by move to and move to ignoring marines orders)."
+	alienordertargetname(target_destination) : "Alien Orders Target Name" : : "Name of the target object for our orders (used by move to and move to ignoring marines orders)."
 
 	// Inputs
 	input SendOrders(void) : "Gives the orders."

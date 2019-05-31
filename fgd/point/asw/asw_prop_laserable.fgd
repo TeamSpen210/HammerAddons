@@ -1,5 +1,4 @@
-
-@PointClass base(BasePropPhysics, RenderFields) 
+@PointClass base(BasePropPhysics, SetModel) 
 	appliesto(ASW) 
 	studioprop() 
 	sphere(fademindist) 
@@ -7,7 +6,4 @@
 	[
 	breakparticleeffect(particlesystem) : "Break Effect" : : "Choose what effect to spawn when the prop breaks."
 	breaksound(sound) : "Break Sound" : "ASWBarrel.Explode" : "Choose what sound to play when the prop breaks."
-
-	// Inputs
-	input Ignite(void) : "Ignite, burst into flames."
 	]

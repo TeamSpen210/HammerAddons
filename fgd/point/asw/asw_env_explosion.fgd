@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	iconsprite("editor/env_explosion.vmt") = asw_env_explosion: "An entity that creates an explosion at its origin."
 	[

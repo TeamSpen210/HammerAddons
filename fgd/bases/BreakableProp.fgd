@@ -6,11 +6,15 @@
 		32: "Break on Pressure" : 0
 		]
 	breakabletype[engine](integer) : "Exploitable by" : 0
-	exploitablebyplayer[!L4D, CSGO](choices) : "Exploitable by Player" : 0 =
+
+	exploitablebyplayer[engine](integer) : "Exploitable by Player" : 0
+	exploitablebyplayer[CSGO](choices) : "Exploitable by Player" : 0 =
 		[
 		0: "Default"
 		1: "Explosive"
 		]
+
+	breakabletype[engine](integer) : "Breakable by" : 0
 	breakabletype[L4D](choices) : "Breakable by" : 0 =
 		[
 		0: "Everyone"
@@ -18,8 +22,8 @@
 		2: "Only Tanks"
 		]
 
-		output OnTakeDamage(void) : "Fired each time this breakable takes any damage."
-			
-		input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
-		input DisableDamageForces(void) : "Damaging the entity does *not* apply physics forces to it."
+	output OnTakeDamage(void) : "Fired each time this breakable takes any damage."
+		
+	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
+	input DisableDamageForces(void) : "Damaging the entity does *not* apply physics forces to it."
 	]

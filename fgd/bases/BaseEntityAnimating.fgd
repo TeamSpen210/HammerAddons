@@ -3,6 +3,7 @@
 	sphere(fademindist) sphere(fademaxdist)
 = BaseEntityAnimating
 	[
+	effects[engine](integer) : "Effect Flags" : 0
 	effects(choices) : "Effect Flags" : 0 : "For configuring visual effects. If you want to combine effects, turn SmartEdit off and add the effect numbers together, i.e. 64 + 8 = 72." =
 		[
 		0 : "None"
@@ -25,7 +26,8 @@
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. " +
 		"Set this to a number other than 0 to use that skin instead of the default."
 
-	solid(choices) : "Collisions" : : "Method of collision for this entity. Can be changed at runtime with AddOutput." =
+	solid[engine](integer) : "Collisions": 6
+	solid(choices) : "Collisions" : 6 : "Method of collision for this entity. Can be changed at runtime with AddOutput." =
 		[
 		0: "None"
 		1: "BSP (QPhysics)"
@@ -36,10 +38,16 @@
 		6: "VPhysics"
 		]
 
-	body(integer) : "Bodygroup" : 0 : "Sets the body group index for the model, starting with 0, if available."
+	body(integer) : "Bodygroup" : 0 : "Body Groups allow turning on and off parts of a model, so sections can be shown or hidden dynamically."
+	setbodygroup(integer) : "(Set) Body Group" : 0 :  "Identical to Body Group (body), ask Valve why this is duplicated. Body Groups allow turning on and off parts of a model, so sections can be shown or hidden dynamically."
+	
 	texframeindex(integer) : "Texture Frame" : : "The frame number for any animated textures on this entity."
 	hitboxset(string) : "Hitbox Set" : : "Sets the $hboxset to use for collision testing."
 	
+	modelscale[EP1, EP2, TF2](float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
+	
+	linedivider_animbase(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
 	LightingOrigin(target_destination) : "Lighting Origin" :  : "Select any entity (not info_lighting!) from which to sample lighting instead of the entity's origin."
 	LightingOriginHack(target_destination) : "Lighting Origin Offset" :  : "The info_lighting_relative from which to sample lighting instead of the entity's origin."
 	
@@ -61,8 +69,6 @@
 	shadowdepthnocache[engine](integer): "": 0
 	disableflashlight[since_L4D](boolean) : "Disable flashlight" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
 
-	modelscale[EP1, EP2, TF2](float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
-	
 	linedivider_anim(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs

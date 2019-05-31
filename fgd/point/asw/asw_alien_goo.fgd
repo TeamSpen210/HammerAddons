@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Angles, Studiomodel, Origin) 
+@PointClass base(BaseEntityAnimating) 
 	appliesto(ASW) 
 	studioprop() = asw_alien_goo
 	[

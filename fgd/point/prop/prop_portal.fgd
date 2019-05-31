@@ -1,8 +1,8 @@
-
-@PointClass base(Targetname, Angles, PortalBase) 
+@PointClass base(BaseEntityPoint, PortalBase) 
 	appliesto(P1, P2) 
 	studioprop("models/editor/prop_portal.mdl") 
-	bbox(-32, -16, -64, 32, 16, 64) = prop_portal: "A portal."
+	bbox(-32, -16, -64, 32, 16, 64) 
+= prop_portal: "A portal."
 	[
 	activated[engine](boolean) : "Start Activated" : 1
 	activated(choices) : "Start Activated" : 1 : "An inactive portal will not be drawn and will not teleport entites" =

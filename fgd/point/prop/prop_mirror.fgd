@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname, Studiomodel, Angles) 
+@PointClass base(BaseEntityAnimating, SetModel) 
 	appliesto(P2) 
 	studioprop() = prop_mirror: "A basic mirror model"
 	[

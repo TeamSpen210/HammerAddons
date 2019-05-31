@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	iconsprite("editor/info_target.vmt") = asw_marines_past_area: "Entity that can be told when marines go past a certain point and will fire an output when the specified number of marines are past.  Can be told when a marine has backtracked to account for that also."
 	[

@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, Angles, Global, Studiomodel) 
+@PointClass base(BaseEntityAnimating, SetModel) 
 	appliesto(ASW) 
 	studioprop() = asw_door: "An entity used to place a Swarm sliding door in the world."
 	[

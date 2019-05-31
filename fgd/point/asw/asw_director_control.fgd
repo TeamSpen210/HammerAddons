@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	iconsprite("editor/info_target.vmt") = asw_director_control: "Alien Swarm Director Control"
 	[

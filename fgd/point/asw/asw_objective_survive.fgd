@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, ASWObjective) 
+@PointClass base(BaseEntityPoint, ASWObjective) 
 	appliesto(ASW) 
 	iconsprite("editor/asw_objective_survive.vmt") = asw_objective_survive: "Alien Swarm all marines must survive objective"
 	[

@@ -1,4 +1,4 @@
-@PointClass base(Angles, Targetname, Studiomodel, DXLevelChoice, BaseFadeProp, EnableDisable, SystemLevelChoice)
+@PointClass base(BaseEntityPhysics, EnableDisable, DXLevelChoice, SystemLevelChoice, SetModel)
 	sphere(fademindist) 
 	sphere(fademaxdist) 
 	studioprop() 

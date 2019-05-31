@@ -1,5 +1,4 @@
-
-@NpcClass base(Parentname, BaseNPC, BaseLogicalNPC) 
+@NpcClass base(BaseLogicalNPC) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	color(255 150 0) 
 	iconsprite("editor/npc_enemyfinder.vmt") 
@@ -22,13 +21,8 @@
 	freepass_movetolerance(float) : "Player pass move tolerance" : 120 : "After granted 'free pass', the distance the target is allowed to move before reaquire"
 	freepass_refillrate(float) : "Player pass refill rate" : 0.5 : "After free pass begins expiring, how much the time the target gets back for every second they hide again"
 	freepass_peektime(float) : "Player pass peek time" : 0 : "How long targets in cover are allowed to peek without penalty"
-	starton(choices) : "Start On" : "1" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	starton[P2](boolean) : "Start On" : 1
+	
+	starton(boolean) : "Start On" : 1
 
 	// Inputs
 	input TurnOn(void) : "Turn on: Look for enemies"

@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	cylinder(255 255 255, targetname, target, radius, targetname, targetname, radius)
 	color(255 192 0)
 	studio("models/editor/angle_helper.mdl")
@@ -26,6 +26,8 @@
 		"A value of 0 will cause no change in the train's speed."
 	radius(float) : "Path radius" : 0 : "Used by NPCs who follow track paths (attack chopper/gunship). " +
 		"This tells them the maximum distance they're allowed to be from the path at this node."
+
+	orientationtype[engine](integer) : "Orientation Type" : 1
 	orientationtype(choices) : "Orientation Type" : 1 : "The way that the path follower faces as it moves through this path track." =
 		[
 		0: "No change"

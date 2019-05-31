@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(ASW) 
 	iconsprite("editor/asw_objective_dummy.vmt") = asw_marker: "Alien Swarm Mission Marker"
 	[

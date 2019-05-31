@@ -3,25 +3,17 @@
 	studio() = npc_alyx: "Alyx"
 	[
 	model(studio) : "World model" : "models/alyx.mdl"
+
+	additionalequipment[engine](string) : "Weapons" : "weapon_alyxgun"
 	additionalequipment(choices) : "Weapons" : "weapon_alyxgun" =
 		[
 		"weapon_alyxgun": "Alyx Gun"
 		"weapon_shotgun": "Shotgun"
-		0: "Nothing"
+		"0": "Nothing"
 		]
 
-	dontpickupweapons(choices) : "Prevent picking up weapons?" : "1" : "If yes, this NPC will NOT be allowed to pick up weapons they find on the ground." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	shouldhaveemp(choices) : "Should alyx have her EMP?" : "1" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	dontpickupweapons(boolean) : "Prevent picking up weapons?" : 1 : "If yes, this NPC will NOT be allowed to pick up weapons they find on the ground."
+	shouldhaveemp(boolean) : "Should alyx have her EMP?" : 1
 
 	// Inputs
 	input AllowInteraction(void) : "Allow Alyx's 'hacking' AI to run."

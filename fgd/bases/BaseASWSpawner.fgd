@@ -1,4 +1,3 @@
-
 @BaseClass 
 line(255 255 255, targetname, alienordertargetname) = BaseASWSpawner
 	[

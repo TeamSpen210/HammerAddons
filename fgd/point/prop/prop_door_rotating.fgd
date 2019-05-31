@@ -1,9 +1,10 @@
-@PointClass base(Targetname, Parentname, Angles, Global, Studiomodel, BaseFadeProp, Glow) 
+@PointClass base(BaseEntityAnimating, SetModel, Glow) 
 	studioprop()
 	line(255, 255, 255, targetname, slavename)
 = prop_door_rotating: "An entity used to place a door in the world."
 	[
-	slavename(target_destination) : "Slave Name" : : "The name of any doors that should be slaved to this door (i.e. should open when this one opens, and close when this one closes)."
+	slavename(target_destination) : "Slave Name" : : "The name of any doors that should be slaved to this door " +
+		"(i.e. should open when this one opens, and close when this one closes)."
 
 	hardware[engine](integer) : "Hardware Type" : 1
 	hardware(choices) : "Hardware Type" : 1 =
@@ -14,7 +15,8 @@
 		3: "Keypad"
 		]
 
-	ajarangles(angle) : "Ajar Angles (Pitch Yaw Roll)" : "0 0 0" : "If the door 'Spawn Position' is set to Ajar, these are the angles to spawn at, instead of being open or closed."
+	ajarangles(angle) : "Ajar Angles (Pitch Yaw Roll)" : "0 0 0" : "If the door 'Spawn Position' is set to Ajar, " +
+		"these are the angles to spawn at, instead of being open or closed."
 
 	spawnpos[engine](integer) : "Spawn Position" : 0
 	spawnpos(choices) : "Spawn Position" : 0 =
@@ -31,13 +33,15 @@
 	soundopenoverride(sound) : "Fully Open Sound" : : "Sound played when the door has finished opening."
 	soundcloseoverride(sound) : "Fully Closed Sound" : : "Sound played when the door has finished closing."
 	soundmoveoverride(sound) : "Moving Sound" : : "Sound played when the door starts to move."
-	returndelay(integer) : "Delay Before close (-1 stay open)" : -1 : "Amount of time, in seconds, after the door has opened before it closes. If the value is set to -1, the door never closes itself."
+	returndelay(integer) : "Delay Before close (-1 stay open)" : -1 : "Amount of time, in seconds, after the door has opened before it closes. " +
+		"If the value is set to -1, the door never closes itself."
 	dmg(integer) : "Damage Inflicted When Blocked" : 0 : "Amount of damage done to entities that block the movement of this door, per frame."
 	health(integer) : "Health (0 = Unbreakable)" : 0
 	soundlockedoverride(sound) : "Locked Sound" : : "Sound played when the player tries to open the door, and fails because it's locked."
 	soundunlockedoverride(sound) : "Unlocked Sound" : : "Sound played when the door is unlocked."
 
-	forceclosed(boolean) : "Force Closed" : "0" : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects."
+	forceclosed(boolean) : "Force Closed" : "0" : "If set, this door will close no matter what. " +
+		"Useful for doors that have to close even if the player tries to block them with objects."
 
 	spawnflags(flags)  =
 		[
@@ -89,6 +93,6 @@
 	output OnUnblockedClosing(void) : "Fired when the door is unblocked while closing."
 	output OnUnblockedOpening(void) : "Fired when the door is unblocked while opening."
 	output OnLockedUse(void) : "Fired when the player uses the door, but it is locked."
-	output OnRotationDone[P2](void) : "Fired when the door arrives at it's goal angle."
+	output OnRotationDone[since_P2](void) : "Fired when the door arrives at it's goal angle."
 	output OnBreak[L4D, L4D2](void) : "Fired when the door changes damage states."
 	]

@@ -8,7 +8,8 @@
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. " +
 		"Set this to a number other than 0 to use that skin instead of the default."
 
-	solid(choices) : "Collisions" : : "Method of collision for this entity. Can be changed at runtime with AddOutput." =
+	solid[engine](integer) : "Collisions" : 6
+	solid(choices) : "Collisions" : 6 : "Method of collision for this entity. Can be changed at runtime with AddOutput." =
 		[
 		0: "None"
 		1: "BSP (QPhysics)"

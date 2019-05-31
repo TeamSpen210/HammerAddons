@@ -1,5 +1,4 @@
-
-@NpcClass base(Parentname, BaseNPC, BaseLogicalNPC) 
+@NpcClass base(BaseLogicalNPC) 
 	iconsprite("editor/bullseye.vmt") 
 	color(255 0 0) = npc_bullseye: "Dummy NPC for targeting or other behavior."
 	[

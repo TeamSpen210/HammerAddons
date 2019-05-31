@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	studio("models/aliens/egg/egg.mdl") = asw_egg: "Egg"
 	[

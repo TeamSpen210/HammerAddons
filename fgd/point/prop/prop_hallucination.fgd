@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, Studiomodel, Angles) 
+@PointClass base(BaseEntityAnimating, SetModel) 
 	appliesto(since_ASW) 
 	studioprop() = prop_hallucination: "A prop that players can't get a good look at, hopefully making them unsure if it's there at all"
 	[

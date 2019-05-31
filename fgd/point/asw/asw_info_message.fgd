@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	iconsprite("editor/asw_info_message.vmt") = asw_info_message: "An entity that pops up a message window on the player's HUD"
 	[

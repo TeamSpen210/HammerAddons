@@ -1,9 +1,11 @@
 
-@PointClass base(Targetname, Angles, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	line(255 255 255, targetname, target)
 	line(200 128 200, targetname, moveto)
-	studioprop("models/editor/camera.mdl") = asw_broadcast_camera: "A camera entity that controls all players views. While it's active, all players will see out of the camera."
+	studioprop("models/editor/camera.mdl") 
+= asw_broadcast_camera: "A camera entity that controls all players views. " +
+	"While it's active, all players will see out of the camera."
 	[
 	target(target_destination) : "Entity to Look At" : : "Name of the entity that the camera should point at and track while active."
 	targetattachment(string) : "Target Attachment Name" : : "If set, the camera will focus on the specified attachment on the 'Entity to Look At'."

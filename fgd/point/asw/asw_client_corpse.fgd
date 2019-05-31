@@ -1,5 +1,5 @@
 
-@PointClass base(Angles, Studiomodel, FadeDistance) 
+@PointClass base(BaseEntityAnimating) 
 	appliesto(ASW) 
 = asw_client_corpse: "A clientside only prop that physically simulates and can be articulated with internal joints. The joint constraints are part of the physics model."
 	[

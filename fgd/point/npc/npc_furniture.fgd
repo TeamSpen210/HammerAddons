@@ -1,8 +1,9 @@
 
-@PointClass base(BaseNPC, Parentname)  
-	studio() = npc_furniture: "An entity used for non-NPCs that need to synchronise their animation with an NPC in a scripted_sequence. Usually a pieceof furniture or door that an NPC needs to manipulate within a scripted_sequence."
+@PointClass base(BaseNPC, SetModel)  
+	studio() 
+= npc_furniture: "An entity used for non-NPCs that need to synchronise their animation with an NPC in a scripted_sequence. " +
+	"Usually a piece of furniture or door that an NPC needs to manipulate within a scripted_sequence."
 	[
-	model(studio) : "Model"
 
 	// Inputs
 	input DisablePlayerCollision(void) : "Disable collisions against the player."

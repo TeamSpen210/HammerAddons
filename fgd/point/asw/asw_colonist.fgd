@@ -1,5 +1,5 @@
 
-@NpcClass base(BaseNPC, Parentname, TalkNPC, PlayerCompanion) 
+@NpcClass base(BaseNPC, TalkNPC, PlayerCompanion) 
 	appliesto(ASW) 
 	studio("models/swarm/Colonist/Male/MaleColonist.mdl") = asw_colonist: "Colonist"
 	[

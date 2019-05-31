@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, GameType, TeamNum, EnableDisable, Angles) 
+@PointClass base(BaseEntityPhysics, GameType, TeamNum, EnableDisable) 
 	appliesto(TF2) 
 	studio("models/flag/briefcase.mdl") = item_teamflag: "Team Fortress flag entity."
 	[

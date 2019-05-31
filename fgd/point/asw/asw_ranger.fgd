@@ -12,11 +12,7 @@
 		3: "Waiting for input"
 		]
 
-	visiblewhenasleep(choices) : "Visible when asleep" : "0" : "If true, this alien will still get drawn even when asleep (useful for aliens you see far below you)." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	visiblewhenasleep(boolean) : "Visible when asleep" : "0" : "If true, this alien will still get drawn even when asleep (useful for aliens you see far below you)."
 
 	spawnflags(flags) : "spawnflags" =
 		[

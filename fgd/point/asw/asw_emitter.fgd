@@ -1,15 +1,10 @@
 
-@PointClass base(Parentname, Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	iconsprite("editor/asw_emitter.vmt") 
 	color(0 180 0) = asw_emitter: "Swarm Generic Emitter"
 	[
-	starton(choices) : "Starts on" : "1" : "Whether the emitter is intially spawning particles or not" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	starton(boolean) : "Starts on" : "1" : "Whether the emitter is intially spawning particles or not" 
 	template(string) : "Template" : "Default" : "The template used by this emitter.  Templates control the appearance of the emitter.  Templates can be created and modified in game with console command ASW_EditEmitterFrame"
 
 	// Inputs

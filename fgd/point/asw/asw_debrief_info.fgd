@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	iconsprite("editor/asw_debrief_info.vmt") = asw_debrief_info: "Mission debrief text"
 	[

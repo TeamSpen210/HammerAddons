@@ -1,12 +1,10 @@
 
-@PointClass base(Targetname, Parentname, RenderFields, Shadow) 
+@PointClass base(BaseNPC, SetModel) 
 	appliesto(CSGO) 
-	studio() = npc_heardanger: "A Generic NPC entity that hears and reports 'danger' and is not preverved on round restart. Danger sounds consist of gunshots, player sounds, bullet impacts, nearby vehicles and andything else that gives off a danger sound."
+	studio() = npc_heardanger: "A Generic NPC entity that hears and reports 'danger' and is not preserved on round restart. " +
+		"Danger sounds consist of gunshots, player sounds, bullet impacts, " +
+		"nearby vehicles and andything else that gives off a danger sound."
 	[
-	model(studio) : "Model"
-
-	// Inputs
-	input Kill(void) : "Removes this entity from the world"
 
 	// Outputs
 	output OnHearWorld(void) : "Fired when this NPC hears a sound (other than combat or the player)."

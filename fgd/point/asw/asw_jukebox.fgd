@@ -1,7 +1,8 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
-	iconsprite("editor/env_soundscape.vmt") = asw_jukebox: "An entity used to control music events."
+	iconsprite("editor/env_soundscape.vmt") 
+= asw_jukebox: "An entity used to control music events."
 	[
 	fadeintime(float) : "Fade In Time" : 1.0 : "The amount of time it takes for the music to fade in to 100% volume (in seconds.)"
 	fadeouttime(float) : "Fade Out Time" : 1.0 : "The amount of time it takes for the music to fade out to 0 volume (in seconds.)"

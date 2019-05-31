@@ -1,4 +1,3 @@
-
 @BaseClass base(BaseVehicle) = BaseDriveableVehicle
 	[
 	vehiclelocked(boolean) : "Start locked" : 0

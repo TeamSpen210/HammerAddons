@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityAnimating) 
 	appliesto(P2) 
 	studioprop("models/props/tripwire_turret.mdl") = prop_rocket_tripwire: "A stationary rocket turret that fires a rocket when players walk in front of it."
 	[

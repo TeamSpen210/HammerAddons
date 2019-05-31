@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	iconsprite("editor/asw_tech_marine_req.vmt") = asw_equip_req: "Equipment Requirement - requires at least one of each class to be selected before mission can begin."
 	[

@@ -1,7 +1,8 @@
-@PointClass base(BaseEntityPoint, LinkedPortalDoor, ToggleDraw, RenderFields) 
+@PointClass base(BaseEntityPoint, LinkedPortalDoor, ToggleDraw) 
 	appliesto(P2) 
 	studio("models/editor/axis_helper_thick.mdl") 
-	iconsprite("editor/portal_dual.vmt") = linked_portal_door: "A door which is linked by a portal to another 'linked_portal_door' entity. Portal shots will pass through, and no effect appears at the edges."
+	iconsprite("editor/portal_dual.vmt") = linked_portal_door: "A door which is linked by a portal to another 'linked_portal_door' entity. " +
+		"Portal shots will pass through, and no effect appears at the edges."
 	[
 	partnername(target_destination) : "Linked Partner" : : "Another 'linked_portal_door' entity which will link to this one."
 	width(integer) : "Half-Width  (G)" : 64 : "Half the width of the portal, on the Green axis."

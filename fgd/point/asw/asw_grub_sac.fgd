@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Angles, Studiomodel, Origin) 
+@PointClass base(BaseEntityPhysics, SetModel) 
 	appliesto(ASW) 
 	studioprop() = asw_grub_sac
 	[

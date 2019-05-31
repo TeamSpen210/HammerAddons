@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	sphere() 
 	iconsprite("editor/env_shake.vmt") = asw_env_shake: "An entity to control screen shake on marines."

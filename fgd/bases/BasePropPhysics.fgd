@@ -1,4 +1,4 @@
-@BaseClass base(BaseEntityPhysics, Global, BreakableProp, SystemLevelChoice, BaseFadeProp) 
+@BaseClass base(BaseEntityPhysics, BreakableProp, SystemLevelChoice, BaseFadeProp) 
 = BasePropPhysics: "For prop_physics-like entities."
 	[
 	spawnflags(flags) : "spawnflags" =

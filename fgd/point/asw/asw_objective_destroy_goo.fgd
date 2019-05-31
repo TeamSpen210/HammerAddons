@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, ASWObjective) 
+@PointClass base(BaseEntityPoint, ASWObjective) 
 	appliesto(ASW) 
 	iconsprite("editor/asw_objective_destroy_goo.vmt") = asw_objective_destroy_goo: "Alien Swarm Mission Objective"
 	[

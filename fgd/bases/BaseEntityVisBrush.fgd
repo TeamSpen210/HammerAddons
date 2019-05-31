@@ -3,7 +3,9 @@
 	sphere(fademindist) sphere(fademaxdist)
 = BaseEntityVisBrush
 	[
-	effects(choices) : "Effect Flags" : 0 : "For configuring visual effects. If you want to combine effects, turn SmartEdit off and add the effect numbers together, i.e. 64 + 8 = 72." =
+	effects[engine](integer) : "Effect Flags" : 0
+	effects(choices) : "Effect Flags" : 0 : "For configuring visual effects. If you want to combine effects, " +
+		"turn SmartEdit off and add the effect numbers together, i.e. 64 + 8 = 72." =
 		[
 		0 : "None"
 		1 : "Bonemerge always, very expensive!!"
@@ -26,10 +28,10 @@
 	
 	vrad_brush_cast_shadows[engine](boolean) : "VRAD Shadows" : 0
 	vrad_brush_cast_shadows(choices) : "VRAD Shadows" : 0 : "Determines if this entity will cast lightmap shadows." =
-	[
+		[
 		0 : "Do not cast shadows"
 		1 : "Cast shadows"
-	]
+		]
 	_minlight(float) : "Minimum Light Level" : 0 : "The minimum level of ambient light that hits this brush."
 
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents dynamic shadows (e.g. player and prop shadows) from appearing on this entity."
@@ -40,7 +42,7 @@
 		1: "No cache = render every frame"
 		2: "Cache it = render only once"
 		]
-	shadowdepthnocache[engine](integer): "": 0
+	shadowdepthnocache[engine](integer) : "Projected Texture Cache" : 0
 	disableflashlight[since_L4D](boolean) : "Disable flashlight" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
 		
 	linedivider_visbrush(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""

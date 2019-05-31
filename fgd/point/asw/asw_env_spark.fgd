@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	iconsprite("editor/env_spark.vmt") = asw_env_spark: "An entity used to create particle sparks at its origin."
 	[

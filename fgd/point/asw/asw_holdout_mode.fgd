@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) = asw_holdout_mode: "If put into a map, this map will be played in holdout mode."
 	[
 	filename(string) : "Holdout Filename" : : "This is the filename of the holdout script that defines the waves, etc.  (assumes a path of 'resource\Holdout\')"

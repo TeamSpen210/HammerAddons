@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, ASWObjective) 
+@PointClass base(BaseEntityPoint, ASWObjective) 
 	appliesto(ASW) 
 	iconsprite("editor/asw_objective_countdown.vmt") = asw_objective_countdown: "Alien Swarm Countdown Objective - counts down to 0 then explodes the level"
 	[

@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	iconsprite("editor/info_target.vmt") = asw_stylincam: "Inputs for stylin cam."
 	[

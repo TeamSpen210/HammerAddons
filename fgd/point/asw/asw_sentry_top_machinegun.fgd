@@ -1,5 +1,5 @@
 
-@PointClass base(Targetname, Parentname, Angles, Studiomodel, Origin) 
+@PointClass base(BaseEntityAnimating, SetModel) 
 	appliesto(ASW) 
 	studioprop("models/sentry_gun/machinegun_top.mdl") = asw_sentry_top_machinegun
 	[

@@ -1,7 +1,8 @@
 
 @PointClass base(BasePropPhysics) 
 	appliesto(ASW) 
-	studioprop("models/swarm/Barrel/barrel.mdl") = asw_barrel_radioactive: "A Barrel that gives off radioactive gas when shot."
+	studioprop("models/swarm/Barrel/barrel.mdl") 
+= asw_barrel_radioactive: "A Barrel that gives off radioactive gas when shot."
 	[
 	bulletforceimmune(boolean) : "Immune to bullet forces" : 0 : "Used to determine whether or not bullet damage should cause the prop to move."
 

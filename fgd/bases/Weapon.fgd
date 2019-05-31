@@ -1,4 +1,4 @@
-@BaseClass base(Targetname, Angles, RenderFields, FadeDistance)
+@BaseClass base(BaseEntityPhysics)
 	color(0 0 200) 
 	sphere(fademindist) 
 	sphere(fademaxdist) 
@@ -14,8 +14,9 @@
 	canbepickedup[CSGO](boolean) : "Is this weapon allowed to be picked up?" : 1
 
 	// Outputs
-	output OnPlayerUse(void) : "Fires when the player +uses this weapon"
-	output OnPlayerPickup(void) : "Fires when the player picks up this weapon"
-	output OnNPCPickup(void) : "Fires when an NPC picks up this weapon"
-	output OnCacheInteraction(void) : "Fires when the player 'proves' they've found this weapon. Fires on: Player Touch, +USE pickup, Physcannon pickup, Physcannon pun" + "t."
+	output OnPlayerUse(void) : "Fires when the player +uses this weapon."
+	output OnPlayerPickup(void) : "Fires when the player picks up this weapon."
+	output OnNPCPickup(void) : "Fires when an NPC picks up this weapon."
+	output OnCacheInteraction(void) : "Fires when the player 'proves' they've found this weapon. " +
+		"Fires on: Player Touch, +USE pickup, Physcannon pickup, Physcannon pun" + "t."
 	]

@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles, Studiomodel) 
+@PointClass base(BaseEntityPhysics, SetModel) 
 	appliesto(L4D, L4D2)
 	studioprop()
 	sphere(fademindist)

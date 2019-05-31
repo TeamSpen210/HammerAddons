@@ -1,7 +1,6 @@
-
-@BaseClass base(BaseEntityBrush, Global) 
-line(255 255 255, targetname, control_volume) 
-sphere(minrange) sphere(maxrange)
+@BaseClass base(BaseEntityBrush) 
+	line(255 255 255, targetname, control_volume) 
+	sphere(minrange) sphere(maxrange)
 = BaseTank
 	[
 	spawnflags(flags) : "spawnflags" =

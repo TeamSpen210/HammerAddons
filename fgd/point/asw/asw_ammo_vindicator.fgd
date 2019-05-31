@@ -1,6 +1,7 @@
 
 @PointClass base(ASWPickup) 
 	appliesto(ASW) 
-	studio("models/swarm/Ammo/ammovindicator.mdl") = asw_ammo_vindicator: "Box of Vindicator ammo"
+	studio("models/swarm/Ammo/ammovindicator.mdl") 
+= asw_ammo_vindicator: "Box of Vindicator ammo"
 	[
 	]

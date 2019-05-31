@@ -1,5 +1,4 @@
-
-@PointClass base(Weapon, Targetname, Parentname) 
+@PointClass base(Weapon) 
 	appliesto(P1, P2) 
 	studioprop("models/weapons/w_portalgun.mdl") = weapon_portalgun: "Aperture Science Handheld Portal Device"
 	[

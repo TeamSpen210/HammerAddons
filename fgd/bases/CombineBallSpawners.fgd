@@ -1,5 +1,4 @@
-
-@BaseClass base(BaseEntityPoint, Global) 
+@BaseClass base(BaseEntityPoint) 
 = CombineBallSpawners
 	[
 	spawnflags(flags) : "spawnflags" =

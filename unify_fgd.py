@@ -251,13 +251,6 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
                 )
                 print('.', end='', flush=True)
     print()
-    missing_bases = 0
-    for ent in fgd:
-        for base in ent.bases:
-            if base.casefold() not in fgd.entities:
-                print(f'{ent.classname}: base({base})')
-                missing_bases += 1
-    print('Missing bases: ', missing_bases)
     fgd.apply_bases()
     print('\nDone!')
     return fgd

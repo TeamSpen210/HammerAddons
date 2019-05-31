@@ -1,5 +1,6 @@
 @BaseClass appliesto(L4D2) = NavBlocker
 	[
+	teamtoblock[engine](integer) : "Team(s) to block" : -1
 	teamtoblock(choices) : "Team(s) to block" : -1 : "Team(s) this entity should block" =
 		[
 		-1: "Everyone"
@@ -7,11 +8,9 @@
 		3: "Infected"
 		]
 
-	affectsflow(choices) : "Affects Flow?" : 0 : "Does this func_nav_blocker block flow in the level? Only func_nav_blockers with this enabled will cause flow recomputation on bl" + "ocking/unblocking." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	affectsflow(boolean) : "Affects Flow?" : 0 : "Does this func_nav_blocker block flow in the level? " +
+		"Only func_nav_blockers with this enabled will " +
+		"cause flow recomputation on blocking/unblocking."
 
 
 	// Inputs
