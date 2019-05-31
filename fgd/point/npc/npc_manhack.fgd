@@ -1,4 +1,3 @@
-
 @NpcClass base(BaseNPC, AlyxInteractable) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio("models/manhack.mdl") = npc_manhack: "Manhack"
@@ -11,11 +10,7 @@
 		1048576: "No Danger Sounds" : 0
 		]
 
-	ignoreclipbrushes(choices) : "Ignore NPC Clip brushes" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	ignoreclipbrushes(boolean) : "Ignore NPC Clip brushes" : 0
 
 
 	// Inputs

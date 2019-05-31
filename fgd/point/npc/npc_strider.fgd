@@ -3,7 +3,8 @@
 	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio() = npc_strider: "Strider"
 	[
-	model(choices) : "Model" : "models/combine_strider.mdl" : "Standard strider" =
+	model[engine](studio) : "Model" : "models/combine_strider.mdl"
+	model(choices) : "Model" : "models/combine_strider.mdl" : "Model to use." =
 		[
 		"models/combine_strider.mdl": "Standard strider"
 		"models/combine_strider_vsdog.mdl": "The Strider that fights Dog"
@@ -15,12 +16,7 @@
 		131072: "Minimal damage taken from NPCs (1 point per missile)" : 0
 		]
 
-	disablephysics(choices) : "Disable physics (reduce CPU)" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	disablephysics(boolean) : "Disable physics (reduce CPU)" : 0
 
 	// Inputs
 	input SetMinigunTime(float) : "Time to shoot at any set minigun target"

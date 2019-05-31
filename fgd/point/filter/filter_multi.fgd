@@ -14,7 +14,8 @@
 	"This allows you to build more complex filters, such as'Allow anyone on Team 1 who is also class engineer', " +
 	"or 'Allow everyone except classes npc_zombie and npc_headcrab'."
 	[
-	filtertype(choices) : "Logic Type" : "0" =
+	filtertype[engine](integer) : "Logic Type" : 0
+	filtertype(choices) : "Logic Type" : 0 =
 		[
 		0: "AND (all filters must pass)"
 		1: "OR (any filter must pass)"

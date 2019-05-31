@@ -1,9 +1,11 @@
 
 @PointClass base(Targetname, Angles, BaseFadeProp) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
-	studio("models/items/ammocrate_rockets.mdl") = item_ammo_crate: "Ammo Crate"
+	studio("models/items/ammocrate_rockets.mdl") 
+= item_ammo_crate: "Ammo Crate"
 	[
-	ammotype(choices) : "Ammo Type" : "0" =
+	ammotype[engine](integer) : "Ammo Type" : 0
+	ammotype(choices) : "Ammo Type" : 0 =
 		[
 		0: "Pistol"
 		1: "SMG1"
@@ -12,14 +14,10 @@
 		4: "Buckshot"
 		5: "Grenades"
 		6: "357"
-		7: "XBowBolt"
+		7: "Crossbow Bolt"
 		8: "AR2 Alt-Fire Round"
 		9: "SMG Alt-Fire grenade"
 		]
-
-
-	// Inputs
-	input Kill(void) : "Remove the ammo crate"
 
 	// Outputs
 	output OnUsed(void) : "Fires when +used by the player."

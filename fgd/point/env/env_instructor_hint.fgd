@@ -27,7 +27,7 @@
 	hint_activator_caption(string) : "Activator Caption" : : "The text of your hint shown to only the activating player."
 	hint_color(color255) : "Caption Color" : "255 255 255" : "The color of the caption text"
 
-	hint_icon_onscreen[engine](integer): "Show through walls" : 0
+	hint_forcecaption[engine](integer): "Show through walls" : 0
 	hint_forcecaption(choices) : "Show through walls" : 0 : "Do we show the caption text even if the hint is occluded by a wall?" =
 		[
 		0: "No"
@@ -131,6 +131,7 @@
 		]
 
 	hint_icon_offset(float) : "Icon Height Offset" : 0 : "A height offset from the target entity's origin to display the hint"
+	
 	hint_pulseoption[engine](integer) : "Size Pulsing" : 0
 	hint_pulseoption(choices) : "Size Pulsing" : 0 : "The icon size can pulsate" =
 		[
@@ -161,10 +162,12 @@
 	hint_timeout(integer) : "Timeout" : 0 : "The automatic timeout for the hint. 0 will persist until stopped with EndHint."
 	hint_range(float) : "Display Range" : 0 : "The visible range of the hint."
 	
-	hint_gamepad_binding[P2](string) : "Gamepad Bound Command" : : "If using 'show key bindings' for the onscreen icon, this field should be the command we want to show bindings for when gamepad is enabled (and PS3/X360)"
+	hint_gamepad_binding[since_P2](string) : "Gamepad Bound Command" : : "If using 'show key bindings' for the onscreen icon, this field should be the command we want to show bindings for when gamepad is enabled (and PS3/X360)"
 
 	hint_name[L4D2](string) : "Lesson Name" : : "Hints with the same lesson name use a common base and are treated as instances the same lesson type."
 	hint_display_limit[L4D2](integer) : "Display Limit" : 0 : "The number of times a hint can be seen. 0 means unlimited."
+
+	hint_instance_type[engine](integer) : "Instance Type" : 2
 	hint_instance_type[L4D2](choices) : "Instance Type" : 2 : "How many instances of a single lesson type can be open or active at the same time" =
 		[
 		0: "Multiple"

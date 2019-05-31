@@ -1,4 +1,3 @@
-
 @NpcClass base(BaseNPC) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio("models/combine_scanner.mdl") = npc_cscanner: "City Scanner"
@@ -11,33 +10,13 @@
 
 	spotlightlength(integer) : "SpotlightLength" : 500
 	spotlightwidth(integer) : "SpotlightWidth" : 50
-	spotlightdisabled(choices) : "SpotlightDisabled" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	shouldinspect(choices) : "Should inspect" : "1" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	onlyinspectplayers(choices) : "Only Inspect Players" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	neverinspectplayers(choices) : "Never Inspect Players" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	spotlightdisabled(boolean) : "Disable Spotlight" : 0
+	shouldinspect(boolean) : "Should inspect" : 1
+	onlyinspectplayers(boolean) : "Only Inspect Players" : 0
+	neverinspectplayers(boolean) : "Never Inspect Players" : 0
 
 	// Inputs
-	input DisableSpotlight(void) : "DisableSpotlight"
+	input DisableSpotlight(void) : "Disable Spotlight"
 	input InspectTargetPhoto(string) : "Tells the scanner to photograph the given entity, named by classname or by target name. !activator or !player works here also."
 	input InspectTargetSpotlight(string) : "Tells the scanner to spotlight the given entity, named by classname or by target name. !activator or !player works here also."
 	input InputSetFlightSpeed(integer) : "Sets the flight speed of the scanner"

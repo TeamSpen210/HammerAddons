@@ -29,7 +29,8 @@
 		"no_taunting_orange": "Prevent Taunting P-Body"
 		]
 
-	initialstate(choices) : "Initial State" : "0" =
+	initialstate[engine](integer) : "Initial State" : 0
+	initialstate(choices) : "Initial State" : 0 =
 		[
 		0: "Off"
 		1: "On"

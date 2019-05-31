@@ -5,11 +5,7 @@
 	health(integer) : "Boss' starting health" : 1000 : "The Boss' starting health."
 	model(string) : "Model" : "models/bots/boss_bot/boss_tank.mdl" : "The model to be used for this entity."
 	speed(float) : "Boss' max movement speed" : 75 : "Boss' max movement speed"
-	start_disabled(choices) : "Start Disabled" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	start_disabled(boolean) : "Start Disabled" : 0
 
 
 	// Inputs

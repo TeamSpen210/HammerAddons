@@ -2,8 +2,6 @@
 	line(255 255 255, targetname, chainstodoor)
 = Door
 	[
-
-
 	speed(float) : "Speed" : 100 : "The speed at which the door moves."
 
 	noise1(sound) : "Start Sound" : : "Sound to play when the door starts moving."
@@ -52,7 +50,8 @@
 		65536: "New +USE rules - Allow +USE only when when the door is closed/closing or is open/opening and can be manually closed" : 0
 		]
 
-	locked_sentence(choices) : "Locked Sentence" : "0" : "A sentence played when the player tries to use the door, and fails because it's locked." =
+	locked_sentence[engine](integer) : "Locked Sentence" : 0
+	locked_sentence(choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the door, and fails because it's locked." =
 		[
 		0: "None"
 		1: "Gen. Access Denied"
@@ -66,7 +65,8 @@
 		9: "Broken Shut Door"
 		]
 
-	unlocked_sentence(choices) : "Unlocked Sentence" : "0" : "A sentence played when the door is unlocked." =
+	unlocked_sentence[engine](integer) : "Unlocked Sentence" : 0
+	unlocked_sentence(choices) : "Unlocked Sentence" : 0 : "A sentence played when the door is unlocked." =
 		[
 		0: "None"
 		1: "Gen. Access Granted"

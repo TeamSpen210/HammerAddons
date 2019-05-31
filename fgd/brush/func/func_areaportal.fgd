@@ -8,7 +8,7 @@
 	[
 	target(target_destination) : "Name of Linked Door" : : "(Optional) The name of a prop_door_rotating or func_door whose open/closed state controls the on/off state of this area portal."
 
-	startopen(boolean): "Start Open?": 1
+	startopen[engine](boolean): "Start Open?": 1
 	startopen(choices) : "Initial State" : 1 =
 		[
 		0: "Closed"

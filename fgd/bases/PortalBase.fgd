@@ -2,12 +2,14 @@
 @BaseClass 
 	appliesto(P2) = PortalBase
 	[
-	activated(choices) : "Start Activated" : "0" : "An inactive portal will not be drawn and will not teleport entities." =
+	activated[engine](boolean) : "Start Activated" : 0
+	activated(choices) : "Start Activated" : 0 : "An inactive portal will not be drawn and will not teleport entities." =
 		[
 		0: "Inactive"
 		1: "Active"
 		]
 
+	portaltwo[engine](boolean) : "Is Secondary Portal?"
 	portaltwo(choices) : "Portal Number" : "0" : "Which of the pair is this portal?" =
 		[
 		0: "Portal 1 (Blue)"

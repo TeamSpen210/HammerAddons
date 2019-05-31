@@ -9,13 +9,10 @@
 		131072: "Use prop_physics collision rules" : 0
 		]
 
-	startburied(choices) : "Start Buried" : "No" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	startburied(boolean) : "Start Buried" : 0
 
-	uniformsightdist(choices) : "Sight Distance" : "0" =
+	uniformsightdist[engine](boolean) : "Uniform Sign Difference" : 0
+	uniformsightdist(choices) : "Sight Distance" : 0 =
 		[
 		0: "Ignore distant targets not in a vehicle (default)."
 		1: "Equal visibility for all targets."

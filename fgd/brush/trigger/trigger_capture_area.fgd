@@ -1,26 +1,24 @@
 @SolidClass base(Trigger) 
-	appliesto(TF2) = trigger_capture_area: "Capture Area"
+	appliesto(TF2)
+= trigger_capture_area: "Capture Area"
 	[
 	area_cap_point(target_source) : "Control point" : : "Name of the control point this area is linked to."
-	team_cancap_2(choices) : "Can RED Cap?" : "1" =
-		[
-		1: "Yes"
-		0: "No"
-		]
+	area_time_to_cap(integer) : "Time to cap (sec)" : 5
 
-	team_cancap_3(choices) : "Can BLUE Cap?" : "1" =
-		[
-		1: "Yes"
-		0: "No"
-		]
+	team_cancap_2(boolean) : "Can RED Cap?" : 1
+	team_cancap_3(boolean) : "Can BLUE Cap?" : 1
 
 	team_startcap_2(integer) : "Number of RED players to start capping" : 1
 	team_startcap_3(integer) : "Number of BLUE players to start capping" : 1
+
 	team_numcap_2(integer) : "Number of RED players to cap" : 1
 	team_numcap_3(integer) : "Number of BLUE players to cap" : 1
-	team_spawn_2(integer) : "Red Spawn Adjust" : 0 : "Adjust the minimum respawn time for the red team by this amount (in seconds) when red captures this point. If the red team owns this point when blue captures it, this adjustment is reversed."
-	team_spawn_3(integer) : "Blue Spawn Adjust" : 0 : "Adjust the minimum respawn time for the blue team by this amount (in seconds) when blue captures this point. If the blue team owns this point when red captures it, this adjustment is reversed."
-	area_time_to_cap(integer) : "Time to cap (sec)" : 5
+
+	team_spawn_2(integer) : "Red Spawn Adjust" : 0 : "Adjust the minimum respawn time for the red team by this amount (in seconds) when red captures this point. " +
+		"If the red team owns this point when blue captures it, this adjustment is reversed."
+	team_spawn_3(integer) : "Blue Spawn Adjust" : 0 : "Adjust the minimum respawn time for the blue team by this amount (in seconds) when blue captures this point. " +
+		"If the blue team owns this point when red captures it, this adjustment is reversed."
+
 
 	// Inputs
 	input SetTeamCanCap(string) : "Set whether a specific team is allowed to capture this point. Format is: <team number> <(0/1)>. i.e. '2 0' would prevent RED from capturing this point, whereas '3 1' would allow BLUE to cap it."

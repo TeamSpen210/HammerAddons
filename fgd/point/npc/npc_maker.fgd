@@ -12,6 +12,8 @@
 	npctargetname(string) : "Childrens' Name"
 	npcsquadname(string) : "Childrens' Squad Name"
 	npchintgroup(string) : "Childrens' Hint Group"
+
+	additionalequipment[engine](string) : "Weapons" : "0"
 	additionalequipment(choices) : "Weapons" : "0" =
 		[
 		"weapon_pistol": "Pistol"
@@ -20,7 +22,7 @@
 		"weapon_smg1": "SMG1"
 		"weapon_stunstick": "Stun Stick"
 		"weapon_annabelle": "Grigori's Shotgun"
-		0: "Nothing"
+		"0": "Nothing"
 		]
 
 	]

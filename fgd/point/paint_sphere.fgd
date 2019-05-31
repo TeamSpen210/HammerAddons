@@ -3,7 +3,8 @@
 	sphere(radius) 
 	iconsprite("editor/paint_sphere.vmt") = paint_sphere: "Paint brushes inside the sphere."
 	[
-	paint_type(choices) : "Paint Type" : "0" : "The type of Gel created." =
+	paint_type[engine](integer) : "Paint Type" : 0 
+	paint_type(choices) : "Paint Type" : 0 : "The type of Gel created." =
 		[
 		0: "Repulsion Gel"
 		1: "Reflection Gel / Adhesion Gel"
