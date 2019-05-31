@@ -4,7 +4,9 @@
 	[
 	actor(target_name_or_class) : "Actor(s) to affect"
 	goal(string) : "Target Entity" : : "The name of the entity to follow. If blank, and the actor likes the player, then defaults to player"
-	searchtype(choices) : "Search Type" : "0" : "How to search for the entities using the targetname." =
+
+	searchtype[engine](integer) : "Search Type" : 0
+	searchtype(choices) : "Search Type" : 0 : "How to search for the entities using the targetname." =
 		[
 		0: "Entity Name"
 		1: "Classname"

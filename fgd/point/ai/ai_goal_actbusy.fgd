@@ -1,23 +1,34 @@
-
 @PointClass base(BaseActBusy) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) = ai_goal_actbusy: "AI Goal Act Busy"
 	[
-	seeentity(target_name_or_class) : "Sight Entity" : : "The Sight Entity (if you provide one) is an entity that will leave the current ActBusy if the Actor playing the ActBusy loses sight of it for the amount of time specified in 'Sight Entity Timeout'. THIS MAY ONLY BE A TARGET NAME. NO CLASSNAMES."
-	seeentitytimeout(string) : "Sight Entity Timeout" : "1" : "If you provide a Sight Entity, the Actor will leave the current ActBusy if the Actor has lost sight of Sight Entity for this many seconds."
-	sightmethod(choices) : "Sight Enemy Method" : "0" : "The method to use to determine whether the Sight enemy is visible." =
+	seeentity(target_name_or_class) : "Sight Entity" : : "The Sight Entity (if you provide one) " +
+		"is an entity that will leave the current ActBusy if the Actor playing the ActBusy loses sight of " +
+		"it for the amount of time specified in 'Sight Entity Timeout'. " +
+		"THIS MAY ONLY BE A TARGET NAME. NO CLASSNAMES."
+	seeentitytimeout(string) : "Sight Entity Timeout" : "1" : "If you provide a Sight Entity, " +
+		"the Actor will leave the current ActBusy if the Actor has " +
+		"lost sight of Sight Entity for this many seconds."
+
+	sightmethod[engine](integer) : "Sight Enemy Method" : 0
+	sightmethod(choices) : "Sight Enemy Method" : 0 : "The method to use to determine whether the Sight enemy is visible." =
 		[
 		0: "Default. LOS -and- Viewcone"
 		1: "LOS Only. Disregard Viewcone"
 		]
 
-	type(choices) : "Actbusy Type" : "0" =
+	type[engine](integer) : "Actbusy Type" : 0
+	type(choices) : "Actbusy Type" : 0 =
 		[
 		0: "Default (Standard)"
 		1: "Combat"
 		]
 
-	safezone(target_destination) : "Combat Safe Zone" : : "Only for combat actbusy. Lets you specify a volume which is the 'safe zone'. The Combat ActBusy will cancel if any enemies are seen in the safe zone."
-	allowteleport(choices) : "Allow actor to teleport?" : "0" =
+	safezone(target_destination) : "Combat Safe Zone" : : "Only for combat actbusy. " +
+		"Lets you specify a volume which is the 'safe zone'. " +
+		"The Combat ActBusy will cancel if any enemies are seen in the safe zone."
+
+	allowteleport[engine](boolean) : "Allow actor to teleport?" : 0
+	allowteleport(choices) : "Allow actor to teleport?" : 0 =
 		[
 		0: "No"
 		1: "Yes (Only for Combat Actbusy)"

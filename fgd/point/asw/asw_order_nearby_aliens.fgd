@@ -23,7 +23,8 @@
 		12: "asw_shaman"
 		]
 
-	alienorders(choices) : "Alien Orders" : "2" : "Orders given to nearby aliens." =
+	alienorders[engine](integer) : "Alien Orders" : 2
+	alienorders(choices) : "Alien Orders" : 2 : "Orders given to nearby aliens." =
 		[
 		0: "Spread Then Hibernate"
 		1: "Move To"

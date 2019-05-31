@@ -38,7 +38,9 @@
 	bullet_damage_vs_player(string) : "Damage Per Bullet Vs Player" : "0" : "If set to 0, it'll use the Damage Per Bullet value."
 	persistence(string) : "Firing persistence" : "1" : "(Seconds) How long to keep firing at last known position after lose sight of target"
 	persistence2(string) : "Firing persistence2" : "0" : "(Seconds) After lost enemy and persistence time has passed, how long to occasionally fire at enemy's last known position"
-	firespread(choices) : "Bullet accuracy" : "0" =
+
+	firespread[engine](integer) : "Bullet accuracy" : 0
+	firespread(choices) : "Bullet accuracy" : 0 =
 		[
 		0: "Perfect Shot"
 		1: "Small cone"
@@ -49,7 +51,7 @@
 
 	minrange(string) : "Minimum target range" : "0"
 	maxrange(string) : "Maximum target range" : "0"
-	_minlight(string) : "Minimum light level"
+
 	gun_base_attach(string) : "Gun Base Attachment" : : "If Parent is specified, this is the attachment point on the parent to aim from."
 	gun_barrel_attach(string) : "Gun Barrel Attachment" : : "If Parent is specified, this is the attachment point on the parent to fire from. If you specify this, you'll want to specify the Gun Base Attachment too."
 	gun_yaw_pose_param(string) : "Gun Yaw Pose Param" : : "If Parent + the Gun Pitch Pose Param is specified, then the gun itself will be invisible and the func_tank will steer a gun on the parent using the pose parameters."
@@ -62,7 +64,9 @@
 	playergraceperiod(float) : "Post-NPC Attack Grace Period" : 0 : "If specified, NPC's manning this func tank won't fire at the player, after firing at a non-player, for this amount of time."
 	ignoregraceupto(float) : "Ignore Grace Upto" : 768 : "The player grace period is ignored if the player's under this distance from the func_tank."
 	playerlocktimebeforefire(float) : "Player Lock Time" : 0 : "The tank must have the player as a target for this amount of time before it's allowed to fire."
-	effecthandling(choices) : "Effect Handling" : "0" =
+
+	effecthandling[engine](integer) : "Effect Handling" : 0
+	effecthandling(choices) : "Effect Handling" : 0 =
 		[
 		0: "Use Individual Settings."
 		1: "AR2"

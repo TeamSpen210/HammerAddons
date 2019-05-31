@@ -6,11 +6,7 @@
 	radius(integer) : "Patience Radius" : 0 : "Sniper will hold fire until the target is within this radius. After that, sniper will always attack, even if the target retreats outside of this radius"
 	misses(integer) : "Initial Misses" : 0 : "How many times to miss a target on purpose before beginning to fire accurately."
 	beambrightness(integer) : "Beam Brightness (0 to 255)" : 100 : "How bright the laser sight beam should be. (0 - 255)"
-	shootzombiesinchest(choices) : "Shoot zombies in chest" : "0" : "If true, aim for chest instead of headcrab. Useful when at great distance and height." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	shootzombiesinchest(boolean) : "Shoot zombies in chest" : 0 : "If true, aim for chest instead of headcrab. Useful when at great distance and height."
 
 	shielddistance(float) : "Bullet shield distance" : 64 : "Obsolete"
 	shieldradius(float) : "Bullet shield radius" : 48 : "Obsolete"

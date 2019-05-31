@@ -5,12 +5,15 @@
 	[
 	mins(vector) : "Mins" : "-4 -128 -80"
 	maxs(vector) : "Maxs" : "4 128 80"
+
+	initialstate[engine](boolean) : "Starts Enabled" : 1
 	initialstate(choices) : "Initial State" : 1 =
 		[
 		0: "Disabled"
 		1: "Enabled"
 		]
 
+	blocktype[engine](integer) : "Blocks" : 0
 	blocktype(choices) : "Blocks" : 0 =
 		[
 		0: "Everyone"

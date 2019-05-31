@@ -20,7 +20,9 @@
 	farz(float) : "FarZ" : 750.0 : "Far Z for projected texture"
 
 	enableshadows(boolean) : "Enable Shadows" : 1 : "Enables/disables shadows from this projected texture."
-	shadowquality(choices) : "Shadow Quality" : "1" : "Quality of shadows." =
+
+	shadowquality[engine](integer) : "Shadow Quality" : 1
+	shadowquality(choices) : "Shadow Quality" : 1 : "Quality of shadows." =
 		[
 		0: "Low"
 		1: "High"
@@ -55,7 +57,10 @@
 		4: "Fast strobe"
 		9: "Slow strobe"
 		]
-	pattern[since_P2](string) : "Custom Appearance" : : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
+
+	pattern[since_P2](string) : "Custom Appearance" : : "Set a custom pattern of light brightness for this light. " +
+		"Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. " +
+		"i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 
 	// Inputs
 	input TurnOn(void) : "Turn on the texture"

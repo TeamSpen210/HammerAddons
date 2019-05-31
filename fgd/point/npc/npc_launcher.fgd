@@ -8,28 +8,21 @@
 		65536: "Check LOS" : 1
 		]
 
-	starton(choices) : "Start On" : "0" =
-		[
-		0: "Off"
-		1: "On"
-		]
+	starton(boolean) : "Start On" : 0
 
 	missilemodel(studio) : "Missile Model" : "models/Weapons/wscanner_grenade.mdl"
 	launchsound(sound) : "Launch Sound" : "npc/waste_scanner/grenade_fire.wav"
 	flysound(sound) : "Fly Sound" : "ambient/objects/machine2.wav"
-	smoketrail(choices) : "Smoke Trail" : "1" =
+
+	smoketrail[engine](integer) : "Smoke Trail" : 1
+	smoketrail(choices) : "Smoke Trail" : 1 =
 		[
 		0: "Off"
 		1: "On"
 		2: "On Homing"
 		]
 
-	launchsmoke(choices) : "Launch Smoke" : "1" =
-		[
-		0: "Off"
-		1: "On"
-		]
-
+	launchsmoke(boolean) : "Launch Smoke" : 1
 	launchdelay(integer) : "Launch Delay" : 8 : "When ON, how long to wait between each launch"
 	launchspeed(string) : "Launch Speed" : "200" : "Initial launch speed of missile (in up direction)"
 	pathcornername(target_destination) : "Path Corner Name" : : "Name of a path corner.  If set launches a pathfollowing missing, rather than a homing missile"

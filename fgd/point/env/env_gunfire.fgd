@@ -8,7 +8,9 @@
 	minburstdelay(float) : "Min Delay Between Bursts" : 2 : "Minimum delay between bursts. (seconds)"
 	maxburstdelay(float) : "Max Delay Between Bursts" : 5 : "Maximum delay between bursts. (seconds)"
 	rateoffire[!CSGO](float) : "Rate of fire" : 10 : "Expressed as rounds per second"
-	spread(choices) : "Bullet spread" : "5" : "The 'cone of inaccuracy' of the shots fired by this entity." =
+
+	spread[engine](integer) : "Bullet spread" : 5
+	spread(choices) : "Bullet spread" : 5 : "The 'cone of inaccuracy' of the shots fired by this entity." =
 		[
 		1: "1 Degree"
 		5: "5 Degrees"

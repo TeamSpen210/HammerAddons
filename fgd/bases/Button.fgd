@@ -163,7 +163,7 @@
 		9: "[NG] Broken Shut Door"
 		]		
 
-	locked_sentence[engine](integer) : "Unlocked Sentence" : 0
+	unlocked_sentence[engine](integer) : "Unlocked Sentence" : 0
 	unlocked_sentence(choices) : "Unlocked Sentence" : 0 : "A sentence played when the button is unlocked." =
 		[
 		0: "None"

@@ -9,29 +9,10 @@
 		131072: "Use inside footsteps" : 0
 		]
 
-	startburrowed(choices) : "Start Burrowed" : "No" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	allowbark(choices) : "Allow Bark" : "No" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	cavernbreed(choices) : "Cavern Guard Model and Texture" : "No" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	incavern(choices) : "Use inside-Cavern Behavior" : "No" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	startburrowed(boolean) : "Start Burrowed" : 0
+	allowbark(boolean) : "Allow Bark" : 0
+	cavernbreed(boolean) : "Cavern Guard Model and Texture" : 0
+	incavern(boolean) : "Use inside-Cavern Behavior" : 0
 
 	shovetargets(string) : "Shove Targets"
 

@@ -3,6 +3,8 @@
 = env_beverage: "HL1 Legacy: Beverage Dispenser."
 	[
 	health(integer) : "Capacity" : 10 : "Number of cans in the dispenser."
+
+	beveragetype[engine](integer) : "Beverage Type" : 0
 	beveragetype(choices) : "Beverage Type" : 0 =
 		[
 		0: "Coca-Cola"

@@ -1,4 +1,3 @@
-
 @PointClass base(BaseEntityAnimating, SetModel) 
 	appliesto(ASW) 
 	studioprop() = asw_door: "An entity used to place a Swarm sliding door in the world."
@@ -6,12 +5,16 @@
 	slavename(string) : "Slave Name" : : "If this is a double door, put the name of the second half of the door here.  They will become linked."
 	model(studio) : "World Model" : "models/swarm/doors/swarm_singleDoor.mdl"
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
-	spawnpos(choices) : "Spawn Position" : "0" =
+
+	spawnpos[engine](integer) : "Spawn Position" : 0
+	spawnpos(choices) : "Spawn Position" : 0 =
 		[
 		0: "Closed"
 		1: "Open"
 		]
 
+	// String, so it doesn't get instance fixed-up.
+	slideangle[engine](string) : "Slide Direction" : "0 90 0"
 	slideangle(choices) : "Slide Direction" : "0 90 0" : "The direction in which the door will slide open." =
 		[
 		"0 90 0": "Left"
@@ -25,11 +28,7 @@
 	soundmoveoverride(sound) : "Moving Sound" : "ASW_Door.Door2Open" : "Sound played when the door starts to move."
 	returndelay(integer) : "Delay Before close (-1 stay open)" : 5 : "Amount of time, in seconds, after the door has opened before it closes. If the value is set to -1, the door never closes itself."
 	dmg(integer) : "Damage Inflicted When Blocked" : 0 : "Amount of damage done to entities that block the movement of this door, per frame."
-	forceclosed(choices) : "Force Closed" : "1" : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	forceclosed(boolean) : "Force Closed" : 1 : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects."
 
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -40,26 +39,19 @@
 
 	totalsealtime(float) : "Total Seal Time" : 10 : "The number of seconds it takes to seal this door with the welder."
 	currentsealtime(float) : "Current Seal Time" : 0 : "How sealed this door currently is.  Number should be from 0 to the Total Seal Time."
-	showsonscanner(choices) : "Shows on Scanner" : "1" : "Whether this door will show a blip on the scanner." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	showsonscanner(boolean) : "Shows on Scanner" : "1" : "Whether this door will show a blip on the scanner."
+	autoopen(boolean) : "Auto Open" : "1" : "Whether this door should automatically open when something enters the door area."
 
-	autoopen(choices) : "Auto Open" : "1" : "Whether this door should automatically open when something enters the door area." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	doortype(choices) : "Door Type" : "0" : "Reinforced doors have twice the strength of normal doors.  Indestructible doors cannot be shot or bashed down by aliens." =
+	doortype[engine](integer) : "Door Type" : 0
+	doortype(choices) : "Door Type" : 0 : "Reinforced doors have twice the strength of normal doors.  Indestructible doors cannot be shot or bashed down by aliens." =
 		[
 		0: "Normal"
 		1: "Reinforced"
 		2: "Indestructible"
 		]
 
-	dentamount(choices) : "Damaged" : "0" : "Whether the door is already damaged or not" =
+	dentamount[engine](integer) : "Damaged" : 0
+	dentamount(choices) : "Damaged" : 0 : "Whether the door is already damaged or not" =
 		[
 		0: "Undamaged"
 		1: "Damaged"
@@ -68,30 +60,15 @@
 		4: "Very damaged (Flipped)"
 		]
 
-	canclosetoweld(choices) : "Can Close To Weld" : "1" : "Whether the welding tool can make this door close to start welding when it's open." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	canclosetoweld(boolean) : "Can Close To Weld" : 1 : "Whether the welding tool can make this door close to start welding when it's open."
+	docutshout(boolean) : "Do Cut Shout" : 0 : "Should a marine shout out 'cut this door!' " +
+		"when he encounters this door sealed and another marine with a welder is nearby?"
 
-	docutshout(choices) : "Do Cut Shout" : "0" : "Should a marine shout out 'cut this door!' when he encounters this door sealed and another marine with a welder is nearby?" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	dobreachedshout(boolean) : "Do Breached Shout" : "1" : "Should a nearby marine shout out " +
+		"'they've breached the door!' when drones bash the door down?"
 
-	dobreachedshout(choices) : "Do Breached Shout" : "1" : "Should a nearby marine shout out 'they've breached the door!' when drones bash the door down?" =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	doautoshootchatter(choices) : "Do Auto Shoot Shout" : "0" : "If set, a marine will shout out 'shoot it down!' as soon as they enter the door area.  Use this for sealed doors that you expect the player to shoot his way through." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
+	doautoshootchatter(boolean) : "Do Auto Shoot Shout" : "0" : "If set, a marine will shout out 'shoot it down!' as soon as they enter the door area. " +
+		"Use this for sealed doors that you expect the player to shoot his way through."
 
 	// Inputs
 	input Open(void) : "Open the door, if it is not fully open."

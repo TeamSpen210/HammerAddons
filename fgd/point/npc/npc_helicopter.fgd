@@ -16,11 +16,7 @@
 	initialspeed(string) : "Initial Speed" : "0"
 	graceperiod(float) : "Grace Period" : 2.0 : "Time in seconds the helicopter has to see the player before he starts shooting"
 	patrolspeed(float) : "Patrol Speed" : 0 : "Speed at which the helicopter moves if he has no enemy."
-	noncombat(choices) : "Non-combat (Do not precache gibs)" : "No" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	noncombat(boolean) : "Non-combat (Do not precache gibs)" : 0
 
 
 	// Inputs

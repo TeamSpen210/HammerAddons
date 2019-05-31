@@ -4,7 +4,8 @@
 	iconsprite("editor/ficool2/ai_changehintgroup")
 = ai_changehintgroup: "Change Hint Group"
 	[
-	searchtype(choices) : "Search Type" : "0" : "How to search for the entities to change." =
+	searchtype[engine](integer) : "Search Type" : 0
+	searchtype(choices) : "Search Type" : 0 : "How to search for the entities to change." =
 		[
 		0: "Entity Name"
 		1: "Classname"
@@ -14,13 +15,7 @@
 	searchname(string) : "Name to search for"
 	newhintgroup(string) : "New Hint Group"
 	radius(string) : "Search Radius" : "0.0" : "Radius to search (0 for all of map)"
-	hintlimiting(choices) : "Hint Limit Nav" : "0" : "Limits NPC to using specified hint group for navigation requests, does not limit local navigation." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	hintlimiting[P2](boolean) : "Hint Limit Nav" : 0 : "Limits NPC to using specified hint group for navigation requests, does not limit local navigation."
+	hintlimiting(boolean) : "Hint Limit Nav" : 0 : "Limits NPC to using specified hint group for navigation requests, does not limit local navigation."
 
 	// Inputs
 	input Kill(void) : "Removes this entity from the world"

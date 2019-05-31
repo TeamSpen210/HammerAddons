@@ -23,13 +23,8 @@
 	node18(target_destination) : "Node 18" : : "The name of the eighteenth actbusy hint node in the queue."
 	node19(target_destination) : "Node 19" : : "The name of the nineteenth actbusy hint node in the queue."
 	node20(target_destination) : "Node 20" : : "The name of the twentieth actbusy hint node in the queue."
-	mustreachfront(choices) : "Must Reach Front" : "0" : "If true, NPCs much reach the front node in the queue before they're allowed to leave the queue." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	mustreachfront[P2](boolean) : "Must Reach Front" : 0 : "If true, NPCs much reach the front node in the queue before they're allowed to leave the queue."
+	
+	mustreachfront(boolean) : "Must Reach Front" : 0 : "If true, NPCs much reach the front node in the queue before they're allowed to leave the queue."
 
 	// Inputs
 	input PlayerStartedBlocking(float) : "Tell the queue manager that the player has started blocking a spot in the queue."
