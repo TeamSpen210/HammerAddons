@@ -1,5 +1,5 @@
 // All model entities have this.
-@BaseClass base(BaseEntityPoint, ToggleDraw) 
+@BaseClass base(BaseEntityPoint, RenderFields, Reflection, ToggleDraw) 
 	sphere(fademindist) sphere(fademaxdist)
 = BaseEntityAnimating
 	[
@@ -22,10 +22,7 @@
 		2048 : "No shadow depth, for use with env_cascade_light" [since_P2]
 		4096 : "No projected textures" [since_P2]
 		]
-		
-	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. " +
-		"Set this to a number other than 0 to use that skin instead of the default."
-
+	
 	solid[engine](integer) : "Collisions": 6
 	solid(choices) : "Collisions" : 6 : "Method of collision for this entity. Can be changed at runtime with AddOutput." =
 		[

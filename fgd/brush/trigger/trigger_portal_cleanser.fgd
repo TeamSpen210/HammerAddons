@@ -1,4 +1,4 @@
-@SolidClass base(Trigger, Reflection) 
+@SolidClass base(Trigger, RenderFields, Reflection) 
 	appliesto(P1, P2) = trigger_portal_cleanser: "A trigger volume that disolves any entities that touch it and fizzles active portals when the player touches it.|||An Aperture Science Material Emancipation Grid."
 	[
 	visible[P2](boolean) : "Visible" : 1 : "If the fizzler is visible. This controls whether sounds will play."

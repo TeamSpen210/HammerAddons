@@ -1,4 +1,4 @@
-@PointClass base(BaseDriveableVehicle)
+@PointClass base(BaseDriveableVehicle, SetModel)
 	studioprop() 
 	color(240 180 250) = prop_vehicle_choreo_generic: "Generic Choreo vehicle used for magical events."
 	[

@@ -1,4 +1,4 @@
-@PointClass base(BaseNPC) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/env_fade")
 	color(200 0 0)
 = env_fade: "An entity that controls screen fades."

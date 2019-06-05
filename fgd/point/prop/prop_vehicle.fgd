@@ -1,5 +1,5 @@
 
-@PointClass base(BaseVehicle) 
+@PointClass base(BaseVehicle, SetModel) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2, CSGO) 
 	studioprop() = prop_vehicle: "Studiomodel vehicle that can be driven via inputs."
 	[

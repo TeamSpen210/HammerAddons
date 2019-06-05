@@ -27,6 +27,9 @@
 
 	src_fix_skins[srctools](boolean) : "Fix Skins Logic" : 1 : "If set, add extra outputs to fix the bug with skins not changing after a reload from save."
 
+	// Inputs
+	input Skin(integer) : "Set the skin of the catcher manually."
+
 	// Outputs
 	output OnPowered(void) : "Fired when a laser hits the target."
 	output OnUnpowered(void) : "Fired when a laser has stopped hitting the target."

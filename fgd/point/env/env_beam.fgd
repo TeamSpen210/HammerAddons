@@ -1,5 +1,5 @@
 
-@PointClass base(BaseEntityPoint) 
+@PointClass base(BaseEntityPoint, RenderFields, Reflection) 
 	line(255 255 255, targetname, LightningStart, targetname, LightningEnd) 
 	cylinder(255 255 255, targetname, LightningStart, Radius, targetname, LightningEnd, Radius) 
 	line(64 64 64, targetname, lightningStart) 

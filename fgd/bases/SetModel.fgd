@@ -1,5 +1,5 @@
 // Entities with a settable model.
-@BaseClass studioprop() = SetModel
+@BaseClass base(SetSkin) studioprop() = SetModel
 	[
 	model(studio) : "World Model" : : "The model to use for this entity."
 	]

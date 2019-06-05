@@ -1,13 +1,9 @@
 // Stripped down version of BaseAnimating for physically-simulated objects, which do not have some keyvalues
 
-@BaseClass base(BaseEntityPoint, Render) 
+@BaseClass base(BaseEntityPoint, RenderFields, Reflection) 
 	sphere(fademindist) sphere(fademaxdist)
 = BaseEntityPhysics
-	[	
-	model(studio) : "Model" :  : "The model this entity should appear as. 128-character limit."
-	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. " +
-		"Set this to a number other than 0 to use that skin instead of the default."
-
+	[
 	solid[engine](integer) : "Collisions" : 6
 	solid(choices) : "Collisions" : 6 : "Method of collision for this entity. Can be changed at runtime with AddOutput." =
 		[

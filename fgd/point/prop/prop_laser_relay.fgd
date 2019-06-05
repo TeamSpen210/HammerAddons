@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityAnimating, SRCIndicator) 
+@PointClass base(BaseEntityAnimating, SRCIndicator, SetSkin) 
 	appliesto(P2) 
 	studioprop() 
 = prop_laser_relay: "Discouragement Beam Relay that detects lasers, whilst allowing it to pass through and hit other Relays. " +
