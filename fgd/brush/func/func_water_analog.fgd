@@ -4,7 +4,7 @@
 	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction the water will move, when told to 'Open'."
 	startposition(float) : "Start Position" : 0 : "Position of the water brush when spawned." +
 		"The range is a value between 0.0 and 1.0, where 0 is the starting position and 1 is the starting position + (move direction * move distance)."
-	speed(integer) : "Speed" : 100 : "The speed that the water brush moves, in inches per second."
+	speed(float) : "Speed" : 100 : "The speed that the water brush moves, in inches per second."
 	movedistance(float) : "Move Distance" : 100 : "The distance from the starting point that the water brush should move, in units."
 	startsound(sound) : "Sound played when the water brush starts moving."
 	stopsound(sound) : "Sound played when the water brush stops moving."

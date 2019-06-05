@@ -7,7 +7,10 @@
 	ballcount(integer) : "Ball count" : 1 : "The number of Pellets that are alive at once."
 	maxspeed(float) : "Max ball speed" : 150.0 : "The maximum starting speed."
 	minspeed(float) : "Min ball speed" : 150.0 : "The minimum starting speed."
-	balltype(integer) readonly : "Ball Type" : 0 : "Has no effect."
+	balltype(choices) readonly : "Ball Type" : 0 : "Has no effect." =
+		[
+		0 : "HEP"
+		]
 
 	balllifetime(float) : "Ball Lifetime" : 12 : "The time in seconds the ball will live before self-destructing. A negative value will give infinite life, appearing green."
 	minlifeafterportal(float) : "Min life after portal transition" : 6 : "When energy balls created by this launcher pass through a portal their life is refreshed to be this number at minimum."

@@ -1,11 +1,22 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(since_CSGO) 
-	iconsprite("editor/shadow_control.vmt") = env_cascade_light: "An entity to control the sunlight that casts cascaded shadows in the map."
+	iconsprite("editor/shadow_control.vmt") 
+= env_cascade_light: "An entity to control the sunlight that casts cascaded shadows in the map."
 	[
-	angles(string) : "Pitch Yaw Roll (Y Z X)" : "50 40 0" : "This is the shadow casting direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis. (Note that pitch is negated vs. light_environment's pitch.)"
+	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "50 40 0" : "This is the shadow casting direction. " +
+		"Pitch is rotation around the Y axis, " +
+		"yaw is the rotation around the Z axis, and " +
+		"roll is the rotation around the X axis. " +
+		"(Note that pitch is negated vs. light_environment's pitch.)"
+
 	color(color255) : "Light Color" : "255 255 255 1" : "This is the color of the sunlight."
-	maxshadowdistance(float) : "Max Shadow Distance" : 400 : "Maximum dynamic shadow distance. Higher values are slower, default on PC is 400 units."
-	uselightenvangles(boolean) : "Use light_environment's angles" : 1 : "If true, the CSM shadow angles are automatically harvested from the light_environment's angles. If false, this entity's angles are used."
+
+	maxshadowdistance(float) : "Max Shadow Distance" : 400 : "Maximum dynamic shadow distance. " +
+		"Higher values are slower, default on PC is 400 units."
+
+	uselightenvangles(boolean) : "Use light_environment's angles" : 1 : "If true, " +
+		"the CSM shadow angles are automatically harvested from the light_environment's angles. " +
+		"If false, this entity's angles are used."
 
 	// Inputs
 	input LightColor(color255) : "Set the light color."

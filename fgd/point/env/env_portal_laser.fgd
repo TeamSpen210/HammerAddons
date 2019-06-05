@@ -28,7 +28,6 @@
 		1: "Rusted"
 		]
 
-
 	// Inputs
 	input Toggle(void) : "Toggle the laser on and off."
 	input TurnOn(void) : "Turn the laser on."
