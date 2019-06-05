@@ -194,3 +194,19 @@
 [
     indicatorname(target_destination) : "Indicator Name" : : "Set to the name of a set of info_overlays to toggle when this is activated and deactivated. The name may also point to a prop_indicator_panel, which will also be toggled appropriately."
 ]
+
+@PointClass size(-8 -8 -8, 8 8 8) = comp_kv_setter : "Sets a keyvalue on an entity to a new value. " +
+	"This is useful to compute spawnflags, or to adjust keyvalues when the target entity's options can't be set to a fixup variable."
+	[
+	target(target_destination) : "Target Entity" : : "The name of the entity or entities to set values on."
+
+	mode(choices) : "Mode" : "kv" : "The type of value to set." = [
+		"kv" : "KeyValues"
+		"flags": "SpawnFlags"
+	]
+
+	kv_name(string) : "Name / Mask" : : "The name of the keyvalue to set, or the bits to change for spawnflags."
+
+	kv_value_global(string) : "Value - String" : : "The value to apply."
+	kv_value_local(target_destination) : "Value - Ent Name" : : "If set, use this fixed-up entity name."
+	]

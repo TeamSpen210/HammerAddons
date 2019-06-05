@@ -101,6 +101,7 @@ def _load() -> None:
         entfinder,
         globals,
         instancing,
+        kv_setter,
         packing,
         portal2,
         sceneset,
