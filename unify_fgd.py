@@ -79,7 +79,8 @@ ALL_FEATURES = {
 TAGS_SPECIAL = {
   'ENGINE',  # Tagged on entries that specify machine-oriented types and defaults.
   'SRCTOOLS',  # Implemented by the srctools post-compiler.
-  'PROPPER',  # Propper's added pseduo-entities.
+  'PROPPER',  # Propper's added pseudo-entities.
+  'BEE2', # BEEmod's templates.
 }
 
 ALL_TAGS = set()  # type: Set[str]
@@ -241,16 +242,27 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
             print('.', end='', flush=True)
 
     if extra_loc is not None:
-        print('\nLoading extra files:')
-        with RawFileSystem(str(extra_loc)) as fsys:
-            for file in extra_loc.rglob("*.fgd"):
+        print('\nLoading extra file:')
+        if extra_loc.is_file():
+            # One file.
+            with RawFileSystem(str(extra_loc.parent)) as fsys:
                 fgd.parse_file(
                     fsys,
-                    fsys[str(file.relative_to(extra_loc))],
+                    fsys[extra_loc.name],
                     eval_bases=False,
                 )
-                print('.', end='', flush=True)
+        else:
+            print('\nLoading extra files:')
+            with RawFileSystem(str(extra_loc)) as fsys:
+                for file in extra_loc.rglob("*.fgd"):
+                    fgd.parse_file(
+                        fsys,
+                        fsys[str(file.relative_to(extra_loc))],
+                        eval_bases=False,
+                    )
+                    print('.', end='', flush=True)
     print()
+
     fgd.apply_bases()
     print('\nDone!')
     return fgd
