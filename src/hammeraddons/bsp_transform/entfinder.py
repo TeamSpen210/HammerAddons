@@ -67,8 +67,10 @@ def entity_finder(ctx: Context):
             del targ_ent
             if found_ent is None:
                 LOGGER.warning(
-                    'Cannot find valid entity '
+                    'Cannot find valid {} entity within {} units '
                     'for entity finder at <{}>!',
+                    targ_class,
+                    targ_radius,
                     finder['origin'],
                 )
                 continue
