@@ -1,5 +1,5 @@
 // All visible Brush entities have these options.
-@BaseClass base(BaseEntityBrush, ToggleDraw) 
+@BaseClass base(BaseEntityBrush, RenderFields, ToggleDraw) 
 	sphere(fademindist) sphere(fademaxdist)
 = BaseEntityVisBrush
 	[

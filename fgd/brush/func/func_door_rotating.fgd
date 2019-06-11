@@ -1,4 +1,4 @@
-@SolidClass base(Door) = func_door_rotating: "A brush entity for use as a rotating player-useable door."
+@SolidClass base(Door, Origin) = func_door_rotating: "A brush entity for use as a rotating player-useable door."
 	[
 	spawnflags(flags)  =
 		[
