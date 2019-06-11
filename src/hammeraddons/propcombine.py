@@ -384,7 +384,11 @@ def group_props_ent(
                         group.remove(prop)
                         break
 
-            yield from found.values()
+            for group in found.values():
+                if len(group) < min_cluster:
+                    rejected.extend(group)
+                else:
+                    yield group
 
     # Finally, reject all the ones not in a bbox.
     for group in prop_groups.values():
