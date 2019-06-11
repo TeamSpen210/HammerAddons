@@ -153,5 +153,17 @@ OPTIONS = [
         the 'content/' folder, which is adjacent to the game root.
         This is how Valve sets up their file structure.
         """
-    )
+    ),
+    Opt(
+        'propcombine_auto_range', 0,
+        """If greater than zero, combine props at least this close together.
+        This is ignored if comp_propcombine_set entities are in the map.
+        """,
+    ),
+    Opt(
+        'propcombine_min_cluster', 2,
+        """The minimum number of props required before propcombine will
+        bother merging them. Should be greater than 1.
+        """,
+    ),
 ]

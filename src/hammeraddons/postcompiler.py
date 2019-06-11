@@ -84,10 +84,13 @@ def main(argv: List[str]) -> None:
         LOGGER.info('Combining props...')
         propcombine.combine(
             bsp_file,
+            vmf,
             packlist,
             game_info,
             game_info.root / studiomdl_loc,
             game_info.root / conf.get(str, 'propcombine_qc_folder'),
+            conf.get(int, 'propcombine_auto_range'),
+            conf.get(int, 'propcombine_min_cluster'),
         )
         LOGGER.info('Done!')
 

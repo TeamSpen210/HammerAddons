@@ -7,9 +7,9 @@ import os
 import subprocess
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Dict, List, Set, Optional, Tuple
+from typing import Dict, List, Set, Optional, Tuple, Callable, FrozenSet
 
-from srctools import Vec, partition
+from srctools import Vec, VMF, Entity, conv_int
 from srctools.tokenizer import Tokenizer, Token
 
 from srctools.game import Game
@@ -75,6 +75,17 @@ def unify_mdl(path: str):
     if not path.endswith('.mdl'):
         path = path + '.mdl'
     return path
+
+
+def in_bbox(pos: Vec, bb_min: Vec, bb_max: Vec) -> bool:
+    """Check if the given position is inside a bounding box."""
+    if pos.x < bb_min.x or bb_max.x < pos.x:
+        return False
+    if pos.y < bb_min.y or bb_max.y < pos.y:
+        return False
+    if pos.z < bb_min.z or bb_max.z < pos.z:
+        return False
+    return True
 
 
 def load_qcs(qc_folder: Path) -> Dict[str, QC]:
@@ -302,7 +313,7 @@ def merge_props(
                     'models/{}{}'.format(prop_name, ext),
                     data=fb.read(),
                 )
-            os.remove(str(full_model_path) + ext)
+            # os.remove(str(full_model_path) + ext)
         except FileNotFoundError:
             pass
 
@@ -322,24 +333,77 @@ def merge_props(
     )
 
 
-def group_props(
+def group_props_ent(
+    prop_groups: Dict[tuple, List[StaticProp]],
+    rejected: List[StaticProp],
+    get_model: Callable[[str], Optional[Model]],
+    bbox_ents: List[Entity],
+    min_cluster: int,
+):
+    """Given the groups of props, merge props according to the provided ents."""
+    bbox_groups = defaultdict(list)  # type: Dict[Tuple[str, FrozenSet[str]], List[Tuple[Vec, Vec]]]
+
+    empty_fs = frozenset('')
+
+    for ent in bbox_ents:
+        # Either provided name, or unique value.
+        name = ent['name'] or format(int(ent['hammerid']), 'X')
+        origin = Vec.from_str(ent['origin'])
+
+        skinset = empty_fs
+
+        mdl_name = ent['prop']
+        if mdl_name:
+            mdl = get_model(mdl_name)
+            if mdl is not None:
+                skinset = frozenset(mdl.iter_textures([conv_int(ent['skin'])]))
+
+        bbox_groups[name, skinset].append(Vec.bbox(
+            Vec.from_str(ent['mins']) + origin,
+            Vec.from_str(ent['maxs']) + origin,
+        ))
+
+    # Each of these groups cannot be merged with other ones.
+    for group_key, group in prop_groups.items():
+        # No point merging single/empty groups.
+        group_skinset = group_key[0]
+        if len(group) < min_cluster:
+            rejected.extend(group)
+            group.clear()
+            continue
+
+        for (name, skinset), bboxes in bbox_groups.items():
+            if skinset and skinset != group_skinset:
+                continue  # No match
+            found = defaultdict(list)  # type: Dict[int, List[StaticProp]]
+            for prop in list(group):
+                for bbox_min, bbox_max in bboxes:
+                    if in_bbox(prop.origin, bbox_min, bbox_max):
+                        # Group by this bbox list object's identity.
+                        found[id(bboxes)].append(prop)
+                        group.remove(prop)
+                        break
+
+            yield from found.values()
+
+    # Finally, reject all the ones not in a bbox.
+    for group in prop_groups.values():
+        rejected.extend(group)
+
+
+def group_props_auto(
     prop_groups: Dict[object, List[StaticProp]],
     rejected: List[StaticProp],
-    dist,
-    min_cluster,
+    dist: float,
+    min_cluster: int,
 ):
-    """Given the groups of props, find close props to merge."""
+    """Given the groups of props, automatically find close props to merge."""
     # Each of these groups cannot be merged with other ones.
-
-    # These are models we cannot merge no matter what -
-    # no source files etc.
-    if None in prop_groups:
-        rejected.extend(prop_groups.pop(None))
 
     dist_sq = dist * dist
     large_dist_sq = 4 * dist_sq
 
-    for key, group in prop_groups.items():
+    for group in prop_groups.values():
         # No point merging single/empty groups.
         if len(group) < 2:
             rejected.extend(group)
@@ -386,12 +450,21 @@ def group_props(
 
 def combine(
     bsp: BSP,
+    bsp_ents: VMF,
     pack: PackList,
     game: Game,
     studiomdl_loc: Path=None,
     qc_folder: Path=None,
+    auto_range: float=0,
+    min_cluster: int=2,
 ):
     """Combine props in this map."""
+
+    # First parse out the bbox ents, so they are always removed.
+    bbox_ents = list(bsp_ents.by_class['comp_propcombine_set'])
+    for ent in bbox_ents:
+        ent.remove()
+
     if studiomdl_loc is None:
         studiomdl_loc = game.bin_folder() / 'studiomdl.exe'
 
@@ -415,6 +488,19 @@ def combine(
     # Don't re-parse models continually.
     mdl_map = {}  # type: Dict[str, Model]
 
+    def get_model(filename: str) -> Optional[Model]:
+        key = unify_mdl(filename)
+        try:
+            model = mdl_map[key]
+        except KeyError:
+            try:
+                mdl_file = pack.fsys[filename]
+            except FileNotFoundError:
+                # We don't have this model, we can't combine...
+                return None
+            model = mdl_map[key] = Model(pack.fsys, mdl_file)
+        return model
+
     def get_grouping_key(prop: StaticProp) -> object:
         """Compute a grouping key for this prop.
 
@@ -431,22 +517,15 @@ def combine(
             # We don't have source for this...
             return None
 
-        try:
-            model = mdl_map[key]
-        except KeyError:
-            try:
-                mdl_file = pack.fsys[prop.model]
-            except FileNotFoundError:
-                # We don't have this model, we can't combine...
-                return None
-            model = mdl_map[key] = Model(pack.fsys, mdl_file)
+        model = get_model(prop.model)
 
-        try:
-            skinset = model.skins[prop.skin]
-        except IndexError:
-            skinset = model.skins[0]
+        if model is None:
+            return None
+
 
         return (
+            # Must be first!
+            frozenset(model.iter_textures([prop.skin])),
             model.flags.value,
             prop.flags.value,
             model.contents,
@@ -454,20 +533,44 @@ def combine(
             prop.solidity,
             prop.renderfx,
             *prop.tint,
-            *sorted(skinset),
         )
 
     prop_count = 0
 
     # First, construct groups of props that can possibly be combined.
-    prop_groups = defaultdict(list)  # type: Dict[object, List[StaticProp]]
-    for prop in bsp.static_props():
-        prop_groups[get_grouping_key(prop)].append(prop)
-        prop_count += 1
+    prop_groups = defaultdict(list)  # type: Dict[tuple, List[StaticProp]]
 
     # This holds the list of all props we want in the map -
     # combined ones, and any we reject for whatever reason.
     final_props = []  # type: List[StaticProp]
+
+    if bbox_ents:
+        LOGGER.info('Propcombine sets present, combining...')
+        grouper = group_props_ent(
+            prop_groups, final_props,
+            get_model,
+            bbox_ents,
+            min_cluster,
+        )
+    elif auto_range > 0:
+        LOGGER.info('Automatically finding propcombine sets...')
+        grouper = group_props_auto(
+            prop_groups, final_props,
+            auto_range,
+            min_cluster,
+        )
+    else:
+        # No way provided to choose props.
+        LOGGER.info('No propcombine groups provided.')
+        return
+
+    for prop in bsp.static_props():
+        prop_groups[get_grouping_key(prop)].append(prop)
+        prop_count += 1
+
+    # These are models we cannot merge no matter what -
+    # no source files etc.
+    final_props.extend(prop_groups.pop(None, []))
 
     with TemporaryDirectory(prefix='autocomb_') as temp_dir:
         mesh_cache = {}
@@ -476,7 +579,7 @@ def combine(
         with open(temp_dir + '/anim.smd', 'wb') as f:
             Mesh.blank('static_prop').export(f)
 
-        for ind, group in enumerate(group_props(prop_groups, final_props, 384, 2)):
+        for ind, group in enumerate(grouper):
             final_props.append(merge_props(
                 qc_map,
                 mdl_map,
