@@ -207,6 +207,10 @@ def merge_props(
     surfprops = set()  # type: Set[str]
     cdmats = set()  # type: Set[str]
     visleafs = set()  # type: Set[int]
+    # We don't need to make a collision mesh if the prop is set to not use
+    # them.
+    # All the props are the same as the first.
+    has_coll = props[0].solidity != 0
 
     for prop in props:
         mdl = mdl_map[unify_mdl(prop.model)]
@@ -270,7 +274,7 @@ def merge_props(
 
         ref_mesh.append_model(child_ref, prop.angles, offset)
 
-        if child_coll is not None:
+        if has_coll and child_coll is not None:
             if coll_mesh is None:
                 coll_mesh = Mesh.blank('static_prop')
             coll_mesh.append_model(child_coll, prop.angles, offset)
@@ -313,7 +317,13 @@ def merge_props(
                     'models/{}{}'.format(prop_name, ext),
                     data=fb.read(),
                 )
-            # os.remove(str(full_model_path) + ext)
+        except FileNotFoundError:
+            pass
+
+    if not coll_mesh:
+        # Make sure an older collision mesh isn't left behind!
+        try:
+            os.remove(full_model_path.with_suffix('.phy'))
         except FileNotFoundError:
             pass
 
