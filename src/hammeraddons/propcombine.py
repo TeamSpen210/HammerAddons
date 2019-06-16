@@ -39,6 +39,8 @@ $surfaceprop "{surf}"
 
 $body body "{ref_mesh}"
 
+$contents {contents}
+
 $sequence idle anim act_idle 1
 '''
 
@@ -207,6 +209,8 @@ def merge_props(
     surfprops = set()  # type: Set[str]
     cdmats = set()  # type: Set[str]
     visleafs = set()  # type: Set[int]
+    contents = set()  # type: Set[int]
+
     # We don't need to make a collision mesh if the prop is set to not use
     # them.
     # All the props are the same as the first.
@@ -217,11 +221,16 @@ def merge_props(
         surfprops.add(mdl.surfaceprop.casefold())
         cdmats.update(mdl.cdmaterials)
         visleafs.update(prop.visleafs)
+        contents.add(mdl.contents)
 
     if len(surfprops) > 1:
         raise ValueError('Multiple surfaceprops? Should be filtered out.')
 
+    if len(contents) > 1:
+        raise ValueError('Multiple contents? Should be filtered out.')
+
     [surfprop] = surfprops
+    [phy_content_type] = contents
 
     if counter > 0xFFFF:
         raise ValueError('More than 65K models, how??')
@@ -293,6 +302,20 @@ def merge_props(
             path=prop_name,
             surf=surfprop,
             ref_mesh=prefix + '_ref.smd',
+            # For $contents, we need to decompose out each bit.
+            # This is the same as BSP's flags in public/bsp_flags.h
+            # However only a few types are allowable.
+            contents=' '.join([
+                cont
+                for mask, cont in [
+                    (0x1, '"solid"'),
+                    (0x8, '"grate"'),
+                    (0x2000000, '"monster"'),
+                    (0x20000000, '"ladder"'),
+                ]
+                if mask & phy_content_type
+                # 0 needs to produce this value.
+            ]) or '"notsolid"',
         ))
 
         for mat in sorted(cdmats):
