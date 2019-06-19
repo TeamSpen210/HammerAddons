@@ -5,6 +5,7 @@ draw call.
 """
 import os
 import subprocess
+import random
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import (
@@ -132,6 +133,9 @@ class ModelManager:
         # to parse them again. The second is the collision model.
         self._mesh_cache = {}  # type: Dict[Tuple[QC, int], Tuple[Mesh, Optional[Mesh]]]
 
+        # The random indexes we use to produce filenames.
+        self._mdl_names = set()  # type: Set[str]
+
         # Function to load and parse a MDL.
         self.lookup_model = get_model
         # The QCs we have parsed.
@@ -156,19 +160,21 @@ class ModelManager:
                 pos_set.add(PropPos(
                     origin.x, origin.y, origin.z,
                     angles.x, angles.y, angles.z,
-                    pos_block['model'],
+                    pos_block['filename'],
                     pos_block.int('skin'),
                 ))
+            mdl_name = prop['name']
+            self._mdl_names.add(mdl_name)
             self._mdl_cache[frozenset(pos_set)] = MergedModel(
-                prop['name'],
+                mdl_name,
                 prop.bool('has_coll'),
             )
+        LOGGER.info('Found {} existing grouped models.', len(self._mdl_cache))
 
     def finalise(self) -> None:
         """Write the constructed models to the cache file and remove unused models."""
         with AtomicWriter(
             str(self.game.path / 'models' / self.model_folder / 'cache.vdf'),
-            is_bytes=True,
         ) as f:
             for positions, mdl in self._mdl_cache.items():
                 if not mdl.used:
@@ -204,11 +210,7 @@ class ModelManager:
                     except FileNotFoundError:
                         pass
 
-    def combine_group(
-        self,
-        props: List[StaticProp],
-        mdl_name: str,
-    ) -> StaticProp:
+    def combine_group(self, props: List[StaticProp]) -> StaticProp:
         """Merge the given props together, compiling a model if required."""
 
         # We want to allow multiple props to reuse the same model.
@@ -230,15 +232,15 @@ class ModelManager:
             visleafs.update(prop.visleafs)
 
         avg_pos /= len(props)
-        avg_yaw /= len(props)
+        avg_yaw = 0
 
         prop_pos = set()
         for prop in props:
             origin = (prop.origin - avg_pos).rotate(0, -avg_yaw, 0)
-            angles = Vec(prop.angles).rotate(0, -avg_yaw, 0)
+            angles = Vec(prop.angles)
             prop_pos.add(PropPos(
                 origin.x, origin.y, origin.z,
-                angles.x, angles.y, angles.z,
+                angles.x, (angles.y - avg_yaw) % 360, angles.z,
                 prop.model,
                 prop.skin
             ))
@@ -251,11 +253,16 @@ class ModelManager:
             # We don't need to make a collision mesh if the prop is set to
             # not use them.
             # All the props are the same as the first.
+            has_coll = props[0].solidity != 0
 
-            merged_model = self._mdl_cache[prop_key] = MergedModel(
-                mdl_name,
-                has_coll=props[0].solidity != 0,
-            )
+            # Figure out a name to use.
+            while True:
+                mdl_name = 'merge_{:04X}'.format(random.getrandbits(16))
+                if mdl_name not in self._mdl_names:
+                    self._mdl_names.add(mdl_name)
+                    break
+
+            merged_model = self._mdl_cache[prop_key] = MergedModel(mdl_name, has_coll)
             self.compile(prop_key, merged_model)
 
         merged_model.used = True
@@ -281,6 +288,7 @@ class ModelManager:
         merged: MergedModel,
     ) -> None:
         """Build this merged model."""
+        LOGGER.info('Compiling {}{}.mdl...', self.model_folder, merged.name)
 
         # Unify these properties.
         surfprops = set()  # type: Set[str]
@@ -524,7 +532,7 @@ def group_props_ent(
     get_model: Callable[[str], Optional[Model]],
     bbox_ents: List[Entity],
     min_cluster: int,
-) -> Iterator[Tuple[str, List[StaticProp]]]:
+) -> Iterator[List[StaticProp]]:
     """Given the groups of props, merge props according to the provided ents."""
     bbox_groups = defaultdict(list)  # type: Dict[Tuple[str, FrozenSet[str]], List[Tuple[Vec, Vec]]]
 
@@ -573,7 +581,7 @@ def group_props_ent(
                 if len(group) < min_cluster:
                     rejected.extend(group)
                 else:
-                    yield ('merge_' + name), group
+                    yield group
 
     # Finally, reject all the ones not in a bbox.
     for group in prop_groups.values():
@@ -585,13 +593,12 @@ def group_props_auto(
     rejected: List[StaticProp],
     dist: float,
     min_cluster: int,
-) -> Iterator[Tuple[str, List[StaticProp]]]:
+) -> Iterator[List[StaticProp]]:
     """Given the groups of props, automatically find close props to merge."""
     # Each of these groups cannot be merged with other ones.
 
     dist_sq = dist * dist
     large_dist_sq = 4 * dist_sq
-    auto_ind = 0
 
     for group in prop_groups.values():
         # No point merging single/empty groups.
@@ -633,8 +640,7 @@ def group_props_auto(
             todo.difference_update(cluster_list)
 
             if len(cluster_list) >= min_cluster:
-                yield 'merge_{:04X}'.format(auto_ind), cluster_list
-                auto_ind += 1
+                yield cluster_list
             else:
                 rejected.extend(cluster_list)
 
@@ -782,8 +788,8 @@ def combine(
         except IOError:
             pass  # Make a new one.
 
-        for mdl_name, group in grouper:
-            final_props.append(mdl_man.combine_group(group, mdl_name))
+        for group in grouper:
+            final_props.append(mdl_man.combine_group(group))
 
     mdl_man.finalise()
 
