@@ -236,18 +236,18 @@ class ModelManager:
 
         prop_pos = set()
         for prop in props:
-            origin = (prop.origin - avg_pos).rotate(0, -avg_yaw, 0)
-            angles = Vec(prop.angles)
+            origin = round((prop.origin - avg_pos).rotate(0, -avg_yaw, 0), 7)
+            angles = round(Vec(prop.angles), 7)
             prop_pos.add(PropPos(
                 origin.x, origin.y, origin.z,
-                angles.x, (angles.y - avg_yaw) % 360, angles.z,
+                angles.x, angles.y, angles.z,
                 prop.model,
-                prop.skin
+                prop.skin,
             ))
         prop_key = frozenset(prop_pos)
 
         try:
-            merged_model = self._mdl_cache[prop_key]
+            merged = self._mdl_cache[prop_key]
         except KeyError:
             # Need to build the model.
             # We don't need to make a collision mesh if the prop is set to
@@ -257,25 +257,52 @@ class ModelManager:
 
             # Figure out a name to use.
             while True:
-                mdl_name = 'merge_{:04X}'.format(random.getrandbits(16))
+                mdl_name = 'merge_{:04x}'.format(random.getrandbits(16))
                 if mdl_name not in self._mdl_names:
                     self._mdl_names.add(mdl_name)
                     break
 
-            merged_model = self._mdl_cache[prop_key] = MergedModel(mdl_name, has_coll)
-            self.compile(prop_key, merged_model)
+            merged = self._mdl_cache[prop_key] = MergedModel(mdl_name, has_coll)
+            self.compile(prop_key, merged)
 
-        merged_model.used = True
+        if not merged.used:
+            # Pack it in.
+            merged.used = True
+
+            full_model_path = Path(
+                self.game.path,
+                'models',
+                self.model_folder,
+                merged.name
+            )
+            for ext in MDL_EXTS:
+                try:
+                    with open(str(full_model_path.with_suffix(ext)), 'rb') as fb:
+                        self.pack.pack_file(
+                            'models/{}{}{}'.format(
+                                self.model_folder, merged.name, ext,
+                            ),
+                            data=fb.read(),
+                        )
+                except FileNotFoundError:
+                    pass
+
+            if not merged.has_coll:
+                # Make sure an older collision mesh isn't left behind!
+                try:
+                    os.remove(full_model_path.with_suffix('.phy'))
+                except FileNotFoundError:
+                    pass
 
         # Many of these we require to be the same, so we can read them
         # from any of the component props.
         return StaticProp(
-            model='models/{}{}.mdl'.format(self.model_folder, merged_model.name),
+            model='models/{}{}.mdl'.format(self.model_folder, merged.name),
             origin=avg_pos,
-            angles=Vec(0, (270 + avg_yaw) % 360.0, 0),
+            angles=Vec(0, 270, 0),
             scaling=1.0,
             visleafs=sorted(visleafs),
-            solidity=0 if not merged_model.has_coll else props[0].solidity,
+            solidity=0 if not merged.has_coll else props[0].solidity,
             flags=props[0].flags,
             lighting_origin=avg_pos,
             tint=props[0].tint,
@@ -403,30 +430,7 @@ class ModelManager:
             '-game', str(self.game.path),
             str((self.temp_folder / merged.name).with_suffix('.qc')),
         ]
-        subprocess.run(args)
-
-        full_model_path = Path(
-            self.game.path,
-            'models',
-            self.model_folder,
-            merged.name
-        )
-        for ext in MDL_EXTS:
-            try:
-                with open(str(full_model_path.with_suffix(ext)), 'rb') as fb:
-                    self.pack.pack_file(
-                        'models/{}{}{}'.format(self.model_folder, merged.name, ext),
-                        data=fb.read(),
-                    )
-            except FileNotFoundError:
-                pass
-
-        if not coll_mesh:
-            # Make sure an older collision mesh isn't left behind!
-            try:
-                os.remove(full_model_path.with_suffix('.phy'))
-            except FileNotFoundError:
-                pass
+        subprocess.run(args, stdout=subprocess.DEVNULL)
 
 
 def load_qcs(qc_folder: Path) -> Dict[str, QC]:
@@ -785,8 +789,10 @@ def combine(
 
         try:
             mdl_man.load()
-        except IOError:
+        except FileNotFoundError:
             pass  # Make a new one.
+        except IOError:
+            LOGGER.warning("Couldn't parse props cache file:", exc_info=True)
 
         for group in grouper:
             final_props.append(mdl_man.combine_group(group))
