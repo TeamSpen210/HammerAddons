@@ -173,12 +173,17 @@ class ModelManager:
 
     def finalise(self) -> None:
         """Write the constructed models to the cache file and remove unused models."""
+        used_models = set()
+
         with AtomicWriter(
             str(self.game.path / 'models' / self.model_folder / 'cache.vdf'),
         ) as f:
             for positions, mdl in self._mdl_cache.items():
                 if not mdl.used:
                     continue
+
+                used_models.add(mdl.name)
+
                 prop = Property('PropGroup', [
                     Property('name', mdl.name),
                     Property('has_coll', bool_as_int(mdl.has_coll)),
@@ -199,16 +204,18 @@ class ModelManager:
                 for line in prop.export():
                     f.write(line)
 
-            for mdl in self._mdl_cache.values():
-                if mdl.used:
-                    continue
-                full_path = self.game.path / 'models' / self.model_folder / mdl.name
-                LOGGER.info('Culling {}...', full_path)
-                for ext in MDL_EXTS:
-                    try:
-                        full_path.with_suffix(ext).unlink()
-                    except FileNotFoundError:
-                        pass
+        for mdl_file in (self.game.path / 'models' / self.model_folder).glob('*'):
+            if mdl_file.suffix not in {'.mdl', '.phy', 'vtx', '.vvd'}:
+                continue
+
+            if mdl_file.stem in used_models:
+                continue
+
+            LOGGER.info('Culling {}...', mdl_file)
+            try:
+                mdl_file.unlink()
+            except FileNotFoundError:
+                pass
 
     def combine_group(self, props: List[StaticProp]) -> StaticProp:
         """Merge the given props together, compiling a model if required."""
