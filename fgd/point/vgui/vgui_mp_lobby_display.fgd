@@ -1,6 +1,6 @@
 
 @PointClass base(BaseEntityPoint) 
 	appliesto(P2) 
-	studio("models/editor/vgui_arrows.mdl") = vgui_mp_lobby_display: "VGUI entity to display Coop levels in the Hub."
+	studioprop("models/editor/vgui_arrows.mdl") = vgui_mp_lobby_display: "VGUI entity to display Coop levels in the Hub."
 	[
 	]

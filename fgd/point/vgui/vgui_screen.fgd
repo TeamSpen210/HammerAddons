@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityPoint)
 	size(-4 -4 -4, 4 4 4) 
 	color(200 200 0) 
-	studio("models/editor/vgui_arrows.mdl") 
+	studioprop("models/editor/vgui_arrows.mdl") 
 	sphere(width) 
 	sphere(height) 
 = vgui_screen: "A VGUI screen. Useful for in-world monitors."
