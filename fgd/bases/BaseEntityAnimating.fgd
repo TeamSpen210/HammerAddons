@@ -41,7 +41,7 @@
 	texframeindex(integer) : "Texture Frame" : : "The frame number for any animated textures on this entity."
 	hitboxset(string) : "Hitbox Set" : : "Sets the $hboxset to use for collision testing."
 	
-	modelscale[EP1, EP2, TF2](float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
+	modelscale(float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
 	
 	linedivider_animbase(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
