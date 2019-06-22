@@ -1,0 +1,32 @@
+@PointClass base(BaseEntityPoint, SystemLevelChoice) 
+	studio("models/editor/cone_helper.mdl") 
+	sphere(spotlightlength) 
+	sphere(spotlightwidth) 
+= point_spotlight: "An entity to draw a spotlight. " +
+	"Will draw a beam when the player views it side on, and a halo when it's facing towards the player. " + 
+	"Unless the 'No Dynamic Light' spawnflag is checked, it will also create a dynamic light wherever the end of the spotlight rests."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Start On" : 1
+		2: "No Dynamic Light" : 1
+		]
+
+	spotlightlength(integer) : "Spotlight Length" : 500 : "Length of the spotlight beam."
+	spotlightwidth(integer) : "Spotlight Width" : 50 : "Width of the spotlight beam."
+	rendercolor(color255) : "Color (R G B)" : "255 255 255"
+	hdrcolorscale(float) : "HDR color scale." : "0.7" : "float value to multiply sprite color by when running in HDR mode."
+	haloscale[since_L4D2](float) : "Halo size scale." : 60 : "float value to determine the size of the halo."
+	ignoresolid[TF2](boolean) : "Ignore Solid" : 0 : "If set, this spotlight won't trace for solids."
+
+
+	// Inputs
+	input LightOn(void) : "Turn the spotlight on."
+	input LightOff(void) : "Turn the spotlight off."
+	input SetColor[ASW](color255) : "Change the color of the spotlight."
+	input ForceUpdate[ASW](void) : "Force an update of the spotlight position and orientation."
+
+	// Outputs
+	output OnLightOn(void) : "Fires when light turns on."
+	output OnLightOff(void) : "Fires when light turns off."
+	]

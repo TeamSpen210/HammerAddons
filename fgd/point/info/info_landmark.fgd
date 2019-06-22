@@ -1,0 +1,8 @@
+@PointClass base(BaseEntityPoint)
+	iconsprite("editor/info_landmark") 
+	color(200 0 0) 
+= info_landmark: "An entity that acts as a landmark for transitions to another level. " +
+	"There should be a corresponding info_landmark entity in the next map. " +
+	"Entities will be transitioned to the next level relative to the info_landmark entities."
+	[
+	]

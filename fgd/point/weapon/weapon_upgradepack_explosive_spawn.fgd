@@ -1,0 +1,5 @@
+@PointClass appliesto(L4D2) base(WeaponSpawnSingle) 
+	studioprop("models/w_models/weapons/w_eq_explosive_ammopack.mdl")
+= weapon_upgradepack_explosive_spawn: "Upgrade Pack - Explosive"
+	[
+	]

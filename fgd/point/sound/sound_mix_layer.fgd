@@ -1,0 +1,8 @@
+@PointClass appliesto(L4D2) base(BaseEntityPoint) = sound_mix_layer: "Set a mix layer to a specific value."
+	[
+	mixlayername(string) : "Mix Layer Name" : : "Name of the mix layer to be setting the level of."
+	level(float) : "Level" : "0.0" : "Set the Mix Layer Level"
+
+	// Inputs
+	input Level(float) : "Set the Mix Layer Level"
+	]

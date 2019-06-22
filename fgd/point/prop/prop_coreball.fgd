@@ -1,0 +1,11 @@
+@PointClass base(BaseEntityAnimating)
+	studio("models/props_combine/coreball.mdl") 
+= prop_coreball: "Special version of prop_scalable, used for EP1's Combine Dark Energy Reactor. " + 
+		"To be rendered correctly, this must be placed at (2688, 12139, 517)."
+	[
+
+	// Inputs
+	input SetScaleX(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
+	input SetScaleY(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
+	input SetScaleZ(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
+	]

@@ -1,0 +1,58 @@
+
+@PointClass base(BaseEntityPoint)
+	color(200 0 0) 
+	iconsprite("editor/env_global.vmt") = env_global: "An entity to control a game-specific global states."
+	[
+	
+	globalstate(string) : "Global State to Set"
+	
+	globalstate[HL2, EP1, EP2](choices) : "Global State to Set" =
+		[
+		"gordon_precriminal": "Gordon pre-criminal"
+		"antlion_allied": "Antlions are player allies"
+		"suit_no_sprint": "Suit sprint function not yet enabled"
+		"super_phys_gun": "Super phys gun is enabled"
+		"friendly_encounter": "Friendly encounter sequence (lower weapons, etc.)"
+		"gordon_invulnerable": "Gordon is invulnerable"
+		"no_seagulls_on_jeep": "Don't spawn seagulls on the jeep"
+		"ep2_alyx_injured": "Episode 2: Alyx injured"
+		"ep_alyx_darknessmode": "Episodic: Alyx darkness mode"
+		"hunters_to_run_over": "Ep2 Counter: Hunters to run over before they dodge"
+		]
+
+	globalstate[P2](choices) : "Global State to Set" =
+		[
+		"portalgun_nospawn": "Spawn without Portalgun"
+		"no_pinging_blue": "Prevent Pinging ATLAS"
+		"no_pinging_orange": "Prevent Pinging P-Body"
+		"no_taunting_blue": "Prevent Taunting ATLAS"
+		"no_taunting_orange": "Prevent Taunting P-Body"
+		]
+
+	initialstate[engine](integer) : "Initial State" : 0
+	initialstate(choices) : "Initial State" : 0 =
+		[
+		0: "Off"
+		1: "On"
+		2: "Dead"
+		]
+
+	counter(integer) : "Counter" : 0 : "An integer counter value associated with this global."
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Set Initial State" : 0
+		]
+
+
+	// Inputs
+	input TurnOn(void) : "Set state of global to ON."
+	input TurnOff(void) : "Set state of global to OFF."
+	input Toggle(void) : "Toggles state of global between ON and OFF."
+	input Remove(void) : "Set state of global to DEAD."
+	input SetCounter(integer) : "Sets the counter value of this global."
+	input AddToCounter(integer) : "Adds to the counter value of this global. Negative numbers subtract."
+	input GetCounter(void) : "Causes the Counter output to be fired, passing the current counter value for this global."
+
+	// Outputs
+	output Counter(integer) : "Fired in response to the GetCounter input, passing the current value of the counter."
+	]

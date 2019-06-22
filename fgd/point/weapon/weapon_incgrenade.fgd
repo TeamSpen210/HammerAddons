@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_eq_incendiarygrenade_dropped.mdl") = weapon_incgrenade: "Incendiary Grenade"
+	[
+	]

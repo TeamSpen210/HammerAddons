@@ -1,0 +1,11 @@
+// This is a real entity. However, as soon as it spawns it applies the mass center,
+// then kills itself.
+@PointClass 
+	halfgridsnap
+	iconsprite("editor/ficool2/info_mass_center.vmt")
+	color(128 128 128) 
+	line(128 128 128, targetname, target) 
+= info_mass_center: "An entity that overrides the mass center of the target physics prop, or func_physbox, by moving it to the info_mass_center's location. This kills itself on spawn."
+	[
+	target(target_destination) : "Target object" : : "The entity whose mass center will be overridden."
+	]

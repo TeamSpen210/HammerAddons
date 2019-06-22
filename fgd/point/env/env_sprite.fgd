@@ -1,0 +1,45 @@
+@PointClass base(BaseEntityPoint, SystemLevelChoice) 
+	studio("models/editor/axis_helper.mdl")
+	sprite()
+	color(20 140 20)
+	sphere(GlowProxySize)
+= env_sprite: "An entity that controls the drawing of a sprite in the world."
+	[
+	framerate(float) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
+	model(sprite) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
+	scale(float) : "Scale" : 0.25 : "Scale multiplier of the sprite."
+	spawnflags(flags)  =
+		[
+		1: "Start on" : 0
+		2: "Play Once" : 0
+		]
+		
+	rendermode[engine](integer) : "Render Mode" : 9
+	rendermode(choices) : "Render Mode" : 9 : "Specify the sprite rendering behaviour." =
+		[
+		3: "Glow"
+		9: "World Space Glow"
+		0: "Normal"
+		1: "Color"
+		2: "Texture"
+		4: "Solid"
+		5: "Additive"
+		7: "Additive Fractional Frame"
+		10: "Don't Render"
+		]
+
+	glowproxysize(float) : "Size of Glow Proxy Geometry." : "2.0" : "Size of the glow to be rendered for visibility testing. " + 
+		"Must be larger than the distance from the sprite center to empty space. " + 
+		"So if this glow is inside geometry (like a light bulb), set this value to be bigger than the bulb's radius. " +
+		"Any time a sphere of this radius would be visible (poking through any nearby geometry), the glow will be rendered."
+	hdrcolorscale(float) : "HDR color scale." : "0.7" : "float value to multiply sprite color by when running in HDR mode."
+
+	// Inputs
+	input ColorRedValue(float) : "Sets the red color channel's value (0 - 255)."
+	input ColorGreenValue(float) : "Sets the green color channel's value (0 - 255)."
+	input ColorBlueValue(float) : "Sets the blue color channel's value (0 - 255)."
+	input SetScale(float) : "Set the sprite's scale (0 - 8.0)."
+	input HideSprite(void) : "Hide the sprite. Won't be drawn until the 'ShowSprite' input is received."
+	input ShowSprite(void) : "Show the sprite."
+	input ToggleSprite(void) : "Toggle the sprite between hidden and shown."
+	]

@@ -1,0 +1,7 @@
+@PointClass base(BaseEntityPoint, MasterEnt)
+	iconsprite("editor/game_end.vmt") 
+= game_end: "An entity that ends a multiplayer game."
+	[
+	// Inputs
+	input EndGame(void) : "End the multiplayer game."
+	]

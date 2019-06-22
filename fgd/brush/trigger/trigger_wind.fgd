@@ -1,0 +1,13 @@
+@SolidClass base(Trigger, Angles) 
+	line(255 255 255, targetname, filtername)
+= trigger_wind: "A trigger volume that pushes physics objects that touch it."
+	[
+	speed(integer) : "Speed" : 200 : "The baseline for how hard the wind blows."
+	speednoise(integer) : "Speed Noise" : 0 : "Noise added to wind speed +/-"
+	directionnoise(integer) : "Direction Noise" : 10 : "Noise added to wind direction."
+	holdtime(integer) : "Hold Time" : 0 : "Baseline for how long to wait before changing wind."
+	holdnoise(integer) : "Hold Noise" : 0 : "Noise added to how long to wait before changing wind."
+
+	// Inputs
+	input SetSpeed(integer) : "Set the baseline for how hard the wind blows."
+	]

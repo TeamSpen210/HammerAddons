@@ -1,0 +1,25 @@
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/env_tonemap_controller.vmt") 
+	color(200 0 0)
+= env_tonemap_controller: "An entity that controls the HDR tonemapping for the player. Think of it as a method of controlling the exposure of the player's eyes."
+	[
+	spawnflags[since_L4D](flags) : "spawnflags" =
+		[
+		1: "Master (Has priority if multiple env_tonemap_controllers exist)" : 0
+		]
+
+
+	// Inputs
+	input SetTonemapScale(integer) : "Set the player's tonemap scale. It should be a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
+	input BlendTonemapScale(string) : "Blend from the player's current tonemap scale to a new one. The parameter syntax is as follows: <target tonemap scale> <blend duration>. For example: '0.5 10' would blend from the current tonemap scale to 0.5 over a period of 10 seconds. Tonemap scale is a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
+	input UseDefaultAutoExposure(void) : "Revert to using the default tonemap auto exposure."
+	input SetAutoExposureMin(float) : "Set a custom tonemap auto exposure minimum."
+	input SetAutoExposureMax(float) : "Set a custom tonemap auto exposure maximum."
+	input SetBloomScale(float) : "Set a custom bloom scale."
+	input SetTonemapRate(float) : "Set the rate for autoexposure adjustment."
+	input SetBloomExponent[since_L4D](float) : "Set a custom bloom exponent."
+	input SetBloomSaturation[since_L4D](float) : "Set a custom bloom saturation."
+	input SetTonemapPercentBrightPixels[since_L4D2](float) : "Set a target for percentage of pixels above a certain brightness. (default: 2)"
+	input SetTonemapPercentTarget[since_L4D2](float) : "Set a custom brightness target for SetTonemapPercentBrightPixels. (default: 60)"
+	input SetTonemapMinAvgLum[since_L4D2](float) : "Sets custom tonemapping param (ask Alex for details; default: 3)."
+	]

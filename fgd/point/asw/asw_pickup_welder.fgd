@@ -1,0 +1,9 @@
+
+@PointClass base(ASWPickup) 
+	appliesto(ASW) 
+	studio("models/swarm/Welder/Welder.mdl") = asw_pickup_welder: "Welding tool"
+	[
+	bulletsingun(integer) : "Bullets In Gun" : 1
+	clips(integer) : "Clips" : 0
+	secondarybullets(integer) : "Secondary Bullets" : 0
+	]

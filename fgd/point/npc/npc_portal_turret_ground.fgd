@@ -1,0 +1,7 @@
+
+@PointClass base(npc_turret_ground) 
+	appliesto(P1) 
+	studio("models/combine_turrets/ground_turret.mdl") = npc_portal_turret_ground: "Combine (Portal) ground turret"
+	[
+	coneoffire(float) : "Cone of Fire" : 60 : "Cone of fire in degrees."
+	]

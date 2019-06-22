@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_eq_decoy_dropped.mdl") = weapon_decoy: "Decoy Grenade"
+	[
+	]

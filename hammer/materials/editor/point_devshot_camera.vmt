@@ -1,0 +1,7 @@
+Sprite
+{
+	"$spriteorientation" "vp_parallel"
+	"$spriteorigin" "[ 0.50 1.50 ]"
+	"$baseTexture" "editor/point_devshot_camera"
+	"$no_fullbright" 1
+}

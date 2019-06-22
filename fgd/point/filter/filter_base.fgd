@@ -1,0 +1,20 @@
+// The base filter class is actually an entity you can use.
+@FilterClass base(Targetname) 
+	color(0 255 0)
+	iconsprite("editor/ficool2/filter_base.vmt")
+= filter_base : "Base filter, which all other filters are based off of. This filter passes any entity whatsoever."
+	[
+	negated(choices) : "Filter Mode" : 0 : "If set to Allow, only entities who match the criteria will pass the filter. If set to Disallow, only entities who do NOT match the criteria will pass the filter." =
+		[
+		0: "Allow entities that match criteria"
+		1: "Disallow entities that match criteria"
+		]
+	negated[engine](boolean) : "Filter Mode" : 0
+
+	// Inputs
+	input TestActivator(void) : "Test the activator against the filter and fires OnPass or OnFail output."
+
+	// Outputs
+	output OnPass(void) : "Fired in response to TestActivator input if the activator passes the filter."
+	output OnFail(void) : "Fired in response to TestActivator input if the activator fails to pass the filter."
+	]

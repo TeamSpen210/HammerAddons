@@ -1,0 +1,8 @@
+
+@SolidClass base(Trigger, Toggle) 
+	appliesto(TF2) = func_nobuild: "Engineer no-build area."
+	[
+	allowsentry(boolean) : "Allow Sentries" : 0 : "Sentries are allowed to be built in this volume."
+	allowdispenser(boolean) : "Allow Dispensers" : 0 : "Dispensers are allowed to be built in this volume." 
+	allowteleporters(boolean) : "Allow Teleporters" : 0 : "Teleporters are allowed to be built in this volume."
+	]

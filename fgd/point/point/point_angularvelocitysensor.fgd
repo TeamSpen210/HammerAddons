@@ -1,0 +1,25 @@
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ficool2/point_angularvelocitysensor")
+	color(0 100 250) 
+	line(0 100 250, targetname, target) 
+= point_angularvelocitysensor: "An entity that detects if another entity's angular velocity meets or exceeds a threshold value."
+	[
+	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angular velocity will be sensed."
+	threshold(float) : "Threshold Velocity" : 0 : "The threshold angular velocity to compare against, in degrees per second."
+	fireinterval(float) : "Fire Interval" : 0.2 : "Angular velocity must cross the threshold for at least this long to fire."
+	axis(vecline) : "Axis"
+	
+	usehelper(boolean) : "Use Axis Helper" : 0 : "Use axis helper to determine rotation values (clockwise/counter-clockwise)."
+
+	// Inputs
+	input Test(void) : "Checks to see if the Target Entity's angular velocity meets or exceeds the Threshold Velocity, firing either the OnGreaterThanOrEqualTo or OnLessThan output based on the result."
+	input TestWithInterval(void) : "Checks to see if the Target Entity's angular velocity meets or exceeds the Threshold Velocity. Once the Fire Interval expires, fires the appropriate test result output if the result is stable throughout the Fire Interval."
+
+	// Outputs
+	output AngularVelocity(float) : "Fired when the Target's Angular Velocity changes, passing the new magnitude of the angular velocity."
+	output OnGreaterThan(void) : "Fired when the Target Entity goes from slower than the threshold angular velocity to faster than the threshold angular velocity."
+	output OnGreaterThanOrEqualTo(void) : "Fired when the Target Entity goes from slower than the threshold angular velocity to faster than the threshold angular velocity."
+	output OnLessThan(void) : "Fired when the Target Entity goes from faster than the threshold angular velocity to slower than the threshold angular velocity."
+	output OnLessThanOrEqualTo(void) : "Fired when the Target Entity goes from faster than the threshold angular velocity to slower than the threshold angular velocity."
+	output OnEqualTo(void) : "Fired when the Target Entity reaches the threshold angular velocity from a different velocity."
+	]

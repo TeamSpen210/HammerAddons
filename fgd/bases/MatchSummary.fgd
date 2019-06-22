@@ -1,0 +1,12 @@
+
+@BaseClass 
+	appliesto(TF2) = MatchSummary
+	[
+	matchsummary(choices) : "Match Summary" : "0" : "Determines whether this location is used for the match summary" =
+		[
+		0: "Not Valid"
+		1: "Loser"
+		2: "Winner"
+		]
+
+	]

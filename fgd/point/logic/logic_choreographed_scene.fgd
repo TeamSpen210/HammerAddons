@@ -1,0 +1,75 @@
+@PointClass base(BaseEntityPoint) 
+	color(0 0 255) 
+	iconsprite("editor/choreo_scene.vmt") 
+	color(240 180 250) 
+	line(240 180 250, targetname, target1) 
+	line(240 180 250, targetname, target2) 
+	line(240 180 250, targetname, target3) 
+	line(240 180 250, targetname, target4) 
+	line(240 180 250, targetname, target5) 
+	line(240 180 250, targetname, target6) 
+	line(240 180 250, targetname, target7) 
+	line(240 180 250, targetname, target8) 
+= logic_choreographed_scene: "Manages a choreographed scene of one or more actors."
+	[
+	scenefile(scene) : "Scene file" : : "The scene that will play when this entity is triggered."
+	target1(target_destination) : "Target 1"
+	target2(target_destination) : "Target 2"
+	target3(target_destination) : "Target 3"
+	target4(target_destination) : "Target 4"
+	target5(target_destination) : "Target 5"
+	target6(target_destination) : "Target 6"
+	target7(target_destination) : "Target 7"
+	target8(target_destination) : "Target 8"
+
+	busyactor[engine](integer) : "If an Actor is talking..." : 1
+	busyactor(choices) : "If an Actor is talking..." : 1 : "What to do if an actor this scene needs is already talking when this scene is told to start." =
+		[
+		0: "Start immediately"
+		1: "Wait for actor to finish"
+		2: "Interrupt at next interrupt event"
+		3: "Cancel at next interrupt event"
+		]
+
+	onplayerdeath[engine](boolean) : "On Player Death" : 0
+	onplayerdeath(choices) : "On Player Death" : 0 : "What should this entity do if the player dies" =
+		[
+		0: "Do Nothing"
+		1: "Cancel Script and return to AI"
+		]
+
+	// Inputs
+	input Start(void) : "Starts playback of the scene file"
+	input Pause(void) : "Pauses playback of the scene file"
+	input Resume(void) : "Resumes playback of the scene if it has been paused"
+	input Cancel(void) : "Cancels playback of the scene"
+	input CancelAtNextInterrupt(void) : "Cancels playback of the scene at the next interrupt event in the scene."
+	input PitchShift(float) : "Multiplies the the pitch"
+	input InterjectResponse(string) : "Finds an actor who can respond to the specified concept string while the scene continues playing"
+	input StopWaitingForActor(void) : "Stop waiting on an actor to stop talking."
+	input SetTarget1[P2](target_destination) : "Set Target 1"
+	input SetTarget2[P2](target_destination) : "Set Target 2"
+	input SetTarget3[P2](target_destination) : "Set Target 3"
+	input SetTarget4[P2](target_destination) : "Set Target 4"
+
+	// Outputs
+	output OnStart(void) : "The scene has started"
+	output OnCompletion(void) : "The scene has completed"
+	output OnCanceled(void) : "The scene has been canceled"
+	output OnTrigger1(void) : "Scene trigger 1"
+	output OnTrigger2(void) : "Scene trigger 2"
+	output OnTrigger3(void) : "Scene trigger 3"
+	output OnTrigger4(void) : "Scene trigger 4"
+	output OnTrigger5(void) : "Scene trigger 5"
+	output OnTrigger6(void) : "Scene trigger 6"
+	output OnTrigger7(void) : "Scene trigger 7"
+	output OnTrigger8(void) : "Scene trigger 8"
+	output OnTrigger9(void) : "Scene trigger 9"
+	output OnTrigger10(void) : "Scene trigger 10"
+	output OnTrigger11(void) : "Scene trigger 11"
+	output OnTrigger12(void) : "Scene trigger 12"
+	output OnTrigger13(void) : "Scene trigger 13"
+	output OnTrigger14(void) : "Scene trigger 14"
+	output OnTrigger15(void) : "Scene trigger 15"
+	output OnTrigger16(void) : "Scene trigger 16"
+	]

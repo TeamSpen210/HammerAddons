@@ -1,0 +1,10 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio("models/Zombie/zombie_soldier.mdl") = npc_zombine: "Combine Soldier Zombie"
+	[
+
+	// Inputs
+	input StartSprint(void) : "Forces the zombine to sprint."
+	input PullGrenade(void) : "Forces the zombine to pull a grenade."
+	]

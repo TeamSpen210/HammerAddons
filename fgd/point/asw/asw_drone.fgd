@@ -1,0 +1,34 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(ASW) 
+	studio("models/aliens/drone/drone.mdl") 
+	sphere() = asw_drone: "A vicious killing machine with bladed limbs and sharp teeth, easily able to tear a man to pieces, even an armoured IAF marine."
+	[
+	moveclone(target_destination) : "Move Clone" : : "If set to an entity name, this alien will match movement with that entity."
+	sleepstate(choices) : "Sleep State" : "1" : "Holds the NPC in stasis until specified condition. See also 'Wake Radius' and 'Wake Squad'." =
+		[
+		0: "None"
+		1: "Waiting for threat"
+		2: "Waiting for PVS"
+		3: "Waiting for input"
+		]
+
+	visiblewhenasleep(choices) : "Visible when asleep" : "0" : "If true, this alien will still get drawn even when asleep (useful for aliens you see far below you)." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		131072: "Use Ground Checks" : 0
+		]
+
+
+	// Inputs
+	input BreakWaitForScript(void) : "Wakes the alien up if his Wait For Script flag was set"
+	input SetMoveClone(string) : "Alien will match position/angle of the specified entity."
+
+	// Outputs
+	output OnReachedFightGoal(void) : "Fires when the drone reaches his specified fight-to location"
+	]

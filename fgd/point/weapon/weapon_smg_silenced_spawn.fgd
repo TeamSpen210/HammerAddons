@@ -1,0 +1,5 @@
+@PointClass appliesto(L4D2) base(WeaponSpawn) 
+	studioprop("models/w_models/Weapons/w_smg_uzi.mdl")
+= weapon_smg_silenced_spawn: "MicroUZI"
+	[
+	]

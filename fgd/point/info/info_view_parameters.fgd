@@ -1,0 +1,11 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(CSGO) = info_view_parameters: "This entity selects whether or not this level uses the Half-Life 2 view parameters (eye height: 64, FOV: 75) or the old Counter-Strike settings (eye height: 53.5, FOV: 90)."
+	[
+	viewmode[engine](boolean) "Use New View Mode?" : 0
+	viewmode(choices) : "View Mode" : 0 =
+		[
+		0: "Old"
+		1: "New"
+		]
+
+	]

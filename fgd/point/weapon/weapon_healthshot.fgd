@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_eq_healthshot_dropped.mdl") = weapon_healthshot: "Medi-Shot"
+	[
+	]

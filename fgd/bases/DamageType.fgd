@@ -1,0 +1,38 @@
+@BaseClass = DamageType
+	[
+	damagetype[engine](integer) : "Damage Type" : 0
+	damagetype(choices) : "Damage Type" : 0 : "Kind of damage to apply. These fields can be ORed together. " =
+		[
+		0: "GENERIC"
+		1: "CRUSH"
+		2: "BULLET"
+		4: "SLASH"
+		8: "BURN"
+
+		16: "FREEZE" [!TF2, until_ASW]
+		16: "TRAIN" [TF2]
+		16: "VEHICLE" [since_ASW]
+
+		32: "FALL"
+		64: "BLAST"
+		128: "CLUB"
+		256: "SHOCK"
+		512: "SONIC"
+		1024: "ENERGYBEAM"
+		16384: "DROWN"
+		32768: "PARALYSE"
+		65536: "NERVEGAS" [!TF2]
+		65536: "SAWBLADE" [TF2]
+		131072: "POISON"
+		262144: "RADIATION"
+		524288: "DROWNRECOVER"
+
+		1048576: "CHEMICAL" [!TF2, until_ASW]
+		1048576: "CRITICAL" [TF2]
+		1048576: "ACID" [since_ASW]
+
+		2097152: "SLOWBURN"
+		4194304: "SLOWFREEZE"
+		16777216: "FULLGIB" [L4D2]
+		]
+	]

@@ -1,0 +1,14 @@
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/logic_multicompare.vmt") = logic_multicompare: "Compares a set of inputs to each other. If they are all the same, fires an OnEqual output. If any are different, fires the OnNotEqual output. It is not possible to clear the memory, so this only works once."
+	[
+	integervalue(integer) : "Integer Value (optional)"
+	shouldcomparetovalue(boolean) : "Should use Integer Value" : 0
+
+	// Inputs
+	input InputValue(integer) : "Provide a value."
+	input CompareValues(void) : "Compares the values and fires appropriate outputs."
+
+	// Outputs
+	output OnEqual(void) : "Fires if all of the values are equal."
+	output OnNotEqual(void) : "Fires if any of the values are not equal."
+	]

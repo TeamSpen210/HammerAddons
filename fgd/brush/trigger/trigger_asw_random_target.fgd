@@ -1,0 +1,15 @@
+
+@SolidClass base(Trigger) 
+	appliesto(ASW) = trigger_asw_random_target: "A trigger volume that can be triggered multiple times and will randomly fire one of its outputs."
+	[
+	wait(integer) : "Delay Before Reset" : -1 : "Amount of time, in seconds, after the trigger has triggered before it can be triggered again. If set to -1, it will never trigger again."
+	numoutputs(integer) : "Num Outputs" : 2 : "How many outputs to randomly pick from (from 1 to 6)."
+
+	// Outputs
+	output OnTrigger1(void) : "One of the OnTrigger outputs is randomly chosen and fired whenever the trigger is activated."
+	output OnTrigger2(void) : "One of the OnTrigger outputs is randomly chosen and fired whenever the trigger is activated."
+	output OnTrigger3(void) : "One of the OnTrigger outputs is randomly chosen and fired whenever the trigger is activated."
+	output OnTrigger4(void) : "One of the OnTrigger outputs is randomly chosen and fired whenever the trigger is activated."
+	output OnTrigger5(void) : "One of the OnTrigger outputs is randomly chosen and fired whenever the trigger is activated."
+	output OnTrigger6(void) : "One of the OnTrigger outputs is randomly chosen and fired whenever the trigger is activated."
+	]

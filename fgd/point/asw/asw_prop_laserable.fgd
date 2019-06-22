@@ -1,0 +1,9 @@
+@PointClass base(BasePropPhysics, SetModel) 
+	appliesto(ASW) 
+	studioprop() 
+	sphere(fademindist) 
+	sphere(fademaxdist) = asw_prop_laserable: "This is a prop_physics that can only be damaged effectively by DMG_ENERGBEAM (i.e. the mining laser)"
+	[
+	breakparticleeffect(particlesystem) : "Break Effect" : : "Choose what effect to spawn when the prop breaks."
+	breaksound(sound) : "Break Sound" : "ASWBarrel.Explode" : "Choose what sound to play when the prop breaks."
+	]

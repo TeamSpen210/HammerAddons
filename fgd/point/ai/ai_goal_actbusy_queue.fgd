@@ -1,0 +1,38 @@
+
+@PointClass base(BaseActBusy) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) = ai_goal_actbusy_queue: "AI Goal Act Busy Queue"
+	[
+	node_exit(target_destination) : "Exit Node" : : "The name of the node the first NPC in the queue should move to when he leaves the head of the queue."
+	node01(target_destination) : "Node 1" : : "The name of the first actbusy hint node in the queue."
+	node02(target_destination) : "Node 2" : : "The name of the second actbusy hint node in the queue."
+	node03(target_destination) : "Node 3" : : "The name of the third actbusy hint node in the queue."
+	node04(target_destination) : "Node 4" : : "The name of the fourth actbusy hint node in the queue."
+	node05(target_destination) : "Node 5" : : "The name of the fifth actbusy hint node in the queue."
+	node06(target_destination) : "Node 6" : : "The name of the sixth actbusy hint node in the queue."
+	node07(target_destination) : "Node 7" : : "The name of the seventh actbusy hint node in the queue."
+	node08(target_destination) : "Node 8" : : "The name of the eighth actbusy hint node in the queue."
+	node09(target_destination) : "Node 9" : : "The name of the ninth actbusy hint node in the queue."
+	node10(target_destination) : "Node 10" : : "The name of the tenth actbusy hint node in the queue."
+	node11(target_destination) : "Node 11" : : "The name of the eleventh actbusy hint node in the queue."
+	node12(target_destination) : "Node 12" : : "The name of the twelfth actbusy hint node in the queue."
+	node13(target_destination) : "Node 13" : : "The name of the thirteenth actbusy hint node in the queue."
+	node14(target_destination) : "Node 14" : : "The name of the fourteenth actbusy hint node in the queue."
+	node15(target_destination) : "Node 15" : : "The name of the fifteenth actbusy hint node in the queue."
+	node16(target_destination) : "Node 16" : : "The name of the sixteenth actbusy hint node in the queue."
+	node17(target_destination) : "Node 17" : : "The name of the seventeenth actbusy hint node in the queue."
+	node18(target_destination) : "Node 18" : : "The name of the eighteenth actbusy hint node in the queue."
+	node19(target_destination) : "Node 19" : : "The name of the nineteenth actbusy hint node in the queue."
+	node20(target_destination) : "Node 20" : : "The name of the twentieth actbusy hint node in the queue."
+	
+	mustreachfront(boolean) : "Must Reach Front" : 0 : "If true, NPCs much reach the front node in the queue before they're allowed to leave the queue."
+
+	// Inputs
+	input PlayerStartedBlocking(float) : "Tell the queue manager that the player has started blocking a spot in the queue."
+	input PlayerStoppedBlocking(float) : "Tell the queue manager that the player has stopped blocking a spot in the queue."
+	input MoveQueueUp(void) : "Force the queue to move up, sending the front-most NPC out of the queue."
+
+	// Outputs
+	output OnQueueMoved(float) : "Fired when the queue moves. Outputs the number of NPCs left in the queue."
+	output OnNPCStartedLeavingQueue(string) : "Fired when the NPC at the head of the queue starts to leave. The activator is the NPC, and the string is the name of the NPC."
+	output OnNPCLeftQueue(string) : "Fired when the NPC at the head of the queue leaves. The activator is the NPC, and the string is the name of the NPC."
+	]

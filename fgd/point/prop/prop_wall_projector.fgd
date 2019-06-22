@@ -1,0 +1,13 @@
+@PointClass base(BaseProjector) 
+	appliesto(P2) 
+	studioprop("models/props/wall_emitter.mdl") 
+= prop_wall_projector: "Aperture Science Hard Light Bridge Projector. " +
+	"Note: To avoid lag when it first turns on, place an info_particle_system to precache 'projected_wall_impact'."
+	[
+	skin[engine](integer) : "Skin" : 0
+	skin(choices) : "Skin" : 0 : "Which skin to use." =
+		[
+		0: "Clean"
+		1: "Rusted"
+		]
+	]

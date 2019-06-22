@@ -1,0 +1,6 @@
+
+@PointClass base(Item) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio("models/weapons/w_missile_closed.mdl") = item_rpg_round: "RPG Round"
+	[
+	]

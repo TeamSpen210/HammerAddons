@@ -1,0 +1,17 @@
+@PointClass base(BaseEntityPoint)
+	studio("models/editor/camera.mdl") 
+	iconsprite("editor/info_camera_link.vmt") 
+	line(255 255 0, targetname, target) 
+	line(255 255 0, targetname, target, targetname, Pointcamera) 
+= info_camera_link: "An entity that can use point_cameras to render images for materials used by entities. " +
+	"To author the material, use the special identifier _rt_Camera for the $baseTexture " +
+	"(or whatever texture you want, like envmap, etc.) in the .vmt then connect the 'target' field " +
+	"to the entity which uses that material, and the 'PointCamera' field to the point_camera you want to have " +
+	"appear on that entity's material."
+	[
+	target(target_destination) : "Entity Whose Material Uses _rt_camera"
+	pointcamera(target_destination) : "Camera Name" : : "The name of a point_camera entity in the map that the material should be rendered from."
+
+	// Inputs
+	input SetCamera(string) : "Set the camera to use. The parameter should be the name of a point_camera entity in the map."
+	]

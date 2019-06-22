@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_pist_p250_dropped.mdl") = weapon_p250: "P250"
+	[
+	]

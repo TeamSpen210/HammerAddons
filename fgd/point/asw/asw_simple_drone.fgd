@@ -1,0 +1,7 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(ASW) 
+	studio("models/swarm/drone/drone.mdl") 
+	sphere() = asw_simple_drone: "Simple version of alien drone"
+	[
+	]

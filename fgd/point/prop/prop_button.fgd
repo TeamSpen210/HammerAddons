@@ -1,0 +1,12 @@
+@PointClass base(BasePedButton) 
+	appliesto(P2) 
+	studioprop("models/props/switch001.mdl") 
+= prop_button: "A button which is activated by player use or by game inputs. While pressed it can play a tick-tock sound to indicate limited time."
+	[
+	skin[engine](integer) : "Skin" : 0 : "Should it appear dirty or clean?"
+	skin(choices) : "Skin" : "0" : "Should it appear dirty or clean?" =
+		[
+		0: "Clean"
+		1: "Dirty"
+		]
+	]

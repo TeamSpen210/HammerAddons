@@ -1,0 +1,33 @@
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/math_counter.vmt") 
+	color(0 100 250) 
+= math_counter: "Holds a numeric value and performs arithmetic operations upon it. " +
+	"If either the minimum or maximum legal value is nonzero, OutValue will be clamped to the legal range, " +
+	"and the OnHitMin/OnHitMax outputs will be fired at the appropriate times. " +
+	"If both min and max are set to zero, no clamping is performed and only the OutValue output will be fired."
+	[
+	startvalue(integer) : "Initial Value" : 0 : "Starting value for the counter."
+	min(integer) : "Minimum Legal Value" : 0 : "Minimum legal value for the counter. If min=0 and max=0, no clamping is performed."
+	max(integer) : "Maximum Legal Value" : 0 : "Maximum legal value for the counter. If min=0 and max=0, no clamping is performed."
+
+	// Inputs
+	input Add(integer) : "Add an amount to the counter and fire the OutValue output with the result."
+	input Divide(integer) : "Divide the counter by an amount and fire the OutValue output with the result."
+	input Multiply(integer) : "Multiply the counter by an amount and fire the OutValue output with the result."
+	input SetValue(integer) : "Set the counter to a new value and fire the OutValue output with the result."
+	input SetValueNoFire(integer) : "Set the counter to a new value without firing any outputs."
+	input Subtract(integer) : "Subtract an amount from the counter and fire the OutValue output with the result."
+	input SetHitMax(integer) : "Set the upper bound of the counter and fire the OutValue output with the current value."
+	input SetHitMin(integer) : "Set the lower bound of the counter and fire the OutValue output with the current value."
+	input GetValue(void) : "Causes the counter fire its OnGetValue output with the current value of the counter. Used for polling the counter when you don't" + " want constant updates from the OutValue output."
+	input SetMaxValueNoFire[since_P2](integer) : "Set the MaxValue without firing any outputs."
+	input SetMinValueNoFire[since_P2](integer) : "Set the MinValue without firing any outputs."
+
+	// Outputs
+	output OutValue(integer) : "Fired when the counter value changes."
+	output OnHitMin(void) : "Fired when the counter value meets or goes below the min value. The counter must go back above the min value before the output will fire again."
+	output OnHitMax(void) : "Fired when the counter value meets or exceeds the max value. The counter must go below the max value before the output will fire again."
+	output OnGetValue(integer) : "Fired in response to the GetValue input. Used for polling the counter when you don't want constant updates from the OutValue output."
+	output OnChangedFromMin[since_ASW](void) : "Fired when the counter value changes from the minimum value."
+	output OnChangedFromMax[since_ASW](void) : "Fired when the counter value changes from the max value."
+	]

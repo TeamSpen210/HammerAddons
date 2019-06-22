@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_rif_m4a1_s_dropped.mdl") = weapon_m4a1_silencer: "M4A1 Silenced"
+	[
+	]

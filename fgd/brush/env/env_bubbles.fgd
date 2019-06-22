@@ -1,0 +1,21 @@
+@SolidClass base(BaseEntityBrush) 
+	color(200 200 0)
+= env_bubbles: "An entity used to create a volume in which to spawn bubbles."
+	[
+	density(integer) : "Bubble density" : 2
+	frequency(integer) : "Bubble frequency" : 2
+	current(integer) : "Speed of Current" : 0 : "The speed of the water current in the volume, used to move the bubbles."
+	spawnflags(flags)  =
+		[
+		1: "Start Off" : 0
+		]
+
+
+	// Inputs
+	input Activate(void) : "Activates the bubbles."
+	input Deactivate(void) : "Deactivates the bubbles."
+	input Toggle(void) : "Toggles the bubbles on and off."
+	input SetDensity(integer) : "Sets the bubble density."
+	input SetFrequency(integer) : "Sets bubble emission rate in bubbles per second."
+	input SetCurrent(integer) : "Sets current speed in units per second."
+	]

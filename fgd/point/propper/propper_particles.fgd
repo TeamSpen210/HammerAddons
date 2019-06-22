@@ -1,0 +1,20 @@
+@PointClass base(Propper) 
+	appliesto()
+	studio("models/editor/cone_helper.mdl")
+	line(255 255 0, targetname, my_model)
+	line(128 128 128, targetname, attachment_point)
+= propper_particles: "Attach a particle emitter to this prop. This is for 2007 or 2009 engines only. Does not work with prop_static."
+	[
+	name(particlesystem) : "Particle system" : : "The name of a particle system. NOT the name of a .pcf file!"
+
+	attachment_type[engine](string): "Attachment Type": "follow_origin"
+	attachment_type(choices) : "Attachment Type" : "follow_origin" : "'Spawn at' choices will start the particle system at the prop's position, but if the prop moves, the particle emitter stays in p" + "lace. Good for short-term effects like explosions" =
+		[
+		"start_at_origin": "Spawn at prop origin"
+		"start_at_attachment": "Spawn at prop attachment"
+		"follow_origin": "Follow prop's origin"
+		"follow_attachment": "Follow prop at attachment"
+		]
+
+	attachment_point(target_destination) : "Attachment point" : : "The attachment point at which the particle system should spawn. Use a propper_attachment for this."
+	]

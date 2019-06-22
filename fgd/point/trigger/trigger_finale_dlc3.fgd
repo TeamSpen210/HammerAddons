@@ -1,0 +1,28 @@
+@PointClass base(BaseEntityAnimating, EnableDisable) 
+	appliesto(L4D) 
+	studioprop() 
+= trigger_finale_dlc3: "Controller for special DLC3 Finale"
+	[
+	model(studio) : "World model" : "models/props_vehicles/floodlight_generator_switch01.mdl"
+
+
+	// Inputs
+	input FinaleEscapeFinished(void) : "Give the survivors a victory."
+	input FinaleEscapeForceSurvivorPositions(void) : "Make the survivors stand still on the escape vehicle."
+	input FinaleEscapeVehicleReadyForSurvivors(void) : "Make survivors say something about how the vehicle has stopped now."
+	input ForceFinaleStart(void) : "Start the finale now."
+	input EnableEscapeSequence(void) : "Allow the escape sequence to happen at the proper phase of the finale."
+	input DisableEscapeSequence(void) : "Block the escape sequence from happening (until re-enabled). Infected will still spawn."
+	input AdvanceFinaleState(void) : "Advances through the DLC3 Finale states"
+	input DLC3FinaleWon(void) : "Indicates the survivors have met the specific win conditions for the DLC3 finale. "
+	input DLC3FinaleLost(void) : "Indicates the survivors have failed the specific conditions for the DLC3 finale. "
+	input DLC3FinaleEnableChaseTanks(void) : "Turns on the chase tanks for the escape sequence"
+	input DLC3SacrificePlayerBeginsRun(void) : "A player ( !Activator ) has committed to the sacrifice run"
+
+	// Outputs
+	output FinaleEscapeStarted(void) : "Fired when the survivors should start their escape."
+	output FinaleStart(void) : "Fired when the finale starts."
+	output FinalePause(void) : "Fired during the pause between each finale wave."
+	output EscapeVehicleLeaving(void) : "Fired when the escape vehicle starts to leave."
+	output OnDLC3FinaleLull(void) : "Fired when there is a break while waiting for the next generator to be started"
+	]

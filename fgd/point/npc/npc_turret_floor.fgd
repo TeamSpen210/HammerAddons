@@ -1,0 +1,31 @@
+
+@PointClass base(Targetname, Angles) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio("models/combine_turrets/floor_turret.mdl") = npc_turret_floor: "Combine Floor Turret"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		32: "Autostart" : 0
+		64: "Start Inactive" : 0
+		128: "Fast Retire" : 0
+		256: "Out of Ammo" : 0
+		512: "Citizen modified (Friendly)" : 0
+		]
+
+	skinnumber(integer) : "Skin Number" : 0 : "Which skin to use for this turret. Set to 0 to select randomly."
+
+	// Inputs
+	input Toggle(void) : "Toggle - If open, close. If closed, open."
+	input Enable(void) : "Enable the turret."
+	input Disable(void) : "Disable the turret."
+	input DepleteAmmo(void) : "Depletes all the ammo from a turret, causing it to dry-fire."
+	input RestoreAmmo(void) : "Restores ammo to a turret, allowing it to fire live rounds again."
+	input SelfDestruct(void) : "Causes the turret to warn and then explode."
+
+	// Outputs
+	output OnDeploy(void) : "Turret is becoming active and dangerous."
+	output OnRetire(void) : "Turret is becoming inactive and harmless."
+	output OnTipped(void) : "Turret has been tipped over and is inactive."
+	output OnPhysGunPickup(void) : "Picked up with physgun"
+	output OnPhysGunDrop(void) : "Released by physgun"
+	]

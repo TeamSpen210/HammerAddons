@@ -1,0 +1,5 @@
+@PointClass appliesto(L4D2) base(WeaponSpawn) 
+	studioprop("models/w_models/Weapons/w_sniper_military.mdl")
+= weapon_sniper_military_spawn: "Military Sniper Rifle"
+	[
+	]

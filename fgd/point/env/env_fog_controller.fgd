@@ -1,0 +1,49 @@
+@PointClass base(Targetname, DXLevelChoice, Angles, SystemLevelChoice) 
+	iconsprite("editor/fog_controller.vmt")
+	color(255 255 255)
+	color(200 0 0)
+	studio("models/editor/cone_helper.mdl")
+= env_fog_controller: "An entity that controls the fog and view distance in the map."
+	[
+	fogenable(boolean) : "Fog Enable" : 0
+	fogblend(boolean) : "Fog Blend" : 0
+	use_angles(boolean) : "Use Angles for Fog Dir" : 0
+
+	fogcolor(color255) : "Primary Fog Color" : "255 255 255"
+	fogcolor2(color255) : "Secondary Fog Color" : "255 255 255"
+	fogdir(string) : "Primary Fog Direction" : "1 0 0"
+	fogstart(string) : "Fog Start" : "500.0"
+	fogend(string) : "Fog End" : "2000.0"
+	fogmaxdensity(float) : "Fog Max Density [0..1]" : 1
+	foglerptime(float) : "Interpolate time" : 0
+	farz(string) : "Far Z Clip Plane" : "-1"
+	spawnflags(flags)  =
+		[
+		1: "Master (Has priority if multiple env_fog_controllers exist)" : 0
+		]
+
+	heightFogDensity[since_P2](float) : "Height Fog Density" : 0
+	heightFogMaxDensity[since_P2](float) : "Height Fog Max Density": 1
+	heightFogStart[since_P2](float) : "Height Fog Start" : 0
+
+
+	hdrcolorscale(float) : "HDR Color Scale" : "1" : "Float value to multiply fog color by when running in HDR mode."
+	zoomfogscale[since_CSGO](float) : "Zoom Fog Scale" : "1" : "How much the fog min/max values will scale the default value by when players are zoomed in (scoped)."
+
+	// Inputs
+	input SetStartDist(float) : "Set the fog start distance."
+	input SetEndDist(float) : "Set the fog end distance."
+	input TurnOn(void) : "Turn the fog on."
+	input TurnOff(void) : "Turn the fog off."
+	input SetColor(color255) : "Set the primary fog color."
+	input SetColorSecondary(color255) : "Set the secondary fog color."
+	input SetFarZ(integer) : "Set the far clip plane distance."
+	input SetAngles(string) : "Set the angles to use for the secondary fog direction."
+	input SetColorLerpTo[since_EP1](color255) : "Set the primary fog color."
+	input SetColorSecondaryLerpTo[since_EP1](color255) : "Set the secondary fog color."
+	input SetStartDistLerpTo[since_EP1](float) : "Set the fog start distance."
+	input SetEndDistLerpTo[since_EP1](float) : "Set the fog end distance."
+	input StartFogTransition[since_EP1](void) : "Start fog transition."
+	input SetMaxDensityLerpTo[since_CSGO](float) : "Set max density lerp to."
+	input SetZoomFogScale[since_CSGO](void) : "Set the value the fog will scale the default value by when players are zoomed in (scoped)."
+	]

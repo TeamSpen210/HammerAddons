@@ -1,0 +1,20 @@
+@NpcClass base(BaseEntityPhysics) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio("models/antlion_grub.mdl") 
+	sphere(fademindist) 
+	sphere(fademaxdist) = npc_antlion_grub: "Antlion grub"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Do not automatically attach to surface" : 0
+		]
+
+
+	// Inputs
+	input Squash(void) : "Squash the grub!"
+
+	// Outputs
+	output OnAgitated(void) : "Fired when the grub is stepped on or damaged."
+	output OnDeath(void) : "Fired when the grub is killed."
+	output OnDeathByPlayer(void) : "Fired when the grub is killed (only by the player)."
+	]

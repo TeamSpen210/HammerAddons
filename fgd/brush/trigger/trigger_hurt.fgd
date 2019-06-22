@@ -1,0 +1,34 @@
+@SolidClass base(Trigger, MasterEnt, DamageType) 
+= trigger_hurt: "A trigger volume that damages entities that touch it."
+	[
+	damage(integer) : "Damage" : 20 : "The amount of damage done to entities that touch this trigger. " +
+		"The damage is done every half-second. See also 'Damage Model' for extra details on how damage can be dealt."
+
+	// No visible health, most triggers should instakill.
+	damage[P1, P2](integer) : "Damage" : 100000 : "The amount of damage done to entities that touch this trigger. " +
+		"The damage is done every half-second. See also 'Damage Model' for extra details on how damage can be dealt."
+	damagecap(integer) : "Damage Cap" : 20 : "Maximum damage dealt per second. " +
+		"This field is only used if you select the Doubling w/Forgiveness damage model, via the spawnflag."
+
+	damagemodel[engine](boolean) : "Damage Model" : 0
+	damagemodel(choices) : "Damage Model" : 0 : "How damage is dealt. Normal always does the specified amount of damage each half second. " +
+		"Doubling starts with the specified amount and doubles it each time it hurts the toucher. " +
+		"Forgiveness means that if the toucher gets out of the trigger the damage will reset to the specified value. " +
+		"Good for making triggers that are deadly over time without having to cause massive damage on each touch." =
+		[
+		0: "Normal"
+		1: "Doubling w/forgiveness"
+		]
+
+	nodmgforce(boolean) : "Zero Damage Force" : 0 : "Should the damaged entity receive no physics force from this trigger."
+
+	damageforce[L4D2](vector) : "Damage Force Override"
+	thinkalways[L4D2](boolean) : "Always think every frame" : 0 : "Normally triggers think every half second, in some cases you may need to request it to damage every frame. This is expensive!"
+
+	// Inputs
+	input SetDamage(float) : "Set a new amount of damage for this trigger."
+
+	// Outputs
+	output OnHurt(void) : "Fired whenever this trigger hurts something other than a player."
+	output OnHurtPlayer(void) : "Fired whenever this trigger hurts a player."
+	]

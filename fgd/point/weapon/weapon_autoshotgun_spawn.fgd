@@ -1,0 +1,6 @@
+@PointClass base(WeaponSpawnOptionalScavenge, WeaponSpawn) 
+	appliesto(L4D, L4D2)
+	studioprop("models/w_models/Weapons/w_autoshot_m4super.mdl")
+= weapon_autoshotgun_spawn: "Auto Shotgun"
+	[
+	]

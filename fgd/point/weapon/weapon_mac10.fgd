@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_smg_mac10_dropped.mdl") = weapon_mac10: "MAC-10"
+	[
+	]

@@ -1,0 +1,57 @@
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	sphere(m_flRadius) 
+	color(255 0 255) 
+	iconsprite("editor/aiscripted_schedule") 
+	line(255 255 255, targetname, m_iszentity)
+	line(255 255 255, targetname, m_iszentity, targetname, goalent)
+= aiscripted_schedule: "Issues a command to an NPC without taking the NPC out of its AI. " +
+	"This does not seize control of the NPC as a scripted_sequence does."
+	[
+	m_iszentity(target_destination) : "Target NPC" : : "The name or classname of an NPC to use."
+	m_flradius(integer) : "Search Radius (0=everywhere)" : 0 : "Radius to search within for an NPC to use. 0 searches everywhere."
+
+	graball(boolean) : "All in radius" : 0 : "Whether to grab all matching NPCs in the specified radius, instead of just one."
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		4: "Repeatable" : 1
+		1024: "Search Cyclically" : 0
+		2048: "Don't Complain" : 0
+		]
+
+	forcestate[engine](integer) : "AI state to set" : 0
+	forcestate(choices) : "AI state to set" : 0 =
+		[
+		0: "<None>"
+		1: "Set state to IDLE"
+		2: "Set state to ALERT"
+		3: "Set state to COMBAT"
+		]
+
+	schedule[engine](integer) : "Schedule to run" : 1
+	schedule(choices) : "Schedule to run" : 1 =
+		[
+		0: "<None>"
+		1: "Walk to Goal Entity"
+		2: "Run to Goal Entity"
+		3: "Set enemy to Goal Entity"
+		4: "Walk Goal Path"
+		5: "Run Goal Path"
+		6: "Set enemy to Goal Entity AND Run to Goal Entity"
+		]
+
+	interruptability[engine](integer) : "Interruptability" : 0
+	interruptability(choices) : "Interruptability" : 0 =
+		[
+		0: "General"
+		1: "Damage or Death"
+		2: "Death"
+		]
+
+	goalent(target_destination) : "Goal entity" : : "Provides the name of a schedule-specific goal entity (see 'Schedule to run')"
+
+	// Inputs
+	input StartSchedule(void) : "Starts the scripted schedule. This will first locate an NPC that matches the given target, then tell the NPC to run the specified schedule."
+	]

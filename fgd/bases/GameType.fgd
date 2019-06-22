@@ -1,0 +1,15 @@
+
+@BaseClass 
+	appliesto(TF2) = GameType
+	[
+	gametype(choices) : "Game Type" : "0" : "Type of game this flag will be used for." =
+		[
+		0: "CTF"
+		1: "Attack/Defend"
+		2: "Territory Control"
+		3: "Invade"
+		4: "Resource Control"
+		5: "Robot Destruction"
+		]
+	gametype[engine](int) : "Game Type" : 0
+	]

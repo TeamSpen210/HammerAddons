@@ -1,0 +1,23 @@
+@PointClass base(BaseEntityAnimating, EnableDisable) 
+	studio("models/extras/info_speech.mdl") 
+= point_commentary_node: "Commentary node for the developer commentary. " +
+	"Usually added after-the-fact by the commentary system, but can also be placed manually."
+	[
+	commentaryfile(sound) : "Commentary File" : : "The sound that will play when this is triggered."
+	commentaryfile_nohdr(sound) : "Commentary File (no HDR)" : : "If HDR is off and this exists it will be played instead."
+	speakers(string) : "Speaker(s)" : : "The characters/people who are saying the commentary."
+	startdisabled(boolean) : "Start Disabled" : 0 : "Should it be disabled or not?"
+	prevent_movement(boolean) : "Prevent Movement?" : 0 : "If enabled players won't be able to move while the commentary is playing."
+	precommands(string) : "Pre-Command" : : "Command that will fire before the sound file is played. Use semicolons to delimit multiple commands."
+	postcommands(string) : "Post-Command" : : "Command that will fire after the sound file is played. Also accepts semicolons."
+	viewposition(target_destination) : "View Position" : : "Targetname of the entity the player's view will move to."
+	viewtarget(target_destination) : "View Target" : : "Targetname of the entity the player's view will track. If set, the player cannot move their camera."
+
+	// Inputs
+	input StartCommentary(void) : "Start the commentary, just like if the player +USEd this."
+	input StartUnstoppableCommentary(void) : "Start the commentary but don't let the player cancel it."
+
+	// Outputs
+	output OnCommentaryStarted(void) : "Triggered when the commentary starts."
+	output OnCommentaryStopped(void) : "Triggered when the commentary stops. If viewposition is set, this triggers after the player's returns to their regular view."
+	]

@@ -1,0 +1,6 @@
+
+@PointClass base(npc_template_maker) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	iconsprite("editor/npc_maker.vmt") = npc_hunter_maker: "An entity that creates hunters. The NPCs it creates are clones of a template NPC."
+	[
+	]

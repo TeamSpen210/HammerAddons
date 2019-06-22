@@ -1,0 +1,11 @@
+@FilterClass appliesto(L4D2) base(filter_base) = filter_health: "A damage filter that filters based on if the entity causing the damage has adrenaline active or not."
+	[
+	adrenalinepresence(choices) : "Adrenaline presence" : 1 : "Allows this state of adrenaline on the attacker to pass the filter." =
+		[
+		0: "only inactive"
+		1: "only active"
+		]
+
+	healthmin(integer) : "Min Health" : 0 : "The lower bound on player health that will pass this filter (inclusive)."
+	healthmax(integer) : "Max Health" : 100 : "The upper bound on player health that will pass this filter (inclusive)."
+	]

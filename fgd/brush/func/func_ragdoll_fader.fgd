@@ -1,0 +1,5 @@
+@SolidClass base(BaseEntityBrush, EnableDisable) 
+	appliesto(L4D, L4D2)
+= func_ragdoll_fader: "A brush entity that will fade out any ragdolls that touch it"
+	[
+	]

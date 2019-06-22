@@ -1,0 +1,7 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(ASW) 
+	studio("models/swarm/Grubs/Grub.mdl") 
+	sphere() = asw_grub: "A harmless Swarm grub, that crawls about looking icky."
+	[
+	]

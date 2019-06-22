@@ -1,0 +1,9 @@
+@PointClass base(BaseEntityPoint) 
+	sphere() 
+	line(255 255 255, targetname, MainSoundscapeName) 
+	iconsprite("editor/env_soundscape_proxy.vmt") 
+= env_soundscape_proxy: "An entity that acts like a soundscape but gets all of its sound parameters from another env_soundscape entity."
+	[
+	mainsoundscapename(target_destination) : "Soundscape Entity" : : "The soundscape to get all sound parameters from."
+	radius(integer) : "Radius" : 128
+	]

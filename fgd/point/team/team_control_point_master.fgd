@@ -1,0 +1,47 @@
+
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	appliesto(TF2) = team_control_point_master: "Control Point Master"
+	[
+	team_base_icon_2(material) : "Material for the RED Base icon" : "sprites/obj_icons/icon_base_red"
+	team_base_icon_3(material) : "Material for the BLUE Base icon" : "sprites/obj_icons/icon_base_blu"
+	caplayout(string) : "Cap Layout" : : "A string that tells the HUD how to lay out the cap points. It should be a string with indexes of cap points seperated by commas to denote a new line. So <2,0 1> would create a pyramid, with cap point 2 on the top and cap points 0 & 1 on the bottom."
+	custom_position_x(float) : "Custom cap position X" : -1 : "Set the cap layout custom X position [0,1]"
+	custom_position_y(float) : "Custom cap position Y" : -1 : "Set the cap layout custom Y position [0,1]"
+	
+	cpm_restrict_team_cap_win[engine](integer) : "Restrict team from winning" : 0
+	cpm_restrict_team_cap_win(choices) : "Restrict team from winning" : 0 : "Prevent this team from winning by capping all the points. This field is ignored if you're using control_point_rounds in your map (set this field inside the rounds)." =
+		[
+		0: "Neither"
+		1: "Both"
+		2: "RED"
+		3: "BLU"
+		]
+
+	switch_teams(boolean) : "Switch teams on map win?" : 0 : "Switch the teams when one team has won the map and the game is going to be reset."
+
+	score_style[engine](integer) : "Scoring Style" : 0
+	score_style(choices) : "Scoring Style" : 0 : "Sets the style of scoring used for capture point maps." =
+		[
+		0: "Add team score for each round won"
+		1: "Add team score for each captured point"
+		]
+
+	play_all_rounds[engine](boolean) : "Play all rounds before changelevel" : 0
+	play_all_rounds(choices) : "Play all rounds before changelevel" : 0 : "Determines whether the server may changelevel when mp_timelimit is up before all mini-rounds have been completed (for maps like Dustbowl)." =
+		[
+		0: "Changelevel normally"
+		1: "Only changelevel after all mini-rounds have been played to completion"
+		]
+
+	partial_cap_points_rate(float) : "Partial cap rate" : 0 : "Rate at which to give partial cap points for area captures."
+
+	// Inputs
+	input SetWinner(integer) : "Set the winner of the round to this team (0 for a stalemate)."
+	input SetCapLayout(string) : "Set the cap layout string."
+	input SetCapLayoutCustomPositionX(float) : "Set the cap layout custom X position [0,1]"
+	input SetCapLayoutCustomPositionY(float) : "Set the cap layout custom Y position [0,1]"
+
+	// Outputs
+	output OnWonByTeam1(void) : "Sent when RED wins the game."
+	output OnWonByTeam2(void) : "Sent when BLUE wins the game."
+	]

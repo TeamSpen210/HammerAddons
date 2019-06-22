@@ -1,0 +1,6 @@
+@PointClass base(WeaponSpawn) 
+	appliesto(L4D, L4D2)
+	studioprop("models/w_models/weapons/w_eq_molotov.mdl")
+= weapon_molotov_spawn: "Molotov"
+	[
+	]

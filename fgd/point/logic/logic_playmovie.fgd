@@ -1,0 +1,81 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(since_ASW) 
+	iconsprite("editor/logic_playmovie") = logic_playmovie: "Plays a movie and allows for various playback options"
+	[
+	MovieFilename(choices) : "Movie to display" : "aperture_logo.bik" : "The movie to display. You can also type in the filename of a custom movie here." =
+	[
+		"coop_black_screen.bik"		: "Black Screen"
+		"aperture_logo.bik"			: "Aperture Logo"
+		
+		// Elevator videos
+		"animalking.bik"			: "Animal King"
+		"aperture_appear_horiz.bik" : "Aperture Appear (Horizontal)"
+		"aperture_appear_vert.bik" 	: "Aperture Appear (Vertical)"
+		"bluescreen.bik"			: "Blue Screen Of Death"
+		"exercises_horiz.bik"		: "Evacuation Training (Horizontal)"
+		"exercises_vert.bik"		: "Evacuation Training (Vertical)"
+		"faithplate.bik"			: "Aerial Faith Plate"
+		"fizzler.bik"				: "Emancipation Grid"
+		"hard_light.bik"			: "Light Bridge"
+		"laser_danger_horiz.bik"	: "Laser Danger (Horizontal)"
+		"laser_danger_vert.bik"		: "Laser Danger (Vertical)"
+		"laser_portal.bik"			: "Laser Through Portal"
+		"plc_blue_horiz.bik"		: "Please Remain Calm (Horizontal)"
+		"plc_blue_vert.bik"			: "Please Remain Calm (Vertical)"
+		"turret_colours_type.bik"	: "Turret Case Options"
+		"turret_dropin.bik"			: "Turret Drop In"
+		"turret_exploded_grey.bik"	: "Exploded Turret"
+		
+		// Single player
+		"menu_act01.bik"			: "Menu Background: Act 1"
+		"menu_act02.bik"			: "Menu Background: Act 2"
+		"menu_act03.bik"			: "Menu Background: Act 3"
+		"menu_act04.bik"			: "Menu Background: Act 4"
+		"menu_act05.bik"			: "Menu Background: Act 5"
+		"sp_30_a4_finale5.bik"		: "SP Ending"
+		"sp_credits_bg.bik"			: "Want You Gone Background"
+		"sp_a5_credits.bik"			: "Space"
+		"sp_ending_callback.bik"	: "Space Wheatley"
+		
+		// Coop
+		"coop_bluebot_load.bik"		: "ATLAS Schematic"
+		"coop_orangebot_load.bik"	: "P-Body Schematic"
+		"coop_bots_load.bik"		: "Conveyor Bots"
+		"coop_bots_load_wave.bik"	: "Waving Bots"
+		"coop_intro.bik"			: "Coop Intro"
+		"coop_outro.bik"			: "Coop Outro"
+		"coop_bts_blueprints.bik"	: "Coop Disc: Blueprints"
+		"coop_bts_powergrid_01.bik"	: "Coop Disc: Power Grid 1"
+		"coop_bts_powergrid_02.bik"	: "Coop Disc: Power Grid 2"
+		"coop_bts_radar_01.bik"		: "Coop Disc: Radar 1"
+		"coop_bts_radar_02.bik"		: "Coop Disc: Radar 2"
+		"coop_bts_security_01.bik"	: "Coop Disc: Security 1"
+		"coop_bts_security_02.bik"	: "Coop Disc: Security 2"
+		"coop_bts_radar.bik"		: "Coop Disc: Unused Radar"
+		"coop_bts_security.bik"		: "Coop Disc: Unused Security"
+		"insert_disc.bik"			: "Insert Disc"
+		"dlc1_endmovie.bik"			: "Art Therapy Outro"
+		
+		// Other
+		"community_bg1.bik"			: "Community Maps Background"
+		"intro_movie.bik"			: "Community Maps Intro"
+		"attract01.bik"				: "Extras: Coop Trailer"
+		"attract02.bik"				: "Extras: SP Trailer"
+		"attrct_boots.bik"			: "Extras: Long Fall Boots"
+		"attract_bot_trust.bik"		: "Extras: Bot Trust"
+		"attract_panels.bik"		: "Extras: Panels"
+		"attract_turrets.bik"		: "Extras: Turrets"
+]
+	allowskip(boolean) : "Allow User to Skip" : 0 : "Whether or not the user may skip the video with common keys"
+	loopvideo[P2](boolean) : "Loop Video" : 0 : "If set to true, the movie will loop forever"
+	fadeintime[P2](float) : "Fade In Time" : 0 : "Time it takes for the video to fade in"
+
+	// Inputs
+	input PlayMovie(void) : "Play the movie."
+	input PlayMovieForAllPlayers[P2](void) : "Play the movie for all connected players."
+	input PlayLevelTransitionMovie[P2](string) : "Plays a movie with specific settings used for level transitions.  Pass the name of the movie in the parameters.  To be fired at the end of a level."
+	input FadeAllMovies[P2](void) : "Fade movies out for all players connected."
+
+	// Outputs
+	output OnPlaybackFinished(void) : "Fired when the movie has completed playing back or was skipped by the user."
+	]

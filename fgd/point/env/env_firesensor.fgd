@@ -1,0 +1,23 @@
+@PointClass base(BaseEntityPoint)
+	sphere(fireradius) 
+	color(200 200 0) 
+	iconsprite("editor/ficool2/env_firesensor.vmt")
+= env_firesensor: "An entity that detects changes in heat nearby."
+	[
+	spawnflags(flags) =
+		[
+		1: "Start On" : 1
+		]
+
+	fireradius(float) : "Radius" : 128 : "The radius around this entity in which to detect heat changes."
+	heatlevel(float) : "Heat level" : 32 : "The target heat level to check for. Outputs are fired when the heat moves over this target level (increasing or decreasing)."
+	heattime(float) : "Time at level" : 0 : "The amount of time the heat level must spend over the target level before the 'OnHeatLevelStart' output is fired."
+
+	// Inputs
+	input Enable(void) : "Enable fire sensor."
+	input Disable(void) : "Disable fire sensor."
+
+	// Outputs
+	output OnHeatLevelStart(void) : "Fires when the heat level has been sustained for the specified length of time."
+	output OnHeatLevelEnd(void) : "Fires when the heat level drops below the target level."
+	]

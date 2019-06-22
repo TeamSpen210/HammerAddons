@@ -1,0 +1,26 @@
+
+@PointClass base(Targetname) 
+	halfgridsnap
+	color(128 128 128) 
+	line(128 128 128, targetname, attach1) 
+	iconsprite("editor/ficool2/phys_motor")
+= phys_motor: "An entity that tries to spin a target entity at a particular speed."
+	[
+	speed(string) : "Rotation Speed" : 0 : "Angular speed (units are degress/second)"
+	spinup(string) : "Spin up time" : 1 : "spin up time in seconds (also affects the rate at which speed changes happen)"
+	inertiafactor(float) : "System Interia Scale" : "1.0" : "Make this larger if the object being driven is constrained to a set of heavier objects."
+	axis(vecline) : "Rotation Axis"
+	spawnflags(flags)  =
+		[
+		1: "Start On" : 1
+		2: "No world collision" : 0
+		4: "Hinge Object" : 1
+		]
+
+	attach1(target_destination) : "Attached Object" : : "Object to apply the force to"
+
+	// Inputs
+	input SetSpeed(float) : "Sets target speed"
+	input TurnOn(void) : "Turns motor on"
+	input TurnOff(void) : "Turns motor off"
+	]

@@ -1,0 +1,15 @@
+@PointClass base(BaseEntityAnimating) 
+	appliesto(P2) 
+	studioprop("models/effects/cappoint_hologram.mdl") = item_nugget: "Aperture Incentivizing Nugget. Useless."
+	[
+	groupname(string) : "Group Name" : : "Giving nuggets a group name hints the game that they are intended to be a group"
+	respawntime(float) : "Respawn Time" : 30 : "Number of seconds between when a nugget is collected and when it respawns"
+	pointvalue(choices) : "Point Value" : "1" =
+		[
+		1: "1"
+		5: "5"
+		10: "10"
+		25: "25"
+		]
+
+	]

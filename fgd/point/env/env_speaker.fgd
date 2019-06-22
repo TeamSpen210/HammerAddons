@@ -1,0 +1,4 @@
+@PointClass base(BaseSpeaker) 
+	iconsprite("editor/ambient_generic.vmt") = env_speaker: "Announcement Speaker"
+	[
+	]

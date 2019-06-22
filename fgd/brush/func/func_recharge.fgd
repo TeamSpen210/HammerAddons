@@ -1,0 +1,22 @@
+@SolidClass base(BaseEntityVisBrush) 
+	appliesto(HL1, EP1, EP2) 
+= func_recharge: "Old brush-based suit battery recharger."
+	[
+	_minlight(string) : "Minimum light level"
+	spawnflags(flags) : "spawnflags" =
+		[
+		8192: "Citadel recharger" : 0
+		]
+
+
+	// Inputs
+	input Recharge(void) : "Recharge to full"
+	input SetCharge(void) : "This sets the remaining charge in the charger to whatever value you specify"
+
+	// Outputs
+	output OutRemainingCharge(float) : "Remaining Charge."
+	output OnHalfEmpty(void) : "Half-Empty"
+	output OnEmpty(void) : "Empty"
+	output OnFull(void) : "Recharged to full."
+	output OnPlayerUse(void) : "Fired when the player +USEs the charger."
+	]

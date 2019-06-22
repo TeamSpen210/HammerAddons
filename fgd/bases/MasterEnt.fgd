@@ -1,0 +1,4 @@
+@BaseClass line(255 255 255, targetname, master) = MasterEnt
+	[
+	master(target_destination) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
+	]

@@ -1,0 +1,31 @@
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW) 
+	line(255 255 255, targetname, target)
+	line(200 128 200, targetname, moveto)
+	studioprop("models/editor/camera.mdl") 
+= asw_broadcast_camera: "A camera entity that controls all players views. " +
+	"While it's active, all players will see out of the camera."
+	[
+	target(target_destination) : "Entity to Look At" : : "Name of the entity that the camera should point at and track while active."
+	targetattachment(string) : "Target Attachment Name" : : "If set, the camera will focus on the specified attachment on the 'Entity to Look At'."
+	wait(integer) : "Hold Time" : 10 : "The amount of time the camera should control the player's view for, after which it deactivates itself. If the camera should stay active until told to deactive, set the 'Infinite Hold Time' spawnflag."
+	moveto(target_destination) : "Path Corner" : : "The first path corner in a track that the camera should move along once it's activated. If not specified, the camera won't move."
+	spawnflags(flags) : "spawnflags" =
+		[
+		4: "Freeze Players" : 0
+		8: "Infinite Hold Time" : 0
+		16: "Snap to goal angles" : 0
+		]
+
+	speed(string) : "Initial Speed" : "0" : "The starting speed that the camera moves at, if it's on a path track."
+	acceleration(string) : "Acceleration units/sec^2" : "500" : "The speed at which the camera accelerates to path corner's desired speeds."
+	deceleration(string) : "Stop Deceleration units/sec^2" : "500" : "The speed at which the camera decelerates to path corner's desired speeds."
+
+	// Inputs
+	input Enable(void) : "Enable the point_viewcontrol, and start controlling the player's view."
+	input Disable(void) : "Disable the point_viewcontrol, and stop controlling the player's view."
+
+	// Outputs
+	output OnEndFollow(void) : "Fired when the point_viewcontrol deactivates, due to the Disable input being received, the Entity to Look At being destroyed, or the Hold Time expiring."
+	]

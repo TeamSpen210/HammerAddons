@@ -1,0 +1,22 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(TF2) = game_round_win: "Tells the game rules that the round has either been won (if a team is assigned) or enter Sudden Death mode (if no team is assigned)."
+	[
+	teammum[engine](integer) : "Team" : 0
+	teamnum(choices) : "Team" : 0 : "Team" =
+		[
+		0: "None (Sudden Death)"
+		2: "Red"
+		3: "Blue"
+		]
+
+	force_map_reset(boolean) : "Force map reset" : "1" : "Force the map to reset during the force respawn after the round is over."
+
+	switch_teams(boolean) : "Switch teams on map win?" : "0" : "Switch the teams when the game is going to be reset."
+
+	// Inputs
+	input SetTeam(integer) : "Changes the entity's team (this is used to determine which team has won the round (0 = none)."
+	input RoundWin(void) : "Tell the game rules the round is over."
+
+	// Outputs
+	output OnRoundWin(void) : "Sent when the entity tells the game rules the round is over."
+	]

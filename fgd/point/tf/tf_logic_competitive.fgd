@@ -1,0 +1,9 @@
+
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	appliesto(TF2) = tf_logic_competitive: "Logic specifically for competitive mode."
+	[
+
+	// Outputs
+	output OnSpawnRoomDoorsShouldLock(void) : "Game rules is saying that we should now disable (home) spawn door triggers."
+	output OnSpawnRoomDoorsShouldUnlock(void) : "Game rules is saying that we should now enable (home) spawn door triggers."
+	]

@@ -1,0 +1,13 @@
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW) = asw_spawn_group: "The named spawners will belong to this spawn group.  In holdout mode, spawning is done via spawn groups rather than individual spawners."
+	[
+	spawnername00(target_destination) : "Spawner 01" : : "The name of one or more spawners."
+	spawnername01(target_destination) : "Spawner 02" : : "The name of one or more spawners."
+	spawnername02(target_destination) : "Spawner 03" : : "The name of one or more spawners."
+	spawnername03(target_destination) : "Spawner 04" : : "The name of one or more spawners."
+	spawnername04(target_destination) : "Spawner 05" : : "The name of one or more spawners."
+	spawnername05(target_destination) : "Spawner 06" : : "The name of one or more spawners."
+	spawnername06(target_destination) : "Spawner 07" : : "The name of one or more spawners."
+	spawnername07(target_destination) : "Spawner 08" : : "The name of one or more spawners."
+	]

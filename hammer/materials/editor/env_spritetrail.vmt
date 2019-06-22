@@ -1,0 +1,8 @@
+"Sprite"
+{
+	$spriteorientation "vp_parallel"
+	$spriteorigin "[ .5 .5 ]"
+	$spriterendermode 2
+	$baseTexture "editor/env_spritetrail"
+	$no_fullbright 1
+}

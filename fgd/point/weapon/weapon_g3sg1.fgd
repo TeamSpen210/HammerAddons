@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_snip_g3sg1_dropped.mdl") = weapon_g3sg1: "G3SG1 Sniper"
+	[
+	]

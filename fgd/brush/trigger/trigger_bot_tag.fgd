@@ -1,0 +1,12 @@
+@SolidClass base(Trigger) 
+	appliesto(TF2) 
+= trigger_bot_tag: "A trigger that will open/close the door base filtered objects."
+	[
+	tags(string) : "Tags" : : "Add/Remove these tags."
+	add(choices) : "Operation" : "1" : "Add/Remove tags operation." =
+		[
+		0: "RemoveTag"
+		1: "AddTag"
+		]
+
+	]

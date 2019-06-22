@@ -1,0 +1,18 @@
+@PointClass base(BaseEntityPoint) 
+	sphere()
+	iconsprite("editor/ficool2/env_viewpunch.vmt")
+	color(200 200 0)
+= env_viewpunch: "Causes a view punch on players."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Punch all players (ignore radius)" : 0
+		2: "Punch players in the air" : 0
+		]
+
+	punchangle(angle) : "Punch angles" : "0 0 90" : "The punch angles to apply."
+	radius(float) : "Effect Radius" : 500 : "The radius around this entity in which to affect players."
+
+	// Inputs
+	input ViewPunch(void) : "Performs the view punch."
+	]

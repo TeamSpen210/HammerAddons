@@ -1,0 +1,68 @@
+@PointClass base(BaseEntityPoint) 
+	color(220 180 0) 
+	line(255 255 255, nodeid, StartNode, nodeid, EndNode) 
+	iconsprite("editor/info_node_link.vmt") 
+= info_node_link: "A dynamic connection between two navigation nodes. You specify the node IDs of the start and end nodes, " +
+	"and then you can use entity I/O to turn on and off the connection. " +
+	"This could be used to create or destroy a connection in the nodegraph because " +
+	"of some event in your map (a bridge being created/destroyed, etc)."
+	[
+	startnode(node_dest) : "Start node ID" : : "The node ID of one end of the node connection."
+	endnode(node_dest) : "End node ID" : : "The node ID of one end of the node connection."
+
+	initialstate[engine](boolean) : "Initial State" : 1
+	initialstate(choices) : "Initial State" : 1 =
+		[
+		0: "Off"
+		1: "On"
+		]
+
+	linktype[engine](integer) : "Type of Connection" : 1
+	linktype(choices) : "Type of Connection" : 1 =
+		[
+		1: "Ground"
+		2: "Jump"
+		4: "Fly"
+		8: "Climb"
+		16: "Crawl" [ASW, L4D2]
+		]
+
+	allowuse(string) : "Allow Pass When Off" : : "Entity or class to allow passage even when node is off"
+	invertallow[ASW](boolean) : "Invert exclusion rules" : 0 : "Allowed entity is the only entity NOT allowed when this is set to 'yes'"
+
+	spawnflags(flags) =
+		[
+		1: "Force human connect" : 0
+		2: "Force small centered connect" : 0
+		4: "Force wide human connect" : 0
+		8: "Force tiny connect" : 0
+		16: "Force wide_short connect" : 0
+		32: "Force medium connect" : 0
+		64: "Force tiny centered connect" : 0
+		128: "Force large connect" : 0
+		256: "Force large centered connect" : 0
+		512: "(Don't drop placeholder)" : 0 [ASW]
+
+		512: "Force medium tall connect" : 0 [!ASW]
+		1024: "Force medium tall connect" : 0 [ASW]
+
+		1024: "Force tiny_fluid connect" : 0 [P2]
+		2048: "Force tiny fluid connect" : 0 [ASW]
+		4096: "Force medium big (Swarm Drone) connect" : 0 [ASW]
+		]
+
+	precisemovement[ASW](boolean) : "Precise Movement" : 0 : "Movement through this link must be precise. " +
+		"Used for NPCs that have sloppy movement characteristics to move through things like doors or windows"
+		
+	priority[engine](integer) "Priority" : 0
+	priority[ASW](choices) : "Priority" : 0 =
+		[
+		0: "Normal"
+		1: "Use As Last Resort"
+		]
+
+
+	// Inputs
+	input TurnOn(void) : "Turn the link on."
+	input TurnOff(void) : "Turn the link off."
+	]

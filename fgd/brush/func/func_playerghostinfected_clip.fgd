@@ -1,0 +1,6 @@
+@SolidClass 
+	appliesto(L4D2) 
+	base(func_brush) 
+= func_playerghostinfected_clip: "Simple Clip brush that blocks player ghost infected movement."
+	[
+	]

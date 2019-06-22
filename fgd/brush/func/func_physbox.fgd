@@ -1,0 +1,73 @@
+@SolidClass base(BreakableBrush) = func_physbox: "A brush entity that's physically simulated."
+	[
+	spawnflags(flags)  =
+		[
+		4096: "Start Asleep" : 0 [!L4D2]
+		8192: "Ignore +USE for Pickup" : 0 [!L4D2]
+		16384: "Debris - Don't collide with the player or other debris" : 0
+		32768: "Motion Disabled" : 0
+		65536: "Use Preferred Carry Angles" : 0
+		131072: "Enable motion on Physcannon grab" : 0	
+		262144: "Not affected by rotor wash" : 0 [!L4D2]
+		262144: "Ignore +USE for Pickup" : 0 [L4D2]
+		524288: "Generate output on +USE " : 1
+		1048576: "Physgun can ALWAYS pick up. No matter what." : 0 [!L4D2]
+		1048576: "Start Asleep" : 0	[L4D2]
+		2097152: "Physgun is NOT allowed to pick this up." : 0
+		4194304: "Physgun is NOT allowed to punt this object." : 0
+		8388608: "Prevent motion enable on player bump" : 0
+		]
+
+	damagetype(choices) : "Impact Damage Type" : 0 =
+		[
+		0: "Blunt"
+		1: "Sharp"
+		]
+
+	massscale(float) : "Mass Scale" : 0 : "A scale multiplier for the object's mass."
+	overridescript(string) : "Override Parameters" : : "A list of physics key/value pairs that are usually in a physics prop .qc file. Format is 'key,value,key,value,etc'."
+	damagetoenablemotion(integer) : "Health Level to Override Motion" : 0 : "If specified, this object will start motion disabled. Once its health has dropped below this specified amount, it will enable motion."
+	forcetoenablemotion(float) : "Physics Impact Force to Override Motion" : 0 : "If specified, this object will start motion disabled. Any impact that imparts a force greater than this value on the physbox will enable motion."
+	health(integer) : "Strength" : 0 : "Number of points of damage to take before breaking.  0 means don't break."
+	preferredcarryangles(vector) : "Preferred Player-carry Angles" : "0 0 0" : "If the 'Use Preferred Carry Angles' spawnflag is set, this angle is the angle which the object should orient to when the player picks it up, with the physgun or +USE."
+
+	notsolid[engine](boolean): "Not solid to world?"
+	notsolid(choices) : "Not solid to world" : 0 =
+		[
+		0: "Solid to World"
+		1: "Passes through World"
+		]
+
+	exploitablebyplayer[engine](boolean) : "Exploitable by Player"
+	exploitablebyplayer(choices) : "Exploitable by Player" : 0 =
+		[
+		0: "Default"
+		1: "Explosive"
+		]
+
+
+	// Inputs
+	input Wake(void) : "Wake up this physics object, if it is sleeping."
+	input Sleep(void) : "Put this physics object to sleep. It will wake if given the Wake input, " +
+		"or if force is applied to it. " +
+		"Note that physics objects go to sleep automatically after coming to rest for a while, " +
+		"so you don't really need to use this."
+	input EnableMotion(void) : "Enable physics motion/collision response."
+	input DisableMotion(void) : "Disable physics motion/collision response."
+	input ForceDrop(void) : "If this object is being carried by a player, with the physgun or +USE, force it to be dropped."
+	input Enable[P2](void) : "Show this object and allow it to collide, doesn't override notsolid."
+	input Disable[P2](void) : "Hide this object and stop collisions."
+	input BecomeDebris[P2](void) : "Change the collision to act like debris"
+
+	// Outputs
+	output OnDamaged(void) : "Fired when this entity is damaged."
+	output OnAwakened(void) : "Fired when this entity becomes awake (collision/force is applied)."
+	output OnMotionEnabled(void) : "Fired when motion is enabled due to damage/physcannon/force."
+	output OnPhysGunPickup(void) : "Fired when a player picks this object up, either with the physgun or +USE."
+	output OnPhysGunPunt(void) : "Fired when a player punts this object with the physgun."
+	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up WITH THE PHYSGUN. " +
+		"+USE pickups do not fire this output."
+	output OnPhysGunDrop(void) : "Fired when a player drops this object."
+	output OnPlayerUse(void) : "Fired when the player tries to +USE the physbox. " +
+		"This output will fire only if the Generate output on +USE spawnflag is set."
+	]

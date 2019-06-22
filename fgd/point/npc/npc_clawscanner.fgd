@@ -1,0 +1,35 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio("models/shield_scanner.mdl") = npc_clawscanner: "Claw Scanner"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "No Dynamic Light" : 0
+		131072: "Strider Scout Scanner" : 0
+		]
+
+	spotlightlength(integer) : "SpotlightLength" : 500
+	spotlightwidth(integer) : "SpotlightWidth" : 50
+
+	spotlightdisabled(boolean) : "SpotlightDisabled" : 0
+	shouldinspect(boolean) : "Should inspect" : 1
+	onlyinspectplayers(boolean) : "Only Inspect Players" : 0
+	neverinspectplayers(boolean) : "Never Inspect Players" : 0
+
+	// Inputs
+	input DisableSpotlight(void) : "DisableSpotlight"
+	input InspectTargetPhoto(string) : "Tells the scanner to photograph the given entity, named by classname or by target name. !activator or !player works here also."
+	input InspectTargetSpotlight(string) : "Tells the scanner to spotlight the given entity, named by classname or by target name. !activator or !player works here also."
+	input InputSetFlightSpeed(integer) : "Sets the flight speed of the scanner"
+	input InputShouldInspect(integer) : "Set whether should inspect or not"
+	input SetFollowTarget(string) : "Set target to follow until told otherwise"
+	input ClearFollowTarget(void) : "Stop following our target"
+	input SetDistanceOverride(float) : "Override the distance the scanner will attempt to keep between inspection targets and itself"
+	input DeployMine(void) : "Drop landmine (if carrying one)"
+	input EquipMine(void) : "Equip with landmine"
+
+	// Outputs
+	output OnPhotographPlayer(void) : "Fired any time the scanner takes a picture of the player."
+	output OnPhotographNPC(void) : "Fired any time the scanner takes a picture of an NPC."
+	]

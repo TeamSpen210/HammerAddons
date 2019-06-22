@@ -1,0 +1,26 @@
+
+@PointClass base(Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	iconsprite("editor/ts2do/script_intro.vmt") = script_intro: "Script: Custom entity used to handle the intro sequence."
+	[
+	alternatefovchange(choices) : "Match env_zoom's FOV transition" : "0" : "Whether the script should match env_zoom's FOV transition." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	alternatefovchange[P2](boolean) : "Match env_zoom's FOV transition" : 0 : "Whether the script should match env_zoom's FOV transition."
+
+	// Inputs
+	input Activate(void) : "Take control of the player's view and start blending the two scenes."
+	input Deactivate(void) : "Stop controlling the view."
+	input SetCameraViewEntity(string) : "Set the viewpoint to blend with the player's viewpoint."
+	input SetBlendMode(integer) : "Set the blending mode to use."
+	input SetFOV(integer) : "Set the fov for the second camera."
+	input SetNextFOV(integer) : "Set the FOV to blend to over time. Follow this with a SetFOVBlendTime input to start the fov blend."
+	input SetFOVBlendTime(float) : "Set the amount of time it should take to blend to the next fov target, and start blending."
+	input SetNextBlendMode(integer) : "Set the blending mode to blend to over time. Follow this with a SetNextBlendTime input to start the mode blend."
+	input SetNextBlendTime(float) : "Set the amount of time it should take to blend to the next mode, and start blending."
+	input FadeTo(string) : "Fade to a specific alpha amount of an amount of time. Parameters: <alpha> <duration>"
+	input SetFadeColor(string) : "Set the fade color. Parameters: <Red> <Green> <Blue>"
+	]

@@ -1,0 +1,22 @@
+@BaseClass base(BaseEntityPhysics)
+	color(0 0 200) 
+	sphere(fademindist) 
+	sphere(fademaxdist) 
+= Weapon
+	[
+	spawnflags(flags)  =
+		[
+		1: "Start constrained" : 0
+		2: "Deny player pickup (reserve for NPC)" : 0
+		4: "Not puntable by Gravity Gun" : 0
+		]
+
+	canbepickedup[CSGO](boolean) : "Is this weapon allowed to be picked up?" : 1
+
+	// Outputs
+	output OnPlayerUse(void) : "Fires when the player +uses this weapon."
+	output OnPlayerPickup(void) : "Fires when the player picks up this weapon."
+	output OnNPCPickup(void) : "Fires when an NPC picks up this weapon."
+	output OnCacheInteraction(void) : "Fires when the player 'proves' they've found this weapon. " +
+		"Fires on: Player Touch, +USE pickup, Physcannon pickup, Physcannon pun" + "t."
+	]

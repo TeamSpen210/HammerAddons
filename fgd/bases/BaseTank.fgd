@@ -1,0 +1,103 @@
+@BaseClass base(BaseEntityBrush) 
+	line(255 255 255, targetname, control_volume) 
+	sphere(minrange) sphere(maxrange)
+= BaseTank
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Active" : 0
+		16: "Only Direct" : 0
+		32: "Controllable" : 0
+		64: "Damage Kick" : 0
+		1024: "NPC Controllable" : 0
+		2048: "NPC Set Controller" : 0
+		4096: "Allow friendlies to hit player" : 0
+		32768: "Non-solid." : 0
+		131072: "Perfect accuracy every 3rd shot at player" : 0
+		]
+
+	control_volume(target_destination) : "Control Volume" : : "Name of a trigger the specifies the volume in which a player must be to control this tank."
+	master(string) : "(Team) Master"
+	yawrate(string) : "Yaw rate" : "30"
+	yawrange(string) : "Yaw range" : "180"
+	yawtolerance(string) : "Yaw tolerance" : "15"
+	pitchrate(string) : "Pitch rate" : "0"
+	pitchrange(string) : "Pitch range" : "0"
+	pitchtolerance(string) : "Pitch tolerance" : "5"
+	barrel(string) : "Barrel Length" : "0"
+	barrely(string) : "Barrel Horizontal" : "0"
+	barrelz(string) : "Barrel Vertical" : "0"
+	spritesmoke(sprite) : "Smoke Sprite"
+	spriteflash(sprite) : "Flash Sprite"
+	spritescale(string) : "Sprite scale" : "1"
+	rotatestartsound(sound) : "Rotate Start Sound"
+	rotatesound(sound) : "Rotate Loop Sound"
+	rotatestopsound(sound) : "Rotate Stop Sound"
+	firerate(string) : "Rate of Fire" : "1"
+	bullet_damage(string) : "Damage Per Bullet" : "0" : "If set to 0, it'll use the base weapon bullet's damage."
+	bullet_damage_vs_player(string) : "Damage Per Bullet Vs Player" : "0" : "If set to 0, it'll use the Damage Per Bullet value."
+	persistence(string) : "Firing persistence" : "1" : "(Seconds) How long to keep firing at last known position after lose sight of target"
+	persistence2(string) : "Firing persistence2" : "0" : "(Seconds) After lost enemy and persistence time has passed, how long to occasionally fire at enemy's last known position"
+
+	firespread[engine](integer) : "Bullet accuracy" : 0
+	firespread(choices) : "Bullet accuracy" : 0 =
+		[
+		0: "Perfect Shot"
+		1: "Small cone"
+		2: "Medium cone"
+		3: "Large cone"
+		4: "Extra-large cone"
+		]
+
+	minrange(string) : "Minimum target range" : "0"
+	maxrange(string) : "Maximum target range" : "0"
+
+	gun_base_attach(string) : "Gun Base Attachment" : : "If Parent is specified, this is the attachment point on the parent to aim from."
+	gun_barrel_attach(string) : "Gun Barrel Attachment" : : "If Parent is specified, this is the attachment point on the parent to fire from. If you specify this, you'll want to specify the Gun Base Attachment too."
+	gun_yaw_pose_param(string) : "Gun Yaw Pose Param" : : "If Parent + the Gun Pitch Pose Param is specified, then the gun itself will be invisible and the func_tank will steer a gun on the parent using the pose parameters."
+	gun_yaw_pose_center(float) : "Gun Yaw Pose Center" : 0 : "The center yaw pose parameter of the gun on the parent"
+	gun_pitch_pose_param(string) : "Gun Pitch Pose Param" : : "If Parent + the Gun Yaw Pose Param is specified, then the gun itself will be invisible and the func_tank will steer a gun on the parent using the pose parameters."
+	gun_pitch_pose_center(float) : "Gun Pitch Pose Center" : 0 : "The center pitch pose parameter of the gun on the parent"
+	ammo_count(integer) : "Ammunition Count" : -1 : "Only applies to player use. -1 = unlimited ammo."
+	leadtarget(boolean) : "Lead Target" : 0
+	npc_man_point(target_destination) : "NPC Man Point" : : "Point where NPC must stand to man this func_tank."
+	playergraceperiod(float) : "Post-NPC Attack Grace Period" : 0 : "If specified, NPC's manning this func tank won't fire at the player, after firing at a non-player, for this amount of time."
+	ignoregraceupto(float) : "Ignore Grace Upto" : 768 : "The player grace period is ignored if the player's under this distance from the func_tank."
+	playerlocktimebeforefire(float) : "Player Lock Time" : 0 : "The tank must have the player as a target for this amount of time before it's allowed to fire."
+
+	effecthandling[engine](integer) : "Effect Handling" : 0
+	effecthandling(choices) : "Effect Handling" : 0 =
+		[
+		0: "Use Individual Settings."
+		1: "AR2"
+		2: "Combine Cannon"
+		]
+
+
+	// Inputs
+	input Activate(void) : "Turn the tank on"
+	input Deactivate(void) : "Turn the tank off (go dormant)"
+	input SetFireRate(string) : "How fast to fire (0 = don't fire)"
+	input SetDamage(string) : "Set the Damage Per Bullet"
+	input SetTargetPosition(string) : "World position that I should aim at"
+	input SetTargetDir(vector) : "Direction to aim at."
+	input SetTargetEntityName(target_destination) : "Name of entity I should follow/attack"
+	input SetTargetEntity(string) : "Set the entity I should follow/attack to the passed in entity."
+	input ClearTargetEntity(void) : "Clear the entity I should be attacking."
+	input FindNPCToManTank(string) : "Find a nearby NPC to man this func_tank."
+	input StartFindingNPCs(void) : "Start searching for NPCs to man this func_tank."
+	input StopFindingNPCs(void) : "Stop searching for NPCs to man this func_tank."
+	input ForceNPCOff(void) : "Force the NPC manning this func_tank (if any) to leave."
+	input SetMaxRange(float) : "Set the max range of the func_tank."
+
+	// Outputs
+	output OnFire(void) : "Fires when the tank fires its bullets"
+	output OnAquireTarget(void) : "Fires when target is newly in range and can be shot"
+	output OnLoseTarget(void) : "Fires when when target goes out of range"
+	output OnAmmoDepleted(void) : "Fires when tank runs out of ammo"
+	output OnGotController(void) : "Fires when an NPC starts to control this tank. Players do NOT fire this input."
+	output OnLostController(void) : "Fires when the NPC controller of the tank stops controlling it. Players do NOT fire this input."
+	output OnGotPlayerController(void) : "Fires when a Player starts to control this tank. NPCs do NOT fire this input."
+	output OnLostPlayerController(void) : "Fires when the Player controller of the tank stops controlling it. NPCs do NOT fire this input."
+	output OnReadyToFire(void) : "Fires once when the tank is done waiting to fire between rounds"
+	]

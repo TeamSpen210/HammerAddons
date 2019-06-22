@@ -1,0 +1,32 @@
+
+@BaseClass = TeamNum
+	[
+	teamnum[TF2](choices) : "Team" : 0 =
+		[
+		0: "Any"
+		2: "Red"
+		3: "Blue"
+		]
+
+	teamnum[CSGO](choices) : "Team" : 0 =
+		[
+		-1: "None"
+		0: "All Teams"
+		2: "Terrorist"
+		3: "Counter-Terrorist"
+		]
+		
+	teamnum[P2](choices) : "Team" : 0 = 
+		[
+		0: "Chell/Bendy"
+		2: "P-Body"
+		3: "ATLAS"
+		]
+		
+	teamnum(integer) : "Team"
+	teamnum[engine](integer): "Team": 0
+
+
+	// Inputs
+	input SetTeam(integer) : "Changes the entity's team."
+	]

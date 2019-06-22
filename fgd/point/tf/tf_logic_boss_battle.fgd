@@ -1,0 +1,5 @@
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(TF2) = tf_logic_boss_battle: "Boss Battle Entity. This is used to detect a Boss Battle map."
+	[
+	]

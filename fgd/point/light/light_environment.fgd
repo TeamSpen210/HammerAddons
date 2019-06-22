@@ -1,0 +1,15 @@
+@PointClass base(Angles) 
+	iconsprite("editor/ficool2/light_env.vmt") 
+	color(255 255 0)
+	lightprop("models/editor/spot.mdl") 
+= light_environment: "Sets the color and angle of the light from the sun and sky."
+	[
+	pitch(angle_negative_pitch) : "Pitch" : "0" : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
+	_light(color255) : "Brightness" : "255 255 255 200"
+	_ambient(color255) : "Ambient light" : "255 255 255 20"
+	_lighthdr(color255) : "BrightnessHDR" : "-1 -1 -1 1"
+	_lightscalehdr(float) : "BrightnessScaleHDR" : 1 : "Amount to scale the light by when compiling for HDR."
+	_ambienthdr(color255) : "AmbientHDR" : "-1 -1 -1 1"
+	_ambientscalehdr(float) : "AmbientScaleHDR" : 1 : "Amount to scale the ambient light by when compiling for hdr."
+	sunspreadangle(float) : "SunSpreadAngle" : 5 : "The angular extent of the sun for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
+	]

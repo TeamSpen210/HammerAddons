@@ -1,0 +1,39 @@
+
+@BaseClass base(BaseEntityPoint) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) = FollowGoal
+	[
+	actor(target_name_or_class) : "Actor(s) to affect"
+	goal(string) : "Target Entity" : : "The name of the entity to follow. If blank, and the actor likes the player, then defaults to player"
+
+	searchtype[engine](integer) : "Search Type" : 0
+	searchtype(choices) : "Search Type" : 0 : "How to search for the entities using the targetname." =
+		[
+		0: "Entity Name"
+		1: "Classname"
+		]
+
+	startactive(boolean) : "Start Active" : 0
+	
+	maximumstate[engine](integer) : "Maximum state" : 1
+	maximumstate(choices) : "Maximum state" : 1 =
+		[
+		1: "Idle"
+		2: "Alert"
+		3: "Combat"
+		]
+
+	formation[engine](integer) : "Maximum state" : 1
+	formation(choices) : "Formation" : "0" =
+		[
+		0: "Close circle"
+		1: "Wide circle"
+		5: "Medium circle"
+		6: "Sidekick"
+		8: "Vortigaunt"
+		]
+
+
+	// Inputs
+	input Activate(void) : "Begin the follow behavior"
+	input Deactivate(void) : "Cease the follow behavior"
+	]

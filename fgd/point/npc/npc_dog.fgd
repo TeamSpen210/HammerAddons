@@ -1,0 +1,23 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio("models/dog.mdl") = npc_dog: "d0g"
+	[
+
+	// Inputs
+	input SetPickupTarget(string) : "Sets the target entity for dog to pickup."
+	input StartCatchThrowBehavior(string) : "Tells d0g to start playing with the player. You can pass in the name of the object you want him to play with otherwise he'll find the closes phys_object."
+	input StopCatchThrowBehavior(string) : "Stop the catch and throw behavior."
+	input PlayerPickupObject(void) : "Tells d0g the physgun just picked up an object."
+	input StartWaitAndCatch(void) : "Tells d0g to wait for the player to throw an object at him."
+	input StopWaitAndCatch(void) : "Tells d0g to stop waiting for the player."
+	input SetThrowArcModifier(float) : "Used to pass in a modifier for d0g's object flight arc."
+	input SetThrowTarget(string) : "Set d0g's throw target (pass in !player if you want the player)"
+	input TurnBoneFollowersOff(void) : "Turn dog's bone followers off"
+	input TurnBoneFollowersOn(void) : "Turn dog's bone followers on"
+
+	// Outputs
+	output OnDogThrow(void) : "Fires when dog throws an object."
+	output OnDogPickup(void) : "Fires when dog picks up an object."
+	output OnDogCatch(void) : "Fires when dog catches an object."
+	]

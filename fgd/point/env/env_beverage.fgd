@@ -1,0 +1,22 @@
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ficool2/env_beverage")
+= env_beverage: "HL1 Legacy: Beverage Dispenser."
+	[
+	health(integer) : "Capacity" : 10 : "Number of cans in the dispenser."
+
+	beveragetype[engine](integer) : "Beverage Type" : 0
+	beveragetype(choices) : "Beverage Type" : 0 =
+		[
+		0: "Coca-Cola"
+		1: "Sprite"
+		2: "Diet Coke"
+		3: "Orange"
+		4: "Surge"
+		5: "Moxie"
+		6: "Random"
+		]
+
+
+	// Inputs
+	input Activate(void) : "Enable this dispenser."
+	]

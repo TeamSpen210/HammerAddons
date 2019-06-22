@@ -1,0 +1,16 @@
+@SolidClass base(Trigger, Origin, Angles)
+= trigger_impact: "A trigger volume that can be told to push all physics objects that are inside of it in the direction specified by this " +
+	"trigger's angles.\n" +
+	"Also outputs the force at the time of impact for anyone else that wants to use it."
+	[
+	magnitude(float) : "Magnitude" : 200 : "The strength of the impact. Negative values reverse the direction."
+	noise(float) : "Noise" : "0.1" : "The amount of directional noise (0-1). 0 = no noise, 1 = random direction."
+	viewkick(float) : "Viewkick" : "0.05" : "The amount to kick player's view if the player is in the trigger.  Proportional to magnitude (0-1)."
+
+	// Inputs
+	input Impact(float) : "Fire the impact, pushing all entities within the volume."
+	input SetMagnitude(float) : "Set the magnitude of the impact."
+
+	// Outputs
+	output ImpactForce(string) : "Fired after an impact. The parameter passed along is the force of the impact that was generated."
+	]

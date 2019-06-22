@@ -1,0 +1,35 @@
+@PointClass base(Targetname) 
+	appliesto(since_P2) 
+	color(200 0 0) 
+	iconsprite("editor/logic_eventlistener.vmt") = logic_eventlistener: "An entity that can listen to events fired from code and fire an output when it happens."
+	[
+	eventname(string) : "Event Name" : : "The name of the event that you want to listen for."
+	isenabled(boolean) : "Start Enabled" : 1
+
+	teamnum(integer) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team."
+	teamnum[engine](integer) : "Team Number" : -1
+	
+	teamnum[P2](choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
+		[
+		-1: "Don't care"
+		1: "Team 1"
+		2: "Team 2 (ORANGE)"
+		3: "Team 3 (BLUE)"
+		]
+	teamnum[CSGO](choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
+		[
+		-1: "Don't care"
+		2: "Terrorists"
+		3: "Counter-Terrorists"
+		]
+
+	// TODO: CSGO-only?
+	fetcheventdata[since_CSGO](boolean) : "Fetch Event Data" : "0" : "If set, will write the data from the event into the table 'event_data' on this entity."
+
+	// Inputs
+	input Enable(void) : "Enable the logic_eventlistener."
+	input Disable(void) : "Disable the logic_eventlistener."
+
+	// Outputs
+	output OnEventFired(void) : "Fired when the event has been detected."
+	]

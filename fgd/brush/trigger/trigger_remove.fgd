@@ -1,0 +1,10 @@
+@SolidClass base(Trigger) 
+= trigger_remove: "A trigger volume that removes any entities that touch it. " +
+	"Be careful, removing some entities can cause instability. " +
+	"This is not the same as killing entities. i.e. NPCs removed in this manner " +
+	"will not fire their OnKilled outputs."
+	[
+
+	// Outputs
+	output OnRemove(void) : "Fired whenever an entity is removed."
+	]

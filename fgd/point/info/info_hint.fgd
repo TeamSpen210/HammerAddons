@@ -1,0 +1,8 @@
+@PointClass base(BaseEntityPoint, HintNode) 
+	studio("models/editor/node_hint.mdl")
+	color(255 255 255)
+	sphere(radius)
+= info_hint: "A hint that is not used for navigation. They don't go into the nodegraph, nor do they fall to the ground. " +
+	"Use these to provide some spatial context for NPCs, such as 'look here if you can't find the player' or 'throw rocks at this spot'."
+	[
+	]

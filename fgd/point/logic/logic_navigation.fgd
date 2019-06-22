@@ -1,0 +1,18 @@
+
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ficool2/logic_navigation")
+	line(128, 128, 128, targetname, target) = logic_navigation: "An entity that is used to set navigation properties on other entities. Useful to make NPCs ignore physics props in their way that they can easily push."
+	[
+	target(target_destination) : "Navigation Entity" : : "Name of the entity to set navigation properties on."
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Start On" : 1
+		]
+
+	navprop(string) : "Nav Property" : "Ignore" : "The only valid property is to ignore this entity, so NPCs will bump into it."
+
+	// Inputs
+	input TurnOn(void) : "Turn on. The Navigation Entity will have its navigation properties set."
+	input TurnOff(void) : "Turn off. The Navigation Entity will have its navigation properties returned to the default settings."
+	input Toggle(void) : "Toggle on/off."
+	]

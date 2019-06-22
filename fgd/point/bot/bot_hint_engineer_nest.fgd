@@ -1,0 +1,6 @@
+
+@PointClass base(BaseEntityPoint, BaseObject, EnableDisable) 
+	appliesto(TF2) 
+	studio("models/bots/engineer/bot_engineer.mdl") = bot_hint_engineer_nest: "TF2 Engineer Nest Hint for Bots"
+	[
+	]

@@ -1,0 +1,55 @@
+@PointClass base(BaseEntityPoint)
+	iconsprite("editor/point_template.vmt") 
+	line(255 255 0, targetname, Template01) 
+	line(255 255 0, targetname, Template09) 
+	line(255 255 0, targetname, Template02) 
+	line(255 255 0, targetname, Template10) 
+	line(255 255 0, targetname, Template03) 
+	line(255 255 0, targetname, Template11) 
+	line(255 255 0, targetname, Template04) 
+	line(255 255 0, targetname, Template12) 
+	line(255 255 0, targetname, Template05) 
+	line(255 255 0, targetname, Template13) 
+	line(255 255 0, targetname, Template06) 
+	line(255 255 0, targetname, Template14) 
+	line(255 255 0, targetname, Template07) 
+	line(255 255 0, targetname, Template15) 
+	line(255 255 0, targetname, Template08) 
+	line(255 255 0, targetname, Template16)
+= point_template: "Turns an entity, or set of entities, into a single template that can be instanced anywhere, and multiple times. " +
+"If there are interdependencies (entity I/O, hierarchy, " +
+"or other name references) between the entities in the template, the entities in the template will have their names changed and the " +
+"interdependencies will be reconnected to the changes names. " +
+"The name change format is as follows: '<original name>&0000', where the 0000 will be replaced with the current global template instance, so wildcard searches for '<original name>*' will still find them.\n" +
+"If you don't want the name fixup to happen, because you're only spawning the template once, or you want inputs to trigger all instances of the template, check the 'Preserve entity names' spawnflag. \n" +
+"To spawn the template in other places, use an env_entity_maker."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Don't remove template entities" : 0
+		2: "Preserve entity names (Don't do name fixup)" : 1
+		]
+
+	template01(target_destination) : "Template 1"
+	template02(target_destination) : "Template 2"
+	template03(target_destination) : "Template 3"
+	template04(target_destination) : "Template 4"
+	template05(target_destination) : "Template 5"
+	template06(target_destination) : "Template 6"
+	template07(target_destination) : "Template 7"
+	template08(target_destination) : "Template 8"
+	template09(target_destination) : "Template 9"
+	template10(target_destination) : "Template 10"
+	template11(target_destination) : "Template 11"
+	template12(target_destination) : "Template 12"
+	template13(target_destination) : "Template 13"
+	template14(target_destination) : "Template 14"
+	template15(target_destination) : "Template 15"
+	template16(target_destination) : "Template 16"
+
+	// Inputs
+	input ForceSpawn(void) : "Spawn an instance of the template at the original position."
+
+	// Outputs
+	output OnEntitySpawned(void) : "Fired after spawning an instance of this template."
+	]

@@ -1,0 +1,24 @@
+@SolidClass base(Trigger) 
+	line(255 255 255, targetname, filtername) 
+	line(255 255 0, targetname, target) 
+	line(0 255 0, target, landmark) 
+= trigger_teleport: "A trigger volume that teleports entities that touch it. " +
+	"Entities are teleported to the Remote Destination, and have their angles set to that of the Remote Destination's. " +
+	"If a Local Destination Landmark is specified, teleported entities are offset from " +
+	"the target by their initial offset from the landmark, and their angles are left alone."
+	[
+	target(target_destination) : "Remote Destination" : : "The entity specifying the point to which entities should be teleported."
+	landmark(target_destination) : "Local Destination Landmark" : : "If specified, then teleported entities are offset " +
+		"from the target by their initial offset from the landmark."
+
+	// This clearly moved from flag to keyvalue.
+	spawnflags[until_ASW](flags)  =
+		[
+		32: "Preserve angles even when a local landmark is not specified" : 0
+		]
+	uselandmarkangles[since_ASW](boolean) : "Use Landmark Angles" : 0 : "Forces the teleported object to snap to the angles of the destination landmark."
+	checkdestifclearforplayer[since_CSGO](boolean) : "Only Spawn-Valid Destinations" : 0 : "Only teleport if there is a clear teleport destination."
+
+	// Inputs
+	input SetRemoteDestination[P2](string) : "Set a new target to teleport to."
+	]

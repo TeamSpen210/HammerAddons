@@ -1,0 +1,13 @@
+@PointClass base(BaseEntityPoint)
+	size(-16 -16 0, 16 16 72) 
+	color(127 127 127) = func_ladderendpoint: "An entity used to specify the endpoints of a ladder. " +
+		"This entity is functional, but has been replaced by the easier-to-use func_useableladder entity. " +
+		"Left in only for backwards-compatibility!\n\n" +
+
+		"To be valid, a full sized player hull traced between the start and end points must not be obstructed at level activation time. " +
+		"The angle determines in which direction the player leaves the ladder if the player presses the +jump button.\n\n" +
+
+		"Note: This entity is non-functional in Counter-Strike: Source. In CS:S, use func_ladder instead."
+	[
+	target(target_destination) : "Other" : : "A ladder goes between any two func_ladderendpoints pointing at each other."
+	]

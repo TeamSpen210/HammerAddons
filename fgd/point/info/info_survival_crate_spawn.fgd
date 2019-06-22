@@ -1,0 +1,9 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(CSGO) 
+	studio("models/props_junk/wood_crate001a.mdl") = info_survival_crate_spawn: "This entity marks a potential spawn point for a survival crates. "
+	[
+	bonuscrate(boolean) : "Bonus Crate?" : 0 : "Bonus crates spawn loot that is higher than default and will not be included in the initial spawn wave collection.."
+
+	// Inputs
+	input ForceSpawnBonusCrate(void) : "Forces a bonus crate to spawn on intput."
+	]

@@ -1,0 +1,6 @@
+@PointClass base(WeaponSpawn) 
+	appliesto(L4D, L4D2)
+	studioprop("models/w_models/weapons/w_eq_pipebomb.mdl")
+= weapon_pipe_bomb_spawn: "Pipe Bomb"
+	[
+	]

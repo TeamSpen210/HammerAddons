@@ -1,0 +1,19 @@
+@PointClass base(BaseEntityPoint) 
+	studio("models/editor/axis_helper.mdl") 
+	color(200 200 0) 
+	iconsprite("editor/ts2do/env_message.vmt") 
+	sphere(radius) = point_message: "An entity that displays a text message in the world, at its origin."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Start Disabled" : 0
+		]
+
+	message(string) : "Entity Message"
+	radius(integer) : "Show message radius" : 128 : "Distance the player must be within to see this message."
+	developeronly(boolean) : "Developer Only?" : 0 : "If set, this message will only be visible when developer mode is on."
+
+	// Inputs
+	input Enable(void) : "Start displaying the message text, if the player is within the message radius."
+	input Disable(void) : "Stop displaying the message text."
+	]

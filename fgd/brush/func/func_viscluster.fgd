@@ -1,0 +1,6 @@
+@SolidClass color(180 180 0)
+= func_viscluster: 
+	"Any visleafs touching this brush will assume they can see each other. " +
+	"Place across large open areas to help reduce compile times."
+	[
+	]

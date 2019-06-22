@@ -1,0 +1,9 @@
+@PointClass base(BaseEntityPoint) 
+	color(200 0 0) 
+	iconsprite("editor/point_servercommand.vmt") 
+= point_servercommand: "An entity that issues commands to the server console."
+	[
+
+	// Inputs
+	input Command(string) : "Command to execute."
+	]

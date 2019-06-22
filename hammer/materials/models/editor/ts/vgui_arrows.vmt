@@ -1,0 +1,5 @@
+VertexLitGeneric
+{
+	$baseTexture "models/editor/ts/vgui_arrows"
+	$translucent 1
+}

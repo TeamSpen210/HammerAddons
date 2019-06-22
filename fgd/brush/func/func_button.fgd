@@ -1,0 +1,29 @@
+@SolidClass base(BaseEntityVisBrush) 
+= func_button: "A brush entity that's designed to be used for a player-useable button. " +
+	"When used by the player, it moves to a pressed position. " +
+	"Do not lock while pressed; it will not return when unlocked."
+	[
+	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "Specifies the direction of motion to move when the button is used."
+	speed(integer) : "Speed" : 5 : "The speed that the button moves, in units per second."
+
+	health(integer) : "Health (Obsolete)" : 0 : "Legacy method of specifying whether or not the button can be shot to activate it. Use the 'Damage Activates' spawnflag instead."
+
+	lip(integer) : "Lip" : 0 : "The amount the button will keep overlapping with the original position. The distance moved = the size of the brush on the movement axis - lip."
+
+	wait(integer) : "Delay Before Reset (-1 stay)" : 3 : "Amount of time, in seconds, after the button has been pressed before it returns to the starting position. " +
+		"Once it has returned, it can be used again. If the value is set to -1, the button never returns."
+		
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Don't move" : 0
+		32: "Toggle" : 0
+		256: "Touch Activates" : 0
+		512: "Damage Activates" : 0
+		1024: "Use Activates" : 1
+		2048: "Starts locked" : 0
+		4096: "Sparks" : 0
+		16384: "Non-solid" : 0 [since_CSGO]
+		]
+
+	min_use_angle[since_CSGO](float) : "Use Look-At Limit" : 0.8 : "Limit the usable look-at-angle. -1 is looking directly away, 0 is looking perpendicular, 1 is looking directly at."
+	]

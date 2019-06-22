@@ -1,0 +1,11 @@
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	size(-8 -8 -8, 8 8 8) = ai_npc_eventresponsesystem: "An entity that allows you to generate events for nearby friendly NPCs to respond to."
+	[
+
+	// Inputs
+	input TriggerResponseEvent(string) : "Fire an NPC Response Event. The parameter should match the response rules concept that any nearby friendly NPCs will try to speak."
+	input ForceTriggerResponseEvent(string) : "Fire an NPC Response Event, and force the first available NPC to speak the response (breaking them out of any scene they're in). The parameter should match the response rules concept that any nearby friendly NPCs will try to speak."
+	input ForceTriggerResponseEventNoCancel(string) : "Fire an NPC Response Event, and force the first available NPC to speak the response (but don't break them out of any scene they're in). The parameter should match the response rules concept that any nearby friendly NPCs will try to speak."
+	]

@@ -1,0 +1,16 @@
+
+@NpcClass base(VehicleDriverNPC) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio("models/roller.mdl") = npc_cranedriver: "NPC used to drive cranes."
+	[
+	releasepause(float) : "Pause time before dropping a ForceDrop specified object." : 0
+
+	// Inputs
+	input ForcePickup(string) : "Force the driver to pickup the specified entity (by targetname)"
+	input ForceDrop(string) : "Force the driver to drop the currently held object at the specified entity's location."
+
+	// Outputs
+	output OnPickedUpObject(void) : "Fired when the ForcePickup specified object has been picked up."
+	output OnDroppedObject(void) : "Fired when the ForceDrop specified object has been dropped."
+	output OnPausingBeforeDrop(void) : "Fired at the start of the pause before dropping the ForceDrop specified object."
+	]

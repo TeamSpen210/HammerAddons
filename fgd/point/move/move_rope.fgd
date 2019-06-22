@@ -1,0 +1,13 @@
+@MoveClass base(BaseEntityPoint, KeyFrame, RopeKeyFrame) 
+	studio("models/editor/axis_helper.mdl")
+	animator()
+= move_rope: "The first node in set of nodes that are used to place ropes in the world. It should connect to 1 or more keyframe_rope entities."
+	[
+	positioninterpolator(choices) : "Position Interpolator" : 2 : "Curve Type. Currently only type 2 (Rope) is fully supported." =
+		[
+		0: "Linear"
+		1: "Catmull-Rom Spline"
+		2: "Rope"
+		]
+
+	]

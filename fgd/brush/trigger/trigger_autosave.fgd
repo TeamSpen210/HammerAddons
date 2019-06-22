@@ -1,0 +1,8 @@
+@SolidClass base(Targetname, MasterEnt) 
+= trigger_autosave: "A trigger volume that autosaves when the player touches it."
+	[
+	newlevelunit(boolean) : "Force New Level Unit" : 0 : "If set, the save will discard any savedata from previous levels, for the purpose of keeping savegame filesizes down. Can only be" + " safely used if there is no way for the player to return to previous levels."
+
+	dangeroustimer(float) : "Dangerous Timer" : "0" : "The number of seconds the player must survive before this autosave takes effect."
+	minimumhitpoints(integer) : "Minumum Hit Points" : 0 : "Don't save dangerous when player has less than this many hitpoints."
+	]

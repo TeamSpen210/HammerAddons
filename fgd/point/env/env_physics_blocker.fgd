@@ -1,0 +1,27 @@
+@PointClass base(BaseEntityPoint) 
+	obb(boxmins, boxmaxs)
+	appliesto(L4D2)
+= env_physics_blocker: "An entity which blocks players and physics objects."
+	[
+	boxmins(vector) : "Mins" : "-8 -8 -8"
+	boxmaxs(vector) : "Maxs" : "8 8 8"
+	initialstate(choices) : "Initial State" : 1 =
+		[
+		0: "Disabled"
+		1: "Enabled"
+		]
+
+	blocktype(choices) : "Blocks" : 0 =
+		[
+		0: "Everyone"
+		1: "Survivors"
+		2: "Player Infected"
+		3: "All Special Infected (Player and AI)"
+		4: "All players and physics objects"
+		]
+
+
+	// Inputs
+	input Enable(void) : "Enables the Blocker"
+	input Disable(void) : "Disables the Blocker"
+	]

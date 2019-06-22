@@ -1,0 +1,10 @@
+@SolidClass base(Trigger) 
+	appliesto(TF2) = trigger_player_respawn_override: "Respawn Override"
+	[
+	respawntime(float) : "Respawn Time" : -1 : "The number of seconds before players that die inside the volume of this trigger can respawn.  Setting -1 will allow the game to decide."
+	respawnname(string) : "Respawn Entity Name" : : "The name of the player team spawn(s) to use when a player dies in this volume."
+
+	// Inputs
+	input SetRespawnTime(float) : "The number of seconds before players that die inside the volume of this trigger can respawn."
+	input SetRespawnName(string) : "The name of the info_player_teamspawn to use when players die inside the volume of this trigger."
+	]

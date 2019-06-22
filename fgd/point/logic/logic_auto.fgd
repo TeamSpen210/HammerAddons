@@ -1,0 +1,40 @@
+// If 'Remove on Fire' is unchecked, this behaves like any normal entity.
+@PointClass
+	base(BaseEntityPoint)
+	iconsprite("editor/logic_auto.vmt") 
+	color(0 100 250) 
+= logic_auto: "Fires outputs when a map spawns. If 'Remove on fire' flag is set the logic_auto is deleted after firing. " +
+	"It can be set to check a global state before firing. " +
+	"This allows you to only fire events based on what took place in a previous map."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Remove on fire" : 1
+		]
+
+	globalstate(string) : "Global State to Read" : : "If set, this specifies a global state to check before firing. The OnMapSpawn output will only fire if the global state is set."
+	globalstate[Hl2, EP1, EP2](choices) : "Global State to Read" : : "If set, this specifies a global state to check before firing. The OnMapSpawn output will only fire if the global state is set." =
+		[
+		"": "--- None ---"
+		"gordon_precriminal": "Gordon pre-criminal"
+		"antlion_allied": "Antlions are player allies"
+		"suit_no_sprint": "Suit sprint function not yet enabled"
+		"super_phys_gun": "Super phys gun is enabled"
+		"friendly_encounter": "Friendly encounter sequence (lower weapons, etc.)"
+		"gordon_invulnerable": "Gordon is invulnerable"
+		"no_seagulls_on_jeep": "Don't spawn seagulls on the jeep"
+		"is_console": "Game is running on a console"
+		"is_pc": "Game is running on a PC"
+		]
+
+
+	// Outputs
+	output OnMapSpawn(void) : "Fired when the map is loaded for any reason."
+	output OnNewGame(void) : "Fired when the map is loaded to start a new game."
+	output OnLoadGame(void) : "Fired when the map is loaded from a saved game."
+	output OnMapTransition(void) : "Fired when the map is loaded due to a level transition."
+	output OnBackgroundMap(void) : "Fired when the map is loaded as a background to the main menu."
+	output OnMultiNewMap(void) : "Fired only in multiplayer, when a new map is loaded."
+	output OnMultiNewRound(void) : "Fired only in multiplayer, when a new round is started. Only fired in multiplayer games that use round-based gameplay."
+	output OnDemoMapSpawn[L4D2](void) : "Fired when the map is loaded in Demo Mode."
+	]

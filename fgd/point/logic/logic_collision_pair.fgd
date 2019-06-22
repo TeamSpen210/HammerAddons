@@ -1,0 +1,14 @@
+@PointClass base(BaseEntityPoint) 
+	color(128 128 128) 
+	iconsprite("editor/ficool2/logic_collision_pair.vmt") 
+	line(128 128 128, attach1, attach2) 
+= logic_collision_pair: "An entity that can be used to enables/disable vphysics collisions between two target entities."
+	[
+	attach1(target_destination) : "Attachment 1" : : "The first entity."
+	attach2(target_destination) : "Attachment 2" : : "The second entity."
+	startdisabled(boolean) : "Start with collisions disabled" : 1
+	
+	// Inputs
+	input EnableCollisions(void) : "Enable collisions between the first and second entity."
+	input DisableCollisions(void) : "Disable collisions between the first and second entity."
+	]

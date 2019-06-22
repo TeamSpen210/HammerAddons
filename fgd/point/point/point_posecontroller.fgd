@@ -1,0 +1,38 @@
+@PointClass base(BaseEntityPoint)
+	size(-8 -8 -8, 8 8 8) 
+	line(255 255 0, targetname, propname) 
+= point_posecontroller: "An entity that controls a pose parameter of a prop and cycles the pose clientside."
+	[
+	propname(target_destination) : "Prop Name" : : "Name of the prop to control."
+	poseparametername(string) : "Pose Parameter Name" : : "Name of the pose parameter to control."
+	posevalue(float) : "Pose Parameter Value" : 0 : "Normalized value for the pose parameter from 0.0 and 1.0 (maps to min and max range)."
+	interpolationtime(float) : "Interpolation Time" : 0 : "Number of seconds (0.0 to 10.0) for client to match absolue pose values."
+	interpolationwrap(boolean) : "Should wrap from 0.0 to 1.0 when interpolating." : 0
+	cyclefrequency(float) : "Cycle Frequency" : 0 : "Base cycles per second from -10.0 to 10.0."
+
+	fmodulationtype[engine](integer) : "Frequency Modulation Type" : 0
+	fmodulationtype(choices) : "Frequency Modulation Type" : 0 =
+		[
+		0: "None"
+		1: "Sine"
+		2: "Square"
+		3: "Triangle"
+		4: "Sawtooth"
+		5: "Noise"
+		]
+
+	fmodtimeoffset(float) : "Frequency Modulation Time Offset" : 0 : "Modulation time offset from -1.0f to 1.0."
+	fmodrate(float) : "Frequency Modulation Rate" : 0 : "Modulation cycles per second from -10.0f to 10.0."
+	fmodamplitude(float) : "Frequency Modulation Amplitude" : 0 : "Modulation extents from 0.0f to 10.0."
+
+	// Inputs
+	input SetPoseParameterName(string) : "Sets the pose parameter to control."
+	input SetPoseValue(float) : "Set the pose parameter to a normalized value between 0.0 and 1.0 (maps to min and max range)."
+	input SetInterpolationTime(float) : "Set the interpolation time to a number of seconds between 0.0 and 10.0."
+	input SetCycleFrequency(float) : "Set the pose parameter's base cycles per second from -10.0f to 10.0."
+	input SetFModType(integer) : "Set the type of frequency modulation."
+	input SetFModTimeOffset(float) : "Set the modulation time offset from -1.0f to 1.0."
+	input SetFModRate(float) : "Set the modulation cycles per second from -10.0f to 10.0."
+	input SetFModAmplitude(float) : "Set the modulation extents from 0.0f to 10.0."
+	input RandomizeFMod(float) : "Randomize the frequency modulation by an extremeness of 0.0 to 1.0."
+	]

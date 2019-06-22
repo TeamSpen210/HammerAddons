@@ -1,0 +1,35 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio("models/antlion.mdl") 
+	sphere() = npc_antlion: "Antlions will run away from ai_sound, type: Thumper."
+	[
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Burrow when eluded" : 0
+		131072: "Use Ground Checks" : 0
+		262144: "Worker Type" : 0
+		]
+
+	radius(integer) : "Alert Radius" : 256
+	eludedist(integer) : "Distance until eluded" : 1024 : "Only available when Burrow When Eluded is flagged"
+	ignorebugbait(boolean) : "Ignore Bugbait" : 0
+	unburroweffects(boolean) : "Suppress unburrow effects" : 0
+	startburrowed(boolean) : "Start Burrowed" : 0
+
+
+	// Inputs
+	input Unburrow(void) : "Unburrow from the ground"
+	input Burrow(void) : "Burrow into the ground"
+	input BurrowAway(void) : "Burrow into the ground and remove the antlion"
+	input FightToPosition(string) : "Fight to position"
+	input EnableJump(void) : "Allow non-navigational jumping"
+	input DisableJump(void) : "Disallow non-navigational jumping"
+	input IgnoreBugbait(void) : "Ignore bugbait"
+	input HearBugbait(void) : "Hear bugbait"
+
+	// Outputs
+	output OnReachedFightGoal(void) : "Fires when the antlion reaches his specified fight-to location"
+	output OnUnBurrowed(void) : "Fires when the antlion unburrows"
+	]

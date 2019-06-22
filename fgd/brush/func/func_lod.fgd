@@ -1,0 +1,18 @@
+@SolidClass base(BaseEntityVisBrush) 
+	sphere(DisappearDist)
+	sphere(DisappearMinDist)
+	sphere(DisappearMaxDist)
+= func_lod: "Brush-built model that fades out over a specified distance. " +
+	"Useful for creating world detail that doesn't need to be drawn far away, for performance reasons."
+	[
+	solid[engine](boolean) : "Solid" : 0
+	solid(choices) : "Solid" : 0 : "Set whether or not these brushes should collide with other entities." =
+		[
+		0: "Solid"
+		1: "Nonsolid"
+		]
+		
+	disappeardist[!L4D2](integer) : "Disappear Distance" : 2000 : "Distance at which these brushes should fade out."
+	disappearmindist[L4D2](integer) : "Disappear Min Distance" : 2000 : "Distance at which these brushes should starting fade out."
+	disappearmaxdist[L4D2](integer) : "Disappear Max Distance" : 2200 : "Distance at which these brushes should be completely faded out."
+	]

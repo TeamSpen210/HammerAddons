@@ -1,0 +1,4 @@
+@PointClass base(BaseEntityPoint) 
+	studio("models/editor/playerstart.mdl") = info_teleport_destination: "An entity that does nothing itself, but can be used to specify the destination for a trigger_teleport entity. An info_target can be used instead."
+	[
+	]

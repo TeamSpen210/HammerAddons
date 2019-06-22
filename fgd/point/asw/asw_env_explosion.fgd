@@ -1,0 +1,24 @@
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW) 
+	iconsprite("editor/env_explosion.vmt") = asw_env_explosion: "An entity that creates an explosion at its origin."
+	[
+	idamage(integer) : "Damage" : 100 : "The amount of damage done by the explosion."
+	iradiusoverride(integer) : "Radius Override" : 0 : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude.  (doesn't affect the fireball effect, yet)"
+	explosionsound(sound) : "Explosion Sound" : "ASW_Explosion.Explosion_Default" : "Choose what sound to play when the explosion happens.  If you don't want a sound to play, click the No Sound flag."
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "No Damage" : 0
+		2: "Repeatable" : 0
+		4: "No Fireball" : 0
+		8: "No Decal" : 0
+		16: "No Sound" : 0
+		32: "Damage above surface only" : 0
+		64: "Generic damage" : 0
+		]
+
+	ignoredentity(target_destination) : "Ignored Entity" : : "Do not harm or affect the named entity."
+
+	// Inputs
+	input Explode(void) : "Triggers the explosion."
+	]

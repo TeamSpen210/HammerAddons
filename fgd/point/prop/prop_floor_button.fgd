@@ -1,0 +1,16 @@
+@PointClass base(BasePortButton) 
+	appliesto(P2) 
+	studioprop() = prop_floor_button: "A 1500 MegaWatt Aperture Science Super-Colliding Super Button, which is pressed by a player or objects."
+	[
+	model[engine](studio) : "Button model" : "models/props/portal_button.mdl" : "Choose the amount of damage for the button, or type in a custom model."
+	model(choices) : "Button model" : "models/props/portal_button.mdl" : "Choose the amount of damage for the button, or type in a custom model." =
+		[
+		"models/props/portal_button.mdl": "Clean"
+		"models/props/portal_button_damaged02.mdl": "Slightly Damaged"
+		"models/props/portal_button_damaged01.mdl": "Very Damaged"
+		]
+
+	// Outputs
+	output OnPressedBlue(void) : "Called in Coop when the button has been pressed by ATLAS."
+	output OnPressedOrange(void) : "Called in Coop when the button has been pressed by P-Body."
+	]

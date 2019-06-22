@@ -1,0 +1,15 @@
+@PointClass base(BaseEntityAnimating) 
+	appliesto(P1, P2) 
+	studioprop("models/props/telescopic_arm.mdl") = prop_telescopic_arm: "Telescopic Arm. Useless."
+	[
+
+	// Inputs
+	input Enable(void) : "Enable Thumper"
+	input Disable(void) : "Disable Thumper"
+	input SetTarget(target_destination) : "Set the entity to target."
+	input TargetPlayer(void) : "Set the player as the entity to target."
+
+	// Outputs
+	output OnFoundTarget(void) : "Arm has direct LOS to target entity."
+	output OnLostTarget(void) : "Arm has lost direct LOS to target entity."
+	]

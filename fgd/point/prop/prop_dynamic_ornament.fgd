@@ -1,0 +1,14 @@
+@PointClass base(prop_dynamic_base) 
+= prop_dynamic_ornament: "A way to attach one studio model to another as an ornament. It will render in the way that player/NPC weapons render."
+	[
+	solid(choices) : "Collisions" : "0" =
+		[
+		0: "Not Solid"
+		]
+
+	initialowner(target_destination) : "Target Entity" : : "Name of the entity that this ornament should attach to, at startup."
+
+	// Inputs
+	input SetAttached(string) : "Attach the ornament to a different entity. Parameter should be the name of entity to attach to."
+	input Detach(string) : "Detach from the Target Entity and become invisible. The ornament can be re-attached with the SetAttached input."
+	]

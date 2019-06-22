@@ -1,0 +1,18 @@
+// Use the appropriate model in each L4D game, for spawn points.
+@BaseClass base (_L4DSurvivor1, _L4DSurvivor2) = L4DSurvivorStudio
+	[
+	]
+
+@BaseClass 
+	appliesto(L4D) 
+	studio("models/survivors/survivor_biker.mdl")
+= _L4DSurvivor1
+	[
+	]
+	
+@BaseClass 
+	appliesto(L4D2) 
+	studio("models/survivors/survivor_coach.mdl")
+= _L4DSurvivor2
+	[
+	]

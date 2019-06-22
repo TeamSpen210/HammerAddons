@@ -1,0 +1,5 @@
+@BaseClass 
+	color(0 255 0)
+= PlayerClass: "Specific color for player spawns and similar entities."
+	[
+	]

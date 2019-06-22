@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_eq_fraggrenade_dropped.mdl") = weapon_hegrenade: "HE Grenade"
+	[
+	]

@@ -1,0 +1,98 @@
+@PointClass base(BaseEntityAnimating, SetModel, Glow) 
+	studioprop()
+	line(255, 255, 255, targetname, slavename)
+= prop_door_rotating: "An entity used to place a door in the world."
+	[
+	slavename(target_destination) : "Slave Name" : : "The name of any doors that should be slaved to this door " +
+		"(i.e. should open when this one opens, and close when this one closes)."
+
+	hardware[engine](integer) : "Hardware Type" : 1
+	hardware(choices) : "Hardware Type" : 1 =
+		[
+		0: "<None>"
+		1: "Lever"
+		2: "Push bar"
+		3: "Keypad"
+		]
+
+	ajarangles(angle) : "Ajar Angles (Pitch Yaw Roll)" : "0 0 0" : "If the door 'Spawn Position' is set to Ajar, " +
+		"these are the angles to spawn at, instead of being open or closed."
+
+	spawnpos[engine](integer) : "Spawn Position" : 0
+	spawnpos(choices) : "Spawn Position" : 0 =
+		[
+		0: "Closed"
+		1: "Open clockwise"
+		2: "Open counter-clockwise"
+		3: "Ajar (use Ajar Angles)"
+		]
+
+	axis(axis) : "Hinge Axis"
+	distance(float) : "Rotation Distance (deg)" : 90 : "The amount, in degrees, that the door should rotate when opened."
+	speed(integer) : "Speed" : 100 : "The speed at which the door moves."
+	soundopenoverride(sound) : "Fully Open Sound" : : "Sound played when the door has finished opening."
+	soundcloseoverride(sound) : "Fully Closed Sound" : : "Sound played when the door has finished closing."
+	soundmoveoverride(sound) : "Moving Sound" : : "Sound played when the door starts to move."
+	returndelay(integer) : "Delay Before close (-1 stay open)" : -1 : "Amount of time, in seconds, after the door has opened before it closes. " +
+		"If the value is set to -1, the door never closes itself."
+	dmg(integer) : "Damage Inflicted When Blocked" : 0 : "Amount of damage done to entities that block the movement of this door, per frame."
+	health(integer) : "Health (0 = Unbreakable)" : 0
+	soundlockedoverride(sound) : "Locked Sound" : : "Sound played when the player tries to open the door, and fails because it's locked."
+	soundunlockedoverride(sound) : "Unlocked Sound" : : "Sound played when the door is unlocked."
+
+	forceclosed(boolean) : "Force Closed" : "0" : "If set, this door will close no matter what. " +
+		"Useful for doors that have to close even if the player tries to block them with objects."
+
+	spawnflags(flags)  =
+		[
+		1: "Starts Open" : 0
+		2048: "Starts locked" : 0
+		4096: "Door silent (No sound, and does not alert NPCs)" : 0
+		8192: "Use closes" : 1
+		16384: "Door silent to NPCS (Does not alert NPCs)" : 0
+		32768: "Ignore player +USE" : 0
+		524288: "Start Breakable" : 0 [since_CSGO]
+		524288 : "Start Unbreakable" : 0 [L4D, L4D2]
+		]
+
+	opendir[engine](integer) : "Open Direction" : 0
+	opendir(choices) : "Open Direction" : 0 : "Force the door to open only forwards or only backwards. Both directions is the standard door behavior." =
+		[
+		0: "Open Both Directions"
+		1: "Open Clockwise Only"
+		2: "Open Counter-Clockwise Only"
+		]
+
+	glowdist[since_CSGO](integer) : "Glow Distance" : 1024
+	glowenabled[since_CSGO](boolean) : "Does the prop glow by default?" : 0
+	glowcolor[since_CSGO](color255) : "Glow Color (R G B)" : "255 255 255" : "The color of the glow (if enabled)."
+	rendercolor(color255) : "Color (R G B)" : "255 255 255"
+
+	// Inputs
+	input Open(void) : "Open the door, if it is not fully open."
+	input OpenAwayFrom(string) : "Open the door away from the specified entity."
+	input Close(void) : "Close the door, if it is not fully closed."
+	input Toggle(void) : "Toggle the door between open and closed."
+	input Lock(void) : "Lock the door."
+	input Unlock(void) : "Unlock the door."
+	input SetRotationDistance(float) : "Set the distance (in degrees) between Open and Closed."
+	input SetSpeed(float) : "Set the speed at which the door rotates. 100 is default."
+	input MoveToRotationDistance[P2, !TF2](float) : "Sets the open distance (in degrees) and moves there."
+	input SetGlowEnabled[since_CSGO](void) : "Starts the glow."
+	input SetGlowDisabled[since_CSGO](void) : "Stops the glow."
+	input SetUnbreakable[L4D, L4D2](void) : "The door can't be broken."
+	input SetBreakable[L4D, L4D2](void) : "The door can be broken."
+
+	// Outputs
+	output OnClose(void) : "Fired when the door is told to close."
+	output OnOpen(void) : "Fired when the door is told to open."
+	output OnFullyOpen(void) : "Fired when the door reaches the fully open position."
+	output OnFullyClosed(void) : "Fired when the door reaches the fully closed position."
+	output OnBlockedClosing(void) : "Fired when the door is blocked while closing."
+	output OnBlockedOpening(void) : "Fired when the door is blocked while opening."
+	output OnUnblockedClosing(void) : "Fired when the door is unblocked while closing."
+	output OnUnblockedOpening(void) : "Fired when the door is unblocked while opening."
+	output OnLockedUse(void) : "Fired when the player uses the door, but it is locked."
+	output OnRotationDone[since_P2](void) : "Fired when the door arrives at it's goal angle."
+	output OnBreak[L4D, L4D2](void) : "Fired when the door changes damage states."
+	]

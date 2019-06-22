@@ -1,0 +1,18 @@
+@PointClass base(BaseEntityPoint)
+	color(200 0 0)
+	iconsprite("editor/ficool2/env_screeneffect")
+= env_screeneffect: "Allows screenspace effects to be played on the player's view."
+	[
+	type[engine](integer) : "Effect Type" : 0
+	type(choices) : "Effect Type" : "0" : "Which effect to use." =
+		[
+		0: "Advisor Stun"
+		1: "Intro Blur"
+		2: "Groggy Vision"
+		]
+
+
+	// Inputs
+	input StartEffect(float) : "Start the effect with the duration in seconds as the passed parameter."
+	input StopEffect(float) : "Stop the effect."
+	]

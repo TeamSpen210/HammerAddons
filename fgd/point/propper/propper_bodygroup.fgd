@@ -1,0 +1,40 @@
+@PointClass base(Propper) 
+	appliesto(PROPPER)
+	iconsprite("editor/logic_case.vmt")
+	line(128 128 128, groupname, body01)
+	line(128 128 128, groupname, body02)
+	line(128 128 128, groupname, body03)
+	line(128 128 128, groupname, body04)
+	line(128 128 128, groupname, body05)
+	line(128 128 128, groupname, body06)
+	line(128 128 128, groupname, body07)
+	line(128 128 128, groupname, body08)
+	line(128 128 128, groupname, body09)
+	line(128 128 128, groupname, body10)
+	line(128 128 128, groupname, body11)
+	line(128 128 128, groupname, body12)
+	line(128 128 128, groupname, body13)
+	line(128 128 128, groupname, body14)
+	line(128 128 128, groupname, body15)
+	line(128 128 128, groupname, body16)
+= propper_bodygroup: "Bodygroups allow you to swap between parts of a mesh. " +
+	"For example, you could have a door with several different knobs and allow the mapper to pick one."
+	[
+	groupname(target_source) : "Bodygroup name" : : "A name for the bodygroup. This is required."
+	body01(target_destination) : "Body Part 01" : : "Pick a brush entity (such as func_brush) to be the body group."
+	body02(target_destination) : "Body Part 02" : : "Pick a brush entity (such as func_brush) to be the body group."
+	body03(target_destination) : "Body Part 03" : : "Pick a brush entity (such as func_brush) to be the body group."
+	body04(target_destination) : "Body Part 04" : : "Pick a brush entity (such as func_brush) to be the body group."
+	body05(target_destination) : "Body Part 05" : : "Pick a brush entity (such as func_brush) to be the body group."
+	body06(target_destination) : "Body Part 06" : : "Pick a brush entity (such as func_brush) to be the body group."
+	body07(target_destination) : "Body Part 07" : : "Pick a brush entity (such as func_brush) to be the body group."
+	body08(target_destination) : "Body Part 08" : : "Pick a brush entity (such as func_brush) to be the body group."
+	body09(target_destination) : "Body Part 09" : : "Pick a brush entity (such as func_brush) to be the body group."
+	body10(target_destination) : "Body Part 10" : : "Pick a brush entity (such as func_brush) to be the body group."
+	body11(target_destination) : "Body Part 11" : : "Pick a brush entity (such as func_brush) to be the body group."
+	body12(target_destination) : "Body Part 12" : : "Pick a brush entity (such as func_brush) to be the body group."
+	body13(target_destination) : "Body Part 13" : : "Pick a brush entity (such as func_brush) to be the body group."
+	body14(target_destination) : "Body Part 14" : : "Pick a brush entity (such as func_brush) to be the body group."
+	body15(target_destination) : "Body Part 15" : : "Pick a brush entity (such as func_brush) to be the body group."
+	body16(target_destination) : "Body Part 16" : : "Pick a brush entity (such as func_brush) to be the body group."
+	]

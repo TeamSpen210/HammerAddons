@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_knife.mdl") = weapon_knife: "Knife"
+	[
+	]

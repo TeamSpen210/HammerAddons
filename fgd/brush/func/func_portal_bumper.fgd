@@ -1,0 +1,14 @@
+
+@SolidClass base(BaseEntityBrush, Origin) 
+	appliesto(P1, P2) = func_portal_bumper: "A region which 'bumps' portals outside of it, but will still allow portals to be placed on it."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Start inactive" : 0
+		]
+
+	// Inputs
+	input Deactivate(void) : "Turn off bumping functionality"
+	input Activate(void) : "Turn on bumping functionality"
+	input Toggle(void) : "Toggle bumping functionality"
+	]

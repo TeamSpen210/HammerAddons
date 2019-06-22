@@ -1,0 +1,7 @@
+@PointClass base(BasePortButton) 
+	appliesto(P2) 
+	studioprop() = prop_floor_cube_button: "A floor button which is activated by a prop_weighted_cube."
+	[
+	model(studio) : "Button model" : "models/props/box_socket.mdl" : "Model for the Cube Button. Custom models can be used."
+	acceptsball(boolean) : "Accepts Balls" : 0 : "Do Edgeless Safety Cubes activate this? Should almost always be No unless no balls are in the map."
+	]

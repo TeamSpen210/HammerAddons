@@ -1,0 +1,9 @@
+@PointClass 
+	sphere(max_range)
+	iconsprite("editor/ficool2/func_fish_pool")
+= func_fish_pool: "Creates a school of interactive fish that swim near this entity."
+	[
+	model(studio) : "World model" : "models/Junkola.mdl"
+	fish_count(integer) : "Fish Count" : 10 : "Number of Fish in this Pool"
+	max_range(float) : "Max Range" : 150 : "How far away a Fish can wander (max 255)"
+	]

@@ -1,0 +1,22 @@
+@PointClass base(BaseEntityPoint) 
+	color(200 50 0)
+	iconsprite("editor/ficool2/env_smoketrail")
+	sphere(spawnradius)
+= env_smoketrail: "An entity that creates a smoke trail."
+	[
+	opacity(float) : "Sprite Opacity" : "0.75" : "Opacity of the sprites (range from 0 - 1)."
+	spawnrate(float) : "Spawn Rate" : 20 : "Number of particles to emit each second."
+	lifetime(float) : "Particle Life Time" : "5.0" : "Number of seconds until each particle dies."
+	startcolor(color255) : "Start Color" : "192 192 192" : "Starting color of the emitted particles."
+	endcolor(color255) : "End Color" : "160 160 160" : "Ending color of the emitted particles."
+	emittime(float) : "Emitter Life Time" : 0 : "Number of seconds until the env_smoketrail stops emitting particles. 0 means never stop emitting particles."
+	minspeed(float) : "Minimum Random Speed" : 10 : "Minimum randomly-directed speed to use for emitted particles."
+	maxspeed(float) : "Maximum Random Speed" : 20 : "Maximum randomly-directed speed to use for emitted particles."
+	mindirectedspeed(float) : "Minimum Directed Speed" : 0 : "Minimum speed along the env_smoketrail's forward direction (x axis) to use for emitted particles."
+	maxdirectedspeed(float) : "Maximum Directed Speed" : 0 : "Maximum speed along the env_smoketrail's forward direction (x axis) to use for emitted particles."
+	startsize(float) : "Starting particle size" : 15 : "Starting particle size."
+	endsize(float) : "Ending particle size" : 50 : "Ending particle size."
+	spawnradius(float) : "Spawn radius" : 15 : "Distance from env_smoketrail at which particles are emitted."
+	firesprite(sprite) : "Fire Sprite" : "sprites/firetrail.spr"
+	smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.spr"
+	]

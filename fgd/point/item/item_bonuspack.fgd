@@ -1,0 +1,10 @@
+
+@PointClass base(Targetname, TeamNum, EnableDisable, Toggle, Angles, PlayerTouch, FadeDistance) 
+	appliesto(TF2) 
+	color(0 0 200) 
+	studio("models/crafting/moustachium.mdl") 
+	sphere(fademindist) 
+	sphere(fademaxdist) = item_bonuspack: "Bonus Pack"
+	[
+	powerup_model(string) : "Model" : : "Change the model to something other than the default model."
+	]

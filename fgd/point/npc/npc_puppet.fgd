@@ -1,0 +1,12 @@
+@PointClass base(BaseNPC, SetModel)
+	studioprop() 
+	line(255 255 255, targetname, animationtarget) 
+= npc_puppet: "Puppet entity that mimics the animations of a target NPC."
+	[
+	animationtarget(target_destination) : "Animation target"
+	attachmentname(string) : "Target attachment point name"
+
+	// Inputs
+	input SetAnimationTarget(string) : "Set the animation target to use. " +
+		"An empty string will disable the puppet."
+	]

@@ -1,0 +1,7 @@
+@SolidClass base(Trigger) 
+	appliesto(TF2) = trigger_teleport_relative: "A trigger volume that teleports entities that touch it. " +
+		"Entities are teleported by Offset from their current position. " +
+		"Useful to get objects out of situations where levels or entities suddenly appear interseting with them."
+	[
+	teleportoffset(vector) : "Offset (X Y Z)" : "0 0 0" : "The offset (in World-Space Coordinates X Y Z) to teleport the entity when the trigger is touched."
+	]

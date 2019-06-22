@@ -1,0 +1,40 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(L4D, L4D2)
+= info_director
+	[
+
+	// Inputs
+	input PanicEvent(void) : "Fired when a major event happens that the director should know about."
+	input PanicEventControlled[L4D](integer) : "Like Panic Event, but allows for control some controll of intensity. Stadard values are 1 for earlier maps, 2 for later maps"
+	input ForceSurvivorPositions(void) : "Make each survivor stand at an info_survivor_position."
+	input ReleaseSurvivorPositions(void) : "Allow survivors to move freely again."
+	input FireConceptToAny(string) : "Fire a speech concept to any survivor that is capable of speaking it."
+	input StartIntro(void) : "Fire when the intro starts."
+	input FinishIntro(void) : "Fire when the intro ends."
+	input EnableTankFrustration(void) : "Can be used to enable the tank frustration meter."
+	input DisableTankFrustration(void) : "Can be used to disable the tank frustration meter."
+	input ScriptedPanicEvent[L4D2](string) : "Fired when a custom panic event wants to happen."
+	input ForcePanicEvent[L4D2](void) : "Trigger a panic event, no matter what else is going on."
+	input EndCustomScriptedStage[L4D2](void) : "End a custom scripted stage."
+	input IncrementTeamScore[L4D2](integer) : "Increment a team's score. (2=survivors, 3=infected)"
+	input BeginScript[L4D2](string) : "Begin a director script"
+	input EndScript[L4D2](void) : "End a director script"
+	input CreateNewJournal[L4D2](string) : "Create a new journal"
+	input WriteToJournal[L4D2](string) : "Add a task to the I/O Journal"
+	input ExecuteJournal[L4D2](string) : "Execute all tasks in the specified journal"
+
+	// Outputs
+	output OnGameplayStart(void) : "Fired when a map loads, all players join and gameplay begins."
+	output OnPanicEventFinished(void) : "Fired when a panic event is finished."
+	output OnCustomPanicStageFinished[L4D2](void) : "Fired when each stage of a custom panic event or custom finale finishes."
+	output OnTeamScored[L4D2](void) : "Fired when a team places a scavenge item in the scavenge goal."
+	output OnScavengeRoundStart[L4D2](void) : "Fired when a scavenge round starts."
+	output OnScavengeOvertimeStart[L4D2](void) : "Timer has run out and game went into overtime."
+	output OnScavengeOvertimeCancel[L4D2](void) : "Time was added to the clock, ending overtime."
+	output OnScavengeTimerExpired[L4D2](void) : "Time has run out, game did not enter overtime."
+	output OnScavengeIntensityChanged[L4D2](integer) : "Intensity level has changed. 1 = highest intensity, decreases as number gets larger."
+	output OnUserDefinedScriptEvent1[L4D2](void) : "Generic user defined event fired from a Squirrel script."
+	output OnUserDefinedScriptEvent2[L4D2](void) : "Generic user defined event fired from a Squirrel script."
+	output OnUserDefinedScriptEvent3[L4D2](void) : "Generic user defined event fired from a Squirrel script."
+	output OnUserDefinedScriptEvent4[L4D2](void) : "Generic user defined event fired from a Squirrel script."
+	]

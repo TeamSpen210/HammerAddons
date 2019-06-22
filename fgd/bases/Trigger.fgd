@@ -1,0 +1,18 @@
+@BaseClass base(TriggerOnce)
+= Trigger
+	[
+	// Inputs
+    input EndTouch(void) : "Fires the OnEndTouch output. If called by an entity inside the trigger, the OnEndTouch will be fired for them as the activator. Note that this input is passed even if the player is being treated as 'not' touching the trigger while outside it."
+	input DisableAndEndTouch[TF2](void) : "Disables this trigger and calls EndTouch on all currently-touching entities."
+
+	// Outputs
+	output OnStartTouchAll(void) : "Fired when an entity starts touching this trigger, and no other entities are touching it. " +
+		"Only entities that passed this trigger's filters are considered."
+	output OnEndTouch(void) : "Fired when an entity stops touching this trigger. " +
+		"Only entities that passed this trigger's filters will cause this output to fire."
+	output OnEndTouchAll(void) : "Fires when an entity stops touching this trigger, and no other entities are touching it. " +
+		"Only entities that passed this trigger's filters are considered."
+
+	output OnTouching(void) : "Fired when the TouchTest input is called. Does not call activators."
+    output OnNotTouching(void) : "Fired when the TouchTest input is called. Does not call activators."
+	]

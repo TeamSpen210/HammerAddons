@@ -1,0 +1,11 @@
+@SolidClass base(BaseEntityBrush, EnableDisable) 
+	appliesto(L4D) 
+= func_spawn_volume: "A brush entity that can be used to designate a desired spawn area"
+	[
+	startdisabled(choices) : "Start Disabled" : "1" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	]

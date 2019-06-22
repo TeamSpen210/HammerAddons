@@ -1,0 +1,39 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(CSGO) 
+	studio("models/player/tm_phoenix.mdl") 
+	sphere(hide_radius)
+= info_enemy_terrorist_spawn: "This entity marks the start point for enemy terrorists in a coop game. Should be placed at least 80 units away from each other and surrounding walls."
+	[
+	priority(integer) : "Spawn Priority (int)" : 0 : "Determines which spawn points get used first.  Smaller numbers are used before larger numbers."
+	enabled(boolean) : "Enabled by default?" : 1
+	model_to_use(studio) : "Override player model" : : "Select a model to override the model used for enemies spawned at this spawn point."
+	weapons_to_give(string) : "Weapons to spawn with" : "glock" : "Weapons and items to give to the bot on spawn. Ex. 'vesthelm, usp, awp, smokegreande, hegrenade'"
+	
+	armor_to_give[engine](int) : "Armor" : 1
+	armor_to_give(choices) : "Armor" : 1 : "What armor should the bot spawn with." =
+		[
+		0: "None"
+		1: "Vest and Helmet"
+		2: "Heavy Armor"
+		]
+
+	start_asleep(boolean) : "Spawn alseep?" : 1 : "Do the bots that spawn here start alseep? If so, they will wait until they see or hear the player to move."
+	
+	default_behaviour[engine](int) : "Default Behaviour" : 0
+	default_behavior(choices) : "Default Behavior" : 0 : "What behavior the bot should have when idle." =
+		[
+		0: "Defend Camp"
+		1: "Hunt"
+		2: "Charge Enemy"
+		3: "Defend Investigate"
+		]
+
+	bot_difficulty(integer) : "Bot Difficulty (int)" : 0 : "How hard the bot is to fight and what his skill level is. [0-7] (0 = super easy, 7 = super human)."
+	is_agressive(boolean) : "Is agressive?" : 0 : "Is the bot agreesive for his difficulty level?"
+	hide_radius(float) : "Hide Radius" : 1000 : "Range around the spawn spot the bot will try to hide. Set to 0 to hold position and never try to hide."
+
+	// Inputs
+	input SetEnabled(void) : "Sets this spawn point as enabled."
+	input SetDisabled(void) : "Sets this spawn point as disabled."
+	input ToggleEnabled(void) : "Toggle the enabled/disabled state of this spawn point."
+	]

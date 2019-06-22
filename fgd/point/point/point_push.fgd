@@ -1,0 +1,29 @@
+@PointClass base(BaseEntityPoint) 
+	sphere(radius) 
+	sphere(inner_radius) 
+	studio("models/editor/cone_helper.mdl") 
+	iconsprite("editor/ficool2/point_push")
+	frustum(influence_cone, inner_radius, radius, 255 255 255 10, -1) 
+= point_push: "Pulls objects to, or pushes them away from a point. " +
+		"In Portal 2, if a portal is placed nearby it will transfer the suction and " +
+		"produce a 'broken_tube_suck' effect for Diversity Vents."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Test LOS before pushing" : 0
+		2: "Use angles for push direction" : 0
+		4: "No falloff (constant push at any distance)" : 0
+		8: "Push players" : 1
+		16: "Push physics" : 1
+		]
+
+	enabled(boolean) : "Start Enabled" : 1
+	magnitude(float) : "Magnitude" : 100 : "How strongly to push away from the center."
+	radius(float) : "Radius" : 128 : "Radius to affect items in."
+	influence_cone(float) : "Cone of Influence" : 0 : "If greater than zero, " +
+		"the cone (in degrees) within which the object must lie for it to be affected."
+
+	// Inputs
+	input Enable(void) : "Enable the push."
+	input Disable(void) : "Disable the push."
+	]

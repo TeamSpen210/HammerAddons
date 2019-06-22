@@ -1,0 +1,21 @@
+@FilterClass base(filter_base)
+	iconsprite("editor/ficool2/filter_enemy.vmt") 
+	sphere(filter_radius) 
+	sphere(filter_outer_radius) 
+	line(0 255 0, targetname, filtername) 
+= filter_enemy: "A filter that filters a potential enemy entity by a set of criteria."
+	[
+	filtername(string) : "Name/Classname" : : "The classname or entity name to filter by. " +
+		"If the filter mode is Allow, only entities whose class name matches the given string will pass the filter. " +
+		"If the filter mode is Disallow, all entities EXCEPT those whose class name matches the given string will pass the filter."
+
+	filter_radius(float) : "Radius" : "0" : "Radius by which to test the proximity of the enemy.  " +
+		"If the filter mode is Allow, only entities whose distance is equal to or closer than the radius will pass the filter. " +
+		"If the filter mode is Disallow, all entities outside the radius will pass the filter."
+	filter_outer_radius(float) : "Outer Radius" : "0" : "Enemies outside this radius are considered invalid if Allow is set and valid if Disallow is set."
+	filter_max_per_enemy(integer) : "Max Squadmates Per Enemy" : 0 : "Maximum number of squadmates allowed to target any given entity."
+	spawnflags(flags)  =
+		[
+		1: "Do not lose target if already aquired but filter failed." : 0
+		]
+	]

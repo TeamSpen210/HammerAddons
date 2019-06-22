@@ -1,0 +1,8 @@
+
+@BaseClass 
+	appliesto(TF2) = PlayerTouch
+	[
+
+	// Outputs
+	output OnPlayerTouch(void) : "Sent when the entity is picked up by a player."
+	]

@@ -1,0 +1,26 @@
+@PointClass base(BaseEntityPoint) appliesto(!CSS)
+	sweptplayerhull() 
+= func_useableladder: "A Half-Life 2 ladder. Handles player auto mount/unmount, as well as +use to get onto the ladder. \n\n" +
+
+	"See also 'info_ladder_dismount', used to specify ladder auto-dismount points.\n\n" +
+	"Note: This entity is non-functional in Counter-Strike: Source. Use func_ladder instead."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Fake Ladder" : 0
+		]
+
+	point0(vector) : "Start" : : "Ladder end point."
+	point1(vector) : "End" : : "Ladder end point."
+	
+	startdisabled(boolean) : "Start Disabled" : 0
+	laddersurfaceproperties(string) : "Surface properties (optional)"
+
+	// Inputs
+	input Enable(void) : "Enable this ladder."
+	input Disable(void) : "Disable this ladder."
+
+	// Outputs
+	output OnPlayerGotOnLadder(void) : "Fired whenever a player gets on this ladder."
+	output OnPlayerGotOffLadder(void) : "Fired whenever a player gets off this ladder."
+	]

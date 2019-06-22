@@ -1,0 +1,4 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(TF2) = tf_logic_raid: "Raid Entity. This is used to detect a Raid map."
+	[
+	]

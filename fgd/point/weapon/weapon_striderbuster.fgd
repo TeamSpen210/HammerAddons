@@ -1,0 +1,22 @@
+
+@PointClass base(BasePropPhysics) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studioprop() 
+	sphere(fademindist) 
+	sphere(fademaxdist) 
+	studio("models/magnusson_device.mdl") = weapon_striderbuster: "Strider Buster"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		8388608: "Don't use game_weapon_manager" : 0
+		]
+
+	dud(boolean) : "Dud Bomb" : 0 : "This striderbuster is not armed (to be used for training)."
+
+
+	// Outputs
+	output OnAttachToStrider(void) : "Fired when the striderbuster successfully attaches to a strider."
+	output OnDetonate(void) : "Fired when the striderbuster detonates."
+	output OnShatter(void) : "Fired when the striderbuster shatters without detonating."
+	output OnShotDown(void) : "Fired when the striderbuster shatters after being shot down by Hunters"
+	]

@@ -1,0 +1,6 @@
+
+@SolidClass base(BaseTank) 
+	appliesto(EP1, EP2, HL2, P1, ASW) = func_tanklaser: "Brush Laser Turret"
+	[
+	laserentity(target_destination) : "env_laser Entity"
+	]

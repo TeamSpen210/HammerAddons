@@ -1,0 +1,32 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(P2) 
+	iconsprite("editor/info_target.vmt") 
+	line(255 255 0, targetname, functankname)
+= info_player_ping_detector: "Player Ping Detector."
+	[
+	functankname(target_destination) : "Func_Tank Entity" : : "Name of the func_tank that will be told to look at the ping location when detected."
+	
+	teamtolookat[engine](integer) : "Player to Observe" : 2
+	teamtolookat(choices) : "Player to Observe" : 2 : "Which player's pings to look at." =
+		[
+		1: "Both"
+		3: "ATLAS"
+		2: "P-Body"
+		]
+
+	enabled[engine](boolean) : "Start Enabled" : 1
+	enabled(choices) : "Default State" : 1 : "Is this entity enabled by default or not?" =
+		[
+		0: "Disabled"
+		1: "Enabled"
+		]
+
+
+	// Inputs
+	input Enable(void) : "Starts listening for pings and will fire outputs when found."
+	input Disable(void) : "Disable this entity from listening for pings."
+	input Toggle(void) : "Toggle from Enabled to Disabled and vice versa."
+
+	// Outputs
+	output OnPingDetected(void) : "Fired when a ping is detected."
+	]

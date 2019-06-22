@@ -1,0 +1,73 @@
+@NpcClass base(BaseNPC, RappelNPC) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio("models/Combine_Soldier.mdl") = npc_combine_s: "Combine Soldier"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Start LookOff" : 0
+		131072: "Don't drop grenades" : 0
+		262144: "Don't drop ar2 alt fire (elite only) " : 0
+		]
+
+	model[engine](studio) : "Model" : "models/combine_soldier.mdl"
+	model(choices) : "Model" : "models/combine_soldier.mdl" : "Regular Soldier" =
+		[
+		"models/combine_soldier.mdl": "Regular Soldier"
+		"models/combine_soldier_prisonguard.mdl": "Nova Prospekt Soldier"
+		"models/combine_super_soldier.mdl": "Elite Soldier"
+		]
+
+	additionalequipment[engine](string) : "Weapons" : "weapon_smg1"
+	additionalequipment(choices) : "Weapons" : "weapon_smg1" =
+		[
+		"weapon_ar2": "AR2"
+		"weapon_shotgun": "Shotgun"
+		"weapon_smg1": "SMG1"
+		"weapon_stunstick": "Stun Stick"
+		"0": "Nothing"
+		]
+
+	numgrenades[engine](integer) : "Number of Grenades" : 5
+	numgrenades(choices) : "Number of Grenades" : 5 =
+		[
+		0: "None"
+		1: "1"
+		2: "2"
+		3: "3"
+		4: "4"
+		5: "5"
+		999999: "Unlimited"
+		]
+
+	teleportgrenades[engine](boolean) : "Teleportation" : 0
+	teleportgrenades[ASW](choices) : "Teleportation" : 0 =
+		[
+		0: "Disabled"
+		1: "Teleport Grenades"
+		]
+
+
+	tacticalvariant[engine](integer) : "Tactical Variant" : 0
+	tacticalvariant(choices) : "Tactical Variant" : 0 =
+		[
+		0: "Normal Tactics"
+		1: "Pressure the enemy (Keep advancing)"
+		2: "Pressure until within 30ft, then normal"
+		]
+
+	usemarch[engine](integer) : "Walk Easy" : 0
+	usemarch(choices) : "Walk Easy" : 0 : "When true, will use a variety of more casual walking animations instead of the standard walk. For use in crowds. WARNING: this animation only has a north component. For use under very special circumstances only." =
+		[
+		0: "No"
+		2: "Yes"
+		]
+
+
+	// Inputs
+	input LookOn(void) : "Look normally"
+	input LookOff(void) : "Don't look for myself, use other squad member's eyes"
+	input StartPatrolling(void) : "Patrol whenever I'm idle or alert."
+	input StopPatrolling(void) : "Stop patrolling when I'm idle or alert."
+	input ThrowGrenadeAtTarget(target_destination) : "Throw a grenade at the specified target."
+	input Assault(string) : "Start an assault. Parameter passed in should be the name of the rally point."
+	]

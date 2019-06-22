@@ -1,0 +1,10 @@
+@MoveClass base(BaseEntityPoint, Mover, KeyFrame)
+	size(-8 -8 -8, 8 8 8) 
+	color(255 0 0) 
+	animator() 
+= move_track: "Track Move Behavior"
+	[
+	wheelbaselength(integer) : "Distance between the wheels" : 50
+	damage(integer) : "Damage done to blocking entities" : 0
+	norotate(boolean) : "Turn to face down path" : 0
+	]

@@ -1,0 +1,17 @@
+@PointClass base(BaseEntityPoint) 
+	color(32 200 255) 
+	// Special model, so scale doesn't resize the sprite.
+	studio("models/editor/env_splash.mdl") 
+= env_splash: "An entity that creates a splash effect at its origin. " +
+	"If the 'find water surface' spawnflag is set, it will instead trace down below itself to find the water surface on which to create splashes."
+	[
+	scale(float) : "Scale of the splash" : 8.0
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Automatically find water surface (place entity above water)" : 0
+		2: "Diminish with depth (diminished completely in 10 feet of water)" : 1
+		]
+
+	// Inputs
+	input Splash(void) : "Create a splash effect."
+	]

@@ -74,6 +74,7 @@
 	model(studio) report : "World Model"
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
 	modelscale(float) : "Scale" : "1.0" : "Sets the scale of the model. This can be quite buggy at times, use with caution."
+	skinset[srctools](string) : "Used Skins": : "If set, these are a list of skins this entity will ever use. This allows the others to not be packed."
 
 	// Inputs
 	input Skin(integer) : "Changes the model skin to the specified number."
@@ -99,8 +100,9 @@
 	vscripts(scriptlist) : "Entity Scripts" : "" : "Name(s) of script files that are executed after all entities have spawned."
 	thinkfunction(string) : "Script think function" : "" : "Name of a function in this entity's script scope which will be called automatically."
 
-	input RunScriptFile(string) : "Execute a game script file from disk"
-	input RunScriptCode(string) : "Execute a string of script source code"
+	input RunScriptFile(string) : "Execute a game script file from disk."
+	input RunScriptCode(string) : "Execute a string of script source code."
+	input CallScriptFunction(string) : "Execute the given function name."
 	
 	// Inputs
 	input Kill(void) : "Removes this entity from the world."
@@ -444,9 +446,9 @@
 	pressuredelay(float) : "Pressure Delay" : 0 : "Delay, in seconds, after 'broken' by pressure before breaking apart (allows for sound to play before breaking apart)."
 ]
 
-@BaseClass base(Targetname, Angles, RenderFields, DamageFilter, ResponseContext, Shadow, ToggleDraw) color(0 200 200) = BaseNPC
+// Added - NPC which is not visible
+@BaseClass base(Targetname, Angles, DamageFilter) color(0 200 200) = BaseLogicalNPC
 [
-	target(target_destination) : "Target Path Corner" : : "If set, the name of a path corner entity that this NPC will walk to, after spawning."
 	squadname(String) : "Squad Name" : : "NPCs that are in the same squad (i.e. have matching squad names) will share information about enemies, and will take turns attacking and covering each other."
 	hintgroup(String) : "Hint Group" : "" : "Hint groups are used by NPCs to restrict their hint-node searching to a subset of the map's hint nodes. Only hint nodes with matching hint group names will be considered by this NPC."
 	hintlimiting(boolean) : "Hint Limit Nav" : 0 : "Limits NPC to using specified hint group for navigation requests, but does not limit local navigation."
@@ -514,7 +516,6 @@
 	input SetRelationship(string) : "Changes this entity's relationship with another entity or class. Format: <entityname/classname> <D_HT/D_FR/D_LI/D_NU> <priority>"
 	input SetEnemyFilter(target_destination) : "Changes this NPC's enemy filter to the named filter."
 	input SetHealth(integer) : "Set this NPC's health."
-	input SetBodyGroup(integer) : "HACK: Sets this NPC's body group (from 0 - n). You'd better know what you are doing!"
 	input physdamagescale(float) : "Sets the value that scales damage energy when this character is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility."
 	input Ignite(void) : "Ignite, burst into flames"
 	input IgniteLifetime(float) : "Ignite, with a parameter lifetime."
@@ -535,6 +536,12 @@
 	input ForceInteractionWithNPC(string) : "Force the NPC to use a dynamic interaction with another NPC. Parameter format: <target NPC name> <dynamic interaction name>"
 	input UpdateEnemyMemory(string) : "Update (or Create) this NPC's memory of an enemy and its location"
 	input BecomeRagdoll(void) : "This NPC will instantly become a ragdoll with ZERO force (just go limp). OnDeath, OnHalfHealth, etc. Outputs will **NOT** BE FIRED."
+]
+
+@BaseClass base(BaseLogicalNPC, RenderFields, DamageFilter, ResponseContext, Shadow, ToggleDraw) color(0 200 200) = BaseNPC
+[
+	target(target_destination) : "Target Path Corner" : : "If set, the name of a path corner entity that this NPC will walk to, after spawning."
+	input SetBodyGroup(integer) : "HACK: Sets this NPC's body group (from 0 - n). You'd better know what you are doing!"
 ]
 
 @PointClass base(Targetname, Parentname, Angles) iconsprite("editor/info_target.vmt") = info_npc_spawn_destination : 
@@ -1186,26 +1193,50 @@
 	output OnBeginFade(void) : "Fired when the fade has begun."
 ]
 
-@PointClass base(Targetname) color(200 0 0) = env_player_surface_trigger : 
+@PointClass base(Targetname) iconsprite("editor/env_player_surface_trigger.vmt") color(200 0 0) = env_player_surface_trigger : 
 	"An entity that monitors the material of the surface the player is standing on, and fires outputs whenever it changes to/from a specific material."
 [
-	gamematerial(choices) : "Game Material to Watch" : "0" : "The material to watch. When the player stands on/off this material, this entity's outputs will be fired." =
+	// These are ASCII char codes.
+	gamematerial(choices) : "Game Material to Watch" : 0 : "The material to watch. When the player stands on/off this material, this entity's outputs will be fired." =
 	[
-		0 : "None (player's in the air)"
-		67 : "Concrete"
-		77 : "Metal"
-		68 : "Dirt"
-		86 : "Vent"
-		71 : "Grate"
-		84 : "Tile"
-		83 : "Slosh"
-		87 : "Wood"
-		80 : "Computer"
-		89 : "Glass"
-		70 : "Flesh"
-		73 : "Clip"
-		79 : "Foliage"
-		78 : "Sand"
+		// Code disables detecting this value
+		0 : "Nonfunctional (air)"
+		67 : "C - Concrete"
+		77 : "M - Metal"
+		68 : "D - Dirt"
+		86 : "V - Vent"
+		71 : "G - Grate"
+		84 : "T - Tile"
+		83 : "S - Slosh"
+		87 : "W - Wood"
+		80 : "P - Computer"
+		89 : "Y - Glass"
+		70 : "F - Flesh"
+		73 : "I - Clip"
+		79 : "O - Foliage"
+		78 : "N - Sand"
+		// Added these.
+		65 : "A - Antlion"
+		66 : "B - Bloody Flesh"
+		69 : "E - Eggshell"
+		72 : "H - Alien Flesh"
+		75 : "K - Snow"
+		76 : "L - Plastic"
+		82 : "R - Reflective / Brick"
+		88 : "X - Fake surfaces"
+		90 : "Z - Warp Shield" 
+
+		1: "1 - Clay"
+	    2: "2 - Plaster"
+	    3: "3 - Rock"
+	    4: "4 - Rubber"
+	    5: "5 - Sheet Rock"
+	    6: "6 - Cloth"
+	    7: "7 - Carpet"
+	    8: "8 - Paper"
+	    9: "9 - Upholstery"
+	    0: "0 - Puddle"
+	    11: "11 - Steam Pipe"
 	]
 	
 	// Inputs
@@ -2152,7 +2183,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	rotortimevariance(float) : "Time variance" : "0.3" : "The random amount to vary the time it has to be under the rotor before it shoots a gib."
 ]
 
-@PointClass base(Targetname,Parentname) sphere() line(255 255 255, targetname, MainSoundscapeName) iconsprite("editor/env_soundscape.vmt") = env_soundscape_proxy : 
+@PointClass base(Targetname,Parentname) sphere() line(255 255 255, targetname, MainSoundscapeName) iconsprite("editor/env_soundscape_proxy.vmt") = env_soundscape_proxy : 
 	"An entity that acts like a soundscape but gets all of its sound parameters from another env_soundscape entity."
 [
 	MainSoundscapeName(target_destination) : "Soundscape Entity" : "" : "The soundscape to get all sound parameters from."
@@ -2665,7 +2696,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	line(255 255 255, targetname, position5)
 	line(255 255 255, targetname, position6)
 	line(255 255 255, targetname, position7)
-	iconsprite("editor/env_soundscape.vmt") = env_soundscape_triggerable : 
+	iconsprite("editor/env_soundscape_triggerable.vmt") = env_soundscape_triggerable : 
 	"An entity that works like env_soundscape except that it works in conjunction with trigger_soundscape to determine when a player hears it."
 [
 ]
@@ -2714,6 +2745,20 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
 	model(material) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
 	scale(string) : "Scale" : "" : "Scale multiplier of the sprite."
+	
+	rendermode(choices) : "Render Mode" : 9 : "Specify the sprite rendering behaviour." =
+		[
+		3: "Glow"
+		9: "World Space Glow"
+		0: "Normal"
+		1: "Color"
+		2: "Texture"
+		4: "Solid"
+		5: "Additive"
+		7: "Additive Fractional Frame"
+		10: "Don't Render"
+		]
+		
 	spawnflags(flags) =
 	[
 		1: "Start on" : 0
@@ -2929,7 +2974,6 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 @PointClass base(Parentname, Angles) size(-2 -2 -2, 2 2 2) line(255 255 255, targetname, parentname) = point_enable_motion_fixup : 
 	"An entity used to move a motion-disabled prop when it enables motion. Parent this entity to the prop, and when the prop has its motion enabled, it will immediately teleport to the origin of this entity."
 [
-	targetname(target_source) readonly : "[H] Ignore this" : "" : "Provides 'targetname' for the line drawn to the target prop"
 ]
 
 @PointClass base(Targetname, Parentname) studio("models/editor/axis_helper.mdl") color(200 200 0) iconsprite("editor/ts2do/env_message.vmt") sphere(radius) = point_message : 
@@ -3183,7 +3227,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	"An entity that places an overlay on the world." 
 [
 	material(material) : "Material"
-	sides(sidelist) : "Brush faces" : "The brush faces this overlay is applied to."
+	sides(sidelist) : "Brush faces" : : "The brush faces this overlay is applied to."
 	RenderOrder(integer) : "Render Order" : 0 : "Higher values render after lower values. This value can be 0-3."
 	StartU(float) : "U Start" : "0.0" : "A value between 0-1, defining the starting X axis position in the overlay material."
 	EndU(float) : "U End" : "1.0" : "A value between 0-1, defining the ending X axis position in the overlay material."
@@ -3236,6 +3280,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 ]
 
 @PointClass base(Targetname, Parentname, Angles) 
+	halfgridsnap
 	iconsprite("editor/info_target.vmt") 
 	studio("models/editor/axis_helper.mdl") = info_target : 
 	"An entity that does nothing. Very useful as a positioning entity for other entities to refer to (i.e. the endpoint of an env_beam)"
@@ -3374,7 +3419,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	]
 ]
 
-@PointClass base(Targetname) iconsprite("editor/info_lighting.vmt") = info_lighting : 
+@PointClass base(Targetname) halfgridsnap iconsprite("editor/info_lighting.vmt") = info_lighting : 
 	"An entity that can be used to change the lighting origin of a prop_static. Set the prop_static's Lighting Origin to point at this entity to "+
 	"make the prop_static light as if it was at the info_lighting's origin. Good for prop_static entities that are embedded in world geometry (like rocks/windows/etc)."
 [
@@ -3456,7 +3501,12 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 [
 ]
 
-@PointClass base(Targetname) color(220 180 0) size(-8 -8 -8, 8 8 8) line(255 255 255, nodeid, StartNode, nodeid, EndNode) = info_node_link :
+@PointClass 
+	base(Targetname) 
+	color(220 180 0)
+	iconsprite("editor/info_node_link.vmt")
+	line(255 255 255, nodeid, StartNode, nodeid, EndNode)
+= info_node_link :
 	"A dynamic connection between two navigation nodes. You specify the node IDs of the start and end nodes, and then you can use entity I/O " +
 	"to turn on and off the connection. This could be used to create or destroy a connection in the nodegraph because of some event in your map " +
 	"(a bridge being created/destroyed, etc)."
@@ -3506,7 +3556,12 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	input TurnOff(void) : "Turn the link off."
 ]
 
-@PointClass wirebox(mins, maxs) base(Targetname) = info_node_link_controller :
+@PointClass 
+	base(Targetname)
+	wirebox(mins, maxs) 
+	color(220 180 0)
+	iconsprite("editor/info_node_link_controller.vmt")
+= info_node_link_controller :
 	"An entity that controls all connections between nodes that intersect the controller's volume. "+
 	"This allows for mass enabling/disabling of all node connections through a volume."
 [
@@ -3537,10 +3592,15 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	input SetInvert(integer) : "Change the invert exclusion rule"
 ]
 
-@PointClass sphere(radius) base(Targetname, Parentname) = info_radial_link_controller :
+@PointClass  
+	base(Targetname, Parentname) 
+	color(220 180 0)
+	sphere(radius)
+	iconsprite("editor/info_radial_link_controller.vmt")
+= info_radial_link_controller :
 	"This entity automatically severs node connections that pass through its radius. If it moves, it will restore those connections."
 [
-	radius(float) : "Radius (Use Helper!)" : 120
+	radius(float) : "Radius" : 120
 ]
 
 @PointClass base(Targetname, Angles, HintNode) studio("models/editor/climb_node.mdl") sphere(radius) color(153 215 103) = info_node_climb : 
@@ -3564,7 +3624,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	_distance(integer) : "Maximum Distance" : 0 : "The distance that light is allowed to cast."
 ]
 
-@PointClass base(Angles) studio("models/editor/spot.mdl") iconsprite("editor/light_env.vmt") = light_environment : 
+@PointClass base(Angles) lightprop("models/editor/spot.mdl") iconsprite("editor/light_env.vmt") = light_environment : 
 	"Sets the color and angle of the light from the sun and sky."
 [
 	pitch(angle_negative_pitch) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
@@ -4658,7 +4718,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	input TeleportPlayerToProxy(void) : "Move the player to the view proxy."
 ]
 
-@PointClass base(Targetname) line(255 255 0, targetname, propname) size(-8 -8 -8, 8 8 8) = point_posecontroller : 
+@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) line(255 255 0, targetname, propname) = point_posecontroller : 
 	"An entity that controls a pose parameter of a prop and cycles the pose clientside." 
 [
 	PropName(target_destination) : "Prop Name" : : "Name of the prop to control."
@@ -4929,7 +4989,8 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	line(200 200 200, targetname, group04) line(200 200 200, targetname, group12) 
 	line(200 200 200, targetname, group05) line(200 200 200, targetname, group13) 
 	line(200 200 200, targetname, group06) line(200 200 200, targetname, group14) 
-	line(200 200 200, targetname, group07) line(200 200 200, targetname, group15) = logic_script : "An entity that acts as a container for scripts."
+	line(200 200 200, targetname, group07) line(200 200 200, targetname, group15)
+ = logic_script : "An entity that acts as a container for scripts."
 [
 	Group00(target_destination) : "EntityGroup[0]"
 	Group01(target_destination) : "EntityGroup[1]"
@@ -5023,7 +5084,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 ]
 
 
-@PointClass base(Targetname, Parentname, EnableDisable) iconsprite("editor/env_microphone.vmt") sphere(MaxRange) color(0 0 255) line(255 255 0, target, speakername) line(255 255 0, targetname, target) = env_microphone :
+@PointClass base(Targetname, Parentname, EnableDisable) iconsprite("editor/env_microphone.vmt") sphere(MaxRange) color(0 0 255) line(64 64 64, targetname, target) line(255 255 0, targetname, target, targetname, SpeakerName) = env_microphone :
 	"An entity that acts as a microphone. It works in one of two modes. If it has a 'Speaker' set, it picks up all sounds within the specified sound range, " +
 	"and rebroadcasts them through the Speaker entity. In this Speaker mode, it ignores the Hears X spawnflags and does not fire the SoundLevel output. " +
 	"If it has no Speaker set, it measures the sound level at a point, and outputs the sound level as a value between 0 and 1. In Measuring mode, it only hears sounds that match the Hear X spawnflags."
@@ -5144,7 +5205,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	output OnGetValue(integer) : "Fired in response to the GetValue input. Used for polling the counter when you don't want constant updates from the OutValue output."
 ]
 
-@PointClass base(Targetname) color(0 100 250) size(-8 -8 -8, 8 8 8) line(255 255 0, source, target) = logic_lineto : 
+@PointClass base(Targetname) color(0 100 250) size(-8 -8 -8, 8 8 8) line(255 255 0, targetname, source, targetname, target) = logic_lineto : 
 	"An entity that calculates and outputs a vector from one entity to another." 
 [
 	source(target_destination) : "Start entity" : : "Name of the entity the line should start from."
@@ -5154,18 +5215,19 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	output Line(vector) : "Fired when the vector, from the start entity to the end entity, changes. Passes along the vector as a parameter."
 ]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = logic_navigation : 
+@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) line(128, 128, 128, targetname, target) = logic_navigation : 
 	"An entity that is used to set navigation properties on other entities. Useful to make NPCs ignore physics props in their way that they can easily push." 
 [
-	target(target_destination) : "Navigation Entity" : "Name of the entity to set navigation properties on."
+	target(target_destination) : "Navigation Entity" : : "Name of the entity to set navigation properties on."
 	spawnflags(flags) =
 	[
 		1 : "Start On" : 1
 	]
-	navprop(choices) : "Nav Property" : "Ignore" =
-	[
-		"Ignore" : "NPCs Ignore this when navigating (they'll bump into it)"
-	]
+	navprop(string) readonly : "Nav Property" : "Ignore" : "The only valid property is to ignore this entity, so NPCs will bump into it."
+	// navprop(choices) : "Nav Property" : "Ignore" =
+	// [
+		// "Ignore" : "NPCs Ignore this when navigating (they'll bump into it)"
+	// ]
 	
 	// Inputs
 	input TurnOn(void) : "Turn on. The Navigation Entity will have its navigation properties set."
@@ -5513,8 +5575,12 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 //
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname, Parentname, EnableDisable) color(0 100 250)
-	line(0 100 250, targetname, target) line(0 100 250, target, lookatname) = point_anglesensor :
+@PointClass base(Targetname, Parentname, EnableDisable)
+	size(-8 -8 -8, 8 8 8) 
+	color(0 100 250)
+	line(0 100 250, targetname, target) 
+	line(0 100 250, targetname, target, targetname, lookatname) 
+= point_anglesensor :
 	"An entity that detects if another entity points in a given direction for a period of time."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angles will be sensed."
@@ -5538,7 +5604,11 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	output FacingPercentage(float) : "Normalized value (0..1) where 1 is facing directly at target and 0 is at or beyond the angle of tolerance."
 ]
 
-@PointClass base(Targetname) color(0 100 250) line(0 100 250, targetname, target) = point_angularvelocitysensor :
+@PointClass base(Targetname) 
+	size(-8 -8 -8, 8 8 8) 
+	color(0 100 250) 
+	line(0 100 250, targetname, target) 
+= point_angularvelocitysensor :
 	"An entity that detects if another entity's angular velocity meets or exceeds a threshold value."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angular velocity will be sensed."
@@ -5565,7 +5635,11 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	output OnEqualTo(void) : "Fired when the Target Entity reaches the threshold angular velocity from a different velocity."
 ]
 
-@PointClass base(Targetname) color(0 100 250) line(0 100 250, targetname, target) = point_velocitysensor :
+@PointClass base(Targetname)
+	size(-8 -8 -8, 8 8 8) 
+	color(0 100 250) 
+	line(0 100 250, targetname, target) 
+= point_velocitysensor :
 	"An entity that detects and outputs an entity's velocity."
 [
 	target(target_destination) : "Target Entity Name" : : "Name of the entity whose velocity will be sensed."
@@ -5579,10 +5653,14 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	input Disable(void) : "Disable the sensor."
 ]
 
-@PointClass base(Targetname, Parentname, EnableDisable, Angles) color(0 100 250) line(0 100 250, targetname, target) iconsprite("editor/point_proximity_sensor.vmt") = point_proximity_sensor :
+@PointClass base(Targetname, Parentname, EnableDisable, Angles) 
+	color(0 100 250) 
+	line(0 100 250, targetname, target) 
+	iconsprite("editor/point_proximity_sensor.vmt") 
+= point_proximity_sensor :
 	"An entity that detects another entity's proximity to a target position."
 [
-	target(target_destination) : "Target Entity Name" : : "Name of the entity whose psition will be sensed."
+	target(target_destination) : "Target Entity Name" : : "Name of the entity whose position will be sensed."
 
 	spawnflags(Flags) =
 	[
@@ -5597,7 +5675,11 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 ]
 
 
-@PointClass base(Targetname, Angles) iconsprite("editor/point_teleport.vmt") line(255 255 255, targetname, target) studioprop() = point_teleport : 
+@PointClass base(Targetname, Angles) 
+	iconsprite("editor/point_teleport.vmt") 
+	line(255 255 255, targetname, target) 
+	studioprop()
+= point_teleport : 
 	"An entity that teleports a target entity to this position and angles. "+
 	"If 'Teleport Home' spawn flag is set, teleports the target entity to its spawn position instead." +
 	"If object is physically simulated, simulation is turned off when teleported."
@@ -5618,7 +5700,11 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	input TeleportEntity(target_destination) : "Teleport the entity specified by the parameter override. Use this to teleport an entity other than the one specified in the Entity To Teleport field."
 ]
 
-@PointClass base(Targetname) sphere(DamageRadius) line(255 255 255, targetname, damagetarget) iconsprite("editor/game_end.vmt") = point_hurt :
+@PointClass base(Targetname) 
+	sphere(DamageRadius) 
+	line(255 255 255, targetname, damagetarget) 
+	iconsprite("editor/game_end.vmt") 
+= point_hurt :
 	"An entity that does damage to all entities in a radius around itself, with a specified delay." +
 	"If 'Target Entity' is specified, the damage is only done to that entity."
 [
@@ -5665,7 +5751,10 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	input Toggle(void) : "Toggle this entity between On/Off state."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/ts2do/point_playermoveconstraint.vmt") sphere(radius) = point_playermoveconstraint : 
+@PointClass base(Targetname)
+	iconsprite("editor/ts2do/point_playermoveconstraint.vmt") 
+	sphere(radius) 
+= point_playermoveconstraint : 
 	"An entity that constrains players to a radius around itself, slowing them down the closer they get to the edge of the radius."
 [
 	radius(float) : "Radius" : 256 : "Radius to constrain players to."
@@ -5786,7 +5875,11 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	additionaliterations(integer) : "Additional System Iterations" : 0 : "Adding iterations makes the interactions among constraints in a system tighter.  It will not compensate for errors due to collision, but will help in cases where objects of disparate mass are constrained to each other."
 ]
 
-@PointClass base(Targetname,Angles) color(128 128 128) iconsprite("editor/ts2do/phys_keepupright.vmt") line(255 255 0, targetname, attach1) = phys_keepupright : "A controller that tries to keep an entity facing a particular direction."
+@PointClass base(Targetname,Angles) 
+	color(128 128 128) 
+	iconsprite("editor/ts2do/phys_keepupright.vmt") 
+	line(255 255 0, targetname, attach1) 
+= phys_keepupright : "A controller that tries to keep an entity facing a particular direction."
 [
 	spawnflags(flags) =
 	[
@@ -5833,14 +5926,19 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	output OnAwakened(void) : "Fired when this entity becomes awake (collision/force is applied)."
 ]
 
-@PointClass base(Targetname, Parentname) size(-4 -4 -4, 4 4 4) color(128 128 128) line(128 128 128, targetname, parentname) = info_constraint_anchor : 
+@PointClass base(Targetname, Parentname)
+	halfgridsnap 
+	iconsprite("editor/info_constraint_anchor.vmt") 
+	color(128 128 128) 
+	line(128 128 128, targetname, parentname) 
+= info_constraint_anchor : 
 	"An entity used to attach constraints to a local position on an entity. Usually constraints will attach to the center of mass of an object. "+
 	"Attach the desired constraint to this entity, and then parent this entity to the entity you want the constraint to apply to."
 [
 	massScale(float) : "Mass Scale" : "1" : "Amount to scale the mass of this body in the constraint solver."
 ]
 
-@PointClass size(-4 -4 -4, 4 4 4) color(128 128 128) line(128 128 128, targetname, target) = info_mass_center :
+@PointClass halfgridsnap size(-4 -4 -4, 4 4 4) color(128 128 128) line(128 128 128, targetname, target) = info_mass_center :
 	"An entity that overrides the mass center of the target physics prop, or func_physbox, by moving it to the info_mass_center's location."
 [
 	target(target_destination) : "Target object" : ""  : "The entity whose mass center will be overridden."
@@ -5848,8 +5946,10 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 
 @PointClass halfgridsnap base(Targetname)
 	color(128 128 128) 
-	line(128 128 128, targetname, attach1)  
+	size(-8 -8 -8, 8 8 8)
+	line(128 128 128, targetname, attach1)
 	line(128 128 128, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	sphere(length) sphere(breaklength) = phys_spring : 
 	"A physically simulated spring. "+
 	"'Length' is what's known as the 'natural spring length'. This is how long the spring would "+
@@ -5882,6 +5982,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 @PointClass halfgridsnap size(-8 -8 -8, 8 8 8)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	color(128 128 128)
 	base(TwoObjectPhysics) = phys_hinge : 
 	"A physically simulated hinge. Use the helper to define the axis of rotation."
@@ -5914,6 +6015,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 @PointClass base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	color(128 128 128) 
 	iconsprite("editor/phys_ballsocket.vmt") = phys_ballsocket : 
 	"A constraint that keeps the position of two objects fixed, relative to the constraint's origin. It does not affect rotation."
@@ -5926,6 +6028,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 @PointClass base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	color(128 128 128) 
 	studio("models/editor/axis_helper.mdl") = phys_constraint : 
 	"A constraint that keeps the relative position and orientation of two objects fixed."
@@ -5935,6 +6038,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 @PointClass base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	color(128 128 128) 
 	studio("models/editor/axis_helper.mdl") = phys_pulleyconstraint : 
 	"A constraint that is essentially two length constraints and two points. Imagine it as a virtual rope connected to two objects, each suspended from a pulley above them."+
@@ -5953,6 +6057,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 @PointClass halfgridsnap base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	color(128 128 128) 
 	studio("models/editor/axis_helper.mdl") = phys_slideconstraint : 
 	"A constraint that constrains an entity along a line segment."
@@ -5989,6 +6094,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 @PointClass base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	sphere(minlength)
 	color(128 128 128) 
 	studio("models/editor/axis_helper.mdl") = phys_lengthconstraint : 
@@ -6007,6 +6113,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 @PointClass base(TwoObjectPhysics)
 	line(255 255 255, targetname, attach1)  
 	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
 	color(128 128 128) 
 	studio("models/editor/axis_helper.mdl") = phys_ragdollconstraint : 
 	"A constraint that fixes the position of two entities, relative to this constraint's origin. Also allows for limits on the rotation around each axis, in the space of this constraint."
@@ -6074,7 +6181,10 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	input Scale(string) : "Set Force Scale"
 ]
 
-@PointClass line(255 255 0, targetname, attach1) color(128 128 128) line(128 128 128, targetname, attach1) base(Angles, ForceController) = phys_thruster : 
+@PointClass base(Angles, ForceController) 
+	line(255 255 255, targetname, attach1)
+	color(128 128 128) 
+= phys_thruster : 
 	"An entity used to apply constant acceleration to a physics object. "+
 	"The force and torque is calculated using the position and direction of the thruster as an impulse. So moving those off the object's center "+
 	"will cause torque as well. Torque can be removed by unchecking the 'apply torque' flag. The position of the thruster can be forced to be "+
@@ -6089,7 +6199,10 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	force(string) : "Force" : "0" : "Force (will be integrated, units are force kg*in/s^2)"
 ]
 
-@PointClass halfgridsnap color(128 128 128) line(128 128 128, targetname, attach1) base(ForceController) = phys_torque : 
+@PointClass halfgridsnap base(ForceController)
+	line(255 255 255, targetname, attach1)
+	color(128 128 128) 
+ = phys_torque : 
 	"An angular thruster. Use it to apply angular force to an entity."
 [
 	// Angular acceleration (units are degress/s^2)
@@ -6124,7 +6237,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	input TurnOff(void) : "Turns motor off"
 ]
 
-@PointClass base(Targetname, Parentname, Angles, Studiomodel) color(128 128 128) studio() = phys_magnet : 
+@PointClass base(Targetname, Parentname, Angles, Studiomodel) color(128 128 128) studio() iconsprite("editor/phys_magnet") = phys_magnet : 
 	"An entity that acts like a magnet, attaching metallic physics objects to itself when they touch it."
 [
 	spawnflags(flags) =
@@ -7285,7 +7398,11 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 //	  at the position of every devshot camera in the level.
 //-------------------------------------------------------------------------
 
-@PointClass base(Angles) studioprop("models/editor/camera.mdl") frustum(fov,16,256,255 255 255 10,-1) = point_devshot_camera : 
+@PointClass base(Angles) 
+	iconsprite("editor/point_devshot_camera.vmt") 
+	studioprop("models/editor/camera.mdl") 
+	frustum(fov,16,256,255 255 255 10,-1) 
+= point_devshot_camera : 
 	"An entity used by the -makedevshots system, which automatically takes screenshots at the position of every devshot camera in the level."
 [
 	cameraname(string) : "Camera Name" : "" : "Used as the name of the directory to store screenshots from this camera. Must be unique within the level."
@@ -7340,7 +7457,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	input SetMotionBlurAmount(float) : "Forces the motion blur effect on the player. Set to < 0 to disable this override."
 ]
 
-@PointClass base(Parentname, Targetname) size(-8 -8 -8, 8 8 8 ) sphere(startwidth) sphere(endwidth) = env_spritetrail : 
+@PointClass base(Parentname, Targetname) iconsprite("editor/env_spritetrail.vmt") sphere(startwidth) sphere(endwidth) = env_spritetrail : 
 	"A magical trail you can parent to anything you heart desires."
 [
 	lifetime(float) : "Lifetime" : "0.5"
@@ -7771,11 +7888,11 @@ base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/
 	input EndHint(void) : "Stop showing the hint if it hasn't already timed out."
 ]
 
-@PointClass base(Targetname,Parentname) iconsprite("editor/info_target.vmt") = info_target_instructor_hint : "A generic target that gets replicated to the client for hud hint targeting."
+@PointClass base(Targetname,Parentname) halfgridsnap iconsprite("editor/info_target.vmt") = info_target_instructor_hint : "A generic target that gets replicated to the client for hud hint targeting."
 [
 ]
 
-@PointClass base(Targetname,EnableDisable) sphere(range) = info_game_event_proxy : "Entity that, when seen, generates a simple game event."
+@PointClass base(Targetname,EnableDisable) iconsprite("editor/info_game_event_proxy.vmt") sphere(range) = info_game_event_proxy : "Entity that, when seen, generates a simple game event."
 [
 	event_name(string) : "Event Name" : : "The event to trigger by name from modevents.res"
 	range(float) : "Range" : 512 : "Distance that the player must be before the event is generated."

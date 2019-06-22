@@ -1,0 +1,40 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio("models/combine_soldier.mdl") = npc_sniper: "Sniper"
+	[
+	radius(integer) : "Patience Radius" : 0 : "Sniper will hold fire until the target is within this radius. After that, sniper will always attack, even if the target retreats outside of this radius"
+	misses(integer) : "Initial Misses" : 0 : "How many times to miss a target on purpose before beginning to fire accurately."
+	beambrightness(integer) : "Beam Brightness (0 to 255)" : 100 : "How bright the laser sight beam should be. (0 - 255)"
+	shootzombiesinchest(boolean) : "Shoot zombies in chest" : 0 : "If true, aim for chest instead of headcrab. Useful when at great distance and height."
+
+	shielddistance(float) : "Bullet shield distance" : 64 : "Obsolete"
+	shieldradius(float) : "Bullet shield radius" : 48 : "Obsolete"
+	paintinterval(float) : "Paint interval" : 1 : "Sniper will keep a target painted for this many seconds before shooting. 'Faster Shooting' sniper flag multiplies this by 0.75."
+	paintintervalvariance(float) : "Paint interval variance" : 0.75 : "When shooting at NPCs, a random number between 0 and this is added to PaintInterval for every shot."
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Hidden" : 0
+		131072: "Laser Viewcone" : 0
+		262144: "No Corpse" : 0
+		524288: "Start Disabled" : 0
+		1048576: "Faster shooting (Episodic)" : 0
+		2097152: "No sweep away from target (Episodic)" : 0
+		]
+
+
+	// Inputs
+	input EnableSniper(void) : "Enable Shooting"
+	input DisableSniper(void) : "Disable Shooting"
+	input SetDecoyRadius(integer) : "Set Decoy Radius"
+	input SweepTarget(string) : "Sweep a Target"
+	input SweepTargetHighestPriority(string) : "Drop everything and sweep this target!"
+	input SweepGroupRandomly(string) : "Randomly Sweep a Group"
+	input StopSweeping(void) : "Stop any target sweeping operation started by entity I/O"
+	input ProtectTarget(target_destination) : "Protect the specified enemy. The sniper will attempt to shoot the enemy nearest the protect target at all times."
+	input SetPaintInterval(float) : "Set PaintInterval field."
+	input SetPaintIntervalVariance(float) : "Set PaintIntervalVariance field."
+
+	// Outputs
+	output OnShotFired(void) : "Fires when sniper fires a shot"
+	]

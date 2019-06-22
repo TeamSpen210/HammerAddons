@@ -17,7 +17,7 @@ Various improvements for Portal 2's Hammer. To install, [download][dl_zip] the r
 * Notify more visibly when the vote screen is triggered.
 
 [dl_zip]: https://github.com/TeamSpen210/HammerAddons/archive/master.zip
-[skotty]: http://forums.thinkingwithportals.com/downloads.php?view=detail&df_id=507
+[skotty]: http://forums.thinking.withportals.com/downloads.php?view=detail&df_id=507
 [tf2]: http://forums.tf2maps.net/showthread.php?t=4674
 [ts2do]: http://halflife2.filefront.com/file/HalfLife_2_Upgraded_Base_FGDs;48139
 [zps]: http://www.necrotalesgames.com/tools/index.php

@@ -1,0 +1,10 @@
+@PointClass base(BaseEntityPoint, Angles) 
+	appliesto(since_L4D2)
+	sphere(fademindist)
+	sphere(fademaxdist)
+	iconsprite("editor/env_particles.vmt")
+= env_detail_controller: "An entity that lets you control override the min and max fade distances for details sprites in the map."
+	[
+	fademindist(float) : "Start Fade Dist/Pixels" : 512 : "The distance at which the detail props will start fading away."
+	fademaxdist(float) : "End Fade Dist/Pixels" : 1024 : "The distance at which the detail props will stop fading and stop drawing entirely."
+	]

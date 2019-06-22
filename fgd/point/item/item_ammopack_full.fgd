@@ -1,0 +1,8 @@
+
+@PointClass base(Item) 
+	appliesto(TF2) 
+	studio("models/items/ammopack_large.mdl") 
+	sphere(fademindist) 
+	sphere(fademaxdist) = item_ammopack_full: "Ammo Pack Full"
+	[
+	]

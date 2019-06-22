@@ -1,0 +1,105 @@
+@BaseClass = RenderFields
+	[
+	rendermode[engine](integer) : "Render Mode" : 0
+	rendermode(choices) : "Render Mode" : 0 : "Used to set a non-standard rendering mode on this entity. See also 'FX Amount' and 'FX Color'. \n" +
+		"* Color & Texture = src*a+dest*(1-a)\n" +
+		"* Glow = src*a + dest, fixed on screen for sprites\n" +
+		"* Solid = Performs alphatest transparency\n" +
+		"* Additive = src*a + dest\n" +
+		"* Additive FF = blend between sprite nimation frames\n" +
+		"* Alpha Add = src + dest*(1-a)\n" +
+		"* World Space Glow = src*a + dest" = 
+		[
+		0: "Normal"
+		1: "Color"
+		2: "Texture"
+		3: "Glow"
+		4: "Solid"
+		5: "Additive"
+		//6: "Enviromental" - not drawn, used internally.
+		7: "Additive Fractional Frame"
+		8: "Additive Alpha"
+		9: "World Space Glow"
+		10: "Don't Render"
+		]
+
+	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "A color to mix with the model/sprite."
+	renderamt(integer) : "FX Alpha (0 - 255)" : 255 : "Transparency amount, requires a Render Mode other than Normal. 0 is invisible, 255 is fully visible."
+
+	// See src/public/const.h for the enum list.
+	renderfx[engine](integer) : "Render FX" : 0
+	renderfx(choices) : "Render FX" : 0 : "Various somewhat legacy alpha effects. Material Proxies are more modern." =
+		[
+		0: "Normal"
+		1: "Slow Pulse"
+		2: "Fast Pulse"
+		3: "Slow Wide Pulse"
+		4: "Fast Wide Pulse"
+
+		9: "Slow Strobe"
+		10: "Fast Strobe"
+		11: "Faster Strobe"
+		12: "Slow Flicker"
+		13: "Fast Flicker"
+
+		5: "Slow Fade Away"
+		6: "Fast Fade Away"
+		7: "Slow Become Solid"
+		8: "Fast Become Solid"
+
+		14: "Constant Glow"
+		15: "Distort" [until_L4D]
+		16: "Hologram (Distort + fade)" [until_L4D]
+		23: "Cull By Distance (TEST)" [until_L4D]
+		24: "Spotlight FX" [until_L4D]
+		26: "Fade Near" [until_L4D]
+
+		15: "Fade Out" [since_L4D]
+		16: "Fade In" [since_L4D]
+		17: "Pulse Fast Wider" [since_L4D]
+		18: "Glow Shell" [since_L4D]
+
+		// Todo, confirm which versions have these - via Pinsplash
+		17: "Scale Up" [TF2]
+		18: "Glow Shell" [TF2]
+		19: "Clamp Minimum Scale (sprites only)" [TF2]
+		20: "Environmental Rain" [TF2]
+		21: "Environmental Snow" [TF2]
+		22: "Spotlight FX" [TF2]
+		23: "Ragdoll (ragdolls the entity but does NOT kill it)" [TF2]
+		24: "Fade Wider Pulse" [TF2]
+		]
+
+	mindxlevel[ASW, EP1, EP2, HL2, P1, TF2](choices) : "Minimum DX Level" : "0" =
+		[
+		 0 : "Default (lowest)"
+		60 : "DirectX 6.0"	
+		70 : "DirectX 7.0"
+		80 : "DirectX 8.0 (4600Ti)"
+		81 : "DirectX 8.1 (FX5200)"
+		90 : "DirectX 9.0 SM2.0"
+		95 : "DirectX 9.5 SM3.0"
+		100: "DirectX 10.0"
+		]
+
+	maxdxlevel[ASW, EP1, EP2, HL2, P1, TF2](choices) : "Maximum DX Level" : "0" =
+		[
+		0: "Default (lowest)"
+		60: "DirectX 6.0"	
+		70: "DirectX 7.0"
+		80: "DirectX 8.0 (4600Ti)"
+		81: "DirectX 8.1 (FX5200)"
+		90: "DirectX 9.0 SM2.0"
+		95: "DirectX 9.5 SM3.0"
+		100: "DirectX 10.0"
+		]
+
+	mindxlevel[engine](integer): "Minimum DX Level": 0
+	maxdxlevel[engine](integer): "Maximum DX Level": 0
+
+	disablereceiveshadows(boolean) : "Disable Receiving Shadows" : 0
+
+	// Inputs
+	input Alpha(integer) : "Set the entity's alpha (0 - 255)."
+	input Color(color255) : "Set the entity's color (R G B)."
+	]

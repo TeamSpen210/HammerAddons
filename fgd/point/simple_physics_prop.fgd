@@ -1,0 +1,7 @@
+@PointClass base(BasePropPhysics) 
+	studioprop() 
+	sphere(fademindist) 
+	sphere(fademaxdist) = simple_physics_prop: "Simpler version of a physics prop. Used for dissolving objects, phys_convert and the like."
+	[
+	allowfunnel[P2](boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a portal."
+	]

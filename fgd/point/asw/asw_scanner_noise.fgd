@@ -1,0 +1,9 @@
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW) 
+	sphere(core) 
+	sphere(maxdistance) = asw_scanner_noise: "Adds noise and distortion over the marine's scanner when he gets near."
+	[
+	maxdistance(float) : "Distortion radius" : 200 : "Radius of the scanner distortion effect.  Falloff is linear from the core edge to this distance.  Must be greater than the core radius."
+	core(float) : "Core distortion radius" : 100 : "Radius of the core scanner distortion effect.  Within this core, distortion will be at full."
+	]

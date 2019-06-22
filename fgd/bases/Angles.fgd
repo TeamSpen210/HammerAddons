@@ -1,0 +1,5 @@
+@BaseClass = Angles
+	[
+	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "This entity's orientation in the world. " +
+	"Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, roll is the rotation around the X axis."
+	]

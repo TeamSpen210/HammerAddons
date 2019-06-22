@@ -1,0 +1,23 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	sphere() 
+	iconsprite("editor/ficool2/ai_changehintgroup")
+= ai_changehintgroup: "Change Hint Group"
+	[
+	searchtype[engine](integer) : "Search Type" : 0
+	searchtype(choices) : "Search Type" : 0 : "How to search for the entities to change." =
+		[
+		0: "Entity Name"
+		1: "Classname"
+		2: "Old Hint Group"
+		]
+
+	searchname(string) : "Name to search for"
+	newhintgroup(string) : "New Hint Group"
+	radius(string) : "Search Radius" : "0.0" : "Radius to search (0 for all of map)"
+	hintlimiting(boolean) : "Hint Limit Nav" : 0 : "Limits NPC to using specified hint group for navigation requests, does not limit local navigation."
+
+	// Inputs
+	input Kill(void) : "Removes this entity from the world"
+	input Activate(void) : "Change the Hint Group"
+	]

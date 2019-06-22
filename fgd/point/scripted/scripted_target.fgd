@@ -1,0 +1,26 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	iconsprite("editor/info_target.vmt") = scripted_target: "Scripted Target"
+	[
+	startdisabled(choices) : "Start Disabled" : "1" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	startdisabled[P2](boolean) : "Start Disabled" : 1
+	m_iszentity(npcclass) : "Target NPC"
+	m_flradius(integer) : "Search Radius (0=everywhere)" : 0 : "Radius to search within for an NPC to use. 0 searches everywhere."
+	movespeed(integer) : "Move Speed" : 5
+	pauseduration(integer) : "Pause Duration" : 0
+	effectduration(integer) : "Effect Duration" : 2
+	target(target_destination) : "Next Target"
+
+	// Inputs
+	input Enable(void) : "Enable this entity"
+	input Disable(void) : "Disable this entity"
+
+	// Outputs
+	output AtTarget(void) : "Fires when NPC reaches this target"
+	output LeaveTarget(void) : "Fires when NPC leaves this target"
+	]

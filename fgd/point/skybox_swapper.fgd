@@ -1,0 +1,9 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(since_ASW) 
+	size(-8 -8 -8, 8 8 8) = skybox_swapper: "An entity that precaches skybox materials and swaps them on trigger."
+	[
+	skyboxname(string) : "Skybox Material Name" : "sky_dust"
+
+	// Inputs
+	input Trigger(void) : "Swap to this skybox."
+	]

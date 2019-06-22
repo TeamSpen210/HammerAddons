@@ -1,0 +1,31 @@
+@PointClass base(Targetname, Angles) 
+	color(0 0 255) 
+	color(173 223 245) 
+	studioprop("models/editor/sky_camera.mdl") 
+	sphere(fogstart) 
+	sphere(fogend) 
+= sky_camera: "An entity used to control the 3D Skybox. Its origin is used to determine the 3D Skybox's position relative to the map. " + 
+	"Place this entity, in the 3D Skybox, at the point where the origin of the map should be."
+	[
+	scale(integer) : "3D Skybox scale" : 16 : "Scale of the skybox."
+
+	fogenable(boolean) : "Fog Enable" : 0
+	fogblend(boolean) : "Fog Blend" : 0
+	use_angles(boolean) : "Use Angles for Fog Dir" : 0
+
+	clip_3d_skybox_near_to_world_far[L4D2](boolean) : "Clip 3D sky near plane to world far plane" : 0
+	clip_3d_skybox_near_to_world_far_offset[L4D2](integer) : "3D sky near plane offset" : "0.0" : "Offset for the near clip plane for the 3D sky in world units.  This is only used if the above field is true. Negative values to pull closer, etc."
+
+	fogcolor(color255) : "Primary Fog Color" : "255 255 255"
+	fogcolor2(color255) : "Secondary Fog Color" : "255 255 255"
+
+	fogdir(string) : "Primary Fog Direction" : "1 0 0"
+	fogstart(float) : "Fog Start" : 500 : "Distance at which the skybox fog should start."
+	fogend(float) : "Fog End" : 2000 : "Distance at which the skybox fog should be fully opaque."
+
+	fogmaxdensity(float) : "Fog Max Density [0..1]" : 1
+	hdrcolorscale[since_L4D2](float) : "HDR color scale." : 1 : "float value to multiply fog color by when running in HDR mode."
+
+	// Inputs
+	input ActivateSkybox[since_ASW](void) : "Make this skybox the active one."
+	]

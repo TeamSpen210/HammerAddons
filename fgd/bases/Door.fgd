@@ -1,0 +1,101 @@
+@BaseClass base(BaseEntityVisBrush, MasterEnt) 
+	line(255 255 255, targetname, chainstodoor)
+= Door
+	[
+	speed(float) : "Speed" : 100 : "The speed at which the door moves."
+
+	noise1(sound) : "Start Sound" : : "Sound to play when the door starts moving."
+	noise2(sound) : "Stop Sound" : : "Sound to play when the door stops moving."
+	startclosesound(sound) : "Start Close Sound" : : "(Optional) Sound to play when the door starts closing."
+	closesound(sound) : "Stop Close Sound" : : "(Optional) Sound to play when the door stops closing."
+	loopmovesound(boolean) : "Loop Moving Sound?" : 0 : "If set to true, the door's 'Start Sound' will be continually looped until the door finishes moving."
+
+	wait(integer) : "Delay Before Reset (-1 stay)" : -1 : "Amount of time, in seconds, after the door has opened before it closes. " +
+		"Once it has closed, it can be used again. If the value is set to -1, the door never closes itself."
+	lip(integer) : "Lip" : 0 : "The amount, in inches, of the door to leave sticking out of the wall it recedes into when pressed. " +
+		"Negative values make the button recede even further into the wall."
+	dmg(integer) : "Blocking Damage" : 0 : "Amount of damage done to entities that block the movement of this door, per frame."
+
+	chainstodoor(target_destination) : "Linked Door" : : "Passes the door's +use inputs and touch events onto a different door, so it also is activated."	
+	forceclosed(boolean) : "Force Closed" : 0 : "If set, this door will close no matter what. Useful for doors that have to close even " +
+		"if the player tries to block them with objects."
+	ignoredebris(boolean) : "Ignore Debris" : 0 : "If set this will change the door's collision group to one that ignore collisions with debris objects " +
+		"(note that this is not compatible with the non-solid-to-player spawnflag)."
+
+	health(integer) : "Door Health" : : "The health of the door (allows someone to shoot it open). 0 means invincible."
+
+	locked_sound(sound) : "Locked Sound" : : "Sound played when the player tries to use the door, and fails because it's locked."
+	unlocked_sound(sound) : "Unlocked Sound" : : "Sound played when the button is door."
+
+	spawnpos[engine](integer) : "Spawn Position" : 0
+	spawnpos(choices) : "Spawn Position" : 0 =
+		[
+		0: "Closed"
+		1: "Open"
+		]
+
+	spawnflags(flags)  =
+		[
+		1: "Starts Open - OBSOLETE, use 'Spawn Position' key instead" : 0
+		4: "Non-solid to Player" : 0
+		8: "Passable" : 0
+		32: "Toggle" : 0
+		256: "Use Opens" : 0
+		512: "NPCs Can't" : 0
+		1024: "Touch Opens" : 1
+		2048: "Starts locked" : 0
+		4096: "Door Silent" : 0
+		131072: "Block Infected nav when closed" : 0 [L4D, L4D2]
+		262144: "Block Survivor nav when closed" : 0 [L4D, L4D2]
+		65536: "New +USE rules - Allow +USE only when when the door is closed/closing or is open/opening and can be manually closed" : 0
+		]
+
+	locked_sentence[engine](integer) : "Locked Sentence" : 0
+	locked_sentence(choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the door, and fails because it's locked." =
+		[
+		0: "None"
+		1: "Gen. Access Denied"
+		2: "Security Lockout"
+		3: "Blast Door"
+		4: "Fire Door"
+		5: "Chemical Door"
+		6: "Radiation Door"
+		7: "Gen. Containment"
+		8: "Maintenance Door"
+		9: "Broken Shut Door"
+		]
+
+	unlocked_sentence[engine](integer) : "Unlocked Sentence" : 0
+	unlocked_sentence(choices) : "Unlocked Sentence" : 0 : "A sentence played when the door is unlocked." =
+		[
+		0: "None"
+		1: "Gen. Access Granted"
+		2: "Security Disengaged"
+		3: "Blast Door"
+		4: "Fire Door"
+		5: "Chemical Door"
+		6: "Radiation Door"
+		7: "Gen. Containment"
+		8: "Maintenance area"
+		]
+
+	// Inputs
+	input Open(void) : "Open the door, if it is not fully open."
+	input Close(void) : "Close the door, if it is not fully closed."
+	input Toggle(void) : "Toggle the door between open and closed."
+	input Lock(void) : "Lock the door."
+	input Unlock(void) : "Unlock the door."
+	input SetSpeed(float) : "Set the door speed."
+	input SetToggleState(bool) : "Force the door instantly to currently open or closed."
+
+	// Outputs
+	output OnClose(void) : "Fired when the door starts closing."
+	output OnOpen(void) : "Fired when the door starts opening."
+	output OnFullyOpen(void) : "Fired when the door reaches the fully open position. Reversed if 'Start Open' flag is set."
+	output OnFullyClosed(void) : "Fired when the door reaches the fully closed position. Reversed if 'Start Open' flag is set."
+	output OnBlockedClosing(void) : "Fired when the door is blocked while closing."
+	output OnBlockedOpening(void) : "Fired when the door is blocked while opening."
+	output OnUnblockedClosing(void) : "Fired when the door is unblocked while closing."
+	output OnUnblockedOpening(void) : "Fired when the door is unblocked while opening."
+	output OnLockedUse(void) : "Fired when the player uses the door, but it is locked."
+	]

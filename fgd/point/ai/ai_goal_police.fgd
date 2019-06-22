@@ -1,0 +1,26 @@
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	sphere(policeradius) 
+	iconsprite("editor/ai_goal_police.vmt") = ai_goal_police: "Implement Metrocop policing behaviour. The cop will guard an area, keeping a target from entering the area. Warnings will be given, before forcing the target back. Optionally the target can be knocked out, so they can be teleported back."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		2: "Knock-out target past crossing plane" : 0
+		4: "Do not leave post" : 0
+		]
+
+	policeradius(float) : "Radius" : 512 : "Radius to police"
+	policetarget(string) : "Target" : : "Target to police"
+
+	// Inputs
+	input EnableKnockOut(void) : "Tells the goal to make the active policing NPC knock out its target"
+	input DisableKnockOut(void) : "Stop the active policing NPC from trying to knock out its target"
+
+	// Outputs
+	output OnFirstWarning(void) : "Fires the first time a policing cop warns a target"
+	output OnSecondWarning(void) : "Fires the second time a policing cop warns a target"
+	output OnLastWarning(void) : "Fires when a policing cop warns a target for the last time"
+	output OnSupressingTarget(void) : "Fires when a policing cop starts to suppress (ie. beat) a target"
+	output OnKnockOut(void) : "Fires when a target has been knocked out"
+	]

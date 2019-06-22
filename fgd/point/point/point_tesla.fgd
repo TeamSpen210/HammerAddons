@@ -1,0 +1,28 @@
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ficool2/point_tesla")
+	color(200 200 0)
+	line(255 255 0, targetname, m_SourceEntityName)
+	sphere(m_flRadius)
+= point_tesla: "An entity that creates tesla lightning arcs around its origin."
+	[
+	m_bOn(boolean): "Start Enabled" : 0 : "Should the tesla start active?"
+	m_sourceentityname(target_destination) : "Source Entity" : : "If specified, tesla lightning will originate from the specified entity. " +
+		"Otherwise, they originate from this entity."
+	m_soundname(sound) : "Sound Name" : "DoSpark" : "Sound to be played whenever lightning is created."
+	texture(sprite) : "Sprite Name" : "sprites/physbeam.vmt" : "Material to use for the tesla lightning beams."
+	m_color(color255) : "Color" : "255 255 255"
+	m_flradius(float) : "Radius" : 200 : "Radius around the origin to find a point to strike with a tesla lightning beam."
+	beamcount_min(integer) : "Min # of Beams" : 6 : "Minimum number of tesla lightning beams to create when creating an arc."
+	beamcount_max(integer) : "Max # of Beams" : 8 : "Maximum number of tesla lightning beams to create when creating an arc."
+	thick_min(float) : "Min Beam Width" : 4 : "Minimum width of the tesla lightning beams."
+	thick_max(float) : "Max Beam Width" : 5 : "Maximum width of the tesla lightning beams."
+	lifetime_min(float) : "Min Time Visible" : "0.3" : "Minimum lifetime of the tesla lightning beams."
+	lifetime_max(float) : "Max Time Visible" : "0.3" : "Maximum lifetime of the tesla lightning beams."
+	interval_min(float) : "Min Time Between Arcs" : "0.5" : "Minimum time delay between random arcing."
+	interval_max(float) : "Max Time Between Arcs" : 2 : "Maximum time delay between random arcing."
+
+	// Inputs
+	input TurnOn(void) : "Turn emitter on."
+	input TurnOff(void) : "Turn emitter off."
+	input DoSpark(void) : "Force a single arc."
+	]

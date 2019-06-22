@@ -1,0 +1,36 @@
+
+@NpcClass base(BaseHelicopter) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio("models/gunship.mdl") = npc_combinegunship: "Combine Gunship"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		4096: "No ground attack" : 0
+		]
+
+	maxangaccel[ASW](float) : "Max Angular Acceleration" : 1000 : "Maximum change in rotation speed. Setting this lower means it can't start or stop turning quickly."
+	maxangvelocity[ASW](vector) : "Max Pitch Velocity" : "300 120 300" : "Maximum rotation speed. Setting this lower means it can't turn quickly."
+
+	// Inputs
+	input OmniscientOn(void) : "Gunship knows target's location even when target is out of sight or behind cover"
+	input OmniscientOff(void) : "Gunship relies on normal sight functions to locate target"
+	input BlindfireOn(void) : "Gunship will fire at an unseen target, attempting to punch through to them"
+	input BlindfireOff(void) : "Gunship only fires at viusible target"
+	input SetPenetrationDepth(float) : "Set penetration depth of bullets"
+	input SetDockingBBox(void) : "Shrink Bounding Box"
+	input SetNormalBBox(void) : "Set Bounding Box to normal size"
+	input EnableGroundAttack(void) : "Allow the gunship to use its ground attack"
+	input DisableGroundAttack(void) : "Don't allow the gunship to use its ground attack"
+	input DoGroundAttack(string) : "Causes the gunship to execute its ground attack"
+	input BecomeInvulnerable(void) : "Stops the gunship from taking damage, but still makes sounds effects"
+	input BecomeVulnerable(void) : "Makes the gunship act normally to damage"
+	input EnableRotorSound(void) : "Turns on rotor sounds"
+	input DisableRotorSound(void) : "Turns off rotor sounds"
+
+	// Outputs
+	output OnFireCannon(void) : "Fires when the gunship fires a cannon round"
+	output OnFirstDamage(void) : "Fired when the first damage is done to the gunship."
+	output OnSecondDamage(void) : "Fired when the second damage is done to the gunship."
+	output OnThirdDamage(void) : "Fired when the third damage is done to the gunship."
+	output OnFourthDamage(void) : "Fired when the fourth damage is done to the gunship."
+	]

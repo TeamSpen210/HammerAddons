@@ -1,0 +1,18 @@
+
+@SolidClass base(BaseEntityBrush, EnableDisable) 
+	appliesto(TF2) = func_tfbot_hint: "Define 'hint' regions for TFBot behaviors"
+	[
+	team(choices) : "Team" : "-1" : "Which team will use this hint" =
+		[
+		-2: "Everyone"
+		2: "Red"
+		3: "Blue"
+		]
+
+	hint(choices) : "Hint" : "0" : "What is the hint" =
+		[
+		0: "Sniper Spot (aim at hint origin)"
+		1: "Sentry Gun Spot (aim at hint origin)"
+		]
+
+	]

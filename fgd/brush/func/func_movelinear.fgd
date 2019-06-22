@@ -1,0 +1,31 @@
+@SolidClass base(BaseEntityBrush) 
+	sphere(movedistance)
+= func_movelinear: "A brush entity that moves linearly along a given distance, in a given direction."
+	[
+	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction the brushes will move, when told to open or passed a positive SetPosition value."
+	spawnflags(flags)  =
+		[
+		8: "Not Solid" : 0
+		]
+
+	startposition(float) : "Start Position" : 0 : "Position of brush when spawned, where 0 is the starting position and 1 is the opened position. " +
+		"Negatives will position it in the opposite direction."
+	speed(float) : "Speed" : 100 : "The speed that the brush moves, in units per second."
+	movedistance(float) : "Move Distance" : 100 : "The distance from the starting point that the brush should move."
+	blockdamage(float) : "Block Damage" : 0 : "The amount of damage to do to any entity that blocks the brushes, per frame."
+	startsound(sound) : "Sound played when the brush starts moving."
+	stopsound(sound) : "Sound played when the brush stops moving."
+
+	// Inputs
+	input Open(void) : "Move the brush to the end position (starting position + (move direction * move distance))."
+	input Close(void) : "Move the brush to the starting position."
+	input SetPosition(string) : "Move the brush to a specific position, where 0 is the starting position and 1 is the opened position. " +
+		"Accepts any value, with negatives moving in the opposite direction."
+	input SetSpeed(float) : "Set the speed and update immediately."
+	input ResetPosition[L4D2](float) : "Set a new start position for our current location."
+	input TeleportToTarget[L4D2](target_destination) : "Teleport to this entity's origin."
+
+	// Outputs
+	output OnFullyOpen(void) : "Fired when the brush reaches the end position (starting position + (move direction * move distance))."
+	output OnFullyClosed(void) : "Fired when the brush reaches the starting position."
+	]

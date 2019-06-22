@@ -1,0 +1,11 @@
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	size(-2 -2 -2, 2 2 2)
+	color(0 255 0)
+= point_gamestats_counter: "Generic game statistics counter."
+	[
+	name(string) : "Name of statistic counter"
+
+	// Inputs
+	input SetName(string) : "Changes name of statistic counter"
+	input Increment(float) : "Increments named statistic counter by specified value"
+	]

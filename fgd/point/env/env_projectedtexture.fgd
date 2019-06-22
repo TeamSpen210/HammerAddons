@@ -1,0 +1,88 @@
+@PointClass base(BaseEntityPoint, SystemLevelChoice) 
+	appliesto(since_EP1)
+	size(-2 -2 -2, 2 2 2)
+	frustum(lightfov, nearz, farz, lightcolor, -1)
+	studio("models/editor/cone_helper.mdl")
+	line(255 255 255, targetname, target)
+	sphere(nearz)
+	sphere(farz)
+= env_projectedtexture: "Projected texture entity."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Enabled" : 1
+		2: "Always Update (moving light)" : 0 [since_ASW]
+		]
+
+	target(target_destination) : "target" : : "target"
+	lightfov(float) : "FOV" : 90.0 : "FOV"
+	nearz(float) : "NearZ" : 4.0 : "Near Z for projected texture"
+	farz(float) : "FarZ" : 750.0 : "Far Z for projected texture"
+
+	enableshadows(boolean) : "Enable Shadows" : 1 : "Enables/disables shadows from this projected texture."
+
+	shadowquality[engine](integer) : "Shadow Quality" : 1
+	shadowquality(choices) : "Shadow Quality" : 1 : "Quality of shadows." =
+		[
+		0: "Low"
+		1: "High"
+		]
+
+	lightonlytarget(boolean) : "Light Only Target" : 0 : "Limit flashlight effect to only effect target entity."
+	lightworld(boolean) : "Light World" : 0 : "Control whether flashlight effects static world geometry."
+	simpleprojection[since_ASW](boolean) : "Simple Projection" : 0 : "Indicates if this is a simple, non-light casting texture projection"
+
+	lightcolor(color255) : "Light Color" : "255 255 255 200" : "Light Color RGB-Intensity"
+	brightnessscale[since_ASW](float) : "Brightness Scale" : 1.0 : "Scale the light color by this brightness"
+
+	cameraspace(boolean) : "Camera Space" : 0 : "Angles are interpreted as being relative to camera."
+
+	colortransitiontime[since_ASW](float) : "Color Transition Time" : 0.5 : "Amount of time it takes for a color change to occur."
+	texturename(material) : "Texture Name" : "effects/flashlight001" : "VTF Texture to 'project' onto the enviroment."
+	textureframe(integer) : "Texture Frame" : 0 : "If the VTF is multi-frame, specify the frame to use."
+
+	style[engine](integer) : "Appearance" : 0
+	style[since_P2](choices) : "Appearance" : "0" =
+		[
+		0: "Normal"
+		10: "Fluorescent flicker"
+		2: "Slow, strong pulse"
+		11: "Slow pulse, noblack"
+		5: "Gentle pulse"
+		1: "Flicker A"
+		6: "Flicker B"
+		3: "Candle A"
+		7: "Candle B"
+		8: "Candle C"
+		4: "Fast strobe"
+		9: "Slow strobe"
+		]
+
+	pattern[since_P2](string) : "Custom Appearance" : : "Set a custom pattern of light brightness for this light. " +
+		"Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. " +
+		"i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
+
+	// Inputs
+	input TurnOn(void) : "Turn on the texture"
+	input TurnOff(void) : "Turn off the texture"
+
+	input SetFOV[!P2](float) : "Set FOV"
+	input FOV[P2](float) : "Set FOV of projection."
+
+	input Target(target_destination): "Set a new target entity to point at."
+	input CameraSpace(boolean): "Set Camera Space."
+
+	input AlwaysUpdateOn[since_ASW](void) : "Turn on per frame updating (for moving lights)"
+	input AlwaysUpdateOff[since_ASW](void) : "Turn off per frame updating (for moving lights)"
+
+	// Disabled by Valve in the code, emits console message.
+	input SpotlightTexture[!CSGO, !P2](string) : "Set the spotlight texture"
+
+	input EnableShadows(boolean) : "Set the if shadows are enabled"
+	input LightColor[since_ASW](color255) : "Change the light color/brightness"
+	input SetLightStyle[since_P2](integer) : "Change the lightstyle (see Appearance field for possible values)."
+	input SetPattern[since_P2](string) : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
+
+	input SetNearZ[since_P2](float) : "Sets the near Z distance."
+	input SetFarZ[since_P2](float) : "Sets the far Z distance."
+	]

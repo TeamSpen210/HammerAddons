@@ -1,0 +1,37 @@
+@BaseClass = PlatSounds
+	[
+	movesnd[engine](integer) : "Move Sound" : 0
+	movesnd(choices) : "Move Sound" : 0 : "The sound played whenever the platform starts moving." =
+		[
+		0: "No Sound"
+		1: "big elev 1"
+		2: "big elev 2"
+		3: "tech elev 1"
+		4: "tech elev 2"
+		5: "tech elev 3"
+		6: "freight elev 1"
+		7: "freight elev 2"
+		8: "heavy elev"
+		9: "rack elev"
+		10: "rail elev"
+		11: "squeek elev"
+		12: "odd elev 1"
+		13: "odd elev 2"
+		]
+
+	stopsnd[engine](integer) : "Stop Sound" : 0
+	stopsnd(choices) : "Stop Sound" : 0 : "The sound played when the platform stops moving." =
+		[
+		0: "No Sound"
+		1: "big elev stop1"
+		2: "big elev stop2"
+		3: "freight elev stop"
+		4: "heavy elev stop"
+		5: "rack stop"
+		6: "rail stop"
+		7: "squeek stop"
+		8: "quick stop"
+		]
+
+	volume(string) : "Sound Volume 0.0 - 1.0" : "0.85"
+	]

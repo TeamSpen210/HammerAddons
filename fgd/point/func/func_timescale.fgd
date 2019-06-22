@@ -1,0 +1,12 @@
+@PointClass appliesto(L4D2) base(BaseEntityPoint) = func_timescale: "Adjust the time scale of the server and client."
+	[
+	desiredtimescale(float) : "Desired timescale." : "1.0" : "Time scale to blend towards, this is a multiplicative value where 1.0 is normal time, 0.5 is half speed, 2.0 is double speed."
+	acceleration(float) : "Acceleration per second" : "0.05" : "How quickly the change per second goes up to the max."
+	minblendrate(float) : "Minimum blend per second" : "0.1" : "Minimum change per second when blending from the current timescale to the desired."
+	blenddeltamultiplier(float) : "Perframe delta multiplier" : "3.0" : "The per frame delta between desired and current is multiplied by this to get the maximum change per second."
+
+	// Inputs
+	input Start(void) : "Start blending to the desired timescale."
+	input Stop(void) : "Stop and blend back to the default timescale (1.0f)."
+	input Reset(void) : "Reset immediately to normal timescale (1.0f)."
+	]

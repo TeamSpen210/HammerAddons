@@ -1,0 +1,24 @@
+@BaseClass = DXLevelChoice
+	[ 
+	mindxlevel[engine](integer) : "Minimum DX Level" : 0
+	mindxlevel(choices) : "Minimum DX Level" : 0 = 
+		[
+		0 : "default (lowest)"
+		70 : "dx7"
+		80 : "dx8.0 (4600Ti)"
+		81 : "dx8.1 (FX5200)"
+		90 : "dx9 SM2.0"
+		95 : "dx9 SM3.0"
+		]
+	maxdxlevel[engine](integer) : "Maximum DX Level" : 0
+	maxdxlevel(choices) : "Maximum DX Level" : 0 = 
+		[
+		0 : "default (highest)"
+		60 : "dx6"
+		70 : "dx7"
+		80 : "dx8.0 (4600Ti)"
+		81 : "dx8.1 (FX5200)"
+		90 : "dx9 SM2.0"
+		95 : "dx9 SM3.0"
+		]
+	]

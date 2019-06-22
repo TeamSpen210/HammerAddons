@@ -1,0 +1,24 @@
+@PointClass base(BaseEntityPoint, DamageType)
+	sphere(DamageRadius) 
+	line(255 0 0, targetname, damagetarget) 
+	iconsprite("editor/ficool2/point_hurt") 
+= point_hurt: "An entity that does damage to all entities in a radius around itself, with a specified delay. " +
+	"If 'Target Entity' is specified, the damage is only done to that entity."
+	[
+	damagetarget(target_destination) : "Target Entity" : : "If specified, only this entity will take damage. Otherwise, all entities within the Radius will take damage."
+	damageradius(float) : "Radius" : 256 : "All entities within this radius of this entity will take damage. If a 'Target Entity' is specified, only that entity will take d" + "amage."
+	damage(integer) : "Damage" : 5 : "Damage done to all affected entities each time this entity fires."
+	damagedelay(float) : "Delay" : 1 : "Delay between refires, in seconds."
+
+	spawnflags(flags)  =
+		[
+		1: "Start Active" : 0
+		]
+
+
+	// Inputs
+	input Hurt(void) : "Force a single fire, damaging either the Target Entity or all entities within the radius."
+	input TurnOn(void) : "Enable this entity. It will start damaging entities everytime it fires, and refire based upon the specified Delay."
+	input TurnOff(void) : "Disable this entity. It will stop damaging entities."
+	input Toggle(void) : "Toggle this entity between On/Off state."
+	]

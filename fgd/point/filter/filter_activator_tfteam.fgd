@@ -1,0 +1,8 @@
+@FilterClass base(TeamNum, filter_base) 
+	appliesto(TF2) 
+	iconsprite("editor/filter_team.vmt")
+	line(0 255 0, targetname, controlpoint)
+= filter_activator_tfteam: "A filter that filters by the team of the activator.  The team number to filter by. If the filter mode is Allow, only entities whose team number matches the given team will pass the filter. If the filter mode is Disallow, all entities EXCEPT those whose team number matches the given team will pass the filter."
+	[
+	controlpoint(target_destination) : "Associated Control Point" : : "The team_control_point associated with this filter. The filter does NOT need an associated control point to function properly, but ownership of the control point will control the team number the filter uses (setup during each round start)."
+	]

@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_rif_famas_dropped.mdl") = weapon_famas: "FAMAS"
+	[
+	]

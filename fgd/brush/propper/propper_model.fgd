@@ -1,0 +1,120 @@
+@SolidClass base(StaticTargetname, Origin) 
+	appliesto(PROPPER)
+	line(255 255 0, targetname, physmodel)
+= propper_model: "This will create a model when Propper is run."
+	[
+	modelname(string) : "Model Name" : "props/generated_prop" : "The directory and name of the finished model. Relative to <yourmod>/models"
+	materialpath(string) : "Material path" : "models/props/generated_prop" : "Where the model's textures will be. Relative to <yourmod>/materials."
+	scale(float) : "Scale" : "1.0" : "Scale the model up or down by this factor."
+
+	surfaceprop[engine](string) : "Surface Property": "no_decal"
+	surfaceprop(choices) : "Surface property" : "no_decal" : "The physical properties of the model--affects impact sounds and weight for physics props." =
+		[
+		"no_decal": "No Decals"
+		"default": "Default"
+
+		// Wood
+		"wood": "Wood - Generic"
+		"wood_box": "Wood - Small Box"
+		"wood_crate": "Wood - Large Crate/Furniture"
+		"wood_plank": "Wood - Planks"
+		"wood_solid": "Wood - Thick/Solid"
+		"wood_furniture": "Wood - Small Furniture"
+		"wood_panel": "Wood - Panel"
+
+		// Natural
+		"gravel": "Gravel"
+		"dirt": "Dirt"
+		"grass": "Grass"
+		"gravel": "Gravel"
+		"mud": "Mud"
+		"sand": "Sand"
+		"ice": "ice"
+		"snow": "snow"
+		"foliage": "Foliage"
+
+		// Rock-like
+		"rock": "Small Rock"
+		"boulder": "Large Rock"
+		"brick": "Brick"
+		"concrete": "Concrete"
+		"concrete_block": "Concrete Block"
+		"asphalt": "Asphalt"
+
+		// Metal
+		"metal": "Metal Sheet"
+		"solidmetal": "Thick/Solid Metal"
+		"metal_box": "Small Metal Box"
+		"metalpanel": "Metal Panel"
+		"metalvent": "Thin Metal Vent"
+		"slipperyslime": "Slippery Slime"
+
+
+		"metalgrate": "Metal Grating"
+		"chainlink": "Chainlink Fence"
+		"chain": "Metal Chain"
+
+		// Unusual
+		"alienflesh": "Alien Flesh"
+		"bloodyflesh": "Bloody Flesh"
+		"water": "Water"
+		"slime": "Slime"
+		"slipperyslime": "Slippery Slime"
+		"flesh": "Flesh"
+
+		// Plastic
+		"plastic_barrel": "Plastic - Hollow/Soft"
+		"plastic_box": "Plastic - Small/Medium Hard"
+		"plastic": "Plastic - Small Hard"
+
+		// Structures
+		"glass": "Glass"
+		"glassbottle": "Glass - Bottle"
+		"brokenglass": "Glass - Broken"
+		"tile": "Tile"
+		"paper": "Paper"
+		"cardboard": "Cardboard Box"
+		"plaster": "Drywall/Sheetrock/Plaster"
+		"rubber": "Rubber"
+		"rubbertire": "Rubber - Hollow Tire"
+		"carpet": "Carpet"
+		"ceiling_tile": "Ceiling Tile"
+		"computer": "Computer"
+		"pottery": "Pottery"
+		]
+
+	physmodel(target_destination) : "Physics mesh" : : "Pick any brush entity (including this one) to represent the physical shape of the model. " +
+		"Leave this field blank for a non-solid model. " +
+		"If you leave this blank while making a physics prop, " +
+		"Propper will automatically use this entity for collisions."
+
+	mass(float) : "Mass" : "0.0" : "Weight of the prop in kg. Enter zero or lower to automatically calculate mass."
+
+	concave(boolean) : "Concave collisions" : 1 : "Used to make a concave collision model. If you choose no, the model will be 'shrink-wrapped'."
+
+	smoothing[engine](integer) : "Smoothing mode" : 1
+	smoothing(choices) : "Smoothing mode" : 1 : "Determines how vertex normals are computed for lighting" =
+		[
+		0: "completely faceted"
+		1: "auto-smooth"
+		2: "Use Hammer's smoothing groups only"
+		]
+
+	sourcefolder(string) : "Source folder" : "c:/propsource" : "Where you want to keep your .qc and .smd files. " +
+		"The final directory will be <sourcefolder>/<modelname>."
+		
+	smoothangle(integer) : "Smoothing threshold" : 45 : "If auto-smooth is enabled, Edges flatter than this angle will appear smooth. Pick from 0 to 180."
+	snaptogrid(boolean) : "Snap to Hammer grid" : 0 : "Causes every vertex to be snapped to the nearest grid point."
+
+	weldvertices(float) : "Welding threshold" : ".01" : "Vertices will be snapped together if within this tolerance. " +
+		"A value of 0 is not recommended because there may be visible gaps in the mesh. " +
+		"Larger numbers will merge vertices together, and may be useful for optimizing your model."
+
+	autocenter(boolean) : "Auto-Center" : 0 : "The model's origin point defines how it is lit and is how the prop is positioned in a map. " +
+		"Auto-center moves the model's origin to the center of its bounding box and is recommended for physics props. " +
+		"For static props, put the origin somewhere that lets you align the prop easily."
+	mat_nonormal(boolean) : "Disable normal mapping" : 0 : "This option removes all bump map info from the converted materials. " +
+		"This is useful if you wish to use -StaticPropLighting to light your props."
+	disp_nowarp(boolean) : "Don't warp displacement textures" : 0 : "In Hammer, when you move a displacement point, the texture moves with it. " +
+		"If you pick yes, the texture will not move." 
+	]

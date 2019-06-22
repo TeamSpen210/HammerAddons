@@ -1,0 +1,41 @@
+// Special case - entities that aren't quite brushes or point ents.
+@BaseClass = BaseEntity
+	[
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	globalname(string) : "Global Entity Name" : : "Name by which this entity is linked to another entity in a different map. " +
+		"When the player transitions to a new map, entities in the new map with globalnames matching entities in the previous map " +
+		"will have the previous map's state copied over their state."
+
+	vscripts[VSCRIPT](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
+	thinkfunction[VSCRIPT](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
+
+	vscript_init_code[+VSCRIPT, +srctools](string) : "Init Code" : : "This code will be executed after the Entity Scripts option."
+	vscript_init_code2[+VSCRIPT, +srctools](string) : "Init Code 2" : : "This code will be executed after the Entity Scripts option."
+	// etc
+
+	linedivider_base(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	// Inputs
+	input Kill(void) : "Removes this entity from the world."
+	input KillHierarchy(void) : "Removes this entity and all its children from the world."
+	input AddOutput(string) : "Adds an entity I/O connection to this entity or changes keyvalues dynamically. Format:" +
+		"\n'<output name> <targetname>:<inputname>:" + 
+		"<parameter>:<delay>:<max times to fire (-1 == infinite, 1 = only once)>'\n" +
+		"or 'keyvalue newval'. Very dangerous, use with care."
+	input FireUser1(void) : "Causes this entity's OnUser1 output to be fired."
+	input FireUser2(void) : "Causes this entity's OnUser2 output to be fired."
+	input FireUser3(void) : "Causes this entity's OnUser3 output to be fired."
+	input FireUser4(void) : "Causes this entity's OnUser4 output to be fired."
+	input Use(void) : "Same as a player invoking +use; may not do anything. Can also be invoked by creating an output that does not specify an input."
+
+	input RunScriptFile[VSCRIPT](script) : "Execute a game script file from disk."
+	input RunScriptCode[VSCRIPT](string) : "Execute a string of script source code."
+	input CallScriptFunction[VSCRIPT](string) : "Execute the given function name."
+
+	// Outputs
+	output OnUser1(void) : "Fired in response to FireUser1 input."
+	output OnUser2(void) : "Fired in response to FireUser2 input."
+	output OnUser3(void) : "Fired in response to FireUser3 input."
+	output OnUser4(void) : "Fired in response to FireUser4 input."
+	output OnKilled[L4D](void) : "Fired when the entity is killed and removed from the game."
+	]

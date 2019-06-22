@@ -1,0 +1,4 @@
+@BaseClass = Node
+	[
+	nodeid(node_id) readonly : "Node ID"
+	]

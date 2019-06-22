@@ -1,0 +1,15 @@
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/env_hudhint.vmt")
+= env_hudhint: "An entity to control the display of HUD hints. HUD hints are used to show the player what key is bound to a particular command."
+	[
+	spawnflags(flags)  =
+		[
+		1: "All Players" : 0
+		]
+
+	message(string) : "Hint Text (localized)" : : "This should be set to match the desired HUD hint entry in resource/valve_english.txt."
+
+	// Inputs
+	input ShowHudHint(void) : "Shows the hint message."
+	input HideHudHint(void) : "Hides the hint message."
+	]

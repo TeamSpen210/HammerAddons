@@ -1,0 +1,42 @@
+@PointClass base(BaseEntityPoint, DamageFilter) 
+	color(200 0 0) 
+	iconsprite("editor/logic_playerproxy.vmt") = logic_playerproxy: "An entity that is used to relay inputs/ouputs to the player and back to the world."
+	[
+
+	// Inputs
+	input RequestPlayerHealth(void) : "Requests the current player's health from the proxy. This will fire the PlayerHealth output with the value."
+	input SetFlashlightSlowDrain(void) : "Puts the player's flashlight in slow-power-drain mode (for Episodic darkness)"
+	input SetFlashlightNormalDrain(void) : "Puts the player's flashlight to default power drain"
+	input SetPlayerHealth(integer) : "Sets the player's health to this value."
+	input RequestAmmoState(void) : "Request the ammo state of the player. It will fire PlayerHasAmmo or PlayerHasNoAmmo outputs."
+	input LowerWeapon(void) : "Lowers the players weapon."
+	input EnableCappedPhysicsDamage(void) : "Cause player to take less damage from physics objects, and never more than 30 points from any individual strike."
+	input DisableCappedPhysicsDamage(void) : "Undo effects of EnableCappedPhysicsDamage"
+	input SetLocatorTargetEntity(string) : "Set the entity that the HUD locator should track. (Usually a vehicle)"
+	
+	input AddPotatosToPortalgun[P2](void) : "Change portalgun bodygroup to show potatos."
+	input RemovePotatosFromPortalgun[P2](void) : "Change portalgun bodygroup to not show potatos."
+	input SetDropEnabled[P2](boolean) : "Set wether the player is allowed to drop a carried object."
+	input ForceVMGrabController[P2](void) : "Force the player to use the view model grab controller for all objects that are picked up."
+	input ForcePhysicsGrabController[P2](void) : "Force the player to use the physics grab controller for all objects that are picked up."
+	input ResetGrabControllerBehavior[P2](void) : "Resets the grab controller used by the player to its default behavior."
+	input SetMotionBlurAmount[P2](float) : "Forces the motion blur effect on the player. Set to < 0 to disable this override."
+
+	// Outputs
+	output OnFlashlightOn(float) : "Fired when the player turns on his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
+	output OnFlashlightOff(float) : "Fired when the player turns off his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
+	output PlayerHealth(integer) : "The player's current health value."
+	output PlayerMissedAR2AltFire(void) : "Player fired an AR2 combine ball that didn't kill any enemies."
+	output PlayerHasAmmo(void) : "Fired by request if the player has any ammo."
+	output PlayerHasNoAmmo(void) : "Fired by request if the player doesn't have any ammo."
+	output PlayerDied(void) : "Fires when the player dies."
+	
+	output OnStartSlowingTime[!TF2, ASW](void) : "Fired when a Portal player initiates slow time."
+	output OnStopSlowingTime[!TF2, ASW](void) : "Fired when a Portal player stops slowing time."
+	
+	output OnPrimaryPortalPlaced[P2](void) : "Fired when a Portal player successfully places the primary portal."
+	output OnSecondaryPortalPlaced[P2](void) : "Fired when a Portal player successfully places the secondary portal."
+	output OnDuck[since_P2](void) : "Fired when a player starts to duck."
+	output OnUnDuck[since_P2](void) : "Fired when a player releases the duck button."
+	output OnJump[since_P2](void) : "Fired when a player jumps."
+	]

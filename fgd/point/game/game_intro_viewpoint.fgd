@@ -1,0 +1,20 @@
+
+@PointClass base(Angles) 
+	appliesto(TF2) 
+	studioprop("models/editor/camera.mdl") = game_intro_viewpoint: "A viewpoint in the intro camera."
+	[
+	teamnum(choices) : "Team" : "0" : "Team" =
+		[
+		0: "None (Shared)"
+		2: "Red"
+		3: "Blue"
+		]
+
+	step_number(integer) : "Step Number. Intro starts at 1." : 1
+	time_delay(float) : "Time to spend here." : 12
+	hint_message(string) : "Hint Message here."
+	event_to_fire(string) : "Game Event To Fire"
+	event_delay(float) : "Game Event fire delay" : 3
+	event_data_int(integer) : "Game Event data" : 0
+	fov(float) : "FOV" : 0
+	]

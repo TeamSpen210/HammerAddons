@@ -1,0 +1,20 @@
+
+@PointClass base(Targetname) 
+	iconsprite("editor/player_speedmod.vmt") = player_speedmod: "Speeds up or slows down player velocity over time (slow mo/fast forward)"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Suppress weapons" : 0
+		2: "Suppress HUD" : 0
+		4: "Suppress jump" : 0
+		8: "Suppress duck" : 0
+		16: "Suppress use" : 0
+		32: "Suppress sprint" : 0
+		64: "Suppress attack" : 0
+		128: "Suppress zoom" : 0
+		]
+
+
+	// Inputs
+	input ModifySpeed(float) : "Modifies player speed by X ammount."
+	]

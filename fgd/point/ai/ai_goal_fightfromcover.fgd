@@ -1,0 +1,19 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(P2) 
+	iconsprite("editor/ai_goal_follow.vmt") = ai_goal_fightfromcover: "AI Fight from Cover"
+	[
+	actor(target_destination) : "Actor(s) to affect"
+	goal(target_destination) : "Target Entity" : : "The name of the entity to follow. If blank, and the actor likes the player, then defaults to player"
+	directionalmarker(target_destination) : "Directional Marker" : : "Specify the entity that indicates the direction of battle"
+	generichinttype(string) : "Generic Hint Type" : : "Behavior looks for 'generic' hints, and requires a text tag to search for"
+	width(float) : "Zone Width" : 600 : "Width of the hint search area"
+	length(float) : "Zone Length" : 480 : "Length of the hint search area"
+	height(float) : "Zone Height" : 2400 : "Offset in the direction of the hint search area"
+	bias(float) : "Zone Bias" : 60 : "Offset in the direction of the hint search area"
+	startactive(boolean) : "Start Active" : 0
+
+	// Inputs
+	input Activate(void)
+	input Deactivate(void)
+	input SetDirectionalMarker(string) : "Specify the entity that indicates the direction of battle"
+	]

@@ -30,7 +30,7 @@
 		0 : "No, keep current"
 		1 : "Yes, clear previous levels"
 	]
-	maxoccludeearea(float) : "Max occluder area" : "0" : "[Used on PC] Prevents occlusion testing for entities that take up more than X% of the screen." 
+	maxoccludeearea(float): "Max occluder area" : "0" : "[Used on PC] Prevents occlusion testing for entities that take up more than X% of the screen." 
 	minoccluderarea(float) : "Min occluder area" : "0" : "[Used on PC] Prevents occluders from being used if they take up less than X% of the screen." 
 	maxpropscreenwidth(float) : "Start Fade Pixels" : -1 : "Number of pixels wide at which all props in the level start to fade (<0 = use fademaxdist). This number is ignored if the prop has a specific fade distance specified."
 	minpropscreenwidth(float) : "End Fade Pixels" : 0 : "Minimum number of pixels wide at which the prop is visible (0 = don't fade out). This number is ignored if the prop has a specific fade distance specified."
@@ -443,6 +443,8 @@
 	input  DisablePortalFunnel(void) : "Disable portal funneling behavior."
 	input  EnableMotion(void) : "Allow physics simulation."
 	input  DisableMotion(void) : "Prevent Physics simulation, freezing the cube in place."
+	
+	input SetPaint(integer) : "Force the cube to be painted with 0 (Repulsion), 2 (Propulsion), or 4 (No) gel."
 
 	input  Dissolve(void) : "Fizzles the cube, firing the OnFizzled output."
 	input  SilentDissolve(void) : "Kills the cube immediately and fires its OnFizzled output."
@@ -698,7 +700,10 @@
 	
 	input  Dissolve(void) : "Fizzles the FrankenCube."
 	input  SilentDissolve(void) : "Kills the FrankenCube and fires its OnFizzled output, if the relevant setting is on."
-	output OnFizzled(void) : "Fired when the FrankenCube gets fizzled."
+	output OnFizzled(void) : "Fired when a cube is fizzled."
+	output OnPlayerUse(void) : "Any player +USEd the cube."
+	output OnPlayerPickup(void) : "Any player picked up the cube."
+	output OnPhysGunDrop(void) : "Any player dropped the cube."
 ]
 
 @PointClass base(Targetname, Parentname, Angles) studioprop("models/editor/prop_indicator_panel.mdl") line(255 255 0, targetname, IndicatorLights) = prop_indicator_panel : "Indicator signs for the end of modern antlines. Shows either a tick/cross, or a circular countdown. Can also function as a env_texturetoggle for indicator lights."
@@ -799,6 +804,7 @@
 
 @PointClass base(Targetname, Parentname, Angles, BasePaintType) 
 	line(255 255 255, targetname, light_position_name) 
+	sphere(blob_spread_radius)
 	studio("models/editor/info_paint_sprayer.mdl") = info_paint_sprayer : "An entity that sprays Gel."
 [
 	//Paint sprayer
@@ -825,7 +831,7 @@
 	blobs_per_second(float) : "Blobs per second" : "1" : "The number of paint blobs sprayed per second."
 	min_speed(float) : "Min blob speed" : "100" : "The minimum speed of the sprayed blobs."
 	max_speed(float) : "Max blob speed" : "100" : "The maximum speed of the sprayed blobs."
-	blob_spread_radius(float) : "Blob spread radius" : "0" : "The starting radius of the spread of the blobs."
+	blob_spread_radius(float) : "Blob spread radius" : "0" : "Blobs will spawn randomly within this radius."
 	blob_spread_angle(float) : "Blob spread angle" : "0" : "The spread of the blobs along its direction vector (in degrees)."
 	blob_streak_percentage(float) : "Blob streak percentage" : "0" : "The percentage of blobs that will streak (0 - 100)."
 	min_streak_time(float) : "Blob min streak time" : "0.2" : "The minimum time that the blobs will streak for."
@@ -847,7 +853,6 @@
 @PointClass base(Targetname,Angles, BasePaintType)
 	studio("models/editor/prop_paint_bomb.mdl") = prop_paint_bomb : "Large blob of gel which explodes on impact. Respawn with a point_template."
 [
-	
 	BombType(choices) : "Bomb Type" : 0 : "The type of explosion." = 
 	[
 		0 : "Dry Bomb"
@@ -858,6 +863,8 @@
 	AllowSilentDissolve(boolean) : "Allow SilentDissolve input" : 0 : "Allow the SilentDissolve input to dissolve this bomb."
 	
 	playspawnsound(boolean) : "Play Spawn Sound" : 1 : "Whether or not this bomb should play a sound on spawn (PaintBlob.Inception)."
+	
+	model(string) readonly: "Model" : "models/error.mdl" : "Paint bombs need a model set to suppress a warning message. This model would be loaded already."
 
 	input  Dissolve(void) : "Dissolves the paint bomb."
 	input  SilentDissolve(void) : "Kills the paint bomb and fires its OnFizzled output."
@@ -1000,7 +1007,7 @@
 ]
 
 
-@PointClass base(Targetname) sphere(radius) studio("models/editor/cone_helper.mdl") = paint_sphere : "Paint brushes inside the sphere."
+@PointClass base(Targetname) sphere(radius) iconsprite("editor/paint_sphere.vmt") = paint_sphere : "Paint brushes inside the sphere."
 [
 	paint_type(choices) : "Paint Type" : 0 : "The type of Gel created." = 
 	[
@@ -1039,3 +1046,6 @@
 	
 	output OnSurveyComplete(void) : "Fired when the player completes or cancels the survey."
 ]
+
+// BEE 2 EDIT FLAG = 0
+// Above forces BEE2 to not write to this file.

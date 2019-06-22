@@ -1,0 +1,25 @@
+@PointClass base(TwoObjectPhysics)
+	studio("models/editor/axis_helper.mdl") 
+	line(255 255 255, targetname, attach1) 
+	line(255 255 255, targetname, attach2) 
+	line(128 128 128, targetname, attach1, targetname, attach2) 
+	color(128 128 128) 
+= phys_ragdollconstraint: "A constraint that fixes the position of two entities, relative to this constraint's origin. " +
+	"Also allows for limits on the rotation around each axis, in the space of this constraint."
+	[
+	spawnflags(flags)  =
+		[
+		1: "No Collision until break" : 1
+		2: "Only limit rotation (free movement)" : 0
+		]
+
+	xmin(float) : "X axis min limit" : -90 : "-180 min and 180 max = no constraint on this axis."
+	xmax(float) : "X axis max limit" : 90 : "-180 min and 180 max = no constraint on this axis."
+	ymin(float) : "Y axis min limit" : 0 : "-180 min and 180 max = no constraint on this axis."
+	ymax(float) : "Y axis max limit" : 0 : "-180 min and 180 max = no constraint on this axis."
+	zmin(float) : "Z axis min limit" : 0 : "-180 min and 180 max = no constraint on this axis."
+	zmax(float) : "Z axis max limit" : 0 : "-180 min and 180 max = no constraint on this axis."
+	xfriction(float) : "X axis friction" : 0
+	yfriction(float) : "Y axis friction" : 0
+	zfriction(float) : "Z axis friction" : 0
+	]

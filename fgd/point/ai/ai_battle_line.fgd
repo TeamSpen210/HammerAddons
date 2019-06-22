@@ -1,0 +1,20 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2)
+	iconsprite("editor/ficool2/ai_battle_line")
+ = ai_battle_line: "Battle line"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Use parent's orientation" : 0
+		]
+
+	actor(target_name_or_class) : "Actor(s) or squad to affect"
+	
+	active(boolean) : "Active" : 0
+	
+	strict(boolean) : "Strict" : 1 : "Player orders can override, applies to allies only"
+
+	// Inputs
+	input Activate(void)
+	input Deactivate(void)
+	]

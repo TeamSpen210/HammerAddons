@@ -1,0 +1,8 @@
+Sprite
+{
+	$baseTexture "editor/ficool2/path_corner_crash"
+	$spriteorientation "vp_parallel"
+	// Put above the model.
+	$spriteorigin "[.5 1]"
+	$no_fullbright 1
+}

@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_shot_sawedoff_dropped.mdl") = weapon_sawedoff: "Sawed-Off"
+	[
+	]

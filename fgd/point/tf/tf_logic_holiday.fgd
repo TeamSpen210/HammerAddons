@@ -1,0 +1,18 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(TF2) = tf_logic_holiday: "Holiday Entity. This is used to detect a holiday map."
+	[
+	holiday_type[engine](integer) : "Holiday" : 1
+	holiday_type(choices) : "Holiday" : 1 =
+		[
+		1: "None"
+		2: "Halloween"
+		3: "Birthday"
+		]
+
+	tauntinhell(boolean) : "Taunt In Hell" : "0" : "Should players taunt when teleported to Hell." 
+	allowhaunting(boolean) : "Haunting" : "0" : "Allow Wheel of Doom haunting."
+
+	// Inputs
+	input HalloweenSetUsingSpells(integer) : "Disable/Enable spells for this map. Only works on Halloween maps. (0 disable, 1 enable)"
+	input Halloween2013TeleportToHell(string) : "Teleport all players to hell."
+	]

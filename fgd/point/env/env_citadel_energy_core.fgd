@@ -1,0 +1,17 @@
+@PointClass base(BaseEntityPoint, Angles) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	studio("models/editor/cone_helper.mdl") = env_citadel_energy_core: "Special effect for the energy cores in the Citadel, or for the Unstationary Scaffold. Appears as a blue-white sphere with streams of energy coming from the direction the entity is pointing."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "No small particles" : 0
+		2: "Start on" : 0
+		]
+
+	scale(float) : "Scale" : 1 : "Scale of the effect.  1 is the default size, 2 is twice that, etc."
+
+	// Inputs
+	input StartCharge(float) : "Start charging the core over specified number of seconds."
+	input StartDischarge(void) : "Switch to discharging the core."
+	input Stop(float) : "Stops the effect over the specified number of seconds."
+	]

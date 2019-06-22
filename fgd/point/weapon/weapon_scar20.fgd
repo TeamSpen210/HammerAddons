@@ -1,0 +1,6 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	studio("models/weapons/w_snip_scar20_dropped.mdl") = weapon_scar20: "Scar20"
+	[
+	]

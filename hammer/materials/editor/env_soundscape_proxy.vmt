@@ -1,0 +1,8 @@
+Sprite
+{
+	$spriteorientation "vp_parallel"
+	$spriteorigin "[ 0.50 0.50 ]"
+	$spriterendermode 2
+	$baseTexture "editor/env_soundscape_proxy"
+	$no_fullbright 1
+}

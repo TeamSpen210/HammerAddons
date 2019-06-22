@@ -1,0 +1,12 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(L4D2)
+	iconsprite("editor/ambient_generic.vmt")
+	sphere()
+= ambient_music: "Play L4D specific music."
+	[
+	message(sound) : "Sound Name" : : "Name of the GameSound entry to play. "
+
+	// Inputs
+	input PlaySound(void) : "Starts the sound."
+	input StopSound(void) : "Stops the sound if it is playing."
+	]

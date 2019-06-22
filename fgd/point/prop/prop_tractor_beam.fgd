@@ -1,0 +1,32 @@
+@PointClass base(BaseProjector) 
+	appliesto(P2) 
+	studioprop()
+= prop_tractor_beam: "Emitter for an Excursion Funnel."
+	[
+	linearforce[engine](integer) : "Funnel Direction" : 250
+	linearforce(choices) : "Funnel Direction" : 250 : "Speed of the Funnel, positive is forward." =
+		[
+		 250: "[+250] Forward / Blue"
+		-250: "[-250] Reversed / Orange"
+		]
+
+	noemitterparticles(boolean) : "Disable Emitter Particles" : 0 : "Disable the whirly particles on the emitter."
+
+	use128model[engine](boolean) : "Use PeTI Model?" : 0
+	use128model(choices) : "Model" : 0 : "Which model should this use?" =
+		[
+		0: "192 Model"
+		1: "128 Model (PeTI)"
+		]
+
+	model(choices) : "[H] Model" : "models/props/tractor_beam_emitter.mdl" : "Sets the model to appear as in Hammer." =
+		[
+		"models/props/tractor_beam_emitter.mdl": "192 Model"
+		"models/props_ingame/tractor_beam_128.mdl": "128 Model (PeTI)"
+		]
+
+	model[engine](studio): "Funnel model" : "models/props/tractor_beam_emitter.mdl"
+
+	// Inputs
+	input SetLinearForce(float) : "Set the speed of the Funnel, and therefore the direction."
+	]

@@ -1,0 +1,14 @@
+
+@SolidClass base(BaseEntityBrush) 
+	appliesto(P1) = func_liquidportal: "A space that fills with portal liquid and teleports entities when done filling."
+	[
+	initiallinkedportal(target_destination) : "Linked liquid portal."
+	filltime(float) : "Fill Time (sec)" : 10 : "How long the volume takes to fill in seconds."
+
+	// Inputs
+	input SetLinkedLiquidPortal(string) : "The liquid portal this should link to. Will update linked portal to point back."
+	input SetFillTime(float) : "How long the area takes to fill."
+	input StartFilling(void) : "Start filling NOW. Entities teleport when finished."
+	input AddActivatorToTeleportList(void) : "Add the activator entity to the list of entities to teleport when filling is finished."
+	input RemoveActivatorFromTeleportList(void) : "Remove the activator entity from the list of entities to teleport when filling is finished."
+	]

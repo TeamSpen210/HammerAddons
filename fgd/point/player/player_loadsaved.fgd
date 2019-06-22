@@ -1,0 +1,14 @@
+@PointClass base(Targetname) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2)
+	size(-8 -8 -8, 8 8 8) 
+= player_loadsaved: "Load Auto-Saved game"
+	[
+	duration(string) : "Fade Duration (seconds)" : "2"
+	holdtime(string) : "Hold Fade (seconds)" : "0"
+	renderamt(integer) : "Fade Alpha" : 255
+	rendercolor(color255) : "Fade Color (R G B)" : "0 0 0"
+	loadtime(string) : "Reload delay" : "0"
+
+	// Inputs
+	input Reload(void) : "Ends this game and reloads"
+	]

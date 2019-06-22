@@ -1,0 +1,14 @@
+@PointClass base(BaseEntityPoint)
+	color(200 0 0)
+	iconsprite("editor/logic_active_autosave.vmt")
+= logic_active_autosave: "An entity that is used to look for opportunities to autosave."
+	[
+	minimumhitpoints(integer) : "Initiation Hit Points" : 30 : "Start looking for an opportunity to save if player drops below this hitpoint level."
+	triggerhitpoints(integer) : "Trigger Hit Points" : 75 : "If started looking for an opportunity, save when hitpoints reach this level."
+	timetotrigget(float) : "Time to trigger" : 0 : "If > 0, how long to try and get a save off before giving up."
+	dangeroustime(float) : "Dangerous time" : 10 : "If 0, just autosave. Otherwise, do an autosavedangerous with this time threshold."
+
+	// Inputs
+	input Enable(void) : "Enable the entity"
+	input Disable(void) : "Enable the entity"
+	]

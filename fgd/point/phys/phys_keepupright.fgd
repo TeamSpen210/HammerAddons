@@ -1,0 +1,18 @@
+@PointClass base(Targetname, Angles)
+	color(128 128 128) 
+	iconsprite("editor/ficool2/phys_keepupright.vmt") 
+	line(128 128 128, targetname, attach1) 
+= phys_keepupright: "A controller that tries to keep an entity facing a particular direction."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Start inactive" : 0
+		]
+
+	attach1(target_destination) : "Target Entity" : : "The entity to align to the desired angles."
+	angularlimit(float) : "Angular Limit" : 15 : "The maximum angular velocity that this controller can compensate for, in degrees per second."
+
+	// Inputs
+	input TurnOn(void) : "Enable the controller."
+	input TurnOff(void) : "Disable the controller."
+	]

@@ -1,0 +1,40 @@
+
+@PointClass base(BaseDriveableVehicle) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studioprop() = prop_vehicle_jeep: "Driveable studiomodel jeep."
+	[
+	cargovisible(choices) : "Hopper Visible" : "0" : "Is the striderbuster cargo hopper visible?" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "HUD Locator Precache" : 0
+		]
+
+
+	// Inputs
+	input StartRemoveTauCannon(void) : "Start the tau removal sequence."
+	input FinishRemoveTauCannon(void) : "Finish the tau removal sequence."
+	input LockEntrance(void) : "Stops NPC's from entering the vehicle until unlocked."
+	input UnlockEntrance(void) : "Allows NPC's to enter the vehicle."
+	input LockExit(void) : "Stops NPC's from exiting the vehicle until unlocked."
+	input UnlockExit(void) : "Allows NPC's to exit the vehicle."
+	input EnableRadar(void) : "Turn on the Jalopy radar"
+	input DisableRadar(void) : "Turn off the Jalopy radar"
+	input EnableRadarDetectEnemies(void) : "Enable Jalopy radar to detect Striders and Hunters"
+	input AddBusterToCargo(void) : "Put a striderbuster in the cargo trigger"
+	input SetCargoHopperVisibility(boolean) : "Set the strider buster hopper thingy to be visible, or invisible."
+	input DisablePhysGun(void) : "Disable physgun interactions with the jeep."
+	input EnablePhysGun(void) : "Enable physgun interactions with the jeep (default)."
+	input CreateLinkController(void) : "Automatically builds and attaches a link controller to the car, which cuts the node connections under the car while the car is standing still."
+	input DestroyLinkController(void) : "Destroys the link controller created by CreateLinkController."
+
+	// Outputs
+	output OnCompanionEnteredVehicle(void) : "Companion has entered the vehicle."
+	output OnCompanionExitedVehicle(void) : "Companion has exited the vehicle."
+	output OnHostileEnteredVehicle(void) : "Hostile has entered the vehicle."
+	output OnHostileExitedVehicle(void) : "Hostile has exited the vehicle."
+	]

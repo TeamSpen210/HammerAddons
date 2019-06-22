@@ -1,0 +1,29 @@
+@PointClass base(BaseEntityPoint, RobotDestruction) 
+	appliesto(TF2) = tf_logic_robot_destruction: "Robot Destruction Entity. This is used to detect a Robot Destruction map."
+	[
+	score_interval(float) : "Robot Scoring Interval (in seconds)" : 1 : "How often a robot should score a point while hacking."
+	loser_respawn_bonus_per_bot(float) : "Loser Respawn Bonus Per Bot (percentage)" : 0 : "How much faster the losing team will respawn per bot difference."
+	red_respawn_time(float) : "Red Respawn Time (in seconds)" : 10 : "Respawn times for Red"
+	blue_respawn_time(float) : "Blue Respawn Time (in seconds)" : 10 : "Respawn times for Blue"
+	max_points(integer) : "Max Points" : 200 : "The number of points a team must get to unlock their win condition."
+	finale_length(float) : "Finale Length" : 30 : "The amount of time from after max score is reached a team will win."
+	res_file(string) : "HUD Res File" : "resource/UI/HudObjectiveRobotDestruction.res" : "What res file to use for the HUD"
+
+	// Outputs
+	output OnBlueHitMaxPoints(void) : "Sent when Blue hits the max points."
+	output OnRedHitMaxPoints(void) : "Sent when Red hits the max points."
+	output OnBlueLeaveMaxPoints(void) : "Sent when blue goes from max points to fewer."
+	output OnRedLeaveMaxPoints(void) : "Sent when red goes from max points to fewer."
+	output OnBlueHitZeroPoints(void) : "Sent when Blue hits 0 points."
+	output OnRedHitZeroPoints(void) : "Sent when Red hits 0 points"
+	output OnBlueHasPoints(void) : "Sent when Blue goes from 0 to any points"
+	output OnRedHasPoints(void) : "Sent when Red goes from 0 to any points"
+	output OnRedFinalePeriodEnd(void) : "Sent when the red finale period ends."
+	output OnBlueFinalePeriodEnd(void) : "Sent when the blue finale period ends."
+	output OnRedFirstFlagStolen(void) : "Sent when red's first flag gets stolen."
+	output OnRedFlagStolen(void) : "Sent when a flag gets stolen from red."
+	output OnRedLastFlagReturned(void) : "Sent when red's last stolen flag gets returned."
+	output OnBlueFirstFlagStolen(void) : "Sent when blue's first flag gets stolen."
+	output OnBlueFlagStolen(void) : "Sent when a flag gets stolen from blue."
+	output OnBlueLastFlagReturned(void) : "Sent when blue's last stolen flag gets returned."
+	]

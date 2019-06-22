@@ -1,0 +1,13 @@
+
+@BaseClass base(Targetname) 
+	size(-10 -10 -10, 10 10 10) 
+	color(255 0 255) 
+= player_control
+	[
+
+	// Inputs
+	input Activate(void) : "Turns on"
+	input Deactivate(void) : "Turns off"
+	input SetThrust(string) : "Set Thrust"
+	input SetSideThrust(string) : "Set Side Thrust"
+	]

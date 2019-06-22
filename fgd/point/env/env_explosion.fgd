@@ -1,0 +1,76 @@
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/env_explosion.vmt") 
+	color(200 200 0) 
+	sphere(iRadiusOverride) 
+	line(255 255 0, targetname, ignoredEntity) 
+= env_explosion: "An entity that creates an explosion at its origin."
+	[
+	imagnitude(integer) : "Magnitude" : 100 : "The amount of damage done by the explosion."
+	iradiusoverride(integer) : "Radius Override" : 0 : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude."
+	fireballsprite(sprite) : "Fireball Sprite" : "sprites/zerogxplode.spr"
+
+	rendermode[engine](integer) : "Render Mode" : 5
+	rendermode(choices) : "Render Mode" : 5 =
+		[
+		0: "Normal"
+		4: "Solid"
+		5: "Additive"
+		]
+
+	spawnflags(flags)  =
+		[
+		1: "No Damage" : 0
+		2: "Repeatable" : 0
+		4: "No Fireball" : 0
+		8: "No Smoke" : 0
+		16: "No Decal" : 0
+		32: "No Sparks" : 0
+		64: "No Sound" : 0
+		128: "Random Orientation" : 0
+		256: "No Fireball Smoke" : 0
+		512: "No particles" : 0
+		1024: "No DLights" : 0
+		2048: "Don't clamp Min" : 0
+		4096: "Don't clamp Max" : 0
+		8192: "Damage above surface only" : 0
+		16384: "Generic damage" : 0
+		]
+
+	ignoredentity(target_destination) : "Ignored Entity" : : "Do not harm or affect the named entity."
+
+	ignoredclass[engine](integer) : "Ignored Class" : 0
+	ignoredclass(choices) : "Ignored Class" : 0 : "Do not harm or affect this class." = 
+		[
+		0: "None"
+		1: "Players"
+		2: "Player Allies"
+		3: "Vital Player Allies"
+		4: "Antlions"
+		5: "Barnacles"
+		6: "npc_bullseyes"
+		//  Bullsquid
+		7: "Citizens - Passive"
+		8: "Citizens Rebel"
+		9: "Combine"
+		10: "Combine Gunships"
+		11: "Conscripts"
+		12: "Headcrabs"
+		//   Houndeye
+		13: "Manhacks"
+		14: "Metropolice"
+		15: "Military"
+		16: "Scanners"
+		17: "Stalkers"
+		18: "Vortigaunts"
+		19: "Zombies"
+		20: "Protosnipers"
+		21: "Missiles"
+		22: "Flares"
+		23: "Earth Fauna"
+		24: "Hacked Rollermines"
+		25: "Combine Hunters"
+		]
+
+	// Inputs
+	input Explode(void) : "Triggers the explosion."
+	]

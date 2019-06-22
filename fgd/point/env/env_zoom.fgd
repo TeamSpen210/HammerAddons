@@ -1,0 +1,18 @@
+@PointClass base(BaseEntityPoint)
+	color(200 0 0)
+	iconsprite("editor/ficool2/env_zoom.vmt")
+= env_zoom: "An entity that can be used to control the player's FOV. " +
+	"Useful for scenes where the player's view is being controlled, " +
+	"or player-usable binoculars/telescopes, etc."
+	[
+	rate(float) : "Seconds to reach target" : "1.0" : "Amount of time it should take to reach the specified FOV."
+	fov(integer) : "Target FOV" : 75 : "FOV that this entity should set the player's FOV to when active."
+	spawnflags(flags)  =
+		[
+		1: "Allow Suit Zoom" : 0
+		]
+
+	// Inputs
+	input Zoom(void) : "Start controlling the player's FOV."
+	input UnZoom(void) : "Stop controlling the player's FOV."
+	]

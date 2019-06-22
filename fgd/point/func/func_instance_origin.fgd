@@ -1,0 +1,7 @@
+// Internal entity.
+@PointClass 
+	appliesto(INSTANCING)
+	iconsprite("editor/func_instance_origin.vmt") 
+= func_instance_origin: "This is the center of the instance for rotation."
+	[
+	]

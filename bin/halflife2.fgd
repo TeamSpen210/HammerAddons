@@ -161,7 +161,11 @@
 	input LaunchBall(void) : "Launch a ball from the spawner."
 ]
 
-@NPCClass base(Parentname, BaseNPC) size(-16 -16 -16, 16 16 16) color(255 150 0) = npc_enemyfinder : "EnemyFinder"
+@NPCClass base(Parentname, BaseLogicalNPC) 
+iconsprite("editor/npc_enemyfinder.vmt")
+sphere(MinSearchDist)
+sphere(MaxSearchDist)
+= npc_enemyfinder : "EnemyFinder"
 [
 	spawnflags(flags) =
 	[
@@ -1743,7 +1747,7 @@
 	input Launch(float) : "Launch the flare forward with the specified speed."
 ]
 
-@PointClass base(Targetname, Parentname, Angles) = env_muzzleflash : "Muzzle Flash" 
+@PointClass base(Targetname, Parentname, Angles) size( -4 -4 -4, 4 4 4 ) iconsprite("editor/env_muzzleflash.vmt") = env_muzzleflash : "Muzzle Flash" 
 [
 	parentattachment(string) : "Parent Attachment" : "" : "The name of an attachment on the parent to hierarchically attach to."
 	scale(float) : "Scale" : "1" : "Size of the muzzle flash."
@@ -1799,14 +1803,13 @@
 // Camera/monitor entities
 //
 //-------------------------------------------------------------------------
-@PointClass base(Parentname, Angles) studioprop("models/editor/camera.mdl") = point_camera : "Camera"
+@PointClass base(Targetname, Parentname, Angles) studioprop("models/editor/camera.mdl") = point_camera : "Camera"
 [
 	spawnflags(Flags) =
 	[
 		1 : "Start Off" : 0 
 	]
 
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	FOV(float) : "FOV" : 90 : "Field of view in degrees"
 //	resolution(float) : "resolution" : 256 : "width/height of the render target for the camera"
 	UseScreenAspectRatio(boolean) : "Screen Aspect Ratio" : 0
