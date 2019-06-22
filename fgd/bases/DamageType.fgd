@@ -3,36 +3,36 @@
 	damagetype[engine](integer) : "Damage Type" : 0
 	damagetype(choices) : "Damage Type" : 0 : "Kind of damage to apply. These fields can be ORed together. " =
 		[
-		0: "GENERIC"
-		1: "CRUSH"
-		2: "BULLET"
-		4: "SLASH"
-		8: "BURN"
+		0: "Generic"
+		1: "Crush"
+		2: "Bullet"
+		4: "Slash"
+		8: "Burn"
 
-		16: "FREEZE" [!TF2, until_ASW]
-		16: "TRAIN" [TF2]
-		16: "VEHICLE" [since_ASW]
+		16: "Freeze" [!TF2, until_ASW]
+		16: "Train" [TF2]
+		16: "Vehicle" [since_ASW]
 
-		32: "FALL"
-		64: "BLAST"
-		128: "CLUB"
-		256: "SHOCK"
-		512: "SONIC"
-		1024: "ENERGYBEAM"
-		16384: "DROWN"
-		32768: "PARALYSE"
-		65536: "NERVEGAS" [!TF2]
-		65536: "SAWBLADE" [TF2]
-		131072: "POISON"
-		262144: "RADIATION"
-		524288: "DROWNRECOVER"
+		32: "Fall"
+		64: "Blast"
+		128: "Club"
+		256: "Shock"
+		512: "Sonic"
+		1024: "Energy Beam"
+		16384: "Drown"
+		32768: "Paralyse"
+		65536: "Nerve Gas" [!TF2]
+		65536: "Sawblade" [TF2]
+		131072: "Poison"
+		262144: "Radiation"
+		524288: "Drown Recover"
 
-		1048576: "CHEMICAL" [!TF2, until_ASW]
-		1048576: "CRITICAL" [TF2]
-		1048576: "ACID" [since_ASW]
+		1048576: "Chemical" [!TF2, until_ASW]
+		1048576: "Critical" [TF2]
+		1048576: "Acid" [since_ASW]
 
-		2097152: "SLOWBURN"
-		4194304: "SLOWFREEZE"
-		16777216: "FULLGIB" [L4D2]
+		2097152: "Slow Burn"
+		4194304: "Slow Freeze"
+		16777216: "Full Gib" [L4D2]
 		]
 	]

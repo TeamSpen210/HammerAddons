@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint, PlayerClass) 
 	appliesto(P2) 
-	studioprop("models/editor/playerstart.mdl")
+	studioprop()
 = info_coop_spawn: "Player spawns for cooperative mode."
 	[
 	enabled[engine](boolean) : "Initial State" : 1
@@ -18,6 +18,13 @@
 		3: "ATLAS"
 		]
 
+
+	model(choices) : "[H] Player" : "models/editor/playerstart.mdl" : "The player model to show in Hammer." =
+	[
+		"models/editor/playerstart.mdl" 	: "Default"
+		"models/player/ballbot/ballbot.mdl"	: "ATLAS"
+		"models/player/eggbot/eggbot.mdl"	: "P-Body"
+	]
 	forcegunonspawn(boolean) : "Force Gun On Spawn" : 0 : "Give the player a Portal Gun on spawn. Coop players always have a Dual Portal Device."
 
 	// Inputs

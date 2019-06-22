@@ -13,7 +13,7 @@
 
 	skin[engine](integer) : "Skin" : 0
 	
-	skin(choices) : "[H] Paint Type" : 0 : "The type of gel created (for display)." =
+	skin(choices) : "[H] Paint Type" : 0 : "The type of gel displayed in Hammer." =
 		[
 		0: "Repulsion Gel"
 		1: "Reflection Gel / Adhesion Gel"

@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityAnimating, SetModel)
+	appliesto(EP1, EP2)
 	studioprop() = prop_scalable: "Scalable Prop"
 	[
 

@@ -7,14 +7,12 @@
 	// No visible health, most triggers should instakill.
 	damage[P1, P2](integer) : "Damage" : 100000 : "The amount of damage done to entities that touch this trigger. " +
 		"The damage is done every half-second. See also 'Damage Model' for extra details on how damage can be dealt."
-	damagecap(integer) : "Damage Cap" : 20 : "Maximum damage dealt per second. " +
-		"This field is only used if you select the Doubling w/Forgiveness damage model, via the spawnflag."
+	damagecap(integer) : "Damage Cap" : 20 : "The maximum amount of damage that can be dealt when using the Doubling w/Forgiveness damage model."
 
 	damagemodel[engine](boolean) : "Damage Model" : 0
 	damagemodel(choices) : "Damage Model" : 0 : "How damage is dealt. Normal always does the specified amount of damage each half second. " +
-		"Doubling starts with the specified amount and doubles it each time it hurts the toucher. " +
-		"Forgiveness means that if the toucher gets out of the trigger the damage will reset to the specified value. " +
-		"Good for making triggers that are deadly over time without having to cause massive damage on each touch." =
+		"Doubling w/Forgiveness starts with the specified amount and doubles it each time it hurts the toucher, resetting when they leave the trigger. " +
+		"Good for making triggers that are deadly over time, without having to cause massive damage on each touch." =
 		[
 		0: "Normal"
 		1: "Doubling w/forgiveness"
