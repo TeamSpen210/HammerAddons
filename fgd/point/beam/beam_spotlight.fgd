@@ -24,8 +24,8 @@
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
 	hdrcolorscale(float) : "HDR color scale." : "0.7" : "float value to multiply sprite color by when running in HDR mode."
 	
-	halosprite[L4D](sprite) : "Halo Sprite" : "sprites/light_glow03.vmt" : "The material that should be used for the halo."
-	beamsprite[L4D](sprite) : "Beam Sprite" : "sprites/glow_test02.vmt" : "The material that should be used for the beam."
+	halosprite[L4D](material) : "Halo Sprite" : "sprites/light_glow03.vmt" : "The material that should be used for the halo."
+	beamsprite[L4D](material) : "Beam Sprite" : "sprites/glow_test02.vmt" : "The material that should be used for the beam."
 
 	// Inputs
 	input LightOn(void) : "Turn the spotlight on."
