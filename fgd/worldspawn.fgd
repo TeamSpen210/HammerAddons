@@ -12,7 +12,7 @@
 	
 	chaptertitle(string) : "Chapter Title Message" : : "Chapter Title that appears onscreen when this level starts."
 	startdark(boolean) : "Level Fade In" : 0
-	gametitle(boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts."
+	gametitle[!P2](boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts."
 
 	newunit[engine](boolean) : "New Level Unit" : 0
 	newunit(choices) : "New Level Unit" : 0 : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. " +
