@@ -1,5 +1,5 @@
 @PointClass 
-	size(-8 -8 -8, 8 8 8) 
+	iconsprite("editor/comp_pack")
 	appliesto(srctools)
 = comp_pack:
 	"Explicitly identify resources to pack into the map. If more are needed, add additional keyvalues with SmartEdit off."
