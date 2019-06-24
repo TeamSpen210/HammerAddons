@@ -1,5 +1,5 @@
 @PointClass 
-    size(-8 -8 -8, 8 8 8)
+	iconsprite("editor/comp_pack_rename")
     appliesto(srctools)
 = comp_pack_rename:
 	"Pack a file into the BSP, under a different name than it starts with."
