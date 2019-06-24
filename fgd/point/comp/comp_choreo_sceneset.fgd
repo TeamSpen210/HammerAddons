@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	iconsprite("editor/choreo_manager.vmt")
+	iconsprite("editor/comp_choreo_sceneset.vmt")
 = comp_choreo_sceneset:
 "Chains a set of choreographed scenes together."
 	[
