@@ -1,5 +1,6 @@
 
 @PointClass base(Targetname, EnableDisable) 
+	autovis(AI, AI Addon Builder)
 	appliesto(ASW, P2, CSGO) = ai_addon_builder
 	[
 	npcname(string) : "NPC name" : : "Name to give built NPCs"

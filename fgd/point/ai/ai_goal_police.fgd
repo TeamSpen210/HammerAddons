@@ -1,8 +1,12 @@
-
 @PointClass base(BaseEntityPoint) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	autovis(AI, AI Goal, Metrocop)
 	sphere(policeradius) 
-	iconsprite("editor/ai_goal_police.vmt") = ai_goal_police: "Implement Metrocop policing behaviour. The cop will guard an area, keeping a target from entering the area. Warnings will be given, before forcing the target back. Optionally the target can be knocked out, so they can be teleported back."
+	iconsprite("editor/ai_goal_police.vmt") 
+= ai_goal_police: "Implement Metrocop policing behaviour. " +
+	"The cop will guard an area, keeping a target from entering the area. " +
+	"Warnings will be given, before forcing the target back. " +
+	"Optionally the target can be knocked out, so they can be teleported back."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
