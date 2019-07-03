@@ -1,7 +1,8 @@
-
 @NpcClass base(BaseNPC) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
-	studio("models/hunter.mdl") = npc_hunter: "A smaller, faster, strider that can pursue the player into buildings."
+	autovis(NPCs, Combine, Combine Hunter)
+	studio("models/hunter.mdl") 
+= npc_hunter: "A smaller, faster, strider that can pursue the player into buildings."
 	[
 	followtarget(target_destination) : "Strider to Follow" : : "The name of the strider that this hunter should follow."
 

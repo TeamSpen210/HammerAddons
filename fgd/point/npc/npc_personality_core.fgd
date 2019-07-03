@@ -1,6 +1,8 @@
 @PointClass base(TalkNPC) 
 	appliesto(P2) 
-	studioprop() = npc_personality_core: "Aperture Science Personality Construct. Animated balls with handles."
+	autovis(NPCs, Aper. Personality Core)
+	studioprop() 
+= npc_personality_core: "Aperture Science Personality Construct. Animated balls with handles."
 	[
 	modelskin[engine](integer) : "Model Skin" : 0
 	modelskin(choices) : "Model Skin" : 0 : "If using the 'alt' skin, this sets the eye color -- If not using the alt skin, (0 = broken) (1=normal)" =

@@ -6,6 +6,7 @@
 
 @PointClass base(BaseNPC, _npc_portal_turret_floor_p1_mdl, _npc_portal_turret_floor_p2_mdl) 
 	appliesto(P1, P2) 
+	autovis(NPCs, Portal Turret)
 	sphere(turretRange) 
 	frustum(45, 16, TurretRange, 255 0 0 100, -1) 
 = npc_portal_turret_floor: "Aperture Science Sentry Turret."

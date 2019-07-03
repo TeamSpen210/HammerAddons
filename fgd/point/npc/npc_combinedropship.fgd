@@ -1,6 +1,23 @@
 
 @NpcClass base(BaseHelicopter) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(NPCs, Combine, Combine Dropship) 
+	line(192 192 192, targetname, npctemplate)
+	line(192 192 192, targetname, npctemplate2)
+	line(192 192 192, targetname, npctemplate3)
+	line(192 192 192, targetname, npctemplate4)
+	line(192 192 192, targetname, npctemplate5)
+	line(192 192 192, targetname, npctemplate6)
+
+	line(192 192 192, targetname, npctemplate,  targetname, dustoff1)
+	line(192 192 192, targetname, npctemplate2, targetname, dustoff2)
+	line(192 192 192, targetname, npctemplate3, targetname, dustoff3)
+	line(192 192 192, targetname, npctemplate4, targetname, dustoff4)
+	line(192 192 192, targetname, npctemplate5, targetname, dustoff5)
+	line(192 192 192, targetname, npctemplate6, targetname, dustoff6)
+
+	line(192 192 192, targetname, apcvehiclename)
+	line(192 192 192, targetname, rollerminetemplate)
 	studio("models/combine_dropship.mdl") = npc_combinedropship: "Combine Dropship"
 	[
 	spawnflags(flags) : "spawnflags" =
@@ -10,25 +27,25 @@
 
 	landtarget(target_destination) : "Land target name"
 	gunrange(float) : "Crate Gun Range" : 2048 : "If the dropship's carrying a crate with a gun on it, it'll only shoot targets within this range."
-	rollerminetemplate(target_destination) : "Name of Rollermine Template" : : "If this dropship drops any rollermines due to the 'DropMines' input being fired, it will use this template for the rollermines it creates. If left blank, ordinary rollermines will be dropped."
-	npctemplate(target_destination) : "Name of Template NPC 1"
-	npctemplate2(target_destination) : "Name of Template NPC 2"
-	npctemplate3(target_destination) : "Name of Template NPC 3"
-	npctemplate4(target_destination) : "Name of Template NPC 4"
-	npctemplate5(target_destination) : "Name of Template NPC 5"
-	npctemplate6(target_destination) : "Name of Template NPC 6"
-	dustoff1(target_destination) : "Name of dustoff point for NPC 1"
-	dustoff2(target_destination) : "Name of dustoff point for NPC 2"
-	dustoff3(target_destination) : "Name of dustoff point for NPC 3"
-	dustoff4(target_destination) : "Name of dustoff point for NPC 4"
-	dustoff5(target_destination) : "Name of dustoff point for NPC 5"
-	dustoff6(target_destination) : "Name of dustoff point for NPC 6"
-	apcvehiclename(target_destination) : "Name of the APC to drop"
-	invulnerable(choices) : "Invulnerable" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	rollerminetemplate(target_destination) : "Name of Rollermine Template" : : "If this dropship drops any rollermines due to the 'DropMines' input being fired, " +
+		"it will use this template for the rollermines it creates. " +
+		"If left blank, ordinary rollermines will be dropped."
+
+	npctemplate(target_destination) : "Name of Template NPC 1."
+	npctemplate2(target_destination) : "Name of Template NPC 2."
+	npctemplate3(target_destination) : "Name of Template NPC 3."
+	npctemplate4(target_destination) : "Name of Template NPC 4."
+	npctemplate5(target_destination) : "Name of Template NPC 5."
+	npctemplate6(target_destination) : "Name of Template NPC 6."
+	dustoff1(target_destination) : "Name of dustoff point for NPC 1."
+	dustoff2(target_destination) : "Name of dustoff point for NPC 2."
+	dustoff3(target_destination) : "Name of dustoff point for NPC 3."
+	dustoff4(target_destination) : "Name of dustoff point for NPC 4."
+	dustoff5(target_destination) : "Name of dustoff point for NPC 5."
+	dustoff6(target_destination) : "Name of dustoff point for NPC 6."
+	apcvehiclename(target_destination) : "Name of the APC to drop."
+
+	invulnerable(boolean) : "Invulnerable" : "0"
 
 	cratetype(choices) : "Crate Type" : "2" =
 		[
@@ -42,8 +59,10 @@
 
 
 	// Inputs
-	input LandLeaveCrate(integer) : "Land, drop soldiers, and leave the crate behind. Specify the number of troops to drop off in the parameter."
-	input LandTakeCrate(integer) : "Land, drop soldiers, but don't leave the crate behind. Specify the number of troops to drop off in the parameter."
+	input LandLeaveCrate(integer) : "Land, drop soldiers, and leave the crate behind. " +
+		"Specify the number of troops to drop off in the parameter."
+	input LandTakeCrate(integer) : "Land, drop soldiers, but don't leave the crate behind. " +
+		"Specify the number of troops to drop off in the parameter."
 	input DropMines(integer) : "Drop Rollermines. Specify the number of mines to drop in the parameter."
 	input DropStrider(void) : "Drop the Strider you're carrying. Now."
 	input DropAPC(void) : "Drop the APC you're carrying. Now."
@@ -51,13 +70,14 @@
 	input Pickup(string) : "Pickup an entity."
 	input SetLandTarget(string) : "Set my land target name."
 	input SetGunRange(float) : "Set my crate gun's range."
-	input EnableRotorSound(void) : "Turns on rotor sounds"
-	input DisableRotorSound(void) : "Turns off rotor sounds"
+	input EnableRotorSound(void) : "Turns on rotor sounds."
+	input DisableRotorSound(void) : "Turns off rotor sounds."
 	input StopWaitingForDropoff(void) : "Stop waiting for the dropoff. Dropoff as soon as possible."
 
 	// Outputs
 	output OnFinishedDropoff(void) : "Fires when the dropship has finished a dropoff."
 	output OnFinishedPickup(void) : "Fires when the dropship has finished a pickup."
-	output OnCrateShotDownBeforeDropoff(float) : "Fires when the container was shot down before it dropped off soldiers. The parameter contains the number of soldiers that weren't successfully dropped off."
+	output OnCrateShotDownBeforeDropoff(float) : "Fires when the container was shot down before it dropped off soldiers. " +
+		"The parameter contains the number of soldiers that weren't successfully dropped off."
 	output OnCrateShotDownAfterDropoff(void) : "Fires when the container was shot down after it dropped off soldiers."
 	]

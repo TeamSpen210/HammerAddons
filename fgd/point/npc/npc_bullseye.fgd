@@ -1,7 +1,10 @@
 @NpcClass base(BaseLogicalNPC) 
 	iconsprite("editor/bullseye.vmt") 
+	autovis(NPCs, Bullseye NPC)
 	color(255 0 0) = npc_bullseye: "Dummy NPC for targeting or other behavior."
 	[
+	linedivider_npc(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
 	health(integer) : "Health" : 35 : "Unlike other NPCs level designers are allowed to set the health on bullseyes."
 	minangle(float) : "Minimum Angle" : 360: "Angle from the bullseye required for bullseye to be a valid enemy."
 	mindist(float) : "Minimum Distance" : 0 : "Distance from the bullseye required for bullseye to be a valid enemy."

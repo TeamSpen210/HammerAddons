@@ -2,6 +2,7 @@
 @PointClass base(BaseNPC) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio("models/junk/w_traffcone.mdl") = npc_launcher: "Launcher"
+	autovis(NPCs, Missile Launcher)
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

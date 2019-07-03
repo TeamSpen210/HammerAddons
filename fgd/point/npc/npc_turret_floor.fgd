@@ -2,6 +2,7 @@
 @PointClass base(BaseNPC) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio("models/combine_turrets/floor_turret.mdl") 
+	autovis(NPCs, Combine, Floor Turret)
 = npc_turret_floor: "Combine Floor Turret"
 	[
 	spawnflags(flags) : "spawnflags" =

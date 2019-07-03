@@ -1,5 +1,5 @@
-@NpcClass base(BaseLogicalNPC) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+@NpcClass base(BaseLogicalNPC)
+	autovis(NPCs, EnemyFinder NPC)
 	color(255 150 0) 
 	iconsprite("editor/npc_enemyfinder.vmt") 
 	sphere(MinSearchDist) 
