@@ -1,18 +1,25 @@
+// Switch the model helper depending on game.
+@BaseClass appliesto(P1) studioprop("models/props/turret_01.mdl")
+	= _npc_portal_turret_floor_p1_mdl []
+@BaseClass appliesto(P2) studioprop()
+	= _npc_portal_turret_floor_p2_mdl []
 
-@PointClass base(npc_turret_floor, Targetname, Angles) 
+@PointClass base(BaseNPC, _npc_portal_turret_floor_p1_mdl, _npc_portal_turret_floor_p2_mdl) 
 	appliesto(P1, P2) 
-	studio("models/props/turret_01.mdl") 
-	studioprop() 
 	sphere(turretRange) 
-	frustum(45, 16, TurretRange, 255 0 0 100, -1) = npc_portal_turret_floor: "Aperture Science Sentry Turret."
+	frustum(45, 16, TurretRange, 255 0 0 100, -1) 
+= npc_portal_turret_floor: "Aperture Science Sentry Turret."
 	[
 	damageforce(boolean) : "Damage Pushes Player" : 0 : "Being hit by this turret will push the player back."
+
 	spawnflags[P2](flags) : "spawnflags" =
 		[
 		32: "Start Active" : 0
 		64: "Start Inactive" : 0
 		128: "Fast Retire" : 0
 		256: "Out of Ammo" : 0
+		// Probably does nothing...
+		512: "Citizen modified (Friendly)" : 0 [P1]
 		]
 
 	modelindex[engine](integer) : "Model" : 0 
@@ -25,8 +32,9 @@
 		4: "Skeleton"
 		]
 
-	skinnumber[engine](boolean) : "Skin" : 0 
-	skinnumber[P2](choices) : "Skin" : "0" : "Set the skin used for the turret. Only useful on normal (for a destroyed variant) or custom turrets." =
+	skinnumber[engine](integer) : "Skin" : 0 
+	skinnumber[P1](integer) readonly: "Skin" : 0 : "Which skin to use for this turret. Aperture Turrets have no variants."
+	skinnumber[P2](choices) : "Skin" : 0 : "Set the skin used for the turret. Only useful on normal (for a destroyed variant) or custom turrets." =
 		[
 		0: "Normal"
 		1: "Destroyed"
@@ -61,16 +69,16 @@
 
 	// Inputs
 	input FireBullet(string) : "Causes the turret to instantly fire at the specified entity."
-	input Toggle[P2](void) : "Toggle enabled state."
-	input Enable[P2](void) : "Enable the turret."
-	input Disable[P2](void) : "Disable the turret."
-	input DepleteAmmo[P2](void) : "Depletes all the ammo from a turret, causing it to dry-fire."
-	input RestoreAmmo[P2](void) : "Restores ammo to a turret, allowing it to fire live rounds again."
+	input Toggle(void) : "Toggle enabled state."
+	input Enable(void) : "Enable the turret."
+	input Disable(void) : "Disable the turret."
+	input DepleteAmmo(void) : "Depletes all the ammo from a turret, causing it to dry-fire."
+	input RestoreAmmo(void) : "Restores ammo to a turret, allowing it to fire live rounds again."
 	input EnableGagging[P2](void) : "Prevents the turret from speaking any lines."
 	input DisableGagging[P2](void) : "Allows the turret to speak again."
 	input EnablePickup[P2](void) : "Enables player pickup of the turret."
 	input DisablePickup[P2](void) : "Disables player pickup of the turret."
-	input SelfDestruct[P2](void) : "Causes the turret to play lines, ignite and then explode."
+	input SelfDestruct(void) : "Causes the turret to play lines, ignite and then explode."
 	input SelfDestructImmediately[P2](void) : "Cause the turret to explode immediately."
 	input SetAsBouncePainted[P2](void) : "Force this turret to be painted with bounce paint."
 	input EnableMotion[P2](void) : "Enable physics motion."
@@ -78,11 +86,11 @@
 	input SetModel[P2](integer) : "Change the model, where the parameter is an integer from 0-4. Requires the Load Defective Models keyvalue to be true!"
 
 	// Outputs
-	output OnDeploy[P2](void) : "Turret has seen the player and is deploying its arms."
-	output OnRetire[P2](void) : "Turret has lost sight of the player and is returning to sleep mode."
-	output OnTipped[P2](void) : "Turret has been tipped over and 'died'."
+	output OnDeploy(void) : "Turret has seen the player and is deploying its arms."
+	output OnRetire(void) : "Turret has lost sight of the player and is returning to sleep mode."
+	output OnTipped(void) : "Turret has been tipped over and 'died'."
 	output OnExplode[P2](void) : "Turret has exploded."
-	output OnPhysGunPickup[P2](void) : "Turret was picked up by player."
-	output OnPhysGunDrop[P2](void) : "Turret was dropped by player."
+	output OnPhysGunPickup(void) : "Turret was picked up by player."
+	output OnPhysGunDrop(void) : "Turret was dropped by player."
 	output OnPainted[P2](void) : "Fires when the turret is first painted or if repainted by a different color."
 	]
