@@ -2,6 +2,7 @@
 // is converted to info_overlay_accesssor, which is a real
 // entity.
 @PointClass base(BaseEntityPoint)
+	autovis(Overlays,Normal)
 	size(-1 -1 0, 1 1 1)
 	color(80 150 225)
 	studio("models/editor/overlay_helper.mdl")

@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint, BaseLight)
+	autovis(Lights, Omnidirectional Light)
 	light() 
 	iconsprite("editor/light.vmt") 
 	sphere(_distance) 
