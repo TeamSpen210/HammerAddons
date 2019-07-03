@@ -1,5 +1,6 @@
 @PointClass base(Origin, Propper) 
 	appliesto(PROPPER)
+	autovis(Propper)
 	sphere(explosive_radius)
 	iconsprite("editor/phys_ballsocket.vmt")
 = propper_physics: "Propper configuration for physics props. Using this entity will make your prop suitable for use as prop_physics."
