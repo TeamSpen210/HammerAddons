@@ -1,6 +1,7 @@
 @PointClass base(WeaponSpawnOptionalScavenge, WeaponSpawn) 
 	appliesto(L4D, L4D2)
 	studioprop("models/w_models/Weapons/w_rifle_m16a2.mdl")
+	autovis(Weapons, L4D, Weapon Spawners)
 = weapon_rifle_spawn: "Assault Rifle"
 	[
 	]

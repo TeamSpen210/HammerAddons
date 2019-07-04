@@ -1,5 +1,6 @@
 @PointClass appliesto(L4D2) base(WeaponSpawn) 
 	studioprop("models/weapons/melee/w_fireaxe.mdl")
+	autovis(Weapons, L4D, Weapon Spawners)
 = weapon_melee_spawn: "Melee Weapon"
 	[
 	melee_weapon(string) : "Melee Weapon" : "any" : "Options: 'Any' or a comma-delimited string of melee weapon script names. Leave blank for none."

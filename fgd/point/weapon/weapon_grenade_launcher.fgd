@@ -1,5 +1,6 @@
 @PointClass appliesto(L4D2) base(WeaponSpawnSingle) 
 	studioprop("models/w_models/weapons/w_grenade_launcher.mdl")
+	autovis(Weapons, L4D, Scripted Weapons)
 = weapon_grenade_launcher: "Grenade Launcher - This entity is intended to be used in scripted events where a single item needs to spawned with physics activ" + "e."
 	[
 	]

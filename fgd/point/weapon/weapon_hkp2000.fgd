@@ -1,6 +1,7 @@
 
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
+	autovis(Weapons, CSGO Weapons, CS Pistols)
 	studio("models/weapons/w_pist_hkp2000_dropped.mdl") = weapon_hkp2000: "P2000"
 	[
 	]

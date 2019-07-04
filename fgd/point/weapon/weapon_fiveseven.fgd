@@ -1,6 +1,7 @@
 
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
-	studio("models/weapons/w_pist_fiveseven_dropped.mdl") = weapon_fiveseven: "Five-SeveN"
+	autovis(Weapons, CSGO Weapons, CS Pistols)
+	studio("models/weapons/w_pist_fiveseven_dropped.mdl") = weapon_fiveseven: "Five-Seven"
 	[
 	]

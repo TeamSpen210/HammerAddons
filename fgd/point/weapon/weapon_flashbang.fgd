@@ -1,6 +1,7 @@
 
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
+	autovis(Weapons, CSGO Weapons, CS Equipment)
 	studio("models/weapons/w_eq_flashbang_dropped.mdl") = weapon_flashbang: "Flashbang"
 	[
 	]

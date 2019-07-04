@@ -1,6 +1,7 @@
 
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
+	autovis(Weapons, CSGO Weapons, CS Assult Rifles)
 	studio("models/weapons/w_rif_galilar_dropped.mdl") = weapon_galilar: "Galil AR"
 	[
 	]
