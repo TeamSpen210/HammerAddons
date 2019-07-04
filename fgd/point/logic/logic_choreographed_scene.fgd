@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	color(0 0 255) 
+	autovis(Sounds, Choreo Scenes)
 	iconsprite("editor/choreo_scene.vmt") 
 	color(240 180 250) 
 	line(240 180 250, targetname, target1) 
