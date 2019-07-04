@@ -5,7 +5,7 @@
 	[
 	returntime(integer) : "Return time (in seconds)" : 60 : "Length of time (in seconds) before dropped flag/intelligence returns to base."
 
-	neutraltype[engine](integer) "Neutral flag (Invade)" : 1
+	neutraltype[engine](integer) : "Neutral flag (Invade)" : 1
 	neutraltype(choices) : "Neutral flag (Invade)" : 1 : "Only used for the Invade game type. When should a dropped Invade flag become neutral?" =
 		[
 		0: "Never"

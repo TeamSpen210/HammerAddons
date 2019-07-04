@@ -54,7 +54,7 @@
 	precisemovement[ASW](boolean) : "Precise Movement" : 0 : "Movement through this link must be precise. " +
 		"Used for NPCs that have sloppy movement characteristics to move through things like doors or windows"
 		
-	priority[engine](integer) "Priority" : 0
+	priority[engine](integer) : "Priority" : 0
 	priority[ASW](choices) : "Priority" : 0 =
 		[
 		0: "Normal"
