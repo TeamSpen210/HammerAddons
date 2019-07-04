@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityAnimating) 
 	appliesto(P2) 
+	autovis(Doors, Prop Door, Testchamber Door)
 	// Non-animating model, which prevents it continually opening 
 	// and fixes collision display.
 	studioprop("models/editor/prop_testchamber_door.mdl") 

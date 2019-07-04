@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityAnimating, SRCIndicator, SetSkin) 
 	appliesto(P2) 
+	autovis(Test Elements, Dis. Beam, Laser Relay)
 	studioprop() 
 = prop_laser_relay: "Discouragement Beam Relay that detects lasers, whilst allowing it to pass through and hit other Relays. " +
 		"The entity will fire outputs when struck and unstruck."

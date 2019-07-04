@@ -1,5 +1,8 @@
-@PointClass base(BaseEntityAnimating, SetModel)
-	studioprop() = prop_scalable: "Scalable Prop"
+@PointClass 
+	autovis(Props, Scalable)
+	base(BaseEntityAnimating, SetModel)
+	studioprop() 
+= prop_scalable: "Scalable Prop"
 	[
 
 	// Inputs

@@ -2,6 +2,7 @@
 @PointClass base(BaseDriveableVehicle) 
 	appliesto(EP1, EP2, HL2, P1, ASW)
 	line(192 0 0, targetname, missilehint)
+	autovis(Vehicles, Combine APC)
 	studioprop() 
 = prop_vehicle_apc: "APC with mounted guns, can only be driven by a vehicle driver or a npc_apcdriver."
 	[

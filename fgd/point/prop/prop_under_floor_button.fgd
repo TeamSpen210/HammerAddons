@@ -1,5 +1,6 @@
 @PointClass base(BasePortButton) 
 	appliesto(P2) 
+	autovis(Test Elements, P2 Buttons, Floor)
 	studioprop("models/props_underground/underground_floor_button.mdl") 
 = prop_under_floor_button: "A floor button which is activated by a player or objects, for use in the underground test chambers. " +
 	"It plays different sounds, and has a larger trigger area."
