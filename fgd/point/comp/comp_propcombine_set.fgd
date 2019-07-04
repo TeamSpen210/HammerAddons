@@ -1,6 +1,7 @@
 @PointClass 
 	appliesto(srctools)
 	iconsprite("editor/comp_propcombine_set")
+	autovis(Postcompiler, Propcombine)
 	wirebox(mins, maxs)
 = comp_propcombine_set : "Specifies a group of props that will be combined together."
 	[
