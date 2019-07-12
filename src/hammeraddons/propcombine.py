@@ -9,7 +9,8 @@ import random
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import (
-    Dict, List, Set, Optional, Tuple, Callable, FrozenSet,
+    Optional, Tuple, Callable, NamedTuple,
+    FrozenSet, Dict, List, Set,
     Iterable, Iterator,
     IO,
 )
@@ -32,12 +33,12 @@ from collections import defaultdict, namedtuple
 
 LOGGER = get_logger(__name__)
 
-QC = namedtuple('QC', [
-    'path',  # QC path.
-    'ref_smd',    # Location of main visible geometry.
-    'phy_smd',    # Relative location of collision model, or None
-    'ref_scale',  # Scale of main model.
-    'phy_scale',  # Scale of collision model.
+QC = NamedTuple('QC', [
+    ('path', str),  # QC path.
+    ('ref_smd', str),  # Location of main visible geometry.
+    ('phy_smd', Optional[str]),  # Relative location of collision model, or None
+    ('ref_scale', float),  # Scale of main model.
+    ('phy_scale', float),  # Scale of collision model.
 ])
 
 QC_TEMPLATE = '''\
@@ -98,10 +99,12 @@ def in_bbox(pos: Vec, bb_min: Vec, bb_max: Vec) -> bool:
     return True
 
 # 'key' used to match models to each other.
-PropPos = namedtuple('PropPos', [
-    'x', 'y', 'z',
-    'pit', 'yaw', 'rol',
-    'model', 'skin',
+PropPos = NamedTuple('PropPos', [
+    ('x', float), ('y', float), ('z', float),
+    ('pit', float), ('yaw', float), ('rol', float),
+    ('model', str),
+    ('skin', int),
+    ('scale', float),
 ])
 
 
@@ -162,6 +165,7 @@ class ModelManager:
                     angles.x, angles.y, angles.z,
                     pos_block['filename'],
                     pos_block.int('skin'),
+                    pos_block.float('scale', 1.0),
                 ))
             mdl_name = prop['name']
             self._mdl_names.add(mdl_name)
@@ -200,6 +204,7 @@ class ModelManager:
                             'angles',
                             '{:g} {:g} {:g}'.format(pos.pit, pos.yaw, pos.rol)
                         ),
+                        Property('scale', str(pos.scale)),
                     ]))
                 for line in prop.export():
                     f.write(line)
@@ -250,6 +255,7 @@ class ModelManager:
                 angles.x, angles.y, angles.z,
                 prop.model,
                 prop.skin,
+                prop.scaling,
             ))
         prop_key = frozenset(prop_pos)
 
@@ -390,12 +396,12 @@ class ModelManager:
             offset = Vec(prop.x, prop.y, prop.z)
             angles = Vec(prop.pit, prop.yaw, prop.rol)
 
-            ref_mesh.append_model(child_ref, angles, offset)
+            ref_mesh.append_model(child_ref, angles, offset, prop.scale * qc.ref_scale)
 
             if merged.has_coll and child_coll is not None:
                 if coll_mesh is None:
                     coll_mesh = Mesh.blank('static_prop')
-                coll_mesh.append_model(child_coll, angles, offset)
+                coll_mesh.append_model(child_coll, angles, offset, prop.scale * qc.phy_scale)
 
         with open(str(self.temp_folder / (merged.name + '_ref.smd')), 'wb') as fb:
             ref_mesh.export(fb)
@@ -585,14 +591,14 @@ def group_props_ent(
                     if in_bbox(prop.origin, bbox_min, bbox_max):
                         # Group by this bbox list object's identity.
                         found[id(bboxes)].append(prop)
-                        group.remove(prop)
                         break
 
-            for group in found.values():
-                if len(group) < min_cluster:
-                    rejected.extend(group)
-                else:
-                    yield group
+            for subgroup in found.values():
+                actual = set(subgroup).intersection(group)
+                if len(actual) >= min_cluster:
+                    yield list(actual)
+                    for prop in actual:
+                        group.remove(prop)
 
     # Finally, reject all the ones not in a bbox.
     for group in prop_groups.values():
