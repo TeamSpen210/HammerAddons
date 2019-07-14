@@ -158,8 +158,8 @@ class ModelManager:
         for prop in prop_block:
             pos_set = set()
             for pos_block in prop.find_all('model'):
-                origin = pos_block.vec('origin')
-                angles = pos_block.vec('angles')
+                origin = round(pos_block.vec('origin'), 7)
+                angles = round(pos_block.vec('angles'), 7)
                 pos_set.add(PropPos(
                     origin.x, origin.y, origin.z,
                     angles.x, angles.y, angles.z,
@@ -198,11 +198,11 @@ class ModelManager:
                         Property('skin', str(pos.skin)),
                         Property(
                             'origin',
-                            '{:g} {:g} {:g}'.format(pos.x, pos.y, pos.z),
+                            '{} {} {}'.format(pos.x, pos.y, pos.z),
                         ),
                         Property(
                             'angles',
-                            '{:g} {:g} {:g}'.format(pos.pit, pos.yaw, pos.rol)
+                            '{} {} {}'.format(pos.pit, pos.yaw, pos.rol)
                         ),
                         Property('scale', str(pos.scale)),
                     ]))
@@ -210,10 +210,11 @@ class ModelManager:
                     f.write(line)
 
         for mdl_file in (self.game.path / 'models' / self.model_folder).glob('*'):
-            if mdl_file.suffix not in {'.mdl', '.phy', 'vtx', '.vvd'}:
+            if mdl_file.suffix not in {'.mdl', '.phy', '.vtx', '.vvd'}:
                 continue
 
-            if mdl_file.stem in used_models:
+            # Strip all suffixes.
+            if mdl_file.name[:mdl_file.name.find('.')] in used_models:
                 continue
 
             LOGGER.info('Culling {}...', mdl_file)
@@ -244,11 +245,10 @@ class ModelManager:
             visleafs.update(prop.visleafs)
 
         avg_pos /= len(props)
-        avg_yaw = 0
 
         prop_pos = set()
         for prop in props:
-            origin = round((prop.origin - avg_pos).rotate(0, -avg_yaw, 0), 7)
+            origin = round((prop.origin - avg_pos), 7)
             angles = round(Vec(prop.angles), 7)
             prop_pos.add(PropPos(
                 origin.x, origin.y, origin.z,
@@ -444,6 +444,10 @@ class ModelManager:
             str((self.temp_folder / merged.name).with_suffix('.qc')),
         ]
         subprocess.run(args, stdout=subprocess.DEVNULL)
+
+    def use_count(self) -> int:
+        """Return the number of used models."""
+        return sum(1 for mdl in self._mdl_cache.values() if mdl.used)
 
 
 def load_qcs(qc_folder: Path) -> Dict[str, QC]:
@@ -812,6 +816,11 @@ def combine(
 
     mdl_man.finalise()
 
-    LOGGER.info('Combined {} props to {} props', prop_count, len(final_props))
+    LOGGER.info(
+        'Combined {} props to {} props using {} groups.',
+        prop_count,
+        len(final_props),
+        mdl_man.use_count(),
+    )
 
     bsp.write_static_props(final_props)
