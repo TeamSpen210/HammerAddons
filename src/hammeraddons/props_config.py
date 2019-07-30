@@ -5,7 +5,7 @@ A list of options are passed in, which parse each option to a basic type.
 import inspect
 from enum import Enum, EnumMeta
 from pathlib import Path
-from typing import TypeVar, Union, Any, List, Type, Optional, Dict, IO
+from typing import TypeVar, Union, Any, List, Type, Optional, Dict, IO, overload
 
 from srctools import Vec, Property, parse_vec_str, conv_bool
 from srctools.logger import get_logger
@@ -36,16 +36,18 @@ TYPE_NAMES = {
     TYPE.RAW: 'Property Block',
 }
 
-OptionT = TypeVar('OptionT', str, int, float, bool, Vec, Property)
+OptionT = TypeVar('OptionT', str, int, float, bool, Vec)
+EnumT = TypeVar('EnumT', bound=Enum)
 
 
 class Opt:
     """A type of option that can be chosen."""
+    default: Union[None, str, int, float, bool, Vec, Property]
 
     def __init__(
         self,
         opt_id: str,
-        default: Union[TYPE, OptionT],
+        default: Union[TYPE, OptionT, Property],
         doc: str,
         fallback: str=None,
     ) -> None:
@@ -77,7 +79,7 @@ class Config:
         else:
             self.defaults = defaults
 
-        self.settings = {}  # type: Dict[str, Union[str, int, float, bool, Vec, Property]]
+        self.settings = {}  # type: Dict[str, Union[None, str, int, float, bool, Vec, Property]]
         self.path = None  # type: Optional[Path]
 
     def load(self, opt_blocks: Property) -> None:
@@ -183,11 +185,16 @@ class Config:
             except (ValueError, TypeError):
                 pass
 
-    def get(
-        self,
-        expected_type: Type[OptionT],
-        name: str,
-    ) -> Optional[OptionT]:
+    @overload
+    def get(self, expected_type: Type[Property], name: str) -> Property: ...
+
+    @overload
+    def get(self, expected_type: Type[EnumT], name: str) -> EnumT: ...
+
+    @overload
+    def get(self, expected_type: Type[OptionT], name: str) -> Optional[OptionT]: ...
+
+    def get(self, expected_type: type, name: str) -> Any:
         """Get the given option.
         expected_type should be the class of the value that's expected.
         The value can be None if unset, except for Property types (which
@@ -210,8 +217,8 @@ class Config:
             else:
                 return None
 
-        if isinstance(expected_type, EnumMeta):
-            enum_type = expected_type
+        if issubclass(expected_type, Enum):
+            enum_type = expected_type  # type: Optional[Type[Enum]]
             expected_type = str
         else:
             enum_type = None
@@ -226,7 +233,7 @@ class Config:
 
         if enum_type is not None:
             try:
-                return enum_type(val)
+                return enum_type(val)  # type: ignore
             except ValueError:
                 LOGGER.warning(
                     'Option "{}" is not a valid value. '
@@ -234,7 +241,7 @@ class Config:
                     name,
                     '\n'.join([mem.value for mem in enum_type])
                 )
-                return next(iter(enum_type))
+                return next(iter(enum_type))  # type: ignore
 
         # Vec is mutable, don't allow modifying the original.
         if expected_type is Vec or expected_type is Property:
