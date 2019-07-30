@@ -11,8 +11,7 @@ from tempfile import TemporaryDirectory
 from typing import (
     Optional, Tuple, Callable, NamedTuple,
     FrozenSet, Dict, List, Set,
-    Iterable, Iterator,
-    IO,
+    Iterator,
 )
 
 from srctools import (
@@ -28,7 +27,7 @@ from srctools.packlist import PackList
 from srctools.bsp import BSP, StaticProp, StaticPropFlags
 from srctools.mdl import Model
 from srctools.smd import Mesh
-from collections import defaultdict, namedtuple
+from collections import defaultdict
 
 
 LOGGER = get_logger(__name__)
@@ -127,7 +126,7 @@ class ModelManager:
         pack: PackList,
         qc_map: Dict[str, QC],
         map_name: str,
-        get_model: Callable[[str], Model],
+        get_model: Callable[[str], Optional[Model]],
     ) -> None:
         # The models already constructed.
         self._mdl_cache = {}  # type: Dict[FrozenSet[PropPos], MergedModel]
@@ -337,6 +336,7 @@ class ModelManager:
 
         for prop in prop_pos:
             mdl = self.lookup_model(prop.model)
+            assert mdl is not None, prop.model
             surfprops.add(mdl.surfaceprop.casefold())
             cdmats.update(mdl.cdmaterials)
             contents.add(mdl.contents)
@@ -356,6 +356,7 @@ class ModelManager:
         for prop in prop_pos:
             qc = self.qc_map[unify_mdl(prop.model)]
             mdl = self.lookup_model(prop.model)
+            assert mdl is not None, prop.model
 
             try:
                 child_ref, child_coll = self._mesh_cache[qc, prop.skin]
@@ -450,105 +451,126 @@ class ModelManager:
         return sum(1 for mdl in self._mdl_cache.values() if mdl.used)
 
 
-def load_qcs(qc_folder: Path) -> Dict[str, QC]:
+def load_qcs(qc_map: Dict[str, QC], qc_folder: Path) -> None:
     """Parse through all the QC files to match to compiled models."""
-    qc_map = {}
+    for dirpath, dirnames, filenames in os.walk(str(qc_folder)):
+        qc_loc = Path(dirpath)
+        for fname in filenames:
+            if not fname.endswith('.qc'):
+                continue
+            qc_path = qc_loc / fname
 
-    for qc_path in qc_folder.rglob('*.qc'):  # type: Path
-        model_name = ref_smd = phy_smd = None
-        scale_factor = ref_scale = phy_scale = 1.0
-        qc_loc = qc_path.parent
-        try:
-            with open(qc_path) as f:
-                tok = Tokenizer(f, qc_path, allow_escapes=False)
-                for token_type, token_value in tok:
+            qc_result = parse_qc(qc_loc, qc_path)
 
-                    if model_name and ref_smd and phy_smd:
-                        break
+            if qc_result is None:
+                # It's a dynamic QC, we can't combine.
+                continue
 
-                    if token_type is Token.STRING:
-                        token_value = token_value.casefold()
-                        if token_value == '$scale':
-                            scale_factor = float(tok.expect(Token.STRING))
-                        elif token_value == '$modelname':
-                            model_name = tok.expect(Token.STRING)
-                        elif token_value in ('$bodygroup', '$body', '$model'):
-                            tok.expect(Token.STRING)  # group name.
-                            body_type, body_value = tok()
-                            if body_type is Token.STRING:
-                                # $body name "file.smd"
-                                if ref_smd:
-                                    raise DynamicModel
-                                else:
-                                    ref_smd = qc_loc / body_value
-                                    ref_scale = scale_factor
-                                continue
-                            elif body_type is Token.NEWLINE:
-                                tok.expect(Token.BRACE_OPEN)
-                            elif body_type is not Token.BRACE_OPEN:
-                                raise tok.error(body_type)
+            (
+                model_name,
+                ref_scale, ref_smd,
+                phy_scale, phy_smd,
+            ) = qc_result
 
-                            for body_type, body_value in tok:
-                                if body_type is Token.BRACE_CLOSE:
-                                    break
-                                elif body_type is Token.STRING:
-                                    if body_value.casefold() == "studio":
-                                        if ref_smd:
-                                            raise DynamicModel
-                                        else:
-                                            ref_smd = qc_loc / tok.expect(Token.STRING)
-                                            ref_scale = scale_factor
-                                elif body_type is not Token.NEWLINE:
-                                    raise tok.error(body_type)
+            # We can't parse FBX files right now.
+            if ref_smd.suffix.casefold() not in ('.smd', '.dmx'):
+                LOGGER.warning('Reference mesh not a SMD/DMX:\n{}', ref_smd)
+                continue
 
-                        elif token_value == '$collisionmodel':
-                            phy_smd = qc_loc / tok.expect(Token.STRING)
-                            phy_scale = scale_factor
-
-                        # We can't support this.
-                        elif token_value in (
-                            '$collisionjoints',
-                            '$ikchain',
-                            '$weightlist',
-                            '$poseparameter',
-                            '$proceduralbones',
-                            '$jigglebone',
-                            '$keyvalues',
-                            # Allow LOD models, propcombine is better than that.
-                            # '$lod',
-                        ):
-                            raise DynamicModel
-
-        except DynamicModel:
-            # It's a dynamic QC, we can't combine.
-            continue
-        if model_name is None or ref_smd is None:
-            # Malformed...
-            LOGGER.warning('Cannot parse "{}"... ({}, {})', qc_path, model_name, ref_smd)
-            continue
-
-        # We can't parse FBX files right now.
-        if ref_smd.suffix.casefold() not in ('.smd', '.dmx'):
-            LOGGER.warning('Reference mesh not a SMD/DMX:\n{}', ref_smd)
-            continue
-
-        if phy_smd is not None:
-            if phy_smd.suffix.casefold() not in ('.smd', '.dmx'):
+            if phy_smd is not None and phy_smd.suffix.casefold() not in ('.smd', '.dmx'):
                 LOGGER.warning('Collision mesh not a SMD/DMX:\n{}', ref_smd)
                 continue
 
-        qc_map[unify_mdl(model_name)] = QC(
-            str(qc_path).replace('\\', '/'),
-            str(ref_smd).replace('\\', '/'),
-            str(phy_smd).replace('\\', '/') if phy_smd else None,
-            ref_scale,
-            phy_scale,
-        )
-    return qc_map
+            qc_map[unify_mdl(model_name)] = QC(
+                str(qc_path).replace('\\', '/'),
+                str(ref_smd).replace('\\', '/'),
+                str(phy_smd).replace('\\', '/') if phy_smd else None,
+                ref_scale,
+                phy_scale,
+            )
+
+
+def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
+    str,
+    float, Path,
+    float, Optional[Path]
+]]:
+    """Parse a single QC file."""
+    model_name = ref_smd = phy_smd = None
+    scale_factor = ref_scale = phy_scale = 1.0
+
+    with open(str(qc_path)) as f:
+        tok = Tokenizer(f, qc_path, allow_escapes=False)
+        for token_type, token_value in tok:
+
+            if token_type is Token.STRING:
+                token_value = token_value.casefold()
+                if token_value == '$scale':
+                    scale_factor = float(tok.expect(Token.STRING))
+                elif token_value == '$modelname':
+                    model_name = tok.expect(Token.STRING)
+                elif token_value in ('$bodygroup', '$body', '$model'):
+                    tok.expect(Token.STRING)  # group name.
+                    body_type, body_value = tok()
+                    if body_type is Token.STRING:
+                        # $body name "file.smd"
+                        if ref_smd:
+                            # Multiple bodygroups, can't deal with that.
+                            return None
+                        else:
+                            ref_smd = qc_loc / body_value
+                            ref_scale = scale_factor
+                        continue
+                    elif body_type is Token.NEWLINE:
+                        tok.expect(Token.BRACE_OPEN)
+                    elif body_type is not Token.BRACE_OPEN:
+                        raise tok.error(body_type)
+
+                    for body_type, body_value in tok:
+                        if body_type is Token.BRACE_CLOSE:
+                            break
+                        elif body_type is Token.STRING:
+                            if body_value.casefold() == "studio":
+                                if ref_smd:
+                                    return None
+                                else:
+                                    ref_smd = qc_loc / tok.expect(Token.STRING)
+                                    ref_scale = scale_factor
+                        elif body_type is not Token.NEWLINE:
+                            raise tok.error(body_type)
+
+                elif token_value == '$collisionmodel':
+                    phy_smd = qc_loc / tok.expect(Token.STRING)
+                    phy_scale = scale_factor
+
+                # We can't support this.
+                elif token_value in (
+                    '$collisionjoints',
+                    '$ikchain',
+                    '$weightlist',
+                    '$poseparameter',
+                    '$proceduralbones',
+                    '$jigglebone',
+                    '$keyvalues',
+                    # Allow LOD models, propcombine is better than that.
+                    # '$lod',
+                ):
+                    return None
+
+    if model_name is None or ref_smd is None:
+        # Malformed...
+        LOGGER.warning('Cannot parse "{}"... ({}, {})', qc_path, model_name, ref_smd)
+        return None
+
+    return (
+        model_name,
+        ref_scale, ref_smd,
+        phy_scale, phy_smd,
+    )
 
 
 def group_props_ent(
-    prop_groups: Dict[tuple, List[StaticProp]],
+    prop_groups: Dict[Optional[tuple], List[StaticProp]],
     rejected: List[StaticProp],
     get_model: Callable[[str], Optional[Model]],
     bbox_ents: List[Entity],
@@ -579,6 +601,9 @@ def group_props_ent(
 
     # Each of these groups cannot be merged with other ones.
     for group_key, group in prop_groups.items():
+        if group_key is None:
+            continue
+
         # No point merging single/empty groups.
         group_skinset = group_key[0]
         if len(group) < min_cluster:
@@ -610,7 +635,7 @@ def group_props_ent(
 
 
 def group_props_auto(
-    prop_groups: Dict[object, List[StaticProp]],
+    prop_groups: Dict[Optional[tuple], List[StaticProp]],
     rejected: List[StaticProp],
     dist: float,
     min_cluster: int,
@@ -654,16 +679,16 @@ def group_props_auto(
                     cluster_list.append((prop, prop_off))
 
             cluster_list.sort(key=lambda t: t[1])
-            cluster_list = [
+            selected_props = [
                 prop for prop, off in
                 cluster_list[:MAX_GROUP]
             ]
-            todo.difference_update(cluster_list)
+            todo.difference_update(selected_props)
 
-            if len(cluster_list) >= min_cluster:
-                yield cluster_list
+            if len(selected_props) >= min_cluster:
+                yield selected_props
             else:
-                rejected.extend(cluster_list)
+                rejected.extend(selected_props)
 
 
 def combine(
@@ -672,7 +697,7 @@ def combine(
     pack: PackList,
     game: Game,
     studiomdl_loc: Path=None,
-    qc_folder: Path=None,
+    qc_folders: List[Path]=None,
     auto_range: float=0,
     min_cluster: int=2,
 ) -> None:
@@ -690,15 +715,17 @@ def combine(
         LOGGER.warning('No studioMDL! Cannot propcombine!')
         return
 
-    if qc_folder is None:
+    if not qc_folders:
         # If gameinfo is blah/game/hl2/gameinfo.txt,
         # QCs should be in blah/content/ according to Valve's scheme.
         # But allow users to override this.
-        qc_folder = game.path.parent.parent / 'content'
+        qc_folders = [game.path.parent.parent / 'content']
 
     # Parse through all the QC files.
-    LOGGER.info('Parsing QC files. Path: {}', qc_folder)
-    qc_map = load_qcs(qc_folder)
+    LOGGER.info('Parsing QC files. Paths: {}', '\n'.join(map(str, qc_folders)))
+    qc_map = {}  # type: Dict[str, QC]
+    for qc_folder in qc_folders:
+        load_qcs(qc_map, qc_folder)
     LOGGER.info('Done! {} props.', len(qc_map))
 
     map_name = Path(bsp.filename).stem
@@ -719,7 +746,7 @@ def combine(
             model = mdl_map[key] = Model(pack.fsys, mdl_file)
         return model
 
-    def get_grouping_key(prop: StaticProp) -> object:
+    def get_grouping_key(prop: StaticProp) -> Optional[tuple]:
         """Compute a grouping key for this prop.
 
         Only props with matching key can be possibly combined.
@@ -755,7 +782,7 @@ def combine(
     prop_count = 0
 
     # First, construct groups of props that can possibly be combined.
-    prop_groups = defaultdict(list)  # type: Dict[tuple, List[StaticProp]]
+    prop_groups = defaultdict(list)  # type: Dict[Optional[tuple], List[StaticProp]]
 
     # This holds the list of all props we want in the map -
     # combined ones, and any we reject for whatever reason.

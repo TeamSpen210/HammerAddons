@@ -1,6 +1,7 @@
 """Runs before VRAD, to run operations on the final BSP."""
 import argparse
 
+from srctools import Property
 from srctools.logger import init_logging
 from pathlib import Path
 import sys
@@ -88,7 +89,11 @@ def main(argv: List[str]) -> None:
             packlist,
             game_info,
             game_info.root / studiomdl_loc,
-            game_info.root / conf.get(str, 'propcombine_qc_folder'),
+            [
+                game_info.root / folder
+                for folder in
+                conf.get(Property, 'propcombine_qc_folder').as_array(conv=Path)
+            ],
             conf.get(int, 'propcombine_auto_range'),
             conf.get(int, 'propcombine_min_cluster'),
         )

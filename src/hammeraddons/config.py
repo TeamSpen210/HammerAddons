@@ -147,7 +147,7 @@ OPTIONS = [
         """
     ),
     Opt(
-        'propcombine_qc_folder', '',
+        'propcombine_qc_folder', Property('', []),
         """Define where the QC files are for combinable static props.
         This path is searched recursively. If unset this defaults to 
         the 'content/' folder, which is adjacent to the game root.
