@@ -63,6 +63,9 @@ def kv_setter(ctx: Context) -> None:
             else:
                 found_ent[kv_name] = kv_value
 
+            for out in setter.outputs:
+                found_ent.add_out(out.copy())
+
         if found_ent is None:
             LOGGER.warning(
                 'No entities found named "{}" for comp_kv_setter at ({})!',
