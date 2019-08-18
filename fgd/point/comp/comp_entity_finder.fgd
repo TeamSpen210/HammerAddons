@@ -1,5 +1,6 @@
 @PointClass 
     appliesto(srctools)
+	autovis(Postcompiler, Entity Finder)
     size(-8 -8 -8, 8 8 8)
     sphere(radius)
     cylinder(255 255 255, targetname, targetref, radius)

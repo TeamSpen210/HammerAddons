@@ -1,9 +1,10 @@
 
 @NpcClass base(BaseNPC) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
+	appliesto(EP1, EP2, HL2, P1, ASW)
+	autovis(NPCs, Zombie, Fast Zombie) 
 	studio("models/Zombie/fast.mdl") = npc_fastzombie: "Fast Zombie"
 	[
 
 	// Inputs
-	input AttachToVehicle(string) : "Attach to a specified vehicle entity"
+	input AttachToVehicle(string) : "Attach to the jeep with the specified name."
 	]

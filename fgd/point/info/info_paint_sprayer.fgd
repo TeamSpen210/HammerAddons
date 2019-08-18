@@ -17,7 +17,7 @@
 		1: "Fast Sphere"
 		]
 
-	ambientsound[engine](integer) "Ambient Sound" : 0
+	ambientsound[engine](integer) : "Ambient Sound" : 0
 	ambientsound(choices) : "Ambient Sound" : 0 : "The sound to play when paint is flowing." =
 		[
 		0: "None (silent)"

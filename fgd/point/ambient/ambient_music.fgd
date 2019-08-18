@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(L4D2)
 	iconsprite("editor/ambient_generic.vmt")
+	autovis(Sounds, Music)
 	sphere()
 = ambient_music: "Play L4D specific music."
 	[

@@ -1,6 +1,7 @@
 
 @NpcClass base(BaseHelicopter) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
+	appliesto(EP1, EP2, HL2, P1, ASW)  
+	autovis(NPCs, Combine, Combine Gunship)
 	studio("models/gunship.mdl") = npc_combinegunship: "Combine Gunship"
 	[
 	spawnflags(flags) : "spawnflags" =
@@ -15,7 +16,7 @@
 	input OmniscientOn(void) : "Gunship knows target's location even when target is out of sight or behind cover"
 	input OmniscientOff(void) : "Gunship relies on normal sight functions to locate target"
 	input BlindfireOn(void) : "Gunship will fire at an unseen target, attempting to punch through to them"
-	input BlindfireOff(void) : "Gunship only fires at viusible target"
+	input BlindfireOff(void) : "Gunship only fires at visible target"
 	input SetPenetrationDepth(float) : "Set penetration depth of bullets"
 	input SetDockingBBox(void) : "Shrink Bounding Box"
 	input SetNormalBBox(void) : "Set Bounding Box to normal size"

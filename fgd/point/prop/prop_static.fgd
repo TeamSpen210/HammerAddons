@@ -24,6 +24,7 @@
 	sphere(fademindist) 
 	sphere(fademaxdist) 
 	studioprop() 
+	autovis(Props, Static)
 = prop_static: "A prop that doesn't move and doesn't animate."
 	[
 	model(studio) : "World Model" : : "Specify the model to place."

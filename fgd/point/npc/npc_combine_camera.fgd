@@ -3,7 +3,9 @@
 	appliesto(EP1, EP2, HL2, P1, ASW) 
 	sphere(innerradius) 
 	sphere(outerradius) 
-	studio("models/combine_camera/combine_camera.mdl") = npc_combine_camera: "Combine security camera"
+	studio("models/combine_camera/combine_camera.mdl") 
+	autovis(NPCs, Combine, Combine Security Camera)
+= npc_combine_camera: "Combine security camera"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

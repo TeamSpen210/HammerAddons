@@ -1,7 +1,12 @@
 
-@PointClass base(BaseNPC) 
+@PointClass base(BaseLogicalNPC) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
-	studio("models/junk/w_traffcone.mdl") = npc_launcher: "Launcher"
+	autovis(NPCs, Missile Launcher)
+	studio("editor/axis_helper.mdl") 
+	sphere(minrange)
+	sphere(maxrange)
+	line(255 0 0, targetname, pathcornername)
+= npc_launcher: "Launches missiles that appear to fly to a target."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -12,7 +17,7 @@
 
 	missilemodel(studio) : "Missile Model" : "models/Weapons/wscanner_grenade.mdl"
 	launchsound(sound) : "Launch Sound" : "npc/waste_scanner/grenade_fire.wav"
-	flysound(sound) : "Fly Sound" : "ambient/objects/machine2.wav"
+	flysound(sound) : "Fly Sound" : "weapons/rpg/rocket1.wav"
 
 	smoketrail[engine](integer) : "Smoke Trail" : 1
 	smoketrail(choices) : "Smoke Trail" : 1 =
@@ -22,29 +27,29 @@
 		2: "On Homing"
 		]
 
-	launchsmoke(boolean) : "Launch Smoke" : 1
-	launchdelay(integer) : "Launch Delay" : 8 : "When ON, how long to wait between each launch"
-	launchspeed(string) : "Launch Speed" : "200" : "Initial launch speed of missile (in up direction)"
-	pathcornername(target_destination) : "Path Corner Name" : : "Name of a path corner.  If set launches a pathfollowing missing, rather than a homing missile"
-	homingspeed(string) : "Homing Speed" : "0" : "Speed to reach when homing"
-	homingstrength(integer) : "Homing Strength" : 10 : "How strong in homing effect (0-100)"
-	homingdelay(string) : "Homing Delay" : "0" : "Number of seconds to delay before homing starts"
-	homingrampup(string) : "Homing Ramp Up" : "0.5" : "Number of seconds it takes to reach full homing strength after homing delay"
-	homingduration(string) : "Homing Duration" : "5" : "Number of seconds the homing effect lasts"
-	homingrampdown(string) : "Homing Ramp Down" : "1.0" : "Number of seconds it takes homing effect to decay after homing duration"
+	launchsmoke(boolean) : "Launch Smoke" : 1 : "If true, spawn smoke from this entity whenever a missile is launched."
+	launchdelay(integer) : "Launch Delay" : 8 : "When ON, how long to wait between each launch."
+	launchspeed(float) : "Launch Speed" : "200" : "Initial launch speed of missile (in up direction)."
+	pathcornername(target_destination) : "Path Corner Name" : : "Name of a path corner.  If set launches a path-following missile rather than a homing missile"
+	homingspeed(float) : "Homing Speed" : 0 : "Speed to reach when homing."
+	homingstrength(integer) : "Homing Strength" : 10 : "How strong is thehoming effect? (0-100)."
+	homingdelay(float) : "Homing Delay" : "0" : "Number of seconds to delay before homing starts"
+	homingrampup(float) : "Homing Ramp Up" : "0.5" : "Number of seconds it takes to reach full homing strength after homing delay."
+	homingduration(float) : "Homing Duration" : "5" : "Number of seconds the homing effect lasts."
+	homingrampdown(float) : "Homing Ramp Down" : "1.0" : "Number of seconds it takes homing effect to decay after homing duration."
 	gravity(string) : "Gravity" : "1.0" : "Scale for effect of gravity. (1.0 = normal gravity)"
-	minrange(integer) : "Min Range" : 100 : "Minimun distance a target can be to be attacked"
-	maxrange(integer) : "Max Range" : 2048 : "Maximum distance a target can be to be attacked"
-	spinmagnitude(string) : "Spin Magnitude" : "0" : "Strength of spin in missile trajectory"
-	spinspeed(string) : "Spin Speed" : "0" : "How fast does the spin rotate through 360"
-	damage(string) : "Damage" : "50" : "How much damage does each missile do"
-	damageradius(string) : "DamageRadius" : "200" : "How far away from impact does the missle do damage"
+	minrange(integer) : "Min Range" : 100 : "Minimum distance a target can be to be attacked."
+	maxrange(integer) : "Max Range" : 2048 : "Maximum distance a target can be to be attacked."
+	spinmagnitude(string) : "Spin Magnitude" : 0 : "Strength of spin in missile trajectory"
+	spinspeed(float) : "Spin Speed" : 0 : "How fast does the spin rotate through 360"
+	damage(float) : "Damage" : 50 : "How much damage does each missile do?"
+	damageradius(float) : "Damage Radius" : 200 : "How far away from impact does the missle do damage?"
 
 	// Inputs
-	input TurnOn(void) : "Turn on Launcher"
-	input TurnOff(void) : "Turn off Launcher"
-	input LOSCheckOn(void) : "Start checking line of sight before firing"
-	input LOSCheckOff(void) : "Stop checking line of sight before firing"
+	input TurnOn(void) : "Turn on Launcher."
+	input TurnOff(void) : "Turn off Launcher."
+	input LOSCheckOn(void) : "Start checking line of sight before firing."
+	input LOSCheckOff(void) : "Stop checking line of sight before firing."
 	input SetEnemyEntity(string) : "Set entity I should attack. Ignores visibility. (output from other entity only)"
 	input ClearEnemyEntity(void) : "Clear set enemy enemy"
 	input FireOnce(void) : "Fire Once (if have enemy)"

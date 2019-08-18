@@ -1,5 +1,6 @@
 @PointClass base(BaseDriveableVehicle, SetSkin) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(Vehicles, Prisoner Pods)
 	studioprop() = prop_vehicle_prisoner_pod: "Combine prisoner pod that the player can ride in."
 	[
 	model(studio) : "World model" : "models/vehicles/prisoner_pod.mdl"

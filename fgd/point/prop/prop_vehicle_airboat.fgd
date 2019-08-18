@@ -1,6 +1,7 @@
 
 @PointClass base(BaseDriveableVehicle) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(Vehicles, Airboat)
 	studioprop() = prop_vehicle_airboat: "Driveable studiomodel airboat."
 	[
 	model(studio) : "World model" : "models/airboat.mdl"

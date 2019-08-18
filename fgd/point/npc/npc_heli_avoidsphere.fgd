@@ -4,6 +4,7 @@
 	iconsprite("editor/env_firesource") 
 	color(255 255 0) 
 	sphere(radius) 
+	autovis(NPCs, Combine, Hunter-Chopper, Avoidance Sphere)
 = npc_heli_avoidsphere: "Helicopter avoidance sphere"
 	[
 	spawnflags(flags) : "spawnflags" =

@@ -1,5 +1,6 @@
 @PointClass appliesto(L4D2) base(WeaponSpawn) 
 	studioprop("models/w_models/Weapons/w_shotgun_spas.mdl")
+	autovis(Weapons, L4D, Weapon Spawners)
 = weapon_shotgun_spas_spawn: "SPAS Shotgun"
 	[
 	]

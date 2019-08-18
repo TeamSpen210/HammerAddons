@@ -1,4 +1,6 @@
-@PointClass appliesto(L4D2) base(Targetname, Angles) = weapon_item_spawn
+@PointClass appliesto(L4D2) base(Targetname, Angles) 
+	autovis(Weapons, L4D, L4D Items)
+= weapon_item_spawn
 	[
 	item1(integer) : "Ammo pile" : 1
 	item2(integer) : "First aid kit" : 0

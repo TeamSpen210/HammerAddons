@@ -1,7 +1,9 @@
 
 @NpcClass base(BaseNPC) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
-	studio("models/combine_soldier.mdl") = npc_sniper: "Sniper"
+	autovis(NPCs, Combine, Combine Sniper)
+	studio("models/combine_soldier.mdl")
+= npc_sniper: "Sniper"
 	[
 	radius(integer) : "Patience Radius" : 0 : "Sniper will hold fire until the target is within this radius. After that, sniper will always attack, even if the target retreats outside of this radius"
 	misses(integer) : "Initial Misses" : 0 : "How many times to miss a target on purpose before beginning to fire accurately."

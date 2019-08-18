@@ -1,7 +1,9 @@
 
 @NpcClass base(BaseNPC) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
-	studio("models/shield_scanner.mdl") = npc_clawscanner: "Claw Scanner"
+	autovis(NPCs, Combine, Combine Claw Scannner)
+	studio("models/shield_scanner.mdl") 
+= npc_clawscanner: "Claw Scanner"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

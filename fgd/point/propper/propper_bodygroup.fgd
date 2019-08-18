@@ -17,6 +17,7 @@
 	line(128 128 128, groupname, body14)
 	line(128 128 128, groupname, body15)
 	line(128 128 128, groupname, body16)
+	autovis(Propper)
 = propper_bodygroup: "Bodygroups allow you to swap between parts of a mesh. " +
 	"For example, you could have a door with several different knobs and allow the mapper to pick one."
 	[

@@ -1,7 +1,8 @@
-
 @NpcClass base(VehicleDriverNPC) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
-	studio("models/roller.mdl") = npc_cranedriver: "NPC used to drive cranes."
+	studio("models/roller.mdl")  
+	autovis(NPCs, Crane Driver)
+	= npc_cranedriver: "NPC used to drive cranes."
 	[
 	releasepause(float) : "Pause time before dropping a ForceDrop specified object." : 0
 

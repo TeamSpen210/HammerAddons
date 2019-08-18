@@ -1,5 +1,5 @@
-
 @PointClass base(Angles) 
+	autovis(Lights, Directional Light)
 	color(255 255 0)
 	appliesto(since_L4D) 
 	iconsprite("editor/light_directional.vmt") = light_directional: "A directional light with no falloff. Similar to sunlight in light_environment."

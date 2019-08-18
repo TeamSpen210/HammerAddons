@@ -1,6 +1,7 @@
 
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
+	autovis(Weapons, CSGO Weapons, CS Shotguns)
 	studio("models/weapons/w_shot_xm1014_dropped.mdl") = weapon_xm1014: "XM1014"
 	[
 	]

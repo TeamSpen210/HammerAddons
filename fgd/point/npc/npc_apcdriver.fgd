@@ -1,6 +1,7 @@
 
 @NpcClass base(VehicleDriverNPC) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(NPCs, Combine, Combine APC Driver)
 	studio("models/roller.mdl") = npc_apcdriver: "NPC used to drive an APC vehicle."
 	[
 	spawnflags(flags) : "spawnflags" =

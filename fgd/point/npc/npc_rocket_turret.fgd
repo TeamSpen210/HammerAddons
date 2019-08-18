@@ -1,6 +1,7 @@
 @PointClass base(BaseNPC, ResponseContext) 
 	appliesto(P1, P2)
 	studioprop("models/props_bts/rocket_sentry.mdl") 
+	autovis(NPCs, Portal Rocket Turret)
 = npc_rocket_turret: "P1 rocket sentry, aims a rocket at a target. " +
 		"The rocket itself will often get stuck inside the model, so that needs to be worked around."
 	[

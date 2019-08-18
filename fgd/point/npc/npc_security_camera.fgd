@@ -1,7 +1,9 @@
 @PointClass base(BaseNPC, SetSkin) 
 	appliesto(P1, P2) 
 	studio("models/props/security_camera.mdl") 
-	studioprop("models/props/security_camera.mdl") = npc_security_camera: "Aperture Science Security Camera. " +
+	studioprop("models/props/security_camera.mdl") 
+	autovis(NPCs, Portal Security Camera)
+= npc_security_camera: "Aperture Science Security Camera. " +
 		"Follows either the player or their pings (Portal 2). " +
 		"When a portal is opened behind it it will fall off the wall. " + 
 		"If gestured to in Coop the player's camera will switch to looking out of the camera lens, with a viewfinder effect."

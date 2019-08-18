@@ -1,6 +1,7 @@
 
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
+	autovis(Weapons, CSGO Weapons, CS Melee Weapons)
 	studio("models/weapons/w_knife.mdl") = weapon_knife: "Knife"
 	[
 	]

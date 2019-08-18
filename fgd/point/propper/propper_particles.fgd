@@ -3,6 +3,7 @@
 	studio("models/editor/cone_helper.mdl")
 	line(255 255 0, targetname, my_model)
 	line(128 128 128, targetname, attachment_point)
+	autovis(Propper)
 = propper_particles: "Attach a particle emitter to this prop. This is for 2007 or 2009 engines only. Does not work with prop_static."
 	[
 	name(particlesystem) : "Particle system" : : "The name of a particle system. NOT the name of a .pcf file!"
