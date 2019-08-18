@@ -6,6 +6,7 @@ draw call.
 import os
 import subprocess
 import random
+from enum import Enum
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import (
@@ -15,8 +16,7 @@ from typing import (
 )
 
 from srctools import (
-    Vec, VMF, Entity, conv_int, Property, AtomicWriter,
-    bool_as_int,
+    Vec, VMF, Entity, conv_int, Property, AtomicWriter, KeyValError,
 )
 from srctools.tokenizer import Tokenizer, Token
 
@@ -97,6 +97,17 @@ def in_bbox(pos: Vec, bb_min: Vec, bb_max: Vec) -> bool:
         return False
     return True
 
+
+class CollType(Enum):
+    """Collision types that static props can have."""
+    NONE = 0  # No collision
+    BSP = 1  # Treat the same as MODEL.
+    BBOX = 2
+    OBB = 3
+    OBB_YAW = 4
+    VPHYS = 6  # Collision model
+
+
 # 'key' used to match models to each other.
 PropPos = NamedTuple('PropPos', [
     ('x', float), ('y', float), ('z', float),
@@ -104,6 +115,7 @@ PropPos = NamedTuple('PropPos', [
     ('model', str),
     ('skin', int),
     ('scale', float),
+    ('solidity', CollType),
 ])
 
 
@@ -133,7 +145,8 @@ class ModelManager:
 
         # Cache of the SMD models we have already parsed, so we don't need
         # to parse them again. The second is the collision model.
-        self._mesh_cache = {}  # type: Dict[Tuple[QC, int], Tuple[Mesh, Optional[Mesh]]]
+        self._mesh_cache = {}  # type: Dict[Tuple[QC, int], Mesh]
+        self._coll_cache = {}  # type: Dict[str, Mesh]
 
         # The random indexes we use to produce filenames.
         self._mdl_names = set()  # type: Set[str]
@@ -150,6 +163,8 @@ class ModelManager:
         self.temp_folder = temp_folder
         self.pack = pack
 
+        os.makedirs(self.model_folder, exist_ok=True)
+
     def load(self) -> None:
         """Load from the cache file."""
         with open(str(self.game.path / 'models' / self.model_folder / 'cache.vdf')) as f:
@@ -165,12 +180,13 @@ class ModelManager:
                     pos_block['filename'],
                     pos_block.int('skin'),
                     pos_block.float('scale', 1.0),
+                    CollType(pos_block.int('solid', CollType.VPHYS.value)),
                 ))
             mdl_name = prop['name']
             self._mdl_names.add(mdl_name)
             self._mdl_cache[frozenset(pos_set)] = MergedModel(
                 mdl_name,
-                prop.bool('has_coll'),
+                any(pos.solidity is not CollType.NONE for pos in pos_set),
             )
         LOGGER.info('Found {} existing grouped models.', len(self._mdl_cache))
 
@@ -188,8 +204,7 @@ class ModelManager:
                 used_models.add(mdl.name)
 
                 prop = Property('PropGroup', [
-                    Property('name', mdl.name),
-                    Property('has_coll', bool_as_int(mdl.has_coll)),
+                    Property('name', mdl.name)
                 ])
                 for pos in positions:
                     prop.append(Property('Model', [
@@ -204,6 +219,7 @@ class ModelManager:
                             '{} {} {}'.format(pos.pit, pos.yaw, pos.rol)
                         ),
                         Property('scale', str(pos.scale)),
+                        Property('solid', str(pos.solidity.value)),
                     ]))
                 for line in prop.export():
                     f.write(line)
@@ -249,12 +265,24 @@ class ModelManager:
         for prop in props:
             origin = round((prop.origin - avg_pos), 7)
             angles = round(Vec(prop.angles), 7)
+            try:
+                coll = CollType(prop.solidity)
+            except ValueError:
+                raise ValueError(
+                     'Unknown prop_static collision type '
+                     '{} for "{}" at {}!'.format(
+                        prop.solidity,
+                        prop.model,
+                        prop.origin,
+                    )
+                )
             prop_pos.add(PropPos(
                 origin.x, origin.y, origin.z,
                 angles.x, angles.y, angles.z,
                 prop.model,
                 prop.skin,
                 prop.scaling,
+                coll,
             ))
         prop_key = frozenset(prop_pos)
 
@@ -264,8 +292,7 @@ class ModelManager:
             # Need to build the model.
             # We don't need to make a collision mesh if the prop is set to
             # not use them.
-            # All the props are the same as the first.
-            has_coll = props[0].solidity != 0
+            has_coll = any(pos.solidity is not CollType.NONE for pos in prop_pos)
 
             # Figure out a name to use.
             while True:
@@ -314,7 +341,7 @@ class ModelManager:
             angles=Vec(0, 270, 0),
             scaling=1.0,
             visleafs=sorted(visleafs),
-            solidity=0 if not merged.has_coll else props[0].solidity,
+            solidity=CollType.VPHYS.value if merged.has_coll else 0,
             flags=props[0].flags,
             lighting_origin=avg_pos,
             tint=props[0].tint,
@@ -359,17 +386,11 @@ class ModelManager:
             assert mdl is not None, prop.model
 
             try:
-                child_ref, child_coll = self._mesh_cache[qc, prop.skin]
+                child_ref = self._mesh_cache[qc, prop.skin]
             except KeyError:
                 LOGGER.info('Parsing ref "{}"', qc.ref_smd)
                 with open(qc.ref_smd, 'rb') as fb:
                     child_ref = Mesh.parse_smd(fb)
-                if qc.phy_smd is not None:
-                    LOGGER.info('Parsing coll "{}"', qc.phy_smd)
-                    with open(qc.phy_smd, 'rb') as fb:
-                        child_coll = Mesh.parse_smd(fb)
-                else:
-                    child_coll = None
 
                 if prop.skin != 0 and prop.skin <= len(mdl.skins):
                     # We need to rename the materials to match the skin.
@@ -386,13 +407,10 @@ class ModelManager:
                     for vert in tri:
                         vert.pos.rotate(0, 90, 0, round_vals=False)
                         vert.norm.rotate(0, 90, 0, round_vals=False)
-                if child_coll is not None:
-                    for tri in child_coll.triangles:
-                        for vert in tri:
-                            vert.pos.rotate(0, 90, 0, round_vals=False)
-                            vert.norm.rotate(0, 90, 0, round_vals=False)
 
-                self._mesh_cache[qc, prop.skin] = child_ref, child_coll
+                self._mesh_cache[qc, prop.skin] = child_ref
+
+            child_coll = self._get_collision(qc, prop, child_ref)
 
             offset = Vec(prop.x, prop.y, prop.z)
             angles = Vec(prop.pit, prop.yaw, prop.rol)
@@ -445,6 +463,37 @@ class ModelManager:
             str((self.temp_folder / merged.name).with_suffix('.qc')),
         ]
         subprocess.run(args, stdout=subprocess.DEVNULL)
+
+    def _get_collision(self, qc: QC, prop: PropPos, ref_mesh: Mesh) -> Optional[Mesh]:
+        """Get the correct collision mesh for this model."""
+        if prop.solidity is CollType.NONE:  # Non-solid
+            return None
+        elif prop.solidity is CollType.VPHYS or prop.solidity is CollType.BSP:
+            if qc.phy_smd is None:
+                return None
+            try:
+                return self._coll_cache[qc.phy_smd]
+            except KeyError:
+                LOGGER.info('Parsing coll "{}"', qc.phy_smd)
+                with open(qc.phy_smd, 'rb') as fb:
+                    coll = Mesh.parse_smd(fb)
+
+                for tri in coll.triangles:
+                    for vert in tri:
+                        vert.pos.rotate(0, 90, 0, round_vals=False)
+                        vert.norm.rotate(0, 90, 0, round_vals=False)
+
+                self._coll_cache[qc.phy_smd] = coll
+                return coll
+        # Else, it's one of the three bounding box types.
+        # We don't really care about which.
+        bbox_min, bbox_max = Vec.bbox(
+            vert.pos
+            for tri in
+            ref_mesh.triangles
+            for vert in tri
+        )
+        return Mesh.build_bbox('static_prop', 'phy', bbox_min, bbox_max)
 
     def use_count(self) -> int:
         """Return the number of used models."""
@@ -551,7 +600,6 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
                     '$poseparameter',
                     '$proceduralbones',
                     '$jigglebone',
-                    '$keyvalues',
                     # Allow LOD models, propcombine is better than that.
                     # '$lod',
                 ):
@@ -722,7 +770,7 @@ def combine(
         qc_folders = [game.path.parent.parent / 'content']
 
     # Parse through all the QC files.
-    LOGGER.info('Parsing QC files. Paths: {}', '\n'.join(map(str, qc_folders)))
+    LOGGER.info('Parsing QC files. Paths: \n{}', '\n'.join(map(str, qc_folders)))
     qc_map = {}  # type: Dict[str, QC]
     for qc_folder in qc_folders:
         load_qcs(qc_map, qc_folder)
@@ -774,7 +822,6 @@ def combine(
             prop.flags.value,
             model.contents,
             model.surfaceprop,
-            prop.solidity,
             prop.renderfx,
             *prop.tint,
         )
@@ -789,7 +836,7 @@ def combine(
     final_props = []  # type: List[StaticProp]
 
     if bbox_ents:
-        LOGGER.info('Propcombine sets present, combining...')
+        LOGGER.info('Propcombine sets present ({}), combining...', len(bbox_ents))
         grouper = group_props_ent(
             prop_groups, final_props,
             get_model,
@@ -835,7 +882,7 @@ def combine(
             mdl_man.load()
         except FileNotFoundError:
             pass  # Make a new one.
-        except IOError:
+        except (IOError, KeyValError):
             LOGGER.warning("Couldn't parse props cache file:", exc_info=True)
 
         for group in grouper:
