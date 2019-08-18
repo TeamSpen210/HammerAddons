@@ -12,7 +12,8 @@
 
 	wait(integer) : "Delay Before Reset (-1 stay)" : -1 : "Amount of time, in seconds, after the door has opened before it closes. " +
 		"Once it has closed, it can be used again. If the value is set to -1, the door never closes itself."
-	lip(integer) : "Lip" : 0 : "The amount the door will keep overlapping with the original position. The distance moved = the size of the brush on the movement axis - lip."
+	lip(integer) : "Lip" : 0 : "The amount the door will keep overlapping with the original position. The distance moved = the size of the brush on the movement axis - lip. " +
+		"Negative values cause the door to move even further."
 	dmg(integer) : "Blocking Damage" : 0 : "Amount of damage done to entities that block the movement of this door, per frame."
 
 	chainstodoor(target_destination) : "Linked Door" : : "Passes the door's +use inputs and touch events onto a different door, so it also is activated."	
