@@ -1,5 +1,6 @@
 @SolidClass base(StaticTargetname, Origin) 
 	appliesto(PROPPER)
+	autovis(Propper)
 	line(255 255 0, targetname, physmodel)
 = propper_model: "This will create a model when Propper is run."
 	[

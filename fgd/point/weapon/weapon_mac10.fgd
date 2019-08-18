@@ -1,6 +1,7 @@
 
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
+	autovis(Weapons, CSGO Weapons, CS Submachine Guns)
 	studio("models/weapons/w_smg_mac10_dropped.mdl") = weapon_mac10: "MAC-10"
 	[
 	]

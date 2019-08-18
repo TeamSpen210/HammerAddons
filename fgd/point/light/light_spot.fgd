@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint, BaseLight)
+	autovis(Lights, Spotlight)
 	lightprop("models/editor/spot.mdl") 
 	lightcone() 
 	sphere(_distance) 

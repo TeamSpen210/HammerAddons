@@ -3,7 +3,10 @@
 	iconsprite("editor/npc_maker.vmt") 
 	line(255 255 0, targetname, templatename) 
 	sphere(radius) 
-	line(255 255 0, targetname, destinationgroup) = npc_template_maker: "An entity that creates NPCs. The NPCs it creates are clones of a template NPC. NPCs are spawned around this maker's origin, or at specified destination points."
+	line(255 255 0, targetname, destinationgroup) 
+	autovis(Templates, NPC Templater)
+= npc_template_maker: "An entity that creates NPCs. The NPCs it creates are clones of a template NPC. " +
+	"NPCs are spawned around this maker's origin, or at specified destination points."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

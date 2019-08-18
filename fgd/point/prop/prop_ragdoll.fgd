@@ -1,4 +1,6 @@
-@PointClass base(BaseEntityPhysics, EnableDisable, DXLevelChoice, SystemLevelChoice, SetModel)
+@PointClass 
+	base(BaseEntityPhysics, EnableDisable, DXLevelChoice, SystemLevelChoice, SetModel)
+	autovis(Props, Physics, Ragdoll)
 	sphere(fademindist) 
 	sphere(fademaxdist) 
 	studioprop() 

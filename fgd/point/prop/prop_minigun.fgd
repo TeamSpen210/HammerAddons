@@ -1,5 +1,6 @@
 @PointClass base(prop_dynamic_base, EnableDisable) 
 	appliesto(L4D, L4D2)
+	autovis(L4D, Weapons, Minigun)
 	studioprop("models/w_models/weapons/w_minigun.mdl")
 = prop_minigun: "A mounted gun players can +USE"
 	[

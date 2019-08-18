@@ -1,6 +1,7 @@
 @PointClass 
 	// This is implemented via a VScript method.
 	appliesto(+srctools, +VScript)
+	autovis(Postcompiler, Precacher)
 	size(-8 -8 -8, 8 8 8) 
 = comp_precache_sound:
     "Force a specific sound to load, for runtime switching. Duplicates will be removed. More keyvalues can be added."

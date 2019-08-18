@@ -1,5 +1,6 @@
 @PointClass base(BaseProjector) 
 	appliesto(P2) 
+	autovis(Test Elements, Light Bridge)
 	studioprop("models/props/wall_emitter.mdl") 
 = prop_wall_projector: "Aperture Science Hard Light Bridge Projector. " +
 	"Note: To avoid lag when it first turns on, place an info_particle_system to precache 'projected_wall_impact'."

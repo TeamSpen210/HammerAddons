@@ -1,8 +1,10 @@
 @NpcClass base(BaseEntityPhysics) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(NPCs, Antlions, Antlion Grub)
 	studio("models/antlion_grub.mdl") 
 	sphere(fademindist) 
-	sphere(fademaxdist) = npc_antlion_grub: "Antlion grub"
+	sphere(fademaxdist)
+ = npc_antlion_grub: "Antlion grub"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

@@ -1,6 +1,7 @@
 
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
+	autovis(Weapons, CSGO Weapons, CS Assault Rifles)
 	studio("models/weapons/w_rif_aug_dropped.mdl") = weapon_aug: "AUG"
 	[
 	]

@@ -1,11 +1,12 @@
 @PointClass base(Angles, Propper) 
 	appliesto()
 	iconsprite("editor/env_physexplosion.vmt")
+	autovis(Propper)
 = propper_physgun_interactions: "Defines non-standard interactions with the Gravity Gun/player holding behaviour. Used for physics props only."
 	[
 	preferred_carryangles(boolean) : "Use angles when carrying?" : 0 : "The player will always carry the prop at this entity's angles if possible."
 	bloodsplat(boolean) : "Blood Splatter?" : 0 : "Create blood splatter on surface impact."
-	paintsplat(boolean) "Paint Splatter?" : 0 : "Create paint splatter on surface impact."
+	paintsplat(boolean) : "Paint Splatter?" : 0 : "Create paint splatter on surface impact."
 	break(boolean) : "Shatter?" : 0 : "Always break when launched."
 
 	impale(boolean) : "Impale Enemies?" : 0 : "Impale enemies when hit."

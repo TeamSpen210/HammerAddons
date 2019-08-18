@@ -1,6 +1,7 @@
 
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
+	autovis(Weapons, CSGO Weapons, CS Assault Rifles)
 	studio("models/weapons/w_rif_m4a1_s_dropped.mdl") = weapon_m4a1_silencer: "M4A1 Silenced"
 	[
 	]

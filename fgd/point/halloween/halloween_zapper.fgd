@@ -5,7 +5,7 @@
 	touch_trigger(target_destination) : "Custom Touch Trigger"
 	particleeffect(string) : "Particle Effect" : : "The particle effect to be played when we fired."
 	
-	zappertype[engine](integer) "Zapper Type" : 0
+	zappertype[engine](integer) : "Zapper Type" : 0
 	zappertype(choices) : "Zapper Type" : 0 : "Type of zapper." =
 		[
 		0: "Zap on touch"

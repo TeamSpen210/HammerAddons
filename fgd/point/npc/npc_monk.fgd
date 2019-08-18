@@ -1,7 +1,8 @@
 
 @NpcClass base(TalkNPC) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
-	studio("models/Monk.mdl") = npc_monk: "Monk"
+	autovis(NPCs, Rebels, Father Grigori)
+	studio("models/Monk.mdl") = npc_monk: "Father Grigori, the last human in Ravenholm."
 	[
 	additionalequipment[engine](string) : "Weapons" : "weapon_annabelle"
 	additionalequipment(choices) : "Weapons" : "weapon_annabelle" =

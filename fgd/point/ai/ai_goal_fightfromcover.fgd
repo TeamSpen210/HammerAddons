@@ -1,6 +1,8 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(P2) 
-	iconsprite("editor/ai_goal_follow.vmt") = ai_goal_fightfromcover: "AI Fight from Cover"
+	autovis(AI, AI Goal, Fight From Cover Goal)
+	iconsprite("editor/ai_goal_follow.vmt") 
+= ai_goal_fightfromcover: "AI Fight from Cover"
 	[
 	actor(target_destination) : "Actor(s) to affect"
 	goal(target_destination) : "Target Entity" : : "The name of the entity to follow. If blank, and the actor likes the player, then defaults to player"

@@ -1,10 +1,7 @@
-
 @NpcClass base(BaseNPC) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
-	studio("models/Barney.mdl") = npc_fisherman: "Fisherman"
+	appliesto(EP1, EP2, HL2, P1, ASW)
+	autovis(NPCs, Lost Coast Fisherman)
+	studio("models/lostcoast/fisherman/fisherman.mdl") 
+= npc_fisherman: "Fisherman NPC from Lost Coast."
 	[
-	expressionoverride(string) : "Facial expression override"
-
-	// Inputs
-	input SetExpressionOverride(string) : "Set facial expression override"
 	]

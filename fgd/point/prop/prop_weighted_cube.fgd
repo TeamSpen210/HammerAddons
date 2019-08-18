@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPhysics) 
 	appliesto(P2) 
+	autovis(Test Elements, Cubes, Normal)
 	studioprop() = prop_weighted_cube: "Aperture Science Weighted Cube. Presses floor buttons, and can be moved around."
 	[
 	skin(integer) : "Skin (OLD)" : 0 : "The old skin property, mainly to show in Hammer. "

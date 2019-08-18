@@ -1,4 +1,5 @@
 @PointClass base(Angles) 
+	autovis(Lights, Environment Light)
 	iconsprite("editor/ficool2/light_env.vmt") 
 	color(255 255 0)
 	lightprop("models/editor/spot.mdl") 

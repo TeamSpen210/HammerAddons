@@ -1,8 +1,10 @@
 
 @NpcClass base(BaseNPC) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(NPCs, Antlions, Regular Antlion)
 	studio("models/antlion.mdl") 
-	sphere() = npc_antlion: "Antlions will run away from ai_sound, type: Thumper."
+	sphere()
+= npc_antlion: "Antlions will run away from ai_sound, type: Thumper."
 	[
 
 	spawnflags(flags) : "spawnflags" =
