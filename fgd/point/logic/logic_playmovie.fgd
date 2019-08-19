@@ -2,7 +2,9 @@
 	appliesto(since_ASW) 
 	iconsprite("editor/logic_playmovie") = logic_playmovie: "Plays a movie and allows for various playback options"
 	[
-	MovieFilename(choices) : "Movie to display" : "aperture_logo.bik" : "The movie to display. You can also type in the filename of a custom movie here." =
+	MovieFilename(string) : "Movie to display" : "" : "The movie to display from the media/ folder. The BIK file extension must be included."
+	
+	MovieFilename[P2](choices) : "Movie to display" : "aperture_logo.bik" : "The movie to display. You can also type in the filename of a custom movie that is present in the media/ folder. The BIK file extension must be included." =
 	[
 		"coop_black_screen.bik"		: "Black Screen"
 		"aperture_logo.bik"			: "Aperture Logo"
