@@ -11,7 +11,7 @@
 	"send messages to other entities outside the instance from the func_instance. "+
 	"NOTE: The instance, the proxy, and all entities involved should be named descriptively."
 	[
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	targetname(target_source) : "Name" : "proxy" : "The name that other entities refer to this entity by."
 
 	// Inputs
 	input ProxyRelay(string) : "This message will get relayed and will be available from the instance."
