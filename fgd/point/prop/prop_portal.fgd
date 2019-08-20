@@ -4,8 +4,8 @@
 	bbox(-32, -16, -64, 32, 16, 64) 
 = prop_portal: "A portal."
 	[
-	activated[engine](boolean) : "Start Activated" : 1
-	activated(choices) : "Start Activated" : 1 : "An inactive portal will not be drawn and will not teleport entites" =
+	activated[engine](boolean) : "Start Activated" : 0
+	activated(choices) : "Start Activated" : 0 : "An inactive portal will not be drawn and will not teleport entites" =
 		[
 		0: "Inactive"
 		1: "Active"

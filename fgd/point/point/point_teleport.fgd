@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	studio("models/editor/axis_helper_thick.mdl") 
+	studioprop() 
 	iconsprite("editor/point_teleport.vmt") 
 	line(255 255 255, targetname, target) 
 = point_teleport: "An entity that teleports a target entity to this position and angles. " +
@@ -7,6 +7,7 @@
 	"If object is physically simulated, simulation is turned off when teleported."
 	[
 	target(target_destination) : "Entity To Teleport" : : "Name of the entity that will be teleported."
+	model(studio) : "[H] Model" : "models/editor/angle_helper.mdl" : "The model shown in Hammer, to use for positioning."
 	spawnflags(flags)  =
 		[
 		1: "Teleport Home" : 0

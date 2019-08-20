@@ -1526,7 +1526,7 @@ sphere(MaxSearchDist)
 		4: "Suppress jump" : 0
 		8: "Suppress duck" : 0
 		16: "Suppress use" : 0
-		32: "Suppress sprint" : 0
+		//32: "Suppress sprint" : 0
 		64: "Suppress attack" : 0
 		128: "Suppress zoom" : 0
 	]
@@ -2027,19 +2027,19 @@ line(255 255 255, targetname, target) = env_entity_dissolver: "Fizzles the targe
 	]
 ]
 
-@PointClass base(Targetname, Angles, Angles, RenderFields) studio("models/props_combine/coreball.mdl") = prop_coreball: "Legacy version of prop_scalable, which forces a specific model." 
-[
-	input SetScaleX(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
-	input SetScaleY(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
-	input SetScaleZ(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
-]
+// @PointClass base(Targetname, Angles, Angles, RenderFields) studio("models/props_combine/coreball.mdl") = prop_coreball: "Legacy version of prop_scalable, which forces a specific model." 
+// [
+	// input SetScaleX(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
+	// input SetScaleY(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
+	// input SetScaleZ(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
+// ]
 
-@PointClass base(Targetname, Studiomodel, Angles, RenderFields) studioprop() = prop_scalable : "Scalable Prop" 
-[
-	input SetScaleX(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
-	input SetScaleY(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
-	input SetScaleZ(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
-]
+// @PointClass base(Targetname, Studiomodel, Angles, RenderFields) studioprop() = prop_scalable : "Scalable Prop" 
+// [
+	// input SetScaleX(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
+	// input SetScaleY(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
+	// input SetScaleZ(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
+// ]
 
 @PointClass base(Targetname, Parentname) sphere(radius) = point_flesh_effect_target : "Flesh Effect Target"
 [

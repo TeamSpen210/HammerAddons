@@ -17,7 +17,7 @@
 	life(string) : "Life (seconds 0 = infinite)" : "1" : "Amount of time before the beam dies. Setting to zero will make the beam stay forever."
 	boltwidth(float) : "Width of beam" : 2 : "Pixel width of the beam."
 	noiseamplitude(float) : "Amount of noise (0-64)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
-	texture(sprite) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the beam."
+	texture(material) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the beam."
 	texturescroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
 	framerate(integer) : "Frames per 10 seconds" : 0 : "Framerate at which the beam texture should animate, if it has multiple frames."
 	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."

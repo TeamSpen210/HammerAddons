@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(CSGO) 
-	studio("models/editor/vgui_arrows.mdl") 
+	studioprop("models/editor/vgui_arrows.mdl") 
 	sphere(width) 
 	sphere(height) 
 = vgui_world_text_panel: "A VGUI world panel that can be placed and modified by entity logic and display localized text"

@@ -11,8 +11,8 @@
 	overlaycolor(color255) : "Overlay Color (R G B)" : "0 0 0" : "A value of 0 0 0 will act the old way."
 	size(integer) : "Size" : 16
 	overlaysize(integer) : "Overlay Size" : -1 : "A value of -1 means the overlay will act the old way."
-	material(sprite) : "Material Name" : "sprites/light_glow02_add_noz" : "Material of the inner glow."
-	overlaymaterial(sprite) : "Overlay Material Name" : "sprites/light_glow02_add_noz" : "Material of the overlay glow."
+	material(material) : "Material Name" : "sprites/light_glow02_add_noz" : "Material of the inner glow."
+	overlaymaterial(material) : "Overlay Material Name" : "sprites/light_glow02_add_noz" : "Material of the overlay glow."
 	hdrcolorscale(float) : "HDR color scale." : "0.5" : "float value to multiply sprite color by when running in HDR mode."
 	glowdistancescale[CSGO](float) : "Glow Distance Scale" : "0.99" : "Scales the distance used to test for sun glow occlusion, 0.99 will act the old way."
 

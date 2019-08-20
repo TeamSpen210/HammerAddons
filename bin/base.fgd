@@ -73,6 +73,7 @@
 [
 	model(studio) report : "World Model"
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
+	modelscale(float) : "Scale" : "1.0" : "Sets the scale of the model. This can be quite buggy at times, use with caution."
 	skinset[srctools](string) : "Used Skins": : "If set, these are a list of skins this entity will ever use. This allows the others to not be packed."
 
 	// Inputs
@@ -215,7 +216,7 @@
 
 @BaseClass line(255 255 255, targetname, master) = MasterEnt
 [
-	master(target_destination) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
+	//master(target_destination) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
 ]
 
 // Inherit from this to get the ability to only include an object in a range of dx levels.
@@ -1045,8 +1046,8 @@
 	size(integer) : "Size" : 16
 	overlaysize(integer) : "Overlay Size" : -1 : "A value of -1 means the overlay will act the old way."
 	
-	material(sprite) : "Material Name" : "sprites/light_glow02_add_noz" : "Material of the inner glow."
-	overlaymaterial(sprite) : "Overlay Material Name" : "sprites/light_glow02_add_noz" : "Material of the overlay glow."
+	material(material) : "Material Name" : "sprites/light_glow02_add_noz" : "Material of the inner glow."
+	overlaymaterial(material) : "Overlay Material Name" : "sprites/light_glow02_add_noz" : "Material of the overlay glow."
 
 	HDRColorScale(float) : "HDR color scale." : "1.0" : "float value to multiply sprite color by when running in HDR mode."
 
@@ -1292,10 +1293,14 @@
 [
 ]
 
-@SolidClass base(Targetname, Parentname, Origin, EnableDisable) = func_clip_vphysics : 
+@SolidClass base(Targetname, Parentname, Origin) = func_clip_vphysics : 
 	"A brush entity that's considered solid to vphysics." 
 [
 	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator collides with me. See filter_activator_name for more explanation. Allow means 'Allow to Block' for this entity."
+	
+	//Not based on EnableDisable, since that adds a nonfunctional Start Disabled property.
+	input Enable(void) : "Enable this entity."
+	input Disable(void) : "Disable this entity."
 ]
 
 @SolidClass base(Targetname, Parentname, Origin, RenderFields, Global, Inputfilter, EnableDisable, Shadow, Reflection, PaintableBrush, compMinLight) = func_brush : 
@@ -1333,7 +1338,7 @@
 // A Vgui screen in 3D
 //
 //-------------------------------------------------------------------------
-@PointClass base(Targetname, Parentname, Angles) color(200 200 0) studio("models/editor/vgui_arrows.mdl") sphere(width) sphere(height) = vgui_screen : 
+@PointClass base(Targetname, Parentname, Angles) color(200 200 0) studioprop("models/editor/vgui_arrows.mdl") sphere(width) sphere(height) = vgui_screen : 
 	"A VGUI screen. Useful for in-world monitors." 
 [
 	panelname(choices) : "Panel Name" : "" : "The type of display to show." = 
@@ -1365,7 +1370,7 @@
 	input SetInactive(void) : "Make the vgui screen invisible."
 ]
 
-@PointClass base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui_arrows.mdl") = vgui_slideshow_display : "Slideshow Display"
+@PointClass base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/vgui_arrows.mdl") = vgui_slideshow_display : "Slideshow Display"
 [
 	displaytext(string) : "Display Text" : ""
 
@@ -1406,10 +1411,73 @@
 ]
 
 @PointClass 
-base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui_arrows.mdl") sphere(width) sphere(height) = vgui_movie_display : "Movie Display"
+base(Targetname, Angles, Parentname) color(200 200 0) studioprop("models/editor/vgui_arrows.mdl") sphere(width) sphere(height) = vgui_movie_display : "Movie Display"
 [
 	displaytext(string) : "Display Text" : ""
-	moviefilename(string) : "Movie Filename" : "media/"
+	MovieFilename(choices) : "Movie to display" : "media/aperture_logo.bik" : "The movie to display. You can also type in the filename of a custom movie here." =
+	[
+		"media/coop_black_screen.bik"		: "Black Screen"
+		"media/aperture_logo.bik"			: "Aperture Logo"
+		
+		// Elevator videos
+		"media/animalking.bik"				: "Animal King"
+		"media/aperture_appear_horiz.bik" 	: "Aperture Appear (Horizontal)"
+		"media/aperture_appear_vert.bik" 	: "Aperture Appear (Vertical)"
+		"media/bluescreen.bik"				: "Blue Screen Of Death"
+		"media/exercises_horiz.bik"			: "Evacuation Training (Horizontal)"
+		"media/exercises_vert.bik"			: "Evacuation Training (Vertical)"
+		"media/faithplate.bik"				: "Aerial Faith Plate"
+		"media/fizzler.bik"					: "Emancipation Grid"
+		"media/hard_light.bik"				: "Light Bridge"
+		"media/laser_danger_horiz.bik"		: "Laser Danger (Horizontal)"
+		"media/laser_danger_vert.bik"		: "Laser Danger (Vertical)"
+		"media/laser_portal.bik"			: "Laser Through Portal"
+		"media/plc_blue_horiz.bik"			: "Please Remain Calm (Horizontal)"
+		"media/plc_blue_vert.bik"			: "Please Remain Calm (Vertical)"
+		"media/turret_colours_type.bik"		: "Turret Case Options"
+		"media/turret_dropin.bik"			: "Turret Drop In"
+		"media/turret_exploded_grey.bik"	: "Exploded Turret"
+		
+		// Single player
+		"media/menu_act01.bik"				: "Menu Background: Act 1"
+		"media/menu_act02.bik"				: "Menu Background: Act 2"
+		"media/menu_act03.bik"				: "Menu Background: Act 3"
+		"media/menu_act04.bik"				: "Menu Background: Act 4"
+		"media/menu_act05.bik"				: "Menu Background: Act 5"
+		"media/sp_30_a4_finale5.bik"		: "SP Ending"
+		"media/sp_credits_bg.bik"			: "Want You Gone Background"
+		"media/sp_a5_credits.bik"			: "Space"
+		"media/sp_ending_callback.bik"		: "Space Wheatley"
+		
+		// Coop
+		"media/coop_bluebot_load.bik"		: "ATLAS Schematic"
+		"media/coop_orangebot_load.bik"		: "P-Body Schematic"
+		"media/coop_bots_load.bik"			: "Conveyor Bots"
+		"media/coop_bots_load_wave.bik"		: "Waving Bots"
+		"media/coop_intro.bik"				: "Coop Intro"
+		"media/coop_outro.bik"				: "Coop Outro"
+		"media/coop_bts_blueprints.bik"		: "Coop Disc: Blueprints"
+		"media/coop_bts_powergrid_01.bik"	: "Coop Disc: Power Grid 1"
+		"media/coop_bts_powergrid_02.bik"	: "Coop Disc: Power Grid 2"
+		"media/coop_bts_radar_01.bik"		: "Coop Disc: Radar 1"
+		"media/coop_bts_radar_02.bik"		: "Coop Disc: Radar 2"
+		"media/coop_bts_security_01.bik"	: "Coop Disc: Security 1"
+		"media/coop_bts_security_02.bik"	: "Coop Disc: Security 2"
+		"media/coop_bts_radar.bik"			: "Coop Disc: Unused Radar"
+		"media/coop_bts_security.bik"		: "Coop Disc: Unused Security"
+		"media/insert_disc.bik"				: "Insert Disc"
+		"media/dlc1_endmovie.bik"			: "Art Therapy Outro"
+		
+		// Other
+		"media/community_bg1.bik"			: "Community Maps Background"
+		"media/intro_movie.bik"				: "Community Maps Intro"
+		"media/attract01.bik"				: "Extras: Coop Trailer"
+		"media/attract02.bik"				: "Extras: SP Trailer"
+		"media/attrct_boots.bik"			: "Extras: Long Fall Boots"
+		"media/attract_bot_trust.bik"		: "Extras: Bot Trust"
+		"media/attract_panels.bik"			: "Extras: Panels"
+		"media/attract_turrets.bik"			: "Extras: Turrets"
+	]
 	groupname(string) : "Group Name" : ""
 
 	looping(boolean) : "Loop Movie" : 0
@@ -1498,7 +1566,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	life(string) : "Life (seconds 0 = infinite)" : "1" : "Amount of time before the beam dies. Setting to zero will make the beam stay forever."
 	BoltWidth(float) : "Width of beam" : 2 : "Pixel width of the beam."
 	NoiseAmplitude(float) : "Amount of noise (0-64)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
-	texture(sprite) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the beam."
+	texture(material) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the beam."
 	TextureScroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
 	framerate(integer) : "Frames per 10 seconds" : 0 : "Framerate at which the beam texture should animate, if it has multiple frames."
 	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
@@ -1644,7 +1712,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	iMagnitude(Integer) : "Magnitude" : 100 : "The amount of damage done by the explosion."
 	// If no radius override, magnitude will determine radius.
 	iRadiusOverride(Integer) : "Radius Override" : 0 : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude."
-	fireballsprite(sprite) : "Fireball Sprite" : "sprites/zerogxplode.spr"
+	fireballsprite(material) : "Fireball Sprite" : "sprites/zerogxplode.spr"
 	rendermode(choices) : "Render Mode" : 5 =
 	[
 		0: "Normal"
@@ -1693,8 +1761,8 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	endsize(float) : "Ending particle size" : "50" : "Ending particle size."
 	spawnradius(float) : "Spawn radius" : "15" : "Distance from env_smoketrail at which particles are emitted."
 
-	firesprite(sprite) : "Fire Sprite" : "sprites/firetrail.spr"
-	smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.spr"
+	firesprite(material) : "Fire Sprite" : "sprites/firetrail.spr"
+	smokesprite(material) : "Smoke Puff" : "sprites/whitepuff.spr"
 ]
 
 @PointClass base(Targetname, Parentname)
@@ -1922,8 +1990,8 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255"
 	width(float) : "Width of Beam" : 2 : "The width of the laser beam, in pixels."
 	NoiseAmplitude(integer) : "Amount of noise (0-255)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
-	texture(sprite) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the laser beam."
-	EndSprite(sprite) : "End Sprite" : "" : "If specified, this sprite will be drawn at the end of the laser beam."
+	texture(material) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the laser beam."
+	EndSprite(material) : "End Sprite" : "" : "If specified, this sprite will be drawn at the end of the laser beam."
 	TextureScroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
 	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
 	damage(string) : "Damage / second" : "100" : "How much damage this laser does. per second. to things it hits."
@@ -2675,7 +2743,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	"An entity that controls the drawing of a sprite in the world." 
 [
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
-	model(sprite) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
+	model(material) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
 	scale(string) : "Scale" : "" : "Scale multiplier of the sprite."
 	
 	rendermode(choices) : "Render Mode" : 9 : "Specify the sprite rendering behaviour." =
@@ -2724,7 +2792,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
     "A env_sprite that allows orientation."
 [
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
-	model(sprite) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
+	model(material) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
 	scale(string) : "Scale" : "" : "Scale multiplier of the sprite."
 	spawnflags(flags) =
 	[
@@ -2872,27 +2940,27 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 		1: "All Players" : 0
 	]
 
-	message(string) report : "Message Text" : "" : "Message to display onscreen."
-	x(string) : "X (0 - 1.0 = left to right) (-1 centers)" : "-1" : "Horizontal position on the player's screens to draw the text. The value should be between 0 and 1, where 0 is the far left of the screen and 1 is the far right. -1 centers the text."
-	y(string) : "Y (0 - 1.0 = top to bottom) (-1 centers)" : "-1" : "Vertical position on the player's screens to draw the text. The value should be between 0 and 1, where 0 is the top of the screen and 1 is the bottom. -1 centers the text."
+	message(string) report : "Message Text" : "" : "Message to display on the screen."
+	x(string) : "X Position" : "-1" : "Horizontal position on the player's screens to draw the text. The value should be between 0 and 1, where 0 is the far left of the screen and 1 is the far right. -1 centers the text."
+	y(string) : "Y Position" : "-1" : "Vertical position on the player's screens to draw the text. The value should be between 0 and 1, where 0 is the top of the screen and 1 is the bottom. -1 centers the text."
 	effect(Choices) : "Text Effect" : 0 =
 	[
 		0 : "Fade In/Out"
-		1 : "Credits"
+	//	1 : "Credits"
 		2 : "Scan Out"
 	]
-	color(color255) : "Color1" : "100 100 100"
-	color2(color255) : "Color2" : "240 110 0"
-	fadein(string) : "Fade in Time (or character scan time)" : "1.5" : "The time it should take for the text to fully fade in."
+	color(color255) : "Text Color" : "100 100 100" : "The primary color used by all the text effects."
+	color2(color255) : "Scan Out Color" : "240 110 0" : "The color of the letter currently being scanned if the Text Effect keyvalue is set to Scan Out. This is usually a different shade of the main color."
+	fadein(string) : "Fade in Time/Character Scan Time" : "1.5" : "The time it should take for the text to fully fade in, or the time between each character being scanned."
 	fadeout(string) : "Fade Out Time" : "0.5" : "The time it should take for the text to fade out, after the hold time has expired."
 	holdtime(string) : "Hold Time" : "1.2" : "The time the text should stay onscreen, after fading in, before it begins to fade out."
 	fxtime(string) : "Scan time (scan effect only)" : "0.25" : "If the 'Text Effect' is set to Scan Out, this is the time it should take to scan out all the letters in the text."
-	channel(choices) : "Text Channel" : 1 : "You can have up to four individual game_text messages onscreen at once, stored in channels. Select which channel this text should be placed in, which will overwrite any active message already in that channel." =
+	channel(choices) : "Text Channel" : 1 : "You can have up to four individual game_text messages onscreen at once, stored in channels. Select which channel this text should be placed in, which will overwrite any active message already in that channel. This also determines the size of the text." =
 	[
-		1 : "Channel 1"
-		2 : "Channel 2"
-		3 : "Channel 3" 
-		4 : "Channel 4"
+		1 : "Channel 1 (medium text size)"
+		2 : "Channel 2 (small text size)"
+		3 : "Channel 3 (large text size)" 
+		4 : "Channel 4 (medium text size)"
 	]
 	// Inputs
 	input Display(void) : "Display the message text."
@@ -2965,7 +3033,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	m_SourceEntityName(target_destination) : "Source Entity" : "" : "If specified, tesla lightning will originate from the specified entity. Otherwise, they originate from this entity."
 	m_SoundName(sound) : "Sound Name" : "DoSpark" : "Sound to be played whenever lightning is created."
 
-	texture(sprite) : "Sprite Name" : "sprites/physbeam.vmt" : "Material to use for the tesla lightning beams."
+	texture(material) : "Sprite Name" : "sprites/physbeam.vmt" : "Material to use for the tesla lightning beams."
 
 	m_Color(color255) : "Color" : "255 255 255"
 
@@ -3108,7 +3176,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	"An entity that places a decal on the world. If the decal has no target name, it will immediately apply itself when the level is loaded. "+
 	"If it has a name specified, it won't apply until it receives the 'Activate' input."
 [
-	texture(decal) : "Texture" : "" : "The texture used for the decal."
+	texture(material) : "Texture" : "" : "The texture used for the decal."
 
 	LowPriority(boolean) : "Low Priority" : 1 : "Allow the decal to be overwritten by other decals when needed. This also makes the decal not persist across savegames."
 
@@ -3122,7 +3190,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	"An entity that projects a decal onto the world (or props). If the decal has no target name, it will immediately apply itself when "+
 	"the level is loaded. If it has a name specified, it won't apply until it receives the 'Activate' input."
 [
-	texture(decal) : "Texture" : "" : "The texture used for the decal."
+	texture(material) : "Texture" : "" : "The texture used for the decal."
 	Distance(float) : "Distance" : 64 : "Distance from the origin to project the decal."
 
 	// Inputs
@@ -4194,11 +4262,11 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	speed(integer) : "Speed" : 100 : "The speed at which the door moves."
 	noise1(sound) : "Start Sound" : : "Sound to play when the door starts moving."
 	noise2(sound) : "Stop Sound" : : "Sound to play when the door stops moving."
-	startclosesound(sound) : "Start Close Sound" : : "(Optional) Sound to play when the door starts closing."
-	closesound(sound) : "Stop Close Sound" : : "(Optional) Sound to play when the door stops closing."
+	startclosesound(sound) : "Start Close Sound" : : "(Optional) Sound to play when the door starts closing. If not set, the Start Sound will be used instead."
+	closesound(sound) : "Stop Close Sound" : : "(Optional) Sound to play when the door stops closing. If not set, the Stop Sound will be used instead."
 	loopmovesound(boolean) : "Loop Moving Sound?" : 0 : "If set to true, the door's 'Start Sound' will be continually looped until the door finishes moving."
-	wait(integer) : "Delay Before Reset (-1 stay)" : 4 : "Amount of time, in seconds, after the door has opened before it closes. Once it has closed, it can be used again. If the value is set to -1, the door never closes itself."
-	lip(integer) : "Lip" : 0 : "The amount, in inches, of the button to leave sticking out of the wall it recedes into when pressed. Negative values make the button recede even further into the wall."
+	wait(integer) : "Delay Before Reset (-1 stay)" : -1 : "Amount of time, in seconds, after the door has opened before it closes. Once it has closed, it can be used again. If the value is set to -1, the door never closes itself."
+	lip(integer) : "Lip" : 0 : "The amount the door will keep overlapping with the original position. The distance moved = the size of the brush on the movement axis - lip."
 	dmg(integer) : "Blocking Damage" : 0 : "Amount of damage done to entities that block the movement of this door, per frame."
 	forceclosed(boolean) : "Force Closed" : 0 : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects."
 	ignoredebris(boolean) : "Ignore Debris" : 0 : "If set this will change the door's collision group to one that ignore collisions with debris objects (note that this is not compatible with the non-solid-to-player spawnflag)."
@@ -4291,7 +4359,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 		128: "Y Axis" : 0
 		65536: "New func_door +USE rules" : 0
 	]
-	distance(integer) : "Distance" : 90 : "The amount, in degrees, that the button should rotate when it's pressed."
+	distance(integer) : "Distance" : 90 : "The amount, in degrees, that the door should rotate when opened."
 	
 	solidbsp(choices) : "Solid Type" : 0 =
 	[
@@ -4657,7 +4725,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	PoseParameterName(string) : "Pose Parameter Name" : : "Name of the pose parameter to control."
 	PoseValue(float) : "Pose Parameter Value" : "0.0" : "Normalized value for the pose parameter from 0.0 and 1.0 (maps to min and max range)."
 	InterpolationTime(float) : "Interpolation Time" : "0.0" : "Number of seconds (0.0 to 10.0) for client to match absolue pose values."
-	InterpolationWrap(boolean) : "Should wrap from 0.0 to 1.0 when interpolating." : 0
+	InterpolationWrap(boolean) : "Interpolation Wrap" : 0 : "Should wrap from 0.0 to 1.0 when interpolating."
 
 	CycleFrequency(float) : "Cycle Frequency" : "0.0" : "Base cycles per second from -10.0 to 10.0."
 	FModulationType(choices) : "Frequency Modulation Type" : 0 = 
@@ -5196,7 +5264,70 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 
 @PointClass base(Targetname) iconsprite("editor/logic_playmovie") = logic_playmovie : "Plays a movie and allows for various playback options"
 [
-	MovieFilename(string) : "Movie to play" : "" : "Filename of the movie to play"
+	MovieFilename(choices) : "Movie to display" : "aperture_logo.bik" : "The movie to display. You can also type in the filename of a custom movie here." =
+	[
+		"coop_black_screen.bik"		: "Black Screen"
+		"aperture_logo.bik"			: "Aperture Logo"
+		
+		// Elevator videos
+		"animalking.bik"				: "Animal King"
+		"aperture_appear_horiz.bik" 	: "Aperture Appear (Horizontal)"
+		"aperture_appear_vert.bik" 	: "Aperture Appear (Vertical)"
+		"bluescreen.bik"				: "Blue Screen Of Death"
+		"exercises_horiz.bik"			: "Evacuation Training (Horizontal)"
+		"exercises_vert.bik"			: "Evacuation Training (Vertical)"
+		"faithplate.bik"				: "Aerial Faith Plate"
+		"fizzler.bik"					: "Emancipation Grid"
+		"hard_light.bik"				: "Light Bridge"
+		"laser_danger_horiz.bik"		: "Laser Danger (Horizontal)"
+		"laser_danger_vert.bik"		: "Laser Danger (Vertical)"
+		"laser_portal.bik"			: "Laser Through Portal"
+		"plc_blue_horiz.bik"			: "Please Remain Calm (Horizontal)"
+		"plc_blue_vert.bik"			: "Please Remain Calm (Vertical)"
+		"turret_colours_type.bik"		: "Turret Case Options"
+		"turret_dropin.bik"			: "Turret Drop In"
+		"turret_exploded_grey.bik"	: "Exploded Turret"
+		
+		// Single player
+		"menu_act01.bik"				: "Menu Background: Act 1"
+		"menu_act02.bik"				: "Menu Background: Act 2"
+		"menu_act03.bik"				: "Menu Background: Act 3"
+		"menu_act04.bik"				: "Menu Background: Act 4"
+		"menu_act05.bik"				: "Menu Background: Act 5"
+		"sp_30_a4_finale5.bik"		: "SP Ending"
+		"sp_credits_bg.bik"			: "Want You Gone Background"
+		"sp_a5_credits.bik"			: "Space"
+		"sp_ending_callback.bik"		: "Space Wheatley"
+		
+		// Coop
+		"coop_bluebot_load.bik"		: "ATLAS Schematic"
+		"coop_orangebot_load.bik"		: "P-Body Schematic"
+		"coop_bots_load.bik"			: "Conveyor Bots"
+		"coop_bots_load_wave.bik"		: "Waving Bots"
+		"coop_intro.bik"				: "Coop Intro"
+		"coop_outro.bik"				: "Coop Outro"
+		"coop_bts_blueprints.bik"		: "Coop Disc: Blueprints"
+		"coop_bts_powergrid_01.bik"	: "Coop Disc: Power Grid 1"
+		"coop_bts_powergrid_02.bik"	: "Coop Disc: Power Grid 2"
+		"coop_bts_radar_01.bik"		: "Coop Disc: Radar 1"
+		"coop_bts_radar_02.bik"		: "Coop Disc: Radar 2"
+		"coop_bts_security_01.bik"	: "Coop Disc: Security 1"
+		"coop_bts_security_02.bik"	: "Coop Disc: Security 2"
+		"coop_bts_radar.bik"			: "Coop Disc: Unused Radar"
+		"coop_bts_security.bik"		: "Coop Disc: Unused Security"
+		"insert_disc.bik"				: "Insert Disc"
+		"dlc1_endmovie.bik"			: "Art Therapy Outro"
+		
+		// Other
+		"community_bg1.bik"			: "Community Maps Background"
+		"intro_movie.bik"				: "Community Maps Intro"
+		"attract01.bik"				: "Extras: Coop Trailer"
+		"attract02.bik"				: "Extras: SP Trailer"
+		"attrct_boots.bik"			: "Extras: Long Fall Boots"
+		"attract_bot_trust.bik"		: "Extras: Bot Trust"
+		"attract_panels.bik"			: "Extras: Panels"
+		"attract_turrets.bik"			: "Extras: Turrets"
+	]
 	allowskip(boolean) : "Allow User to Skip" : 0 : "Whether or not the user may skip the video with common keys"
 	loopvideo(boolean) : "Loop Video" : 0 : "If set to true, the movie will loop forever"
 	fadeintime(float) : "Fade In Time" : 0 : "Time it takes for the video to fade in"
@@ -5393,26 +5524,27 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	damagetype(choices) : "Damage type" : 64 : "The damage type to filter by. If the filter mode is Allow, only damage types that "+
 		"match will pass the filter. If the filter mode is Disallow, all damage types EXCEPT those who match will pass the filter." =
 	[
-		0 : "GENERIC"
-		1 : "CRUSH"
-		2 : "BULLET"
-		4 : "SLASH"
-		8 : "BURN"
-		16 : "VEHICLE"
-		32 : "FALL"
-		64 : "BLAST"
-		128 : "CLUB"
-		256 : "SHOCK"
-		512 : "SONIC"
-		1024 : "ENERGYBEAM"
-		16384: "DROWN"
-		32768 : "PARALYSE"
-		65536 : "NERVEGAS"
-		131072 : "POISON"
-		262144 : "RADIATION"
-		524288 : "DROWNRECOVER"
-		1048576 : "ACID"
-		2097152 : "SLOWBURN"
+		0 			: "Generic"
+		1 			: "Crush"
+		32 			: "Fall (Bottomless Pits)"
+		1024 		: "Energy Beam (Laserfields)"
+		131072 		: "Poison (Neurotoxin)"
+		1048576 	: "Chemical (Deadly Goo)"
+		2 			: "Bullet"
+		4 			: "Slash"
+		8 			: "Burn"
+		16 			: "Freeze"
+		64 			: "Blast"
+		128 		: "Club"
+		256 		: "Shock"
+		512 		: "Sonic"
+		16384		: "Drown (NOT for Goo!)"
+		32768 		: "Paralyse"
+		65536 		: "Nerve Gas"
+		262144 		: "Radiation"
+		524288 		: "Drown Recover"
+		2097152 	: "Slow Burn"
+		4194304 	: "Slow Freeze"
 	]
 ]
 
@@ -5546,12 +5678,14 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 @PointClass base(Targetname, Angles) 
 	iconsprite("editor/point_teleport.vmt") 
 	line(255 255 255, targetname, target) 
+	studioprop()
 = point_teleport : 
 	"An entity that teleports a target entity to this position and angles. "+
 	"If 'Teleport Home' spawn flag is set, teleports the target entity to its spawn position instead." +
 	"If object is physically simulated, simulation is turned off when teleported."
 [
 	target(target_destination) : "Entity To Teleport" : : "Name of the entity that will be teleported."
+	model(studio) : "[H] Model" : "models/editor/angle_helper.mdl" : "The model shown in Hammer. Mainly useful for positioning the entity."
 	spawnflags(flags) =
 	[
 		1 : "Teleport Home" : 0
@@ -5587,27 +5721,27 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	
 	DamageType(choices) : "Damage Type" : 0 : "Type of damage to inflict on entities damaged." =
 	[
-		0 : "GENERIC"
-		1 : "CRUSH"
-		2 : "BULLET"
-		4 : "SLASH"
-		8 : "BURN"
-		16 : "FREEZE"
-		32 : "FALL"
-		64 : "BLAST"
-		128 : "CLUB"
-		256 : "SHOCK"
-		512 : "SONIC"
-		1024 : "ENERGYBEAM"
-		16384: "DROWN"
-		32768 : "PARALYSE"
-		65536 : "NERVEGAS"
-		131072 : "POISON"
-		262144 : "RADIATION"
-		524288 : "DROWNRECOVER"
-		1048576 : "CHEMICAL"
-		2097152 : "SLOWBURN"
-		4194304 : "SLOWFREEZE"
+		0 			: "Generic"
+		1 			: "Crush"
+		32 			: "Fall (Bottomless Pits)"
+		1024 		: "Energy Beam (Laserfields)"
+		131072 		: "Poison (Neurotoxin)"
+		1048576 	: "Chemical (Deadly Goo)"
+		2 			: "Bullet"
+		4 			: "Slash"
+		8 			: "Burn"
+		16 			: "Freeze"
+		64 			: "Blast"
+		128 		: "Club"
+		256 		: "Shock"
+		512 		: "Sonic"
+		16384		: "Drown (NOT for Goo!)"
+		32768 		: "Paralyse"
+		65536 		: "Nerve Gas"
+		262144 		: "Radiation"
+		524288 		: "Drown Recover"
+		2097152 	: "Slow Burn"
+		4194304 	: "Slow Freeze"
 	]
 
 	// Inputs
@@ -6905,33 +7039,33 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	"A trigger volume that damages entities that touch it."
 [
 	damage(integer) : "Damage" : 100000 : "The amount of damage done to entities that touch this trigger. The damage is done every half-second. See also 'Damage Model' for extra details on how damage can be dealt."
-	damagecap(integer) : "Damage Cap" : 20 : "Maximum damage dealt per second. This field is only used if you select the Doubling w/Forgiveness damage model, via the spawnflag."
-	damagetype(choices) : "Damage Type" : 0 =
+	damagecap(integer) : "Damage Cap" : 100000 : "The maximum amount of damage that can be dealt when using the Doubling w/Forgiveness damage model."
+	damagetype(choices) : "Damage Type" : 0 : "Type of damage to inflict on entities damaged." =
 	[
-		0 : "GENERIC"
-		1 : "CRUSH"
-		2 : "BULLET"
-		4 : "SLASH"
-		8 : "BURN"
-		16 : "FREEZE"
-		32 : "FALL"
-		64 : "BLAST"
-		128 : "CLUB"
-		256 : "SHOCK"
-		512 : "SONIC"
-		1024 : "ENERGYBEAM"
-		16384: "DROWN"
-		32768 : "PARALYSE"
-		65536 : "NERVEGAS"
-		131072 : "POISON"
-		262144 : "RADIATION"
-		524288 : "DROWNRECOVER"
-		1048576 : "CHEMICAL"
-		2097152 : "SLOWBURN"
-		4194304 : "SLOWFREEZE"
+		0 			: "Generic"
+		1 			: "Crush"
+		32 			: "Fall (Bottomless Pits)"
+		1024 		: "Energy Beam (Laserfields)"
+		131072 		: "Poison (Neurotoxin)"
+		1048576 	: "Chemical (Deadly Goo)"
+		2 			: "Bullet"
+		4 			: "Slash"
+		8 			: "Burn"
+		16 			: "Freeze"
+		64 			: "Blast"
+		128 		: "Club"
+		256 		: "Shock"
+		512 		: "Sonic"
+		16384		: "Drown (NOT for Goo!)"
+		32768 		: "Paralyse"
+		65536 		: "Nerve Gas"
+		262144 		: "Radiation"
+		524288 		: "Drown Recover"
+		2097152 	: "Slow Burn"
+		4194304 	: "Slow Freeze"
 	]
 
-	damagemodel(choices) : "Damage Model" : 0 : "How damage is dealt. Normal always does the specified amount of damage each half second. Doubling starts with the specified amount and doubles it each time it hurts the toucher. Forgiveness means that if the toucher gets out of the trigger the damage will reset to the specified value. Good for making triggers that are deadly over time without having to cause massive damage on each touch." =
+	damagemodel(choices) : "Damage Model" : 0 : "How damage is dealt. Normal always does the specified amount of damage each half second. Doubling w/Forgiveness starts with the specified amount and doubles it each time it hurts the toucher, resetting when they leave the trigger. Good for making triggers that are deadly over time, without having to cause massive damage on each touch." =
 	[
 		0 : "Normal"
 		1 : "Doubling w/forgiveness"
@@ -7115,26 +7249,6 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	]
 
 	input SetIdleModifier(float) : "Allows designers to change the idle modifier at runtime"
-]
-
-@BaseClass base(Targetname) line(255 255 255, targetname, target) = ai_addon
-[
-	target(target_destination) : "Host NPC"
-	input	Install(target_destination) : "Install this AddOn to the specified NPC"
-	input	Remove(target_destination): "Remove this AddOn from the NPC it is attached to"
-]
-
-@PointClass base(Targetname,EnableDisable) = ai_addon_builder
-[
-	NPCName(string) : "NPC name" : "" : "Name to give built NPCs"
-	AddOnName(string) : "Add on name" : "" : "Name to give built addons"
-	NpcPoints(integer) : "NPC Points" : 10 : "Points available to spend for NPCs"
-	AddonPoints(integer) : "Addon Points" : 10 : "Points available to spend for addons"
-	input Execute(void) : ""
-	output OnCreateNpc(void) : "Fires when an NPC is created."
-	output OnFailedToCreateNpc(void) : "Fires when an NPC fails to be created."
-	output OnCreateAddon(void) : "Fires when an Addon is created."
-	output OnFailedToCreateAddon(void) : "Fires when an Addon fails to be created."
 ]
 
 //-------------------------------------------------------------------------
@@ -7349,7 +7463,7 @@ base(Targetname, Angles, Parentname) color(200 200 0) studio("models/editor/vgui
 	lifetime(float) : "Lifetime" : "0.5"
 	startwidth(float) : "Start Width" : "8.0"
 	endwidth(float) : "End Width" : "1.0"
-	spritename(sprite) : "Sprite Name" : "sprites/bluelaser1.vmt"
+	spritename(material) : "Sprite Name" : "sprites/bluelaser1.vmt"
 
 	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
 	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."

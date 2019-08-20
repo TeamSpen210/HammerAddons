@@ -1,13 +1,76 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(since_ASW) 
-	studio("models/editor/axis_helper_thick.mdl") 
+	studioprop("models/editor/axis_helper_thick.mdl") 
 	color(200 200 0) 
-	studio("models/editor/vgui_arrows.mdl") 
+	studioprop("models/editor/vgui_arrows.mdl") 
 	sphere(width) 
 	sphere(height) = vgui_movie_display: "Movie Display"
 	[
 	displaytext(string) : "Display Text"
-	moviefilename(string) : "Movie Filename" : "media/"
+	MovieFilename(choices) : "Movie to display" : "media/aperture_logo.bik" : "The movie to display. You can also type in the filename of a custom movie here." =
+	[
+		"media/coop_black_screen.bik"		: "Black Screen"
+		"media/aperture_logo.bik"			: "Aperture Logo"
+		
+		// Elevator videos
+		"media/animalking.bik"				: "Animal King"
+		"media/aperture_appear_horiz.bik" 	: "Aperture Appear (Horizontal)"
+		"media/aperture_appear_vert.bik" 	: "Aperture Appear (Vertical)"
+		"media/bluescreen.bik"				: "Blue Screen Of Death"
+		"media/exercises_horiz.bik"			: "Evacuation Training (Horizontal)"
+		"media/exercises_vert.bik"			: "Evacuation Training (Vertical)"
+		"media/faithplate.bik"				: "Aerial Faith Plate"
+		"media/fizzler.bik"					: "Emancipation Grid"
+		"media/hard_light.bik"				: "Light Bridge"
+		"media/laser_danger_horiz.bik"		: "Laser Danger (Horizontal)"
+		"media/laser_danger_vert.bik"		: "Laser Danger (Vertical)"
+		"media/laser_portal.bik"			: "Laser Through Portal"
+		"media/plc_blue_horiz.bik"			: "Please Remain Calm (Horizontal)"
+		"media/plc_blue_vert.bik"			: "Please Remain Calm (Vertical)"
+		"media/turret_colours_type.bik"		: "Turret Case Options"
+		"media/turret_dropin.bik"			: "Turret Drop In"
+		"media/turret_exploded_grey.bik"	: "Exploded Turret"
+		
+		// Single player
+		"media/menu_act01.bik"				: "Menu Background: Act 1"
+		"media/menu_act02.bik"				: "Menu Background: Act 2"
+		"media/menu_act03.bik"				: "Menu Background: Act 3"
+		"media/menu_act04.bik"				: "Menu Background: Act 4"
+		"media/menu_act05.bik"				: "Menu Background: Act 5"
+		"media/sp_30_a4_finale5.bik"		: "SP Ending"
+		"media/sp_credits_bg.bik"			: "Want You Gone Background"
+		"media/sp_a5_credits.bik"			: "Space"
+		"media/sp_ending_callback.bik"		: "Space Wheatley"
+		
+		// Coop
+		"media/coop_bluebot_load.bik"		: "ATLAS Schematic"
+		"media/coop_orangebot_load.bik"		: "P-Body Schematic"
+		"media/coop_bots_load.bik"			: "Conveyor Bots"
+		"media/coop_bots_load_wave.bik"		: "Waving Bots"
+		"media/coop_intro.bik"				: "Coop Intro"
+		"media/coop_outro.bik"				: "Coop Outro"
+		"media/coop_bts_blueprints.bik"		: "Coop Disc: Blueprints"
+		"media/coop_bts_powergrid_01.bik"	: "Coop Disc: Power Grid 1"
+		"media/coop_bts_powergrid_02.bik"	: "Coop Disc: Power Grid 2"
+		"media/coop_bts_radar_01.bik"		: "Coop Disc: Radar 1"
+		"media/coop_bts_radar_02.bik"		: "Coop Disc: Radar 2"
+		"media/coop_bts_security_01.bik"	: "Coop Disc: Security 1"
+		"media/coop_bts_security_02.bik"	: "Coop Disc: Security 2"
+		"media/coop_bts_radar.bik"			: "Coop Disc: Unused Radar"
+		"media/coop_bts_security.bik"		: "Coop Disc: Unused Security"
+		"media/insert_disc.bik"				: "Insert Disc"
+		"media/dlc1_endmovie.bik"			: "Art Therapy Outro"
+		
+		// Other
+		"media/community_bg1.bik"			: "Community Maps Background"
+		"media/intro_movie.bik"				: "Community Maps Intro"
+		"media/attract01.bik"				: "Extras: Coop Trailer"
+		"media/attract02.bik"				: "Extras: SP Trailer"
+		"media/attrct_boots.bik"			: "Extras: Long Fall Boots"
+		"media/attract_bot_trust.bik"		: "Extras: Bot Trust"
+		"media/attract_panels.bik"			: "Extras: Panels"
+		"media/attract_turrets.bik"			: "Extras: Turrets"
+]
 	groupname(string) : "Group Name"
 	looping(boolean) : "Loop Movie" : 0
 	

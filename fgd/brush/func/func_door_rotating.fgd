@@ -9,7 +9,7 @@
 		65536: "New func_door +USE rules (NOT for prop_doors!!)" : 0
 		]
 
-	distance(integer) : "Distance" : 90 : "The amount, in degrees, that the button should rotate when it's pressed."
+	distance(integer) : "Distance" : 90 : "The amount, in degrees, that the door should rotate when opened."
 
 	solidbsp[engine](boolean) : "Solid BSP Mode"
 	solidbsp(choices) : "Solid Type" : 0 : "How to calculate collisions. BSP is more rudimentarty but allows more stable collision with players."=

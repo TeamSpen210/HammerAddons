@@ -19,11 +19,11 @@
 	
 	maxblobcount(integer) : "Gel Blob Limit" : 250 : "Number of Gel blobs that can exist. Maximum is 250."
 	
-	message(string) : "Map Description / Title"
+	message(string) : "Map Description / Title" : : "Doesn't seem to be used anywhere."
 	skyname(string) : "SkyBox" : "sky_black_nofog" : "Texture used for the 2D skybox."
-	chaptertitle(string) : "Chapter Title Message" : "" : "Chapter Title that appears onscreen when this level starts."
+	chaptertitle(string) : "Chapter Title Message" : "" : "Chapter Title that appears onscreen when this level starts. Appears non-functional."
 	startdark(boolean) : "Level Fade In" : 0
-	gametitle(boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts."
+	//gametitle(boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts. Non-functional, crashes the game when used."
 
 	newunit(choices) : "New Level Unit" : 0 : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. Only set it to Yes if the player cannot return to any previous levels." = 
 	[
@@ -107,7 +107,7 @@
 		3 : "Conversion Gel"
 		4 : "Cleansing Gel"
 	]
-	skin(choices) : "[H] Paint Type" : 0 : "The type of gel created (for display)." = 
+	skin(choices) : "[H] Paint Type" : 0 : "The type of gel displayed in Hammer." = 
 	[
 		0 : "Repulsion Gel"
 		1 : "Reflection Gel / Adhesion Gel"
@@ -179,7 +179,7 @@
 @PointClass 
 	base(Targetname, Parentname, Angles, LinkedPortalDoor, ToggleDraw, RenderFields)
 	line(255 255 0, targetname, partnername)
-	studio("models/editor/axis_helper_thick.mdl")
+	studio("models/editor/angle_helper.mdl")
 	iconsprite("editor/portal_dual.vmt") = linked_portal_door :
 "A door which is linked by a portal to another 'linked_portal_door' entity. Portal shots will pass through, and no effect appears at the edges."
 [
@@ -328,7 +328,7 @@
 		"models/props/laser_emitter.mdl" 		: "Offset"
 	]
 	
-	StartState(choices) : "Start off?" : 0 =
+	StartState(choices) : "Start Disabled" : 0 =
 	[
 		1 : "Yes"
 		0 : "No"
@@ -559,12 +559,20 @@
 [
 	GroupName(string) : "Group Name" : "" : "Giving nuggets a group name hints the game that they are intended to be a group"
 	RespawnTime(float) : "Respawn Time" : 30 : "Number of seconds between when a nugget is collected and when it respawns"
-	PointValue(choices) : "Point Value" : 1 =
+	PointValue(choices) : "Point Value" : 1 : "The amount of 'points' given when the nugget is collected. Any value can be set here but only the included options will appear correctly in-game." =
 	[
 		1 : "1"
 		5 : "5"
 		10 : "10"
 		25 : "25"
+	]
+	
+	skin(choices) : "[H] Point Value" : 1 : "The point value shown on the model in Hammer." =
+	[
+		1 : "1"
+		2 : "5"
+		3 : "10"
+		4 : "25"
 	]
 ]
 
@@ -591,7 +599,7 @@
 	input HideViewFinder(void) : "Hides the view finder screen overlay."
 ]
 
-@PointClass base(Targetname, PlayerClass, Angles) studioprop("models/editor/playerstart.mdl") = info_coop_spawn : "Player spawns for cooperative mode."
+@PointClass base(Targetname, PlayerClass, Angles) studioprop() = info_coop_spawn : "Player spawns for cooperative mode."
 [
 	Enabled(choices) : "Initial State" : 0 =
 	[
@@ -604,6 +612,13 @@
 		0 : "Any"
 		2 : "P-Body"
 		3 : "ATLAS"
+	]
+	
+	model(choices) : "[H] Player" : "models/editor/playerstart.mdl" : "The player model to show in Hammer." =
+	[
+		"models/editor/playerstart.mdl" 	: "Player Start"
+		"models/player/ballbot/ballbot.mdl"	: "ATLAS"
+		"models/player/eggbot/eggbot.mdl"	: "P-Body"
 	]
 	
 	ForceGunOnSpawn(boolean) : "Force Gun On Spawn" : 0 : "Give the player a Portal Gun on spawn."
@@ -972,6 +987,8 @@
 	UseAreaPortalFade(boolean) : "Fade Area Portal?" : 0 : "If the area portal should use the specified fade distances to fade out."
 	AreaPortalFadeStart(float) : "Fade Start Distance" : 0 : "The distance at which the area portal starts fading out."
 	AreaPortalFadeEnd(float) : "Fade End Distance" : 0 : "The distance at which the area portal turns completely opaque."
+	
+	DefaultAnim(string) readonly: "<Default Animation>" : "idleclose" : "Ignore, needed to stop the door from looping the close animation in Hammer."
 
 	input Open(void) : "Open the door and cause the portal to activate."
 	input Close(void) : "Close the door and cause the portal to deactivate."
@@ -1021,6 +1038,14 @@
 	]
 ]
 
+@PointClass base(Targetname) = point_survey : "Shows the player a survey."
+[
+	surveyname(string) : "Survey Script Name" : "end_puzzle_survey" : "Name of a survey script, from the 'scripts/surveys' folder."
+	
+	input ShowSurvey(void) : "Shows the survey."
+	
+	output OnSurveyComplete(void) : "Fired when the player completes or cancels the survey."
+]
 
 // BEE 2 EDIT FLAG = 0
 // Above forces BEE2 to not write to this file.

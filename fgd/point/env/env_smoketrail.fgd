@@ -17,6 +17,6 @@
 	startsize(float) : "Starting particle size" : 15 : "Starting particle size."
 	endsize(float) : "Ending particle size" : 50 : "Ending particle size."
 	spawnradius(float) : "Spawn radius" : 15 : "Distance from env_smoketrail at which particles are emitted."
-	firesprite(sprite) : "Fire Sprite" : "sprites/firetrail.spr"
-	smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.spr"
+	firesprite(material) : "Fire Sprite" : "sprites/firetrail.spr"
+	smokesprite(material) : "Smoke Puff" : "sprites/whitepuff.spr"
 	]

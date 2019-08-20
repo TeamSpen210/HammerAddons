@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint)
 	color(200 200 0) 
-	studio("models/editor/vgui_arrows.mdl") 
+	studioprop("models/editor/vgui_arrows.mdl") 
 	sphere(width) 
 	sphere(height) 
 = vgui_slideshow_display: "Slideshow Display"

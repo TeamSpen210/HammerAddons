@@ -1,7 +1,7 @@
 
 @PointClass base(BaseEntityPoint)
 	appliesto(P1, P2) 
-	studio("models/editor/vgui_arrows.mdl") 
+	studioprop("models/editor/vgui_arrows.mdl") 
 = vgui_neurotoxin_countdown: "Neurotoxin Countdown display. AddOutput can be used to change/reset timer countdown."
 	[
 	width(integer) : "Panel width" : 256 : "Width of the screen in units."

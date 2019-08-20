@@ -1,0 +1,8 @@
+@PointClass base(Targetname) appliesto(P2) = point_survey : "Displays a survey to the player."
+[
+	surveyname(string) : "Survey Script Name" : "end_puzzle_survey" : "Name of a survey keyvalues file, from the 'scripts/surveys' folder."
+
+	input ShowSurvey(void) : "Displays the survey."
+
+	output OnSurveyComplete(void) : "Fired when the player completes or cancels the survey."
+]
