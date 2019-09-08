@@ -640,7 +640,11 @@ def group_props_ent(
         if mdl_name:
             mdl = get_model(mdl_name)
             if mdl is not None:
-                skinset = frozenset(mdl.iter_textures([conv_int(ent['skin'])]))
+                skinset = frozenset({
+                    tex.casefold().replace('\\', '/')
+                    for tex in
+                    mdl.iter_textures([conv_int(ent['skin'])])
+                })
 
         bbox_groups[name, skinset].append(Vec.bbox(
             Vec.from_str(ent['mins']) + origin,
@@ -816,8 +820,12 @@ def combine(
             return None
 
         return (
-            # Must be first!
-            frozenset(model.iter_textures([prop.skin])),
+            # Must be first, we pull this out later.
+            frozenset({
+                tex.casefold().replace('\\', '/')
+                for tex in
+                model.iter_textures([prop.skin])
+            }),
             model.flags.value,
             prop.flags.value,
             model.contents,
