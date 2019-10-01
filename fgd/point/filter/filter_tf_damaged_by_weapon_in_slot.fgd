@@ -1,4 +1,5 @@
 @FilterClass base(filter_base) 
+	autovis(Logic, Filters)
 	appliesto(TF2) 
 	iconsprite("editor/ficool2/filter_tf_damaged_by_weapon_in_slot.vmt")
 = filter_tf_damaged_by_weapon_in_slot: "A filter that filters damage by a weapon in a certain slot. Used for training purposes"

@@ -26,7 +26,7 @@
 	flag_model(string) : "Model" : "models/flag/briefcase.mdl" : "The model to be used for this entity."
 	flag_icon(string) : "Icon" : "../hud/objectives_flagpanel_carried" : "The icons used for the HUD in some game modes. " +
 		"Format: materials/vgui/[materialname]_red and materials/vgui/[materialname]_blue"
-	flag_paper(string) : "Paper Particle" : "player_intel_papertrail" : "Particle effect used for the falling paper trail."
+	flag_paper(particlesystem) : "Paper Particle" : "player_intel_papertrail" : "Particle effect used for the falling paper trail."
 	flag_trail(string) : "Trail Effect" : "flagtrail" : "Materials used for the trail effect. " +
 		"Format: materials/effects/[materialname]_red and materials/effects/[materialname]_blu"
 

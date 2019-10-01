@@ -1,4 +1,5 @@
 @FilterClass base(filter_base, DamageType)
+	autovis(Logic, Filters)
 	iconsprite("editor/filter_damage_type.vmt") 
 = filter_damage_type: "A damage filter that filters by the type of damage inflicted. This can only be used as a damage filter, not as an activator filter."
 	[

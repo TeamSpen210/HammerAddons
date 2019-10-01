@@ -36,7 +36,7 @@
 		2: "No Announcements"
 		]
 
-	point_warn_sound(string) : "Warning sound" : "ControlPoint.CaptureWarn" : "Sound to be played when this point is being captured (if warn on capture is set)."
+	point_warn_sound(sound) : "Warning sound" : "ControlPoint.CaptureWarn" : "Sound to be played when this point is being captured (if warn on capture is set)."
 	random_owner_on_restart(boolean) : "Randomly set the owner on restart" : "0" : "Randomly set the owner of this point during a full restart of the map. The ratio of default owners among the points with this flag will be kept when selecting random owners."
 
 	team_timedpoints_2(integer) : "Time-based point value for RED." : 0

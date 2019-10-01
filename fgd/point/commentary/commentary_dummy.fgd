@@ -1,5 +1,6 @@
 @NpcClass base(BaseEntityAnimating) 
 	appliesto(L4D, L4D2)
+	autovis(Commantary, Comm. Dummy)
 	studio()
 = commentary_dummy: "Commentary Dummy"
 	[

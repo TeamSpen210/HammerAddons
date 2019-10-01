@@ -1,4 +1,8 @@
-@FilterClass appliesto(L4D2) base(filter_base) = filter_health: "A damage filter that filters based on if the entity causing the damage has adrenaline active or not."
+@FilterClass 
+	appliesto(L4D2) 
+	base(filter_base)
+	autovis(Logic, Filters)
+= filter_health: "A damage filter that filters based on if the entity causing the damage has adrenaline active or not."
 	[
 	adrenalinepresence(choices) : "Adrenaline presence" : 1 : "Allows this state of adrenaline on the attacker to pass the filter." =
 		[

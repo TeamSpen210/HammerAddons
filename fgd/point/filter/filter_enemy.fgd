@@ -1,4 +1,5 @@
 @FilterClass base(filter_base)
+	autovis(Logic, Filters)
 	iconsprite("editor/ficool2/filter_enemy.vmt") 
 	sphere(filter_radius) 
 	sphere(filter_outer_radius) 

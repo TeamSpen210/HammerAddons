@@ -1,6 +1,8 @@
 
 @PointClass base(BaseEntityPoint) 
-	appliesto(TF2) = bot_generator: "Entity spawns <count> TFBots every <interval> seconds, with at most <maxActive> active at once"
+	appliesto(TF2)
+	autovis(TF2, TFBots, Bot Generator)
+= bot_generator: "Entity spawns <count> TFBots every <interval> seconds, with at most <maxActive> active at once"
 	[
 	team(choices) : "Team" : "auto" : "Team" =
 		[

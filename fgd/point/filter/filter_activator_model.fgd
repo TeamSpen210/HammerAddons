@@ -1,4 +1,5 @@
 @FilterClass base(filter_base) 
+	autovis(Logic, Filters)
 	appliesto(since_L4D2) 
 	iconsprite("editor/filter_model.vmt")
 = filter_activator_model: "A filter that filters by the model of the activator."

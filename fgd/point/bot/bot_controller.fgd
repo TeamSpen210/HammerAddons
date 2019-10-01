@@ -1,5 +1,7 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(TF2) = bot_controller: "An entity used to create a bot, and then issue commands to it."
+	appliesto(TF2)
+	autovis(TF2, TFBots, Bot Controller)
+ = bot_controller: "An entity used to create a bot, and then issue commands to it."
 	[
 	teamnum[engine](integer) : "Team" : 2
 	teamnum(choices) : "Team" : 2 : "Team" =

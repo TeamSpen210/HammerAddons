@@ -1,4 +1,5 @@
 @FilterClass base(filter_base) 
+	autovis(Logic, Filters)
 	iconsprite("editor/filter_mass.vmt")
 = filter_activator_mass_greater: "A filter that filters by the mass of the activator."
 	[

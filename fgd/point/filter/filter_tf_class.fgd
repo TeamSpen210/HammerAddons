@@ -1,4 +1,5 @@
 @FilterClass base(filter_base) 
+	autovis(Logic, Filters)
 	appliesto(TF2) 
 	iconsprite("editor/ficool2/filter_tf_class.vmt") 
 = filter_tf_class: "A filter that filters by the class of the activator. " +

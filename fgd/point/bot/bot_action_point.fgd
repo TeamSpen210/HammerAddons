@@ -1,6 +1,7 @@
 
 @PointClass base(BaseEntityPoint) 
-	appliesto(TF2) 
+	appliesto(TF2)
+	autovis(TF2, TFBots, Action Point)
 	sphere(desired_distance) = bot_action_point: "A potential destination for a bot"
 	[
 	next_action_point(target_destination) : "Next Action Point" : : "The next Action Point to approach after performing this one."

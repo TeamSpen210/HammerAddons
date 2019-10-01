@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint, BasePaintType) 
 	appliesto(P2) 
+	autovis(Test Elements, Paint, Paint Sprayer)
 	line(255 255 255, targetname, light_position_name) 
 	sphere(blob_spread_radius) 
 	studio("models/editor/info_paint_sprayer.mdl") = info_paint_sprayer: "An entity that sprays Gel."

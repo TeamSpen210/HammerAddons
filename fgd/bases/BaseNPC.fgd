@@ -14,6 +14,8 @@
 		1 : "Yes (Don't use speech semaphore)"
 	]
 
+	linedivider_npc(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
 	// Inputs
 	input SetBodyGroup(integer) : "HACK: Sets this NPC's body group (from 0 - n). You'd better know what you are doing!"
 

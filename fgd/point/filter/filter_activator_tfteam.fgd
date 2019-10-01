@@ -1,5 +1,6 @@
 @FilterClass base(TeamNum, filter_base) 
 	appliesto(TF2) 
+	autovis(Logic, Filters)
 	iconsprite("editor/filter_team.vmt")
 	line(0 255 0, targetname, controlpoint)
 = filter_activator_tfteam: "A filter that filters by the team of the activator.  The team number to filter by. If the filter mode is Allow, only entities whose team number matches the given team will pass the filter. If the filter mode is Disallow, all entities EXCEPT those whose team number matches the given team will pass the filter."

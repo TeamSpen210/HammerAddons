@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	iconsprite("editor/logic_auto.vmt") 
 	color(0 100 250)
+	autovis(Commantary, Comm. Auto)
 = commentary_auto: "Commentary-specific version of logic_auto."
 	[
 	input MultiplayerSpawned(void) : "Internal input, fires OnCommentaryMultiplayerSpawn."
