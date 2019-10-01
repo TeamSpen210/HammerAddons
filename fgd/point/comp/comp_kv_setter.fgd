@@ -1,5 +1,5 @@
 @PointClass 
-    size(-8 -8 -8, 8 8 8)
+	iconsprite("editor/comp_kv_setter")
 	appliesto(srctools)
 	autovis(Postcompiler, KV Setter)
 = comp_kv_setter : "Sets a keyvalue on an entity to a new value. " +
