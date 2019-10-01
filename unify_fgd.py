@@ -144,20 +144,6 @@ def _polyfill_node_id(fgd: FGD):
                     kv.type = ValueTypes.INT
 
 
-@_polyfill('')
-def _polyfill_bool_io(fgd: FGD):
-    """Boolean types cannot be used for IO events."""
-    for ent in fgd.entities.values():
-        for tag_map in ent.outputs.values():
-            for iodef in tag_map.values():
-                if iodef.type is ValueTypes.BOOL:
-                    iodef.type = ValueTypes.INT
-        for tag_map in ent.inputs.values():
-            for iodef in tag_map.values():
-                if iodef.type is ValueTypes.BOOL:
-                    iodef.type = ValueTypes.INT
-
-
 @_polyfill('until_csgo')
 def _polyfill_worltext(fgd: FGD):
     """Strip worldtext(), since this is not available."""
