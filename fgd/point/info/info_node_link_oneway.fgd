@@ -1,0 +1,19 @@
+@PointClass base(info_node_link) appliesto(MBase)
+	color(220 180 0) 
+	iconsprite("editor/info_node_link.vmt")
+= info_node_link_filtered :
+	"A variant of info_node_link that fires outputs when a NPC tries to use it. " +
+	"Otherwise functions identically to a regular info_node_link."
+	[
+	StartNode(node_dest) : "Start node ID" : : "The node ID that will always be allowed to pass."
+    EndNode(node_dest) : "End node ID" : : "The node ID that will not be allowed to pass unless the NPC follows exclusion rules."
+	
+	AllowUse(target_name_or_class) : "Allow Pass When Off" : : "Entity or class to allow passage regardless of which node they're coming from."
+	
+	Usage[engine](integer) : "Usage" : 0
+	Usage(choices) : "Usage" : 0 : "Causes the link to use slightly different behavior." =
+		[
+		0 : "Enabled is one-way, disabled turns off link"
+		1 : "Enabled is two-way, disabled is one-way"
+		]
+	]

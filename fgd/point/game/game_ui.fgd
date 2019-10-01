@@ -20,21 +20,42 @@
 	input Deactivate(void) : "Return Player Control."
 	input Activate(string) : "Take Player Control."
 
+	input GetButtons(void) : "Fires OutButtons with the player's current button flags."
+
 	// Outputs
 	output PlayerOn(void) : "Fired whenever this entity starts controlling the player's input."
 	output PlayerOff(void) : "Fired whenever this entity stops controlling the player's input."
+
+	output OutButtons[MBase](integer) : "Outputs the player's current button flags when they are requested by the GetButtons input."
+	
 	output PressedMoveLeft(void) : "Fired whenever the player presses the moveleft key."
 	output PressedMoveRight(void) : "Fired whenever the player presses the moveright key."
 	output PressedForward(void) : "Fired whenever the player presses the forward key."
 	output PressedBack(void) : "Fired whenever the player presses the backward key."
 	output PressedAttack(void) : "Fired whenever the player presses the attack key."
 	output PressedAttack2(void) : "Fired whenever the player presses the secondary attack key."
+	output PressedAttack3[MBase](void) : "Fired whenever the player presses the tertiary attack key."
+
+	output PressedUse[MBase](void) : "Fired whenever the player presses the use key."
+	output PressedJump[MBase](void) : "Fired whenever the player presses the jump key."
+	output PressedCrouch[MBase](void) : "Fired whenever the player presses the crouch key."
+	output PressedSprint[MBase](void) : "Fired whenever the player presses the sprint key."
+	output PressedReload[MBase](void) : "Fired whenever the player presses the reload key."
+
 	output UnpressedMoveLeft(void) : "Fired whenever the player releases the moveleft key."
 	output UnpressedMoveRight(void) : "Fired whenever the player releases the moveright key."
 	output UnpressedForward(void) : "Fired whenever the player releases the forward key."
 	output UnpressedBack(void) : "Fired whenever the player releases the backward key."
 	output UnpressedAttack(void) : "Fired whenever the player releases the attack key."
 	output UnpressedAttack2(void) : "Fired whenever the player releases the secondary attack key."
+
+	output UnpressedAttack3[MBase](void) : "Fired whenever the player releases the tertiary attack key."
+	output UnpressedUse[MBase](void) : "Fired whenever the player releases the use key."
+	output UnpressedJump[MBase](void) : "Fired whenever the player releases the jump key."
+	output UnpressedCrouch[MBase](void) : "Fired whenever the player releases the crouch key."
+	output UnpressedSprint[MBase](void) : "Fired whenever the player releases the sprint key."
+	output UnpressedReload[MBase](void) : "Fired whenever the player releases the reload key."
+
 	output XAxis(string) : "An output that fires whenever the X axis of the player's input changes. i.e. -1 when the player has moveleft key down, 1 when th" + "e player has moveright key down, and 0 if neither."
 	output YAxis(string) : "An output that fires whenever the Y axis of the player's input changes. i.e. -1 when the player has backward key down, 1 when th" + "e player has forward key down, and 0 if neither."
 	output AttackAxis(string) : "An output that fires whenever the state of the player's attack key changes. i.e. 1 when the player has the attack key down, 0 ot" + "herwise."

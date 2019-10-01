@@ -1,0 +1,7 @@
+@FilterClass base(BaseRedirectFilter) 
+	autovis(Logic, Filters)
+	appliesto(MBase)
+	iconsprite("editor/filter_redirect.vmt")
+= filter_redirect_inflictor :
+	"A filter that passes the inflictor of damage (e.g. the crossbow bolt instead of the crossbow user) to a separate filter."
+	[ ]

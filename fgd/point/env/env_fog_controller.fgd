@@ -5,7 +5,7 @@
 	studio("models/editor/cone_helper.mdl")
 = env_fog_controller: "An entity that controls the fog and view distance in the map."
 	[
-	fogenable(boolean) : "Fog Enable" : 0
+	fogenable(boolean) : "Fog Enable" : 1
 	fogblend(boolean) : "Fog Blend" : 0
 	use_angles(boolean) : "Use Angles for Fog Dir" : 0
 

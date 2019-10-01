@@ -1,10 +1,23 @@
 @FilterClass base(filter_base) 
 	autovis(Logic, Filters)
-	appliesto(since_L4D) 
+	appliesto(since_L4D, MBase) 
 	iconsprite("editor/filter_context.vmt")
 = filter_activator_context: "A filter that filters by a context on the activator."
 	[
-	responsecontext(string) : "Filter Context" : : "The context to filter by. " +
+	// Mapbase and L4D's implementation is unrelated, they don't share code/functionality.
+
+	responsecontext[since_L4D](string) : "Filter Context" : : "The context to filter by. " +
 		"If the filter mode is Allow, only entities that have a context matching the given string, of any value, will pass the filter. " +
 		"If the filter mode is Disallow, all entities EXCEPT those whose context matches the string will pass the filter."
+
+	ResponseContext[MBase](string) : "Filter Context" : : "The context(s) to filter by. Syntax is 'key:value,key:value'. "+
+		"Values in this field can use wilcards. For example, if this filter contains 'lastname:*', it will pass any entity with the context 'lastname', regardless of its value. "+
+		"Wildcards do not apply to context names and you cannot define the same context multiple times, but inputs like AddContext or RemoveContext can be used to add to the filter context."
+		
+	any[MBase](boolean) : "Pass if entity has any of these contexts" : 0 : "Should this filter only pass if the entity contains all of these contexts or can it pass if the entity has at least one of them?" 
+
+	// Inputs
+	input AddContext[MBase](string) : "Adds a context to this fitler's list of response contexts. The format should be 'key:value'."
+	input RemoveContext[MBase](string) : "Remove a context from this filter's list of response contexts. The name should match the 'key' of a previously added context."
+	input ClearContext[MBase](void) : "Removes all contexts in this filter's list of response contexts."
 	]

@@ -1,8 +1,16 @@
-@FilterClass base(filter_base, DamageType)
+@FilterClass base(filter_base)
 	autovis(Logic, Filters)
 	iconsprite("editor/filter_damage_type.vmt") 
 = filter_damage_type: "A damage filter that filters by the type of damage inflicted. This can only be used as a damage filter, not as an activator filter."
 	[
+	filtertype[engine](integer) : "Logic Type" : 1
+	filtertype[MBase](choices) : "Logic Type" : 1 : "Most of these are only relevant if more than one damage type is a factor." =
+		[
+		0 : "EQUAL TO (input and damage type must be equal)"
+		1 : "AND (input must contain all bits in damage type)"
+		2 : "OR (input must contain any bit in damage type)"
+		]
+
 	damagetype[engine](integer) : "Damage Type" : 64
 	damagetype(choices) : "Damage Type" : 64 : "The damage type to filter by. " +
 		"If the filter mode is Allow, only damage types that match will pass the filter. " +
@@ -37,7 +45,14 @@
 		1048576: "Acid" [since_ASW]
 
 		2097152: "Slow Burn"
-		4194304: "Slow Freeze"
+		//4194304 : "Slow Freeze" // This does not appear to exist.
+		4194304: "Remove No Ragdoll"
 		16777216: "Full Gib" [L4D2]
+		16777216 : "Plasma" [until_L4D2]
+		33554432 : "Airboat (gun)"
+		67108864 : "Dissolve"
+		134217728 : "Blast Surface"
+		268435456 : "Direct"
+		536870912 : "Buckshot"
 		]
 	]

@@ -1,6 +1,7 @@
 // This is a full entity, with all normal behaviours.
 // However, it kills itself immediately so most are useless
 // TODO: might be useful to strip ones that can't function.
+// If so, also apply this to func_null
 @PointClass base(BaseEntityPoint) 
 	color(200 0 0)
 	iconsprite("editor/ts2do/info_null.vmt")

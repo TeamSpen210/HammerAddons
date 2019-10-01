@@ -10,6 +10,7 @@
 	"but will apply force to any physics objects within its radius."
 	[
 	magnitude(string) : "Magnitude" : 100 : "Amount of physics force applied by the explosion."
+	magnitude[MBase](string) : "Magnitude" : 100 : "Amount of physics force applied by the explosion. A negative value can be used to suck entities inward."
 	radius(string) : "Clamp Radius (0 = auto)" : 0 : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude."
 	targetentityname(target_destination) : "Limit to Entity" : : "If specified, the explosion will only affect the matching entity."
 	spawnflags(flags)  =
@@ -25,6 +26,7 @@
 
 	// Inputs
 	input Explode(void) : "Trigger the explosion."
+	input ExplodeAndRemove[MBase](void) : "Triggers the explosion and then removes the entity."
 
 	// Outputs
 	output OnPushedPlayer(void) : "Fires when the player is pushed by the explosion."

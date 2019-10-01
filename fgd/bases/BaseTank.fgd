@@ -1,5 +1,7 @@
 @BaseClass base(BaseEntityBrush) 
 	line(255 255 255, targetname, control_volume) 
+	line(255 255 255, targetname, TraceFilter)
+	sphere(PlayerBBoxDist) 
 	sphere(minrange) sphere(maxrange)
 = BaseTank
 	[
@@ -17,7 +19,9 @@
 		]
 
 	control_volume(target_destination) : "Control Volume" : : "Name of a trigger the specifies the volume in which a player must be to control this tank."
+	
 	master(string) : "(Team) Master"
+
 	yawrate(string) : "Yaw rate" : "30"
 	yawrange(string) : "Yaw range" : "180"
 	yawtolerance(string) : "Yaw tolerance" : "15"
@@ -27,9 +31,11 @@
 	barrel(string) : "Barrel Length" : "0"
 	barrely(string) : "Barrel Horizontal" : "0"
 	barrelz(string) : "Barrel Vertical" : "0"
-	spritesmoke(material) : "Smoke Sprite"
-	spriteflash(material) : "Flash Sprite"
-	spritescale(string) : "Sprite scale" : "1"
+
+	spritesmoke(material) : "Smoke Sprite" : "" : "A specific sprite to use for the muzzle's smoke effect."
+	spriteflash(material) : "Flash Sprite" : "" : "A specific sprite to use for the muzzle's flash effect."
+	spritescale(string) : "Sprite scale" : "1" : "The scale for smoke and flash sprites."
+
 	rotatestartsound(sound) : "Rotate Start Sound"
 	rotatesound(sound) : "Rotate Loop Sound"
 	rotatestopsound(sound) : "Rotate Stop Sound"
@@ -58,21 +64,40 @@
 	gun_yaw_pose_center(float) : "Gun Yaw Pose Center" : 0 : "The center yaw pose parameter of the gun on the parent"
 	gun_pitch_pose_param(string) : "Gun Pitch Pose Param" : : "If Parent + the Gun Yaw Pose Param is specified, then the gun itself will be invisible and the func_tank will steer a gun on the parent using the pose parameters."
 	gun_pitch_pose_center(float) : "Gun Pitch Pose Center" : 0 : "The center pitch pose parameter of the gun on the parent"
+
 	ammo_count(integer) : "Ammunition Count" : -1 : "Only applies to player use. -1 = unlimited ammo."
+
 	leadtarget(boolean) : "Lead Target" : 0
+
 	npc_man_point(target_destination) : "NPC Man Point" : : "Point where NPC must stand to man this func_tank."
 	playergraceperiod(float) : "Post-NPC Attack Grace Period" : 0 : "If specified, NPC's manning this func tank won't fire at the player, after firing at a non-player, for this amount of time."
 	ignoregraceupto(float) : "Ignore Grace Upto" : 768 : "The player grace period is ignored if the player's under this distance from the func_tank."
 	playerlocktimebeforefire(float) : "Player Lock Time" : 0 : "The tank must have the player as a target for this amount of time before it's allowed to fire."
 
+	ShouldFindNPCs(boolean) : "Automatically search for NPCs" : 1 : "If controllable by NPCs, " +
+		"sets whether we should automatically search for NPCs to use this func_tank or just wait for the player to set it. " +
+		"Identical to StartFindingNPCs and StopFindingNPCs."
+
 	effecthandling[engine](integer) : "Effect Handling" : 0
-	effecthandling(choices) : "Effect Handling" : 0 =
+	effecthandling(choices) : "Effect Handling" : 0 : "Special effect handling that influences sound and muzzle effects. Individual settings can override parts of it." =
 		[
 		0: "Use Individual Settings."
 		1: "AR2"
 		2: "Combine Cannon"
 		]
 
+	TraceFilter[MBase](filterclass) : "Trace Filter" : "" : "Entities that pass this filter will be ignored by this func_tank while it's aiming."
+
+	DontHitController[MBase](boolean) : "Don't hit controller" : 1 : "If enabled, bullets will not hit whoever is controlling this func_tank." 
+	ControllerGlued[MBase](boolean) : "NPC controller glued" : 0 : "If enabled, NPCs that mount this func_tank will " +
+		"disregard certain conditions that cause it to dismount automatically, " +
+		"like damage from behind or enemies getting beyond reach. " +
+		"They will still dismount for things like grenades." 
+	
+	PlayerBBoxDist[MBase](float) : "Player Crosshair Trace Offset" : "24" : "When a func_tank wants to aim at the player's crosshair, " +
+		"it draws a line to the point they're looking at. " +
+		"The line should start this many units ahead to avoid colliding with the player or any nearby objects. " +
+		"Decreasing the value is only recommended if 'Dont Hit Controller' is enabled."
 
 	// Inputs
 	input Activate(void) : "Turn the tank on"
@@ -85,6 +110,10 @@
 	input SetTargetEntity(string) : "Set the entity I should follow/attack to the passed in entity."
 	input ClearTargetEntity(void) : "Clear the entity I should be attacking."
 	input FindNPCToManTank(string) : "Find a nearby NPC to man this func_tank."
+	input TeleportNPCToManTank[MBase](target_destination) : "Teleports the specified NPC to man this func_tank. " +
+		"The parameter cannot be blank and the chosen NPC will man the tank instantly."
+	input ForceNPCToManTank[MBase](target_destination) : "Forces the specified NPC to snap to manning this func_tank, " +
+		"regardless of the NPC's current position. They will still turn to face it."
 	input StartFindingNPCs(void) : "Start searching for NPCs to man this func_tank."
 	input StopFindingNPCs(void) : "Stop searching for NPCs to man this func_tank."
 	input ForceNPCOff(void) : "Force the NPC manning this func_tank (if any) to leave."

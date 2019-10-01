@@ -1,0 +1,24 @@
+@FilterClass base(filter_base) 
+	autovis(Logic, Filters)
+	appliesto(MBase)
+	iconsprite("editor/filter_relationship.vmt") 
+	line(255 255 255, targetname, target)
+= filter_activator_relationship : "A filter that filters by the activator's relationship with another entity. " +
+	"Please note that any entity incapable of supporting relationships is automatically passed if this filter is set to 'Neutral'."
+[
+	target(target_destination) : "Subject" : : "The entity whose relationships we should test with. If empty, the entity using the filter will be used."
+	
+	rank(string) : "Priority" : : "The priority the subject should have with the target. If empty, priority will be disregarded."
+	
+	disposition[engine](integer) : "Disposition" : 3
+	disposition(choices) : "Disposition" : 3 : "What relationship the subject should have with the activator." =
+	[
+		1 : "Hate"
+		2 : "Fear"
+		3 : "Like"
+		4 : "Neutral"
+	]
+	
+	inverttarget(boolean) : "Invert Subject" : 0 : "Should we use the activator's relationship to the subject instead?"
+	Reciprocal(boolean) : "Reciprocal" : 0 : "Should we only pass if both entities have the same relationship with each other? Makes 'Invert Subject' useless."
+]

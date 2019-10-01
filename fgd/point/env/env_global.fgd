@@ -54,5 +54,7 @@
 	input GetCounter(void) : "Causes the Counter output to be fired, passing the current counter value for this global."
 
 	// Outputs
-	output Counter(integer) : "Fired in response to the GetCounter input, passing the current value of the counter."
+	// Originally "Counter", but this conflicts with the keyvalue above.
+	output Counter[!MBase](integer) : "Fired in response to the GetCounter input, passing the current value of the counter."
+	output OutCounter[MBase](integer) : "Fired in response to the GetCounter input, passing the current value of the counter."
 	]

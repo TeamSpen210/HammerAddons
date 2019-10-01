@@ -1,0 +1,11 @@
+@FilterClass base(filter_base) 
+	autovis(Logic, Filters)
+	appliesto(MBase)
+	iconsprite("editor/filter_involume.vmt") 
+	line(255 255 255, targetname, target)
+= filter_activator_involume : "A filter that tests whether the activator is within a volume."
+[
+	target(target_destination) : "Volume" : : "The volume to be tested with. This filter passes if the activator is within this volume. " +
+		"Intended to be a brush entity. (e.g. a trigger)"
+	tester(target_destination) : "Volume Tester" : "!activator" : "Who should be in the volume for the filter to pass?"
+]

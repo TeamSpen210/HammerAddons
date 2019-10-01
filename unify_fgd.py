@@ -33,9 +33,14 @@ GAMES = [
     ('HLS',  'Half-Life: Source'),
     ('DODS', 'Day of Defeat: Source'),
     ('CSS',  'Counter-Strike: Source'),
+
     ('HL2',  'Half-Life 2'),
     ('EP1',  'Half-Life 2 Episode 1'),
     ('EP2',  'Half-Life 2 Episode 2'),
+
+    # Not chronologically here, but it uses 2013 as the base.
+    ('MBASE', 'Mapbase'),
+
     ('TF2',  'Team Fortress 2'),
     ('P1', 'Portal'),
     ('L4D', 'Left 4 Dead'),
@@ -43,6 +48,7 @@ GAMES = [
     ('ASW', 'Alien Swam'),
     ('P2', 'Portal 2'),
     ('CSGO', 'Counter-Strike Global Offensive'),
+
     ('SFM', 'Source Filmmaker'),
     ('DOTA2', 'Dota 2'),
     ('PUNT', 'PUNT'),
@@ -59,6 +65,8 @@ FEATURES = {
     'HL2': {'INSTANCING'},
     'EP1': {'INSTANCING'},
     'EP2': {'INSTANCING'},
+
+    'MBASE': {'HL2', 'EP1', 'EP2'},
     
     'L4D': {'INSTANCING'},
     'L4D2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},

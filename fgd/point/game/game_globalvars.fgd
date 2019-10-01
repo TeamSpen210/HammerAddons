@@ -1,0 +1,19 @@
+@PointClass appliesto(MBase) 
+	base(BaseEntityPoint, EnableDisable)
+	size(-8 -8 -8, 8 8 8)
+= game_globalvars : "Outputs a few global variables when requested."
+[
+	// Inputs
+	input GetCurtime(void) : "Gets curtime."
+	input GetFrameCount(void) : "Gets frame count."
+	input GetFrametime(void) : "Gets frame time."
+	input GetTickCount(void) : "Gets tick count."
+	input GetIntervalPerTick(void) : "Gets interval per tick."
+
+	// Outputs
+	output OutCurtime(float) : "Outputs curtime."
+	output OutFrameCount(integer) : "Outputs frame count."
+	output OutFrametime(float) : "Outputs frame time."
+	output OutTickCount(integer) : "Outputs tick count."
+	output OutIntervalPerTick(integer) : "Outputs interval per tick."
+]

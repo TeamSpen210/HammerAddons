@@ -36,4 +36,7 @@
 	input SetScrollSpeed(float) : "Set the speed at which the texture scrolls."
 	input SetForce(string) : "Apply a force instantaneously to the rope. The parameter should be a vector containing the force to be applied (X Y Z)."
 	input Break(void) : "Break the rope, if it's marked to do so."
+	
+	// Outputs
+	output OnBreak[MBase](void) : "Fires when this rope breaks."
 	]

@@ -3,7 +3,8 @@
 	autovis(AI, AI Sound)
 	sphere(volume) 
 	line(255 255 255, targetname, locationproxy)
-	iconsprite("editor/ai_sound.vmt") = ai_sound: "This entity makes sounds or smells that can be sensed by NPCs, butnot by the player. This can be used to cause reactions in nearby NPCs.\n\n" +
+	line(255 255 255, targetname, target, targetname, locationproxy)
+	iconsprite("editor/ai_sound.vmt") = ai_sound: "This entity makes sounds or smells that can be sensed by NPCs, but not by the player. This can be used to cause reactions in nearby NPCs.\n\n" +
 	
 	"Sound Types\n" +
 	"  Combat: Will cause most NPCs to become alert\n" +
@@ -13,8 +14,8 @@
 	"  Carcass: \n" +
 	"  Meat: \n" +
 	"  Garbage: \n" +
-	"  Thumper: causes antlions to run away briefly" +
-	"\n  Readiness: (Low, Medium, High) Causes player companions that can hear this sound to change readiness\n"
+	"  Thumper: causes antlions to run away briefly\n" +
+	"  Readiness: (Low, Medium, High) Causes player companions that can hear this sound to change readiness\n"
 	[
 	volume(integer) : "Volume" : 120 : "How far away this sound can be heard. This is a radius."
 	duration(float) : "Duration" : 0.5 : "How long the sound persists each time you insert it."
@@ -25,13 +26,18 @@
 		0: "Select one"
 		1: "Combat"
 		2: "World"
+		//4: "Player (Don't use)"
 		8: "Danger"
 		16: "Bullet Impact"
 		32: "Carcass"
 		64: "Meat"
 		128: "Garbage"
 		256: "Thumper"
+		512: "Bugbait"
+		1024: "Physics Danger"
+		2048: "Sniper Danger (only scares sniper)"
 		4096: "Move Away - Most NPCs will clear the radius of this sound when heard."
+		8192: "Player Vehicle"
 		16384: "Readiness - Low"
 		32768: "Readiness - Medium"
 		65536: "Readiness - High"
@@ -41,11 +47,19 @@
 	soundcontext(choices) : "Additional sound context (optional)" : 0 : "Optional settings specifying such things as who can or cannot hear the sound." =
 		[
 		0: "Select one"
-		8388608: "Only Combine hear"
-		67108864: "Combine cannot hear"
+		1048576: "From sniper"
+		2097152: "Gunfire (use with combat sound type)"
+		4194304: "Mortar (pending explosion)"
+		8388608: "Only Combine can hear"
+		67108864: "Combine cannot can hear"
+		16777216: "React to source (face sound owner)"
+		33554432: "Explosion (use with combat sound type)"
+		134217728: "Danger approach (run if see sound owner, turn to face if not)"
+		268435456: "Only allies can hear"
 		]
 
 	locationproxy(target_destination) : "Location Proxy" : : "The name of an entity to use as a proxy to determine the location at which to make the sound. If you specify an entity here, the sound will be made at that entity's location (!player included)"
+	target[MBase](target_destination) : "Sound Owner" : "" : "An optional entity to use that the sound doesn't emit from, but is specified as the 'owner'. This is needed for certain sound contexts and other miscellaneous stuff. If not specified, the ai_sound will be used as the owner." 
 
 	// Inputs
 	input EmitAISound(void) : "Make the sound."

@@ -1,5 +1,5 @@
 // The base filter class is actually an entity you can use.
-@FilterClass base(Targetname) 
+@FilterClass base(BaseEntityPoint) 
 	autovis(Logic, Filters)
 	color(0 255 0)
 	iconsprite("editor/ficool2/filter_base.vmt")
@@ -12,8 +12,13 @@
 		]
 	negated[engine](boolean) : "Filter Mode" : 0
 
+	PassCallerWhenTested[MBase](boolean) : "Pass caller when tested" : 0 : "When tested with TestActivator or TestEntity, " +
+		"this causes the OnPass and OnFail outputs to use either this filter as the caller or the entity that called the test as the caller."
+
 	// Inputs
 	input TestActivator(void) : "Test the activator against the filter and fires OnPass or OnFail output."
+	input TestEntity[MBase](target_destination) : "Tests the target entity against the specified entity and fires the OnPass or OnFail output."
+	input SetField[MBase](string) : "Sets this filter's primary test criteria. (e.g. the name to test against the activator)"
 
 	// Outputs
 	output OnPass(void) : "Fired in response to TestActivator input if the activator passes the filter."

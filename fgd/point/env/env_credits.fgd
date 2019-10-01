@@ -2,6 +2,7 @@
 	iconsprite("editor/ts2do/env_credits.vmt") 
 = env_credits: "An entity to control the rolling credits."
 	[
+	CreditsFile[MBase](string) : "Custom Credits File" : : "Allows a custom credits file to be loaded instead of the default 'scripts/credits.txt'."
 
 	// Inputs
 	input RollCredits(void) : "Start the intro credits rolling."

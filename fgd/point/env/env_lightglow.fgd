@@ -26,11 +26,17 @@
 
 	hdrcolorscale(float) : "HDR color scale." : "0.5" : "float value to multiply sprite color by when running in HDR mode."
 
+
+	StartDisabled[MBase](boolean) : "Start Disabled" : 0
+
+
 	spawnflags(flags)  =
 		[
 		1: "Visible only from front" : 0
 		]
 
 	// Inputs
+	input Enable[MBase](void) : "Make the glow visible."
+	input Disable[MBase](void) : "Hide the glow."
 	input Color(color255) : "Change the render color of the glow. Format: <Red 0-255> <Green 0-255> <Blue 0-255>"
 	]

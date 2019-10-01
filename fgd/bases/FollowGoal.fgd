@@ -22,13 +22,17 @@
 		3: "Combat"
 		]
 
-	formation[engine](integer) : "Maximum state" : 1
-	formation(choices) : "Formation" : "0" =
+	formation[engine](integer) : "Formation" : 0
+	formation(choices) : "Formation" : 0 =
 		[
 		0: "Close circle"
 		1: "Wide circle"
+		2: "Antlion"
+		3: "Commander"
+		4: "Tight circle"
 		5: "Medium circle"
 		6: "Sidekick"
+		7: "Hunter"
 		8: "Vortigaunt"
 		]
 
@@ -36,4 +40,5 @@
 	// Inputs
 	input Activate(void) : "Begin the follow behavior"
 	input Deactivate(void) : "Cease the follow behavior"
+	input UpdateActors[MBase](void) : "Forces an update on this goal's actors."
 	]

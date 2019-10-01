@@ -1,0 +1,17 @@
+@PointClass appliesto(MBase) 
+	base(BaseEntityPoint)
+	iconsprite("editor/game_metadata.vmt") 
+= game_metadata : "An entity that provides metadata for things like Discord." 
+	[
+	spawnflags(flags) =
+		[
+		1: "[1] Update Steam" : 1
+		2: "[2] Update Discord" : 1
+		]
+
+	SetRPCState(string) : "RPC State" : "" : "Sets the 'state' that should be reported to rich presence clients like Discord. Shows the mod's name from gameinfo.txt by default."
+	SetRPCDetails(string) : "RPC Details" : "" : "Sets the 'details' that should be reported to rich presence clients like Discord. Shows the map being played by default."
+	
+	input SetRPCState(string) : "Sets the RPC state."
+	input SetRPCDetails(string) : "Sets the RPC details."
+	]

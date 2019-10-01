@@ -1,5 +1,5 @@
 @SolidClass base(BaseEntityVisBrush, EnableDisable) 
-	appliesto(HL1, EP1, EP2) = func_healthcharger: "Original brush-based health recharger."
+	appliesto(HL1, EP1, EP2, MBase) = func_healthcharger: "Original brush-based health recharger."
 	[
 	_minlight(string) : "Minimum light level"
 

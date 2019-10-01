@@ -1,6 +1,30 @@
-
 @SolidClass base(BaseTank) 
 	appliesto(EP1, EP2, HL2, P1, ASW) = func_tankairboatgun: "Airboat Gun Turret"
 	[
-	airboat_gun_model(target_destination) : "Name of a prop_dynamic which is the airboat gun model"
+	shootsound[MBase](sound) : "Shoot Sound" : "" : "Plays a specific sound each time this tank fires."
+	firespread[engine](integer) : "Bullet accuracy" : 0
+	firespread[MBase](choices) : "Bullet accuracy" : -1 =
+		[
+		-1: "Original (slightly smaller than medium cone)"
+		0: "Perfect Shot"
+		1: "Small cone"
+		2: "Medium cone"
+		3: "Large cone"
+		4: "Extra-large cone"
+		]
+
+	heavy_shot_spread[engine](integer) : "Heavy shot accuracy" : 0
+	heavy_shot_spread[MBase](choices) : "Heavy shot accuracy" : 0 : "The accuracy for each 'heavy' shot, which fires at a specified interval." =
+		[
+		0: "Perfect Shot"
+		1: "Small cone"
+		2: "Medium cone"
+		3: "Large cone"
+		4: "Extra-large cone"
+		]
+	
+	heavy_shot_interval[MBase](float) : "Heavy shot interval" : "0.2" : "The interval between each 'heavy' shot, which carries higher knockback and, by default, perfect accuracy. The vast majority of bullets that hit the enemy are these 'heavy' shots."
+	
+	airboat_gun_model[MBase](target_destination) : "Airboat gun model (Obsolete)" : : "You can do everything and more with the parent now, so you'd be better off using regular func_tank parent behavior than this. It is still functional for legacy support."
+	airboat_gun_model[!MBase](target_destination) : "Name of a prop_dynamic which is the airboat gun model"
 	]

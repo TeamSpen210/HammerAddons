@@ -27,4 +27,7 @@
 	// Inputs
 	input CalculateType(void) : "Force the dynamic resupply to calculate which item it should spawn."
 	input BecomeMaster(void) : "Make this resupply the master resupply. All other resupplies set to Use Master's Values will now use this resupply's values."
+
+	// Outputs
+	output OnItem(ehandle) : "Fired with each item created by this box."
 	]

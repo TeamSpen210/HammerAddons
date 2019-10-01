@@ -1,6 +1,8 @@
 @SolidClass base(BaseTank) 
 	appliesto(EP1, EP2, HL2, P1, ASW) = func_tank_combine_cannon: "Combine sentry cannon"
 	[
+	shootsound[MBase](sound) : "Shoot Sound" : "" : "Plays a specific sound each time this tank fires."
+
 	ammotype[engine](string): "Ammo Type"
 	ammotype(choices) : "Ammo Type" =
 		[
@@ -11,6 +13,7 @@
 		"CombineHeavyCannon": "Combine Heavy Cannon"
 		]
 
+	ControllableVersion[MBase](boolean) : "Controllable Version" : 0 : "Enables a tweaked version of func_tank_combine_cannon that is designed to be controlled by players and NPCs."
 
 	// Inputs
 	input DisableHarrass(void) : "Disable the cannon tracking an unseen player"

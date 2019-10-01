@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	iconsprite("editor/env_wind.vmt")
 	color(200 0 0)
-	sphere(windradius)
+	sphere(windradius) sphere(windradiusinner) 
 = env_wind: "An entity to control wind in the map. Partially functional."
 	[
 	minwind(integer) : "Min normal speed" : 20 : "Minimum speed of the wind while idling."
@@ -12,7 +12,8 @@
 	maxgustdelay(integer) : "Max gust delay" : 20 : "Maximum time delay between random gusts."
 	gustduration(integer) : "Gust Duration" : 5 : "How long will the wind gust for."
 	gustdirchange(integer) : "Max gust dir change (degrees)" : 20 : "Maximum amount that the wind's direction changes due to a gust."
-	windradius[L4D](float) : "Radius" : -1 : "The radius this entity applies wind effects to.  -1 for global effect, other value to allow multiple or limited wind entities."
+	windradius[L4D, MBase](float) : "Radius" : -1 : "The radius this entity applies wind effects to.  -1 for global effect, other value to allow multiple or limited wind entities."
+	windradiusinner[MBase](float) : "Inner Radius" : 0 : "The inner-radius for the env_wind, which enables varying intensities at certain distances. 0 = no inner radius"
 
 	// Outputs
 	output OnGustStart(void) : "Fired when a wind gust begins."

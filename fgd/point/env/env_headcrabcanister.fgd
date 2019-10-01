@@ -43,9 +43,11 @@
 	input OpenCanister(void) : "Opens the canister (must be called after the OnImpacted output is fired)"
 	input SpawnHeadcrabs(void) : "Spawns headcrabs (must be called after the OnImpacted output is fired and after OpenCanister is triggered, if the Wait for Input to open spawnflag is checked.)"
 	input StopSmoke(void) : "Stops the smoke if it's on"
+	input StopHissing[MBase](void) : "Stops post-impact hissing."
 
 	// Outputs
 	output OnLaunched(string) : "Fired when the canister is launched"
 	output OnImpacted(void) : "Fires when canister hits the ground"
 	output OnOpened(void) : "Fires when canister has finished opening"
+	output OnCrab[MBase](ehandle) : "Fires for each headcrab that comes out of this canister"
 	]

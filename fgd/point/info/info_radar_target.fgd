@@ -12,6 +12,8 @@
 		1: "Magnussen RDU Beacon"
 		2: "Dog"
 		3: "Ally Installation"
+		4 : "Enemy"
+		5 : "Large Enemy (striders)"
 		]
 
 	mode[engine](integer) : "Mode" : 0

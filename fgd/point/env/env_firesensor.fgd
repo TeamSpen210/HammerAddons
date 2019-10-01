@@ -7,6 +7,7 @@
 	spawnflags(flags) =
 		[
 		1: "Start On" : 1
+		2:	"Accepts flares for heat" : 0 [MBase]
 		]
 
 	fireradius(float) : "Radius" : 128 : "The radius around this entity in which to detect heat changes."

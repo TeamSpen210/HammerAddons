@@ -1,4 +1,6 @@
-@BaseClass base(Node) = HintNode
+@BaseClass base(Node) 
+	 frustum(nodeFOV,-1,128,250 250 250,-1)
+= HintNode
 	[
 	spawnflags(flags)  =
 		[

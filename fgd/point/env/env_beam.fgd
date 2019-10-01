@@ -77,6 +77,9 @@
 	input Amplitude(float) : "Set the amplitude of beam noise (0 - 255)."
 	input ScrollSpeed(float) : "Set the scroll speed in units per second (0 - 100)."
 	input Width(float) : "Set the width of the beam, in pixels."
+	input Noise[MBase](float) : "Set the noise of the beam, in pixels."
+	input SetStartEntity[MBase](target_destination) : "Sets the start entity."
+	input SetEndEntity[MBase](target_destination) : "Sets the end entity."
 
 	// Outputs
 	output OnTouchedByEntity(void) : "Fired when an entity touches the beam. Only fired if the entity passes the 'Touch Type' choice."

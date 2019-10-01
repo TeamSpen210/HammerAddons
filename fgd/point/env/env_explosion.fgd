@@ -73,4 +73,5 @@
 
 	// Inputs
 	input Explode(void) : "Triggers the explosion."
+	input SetIgnoredEntity[MBase](string) : "Sets the ignored entity."
 	]

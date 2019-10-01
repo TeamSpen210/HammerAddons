@@ -1,10 +1,12 @@
 
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(ASW, EP1, EP2, HL2, P1, CSGO) = env_gunfire: "Gunfire Effect"
+	appliesto(ASW, EP1, EP2, HL2, MBase, P1, CSGO) = env_gunfire: "Gunfire Effect"
 	[
-	target(target_destination) : "Target" : : "Shoot at this target."
+	target(target_destination) : "Target" : : "Shoot at this target. REMEMBER - this is an effect only! It does not do damage!"
+
 	minburstsize(integer) : "Min Burst Size" : 2 : "Minimum number of rounds in a burst."
 	maxburstsize(integer) : "Max Burst Size" : 7 : "Maximum number of rounds in a burst."
+
 	minburstdelay(float) : "Min Delay Between Bursts" : 2 : "Minimum delay between bursts. (seconds)"
 	maxburstdelay(float) : "Max Delay Between Bursts" : 5 : "Maximum delay between bursts. (seconds)"
 	rateoffire[!CSGO](float) : "Rate of fire" : 10 : "Expressed as rounds per second"
@@ -32,18 +34,14 @@
 		1: "Normal collision detection."
 		]
 
-	shootsound[engine](string) : "Shoot Sound" : "Weapon_AR2.NPC_Single"
-	shootsound[!CSGO](choices) : "Shoot Sound" : "Weapon_AR2.NPC_Single" : "Gunfire sound to make" =
-		[
-		"Weapon_AR2.NPC_Single": "AR2"
-		"Weapon_SMG1.NPC_Single": "SMG1"
-		]
+	shootsound[!CSGO](sound) : "Shoot Sound" : "Weapon_AR2.NPC_Single" : "Gunfire sound to make"
 
 	tracertype[engine](string) : "Tracer" : "AR2TRACER"
 	tracertype[!CSGO](choices) : "Tracer" : "AR2TRACER" : "Type of tracer to display" =
 		[
 		"Tracer": "Default"
 		"AR2TRACER": "AR2"
+		"" : "None"
 		]
 
 	weaponname[engine](string) : "Weapon" : "weapon_ak47"
@@ -83,4 +81,10 @@
 		"weapon_m4a1_silencer": "M4A1 Silencer"
 		]
 
+	// Inputs
+	input FireBurst[MBase](integer) : "Fires a burst with the specified number of shots, regardless of the entity's current state, the maximum and minimum burst numbers, or any bursts currently being executed by this entity."
+	input SetTarget[MBase](target_destination) : "Sets the target to shoot at."
+	
+	// Outputs
+	output OnFire[MBase](void) : "Fires for each bullet fired by this entity."
 	]
