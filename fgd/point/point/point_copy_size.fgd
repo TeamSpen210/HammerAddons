@@ -1,0 +1,21 @@
+@PointClass appliesto(MBase)
+	base(point_camera)
+	line(255 255 255, targetname, source)
+	line(255 255 255, targetname, target)
+= point_copy_size : "Copies the size of one entity to another."
+	[
+	Source(target_destination) : "Size source" : : "The entity whose size would be measured and copied from."
+	Target(target_destination) : "Resize target" : : "The entity that will receive the copied size."
+	
+	SetScale(float) : "Scale" : "1" : "Multiplies the source's size by this number. Useful for bullseyes."
+	
+	// Inputs
+	input SetTarget(target_destination) : "Sets the resize target."
+	input SetSource(target_destination) : "Sets the size source."
+	input CopySize(void) : "Copies the source's size to the target."
+	input CopySizeToEntity(target_destination) : "Copies the source's size to the specified entity."
+	input CopySizeFromEntity(target_destination) : "Copies the specified entity's size to the target."
+	
+	// Outputs
+	output OnCopy(void) : "Fires each time the size is successfully copied with the target as the activator." 
+	]

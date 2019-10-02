@@ -10,6 +10,7 @@
 		4: "Suck On Touch" : 0
 		8: "Allow Attached Rotation" : 0
 		16: "Coast jeep pickup hack" : 0
+		32: "Prevent player pickup" : 0 [MBase]
 		]
 
 	forcelimit(float) : "Force Limit to Break (lbs)" : 0 : "The amount of force necessary to break a stuck object off the magnet. A way of calculating this is to set it to the mass of an object that would break this constraint if it were resting on the magnet."

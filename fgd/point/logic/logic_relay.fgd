@@ -14,11 +14,16 @@
 
 	// Inputs
 	input Trigger(void) : "Trigger the relay, causing its OnTrigger output to fire if it is enabled."
+	input TriggerWithParameter[MBase](string) : "Triggers the relay with a parameter, causing its OnTriggerParameter output to fire if it is enabled."
 	input Toggle(void) : "Toggle the relay between enabled and disabled."
 	input CancelPending(void) : "Cancel any events fired by this relay that are currently pending in the I/O event queue."
-	input EnableRefire(void) : "Allow this relay to trigger again quickly, if fast retrigger is disabled. This is automatically triggered 0.01s after the last OnTrigger output."
+	input EnableRefire(void) : "Allow this relay to trigger again quickly, if fast retrigger is disabled. " +
+		"This input allows the relay to fire again early if it is in this state." +
+		"This is automatically triggered 0.01s after the last OnTrigger output."
 
 	// Outputs
 	output OnSpawn(void) : "Fired when the relay is spawned. If the relay is set to only trigger once, it will delete itself after firing this output."
 	output OnTrigger(void) : "Fired when the relay is triggered. If the relay is set to only trigger once, it will delete itself after firing this output."
+	output OnTriggerParameter[MBase](string) : "Fired when the relay is triggered with a parameter. If the relay is set to only trigger once, it will "+
+		"delete itself after firing this output."
 	]

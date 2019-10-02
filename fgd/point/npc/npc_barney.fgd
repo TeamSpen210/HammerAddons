@@ -4,6 +4,8 @@
 	autovis(NPCs, Rebels, Barney)
 	studio("models/Barney.mdl") = npc_barney: "Barney"
 	[
+	model[MBase](studio) : "Custom Model" : "models/Barney.mdl" : "Mapbase allows setting a custom model."
+
 	additionalequipment(choices) : "Weapons" : "weapon_pistol" =
 		[
 		"weapon_pistol": "Pistol"

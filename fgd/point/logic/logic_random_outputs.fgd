@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(since_ASW) 
+	appliesto(since_ASW, MBase) 
 	iconsprite("editor/logic_random_outputs.vmt") 
 	color(0 100 250)
 = logic_random_outputs: "A message forwarder. Fires up to eight separate outputs, each with a different chance of firing."

@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPhysics) 
 	sphere(expradius) 
 	studioprop() = physics_cannister: "A physically simulated gas cannister that can have its cap shot off, " +
 		"at which point gas will start escaping and cause the cannister to fly around. " +
@@ -16,6 +16,7 @@
 	expdamage(float) : "Explosion Damage" : "200.0" : "The amount of damage done by the explosion created when the cannister blows up."
 	expradius(float) : "Explosion Radius" : "250.0" : "The radius of the explosion to create when the cannister blows up."
 	health(integer) : "Health" : 25 : "The amount of damage the cannister takes before exploding."
+
 	thrust(float) : "Thrust" : "3000.0" : "When the cap has been blown off, and the escaping gas is thrusting the cannister about, " +
 		"this is the amount of thrust generated."
 	fuel(float) : "Fuel Seconds" : "12.0" : "The amount of time that gas leaks from the cannister before being considered empty."

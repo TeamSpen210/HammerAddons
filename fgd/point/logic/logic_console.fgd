@@ -1,0 +1,28 @@
+@PointClass appliesto(MBase) 
+	base(BaseEntityPoint)
+	iconsprite("editor/logic_console.vmt")
+= logic_console : "Sends messages to the console. Not to be confused with point_clientcommand or point_servercommand."
+	[
+	// Keys
+	SetDevLvl(integer) : "Developer Level" : 1 : "What level developer messages should appear at."
+	SetMsgColor(color255) : "Message Color" : "210 250 255 255" : "The color of standard messages."
+	SetWarningColor(color255) : "Warning Color" : "255 210 210 255" : "The color of warning messages."
+	
+	SetNewLineNotAuto(boolean) : "Don't automatically append \\n?" : 0 : "Prevents this logic_console from automatically appending a new line each time it prints."
+	
+	// Inputs
+	input SendMsg(string) : "Sends a message to the console."
+	input SendWarning(string) : "Sends a message to the console in red text."
+	input SendDevMsg(string) : "Sends a message to the console that can only be viewed in developer mode."
+	input SendDevWarning(string) : "Sends a red-colored message to the console that can only be viewed in developer mode."
+	input SetDevLvl(integer) : "Sets the level developer messages should appear at."
+	input SetMsgColor(color255) : "Sets the color of standard messages."
+	input SetWarningColor(color255) : "Sets the color of warning messages."
+	input SetNewLineNotAuto(bool) : "Enables or disables this logic_console's ability to append \n to each message."
+	input NewLine(void) : "Manually sends \n."
+	input DevNewLine(void) : "Manually sends \n in the specified developer level."
+	input ClearConsole(void) : "Clears the console of all output."
+	
+	// No way, you wacko!
+	//input SendError(string) : "Crashes the player's game and gives the parameter as an error message. Please handle with care."
+	]

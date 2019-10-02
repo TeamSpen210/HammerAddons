@@ -13,4 +13,5 @@
 	// Inputs
 	input StartHangingFromCeiling(void) : "Start hanging from ceiling."
 	input DropFromCeiling(void) : "Drop if hanging from ceiling."
+	output OnLeap[MBase](void) : "Fires when the headcrab leaps at an enemy. !activator is the target."
 	]

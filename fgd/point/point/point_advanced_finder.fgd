@@ -1,0 +1,38 @@
+@PointClass appliesto(MBase)
+	base(BaseEntityPoint)
+	sphere(radius)
+= point_advanced_finder :
+	"An enhanced entity finder that finds entities that pass a filter and fires OnFoundEntity for each of them."
+	[
+	// 
+	// This used to have an actual limit, 64, but now we've moved to a different model that has no limit.
+	// "The number of entities that can be found by this finder. 0 = No limit. Cannot exceed 64 when firing mode isn't none or output delay is greater than zero."
+	// 
+	SearchFilter(filterclass) : "Filter Name" : : "The filter to use that finds what entit(ies) we're looking for."
+	SearchPoint(target_destination) : "Search Point" : "" : "This is the entity in which distance and radius is measured from. Leave blank to use the finder itself."
+	radius(float) : "Radius" : "0.0" : "The radius in which entities can be found. Leave 0 for infinite."
+	NumberOfEntities(integer) : "Max Results" : 0 : "The number of entities that can be found by this finder. 0 = No limit."
+	OutputDelay(float) : "Output Delay" : "0.0" : "OnFoundEntity fires once for each entity every X number of seconds. Deleted/killed/removed entities will not be skipped and a chain cannot be canceled, even if the finder is removed. Look into a more manual alternative if you do not want these side effects. Leave 0 for no delay."
+
+	Method[Mbase](integer) : "Search Method" : 0
+	Method(choices) : "Search Method" : 0 =
+		[
+		-1 : "None (first in ent list)"
+		0 : "Nearest"
+		1 : "Farthest"
+		2 : "Random"
+		]
+	
+	// Inputs
+	input BeginSearch(void) : "Begins finding entities with all of the current options."
+	input SetSearchFilter(target_destination) : "Sets the search filter."
+	input SetSearchPoint(target_destination) : "Sets the search point."
+	input SetRadius(float) : "Sets the search radius."
+	input SetMaxResults(integer) : "Sets the maximum entities that could be found by this finder."
+	input SetOutputDelay(float) : "Sets the delay in between outputs."
+	input SetFiringMethod(integer) : "Sets the search method."
+
+	// Outputs
+	output OnFoundEntity(ehandle) : "Fires for each entity found, passing it as the parameter and the activator."
+	output OnSearchFailed(void) : "Fired when this finder couldn't find any entities."
+	]

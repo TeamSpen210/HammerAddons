@@ -15,8 +15,16 @@
 	swapmodel(target_destination) : "Model Swap Entity" : : "If specified, the entity will be switched to use this entity's model instead of its own. Only one entity will be converted."
 	massoverride(float) : "Mass Override" : "0" : "Sets the mass when the object(s) are converted (0 means auto-calculate)"
 
+	SetConversionType[engine](integer) : "Conversion Type" : 0
+	SetConversionType[MBase](choices) : "Conversion Type" : 0 : "How this phys_convert should convert objects." =
+		[
+		0 : "Simple (simple_physics_prop, simple_physics_brush)"
+		1 : "Conventional (prop_physics, func_physbox)"
+		]
+
 	// Inputs
 	input ConvertTarget(void) : "Converts this entity's target to a physically simulated object."
+	input SetConversionType[Mbase](integer) : "Sets this entity's conversion type. 0 = Simple, 1 = Conventional"
 
 	// Outputs
 	output OnConvert(void) : "Fires after the conversion has taken place."

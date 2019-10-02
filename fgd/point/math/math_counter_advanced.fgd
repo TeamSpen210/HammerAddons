@@ -1,0 +1,36 @@
+@PointClass appliesto(MBase) 
+	base(BaseEntityPoint, EnableDisable, math_counter) 
+	iconsprite("editor/math_counter_advanced.vmt") 
+	= math_counter_advanced : "A special version of math_counter with the ability to perform advanced calculations. " +
+	"Otherwise functions identically to math_counter."
+	[
+	PreserveValue(boolean) : "Preserve Value?" : 0 : "If set to 'Yes', calculations will fire OutValue with the resulting value, " +
+		"but the actual value stored in this entity will stay the same, allowing future calculations to use a constant value. " +
+		"If you want to change the value, you must use SetValueNoFire to set the counter's value or the PreserveValue input to toggle this feature. " +
+		"This also disables min/max functionality."	
+	AlwaysOutputAsInt(boolean) : "Always Output As Int" : 0 : "If set to 'Yes', the stored value (and OutValue) " +
+		"will always be rounded to an integer before firing."
+
+	// Inputs
+	input PreserveValue(bool): "Sets whether this counter's value should be preserved after calculations. 1 = Yes, 0 = No"
+	input AlwaysOutputAsInt(bool): "Sets whether this counter's value should always output as an integer. 1 = Yes, 0 = No"
+	
+	input SetValueToPi(void) : "Sets the counter's value to 3.14159265358979323846 and fires the OutValue output with it."
+	
+	input SquareRoot(void) : "Calculates the square root of the counter's current value. Fires the OutValue output with the result."
+	input Power(integer) : "Raises the power of the counter's current value to this value. Fires the OutValue output with the result."
+	
+	input Round(integer) : "Rounds the counter's current value to the specified number place. " +
+		"For example, rounding 256 to 100 will round it to 300 and rounding 256 to 10 will round it to 260. " +
+		"Use 0 to round decimals to integers. Fires the OutValue output with the result."
+	input Floor(integer) : "Floors, or rounds down, the counter's current value to the specified number place. Fires the OutValue output with the result."
+	input Ceil(integer) : "Ceils, or rounds up, the counter's current value to the specified number place. Fires the OutValue output with the result."
+	input Trunc(integer) : "Truncates, or rounds toward zero, the counter's current value to the specified number place. Fires the OutValue output with the result."
+	
+	input Sin(void) : "Applies sine to the counter's current value. Fires the OutValue output with the result."
+	input Cos(void) : "Applies cosine to the counter's current value. Fires the OutValue output with the result."
+	input Tan(void) : "Applies tangent to the counter's current value. Fires the OutValue output with the result."
+	
+	input RandomInt(string) : "Generates a random integer between the specified bounds. Format = 'lowerbound upperbound', like '22 65'. Fires the OutValue output with the result."
+	input RandomFloat(string) : "Generates a random float between the specified bounds. Format = 'lowerbound upperbound', like '22.5 48.721'. Fires the OutValue output with the result."
+	]

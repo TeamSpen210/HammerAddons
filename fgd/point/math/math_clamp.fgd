@@ -1,0 +1,19 @@
+@PointClass appliesto(MBase) 
+	base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/math_clamp.vmt") 
+= math_clamp : "Clamps a value between two values. Supports integers, floats, and vectors."
+	[
+	// Keys
+	SetMax(string) : "Max" : : "The maximum value. Can be an integer, a float, or a vector."
+	SetMin(string) : "Min" : : "The minimum value. Can be an integer, a float, or a vector."
+	
+	// Inputs
+	input ClampValue(string) : "Clamps the specified value. Can be an integer, a float, or a vector."
+	input SetMax(string) : "Sets the max value. Can be an integer, a float, or a vector."
+	input SetMin(string) : "Sets the max value. Can be an integer, a float, or a vector."
+	
+	// Outputs
+	output OutValue(string) : "Outputs the clamped value."
+	output OnBeforeMin(string) : "Fires when a clamped value was before the minimum value. Outputs the clamped value."
+	output OnBeyondMax(string) : "Fires when a clamped value was beyond the maximum value. Outputs the clamped value."
+	]

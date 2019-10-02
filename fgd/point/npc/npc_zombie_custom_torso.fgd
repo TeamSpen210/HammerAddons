@@ -1,0 +1,12 @@
+@PointClass appliesto(MBase) 
+	base(npc_zombie_torso, Studiomodel) 
+	studio()
+= npc_zombie_custom_torso : "Custom Zombie Torso"
+	[
+	health(integer) : "Health" : 0 : "Overrides this zombie's health. 0 = default npc_zombie health."
+	
+	model(studio) : "Model" : "models/Zombie/Classic_torso.mdl" : "The zombie's model."
+	
+	HeadcrabClassname(pointentityclass) : "Headcrab Classname" : "npc_headcrab" : "The NPC that should be used as the 'headcrab'. You can leave this blank if the zombie is marked as headcrab-less."
+	HeadcrabModel(studio) : "Headcrab Model" : "models/headcrabclassic.mdl" : "The model that should be used for 'headcrab' ragdolls. You can leave this blank if the zombie is marked as headcrab-less."
+	]

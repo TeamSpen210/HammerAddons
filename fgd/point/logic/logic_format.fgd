@@ -1,0 +1,42 @@
+@PointClass appliesto(MBase) 
+	base(BaseEntityPoint)
+	iconsprite("editor/logic_format.vmt")
+= logic_format : "Formats a line of text akin to C# String.Format.\n" +
+	"As curly brackets cannot be used in the help window, please see Mapbase documentation for clear instructions."
+	// "For example, take the following values:\n\n" +
+	// "Input Value: 'A  {0} there and a \{1\} {1} there\n" +
+	// "Parameter 0: 'poot'\n" +
+	// "Parameter 1: 'doot'\n" +
+	// "\n" +
+	// "The 'GetFormattedString' input will create the following text:\n\n" +
+	// "'A poot poot there and a doot doot there'\n\n" +
+	// "This will be sent out via the OutFormattedValue output."
+	[
+	// Keys
+	SetInputValue(string) : "Input Value" : : "The input value. Should contain {0}, {1}, etc, which will be replaced by the parameters and then output as OutFormattedValue."
+	SetParameter0(string) : "Parameter 0" : : "Will replace all instances of {0} in the input value."
+	SetParameter1(string) : "Parameter 1" : : "Will replace all instances of {1} in the input value."
+	SetParameter2(string) : "Parameter 2" : : "Will replace all instances of {2} in the input value."
+	SetParameter3(string) : "Parameter 3" : : "Will replace all instances of {3} in the input value."
+	SetParameter4(string) : "Parameter 4" : : "Will replace all instances of {4} in the input value."
+	SetParameter5(string) : "Parameter 5" : : "Will replace all instances of {5} in the input value."
+	SetParameter6(string) : "Parameter 6" : : "Will replace all instances of {6} in the input value."
+	SetParameter7(string) : "Parameter 7" : : "Will replace all instances of {7} in the input value."
+	SetBackupParameter(string) : "Backup Parameter" : : "If an invalid parameter is used (e.g. null parameter or asks for a parameter beyond {7}), then this will be used instead. Otherwise just uses '<null>'."
+	
+	// Inputs
+	input GetFormattedValue(void) : "Fires OutFormattedValue, which passes the formatted input value."
+	input SetInputValue(string) : "Sets the input value. Should contain {0}, {1}, etc. enclosed by curly brackets, which will be replaced by the parameters and then output as OutFormattedValue."
+	input SetParameter0(string) : "Sets the text that will replace all instances of {0}."
+	input SetParameter1(string) : "Sets the text that will replace all instances of {1}."
+	input SetParameter2(string) : "Sets the text that will replace all instances of {2}."
+	input SetParameter3(string) : "Sets the text that will replace all instances of {3}."
+	input SetParameter4(string) : "Sets the text that will replace all instances of {4}."
+	input SetParameter5(string) : "Sets the text that will replace all instances of {5}."
+	input SetParameter6(string) : "Sets the text that will replace all instances of {6}."
+	input SetParameter7(string) : "Sets the text that will replace all instances of {7}."
+	input SetBackupParameter(string) : "Sets the text that will replace all invalid parameters."
+	
+	// Outputs
+	output OutFormattedValue(string) : "Fired when the formatted value is requested. Outputs the formatted value."
+	]

@@ -1,17 +1,47 @@
 @PointClass base(BaseEntityPoint, DamageFilter) 
 	color(200 0 0) 
-	iconsprite("editor/logic_playerproxy.vmt") = logic_playerproxy: "An entity that is used to relay inputs/ouputs to the player and back to the world."
+	iconsprite("editor/logic_playerproxy.vmt")
+= logic_playerproxy: "An entity that is used to relay inputs/ouputs to the player and back to the world."
 	[
+	SetMaxInputArmor[MBase](integer) : "Max Input Armor" : 100 : "Sets the maximum armor a player can receive from the " +
+		"AddArmor, RemoveArmor, and SetArmor inputs. " +
+		"This does NOT override how much armor a player can receive overall!"
+	ResponseContext[MBase](string) : "Response Contexts" : "" : "Response system context(s) for the player. " +
+		"Format should be: 'key:value,key2:value2,etc'. " +
+		"Using inputs like AddContext on this player proxy will not carry it over to the player and should be done on the '!player' entity instead."
+	HideSquadHUD[MBase](boolean) : "Hide squad HUD" : 0 : "Hides the player's squad status HUD above the ammo display."
+	
+	HandsVM[MBase](studio) : "Hands Viewmodel" : : "Custom hands viewmodel."
+	HandsVMSkin[MBase](string) : "Hands Viewmodel Skin" : : "Skin for the custom hands viewmodel."
 
-	// Inputs
+	// Inputs and Outputs
 	input RequestPlayerHealth(void) : "Requests the current player's health from the proxy. This will fire the PlayerHealth output with the value."
+	output PlayerHealth(integer)    : "The player's current health value, fired in response to RequestPlayerHealth."
+	
+	input RequestPlayerArmor[MBase](void) : "Requests the current player's armor from the proxy. This will fire the PlayerArmor output with the value."
+	output PlayerArmor[MBase](integer)    : "The player's current armor value, fired in response to RequestPlayerArmor."
+	
+	input RequestPlayerAuxPower[MBase](void) : "Requests the current player's auxiliary power from the proxy. This will fire the PlayerAuxPower output with the value."
+	output PlayerAuxPower[MBase](float)      : "The player's current auxiliary power value, fired in response to RequestPlayerArmor."
+	
+	input RequestPlayerFlashBattery[MBase](void) : "Requests the current player's current flashlight battery from the proxy. This will fire the PlayerFlashBattery output with the value.\n\nNOTE: If legacy flashlight is enabled (aux power flashlight), this will return the player's current auxiliary power."
+	output PlayerFlashBattery[MBase](float)      : "The player's current flashlight battery percentage, fired in response to RequestPlayerFlashBattery."
+
+	input RequestAmmoState(void) : "Request the ammo state of the player. It will fire PlayerHasAmmo or PlayerHasNoAmmo outputs."
+	output PlayerHasAmmo(void)   : "Fired by request if the player has any ammo."
+	output PlayerHasNoAmmo(void) : "Fired by request if the player doesn't have any ammo."
+	
 	input SetFlashlightSlowDrain(void) : "Puts the player's flashlight in slow-power-drain mode (for Episodic darkness)"
 	input SetFlashlightNormalDrain(void) : "Puts the player's flashlight to default power drain"
-	input SetPlayerHealth(integer) : "Sets the player's health to this value."
-	input RequestAmmoState(void) : "Request the ammo state of the player. It will fire PlayerHasAmmo or PlayerHasNoAmmo outputs."
+
+	input SetPlayerHealth(integer)  : "Sets the player's health to this value."
+	input SetMaxInputArmor(integer) : "Sets the maximum armor value that could be set by armor inputs."
+
 	input LowerWeapon(void) : "Lowers the players weapon."
+
 	input EnableCappedPhysicsDamage(void) : "Cause player to take less damage from physics objects, and never more than 30 points from any individual strike."
 	input DisableCappedPhysicsDamage(void) : "Undo effects of EnableCappedPhysicsDamage"
+
 	input SetLocatorTargetEntity(string) : "Set the entity that the HUD locator should track. (Usually a vehicle)"
 	
 	input AddPotatosToPortalgun[P2](void) : "Change portalgun bodygroup to show potatos."
@@ -25,11 +55,12 @@
 	// Outputs
 	output OnFlashlightOn(float) : "Fired when the player turns on his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
 	output OnFlashlightOff(float) : "Fired when the player turns off his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
-	output PlayerHealth(integer) : "The player's current health value."
-	output PlayerMissedAR2AltFire(void) : "Player fired an AR2 combine ball that didn't kill any enemies."
-	output PlayerHasAmmo(void) : "Fired by request if the player has any ammo."
-	output PlayerHasNoAmmo(void) : "Fired by request if the player doesn't have any ammo."
-	output PlayerDied(void) : "Fires when the player dies."
+
+	output OnSquadMemberKilled[MBase](void) : "Fires when a member of the player's squad dies. Fires with this member as the activator."
+	
+	output PlayerDied(void)             : "Fires when the player dies."
+	output PlayerDamaged[MBase](void)   : "Fires when the player is damaged."
+	output PlayerMissedAR2AltFire(void)	: "Player fired an AR2 combine ball that didn't kill any enemies."
 	
 	output OnStartSlowingTime[!TF2, ASW](void) : "Fired when a Portal player initiates slow time."
 	output OnStopSlowingTime[!TF2, ASW](void) : "Fired when a Portal player stops slowing time."
@@ -39,4 +70,39 @@
 	output OnDuck[since_P2](void) : "Fired when a player starts to duck."
 	output OnUnDuck[since_P2](void) : "Fired when a player releases the duck button."
 	output OnJump[since_P2](void) : "Fired when a player jumps."
+
+	// These are I/O/KV on the player itself. They're exposed through logic_playerproxy in Mapbase as it now passes unknown inputs and KV to the player.
+	input SetBodyGroup[MBase](integer) : "HACK: Sets this player's body group (from 0 - n). You'd better know what you are doing!"
+	input Ignite[MBase](void) : "Ignite, burst into flames"
+	input IgniteLifetime[MBase](float) : "Ignite, with a parameter lifetime."
+	input IgniteNumHitboxFires[MBase](integer) : "Ignite, with a parameter number of hitbox fires."
+	input IgniteHitboxFireScalev[MBase](float) : "Ignite, with a parameter hitbox fire scale."
+	
+	input GiveWeapon[MBase](string) : "Gives the player a weapon of the specified class name."
+	input DropWeapon[MBase](string) : "Causes the player to drop its current weapon in front of it."
+	
+	input AddArmor[MBase](integer)    : "Adds to the player's current armor value. " +
+		"Total armor cannot exceed 100 unless a different value is set in logic_playerproxy."
+	input RemoveArmor[MBase](integer) : "Removes from the player's current armor value."
+	input SetArmor[MBase](integer)    : "Sets the player's current armor value. " +
+		"Cannot exceed 100 unless a different value is set in logic_playerproxy."
+	
+	input AddAuxPower[MBase](float)    : "Adds to the player's current aux power. Total power cannot exceed 100."
+	input RemoveAuxPower[MBase](float) : "Removes from the player's current aux power. Total power cannot exceed 100."
+	input SetAuxPower[MBase](float)    : "Sets the player's current aux power. Total power cannot exceed 100."
+	
+	input TurnFlashlightOn[MBase](void)  : "Turns the player's flashlight on."
+	input TurnFlashlightOff[MBase](void) : "Turns the player's flashlight off."
+	
+	input SquadForceSummon[MBase](void)             : "Forces the player's squad to be resummoned."
+	input SquadForceGoTo[MBase](target_destination) : "Forces the player's squad to go to a specific point or entity."
+	
+	input EnableGeigerCounter[MBase](void)  : "Allows the player's geiger counter to respond to radiation if it was prevented before."
+	input DisableGeigerCounter[MBase](void) : "Prevents the player's geiger counter from responding to radiation."
+	
+	input ShowSquadHUD[MBase](void) : "Shows the player's squad status HUD if it was hidden before."
+	input HideSquadHUD[MBase](void) : "Hides the player's squad status HUD."
+	
+	input SetHUDVisibility[MBase](bool)   : "Sets whether the HUD should be disabled. Also disables most forms of weapon switching."
+	input SetSuppressAttacks[MBase](bool) : "Sets whether attacks should be suppressed."
 	]

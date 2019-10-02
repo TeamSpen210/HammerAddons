@@ -1,4 +1,3 @@
-
 @NpcClass base(BaseNPC) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
 	autovis(NPCs, Antlions, Regular Antlion)
@@ -26,10 +25,12 @@
 	input Burrow(void) : "Burrow into the ground"
 	input BurrowAway(void) : "Burrow into the ground and remove the antlion"
 	input FightToPosition(string) : "Fight to position"
+	input StopFightToPosition[MBase](target_destination) : "Stop fighting to reach a position, if it currently is."
 	input EnableJump(void) : "Allow non-navigational jumping"
 	input DisableJump(void) : "Disallow non-navigational jumping"
 	input IgnoreBugbait(void) : "Ignore bugbait"
 	input HearBugbait(void) : "Hear bugbait"
+	input SetFollowTarget(string) : "Make the Antlion follow the given entity."
 
 	// Outputs
 	output OnReachedFightGoal(void) : "Fires when the antlion reaches his specified fight-to location"

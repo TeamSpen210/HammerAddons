@@ -1,0 +1,26 @@
+@PointClass appliesto(MBase) 
+	base(BaseEntityPoint)
+	iconsprite("editor/logic_datadesc_accessor.vmt") 
+	line(255 255 255, targetname, target)
+= logic_datadesc_accessor : "A logic entity that could read or write any field in an entity's data description, " +
+	"keyvalue or not, based on its internal name. " +
+	"It otherwise functions identically to logic_keyfield.\n\n" +
+	"You'd better know what you're doing."
+	[
+	// Keys
+	target(target_destination) : "Target Entity" : : "The entity whose data description will be measured."
+	keyname(string) : "Element Name" : : "The internal name (e.g. m_iName) of the field to measure. " +
+		"Use the ''ent_info_datatable'' command followed by an entity's class name to see all of their fields."
+	
+	// Inputs
+	input Test(void) : "Gets the stored field's value from stored target."
+	input TestKey(string) : "Tests the specified field against the target instead of using the stored field. Does not change the stored field."
+	input TestTarget(target_destination) : "Tests the specified target against the field instead of using the stored target. Does not change the stored target."
+	input SetKey(string) : "Sets the field to measure."
+	input SetValue(string) : "Sets the stored target's stored field to the specified string."
+	input SetTarget(target_destination) : "Sets the target entity."
+	
+	// Outputs
+	output OutValue(string) : "Fires when a field is found. Passes its value."
+	output OnFailed(void) : "Fires when this entity fails to find the specified field."
+	]

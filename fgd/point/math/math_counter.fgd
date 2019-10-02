@@ -20,14 +20,14 @@
 	input SetHitMax(integer) : "Set the upper bound of the counter and fire the OutValue output with the current value."
 	input SetHitMin(integer) : "Set the lower bound of the counter and fire the OutValue output with the current value."
 	input GetValue(void) : "Causes the counter fire its OnGetValue output with the current value of the counter. Used for polling the counter when you don't" + " want constant updates from the OutValue output."
-	input SetMaxValueNoFire[since_P2](integer) : "Set the MaxValue without firing any outputs."
-	input SetMinValueNoFire[since_P2](integer) : "Set the MinValue without firing any outputs."
+	input SetMaxValueNoFire[since_P2, MBase](integer) : "Set the upper bound of the counter without firing any outputs."
+	input SetMinValueNoFire[since_P2, MBase](integer) : "Set the lower bound of the counter without firing any outputs."
 
 	// Outputs
 	output OutValue(integer) : "Fired when the counter value changes."
 	output OnHitMin(void) : "Fired when the counter value meets or goes below the min value. The counter must go back above the min value before the output will fire again."
 	output OnHitMax(void) : "Fired when the counter value meets or exceeds the max value. The counter must go below the max value before the output will fire again."
 	output OnGetValue(integer) : "Fired in response to the GetValue input. Used for polling the counter when you don't want constant updates from the OutValue output."
-	output OnChangedFromMin[since_ASW](void) : "Fired when the counter value changes from the minimum value."
-	output OnChangedFromMax[since_ASW](void) : "Fired when the counter value changes from the max value."
+	output OnChangedFromMin[since_ASW, MBase](void) : "Fired when the counter value changes from the minimum value."
+	output OnChangedFromMax[since_ASW, MBase](void) : "Fired when the counter value changes from the max value."
 	]

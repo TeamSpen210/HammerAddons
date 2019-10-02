@@ -1,0 +1,14 @@
+@PointClass appliesto(MBase) 
+	base(npc_zombie, Studiomodel) 
+	studio()
+= npc_zombie_custom : "Custom Zombie"
+	[
+	health(integer) : "Health" : 0 : "Overrides this zombie's health. 0 = default npc_zombie health."
+	
+	model(studio) : "Model" : "models/Zombie/Classic.mdl" : "The zombie's model."
+	
+	LegsModel(studio) : "Legs Model" : "models/zombie/classic_legs.mdl" : "The model to use for legs. You can leave this blank if you enable the 'No Torso' spawnflag."
+	TorsoModel(studio) : "Torso Model" : "models/zombie/classic_torso.mdl" : "The model to use for torso. You can leave this blank if you enable the 'No Torso' spawnflag."
+	HeadcrabClassname(npcclass) : "Headcrab Classname" : "npc_headcrab" : "The NPC that should be used as the 'headcrab'. You can leave this blank if the zombie is marked as headcrab-less."
+	HeadcrabModel(studio) : "Headcrab Model" : "models/headcrabclassic.mdl" : "The model that should be used for 'headcrab' ragdolls. You can leave this blank if the zombie is marked as headcrab-less."
+	]

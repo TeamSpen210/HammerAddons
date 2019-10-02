@@ -1,0 +1,48 @@
+@PointClass appliesto(MBase) 
+	base(BaseentityPoint) 
+	iconsprite("editor/logic_sequence.vmt") 
+= logic_sequence :
+	"Coordinates a sequence out of up to 16 preset values. If the input value matches " +
+	"the sequence's current case value, an output is fired and (by default) the sequence increments to the next case.\n\n" +
+	"This is intended for things like passwords in keypads, which usually demand a specific combination of numbers."
+	[
+	InitialCase(integer) : "Initial Case" : 1 : "Which case to start on, meaning inputs will initially compare with this case. " +
+		"Uses the case's index. (e.g. 4 for Case 04)"
+	StartDisabled(boolean) : "Start Disabled" : 0 : "If this entity is disabled, it will not accept any case tests. " +
+		"It will still accept other inputs, like SetSequenceIndex."
+
+	Case01(string) : "Case 01"
+	Case02(string) : "Case 02"
+	Case03(string) : "Case 03"
+	Case04(string) : "Case 04"
+	Case05(string) : "Case 05"
+	Case06(string) : "Case 06"
+	Case07(string) : "Case 07"
+	Case08(string) : "Case 08"
+	Case09(string) : "Case 09"
+	Case10(string) : "Case 10"
+	Case11(string) : "Case 11"
+	Case12(string) : "Case 12"
+	Case13(string) : "Case 13"
+	Case14(string) : "Case 14"
+	Case15(string) : "Case 15"
+	Case16(string) : "Case 16"
+	
+	DontIncrementOnPass(boolean) : "Suppress auto increment" : 0 : "Prevents automatically incrementing the sequence each time a case passes."
+
+	// Inputs
+	input Enable(void) : "Enables this entity."
+	input Disable(void) : "Disables this entity."
+	input Toggle(void) : "Toggles whether this entity is disabled."
+	input InValue(string) : "Tests the input value against the current case."
+	input SetCurrentCase(integer) : "Sets the sequence's current case. This will fire OutCurCase."
+	input SetCurrentCaseNoFire(integer) : "Sets the sequence's current case without firing OutCurCase."
+	input IncrementSequence(integer) : "Increments the current case by the specified number. (1 if blank)"
+	input ResetSequence(void) : "Resets the sequence to Case 01."
+	
+	// Outputs
+	output OutCurCase(integer) : "Fires each time the sequence's current case value changes, e.g. when it's incremented by a passing case."
+	output OnCasePass(string) : "Fires when a case is matched, passing the input value."
+	output OnCaseFail(string) : "Fires when a case fails, passing the input value."
+	output OnSequenceComplete(string) : "Fires when the last case is matched and sequence is complete."
+	]

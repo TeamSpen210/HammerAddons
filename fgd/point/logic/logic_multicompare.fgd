@@ -1,11 +1,17 @@
 @PointClass base(BaseEntityPoint) 
-	iconsprite("editor/logic_multicompare.vmt") = logic_multicompare: "Compares a set of inputs to each other. If they are all the same, fires an OnEqual output. If any are different, fires the OnNotEqual output. It is not possible to clear the memory, so this only works once."
+	iconsprite("editor/logic_multicompare.vmt") = logic_multicompare: "Compares a set of inputs to each other. " +
+		"If they are all the same, fires an OnEqual output. " +
+		"If any are different, fires the OnNotEqual output. " +
+		"It is not possible to clear the memory, so this only works once."
 	[
-	integervalue(integer) : "Integer Value (optional)"
-	shouldcomparetovalue(boolean) : "Should use Integer Value" : 0
+	integervalue(integer) : "Integer Value (optional)" : : "The value all inputs are compared to if ''Should use Reference Value'' is enabled."
+	ShouldComparetoValue(boolean) : "Should use Integer Value" : 0 : "If enabled, all inputs are compared to the reference value. If not enabled, they are instead compared to the last input added."
 
 	// Inputs
-	input InputValue(integer) : "Provide a value."
+	input InputValue(integer) : "Adds a value to our set of inputs and fires CompareValues automatically, " +
+		"comparing existing inputs to this one if set to do so."
+	input InputValueNoFire[MBase](string) : "Adds a value to our set of inputs without firing CompareValues."
+	input SetReferenceValue[MBase](string) : "Sets our reference value."
 	input CompareValues(void) : "Compares the values and fires appropriate outputs."
 
 	// Outputs

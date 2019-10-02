@@ -1,4 +1,3 @@
-
 @NpcClass base(BaseHelicopter) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
 	autovis(NPCs, Combine, Combine Dropship) 
@@ -18,7 +17,8 @@
 
 	line(192 192 192, targetname, apcvehiclename)
 	line(192 192 192, targetname, rollerminetemplate)
-	studio("models/combine_dropship.mdl") = npc_combinedropship: "Combine Dropship"
+	studio("models/combine_dropship.mdl") 
+= npc_combinedropship: "Combine Dropship"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -46,6 +46,7 @@
 	apcvehiclename(target_destination) : "Name of the APC to drop."
 
 	invulnerable(boolean) : "Invulnerable" : "0"
+	DontEmitDanger[MBase](boolean) : "Don't emit danger on dropoff" : 0 : "Prevents this dropship from emitting danger sounds when it's dropping off soldiers."
 
 	cratetype(choices) : "Crate Type" : "2" =
 		[
@@ -57,6 +58,11 @@
 		2: "None"
 		]
 
+	AllowsAnyDamage[MBase](boolean) : "Allows any damage (to container)" : 0 : "Allows this dropship's container (if it's a soldier crate) " +
+		"to take any amount of any type of damage, including bullet or melee damage. " + 
+		"This is supposed to allow dropship containers to be taken down in previously " +
+		"impossible ways and should be used with an actual damage filter."
+
 
 	// Inputs
 	input LandLeaveCrate(integer) : "Land, drop soldiers, and leave the crate behind. " +
@@ -66,17 +72,21 @@
 	input DropMines(integer) : "Drop Rollermines. Specify the number of mines to drop in the parameter."
 	input DropStrider(void) : "Drop the Strider you're carrying. Now."
 	input DropAPC(void) : "Drop the APC you're carrying. Now."
+	input DropCargo[MBase](void) : "Drop whatever the hell you're carrying. Now."
 	input Hover(target_destination) : "Hover over a named target entity until told to fly to a path."
-	input Pickup(string) : "Pickup an entity."
+	input Pickup(target_destination) : "Pickup that entity."
 	input SetLandTarget(string) : "Set my land target name."
 	input SetGunRange(float) : "Set my crate gun's range."
+
 	input EnableRotorSound(void) : "Turns on rotor sounds."
 	input DisableRotorSound(void) : "Turns off rotor sounds."
+
 	input StopWaitingForDropoff(void) : "Stop waiting for the dropoff. Dropoff as soon as possible."
 
 	// Outputs
 	output OnFinishedDropoff(void) : "Fires when the dropship has finished a dropoff."
 	output OnFinishedPickup(void) : "Fires when the dropship has finished a pickup."
+
 	output OnCrateShotDownBeforeDropoff(float) : "Fires when the container was shot down before it dropped off soldiers. " +
 		"The parameter contains the number of soldiers that weren't successfully dropped off."
 	output OnCrateShotDownAfterDropoff(void) : "Fires when the container was shot down after it dropped off soldiers."

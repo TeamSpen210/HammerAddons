@@ -17,4 +17,7 @@
 
 	// Inputs
 	input ModifySpeed(float) : "Modifies player speed by X ammount."
+	
+	input Enable[MBase](void) : "Enables the spawnflag abilities without actually modifying the player's speed."
+	input Disable[MBase](void) : "Disables the spawnflag abilities without actually modifying the player's speed."
 	]

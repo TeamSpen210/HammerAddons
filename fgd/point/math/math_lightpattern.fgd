@@ -1,0 +1,42 @@
+@PointClass appliesto(MBase) 
+	base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/math_lightpattern.vmt") 
+= math_lightpattern :
+	"A logic entity that attempts to replicate light patterns that can be used on named lights.\n\n" +
+	"WARNING: This is currently out of sync with default light patterns. TODO: Fix that!"
+	[
+	style[engine](integer) : "Appearance" : ""
+	style(Choices) : "Appearance" : "" : "Which preset pattern to use." =
+		[
+		"" : "None"
+		0 : "Normal"
+		10: "Fluorescent flicker"
+		2 : "Slow, strong pulse"
+		11: "Slow pulse, noblack"
+		5 : "Gentle pulse"
+		1 : "Flicker A"
+		6 : "Flicker B"
+		3 : "Candle A"
+		7 : "Candle B"
+		8 : "Candle C"
+		4 : "Fast strobe"
+		9 : "Slow strobe"
+		]
+	
+	pattern(string) : "Custom Appearance" : : "A custom pattern to use. a = fully dark, z = fully bright. This should always contain lowercase letters for light patterns. Uppercase letters or other types of characters won't work with actual light patterns. (although they shouldn't break the whole entity either)"
+	
+	PatternSpeed(float) : "Pattern Speed" : "0.1" : "The speed of the pattern."
+	
+	// Inputs
+	input SetStyle(integer) : "Sets the pattern from the style presets."
+	input SetPattern(string) : "Sets the pattern directly."
+	input Enable(void) : "Enables this entity."
+	input Disable(void) : "Disables this entity."
+	input Toggle(void) : "Toggles this entity."
+	
+	// Outputs
+	output OutValue(float) : "Outputs with a brightness equivalent to the current letter."
+	output OutLetter(string) : "Outputs with the current letter itself."
+	output OnLightOn(void) : "Fires when the current letter is equivalent to 'on' (greater than a)."
+	output OnLightOff(void) : "Fires when the current letter is equivalent to 'off' (equal to a)."
+	]

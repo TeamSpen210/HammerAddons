@@ -18,7 +18,7 @@
 	input FireUser2(void) : "Causes this entity's OnUser2 output to be fired."
 	input FireUser3(void) : "Causes this entity's OnUser3 output to be fired."
 	input FireUser4(void) : "Causes this entity's OnUser4 output to be fired."
-	input RunScriptFile[VSCRIPT](script) : "Execute a game script file from disk."
+	input RunScriptFile[VSCRIPT](string) : "Execute a game script file from disk."
 	input RunScriptCode[VSCRIPT](string) : "Execute a string of script source code."
 	input CallScriptFunction[VSCRIPT](string) : "Execute the given function name."
 

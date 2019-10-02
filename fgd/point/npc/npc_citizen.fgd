@@ -15,6 +15,7 @@
 		4194304: "Random male head" : 0
 		8388608: "Random female head" : 0
 		16777216: "Use RenderBox in ActBusies" : 0
+		33554432 : "Player can +USE and +WALK (Alt + E) to toggle squad (disables automatically joining)" : 0 [MBase]
 		]
 
     additionalequipment[engine](string) : "Weapons" : 0
@@ -25,6 +26,8 @@
 		"weapon_stunstick": "Stun Stick"
 		"weapon_crowbar": "Crow Bar"
 		"weapon_shotgun": "Shotgun"
+		"weapon_pistol" : "Pistol" [MBase]
+		"weapon_357" : "357" [MBase]
 		"weapon_beerbottle": "Beer Bottle"
 		"weapon_beerbottle2": "Beer Bottle2"
 		"weapon_rpg": "RPG"
@@ -100,9 +103,26 @@
 
 	denycommandconcept(string) : "Deny command speech concept" : : "If you want your citizens to squad with the player but not obey commands the player gives to move the squad, put a concept here and this citizen will speak the concept instead of obeying the order."
 
+	SetTossMedkits[MBase](choices) : "Toss medkits?" : 0 : "Episodic only. Griggs in Half-Life 2: Episode Two uses experimental code that allows him to toss medkits at the player from a distance. " +
+		"This activates that code on this NPC if it is a medic. Does not work with ammo resuppliers."
+	
+	AlternateAiming(boolean) : "Alternate aiming animations" : 0 : "Causes this citizen to use readiness aiming animations with a SMG, AR2, or shotgun. " +
+		"When running or walking while aiming/shooting, " + 
+		"they will hold their weapon around their upper-chest instead of from their hip."
+
+
+	// RapelNPC base, only in MBase.	
+	waitingtorappel[MBase](boolean) : "Waiting to Rappel?" : 0 : "If yes, this citizen spawns suspended in air and awaits a BeginRappel input. " +
+		"It will then spawn a zipline and slide down. " +
+		"When it hits the ground, the citizen will cut away the line and try to move forward a few feet to make room for the next NPC. " +
+		"The citizen will not attempt to clear its landing space if it cannot do so by taking a few steps forward."
+	input BeginRappel[MBase](void) : "Begin rapelling down."
+	output OnRappelTouchdown[MBase](void) : "Fires when done rappeling."
+
 	// Inputs
 	input RemoveFromPlayerSquad(void) : "Remove from player squad, instantly."
 	input SetExpressionOverride(string) : "Set facial expression override"
+
 	input StartPatrolling(void) : "Patrol whenever I'm idle or alert."
 	input StopPatrolling(void) : "Stop patrolling when I'm idle or alert."
 	input SetCommandable(void) : "Make a previously uncommandable citizen commandable"
@@ -110,6 +130,7 @@
 	input SetMedicOff(void) : "Set the medic flag off. Will not change the model or skin of the citizen."
 	input SetAmmoResupplierOn(void) : "Set the ammo-resupplier flag on. Will not change the model or skin of the citizen."
 	input SetAmmoResupplierOff(void) : "Set the ammo-resupplier flag off. Will not change the model or skin of the citizen."
+	input SetTossMedkits[MBase](bool) : "Sets whether this NPC can toss medkits."
 
 	// Outputs
 	output OnJoinedPlayerSquad(void) : "Fires when joins player squad"
@@ -118,4 +139,9 @@
 	output OnStationOrder(void) : "Fires when ordered to a location by player"
 	output OnPlayerUse(void) : "Fires when a player +USEs the citizen"
 	output OnNavFailBlocked(void) : "Fires when this Citizen's movement fails because he/she is blocked."
+
+	output OnHealedNPC[MBase](void) : "Fires when this citizen heals a NPC."
+	output OnHealedPlayer[MBase](void) : "Fires when this citizen heals a player."
+	output OnTossMedkit[MBase](ehandle) : "Fires when a medkit is tossed. Passes the medkit."
+	output OnGiveAmmo[MBase](void) : "Fires when ammo is given to the player."
 	]

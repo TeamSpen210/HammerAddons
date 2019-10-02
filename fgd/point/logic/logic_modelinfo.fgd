@@ -1,0 +1,18 @@
+@PointClass appliesto(MBase)
+	base(BaseEntityPoint) 
+	size(-8 -8 -8, 8 8 8)
+	line(255 255 255, targetname, target)
+= logic_modelinfo : "Gets and outputs some model information from an entity."
+	[
+	target(target_destination) : "Target" : "" : "The entity whose model will be evaluated."
+
+	// Inputs
+	input SetTarget(target_destination) : "Sets this entity's target."
+	input GetNumSkins(void) : "Gets the number of skins on the target entity."
+	input LookupSequence(string) : "Looks up the specified sequence on the target entity."
+
+	// Outputs
+	output OutNumSkins(integer) : "Outputs number of skins."
+	output OnHasSequence(integer) : "Fires when the target has the sequence requested. Outputs the sequence's index."
+	output OnLacksSequence(void) : "Fires when the target does not have the sequence requested."
+	]

@@ -2,7 +2,8 @@
 @PointClass base(BaseLogicalNPC) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
 	autovis(NPCs, Missile Launcher)
-	studio("editor/axis_helper.mdl") 
+	size( -4 -16 -16, 4 16 16 ) 
+	studio("models/weapons/w_rocket_launcher.mdl")
 	sphere(minrange)
 	sphere(maxrange)
 	line(255 0 0, targetname, pathcornername)
@@ -15,9 +16,11 @@
 
 	starton(boolean) : "Start On" : 0
 
-	missilemodel(studio) : "Missile Model" : "models/Weapons/wscanner_grenade.mdl"
+	OwnerEntity[MBase](target_destination) : "Owner Entity" : : "The entity that should 'own' the missiles, or receive credit/not collide with them."
+	
+	missilemodel(studio) : "Missile Model" : "models/weapons/w_missile.mdl"
 	launchsound(sound) : "Launch Sound" : "npc/waste_scanner/grenade_fire.wav"
-	flysound(sound) : "Fly Sound" : "weapons/rpg/rocket1.wav"
+	flysound(sound) : "Fly Sound" : "Missile.Accelerate"
 
 	smoketrail[engine](integer) : "Smoke Trail" : 1
 	smoketrail(choices) : "Smoke Trail" : 1 =
@@ -30,13 +33,16 @@
 	launchsmoke(boolean) : "Launch Smoke" : 1 : "If true, spawn smoke from this entity whenever a missile is launched."
 	launchdelay(integer) : "Launch Delay" : 8 : "When ON, how long to wait between each launch."
 	launchspeed(float) : "Launch Speed" : "200" : "Initial launch speed of missile (in up direction)."
+
 	pathcornername(target_destination) : "Path Corner Name" : : "Name of a path corner.  If set launches a path-following missile rather than a homing missile"
+
 	homingspeed(float) : "Homing Speed" : 0 : "Speed to reach when homing."
-	homingstrength(integer) : "Homing Strength" : 10 : "How strong is thehoming effect? (0-100)."
+	homingstrength(integer) : "Homing Strength" : 10 : "How strong is the homing effect? (0-100)."
 	homingdelay(float) : "Homing Delay" : "0" : "Number of seconds to delay before homing starts"
 	homingrampup(float) : "Homing Ramp Up" : "0.5" : "Number of seconds it takes to reach full homing strength after homing delay."
 	homingduration(float) : "Homing Duration" : "5" : "Number of seconds the homing effect lasts."
 	homingrampdown(float) : "Homing Ramp Down" : "1.0" : "Number of seconds it takes homing effect to decay after homing duration."
+
 	gravity(string) : "Gravity" : "1.0" : "Scale for effect of gravity. (1.0 = normal gravity)"
 	minrange(integer) : "Min Range" : 100 : "Minimum distance a target can be to be attacked."
 	maxrange(integer) : "Max Range" : 2048 : "Maximum distance a target can be to be attacked."
@@ -56,4 +62,6 @@
 
 	// Outputs
 	output OnLaunch(void) : "Fires when missile is launched"
+	output OutMissile[MBase](ehandle) : "Passes each missile launched"
+
 	]

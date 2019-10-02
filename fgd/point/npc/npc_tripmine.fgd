@@ -1,0 +1,21 @@
+@PointClass appliesto(MBase)
+	base(BaseEntityAnimating, Angles, DamageFilter) 
+	studio( "models/weapons/w_slam.mdl" ) 
+	sphere(DmgRadius)
+= npc_tripmine : "S.L.A.M. Tripmine"
+	[
+	PowerUpTime(float) : "Power Up Time" : "2.0" : "How much time this tripmine takes to power up after being activated."
+	Damage(float) : "Damage" : "150" : "The amount of damage this tripmine can deal."
+	DmgRadius(float) : "Damage Radius" : "200" : "The radius in which this tripmine can damage."
+
+	spawnflags(flags) =
+	[
+		1  : "Start inactive" : 0
+	]
+
+	// Inputs
+	input Activate(void) : "Recharge to full"
+
+	// Outputs
+	output OnExplode(void) : "Fires when this tripmine explodes."
+	]
