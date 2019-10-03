@@ -10,7 +10,7 @@
 	TargetReference(target_destination) : "Movement Reference" : "" : "The Entity to Move will move relative to this entity."
 	TargetScale(float) : "Trace scale" : "1" : "A scale to *divide* the distance between the Entity to Measure and the trace's endpoint by before applying those movements to the Entity to Move. 1 = target entity moves to the end of the trace, 2 = target entity moves to the middle of the trace (half as far), and 0.5 = target entity moves twice as far as the trace."
 
-	MeasureType[engine](integer) "Measurement Type" : 0
+	MeasureType[engine](integer) : "Measurement Type" : 0
 	MeasureType(choices) : "Measurement Type" : 0 : "How should the direction be measured?" =
 		[
 		0 : "Angles"

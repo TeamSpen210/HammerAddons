@@ -103,7 +103,7 @@
 
 	denycommandconcept(string) : "Deny command speech concept" : : "If you want your citizens to squad with the player but not obey commands the player gives to move the squad, put a concept here and this citizen will speak the concept instead of obeying the order."
 
-	SetTossMedkits[MBase](choices) : "Toss medkits?" : 0 : "Episodic only. Griggs in Half-Life 2: Episode Two uses experimental code that allows him to toss medkits at the player from a distance. " +
+	SetTossMedkits[MBase](boolean) : "Toss medkits?" : 0 : "Episodic only. Griggs in Half-Life 2: Episode Two uses experimental code that allows him to toss medkits at the player from a distance. " +
 		"This activates that code on this NPC if it is a medic. Does not work with ammo resuppliers."
 	
 	AlternateAiming(boolean) : "Alternate aiming animations" : 0 : "Causes this citizen to use readiness aiming animations with a SMG, AR2, or shotgun. " +

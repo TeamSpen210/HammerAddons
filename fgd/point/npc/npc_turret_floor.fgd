@@ -6,7 +6,7 @@
 = npc_turret_floor: "Combine Floor Turret"
 	[
 	// AlyxInteractable in Mapbase
-	Hacked[MBase](choices) : "Start Hacked" : "No" : "Makes this NPC start as if Alyx had hacked it. This causes the NPC to switch sides and might give it a different color."
+	Hacked[MBase](boolean) : "Start Hacked" : "No" : "Makes this NPC start as if Alyx had hacked it. This causes the NPC to switch sides and might give it a different color."
 	input InteractivePowerDown[MBase](void) : "Shutdown this target."
 	input Hack[MBase](void) : "Hacks this entity as if Alyx interacted with it."
 	output OnAlyxStartedInteraction[MBase](void) : "Fired when Alyx begins to interact with this entity."

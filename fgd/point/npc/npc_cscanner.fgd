@@ -18,7 +18,7 @@
 	onlyinspectplayers(boolean) : "Only Inspect Players" : 0
 	neverinspectplayers(boolean) : "Never Inspect Players" : 0
 
-	DisablePhotos[MBase](choices) : "Never take photos" : 0 : "Prevents this scanner from ever taking photos. It may still chase and inspect, but it will never actually take any pictures or flashes."
+	DisablePhotos[MBase](boolean) : "Never take photos" : 0 : "Prevents this scanner from ever taking photos. It may still chase and inspect, but it will never actually take any pictures or flashes."
 
 	// Inputs
 	input DisableSpotlight(void) : "Disable the spotlight."

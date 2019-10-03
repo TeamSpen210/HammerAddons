@@ -1,5 +1,5 @@
 @PointClass appliesto(MBase) 
-	base(npc_zombie_torso, Studiomodel) 
+	base(npc_zombie_torso) 
 	studio()
 = npc_zombie_custom_torso : "Custom Zombie Torso"
 	[
