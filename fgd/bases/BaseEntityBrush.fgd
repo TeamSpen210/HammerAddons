@@ -15,7 +15,7 @@
 	thinkfunction[VSCRIPT](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
 
 	vscript_init_code[+VSCRIPT, +srctools](string) : "Init Code" : : "This code will be executed after the Entity Scripts option."
-	vscript_init_code2[+VSCRIPT, +srctools](string) : "Init Code 2" : : "This code will be executed after the Entity Scripts option."
+	vscript_init_code2[+VSCRIPT, +srctools](string) : "Init Code 2" : : "This code will be the second line executed after the Entity Scripts option."
 	// etc
 
 	linedivider_base(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
@@ -68,5 +68,49 @@
 	output OnUser2(void) : "Fired in response to FireUser2 input."
 	output OnUser3(void) : "Fired in response to FireUser3 input."
 	output OnUser4(void) : "Fired in response to FireUser4 input."
-	output OnKilled[L4D](void) : "Fired when the entity is killed and removed from the game."
+	output OnKilled[MBase, L4D](void) : "Fired when the entity is killed and removed from the game."
+
+	// Mapbase BaseEntity changes:
+	input PassUser1[MBase](string) : "Causes this entity's OutUser1 output to be fired, passing along the parameter unchanged."
+	input PassUser2[MBase](string) : "Causes this entity's OutUser2 output to be fired, passing along the parameter unchanged."
+	input PassUser3[MBase](string) : "Causes this entity's OutUser3 output to be fired, passing along the parameter unchanged."
+	input PassUser4[MBase](string) : "Causes this entity's OutUser4 output to be fired, passing along the parameter unchanged."
+
+	input FireRandomUser[MBase](void) : "Fires OnUser1, OnUser2, OnUser3, or OnUser4 with a 25% chance of each."
+	input PassRandomUser[MBase](string) : "Fires OutUser1, OutUser2, OutUser3, or OutUser4 with a 25% chance of each. The parameter is passed along unchanged."
+	
+	input KillIfNotVisible[MBase](void) : "Removes this entity if it is not in the player's viewcone."
+	input KillWhenNotVisible[MBase](void) : "Removes this entity when it is not in the player's viewcone."
+	
+	input FireOutput[MBase](string) : "Fires the named output on this entity. Format: '<output name>:<activator>:<caller>:<parameter>:<delay>' (OnDeath:hl3cardgame:gaben). Everything beyond the output name is optional."
+	input RemoveOutput[MBase](string) : "Removes all instances of the named output on this entity. Wildcards are supported, meaning you could just pass '*' to wipe all outputs from this entity."
+	input AcceptInput[MBase](string) : "Fires the named input on this entity. Format: '<input name>:<parameter>:<activator>:<caller>:<output ID>' (SetTarget:cheese). Everything beyond the input name is optional. Mind the fact this is arranged differently from FireOutput, having the parameter right after the input name."
+	input CancelPending[MBase](void) : "Cancels any events fired by this entity that are currently pending in the I/O event queue."
+	
+	input FreeChildren[MBase](void) : "Unparents all direct children of this entity."
+	input SetLocalOrigin[MBase](vector) : "Sets this entity's origin in the map."
+	input SetLocalVelocity[MBase](vector) : "Sets this entity's current velocity."
+	input SetLocalAngularVelocity[MBase](vector) : "Sets this entity's current angular velocity."
+	
+	input AddSpawnFlags[MBase](integer) : "Adds spawnflag(s) to this entity. Many spawnflags have their respective numbers suffixed in this FGD."
+	input RemoveSpawnFlags[MBase](integer) : "Removes spawnflag(s) to this entity. Many spawnflags have their respective numbers suffixed in this FGD."
+	input ChangeVariable[MBase](string) : "Similar to AddOutput, except it changes an internal variable similar to logic_datadesc_accessor instead. Very dangerous, use with care."
+	
+	input SetHealth[MBase](integer) : "Sets this entity's health."
+	input AddHealth[MBase](integer) : "Adds to this entity's health."
+	input RemoveHealth[MBase](integer) : "Removes from this entity's health."
+	
+	input SetMaxHealth[MBase](integer) : "Sets this entity's max health."
+	
+	input SetTarget[MBase](target_destination) : "Sets this entity's target. This is specific to certain entities, particularly logic entities that involve a target."
+	input SetOwnerEntity[MBase](target_destination) : "Sets this entity's owner entity. This has nothing to do with parenting and has more to do with collision and kill credits."
+	
+	input SetThinkNull[MBase](void) : "Sets this entity's general think function to null. Behavior varies from entity to entity.."
+	
+	input Use[MBase](void) : "More or less replicates the player interacting with an entity. (+USE)"
+
+	output OutUser1[MBase](string) : "Fires in response to PassUser1 input, with the parameter passed through unchanged."
+	output OutUser2[MBase](string) : "Fires in response to PassUser2 input, with the parameter passed through unchanged."
+	output OutUser3[MBase](string) : "Fires in response to PassUser3 input, with the parameter passed through unchanged."
+	output OutUser4[MBase](string) : "Fires in response to PassUser4 input, with the parameter passed through unchanged."
 	]
