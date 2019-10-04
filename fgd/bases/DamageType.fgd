@@ -1,5 +1,6 @@
 @BaseClass = DamageType
 	[
+	// We don't include flags here, not something valid to select...
 	damagetype[engine](integer) : "Damage Type" : 0
 	damagetype(choices) : "Damage Type" : 0 : "Kind of damage to apply. These fields can be ORed together. " =
 		[
@@ -32,7 +33,27 @@
 		1048576: "Acid" [since_ASW]
 
 		2097152: "Slow Burn"
-		4194304: "Slow Freeze"
 		16777216: "Force Gibs" [L4D2]
+		]
+
+	damagepresets[engine](integer) : "Damage Presets" : 0
+	damagepresets[MBase](choices) : "Damage Presets" : 0 : "User-friendly 'presets' based on combined damage types. " +
+		"This is accompanied by the damage type and damage or, if they are specified." = 
+		[
+		0 : "None"
+		268435464 : "[268435464] Ignite Damage (BURN + DIRECT)"
+		134217792 : "[134217792] All Blast Types (BLAST + BLAST_SURFACE)"
+		]
+	
+	damageor[engine](integer) : "Damage Or" : 0
+	damageor[MBase](choices) : "Damage Or" : 0 : "Optional flags that can accompany the damage type." = 
+		[
+		0 : "None"
+		2048 : "PREVENT_PHYSICS_FORCE (no physics force)"
+		4096 : "NEVERGIB (no gibs)"
+		8192 : "ALWAYSGIB (always gib if possible)"
+		4194304 : "REMOVENORAGDOLL (no ragdoll on death)"
+		134217728 : "BLAST_SURFACE (no damage underwater)"
+		268435456 : "DIRECT (With burn, NPCs treat as being on fire)"
 		]
 	]

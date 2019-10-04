@@ -6,7 +6,7 @@
 		16: "(OBSOLETE, Uncheck me)" : 0
 		128: "Disable auto player movement" : 1
 		2048: "Auto-duck while in trigger" : 0
-		4096: "Auto-walk while in trigger" : 0 [since_L4D]
-		8192 : "Disable jump while in trigger" [since_L4D2]
+		4096: "Auto-walk while in trigger" : 0 [MBase, since_L4D]
+		8192 : "Disable jump while in trigger" [MBase, since_L4D2]
 		]
 	]

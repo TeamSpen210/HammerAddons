@@ -1,0 +1,6 @@
+@SolidClass base(Trigger) 
+	appliesto(MBase) = trigger_fall: "A trigger that causes the player to die the moment they touch the ground as long as they are inside of this volume."
+	[
+	StayLethal(boolean) : "Stay Lethal" : 0 : "Causes players who touch this trigger to be marked for death by " +
+		"fall damage even after they leave the volume."
+	]

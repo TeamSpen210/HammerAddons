@@ -1,41 +1,60 @@
-
 @PointClass base(BaseDriveableVehicle) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
+	appliesto(HL2, EP1, EP2, P1, ASW)
+	studioprop() 
 	autovis(Vehicles, Jeep)
-	studioprop() = prop_vehicle_jeep: "Driveable studiomodel jeep."
+= prop_vehicle_jeep: "Driveable studiomodel jeep. In HL2 it's the Scout Car, in EP2 it's the Scout Car/Jalopy."
 	[
-	cargovisible(choices) : "Hopper Visible" : "0" : "Is the striderbuster cargo hopper visible?" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	model[-EP1, -EP2](studio) : "World model" : "models/buggy.mdl"
+	model[EP1, EP2](studio) : "World model" : "models/jalopy.mdl"
+
+	cargovisible[EP1, EP2](choices) : "Hopper Visible" : "0" : "Is the striderbuster cargo hopper visible?"
 
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "HUD Locator Precache" : 0
 		]
 
+	NoHazardLights[EP1, EP2](boolean) : "No Hazard Lights" : 0 : "Stops the jalopy's hazard lights from turning on and flashing when the player exits the vehicle."
+	EnableGun[-EP1, -EP2](boolean) : "Has Gun" : 0 : "Whether the jeep's tau cannon is enabled or disabled."
 
-	// Inputs
-	input StartRemoveTauCannon(void) : "Start the tau removal sequence."
-	input FinishRemoveTauCannon(void) : "Finish the tau removal sequence."
-	input LockEntrance(void) : "Stops NPC's from entering the vehicle until unlocked."
-	input UnlockEntrance(void) : "Allows NPC's to enter the vehicle."
-	input LockExit(void) : "Stops NPC's from exiting the vehicle until unlocked."
-	input UnlockExit(void) : "Allows NPC's to exit the vehicle."
-	input EnableRadar(void) : "Turn on the Jalopy radar"
-	input DisableRadar(void) : "Turn off the Jalopy radar"
-	input EnableRadarDetectEnemies(void) : "Enable Jalopy radar to detect Striders and Hunters"
-	input AddBusterToCargo(void) : "Put a striderbuster in the cargo trigger"
-	input SetCargoHopperVisibility(boolean) : "Set the strider buster hopper thingy to be visible, or invisible."
-	input DisablePhysGun(void) : "Disable physgun interactions with the jeep."
-	input EnablePhysGun(void) : "Enable physgun interactions with the jeep (default)."
-	input CreateLinkController(void) : "Automatically builds and attaches a link controller to the car, which cuts the node connections under the car while the car is standing still."
-	input DestroyLinkController(void) : "Destroys the link controller created by CreateLinkController."
+	// HL2 Jeep inputs
+	input StartRemoveTauCannon[-EP1, -EP2](void) : "Start the tau removal sequence."
+	input FinishRemoveTauCannon[-EP1, -EP2](void) : "Finish the tau removal sequence."
+	// Mapbase re-adds these for the episodic jeep.
+	input DisablePhysGun[-MBase, -EP1, -EP2](void) : "Disable physgun interactions with the jeep."
+	input EnablePhysGun[-MBase, -EP1, -EP2](void) : "Enable physgun interactions with the jeep (default)."
+
+	// Episodic Jeep Inputs
+	input LockEntrance[EP1, EP2](void) : "Stops NPC's from entering the vehicle until unlocked."
+	input UnlockEntrance[EP1, EP2](void) : "Allows NPC's to enter the vehicle."
+	input LockExit[EP1, EP2](void) : "Stops NPC's from exiting the vehicle until unlocked."
+	input UnlockExit[EP1, EP2](void) : "Allows NPC's to exit the vehicle."
+	input EnableRadar[EP1, EP2](void) : "Turn on the Jalopy radar"
+	input DisableRadar[EP1, EP2](void) : "Turn off the Jalopy radar"
+	input EnableRadarDetectEnemies[EP1, EP2](void) : "Enable Jalopy radar to detect Striders and Hunters"
+	input AddBusterToCargo[EP1, EP2](void) : "Put a striderbuster in the cargo trigger"
+	input SetCargoHopperVisibility[EP1, EP2](boolean) : "Set the strider buster hopper thingy to be visible, or invisible."
+	input CreateLinkController[EP1, EP2](void) : "Automatically builds and attaches a link controller to the car, which cuts the node connections under the car while the car is standing still."
+	input DestroyLinkController[EP1, EP2](void) : "Destroys the link controller created by CreateLinkController."
 
 	// Outputs
-	output OnCompanionEnteredVehicle(void) : "Companion has entered the vehicle."
-	output OnCompanionExitedVehicle(void) : "Companion has exited the vehicle."
-	output OnHostileEnteredVehicle(void) : "Hostile has entered the vehicle."
-	output OnHostileExitedVehicle(void) : "Hostile has exited the vehicle."
+	output OnCompanionEnteredVehicle[EP1, EP2](void) : "Companion has entered the vehicle."
+	output OnCompanionExitedVehicle[EP1, EP2](void) : "Companion has exited the vehicle."
+	output OnHostileEnteredVehicle[EP1, EP2](void) : "Hostile has entered the vehicle."
+	output OnHostileExitedVehicle[EP1, EP2](void) : "Hostile has exited the vehicle."
+	]
+
+@PointClass base(BaseDriveableVehicle) 
+	appliesto(+MBase, EP1, EP2)
+	studioprop() 
+	autovis(Vehicles, Jeep)
+= prop_vehicle_jeep_old: "Copy of the original HL2 Jeep for use in Episodic."
+	[
+	model[](studio) : "World model" : "models/buggy.mdl"
+
+	// HL2 Jeep inputs
+	input StartRemoveTauCannon(void) : "Start the tau removal sequence."
+	input FinishRemoveTauCannon(void) : "Finish the tau removal sequence."
+	input DisablePhysGun(void) : "Disable physgun interactions with the jeep."
+	input EnablePhysGun(void) : "Enable physgun interactions with the jeep (default)."
 	]

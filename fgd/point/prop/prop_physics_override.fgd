@@ -9,9 +9,30 @@
 	[
 	health(integer) : "Health" : 0 : "Number of points of damage to take before breaking.  0 means don't break."
 
+	InitialInteractions[engine](integer) : "Interaction Override" : ""
+	InitialInteractions[MBase](choices) : "Interaction Override" : "" : "Overrides this prop's default interactions. If you want to combine them, enter each number with a space or comma in between. (e.g. '1 5 7')" =
+	[
+		"": "None"
+		"0": "0 : When punted: Stick to world (sawblades)"
+		"1": "1 : When punted: Break on impact (explosive barrels)"
+		"2": "2 : When punted: Paint surfaces (paint cans)"
+		"3": "3 : When punted: Impale (harpoons)"
+		"4": "4 : When punted: Don't spin"
+		"5": "5 : When punted: Spin on Z axis (sawblades, propellers)"
+		"6": "6 : When broken: Gas explosion (propane tanks, gas cans)"
+		"7": "7 : When punted: No damage on impact"
+		"8": "8 : Fire: Flammable"
+		"9": "9 : Fire: Explosive resistant (only ignites from nearby explosions, no damage, e.g. explosive barrels)"
+		"10": "10 : Fire: Ignite on half health (explosive barrels)"
+		//"11": "11 : Flare" // This is what prop_flare is for
+		"12": "12 : Allow player to hold directly overhead"
+	]
+
+	preferredcarryangles[MBase](angle) : "Preferred Player-carry Angles" : "0" : "The angle which the object should orient to when the player picks it up " +
+		"with the physgun or +USE. Overrides the prop's own QC carry angles if it has any. " +
+		"'0' doesn't override the carry angles."
+
 	// Inputs
-	input Ignite(void) : "Ignite, burst into flames."
-	input IgniteLifetime(float) : "Ignite, with a parameter lifetime."
-	input IgniteNumHitboxFires(integer) : "Ignite, with a parameternumber of hitbox fires."
-	input IgniteHitboxFireScale(float) : "Ignite, with a parameter hitbox fire scale."
+	input SetInteraction[MBase](integer) : "Adds an interaction to this entity."
+	input RemoveInteraction[MBase](integer) : "Removes an interaction from this entity."
 	]

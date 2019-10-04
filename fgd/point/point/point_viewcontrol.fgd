@@ -26,15 +26,19 @@
 		16: "Snap to goal angles" : 0
 		32: "Make Player non-solid" : 0
 		64: "Interruptable by Player" : 0
-		128: "Set Fov" : 0 [since_ASW]
+		128: "Set Fov" : 0 [MBase, since_ASW]
+		256:"Allow fixed behavior (can move without look target, removal stops softlock, etc.)" : 1 [MBase]
 		]
 
 	speed(string) : "Initial Speed" : "0" : "The starting speed that the camera moves at, if it's on a path track."
 	acceleration(string) : "Acceleration units/sec^2" : "500" : "The speed at which the camera accelerates to path corner's desired speeds."
 	deceleration(string) : "Stop Deceleration units/sec^2" : "500" : "The speed at which the camera decelerates to path corner's desired speeds."
 	trackspeed[since_P2](float) : "Tracking Speed of the camera" : "40" : "The speed that the camera tries to follow it's look target."
-	fov[since_ASW](float) : "Field of view" : "90" : "Player FOV (if Set FOV spawnflag is set)"
-	fov_rate[since_ASW](float) : "Seconds to reach FOV target" : "1.0" : "Amount of time it should take to reach the specified FOV"
+	fov[MBase, since_ASW](float) : "Field of view" : "90" : "Player FOV (if Set FOV spawnflag is set)"
+	fov_rate[MBase, since_ASW](float) : "Seconds to reach FOV target" : "1.0" : "Amount of time it should take to reach the specified FOV"
+
+	DontSetPlayerView(boolean) : "Don't set player view" : 0 : "Prevents this point_viewcontrol from actually controlling the player's view. " +
+		"FOV, player-affecting spawnflags, etc. may still happen."
 
 	// Inputs
 	input Enable(void) : "Enable the point_viewcontrol, and start controlling the player's view."
@@ -48,4 +52,5 @@
 
 	// Outputs
 	output OnEndFollow(void) : "Fired when the point_viewcontrol deactivates, due to the Disable input being received, the Entity to Look At being destroyed, or the Hold Time expiring."
+	output OnStartFollow[MBase](void) : "Fired when the point_viewcontrol activates, usually due to the Enable input being received."
 	]

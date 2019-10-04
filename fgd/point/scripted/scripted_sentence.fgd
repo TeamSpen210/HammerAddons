@@ -20,7 +20,9 @@
 	refire(string) : "Delay Before Refire" : "3"
 	listener(string) : "Listener Type"
 	volume(string) : "Volume 0-10" : "10"
-	attenuation(choices) : "Sound Radius" : "0" =
+
+	attenuation[engine](integer) : "Sound Radius" : 0
+	attenuation(choices) : "Sound Radius" : 0 =
 		[
 		0: "Small Radius"
 		1: "Medium Radius"

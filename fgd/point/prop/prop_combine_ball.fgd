@@ -2,9 +2,15 @@
 @PointClass base(BasePropPhysics) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
 	studioprop() 
-	studio("models/effects/combineball.mdl") = prop_combine_ball: "A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges or other constraints. It can also be configured to break when it takes enough damage.|||An earlier Half-Life version of the Energy Pellet."
+	studio("models/effects/combineball.mdl") = prop_combine_ball: "The Combine Dark Energy Pellet, fired from the AR2 and held in energy fields. " +
+		"Use point_combine_energy_ball_launcher to spawn this, don't place directly." + 
+		"prop_energy_ball is the Portal version with some slightly different behaviour."
 	[
 
 	// Inputs
-	input Explode(void) : "Explode"
+	input Explode(void) : "Explode the ball with some visual effects."
+	input Socketed[EP1, EP2](void) : "If this was fired by a player, tell Alyx that they socketed a ball so she can comment on it."
+	input FadeAndRespawn(void) : "Force the ball to expire in 0.1 seconds."
+	input SetLifetime[MBase](float) : "Set the lifetime of the ball to the given duration."
+	input AddLifetime[MBase](float) : "Add the given amount of additional lifetime."
 	]

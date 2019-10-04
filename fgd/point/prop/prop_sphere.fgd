@@ -1,0 +1,9 @@
+@PointClass  appliesto(MBase)
+	base(BasePropPhysics, SetModel)
+	autovis(Props, Physics, Ragdoll)
+	studioprop()
+	sphere(radius) 
+= prop_sphere : "Creates a perfect sphere."
+	[
+	radius(float) : "Radius" : 12 : ""
+	]

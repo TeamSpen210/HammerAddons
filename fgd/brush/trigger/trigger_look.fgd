@@ -20,6 +20,7 @@
 	fieldofview(string) : "FieldOfView" : "0.9" : "How close the player has to be looking at the target. " +
 		"1.0 = straight ahead\n 0.0 = +/- 90 degrees\n -1.0 = all directions)."
 	timeout(float) : "Timeout" : 0 : "The time, in seconds, to wait after player enters the trigger before firing the OnTimeout output, 0 = never."
+	UseLOS[MBase](boolean) : "Require LOS" : 0 : "If enabled, the player must have full LOS to the target entity in order to count as ''looking''."
 
 	// Outputs
 	output OnTrigger(void) : "Fired when the trigger is activated."

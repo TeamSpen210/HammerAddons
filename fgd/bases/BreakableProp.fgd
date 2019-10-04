@@ -5,7 +5,7 @@
 		16: "Break on Touch" : 0
 		32: "Break on Pressure" : 0
 		]
-	breakabletype[engine](integer) : "Exploitable by" : 0
+	exploitablebyplayer[engine](integer) : "Exploitable by" : 0
 
 	exploitablebyplayer[engine](integer) : "Exploitable by Player" : 0
 	exploitablebyplayer[CSGO](choices) : "Exploitable by Player" : 0 =

@@ -12,7 +12,4 @@
 		"Only entities that passed this trigger's filters will cause this output to fire."
 	output OnEndTouchAll(void) : "Fires when an entity stops touching this trigger, and no other entities are touching it. " +
 		"Only entities that passed this trigger's filters are considered."
-
-	output OnTouching(void) : "Fired when the TouchTest input is called. Does not call activators."
-    output OnNotTouching(void) : "Fired when the TouchTest input is called. Does not call activators."
 	]

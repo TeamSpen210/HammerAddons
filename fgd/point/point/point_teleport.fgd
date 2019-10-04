@@ -16,9 +16,9 @@
 
 	// Inputs
 	input Teleport(void) : "Teleport the target entity."
-	input TeleportToCurrentPos[since_ASW](void) : "Teleport the target entity to wherever the point_teleport entity is currently. " +
+	input TeleportToCurrentPos[MBase, since_ASW](void) : "Teleport the target entity to wherever the point_teleport entity is currently. " +
 		"The Teleport input teleports to the initial position of the point_teleport, " +
 		"so this input was added to avoid breaking old content."
-	input TeleportEntity[since_ASW](target_destination) : "Teleport the entity specified by the parameter override. " +
+	input TeleportEntity[MBase, since_ASW](target_destination) : "Teleport the entity specified by the parameter override. " +
 		"Use this to teleport an entity other than the one specified in the Entity To Teleport field."
 	]

@@ -1,0 +1,68 @@
+// So we can arrange the DamageTypes base class in point_damageinfo
+@BaseClass appliesto(MBase) = PointDamageInfoInit
+	[
+	target(target_destination) : "Target/Victim" : : "The entit(ies) that will take all of this damage. " +
+		"This is optional if you're only using the 'ApplyDamageToEntity' input."
+	inflictor(target_destination) : "Inflictor" : : "The entity that actually supposedly dealt the damage. " +
+		"This isn't supposed to be the attacker as much as it's supposed to be their weapon or a projectile from their weapon."
+	attacker(target_destination) : "Attacker" : : "The entity that the damage is credited to."
+	weapon(target_destination) : "Weapon" : : "The weapon that did the damage. " +
+		"This is usually used when the inflictor would already be used for something else. " +
+		"For example, when the inflictor is a rocket, this would be the RPG."
+	
+	MaxEnts(integer) : "Maximum Victims" : 1 : "When ApplyDamage is called, how many entities that match the " +
+		"target's description should be victimized? Use 0 for no limit."
+
+	Damage(integer) : "Damage" : 0 : "How much damage to inflict."
+	MaxDamage(integer) : "Max Damage" : : "Function not fully understood, likely something related to multidamage"
+	//DamageBonus(integer) : "Damage Bonus" : : "" // No references found, likely unused
+	DamageBonus(integer) : "Damage Bonus" : : ""
+	]
+
+@PointClass appliesto(MBase)
+	base(BaseEntityPoint, PointDamageInfoInit, DamageTypes)
+	iconsprite("editor/point_damageinfo.vmt")
+	line(255 255 255, targetname, target)
+	line(255 255 255, targetname, inflictor)
+	line(255 255 255, targetname, attacker)
+	line(255 255 255, targetname, weapon)
+= point_damageinfo : "Applies damage with as precise control possible."
+	[
+	// Keys
+	DamageCustom(integer) : "Damage Custom" : : "Function not fully understood, likely something related to multiplayer"
+	MaxDamage(integer) : "Max Damage" : : "Function not fully understood, likely something related to multidamage"
+
+	//DamageBonus(integer) : "Damage Bonus" : : "" // No references found, likely unused
+	//DamageStats(integer) : "Damage Stats" : : "" // No references found, likely unused
+
+	ForceFriendlyFire(boolean) : "Force Friendly Fire" : 0 : "Disregards friendly fire safechecks and " +
+		"applies the damage regardless of the attacker's relationship to the victim."
+
+	SuppressDeathSound(boolean) : "Suppress Death Sound" : 0 : "Attempts to suppress the target entity's death sound."
+
+	DamageForce(vector) : "Damage Force" : "0 0 0" : "The force to apply when the damage is applied."
+	DamagePosition(vector) : "Damage Position" : "0 0 0" : "What position the damage took place."
+	ReportedPosition(vector) : "Reported Position" : "0 0 0" : "I have no idea what this does."
+	
+	// Inputs
+	input SetInflictor(target_destination) : "Sets the inflictor."
+	input SetAttacker(target_destination) : "Sets the attacker."
+	input SetWeapon(target_destination) : "Sets the weapon."
+	input SetDamage(integer) : "Sets the damage."
+	input SetMaxDamage(integer) : "Sets the max damage."
+	//input SetDamageBonus(integer) : "Sets the damage bonus."
+	input SetDamageType(integer) : "Sets the damage type."
+	input SetDamageCustom(integer) : "Sets the damage custom."
+	//input SetDamageStats(integer) : "Sets the damage stats."
+	input SetForceFriendlyFire(bool) : "Sets force friendly fire."
+	input SetAmmoType(integer) : "Sets the ammo type."
+	input SetDamageForce(vector) : "Sets the damage force."
+	input SetDamagePosition(vector) : "Sets the damage position."
+	input SetReportedPosition(vector) : "Sets the reported position."
+	input ApplyDamage(void) : "Applies damage."
+	input ApplyDamageToEntity(target_destination) : "Applies damage to a specific entity."
+	
+	// Outputs
+	output OnApplyDamage(void) : "Fires for every entity that takes our damage, using that as the activator."
+	output OnApplyDeath(void) : "Fires for every entity that dies from our damage, using that as the activator."
+	]

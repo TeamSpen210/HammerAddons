@@ -50,7 +50,9 @@
 
 	// Inputs
 	input ForceSpawn(void) : "Spawn an instance of the template at the original position."
+	input ForceSpawnRandomTemplate[MBase](void) : "Spawns one of this entity's templates at its original position."
 
 	// Outputs
 	output OnEntitySpawned(void) : "Fired after spawning an instance of this template."
+	output OutSpawnedEntity[MBase](ehandle) : "Fired for each entity spawned by this template, passing said entity as the parameter and activator."
 	]

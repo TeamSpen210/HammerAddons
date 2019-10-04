@@ -25,7 +25,7 @@
 	lagcompensate[L4D2](boolean) : "Lag Compensation" : 0 : "Set to Yes to lag compensate this prop, should be use very sparingly!"
 	glowbackfacemult[L4D2](float) : "Glow backface Multiplier" : "1.0" : "What to multiply glow by on backfaces,"
 
-	updatechildren(boolean) : "Update children" : 0 : "Update touches for any children that are attached to attachment points as this prop animates. " +
+	updatechildren[since_ASW](boolean) : "Update children" : 0 : "Update touches for any children that are attached to attachment points as this prop animates. " +
 		"This allows SetParentAttached triggers or func_brushes to touch properly."
 
 

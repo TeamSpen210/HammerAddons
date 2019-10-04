@@ -1,4 +1,4 @@
-@BaseClass base(BaseEntityPhysics, BasePropPhysics) 
+@BaseClass base(BasePropPhysics) 
 = BaseVehicle
 	[
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/jeep_test.txt"
