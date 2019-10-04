@@ -1,4 +1,4 @@
-@SolidClass base(Targetname, MasterEnt) 
+@SolidClass base(TriggerOnce) 
 = trigger_autosave: "A trigger volume that autosaves when the player touches it."
 	[
 	newlevelunit(boolean) : "Force New Level Unit" : 0 : "If set, the save will discard any savedata from previous levels, for the purpose of keeping savegame filesizes down. Can only be" + " safely used if there is no way for the player to return to previous levels."
