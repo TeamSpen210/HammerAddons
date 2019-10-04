@@ -1,4 +1,4 @@
-@BaseClass base(Targetname, Angles, EnableDisable) 
+@BaseClass base(BaseEntityPoint, EnableDisable) 
 	iconsprite("editor/npc_maker.vmt") 
 	color(0 0 255) 
 = BaseNPCMaker

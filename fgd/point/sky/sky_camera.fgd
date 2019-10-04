@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	color(0 0 255) 
 	color(173 223 245) 
 	studioprop("models/editor/sky_camera.mdl") 
@@ -11,6 +11,7 @@
 		"NOTE: sky_camera's position is normally only updated on spawn. " +
 		"Fire the ForceUpdate or StartUpdating inputs to update the sky_camera's position! " +
 		"You might also want to enable Use Angles for Sky."
+	// Override to indicate that parenting isn't a good idea.
 	parentname[!MBase](target_destination) : "Parent" : : "The name of the entity to move with. " +
 		"NOTE: sky_camera's position is normally only updated on spawn, so this may not work."
 

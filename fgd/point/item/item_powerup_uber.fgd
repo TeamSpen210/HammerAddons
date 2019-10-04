@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(TF2) 
 	studio("models/pickups/pickup_powerup_uber.mdl") 
 	sphere(fademindist) 

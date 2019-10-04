@@ -1,4 +1,4 @@
-@SolidClass base(Targetname, EnableDisable) 
+@SolidClass base(BaseEntityBrush, EnableDisable) 
 	appliesto(TF2) = func_upgradestation: "The upgrade station area for MvM, where players buy upgrades."
 	[
 	]

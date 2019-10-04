@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) = tf_gamerules: "Proxy entity for TF Gamerules"
 	[
 	hud_type(choices) : "Hud Type" : "0" : "Override the HUD type clients should display." =

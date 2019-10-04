@@ -1,4 +1,4 @@
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(TF2) = tf_logic_minigames: "Minigame mode logic."
 	[
 	// Inputs

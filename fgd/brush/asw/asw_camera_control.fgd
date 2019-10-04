@@ -1,11 +1,10 @@
-
-@SolidClass base(Targetname, Origin) 
+@SolidClass base(BaseEntityBrush) 
 	appliesto(ASW) = asw_camera_control: "The camera will change when marines are inside this volume."
 	[
-	angtype(choices) : "Angle Type" : "0" : "Camera angle to use when marines are in this volume." =
+	angtype[engine](integer) : "Angle Type" : 0
+	angtype(choices) : "Angle Type" : 0 : "Camera angle to use when marines are in this volume." =
 		[
 		0: "Top-down"
 		1: "40 degree"
 		]
-
 	]

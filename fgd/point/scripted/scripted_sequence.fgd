@@ -1,7 +1,6 @@
-
-@PointClass base(BaseScripted, Angles, DXLevelChoice, SystemLevelChoice) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+@PointClass base(BaseEntityPoint, DXLevelChoice, SystemLevelChoice)
 	studio("models/editor/scriptedsequence.mdl") 
+	color(255 0 255) 
 	sphere(m_flRadius) = scripted_sequence: "Grabs an NPC and makes them play a specified set of animations. " +
 		"The NPC can be told to move to the scripted sequence position or can " + 
 		"be told to play the script wherever they currently are. " +
@@ -23,6 +22,39 @@
 		 "BeginSequence input is received.\n\n" +
 		"If the sequence has motion extraction in it, set the 'Don't Teleport NPC On End' spawnflag."
 	[
+	m_iszentity(target_destination) : "Target NPC" : : "The name or class name (such as 'npc_zombie') of an NPC to use for this script."
+	m_iszidle(string) : "Pre Action Idle Animation" : : "The name of the sequence (such as 'idle01') or activity (such as 'ACT_IDLE') to play before the action animation if the NPC must wait for the script to be triggered. Use 'Start on Spawn' flag or MoveToPosition input to play this idle animation."
+	m_iszentry(string) : "Entry Animation" : : "The name of the sequence (such as 'reload02') or activity (such as 'ACT_RELOAD') to play when the sequence starts, before transitioning to play the main action sequence."
+	m_iszplay(string) : "Action Animation" : : "The name of the main sequence (such as 'reload02') or activity (such as 'ACT_RELOAD') to play."
+	m_iszpostidle(string) : "Post Action Idle Animation" : : "The name of the sequence (such as 'idle01') or activity (such as 'ACT_IDLE') to play after the action animation."
+	m_iszcustommove(string) : "Custom Move Animation" : : "Used in conjunction with the 'Custom movement' setting for the 'Move to Position' property, specifies the sequence (such as 'crouch_run01') or activity (such as 'ACT_RUN') to use while moving to the scripted position."
+	m_bloopactionsequence(boolean) : "Loop Action Animation?" : 0
+	m_bsynchpostidles(boolean) : "Synch Post Idles?" : 0
+	m_flradius(integer) : "Search Radius (0=everywhere)" : 0 : "Radius to search within for an NPC to use. 0 searches everywhere."
+	m_flrepeat(integer) : "Repeat Rate ms" : 0
+
+	m_fmoveto[engine](integer) : "Move to Position": 1
+	m_fmoveto(choices) : "Move to Position" : 1 =
+		[
+		0: "No"
+		1: "Walk"
+		2: "Run"
+		3: "Custom movement"
+		4: "Instantaneous"
+		5: "No - Turn to Face"
+		]
+
+	onplayerdeath[engine](integer) : "On player death" : 0
+	onplayerdeath(choices) : "On player death" : 0 : "What should this entity do if the player dies" =
+		[
+		0: "Do Nothing"
+		1: "Cancel Script and return to AI"
+		]
+
+	m_isznextscript(target_destination) : "Next Script" : : "The name of the script to run immediately after this script completes. The NPC will not return to AI between the two scripts."
+	m_bignoregravity(boolean) : "Ignore Gravity on NPC during script" : 0 : "If this is set to 'Yes', the NPC will not be subject to gravity while playing this script."
+	m_bdisablenpccollisions(boolean) : "Disable NPC collisions during script" : 0 : "Useful for when NPCs playing scripts must interpenetrate while riding on trains, elevators, etc. This only disables collisions between the NPCs in the script and must be enabled on BOTH scripted_sequences."
+
 	spawnflags(flags) : "spawnflags" =
 		[
 		4: "Repeatable" : 0
@@ -38,12 +70,23 @@
 		4096: "Allow actor death without stopping scene" : 0
 		]
 
-	onplayerdeath[engine](integer) : "On player death" : 0
-	onplayerdeath(choices) : "On player death" : 0 : "What should this entity do if the player dies" =
-		[
-		0: "Do Nothing"
-		1: "Cancel Script and return to AI"
-		]
+	// Inputs
+	input BeginSequence(void) : "Summons an NPC to act out the scripted sequence."
+	input MoveToPosition(void) : "Summons an NPC to the script location. They will play their scripted idle (or ACT_IDLE if none is specified) until BeginSequence is triggered."
+	input CancelSequence(void) : "Stops the scripted sequence. If fired after a sequence starts, this input will not take effect until the NPC finishes playing the scripted action animation."
+	input SetTarget[MBase](string) : "Set the target NPC to the specified entity."
 
-	input SetTarget(string) : "Set the target NPC to the specified entity."
+	// Outputs
+	output OnBeginSequence(void) : "Fires when the action animation begins playing."
+	output OnEndSequence(void) : "Fires when the action animation completes."
+	output OnCancelSequence(void) : "Fires when the sequence is cancelled."
+	output OnCancelFailedSequence(void) : "Fires when the sequence is cancelled without ever playing (OnCancelSequence will also fire)."
+	output OnScriptEvent01(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 1 } in the QC."
+	output OnScriptEvent02(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 2 } in the QC."
+	output OnScriptEvent03(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 3 } in the QC."
+	output OnScriptEvent04(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 4 } in the QC."
+	output OnScriptEvent05(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 5 } in the QC."
+	output OnScriptEvent06(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 6 } in the QC."
+	output OnScriptEvent07(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 7 } in the QC."
+	output OnScriptEvent08(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 8 } in the QC."
 	]

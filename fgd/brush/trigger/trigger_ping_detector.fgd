@@ -1,4 +1,4 @@
-@SolidClass base(Targetname) 
+@SolidClass base(Trigger) 
 	appliesto(P2) 
 = trigger_ping_detector: "Detects whether a player has pinged in its region."
 	[

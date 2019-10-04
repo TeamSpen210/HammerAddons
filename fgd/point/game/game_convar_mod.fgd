@@ -1,5 +1,5 @@
 @PointClass appliesto(MBase)
-	base(Targetname)
+	base(BaseEntityPoint)
 	iconsprite("editor/convar_mod.vmt")
 	color(239 163 14)
 = game_convar_mod : "Mods cvars"

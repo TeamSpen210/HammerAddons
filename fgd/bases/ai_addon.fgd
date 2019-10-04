@@ -1,6 +1,4 @@
-
-@BaseClass base(Targetname) 
-	line(255 255 255, targetname, target) = ai_addon
+@BaseClass line(255 255 255, targetname, target) = ai_addon
 	[
 	target(target_destination) : "Host NPC"
 

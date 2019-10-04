@@ -1,7 +1,7 @@
 @BaseClass appliesto(-MBase) studioprop("models/items/item_item_crate.mdl") = _item_item_crate_fixedmodel []
 @BaseClass appliesto(+MBase) studioprop() = _item_item_crate_anymodel []
 
-@PointClass base(BasePropPhysics, Targetname, Angles, DamageFilter, BaseFadeProp, _item_item_crate_anymodel, _item_item_crate_fixedmodel) 
+@PointClass base(BasePropPhysics, Angles, DamageFilter, BaseFadeProp, _item_item_crate_anymodel, _item_item_crate_fixedmodel) 
 	appliesto(EP1, EP2, HL2, P1, ASW)
 = item_item_crate: "Item Crate"
 	[

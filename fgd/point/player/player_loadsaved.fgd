@@ -1,5 +1,4 @@
-@PointClass base(Targetname) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2)
+@PointClass base(BaseEntityPoint)
 	size(-8 -8 -8, 8 8 8) 
 = player_loadsaved: "Load Auto-Saved game"
 	[

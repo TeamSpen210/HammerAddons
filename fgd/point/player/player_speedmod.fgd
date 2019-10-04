@@ -1,6 +1,6 @@
-
-@PointClass base(Targetname) 
-	iconsprite("editor/player_speedmod.vmt") = player_speedmod: "Speeds up or slows down player velocity over time (slow mo/fast forward)"
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/player_speedmod.vmt")
+= player_speedmod: "Speeds up or slows down player velocity over time (slow mo/fast forward)"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

@@ -1,4 +1,4 @@
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/player_weaponstrip.vmt")
 = player_weaponstrip: "Removes weapons from the player."
 	[

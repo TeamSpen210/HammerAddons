@@ -1,4 +1,4 @@
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(since_P2, MBase) 
 	color(200 0 0) 
 	iconsprite("editor/logic_eventlistener.vmt") = logic_eventlistener: "An entity that can listen to events fired from code and fire an output when it happens."

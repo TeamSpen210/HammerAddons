@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Angles, BaseFadeProp) 
+@PointClass base(BaseEntityAnimating) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
 	studio("models/props_combine/suit_charger001.mdl") = item_suitcharger: "Battery recharger"
 	[

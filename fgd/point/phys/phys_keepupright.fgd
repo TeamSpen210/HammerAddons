@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles)
+@PointClass base(BaseEntityPoint)
 	color(128 128 128) 
 	iconsprite("editor/ficool2/phys_keepupright.vmt") 
 	line(128 128 128, targetname, attach1) 

@@ -1,5 +1,4 @@
-
-@SolidClass base(Trigger, Targetname) 
+@SolidClass base(Trigger) 
 	appliesto(ASW) = asw_trigger_fall: "A trigger volume that kills any NPCs that touch it."
 	[
 

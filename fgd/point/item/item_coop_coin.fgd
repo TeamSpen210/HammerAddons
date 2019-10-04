@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, Angles) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(CSGO) 
 	studio("models/coop/challenge_coin.mdl") = item_coop_coin: "Collectable coin for coop missions."
 	[

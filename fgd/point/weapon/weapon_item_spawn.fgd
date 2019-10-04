@@ -1,4 +1,4 @@
-@PointClass appliesto(L4D2) base(Targetname, Angles) 
+@PointClass appliesto(L4D2) base(BaseEntityPoint) 
 	autovis(Weapons, L4D, L4D Items)
 = weapon_item_spawn
 	[

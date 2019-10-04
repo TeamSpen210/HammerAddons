@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname) 
+@PointClass base(BaseEntityPoint) 
 	halfgridsnap
 	color(128 128 128) 
 	iconsprite("editor/ficool2/phys_spring")

@@ -1,5 +1,4 @@
-
-@SolidClass base(Targetname, TeamNum, EnableDisable, Toggle) 
+@SolidClass base(BaseEntityBrush, TeamNum, EnableDisable, Toggle) 
 	appliesto(TF2) 
 	line(255 0 0, targetname, associatedmodel)
 = func_regenerate: "Regeneration/item resupply zone for players."

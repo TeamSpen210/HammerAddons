@@ -1,4 +1,4 @@
-// So we can arrange the DamageTypes base class in point_damageinfo
+// So we can arrange the DamageType base class in point_damageinfo
 @BaseClass appliesto(MBase) = PointDamageInfoInit
 	[
 	target(target_destination) : "Target/Victim" : : "The entit(ies) that will take all of this damage. " +
@@ -20,7 +20,7 @@
 	]
 
 @PointClass appliesto(MBase)
-	base(BaseEntityPoint, PointDamageInfoInit, DamageTypes)
+	base(BaseEntityPoint, PointDamageInfoInit, DamageType)
 	iconsprite("editor/point_damageinfo.vmt")
 	line(255 255 255, targetname, target)
 	line(255 255 255, targetname, inflictor)

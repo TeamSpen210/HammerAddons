@@ -1,4 +1,4 @@
-@PointClass base(Targetname, DXLevelChoice, Angles, SystemLevelChoice) 
+@PointClass base(BaseEntityPoint, DXLevelChoice, SystemLevelChoice) 
 	iconsprite("editor/fog_controller.vmt")
 	color(255 255 255)
 	color(200 0 0)

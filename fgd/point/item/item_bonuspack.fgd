@@ -1,5 +1,4 @@
-
-@PointClass base(Targetname, TeamNum, EnableDisable, Toggle, Angles, PlayerTouch, FadeDistance) 
+@PointClass base(BaseEntityAnimating, TeamNum, EnableDisable, Toggle, PlayerTouch, FadeDistance) 
 	appliesto(TF2) 
 	color(0 0 200) 
 	studio("models/crafting/moustachium.mdl") 
