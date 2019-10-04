@@ -7,7 +7,7 @@
 	model[-EP1, -EP2](studio) : "World model" : "models/buggy.mdl"
 	model[EP1, EP2](studio) : "World model" : "models/jalopy.mdl"
 
-	cargovisible[EP1, EP2](choices) : "Hopper Visible" : "0" : "Is the striderbuster cargo hopper visible?"
+	cargovisible[EP1, EP2](boolean) : "Hopper Visible" : "0" : "Is the striderbuster cargo hopper visible?"
 
 	spawnflags(flags) : "spawnflags" =
 		[
