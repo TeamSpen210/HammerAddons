@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityAnimating, TeamNum, EnableDisable, Toggle, PlayerTouch, FadeDistance) 
+@PointClass base(BaseEntityAnimating, TeamNum, EnableDisable, Toggle, FadeDistance) 
 	appliesto(TF2) 
 	color(0 0 200) 
 	studio("models/crafting/moustachium.mdl") 
@@ -6,4 +6,5 @@
 	sphere(fademaxdist) = item_bonuspack: "Bonus Pack"
 	[
 	powerup_model(string) : "Model" : : "Change the model to something other than the default model."
+	output OnPlayerTouch(void) : "Sent when the entity is picked up by a player."
 	]

@@ -48,7 +48,8 @@
 	invulnerable(boolean) : "Invulnerable" : "0"
 	DontEmitDanger[MBase](boolean) : "Don't emit danger on dropoff" : 0 : "Prevents this dropship from emitting danger sounds when it's dropping off soldiers."
 
-	cratetype(choices) : "Crate Type" : "2" =
+	cratetype[engine](integer) : "Crate Type" : 2
+	cratetype(choices) : "Crate Type" : 2 =
 		[
 		-3: "Jeep (No crate)"
 		-2: "APC (No crate)"

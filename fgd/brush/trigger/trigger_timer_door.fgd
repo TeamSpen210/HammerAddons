@@ -3,17 +3,9 @@
 	[
 	door_name(string) : "Door Name" : : "Name of the door entity the trigger is attaching to."
 	area_cap_point(target_source) : "Control point" : : "Name of the control point this area is linked to."
-	team_cancap_2(choices) : "Can RED Cap?" : "1" =
-		[
-		1: "Yes"
-		0: "No"
-		]
 
-	team_cancap_3(choices) : "Can BLUE Cap?" : "1" =
-		[
-		1: "Yes"
-		0: "No"
-		]
+	team_cancap_2(boolean) : "Can RED Cap?" : 1
+	team_cancap_3(boolean) : "Can BLUE Cap?" : 1
 
 	team_startcap_2(integer) : "Number of RED players to start capping" : 1
 	team_startcap_3(integer) : "Number of BLUE players to start capping" : 1

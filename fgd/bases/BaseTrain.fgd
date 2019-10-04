@@ -17,6 +17,8 @@
 	target(target_destination) : "Spawn path_track" : : "The name of the first path_track in the train's path. The train will spawn at this path_track. It will also turn to face direction indicated by the 'Orientation Type' setting."
 	startspeed(integer) : "Max Speed (units / second)" : 100 : "The maximum speed that this train can move. Any speeds applied to this train, such as by path_tracks or SetSpeed inputs, will be clipped to this maximum value."
 	speed(integer) : "Initial Speed (units / second)" : 0 : "The speed that the train will move at after it spawns, 0 = stopped."
+
+	velocitytype[engine](integer) : "Change Velocity" : 0
 	velocitytype(choices) : "Change Velocity" : 0 : "The method through which this train changes its velocity as it moves along the path." =
 		[
 		0: "Instantaneously"
@@ -24,7 +26,8 @@
 		2: "Ease in/ease out"
 		]
 
-	orientationtype(choices) : "Change angles" : 1 : "The method through which this train changes its orientation as it moves along the path." =
+	orientationtype[engine](integer) : "Change Orientation" : 0
+	orientationtype(choices) : "Change Orientation" : 1 : "The method through which this train changes its orientation as it moves along the path." =
 		[
 		0: "Never (fixed orientation)"
 		1: "Near path_tracks"
@@ -36,7 +39,9 @@
 	height(integer) : "Height above track" : 4 : "The height above the track that this train moves."
 	bank(string) : "Bank Angle on Turns" : 0
 	dmg(integer) : "Damage on Crush" : 0 : "The amount of damage this train does to entities that block it."
-	_minlight[!P2](string) : "Minimum Light Level" : : "The minimum level of ambient light that hits this brush."
+
+	line_basetrain(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
 	movesound(sound) : "Move Sound" : : "A sound that is played (and looped) while the train is moving."
 	movepingsound(sound) : "Move Ping Sound" : : "A sound that is played more frequently as the train speeds up."
 	startsound(sound) : "Start Sound" : : "A sound played when the train starts moving."

@@ -2,7 +2,8 @@
 @SolidClass base(Trigger, TeamNum) 
 	appliesto(TF2) = func_suggested_build: "Engineer suggested build area."
 	[
-	object_type(choices) : "Suggested Object" : "0" : "Suggested object to build in this area." =
+	object_type[engine](integer) : "Suggested Object" : 0
+	object_type(choices) : "Suggested Object" : 0 : "Suggested object to build in this area." =
 		[
 		0: "Any"
 		1: "Sentry"

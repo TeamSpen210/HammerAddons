@@ -22,6 +22,7 @@
 		]
 
 	dmg(integer) : "Blocking Damage" : 0 : "Damage done to any entity that blocks the rotation, per frame."
+	solidbsp[engine](boolean) : "Use SOLID_BSP" : 0
 	solidbsp(choices) : "Solid Type" : 0 =
 		[
 		0: "VPhysics"

@@ -1,8 +1,18 @@
-
-@PointClass base(BaseEntityPhysics, GameType, TeamNum, EnableDisable) 
+@PointClass base(BaseEntityPhysics, TeamNum, EnableDisable) 
 	appliesto(TF2) 
 	studio("models/flag/briefcase.mdl") = item_teamflag: "Team Fortress flag entity."
 	[
+	gametype(choices) : "Game Type" : "0" : "Type of game this flag will be used for." =
+		[
+		0: "CTF"
+		1: "Attack/Defend"
+		2: "Territory Control"
+		3: "Invade"
+		4: "Resource Control"
+		5: "Robot Destruction"
+		]
+	gametype[engine](int) : "Game Type" : 0
+
 	returntime(integer) : "Return time (in seconds)" : 60 : "Length of time (in seconds) before dropped flag/intelligence returns to base."
 
 	neutraltype[engine](integer) : "Neutral flag (Invade)" : 1

@@ -14,7 +14,7 @@
 	NumberOfEntities(integer) : "Max Results" : 0 : "The number of entities that can be found by this finder. 0 = No limit."
 	OutputDelay(float) : "Output Delay" : "0.0" : "OnFoundEntity fires once for each entity every X number of seconds. Deleted/killed/removed entities will not be skipped and a chain cannot be canceled, even if the finder is removed. Look into a more manual alternative if you do not want these side effects. Leave 0 for no delay."
 
-	Method[Mbase](integer) : "Search Method" : 0
+	Method[engine](integer) : "Search Method" : 0
 	Method(choices) : "Search Method" : 0 =
 		[
 		-1 : "None (first in ent list)"

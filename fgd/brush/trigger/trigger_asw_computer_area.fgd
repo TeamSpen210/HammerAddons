@@ -2,7 +2,8 @@
 @SolidClass base(trigger_asw_use_area) 
 	appliesto(ASW) = trigger_asw_computer_area: "A trigger volume in which marines can use a computer."
 	[
-	locked(choices) : "Locked" : "1" : "Locked computer terminals will require a Technical Engineer to pass the hacking minigame before allowing access to the main menu." =
+	locked[engine](boolean) : "Locked" : 1
+	locked(choices) : "Locked" : 1 : "Locked computer terminals will require a Technical Engineer to pass the hacking minigame before allowing access to the main menu." =
 		[
 		0: "Unlocked"
 		1: "Locked"
