@@ -321,13 +321,10 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
     all_tags = set()
 
     for ent in fgd:
-        all_tags.update(get_appliesto(ent))
+        for tag in get_appliesto(ent):
+            all_tags.add(tag.lstrip('+-!').upper())
 
-    games = {
-        game for game
-        in GAME_ORDER
-        if game in all_tags
-    }
+    games = set(GAME_ORDER).intersection(all_tags)
 
     print('Done.\nGames: ' + ', '.join(sorted(games)))
 
