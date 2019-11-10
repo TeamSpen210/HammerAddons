@@ -1,10 +1,11 @@
 """Implements comp_entity_finder."""
 import itertools
+import math
 from enum import Enum
 from typing import Dict, Tuple
 
 from srctools.bsp_transform import trans, Context
-from srctools import Output, conv_bool, conv_float, Vec, Entity
+from srctools import conv_bool, conv_float, Vec, Entity
 from srctools.logger import get_logger
 
 LOGGER = get_logger(__name__)
@@ -30,13 +31,26 @@ NEEDS = {
 @trans('comp_entity_finder')
 def entity_finder(ctx: Context):
     """Finds the closest entity of a given type."""
-    target_cache = {}  # type: Dict[Tuple[str, float, float, float, float], Entity]
+    target_cache = {}  # type: Dict[tuple, Entity]
 
     for finder in ctx.vmf.by_class['comp_entity_finder']:
         finder.remove()
         targ_class = finder['targetcls']
         targ_radius = conv_float(finder['radius'])
         targ_ref = finder['targetref']
+        blacklist = finder['blacklist'].casefold()
+        # Restrict to actually valid dot products.
+        targ_fov = max(0.0, min(180.0, conv_float(finder['searchfov', '180.0'], 180.0)))
+
+        # This will never find things, ignore that.
+        if targ_fov == 0.0:
+            LOGGER.warning(
+                'Entity finder at <{}>! has FOV of 0, ignoring!',
+                finder['origin'],
+            )
+            targ_fov = 180.0
+        targ_dot = math.cos(math.radians(targ_fov))
+        normal = Vec(x=1).rotate_by_str(finder['angles'])
 
         targ_pos = Vec.from_str(finder['origin'])
         if targ_ref:
@@ -51,15 +65,41 @@ def entity_finder(ctx: Context):
                     finder['origin'],
                 )
 
-        key = (targ_class, targ_radius) + targ_pos.as_tuple()
+        key = (targ_class, targ_radius, blacklist, targ_fov) + targ_pos.as_tuple()
         try:
             found_ent = target_cache[key]
         except KeyError:
             found_ent = None
             cur_dist = float('inf')
             targ_ent = None
+
+            if blacklist.startswith('*'):
+                blacklist = blacklist[1:]
+
+                def blacklist_func(name: str) -> bool:
+                    """Check if the name matches the blacklist, with wildcards."""
+                    return name.casefold().startswith(blacklist)
+            elif blacklist:
+                def blacklist_func(name: str) -> bool:
+                    """Check if the name matches the blacklist exactly."""
+                    return name.casefold() == blacklist
+            else:
+                def blacklist_func(name: str) -> bool:
+                    """No blacklist."""
+                    return False
+
             for targ_ent in ctx.vmf.by_class[targ_class]:
-                dist_to = (Vec.from_str(targ_ent['origin']) - targ_pos).mag()
+                if blacklist_func(targ_ent['targetname']):
+                    continue
+
+                offset = (Vec.from_str(targ_ent['origin']) - targ_pos)
+                dist_to = offset.mag()
+
+                # If at the same point, direction is meaningless.
+                # Treat that as always passing the FOV check.
+                if dist_to != 0.0 and Vec.dot(offset.norm(), normal) < targ_dot:
+                    continue
+
                 if targ_radius == 0 or dist_to < targ_radius:
                     if cur_dist > dist_to:
                         found_ent = targ_ent
@@ -68,10 +108,12 @@ def entity_finder(ctx: Context):
             if found_ent is None:
                 LOGGER.warning(
                     'Cannot find valid {} entity within {} units '
-                    'for entity finder at <{}>!',
+                    'for entity finder at <{}>! (fov={}, in direction {})',
                     targ_class,
                     targ_radius,
                     finder['origin'],
+                    targ_fov,
+                    normal,
                 )
                 continue
             target_cache[key] = found_ent
@@ -111,8 +153,9 @@ def entity_finder(ctx: Context):
             if not kv_dest:
                 LOGGER.warning(
                     'No destination keyvalue set '
-                    'for entity finder at <{}>!',
+                    'for entity finder at <{}>, transformation #{}!',
                     finder['origin'],
+                    ind,
                 )
                 continue
 
@@ -120,22 +163,32 @@ def entity_finder(ctx: Context):
 
             known_ent = None
             if needs_known:
-                for known_ent in ctx.vmf.search(finder['kv{}_known'.format(ind)]):
+                known_ent_name = finder['kv{}_known'.format(ind)]
+                if not known_ent_name:
+                    LOGGER.warning(
+                        'No known entity specified for entity finder at '
+                        '<{}>, but one required for transformation #{}!',
+                        finder['origin'],
+                        ind,
+                    )
+                for known_ent in ctx.vmf.search(known_ent_name):
                     break
                 if known_ent is None:
                     LOGGER.warning(
                         'Can\'t find known entity named '
-                        '"{}" for entity finder at <{}>!',
-                        known_ent,
+                        '"{}" for entity finder at <{}>, transformation #{}!',
+                        known_ent_name,
                         finder['origin'],
+                        ind,
                     )
                     continue
 
             if needs_src and not kv_src:
                 LOGGER.warning(
                     'No source keyvalue set '
-                    'for entity finder at <{}>!',
+                    'for entity finder at <{}>, transformation {}!',
                     finder['origin'],
+                    ind,
                 )
                 continue
 
