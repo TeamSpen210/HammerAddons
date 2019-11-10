@@ -4,7 +4,8 @@
 	iconsprite("editor/ficool2/filter_tf_damaged_by_weapon_in_slot.vmt")
 = filter_tf_damaged_by_weapon_in_slot: "A filter that filters damage by a weapon in a certain slot. Used for training purposes"
 	[
-	weaponslot(choices) : "Weapon Slot" : "0" : "Damaged by weapon in slot." =
+	weaponslot[engine](integer) : "Weapon Slot" : 0
+	weaponslot(choices) : "Weapon Slot" : 0 : "Damaged by weapon in slot." =
 		[
 		0: "Primary"
 		1: "Secondary"
@@ -15,5 +16,4 @@
 		6: "Item 1"
 		7: "Item 2"
 		]
-
 	]

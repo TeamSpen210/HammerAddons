@@ -11,15 +11,16 @@
 
 	// Replaced by Initial State
 	startdisarmed[!MBase](boolean) : "Start Disarmed" : 0: "If yes, mine begins dormant."
+	InitialState[engine](integer) : "Initial State" : 0
 	InitialState[MBase](choices) : "Initial State" : 0 : "The initial state of this mine." =
-	[
+		[
 		0 : "Deploying"
 		1 : "Disarmed"
 		2 : "Captive (locked in physgun)"
 		3 : "Planted"
 		4 : "Triggered (bounce, explode on touch)"
 		5 : "Physgun Launch (no bounce, explode on touch)"
-	]
+		]
 
 	modification[engine](integer) : "Citizen modified" : 0 : "'Normal' is default Combine behavior. 'Cavern' detonates earlier in its jump, and has a different default skin."
 	modification[since_EP2](choices) : "Citizen modified" : 0 : "'Normal' is default Combine behavior. 'Cavern' detonates earlier in its jump, and has a different default skin." =

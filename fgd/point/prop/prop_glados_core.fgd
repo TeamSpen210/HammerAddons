@@ -9,7 +9,8 @@
 = prop_glados_core: "The P1 personality cores for GlaDOS. Resemble little eyeballs with handles. " +
 	"These play lines and look around when near the player. "
 	[
-	coretype(choices) : "Core Personality" : "1" : "Which personality VO set the core is set to." =
+	coretype[engine](integer) : "Core Personality" : 1
+	coretype(choices) : "Core Personality" : 1 : "Which personality VO set the core is set to." =
 		[
 		0: "Curious"
 		1: "Aggressive"

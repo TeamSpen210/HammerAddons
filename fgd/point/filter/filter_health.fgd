@@ -4,6 +4,7 @@
 	autovis(Logic, Filters)
 = filter_health: "A damage filter that filters based on if the entity causing the damage has adrenaline active or not."
 	[
+	adrenalinepresence[engine](boolean) : "Adrenaline presence" : 1
 	adrenalinepresence(choices) : "Adrenaline presence" : 1 : "Allows this state of adrenaline on the attacker to pass the filter." =
 		[
 		0: "only inactive"

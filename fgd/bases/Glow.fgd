@@ -1,6 +1,7 @@
 @BaseClass appliesto(L4D2) = Glow
 	[
-	glowstate(choices) : "Glow State" : 0 =
+	glowstate[engine](integer) : "Glow Type" : 0
+	glowstate(choices) : "Glow Type" : 0 =
 		[
 		0: "OFF"
 		1: "+use"

@@ -5,7 +5,8 @@ line(255 255 255, targetname, actor) = BaseActBusy
 
 	actor(target_name_or_class) : "Actor(s) to affect" : : "NPC's that should act busy"
 	startactive(boolean) : "Start Active" : 0
-	searchtype(choices) : "Search Type" : "0" : "How to search for the entities using the targetname." =
+	searchtype[engine](integer) : "Search Type" : 0
+	searchtype(choices) : "Search Type" : 0 : "How to search for the entities using the targetname." =
 		[
 		0: "Entity Name"
 		1: "Classname"

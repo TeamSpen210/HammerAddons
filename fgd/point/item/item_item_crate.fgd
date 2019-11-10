@@ -7,13 +7,15 @@
 	[
 	model[MBase](studio) : "Model" : "models/items/item_item_crate.mdl" : "The model of this item_item_crate. Only works when this crate's appearance is set to use a custom model."
 
-	cratetype(choices) : "Crate Contains" : "0" =
+	cratetype[engine](integer) : "Crate Contents": 0
+	cratetype(choices) : "Crate Contains" : 0 =
 		[
 		0: "Contains specified item"
 		1 : "Contains point_template (use specific resupply)" [MBase]
 		]
 
-	crateappearance(choices) : "Crate Appearance" : "0" =
+	crateappearance[engine](integer) : "Crate Appearance" : 0
+	crateappearance(choices) : "Crate Appearance" : 0 =
 		[
 		0: "Default Appearance"
 		1: "Radar Beacon Crate"
