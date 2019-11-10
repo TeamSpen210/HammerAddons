@@ -2,7 +2,7 @@
 	appliesto(P2) 
 	studio("models/editor/prop_paint_bomb.mdl") = prop_paint_bomb: "Large blob of gel which explodes on impact. Respawn with a point_template."
 	[
-	cubetype[engine](boolean) : "Bomb Type" : 0
+	bombtype[engine](boolean) : "Bomb Type" : 0
 	bombtype(choices) : "Bomb Type" : 0 : "The type of explosion." =
 		[
 		0: "Dry Bomb"
