@@ -66,7 +66,7 @@ FEATURES = {
     'EP1': {'INSTANCING'},
     'EP2': {'INSTANCING'},
 
-    'MBASE': {'HL2', 'EP1', 'EP2'},
+    'MBASE': {'HL2', 'EP1', 'EP2', 'INSTANCING'},
     
     'L4D': {'INSTANCING'},
     'L4D2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
