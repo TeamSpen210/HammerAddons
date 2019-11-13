@@ -21,6 +21,8 @@ from srctools.fgd import (
     EntityDef, EntityTypes,
     HelperTypes, IODef,
     KeyValues, ValueTypes,
+    HelperExtAppliesTo,
+    HelperWorldText,
 )
 from srctools.filesys import RawFileSystem
 
@@ -151,7 +153,7 @@ def _polyfill_worltext(fgd: FGD):
         ent.helpers[:] = [
             helper
             for helper in ent.helpers
-            if helper[0] is not HelperTypes.ENT_WORLDTEXT
+            if not isinstance(helper, HelperWorldText)
         ]
 
 
@@ -271,21 +273,20 @@ def get_appliesto(ent: EntityDef) -> List[str]:
     """
     pos = None
     applies_to: Set[str] = set()
-    for i, (helper_type, args) in enumerate(ent.helpers):
-        if helper_type is HelperTypes.EXT_APPLIES_TO:
+    for i, helper in enumerate(ent.helpers):
+        if isinstance(helper, HelperExtAppliesTo):
             if pos is None:
                 pos = i
-            applies_to.update(args)
+            applies_to.update(helper.tags)
 
     if pos is None:
         pos = 0
     arg_list = sorted(applies_to)
     ent.helpers[:] = [
-        tup for tup in
-        ent.helpers
-        if tup[0] is not HelperTypes.EXT_APPLIES_TO
+        help for help in ent.helpers
+        if not isinstance(help, HelperExtAppliesTo)
     ]
-    ent.helpers.insert(pos, (HelperTypes.EXT_APPLIES_TO, arg_list))
+    ent.helpers.insert(pos, HelperExtAppliesTo(arg_list))
     return arg_list
 
 
@@ -534,8 +535,7 @@ def action_export(
             # Strip applies-to helper and ordering helper.
             ent.helpers[:] = [
                 helper for helper in ent.helpers
-                if helper[0] is not HelperTypes.EXT_APPLIES_TO and
-                   helper[0] is not HelperTypes.EXT_ORDERBY
+                if not helper.IS_EXTENSION
             ]
             for category in [ent.inputs, ent.outputs, ent.keyvalues]:
                 # For each category, check for what value we want to keep.
@@ -616,59 +616,31 @@ def action_export(
 
     print('Applying helpers to child entities...')
     for ent in fgd.entities.values():
-        # Strip applies-to helper.
-        ent.helpers[:] = [
-            helper for helper in ent.helpers
-            if helper[0] is not HelperTypes.EXT_APPLIES_TO
-        ]
-
-        # Copy all helpers from bases.
-        # If any are sprite/model, don't add SIZE ones.
-        # But ignore if they have no args - when the keyvalue
-        # is empty you'll see the size value.
-        model_helpers = [
-            HelperTypes.MODEL,
-            HelperTypes.MODEL_NEG_PITCH,
-            HelperTypes.MODEL_PROP,
-        ]
-        sprite_helpers = [
-            HelperTypes.SPRITE,
-            HelperTypes.ENT_SPRITE,
-        ]
-        size_overrides = model_helpers + sprite_helpers
-        allow_size = all(
-            typ not in size_overrides or not args
-            for typ, args in
-            ent.helpers
-        )
-        has_sprite = any(
-            typ in sprite_helpers
-            for typ, args in ent.helpers
-        )
-        has_model = any(
-            typ in model_helpers
-            for typ, args in ent.helpers
-        )
-
+        # Merge them together.
+        helpers = []
         for base in ent.bases:
-            for helper in base.helpers:
-                if helper in ent.helpers: # No duplicates
-                    continue
-                typ, args = helper
+            helpers.extend(base.helpers)
+        helpers.extend(ent.helpers)
 
-                # Never copy this.
-                if typ is HelperTypes.EXT_APPLIES_TO:
-                    continue
+        # Then optimise this list.
+        ent.helpers.clear()
+        for helper in helpers:
+            if helper in ent.helpers:  # No duplicates
+                continue
+            # Strip applies-to helper.
+            if isinstance(helper, HelperExtAppliesTo):
+                continue
 
-                # Don't inherit models or sprites if the child has those
-                # already.
-                if has_model and typ in model_helpers:
-                    continue
-                if has_sprite and typ in sprite_helpers:
-                    continue
+            # For each, check if it makes earlier ones obsolete.
+            overrides = helper.overrides()
+            if overrides:
+                ent.helpers[:] = [
+                    helper for helper in ent.helpers
+                    if helper.TYPE not in overrides
+                ]
 
-                if allow_size or typ is not HelperTypes.CUBE:
-                    ent.helpers.append(helper)
+            # But it itself should be added to the end regardless.
+            ent.helpers.append(helper)
 
     # Helpers aren't inherited, so this isn't useful anymore.
     for ent in fgd.entities.values():
