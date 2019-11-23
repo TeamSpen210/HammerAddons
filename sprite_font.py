@@ -23,7 +23,7 @@ except IndexError:
 
 chars = list(map(LETTERS.__getitem__, text.lower()))
 
-width = sum(c.width for c in chars)
+width = sum(c.width for c in chars) + 1
 
 img = Image.new('RGBA', (width, 11), (0, 0, 0, 0))
 
