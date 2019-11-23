@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint)
+	autovis(Entities, Constraints, Constraint System)
 	color(128 128 128) 
 	iconsprite("editor/phys_constraintsystem.vmt") 
 = phys_constraintsystem: "An entity used to manage a group of interacting constraints and keep them stable. " +

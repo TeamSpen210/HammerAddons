@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable)
+	autovis(Entities, Constraints, Ragdoll Magnet)
 	iconsprite("editor/ficool2/phys_ragdollmagnet")
 	sphere(radius) 
 	line(255 255 0, targetname, target) 

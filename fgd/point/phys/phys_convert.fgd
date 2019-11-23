@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
+	autovis(Entities, phys_convert)
 	color(128 128 128) 
 	line(255 255 0, targetname, target) 
 	iconsprite("editor/phys_convert.vmt") 

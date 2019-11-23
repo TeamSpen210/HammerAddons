@@ -1,4 +1,5 @@
 @PointClass base(TwoObjectPhysics)
+	autovis(Entities, Constraints, Length)
 	studio("models/editor/axis_helper.mdl") 
 	line(255 255 255, targetname, attach1) 
 	line(255 255 255, targetname, attach2) 
