@@ -1,6 +1,7 @@
 @PointClass 
 	// This is implemented via a VScript method.
 	appliesto(+srctools, +VScript)
+	iconsprite("editor/comp_precache_sound")
 	autovis(Postcompiler, Precacher)
 	size(-8 -8 -8, 8 8 8) 
 = comp_precache_sound:

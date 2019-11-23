@@ -1,4 +1,5 @@
-@PointClass base(Angles) 
+@PointClass base(Angles)
+	iconsprite("editor/comp_precache_model") 
 	studioprop() 
 	appliesto(srctools)
 	autovis(Postcompiler, Precacher)

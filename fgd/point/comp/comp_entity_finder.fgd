@@ -1,7 +1,7 @@
 @PointClass
     appliesto(srctools)
 	autovis(Postcompiler, Entity Finder)
-    size(-8 -8 -8, 8 8 8)
+    iconsprite("editor/comp_entity_finder")
     sphere(radius)
     cylinder(255 255 255, targetname, targetref, radius)
     line(255 255 255, targetname, kv1_known)

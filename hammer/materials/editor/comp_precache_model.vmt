@@ -1,0 +1,8 @@
+Sprite
+{
+	$baseTexture "editor/comp_precache_model"
+	$spriteorientation "vp_parallel"
+	$spriteorigin "[ 0.50 1.0 ]"
+	$spriterendermode 2
+	$no_fullbright 1
+}
