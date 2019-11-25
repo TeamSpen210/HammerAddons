@@ -102,6 +102,7 @@ def _load() -> None:
         globals,
         instancing,
         kv_setter,
+        movement,
         packing,
         portal2,
         sceneset,
