@@ -507,8 +507,10 @@ def action_import(
         applies_to = get_appliesto(ent)
         if not match_tags(expanded, applies_to):
             applies_to.append(engine_tag)
-        if not applies_to:
-            ent.helpers.remove((HelperTypes.EXT_APPLIES_TO, []))
+        ent.helpers[:] = [
+            helper for helper in ent.helpers
+            if not isinstance(helper, HelperExtAppliesTo)
+        ]
 
         with open(path, 'w') as f:
             ent.export(f)
