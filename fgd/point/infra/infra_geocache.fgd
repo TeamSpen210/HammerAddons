@@ -1,0 +1,8 @@
+@PointClass base(BaseEntityAnimating) 
+	studio("models/props_clutter/geo_cache_001.mdl")
+= infra_geocache: "Geocache"
+	[
+
+	// Outputs
+	output OnPickedUp(void) : "Fired when this is picked up."
+	]

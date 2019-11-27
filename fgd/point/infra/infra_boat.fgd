@@ -1,0 +1,21 @@
+@PointClass base(BaseDrivableVehicle) 
+	appliesto(INFRA)
+	studioprop()
+= infra_boat: "Boat"
+	[
+	model(studio) : "World model" : "models/props_vehicles/rowboat_driveable.mdl"
+	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/infra_boat.txt"
+	vehiclelocked(boolean) : "Start locked" : 0
+	ignoremoveparent(boolean) : "Ignore Move Parent on Exit" : 0 : "Should the player ignore this vehicle's move parent went performing exit checks."
+	ignoreplayer(boolean) : "Ignore Player collision" : 0 : "The player won't collide against this vehicle when moving around."
+
+	// Inputs
+	input EnterVehicle(void) : "Forces the activator (or player) into the vehicle."
+	input ExitVehicle(void) : "Boots the prisoner out of the vehicle."
+	input Lock(void) : "Prevent the player from entering or exiting the vehicle."
+	input Unlock(void) : "Re-allow the player to enter or exit the vehicle."
+
+	// Outputs
+	output PlayerOn(void) : "Player entered the vehicle"
+	output PlayerOff(void) : "Player exited the vehicle"
+	]

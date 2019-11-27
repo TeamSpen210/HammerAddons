@@ -71,6 +71,7 @@
 	glowdist[since_CSGO](integer) : "Glow Distance" : 1024
 	glowenabled[since_CSGO](boolean) : "Does the prop glow by default?" : 0
 	glowcolor[since_CSGO](color255) : "Glow Color (R G B)" : "255 255 255" : "The color of the glow (if enabled)."
+	candamageplayer[INFRA](boolean) : "Can Damage Player" : 0 : "If set, this door will kill the player blocking it. Used for the large blast doors in infra_c7_m2_bunker."
 
 	// Inputs
 	input Open(void) : "Open the door, if it is not fully open."
@@ -90,6 +91,9 @@
 	input SetGlowDisabled[since_CSGO](void) : "Stops the glow."
 	input SetUnbreakable[L4D, L4D2](void) : "The door can't be broken."
 	input SetBreakable[L4D, L4D2](void) : "The door can be broken."
+	input SetAnimation[INFRA](string) : "Force the door to play an animation. The parameter should be the name of the animation."
+	input SetAnimationNoReset[INFRA](string) : "Force the door to play an animation unless the door " +
+		"is already playing the animation. The parameter should be the name of the animation."
 
 	// Outputs
 	output OnClose(void) : "Fired when the door is told to close."

@@ -1,18 +1,28 @@
 @FilterClass base(filter_base)
 	autovis(Logic, Filters)
 	iconsprite("editor/filter_multiple.vmt") 
-	line(0 255 0, targetname, filter01) 
-	line(0 255 0, targetname, filter02) 
-	line(0 255 0, targetname, filter03) 
-	line(0 255 0, targetname, filter04) 
-	line(0 255 0, targetname, filter05) 
-	line(0 255 0, targetname, filter06) 
-	line(0 255 0, targetname, filter07) 
-	line(0 255 0, targetname, filter08) 
-	line(0 255 0, targetname, filter09) 
-	line(0 255 0, targetname, filter10) 
+	line(0 255 0, targetname, filter01)
+	line(0 255 0, targetname, filter02)
+	line(0 255 0, targetname, filter03)
+	line(0 255 0, targetname, filter04)
+	line(0 255 0, targetname, filter05)
+	line(0 255 0, targetname, filter06)
+	line(0 255 0, targetname, filter07)
+	line(0 255 0, targetname, filter08)
+	line(0 255 0, targetname, filter09)
+	line(0 255 0, targetname, filter10)
+	line(0 255 0, targetname, filter11)
+	line(0 255 0, targetname, filter12)
+	line(0 255 0, targetname, filter13)
+	line(0 255 0, targetname, filter14)
+	line(0 255 0, targetname, filter15)
+	line(0 255 0, targetname, filter16)
+	line(0 255 0, targetname, filter17)
+	line(0 255 0, targetname, filter18)
+	line(0 255 0, targetname, filter19)
+	line(0 255 0, targetname, filter20)
 = filter_multi: "A filter that tests the activator against multiple filters. " +
-	"This allows you to build more complex filters, such as'Allow anyone on Team 1 who is also class engineer', " +
+	"This allows you to build more complex filters, such as 'Allow anyone on Team 1 who is also class engineer', " +
 	"or 'Allow everyone except classes npc_zombie and npc_headcrab'."
 	[
 	filtertype[engine](integer) : "Logic Type" : 0
@@ -37,4 +47,14 @@
 	filter08[since_L4D](filterclass) : "Filter 8" : : "Activator filter to test."
 	filter09[since_L4D](filterclass) : "Filter 9" : : "Activator filter to test."
 	filter10[since_L4D](filterclass) : "Filter 10" : : "Activator filter to test."
+	filter11[INFRA](filterclass) : "Filter 11" : : "Activator filter to test."
+	filter12[INFRA](filterclass) : "Filter 12" : : "Activator filter to test."
+	filter13[INFRA](filterclass) : "Filter 13" : : "Activator filter to test."
+	filter14[INFRA](filterclass) : "Filter 14" : : "Activator filter to test."
+	filter15[INFRA](filterclass) : "Filter 15" : : "Activator filter to test."
+	filter16[INFRA](filterclass) : "Filter 16" : : "Activator filter to test."
+	filter17[INFRA](filterclass) : "Filter 17" : : "Activator filter to test."
+	filter18[INFRA](filterclass) : "Filter 18" : : "Activator filter to test."
+	filter19[INFRA](filterclass) : "Filter 19" : : "Activator filter to test."
+	filter20[INFRA](filterclass) : "Filter 20" : : "Activator filter to test."
 	]

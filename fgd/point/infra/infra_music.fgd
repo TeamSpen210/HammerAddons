@@ -1,0 +1,19 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(INFRA)
+	iconsprite("editor/infra_music.vmt")
+= infra_music: "Music"
+	[
+	sound(sound) : "Music" : : "Soundscript to play."
+	loop(boolean) : "Loop" : 0 : "Loop the music until stopped?"
+
+	// Inputs
+	input Start(void) : "Starts the music."
+	input Stop(void) : "Stops the music."
+	input Pause(void) : "Pauses the music."
+	input Resume(void) : "Resumes the music."
+	input FadeIn(float) : "Fades in the music from the beginning. Takes fade length in seconds as a parameter."
+	input FadeOut(float) : "Fades out the music. Takes fade length in seconds as a parameter."
+
+	// Outputs
+	output OnFinishedPlaying(void) : "Fired when the music has reached its end and finished playing."
+	]

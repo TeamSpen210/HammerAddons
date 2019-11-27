@@ -28,9 +28,17 @@
 	skewaccelerationforward(boolean) : "Skew Acceleration Forward" : 1 : "If this is set fake acceleration will be more noticeable in the direction of the proxy."
 	accelerationscalar(float) : "Acceleration Scalar" : 1.0 : "Multiply the fake acceleration by this ammount."
 	easeanglestocamera(boolean) : "Ease Angles To Camera" : 0 : "Move the player's angles to the camera - this will stop them from looking around."
+	
+	ignoreangle[INFRA](boolean) : "Ignore Camera Angle" : 0 : "Ignore the camera angle and use player's eye angles."
+	ignoreroll[INFRA](boolean) : "Ignore Roll" : 0 : "Ignore the roll of the camera."
+	shouldtransition[INFRA](boolean) : "Transition Across Levels" : 1 : "Should the entity continue into the next map? " +
+		"This is used in tunnel3, but not in metroride. " +
+		"In metroride we have a similar train setup on the other map so it makes no sense to transition. " +
+		"In tunnel3 the setup is much simpler, so we can just transition the raft model and everything that goes with it."
 
 	// Inputs
 	input Enable(void) : "Enable the view proxy, and start modifying the player's view."
 	input Disable(void) : "Disable the view proxy, and start modifying the player's view."
 	input TeleportPlayerToProxy(void) : "Move the player to the view proxy."
+	input OffsetToPlayerAndEnable(void) : "Enable the viewproxy, but alter the offset such that it doesn't move the camera."
 	]

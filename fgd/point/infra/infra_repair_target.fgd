@@ -1,0 +1,18 @@
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	appliesto(INFRA)
+	iconsprite("editor/infra_repair_target.vmt")
+	sphere(range)
+= infra_repair_target: "Repair target"
+	[
+
+	// Inputs
+	input Trigger(void) : "Marks this target as repaired and increments the stat. " +
+		"Doesn't do anything if it's disabled or if it has already been repaired."
+	input Untrigger(void) : "Marks this target as broken again and decrements the stat. " +
+		"It can be triggered again to restore the stat but that won't replay the sound. " +
+		"Doesn't do anything if disabled."
+
+	// Outputs
+	output OnTriggered(void) : "Fired when this is triggered."
+	output OnUntriggered(void) : "Fired when this is untriggered."
+	]

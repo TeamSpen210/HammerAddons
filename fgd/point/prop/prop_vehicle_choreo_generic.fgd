@@ -31,4 +31,5 @@
 	// Outputs
 	output OnOpen(void) : "Fired when the vehicle is open enough to enter."
 	output OnClose(void) : "Fired when the vehicle is too closed to enter."
+	output OnPlayerUse[INFRA](void) : "Fired when the player presses the use key while inside the vehicle."
 	]

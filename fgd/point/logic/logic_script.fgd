@@ -36,4 +36,6 @@
 	group13(target_destination) : "EntityGroup[13]"
 	group14(target_destination) : "EntityGroup[14]"
 	group15(target_destination) : "EntityGroup[15]"
+	
+	shouldtransition[INFRA](boolean) : "Transition Across Levels" : 0 : "Transition this script across levels."
 	]

@@ -14,7 +14,7 @@
 		4: "Particle Rain" [since_L4D]
 		5: "Particle Ash" [since_L4D]
 		6: "Particle Rainstorm" [since_L4D2]
-		7: "Particle Snow" [since_CSGO]
+		7: "Particle Snow" [since_CSGO, INFRA]
 		8: "Particle Bugs" [since_L4D2]
 		9: "Particle Smoke" [since_L4D2]
 		]

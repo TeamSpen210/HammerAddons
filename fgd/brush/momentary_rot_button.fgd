@@ -52,6 +52,23 @@
 		46: "Buttons.snd46: Combine click fizz (deny)"
 		47: "Buttons.snd47: Combine click talker"
 		]
+	sounds[INFRA](choices) : "Sounds" : 0 : "Sound played when pressed." =
+		[
+		0: "None"
+		1: "button_001"
+		2: "button_002"
+		3: "button_003"
+		4: "button_004"
+		5: "button_005"
+		6: "button_006"
+		7: "button_007"
+		8: "button_008"
+		9: "vcr_button_001"
+		21: "lever_004"
+		22: "lever_002"
+		23: "lever_003"
+		24: "lever_001"
+		]
 
 	distance(float) : "Distance" : 90 : "The maximum amount, in degrees, that the wheel is allowed to rotate."
 	returnspeed(float) : "Auto-return speed" : 0 : "If the 'Toggle' spawnflag is not set, " +

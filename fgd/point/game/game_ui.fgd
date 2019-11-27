@@ -19,15 +19,15 @@
 	// Inputs
 	input Deactivate(void) : "Return Player Control."
 	input Activate(string) : "Take Player Control."
-
-	input GetButtons(void) : "Fires OutButtons with the player's current button flags."
+	
+	input GetButtons[MBase](void) : "Fires OutButtons with the player's current button flags."
 
 	// Outputs
 	output PlayerOn(void) : "Fired whenever this entity starts controlling the player's input."
 	output PlayerOff(void) : "Fired whenever this entity stops controlling the player's input."
 
 	output OutButtons[MBase](integer) : "Outputs the player's current button flags when they are requested by the GetButtons input."
-	
+
 	output PressedMoveLeft(void) : "Fired whenever the player presses the moveleft key."
 	output PressedMoveRight(void) : "Fired whenever the player presses the moveright key."
 	output PressedForward(void) : "Fired whenever the player presses the forward key."

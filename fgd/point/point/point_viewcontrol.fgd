@@ -40,6 +40,18 @@
 	DontSetPlayerView(boolean) : "Don't set player view" : 0 : "Prevents this point_viewcontrol from actually controlling the player's view. " +
 		"FOV, player-affecting spawnflags, etc. may still happen."
 
+	startatplayer[INFRA](boolean) : "Start at Player" : 0 : "Should the camera start at the player instead of the camera position?"
+	smoothspeed[INFRA](boolean) : "Smooth Speed" : 1 : "Should the camera speed ease in and ease out?"
+	drawlocalplayer[INFRA](boolean) : "Draw Local Player" : 0 : "Should the local player be drawn when viewing from this camera?"
+	drawviewmodel[INFRA](boolean) : "Draw View Model" : 0 : "Should the view model be drawn when viewing from this camera?"
+	drawhud[INFRA](boolean) : "Draw HUD" : 1 : "Should the HUD be drawn when viewing from this camera?"
+	allowcontrols[INFRA](boolean) : "Allow Controls" : 0 : "Should the player be allowed to use his movement controls?"
+	freezeinstead[INFRA](boolean) : "Freeze Instead" : 0 : "If controls are disabled, should the player be disallowed from using any of his controls (+use, +attack, VGUI screens etc.)?"
+	disableatend[INFRA](boolean) : "Disable at End" : 0 : "Disable the camera once it reaches the end of its path?"
+	holsterweapons[INFRA](boolean) : "Holster Weapons" : 0 : "Should the player holster his weapons while under control of the camera?"
+	teleportplayertoend[INFRA](boolean) : "Teleport Player to End" : 0 : "Should the player be teleported to the end once the camera reaches the end of its path?"
+	pathlengthinseconds[INFRA](float) : "Path Length in Seconds" : 5 : "How long does this path last? Smaller numbers means faster camera."
+
 	// Inputs
 	input Enable(void) : "Enable the point_viewcontrol, and start controlling the player's view."
 	input Disable(void) : "Disable the point_viewcontrol, and stop controlling the player's view."
@@ -49,6 +61,13 @@
 	input TeleportToView[since_P2](void) : "Teleport the player to the current position of the camera."
 	input SetTrackSpeed[since_P2](float) : "Set the speed that the camera will try to track it's target."
 	input SetPath[since_P2](string) : "Have the camera start following a new path."
+
+	input EnableControls[INFRA](void) : "Enables player's controls."
+	input DisableControls[INFRA](void) : "Disables player's controls."
+	input EnableCursor[INFRA](void) : "Enables player's mouse cursor."
+	input DisableCursor[INFRA](void) : "Disables player's mouse cursor."
+	input SetTargetNode[INFRA](string) : "Have the camera start following a new path."
+	input Reverse[INFRA](void) : "Should be fired when the camera is already moving along some path or reached the end of it. Causes it to move the same path but backwards."
 
 	// Outputs
 	output OnEndFollow(void) : "Fired when the point_viewcontrol deactivates, due to the Disable input being received, the Entity to Look At being destroyed, or the Hold Time expiring."

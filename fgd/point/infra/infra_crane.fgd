@@ -1,0 +1,49 @@
+@PointClass base(BaseDrivableVehicle) 
+	appliesto(INFRA)
+	studioprop()
+= infra_crane: "Crane"
+	[
+	model(studio) : "World model" : "models/props_machinery/operator_seat_001.mdl"
+	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/infra_crane.txt"
+	vehiclelocked(boolean) : "Start locked" : 0
+	ignoremoveparent(boolean) : "Ignore Move Parent on Exit" : 0 : "Should the player ignore this vehicle's move parent went performing exit checks."
+	ignoreplayer(boolean) : "Ignore Player collision" : 0 : "The player wont collide against this vehicle when moving around."
+	playercanshoot(boolean) : "Can the player shoot" : 0 : "Lets the player shoot their weapon while in the vehicle"
+
+	// Inputs
+	input Open(void) : "Plays the vehicle's open animation and unlocks the vehicle for entry or exit."
+	input Close(void) : "Plays the vehicle's close animation and locks the vehicle for entry or exit."
+	input EnterVehicle(void) : "Forces the activator (or player) into the vehicle."
+	input ExitVehicle(void) : "Boots the prisoner out of the vehicle."
+	input Viewlock(bool) : "Set true to prevent Gordon from looking around *at all*. Set false to let him look within limits."
+	input SetCanShoot(bool) : "Set if the driver can shoot their weapon."
+	input SetMaxPitch(float) : "Set max pitch for driver."
+	input SetMinPitch(float) : "Set min pitch for driver."
+	input SetMaxYaw(float) : "Set max yaw for driver."
+	input SetMinYaw(float) : "Set min yaw for driver."
+	input EnableControls(void) : "Enables the Pressed outputs."
+	input DisableControls(void) : "Disables the Pressed outputs."
+
+	// Outputs
+	output PlayerOn(void) : "Player entered the vehicle"
+	output PlayerOff(void) : "Player exited the vehicle"
+	output OnOpen(void) : "Fired when the vehicle is open enough to enter."
+	output OnClose(void) : "Fired when the vehicle too closed to enter."
+	output PressedUse(void) : "Fired when the player presses the use key inside the vehicle."
+	output PressedMoveLeft(void) : "Fired when the player presses the moveleft key inside the vehicle."
+	output PressedMoveRight(void) : "Fired when the player presses the moveright key inside the vehicle."
+	output PressedForward(void) : "Fired when the player presses the forward key inside the vehicle."
+	output PressedBack(void) : "Fired when the player presses the backward key inside the vehicle."
+	output PressedAttack(void) : "Fired when the player presses the attack key inside the vehicle."
+	output PressedAttack2(void) : "Fired when the player presses the secondary attack key inside the vehicle."
+	output UnpressedMoveLeft(void) : "Fired when the player releases the moveleft key inside the vehicle."
+	output UnpressedMoveRight(void) : "Fired when the player releases the moveright key inside the vehicle."
+	output UnpressedForward(void) : "Fired when the player releases the forward key inside the vehicle."
+	output UnpressedBack(void) : "Fired when the player releases the backward key inside the vehicle."
+	output UnpressedAttack(void) : "Fired when the player releases the attack key inside the vehicle."
+	output UnpressedAttack2(void) : "Fired when the player releases the secondary attack key inside the vehicle."
+	output XAxis(string) : "An output that fires whenever the X axis of the player's input changes. i.e. -1 when the player has moveleft key down, 1 when th" + "e player has moveright key down, and 0 if neither."
+	output YAxis(string) : "An output that fires whenever the Y axis of the player's input changes. i.e. -1 when the player has backward key down, 1 when th" + "e player has forward key down, and 0 if neither."
+	output AttackAxis(string) : "An output that fires whenever the state of the player's attack key changes. i.e. 1 when the player has the attack key down, 0 ot" + "herwise."
+	output Attack2Axis(string) : "An output that fires whenever the state of the player's secondary attack key changes. i.e. 1 when the player has the secondary a" + "ttack key down, 0 otherwise."
+	]

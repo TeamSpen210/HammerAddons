@@ -18,7 +18,10 @@
 
 
 	// Inputs
-	input ChangeLevel(void) : "Cause the level change. Use this when triggering the level change with a button, etc."
+	input ChangeLevel[!INFRA](void) : "Cause the level change. Use this when triggering the level change with a button, etc."
+	input ChangeLevel[INFRA](void) : "Cause the level change by a fade to black. Use this when triggering the level change with a button, etc."
+	input ChangeLevelImmediately[INFRA](void) : "Cause the level change immediately without fading to black. Use this when triggering the level change with a button, etc."
+	input SetDesiredLoadingScreen[INFRA](string) : "Changes the desired loading screen for the next level. Loading screen name is limited to 32 characters!"
 
 	// Outputs
 	output OnChangeLevel(void) : "Fired when the level changes."

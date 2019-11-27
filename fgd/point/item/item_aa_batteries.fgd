@@ -1,0 +1,6 @@
+@PointClass base(Item)
+ 	appliesto(INFRA)
+	studio("models/items/batterypack_001.mdl")
+= item_aa_batteries: "Box of camera batteries"
+	[
+	]

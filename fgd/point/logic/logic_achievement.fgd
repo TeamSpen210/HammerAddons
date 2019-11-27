@@ -1,6 +1,5 @@
-
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) = logic_achievement: "Sends an achievement system related event from the map to the achievement system."
+= logic_achievement: "Sends an achievement system related event from the map to the achievement system."
 	[
 	achievementevent[engine](string) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input."
 	achievementname[engine](string) : "Achievement Name" : : "The name of the achievement to be awarded when this  entity receives a 'FireEvent' input."
@@ -94,7 +93,7 @@
 		"ACHIEVEMENT_EVENT_HL2_LAMDACACHE_EXITCATWALK": "Lambda: c17_08 side of building next to hallway leading to level exit"
 		"ACHIEVEMENT_EVENT_HL2_LAMDACACHE_ENDOFC1712B": "Lambda: c17_12b at map exit"
 		"ACHIEVEMENT_EVENT_HL2_LAMDACACHE_WHITEVAN": "Lambda: c17_13 white van in underground garage"
-	]
+		]
 	
 	achievementevent[EP1](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
@@ -111,7 +110,7 @@
 		"ACHIEVEMENT_EVENT_EP1_BEAT_GAME_NOHEALTHPICKUPS_END": "Beat EP1 without picking up any health. (end)"
 		"ACHIEVEMENT_EVENT_EP1_START_GAME": "Began EP1 (for tracking One Free Bullet)"
 		"ACHIEVEMENT_EVENT_EP1_BEAT_GAME": "Beat EP1 (for tracking One Free Bullet)"
-	]
+		]
 	
 	achievementevent[EP2](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
@@ -143,7 +142,7 @@
 		"ACHIEVEMENT_EVENT_EP2_WEBCACHE_07": "Web Cache: ep2_outland_04 gear cave rockfall ceiling cache"
 		"ACHIEVEMENT_EVENT_EP2_WEBCACHE_08": "Web Cache: ep2_outland_04 gear cave barnacle ceiling cache"
 		"ACHIEVEMENT_EVENT_EP2_WEBCACHE_09": "Web Cache: ep2_outland_04 gear cave poison crab wall cache"
-	]
+		]
 	
 	achievementevent[P1](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
@@ -164,7 +163,7 @@
 		"ACHIEVEMENT_EVENT_PORTAL_TRANSMISSION_RECEIVED": 	"Transmission Received"
 		]
 
-	achievementname[P2](choices) : "Achievement Name" : : "The name of the achievement to be awarded when this  entity receives a 'FireEvent' input." =
+	achievementname[P2](choices) : "Achievement Name" : : "The name of the achievement to be awarded when this entity receives a 'FireEvent' input." =
 		[
 		"ACH.SURVIVE_CONTAINER_RIDE": "Wake Up Call"
 		"ACH.WAKE_UP": "You Monster"

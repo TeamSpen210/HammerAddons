@@ -1,0 +1,29 @@
+@SolidClass base(Door) 
+	appliesto(INFRA) 
+= infra_button: "A brush entity that's designed to be used for a player-useable button."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Starts Open - OBSOLETE, use 'Spawn Position' key instead" : 0
+		4: "Non-solid to Player" : 0
+		8: "Passable" : 0
+		32: "Toggle" : 0
+		256: "Use Opens" : 1
+		512: "NPCs Can't" : 0
+		1024: "Touch Opens" : 0
+		2048: "Starts Locked" : 0
+		4096: "Silent" : 0
+		16384: "Can be held down" : 0
+		]
+
+	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction the door will move, when it opens."
+
+	// Inputs
+	input Press(void) : "Presses it as if it was pressed by a player."
+
+	// Outputs
+	output OnStartPressing(void) : "Fired when the player starts pressing the button."
+	output OnStopPressing(void) : "Fired when the player stops pressing the button."
+	output OnPressed(void) : "Fired when pressed."
+	output OnDamaged(void) : "Fired when damaged."
+	]
