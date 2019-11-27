@@ -87,14 +87,14 @@ def unify_mdl(path: str):
     return path
 
 
-def in_bbox(pos: Vec, bb_min: Vec, bb_max: Vec) -> bool:
-    """Check if the given position is inside a bounding box."""
-    if pos.x < bb_min.x or bb_max.x < pos.x:
-        return False
-    if pos.y < bb_min.y or bb_max.y < pos.y:
-        return False
-    if pos.z < bb_min.z or bb_max.z < pos.z:
-        return False
+def bsp_collision(point: Vec, planes: List[Tuple[Vec, Vec]]) -> bool:
+    """Check if the given position is inside a BSP node."""
+    for pos, norm in planes:
+        off = pos - point
+        # This is the actual distance, so we'll use a rather large
+        # "epsilon" to catch objects close to the edges.
+        if Vec.dot(off, norm) < -0.1:
+            return False
     return True
 
 
