@@ -1,4 +1,4 @@
-@PointClass base(BaseDrivableVehicle) 
+@PointClass base(BaseDriveableVehicle) 
 	appliesto(INFRA)
 	studioprop()
 = infra_boat: "Boat"

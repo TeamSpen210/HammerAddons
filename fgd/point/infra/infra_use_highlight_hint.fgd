@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Parentname, Angles)
+@PointClass base(BaseEntityPoint)
  	appliesto(INFRA)
 	iconsprite("editor/infra_use_highlight_hint.vmt")
 	line(255 255 255, targetname, useentity)
