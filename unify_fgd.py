@@ -90,7 +90,7 @@ TAGS_SPECIAL = {
   'ENGINE',  # Tagged on entries that specify machine-oriented types and defaults.
   'SRCTOOLS',  # Implemented by the srctools post-compiler.
   'PROPPER',  # Propper's added pseudo-entities.
-  'BEE2', # BEEmod's templates.
+  'BEE2',  # BEEmod's templates.
 }
 
 ALL_TAGS = set()  # type: Set[str]
@@ -131,6 +131,19 @@ def _polyfill_boolean(fgd: FGD):
                         ('0', 'No', frozenset()),
                         ('1', 'Yes', frozenset())
                     ]
+
+
+@_polyfill('until_asw')
+def _polyfill_particlesystem(fgd: FGD):
+    """Before Alien Swarm's Hammer, the particle system viewer was not available.
+
+    Substitute with just a string.
+    """
+    for ent in fgd.entities.values():
+        for tag_map in ent.keyvalues.values():
+            for kv in tag_map.values():
+                if kv.type is ValueTypes.STR_PARTICLE:
+                    kv.type = ValueTypes.STRING
 
 
 @_polyfill('until_p1')
@@ -614,7 +627,7 @@ def action_export(
         if not poly_tag or poly_tag in tags:
             polyfill(fgd)
 
-    print('Applying helpers to child entities...')
+    print('Applying helpers to child entities and optimising...')
     for ent in fgd.entities.values():
         # Merge them together.
         helpers = []
