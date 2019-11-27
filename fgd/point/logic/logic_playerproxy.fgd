@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint, DamageFilter) 
 	color(200 0 0) 
 	iconsprite("editor/logic_playerproxy.vmt")
+ 	autovis(Point Entities, Globals, Player Proxy)
 = logic_playerproxy: "An entity that is used to relay inputs/ouputs to the player and back to the world."
 	[
 	SetMaxInputArmor[MBase](integer) : "Max Input Armor" : 100 : "Sets the maximum armor a player can receive from the " +

@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint)
  	appliesto(INFRA)
+ 	autovis(Point Entities, Globals, INFRA Phone Signal)
 	iconsprite("editor/infra_phone_signal.vmt")
 = infra_phone_signal: "Phone signal"
 	[

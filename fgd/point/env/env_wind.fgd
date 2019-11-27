@@ -2,6 +2,7 @@
 	iconsprite("editor/env_wind.vmt")
 	color(200 0 0)
 	sphere(windradius) sphere(windradiusinner) 
+ 	autovis(Point Entities, Globals, Wind)
 = env_wind: "An entity to control wind in the map. Partially functional."
 	[
 	minwind(integer) : "Min normal speed" : 20 : "Minimum speed of the wind while idling."

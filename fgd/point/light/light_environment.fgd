@@ -3,6 +3,7 @@
 	iconsprite("editor/ficool2/light_env.vmt") 
 	color(255 255 0)
 	lightprop("models/editor/spot.mdl") 
+ 	autovis(Point Entities, Globals, Light Environment)
 = light_environment: "Sets the color and angle of the light from the sun and sky."
 	[
 	pitch(angle_negative_pitch) : "Pitch" : "0" : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."

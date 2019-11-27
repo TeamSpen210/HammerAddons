@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	iconsprite("editor/env_tonemap_controller.vmt") 
+ 	autovis(Point Entities, Globals, Tonemap Controller)
 	color(200 0 0)
 = env_tonemap_controller: "An entity that controls the HDR tonemapping for the player. Think of it as a method of controlling the exposure of the player's eyes."
 	[

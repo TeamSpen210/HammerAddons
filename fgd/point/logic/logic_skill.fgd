@@ -1,6 +1,7 @@
 @PointClass appliesto(MBase) 
 	base(BaseentityPoint) 
-	iconsprite("editor/logic_skill.vmt") = logic_skill :
+	iconsprite("editor/logic_skill.vmt")
+ = logic_skill :
 	"Fires various inputs and outputs related to difficulty levels. " +
 	"You can use this entity to figure out what difficulty the player is using."
 	[	

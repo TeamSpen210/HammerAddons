@@ -1,7 +1,8 @@
-
 @PointClass base(BaseEntityPoint)
 	color(200 0 0) 
-	iconsprite("editor/env_global.vmt") = env_global: "An entity to control a game-specific global states."
+	iconsprite("editor/env_global.vmt") 
+ 	autovis(Point Entities, Globals, Env Global)
+= env_global: "An entity to control a game-specific global states."
 	[
 	
 	globalstate(string) : "Global State to Set"

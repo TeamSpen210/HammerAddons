@@ -1,5 +1,7 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(TF2) = game_round_win: "Tells the game rules that the round has either been won (if a team is assigned) or enter Sudden Death mode (if no team is assigned)."
+	appliesto(TF2) 
+ 	autovis(Point Entities, Globals, Game Round End)
+= game_round_win: "Tells the game rules that the round has either been won (if a team is assigned) or enter Sudden Death mode (if no team is assigned)."
 	[
 	teammum[engine](integer) : "Team" : 0
 	teamnum(choices) : "Team" : 0 : "Team" =

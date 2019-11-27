@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(TF2) 
+ 	autovis(Point Entities, Globals,Ent Spawn Manager)
 = entity_spawn_manager: "An entity that spawns stuff at spawn points."
 	[
 	entity_name(string) : "Entity Name" : : "Name of the entity class we are supposed to spawn."

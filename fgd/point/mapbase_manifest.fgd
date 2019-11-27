@@ -2,6 +2,7 @@
 	base(BaseentityPoint) 
 	iconsprite("editor/mapbase_manifest.vmt") 
 	color(239 163 14) 
+ 	autovis(Point Entities, Globals, Mapbase Manifest)
 	= mapbase_manifest : "Mounts additional manifest files"
 	[
 	// Keys

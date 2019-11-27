@@ -1,9 +1,10 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(P2) 
+ 	autovis(Point Entities, Globals, Challenge Mode End)
 	studioprop("models/props/stopwatch_finish_line.mdl") = portal_race_checkpoint: "Checkpoint for race maps."
 	[
 	resettime(float) : "Reset Time" : 5.0 : "The time it takes for the checkpoint to reset after activation"
-	skin(integer) : "<Skin>" : 3 : "Ignore, needed to make the skin lit."
+	skin(integer) readonly: "<Skin>" : 3 : "Ignore, needed to make the skin lit."
 
 	// Inputs
 	input Activate(void) : "Activates the checkpoint."

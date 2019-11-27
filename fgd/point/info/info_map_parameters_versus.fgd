@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(L4D, L4D2)
+ 	autovis(Point Entities, Globals, Map Parameters)
 = info_map_parameters_versus: "L4D-specific map parameters for versus games."
 	[
 	painpilldensity(float) : "Pain Pill density" : "6.48" : "Pain Pill density per sq 100 yards"

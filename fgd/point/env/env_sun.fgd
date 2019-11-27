@@ -2,6 +2,7 @@
 	color(255 0 0) 
 	color(200 0 0) 
 	iconsprite("editor/env_sun.vmt") 
+ 	autovis(Point Entities, Globals, Sun)
 	line(255 255 0, targetname, target) = env_sun: "An entity to control & draw a sun effect in the sky."
 	[
 	target(target_destination) : "Viewer entity" : : "Name of an entity used to determine where the sun is in the skybox. The sun should be lined up on a line from this entity to the env_sun entity."

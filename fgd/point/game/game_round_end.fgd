@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(CSGO) 
+ 	autovis(Point Entities, Globals, Game Round End)
 	iconsprite("editor/game_end.vmt") = game_round_end: "An entity that ends a multiplayer game ROUND."
 	[
 

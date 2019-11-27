@@ -1,6 +1,7 @@
 @PointClass appliesto(MBase) 
 	base(BaseEntityPoint)
 	iconsprite("editor/game_metadata.vmt") 
+ 	autovis(Point Entities, Globals, Game Metadata)
 = game_metadata : "An entity that provides metadata for things like Discord." 
 	[
 	spawnflags(flags) =

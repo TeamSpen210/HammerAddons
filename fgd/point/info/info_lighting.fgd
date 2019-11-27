@@ -2,6 +2,7 @@
 @PointClass base(StaticTargetname)
 	iconsprite("editor/info_lighting.vmt") 
 	halfgridsnap
+ 	autovis(Point Entities, Props, Static Lighting Origins)
 = info_lighting: "An entity that can be used to change the lighting origin of a prop_static. " +
 	"Set the prop_static's Lighting Origin to point at this entity to make the prop_static light as if it was at the info_lighting's origin. " +
 	" Good for prop_static entities that are embedded in world geometry (like rocks/windows/etc)."

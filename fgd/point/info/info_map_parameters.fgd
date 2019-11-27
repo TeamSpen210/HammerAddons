@@ -1,6 +1,7 @@
 
 @PointClass base(BaseEntityPoint) 
-	appliesto(CSGO, L4D, L4D2) 
+	appliesto(CSGO, L4D, L4D2)
+ 	autovis(Point Entities, Globals, Map Parameters) 
 = info_map_parameters: "L4D or CS Map parameters. Used to set which teams can buy items, and the C4 bomb detonation radius."
 	[
 	// L4D

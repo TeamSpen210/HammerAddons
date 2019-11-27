@@ -1,6 +1,8 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(MBase) 
-	 iconsprite("editor/hl2_gamerules.vmt") color(239 163 14) = hl2_gamerules : "Proxy entity for HL2 Gamerules"
+	 iconsprite("editor/hl2_gamerules.vmt") color(239 163 14) 
+ 	autovis(Point Entities, Globals, Gamerules)
+	= hl2_gamerules : "Proxy entity for HL2 Gamerules"
 	[	
 	DefaultCitizenType[engine](integer) : "Default Citizen Type" : 0
 	DefaultCitizenType(choices) : "Default Citizen Type" : 0 : "Overrides the default citizen type." =
