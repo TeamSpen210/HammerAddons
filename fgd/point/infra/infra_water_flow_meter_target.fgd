@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint, EnableDisable)
  	appliesto(INFRA)
+ 	autovis(Point Entities, Camera Targets, Water Flow)
 	iconsprite("editor/infra_water_flow_meter_target.vmt")
 	sphere(range)
 = infra_water_flow_meter_target: "Water flow meter target"

@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(INFRA)
+ 	autovis(Point Entities, Camera Targets, Damage Target)
 	iconsprite("editor/infra_camera_target.vmt")
 	sphere(range)
 = infra_camera_target: "Camera target"

@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(INFRA)
+ 	autovis(Point Entities, Camera Targets, Corruption Target)
 	iconsprite("editor/infra_corruption_target.vmt")
 	sphere(range)
 = infra_corruption_target: "Corruption target"

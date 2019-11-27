@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityAnimating, SetModel, EnableDisable) 
 	appliesto(INFRA)
+ 	autovis(Point Entities, Camera Targets, Document)
 	studio()
 = infra_document: "Document"
 	[
