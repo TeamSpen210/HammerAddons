@@ -625,7 +625,8 @@ def group_props_ent(
     min_cluster: int,
 ) -> Iterator[List[StaticProp]]:
     """Given the groups of props, merge props according to the provided ents."""
-    bbox_groups = defaultdict(list)  # type: Dict[Tuple[str, FrozenSet[str]], List[Tuple[Vec, Vec]]]
+    # (name, skinset) -> list of boxes, constructed as 6 (pos, norm) tuples.
+    combine_sets = defaultdict(list)  # type: Dict[Tuple[str, FrozenSet[str]], List[List[Tuple[Vec, Vec]]]]
 
     empty_fs = frozenset('')
 
@@ -646,10 +647,32 @@ def group_props_ent(
                     mdl.iter_textures([conv_int(ent['skin'])])
                 })
 
-        bbox_groups[name, skinset].append(Vec.bbox(
-            Vec.from_str(ent['mins']) + origin,
-            Vec.from_str(ent['maxs']) + origin,
-        ))
+        # Compute 6 planes to use for collision detection.
+        angles = Vec.from_str(ent['angles'])
+        mins, maxes = Vec.bbox(
+            Vec.from_str(ent['mins']),
+            Vec.from_str(ent['maxs']),
+        )
+        # Subtract off the midpoint, so these are pointing away from the center
+        # This only matters if the origin of the ent is outside the box.
+        midpoint = (mins + maxes) / 2
+        mins -= midpoint
+        mins -= midpoint
+        # Then adjust the origin to compensate.
+        origin += midpoint.rotate(*angles)
+
+        # Enlarge slightly to ensure it never has a zero area.
+        # Otherwise the normal could potentially be invalid.
+        mins -= 0.05
+        maxes += 0.05
+        planes = []  # type: List[Tuple[Vec, Vec]]
+
+        for offset in [mins, maxes]:
+            for axis in ('x', 'y', 'z'):
+                norm = Vec.with_axes(axis, offset).rotate(*angles)
+                planes.append((origin + norm, norm.norm()))
+
+        combine_sets[name, skinset].append(planes)
 
     # Each of these groups cannot be merged with other ones.
     for group_key, group in prop_groups.items():
@@ -663,15 +686,17 @@ def group_props_ent(
             group.clear()
             continue
 
-        for (name, skinset), bboxes in bbox_groups.items():
+        for (name, skinset), boxes in combine_sets.items():
             if skinset and skinset != group_skinset:
                 continue  # No match
             found = defaultdict(list)  # type: Dict[int, List[StaticProp]]
             for prop in list(group):
-                for bbox_min, bbox_max in bboxes:
-                    if in_bbox(prop.origin, bbox_min, bbox_max):
-                        # Group by this bbox list object's identity.
-                        found[id(bboxes)].append(prop)
+                for box in boxes:
+                    if bsp_collision(prop.origin, box):
+                        # Group by this box object's identity.
+                        # That's a cheap way to keep each propcombine set
+                        # grouped uniquely.
+                        found[id(boxes)].append(prop)
                         break
 
             for subgroup in found.values():
