@@ -392,7 +392,7 @@ class ModelManager:
                 with open(qc.ref_smd, 'rb') as fb:
                     child_ref = Mesh.parse_smd(fb)
 
-                if prop.skin != 0 and prop.skin <= len(mdl.skins):
+                if prop.skin != 0 and prop.skin < len(mdl.skins):
                     # We need to rename the materials to match the skin.
                     swap_skins = dict(zip(
                         mdl.skins[0],
