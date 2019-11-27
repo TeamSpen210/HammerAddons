@@ -16,11 +16,6 @@
 		0: "Nothing"
 		]
 
-	expressionoverride(string) : "Facial expression override"
-
-	// Inputs
-	input SetExpressionOverride(string) : "Set facial expression override"
-
 	// Outputs
 	output OnPlayerUse(void) : "Fires when a player +USEs Barney"
 	]

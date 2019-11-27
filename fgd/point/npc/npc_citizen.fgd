@@ -90,8 +90,6 @@
 		"models/odessa.mdl": "Odessa. DO NOT USE."
 		]
 
-	expressionoverride(string) : "Facial expression override"
-
 	notifynavfailblocked(boolean) : "Fire output when Nav is blocked?" : "0"
 
 	neverleaveplayersquad[engine](boolean) : "Permanent squad member?" : 0

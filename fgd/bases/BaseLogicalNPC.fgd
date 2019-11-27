@@ -12,7 +12,11 @@
 	hintgroup(string) : "Hint Group" : : "Hint groups are used by NPCs to restrict their hint-node searching to a subset of the map's hint nodes. Only hint nodes with matching hint group names will be considered by this NPC."
 	hintlimiting(boolean) : "Hint Limit Nav" : 0 : "Limits NPC to using specified hint group for navigation requests, but does not limit local navigation."
 	
-	additionalequipment(string) : "Weapon Held" : : "Gives the NPC a weapon. NPCs may attack oddly or not attack if they don't know how to use a particular weapon."
+	additionalequipment[engine](string) : "Weapon Held":  "0"
+	additionalequipment(choices) : "Weapon Held" : "0" : "Gives the NPC a weapon. NPCs may attack oddly or not attack if they don't know how to use a particular weapon." =
+		[
+		"0": "Nothing"
+		]
 	relationship(string) : "Relationship" : : "Changes whether this NPC likes or dislikes certain others. Format is: <string|targetname or classname> <string|disposition> <integer|rank>. Values for disposition are: D_HT (Hate), D_FR (Fear), D_LI (Like), D_NU, (Neutral)."
 	
 	spawnflags(flags) : "spawnflags" =

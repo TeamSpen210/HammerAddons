@@ -10,10 +10,6 @@
 		"models/props/portal_button_damaged02.mdl": "Slightly Damaged"
 		"models/props/portal_button_damaged01.mdl": "Very Damaged"
 		]
-	solid(choices) readonly : "Collisions" : 0 : "Don't change, setting this to a value other than 0 causes the button to become non-solid." =
-		[
-		0 : "Default"
-		]
 
 	// Outputs
 	output OnPressedBlue(void) : "Called in Coop when the button has been pressed by ATLAS."

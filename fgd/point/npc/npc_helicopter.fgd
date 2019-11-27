@@ -19,7 +19,7 @@
 		2097152: "Cast long shadow" : 0
 		]
 
-	initialspeed(string) : "Initial Speed" : "0"
+	initialspeed(float) : "Initial Speed" : 0
 	graceperiod(float) : "Grace Period" : 2.0 : "Time in seconds the helicopter has to see the player before he starts shooting"
 	patrolspeed(float) : "Patrol Speed" : 0 : "Speed at which the helicopter moves if he has no enemy."
 	FieldOfView[MBase](float) : "Field of View" : "-1.0" : "The helicoter's viewcone. (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"

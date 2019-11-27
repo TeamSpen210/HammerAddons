@@ -2,7 +2,6 @@
 	appliesto(HL1, EP1, EP2) 
 = func_recharge: "Old brush-based suit battery recharger."
 	[
-	_minlight(string) : "Minimum light level"
 	spawnflags(flags) : "spawnflags" =
 		[
 		8192: "Citadel recharger" : 0
