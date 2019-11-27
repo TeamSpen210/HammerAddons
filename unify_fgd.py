@@ -49,6 +49,7 @@ GAMES = [
     ('L4D2', 'Left 4 Dead 2'),
     ('ASW', 'Alien Swam'),
     ('P2', 'Portal 2'),
+    ('INFRA', 'INFRA'),
     ('CSGO', 'Counter-Strike Global Offensive'),
 
     ('SFM', 'Source Filmmaker'),
@@ -76,6 +77,7 @@ FEATURES = {
     'ASW': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'P2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'CSGO': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
+    'INFRA': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'P2DES': {'P2', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 }
 
