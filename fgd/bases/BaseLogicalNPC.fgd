@@ -110,7 +110,8 @@
 	input ForceInteractionWithNPC(string) : "Force the NPC to use a dynamic interaction with another NPC. Parameter format: <target NPC name> <dynamic interaction name>"
 	input UpdateEnemyMemory(string) : "Update (or Create) this NPC's memory of an enemy and its location"
 	input BecomeRagdoll(void) : "This NPC will instantly become a ragdoll with ZERO force (just go limp). OnDeath, OnHalfHealth, etc. Outputs will **NOT** BE FIRED."
-
+	
+	input SetBloodColor[MBase](integer) : "Changes this entity's blood color based on the internal enum in shareddefs.h."
 	input SetMoveType[MBase](integer) : "Sets this NPC's movetype."
 	input AddCapabilities[MBase](integer) : "Adds capabilities to this NPC."
 	input RemoveCapabilities[MBase](integer) : "Removes capabilities from this NPC."
@@ -157,4 +158,10 @@
 	output OnForcedInteractionFinished(void) : "NPCs in actbusies can no longer perform dynamic interactions."
 	output OnItemPickup[MBase](void) : "Fires when a NPC picks up an item, e.g. a citizen picking up a health kit or a scripted item picked up in response to PickupItem."
 	output OnStateChange[MBase](integer) : "Fires when a NPC's state changes, outputting the new state. (1 = Idle, 2 = Alert, 3 = Combat...)"
+
+	output OnWeaponEquip[MBase](void) : "Fires when this NPC/player acquires a weapon through any means, including spawn equipment. Passes the weapon as the activator."
+	output OnWeaponDrop[MBase](void) : "Fires when this NPC/player drops a weapon, including when they die."
+
+	output OnKilledNPC[MBase](ehandle) : "Fires when we kill a NPC. Passes the victim."
+	output OnKilledPlayer[MBase](ehandle) : "Fires when we kill a player. Passes the killed player." 
 	]

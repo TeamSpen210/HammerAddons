@@ -26,4 +26,7 @@
 		
 	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
 	input DisableDamageForces(void) : "Damaging the entity does *not* apply physics forces to it."
+
+	input SetInteraction[MBase](integer) : "Adds an interaction to this entity."
+	input RemoveInteraction[MBase](integer) : "Removes an interaction from this entity."
 	]

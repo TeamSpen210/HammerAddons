@@ -10,8 +10,10 @@
 		131072: "Strider Scout Scanner" : 0
 		]
 
-	spotlightlength(integer) : "SpotlightLength" : 500
-	spotlightwidth(integer) : "SpotlightWidth" : 50
+	CustomFlightSpeed[MBase](float) : "Custom Flight Speed" : "0" : "Overrides the scanner's default speed. 0 = use default"
+
+	spotlightlength(integer) : "Spotlight Length" : 500
+	spotlightwidth(integer) : "Spotlight Width" : 50
 
 	spotlightdisabled(boolean) : "Disable Spotlight" : 0
 	shouldinspect(boolean) : "Should inspect" : 1

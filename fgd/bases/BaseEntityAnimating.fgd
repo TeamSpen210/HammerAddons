@@ -76,7 +76,7 @@
 	input IgniteLifetime(float) : "Makes the entity catch on fire for a given amount of time."
 	input IgniteNumHitboxFires(integer) : "Makes the entity catch on fire with a given number of hitbox fire particles."
 	input IgniteHitboxFireScale(float) : "Makes the entity catch on fire with a given scale for hitbox fire particles."
-	input BecomeRagdoll(void) : "Kills the entity and creates a client-side ragdoll from the model. Input is only passed if the model contains ragdolling, for other models phys_convert can be used instead."
+	input BecomeRagdoll(void) : "Kills the entity and creates a client-side ragdoll from the model with ZERO force (just go limp). Input is only passed if the model contains ragdolling, for other models phys_convert can be used instead. OnDeath, OnHalfHealth, etc. outputs will **NOT** BE FIRED."
 	input SetLightingOrigin(string) : "Sets the entity to use as the entity's lighting origin. Any entity can be used."
 	input SetLightingOriginHack(string) : "Offsets the entity's lighting origin by their distance from an info_lighting_relative."
 	input fademindist(float) : "Sets distance at which the entity starts fading. If <0, the entity will disappear instantly when end fade is hit. The value will scale appropriately if the entity is in a 3D Skybox."
@@ -92,6 +92,11 @@
 	input SetModelScale[EP1, EP2](vector) : "Takes two values separated by a space. The first is the target model scale. " +
 		"The second value is the number of seconds the change in scale will be spread over."
 
+	input SetModel[MBase](string) : "Sets this entity's model. Must include 'models/' as well as the extension."
+	input CreateSeparateRagdoll[MBase](void) : "Creates a separate serverside ragdoll at this entity's origin."
+	input CreateSeparateRagdollClient[MBase](void) : "Creates a separate clientside ragdoll at this entity's origin."
+
 	// Outputs
 	output OnIgnite(void) : "Fired when this object catches fire."
+	output OnServerRagdoll[MBase](ehandle) : "Fires when this object becomes/creates a serverside ragdoll. Passes the ragdoll."
 	]

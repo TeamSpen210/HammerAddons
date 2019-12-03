@@ -26,17 +26,22 @@
 	line(255 255 255, targetname, inflictor)
 	line(255 255 255, targetname, attacker)
 	line(255 255 255, targetname, weapon)
-= point_damageinfo : "Applies damage with as precise control possible."
+= point_damageinfo : "Applies damage with full control over the variables of CTakeDamageInfo, providing as much precision as possible."
 	[
 	// Keys
-	DamageCustom(integer) : "Damage Custom" : : "Function not fully understood, likely something related to multiplayer"
-	MaxDamage(integer) : "Max Damage" : : "Function not fully understood, likely something related to multidamage"
-
-	//DamageBonus(integer) : "Damage Bonus" : : "" // No references found, likely unused
-	//DamageStats(integer) : "Damage Stats" : : "" // No references found, likely unused
+	DamageCustom(integer) : "Damage Custom" : : "A special, game-specific identifier mostly used in mods or multiplayer games."
+	DamageStats(integer) : "Damage Stats" : : "Function unknown, possibly unused"
 
 	ForceFriendlyFire(boolean) : "Force Friendly Fire" : 0 : "Disregards friendly fire safechecks and " +
 		"applies the damage regardless of the attacker's relationship to the victim."
+
+	AmmoType(integer) : "Ammo Type" : : "Uses a specific ammo type by order in the ammo def. (not to be confused with damage type)"
+	PlayerPenetrationCount(integer) : "Player Penetration Count" : : "Presumably how many players the inflictor has gone through before reaching the current victim. Appears to be unused in singleplayer games."
+	DamagedOtherPlayers(integer) : "Damaged Other Players" : : "Function unknown, possibly unused"
+
+	DamageForce(vector) : "Damage Force" : "0 0 0" : "The force to apply when the damage is applied."
+	DamagePosition(vector) : "Damage Position" : "0 0 0" : "What position the damage took place."
+	ReportedPosition(vector) : "Reported Position" : "0 0 0" : "Function unknown, possibly related to multidamage (buckshot)"
 
 	SuppressDeathSound(boolean) : "Suppress Death Sound" : 0 : "Attempts to suppress the target entity's death sound."
 
@@ -50,12 +55,14 @@
 	input SetWeapon(target_destination) : "Sets the weapon."
 	input SetDamage(integer) : "Sets the damage."
 	input SetMaxDamage(integer) : "Sets the max damage."
-	//input SetDamageBonus(integer) : "Sets the damage bonus."
+	input SetDamageBonus(integer) : "Sets the damage bonus."
 	input SetDamageType(integer) : "Sets the damage type."
 	input SetDamageCustom(integer) : "Sets the damage custom."
-	//input SetDamageStats(integer) : "Sets the damage stats."
+	input SetDamageStats(integer) : "Sets the damage stats."
 	input SetForceFriendlyFire(bool) : "Sets force friendly fire."
 	input SetAmmoType(integer) : "Sets the ammo type."
+	input SetPlayerPenetrationCount(integer) : "Sets player penetration count."
+	input SetDamagedOtherPlayers(integer) : "Sets damaged other players."
 	input SetDamageForce(vector) : "Sets the damage force."
 	input SetDamagePosition(vector) : "Sets the damage position."
 	input SetReportedPosition(vector) : "Sets the reported position."

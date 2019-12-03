@@ -99,7 +99,34 @@
 
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows" : 0
 
+	viewhideflags[MBase](choices) : "View ID nodraw" : 0 : "This keyvalue can control whether an entity should only draw on things like monitors or mirrors, " +
+		"or the opposite. The code for this is { m_iViewHideFlags & (1 << CurrentViewID()) } and supports any combination of view IDs." =
+		[
+		0 : "Draw normally"
+		193 : "Hide in main view (player's eyes)" // VIEW_MAIN + VIEW_INTRO_CAMERA + VIEW_SHADOW_DEPTH_TEXTURE
+		36 : "Hide in cameras" // VIEW_MONITOR + VIEW_INTRO_PLAYER
+		24 : "Hide in mirrors/water" // VIEW_REFLECTION + VIEW_REFRACTION
+		60 : "Hide in cameras and mirrors/water" // VIEW_MONITOR + VIEW_INTRO_PLAYER + VIEW_REFLECTION + VIEW_REFRACTION
+		2 : "Hide in 3D skybox" // VIEW_3DSKY
+		128 : "Hide projected texture shadows" // VIEW_SHADOW_DEPTH_TEXTURE
+		]
+
 	// Inputs
 	input Alpha(integer) : "Set the entity's alpha (0 - 255)."
 	input Color(color255) : "Set the entity's color (R G B)."
+
+	input SetRenderMode[MBase](integer) : "Sets this entity's render mode."
+	input SetRenderFX[MBase](integer) : "Sets this entity's render FX."
+	input SetViewHideFlags[MBase](integer) : "Sets this entity's view ID nodraw flags (takes raw flag combination)."
+	input AddEffects[MBase](integer) : "Adds an entity effect."
+	input RemoveEffects[MBase](integer) : "Removes an entity effect."
+	input EnableDraw[!MBase](void) : "Draws an entity if it is not drawn."
+	input DisableDraw[!MBase](void) : "Undraws an entity if it is drawn."
+	input EnableDraw[MBase](void) : "Draws an entity if it is not drawn. Equivalent to RemoveEffects > 32."
+	input DisableDraw[MBase](void) : "Undraws an entity if it is drawn. Equivalent to AddEffects > 32."
+	input AddEFlags[MBase](integer) : "Adds an entity flag. NOTE: Entity flags are not the spawn flags you see in Hammer. Use AddSpawnFlags to add spawnflags."
+	input RemoveEFlags[MBase](integer) : "Removes an entity flag. NOTE: Entity flags are not the spawn flags you see in Hammer. Use RemoveSpawnFlags to remove spawnflags."
+
+	// This is the closest I could get without putting this in Targetname, as most entities that use collision groups usually use render fields as well
+	input SetCollisionGroup[MBase](integer) : "Sets this entity's collision group."
 	]

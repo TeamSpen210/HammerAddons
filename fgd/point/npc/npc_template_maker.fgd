@@ -41,6 +41,6 @@
 	input SpawnNPCInRadius(void) : "Spawn an NPC somewhere within the maker's radius."
 	input SpawnNPCInLine(void) : "Spawn an NPC somewhere within a line behind the maker."
 	input SpawnMultiple(integer) : "Spawn multiple NPCs (uses destination group, else radius)."
-	input ChangeDestinationGroup(string) : "Switch to a different set of Destination entities."
+	input ChangeDestinationGroup(target_destination) : "Switch to a different set of Destination entities."
 	input SetMinimumSpawnDistance(integer) : "Set the minimum spawn distance from player to destination node."
 	]
