@@ -210,3 +210,17 @@
 	kv_value_global(string) : "Value - String" : : "The value to apply."
 	kv_value_local(target_destination) : "Value - Ent Name" : : "If set, use this fixed-up entity name."
 	]
+
+
+@PointClass base(Angles)
+	wirebox(mins, maxs)
+	iconsprite("editor/comp_propcombine_set")
+= comp_propcombine_set : "Specifies a group of props that will be combined together."
+	[
+	mins(vector) : "BBox Mins" : "-32 -32 -32": "Minimum offset from the entity, defining the shape."
+	maxs(vector) : "BBox Maxes" : "32 32 32": "Maximum offset from the entity, defining the shape."
+	name(target_source) : "Name" : : "Two sets with the same name will be treated as one."
+
+	prop(studio) : "Group Model" : : "If set, a combinable model used to define which others will be combined."
+	skin(integer) : "Group Skin" : 0 : "The skin for the Group Model."
+	]
