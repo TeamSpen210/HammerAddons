@@ -1,6 +1,6 @@
 @PointClass 
 	autovis(Props, Physics)
-	base(BasePropPhysics, BreakableProp, BaseFadeProp, SetModel)
+	base(BasePropPhysics, SetModel)
 	studioprop() 
 	sphere(fademindist) 
 	sphere(fademaxdist) 
