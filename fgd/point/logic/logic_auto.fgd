@@ -16,6 +16,9 @@
 	globalstate[Hl2, EP1, EP2](choices) : "Global State to Read" : : "If set, this specifies a global state to check before firing. The OnMapSpawn output will only fire if the global state is set." =
 		[
 		"": "--- None ---"
+		"is_console": "Game is running on a console"
+		"is_pc": "Game is running on a PC"
+		
 		"gordon_precriminal": "Gordon pre-criminal"
 		"antlion_allied": "Antlions are player allies"
 		"suit_no_sprint": "Suit sprint function not yet enabled"
@@ -24,7 +27,19 @@
 		"gordon_invulnerable": "Gordon is invulnerable"
 		"no_seagulls_on_jeep": "Don't spawn seagulls on the jeep"
 		"is_console": "Game is running on a console"
+		]
+
+	globalstate[P2, -INFRA](choices) : "Global State to Read" =
+		[
+		"": "--- None ---"
+		"is_console": "Game is running on a console"
 		"is_pc": "Game is running on a PC"
+		
+		"portalgun_nospawn": "Spawn without Portalgun"
+		"no_pinging_blue": "Prevent Pinging ATLAS"
+		"no_pinging_orange": "Prevent Pinging P-Body"
+		"no_taunting_blue": "Prevent Taunting ATLAS"
+		"no_taunting_orange": "Prevent Taunting P-Body"
 		]
 
 	globalstate[INFRA](choices): "Global State to Read" : : "" = 
@@ -32,6 +47,7 @@
 		"": "--- None ---"
 		"is_console": "Game is running on a console"
 		"is_pc": "Game is running on a PC"
+
 		"infra_waterflow_reserve1": "INFRA: Reserve1 water flow meter turned on"
 		"infra_waterflow_reserve2": "INFRA: Reserve2 water flow meter turned on"
 		"infra_waterflow_tunnel1": "INFRA: Tunnel1 water flow meter turned on"
