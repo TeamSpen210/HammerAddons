@@ -2,6 +2,7 @@
 	autovis(Templates, Entity Maker)
 	line(255 255 0, targetname, entitytemplate)
 	iconsprite("editor/env_entity_maker.vmt")
+	studio("models/editor/angle_helper.mdl")
 = env_entity_maker: "Spawns the specified entity template at its origin. If set to auto-spawn, it will spawn the template whenever there's room and the player is looking elsewhere."
 	[
 	spawnflags(flags)  =
