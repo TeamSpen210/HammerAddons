@@ -274,7 +274,7 @@ class ModelManager:
                         prop.solidity,
                         prop.model,
                         prop.origin,
-                    )
+                     )
                 )
             prop_pos.add(PropPos(
                 origin.x, origin.y, origin.z,
@@ -522,11 +522,11 @@ def load_qcs(qc_map: Dict[str, QC], qc_folder: Path) -> None:
             ) = qc_result
 
             # We can't parse FBX files right now.
-            if ref_smd.suffix.casefold() not in ('.smd', '.dmx'):
+            if ref_smd.suffix.casefold() not in ('.smd', '.dmx_DISABLE'):
                 LOGGER.warning('Reference mesh not a SMD/DMX:\n{}', ref_smd)
                 continue
 
-            if phy_smd is not None and phy_smd.suffix.casefold() not in ('.smd', '.dmx'):
+            if phy_smd is not None and phy_smd.suffix.casefold() not in ('.smd', '.dmx_DISABLE'):
                 LOGGER.warning('Collision mesh not a SMD/DMX:\n{}', ref_smd)
                 continue
 
@@ -549,7 +549,11 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
     scale_factor = ref_scale = phy_scale = 1.0
 
     with open(str(qc_path)) as f:
-        tok = Tokenizer(f, qc_path, allow_escapes=False)
+        tok = Tokenizer(
+            f, qc_path,
+            allow_escapes=False,
+            allow_star_comments=True,
+        )
         for token_type, token_value in tok:
 
             if token_type is Token.STRING:
