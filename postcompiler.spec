@@ -31,6 +31,7 @@ exe = EXE(
     strip=False,
     upx=True,
     console=True,
+    icon="postcompiler.ico",
 )
 coll = COLLECT(
     exe,
