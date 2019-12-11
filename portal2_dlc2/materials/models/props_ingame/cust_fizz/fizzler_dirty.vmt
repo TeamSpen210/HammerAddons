@@ -1,6 +1,0 @@
-VertexLitGeneric
-{
-$basetexture "models/props_ingame/cust_fizz/fizzler_dirty"
-$selfillum 0
-$blendtintbybasealpha 1
-}

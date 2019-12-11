@@ -1,9 +1,3 @@
-//--------------------------- VISGROUPS ---------------------------------
-@MaterialExclusion
-[
-	"Erikszeug/Modelle"
-	"backpack"
-]
 
 @AutoVisGroup = "Test Elements"
 [
@@ -693,7 +687,6 @@
 	[
 		"info_lighting"
 		"info_lighting_relative"
-		"path_track" // For prop_dynamics this is the suggested entity
 		"info_no_dynamic_shadow"
 	]
 	"Cubemaps"
