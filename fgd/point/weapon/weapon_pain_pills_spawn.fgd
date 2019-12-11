@@ -1,0 +1,8 @@
+@PointClass base(WeaponSpawnSingle) 
+	appliesto(L4D, L4D2)
+	autovis(Weapons, L4D Weapons, L4D Equipment)
+	studioprop("models/w_models/weapons/w_eq_painpills.mdl")
+	autovis(Weapons, L4D, Weapon Spawners)
+= weapon_pain_pills_spawn: "Painkillers"
+	[
+	]

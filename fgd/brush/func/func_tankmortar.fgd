@@ -1,0 +1,20 @@
+@SolidClass base(BaseTank) = func_tankmortar: "Brush Mortar Turret"
+	[
+	imagnitude(integer) : "Explosion Magnitude" : 100
+	firedelay(string) : "Shell travel time" : "2" : "How long after the turret fires before the shell impacts"
+	firestartsound(sound) : "Firing start sound" : : "Sound of the mortar firing"
+	fireendsound(sound) : "Firing end sound"
+	incomingsound(sound) : "Incoming Shell Sound" : : "Sound of the shell falling on the target"
+	warningtime(float) : "Incoming warning time" : 1 : "How long before the shell impacts to play the warning sound"
+	firevariance(float) : "Fire time variance" : 0 : "How much variability to add to fire rate (time +-)"
+	radius[MBase](float) : "Explosion Radius" : "0" : "The radius of each shell's explosion. Reflected in its effects as well as its damage. 0 = Default (350)"
+	
+	trace_mask[engine](integer) : "Trace Mask" : 16395
+	trace_mask[MBase](choices) : "Trace Mask" : 16395 : "The mask to use for when the mortar is tracing attacks from above. Good for when you want the mortar to hit NPCs like striders." =
+	[
+		16395: "MASK_SOLID_BRUSHONLY (Default)"
+		100679691: "MASK_SHOT_HULL (hits NPCs)"
+	]
+	// Inputs
+	input FireAtWill(void) : "Allow tank to fire next shot as soon as ready."
+	]

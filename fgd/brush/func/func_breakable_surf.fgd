@@ -1,0 +1,40 @@
+@SolidClass base(BreakableBrush) 
+	quadbounds() 
+= func_breakable_surf: "A breakable surface, for partially breakable glass / tile / etc. " +
+	"All faces but the desired visible one must be marked as NODRAW and that face must be 4 sided. " +
+	"The material applied to the visible face must be set up to be breakable."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Physics damage decals" : 0
+		2: "Take damage from held objects" : 0
+		]
+
+	health(integer) : "Health" : 5 : "The amount of damage the surface takes before breaking."
+	fragility(integer) : "Fragility" : 100 : "If the 'Surface Type' is set to Glass, this value sets how fragile the glass pieces are after the surface has been broken. Lower values make glass pieces tend to stay more."
+
+	surfacetype[engine](integer) : "Surface Type" : 0
+	surfacetype(choices) : "Surface Type" : 0 : "Sets the behaviour of the brush. Glass shatters in multiple sizes, and easily breaks. Tile only breaks along edges, and is still strong after being shattered." =
+		[
+		0: "Glass"
+		1: "Tile"
+		]
+
+	lowerleft(vecline) readonly : "Lower Left Corner (readonly)" : : "This is set automatically by Hammer when saving."
+	lowerright(vecline) readonly : "Lower Right Corner (readonly)" : : "This is set automatically by Hammer when saving."
+	upperleft(vecline) readonly : "Upper Left Corner (readonly)" : : "This is set automatically by Hammer when saving."
+	upperright(vecline) readonly : "Upper Right Corner (readonly)" : : "This is set automatically by Hammer when saving."
+
+	error[engine](integer) readonly : "Face Error" : 0
+	error(choices) readonly : "Face Error" : 0 : "Set by Hammer to indicate an invalid glass/tile surface." =
+		[
+		0: "No Error"
+		1: "Multiple Textured Faces"
+		2: "Non-Square Face"
+		]
+
+	// Inputs
+	input Shatter(vector) : "Shatter the window. Input a vector. " +
+		"First two coordinates are the X,Y center of the shattering (as values from from 0-1). " +
+		"The third coordinate is the radius of the shatter, in units."
+	]

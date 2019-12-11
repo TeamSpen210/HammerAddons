@@ -1,0 +1,10 @@
+@PointClass base(ForceController)
+	autovis(Entities, Constraints, Motor)
+	halfgridsnap
+	line(255 255 255, targetname, attach1) 
+	color(128 128 128)
+= phys_torque: "An angular thruster. Use it to apply angular force to an entity."
+	[
+	force(string) : "Angular Acceleration" : "0"
+	axis(vecline) : "Rotation Axis"
+	]

@@ -1,0 +1,10 @@
+
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ts2do/env_ar2explosion.vmt")
+= env_ar2explosion: "AR2 explosion visual effect. Big, volume-filling brown cloud. Does not cause damage or emit sound."
+	[
+	material(material) : "Particle Material" : "particle/particle_noisesphere" : "The material to use for each particle in the explosion."
+
+	// Inputs
+	input Explode(void) : "Make the explosion effect."
+	]

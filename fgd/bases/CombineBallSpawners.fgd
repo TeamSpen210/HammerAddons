@@ -1,0 +1,36 @@
+@BaseClass base(BaseEntityPoint) 
+= CombineBallSpawners
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		4096: "Start inactive" : 1
+		8192: "Combine power supply" : 0
+		]
+
+	ballcount(integer) : "Ball count" : 3 : "This is how many balls will be bouncing around inside the spawner"
+	minspeed(float) : "Min ball speed" : 300.0 : "The minimum speed of balls that fly in the spawner"
+	maxspeed(float) : "Max ball speed" : 600.0 : "The maximum speed of balls that fly in the spawner"
+
+	ballradius(float) : "Ball radius" : 20.0 : "The radius of the energy balls."
+	balltype(choices) : "Ball Type" : "Combine Energy Ball 1" =
+		[
+		0: "Combine Energy Ball 1"
+		1: "Combine Energy Ball 2"
+		2: "Combine Energy Ball 3"
+		]
+	balltype[engine](integer): "Ball Type": 0
+
+	ballrespawntime(float) : "Ball Respawn Time" : 4.0 : "The energy balls respawn time"
+
+	// Inputs
+	input Enable(void) : "Enable spawning of combine balls"
+	input Disable(void) : "Disable spawning of combine balls"
+
+	// Outputs
+	output OnBallGrabbed(void) : "Fired when a combine ball is grabbed from the field by a mega physcannon"
+	output OnBallReinserted(void) : "Fired when a combine ball is reinserted into the field (only gets triggered when Combine Power supply is checked)"
+	output OnBallHitTopSide(void) : "Fired when a combine ball in hits the top side of the field (only gets triggered when Combine Power supply is checked)"
+	output OnBallHitBottomSide(void) : "Fired when a combine ball in hits the bottom side of the field (only gets triggered when Combine Power supply is checked)"
+	output OnLastBallGrabbed(void) : "Fired when the last combine ball is grabbed from the field by a mega physcannon"
+	output OnFirstBallReinserted(void) : "Fired when the first combine ball is reinserted into the field (only gets triggered when Combine Power supply is checked)"
+	]

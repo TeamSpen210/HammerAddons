@@ -1,0 +1,21 @@
+@PointClass base(BaseEntityPoint) 
+	color(0 100 250)
+	iconsprite("editor/math_colorblend.vmt")
+= math_colorblend: "Used to create a blend between two colors for controlling the color of another entity."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Ignore out of range input values" : 1
+		]
+
+	inmin(integer) : "Minimum Valid Input Value" : 0 : "Input values below this value will be ignored."
+	inmax(integer) : "Maximum Valid Input Value" : 1 : "Input values above this value will be ignored."
+	colormin(color255) : "Output RGB color when input is min." : "0 0 0" : "When the input value is equal to 'Minimum Valid Input Value', this is the output RGB color."
+	colormax(color255) : "Output RGB color when input is max." : "255 255 255" : "When the input value is equal to 'Maximum Valid Input Value', this is the output RGB color."
+
+	// Inputs
+	input InValue(float) : "Input a value and fire the output with the remapped value."
+
+	// Outputs
+	output OutColor(color255) : "Fired when the InValue input is received, with the remapped RGB color as the parameter."
+	]

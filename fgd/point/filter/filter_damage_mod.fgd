@@ -1,0 +1,31 @@
+@FilterClass base(BaseRedirectFilter) 
+	autovis(Logic, Filters)
+	appliesto(MBase)
+	iconsprite("editor/filter_damage_mod.vmt")
+= filter_damage_mod : "A filter that modifies damage taken by an entity."
+	[
+	SetDamageMultiplier(float) : "Damage Multiplier" : "1.0" : "Multiplies the damage by this scale."
+	SetDamageAddend(float) : "Damage Addend" : "0" : "Adds to or subtracts the damage by this number. This is done after the damage is multiplied by the damage scale."
+
+	NewAttacker(string) : "New Attacker" : : "If specified, the damage will be credited to this entity instead of the original attacker."
+	NewInflictor(string) : "New Inflictor" : : "If specified, the damage's inflictor will be changed to this entity instead of the original inflictor."
+	NewWeapon(string) : "New Weapon" : : "If specified, the damage's weapon will be changed to this entity instead of the original weapon."
+
+	damagefilter(filterclass) : "Secondary Filter" : "" : "An optional secondary filter that can be used for either whose damage could be modified or as a real damage filter for whether any damage should be taken at all."
+	SecondaryFilterMode[engine](integer) : "Secondary Filter Mode" : 0
+	SecondaryFilterMode(choices) : "Secondary Filter Mode" : 0 : "Sets whether the secondary filter should be treated as a redirected damage filter (must pass to take actual damage) instead of just permitting modification." =
+		[
+		0 : "Must pass to damage caller (and therefore mod damage)"
+		1 : "Must pass to modify damage (others use the original damage)"
+		2 : "Attackers must pass to modify damage"
+		]
+	
+	input SetDamageMultiplier(float) : "Sets the damage multiplier."
+	input SetDamageAddend(float) : "Sets the damage addend."
+	
+	input SetNewAttacker(target_destination) : "Sets the new attacker."
+	input SetNewInflictor(target_destination) : "Sets the new inflictor."
+	input SetNewWeapon(target_destination) : "Sets the new weapon."
+	
+	input SetField(target_destination) : "Sets the secondary filter."
+	]

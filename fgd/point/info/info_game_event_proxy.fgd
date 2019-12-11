@@ -1,0 +1,16 @@
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	appliesto(since_L4D) 
+	iconsprite("editor/info_game_event_proxy.vmt") 
+	sphere(range) 
+= info_game_event_proxy: "Entity that, when seen, generates a simple game event."
+	[
+	event_name(string) : "Event Name" : : "The event to trigger by name from modevents.res"
+	range(float) : "Range" : "512" : "Distance that the player must be before the event is generated."
+	spawnflags(flags)  =
+		[
+		1: "Automatically detect visibility" : 1
+		]
+
+	// Inputs
+	input GenerateGameEvent(void) : "Generate my game event. (This entity is sent as the SUBJECT)"
+	]

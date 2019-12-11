@@ -1,0 +1,16 @@
+@PointClass base(BaseEntityPoint)
+	iconsprite("editor/ficool2/game_gib_manager")
+	color(200 0 0) 
+ 	autovis(Point Entities, Globals, Gib Manager)
+= game_gib_manager: "An entity to control the number of gibs in the world, for performance reasons."
+	[
+	maxpieces(integer) : "Max Gib Count" : -1 : "Sets the max number of gib that can be spawned at a time. (-1=no limit)"
+	maxpiecesdx8(integer) : "Max Gib Count On DX8" : -1 : "Sets the max number of gib that can be spawned at a time under DX8. (-1=use Max Gib Count setting)"
+
+	allownewgibs(boolean) : "Allow New Gibs To Spawn" : 0 : "If true, when the max gib count is reached, oldest gibs are removed as new gibs spawn. " +
+	                                                        "If false, new gibs will not be spawned once the gib limit is reached."
+
+	// Inputs
+	input SetMaxPieces(integer) : "Set the max gib count."
+	input SetMaxPiecesDX8(integer) : "Set the max gib count under DX8."
+	]

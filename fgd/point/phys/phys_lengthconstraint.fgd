@@ -1,0 +1,20 @@
+@PointClass base(TwoObjectPhysics)
+	autovis(Entities, Constraints, Length)
+	studio("models/editor/axis_helper.mdl") 
+	line(255 255 255, targetname, attach1) 
+	line(255 255 255, targetname, attach2) 
+	line(128 128 128, targetname, attach1, targetname, attach2) 
+	sphere(minlength) 
+	color(128 128 128) 
+= phys_lengthconstraint: "A constraint that preserves the distance between two entities. " +
+	"If the 'Keep Rigid' flag is set, think of it as a rod. If not, think off it as a virtual rope."
+	[
+	addlength(float) : "Additional Length" : 0 : "Add (or subtract) this amount to the rest length of the rope."
+	minlength(float) : "Minimum Length" : 0 : "If the constraint is not rigid, this is the minimum length it can be."
+	attachpoint(vecline) : "Attached object 2 point" : "The position the rope attaches to object 2"
+	spawnflags(flags) =
+		[
+		1: "No Collision until break" : 1
+		2: "Keep Rigid" : 0
+		]
+	]

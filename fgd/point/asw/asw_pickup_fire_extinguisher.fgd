@@ -1,0 +1,9 @@
+
+@PointClass base(ASWPickup) 
+	appliesto(ASW) 
+	studio("models/swarm/FireExt/fireextpickup.mdl") = asw_pickup_fire_extinguisher: "Fire Extinguisher"
+	[
+	bulletsingun(integer) : "Bullets In Gun" : 200
+	clips(integer) : "Clips" : 1
+	secondarybullets(integer) : "Secondary Bullets" : 0
+	]

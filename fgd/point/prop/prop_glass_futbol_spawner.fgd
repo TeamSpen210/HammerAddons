@@ -1,0 +1,14 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(P2) 
+	studioprop("models/props/futbol_dispenser.mdl") = prop_glass_futbol_spawner: "Spawns futbols. Will re-create a futbol when its created futbol breaks."
+	[
+	startwithfutbol(boolean) : "Start with Futbol" : 1 : "Set true if this spawner starts with a futbol in it. " +
+		"Set to false if this spawner's futbol will be manually placed in the map."
+
+	// Inputs
+	input ForceSpawn(void) : "Spawns a new futbol. Usually isn't necessary, because futbols respawn automatically if broken."
+
+	// Outputs
+	output OnFutbolSpawned(void) : "Created a new futbol."
+	output OnFutbolGrabbed(void) : "Player has taken the futbol out of this spawner."
+	]

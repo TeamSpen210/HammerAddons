@@ -1,0 +1,73 @@
+@BaseClass = DamageType
+	[
+	// We don't include flags here, not something valid to select...
+	damagetype[engine](integer) : "Damage Type" : 0
+	damagetype(choices) : "Damage Type" : 0 : "Kind of damage to apply. These fields can be ORed together. " =
+		[
+		0: "Generic"
+		1: "Crush"
+		2: "Bullet"
+		4: "Slash"
+		8: "Burn"
+
+		16: "Freeze" [!TF2, until_ASW]
+		16: "Train" [TF2]
+		16: "Vehicle" [since_ASW]
+
+		32: "Fall"
+		64: "Blast"
+		128: "Club"
+		256: "Shock"
+		512: "Sonic"
+		1024: "Energy Beam"
+		16384: "Drown"
+		32768: "Paralyse"
+		65536: "Nerve Gas" [!TF2]
+		65536: "Sawblade" [TF2]
+		131072: "Poison"
+		262144: "Radiation"
+		524288: "Drown Recover"
+
+		1048576: "Chemical" [!TF2, until_ASW]
+		1048576: "Critical" [TF2]
+		1048576: "Acid" [since_ASW]
+
+		2097152: "Slow Burn"
+		16777216: "Force Gibs" [L4D2]
+		]
+
+	damagepresets[engine](integer) : "Damage Presets" : 0
+	damagepresets[MBase](choices) : "Damage Presets" : 0 : "User-friendly 'presets' based on combined damage types. " +
+		"This is accompanied by the damage type and damage or, if they are specified." = 
+		[
+		0 : "None"
+		268435464 : "[268435464] Ignite Damage (BURN + DIRECT)"
+		134217792 : "[134217792] All Blast Types (BLAST + BLAST_SURFACE)"
+		]
+	
+	damageor1[engine](integer) : "Damage Gib Mode" : 0
+	damageor1[srctools](choices) : "Damage Gibbing" : 0 : "Optional flags that can accompany the damage type." =
+		[
+		0 : "Normal Behaviour"
+		4096 : "Never use gibs"
+		8192 : "Always gib if possible"
+		]
+	damageor2[engine](integer) : "Prevent Physics Force" : 0
+	damageor2[srctools](choices) : "Prevent Physics Force" : 0 : "Prevent applying physics force to the target." =
+		[
+		0 : "No"
+		2048 : "Yes"
+		]
+
+	damageor[engine](integer) : "Damage Or" : 0
+	damageor[MBase](choices) : "Damage Or" : 0 : "Optional flags that can accompany the damage type." = 
+		[
+		0 : "None"
+		2048 : "PREVENT_PHYSICS_FORCE (no physics force)"
+		4096 : "NEVERGIB (no gibs)" [!srctools]
+		8192 : "ALWAYSGIB (always gib if possible)" [!srctools]
+		4194304 : "REMOVENORAGDOLL (no ragdoll on death)"
+		134217728 : "BLAST_SURFACE (no damage underwater)"
+		268435456 : "DIRECT (With burn, NPCs treat as being on fire)"
+		]
+	]

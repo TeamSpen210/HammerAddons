@@ -1,0 +1,6 @@
+
+@PointClass base(prop_glass_futbol_spawner) 
+	appliesto(P2) 
+	studioprop("models/props/futbol_dispenser.mdl") = hot_potato_spawner: "Catches 'hot potatos' and fires an output."
+	[
+	]

@@ -1,0 +1,9 @@
+@PointClass base(BaseEntityPoint, MasterEnt)
+	iconsprite("editor/game_end.vmt") 
+ 	autovis(Point Entities, Globals, Game End)
+= game_end: "An entity that ends a multiplayer game."
+	[
+	// Inputs
+	input EndGame(void) : "End the multiplayer game."
+	input EndGameSP[MBase](string) : "End the SP game. String could be a game-specific context."
+	]

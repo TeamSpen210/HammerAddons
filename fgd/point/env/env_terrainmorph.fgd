@@ -1,0 +1,19 @@
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(EP1, EP2, HL2, P1, P2) 
+	size(-4 -4 -4, 4 4 4) 
+	color(0 180 0) = env_terrainmorph: "Morphs terrain by pulling vertices along a normal.\n\nPlace this entity the desired distance from a terrain surface and set ANGLES to the normal along which you want to pull the surface's vertices. If you set the INSTANT spawnflag, the morph will take place instantly instead of over time.\n"
+	[
+	startradius(integer) : "Start Radius" : 500 : "Radius of the effect when morphing begins. Only this value is usedif the effect is flagged to occur instantly."
+	goalradius(integer) : "Goal Radius" : 100 : "Radius of the effect at the end of morphing. The radius of this effect will change from Start Radius to Goal Radius over the duration of this effect. This value is ignored if the effect is flagged to occur instantly."
+	duration(integer) : "Duration" : 3 : "The morph will take place over this period of time (seconds). Ignored if flagged to occur instantly"
+	fraction(integer) : "Displacement Fraction" : 1 : "If set to 1, the terrain surface will be pulled exactly to this entity's position. If set to 0.5, the surface will be pulled exactly half way to this entity's position. If set to 2, the surface will be pulled to an imaginary point twice as far away as this entity. (Any Displacement Fraction greater than 1.0 will result in clipping. The surface cannot be pulled beyond This entity's position and any vertices attemping will clip to this entity's position. You may use this feature to create mesas.)"
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Instant" : 0
+		]
+
+
+	// Inputs
+	input BeginMorph(void) : "Begin Morph"
+	]

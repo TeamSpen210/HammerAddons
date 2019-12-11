@@ -1,0 +1,15 @@
+@PointClass base(BaseEntityAnimating, SetModel, EnableDisable) 
+	appliesto(INFRA)
+ 	autovis(Point Entities, Camera Targets, Document)
+	studio()
+= infra_document: "Document"
+	[
+	extendeduserange(boolean) : "Extended Use Range" : 0 : "Can the player use this document from further away than normal? Useful for certain notes pinned on walls."
+
+	// Inputs
+	input SetAnimation(string) : "Plays this activity or sequence."
+
+	// Outputs
+	output OnUsed(void) : "Fired when this is used."
+	output OnRead(void) : "Fired when the player exits the document view."
+	]

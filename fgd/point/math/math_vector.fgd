@@ -1,0 +1,45 @@
+@PointClass appliesto(MBase) 
+	base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/math_vector.vmt") = math_vector :
+	"A math_counter variant that specializes in vector operations."
+	[
+	// Keys
+	startvalue(vector) : "Initial Value" : "0 0 0" : "The vector this entity shuold start with."
+
+	// Inputs
+	input Add(vector) : "Adds a vector to this entity's current value and fires the OutValue output with the result."
+	input Divide(vector): "Divides a vector from this entity's current value and fire the OutValue output with the result."
+	input Multiply(vector): "Multiplies a vector from this entity's current value and fires the OutValue output with the result."
+	input SetValue(vector): "Sets this entity's current vector to a new value and fires the OutValue output with the result."
+	input SetValueNoFire(vector): "Sets this entity's current vector to a new value without firing any outputs."
+	input Subtract(vector): "Subtracts a vector from this entity's current value and fires the OutValue output with the result."
+	input GetValue(void): "Causes this entity to fire its OnGetValue output with its current vector. " +
+		"Used for polling the counter when you don't want constant updates from the OutValue output."
+	
+	input Normalize(void): "Normalizes this entity's vector and fires the OutValue output with the result."
+	
+	input SetX(float) : "Sets this entity's X coordinate."
+	input SetY(float) : "Sets this entity's Y coordinate."
+	input SetZ(float) : "Sets this entity's Z coordinate."
+	input GetX(void) : "Gets this entity's X coordinate."
+	input GetY(void) : "Gets this entity's Y coordinate."
+	input GetZ(void) : "Gets this entity's Z coordinate."
+	input AddX(float) : "Adds to this entity's X coordinate."
+	input AddY(float) : "Adds to this entity's Y coordinate."
+	input AddZ(float) : "Adds to this entity's Z coordinate."
+	input SubtractX(float) : "Subtracts from this entity's X coordinate."
+	input SubtractY(float) : "Subtracts from this entity's Y coordinate."
+	input SubtractZ(float) : "Subtracts from this entity's Z coordinate."
+
+	// Outputs
+	output OutValue(vector) : "Fired when the value changes."
+	output OutX(float) : "Fired when the value changes, passing the resulting X coordinate."
+	output OutY(float) : "Fired when the value changes, passing the resulting Y coordinate."
+	output OutZ(float) : "Fired when the value changes, passing the resulting Z coordinate."
+	
+	output OnGetValue(vector) : "Fired in response to the GetValue input. " +
+		"Used for polling this entity's current value when you don't want constant updates from the OutValue output."
+	output OnGetX(float) : "Fired in response to the GetX input."
+	output OnGetY(float) : "Fired in response to the GetY input."
+	output OnGetZ(float) : "Fired in response to the GetZ input."
+	]

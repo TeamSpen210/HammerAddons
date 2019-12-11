@@ -1,0 +1,36 @@
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(TF2)
+	autovis(TF2, TFBots, Bot Roster)
+ = bot_roster: "Entity specifies what classes TFBots can choose"
+	[
+	team[engine](string) : "Team" : "auto"
+	team(choices) : "Team" : "auto" : "Team" =
+		[
+		"auto": "Any"
+		"red": "Red"
+		"blue": "Blue"
+		]
+
+	allowclasschanges(boolean) : "Allow Class Changes" : "1" : "Allow TFBots to choose a new class when they respawn."
+	allowscout(boolean) : "Allow Scout" : "1" : "Allow TFBots to choose Scouts as a class." 
+	allowsniper(boolean) : "Allow Sniper" : "1" : "Allow TFBots to choose Snipers as a class."
+	allowsoldier(boolean) : "Allow Soldier" : "1" : "Allow TFBots to choose Soldiers as a class."
+	allowdemoman(boolean) : "Allow Demoman" : "1" : "Allow TFBots to choose Demoman as a class."
+	allowmedic(boolean) : "Allow Medics" : "1" : "Allow TFBots to choose Medics as a class."
+	allowheavy(boolean) : "Allow Heavy" : "1" : "Allow TFBots to choose Heavy as a class."
+	allowpyro(boolean) : "Allow Pyro" : "1" : "Allow TFBots to choose Pyro as a class."
+	allowspy(boolean) : "Allow Spy" : "1" : "Allow TFBots to choose Spy as a class."
+	allowengineer(boolean) : "Allow Engineer" : "1" : "Allow TFBots to choose Engineer as a class."
+
+	// Inputs
+	input SetAllowScout(boolean) : "Sets whether TFBots can choose Scouts as a class. 0 = No, 1 = Yes"
+	input SetAllowSniper(boolean) : "Sets whether TFBots can choose Snipers as a class. 0 = No, 1 = Yes"
+	input SetAllowSoldier(boolean) : "Sets whether TFBots can choose Soldiers as a class. 0 = No, 1 = Yes"
+	input SetAllowDemoman(boolean) : "Sets whether TFBots can choose Demoman as a class. 0 = No, 1 = Yes"
+	input SetAllowMedic(boolean) : "Sets whether TFBots can choose Medics as a class. 0 = No, 1 = Yes"
+	input SetAllowHeavy(boolean) : "Sets whether TFBots can choose Heavy as a class. 0 = No, 1 = Yes"
+	input SetAllowPyro(boolean) : "Sets whether TFBots can choose Pyro as a class. 0 = No, 1 = Yes"
+	input SetAllowSpy(boolean) : "Sets whether TFBots can choose Spy as a class. 0 = No, 1 = Yes"
+	input SetAllowEngineer(boolean) : "Sets whether TFBots can choose Engineer as a class. 0 = No, 1 = Yes"
+	]

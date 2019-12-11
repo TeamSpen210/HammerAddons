@@ -1,0 +1,7 @@
+@PointClass base(gibshooterbase)
+	iconsprite("editor/gibshooter.vmt") 
+	color(200 200 0) 
+	line(255 255 255, targetname, lightingorigin) 
+= gibshooter: "An entity that shoots out gibs. Style of body part depends on language type."
+	[
+	]

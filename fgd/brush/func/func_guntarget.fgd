@@ -1,0 +1,17 @@
+@SolidClass base(BaseEntityVisBrush) 
+	line(255 255 0, targetname, target) 
+= func_guntarget: "This is a moving target that moves along a path of path_tracks. " +
+	"It can be shot and killed."
+	[
+	speed(integer) : "Speed (units per second)" : 100 : "The speed at which the target moves along its path."
+	target(target_destination) : "Spawn Track" : : "The name of the first path_track entity in the path that this target should follow."
+	health(integer) : "Damage to Take" : 0 : "The amount of damage taken before this target is killed."
+
+	// Inputs
+	input Start(void) : "Start the target moving."
+	input Stop(void) : "Stop the target from moving."
+	input Toggle(void) : "Toggle the target between moving and stopped."
+
+	// Outputs
+	output OnDeath(void) : "Fires when the target is killed."
+	]

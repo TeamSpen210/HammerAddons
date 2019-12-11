@@ -1,0 +1,12 @@
+
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ficool2/logic_lineto")
+	color(0 100 250) 
+	line(255 255 0, targetname, source, targetname, target) = logic_lineto: "An entity that calculates and outputs a vector from one entity to another."
+	[
+	source(target_destination) : "Start entity" : : "Name of the entity the line should start from."
+	target(target_destination) : "End entity" : : "Name of the entity that line should end at."
+
+	// Outputs
+	output Line(vector) : "Fired when the vector, from the start entity to the end entity, changes. Passes along the vector as a parameter."
+	]

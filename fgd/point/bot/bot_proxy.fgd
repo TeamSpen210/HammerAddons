@@ -1,0 +1,50 @@
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(TF2)
+	autovis(TF2, TFBots, Bot Proxy)
+= bot_proxy: "An entity that spawns a TFBot and relays events to/from it"
+	[
+	bot_name(string) : "Bot Name" : "TFBot" : "The bot's player name"
+
+	team[engine](string) : "Team" : "auto"
+	team(choices) : "Team" : "auto" : "Team" =
+		[
+		"auto": "Any"
+		"red": "Red"
+		"blue": "Blue"
+		]
+
+	class[engine](string) : "Class" : "auto"
+	class(choices) : "Class" : "auto" : "Class" =
+		[
+		"auto": "Any"
+		"scout": "Scout"
+		"sniper": "Sniper"
+		"soldier": "Soldier"
+		"demoman": "Demoman"
+		"medic": "Medic"
+		"heavyweapons": "Heavy"
+		"pyro": "Pyro"
+		"spy": "Spy"
+		"engineer": "Engineer"
+		]
+
+	spawn_on_start(boolean) : "Spawn on start" : "0" : "Spawn this bot when the round starts"
+
+	respawn_interval(float) : "Respawn delay" : 0 : "If nonzero, respawn this bot N seconds after it dies"
+	action_point(target_destination) : "Action Point" : : "Put the name of a bot_action_point here to tell the bot to move to it when it spawns in."
+
+	// Inputs
+	input SetTeam(string) : "Change the bot's team (auto, red, blue)"
+	input SetClass(string) : "Change the bot's class (auto, soldier, pyro, etc)"
+	input SetMovementGoal(target_destination) : "Tell the bot to move to the given goal"
+	input Spawn(void) : "Spawn a TFBot at this position"
+	input Delete(void) : "Delete the existing TFBot"
+
+	// Outputs
+	output OnSpawned(void) : "Sent when the TFBot has spawned into the environment"
+	output OnInjured(void) : "Sent when the TFBot has been injured"
+	output OnKilled(void) : "Sent when the TFBot has been killed"
+	output OnAttackingEnemy(void) : "Sent when the TFBot has started attacking an enemy"
+	output OnKilledEnemy(void) : "Sent when the TFBot has killed an enemy"
+	]

@@ -1,0 +1,25 @@
+
+@PointClass base(BaseEntityAnimating, BaseFadeProp) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio("models/props_combine/health_charger001.mdl") = item_healthcharger: "Health Charger"
+	[
+	_minlight(string) : "Minimum light level"
+
+	Charge[MBase](integer) : "Juice" : 0 : "Overrides the amount of suit power this charger contains. Use 0 for the default charge, which is usually the maximum juice. Use -1 if you want the charger to start empty."
+	MaxCharge[MBase](integer) : "Max Juice" : 0 : "Overrides the maximum suit power this charger contains. Use 0 for the default charge, 75."
+	SetIncrementValue[MBase](integer) : "Increment Health" : 0 : "How much charge should be given each 'increment', or each tenth-of-a-second interval in which the player is given health while using this charger. Juice is also decreased accordingly. Use 0 for the default increment, 1."
+	
+	// Inputs
+	input Recharge[MBase](void) : "Recharge to full"
+	input SetCharge[MBase](integer) : "Sets the *maximum* charge, refilling the charger in the process."
+	input SetChargeNoMax[MBase](float) : "Sets the charger's current juice without doing anything with the maximum."
+	input SetIncrementValue[MBase](integer) : "Sets the charger's increment value."
+
+
+	// Outputs
+	output OutRemainingHealth(float) : "Remaining Health."
+	output OnHalfEmpty[MBase](void) : "Half-Empty"
+	output OnEmpty[MBase](void) : "Empty"
+	output OnFull[MBase](void) : "Recharged to full."
+	output OnPlayerUse(void) : "Fired when the player +USEs the charger."
+	]

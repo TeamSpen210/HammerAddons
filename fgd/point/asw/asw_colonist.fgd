@@ -1,0 +1,12 @@
+
+@NpcClass base(BaseNPC, TalkNPC, PlayerCompanion) 
+	appliesto(ASW) 
+	studio("models/swarm/Colonist/Male/MaleColonist.mdl") = asw_colonist: "Colonist"
+	[
+	notifynavfailblocked(choices) : "Fire output when Nav is blocked?" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	]

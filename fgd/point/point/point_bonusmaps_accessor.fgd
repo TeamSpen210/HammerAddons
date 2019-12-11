@@ -1,0 +1,12 @@
+@PointClass base(BaseEntityPoint)
+	iconsprite("editor/ficool2/point_bonusmaps_accessor")
+	color(200 0 0) = point_bonusmaps_accessor: "An entity that relays bonus maps changes."
+	[
+	filename(string) : "File Name"
+	mapname(string) : "Map Name"
+
+	// Inputs
+	input Unlock(void) : "Unlocks the filename/map combination."
+	input Complete(void) : "Completes the filename/map combination."
+	input Save(void) : "Saves bonus map data."
+	]

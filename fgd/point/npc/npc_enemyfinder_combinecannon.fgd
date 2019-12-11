@@ -1,0 +1,13 @@
+@NpcClass base(npc_enemyfinder) 
+	appliesto(EP1, EP2, HL2, P1, ASW)
+	autovis(NPCs, EnemyFinder NPC)
+ = npc_enemyfinder_combinecannon: "npc_enemyfinder, specifically for use with func_tank_combine_cannon. " + 
+	"This enemyfinder will shoot through any damagable objects obstructing the LOS to the player."
+	[
+	snaptoent(target_destination) : "Name of entity to snap to" : : "Since it can be hard to position these entities with respect to the func_tank brushwork, " +
+		"you can specify an entity name here and this enemyfinder will position itself 8 units above the center of that entity. "
+	
+	// Inputs
+	input SetWideFOVForSeconds(float) : "Gives this enemyfinder a 270 degree viewcone for the number of seconds " +
+		"specified in the parameter override. While in this mode the gun will not shoot non-players."
+	]

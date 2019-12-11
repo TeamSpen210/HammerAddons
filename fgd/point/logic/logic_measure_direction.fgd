@@ -1,0 +1,66 @@
+@PointClass appliesto(MBase)
+	base(logic_measure_movement) 
+	sphere(TraceDistance)
+	line(255 255 255, targetname, damagefilter)
+= logic_measure_direction: "An entity that can measure the direction of an entity relative to another entity and apply that movement to a third entity."
+	[
+	MeasureTarget(target_destination) : "Entity to Measure" : "" : "Entity whose direction you want to measure."
+	MeasureReference(target_destination) : "Measure Reference" : "" : "The direction of Entity to Measure will be measured from this entity."
+	Target(target_destination) : "Entity to Move" : "" : "This entity will be moved in the direction of the Entity to Measure."
+	TargetReference(target_destination) : "Movement Reference" : "" : "The Entity to Move will move relative to this entity."
+	TargetScale(float) : "Trace scale" : "1" : "A scale to *divide* the distance between the Entity to Measure and the trace's endpoint by before applying those movements to the Entity to Move. 1 = target entity moves to the end of the trace, 2 = target entity moves to the middle of the trace (half as far), and 0.5 = target entity moves twice as far as the trace."
+
+	MeasureType[engine](integer) : "Measurement Type" : 0
+	MeasureType(choices) : "Measurement Type" : 0 : "How should the direction be measured?" =
+		[
+		0 : "Angles"
+		1 : "Eye angles"
+		2 : "Attachment point angles"
+		//3 : "Aim angles"
+		]
+	
+	TraceDistance(float) : "Trace distance" : "8192" : "The maximum distance that the trace can go. 0 = no limit."
+
+	Mask[engine](integer) : "Trace Mask" : 1174421507
+	Mask(choices) : "Trace Mask" : 1174421507 : "How the measurement tracing should act in regards to what it should collide with." =
+	[
+		33570827 : "MASK_SOLID (Anything solid)"
+		33636363 : "MASK_PLAYERSOLID (Anything solid + player clip)"
+		33701899 : "MASK_NPCSOLID (Anything solid + NPC clip)"
+		16432 : "MASK_WATER (Water volumes)"
+		16513 : "MASK_OPAQUE (Anything opaque, e.g. windows)"
+		16449 : "MASK_BLOCKLOS (Anything that blocks line of sight)"
+		1174421507 : "MASK_SHOT (Anything that would be hit by a bullet)"
+	]
+	
+	CollisionGroup[engine](integer) : "Collision Group" : 0
+	CollisionGroup(choices) : "Collision Group" : 0 : "The collision group the measurement tracing should use." =
+	[
+		0 : "None"
+	]
+	
+	damagefilter(filterclass) : "Trace Filter" : "" : "A filter to use for tracing."
+
+	HitIfPassed[engine](boolean) : "Hit if Passed" : 0
+	HitIfPassed(choices) : "Trace Filter behavior" : 0 : "What the filter should actually be used for." =
+	[
+		0 : "If pass, don't hit"
+		1 : "If pass, hit"
+	]
+	
+	TraceTargetReference(boolean) : "Additional trace from movement reference" : 0 : "Initiates another trace from the Movement Reference " +
+		"using the existing properties and adjusts the position to its end point. " +
+		"Only use this if the Movement Reference is different from the Measure Reference."
+	
+	// Inputs
+	input SetMeasureTarget(target_destination) : "Set the Entity to Measure, whose movement should be measured."
+	input SetMeasureReference(target_destination) : "Set the Measure Reference entity."
+	input SetTarget(target_destination) : "Set the Entity to Move, which will be moved to mimic the measured entity."
+	input SetTargetReference(target_destination) : "Set the Movement Reference entity."
+	input SetTargetScale(float) : "Set the scale to divide the measured movements by."
+	input SetMeasureType(integer) : "Sets the measurement type."
+	input SetMeasureAttachment(string) : "Sets the measurement attachment."
+	input Enable(void) : "Enable the logic_measure_direction."
+	input Disable(void) : "Disable the logic_measure_direction."
+	input SetTraceFilter(target_destination) : "Sets the entity to use as the trace filter. Pass in an empty string to clear the trace filter."
+	]

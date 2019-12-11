@@ -1,0 +1,26 @@
+@PointClass appliesto(MBase) 
+	base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/math_bits.vmt")
+= math_bits :
+	"A math_counter variant that specializes in bitwise operations."
+	[
+	// Keys
+	startvalue(integer) : "Initial Value" : 0 : "The bits this entity should start with."
+
+	// Inputs
+	input Add(integer) : "Adds bit(s) to this entity's value and fires the OutValue output with the result."
+	input Subtract(integer): "Subtracts bit(s) to this entity's value and fires the OutValue output with the result."
+	input ShiftLeft(integer): "Shifts this entity's value to the left by the specified number and fires the OutValue output with the result."
+	input ShiftRight(integer): "Shifts this entity's value to the right by the specified number and fires the OutValue output with the result."
+	input SetValue(integer): "Changes this entity's value and fires the OutValue output with the result."
+	input SetValueNoFire(integer): "Changes this entity's value without firing any outputs."
+	input GetValue(void): "Causes this entity to fire its OnGetValue output with its current bits. Used for polling the current bits when you don't want constant updates from the OutValue output."
+	input ContainsBits(integer): "Tests whether this entity's current value contains at least one of the specified bit(s)."
+	input ContainsAllBits(integer): "Tests whether this entity's current value contains all of the specified bit(s)."
+
+	// Outputs
+	output OutValue(integer) : "Fired when the value changes."
+	output OnGetValue(integer) : "Fired in response to the GetValue input. Used for polling the current bits when you don't want constant updates from the OutValue output."
+	output OnTrue(void) : "Fired by ContainsBits when the current value contains the specified bit." 
+	output OnFalse(void) : "Fired by ContainsBits when the current value does not contain the specified bit." 
+	]

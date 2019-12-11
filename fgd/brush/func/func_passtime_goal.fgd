@@ -1,0 +1,17 @@
+@SolidClass base(Trigger, TeamNum) 
+	appliesto(TF2) = func_passtime_goal: "Players or passtime balls that touch this will cause a score for whichever team touches it. You can limit which teams are allowed to touch it."
+	[
+	points(float) : "Points" : 1 : "How many points the team gets for scoring here."
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Scoring here wins the game" : 0
+		2: "DO NOT let the ball score here" : 0
+		4: "Let ball-carrying players score here" : 0
+		8: "Show special locked status on HUD" : 0
+		]
+
+
+	// Outputs
+	output OnScoreBlu(void) : "BLU scored. Useful for doing any effects specific to this goal."
+	output OnScoreRed(void) : "RED scored. Useful for doing any effects specific to this goal."
+	]

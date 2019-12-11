@@ -1,0 +1,66 @@
+@PointClass base(BaseEntityPoint) 
+	color(0 0 255) 
+	color(173 223 245) 
+	studioprop("models/editor/sky_camera.mdl") 
+	sphere(fogstart) 
+	sphere(fogend) 
+= sky_camera: "An entity used to control the 3D Skybox. Its origin is used to determine the 3D Skybox's position relative to the map. " + 
+	"Place this entity, in the 3D Skybox, at the point where the origin of the map should be."
+	[
+	parentname[MBase](target_destination) : "Parent" : : "The name of the entity to move with. " +
+		"NOTE: sky_camera's position is normally only updated on spawn. " +
+		"Fire the ForceUpdate or StartUpdating inputs to update the sky_camera's position! " +
+		"You might also want to enable Use Angles for Sky."
+	// Override to indicate that parenting isn't a good idea.
+	parentname[!MBase](target_destination) : "Parent" : : "The name of the entity to move with. " +
+		"NOTE: sky_camera's position is normally only updated on spawn, so this may not work."
+
+	spawnflags[MBase](flags) =
+		[
+		1: "Master (takes priority if multiple sky_cameras exist)" : 0 [MBase]
+		2: "Continuously update position (for moving sky_cameras)" : 0 [MBase]
+		]
+
+	skycolor[MBase](color255) : "Sky Color" : "255 255 255 0" : "Causes the skybox to use a solid color instead of the sky texture specified in worldspawn. " +
+		"Blended alpha is unfortunately not supported, " +
+		"but an alpha of '0' disables the effect and any alpha greater than that (e.g. 255) enables the effect."
+
+	scale(integer) : "3D Skybox scale" : 16 : "Scale of the skybox."
+
+	fogenable(boolean) : "Fog Enable" : 0
+	fogblend(boolean) : "Fog Blend" : 0
+	use_angles(boolean) : "Use Angles for Fog Dir" : 0
+	use_angles_for_sky(boolean) : "Use Angles for Sky" : 0 : "Uses angles for actual skybox rotation, as if the world were tilted on this entity's axis."
+
+	clip_3d_skybox_near_to_world_far[L4D2](boolean) : "Clip 3D sky near plane to world far plane" : 0
+	clip_3d_skybox_near_to_world_far_offset[L4D2](integer) : "3D sky near plane offset" : "0.0" : "Offset for the near clip plane for the 3D sky in world units.  " +
+		"This is only used if the above field is true. Negative values to pull closer, etc."
+
+	fogcolor(color255) : "Primary Fog Color" : "255 255 255"
+	fogcolor2(color255) : "Secondary Fog Color" : "255 255 255"
+
+	fogdir(string) : "Primary Fog Direction" : "1 0 0"
+	fogstart(float) : "Fog Start" : 500 : "Distance at which the skybox fog should start."
+	fogend(float) : "Fog End" : 2000 : "Distance at which the skybox fog should be fully opaque."
+
+	fogmaxdensity(float) : "Fog Max Density [0..1]" : 1
+	hdrcolorscale[since_L4D2](float) : "HDR color scale." : 1 : "float value to multiply fog color by when running in HDR mode."
+
+	// Inputs
+	input ForceUpdate[MBase](void) : "Forces the 3D skybox to update with this sky_camera's position."
+	input StartUpdating[MBase](void) : "Begins per-tick skybox updating, which is needed if you want this sky_camera to move."
+	input StopUpdating[MBase](void) : "Ends per-tick skybox updating if it was enabled before."
+	
+	input ActivateSkybox[MBase,since_ASW](void) : "Make this skybox the active one."
+	input DeactivateSkybox(void) : "Stops making this sky_camera the active skybox if it is currently the active skybox, which causes the sky to clear."
+	
+	input SetFogStartDist[MBase](float) : "Sets the fog start distance."
+	input SetFogEndDist[MBase](float) : "Sets the fog end distance."
+	input TurnOnFog[MBase](void) : "Turns the fog on."
+	input TurnOffFog[MBase](void) : "Turns the fog off."
+	input SetFogColor[MBase](color255) : "Sets the primary fog color."
+	input SetFogColorSecondary[MBase](color255) : "Sets the secondary fog color."
+	input SetFarZ[MBase](integer): "Sets the far clip plane distance."
+	
+	input SetSkyColor[MBase](color255) : "Sets the sky color."
+	]

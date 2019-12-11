@@ -1,0 +1,4 @@
+@SolidClass base(TriggerOnce)
+= trigger_once: "A trigger volume that removes itself after it is triggered once."
+	[
+	]

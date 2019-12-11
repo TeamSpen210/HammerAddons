@@ -1,0 +1,9 @@
+@SolidClass base(Trigger) 
+	appliesto(TF2) 
+= trigger_passtime_ball: "Send enter/exit outputs when ball or player with ball enter/exits"
+	[
+
+	// Outputs
+	output OnBallEnter(void)
+	output OnBallExit(void)
+	]

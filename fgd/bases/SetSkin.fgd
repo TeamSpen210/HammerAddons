@@ -1,0 +1,6 @@
+// Entities with a settable skin.
+@BaseClass = SetSkin
+	[
+	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. " +
+		"Set this to a number other than 0 to use that skin instead of the default."
+	]

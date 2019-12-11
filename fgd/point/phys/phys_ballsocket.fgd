@@ -1,0 +1,10 @@
+@PointClass base(TwoObjectPhysics)
+	autovis(Entities, Constraints, Ballsocket)
+	iconsprite("editor/phys_ballsocket.vmt") 
+	line(255 255 255, targetname, attach1) 
+	line(255 255 255, targetname, attach2) 
+	line(128 128 128, targetname, attach1, targetname, attach2) 
+	color(128 128 128) 
+= phys_ballsocket: "A constraint that keeps the position of two objects fixed, relative to the constraint's origin. It does not affect rotation."
+	[
+	]

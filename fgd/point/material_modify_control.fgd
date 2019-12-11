@@ -1,0 +1,22 @@
+@PointClass base(BaseEntityPoint)  
+	color(0 100 250) 
+	line(255 255 0, targetname, parentname) 
+	iconsprite("editor/ficool2/material_modify_control.vmt")
+ = material_modify_control: "An entity that can be used to directly control material vars. " +
+ "To use it, you need to add the MaterialModify or MaterialModifyAnimated proxy to the material you intend to change. " +
+ "Parent this entity the entity who's material you want to control. " +
+ "If not parented, this applies to all materials in the map with the given name."
+	[
+	materialname(string) : "Material to modify."
+	materialvar(string) : "Material variable to modify."
+
+	// Inputs
+	input SetMaterialVar(string) : "Fire to modify a material variable. The argument is the value to set the variable to."
+	input SetMaterialVarToCurrentTime(void) : "This sets the material variable to the current time on the server."
+	input StartAnimSequence(string) : "Force an animated material with the MaterialModifyAnimated proxy to play a set of animation frames. " +
+		"Format is: <Frame Start> <Frame End> <Frame Rate> <Loop>. " +
+		"Setting <Frame End> to -1 uses the last frame of the texture. <Loop> should be 1 or 0."
+	input StartFloatLerp(string) : "Force a material with the MaterialModify proxy to lerp a material var between two floating point values. " +
+		"Format is: <Start Value> <End Value> <Transition Time> <Loop>. " +
+		"<Loop> should be 1 or 0."
+	]

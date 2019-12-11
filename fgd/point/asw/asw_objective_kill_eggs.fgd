@@ -1,0 +1,7 @@
+
+@PointClass base(BaseEntityPoint, ASWObjective) 
+	appliesto(ASW) 
+	iconsprite("editor/asw_objective_kill_eggs.vmt") = asw_objective_kill_eggs: "Alien Swarm Mission Objective"
+	[
+	numeggs(integer) : "Num Eggs" : 1 : "How many eggs have to be killed for this objective to be complete."
+	]

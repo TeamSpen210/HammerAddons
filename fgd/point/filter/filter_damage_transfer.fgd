@@ -1,0 +1,29 @@
+@FilterClass base(BaseRedirectFilter) 
+	autovis(Logic, Filters)
+	appliesto(MBase)
+	iconsprite("editor/filter_damage_transfer.vmt") 
+= filter_damage_transfer :
+	"Whenever an entity using this as a damage filter takes damage, that damage is transferred to another entity. " +
+	"The entity using this filter will not take the damage unless a secondary filter is specified and passed or caller damage is allowed. " +
+	"All damage information including force, type, attacker, etc. should be retained during the transfer " +
+	"and it obeys the target entity's own damage filters."
+	[
+	target(target_destination) : "Transfer Target" : "" : "The name of the entity/entities that will receive the damage. Please note that this complies with their own damage filters."
+	
+	AdjustDamagePosition(boolean) : "Adjust Damage Position" : 0 : "Adjusts the damage position to be relative to the target entity." 	
+	MaxEntities(integer) : "Max Entities" : 1 : "The maximum number of entities matching the criteria who can be damaged. 0 = no limit. (0 is actually changed to 2048 internally, but don't worry about that)"
+	
+	CallerDamageAllowed(boolean) : "Caller Damage Allowed" : 0 : "Sets whether the caller using this filter is allowed to take the transferred damage as well." 
+
+	damagefilter(filterclass) : "Secondary Filter" : "" : "A secondary filter that can be used for certain things. See the Secondary Filter Mode for different ways you can use this. This is optional."
+	SecondaryFilterMode[engine](integer) : "Secondary Filter Mode" : 0
+	SecondaryFilterMode(choices) : "Secondary Filter Mode" : 0 : "How should the secondary filter be used?" =
+		[
+		0 : "Must pass to damage caller (if damage is allowed)"
+		1 : "Must pass to transfer damage to targets"
+		2 : "Each transfer target must pass"
+		]
+
+	input SetTarget(target_destination) : "Sets the transfer target."
+	input SetField(target_destination) : "Sets the secondary filter."
+	]

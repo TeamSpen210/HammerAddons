@@ -1,0 +1,21 @@
+
+@BaseClass base(BaseEntityPhysics, TeamNum, EnableDisable, Toggle, FadeDistance) 
+	color(0 0 200) 
+	sphere(fademindist) 
+	sphere(fademaxdist) = Item
+	[
+	spawnflags[!TF2](flags) : "spawnflags" =
+		[
+		1: "Start Constrained" : 0
+		2 : "Deny player pickup (reserve for NPC)" : 0 [MBase]
+		4 : "Not puntable by Gravity Gun" : 0 [MBase]
+		8 : "Deny NPC pickup (reserve for player)" : 0 [MBase]
+		]
+
+	powerup_model[TF2](string) : "Model" : : "Change the model to something other than the default model."
+	automaterialize[TF2](boolean) : "Auto-Materialize" : 1 : "The pickup should automatically materialize after being picked up."
+
+	// Outputs
+	output OnPlayerTouch(void) : "Fires when the player touches this object."
+	output OnCacheInteraction[!TF2](void) : "This output fires when the player proves they have 'found' this item. Fires on: Player Touch (whether or not player actually acquires the item), Picked up by +USE, Picked up by Physcannon, Punted by Physcannon."
+	]

@@ -1,0 +1,14 @@
+@PointClass base(BaseEntityPoint, MasterEnt)
+	iconsprite("editor/ficool2/game_player_team")
+	color(200 0 0) 
+= game_player_team: "An entity that changes the team of the player who activates it."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Remove On fire" : 0
+		2: "Kill Player" : 0
+		4: "Gib Player" : 0
+		]
+
+	target(string) : "game_team_master to use"
+	]

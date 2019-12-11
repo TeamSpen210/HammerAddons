@@ -1,0 +1,26 @@
+@PointClass appliesto(MBase) 
+	base(BaseEntityPoint)
+	iconsprite("editor/logic_entity_position.vmt") 
+	line(255 255 255, targetname, target)
+= logic_entity_position : "Outputs an entity's position. Prediction operations can be performed as well."
+	[
+	target(target_destination) : "Target" : "" : "Who's position should be measured? Use the SetTarget input to change mid-game."
+	PositionType(choices) : "Position Type" : 0 : "What position should be measured." =
+	[
+		0 : "Origin (default)"
+		1 : "Local Origin"
+		2 : "Worldspace Center"
+		3 : "Eyes"
+		4 : "Ears"
+		5 : "Attachment (use parameter keyvalue)"
+	]
+	PositionParameter(string) : "Position Type Parameter" : "" : "If using an attachment's position, enter the name of the attachment here."
+
+	// Inputs
+	input GetPosition(void) : "Gets the target's position."
+	input SetPosition(vector) : "Sets the target's position. Using the default 'Origin' will set absolute origin while using 'Local Origin' will set local origin."
+	input PredictPosition(float) : "Predicts what position the target will be at in the specified number of seconds."
+
+	// Outputs
+	output OutPosition(vector) : "Outputs the position."
+	]

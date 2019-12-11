@@ -1,0 +1,22 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(P2) 
+	autovis(Test Elements, Paint, Paint Sprayer)
+	sphere(radius) 
+	iconsprite("editor/paint_sphere.vmt") = paint_sphere: "Paint brushes inside the sphere."
+	[
+	paint_type[engine](integer) : "Paint Type" : 0 
+	paint_type(choices) : "Paint Type" : 0 : "The type of Gel created." =
+		[
+		0: "Repulsion Gel"
+		1: "Reflection Gel / Adhesion Gel"
+		2: "Propulsion Gel"
+		3: "Conversion Gel"
+		4: "Cleansing Gel"
+		]
+
+	radius(float) : "Radius" : 60.f : "Radius of paint sphere"
+	alpha_percent(float) : "Alpha Percent" : 1.0 : "Alpha percent to control the density of paint, the value must be between 0 to 1"
+
+	// Inputs
+	input Paint(void) : "Apply paint with specified paint type inside the paint sphere"
+	]

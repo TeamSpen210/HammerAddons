@@ -1,0 +1,31 @@
+@PointClass base(BaseEntityPoint) 
+	autovis(Entities, phys_convert)
+	color(128 128 128) 
+	line(255 255 0, targetname, target) 
+	iconsprite("editor/phys_convert.vmt") 
+= phys_convert: "Turns an arbitrary entity into a physically simulated entity. i.e. brush entities will behave like func_physbox, model entities behave like prop_physics."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Convert Asleep" : 0
+		2: "Convert As Debris" : 0
+		]
+
+	target(target_destination) : "Entity to convert" : : "Name of the entity or entities that will be converted to a physics object when the ConvertTarget input is fired. Maximum of 512 entities."
+	swapmodel(target_destination) : "Model Swap Entity" : : "If specified, the entity will be switched to use this entity's model instead of its own. Only one entity will be converted."
+	massoverride(float) : "Mass Override" : "0" : "Sets the mass when the object(s) are converted (0 means auto-calculate)"
+
+	SetConversionType[engine](integer) : "Conversion Type" : 0
+	SetConversionType[MBase](choices) : "Conversion Type" : 0 : "How this phys_convert should convert objects." =
+		[
+		0 : "Simple (simple_physics_prop, simple_physics_brush)"
+		1 : "Conventional (prop_physics, func_physbox)"
+		]
+
+	// Inputs
+	input ConvertTarget(void) : "Converts this entity's target to a physically simulated object."
+	input SetConversionType[Mbase](integer) : "Sets this entity's conversion type. 0 = Simple, 1 = Conventional"
+
+	// Outputs
+	output OnConvert(void) : "Fires after the conversion has taken place."
+	]

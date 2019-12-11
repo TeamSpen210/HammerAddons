@@ -1,0 +1,19 @@
+
+@PointClass base(BaseEntityAnimating) 
+	appliesto(P1, P2) 
+	studio("models/props/Round_elevator_body.mdl") 
+	studioprop("models/props/Round_elevator_body.mdl") = prop_portal_stats_display: "Portal Stats Display, for P1's challenge mode."
+	[
+
+	// Inputs
+	input Enable(void) : "Turn on and display the current stats"
+	input Disable(void) : "Turn off stats display"
+	input UpdateStats(void) : "Updates the stats to the player's current level stats"
+	input ResetPlayerStats(void) : "Resets the curret level stats of the player"
+
+	// Outputs
+	output OnMetPortalObjective(void) : "Fired when enabled and player met the number of portal placements."
+	output OnMetStepsObjective(void) : "Fired when enabled and player met the number of foot steps."
+	output OnMetSecondsObjective(void) : "Fired when enabled and player met the number of seconds."
+	output OnFailedAllObjectives(void) : "Fired when enabled and player met no objectives."
+	]

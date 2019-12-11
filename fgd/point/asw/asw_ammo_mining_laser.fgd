@@ -1,0 +1,6 @@
+
+@PointClass base(ASWPickup) 
+	appliesto(ASW) 
+	studio("models/swarm/Ammo/ammobattery.mdl") = asw_ammo_mining_laser: "Box of Mining Laser ammo"
+	[
+	]

@@ -1,0 +1,7 @@
+@PointClass base(Item)
+ 	appliesto(INFRA)
+ 	autovis(Point Entities, Items, AA Batteries)
+	studio("models/items/batterypack_001.mdl")
+= item_aa_batteries: "Box of camera batteries"
+	[
+	]

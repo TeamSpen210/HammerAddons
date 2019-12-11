@@ -1,0 +1,19 @@
+@PointClass appliesto(MBase)
+	base(point_camera)
+	studioprop("models/editor/camera.mdl") 
+= point_camera_ortho : "Orthographic Camera"
+	[
+	Ortho0(float) : "Ortho Top" : 100 : "The ortho's top dimension. Will be FOV if 0."
+	Ortho1(float) : "Ortho Bottom" : 0 : "The ortho's bottom dimension. Will be a negative version of the top if 0."
+	Ortho2(float) : "Ortho Left" : 0 : "The ortho's left dimension. Will be the top if 0."
+	Ortho3(float) : "Ortho Right" : 0 : "The ortho's right dimension. Will be a negative version of the left if 0."
+	
+	IsOrtho(boolean) : "Ortho Enabled" : 1 : "Sets whether this camera is orthographic. This is for when you want to toggle ortho mode via input."
+
+	// Inputs
+	input SetOrthoEnabled(bool) : "Changes camera's FOV over time"
+	input SetOrthoTop(string) : "Changes the top ortho over time"
+	input SetOrthoBottom(string) : "Changes the bottom ortho over time"
+	input SetOrthoLeft(string) : "Changes the left ortho over time"
+	input SetOrthoRight(string) : "Changes the right ortho over time"
+	]

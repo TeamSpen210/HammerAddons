@@ -1,0 +1,21 @@
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/env_spritetrail.vmt") 
+	sphere(startwidth) 
+	sphere(endwidth) 
+= env_spritetrail: "A magical trail you can parent to anything you heart desires."
+	[
+	lifetime(float) : "Lifetime" : 0.5
+	startwidth(float) : "Start Width" : 8.0
+	endwidth(float) : "End Width" : 1.0
+	spritename(material) : "Sprite Name" : "sprites/bluelaser1.vmt"
+	renderamt(integer) : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
+	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
+	rendermode[engine](integer) : "Render Mode" : 5
+	rendermode(choices) : "Render Mode" : 5 =
+		[
+		0: "Normal"
+		4: "Solid"
+		5: "Additive"
+		]
+
+	]

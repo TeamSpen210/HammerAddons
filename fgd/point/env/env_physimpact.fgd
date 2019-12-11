@@ -1,0 +1,23 @@
+@PointClass base(BaseEntityPoint) 
+	line(255 255 255, targetname, directionentityname)
+	iconsprite("editor/env_physexplosion.vmt")
+	sphere(distance)
+	color(128 128 128)
+= env_physimpact: "An entity that will cause a physics impact on another entity."
+	[
+	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "Direction to project the impact."
+	magnitude(integer) : "Magnitude" : 100 : "Strength of the impact."
+	distance(integer) : "Distance" : 0 : "How far to project the impact (if 0 uses a default value)."
+	directionentityname(target_destination) : "Point to Entity" : : "If set, 'Distance' and Angle settings are ignored and the direction and distance to the target entity will be used."
+	spawnflags(flags)  =
+		[
+		1: "No fall-off" : 0
+		2: "Infinite Length" : 0
+		4: "Ignore Mass" : 0
+		8: "Ignore Surface Normal When Applying Force" : 1
+		]
+
+
+	// Inputs
+	input Impact(void) : "Trigger the impact"
+	]

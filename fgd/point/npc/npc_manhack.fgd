@@ -1,0 +1,20 @@
+@NpcClass base(BaseNPC, AlyxInteractable) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(NPCs, Combine, Manhack)
+	studio("models/manhack.mdl") = npc_manhack: "Manhack"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Start packed up (folded and engine off)" : 0
+		131072: "Don't use any damage effects" : 0
+		262144: "Use Air Nodes" : 0
+		1048576: "No Danger Sounds" : 0
+		]
+
+	ignoreclipbrushes(boolean) : "Ignore NPC Clip brushes" : 0
+
+
+	// Inputs
+	input DisableSwarm(void) : "Disable the manhack swarm behavior."
+	input Unpack(void) : "Causes the manhack to stop being packed up."
+	]

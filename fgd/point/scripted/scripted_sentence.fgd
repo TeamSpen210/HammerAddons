@@ -1,0 +1,39 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	sphere() 
+	iconsprite("editor/scripted_sentence.vmt") = scripted_sentence: "Scripted Sentence"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Fire Once" : 1
+		2: "Followers Only" : 0
+		4: "Interrupt Speech" : 1
+		8: "Concurrent" : 0
+		16: "Speak to Activator" : 1
+		]
+
+	sentence(string) : "Sentence Name"
+	entity(string) : "Speaker Type"
+	delay(string) : "Additional Sentence Time" : "0"
+	radius(integer) : "Search Radius" : 512
+	refire(string) : "Delay Before Refire" : "3"
+	listener(string) : "Listener Type"
+	volume(string) : "Volume 0-10" : "10"
+
+	attenuation[engine](integer) : "Sound Radius" : 0
+	attenuation(choices) : "Sound Radius" : 0 =
+		[
+		0: "Small Radius"
+		1: "Medium Radius"
+		2: "Large  Radius"
+		3: "Play Everywhere"
+		]
+
+
+	// Inputs
+	input BeginSentence(void) : "Starts the scripted sentence."
+
+	// Outputs
+	output OnBeginSentence(void) : "Fires when the sentence begins"
+	output OnEndSentence(void) : "Fires when the sentence ends"
+	]

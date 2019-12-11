@@ -1,0 +1,33 @@
+@PointClass base(TwoObjectPhysics)  
+	autovis(Entities, Constraints, Slide Constraint)
+	halfgridsnap
+	studio("models/editor/axis_helper.mdl") 
+	line(255 255 255, targetname, attach1) 
+	line(255 255 255, targetname, attach2) 
+	line(128 128 128, targetname, attach1, targetname, attach2) 
+	color(128 128 128)
+= phys_slideconstraint: "A constraint that constrains an entity along a line segment."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "No Collision until break" : 1
+		2: "Limit Endpoints" : 0
+		]
+
+	slideaxis(vecline) : "Sliding Axis"
+	slidefriction(float) : "Friction" : 0 : "Resistance/friction in the constraint"
+	systemloadscale(float) : "Load Scale" : 1 : "Scale of the mass load connected to this constraint (1=just the objects directly connected)"
+	minsoundthreshold(float) : "Minimum Sound Velocity" : 6 : "When travelling below this many units/sec, will not play any sound."
+	maxsoundthreshold(float) : "Full Sound Velocity" : 80 : "When travelling at this speed or above, will play sound at full volume."
+	slidesoundfwd(sound) : "Travel sound (forward)" : : "Play this sound when travelling forward on helper axis"
+	slidesoundback(sound) : "Travel sound (backward)" : : "Play this sound when travelling backward on helper axis"
+	reversalsoundthresholdsmall(float) : "Reversal sound threshold (small)" : 0 : "When accelerating by more than this many units/sec^2 opposite to direction of travel, play the small reversal sound."
+	reversalsoundthresholdmedium(float) : "Reversal sound threshold (medium)" : 0 : "When accelerating by more than this many units/sec^2 opposite to direction of travel, play the medium reversal sound."
+	reversalsoundthresholdlarge(float) : "Reversal sound threshold (large)" : 0 : "When accelerating by more than this many units/sec^2 opposite to direction of travel, play the large reversal sound."
+	reversalsoundsmall(sound) : "Reversal sound (small)" : : "Play this sound when making a hard reverse over the small threshold but less than medium"
+	reversalsoundmedium(sound) : "Reversal sound (medium)" : : "Play this sound when making a hard reverse over the medium threshold but less than large"
+	reversalsoundlarge(sound) : "Reversal sound (large)" : : "Play this sound when making a hard reverse over the large threshold"
+
+	// Inputs
+	input SetVelocity(float) : "Set linear velocity along the constraint"
+	]

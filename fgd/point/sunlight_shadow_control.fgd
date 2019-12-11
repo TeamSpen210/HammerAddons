@@ -1,0 +1,30 @@
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	appliesto(since_ASW) 
+	iconsprite("editor/shadow_control.vmt") 
+	color(200 0 0) 
+	frustum(fov, nearz, distance, color, -1) 
+	sphere(distance) 
+	sphere(nearz) 
+ 	autovis(Point Entities, Globals, Sunlight Shadow Controller)
+= sunlight_shadow_control: "An entity to control the sunlight that casts shadows in the map."
+	[
+	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "50 40 0" : "This is the light cast direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis."
+	color(color255) : "Light Color" : "255 255 255 1" : "This is the color of the sunlight."
+	colortransitiontime(float) : "Color Transition Time" : 0.5 : "This is the number of seconds it takes to get from 0 to 255."
+	distance(float) : "Distance" : 10000 : "This is the distance of the sun, greater distances produce more orthogonal shadows."
+	fov(float) : "FOV" : 5 : "This is the field of view that the sunlight casts in. Use lower values for more distant sun and sharper shadows."
+	nearz(float) : "NearZ Distance" : 512 : "This controls the near clipping plane's distance from the player."
+	northoffset(float) : "North Offset" : 200 : "This offsets the from the player position where the sun is attached."
+	texturename(material) : "Texture Name" : "effects/flashlight001"
+	enableshadows(boolean) : "Enable Shadows" : 0 : "Enables/disables shadows from this projected texture."
+
+	// Inputs
+	input LightColor(color255) : "Set the light color."
+	input SetAngles(string) : "Set the sun direction."
+	input SetDistance(float) : "Set the distance of the sun."
+	input SetFOV(float) : "Set the field of view the sun casts."
+	input SetNearZDistance(float) : "Set the near z distance."
+	input SetNorthOffset(float) : "Sets the north offset."
+	input SetTexture(string) : "Set the texture cookie of the sunlight."
+	input EnableShadows(boolean) : "Set the if shadows are enabled"
+	]

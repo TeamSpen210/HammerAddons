@@ -1,0 +1,6 @@
+@PointClass base(hostage_entity) 
+	appliesto(CSGO) 
+	studio("models/Characters/hostage_04.mdl") = info_hostage_spawn: "Hostage. A hostage NPC will spawn at this point.\n\n" +
+	"There are usually four hostages placed in each hostage rescue map. The model for each Hostage is randomly chosen."
+	[
+	]

@@ -1,0 +1,21 @@
+
+@PointClass base(tf_base_minigame) 
+	appliesto(TF2) = tf_halloween_minigame: "Halloween 2014 Minigame"
+	[
+	minigametype[engine](integer) : "Minigame Type" : 1
+	minigametype(choices) : "Minigame Type" : 1 : "Which minigame is this" =
+		[
+		1: "Halloween Collection"
+		2: "Halloween Platforms"
+		3: "Halloween Soccer"
+		]
+
+
+	// Inputs
+	input KartWinAnimationRed(void) : "Play win animation for all players in kart on team RED"
+	input KartWinAnimationBlue(void) : "Play win animation for all players in kart on team BLUE"
+	input KartLoseAnimationRed(void) : "Play lose animation for all players in kart on team RED"
+	input KartLoseAnimationBlue(void) : "Play lose animation for all players in kart on team BLUE"
+	input EnableSpawnBoss(string) : "Spawn Halloween boss HHH at specified target entity"
+	input DisableSpawnBoss(void) : "Stop spawning Halloween boss"
+	]

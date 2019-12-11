@@ -1,0 +1,18 @@
+@PointClass appliesto(MBase)
+	base(BaseEntityPoint)
+	iconsprite("editor/convar_mod.vmt")
+	color(239 163 14)
+= game_convar_mod : "Mods cvars"
+	[
+	// Keys
+	target(string) : "ConVars" : "" : "The convars to modify. Multiple cvars can be modded with ';', e.g. 'host_timescale 0.25; npc_alyx_interact_manhacks 1'"
+	
+	spawnflags(Flags) =
+		[
+		1 : "Start Activated" : 1
+		]
+	
+	// Inputs
+	input Activate(void) : "Begins modding the cvars."
+	input Deactivate(void) : "Stops modding the cvars."
+	]

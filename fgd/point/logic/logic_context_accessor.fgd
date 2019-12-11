@@ -1,0 +1,26 @@
+@PointClass appliesto(MBase) 
+	base(BaseEntityPoint)
+	iconsprite("editor/logic_context_accessor.vmt") 
+	line(255 255 255, targetname, target)
+= logic_context_accessor :
+	"A logic entity that could read an entity's response contexts. " +
+	"Use the target and context name keyvalues if you want to store a specific target and/or context. " +
+	"Use the 'Test' input to look for the context on the target. " +
+	"The 'OutValue' output will fire with the context's value if it is found."
+	[
+	// Keys
+	target(target_destination) : "Target Entity" : : "The entity with the context to measure."
+	context(string) : "Context Name" : : "The name of the context to measure."
+	
+	// Inputs
+	input Test(void) : "Gets the stored context's value from stored target."
+	input TestContext(string) : "Tests the specified context against the target instead of using the stored context. Does not change the stored context."
+	input TestTarget(target_destination) : "Tests the specified target against the context instead of using the stored target. Does not change the stored target."
+	input SetContext(string) : "Sets the context to measure."
+	input SetValue(string) : "Sets the stored target's stored context value to the specified string."
+	input SetTarget(target_destination) : "Sets the target entity."
+	
+	// Outputs
+	output OutValue(string) : "Fires when a context is found. Passes its value."
+	output OnFailed(void) : "Fires when this entity fails to find the specified context."
+	]

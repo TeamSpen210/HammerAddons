@@ -1,0 +1,13 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	autovis(AI, AI Change Target)
+	iconsprite("editor/ai_changetarget.vmt") 
+= ai_changetarget: "Change Target"
+	[
+	target(target_destination) : "Target entity" : : "Name of entity whose target will be changed."
+	m_isznewtarget(string) : "New Target"
+
+	// Inputs
+	input Kill(void) : "Removes this entity from the world"
+	input Activate(void) : "Changes the entities target"
+	]

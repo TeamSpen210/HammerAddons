@@ -1,0 +1,18 @@
+@BaseClass 
+	sphere(distmax)
+= BModelParticleSpawner
+	[
+	startdisabled(boolean) : "Start Disabled" : 0
+	color(color255) : "Particle Color (R G B)" : "255 255 255"
+	spawnrate(integer) : "Particle Per Second" : 40 : "Number of particles to spawn, per second."
+	speedmax(integer) : "Maximum Particle Speed" : 13 : "Maximum speed that the particles can move after spawning."
+	lifetimemin(integer) : "Minimum Particle Lifetime" : 3 : "Minimum number of seconds until each particle dies. Particles live for a random duration between this and 'Maximum Particle Lifetime'."
+	lifetimemax(integer) : "Maximum Particle Lifetime" : 5 : "Maximum number of seconds until each particle dies. Particles live for a random duration between 'Minimum Particle Lifetime' and this. Will be clamped to a max of 15."
+	distmax(integer) : "Maximum Visible Distance" : 1024 : "Maximum distance at which particles are visible. They fade to translucent at this distance."
+	frozen(boolean) : "Frozen" : 0 : "When set, this entity spawns the number of particles in SpawnRate immediately, and then goes inactive."
+	nowind(boolean) : "Unaffected by Wind" : 0 : "When set, wind doesn't affect the particles of this entity."
+
+	// Inputs
+	input TurnOn(void) : "Turn on."
+	input TurnOff(void) : "Turn off."
+	]

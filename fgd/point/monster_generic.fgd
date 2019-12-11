@@ -1,0 +1,13 @@
+@PointClass base(BaseNPC) 
+	studio() 
+	bbox(-4 -4 -4, 4 4 4)
+	= monster_generic: "Generic Script NPC"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Not solid" : 0
+		]
+
+	model(studio) : "Model"
+	body(integer) : "Body" : 0
+	]

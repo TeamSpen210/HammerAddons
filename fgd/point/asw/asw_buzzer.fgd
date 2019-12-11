@@ -1,0 +1,17 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(ASW) 
+	studio("models/swarm/Buzzer/buzzer.mdl") = asw_buzzer: "Buzzer"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Start packed up (folded and engine off)" : 0
+		131072: "Don't use any damage effects" : 0
+		262144: "Use Air Nodes" : 0
+		1048576: "No Danger Sounds" : 0
+		]
+
+
+	// Inputs
+	input DisableSwarm(void) : "Disable the buzzer swarm behavior."
+	]

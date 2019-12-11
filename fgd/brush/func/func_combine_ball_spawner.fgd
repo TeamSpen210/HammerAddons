@@ -1,0 +1,7 @@
+@SolidClass base(CombineBallSpawners) = func_combine_ball_spawner: "Spawns Combine balls."
+	[
+
+	// Outputs
+	output OnBallReinserted(void) : "Fired when a combine ball is reinserted into the field (only gets triggered when Combine Power supply is checked)"
+	output OnLastBallGrabbed(void) : "Fired when the last combine ball is grabbed from the field by a mega physcannon"
+	]

@@ -1,0 +1,35 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(ASW) 
+	studio("models/aliens/shieldbug/shieldbug.mdl") 
+	sphere() = asw_shieldbug: "A large, heavily armoured Swarm alien."
+	[
+	sleepstate[engine](integer) : "Sleep State" : 1
+	sleepstate(choices) : "Sleep State" : 1 : "Holds the NPC in stasis until specified condition. See also 'Wake Radius' and 'Wake Squad'." =
+		[
+		0: "None"
+		1: "Waiting for threat"
+		2: "Waiting for PVS"
+		3: "Waiting for input"
+		]
+
+	visiblewhenasleep[engine](boolean) : "Visible when asleep" : 0
+	visiblewhenasleep(choices) : "Visible when asleep" : 0 : "If true, this alien will still get drawn even when asleep" +
+		"(useful for aliens you see far below you)." =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	extrahealth(integer) : "Extra Health" : 0 : "Additional health added to the normal starting amount."
+	spawnflags(flags) : "spawnflags" =
+		[
+		131072: "Use Ground Checks" : 0
+		]
+
+	// Inputs
+	input BreakWaitForScript(void) : "Wakes the alien up if his Wait For Script flag was set"
+
+	// Outputs
+	output OnReachedFightGoal(void) : "Fires when the Shieldbug reaches his specified fight-to location"
+	]

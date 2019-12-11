@@ -1,0 +1,21 @@
+@BaseClass base(BaseVehicle) = BaseDriveableVehicle
+	[
+	vehiclelocked(boolean) : "Start locked" : 0
+
+	// Inputs
+	input HandBrakeOn(void) : "Turns the handbrake on"
+	input HandBrakeOff(void) : "Releases the handbrake"
+	
+	input EnterVehicle[MBase](void) : "Forces the activator (or player) into the vehicle."
+	input EnterVehicleImmediate[MBase](void) : "Forces the activator (or player) into the vehicle without enter/exit animations."
+	input ExitVehicle[MBase](void) : "Boots the driver out of the vehicle."
+	input ExitVehicleImmediate[MBase](void) : "Immediately boots the driver out of the vehicle with no animations."
+
+	// Outputs
+	output PlayerOn(void) : "Player entered the vehicle"
+	output PlayerOff(void) : "Player exited the vehicle"
+	output PressedAttack(void) : "Player Pressed attack key"
+	output PressedAttack2(void) : "Player Pressed attack2 key"
+	output AttackAxis(string) : "State of attack button [0,1]"
+	output Attack2Axis(string) : "State of attack2 button [0,1]"
+	]

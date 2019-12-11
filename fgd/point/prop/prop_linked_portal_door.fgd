@@ -1,0 +1,14 @@
+@PointClass base(BaseEntityAnimating, LinkedPortalDoor) 
+	appliesto(P2) 
+	studioprop("models/props/portal_door.mdl") 
+	line(255 255 0, targetname, lightingorigin) 
+= prop_linked_portal_door: "A door which is linked by a portal to another 'prop_linked_portal_door' entity. " +
+	"This is premade at the correct size to allow portaling though the included door. It appears as a grey door."
+	[
+	partnername(target_destination) : "Linked Partner" : : "Another 'prop_linked_portal_door' entity which will link to this one."
+	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from for the door."
+
+	// Outputs
+	output OnFullyOpen(void) : "Called when the door has finished its open animation."
+	output OnFullyClosed(void) : "Called when the door has finished its close animation."
+	]

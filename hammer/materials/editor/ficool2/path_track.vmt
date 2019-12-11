@@ -1,0 +1,8 @@
+Sprite
+{
+	$baseTexture "editor/ficool2/path_track"
+	$spriteorientation "vp_parallel"
+	// Align 32,48 with the origin.
+	$spriteorigin "[.5 0.75]"
+	$no_fullbright 1
+}

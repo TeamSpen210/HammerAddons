@@ -1,0 +1,9 @@
+@PointClass base(BaseEntityPoint)
+ 	appliesto(INFRA)
+	studioprop("models/editor/camera.mdl")
+	line(255 255 255, targetname, nextnode)
+= point_viewcontrol_node: "A camera entity that controls the player's view. While it's active, the player will see out of the camera."
+	[
+	nextnode(target_destination) : "Next Node" : : "The next node on the path."
+	fov(float) : "Field of View" : 0 : "0 is the same as the camera field of view. -1 is the same as the player default field of view."
+	]

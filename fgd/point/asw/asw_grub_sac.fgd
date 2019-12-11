@@ -1,0 +1,19 @@
+
+@PointClass base(BaseEntityPhysics, SetModel) 
+	appliesto(ASW) 
+	studioprop() = asw_grub_sac
+	[
+	model(studio) : "World model" : "models/swarm/GrubSac/grubsac.mdl"
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Burst when touched" : 1
+		2: "Burst randomly when marine is near" : 1
+		4: "Burst when damaged" : 1
+		8: "Burst on input" : 1
+		]
+
+	burninglinkname(string) : "Burning Link Name" : : "Alien goo/Grub sacs that share the same Burning Link Name will all be set on fire when one of those alien goo's is set on fire."
+
+	// Inputs
+	input Burst(void) : "Burst and spawn grubs."
+	]

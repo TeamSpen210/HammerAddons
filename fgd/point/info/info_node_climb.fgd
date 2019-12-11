@@ -1,0 +1,7 @@
+@PointClass base(BaseEntityPoint, HintNode) 
+	studio("models/editor/climb_node.mdl")
+	color(153 215 103)
+	sphere(radius)
+= info_node_climb: "A climb-node for AI navigation. Only usable by NPCs that can climb."
+	[
+	]

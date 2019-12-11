@@ -1,0 +1,19 @@
+@BaseClass appliesto(L4D2) = Glow
+	[
+	glowstate[engine](integer) : "Glow Type" : 0
+	glowstate(choices) : "Glow Type" : 0 =
+		[
+		0: "OFF"
+		1: "+use"
+		2: "look-at"
+		3: "ON"
+		]
+
+	glowrange(integer) : "Glow Range" : 0 : "Range at which the glow becomes visible. (0 = always visible)"
+	glowrangemin(integer) : "Glow Range Min" : 0 : "Range at which the glow stops being visible. (0 = always visible)"
+	glowcolor(color255) : "Glow Color Override (R G B)" : "0 0 0" : "Change the render color of the glow."
+
+	// Inputs
+	input StartGlowing(void) : "Turn on a permanent glow effect for this prop."
+	input StopGlowing(void) : "Turn off this prop's glow effect."
+	]

@@ -1,0 +1,38 @@
+
+@SolidClass base(trigger_asw_use_area) 
+	appliesto(ASW) = trigger_asw_computer_area: "A trigger volume in which marines can use a computer."
+	[
+	locked[engine](boolean) : "Locked" : 1
+	locked(choices) : "Locked" : 1 : "Locked computer terminals will require a Technical Engineer to pass the hacking minigame before allowing access to the main menu." =
+		[
+		0: "Unlocked"
+		1: "Locked"
+		]
+
+	panelpropname(target_destination) : "Computer prop name" : : "Name of the prop_dynamic used for this computer panel's representation in the world.  Skin # of this prop_dynamic will be set to reflect the locked/unlocked status of this computer."
+	securitycam1name(target_destination) : "SecurityCam1 Name" : : "Name of the 1st security cam available from this computer."
+	securitycam1label(string) : "SecurityCam1 Label" : : "Text label shown over this camera view ingame."
+	turret1name(target_destination) : "Turret1 Name" : : "Name of the 1st turret available from this computer."
+	mailfile(string) : "Mail File" : : "Name of the text resource file containing email to show at this computer."
+	newsfile(string) : "News File" : : "Name of the text resource file containing news to show at this computer."
+	stocksseed(string) : "Stocks Seed" : : "Number used to seed the stocks data shown at this computer.  Computers with the same Stock Seed will show the same stock values."
+	weatherseed(string) : "Weather Seed" : : "Number used to seed the weather data shown at this computer.  Computers with the same Weather Seed will show the same weather values."
+	plantfile(string) : "Plant Status" : : "Put in any text here to make the computer show the reactor status (special option for use only in Rydberg).  Leave blank to not have this option in the computer."
+	downloadobjectivename(string) : "Download Objective Name" : : "Name of the objective to trigger as complete when a marine downloads the documents from this computer."
+	hackdifficulty(integer) : "Num Tumblers" : 5 : "How many columns are in the hack puzzle for this computer (from 3 to 8)."
+	entriespertumbler(integer) : "Entries per tumbler" : 5 : "How many numbers are in each column of the hack puzzle (from 5 to 9)."
+	tumblermoveinterval(float) : "Move interval" : 0.5 : "How long each column pauses for before shifting to a new number (from 0.3 to 2.0 seconds)."
+	pdaname(string) : "PDA Name" : : "If this computer area represents a PDA, then put the name of the PDA owner here."
+	downloadtime(float) : "Download Time" : 10.0 : "How many seconds it takes to download the critical files from this computer.  NOTE: This number may be adjusted ingame by the marine's hack skill."
+
+	// Outputs
+	output OnComputerHackStarted(void) : "Fired whenever a marine starts hacking this computer."
+	output OnComputerHackHalfway(void) : "Fired when a marine successfully finishes hacking this pcomputer."
+	output OnComputerHackCompleted(void) : "Fired when a marine successfully finishes hacking this pcomputer."
+	output OnComputerActivated(void) : "Fired whenever a marine uses this computer."
+	output OnComputerDataDownloaded(void) : "Fired when a marine downloads the critical data from this computer."
+	output OnComputerViewMail1(void) : "Fired whenever a marine reads the 1st mail in this computer."
+	output OnComputerViewMail2(void) : "Fired whenever a marine reads the 2nd mail in this computer."
+	output OnComputerViewMail3(void) : "Fired whenever a marine reads the 3rd mail in this computer."
+	output OnComputerViewMail4(void) : "Fired whenever a marine reads the 4th mail in this computer."
+	]

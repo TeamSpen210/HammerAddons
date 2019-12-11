@@ -1,0 +1,33 @@
+@PointClass base(BaseEntityPoint, Angles)
+	autovis(Templates, Entity Maker)
+	line(255 255 0, targetname, entitytemplate)
+	iconsprite("editor/env_entity_maker.vmt")
+	studio("models/editor/angle_helper.mdl")
+= env_entity_maker: "Spawns the specified entity template at its origin. If set to auto-spawn, it will spawn the template whenever there's room and the player is looking elsewhere."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Enable AutoSpawn (will spawn whenever there's room)" : 0
+		2: "AutoSpawn: Wait for entity destruction" : 0
+		4: "AutoSpawn: Even if the player is looking" : 0
+		8: "ForceSpawn: Only if there's room" : 0
+		16: "ForceSpawn: Only if the player isn't looking" : 0
+		]
+
+	entitytemplate(target_destination) : "Point_template To Spawn" : : "Name of the point_template to spawn here."
+	postspawnspeed(float) : "PostSpawn Movement Speed" : 0 : "If specified, all the entities created in the template will move this fast in the specified PostSpawn Movement Direction."
+	postspawndirection(angle) : "PostSpawn Movement Direction" : "0 0 0" : "If a PostSpawn Movement Speed is specified, all the entities created in the template will move in this direction."
+	postspawndirectionvariance(float) : "PostSpawn Direction Variance" : "0.15" : "This variance is applied to the PostSpawn Movement Direction for each spawned entity in the template. Use it to apply some randomness to the directions."
+	postspawninheritangles(boolean) : "PostSpawn Inherit Angles" : 0 : "If in hierarchy, is spawn direction in world space, or object local space of parent."
+
+	// Inputs
+	input ForceSpawn(void) : "Spawn an instance of the template at this origin and angle."
+	input ForceSpawnAtEntityOrigin(target_destination) : "Spawns an instance of the template that has the same origin and angles as the specified entity."
+	input ForceSpawnAtEntityCenter[MBase](target_destination) : "Spawns an instance of the template at the specified entity's world space center and angles."
+	input ForceSpawnAtPosition[MBase](vector) : "Spawn an instance of the template at the specified position (has env_entity_maker's angles)"
+
+	// Outputs
+	output OnEntitySpawned(void) : "Fired when an instance of the entity template has been spawned."
+	output OnEntityFailedSpawn(void) : "Fired when a ForceSpawn input failed to spawn the template, either due to lack of space or being in player's view, depending on the spawnflags."
+	output OutSpawnedEntity[MBase](ehandle) : "Fired for each entity spawned by this template, passing said entity as the parameter and activator."
+	]

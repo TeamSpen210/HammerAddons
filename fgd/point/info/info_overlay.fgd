@@ -1,0 +1,43 @@
+// Internal entity only. However the named version
+// is converted to info_overlay_accesssor, which is a real
+// entity.
+@PointClass base(BaseEntityPoint)
+	autovis(Overlays,Normal)
+	size(-1 -1 0, 1 1 1)
+	color(80 150 225)
+	studio("models/editor/overlay_helper.mdl")
+	sphere(fademindist)
+	sphere(fademaxdist)
+	overlay()
+= info_overlay: "An entity that places an overlay on the world."
+	[
+	material(material) : "Material" : : "Material to use for the overlay."
+	sides(sidelist) : "Brush faces" : : "The brush faces this overlay is applied to."
+
+	renderorder[engine](integer) : "Render Order" : 0
+	renderorder(choices) : "Render Order" : 0 : "Higher values render after lower values. This value can be 0-3." =
+		[
+		0: "First"
+		1: "Second"
+		2: "Third"
+		3: "Fourth"
+		]
+
+	startu(float) : "U Start" : 0.0 : "A value between 0-1, defining the starting X axis position in the overlay material."
+	endu(float) : "U End" : 1.0 : "A value between 0-1, defining the ending X axis position in the overlay material."
+	startv(float) : "V Start" : 0.0 : "A value between 0-1, defining the starting Y axis position in the overlay material."
+	endv(float) : "V End" : 1.0 : "A value between 0-1, defining the ending Y axis position in the overlay material."
+
+	basisorigin(vector) readonly: "Overlay Basis Origin(Read-Only)" : : "Center of the overlay on the surface(s) the overlay is applied to."
+	basisu(vector) : "Overlay Basis U" : : "The direction the X-axis of the material points."
+	basisv(vector) : "Overlay Basis V" : : "The direction the Y-axis of the material points."
+	basisnormal(vector) readonly: "Overlay Basis Normal(Read-Only)" : : "Normal of the surface(s) the overlay is applied to."
+
+	uv0(vector) : "Overlay Point 1" : : "Corner 1 of the overlay."
+	uv1(vector) : "Overlay Point 2" : : "Corner 2 of the overlay."
+	uv2(vector) : "Overlay Point 3" : : "Corner 3 of the overlay."
+	uv3(vector) : "Overlay Point 4" : : "Corner 4 of the overlay."
+
+	fademindist(float) : "Start Fade Dist" : -1 : "Distance at which the overlay starts to fade (<0 = use fademaxdist)."
+	fademaxdist(float) : "End Fade Dist" : 0 : "Maximum distance at which the overlay is visible (0 = don't fade out)."
+	]

@@ -1,0 +1,133 @@
+@PointClass base(BaseEntityPoint)
+	color(200 0 0) 
+	iconsprite("editor/env_global.vmt") 
+ 	autovis(Point Entities, Globals, Env Global)
+= env_global: "An entity to control a game-specific global states."
+	[
+	
+	globalstate(string) : "Global State to Set"
+	
+	globalstate[HL2, EP1, EP2](choices) : "Global State to Set" =
+		[
+		"gordon_precriminal": "Gordon pre-criminal"
+		"antlion_allied": "Antlions are player allies"
+		"suit_no_sprint": "Suit sprint function not yet enabled"
+		"super_phys_gun": "Super phys gun is enabled"
+		"friendly_encounter": "Friendly encounter sequence (lower weapons, etc.)"
+		"gordon_invulnerable": "Gordon is invulnerable"
+		"no_seagulls_on_jeep": "Don't spawn seagulls on the jeep"
+		"ep2_alyx_injured": "Episode 2: Alyx injured"
+		"ep_alyx_darknessmode": "Episodic: Alyx darkness mode"
+		"hunters_to_run_over": "Ep2 Counter: Hunters to run over before they dodge"
+		]
+
+	globalstate[P2, -INFRA](choices) : "Global State to Set" =
+		[
+		"portalgun_nospawn": "Spawn without Portalgun"
+		"no_pinging_blue": "Prevent Pinging ATLAS"
+		"no_pinging_orange": "Prevent Pinging P-Body"
+		"no_taunting_blue": "Prevent Taunting ATLAS"
+		"no_taunting_orange": "Prevent Taunting P-Body"
+		]
+
+	globalstate[INFRA](choices) : "Global State to Set" =
+		[
+		"infra_no_tools": "INFRA: player doesn't start with his tools"
+		"infra_waterflow_reserve1": "INFRA: reserve1 water flow meter turned on"
+		"infra_waterflow_reserve2": "INFRA: reserve2 water flow meter turned on"
+		"infra_waterflow_tunnel1": "INFRA: tunnel1 water flow meter turned on"
+		"infra_waterflow_tunnel3": "INFRA: tunnel3 water flow meter turned on"
+		"infra_waterflow_tunnel4": "INFRA: tunnel4 water flow meter turned on"
+		"infra_pumping_station_polluted": "INFRA: tunnel2 water supply is polluted"
+		"infra_pumping_station_repaired": "INFRA: tunnel2 water supply is repaired"
+		"infra_pumping_station_stopped": "INFRA: tunnel2 water supply is stopped"
+		"infra_watertreatment_repaired": "INFRA: watertreatment is repaired"
+		"infra_player_no_creditcard": "INFRA: player lost his creditcard"
+		"infra_player_osmo_called": "INFRA: player called osmo olut customer service"
+		"infra_player_dock_called": "INFRA: player called dock guy"
+		"infra_reserve1_dam_picture_taken": "INFRA: player took picture of the dam"
+		"infra_reserve2_stash": "INFRA: player took stash keys in reserve2"
+		"infra_reserve2_power": "INFRA: player connected HW dam to the grid"
+		"infra_reserve1_train_signal_changed": "INFRA: player changed the train signal in reserve1"
+		"infra_sewer_fixed": "INFRA: player solved sewer issues"
+		"infra_tunnel_elevator_picture_taken": "INFRA: player took picture of the elevator"
+		"infra_tunnel_cracks_picture_taken": "INFRA: player took picture of the cracks"
+		"infra_skyscraper_sledgehammer": "INFRA: player has sledgehammer"
+		"infra_watertreatment_steam_picture_taken": "INFRA: player took picture of the steam pipe"
+		"infra_servicetunnel_HW_dam_connected": "INFRA: player fully connected bunker to the grid"
+		"infra_stormdrain_contamination": "INFRA: player contaminated water supply"
+		"infra_waterplant_fixed_all": "INFRA: waterplant fixed"
+		"infra_waterplant_fixed_sewer": "INFRA: waterplant sewer fixed"
+		"infra_waterplant_default": "INFRA: waterplant default"
+		"infra_waterplant_mistake": "INFRA: waterplant polluted"
+		"infra_waterplant_stopped": "INFRA: waterplant flow stopped"
+		"infra_player_coins": "INFRA: player coin counter"
+		"infra_player_bills": "INFRA: player bill counter"
+		"infra_player_bank_account": "INFRA: player bank account counter"
+		"infra_player_credit_card": "INFRA: player doesn't have a credit card"
+		"infra_service_tram_speed_1": "INFRA: service tram speed is low"
+		"infra_service_tram_speed_2": "INFRA: service tram speed is med"
+		"infra_service_tram_speed_3": "INFRA: service tram speed is high"
+		"infra_service_lights_1": "INFRA: service light 1 is on"
+		"infra_service_lights_2": "INFRA: service light 2 is on"
+		"infra_service_lights_3": "INFRA: service light 3 is on"
+		"infra_residential_collapse1_picture_taken": "INFRA: player took picture of the collapse"
+		"infra_residential_collapse2_picture_taken": "INFRA: player took picture of the collapse"
+		"infra_duck": "INFRA: player found duck"
+		"infra_internets_usb": "INFRA: player took usb"
+		"infra_passport_fake": "INFRA: player has fake passport"
+		"infra_passport_real": "INFRA: player has real passport"
+		"infra_saved_robin": "INFRA: player saved Robin"
+		"infra_promise_help_rob": "INFRA: player promised to help Rob"
+		"infra_talked_rob": "INFRA: player talked Rob"
+		"infra_helped_rob": "INFRA: player helped Rob"
+		"infra_beer_master": "INFRA: player is beer master"
+		"infra_mushroom_medicine": "INFRA: player found mushroom medicine"
+		"infra_dock_drink": "INFRA: player drank mushroom tea"
+		"infra_reactor_code": "INFRA: player has reactor code"
+		"infra_SNW_list": "INFRA: player has SNW list"
+		"infra_isle2_generators": "INFRA: player activated generators on isle2"
+		"infra_battery_store_robbed": "INFRA: player robbed battery shop"
+		"infra_cancer": "INFRA: player has cancer"
+		"infra_to_isle3": "INFRA: player moves to isle3 from business"
+		"infra_to_business": "INFRA: player moves to business from isle3"
+		"infra_carla": "INFRA: player heard discussion between Carla and Amit"
+		"infra_wasteland": "INFRA: player comes from wasteland"
+		"infra_office_flood": "INFRA: player took picture of the office flood"
+		"infra_B2_Keys": "INFRA: player has B2 Keys"
+		]
+
+
+	initialstate[engine](integer) : "Initial State" : 0
+	initialstate(choices) : "Initial State" : 0 =
+		[
+		0: "Off"
+		1: "On"
+		2: "Dead"
+		]
+
+	counter(integer) : "Counter" : 0 : "An integer counter value associated with this global."
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Set Initial State" : 0
+		]
+
+
+	// Inputs
+	input TurnOn(void) : "Set state of global to ON."
+	input TurnOff(void) : "Set state of global to OFF."
+	input Toggle(void) : "Toggles state of global between ON and OFF."
+	input Remove(void) : "Set state of global to DEAD."
+	input SetCounter(integer) : "Sets the counter value of this global."
+	input AddToCounter(integer) : "Adds to the counter value of this global. Negative numbers subtract."
+	input GetCounter[!INFRA, !MBASE](void) : "Causes the Counter output to be fired, passing the current counter value for this global."
+	input GetCounter[INFRA](void) : "Causes the OnGetCounter output to be fired, passing the current counter value for this global."
+	input GetCounter[MBASE](void) : "Causes the OutCounter output to be fired, passing the current counter value for this global."
+
+	// Outputs
+	// This counter output is overwritten by the KV above, making it non-functional.
+	// INFRA and Mapbase rename it to fix that.
+	output Counter[!INFRA, !MBASE](integer) : "Fired in response to the GetCounter input, passing the current value of the counter."
+	output OutCounter[MBASE](integer) : "Fired in response to the GetCounter input, passing the current value of the counter."
+	output OnGetCounter[INFRA](integer) : "Fired in response to the GetCounter input, passing the current value of the counter."
+	]

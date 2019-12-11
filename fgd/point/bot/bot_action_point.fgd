@@ -1,0 +1,24 @@
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(TF2)
+	autovis(TF2, TFBots, Action Point)
+	sphere(desired_distance) = bot_action_point: "A potential destination for a bot"
+	[
+	next_action_point(target_destination) : "Next Action Point" : : "The next Action Point to approach after performing this one."
+	desired_distance(float) : "Desired Distance" : 5 : "The distance to get within when approaching this Action Point before the bot says it has reached it."
+	stay_time(float) : "Stay Time" : 0 : "How long the bot should stay at this action point (while perform any commands if applicable)."
+	command(choices) : "Command" : : "Command to give to the bot when it gets within range of this Action Point." =
+		[
+		"taunt": "Taunt"
+		"despawn": "Leave the game"
+		"cloak": "If Spy, Cloak"
+		"uncloak": "If Spy, Uncloak"
+		"attack sentry at next action point": "Attack sentry gun at next action point"
+		"disguise": "If Spy, Disguise"
+		"build sentry at nearest sentry hint": "If Engineer, build a sentry gun at the nearest sentry hint"
+		]
+
+
+	// Outputs
+	output OnBotReached(void) : "A bot has reached this action point"
+	]

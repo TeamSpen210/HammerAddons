@@ -1,0 +1,105 @@
+@BaseClass base(Node) 
+	 frustum(nodeFOV,-1,128,250 250 250,-1)
+= HintNode
+	[
+	spawnflags(flags)  =
+		[
+		65536: "Allow jump up" : 0
+		]
+
+	hinttype[engine](integer) : "Hint" : 0
+	hinttype(choices) : "Hint" : "0" =
+		[
+		0: "None"
+		2: "World: Window"
+		12: "World: Act Busy Hint"
+		13: "World: Visually Interesting"
+		14: "World: Visually Interesting (Don't aim at)"
+		15: "World: Inhibit Combine Mines within 15 feet"
+		16: "World: Visually Interesting (Stealth mode)"
+		100: "Tactical: Crouch Cover Medium"
+		101: "Tactical: Crouch Cover Low"
+		102: "Waste Scanner Spawn" [HL2, EP1, EP2]
+		103: "Tactical: Entrance / Exit Pinch"
+		105: "Tactical: Enemy Disadvantage Point"
+		106: "Tactical: Health Kit" [HL2, EP1, EP2]
+		107: "Tactical: High Ground" [L4D2]
+		400: "Antlion: Burrow Point"
+		401: "Antlion: Thumper Flee Point"
+		450: "Headcrab: Burrow Point"
+		451: "Headcrab: Exit Pod Point"
+		500: "Roller: Patrol Point"
+		501: "Roller: Cleanup Spot"
+		700: "Crow: Fly to point"
+		701: "Crow: Perch point"
+		900: "Follower: Wait point"
+		901: "Override jump permission"
+		902: "Player squad transition point"
+		903: "NPC exit point"
+		904: "Strider node"
+		950: "Player Ally: Push away destination"
+		951: "PLayer Ally: Fear withdrawal destination"
+		1000: "HL1 World: Machinery"
+		1001: "HL1 World: Blinking Light"
+		1002: "HL1 World: Human Blood"
+		1003: "HL1 World: Alien Blood"
+
+		1200: "Ep3 Blob Shake Position" [ASW]
+		1201: "Ep3 Blob Fire Cover Position" [ASW]
+		1202: "Ep3 Blob Brain Cover Position" [ASW]
+		1203: "Ep3 Blob Brain Regenerate Position" [ASW]
+		1204: "Ep3 Blob Spit Position" [ASW]
+		1205: "Ep3 Blob Spawn Regenerator Position" [ASW]
+		1300: "Aperture: Nest"
+		]
+
+	hintactivity(string) : "Hint Activity" : : "Activity associated with this hint node. " +
+		"Various parts of the NPC AI play this activity at times. i.e. Actbusy nodes will play this activity when an NPC acts busy on the node."
+	nodefov[engine](integer) : "Node FOV" : 180
+	nodefov(choices) : "Node FOV" : 180 : "Imagine this node requires that an NPC be in the node's field of view in order to use this hint." =
+		[
+		45: "45 Degrees"
+		90: "90 Degrees"
+		180: "180 Degrees"
+		360: "360 Degrees"
+		]
+
+	starthintdisabled(boolean) : "Start Hint Disabled" : 0
+
+	group(string) : "Hint Group" : : "If specified, gives the hint a specific group name.  " +
+		"Useful for hint nodes that need to be logically grouped together. " +
+		"NPCs may also refuse to use hint nodes that don't match their hint group."
+
+	targetnode(node_dest) : "Target node" : -1 : "The node ID of an associated target node, if any."
+
+	ignorefacing[engine](integer) : "Ignore Facing" : 2
+	ignorefacing(choices) : "Ignore Facing" : 2 : "Don't pay attention to the facing of the node. May not apply to a given hint type." =
+		[
+		0: "No"
+		1: "Yes"
+		2: "Default"
+		]
+
+	minimumstate[engine](integer) : "Minimum State" : 1
+	minimumstate(choices) : "Minimum State" : 1 : "Require an NPC have a minimum state to use the hint." =
+		[
+		1: "Idle"
+		2: "Alert"
+		3: "Combat"
+		]
+
+	maximumstate[engine](integer) : "Maximum State" : 3
+	maximumstate(choices) : "Maximum State" : 3 : "Require an NPC have a maximum state to use the hint." =
+		[
+		1: "Idle"
+		2: "Alert"
+		3: "Combat"
+		]
+
+	generictype[ASW](string) : "Generic Hint" : : "String identifying what the hint type is, if generic."
+	radius[ASW](integer) : "Radius" : 0 : "How close an NPC must be to consider this hint. 0 means infinite."
+
+	// Inputs
+	input EnableHint(void) : "Enable hint."
+	input DisableHint(void) : "Disable hint."
+	]

@@ -1,0 +1,49 @@
+@PointClass
+	base(BaseEntityPoint) 
+	appliesto(MBase) 
+	iconsprite("editor/env_shooter.vmt") 
+= env_break_shooter : 
+	"An entity that shoots func_breakable gibs."
+[
+	angles(angle) : "Gib Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction the gibs will fly."
+
+	model[engine](string) : "Model" : ""
+	model(choices) : "Model" : "WoodChunks" : "Thing(s) to shoot out. The choices only matter when the model type is Breakable Chunks. If a specific model is needed, enter its file path. If a point_template is needed, enter the point_template's name." =
+	[
+		"WoodChunks" : "WoodChunks"
+		"GlassChunks" : "GlassChunks"
+		"MetalChunks" : "MetalChunks"
+		"ConcreteChunks" : "ConcreteChunks"
+		//"ComputerGibs" : "ComputerGibs"
+		//"CeilingTile" : "CeilingTile"
+		//"FleshGibs" : "FleshGibs"
+		//"WebGibs" : "WebGibs"
+	]
+	
+	modeltype[engine](integer) : "Model Type" : 0
+	modeltype(choices) : "Model Type" : 0 : "The type of model to use." =
+	[
+		0: "Breakable Chunks"
+		1: "Specific Model"
+		2: "point_template"
+	]
+
+	SetCount(integer) : "Gib Count" : 15 : "Number of gibs to create."
+	SetDelay(float) : "Delay" : "0.0" : "Delay until gibs are shot."
+	SetGibSize(vector) : "Gib Size" : "0 0 0" : "The size of each gib."
+	SetGibSpeed(float) : "Gib Speed" : "200" : "The speed of each gib."
+	SetRandomization(integer) : "Randomization" : 100 : "The gib direction randomization factor."
+	SetLifetime(float) : "Lifetime" : "5" : "The lifetime of each gib."
+	SetGibFlags(integer) : "Gib Flags" : 0 : "The flags for each gib."
+	
+	// Inputs
+	input Shoot(void) : "Shoots the gibs."
+	
+	input SetCount(integer) : "Sets the number of gibs to create."
+	input SetDelay(float) : "Sets the delay until gibs are shot."
+	input SetGibSize(vector) : "Sets the size of each gib."
+	input SetGibSpeed(float) : "Sets the speed of each gib."
+	input SetRandomization(integer) : "Sets the gib direction randomization factor."
+	input SetLifetime(float) : "Sets the lifetime of each gib."
+	input SetGibFlags(integer) : "Sets the flags for each gib."
+]

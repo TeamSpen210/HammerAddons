@@ -1,0 +1,12 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(L4D, L4D2)
+	studio("models/editor/cone_helper.mdl")
+= env_rock_launcher: "Rock launcher"
+	[
+	rocktargetname(target_destination) : "Target Name" : : "The name of the entity to throw the rock at."
+	rockdamageoverride(integer) : "Rock Damage Override" : 0 : "damage to be used instead of the the default rock damage. "
+
+	// Inputs
+	input LaunchRock(void) : "Launch a rock"
+	input SetTarget(string) : "Target a new entity (by name)"
+	]

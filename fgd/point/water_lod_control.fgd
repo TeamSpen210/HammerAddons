@@ -1,0 +1,15 @@
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/waterlodcontrol.vmt") 
+	sphere(cheapwaterstartdistance) 
+	sphere(cheapwaterenddistance) 
+	color(64 64 200) 
+ 	autovis(Point Entities, Globals, Water LOD Controller)
+= water_lod_control: "An entity used to control the LOD behavior of any water in the map. If your map has water, this entity is required."
+	[
+	cheapwaterstartdistance(float) : "Start Transition to Cheap Water" : 1000 : "This is the distance from the camera that water will start transitioning to cheap water, in unit."
+	cheapwaterenddistance(float) : "End Transition to Cheap Water" : 2000 : "This is the distance from the camera that water will finish transitioning to cheap water, in unit."
+
+	// Inputs
+	input SetCheapWaterStartDistance(float) : "Set the distance that water starts transitioning to cheap water."
+	input SetCheapWaterEndDistance(float) : "Set the distance that water finishes transitioning to cheap water."
+	]

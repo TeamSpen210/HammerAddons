@@ -1,0 +1,50 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(NPCs, Combine, Strider)
+	studio() = npc_strider: "Strider"
+	[
+	model[engine](studio) : "Model" : "models/combine_strider.mdl"
+	model(choices) : "Model" : "models/combine_strider.mdl" : "Model to use." =
+		[
+		"models/combine_strider.mdl": "Standard strider"
+		"models/combine_strider_vsdog.mdl": "The Strider that fights Dog"
+		]
+
+	stompfilter[MBase](filterclass) : "Stomp Filter" : : "Which entities am I allowed to stomp? Don't forget to use the 'Can Stomp Player' spawnflag as well."
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Can Stomp Player" : 0
+		131072: "Minimal damage taken from NPCs (1 point per missile)" : 0
+		]
+
+	disablephysics(boolean) : "Disable physics (reduce CPU)" : 0
+
+	// Inputs
+	input SetMinigunTime(float) : "Time to shoot at any set minigun target"
+	input SetMinigunTarget(string) : "Strider will shoot minigun at this"
+	input DisableMinigun(void) : "Disables the minigun until further notice by the EnableMinigun input."
+	input EnableMinigun(void) : "Enables the minigun if it was disabled by the DisableMinigun input."
+	input SetCannonTarget(string) : "Strider will shoot cannon at this"
+	input FlickRagdoll(void) : "Strider will flick anyone he's skewered"
+	input StartPatrol(void) : "Start patrolling back and forth along the current track."
+	input StopPatrol(void) : "Stop patrolling back and forth along the track. This will cause the helicopter to come to rest at the track which he's currently flying toward."
+	input ChooseFarthestPathPoint(void) : "When tracking an enemy, choose the point on the path furthest from the enemy, but still in firing range"
+	input ChooseNearestPathPoint(void) : "When tracking an enemy, choose the point on the path nearest from the enemy"
+	input Crouch(void) : "Crouch down"
+	input CrouchInstantly(void) : "Crouch instantly. This makes the Strider pop to a crouch. Do not do this where players can observe."
+	input Stand(void) : "Stand up from crouch"
+	input DisableCrouchWalk(void)
+	input EnableCrouchWalk(void)
+	input SetTargetPath(string) : "Set a path for the strider to patrol. The strider will first move to the closest point on the path"
+	input ClearTargetPath(void) : "Clear the strider patrol path"
+	input EnableAggressiveBehavior(void) : "Use aggressive behavior. Fire faster, more frequently"
+	input DisableAggressiveBehavior(void) : "Stop using aggressive behavior. (Revert to normal)"
+	input StopShootingMinigunForSeconds(float) : "Stop shooting the minigun for a period of time (specify seconds as parameter)"
+	input DisableCrouch(void) : "Prevent the Strider from crouching"
+	input DisableMoveToLOS(void) : "Prevent the Strider from seeking Line of Sight to target. (Hold position)"
+	input DisableCollisionWith(string) : "Disable collision with a given object."
+	input EnableCollisionWith(string) : "Reenable collision with a given object."
+	input ScaleGroundSpeed(float) : "Scale the movement speed of the strider"
+	]

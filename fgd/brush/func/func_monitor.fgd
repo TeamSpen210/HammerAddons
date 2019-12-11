@@ -1,0 +1,12 @@
+@SolidClass base(func_brush)
+	line(255 255 0, targetname, target)
+= func_monitor: "A monitor that renders the view from a given point_camera entity."
+	[
+	target(target_destination) : "Camera name"
+
+	// Inputs
+	input Toggle(void) : "Toggle - If on, turn off, if off, turn on."
+	input Enable(void) : "Enable."
+	input Disable(void) : "Disable."
+	input SetCamera(target_destination) : "Sets the camera to use for this monitor. Takes the name of a point_camera entity in the map."
+	]

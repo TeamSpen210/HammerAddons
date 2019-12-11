@@ -1,0 +1,24 @@
+@PointClass base(BaseEntityPoint)
+	studioprop() 
+	iconsprite("editor/point_teleport.vmt") 
+	line(255 255 255, targetname, target) 
+= point_teleport: "An entity that teleports a target entity to this position and angles. " +
+	"If 'Teleport Home' spawn flag is set, teleports the target entity to its spawn position instead. " +
+	"If object is physically simulated, simulation is turned off when teleported."
+	[
+	target(target_destination) : "Entity To Teleport" : : "Name of the entity that will be teleported."
+	model(studio) : "[H] Model" : "models/editor/angle_helper.mdl" : "The model shown in Hammer, to use for positioning."
+	spawnflags(flags)  =
+		[
+		1: "Teleport Home" : 0
+		2: "Into Duck (episodic)" : 0
+		]
+
+	// Inputs
+	input Teleport(void) : "Teleport the target entity."
+	input TeleportToCurrentPos[MBase, since_ASW](void) : "Teleport the target entity to wherever the point_teleport entity is currently. " +
+		"The Teleport input teleports to the initial position of the point_teleport, " +
+		"so this input was added to avoid breaking old content."
+	input TeleportEntity[MBase, since_ASW](target_destination) : "Teleport the entity specified by the parameter override. " +
+		"Use this to teleport an entity other than the one specified in the Entity To Teleport field."
+	]

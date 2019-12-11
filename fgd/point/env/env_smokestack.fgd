@@ -1,0 +1,37 @@
+@PointClass base(BaseEntityPoint)
+	color(255 255 255) 
+	color(200 200 0) 
+	iconsprite("editor/env_smokestack.vmt") 
+	sphere(jetlength) = env_smokestack: "An entity that spits out a constant stream of smoke. See particlezoo.vmf for sample usage. You can place up to two env_particlelight entities near the smoke stack to add ambient light to its particles."
+	[
+	initialstate[engine](boolean) : "Start Acive" : 0
+	initialstate(choices) : "Initial State" : 0 =
+		[
+		0: "Off"
+		1: "On"
+		]
+
+	basespread(integer) : "Spread at the base" : 20 : "Amount of random spread in the origins of the smoke particles when they're spawned."
+	spreadspeed(integer) : "Spread Speed" : 15 : "Amount of random spread in the velocity of the smoke particles after they're spawned."
+	speed(integer) : "Speed" : 30 : "The speed at which the smoke particles move after they're spawned."
+	startsize(integer) : "Particle start size" : 20 : "Size of the smoke particles when they're first emitted."
+	endsize(integer) : "Particle end size" : 30 : "Size of the smoke particles at the point they fade out completely."
+	rate(integer) : "Emission rate" : 20 : "Rate at which to emit smoke particles (i.e. particles to emit per second)."
+	jetlength(integer) : "Length of smoke trail" : 180 : "Length of the smokestack. Lifetime of the smoke particles is derived from this & particle speed."
+	windangle(integer) : "Wind X/Y Angle" : 0 : "This specifies the wind direction. It is an angle in the XY plane. WindSpeed specifies the strength of the wind."
+	windspeed(integer) : "Wind Speed" : 0 : "The strength of the wind."
+	smokematerial(material) : "Particle material" : "particle/SmokeStack.vmt" : "Material of the smoke particles emitted by this stack."
+	twist(integer) : "Twist" : 0 : "The amount, in degrees per second, that the smoke particles twist around the origin."
+	roll(float) : "Roll Speed" : 0 : "Amount of roll in degrees per second."
+	rendercolor(color255) : "Base Color (R G B)" : "255 255 255"
+	renderamt(integer) : "Translucency" : 255
+
+	// Inputs
+	input TurnOn(void) : "Turn on the smokestack."
+	input TurnOff(void) : "Turn off the smokestack."
+	input Toggle(void) : "Toggles the smokestack between on and off state."
+	input JetLength(integer) : "Set the length of the smoke trail."
+	input Rate(integer) : "Set the rate at which to emit smoke particles (particles per second)."
+	input Speed(integer) : "Set the speed at which the smoke particles move after they're spawned."
+	input SpreadSpeed(integer) : "Set the amount of random spread in the velocity of the smoke particles after they're spawned."
+	]

@@ -1,0 +1,8 @@
+@PointClass base(BaseEntityPoint, NavBlocker) 
+	obb(boxmins, boxmaxs)
+	appliesto(L4D2)
+= point_nav_blocker: "A point entity that can block nav areas touching its AABB."
+	[
+	boxmins(vector) : "Mins" : "-8 -8 -8"
+	boxmaxs(vector) : "Maxs" : "8 8 8"
+	]

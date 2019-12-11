@@ -1,0 +1,16 @@
+@PointClass base(BaseEntityPhysics) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio("models/combine_helicopter/helicopter_bomb01.mdl") = grenade_helicopter: "HL2 Combine Helicopter's bomb."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Is a dud" : 0
+		]
+
+
+	// Inputs
+	input ExplodeIn(float) : "Tells the bomb to explode in X seconds."
+
+	// Outputs
+	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up WITH THE PHYSGUN. +USE pickups do not fire this output."
+	]

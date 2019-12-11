@@ -1,0 +1,12 @@
+
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	appliesto(ASW) 
+	iconsprite("editor/asw_objective_dummy.vmt") = asw_marker: "Alien Swarm Mission Marker"
+	[
+	objectivename(target_destination) : "Objective Name" : : "Name of the target object this is associated with."
+	mapwidth(integer) : "Map Width" : 256 : "Size of the map marker in world units."
+	mapheight(integer) : "Map Height" : 256 : "Size of the map marker in world units."
+
+	// Inputs
+	input SetComplete(void) : "Mark as complete."
+	]

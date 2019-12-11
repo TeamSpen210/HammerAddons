@@ -1,0 +1,37 @@
+@PointClass base(BaseEntityPoint)
+	wirebox(mins, maxs) 
+	color(220 180 0) 
+	iconsprite("editor/info_node_link_controller.vmt") 
+	line(255 255 255, targetname, allowuse)
+= info_node_link_controller: "An entity that controls all connections between nodes that intersect the controller's volume. " +
+	"This allows for mass enabling/disabling of all node connections through a volume."
+	[
+	mins(vector) : "Mins" : "-8 -32 -36"
+	maxs(vector) : "Maxs" : "8 32 36"
+
+	initialstate[engine](boolean): "Initial State": 1
+	initialstate(choices) : "Initial State" : "1" =
+		[
+		0: "Off"
+		1: "On"
+		]
+
+	useairlinkradius(boolean) : "Use Larger Radius (for air links)" : 0 : "Set this to 'Yes' if this controller is intended to control air links. " +
+		"Air links connect using a larger search radius so leaving this at 'No' might miss some air links."
+	allowuse(target_name_or_class) : "Allow Pass When Off" : : "Entity or class to allow passage even when node is off"
+	invertallow(boolean) : "Invert exclusion rules" : 0 : "Allowed entity is the only entity NOT allowed when this is set to 'yes'"
+
+	priority[engine](boolean): "Priority": 0
+	priority[ASW](choices) : "Priority" : 0 =
+		[
+		0: "Normal"
+		1: "Use As Last Resort"
+		]
+
+
+	// Inputs
+	input TurnOn(void) : "Turn the link on."
+	input TurnOff(void) : "Turn the link off."
+	input SetAllowed(string) : "Change the allowed pass when off"
+	input SetInvert(integer) : "Change the invert exclusion rule"
+	]

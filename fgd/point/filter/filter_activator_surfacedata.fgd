@@ -1,0 +1,21 @@
+@FilterClass base(filter_base) 
+	autovis(Logic, Filters)
+	appliesto(MBase)
+	iconsprite("editor/filter_generic.vmt") 
+= filter_activator_surfacedata : "A filter that tests the activator's surface data."
+	[
+	filtersurfaceprop[engine](string) : "Surface"
+	filtersurfaceprop(choices) : "Surface" : : "The surface to test with." =
+		[
+		"metal" : "Metal"
+		"metalgrate" : "Metal Grate"
+		"metalvent" : "Metal Vent"
+		]
+	
+	SurfaceType[engine](integer) : "Type" : 1
+	SurfaceType(choices) : "Type" : 1 : "What to actually filter by."  =
+		[
+		0 : "Surface Prop"
+		1 : "Game Material"
+		]
+	]

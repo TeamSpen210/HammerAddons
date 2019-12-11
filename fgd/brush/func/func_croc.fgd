@@ -1,0 +1,9 @@
+
+@SolidClass base(Trigger, TeamNum) 
+	appliesto(TF2) = func_croc: "Crocs live here!"
+	[
+	// Outputs
+	output OnEat(void) : "Sent when the crocs eat a player."
+	output OnEatRed(void) : "Sent when the crocs eat a player on team RED."
+	output OnEatBlue(void) : "Sent when the crocs eat a player on team BLU."
+	]

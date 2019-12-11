@@ -1,0 +1,12 @@
+@PointClass base(BaseEntityPoint, HintNode)
+	studio("models/editor/air_node_hint.mdl")
+	color(232 171 8)
+	line(255 255 255, nodeid, TargetNode)
+	sphere(radius) 
+= info_node_air_hint: "A navigation node for flying NPCs that includes some context information for NPCs that are interested in it. " +
+	"The hint might indicate a window that could be looked into, or an item of interest that could be commented on. " +
+	"Many hint nodes are NPC-specific, so it's helpful to use naming conventions like " +
+	"'Crow: Fly to point' in the hint choices list. The angles of a hint node indicate what direction the NPC should face to perform the hint behavior."
+	[
+	nodeheight(integer) : "NodeHeight" : 0
+	]

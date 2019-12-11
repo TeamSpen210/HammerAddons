@@ -1,0 +1,12 @@
+@SolidClass base(BaseTank) 
+	appliesto(MBase) 
+= func_tank: "A special kind of turret designed to fire outputs instead of bullets, functioning solely through the I/O system."
+	[
+	shootsound[MBase](sound) : "Shoot Sound" : "" : "Plays a specific sound each time this tank fires."
+
+	ShootsThroughWater(boolean) : "Shoots through water" : 0 : "If enabled, this func_tanklogic will be allowed to trace through water. (as opposed to just hitting the surface)"
+
+	output OnFire_BarrelPos(vector) : "Fires each time this func_tank would fire a bullet. Passes the barrel's current position."
+	output OnFire_ShootPos(vector) : "Fires each time this func_tank would fire a bullet. Passes the position which said bullet would hit, spread applied."
+	output OnFire_FirstEnt(ehandle) : "Fires each time this func_tank would fire a bullet. Passes the first entity that would be hit, if any."
+	]

@@ -1,0 +1,27 @@
+@PointClass appliesto(MBase) 
+	base(BaseEntityPoint)
+	iconsprite("editor/logic_keyfield.vmt") 
+	line(255 255 255, targetname, target)
+= logic_keyfield :
+	"A logic entity that could read an entity's keyfields. " +
+	"Use the target and key name options if you want to store a specific target and/or keyvalue. " +
+	"Use the 'Test' input to look for the key within the target's datadesc. " +
+	"The 'OutValue' output will fire with the keyfield's value if it is found." +
+	"\n\nPlease note that some keyvalues do not work with this entity. (most do though, so don't worry about it)"
+	[
+	// Keys
+	target(target_destination) : "Target Entity" : : "The entity with the key to measure."
+	keyname(string) : "Key Name" : : "The name of the key to measure."
+	
+	// Inputs
+	input Test(void) : "Gets the stored key's value from stored target."
+	input TestKey(string) : "Tests the specified key against the target instead of using the stored key. Does not change the stored key."
+	input TestTarget(target_destination) : "Tests the specified target against the key instead of using the stored target. Does not change the stored target."
+	input SetKey(string) : "Sets the key to measure."
+	input SetValue(string) : "Sets the stored target's stored key value to the specified string."
+	input SetTarget(target_destination) : "Sets the target entity."
+	
+	// Outputs
+	output OutValue(string) : "Fires when a keyfield is found. Passes its value."
+	output OnFailed(void) : "Fires when this entity fails to find the specified keyfield."
+	]

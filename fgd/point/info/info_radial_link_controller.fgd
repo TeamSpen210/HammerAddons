@@ -1,0 +1,8 @@
+@PointClass base(BaseEntityPoint) 
+	sphere(radius) 
+	color(220 180 0) 
+	iconsprite("editor/info_radial_link_controller.vmt") 
+= info_radial_link_controller: "This entity automatically severs node connections that pass through its radius. If it moves, it will restore those connections."
+	[
+	radius(float) : "Radius" : 120
+	]

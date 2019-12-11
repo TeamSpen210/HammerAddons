@@ -1,0 +1,66 @@
+@PointClass base(BaseEntityPhysics) 
+	appliesto(P2) 
+	autovis(Test Elements, Cubes, Normal)
+	studioprop() = prop_weighted_cube: "Aperture Science Weighted Cube. Presses floor buttons, and can be moved around."
+	[
+	skin(integer) : "Skin (OLD)" : 0 : "The old skin property, mainly to show in Hammer. "
+
+	cubetype[engine](integer) : "Cube Type" : 0
+	cubetype(choices) : "Cube Type" : "0" : "What cube type is this? Use a prop_monster_box for FrankenTurrets. " +
+		"If set to Custom, use AddOutput to change it back OnMapSpawn so gel skins behave correctly." =
+		[
+		0: "[0] Weighted Storage Cube"
+		1: "[1] Weighted Companion Cube"
+		2: "[2] Weighted Pivot Cube"
+		3: "[3] Edgeless Safety Cube"
+		4: "[4] Antique Storage Cube"
+		6: "Custom model"
+		]
+
+	skintype[engine](boolean) : "Skin Type" : 0
+	skintype(choices) : "Skin Type" : "0" : "Is the cube clean or rusty? Storage and Pivot cubes are the only types with a rusty version." =
+		[
+		0: "Clean"
+		1: "Rusted"
+		]
+
+	model[engine](studio) : "Model" : ""
+	model(choices) : "[H] Model" : "models/props/metal_box.mdl" : "The model to show in Hammer." =
+		[
+		"models/props/metal_box.mdl": "Weighted Storage/Companion Cube"
+		"models/props/reflection_cube.mdl": "Weighted Pivot"
+		"models/props_gameplay/mp_ball.mdl": "Edgeless Safety"
+		"models/props_underground/underground_weighted_cube.mdl": "Antique"
+		]
+
+	paintpower[engine](integer) : "Starting Paint" : 4
+	paintpower(choices) : "Starting paint" : "4" : "The cube starts painted with the set gel." =
+		[
+		0: "Repulsion Gel"
+		1: "Adhesion Gel"
+		2: "Propulsion Gel"
+		3: "Conversion Gel"
+		4: "None"
+		]
+
+	allowfunnel(boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a floor portal."
+	newskins(integer) : "Use new skins" : 1 : "Use the values in the Cube Type and Skin Type fields instead of the Skin(OLD) field. You shouldn't need to touch this."
+
+	// Inputs
+	input EnablePortalFunnel(void) : "Enable portal funneling behavior."
+	input DisablePortalFunnel(void) : "Disable portal funneling behavior."
+	input EnableMotion(void) : "Allow physics simulation."
+	input DisableMotion(void) : "Prevent Physics simulation, freezing the cube in place."
+	input SetPaint(integer) : "Force the cube to be painted with 0 (Repulsion), 2 (Propulsion), or 4 (No) gel."
+	input Dissolve(void) : "Fizzles the cube, firing the OnFizzled output."
+	input SilentDissolve(void) : "Kills the cube immediately and fires its OnFizzled output."
+	input ExitDisabledState(void) : "Exits the disabled state of a reflective cube."
+
+	// Outputs
+	output OnFizzled(void) : "Fired when a cube is fizzled."
+	output OnOrangePickUp(void) : "P-Body picked up the cube."
+	output OnBluePickUp(void) : "ATLAS picked up the cube."
+	output OnPlayerPickup(void) : "Any player picked up the cube."
+	output OnPhysGunDrop(void) : "Any player dropped the cube."
+	output OnPainted(void) : "Cube got painted, only if the state changed."
+	]

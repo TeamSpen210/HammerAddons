@@ -1,0 +1,12 @@
+@PointClass base(BaseEntityPoint)
+	autovis(Overlays,Texture Toggle)
+	iconsprite("editor/env_texturetoggle.vmt") 
+	line(255 255 0, targetname, target) 
+= env_texturetoggle: "An entity that allows you to change the textures on other brush-built entities, or on overlays."
+	[
+	target(target_destination) : "Target Brush or Overlay name."
+
+	// Inputs
+	input IncrementTextureIndex(void) : "Increments target brush's current texture frame by one."
+	input SetTextureIndex(integer) : "Sets target brush's texture frame to the specified index."
+	]

@@ -1,0 +1,17 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(NPCs, Seagull)
+	studio("models/seagull.mdl") = npc_seagull: "Seagull"
+	[
+	deaf[engine](boolean) : "Deaf" : 0
+	deaf(choices) : "Deaf?" : "0" =
+		[
+		0: "No."
+		1: "Yes. Ignore sounds."
+		]
+
+
+	// Inputs
+	input FlyAway(string) : "Forces the seagull to fly to the nearest crow flyto hint node."
+	]

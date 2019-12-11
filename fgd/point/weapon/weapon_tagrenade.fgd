@@ -1,0 +1,7 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	autovis(Weapons, CSGO Weapons, CS Equipment)
+	studio("models/weapons/w_eq_sensorgrenade_dropped.mdl") = weapon_tagrenade: "TAGrenade"
+	[
+	]

@@ -1,0 +1,145 @@
+
+@NpcClass base(BaseNPC, TalkNPC, PlayerCompanion) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(NPCs, HL2 Citizen)
+	studio() = npc_citizen: "Citizen"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Follow player on spawn" : 0
+		131072: "Medic" : 0
+		262144: "Random Head" : 1
+		524288: "Ammo Resupplier" : 0
+		1048576: "Not Commandable" : 0
+		2097152: "Don't use Speech Semaphore - OBSOLETE" : 0
+		4194304: "Random male head" : 0
+		8388608: "Random female head" : 0
+		16777216: "Use RenderBox in ActBusies" : 0
+		33554432 : "Player can +USE and +WALK (Alt + E) to toggle squad (disables automatically joining)" : 0 [MBase]
+		]
+
+    additionalequipment[engine](string) : "Weapons" : 0
+	additionalequipment(choices) : "Weapons" : 0 =
+		[
+		"weapon_smg1": "SMG1"
+		"weapon_ar2": "AR2"
+		"weapon_stunstick": "Stun Stick"
+		"weapon_crowbar": "Crow Bar"
+		"weapon_shotgun": "Shotgun"
+		"weapon_pistol" : "Pistol" [MBase]
+		"weapon_357" : "357" [MBase]
+		"weapon_beerbottle": "Beer Bottle"
+		"weapon_beerbottle2": "Beer Bottle2"
+		"weapon_rpg": "RPG"
+		"0": "Nothing"
+		]
+
+    ammosupply[engine](string) : "Ammo to Resupply" : 0
+	ammosupply(choices) : "Ammo to Resupply (if spawnflag set)" : "SMG1" =
+		[
+		"Pistol": "Pistol"
+		"SMG1": "SMG1"
+		"SMG1_Grenade": "SMG1 Grenade"
+		"AR2": "AR2"
+		"Buckshot": "Shotgun"
+		"RPG_Round": "RPG"
+		"Grenade": "Grenade"
+		"XBowBolt": "Crossbow Bolt"
+		]
+
+	ammoamount(integer) : "Amount of ammo to give" : 1
+
+    citizentype[engine](integer) : "Type" : 0
+	citizentype(choices) : "Type" : "Default" =
+		[
+		0: "Default"
+		1: "Downtrodden"
+		2: "Refugee"
+		3: "Rebel"
+		4: "Unique"
+		]
+
+    expressiontype[engine](integer) : "Expression Type" : 0
+	expressiontype(choices) : "Expression Type" : "Random" =
+		[
+		0: "Random"
+		1: "Scared"
+		2: "Normal"
+		3: "Angry"
+		]
+
+    model[engine](string) : "Model" : "models/humans/group01/male_01.mdl"
+	model(choices) : "Model" : "models/humans/group01/male_01.mdl" =
+		[
+		"models/humans/group01/male_01.mdl": "Male 1"
+		"models/humans/group01/male_02.mdl": "Male 2"
+		"models/humans/group01/male_03.mdl": "Male 3"
+		"models/humans/group01/male_04.mdl": "Male 4"
+		"models/humans/group01/male_05.mdl": "Male 5"
+		"models/humans/group01/male_06.mdl": "Male 6"
+		"models/humans/group01/male_07.mdl": "Male 7"
+		"models/humans/group01/male_08.mdl": "Male 8"
+		"models/humans/group01/male_09.mdl": "Male 9"
+		"models/humans/group01/female_01.mdl": "Female 1"
+		"models/humans/group01/female_02.mdl": "Female 2"
+		"models/humans/group01/female_03.mdl": "Female 3"
+		"models/humans/group01/female_04.mdl": "Female 4"
+		"models/humans/group01/female_06.mdl": "Female 5"
+		"models/humans/group01/female_07.mdl": "Female 6"
+		"models/humans/male_cheaple.mdl": "Cheaple Male 1"
+		"models/odessa.mdl": "Odessa. DO NOT USE."
+		]
+
+	notifynavfailblocked(boolean) : "Fire output when Nav is blocked?" : "0"
+
+	neverleaveplayersquad[engine](boolean) : "Permanent squad member?" : 0
+	neverleaveplayersquad(choices) : "Permanent squad member?" : 0 : "A permanent squad member cannot leave the player's squad unless killed or explicity removed by entity I/O. Only use this if you're sure you want to override the default AI." =
+		[
+		0: "No. This is default behavior."
+		1: "Yes, stay in squad until death."
+		]
+
+	denycommandconcept(string) : "Deny command speech concept" : : "If you want your citizens to squad with the player but not obey commands the player gives to move the squad, put a concept here and this citizen will speak the concept instead of obeying the order."
+
+	SetTossMedkits[MBase](boolean) : "Toss medkits?" : 0 : "Episodic only. Griggs in Half-Life 2: Episode Two uses experimental code that allows him to toss medkits at the player from a distance. " +
+		"This activates that code on this NPC if it is a medic. Does not work with ammo resuppliers."
+	
+	AlternateAiming(boolean) : "Alternate aiming animations" : 0 : "Causes this citizen to use readiness aiming animations with a SMG, AR2, or shotgun. " +
+		"When running or walking while aiming/shooting, " + 
+		"they will hold their weapon around their upper-chest instead of from their hip."
+
+
+	// RapelNPC base, only in MBase.	
+	waitingtorappel[MBase](boolean) : "Waiting to Rappel?" : 0 : "If yes, this citizen spawns suspended in air and awaits a BeginRappel input. " +
+		"It will then spawn a zipline and slide down. " +
+		"When it hits the ground, the citizen will cut away the line and try to move forward a few feet to make room for the next NPC. " +
+		"The citizen will not attempt to clear its landing space if it cannot do so by taking a few steps forward."
+	input BeginRappel[MBase](void) : "Begin rapelling down."
+	output OnRappelTouchdown[MBase](void) : "Fires when done rappeling."
+
+	// Inputs
+	input RemoveFromPlayerSquad(void) : "Remove from player squad, instantly."
+	input SetExpressionOverride(string) : "Set facial expression override"
+
+	input StartPatrolling(void) : "Patrol whenever I'm idle or alert."
+	input StopPatrolling(void) : "Stop patrolling when I'm idle or alert."
+	input SetCommandable(void) : "Make a previously uncommandable citizen commandable"
+	input SetMedicOn(void) : "Set the medic flag on. Will not change the model or skin of the citizen."
+	input SetMedicOff(void) : "Set the medic flag off. Will not change the model or skin of the citizen."
+	input SetAmmoResupplierOn(void) : "Set the ammo-resupplier flag on. Will not change the model or skin of the citizen."
+	input SetAmmoResupplierOff(void) : "Set the ammo-resupplier flag off. Will not change the model or skin of the citizen."
+	input SetTossMedkits[MBase](bool) : "Sets whether this NPC can toss medkits."
+
+	// Outputs
+	output OnJoinedPlayerSquad(void) : "Fires when joins player squad"
+	output OnLeftPlayerSquad(void) : "Fires when leaves player squad"
+	output OnFollowOrder(void) : "Fires when ordered to follow player"
+	output OnStationOrder(void) : "Fires when ordered to a location by player"
+	output OnPlayerUse(void) : "Fires when a player +USEs the citizen"
+	output OnNavFailBlocked(void) : "Fires when this Citizen's movement fails because he/she is blocked."
+
+	output OnHealedNPC[MBase](void) : "Fires when this citizen heals a NPC."
+	output OnHealedPlayer[MBase](void) : "Fires when this citizen heals a player."
+	output OnTossMedkit[MBase](ehandle) : "Fires when a medkit is tossed. Passes the medkit."
+	output OnGiveAmmo[MBase](void) : "Fires when ammo is given to the player."
+	]

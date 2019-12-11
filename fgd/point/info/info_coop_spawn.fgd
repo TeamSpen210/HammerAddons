@@ -1,0 +1,35 @@
+@PointClass base(BaseEntityPoint, PlayerClass) 
+	appliesto(P2) 
+	studioprop()
+= info_coop_spawn: "Player spawns for cooperative mode."
+	[
+	enabled[engine](boolean) : "Initial State" : 1
+	enabled(choices) : "Initial State" : 1 =
+		[
+		0: "Disabled"
+		1: "Enabled"
+		]
+
+	startingteam[engine](int) : "Team" : 0
+	startingteam(choices) : "Player" : 0 : "Which player to spawn." =
+		[
+		0: "Any"
+		2: "P-Body"
+		3: "ATLAS"
+		]
+
+
+	model(choices) : "[H] Player" : "models/editor/playerstart.mdl" : "The player model to show in Hammer." =
+	[
+		"models/editor/playerstart.mdl" 	: "Default"
+		"models/player/ballbot/ballbot.mdl"	: "ATLAS"
+		"models/player/eggbot/eggbot.mdl"	: "P-Body"
+	]
+	forcegunonspawn(boolean) : "Force Gun On Spawn" : 0 : "Give the player a Portal Gun on spawn. Coop players always have a Dual Portal Device."
+
+	// Inputs
+	input Enable(void) : "Enable the spawn point to be used."
+	input SetAsActiveSpawn(void) : "Enable the spawn point to be used, disabling all other spawn points that do not share the same name."
+	input Disable(void) : "Disable the spawn point from being used."
+	input SetTeam(integer) : "Set the player this spawn point is for - 0 and 1 are any player, 2 is P-Body, 3 is ATLAS."
+	]

@@ -1,0 +1,7 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	autovis(Weapons, CSGO Weapons, CS Assault Rifles)
+	studio("models/weapons/w_rif_sg556_dropped.mdl") = weapon_sg556: "SG 553"
+	[
+	]

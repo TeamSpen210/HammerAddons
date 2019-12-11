@@ -1,0 +1,10 @@
+
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	appliesto(TF2) = tf_logic_arena: "Arena Entity. This is used to detect an arena map and also to do round specific stuff."
+	[
+	capenabledelay(float) : "Capture Point Enable Time" : 0
+
+	// Outputs
+	output OnArenaRoundStart(void) : "Fired the moment an arena match starts"
+	output OnCapEnabled(void) : "Fired when the specified time elapses and the cap becomes enabled"
+	]

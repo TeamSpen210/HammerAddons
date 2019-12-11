@@ -1,0 +1,5 @@
+@BaseClass = StaticTargetName:
+    "Targetnames only used in compilation."
+    [
+    targetname(target_source) : "Name" : : "The name that other entities refer to this entity by. This entity only exists during compilation, so the name is only usable in limited situations."
+    ]

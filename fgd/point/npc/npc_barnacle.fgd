@@ -1,0 +1,25 @@
+
+@NpcClass base(BaseNPC, BaseFadeProp) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(NPCs, Combine, Barnacle)
+	studio("models/Barnacle.mdl") 
+	sphere(fademindist) 
+	sphere(fademaxdist) = npc_barnacle: "Barnacle"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Cheap death" : 0
+		131072: "Ambush Mode" : 0
+		]
+
+	restdist(float) : "Rest Distance" : 16 : "Distance above the ground that the tongue should lie when the barnacle is at rest"
+
+	// Inputs
+	input DropTongue(void) : "Drop tongue"
+	input SetDropTongueSpeed(integer) : "Set Drop Tongue speed"
+	input LetGo(void) : "Let go of anything I am holding."
+
+	// Outputs
+	output OnGrab(string) : "When I attach my tongue to something"
+	output OnRelease(string) : "When I let go of something"
+	]

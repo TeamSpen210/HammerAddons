@@ -1,0 +1,42 @@
+
+@BaseClass base(DXLevelChoice, SystemLevelChoice) = RopeKeyFrame
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Auto Resize" : 0
+		]
+
+	slack(integer) : "Slack" : 25 : "How much extra length the rope has (by default it has the length between its two endpoints in the editor)."
+	type(choices) : "Type" : "0" =
+		[
+		0: "Rope"
+		1: "Semi-rigid"
+		2: "Rigid"
+		]
+	type[engine](integer): "Type": 0
+
+	subdiv(integer) : "Subdivision" : 2 : "Number of subdivisions between each rope segment. Maximum value is 8. Higher values make smoother ropes, but are slower to render."
+	barbed(boolean) : "Barbed" : 0 : "Test effect that makes the rope look sharper and more barbed."
+	width(string) : "Width (1-64)" : "2" : "Width of the rope."
+	texturescale(string) : "Texture Scale" : "1" : "This changes the texture resolution. The default resolution is 4 pixels per inch. Larger values stretch the texture and smaller values scrunch it up."
+	collide(boolean) : "Collide with world" : 0
+	dangling(boolean) : "Start Dangling" : 0 : "When set to Yes, the rope starts out detached from its target endpoint."
+	breakable(boolean) : "Breakable" : 0 : "When set to yes, the rope can be detached from either endpoint when shot."
+	ropematerial(material) : "Rope Material" : "cable/cable.vmt" : "The material to use when rendering the rope."
+	
+	usewind(choices) : "Wind" : "0" : "Is the rope affected by wind?" =
+		[
+		0: "Ignore Wind"
+		1: "Affected by Wind"
+		]
+	usewind[engine](boolean): "Use Wind": 0
+
+
+	// Inputs
+	input SetScrollSpeed(float) : "Set the speed at which the texture scrolls."
+	input SetForce(string) : "Apply a force instantaneously to the rope. The parameter should be a vector containing the force to be applied (X Y Z)."
+	input Break(void) : "Break the rope, if it's marked to do so."
+	
+	// Outputs
+	output OnBreak[MBase](void) : "Fires when this rope breaks."
+	]

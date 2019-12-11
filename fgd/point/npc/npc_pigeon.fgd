@@ -1,0 +1,17 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, P1, ASW)
+	autovis(NPCs, Pigeon) 
+	studio("models/pigeon.mdl") = npc_pigeon: "Pigeon"
+	[
+	deaf[engine](boolean) : "Deaf" : 0
+	deaf(choices) : "Deaf?" : 0 =
+		[
+		0: "No."
+		1: "Yes. Ignore sounds."
+		]
+
+
+	// Inputs
+	input FlyAway(string) : "Forces the pigeon to fly to the nearest crow flyto hint node."
+	]

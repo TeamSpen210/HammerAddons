@@ -1,0 +1,48 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	size(-4 -4 -4, 4 4 4) 
+	line(255 255 255, targetname, enemyfilter)
+	line(255 255 255, targetname, friendfilter)
+	studio("models/props_combine/combine_mine01.mdl") = combine_mine: "Combine Land Mine"
+	[
+	bounce(boolean) : "Bounce" : 1 : "Whether the mine should bounce up in the air before exploding." 
+	ExplosionDelay[MBase](float) : "Delay" : "0.5" : "The delay after being triggered before this mine bounces, or before it explodes if bouncing is disabled. Does not apply to the cavern type."
+	locksilently(boolean) : "Lock Silently" : 1 : "Prevents the mine from making any clamping sound when it plants itself for the first time, after which it makes sound again."
+
+	// Replaced by Initial State
+	startdisarmed[!MBase](boolean) : "Start Disarmed" : 0: "If yes, mine begins dormant."
+	InitialState[engine](integer) : "Initial State" : 0
+	InitialState[MBase](choices) : "Initial State" : 0 : "The initial state of this mine." =
+		[
+		0 : "Deploying"
+		1 : "Disarmed"
+		2 : "Captive (locked in physgun)"
+		3 : "Planted"
+		4 : "Triggered (bounce, explode on touch)"
+		5 : "Physgun Launch (no bounce, explode on touch)"
+		]
+
+	modification[engine](integer) : "Citizen modified" : 0 : "'Normal' is default Combine behavior. 'Cavern' detonates earlier in its jump, and has a different default skin."
+	modification[since_EP2](choices) : "Citizen modified" : 0 : "'Normal' is default Combine behavior. 'Cavern' detonates earlier in its jump, and has a different default skin." =
+		[
+		0: "Normal"
+		1: "Cavern"
+		]
+
+	Friendly[MBase](boolean): "Start Friendly" : 0 : "Makes this combine_mine friendly, as if it was placed by the player." 
+	enemyfilter[MBase](filterclass) : "Enemy Filter" : : "Makes this combine_mine target specific NPCs as enemies. It will also use its default targets unless ''Filter Exclusive'' is enabled."
+	friendfilter[MBase](filterclass) : "Friend Filter" : : "Makes this combine_mine target specific NPCs as friends. It will also use its default targets unless ''Filter Exclusive'' is enabled."
+	FilterExclusive[MBase](boolean): "Filter Exclusive" : 0 : "If enabled, the filters will be the exclusive factor in determining whether a mine is friendly or hostile towards a target. Entities that pass neither filter will be ignored by the mine."
+
+	// Inputs
+	input Disarm(void) : "Disarm this mine (open hooks and shut off) if not placed by player."
+	input Bounce[MBase](void) : "Causes this mine to instantly bounce straight up into the air."
+	input BounceAtTarget[MBase](target_destination) : "Causes this mine to bounce at the specified entity, regardless of distance."
+	input SetEnemyFilter[MBase](target_destination) : "Changes this mine's enemy filter to the named filter."
+	input SetFriendFilter[MBase](target_destination) : "Changes this mine's friend filter to the named filter."
+
+	// Outputs
+	output OnPulledUp(void) : "Fires when this mine is uprooted with physgun."
+	output OnTriggered[MBase](void) : "Fires when this mine is triggered by an enemy."
+	output OnExplode[MBase](void) : "Fires when this mine actually explodes."
+	]

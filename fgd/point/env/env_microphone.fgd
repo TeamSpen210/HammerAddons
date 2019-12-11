@@ -1,0 +1,65 @@
+@PointClass base(BaseEntityPoint, EnableDisable)
+	iconsprite("editor/env_microphone.vmt") 
+	sphere(MaxRange) 
+	color(0 0 255) 
+	line(64 64 64, targetname, target) 
+	line(255 255 0, targetname, target, targetname, SpeakerName) 
+= env_microphone: "An entity that acts as a microphone. It works in one of two modes. " +
+	"If it has a 'Speaker' set, it picks up all sounds within the specified sound range, " +
+	"and rebroadcasts them through the Speaker entity. " +
+	"In this Speaker mode, it ignores the Hears X spawnflags and does not fire the SoundLevel output. " +
+	"If it has no Speaker set, it measures the sound level at a point, and outputs the sound level as a value between 0 and 1. " +
+	"In Measuring mode, it only hears sounds that match the Hear X spawnflags."
+	[
+	target(target_destination) : "Measure target" : : "If the speaker is in Measuring mode, " +
+		"this is the name of the entity where the sound level is to be measured."
+	speakername(target_destination) : "Speaker target" : : "The name of an entity through which to play any sounds heard by this microphone. " +
+		"If specified, the microphone will consider itself in Speaker mode."
+	listenfilter(filterclass) : "Listen Filter" : : "The name of an filter entity which specifies the only entities the microphone can hear. " +
+		"Sounds emitted by other entities will not be heard."
+
+	speaker_dsp_preset[engine](integer) : "Speaker DSP Preset" : 0
+	speaker_dsp_preset(choices) : "Speaker DSP Preset" : 0 : "Only useful in Speaker mode. " +
+		"If specified, when the microphone is enabled, it'll set the global dsp_speaker preset to this value. " +
+		"Sounds played back through speakers will then be affected by the selected DSP." =
+		[
+		0: "Use Default"
+		50: "1 NO EFFECT"
+		51: "2 (DUPLICATE OF 1)"
+		52: "3 (DUPLICATE OF 1)"
+		53: "4 (DUPLICATE OF 1)"
+		54: "5 (DUPLICATE OF 1)" [!INFRA]
+		54: "5 INFRA: MODERN TV SPEAKER" [INFRA]
+		55: "6 SPEAKER, LOUDER"
+		56: "7 SPEAKER VERY SMALL"
+		57: "8 LOUDSPEAKER, ECHO"
+		58: "9 SPEAKER SMALL"
+		59: "10 SPEAKER TINY"
+		]
+
+	spawnflags(flags) =
+		[
+		1: "Hears combat sounds" : 1
+		2: "Hears world sounds" : 1
+		4: "Hears player sounds" : 1
+		8: "Hears bullet impacts" : 1
+		16: "Swallows sounds routed through speakers" : 0
+		32: "Hears explosions" : 0
+		64: "Ignores non-attenuated sounds" : 0
+		128: "Ignores sound gain (stops reducing sound volume)" : 0 [INFRA]
+		]
+
+	sensitivity(float) : "Sensitivity (0 - 10)" : 1 : "Microphone sensitivity, 0=deaf, 1=default, 10=extremely sensitive). Only applicable in Measuring mode."
+	smoothfactor(float) : "Smoothing (0 - 1)" : 0 : "Smoothing factor, 0=no smoothing, 1=maximum smoothing). Only applicable in Measuring mode."
+	maxrange(float) : "Maximum hearing range (0=infinite)" : 240 : "Sounds beyond this range won't be heard, irrelevant of attenuation. " +
+		"WARNING: setting this to zero (or a value > 1024) when the microphone is in Speaker mode can be very bad for performance!!"
+
+	// Inputs
+	input SetSpeakerName(string) : "Set the microphone to output through a different speaker entity."
+	input SetMeasureTarget[INFRA](string) : "Set the location to listen to sounds from."
+
+	// Outputs
+	output SoundLevel(float) : "Fired in Measuring mode whenever the sound level changes."
+	output OnRoutedSound(void) : "Fired whenever a sound is routed out through the specified speaker (if any)."
+	output OnHeardSound(void) : "Fired whenever this microphone hears any sound it cares about."
+	]

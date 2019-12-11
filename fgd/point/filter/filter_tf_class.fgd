@@ -1,0 +1,23 @@
+@FilterClass base(filter_base) 
+	autovis(Logic, Filters)
+	appliesto(TF2) 
+	iconsprite("editor/ficool2/filter_tf_class.vmt") 
+= filter_tf_class: "A filter that filters by the class of the activator. " +
+	"If the filter mode is Allow, only entities whose class matches the given class will pass the filter. " +
+	"If the filter mode is Disallow, all entities EXCEPT those whose class matches the given class will pass the filter."
+	[
+	tfclass[engine](integer) : "Class": 0
+	tfclass(choices) : "Class" : 0 : "Class" =
+		[
+		1: "Scout"
+		2: "Sniper"
+		3: "Soldier"
+		4: "Demoman"
+		5: "Medic"
+		6: "Heavy"
+		7: "Pyro"
+		8: "Spy"
+		9: "Engineer"
+		]
+
+	]

@@ -1,0 +1,15 @@
+@SolidClass base(func_brush) 
+	appliesto(TF2) = func_respawnroomvisualizer: 
+	"Brushes that become visible to enemy players when they get close. " +
+	"Use them to mark areas that they're unable to enter (i.e. respawn rooms)."
+	[
+	respawnroomname(target_destination) : "Associated Respawn Room" : : "The func_respawnroom that this entity is visualizing. " +
+		"This entity will have its team matched to that for the func_respawnroom, " +
+		"and will have it updated if the func_respawnroom ever changes team."
+
+	solid_to_enemies(boolean) : "Solid to Enemies" : "1" : "Determines if this area is solid to enemy players."
+
+	// Inputs
+	input SetSolid(boolean) : "Set whether this area is solid to enemy players or not. 0 = No, 1 = Yes"
+	input RoundActivate(void) : "Forces this entity to activate. Fired automatically at the start of a round."
+	]

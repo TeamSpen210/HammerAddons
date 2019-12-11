@@ -1,0 +1,10 @@
+@FilterClass base(filter_base) 
+	autovis(Logic, Filters)
+	appliesto(TF2) 
+	iconsprite("editor/ficool2/filter_tf_bot_has_tag.vmt")
+= filter_tf_bot_has_tag: "A filter that filters based on the touching bot having specific tags."
+	[
+	tags(string) : "Tags" : : "Tags required to pass this filter"
+	require_all_tags(boolean) : "Require all tags?" : 1 : "Does this filter require all specified tags?" 
+
+	]

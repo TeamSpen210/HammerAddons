@@ -1,0 +1,7 @@
+@BaseClass 
+	appliesto(PROPPER)
+	line(255 255 0, targetname, my_model)
+= Propper
+	[
+	my_model(target_destination) : "Model to apply to" : : "Pick a propper_model entity for this property to apply to."
+	]

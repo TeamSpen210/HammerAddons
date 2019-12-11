@@ -1,0 +1,8 @@
+@BaseClass line(255 255 255, targetname, target) = ai_addon
+	[
+	target(target_destination) : "Host NPC"
+
+	// Inputs
+	input Install(target_destination) : "Install this AddOn to the specified NPC"
+	input Remove(target_destination) : "Remove this AddOn from the NPC it is attached to"
+	]

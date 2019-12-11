@@ -1,0 +1,36 @@
+@PointClass base(BaseEntityPoint)
+	color(200 0 0) 
+	studioprop("models/editor/camera.mdl") 
+	frustum(fov, 16, 256, 255 255 255 10, -1) 
+	line(255 255 0, targetname, target_entity) 
+= point_viewcontrol_multiplayer: "A camera entity that controls all players' views. " +
+	"While it's active, the players will see out of the camera."
+	[
+	fov(float) : "Field of view" : 90 : "Player FOV"
+	fov_rate(float) : "Seconds to reach FOV target" : 1 : "Amount of time it should take to reach the specified FOV"
+	target_entity(target_destination) : "Target Entity" : : "Entity to move to. (End of move will match origin and angles)."
+	interp_time(float) : "Seconds to reach target entity" : 1 : "Amount of time it should take to reach the target entity's origin and angles."
+
+
+	target_team[engine](integer) : "Target Team" : -1
+	target_team[P2](choices) : "Target Team" : -1 : "Which team (or all) to allow to touch this trigger." =
+		[
+		-1: "All Teams"
+		0: "0 (Spectators)"
+		1: "1"
+		2: "2 (Portal2 Orange)"
+		3: "3 (Portal2 Blue)"
+		]
+
+	spawnflags(flags)  =
+		[
+		1: "Disable when move finished" : 1
+		2: "Set FOV" : 0
+		]
+
+
+	// Inputs
+	input Enable(void) : "Enable the point_viewcontrol_multiplayer, and start controlling the players' view."
+	input Disable(void) : "Disable the point_viewcontrol_multiplayer, and stop controlling the players' view."
+	input StartMovement(void) : "Start the movement to the target entity."
+	]

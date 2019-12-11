@@ -1,0 +1,32 @@
+@BaseClass base(_Breakable) = BreakableProp
+	[
+	spawnflags(flags)  =
+		[
+		16: "Break on Touch" : 0
+		32: "Break on Pressure" : 0
+		]
+	exploitablebyplayer[engine](integer) : "Exploitable by" : 0
+
+	exploitablebyplayer[engine](integer) : "Exploitable by Player" : 0
+	exploitablebyplayer[CSGO](choices) : "Exploitable by Player" : 0 =
+		[
+		0: "Default"
+		1: "Explosive"
+		]
+
+	breakabletype[engine](integer) : "Breakable by" : 0
+	breakabletype[L4D](choices) : "Breakable by" : 0 =
+		[
+		0: "Everyone"
+		1: "All Infected"
+		2: "Only Tanks"
+		]
+
+	output OnTakeDamage(void) : "Fired each time this breakable takes any damage."
+		
+	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
+	input DisableDamageForces(void) : "Damaging the entity does *not* apply physics forces to it."
+
+	input SetInteraction[MBase](integer) : "Adds an interaction to this entity."
+	input RemoveInteraction[MBase](integer) : "Removes an interaction from this entity."
+	]

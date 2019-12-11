@@ -1,0 +1,14 @@
+
+@BaseClass = AlyxInteractable
+	[
+	Hacked[MBase](boolean) : "Start Hacked" : "No" : "Makes this NPC start as if Alyx had hacked it. This causes the NPC to switch sides and might give it a different color."
+
+	// Inputs
+	input InteractivePowerDown(void) : "Shutdown this target."
+	input Hack[MBase](void) : "Hacks this entity as if Alyx interacted with it."
+
+	// Outputs
+	output OnAlyxStartedInteraction(void) : "Fired when Alyx begins to interact with this entity."
+	output OnAlyxFinishedInteraction(void) : "Fired when Alyx has finished interacting with this entity."
+	output OnHacked[MBase](void) : "Fires when this entity is hacked, either by Alyx or through the 'Hack' input."
+	]

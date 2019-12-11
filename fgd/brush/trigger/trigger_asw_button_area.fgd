@@ -1,0 +1,47 @@
+
+@SolidClass base(trigger_asw_use_area) 
+	appliesto(ASW) 
+	line(255 255 255, targetname, panelpropname)
+= trigger_asw_button_area: "A trigger volume in which marines can use a button.  Set the UseTarget to a door to make it a Door Button."
+	[
+	panelpropname(target_destination) : "Panel Prop name" : : "Name of the prop_dynamic used for this button panel's representation in the world. " +
+		"Skin # of this prop_dynamic will be set to reflect the locked/unlocked/power status of this panel."
+
+	hacklevel(integer) : "Time to charge up" : 5 : "The time taken to charge up this panel's actuators in seconds, if all wires are unjumbled.  " +
+		"NOTE: This number may be adjusted ingame by the marine's hack skill."
+
+	numwires(integer) : "Num Wires" : 2 : "How many wires this door panel has inside it (from 1 to 4). " +
+		"Each wire unjumbled will speed up the charging of the actuators."
+
+	wirecolumns(integer) : "Wire Columns" : 5 : "How many sections across the wire has (from 3 to 8). " +
+		"Higher values should be used for more difficult panels."
+
+	wirerows(integer) : "Wire Rows" : 2 : "How many rows each wire has (from 1 to 3)."
+	
+	locked(boolean) : "Locked" : "0" : "Whether this panel is locked or not."
+	useafterhack(boolean) : "Auto-use after hack" : 1 : "If set, when the marine finishes hacking this panel, he will perform a use action on it."
+	disableafteruse(boolean) : "Disable After Use" : 0 : "If set, button panel will become non-interactive after use"
+
+	nopower[engine](boolean) : "No Power?" : 0
+	nopower(choices) : "Has Power" : 0 : "Button areas without power can't be used.  Button areas can be powered using input PowerOn." =
+		[
+		0: "Powered"
+		1: "No Power"
+		]
+
+	nopowermessage(string) : "No Power Message" : : "Message to show on the use icon when this panel has no power."
+
+	// Inputs
+	input PowerOn(void) : "Enables power to this button area.  Button areas without power can't be used."
+	input PowerOff(void) : "Disables power to this button area.  Button areas without power can't be used."
+	input ResetHack(void) : "Relocks the panel, removes the hack and all hack progess.  Only works if the panel isn't in use."
+	input Unlock(void) : "Unlocks a locked button panel"
+
+	// Outputs
+	output OnButtonHackStarted(void) : "Fired whenever a marine starts hacking this panel."
+	output OnButtonHackAt25Percent(void) : "Fired whenever the hack gets over halfway through"
+	output OnButtonHackAt50Percent(void) : "Fired whenever the hack gets over halfway through"
+	output OnButtonHackAt75Percent(void) : "Fired whenever the hack gets over halfway through"
+	output OnButtonHackCompleted(void) : "Fired when a marine successfully finishes hacking this panel."
+	output OnButtonActivated(void) : "Fired whenever a marine uses this button panel."
+	]

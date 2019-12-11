@@ -1,0 +1,47 @@
+@PointClass base(BaseEntityPoint) 
+	color(0 0 255) 
+	iconsprite("editor/choreo_manager.vmt") 
+	color(240 180 250) 
+	line(240 180 250, targetname, scene0) 
+	line(240 180 250, targetname, scene1) 
+	line(240 180 250, targetname, scene2) 
+	line(240 180 250, targetname, scene3) 
+	line(240 180 250, targetname, scene4) 
+	line(240 180 250, targetname, scene5) 
+	line(240 180 250, targetname, scene6) 
+	line(240 180 250, targetname, scene7) 
+	line(240 180 250, targetname, scene8) 
+	line(240 180 250, targetname, scene9) 
+	line(240 180 250, targetname, scene10) 
+	line(240 180 250, targetname, scene11) 
+	line(240 180 250, targetname, scene12) 
+	line(240 180 250, targetname, scene13) 
+	line(240 180 250, targetname, scene14) 
+	line(240 180 250, targetname, scene15) 
+= logic_scene_list_manager: "Manages a list of logic_choreographed_scene entities. " +
+	"Store choreo scenes in them in order that they will be played by other inputs. " +
+	"Whenever a scene plays, the manager will remove all scenes before that one in the list. " +
+	"The name of another logic_scene_list_manager can be entered in a slot instead of an invididual scene, " +
+	"which will cause all scenes in that manager to be removed when a later scene in this list is played."
+	[
+	scene0(target_destination) : "Scene 1" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+	scene1(target_destination) : "Scene 2" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+	scene2(target_destination) : "Scene 3" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+	scene3(target_destination) : "Scene 4" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+	scene4(target_destination) : "Scene 5" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+	scene5(target_destination) : "Scene 6" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+	scene6(target_destination) : "Scene 7" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+	scene7(target_destination) : "Scene 8" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+	scene8(target_destination) : "Scene 9" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+	scene9(target_destination) : "Scene 10" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+	scene10(target_destination) : "Scene 11" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+	scene11(target_destination) : "Scene 12" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+	scene12(target_destination) : "Scene 13" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+	scene13(target_destination) : "Scene 14" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+	scene14(target_destination) : "Scene 15" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+	scene15(target_destination) : "Scene 16" : : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
+
+	// Inputs
+	input Shutdown(void) : "Remove the manager and all scenes referenced by it " +
+		"(and all scenes referenced by logic_scene_list_manager's embedded in this one)."
+	]

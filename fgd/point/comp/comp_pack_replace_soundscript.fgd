@@ -1,0 +1,10 @@
+@PointClass 
+	size(-8 -8 -8, 8 8 8)
+	appliesto(srctools)
+	autovis(Postcompiler, Packing)
+= comp_pack_replace_soundscript:
+	"Replace a soundscript with a different one."
+	[
+	original(string): "Original SoundScript" : : "Prevent this soundscript from being included."
+	replacement(string): "New SoundScript" : : "Force this soundscript to be included."
+	]

@@ -1,0 +1,68 @@
+
+@NpcClass base(BaseNPC, RappelNPC) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(NPCs, Combine, MetroPolice)
+	studio("models/Police.mdl") = npc_metropolice: "MetroPolice"
+	[
+	model[MBase](studio) : "Model" : "models/police.mdl" : "The model of this npc_metropolice. " +
+		"Keep in mind this overrides the 'Efficient' spawnflag which sets the model to police_cheaple.mdl."
+
+	additionalequipment[engine](string) : "Weapons": "weapon_pistol"
+	additionalequipment(choices) : "Weapons" : "weapon_pistol" =
+		[
+		"weapon_pistol": "Pistol"
+		"weapon_smg1": "SMG1"
+		"weapon_stunstick": "Stun Stick"
+		"weapon_shotgun": "Shotgun"
+		"0": "Nothing"
+		]
+
+	manhacks[engine](integer) : "Number of Manhacks" : 0
+	manhacks(choices) : "Number of Manhacks" : 0 =
+		[
+		0: "None"
+		1: "1"
+		2: "2"
+		]
+
+	weapondrawn[engine](boolean) : "Number of Manhacks" : 0
+	weapondrawn(choices) : "Pistol starts drawn" : "0" =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		131072: "Simple cops" : 0
+		// 262144: "Rappel (UNCHECK THIS IF IT IS CHECKED!)" : 0
+		524288: "Always stitch" : 0
+		1048576: "No chatter" : 0
+		2097152: "Arrest enemies" : 0
+		4194304: "No far stitching" : 0
+		8388608: "Prevent manhack toss" : 0
+		16777216: "Allowed to respond to thrown objects" : 0
+		33554432: "Mid-range attacks (halfway between normal + long-range)" : 0
+		]
+
+
+	// Inputs
+	input DisableManhackToss[MBase](void) : "Disables manhack toss"
+	input EnableManhackToss(void) : "Enables manhack toss (which had been disabled by the spawnflag)"
+	input SetPoliceGoal(string) : "Causes the NPC to police the area defined by an ai_goal_police"
+	input ActivateBaton(void) : "Set the baton to active"
+
+	input AdministerJustice[MBase](void) : "Orders this NPC to administer justice to the player as if they hit this NPC with a can or something. " +
+		"If this NPC cannot respond, it will look for another npc_metropolice to do it."
+	input SetWarnings[MBase](integer) : "Sets the number of warnings this NPC has given to the player."
+	input AddWarnings[MBase](integer) : "Adds to the number of warnings this NPC has given to the player."
+	input DeployManhack[MBase](void) : "Deploys a manhack immediately if one is available."
+	input AddManhacks[MBase](integer) : "Adds to the number of manhacks this NPC has available."
+	input SetManhacks[MBase](integer) : "Sets the number of manhacks this NPC has available."
+
+	// Outputs
+	output OnStunnedPlayer(void) : "Fires when the player is hit by a stunstick by this NPC."
+	output OnCupCopped(void) : "Fires if the player hits me with the cupcop can. ONLY use for x360 achievement."
+	output OnHitByPhysicsObject[Mbase](ehandle) : "Fired when the player hits this NPC with any prop. Passes the thrower as the activator and the prop as the parameter."
+	output OutManhack[Mbase](ehandle) : "Fired the moment when this NPC spawns a manhack. Passes the manhack."
+	]

@@ -1,0 +1,6 @@
+@PointClass appliesto(L4D2) base(WeaponSpawnSingle)
+	autovis(Weapons, L4D, Weapon Spawners) 
+	studioprop("models/w_models/weapons/w_eq_defibrillator.mdl")
+= weapon_defibrillator_spawn: "Defibrillator"
+	[
+	]

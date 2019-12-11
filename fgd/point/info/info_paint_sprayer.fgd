@@ -1,0 +1,51 @@
+@PointClass base(BaseEntityPoint, BasePaintType) 
+	appliesto(P2) 
+	autovis(Test Elements, Paint, Paint Sprayer)
+	line(255 255 255, targetname, light_position_name) 
+	sphere(blob_spread_radius) 
+	studio("models/editor/info_paint_sprayer.mdl") = info_paint_sprayer: "An entity that sprays Gel."
+	[
+	maxblobcount(integer) : "Max number of blobs" : 250 : "Max number of blobs that sprayer can spawn in the world (1-250)."
+	light_position_name(target_destination) : "Light Position Name" : : "Name of the entity we want to use as blobs light position."
+	start_active(boolean) : "Start Active?" : 0
+	silent(boolean) : "Silent?" : 0 : "If this flag is true, blobs will only paint, appearing entirely invisible."
+	drawonly(boolean) : "DrawOnly?" : 0 : "If this flag is true, blobs will only render, vanishing on contact with surfaces."
+
+	rendermode[engine](integer) : "Render Mode" : 0
+	rendermode(choices) : "Render Mode" : 0 : "The mode to render blobs. Appears non-functional." =
+		[
+		0: "Blobulator"
+		1: "Fast Sphere"
+		]
+
+	ambientsound[engine](integer) : "Ambient Sound" : 0
+	ambientsound(choices) : "Ambient Sound" : 0 : "The sound to play when paint is flowing." =
+		[
+		0: "None (silent)"
+		1: "Drip"
+		2: "Medium Flow"
+		3: "Heavy Flow"
+		]
+
+	blobs_per_second(float) : "Blobs per second" : 1 : "The number of paint blobs sprayed per second."
+	min_speed(float) : "Min blob speed" : 100 : "The minimum speed of the sprayed blobs."
+	max_speed(float) : "Max blob speed" : 100 : "The maximum speed of the sprayed blobs."
+	blob_spread_radius(float) : "Blob spread radius" : 0 : "Blobs will spawn randomly within this radius."
+	blob_spread_angle(float) : "Blob spread angle" : 0 : "The spread of the blobs along its direction vector (in degrees)."
+	blob_streak_percentage(float) : "Blob streak percentage" : 0 : "The percentage of blobs that will streak (0 - 100)."
+	min_streak_time(float) : "Blob min streak time" : 0.2 : "The minimum time that the blobs will streak for."
+	max_streak_time(float) : "Blob max streak time" : 0.5 : "The maximum time that the blobs will streak for."
+	min_streak_speed_dampen(float) : "Blob min streak speed dampen" : 500 : "The minimum speed dampening while streaking."
+	max_streak_speed_dampen(float) : "Blob max streak speed dampen" : 1000 : "The maximum speed dampening while streaking."
+	start_radius_min(float) : "Min blob start size" : 0.5 : "The minimum start size of the sprayed blobs."
+	start_radius_max(float) : "Max blob start size" : 0.7 : "The maximum start size of the sprayed blobs."
+	end_radius_min(float) : "Min blob end size" : 0.5 : "The minimum end size of the sprayed blobs."
+	end_radius_max(float) : "Max blob end size" : 0.7 : "The maximum end size of the sprayed blobs."
+	radius_grow_time_min(float) : "Min grow time" : 0.5 : "The minimum time to grow from start to end size."
+	radius_grow_time_max(float) : "Max grow time" : 1 : "The maximum time to grow from start to end size."
+
+	// Inputs
+	input Start(void) : "Start shooting Gel."
+	input Stop(void) : "Stop shooting Gel."
+	input ChangePaintType(integer) : "Change the type of Gel being sprayed. Values between 0-4, higher values are unstable."
+	]

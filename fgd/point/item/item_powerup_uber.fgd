@@ -1,0 +1,7 @@
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	appliesto(TF2) 
+	studio("models/pickups/pickup_powerup_uber.mdl") 
+	sphere(fademindist) 
+	sphere(fademaxdist) = item_powerup_uber: "Temporary Uber Powerup. Powerup effect wears off. Powerup respawns automatically"
+	[
+	]

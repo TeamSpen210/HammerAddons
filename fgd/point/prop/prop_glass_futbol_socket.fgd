@@ -1,0 +1,9 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(P2) 
+	studio("models/editor/angle_helper.mdl") = prop_glass_futbol_socket: "Invisible entity that holds futbols and fires an output. When a futbol comes close it will snap into place."
+	[
+
+	// Outputs
+	output OnFutbolReleased(void) : "Player has taken the futbol out of this socket."
+	output OnFutbolCaught(void) : "This socket has captured a futbol."
+	]

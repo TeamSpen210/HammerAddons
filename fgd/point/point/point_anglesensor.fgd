@@ -1,0 +1,27 @@
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/ficool2/point_anglesensor")
+	color(0 100 250) 
+	line(0 100 250, targetname, target) 
+	line(0 100 250, targetname, target, targetname, lookatname) 
+= point_anglesensor: "An entity that detects if another entity points in a given direction for a period of time."
+	[
+	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angles will be sensed."
+	lookatname(target_destination) : "Look At Entity" : : "The entity we want to check to see if the Target Entity is looking at."
+	duration(float) : "Duration" : : "The amount of time the Target Entity must look at the 'Look at Entity' to trigger this entity, in seconds."
+	tolerance(integer) : "Tolerance" : : "The tolerance, in degrees, in the checking to determine when the Target Entity is looking at the Look At Entity."
+	spawnflags(flags)  =
+		[
+		1: "Use target entity's angles (NOT position)" : 0
+		]
+
+	// Inputs
+	input Toggle(void) : "Toggle the sensor between enabled and disabled."
+	input Test(void) : "Check to see if the Target Entity is facing the Look At Entity within the specified tolerance, " +
+		"firing either the OnFacingLookat or OnNotFacingLookat output based on the result."
+
+	// Outputs
+	output TargetDir(vector) : "Fired when the forward direction of the Target Entity changes. Passes the new forward direction as a parameter."
+	output OnFacingLookat(void) : "Fired when the Target Entity points at the Look At Entity for more than the specified Duration, or in response to a Test input."
+	output OnNotFacingLookat(void) : "Fires in response to a Test input when the Target Entity is not pointing at the Look At Entity."
+	output FacingPercentage(float) : "Normalized value (0..1) where 1 is facing directly at target and 0 is at or beyond the angle of tolerance."
+	]

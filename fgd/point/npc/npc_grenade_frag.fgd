@@ -1,0 +1,10 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(NPCs, Hand Grenade)
+	studio("models/Weapons/w_grenade.mdl") = npc_grenade_frag: "Hand Grenade"
+	[
+
+	// Inputs
+	input SetTimer(float) : "This input makes the grenade live, and specifies how many seconds before it explodes."
+	]

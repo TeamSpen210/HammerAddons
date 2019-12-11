@@ -1,0 +1,186 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(since_L4D2)
+	iconsprite("editor/env_instructor_hint.vmt")
+	line(255 255 0, targetname, hint_target)
+	sphere(hint_range)
+= env_instructor_hint: "An entity that allows for creation and control of instructor lessons by map logic."
+	[
+	hint_replace_key(string) : "Replace Key" : : "Unique name so that messages with the same key will replace each other."
+	hint_target(target_destination) : "Target Entity" : : "The entity to show this hint on top of. The entity used must exist on the client, info_target_instructor_hint can be parented to server only entities for this purpose."
+
+
+	hint_static[engine](integer): "Positioning" : 0
+	hint_static(choices) : "Positioning" : "0" : "Either show at the position of the Target Entity. Or show the hint directly on the hud at a fixed position." =
+		[
+		0: "Follow the Target Entity"
+		1: "Show on the hud"
+		]
+
+	hint_allow_nodraw_target[engine](integer): "Allow invisible target" : 1
+	hint_allow_nodraw_target(choices) : "Allow invisible target" : "1" : "Do we allow the hint to follow entities with nodraw set?" =
+		[
+		0: "End immediately on nodraw"
+		1: "Yes"
+		]
+
+	hint_caption(string) : "Caption" : : "The text of your hint."
+	hint_activator_caption(string) : "Activator Caption" : : "The text of your hint shown to only the activating player."
+	hint_color(color255) : "Caption Color" : "255 255 255" : "The color of the caption text"
+
+	hint_forcecaption[engine](integer): "Show through walls" : 0
+	hint_forcecaption(choices) : "Show through walls" : 0 : "Do we show the caption text even if the hint is occluded by a wall?" =
+		[
+		0: "No"
+		1: "Show when occluded"
+		]
+
+	hint_icon_onscreen[engine](string): "Onscreen Icon" : "icon_tip"
+	hint_icon_onscreen(choices) : "Onscreen Icon" : "icon_tip" : "The icon to use when the hint is within the player's view." =
+		[
+		// Todo: cross-check with CSGO and ASW
+		"use_binding": "Show controls instead"
+		"icon_blank": "Blank"
+		"icon_bulb": "Bulb"
+		"icon_caution": "Caution"
+		"icon_alert": "White Exclamation Mark"
+		"icon_alert_red": "Red Exclamation Mark"
+		"icon_tip": "Information"
+		"icon_skull": "Eye"
+		"icon_interact": "Interact/Pickup"
+		"icon_button": "Button"
+		"icon_door": "Door"
+		"icon_useable_item": "Joystick"
+		"icon_arrow_plain_white_dn": "Simple Down Arrow"
+		"icon_arrow_plain_white_up": "Simple Up Arrow"
+		"icon_arrow_up": "Up Arrow"
+		"icon_arrow_right": "Right Arrow"
+		"icon_mouseRight": "Right-Click"
+		"icon_mouseLeft": "Left-Click"
+		"icon_mouseWheel_up": "MouseWheel Up"
+		"icon_mouseWheel_down": "MouseWheel Down"
+		"icon_mouseThree": "Click Scrollwheel"
+		"icon_key_generic": "Empty Key"
+		"icon_key_wide": "Spacebar"
+		"icon_key_right": "Right Key"
+		"icon_key_left": "Left Key"
+		"icon_key_down": "Down Key"
+		"icon_key_up": "Up Key"
+		"icon_dpad": "D-Pad"
+		"icon_fire": "Fire"
+		"icon_present": "Present"
+		]
+		
+	hint_icon_offscreen[engine](string): "Offscreen Icon" : "icon_tip"
+	hint_icon_offscreen(choices) : "Offscreen Icon" : "icon_tip" : "The icon to use when the hint is outside the player's view." =
+		[
+		"icon_blank": "Blank"
+		"icon_bulb": "Bulb"
+		"icon_caution": "Caution"
+		"icon_alert": "White Exclamation Mark"
+		"icon_alert_red": "Red Exclamation Mark"
+		"icon_tip": "Information"
+		"icon_skull": "Eye"
+		"icon_interact": "Interact/Pickup"
+		"icon_button": "Button"
+		"icon_door": "Door"
+		"icon_useable_item": "Joystick"
+		"icon_arrow_plain_white_dn": "Simple Down Arrow"
+		"icon_arrow_plain_white_up": "Simple Up Arrow"
+		"icon_arrow_up": "Up Arrow"
+		"icon_arrow_right": "Right Arrow"
+		"icon_mouseRight": "Right-Click"
+		"icon_mouseLeft": "Left-Click"
+		"icon_mouseWheel_up": "MouseWheel Up"
+		"icon_mouseWheel_down": "MouseWheel Down"
+		"icon_mouseThree": "Click Scrollwheel"
+		"icon_key_generic": "Empty Key"
+		"icon_key_wide": "Spacebar"
+		"icon_key_right": "Right Key"
+		"icon_key_left": "Left Key"
+		"icon_key_down": "Down Key"
+		"icon_key_up": "Up Key"
+		"icon_dpad": "D-Pad"
+		"icon_fire": "Fire"
+		"icon_present": "Present"
+		]
+
+	hint_nooffscreen[engine](boolean): "Show offscreen" : 0
+	hint_nooffscreen(choices) : "Show offscreen" : 0 : "When the hint is offscreen, do we show an icon and arrow?" =
+		[
+		0: "Show"
+		1: "Don't show"
+		]
+
+	hint_binding[engine](string) : "Bound Command": ""
+	hint_binding(choices) : "Bound Command" : : "If using 'show key bindings' for the onscreen icon, this field should be the command we want to show bindings for." =
+		[
+		"": "Unused"
+		"+forward": "Forward"
+		"+back": "Backward"
+		"+left": "Strafe Left"
+		"+right": "strafe Right"
+		"+duck": "Crouch"
+		"+jump": "Jump"
+		"+attack": "Primary Attack" [!P2]
+		"+attack2": "Secondary Attack" [!P2]
+		"+attack": "Fire Blue Portal" [P2]
+		"+attack2": "Fire Orange Portal" [P2]
+		"+use": "Use Key"
+		"+zoom": "Zoom In"
+		"-zoom": "Zoom Out"
+		]
+
+	hint_icon_offset(float) : "Icon Height Offset" : 0 : "A height offset from the target entity's origin to display the hint"
+	
+	hint_pulseoption[engine](integer) : "Size Pulsing" : 0
+	hint_pulseoption(choices) : "Size Pulsing" : 0 : "The icon size can pulsate" =
+		[
+		0: "No Pulse"
+		1: "Slow Pulse"
+		2: "Fast Pulse"
+		3: "Urgent Pulse"
+		]
+
+	hint_alphaoption[engine](integer) : "Alpha Pulsing" : 0
+	hint_alphaoption(choices) : "Alpha Pulsing" : 0 : "The icon alpha can pulsate" =
+		[
+		0: "No Pulse"
+		1: "Slow Pulse"
+		2: "Fast Pulse"
+		3: "Urgent Pulse"
+		]
+
+	hint_shakeoption[engine](integer) : "Shaking" : 0
+	hint_shakeoption(choices) : "Shaking" : 0 : "The icon can shake" =
+		[
+		0: "No Shaking"
+		1: "Narrow Shake"
+		2: "Wide Shake"
+		]
+
+	hint_local_player_only(boolean) : "Only Local Player" : 0 : "The hint will only be shown to the local player."
+	hint_timeout(integer) : "Timeout" : 0 : "The automatic timeout for the hint. 0 will persist until stopped with EndHint."
+	hint_range(float) : "Display Range" : 0 : "The visible range of the hint."
+	
+	hint_gamepad_binding[since_P2](string) : "Gamepad Bound Command" : : "If using 'show key bindings' for the onscreen icon, this field should be the command we want to show bindings for when gamepad is enabled (and PS3/X360)"
+
+	hint_name[L4D2](string) : "Lesson Name" : : "Hints with the same lesson name use a common base and are treated as instances the same lesson type."
+	hint_display_limit[L4D2](integer) : "Display Limit" : 0 : "The number of times a hint can be seen. 0 means unlimited."
+
+	hint_instance_type[engine](integer) : "Instance Type" : 2
+	hint_instance_type[L4D2](choices) : "Instance Type" : 2 : "How many instances of a single lesson type can be open or active at the same time" =
+		[
+		0: "Multiple"
+		1: "Single Open"
+		2: "Fixed Replace"
+		3: "Single Active"
+		]
+
+	hint_auto_start[L4D2](boolean) : "Show on First Sight" : 1 : "When the player first sees it, it will automatically show for them."
+	hint_suppress_rest[L4D2](boolean) : "Suppress rest before moving" : 0 : "Suppress the initial icon display in center of screen?"
+
+
+	// Inputs
+	input ShowHint(string) : "Start showing the hint. If an entity name is passed as a parameter, the hint is shown only to that entity."
+	input EndHint(void) : "Stop showing the hint if it hasn't already timed out."
+	]

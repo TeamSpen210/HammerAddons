@@ -1,0 +1,149 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	autovis(AI, AI Script Conditions)
+	sphere(PlayerActorProximity) 
+	sphere(ActorTargetProximity) 
+	sphere(PlayerTargetProximity) 
+	line(255 255 0, targetname, actor) 
+	line(255 255 255, targetname, target) 
+	iconsprite("editor/ai_script_conditions.vmt") = ai_script_conditions: "AI Script Conditions"
+	[
+	actor(target_destination) : "Actor (optional)" : : "NPC Target"
+
+	startdisabled(boolean) : "Start Disabled" : 1
+	
+	minimumstate[engine](integer) : "Minimum state" : 1
+	minimumstate(choices) : "Minimum state" : 1 =
+		[
+		0: "Don't care" [MBase]
+		1: "Idle"
+		2: "Alert"
+		3: "Combat"
+		]
+
+	maximumstate[engine](integer) : "Maximum state" : 3
+	maximumstate(choices) : "Maximum state" : 3 =
+		[
+		0: "Don't care" [MBase]
+		1: "Idle"
+		2: "Alert"
+		3: "Combat"
+		]
+
+	scriptstatus[engine](integer) : "Actor is running a script?" : 2
+	scriptstatus(choices) : "Actor is running a script?" : 2 =
+		[
+		0: "No"
+		1: "Yes"
+		2: "Don't care"
+		]
+
+	requiredtime(float) : "Required Time" : 0 : "Duration of time that all the conditions must be true"
+	mintimeout(float) : "Minimum time out" : 0 : "Minimum time before OnConditionsTimeout is fired. 0 = never expire."
+	maxtimeout(float) : "Maximum time out" : 0 : "Maximum time before OnConditionsTimeout is fired. " +
+		"0 = ignore (If you don't specify a Maximum timeout, conditions will time out at exactly Minimum Time Out. " +
+		"If you DO specify a Maximum time out, timeout will occur randomly between Minimum and Maximum time out values.)"
+
+	actorseeplayer[engine](integer) : "Actor Sees Player" : 2
+	actorseeplayer(choices) : "Actor Sees Player" : 2 =
+		[
+		0: "No"
+		1: "Yes"
+		2: "Don't care"
+		]
+
+	playeractorproximity(float) : "Player distance" : 0 : "The distance the player must/must not be to the actor. Negative values for NOT, 0 for ignore."
+	playeractorfov(float) : "Player FOV for Actor " : 360 : "Specify angle of view cone in degrees. Negative value = NOT"
+
+	playeractorfovtruecone[engine](boolean) : "Player FOV to Actor is a true view cone" : 0 
+	playeractorfovtruecone(choices) : "Play FOV to Actor is a true view cone" : 0 : "Player's view cone is evaluated as a true cone, not pie slice " =
+		[
+		0: "No - Tall pie slice"
+		1: "Yes - True view cone"
+		]
+
+	playeractorlos[engine](integer) : "Player has LOS to Actor" : 2
+	playeractorlos(choices) : "Player has LOS to Actor" : 2 : "Checks that the player has clear Line of Sight to the Actor." =
+		[
+		0: "No"
+		1: "Yes"
+		2: "Don't care"
+		]
+
+	target(target_destination) : "Target (Optional)" : : "Optional entity to include in conditions."
+
+	actorseetarget[engine](integer) : "Actor Sees Target" : 2
+	actorseetarget(choices) : "Actor Sees Target" : 2 =
+		[
+		0: "No"
+		1: "Yes"
+		2: "Don't care"
+		]
+
+	actortargetproximity(float) : "Target distance" : 0 : "The distance the actor must/must not be to the Target. Negative values for NOT, 0 for ignore."
+	playertargetproximity(float) : "Player distance from Target" : 0 : "The distance the player must/must not be to the Target. Negative values for NOT, 0 for ignore."
+	playertargetfov(float) : "Player FOV for Target" : 360 : "Specify angle of view cone in degrees. Negative value = NOT"
+
+	playertargetfovtruecone[engine](boolean) : "Player FOV to Target is a true view cone" : 0
+	playertargetfovtruecone(choices) : "Player FOV to Target is a true view cone" : 0 : "Player's view cone is evaluated as a true cone, not pie slice " =
+		[
+		0: "No - Tall pie slice"
+		1: "Yes - True view cone"
+		]
+
+	playertargetlos[engine](integer) : "Player has LOS to Target" : 2
+	playertargetlos(choices) : "Player has LOS to Target" : 2 : "Checks that the player has clear Line of Sight to the Target" =
+		[
+		0: "No"
+		1: "Yes"
+		2: "Don't care"
+		]
+
+	playerblockingactor[engine](integer) : "Player blocking Actor" : 2
+	playerblockingactor(choices) : "Player blocking Actor" : 2 : "Checks that the player is blocking the Actor's path" =
+		[
+		0: "No"
+		1: "Yes"
+		2: "Don't care"
+		]
+
+	actorinpvs[engine](integer) : "Actor in Player's PVS" : 2
+	actorinpvs(choices) : "Actor in Player's PVS" : 2 : "Checks that the actor is in the player's PVS" =
+		[
+		0: "No"
+		1: "Yes"
+		2: "Don't care"
+		]
+
+	actorinvehicle[engine](integer) : "Actor in a vehicle" : 2
+	actorinvehicle(choices) : "Actor in a vehicle" : 2 : "Checks the actor's state in a vehicle" =
+		[
+		0: "No"
+		1: "Yes"
+		2: "Don't care"
+		]
+
+	playerinvehicle[engine](integer) : "Player in a vehicle" : 2
+	playerinvehicle(choices) : "Player in a vehicle" : 2 : "Checks the player's state in a vehicle" =
+		[
+		0: "No"
+		1: "Yes"
+		2: "Don't care"
+		]
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Fire outputs with the Actor as Activator" : 0
+		]
+
+
+	// Inputs
+	input Enable(void) : "Enable this entity"
+	input Disable(void) : "Disable this entity"
+	input SatisfyConditions[MBase](void) : "Forces the conditions to be satisfied."
+
+	// Outputs
+	output OnConditionsSatisfied(void) : "Fires when AI conditions satisfied"
+	output OnConditionsTimeout(void) : "Fires when AI conditions timed out"
+	output NoValidActor(void) : "Fires if/when there are no matching actors in the map."
+	]

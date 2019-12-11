@@ -1,0 +1,23 @@
+@PointClass base(Propper) 
+	appliesto(PROPPER)
+	iconsprite("editor/gibshooter.vmt")
+	sphere(fademindist)
+	sphere(fademaxdist)
+	autovis(Propper)
+= propper_gibs: "When a prop breaks, you can cause one or more custom-made broken pieces to spawn in its place."
+	[
+	model(studio) : "Gib model"
+	ragdoll[engine](string) : "Model Type" : "model"
+	ragdoll(choices) : "Model Type" : "model" : "If the chosen gib model supports ragdoll physics, Use this setting to enable it." =
+		[
+		"model": "Physics"
+		"ragdoll": "Ragdoll"
+		]
+
+	debris(boolean) : "Debris" : 1 : "Debris won't collide with the player or other dynamic objects. Use if the gib is small."
+
+	burst(integer) : "Burst Strength" : 0 : "The gib will receive a force out from the center of the prop if this is set."
+	fadetime(integer) : "Fade away time" : 0 : "The gib will begin to disappear after this many seconds."
+	fademindist(integer) : "Min Fade Distance (units)" : 0 : "The gib will begin to disappear at this distance from the player."
+	fademaxdist(integer) : "Max Fade Distance (units)" : 0 : "The gib will not render at this distance from the player."
+	]

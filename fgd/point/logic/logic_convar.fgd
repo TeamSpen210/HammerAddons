@@ -1,0 +1,25 @@
+@PointClass appliesto(MBase) 
+	base(BaseEntityPoint)
+	iconsprite("editor/logic_convar.vmt") 
+= logic_convar :
+	"A powerful entity that can read the specified ConVar's value. " +
+	"It functions similarly to a logic_branch, except you could also output the value directly. " +
+	"Due to theoretical abuse, players have the option to disable logic_ConVar usage on a map. " +	
+	"Use the 'OnDenied' output to prevent any issues from players who have disabled logic_ConVar."
+	[
+	// Keys
+	SetConVar(string) : "ConVar" : : "The ConVar to read. Can be serverside or clientside(?)"
+	SetTestValue(string) : "Compare value" : : "The value to compare with the ConVar's value during comparisons. You could use <, !=, etc. at the beginning similar to a Response System criterion."
+	
+	// Inputs
+	input SetConVar(string) : "Sets the ConVar whose variable will be retrieved."
+	input SetTestValue(string) : "Sets the value that will be compared with the ConVar variable during comparisons."
+	input GetValue(void) : "Retrieves the ConVar's value, firing OutValue with its value."
+	input Test(void) : "Compares the ConVar's value with the compare value."
+	
+	// Outputs
+	output OnTrue(void) : "Fired when a comparison is true."
+	output OnFalse(void) : "Fired when a comparison is false."
+	output OutValue(string) : "Fired with the GetValue input. Passes the ConVar's current value."
+	output OnDenied(void) : "Fires when the ConVar is requested and logic_convar is not allowed by the server."
+	]

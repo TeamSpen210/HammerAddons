@@ -1,0 +1,20 @@
+@BaseClass base(BaseEntityAnimating, SRCIndicator)
+= BasePedButton: "The base for the prop_button/prop_under_button."
+	[
+	delay(float) : "Delay Before Reset" : 1 : "Amount of time, in seconds, after the button has been pressed before it returns to the starting position. Once it has returned, it can be used again."
+	istimer(boolean) : "Play timer sound?" : 0 : "If set, this button will play timer sounds while button is depressed. This allows fast reset by default - use Prevent fast reset to stop this."
+	preventfastreset(boolean) : "Prevent fast reset?" : 0 : "Buttons that are timer's allow you to reset early - use this to make the button stick for the entire duration."
+	solid(boolean) : "Is Solid" : 1 : "Makes button able to be passed through."
+
+	// Inputs
+	input Press(void) : "Cause the button to be pressed."
+	input Lock(void) : "Locks the button."
+	input UnLock(void) : "UnLocks the button."
+	input CancelPress(void) : "Causes the button to reset quietly and without firing OnButtonReset outputs."
+
+	// Outputs
+	output OnPressed(void) : "Called when the button has been pressed."
+	output OnPressedBlue(void) : "Called in Coop when the button has been pressed by the Blue player."
+	output OnPressedOrange(void) : "Called in Coop when the button has been pressed by the Orange player."
+	output OnButtonReset(void) : "Called when the button has reset after being pressed."
+	]

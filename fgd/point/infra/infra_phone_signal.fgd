@@ -1,0 +1,11 @@
+@PointClass base(BaseEntityPoint)
+ 	appliesto(INFRA)
+ 	autovis(Point Entities, Globals, INFRA Phone Signal)
+	iconsprite("editor/infra_phone_signal.vmt")
+= infra_phone_signal: "Phone signal"
+	[
+	// Inputs
+	input SetBars(integer) : "Sets the phone signal strength. Takes a number in the range from 0 to 5, where 0 is no signal and 5 is perfect signal."
+	input Set3G(void) : "Switches the phone to a 3G network."
+	input Set4G(void) : "Switches the phone to a 4G network."
+	]

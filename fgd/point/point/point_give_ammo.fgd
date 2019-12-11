@@ -1,0 +1,8 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(CSGO) = point_give_ammo: "An entity that gives ammo to the activator. " +
+		"Use a trigger or a button to trigger this entity."
+	[
+
+	// Inputs
+	input GiveAmmo(void) : "Fill up the ammo of all weapons held by the activator of this entity."
+	]

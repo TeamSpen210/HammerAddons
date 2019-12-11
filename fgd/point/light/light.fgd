@@ -1,0 +1,13 @@
+@PointClass base(BaseEntityPoint, BaseLight)
+	autovis(Lights, Omnidirectional Light)
+	light() 
+	iconsprite("editor/light.vmt") 
+	sphere(_distance) 
+	line(255 255 255, targetname, target)
+= light: "An invisible omnidirectional lightsource."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Initially dark" : 0
+		]
+	]

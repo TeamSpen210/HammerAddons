@@ -1,0 +1,14 @@
+@PointClass 
+	base(BaseEntityPoint)
+	iconsprite("editor/ficool2/game_weapon_manager")
+ 	autovis(Point Entities, Globals, Weapon Manager)
+= game_weapon_manager: "An entity used to limit the number of a particular weapon type in the world. " +
+	"Useful in places where NPCs are spawning rapidly, dying, and dropping weapons."
+	[
+	weaponname(string) : "Weapon Classname" : : "Classname of the weapon type to limit."
+	maxpieces(integer) : "Max Allowed in Level" : 0 : "The maximum amount of the specified weapon type allowed in the world."
+	ammomod(float) : "Ammo modifier" : 1 : "Modifier for ammount of ammo dropped by a weapon."
+
+	// Inputs
+	input SetAmmoModifier(float) : "Adjust the ammo modifier."
+	]

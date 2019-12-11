@@ -1,0 +1,58 @@
+@PointClass base(TalkNPC) 
+	appliesto(P2) 
+	autovis(NPCs, Aper. Personality Core)
+	studioprop() 
+= npc_personality_core: "Aperture Science Personality Construct. Animated balls with handles."
+	[
+	modelskin[engine](integer) : "Model Skin" : 0
+	modelskin(choices) : "Model Skin" : 0 : "If using the 'alt' skin, this sets the eye color -- If not using the alt skin, (0 = broken) (1=normal)" =
+		[
+		0: "Blue Eye / Broken"
+		1: "Green Eye / Normal"
+		2: "Red Eye / NA"
+		3: "Purple Eye / NA"
+		]
+
+	altmodel[engine](boolean) : "Use Alternate Skins" : 0
+	altmodel(choices) : "Use Alternate Skins" : 0 : "Use the model with corrupted skins, instead of the skins in the original model. " =
+		[
+		0: "No"
+		1: "Yes"
+		]
+
+	model[engine](string) : "Model" : "models/npcs/personality_sphere/personality_sphere.mdl" 
+	model(choices) : "[H] Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "Choose the model to show in hammer. Set to the same as Use Alternate Skins." =
+		[
+		"models/npcs/personality_sphere/personality_sphere.mdl": "Original (Wheatley)"
+		"models/npcs/personality_sphere/personality_sphere_skins.mdl": "Alternate (Corrupt Cores)"
+		]
+
+	skin[engine](integer) : "Skin" : 0
+	skin(choices) : "[H] Skin" : 0 : "If using the 'alt' skin, this sets the eye color (in hammer) -- If not using the alt skin, (0 = broken) (1=normal)" =
+		[
+		0: "Blue Eye / Broken"
+		1: "Green Eye / Normal"
+		2: "Red Eye / NA"
+		3: "Purple Eye / NA"
+		]
+
+
+	// Inputs
+	input EnableMotion(void) : "Enable physics motion/collision response."
+	input DisableMotion(void) : "Disable physics motion/collision response."
+	input EnableFlashlight(void) : "Enable the eye flashlight."
+	input DisableFlashlight(void) : "Disable the eye flashlight."
+	input ForcePickup(void) : "Force the player to pickup the sphere immediately."
+	input EnablePickup(void) : "Allow player pickup."
+	input DisablePickup(void) : "Disable player pickup."
+	input PlayAttach(void) : "Play the attachment animation, used for syncing with the socket's animation."
+	input PlayDetach(void) : "Play the detachment animation, used for syncing with the socket's animation."
+	input PlayLock(void) : "Play the locking animation, used for syncing with the socket's animation."
+	input SetIdleSequence(string) : "Set a sequence to use as an idle sequence."
+	input ClearIdleSequence(void) : "Return to the default idle animation."
+	input Explode(void) : "Explode the sphere, triggering an explosion effect and some gibs."
+
+	// Outputs
+	output OnPlayerPickup(void) : "Fired whenever the player picks up the core."
+	output OnPlayerDrop(void) : "Fired whenever the player drops the core."
+	]

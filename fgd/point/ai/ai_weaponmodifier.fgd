@@ -1,0 +1,28 @@
+
+@PointClass base(BaseEntityPoint, EnableDisable)
+	appliesto(MBase)
+	line(255 255 255, targetname, target)
+ = ai_weaponmodifier : 
+	"Modifies a NPC's weapon shot regulation."
+[
+	target(target_destination) : "Target(s)" : : "The NPC(s) that will be modified by default."
+
+	BurstInterval(string) : "Burst Interval" : "0.1:0.25" : "The range for a random amount of time the should pass between each shot in a burst. Format: 'min:max'"
+	RestInterval(string) : "Rest Interval" : "0.25:1.25" : "The range for a random amount of time the should pass between bursts. Format: 'min:max'"
+	BurstShotCountRange(string) : "Burst Shot Count Range" : "2:5" : "The range for a random amount of shots that should be fired in a bursts. Format: 'min:max'"
+	//BurstShotsRemaining(string) : "Burst Shots Remaining" : "2" : "How many shots are left in the current burst."
+	
+	// Inputs
+	input EnableOnNPC(target_destination) : "Applies weapon modification to a specific NPC."
+	input DisableOnNPC(target_destination) : "Stops applying weapon modification to a specific NPC."
+	
+	input SetBurstInterval(string) : "Sets the burst interval. Follows the same format as the keyvalue."
+	input SetRestInterval(string) : "Sets the rest interval. Follows the same format as the keyvalue."
+	input SetBurstShotCountRange(string) : "Sets the burst shot count range. Follows the same format as the keyvalue."
+	input SetBurstShotsRemaining(integer) : "Sets how many shots are left in the current burst."
+	
+	input EnableShooting(void) : "Enables shooting if it was disabled."
+	input DisableShooting(void) : "Disables shooting."
+	input FireNoEarlierThan(float) : "Causes the NPC to stop firing for this amount of time."
+	input Reset(bool) : "Causes the shot regulator to reset. If 1 is passed, the NPC will immediately start firing instead of waiting for the next burst interval."
+]

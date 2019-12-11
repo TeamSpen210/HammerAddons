@@ -1,0 +1,25 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(NPCs, Zombies, Zombine)
+	studio("models/Zombie/zombie_soldier.mdl") = npc_zombine: "Combine Soldier Zombie"
+	[
+
+	NumGrenades[engine](integer) : "Number of Grenades" : 1
+	NumGrenades[MBase](choices) : "Number of Grenades" : 1 : "The number of grenades this zombine can pull out." =
+	[
+		0 : "None"
+		1 : "1"
+		2 : "2"
+		3 : "3"
+		4 : "4"
+		5 : "5"
+		999999 : "Unlimited"
+	]
+
+	// Inputs
+	input StartSprint(void) : "Forces the zombine to sprint."
+	input PullGrenade(void) : "Forces the zombine to pull a grenade."
+
+	output OnPullGrenade[MBase](ehandle) : "Fires when the zombine pulls a grenade. Passes the grenade."
+	]

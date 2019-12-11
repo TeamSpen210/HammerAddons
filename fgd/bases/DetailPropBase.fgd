@@ -1,0 +1,11 @@
+
+@BaseClass = DetailPropBase
+	[
+	detailOrientation[engine](integer) : "Orientation" : 0
+	detailOrientation(choices) : "Orientation" : 0 : "How the prop/sprite rotates to face the camera." = 
+		[
+		0 : "No rotation"
+		1 : "Screen Aligned"
+		2 : "Z axis only"
+		]
+	]

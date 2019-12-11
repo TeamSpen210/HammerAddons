@@ -1,0 +1,5 @@
+@SolidClass base(Trigger)
+= trigger_gravity: "A trigger volume that changes the gravity on any entity that touches it."
+	[
+	gravity(integer) : "Gravity (0-1)" : 1
+	]

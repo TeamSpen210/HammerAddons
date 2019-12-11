@@ -1,0 +1,7 @@
+@FilterClass base(BaseRedirectFilter) 
+	autovis(Logic, Filters)
+	appliesto(MBase)
+	iconsprite("editor/filter_redirect.vmt")
+= filter_redirect_weapon :
+	"A filter that passes the activator's weapon OR the weapon causing damage to a separate filter, depending on what this filter is filtering."
+	[ ]

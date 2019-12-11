@@ -1,0 +1,30 @@
+@PointClass appliesto(MBase) 
+	base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/math_mod.vmt") = math_mod :
+	"A lightweight entity that performs simple calculations on the fly without needing a complicated I/O chain. "+
+	"This is useful for values that are outputted on a per-frame basis and might not work with a math_counter chain."
+[
+	// Keys
+	startvalue(string) : "Mod Value" : "0" : "The value that is applied to input values."
+	
+	SetOperator[engine](integer) : "Operator" : 43
+	SetOperator(choices) : "Operator" : 43 : "What calculation to perform with the mod value. (input value _ mod value)" = 
+		[
+		43 : "Addition"
+		45 : "Subtraction"
+		42 : "Multiplication"
+		47 : "Division"
+		]
+
+	// Inputs
+	input SetMod(string) : "Sets the mod value."
+	input ModInt(integer) : "Applies modification to the specified integer."
+	input ModFloat(float) : "Applies modification to the specified float."
+	input ModVector(vector) : "Applies modification to the specified vector."
+	input SetOperator(string): "Sets the operator. Use +, -, *, or / to choose addition, subtraction, multiplication, or division respectively."
+
+	// Outputs
+	output OutInt(integer) : "Outputs the modified integer."
+	output OutFloat(float) : "Outputs the modified float."
+	output OutVector(vector) : "Outputs the modified vector."
+	]

@@ -1,0 +1,26 @@
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	iconsprite("editor/info_target.vmt") 
+	sphere(radius) = info_radar_target: "Jalopy Radar Beacon"
+	[
+	radius(float) : "Effective Radius" : 6000 : "How close the Jalopy must be to detect this beacon. If this radius is -1, the range is infinite."
+	
+	type[engine](integer) : "Type of target" : 0
+	type(choices) : "Type of target" : 0 =
+		[
+		0: "Generic Citizen Beacon"
+		1: "Magnussen RDU Beacon"
+		2: "Dog"
+		3: "Ally Installation"
+		4 : "Enemy"
+		5 : "Large Enemy (striders)"
+		]
+
+	mode[engine](integer) : "Mode" : 0
+	mode(choices) : "Mode" : 0 =
+		[
+		0: "Default"
+		1: "Sticky - once detected, ignore effective radius."
+		]
+
+	]

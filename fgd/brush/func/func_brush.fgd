@@ -1,0 +1,28 @@
+@SolidClass base(BaseEntityVisBrush, EnableDisable, Toggle) 
+= func_brush: "An brush built entity with various features."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		2: "Ignore player +USE" : 1
+		]
+
+	solidity[engine](integer) : "Solidity" : 0
+	solidity(choices) : "Solidity" : 0 : "How the solidity changes." =
+		[
+		0: "Toggle with Enable/Disable"
+		1: "Never Solid"
+		2: "Always Solid"
+		]
+
+	excludednpc(string) : "NPC class excluded from collisions" : : "If an NPC classname is specified here, NPCs of that type won't collide with these brushes. In Episodic, you may also specify an individual entity's name."
+	
+	invert_exclusion(boolean) : "Invert NPC class exclusion" : "0" : "If set, then the excluded NPC class will consider this brush solid, and all other NPC classes will consider it non-solid."
+	
+	solidbsp(boolean) : "Solid BSP" : "0" : "Set this if this brush is in heirarchy with a moving object of some kind, and the player can stand on this brush."
+
+	// Inputs
+	input SetExcluded(string) : "Change the NPC class excluded from collisions."
+	input SetInvert(boolean) : "Set the state of inversion for NPC class exclusion (0 or 1)."
+
+	input Toggle(void) : "Toggle visibility/solidity of this brush."
+	]

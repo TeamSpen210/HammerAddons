@@ -1,0 +1,21 @@
+@BaseClass base(BaseEntityPoint) 
+	line(128 128 128, targetname, attach1)
+= ForceController
+	[
+	spawnflags(flags)  =
+		[
+		1: "Start On" : 0
+		2: "Apply Force" : 1
+		4: "Apply Torque" : 1
+		8: "Orient Locally" : 1
+		16: "Ignore Mass" : 0
+		]
+
+	attach1(target_destination) : "Attached Object" : : "Object to apply the force to."
+	forcetime(float) : "Time of Force (0=inf)" : 0 : "Automatic shut-off after this time has passed (0 = stay on forever or until deactivated)"
+
+	// Inputs
+	input Activate(void) : "Turn the force on"
+	input Deactivate(void) : "Turn the force off"
+	input Scale(string) : "Set Force Scale"
+	]

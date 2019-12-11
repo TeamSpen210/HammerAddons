@@ -1,0 +1,11 @@
+@PointClass base(BaseEntityPoint, Angles) 
+	iconsprite("editor/ficool2/env_dustpuff")
+= env_dustpuff: "An entity that can emit dust puffs."
+	[
+	scale(float) : "Scale" : 8 : "Size of the dust puff."
+	speed(float) : "Speed" : 16 : "Speed at which the dust particles should move."
+	color(color255) : "Dust color" : "128 128 128"
+
+	// Inputs
+	input SpawnDust(void) : "Spawn a dust puff."
+	]

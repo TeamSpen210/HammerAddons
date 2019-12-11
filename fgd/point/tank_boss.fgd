@@ -1,0 +1,8 @@
+
+@PointClass base(base_boss) 
+	appliesto(TF2) = tank_boss: "Tank Boss"
+	[
+	// Inputs
+	input DestroyIfAtCapturePoint(integer) : "Destroy If At CapturePoint"
+	input AddCaptureDestroyPostfix(string) : "Set the postfix for the destroy animation when it's at the capture point"
+	]

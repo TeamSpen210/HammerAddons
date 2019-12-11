@@ -1,0 +1,9 @@
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ts2do/env_starfield.vmt") = env_starfield: "Starfield effect"
+	[
+
+	// Inputs
+	input TurnOn(void) : "Turn on"
+	input TurnOff(void) : "Turn off"
+	input SetDensity(float) : "Set the density of the starfield. It's a multiplier, so 1 is the default."
+	]

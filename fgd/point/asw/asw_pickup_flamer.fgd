@@ -1,0 +1,9 @@
+
+@PointClass base(ASWPickup) 
+	appliesto(ASW) 
+	studio("models/weapons/flamethrower/flamethrower.mdl") = asw_pickup_flamer: "Flamer"
+	[
+	bulletsingun(integer) : "Bullets In Gun" : 60
+	clips(integer) : "Clips" : 5
+	secondarybullets(integer) : "Secondary Bullets" : 0
+	]

@@ -1,0 +1,56 @@
+@PointClass base(BaseEntityPoint) 
+	autovis(Lights, Dynamic Light) 
+	iconsprite("editor/ficool2/light_dynamic.vmt") 
+	sphere(distance) 
+	lightcone() 
+	line(255 255 255, targetname, target)
+= light_dynamic: "An invisible lightsource that changes in some way over time."
+	[
+	target(target_destination) : "Entity to point at" : : "The name of an entity in the map that the dynamic light will point at."
+	_light(color255) : "Light color" : "255 255 255 200"
+	brightness(integer) : "Light brightness" : 0
+	_inner_cone(integer) : "Inner (bright) angle" : 30
+	_cone(integer) : "Outer (fading) angle" : 45
+	pitch(integer) : "Pitch" : -90
+
+	distance(float) : "Maximum distance" : 120 : "This is the distance that light is allowed to cast, in inches."
+	spotlight_radius(float) : "Spotlight end radius" : 80 : "This is the radius of the light, in inches, at the object that it is hitting."
+
+	style[engine](integer) : "Appearance" : 0
+	style(choices) : "Appearance" : "0" =
+		[
+		0: "Normal"
+		10: "Fluorescent flicker"
+		2: "Slow, strong pulse"
+		11: "Slow pulse, noblack"
+		5: "Gentle pulse"
+		1: "Flicker A"
+		6: "Flicker B"
+		3: "Candle A"
+		7: "Candle B"
+		8: "Candle C"
+		4: "Fast strobe"
+		9: "Slow strobe"
+		]
+
+	spawnflags(flags)  =
+		[
+		1: "Do not light world (better perf)" : 0
+		2: "Do not light models" : 0
+		4: "Add Displacement Alpha" : 0
+		8: "Subtract Displacement Alpha" : 0
+		]
+
+
+	// Inputs
+	input Color(color255) : "Set the light's render color (R G B)."
+	input brightness(integer) : "Set the light brightness."
+	input distance(float) : "Set the maximum light distance."
+	input _inner_cone(integer) : "Set the inner (bright) angle."
+	input _cone(integer) : "Set the outer (fading) angle."
+	input spotlight_radius(float) : "Set the radius of the spotlight at the end point."
+	input style(integer) : "Change the lightstyle (see Appearance field for possible values)."
+	input TurnOn(void) : "Turn the light off."
+	input TurnOff(void) : "Turn the light on."
+	input Toggle(void) : "Toggle the light on/off."
+	]

@@ -1,0 +1,6 @@
+@PointClass appliesto(L4D2) base(WeaponSpawn) 
+	studioprop("models/w_models/Weapons/w_rifle_ak47.mdl")
+	autovis(Weapons, L4D, Weapon Spawners)
+= weapon_rifle_ak47_spawn: "AK47"
+	[
+	]

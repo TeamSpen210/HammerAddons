@@ -1,0 +1,7 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	autovis(Weapons, CSGO Weapons, CS Pistols)
+	studio("models/weapons/w_pist_deagle_dropped.mdl") = weapon_deagle: "Desert Eagle"
+	[
+	]

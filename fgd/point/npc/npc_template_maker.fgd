@@ -1,0 +1,46 @@
+
+@PointClass base(BaseNPCMaker)  
+	iconsprite("editor/npc_maker.vmt") 
+	line(255 255 0, targetname, templatename) 
+	sphere(radius) 
+	line(255 255 0, targetname, destinationgroup) 
+	autovis(Templates, NPC Templater)
+= npc_template_maker: "An entity that creates NPCs. The NPCs it creates are clones of a template NPC. " +
+	"NPCs are spawned around this maker's origin, or at specified destination points."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		256: "Always use radius spawn" : 0
+		512: "Don't preload template models" : 0
+		]
+
+	templatename(target_destination) : "Name of template NPC" : : "Template NPC that this maker should be creating clones of."
+	radius(float) : "Radius" : 256 : "Radius around this maker within which NPCs are to be placed. Spawned NPCs will try and find empty space within this radius to spawn."
+	destinationgroup(target_destination) : "Name of Destination Group" : : "If you'd like spawned NPCs to be created at an info_npc_spawn_destination entity, enter the name of that entity here. If you have more than one destination entity by that name, the Destination Criteria will be used to select one from the group."
+
+	criterionvisibility[engine](integer) : "Dest. Criterion: Visible to player?" : 2
+	criterionvisibility(choices) : "Dest. Criterion: Visible to player?" : 2 : "Should the NPC try to spawn at a destination that the player can see? Only applicable if a Destination Group is being used." =
+		[
+		0: "Yes"
+		1: "No"
+		2: "Don't Care"
+		]
+
+	criteriondistance[engine](integer) : "Dest. Criterion: Distance to player?" : 2
+	criteriondistance(choices) : "Dest. Criterion: Distance to player?" : 2 : "Should the NPC try to spawn nearest to or farthest from the player's current location? Only applicable if a Destination Group is being used." =
+		[
+		0: "Nearest"
+		1: "Farthest"
+		2: "Don't Care"
+		]
+
+	minspawndistance[engine](integer) : "Minimum spawn distance from player" : 0
+	minspawndistance(integer) : "Minimum spawn distance from player" : 0 : "The spawn destination node distance to the player will have to be further or equal than this value."
+
+	// Inputs
+	input SpawnNPCInRadius(void) : "Spawn an NPC somewhere within the maker's radius."
+	input SpawnNPCInLine(void) : "Spawn an NPC somewhere within a line behind the maker."
+	input SpawnMultiple(integer) : "Spawn multiple NPCs (uses destination group, else radius)."
+	input ChangeDestinationGroup(target_destination) : "Switch to a different set of Destination entities."
+	input SetMinimumSpawnDistance(integer) : "Set the minimum spawn distance from player to destination node."
+	]

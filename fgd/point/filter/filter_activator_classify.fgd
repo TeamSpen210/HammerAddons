@@ -1,0 +1,39 @@
+@FilterClass base(filter_base) 
+	autovis(Logic, Filters)
+	appliesto(MBase) 
+	iconsprite("editor/filter_classify.vmt") 
+= filter_activator_classify :"A filter that filters by the Class_T of the activator."
+	[
+	filterclassify[engine](integer) : "Filter Classify" : 0
+	filterclassify(choices) : "Filter Classify" : 0 : "The class to filter by. If the filter mode is Allow, only entities whose "+
+		"class matches the given class will pass the class filter. If the filter mode is Disallow, "+
+		"all entities EXCEPT those whose class matches the given class will pass the class filter." =
+		[
+		0 : "CLASS_NONE"
+		1 : "CLASS_PLAYER"
+		2 : "CLASS_PLAYER_ALLY (Citizens)"
+		3 : "CLASS_PLAYER_ALLY_VITAL (Alyx, Dr. Kleiner, GameEndAlly vorts, etc.)"
+		4 : "CLASS_ANTLION"
+		5 : "CLASS_BARNACLE"
+		6 : "CLASS_BULLSEYE (npc_bullseyes)"
+		7 : "CLASS_CITIZEN_PASSIVE (pre-criminal citizens)"
+		//8 : "CLASS_CITIZEN_REBEL (Unused)"
+		9 : "CLASS_COMBINE (Soldiers, turrets, etc.)"
+		10 : "CLASS_COMBINE_GUNSHIP (Gunships, helicopters, dropships)"
+		//11 : "CLASS_CONSCRIPT (Unused)"
+		12 : "CLASS_HEADCRAB"
+		13 : "CLASS_MANHACK"
+		14 : "CLASS_METROPOLICE"
+		//15 : "CLASS_MILITARY (Unused)"
+		16 : "CLASS_SCANNER"
+		17 : "CLASS_STALKER"
+		18 : "CLASS_VORTIGAUNT (Non-vital vortigaunts only)"
+		19 : "CLASS_ZOMBIE"
+		20 : "CLASS_PROTOSNIPER (npc_snipers)"
+		21 : "CLASS_MISSILE"
+		22 : "CLASS_FLARE"
+		23 : "CLASS_EARTH_FAUNA (crows, seagulls, etc.)"
+		24 : "CLASS_HACKED_ROLLERMINE"
+		25 : "CLASS_COMBINE_HUNTER"
+		]
+	]

@@ -1,0 +1,5 @@
+@SolidClass base(Trigger, TeamNum) 
+	appliesto(TF2) = func_achievement: "Achievement area. Coded into the engine."
+	[
+	zone_id(integer) : "Zone ID" : 0 : "ID number for this zone (multiple zones can have the same number to group them)."
+	]

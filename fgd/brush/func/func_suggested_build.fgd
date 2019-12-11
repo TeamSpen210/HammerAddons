@@ -1,0 +1,32 @@
+
+@SolidClass base(Trigger, TeamNum) 
+	appliesto(TF2) = func_suggested_build: "Engineer suggested build area."
+	[
+	object_type[engine](integer) : "Suggested Object" : 0
+	object_type(choices) : "Suggested Object" : 0 : "Suggested object to build in this area." =
+		[
+		0: "Any"
+		1: "Sentry"
+		2: "Dispenser"
+		3: "Teleporter Entrance"
+		4: "Teleporter Exit"
+		]
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Built Object Never Dies" : 0
+		]
+
+	face_entity(target_destination) : "Must face point entity" : : "If this is not empty, the built object must face the point this entity is at."
+	face_entity_fov(float) : "Facing Angle FOV Tolerance" : 90 : "If the 'must face entity' property is set, this is the tolerance aka field-of-view when facing that entity (in degrees)."
+
+	// Inputs
+	input SetActive(void) : "Disables the build area."
+	input SetInactive(void) : "Enables the build area."
+	input ToggleActive(void) : "Changes the build area from enabled to disabled or from disabled to enabled."
+
+	// Outputs
+	output OnBuildInsideArea(void) : "Sent when the player builds an appropriate object inside a suggested area."
+	output OnBuildNotFacing(void) : "Sent when the player builds an appropriate object inside a suggested area, but it has a bad orientation."
+	output OnBuildingUpgraded(void) : "Sent when a building in this area is upgraded."
+	]

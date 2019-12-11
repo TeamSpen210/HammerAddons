@@ -1,0 +1,36 @@
+@PointClass appliesto(MBase) 
+	base(BaseentityPoint, EnableDisable) 
+	iconsprite("editor/logic_relay_queue.vmt") 
+= logic_relay_queue :
+	"A special variant of logic_relay designed to queue trigger inputs. " +
+	"If the relay is still handling its I/O connections after being triggered, additional Trigger inputs will be queued and automatically fire when the relay is able to be re-fired. Activator, output ID, and parameter are all kept and saved. " +
+	"Inputs are added to the queue each time Trigger or TriggerWithParameter are received while the relay is disabled or still handling its current I/O connections. The first one in the queue will trigger the moment an opportunity becomes available and the next one in the queue will wait for that one.\n\n" +
+	"This is useful for when you don't want something to happen multiple times at once, but don't want to discard further requests either."
+[
+	SetMaxQueueItems(integer) : "Maximum Items" : 3 : "The maximum number of Trigger and TriggerWithParameter inputs allowed in the queue. " +
+		"Any others received while this value is full will be discarded. Keep in mind this does not count the I/O chain currently being handled."
+	DontQueueWhenDisabled(boolean) : "Don't queue when disabled" : 0 : "Prevents the relay from queuing inputs when disabled. " +
+		"This means inputs will only be queued when enabled and still handling its current I/O connections." 
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Only trigger once" : 0
+		2: "Allow fast retrigger" : 0
+		]
+	
+	// Inputs
+	input Trigger(void) : "Triggers the relay, causing its OnTrigger output to fire if it is enabled."
+	input TriggerWithParameter(string) : "Triggers the relay with a parameter, causing its OnTriggerParameter output to fire if it is enabled."
+	input Toggle(void) : "Toggle the relay between enabled and disabled."
+	//input CancelPending(void) : "Cancel any events fired by this relay that are currently pending in the I/O event queue."
+	input EnableRefire(void) : "If fast retrigger is disabled, the relay will not be able to fire again until its most delayed output has been fired. " +
+		"This input allows the relay to fire again early if it is in this state." +
+		"This is automatically triggered 0.01s after the last OnTrigger output."
+		
+	input ClearQueue(void) : "Clears the input queue."
+	input SetMaxQueueItems(integer) : "Sets the maximum queue items."
+	
+	// Outputs
+	output OnTrigger(void) : "Fired when the relay is triggered."
+	output OnTriggerParameter(string) : "Fired when the relay is triggered with a parameter."
+]

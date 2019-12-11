@@ -1,0 +1,18 @@
+@BaseClass base(BaseEntityAnimating, SRCIndicator)
+= BasePortButton: "The base for the various floor buttons - weighted, cube, sphere and Antique weighted."
+	[
+	suppressanimsounds(boolean) : "Suppress Animation Sounds" : 0 : "Prevent the model from playing any sounds."
+	solid(choices) : "Collisions" : 0 : "Determine if the button should be solid or not." =
+		[
+		0 : "Solid"
+		1 : "Non-Solid"
+		]
+
+	// Inputs
+	input PressIn(void) : "Activate the button as if it was pressed, sending it to the bottom position."
+	input PressOut(void) : "Release the button, sending it to the top position."
+
+	// Outputs
+	output OnPressed(void) : "Called when the button has been pressed."
+	output OnUnPressed(void) : "Called when the button has been released."
+	]

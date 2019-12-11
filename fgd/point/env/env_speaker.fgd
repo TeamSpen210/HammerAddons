@@ -1,0 +1,25 @@
+@PointClass base(BaseEntityPoint, ResponseContext) 
+	iconsprite("editor/ambient_generic.vmt") = env_speaker: "Announcement Speaker"
+	[
+	delaymin(string) : "Min Delay Between Announcements" : 15
+	delaymax(string) : "Max Delay Between Announcements" : 135
+	spawnflags(flags)  =
+		[
+		1: "Start Silent" : 0
+		2: "Play Everywhere" : 0
+		]
+
+	rulescript(string) : "Context rule script" : : "Script file containing rules for playing appropriate sounds."
+	concept(string) : "Concept name" : : "High level concept name used as primary search key."
+
+	target[MBase](target_destination) : "Speaker entity" : "" : "All responses, including scenes, will be redirected to this entity if specified. Use the SetTarget input to change mid-game."
+
+	// Inputs
+	input TurnOn(void) : "Turn on the random announcements."
+	input TurnOff(void) : "Turn off the random announcements."
+	input Toggle(void) : "Toggle the random announcements off and on."
+	input SetTarget[MBase](target_destination) : "Sets the speaker target."
+	
+	// Outputs
+	output OnSpeak[MBase](string) : "Fires each time this env_speaker speaks, passing its selected response (scene path, sound name, etc.) as the parameter."
+	]

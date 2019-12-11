@@ -1,0 +1,14 @@
+@PointClass base(Angles)
+	appliesto(srctools)
+	iconsprite("editor/comp_propcombine_set")
+	autovis(Postcompiler, Propcombine)
+	wirebox(mins, maxs)
+= comp_propcombine_set : "Specifies a group of props that will be combined together."
+	[
+	mins(vector) : "BBox Mins" : "-32 -32 -32": "Minimum offset from the entity, defining the shape."
+	maxs(vector) : "BBox Maxes" : "32 32 32": "Maximum offset from the entity, defining the shape."
+	name(string) : "Name" : : "Two sets with the same name will be treated as one."
+
+	prop(studio) : "Group Model" : : "If set, a combinable model used to define which others will be combined."
+	skin(integer) : "Group Skin" : 0 : "The skin for the Group Model."
+	]

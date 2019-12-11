@@ -1,0 +1,17 @@
+
+@BaseClass base(BaseNPC) = BaseHeadcrab
+	[
+	startburrowed(boolean) : "Start burrowed" : 0
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Start hidden" : 0
+		131072: "Start hanging from ceiling" : 0
+		]
+
+
+	// Inputs
+	input StartHangingFromCeiling(void) : "Start hanging from ceiling."
+	input DropFromCeiling(void) : "Drop if hanging from ceiling."
+	output OnLeap[MBase](void) : "Fires when the headcrab leaps at an enemy. !activator is the target."
+	]

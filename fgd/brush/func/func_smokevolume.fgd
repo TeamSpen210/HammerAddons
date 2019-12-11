@@ -1,0 +1,24 @@
+@SolidClass base(BaseEntityBrush) 
+= func_smokevolume: "A brush entity that spawns smoke particles within its volume."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Emissive" : 0
+		]
+
+	color1(color255) : "Particle Color1 (R G B)" : "255 255 255"
+	color2(color255) : "Particle Color2 (R G B)" : "255 255 255"
+	material(material) : "Material" : "particle/particle_smokegrenade" : "The material to use for the particles"
+	particledrawwidth(float) : "Particle Draw Width (units)" : 120 : "The size of the particles, in units/inches."
+	particlespacingdistance(float) : "Particle Spacing Distance (units)" : 80 : "The distance between the particles inside the volume. The lower the number, the denser the particles, and the more overdraw ther" + "e will be. It is best to keep it as high as you can without it looking bad."
+	densityrampspeed(float) : "Density Ramp Speed (seconds)" : 1 : "Time to go from density 0 to density 1, in seconds."
+	rotationspeed(float) : "Rotation Speed (degrees/sec)" : 10 : "The speed that the particles should rotate, in degrees per second."
+	movementspeed(float) : "Movement Speed (units/sec)" : 10 : "The speed that the particles should move around, in units/inches per second."
+	density(float) : "Density [0..1]" : 1
+	maxdrawdistance[L4D](float) : "Max Draw Distance (0 is unlimited)" : 0
+
+	// Inputs
+	input SetRotationSpeed(float) : "Set the particle rotation speed (in degrees per second)."
+	input SetMovementSpeed(float) : "Set the particle movement speed (in inches per second)."
+	input SetDensity(float) : "Set the particle density. It should be a range from 0 to 1."
+	]

@@ -1,0 +1,10 @@
+@PointClass base(BaseEntityPoint) 
+	color(200 200 0) 
+	line(200 200 200, targetname, psname)
+	iconsprite("editor/light.vmt") = env_particlelight: "An entity that can be used to light the smoke particles emitted by env_smokestack entities. Does not light any other particle types."
+	[
+	color(color255) : "Color" : "255 0 0" : "Color emitted by this light."
+	intensity(integer) : "Intensity" : 5000
+	directional(boolean) : "Directional" : 0 : "If this is specified, then this light will use the bump map on the particles. Each particle system can have one ambient and one directional light."
+	psname(target_destination) : "Particle System Entity" : : "Set this to the name of the env_smokestack that you want this light to affect."
+	]

@@ -1,0 +1,75 @@
+@PointClass base(BaseEntityPoint) 
+	studioprop("models/editor/camera.mdl") 
+	color(200 0 0) 
+	frustum(fov, 16, 256, 255 255 255 10, -1) 
+	line(255 255 0, targetname, target) 
+	line(255 255 0, targetname, moveto) 
+= point_viewcontrol: "A camera entity that controls the player's view. While it's active, the player will see out of the camera."
+	[
+	target(target_destination) : "Entity to Look At" : : "Name of the entity that the camera should point at and track while active."
+	targetattachment(string) : "Target Attachment Name" : : "If set, the camera will focus on the specified attachment on the 'Entity to Look At'."
+
+	wait(integer) : "Hold Time" : 10 : "The amount of time the camera should control the player's view for, after which it deactivates itself. " +
+		"If the camera should stay active until told to deactive, set the 'Infinite Hold Time' spawnflag."
+
+	moveto(target_destination) : "Path Corner" : : "The first path corner in a track that the camera should move along once it's activated. " +
+		"If not specified, the camera won't move."
+
+	interpolatepositiontoplayer(boolean) : "Interpolate Position To Player" : 0 : "Gradually interpolate player's position to here on start. (Episodic only)"
+
+	spawnflags(flags)  =
+		[
+		1: "Start At Player" : 1
+		2: "Follow Player" : 1
+		4: "Freeze Player" : 0
+		8: "Infinite Hold Time" : 0
+		16: "Snap to goal angles" : 0
+		32: "Make Player non-solid" : 0
+		64: "Interruptable by Player" : 0
+		128: "Set Fov" : 0 [MBase, since_ASW]
+		256:"Allow fixed behavior (can move without look target, removal stops softlock, etc.)" : 1 [MBase]
+		]
+
+	speed(string) : "Initial Speed" : "0" : "The starting speed that the camera moves at, if it's on a path track."
+	acceleration(string) : "Acceleration units/sec^2" : "500" : "The speed at which the camera accelerates to path corner's desired speeds."
+	deceleration(string) : "Stop Deceleration units/sec^2" : "500" : "The speed at which the camera decelerates to path corner's desired speeds."
+	trackspeed[since_P2](float) : "Tracking Speed of the camera" : "40" : "The speed that the camera tries to follow it's look target."
+	fov[MBase, since_ASW](float) : "Field of view" : "90" : "Player FOV (if Set FOV spawnflag is set)"
+	fov_rate[MBase, since_ASW](float) : "Seconds to reach FOV target" : "1.0" : "Amount of time it should take to reach the specified FOV"
+
+	DontSetPlayerView(boolean) : "Don't set player view" : 0 : "Prevents this point_viewcontrol from actually controlling the player's view. " +
+		"FOV, player-affecting spawnflags, etc. may still happen."
+
+	startatplayer[INFRA](boolean) : "Start at Player" : 0 : "Should the camera start at the player instead of the camera position?"
+	smoothspeed[INFRA](boolean) : "Smooth Speed" : 1 : "Should the camera speed ease in and ease out?"
+	drawlocalplayer[INFRA](boolean) : "Draw Local Player" : 0 : "Should the local player be drawn when viewing from this camera?"
+	drawviewmodel[INFRA](boolean) : "Draw View Model" : 0 : "Should the view model be drawn when viewing from this camera?"
+	drawhud[INFRA](boolean) : "Draw HUD" : 1 : "Should the HUD be drawn when viewing from this camera?"
+	allowcontrols[INFRA](boolean) : "Allow Controls" : 0 : "Should the player be allowed to use his movement controls?"
+	freezeinstead[INFRA](boolean) : "Freeze Instead" : 0 : "If controls are disabled, should the player be disallowed from using any of his controls (+use, +attack, VGUI screens etc.)?"
+	disableatend[INFRA](boolean) : "Disable at End" : 0 : "Disable the camera once it reaches the end of its path?"
+	holsterweapons[INFRA](boolean) : "Holster Weapons" : 0 : "Should the player holster his weapons while under control of the camera?"
+	teleportplayertoend[INFRA](boolean) : "Teleport Player to End" : 0 : "Should the player be teleported to the end once the camera reaches the end of its path?"
+	pathlengthinseconds[INFRA](float) : "Path Length in Seconds" : 5 : "How long does this path last? Smaller numbers means faster camera."
+
+	// Inputs
+	input Enable(void) : "Enable the point_viewcontrol, and start controlling the player's view."
+	input Disable(void) : "Disable the point_viewcontrol, and stop controlling the player's view."
+	input SetTarget[since_P2](string) : "Set a new target for the camera to point at."
+	input SetTargetAttachment[since_P2](string) : "Set a new attachment on the target for the camera to point at."
+	input ReturnToEyes[since_P2](void) : "Return the camera view to the player's eyes."
+	input TeleportToView[since_P2](void) : "Teleport the player to the current position of the camera."
+	input SetTrackSpeed[since_P2](float) : "Set the speed that the camera will try to track it's target."
+	input SetPath[since_P2](string) : "Have the camera start following a new path."
+
+	input EnableControls[INFRA](void) : "Enables player's controls."
+	input DisableControls[INFRA](void) : "Disables player's controls."
+	input EnableCursor[INFRA](void) : "Enables player's mouse cursor."
+	input DisableCursor[INFRA](void) : "Disables player's mouse cursor."
+	input SetTargetNode[INFRA](string) : "Have the camera start following a new path."
+	input Reverse[INFRA](void) : "Should be fired when the camera is already moving along some path or reached the end of it. Causes it to move the same path but backwards."
+
+	// Outputs
+	output OnEndFollow(void) : "Fired when the point_viewcontrol deactivates, due to the Disable input being received, the Entity to Look At being destroyed, or the Hold Time expiring."
+	output OnStartFollow[MBase](void) : "Fired when the point_viewcontrol activates, usually due to the Enable input being received."
+	]

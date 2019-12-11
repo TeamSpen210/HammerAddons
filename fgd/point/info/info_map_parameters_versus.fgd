@@ -1,0 +1,29 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(L4D, L4D2)
+ 	autovis(Point Entities, Globals, Map Parameters)
+= info_map_parameters_versus: "L4D-specific map parameters for versus games."
+	[
+	painpilldensity(float) : "Pain Pill density" : "6.48" : "Pain Pill density per sq 100 yards"
+	molotovdensity(float) : "Molotov density" : "6.48" : "Molotov density per sq 100 yards"
+	pipebombdensity(float) : "Pipe Bomb density" : "6.48" : "Pipe Bomb density per sq 100 yards"
+	pistoldensity(float) : "Pistol density" : "6.48" : "Pistol density per sq 100 yards"
+	weapondensity[L4D1](float) : "Weapon density" : "6.48" : "Weapon (non-pistol) density per sq 100 yards"
+	gascandensity(float) : "Gas Can density" : "6.48" : "Gas Can density per sq 100 yards"
+	oxygentankdensity(float) : "Oxygen Tank density" : "6.48" : "Oxygen Tank density per sq 100 yards"
+	propanetankdensity(float) : "Propane Tank density" : "6.48" : "Propane Tank density per sq 100 yards"
+	itemclusterrangey(float) : "Item Cluster Range" : 50 : "Scavenge items of the same kind that are this close to each other are considered a single 'cluster' for population purposes."
+	finaleitemclustercount(integer) : "Finale Item Cluster Count" : 3 : "How many clusters of items will be populated in the finale"
+	ammodensity[L4D2](float) : "Ammo pile density" : "6.48" : "Ammo pile density per sq 100 yards"
+	meleeweapondensityy[L4D2](float) : "Melee Weapon density" : "6.48" : "Melee Weapon density per sq 100 yards"
+	adrenalinedensityy[L4D2](float) : "Adrenaline density" : "6.48" : "Adrenaline density per sq 100 yards"
+	defibrillatordensityy[L4D2](float) : "Defibrillator density" : "2.50" : "Defibrillator density per sq 100 yards"
+	vomitjardensityy[L4D2](float) : "Boomer Bile density" : "6.48" : "Boomer Bile density per sq 100 yards"
+	upgradepackdensityy[L4D2](float) : "Ammo upgrade density" : "1.0" : "Ammo upgrade pack density per sq 100 yards"
+	chainsawdensityy[L4D2](float) : "Super Weapon density" : "1.0" : "Chainsaw and Grenade Launcher density per sq 100 yards"
+	configurableweapondensityy[L4D2](float) : "Configurable Weapon Spawn density" : "-1.0" : "Density for weapon_spawn entities, -1 to spawn all"
+	configurableweaponclusterrangey[L4D2](float) : "Configurable Weapon Cluster Range" : 100 : "weapon_spawn entities that are this close to each other are considered a single 'cluster' for population purposes"
+	magnumdensityy[L4D2](float) : "Magnum Pistol Spawn density" : "-1.0" : "Density for weapon_spawn entities, -1 to spawn all"
+
+	// Inputs
+	input UpdateCvars(void) : "Stuff values from this entity into cvars for tweaking"
+	]

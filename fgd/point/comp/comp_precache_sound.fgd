@@ -1,0 +1,19 @@
+@PointClass 
+	// This is implemented via a VScript method.
+	appliesto(+srctools, +VScript)
+	iconsprite("editor/comp_precache_sound")
+	autovis(Postcompiler, Precacher)
+= comp_precache_sound:
+    "Force a specific sound to load, for runtime switching. Duplicates will be removed. More keyvalues can be added."
+	[
+	sound1(sound): "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound2(sound): "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound3(sound): "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound4(sound): "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound5(sound): "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound6(sound): "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound7(sound): "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound8(sound): "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound9(sound): "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound10(sound): "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	]

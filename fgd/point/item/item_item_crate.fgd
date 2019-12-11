@@ -1,0 +1,43 @@
+@BaseClass appliesto(-MBase) studioprop("models/items/item_item_crate.mdl") = _item_item_crate_fixedmodel []
+@BaseClass appliesto(+MBase) studioprop() = _item_item_crate_anymodel []
+
+@PointClass base(BasePropPhysics, Angles, DamageFilter, BaseFadeProp, _item_item_crate_anymodel, _item_item_crate_fixedmodel) 
+	appliesto(EP1, EP2, HL2, P1, ASW)
+= item_item_crate: "Item Crate"
+	[
+	model[MBase](studio) : "Model" : "models/items/item_item_crate.mdl" : "The model of this item_item_crate. Only works when this crate's appearance is set to use a custom model."
+
+	cratetype[engine](integer) : "Crate Contents": 0
+	cratetype(choices) : "Crate Contains" : 0 =
+		[
+		0: "Contains specified item"
+		1 : "Contains point_template (use specific resupply)" [MBase]
+		]
+
+	crateappearance[engine](integer) : "Crate Appearance" : 0
+	crateappearance(choices) : "Crate Appearance" : 0 =
+		[
+		0: "Default Appearance"
+		1: "Radar Beacon Crate"
+		2 : "Custom Model (use model keyvalue)" [MBase]
+		]
+
+	itemclass(pointentityclass) : "Item Type" : "item_dynamic_resupply" : "Class name of the entity to spawn when the crate is broken"
+	itemcount(integer) : "Item Count" : 1 : "Number of items to emit upon breakage"
+	specificresupply[!MBase](target_destination) : "Specific resupply" : : "If item type is item_dynamic_resupply, specify a specific one to use instead of the master"
+	SpecificResupply[MBase](target_destination) : "Specific resupply/Target template" : "" : "If item type is item_dynamic_resupply, specify a specific one to use instead of the master. If the crate contains a point_template, this is required to specify which point_template to spawn."
+
+	// Inputs
+	input Kill(void) : "Remove the item crate"
+	input Break(void) : "Breaks the breakable."
+	input SetHealth(integer) : "Sets a new value for health. If the breakable's health reaches zero it will break."
+	input AddHealth(integer) : "Adds health to the breakable. If the breakable's health reaches zero it will break."
+	input RemoveHealth(integer) : "Removes health from the breakable. If the breakable's health reaches zero it will break."
+
+	// Outputs
+	output OnBreak(void) : "Fires when broken."
+	output OnHealthChanged(float) : "Fires when the health of this breakable changes, passing the new value of health as a percentage of max health, from [0..1]."
+	output OnCacheInteraction(void) : "This output fires when the player proves they have 'found' this crate. Fires on: Picked up by +USE, Picked up by Physcannon, Punted by Physcannon, Broken."
+
+	output OnItem[MBase](ehandle) : "Fires for each item spawned by this crate."
+	]

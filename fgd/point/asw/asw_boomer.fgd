@@ -1,0 +1,28 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(ASW) 
+	studio("models/aliens/boomer/boomer.mdl") 
+	sphere() = asw_boomer: "Swarm Boomer"
+	[
+	sleepstate[engine](integer) : "Sleep State" : 1
+	sleepstate(choices) : "Sleep State" : 1 : "Holds the NPC in stasis until specified condition. See also 'Wake Radius' and 'Wake Squad'." =
+		[
+		0: "None"
+		1: "Waiting for threat"
+		2: "Waiting for PVS"
+		3: "Waiting for input"
+		]
+
+	visiblewhenasleep(boolean) : "Visible when asleep" : 0 : "If true, this alien will still get drawn even when asleep (useful for aliens you see far below you)."
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		131072: "Use Ground Checks" : 0
+		]
+
+	radius(integer) : "Alert Radius" : 256
+	eludedist(integer) : "Distance until eluded" : 1024 : "Only available when Burrow When Eluded is flagged"
+
+	// Inputs
+	input BreakWaitForScript(void) : "Wakes the alien up if his Wait For Script flag was set"
+	]

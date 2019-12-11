@@ -1,0 +1,44 @@
+
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	appliesto(ASW, MBase) 
+	iconsprite("editor/shadow_control.vmt") 
+ 	autovis(Point Entities, Globals, Global Light)
+= env_global_light: "An entity to control the sunlight that casts shadows in the map."
+	[
+	angles(string) : "Pitch Yaw Roll (Y Z X)" : "50 40 0" : "This is the light cast direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis."	
+	distance(float) : "Distance" : 10000 : "This is the distance of the sun, greater distances produce more orthogonal shadows."
+	fov(float) : "FOV" : 5 : "This is the field of view that the sunlight casts in. Use lower values for more distant sun and sharper shadows."
+	nearz(float) : "NearZ Distance" : 512 : "This controls the near clipping plane's distance from the player."
+
+	orthosize[MBase](float) : "Ortho Size" : "1000.0" : "The env_global_light's 'size', or how much ground it covers."
+
+	northoffset(float) : "North Offset" : 200 : "This offsets the from the player position where the sun is attached."
+	eastoffset[MBase](float)  : "X Offset" : "0" : "X/East offset the from the player position."	
+	forwardoffset[MBase](float) : "Y Offset" : "0" : "Y/Forward offset the from the player position."	
+	
+	brightnessscale[MBase](float) : "Brightness Scale" : "1.0" : "The light color's brightness scale."	
+
+	texturename(material) : "Texture Name" : "effects/flashlight001"
+	textureframe[MBase](integer) : "Texture Frame" : 0 : "Sets the frame of the env_global_light. Only relevant if the texture is animated/has multiple frames."
+
+	enableshadows(boolean) : "Enable Shadows" : 0 : "Enables/disables shadows from this projected texture."
+
+	color[ASW](color255) : "Light Color" : "255 255 255 1" : "This is the color of the sunlight."
+	lightcolor[MBase](color255)		: "Light Color" : "255 255 255 200" : "RGBA color of the sunlight. Intensity can only range from 0 to 255, so use the Brightness Scale keyvalue to make the sunlight brighter than 255."
+	colortransitiontime(float) : "Color Transition Time" : 0.5 : "This is the number of seconds it takes to get from 0 to 255."
+	
+	// Inputs
+	input LightColor(color255) : "Set the light color."
+	input SetBrightness[MBase](float) : "Sets brightness."
+	input SetColorTransitionTime[MBase](float) : "Sets the color transition time."
+	input SetAngles(string) : "Set the sun direction."
+	input SetDistance(float) : "Set the distance of the sun."
+	input SetFOV(float) : "Set the field of view the sun casts."
+	input SetNearZDistance(float) : "Set the near z distance."
+	input SetNorthOffset(float) : "Sets the north offset."
+	input SetXOffset[MBase](float) : "Sets the X offset."
+	input SetYOffset[MBase](float) : "Sets the Y offset."
+	input SetOrthoSize[MBase](float) : "Sets the light's size."
+	input SetTexture(string) : "Set the texture cookie of the sunlight."
+	input EnableShadows(bool) : "Set whether shadow maps are enabled"
+	]

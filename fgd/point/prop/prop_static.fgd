@@ -1,0 +1,152 @@
+// Very special-case entity.
+// This is versioned based on the prop lump version, not the game (particularly).
+
+// V4/5 is HL2.
+// V6 is early TF2.
+// V7/8 is L4D.
+// V9 is L4D2.
+// V10 is seen in Tactical Intervention+
+// V11 is in CSGO after prop scaling.
+
+// V5 adds fade scale.
+// V6 adds DX levels.
+// V7 adds tinting.
+// V8 removes DX levels and adds CPU/GPU.
+// V9-10 adds disable-xbox and various flags.
+// V11 adds prop scaling.
+
+// Lightmaps are TF2-exclusive.
+// Since at least ASW, screenspace fade is disallowed.
+
+@PointClass base(Angles) 
+	// line() breaks the studioprop() default box.
+	color(255 255 0)
+	sphere(fademindist) 
+	sphere(fademaxdist) 
+	studioprop() 
+	autovis(Props, Static)
+= prop_static: "A prop that doesn't move and doesn't animate."
+	[
+	model(studio) : "World Model" : : "Specify the model to place."
+	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
+	
+	renderamt[since_L4D](integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
+	rendercolor[since_L4D](color255) : "Color (R G B)" : "255 255 255"
+
+	uniformscale[PROP_SCALING](float) : "Uniform Scale Override" : 1 : "Resize the static prop."
+
+
+	solid[engine](integer) : "Collisions" : 6
+	solid(choices) : "Collisions" : 6 =
+		[
+		0: "Not Solid"
+		1: "Use BSP (QPhysics)"
+		2: "Use Bounding Box"
+		3: "Use Oriented Bounding Box"
+		4: "Use Oriented Bounding Box, constrained to Yaw only"
+		6: "Use VPhysics"
+		]
+
+	preventpropcombine[PROPCOMBINE](boolean) : "Disable Prop Combine" : 0 : "Prevent this static prop from combining with any other static props in vbsp."
+
+	linedivider_levels(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	mincpulevel[engine](integer): "Minimum CPU Level": 0
+	maxcpulevel[engine](integer): "Maximum CPU Level": 0
+	mingpulevel[engine](integer): "Minimum GPU Level": 0
+	maxgpulevel[engine](integer): "Maximum GPU Level": 0
+	mindxlevel[engine](integer): "Minimum DX Level": 0
+	maxdxlevel[engine](integer): "Maximum DX Level": 0
+
+	// DXlevel is used in v6 and 7 only, the replaced by cpu/gpu for 8+.
+
+	mindxlevel[since_TF2, until_L4D2](choices) : "Minimum DX Level" : 0 = 
+		[
+		0 : "default (lowest)"
+		70 : "dx7"
+		80 : "dx8.0 (4600Ti)"
+		81 : "dx8.1 (FX5200)"
+		90 : "dx9 SM2.0"
+		95 : "dx9 SM3.0"
+		]
+	maxdxlevel[since_TF2, until_L4D2](choices) : "Maximum DX Level" : 0 = 
+		[
+		0 : "default (highest)"
+		60 : "dx6"
+		70 : "dx7"
+		80 : "dx8.0 (4600Ti)"
+		81 : "dx8.1 (FX5200)"
+		90 : "dx9 SM2.0"
+		95 : "dx9 SM3.0"
+		]
+
+	mincpulevel[since_L4D2](choices) : "Minimum CPU Level" : 0 =
+		[
+		0: "default (low)"
+		1: "low"
+		2: "medium"
+		3: "high"
+		]
+
+	maxcpulevel[since_L4D2](choices) : "Maximum CPU Level" : 0 =
+		[
+		0: "default (high)"
+		1: "low"
+		2: "medium"
+		3: "high"
+		]
+
+	mingpulevel[since_L4D2](choices) : "Minimum GPU Level" : 0 =
+		[
+		0: "default (very low)"
+		1: "very low"
+		2: "low"
+		3: "medium"
+		4: "high"
+		]
+
+	maxgpulevel[since_L4D2](choices) : "Maximum GPU Level" : 0 =
+		[
+		0: "default (high)"
+		1: "very low"
+		2: "low"
+		3: "medium"
+		4: "high"
+		]
+
+	disablex360[since_L4D2](boolean) : "Disable on Xbox 360" : 0
+
+	linedivider_light(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	disableshadows(boolean) : "Disable Shadows" : 0
+	disablevertexlighting(boolean) : "Disable Vertex lighting" : 0 : "Disable per-vertex lighting on this prop."
+	disableselfshadowing(boolean) : "Disable Self-Shadowing" : 0 : "When vertex lighting is enabled, prevent the geometry from self-shadowing -- casting shadows onto itself."
+	ignorenormals(boolean) : "Ignore Surface Normal" : 0 : "When vertex lighting is enabled, ignore the surface normal of faces when calculating the vertex lighting. Useful for thin, translucent objects such as leaves on foliage props."
+	
+	drawinfastreflection[since_L4D](boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
+	enablelightbounce[since_CSGO](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
+	
+	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's origin."
+
+	linedivider_lmap[TF2](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	generatelightmaps[TF2](boolean) : "Generate (and use) lightmaps for this static prop" : 0
+	lightmapresolutionx[TF2](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
+	lightmapresolutiony[TF2](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
+	
+
+	linedivider_fade(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	screenspacefade[until_ASW](boolean) : "Screen Space Fade" : 0 : "The method by which the fading distance should be determined. If 'No', the fade distances is the distance from the player's view to the object, in inches. " +
+		"If 'Yes', the fade distance is the size of the object onscreen, in pixels."
+	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
+	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
+	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, " +
+		"or if the engine is running under dx7 [hl2/ep1/portal] or dx8 [ep2/tf], " +
+		"then the engine will forcibly fade out props even if fademindist/fademaxdist " +
+		"isn't specified. " +
+		"This scale factor gives you some control over the fade. " +
+		"Using 0 here turns off the forcible fades. " +
+		"Numbers smaller than 1 cause the prop to fade out at further distances, " +
+		"and greater than 1 cause it to fade out at closer distances."
+	]

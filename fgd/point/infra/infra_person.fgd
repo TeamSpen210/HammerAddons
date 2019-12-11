@@ -1,0 +1,25 @@
+@PointClass base(TalkNPC)
+	appliesto(INFRA)
+	studio()
+= infra_person
+	[
+	model(choices) : "Model" : "models/characters/male_formal_office_01.mdl" : "Instead of choosing from the presets, you can also type in a model manually to this field." =
+		[
+		"models/characters/male_formal_office_01.mdl": "Male Formal Office"
+		"models/characters/male_casual_01.mdl": "Male Casual"
+		"models/characters/female_formal_01.mdl": "Female Formal"
+		"models/characters/carla.mdl": "Carla"
+		"models/characters/steve.mdl": "Steve"
+		"models/characters/amit.mdl": "Amit"
+		]
+
+	customization(choices) : "Customization" : : "Affects the randomization of this NPC's appearance. These can be specified in the appearance scripts." =
+		[
+		"no_suits": "No Suits"
+		"suits_only": "Suits Only"
+		"collarshirts_only": "Collarshirts Only"
+		"hobo_attire": "Hobo Mix"
+		]
+
+	lightingorigin(target_destination) : "Lighting Origin" : : "Select a path_corner entity to specify a location to sample lighting from, instead of using this entity's origin."
+	]

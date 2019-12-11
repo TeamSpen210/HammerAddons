@@ -1,0 +1,33 @@
+@PointClass base(BaseEntityPoint) 
+	sphere(inner_radius)
+	iconsprite("editor/env_physexplosion.vmt")
+	sphere(radius)
+	line(255 255 0, targetname, targetEntityName)
+	cylinder(255 0 0, targetname, targetname, radius, targetname, targetentityname)
+	color(128 128 128)
+	sphere()
+= env_physexplosion: "An entity that creates an explosion at its origin. If the no-damage spawnflag is set, the explosion won't be visible, " +
+	"but will apply force to any physics objects within its radius."
+	[
+	magnitude(string) : "Magnitude" : 100 : "Amount of physics force applied by the explosion."
+	magnitude[MBase](string) : "Magnitude" : 100 : "Amount of physics force applied by the explosion. A negative value can be used to suck entities inward."
+	radius(string) : "Clamp Radius (0 = auto)" : 0 : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude."
+	targetentityname(target_destination) : "Limit to Entity" : : "If specified, the explosion will only affect the matching entity."
+	spawnflags(flags)  =
+		[
+		1: "No Damage - Only Force" : 1
+		2: "Push players" : 0
+		4: "Push radially - not as a sphere" : 0
+		8: "Test LOS before pushing" : 0
+		16: "Disorient player if pushed" : 0
+		]
+
+	inner_radius(float) : "Inner radius" : 0 : "If not zero, the LOS is calculated from a point intersecting this sphere."
+
+	// Inputs
+	input Explode(void) : "Trigger the explosion."
+	input ExplodeAndRemove[MBase](void) : "Triggers the explosion and then removes the entity."
+
+	// Outputs
+	output OnPushedPlayer(void) : "Fires when the player is pushed by the explosion."
+	]

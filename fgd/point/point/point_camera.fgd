@@ -1,0 +1,33 @@
+@PointClass base(BaseEntityPoint)
+	studioprop("models/editor/camera.mdl") 
+	frustum(FOV,fogstart,fogend,250 250 250,-1)
+= point_camera: "Camera"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Start Off" : 0
+		]
+	fov(float) : "FOV" : 90 : "Field of view in degrees"
+	usescreenaspectratio(boolean) : "Screen Aspect Ratio" : 0
+	fogenable(boolean) : "Fog Enable" : 0
+	fogcolor(color255) : "Fog Color" : "0 0 0"
+	fogstart(float) : "Fog Start" : 2048 : "The near fog plane."
+	fogend(float) : "Fog End" : 4096 : "The far fog/clipping plane."
+	fogmaxdensity(float) : "Fog Max Density [0..1]" : 1 : "The maximum fog density. 0=no fog, 1=full fog."
+
+	SkyMode[engine](integer) : "Sky Mode" : 2
+	SkyMode[MBase](choices) : "Sky Mode" : 2 : "How to draw the sky through this point_camera." =
+		[
+		2 : "Draw sky texture"
+		1 : "Draw 3D skybox"
+		]
+
+	// Inputs
+	input ChangeFOV(string) : "Changes camera's FOV over time"
+	input SetOnAndTurnOthersOff(void) : "Turn the camera on, and turn all other cameras off."
+	input SetOn(void) : "Turn the camera on."
+	input SetOff(void) : "Turn the camera off."
+	input SetSkyMode[MBase](void) : "Sets the sky mode. NOTE: 2 = draw sky texture, 1 = draw 3D skybox!"
+	input Activate[since_ASW](void) : "Turn the camera on, activate it and deactivate all other cameras."
+	input Deactivate[since_ASW](void) : "Turn the camera off, deactivate it."
+	]

@@ -1,0 +1,19 @@
+@PointClass base(BaseEntityPoint, EnableDisable)
+	color(0 100 250) 
+	line(0 100 250, targetname, target) 
+	iconsprite("editor/point_proximity_sensor.vmt") 
+= point_proximity_sensor: "An entity that detects another entity's proximity to a target position."
+	[
+	target(target_destination) : "Target Entity Name" : : "Name of the entity whose position will be sensed."
+	spawnflags(flags) =
+		[
+		1: "Test the distance as measured along the axis specified by our direction." : 0
+		]
+
+
+	// Inputs
+	input Toggle(void) : "Toggle the sensor between enabled and disabled."
+
+	// Outputs
+	output Distance(float) : "Distance of the target entity away from this entity."
+	]

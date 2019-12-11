@@ -1,0 +1,28 @@
+@PointClass 
+	base(prop_dynamic)
+	autovis(Props, Dynamic)
+	appliesto(CSGO) 
+= prop_dynamic_glow: "A prop that can be placed in hierarchy and can play animations. It can also be configured to break when it takes enough damage.\nWorks exactly like a prop_dynamic, but it can optionally have a custom glow around it."
+	[
+	glowdist(integer) : "Glow Distance" : 1024
+	glowenabled(boolean) : "Does the prop glow by default?" : 1
+	glowcolor(color255) : "Glow Color (R G B)" : "255 255 255" : "The color of the glow (if enabled)."
+
+	glowstyle[engine](integer) : "Glow Style" : 0
+	glowstyle(choices) : "Glow Style" : 0 : "What style of glow should be used." =
+		[
+		0: "Default (through walls)"
+		1: "Shimmer (doesn't glow through walls)"
+		2: "Outline (doesn't glow through walls)"
+		3: "Outline Pulse (doesn't glow through walls)"
+		]
+
+
+	// Inputs
+	input SetGlowEnabled(void) : "Starts the glow."
+	input SetGlowDisabled(void) : "Stops the glow."
+	input SetGlowColor(color255) : "Change the glow's color. Format: <Red 0-255> <Green 0-255> <Blue 0-255>"
+	input GlowColorRedValue(float) : "Sets the glow red color channel's value (0 - 255)."
+	input GlowColorGreenValue(float) : "Sets the glow green color channel's value (0 - 255)."
+	input GlowColorBlueValue(float) : "Sets the glow blue color channel's value (0 - 255)."
+	]

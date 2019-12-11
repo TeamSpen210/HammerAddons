@@ -1,0 +1,79 @@
+@PointClass base(BaseEntityPhysics, TeamNum, EnableDisable) 
+	appliesto(TF2) 
+	studio("models/flag/briefcase.mdl") = item_teamflag: "Team Fortress flag entity."
+	[
+	gametype(choices) : "Game Type" : "0" : "Type of game this flag will be used for." =
+		[
+		0: "CTF"
+		1: "Attack/Defend"
+		2: "Territory Control"
+		3: "Invade"
+		4: "Resource Control"
+		5: "Robot Destruction"
+		]
+	gametype[engine](int) : "Game Type" : 0
+
+	returntime(integer) : "Return time (in seconds)" : 60 : "Length of time (in seconds) before dropped flag/intelligence returns to base."
+
+	neutraltype[engine](integer) : "Neutral flag (Invade)" : 1
+	neutraltype(choices) : "Neutral flag (Invade)" : 1 : "Only used for the Invade game type. When should a dropped Invade flag become neutral?" =
+		[
+		0: "Never"
+		1: "Default (30 seconds)"
+		2: "Half of the Return Time."
+		]
+
+	scoringtype[engine](integer) : "Scoring style (Invade)" : 0
+	scoringtype(choices) : "Scoring style (Invade)" : 0 : "Only used for the Invade game type. " +
+		"When the Invade flag is captured, how should the team be rewarded? " +
+		"'Score' is the team score in the scoreboard. " +
+		"'Capture count' is the team capture count used in the HUD." =
+		[
+		0: "Increment score"
+		1: "Increment capture count"
+		]
+
+	flag_model(string) : "Model" : "models/flag/briefcase.mdl" : "The model to be used for this entity."
+	flag_icon(string) : "Icon" : "../hud/objectives_flagpanel_carried" : "The icons used for the HUD in some game modes. " +
+		"Format: materials/vgui/[materialname]_red and materials/vgui/[materialname]_blue"
+	flag_paper(particlesystem) : "Paper Particle" : "player_intel_papertrail" : "Particle effect used for the falling paper trail."
+	flag_trail(string) : "Trail Effect" : "flagtrail" : "Materials used for the trail effect. " +
+		"Format: materials/effects/[materialname]_red and materials/effects/[materialname]_blu"
+
+	trail_effect[engine](integer) : "Use Trail Effect" : 1
+	trail_effect(choices) : "Use Trail Effect" : 1 : "Use trail effect when the player is carrying the flag." =
+		[
+		0: "None"
+		1: "All Effects"
+		2: "Paper Trail Only"
+		3: "Color Trail Only"
+		]
+
+	visiblewhendisabled(boolean) : "Visible When Disabled" : "0" : "Flag appears semitransparent when disabled."
+	shotclockmode(boolean) : "Shot Clock Mode" : "0" : "Flag uses shot-clock mode, which means that the timer doesn't reset to the full time when an attacking player touches it."
+	pointvalue(integer) : "Point Value" : 0 : "Player Destruction or Robot Destruction mode: Point value of this flag pickup."
+
+	returnbetweenwaves(boolean) : "Return Between Waves" : "1" : "Used only for MvM mode. Determines if the flag should return home between waves."
+
+	tags(string) : "tags" : : "Tags used for the AI bomb carrier to avoid nav areas that have matching tags. Tags need to be separated by empty space."
+
+	// Inputs
+	input ForceDrop(void) : "Force the flag to be dropped if it's being carried by a player."
+	input ForceReset(void) : "Force the flag to be dropped if it's being carried by a player, then reset the flag to its original location."
+	input ForceResetSilent(void) : "Force the flag to be dropped if it's being carried by a player, then reset the flag to its original location silently (no messages sent to players)."
+	input ForceResetAndDisableSilent(void) : "Force the flag to be dropped if it's being carried by a player, and disable the flag, then reset the flag to its original location silently (no messages sent to players)."
+	input SetReturnTime(integer) : "Set the length of time (in seconds) before dropped flag/intelligence returns to base."
+	input ShowTimer(integer) : "Show a visible timer (in seconds)."
+	input ForceGlowDisabled(integer) : "Forcably block the glow effect for this flag. 1 = glow blocked, 0 = normal behavior"
+
+	// Outputs
+	output OnReturn(void) : "Sent when the flag is returned via timer."
+	output OnPickup(void) : "Sent when the flag is picked up."
+	output OnPickupTeam1(void) : "Sent when the flag is picked up by RED."
+	output OnPickupTeam2(void) : "Sent when the flag is picked up by BLU."
+	output OnDrop(void) : "Sent when the flag is dropped."
+	output OnCapture(void) : "Sent when the flag is captured."
+	output OnCapTeam1(void) : "Sent when the flag is captured by RED."
+	output OnCapTeam2(void) : "Sent when the flag is captured by BLU."
+	output OnTouchSameTeam(void) : "Sent when the flag is touched by a player on the same team (BLU player touches BLU flag, RED player touches RED flag)."
+	]

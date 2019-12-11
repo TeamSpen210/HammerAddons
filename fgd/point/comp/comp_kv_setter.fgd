@@ -1,0 +1,28 @@
+@PointClass 
+	iconsprite("editor/comp_kv_setter")
+	appliesto(srctools)
+	autovis(Postcompiler, KV Setter)
+= comp_kv_setter : "Sets a keyvalue on an entity to a new value. " +
+	"This is useful to compute spawnflags, or to adjust keyvalues when the target entity's options can't be set to a fixup variable."
+	[
+	target(target_destination) : "Target Entity" : : "The name of the entity or entities to set values on."
+
+	mode[engine](string) : "Mode" : "kv"
+	mode(choices) : "Mode" : "kv" : "The type of value to set." = [
+		"kv" : "KeyValues"
+		"flags": "SpawnFlags"
+	]
+
+	kv_name(string) : "Name / Mask" : : "The name of the keyvalue to set, or the bits to change for spawnflags."
+
+	kv_value_global(string) : "Value - String" : : "The value to apply."
+	kv_value_local(target_destination) : "Value - Ent Name" : : "If set, use this fixed-up entity name."
+
+	// We need to provide "some" outputs to allow you to add some.
+	// These exist on everything, at least.
+	output OnUser1(void) : "Fired in response to FireUser1 input."
+	output OnUser2(void) : "Fired in response to FireUser2 input."
+	output OnUser3(void) : "Fired in response to FireUser3 input."
+	output OnUser4(void) : "Fired in response to FireUser4 input."
+	output OnKilled[L4D](void) : "Fired when the entity is killed and removed from the game."
+	]

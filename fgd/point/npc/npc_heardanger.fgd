@@ -1,0 +1,15 @@
+
+@PointClass base(BaseNPC, SetModel) 
+	appliesto(CSGO) 
+	autovis(NPCs, Danger Listener)
+	studio() 
+= npc_heardanger: "A Generic NPC entity that hears and reports 'danger' and is not preserved on round restart. " +
+		"Danger sounds consist of gunshots, player sounds, bullet impacts, " +
+		"nearby vehicles and andything else that gives off a danger sound."
+	[
+
+	// Outputs
+	output OnHearWorld(void) : "Fired when this NPC hears a sound (other than combat or the player)."
+	output OnHearPlayer(void) : "Fired when this NPC hears the player."
+	output OnHearCombat(void) : "Fired when this NPC hears combat sounds."
+	]

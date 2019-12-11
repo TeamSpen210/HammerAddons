@@ -1,0 +1,7 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	autovis(Weapons, CSGO Weapons, CS Melee Weapons)
+	studio("models/weapons/w_eq_taser.mdl") = weapon_taser: "weapon_taser"
+	[
+	]

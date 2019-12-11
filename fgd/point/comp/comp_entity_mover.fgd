@@ -1,0 +1,14 @@
+@PointClass 
+	iconsprite("editor/comp_entity_mover")
+	appliesto(srctools)
+	autovis(Postcompiler, Ent Mover)
+	sphere(distance)
+	line(255 255 255, targetname, target)
+= comp_entity_mover : "Shift an entity by a given amount. This is useful to place entities into the void, for example."
+	[
+	target(target_destination) : "Target Entity" : : "The name of the entity or entities to move."
+
+	reference(target_destination) : "Reference Entity": : "If set, the target will be offset by the amount that this entity is from the reference. The Distance will then be a multiplier."
+	direction(angle) : "Direction" : "0 0 0" : "If no Reference is provided, the direction to move in."
+	distance(float) : "Distance": 1 : "The amount to move targets by."
+	]

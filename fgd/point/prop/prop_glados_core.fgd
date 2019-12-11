@@ -1,0 +1,29 @@
+// Switch the model used depending on game.
+@BaseClass appliesto(P1) studioprop("models/props_bts/glados_ball_reference.mdl") 
+	= _prop_glados_core_p1_mdl []
+@BaseClass appliesto(P2) studioprop("models/npcs/personality_sphere/personality_sphere.mdl") 
+	= _prop_glados_core_p2_mdl []
+
+@PointClass base(BasePropPhysics, _prop_glados_core_p1_mdl, _prop_glados_core_p2_mdl) 
+	appliesto(P1, P2)
+= prop_glados_core: "The P1 personality cores for GlaDOS. Resemble little eyeballs with handles. " +
+	"These play lines and look around when near the player. "
+	[
+	coretype[engine](integer) : "Core Personality" : 1
+	coretype(choices) : "Core Personality" : 1 : "Which personality VO set the core is set to." =
+		[
+		0: "Curious"
+		1: "Aggressive"
+		2: "Crazy"
+		3: "None"
+		]
+
+	delaybetweenlines(float) : "Pause (in secs) between VO Lines." : 0.4 : "When the core is talking, this is the number of seconds delay between it's spoken lines."
+
+	// Inputs
+	input Panic(void) : "Core is near death, panic."
+	input StartTalking(void) : "Start playing lines, play looking animations."
+
+	// Outputs
+	output OnPlayerPickup(void) : "Player picked up core."
+	]

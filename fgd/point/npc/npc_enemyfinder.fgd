@@ -1,0 +1,66 @@
+@NpcClass base(BaseLogicalNPC)
+	autovis(NPCs, EnemyFinder NPC)
+	color(255 150 0) 
+	iconsprite("editor/npc_enemyfinder.vmt") 
+	sphere(MinSearchDist) 
+	sphere(MaxSearchDist) 
+= npc_enemyfinder: "EnemyFinder"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Check Visibility" : 1
+		131072: "APC Visibility checks" : 0
+		262144: "Short memory" : 0
+		524288: "Can be an enemy" : 0
+		]
+
+	fieldofview(string) : "FieldOfView" : "0.2" : "How far to look (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
+	minsearchdist(integer) : "Min Search Dist" : 0
+	maxsearchdist(integer) : "Max Search Dist" : 2048
+	freepass_timetotrigger(float) : "Player pass issue time" : 0 : "Amount of time an enemy is hidden after which a 'free pass' on reaquire is granted"
+	freepass_duration(float) : "Player pass duration" : 0 : "After granted 'free pass', the amount of time a target is allowed before reaquire"
+	freepass_movetolerance(float) : "Player pass move tolerance" : 120 : "After granted 'free pass', the distance the target is allowed to move before reaquire"
+	freepass_refillrate(float) : "Player pass refill rate" : 0.5 : "After free pass begins expiring, how much the time the target gets back for every second they hide again"
+	freepass_peektime(float) : "Player pass peek time" : 0 : "How long targets in cover are allowed to peek without penalty"
+	
+	starton(boolean) : "Start On" : 1
+
+	SetClassify[engine](integer) : "Classification" : 0
+	SetClassify[MBase](choices) : "Classify" : 0 : "Allows this npc_enemyfinder to simulate a NPC's Class_T. Useful for relationships." =
+	[
+		0 : "None"
+		1 : "CLASS_PLAYER"
+		2 : "CLASS_PLAYER_ALLY (Citizens)"
+		3 : "CLASS_PLAYER_ALLY_VITAL (Alyx, Dr. Kleiner, GameEndAlly vorts, etc.)"
+		4 : "CLASS_ANTLION"
+		5 : "CLASS_BARNACLE"
+		6 : "CLASS_BULLSEYE (npc_bullseyes)"
+		7 : "CLASS_CITIZEN_PASSIVE (pre-criminal citizens)"
+		//8 : "CLASS_CITIZEN_REBEL (Unused)"
+		9 : "CLASS_COMBINE (Soldiers, turrets, etc.)"
+		10 : "CLASS_COMBINE_GUNSHIP (Gunships, helicopters, dropships)"
+		//11 : "CLASS_CONSCRIPT (Unused)"
+		12 : "CLASS_HEADCRAB"
+		13 : "CLASS_MANHACK"
+		14 : "CLASS_METROPOLICE"
+		//15 : "CLASS_MILITARY (Unused)"
+		16 : "CLASS_SCANNER"
+		17 : "CLASS_STALKER"
+		18 : "CLASS_VORTIGAUNT (Non-vital vortigaunts only)"
+		19 : "CLASS_ZOMBIE"
+		20 : "CLASS_PROTOSNIPER (npc_snipers)"
+		21 : "CLASS_MISSILE"
+		22 : "CLASS_FLARE"
+		23 : "CLASS_EARTH_FAUNA (crows, seagulls, etc.)"
+		24 : "CLASS_HACKED_ROLLERMINE"
+		25 : "CLASS_COMBINE_HUNTER"
+	]
+
+	// Inputs
+	input TurnOn(void) : "Turn on: Look for enemies"
+	input TurnOff(void) : "Turn off: Stop looking for enemies"
+
+	// Outputs
+	output OnLostEnemies(void) : "Fires when the enemy finder has no enemies."
+	output OnAcquireEnemies(void) : "Fires when the enemy finder acquires enemies."
+	]

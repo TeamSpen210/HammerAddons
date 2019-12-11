@@ -1,0 +1,23 @@
+@PointClass base(TwoObjectPhysics)
+	autovis(Entities, Constraints, Pulley Constraint)
+	studio("models/editor/axis_helper.mdl")
+	line(255 255 255, targetname, attach1)
+	line(255 255 255, targetname, attach2)
+	line(128 128 128, targetname, attach1, targetname, attach2)
+	color(128 128 128)
+= phys_pulleyconstraint: "A constraint that is essentially two length constraints and two points. " +
+	"Imagine it as a virtual rope connected to two objects, each suspended from a pulley above them. " +
+	"The constraint keeps the sum of the distances between the pulley points and their suspended objects constant."
+	[
+	addlength(float) : "Additional Length" : 0 : "Add (or subtract) this amount to the rest length of the pulley rope."
+	gearratio(float) : "Pulley Gear Ratio" : 1 : "Add (or subtract) this amount to the rest length of the pulley rope."
+	position2(vecline) : "Pulley Position 2" : : "The position of the pulley for Entity 2. " +
+		"The pulley for Entity 1 is the origin of this constraint entity. " +
+		"Entity 1 is always suspended from pulley point 1, " +
+		"and Entity 2 is always suspended from pulley point 2."
+	spawnflags(flags)  =
+		[
+		1: "No Collision until break" : 1
+		2: "Keep Rigid" : 0
+		]
+	]

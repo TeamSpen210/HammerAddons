@@ -1,0 +1,22 @@
+@PointClass base(BaseEntityAnimating) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio("models/props_combine/suit_charger001.mdl") = item_suitcharger: "Battery recharger"
+	[
+	_minlight(string) : "Minimum light level"
+	spawnflags(flags) : "spawnflags" =
+		[
+		8192: "Citadel recharger" : 0
+		16384: "Kleiner's recharger" : 0
+		]
+
+
+	// Inputs
+	input Recharge(void) : "Recharge to full"
+
+	// Outputs
+	output OutRemainingCharge(float) : "Remaining Charge."
+	output OnHalfEmpty(void) : "Half-Empty"
+	output OnEmpty(void) : "Empty"
+	output OnFull(void) : "Recharged to full."
+	output OnPlayerUse(void) : "Fired when the player +USEs the charger."
+	]

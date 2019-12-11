@@ -1,0 +1,7 @@
+
+@BaseClass = ToggleDraw
+	[
+	// Inputs
+	input DisableDraw[since_P2](void) : "Add the EF_NODRAW flag to this entity. Some entities manage this on their own so be aware you can override that value."
+	input EnableDraw[since_P2](void) : "Remove the EF_NODRAW flag to this entity. Some entities manage this on their own so be aware you can override that value."
+	]

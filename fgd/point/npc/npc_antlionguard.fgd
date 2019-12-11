@@ -1,0 +1,38 @@
+
+@NpcClass base(BaseNPC) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(NPCs, Antlions, Antlion Guard)
+	studio("models/antlion_guard.mdl") = npc_antlionguard: "Antlion Guard"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Create server-side ragdoll on death" : 0
+		131072: "Use inside footsteps" : 0
+		]
+
+	startburrowed(boolean) : "Start Burrowed" : 0
+	allowbark(boolean) : "Allow Bark" : 0
+	cavernbreed(boolean) : "Cavern Guard Model and Texture" : 0
+	incavern(boolean) : "Use inside-Cavern Behavior" : 0
+
+	shovetargets(string) : "Shove Targets"
+
+	// Inputs
+	input Unburrow(void) : "Unburrow from the ground"
+	input SetShoveTarget(string) : "Sets a shove target to attack"
+	input SetChargeTarget(string) : "Sets a charge target to attack.  Parameters are the name of the entity to start at and the name of the entity to charge towards, separated by a space (i.e. start target)"
+	input ClearChargeTarget(void) : "Clear the charge target"
+	input SetCoverFromAttack(integer) : "Sets whether or not the creature will protect itself from attacks"
+	input Ragdoll(void) : "Causes the antlion guard to die, regardless of health"
+	input EnableBark(void) : "Allow the antlion guard to try and summon antlions"
+	input DisableBark(void) : "Stop the antlion guard from trying to summon antlions"
+	input InvestigateHint(string) : "Sniff around at a hint group until told otherwise"
+	input StopInvestigating(void) : "Stop trying to sniff out the player"
+	input EnablePreferPhysicsAttack(void) : "Prefer to use physics attacks if at all possible, even when inside a cavern."
+	input DisablePreferPhysicsAttack(void) : "Do not prefer to use physics attacks if at all possible, even when inside a cavern."
+
+	// Outputs
+	output OnSeeHiddenPlayer(void) : "Fires when the current enemy is seen while trying to hide"
+	output OnSmellHiddenPlayer(void) : "Fires when the current enemy is smelled while trying to hide"
+	output OnSummon(void) : "Antlion guard is attempting to summon antlions"
+	]

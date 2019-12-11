@@ -1,0 +1,11 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW) 
+	sphere() 
+	iconsprite("editor/env_slomo.vmt") = env_slomo: "Causes slow motion for a while."
+	[
+	duration(float) : "Duration (seconds)" : 6 : "How long the slow motion lasts."
+
+	// Inputs
+	input StartSlomo(void) : "Start the slomo."
+	input StopSlomo(void) : "Stop the slomo."
+	]

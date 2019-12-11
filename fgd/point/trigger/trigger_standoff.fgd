@@ -1,0 +1,30 @@
+@PointClass base(BaseEntityAnimating) 
+	appliesto(L4D, L4D2)
+	studioprop()
+= trigger_standoff: "Standoff Trigger"
+	[
+	model(studio) : "World model" : "models/props_misc/german_radio.mdl"
+	spawnflags(flags)  =
+		[
+		512: "Diable +use" : 0
+		]
+
+	useduration(float) : "Use Duration" : 0 : "Seconds a survivor must +use the trigger to start the finale (0 is instantaneous)."
+	usedelay(float) : "Use Delay" : 0 : "Starts the finale this many seconds after a +use."
+
+	// Inputs
+	input FinaleEscapeFinished(void) : "Give the survivors a victory."
+	input FinaleEscapeForceSurvivorPositions(void) : "Make the survivors stand still on the escape vehicle."
+	input FinaleEscapeVehicleReadyForSurvivors(void) : "Make survivors say something about how the vehicle has stopped now."
+	input ForceFinaleStart(void) : "Start the finale now."
+
+	// Outputs
+	output FinaleEscapeStarted(void) : "Fired when the survivors should start their escape."
+	output FinaleWon(void) : "Fired when the survivors win the finale."
+	output FinaleLost(void) : "Fired when the survivors lose the finale."
+	output UseStart(void) : "Fired when a duration-based +use starts."
+	output UseCancel(void) : "Fired when a duration-based +use is stopped early."
+	output FinaleStart(void) : "Fired when the finale starts."
+	output FinalePause(void) : "Fired during the pause between each finale wave."
+	output EscapeVehicleLeaving(void) : "Fired when the escape vehicle starts to leave."
+	]

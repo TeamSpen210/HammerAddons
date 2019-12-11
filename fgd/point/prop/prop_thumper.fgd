@@ -1,0 +1,22 @@
+@PointClass base(BaseEntityAnimating) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio() = prop_thumper: "Combine Thumper device, used to scare Antlions away."
+	[
+	model(studio) : "World model" : "models/props_combine/CombineThumper002.mdl"
+
+	dustscale[engine](integer) : "Dust Scale"
+	dustscale(choices) : "Dust Scale" : 128 =
+		[
+		128: "Small Thumper"
+		256: "Large Thumper"
+		]
+
+	effectradius[EP1, EP2](integer) : "Effect Radius" : 1000 : "Radius of the thumper's sound. EPISODIC ONLY."
+
+	// Inputs
+	input Enable(void) : "Enable Thumper"
+	input Disable(void) : "Disable Thumper"
+
+	// Outputs
+	output OnThumped(void) : "Fires when thumper impacts the ground."
+	]

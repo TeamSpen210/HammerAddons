@@ -1,0 +1,8 @@
+@NpcClass base(npc_cscanner)  
+	autovis(NPCs, Combine, Combine Claw Scannner)
+	studio("models/shield_scanner.mdl") 
+= npc_clawscanner: "Claw Scanner"
+	[
+	input DeployMine(void) : "Drop landmine (if carrying one)"
+	input EquipMine(void) : "Equip with landmine"
+	]

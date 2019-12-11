@@ -1,0 +1,16 @@
+@PointClass appliesto(L4D2) base(BaseEntityPoint) 
+	studio("models/survivors/survivor_biker.mdl")
+= info_l4d1_survivor_spawn: "Spawn a L4D1 survivor"
+	[
+	character(choices) : "Character" : 5 : "Which survivor to spawn here" =
+		[
+		4: "Bill"
+		5: "Zoey"
+		6: "Francis"
+		7: "Louis"
+		]
+
+
+	// Inputs
+	input SpawnSurvivor(void) : "Spawn the survivor"
+	]

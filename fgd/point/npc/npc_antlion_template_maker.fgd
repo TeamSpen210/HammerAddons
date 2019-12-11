@@ -1,0 +1,49 @@
+
+@PointClass base(Angles, BaseNPCMaker) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	autovis(Templates, Antlion Generator)
+	line(192 192 192, targetname, templatename)
+	size(-8 -8 -8, 8 8 8) 
+	color(0 0 255) 
+= npc_antlion_template_maker: "Antlion Template Maker"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1024: "Random spawn node" : 0
+		2048: "Try to spawn close to the current target" : 0
+		4096: "Pick a random fight target" : 0
+		8192: "Try to play blocked effects near the player" : 0
+		]
+
+	templatename(target_destination) : "Name of template NPC"
+	spawngroup(string) : "Spawn on Hint Group" : : "If specified, children will spawn on a hint node from this group, nearest the target."
+	spawnradius(float) : "Spawn radius" : 512 : "Target must be within this distance of any node in the hint group specified above. If the target is outside the radius, no NPC will spawn."
+	spawntarget(string) : "Spawn target" : : "Targetname of the entity to try and spawn near."
+	fighttarget(string) : "Fight target" : : "Targetname of an entity used as a goal for the children to fight to."
+	followtarget(string) : "Follow target" : : "Targetname of an entity used as a goal for the children to follow."
+	vehicledistance(float) : "Vehicle Spawn Distance" : 1 : "This is a modifier of the current spawn distance. Spawn distance on a vehicle is based on speed, so this is just a modifier for it."
+	workerspawnrate(float) : "Random Worker Spawn Rate" : 0 : "Percentage chance that a spawned antlion will be a worker. (0 = no chance, 1 = 100% chance)"
+	ignorebugbait(boolean) : "Ignore Bugbait" : 0
+
+	pool_start(integer) : "Initial antlions in the pool." : 0 : "Number of antlions in the pool at map start."
+	pool_max(integer) : "Max antlions in the pool." : 0 : "Maximum number of antlions allowed in the pool. If 0, pool behavior is turned off."
+	pool_regen_amount(integer) : "Pool regen amount." : 0 : "This is the number of antlions added to the pool every time it regenerates."
+	pool_regen_time(float) : "Pool regen time." : 0 : "Time interval between pool regeneration ticks."
+	createspores(boolean) : "Create Spore effect" : 0
+
+
+	// Inputs
+	input SetFightTarget(string) : "Sets the target entity for children to fight to."
+	input ClearFightTarget(void) : "Clears the fight target goal for this spawner."
+	input SetFollowTarget(string) : "Sets the target entity for children to follow."
+	input ClearFollowTarget(void) : "Clears the follow target goal for this spawner."
+	input SetSpawnRadius(float) : "Sets the Spawn Radius."
+	input AddToPool(integer) : "Add the number of antlions specified in the parameter to the pool."
+	input SetMaxPool(integer) : "Set the maximum number of antlions allowed in the pool at any time. Setting it to 0 turns off the pool behavior."
+	input SetPoolRegenAmount(integer) : "Set the number of antlions added to the pool every time it regenerates."
+	input SetPoolRegenTime(float) : "Set the time interval between pool regeneration ticks."
+	input ChangeDestinationGroup(string) : "Change the spawn group for this spawner."
+
+	// Outputs
+	output OnAllBlocked(void) : "Fires when all the hint nodes are blocked."
+	]

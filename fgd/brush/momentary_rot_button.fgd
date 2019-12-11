@@ -1,0 +1,123 @@
+@SolidClass base(BaseEntityVisBrush, Angles, MasterEnt)
+= momentary_rot_button: "A brush entity that's designed to be used for rotating wheels, " +
+	"where the player can rotate them to arbitrary positions before stopping."
+	[
+	speed(float) : "Speed (deg/sec)" : 50 : "The amount, in degrees, that the wheel turns per second."
+	
+	sounds[engine](integer) : "Sounds" : 0
+	sounds(choices) : "Sounds" : 0 : "Sound played when pressed. Choose from sounds in the Buttons.snd* category." =
+		[
+		0: "None (Silent)"
+		1: "Buttons.snd1: Big zap & Warmup"
+		2: "Buttons.snd2: Access Denied"
+		3: "Buttons.snd3: Access Granted"
+		4: "Buttons.snd4: Quick Combolock"
+		5: "Buttons.snd5: Power Deadbolt 1"
+		6: "Buttons.snd6: Power Deadbolt 2"
+		7: "Buttons.snd7: Plunger"
+		8: "Buttons.snd8: Small zap"
+		9: "Buttons.snd9: Keycard Sound"
+		10: "Buttons.snd10: Buzz"
+		11: "Buttons.snd11: Buzz Off"
+		12: "Buttons.snd12: Latch locked"
+		13: "Buttons.snd13: Latch Unlocked"
+		14: "Buttons.snd14: Lightswitch"
+		15: "Buttons.snd15: Small bleek"
+		16: "Buttons.snd16: Small deny"
+		17: "Buttons.snd17: Small doop"
+		18: "Buttons.snd18: Small tech deny"
+		19: "Buttons.snd19: Click and combine screen fuzz"
+		20: "Buttons.snd20: Roomy beep"
+		21: "Buttons.snd21: Lever or Wheel: turn + move sqeek"
+		22: "Buttons.snd22: Lever or Wheel: latch + release gas"
+		23: "Buttons.snd23: Lever or Wheel: ratchet + sqeek"
+		24: "Buttons.snd24: Lever or Wheel: large ratchet"
+		25: "Buttons.snd25: Lever or Wheel: clanky + gas release"
+		26: "Buttons.snd26: Lever or Wheel: latch + large metal thud"
+		27: "Buttons.snd27: Lever or Wheel: smaller ratchet"
+		28: "Buttons.snd28: Lever or Wheel: smaller lever move"
+		31: "Buttons.snd31: Shock buzz"
+		32: "Buttons.snd32: Clickbeep"
+		33: "Buttons.snd33: Tech blip"
+		34: "Buttons.snd34: Clickbeepbeep open"
+		35: "Buttons.snd35: Small high blip"
+		36: "Buttons.snd36: Small tech fuzz blip"
+		37: "Buttons.snd37: Small click bleep (change to lightswitch)"
+		40: "Buttons.snd40: Combine door lock - locked"
+		41: "Buttons.snd41: Combine blip growl"
+		42: "Buttons.snd42: Combine squick growl"
+		43: "Buttons.snd43: Combine whine purr"
+		44: "Buttons.snd44: Combine click talk"
+		45: "Buttons.snd45: Combine click growl fizz"
+		46: "Buttons.snd46: Combine click fizz (deny)"
+		47: "Buttons.snd47: Combine click talker"
+		]
+	sounds[INFRA](choices) : "Sounds" : 0 : "Sound played when pressed." =
+		[
+		0: "None"
+		1: "button_001"
+		2: "button_002"
+		3: "button_003"
+		4: "button_004"
+		5: "button_005"
+		6: "button_006"
+		7: "button_007"
+		8: "button_008"
+		9: "vcr_button_001"
+		21: "lever_004"
+		22: "lever_002"
+		23: "lever_003"
+		24: "lever_001"
+		]
+
+	distance(float) : "Distance" : 90 : "The maximum amount, in degrees, that the wheel is allowed to rotate."
+	returnspeed(float) : "Auto-return speed" : 0 : "If the 'Toggle' spawnflag is not set, " +
+		"the speed at which the wheel auto-returns when left alone, in degrees per second."
+
+	spawnflags(flags)  =
+		[
+		1: "Not Solid" : 1
+		32: "Toggle (Disable Auto Return)" : 1
+		64: "X Axis" : 0
+		128: "Y Axis" : 0
+		1024: "Use Activates" : 1
+		2048: "Starts locked" : 0
+		8192: "Jiggle when used while locked" : 0
+		]
+
+	startposition(float) : "Start Position" : "0" : "Postion when spawned. " +
+		"The value is a range between 0.0 and 1.0, where 0 is the unrotated position and 1 is the rotated position + 'Distance'."
+
+	// From original FGD: Reverses upon USE, so are reversed here.
+	startdirection[engine](integer): "Start Direction" : -1
+	startdirection(choices) : "Start Direction" : -1 : "Specify the direction the button will move when first used. Ignored if Start Position is 0 or 1." =
+		[
+		-1: "Forward"
+		1: "Backward"
+		]
+
+	solidbsp[ASW](boolean) : "Solid BSP" : 0 : "If set, use the SOLID_BSP collision type."
+
+	glow[L4D](target_destination) : "Glow Entity" : : "The name of an entity that will get the +use glow for this button."
+
+	// Inputs
+	input Lock(void) : "Lock the button, preventing it from functioning."
+	input Unlock(void) : "Unlock the button, allowing it to function."
+	input SetPosition(string) : "Move to a position. " +
+		"The parameter must be a value between 0 and 1, where 0 is the unrotated position and 1 is the rotated position + 'Distance'."
+	input SetPositionImmediately(string) : "Immediately teleport to a position. " +
+		"The parameter must be a value between 0 and 1, where 0 is the unrotated position and 1 is the rotated position + 'Distance'."
+
+	input _DisableUpdateTarget(void): "Prevent the Position output from firing. Used when lock jiggling is triggered."
+	input _EnableUpdateTarget(void): "Allow the Position output to fire again. Used when lock jiggling is triggered."
+
+	// Outputs
+	output Position(integer) : "Fired whenever the button moves. " +
+		"The output is the position of button from 0 to 1, where 0 is the unrotated position and 1 is the rotated position + 'Distance'."
+	output OnPressed(integer) : "Fired when the button is first pressed."
+	output OnUnpressed(integer) : "Fired when the button is first released from being pressed."
+	output OnFullyClosed(void) : "Fired when the button has reached position 1, the rotated position + 'Distance'."
+	output OnFullyOpen(void) : "Fired when the button has reached position 0, the unrotated starting position."
+	output OnReachedPosition(void) : "Fired whenever the button reaches a goal position: i.e. when it becomes open, becomes closed, " +
+		"or reaches the point specified by a 'SetPosition' input."
+	]

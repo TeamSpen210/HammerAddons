@@ -1,0 +1,35 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(P2) 
+	color(0 100 250) 
+	iconsprite("editor/logic_coop_manager.vmt")
+ = logic_coop_manager: "Manages two sets of values and can fire outputs based on the state of those values. Useful in coop where you can have players independently setting states on buttons, switches, etc."
+	[
+	defaultplayerstatea[engine](boolean) : "Default State A" : 0 : "The default state of A"
+	defaultplayerstateb[engine](boolean) : "Default State B" : 0 : "The default state of B" 
+
+	defaultplayerstatea(choices) : "Default State A" : "0" : "The default state of A" =
+		[
+		0: "False"
+		1: "True"
+		]
+
+	defaultplayerstateb(choices) : "Default State B" : "0" : "The default state of B" =
+		[
+		0: "False"
+		1: "True"
+		]
+
+	// Inputs
+	input SetStateATrue(void) : "Set A to TRUE"
+	input SetStateBTrue(void) : "Set B to TRUE"
+	input SetStateAFalse(void) : "Set A to FALSE"
+	input SetStateBFalse(void) : "Set B to FALSE"
+	input ToggleStateA(void) : "Toggle A"
+	input ToggleStateB(void) : "Toggle B"
+
+	// Outputs
+	output OnChangeToAllTrue(void) : "Fires when ALL of the values change to TRUE for the first time."
+	output OnChangeToAnyTrue(void) : "Fires when ANY of the values change to TRUE for the first time."
+	output OnChangeToAllFalse(void) : "Fires when ALL of the values change to FALSE for the first time."
+	output OnChangeToAnyFalse(void) : "Fires when ANY of the values change to FALSE for the first time."
+	]

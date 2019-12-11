@@ -1,0 +1,59 @@
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	autovis(AI, AI Goal)
+	iconsprite("editor/ai_goal_standoff.vmt") = ai_goal_standoff: "AI Goal Standoff"
+	[
+	actor(target_name_or_class) : "Actor(s) to affect"
+	
+	searchtype[engine](integer) : "Search Type" : 0
+	searchtype(choices) : "Search Type" : 0 : "How to search for the entities using the targetname." =
+		[
+		0: "Entity Name"
+		1: "Classname"
+		]
+
+	startactive(boolean) : "Start Active" : 0
+
+	hintgroupchangereaction[engine](integer) : "Reaction to tactical change" : 1
+	hintgroupchangereaction(choices) : "Reaction to tactical change" : 1 : "What to do if leader moves, threat is neutralized, hint group changes, etc" =
+		[
+		0: "Move when ready (default AI)"
+		1: "Move when seek cover"
+		2: "Move immediately"
+		]
+
+	aggressiveness[engine](integer) : "Aggressiveness" : 2
+	aggressiveness(choices) : "Aggressiveness" : 2 =
+		[
+		0: "Very low"
+		1: "Low"
+		2: "Medium"
+		3: "High"
+		4: "Very High"
+		// Custom agression disabled
+		5 : "Custom" [MBase]
+		]
+
+	playerbattleline(boolean) : "Player battleline" : 1 : "Player defines a battle line, applies to allies only"
+	stayatcover(boolean) : "Stay at cover location" : 0 : "When have suitable cover, don't change it (disables advancing to battle line)"
+	abandonifenemyhides(boolean) : "Abandon if enemies hide" : 0 : "If no enemy detected recently, stop the standoff"
+
+	// Custom aggression
+	CustomCoverOnReload[MBase](choices) : "Custom: Take cover to reload" : 1 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	CustomMinTimeShots[MBase](float) : "Custom: Min time wait to shoot" : 2 : "Minimum duration of time after a burst of shooting before trying again"
+	CustomMaxTimeShots[MBase](float) : "Custom: Max time wait to shoot" : 4 : "Minimum duration of time after a burst of shooting before trying again"
+	CustomMinShots[MBase](integer)   : "Custom: Min shots in a burst"   : 1
+	CustomMaxShots[MBase](integer)   : "Custom: Max shots in a burst"   : 4
+	CustomOddsCover[MBase](integer)  : "Custom: Odds cover on damage"   : 25 : "If damaged, the chances react by taking immediate cover"
+
+	// Inputs
+	input Activate(void) : "Begin contesting position."
+	input Deactivate(void) : "Cease contesting position."
+	input UpdateActors[MBase](void) : "Forces an update on this goal's actors."
+	input SetAggressiveness(integer) : "Set aggressiveness."
+	]

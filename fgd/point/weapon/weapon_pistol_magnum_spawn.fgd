@@ -1,0 +1,6 @@
+@PointClass appliesto(L4D2) base(WeaponSpawn) 
+	studioprop("models/w_models/Weapons/w_desert_eagle.mdl")
+	autovis(Weapons, L4D, Weapon Spawners)
+= weapon_pistol_magnum_spawn: "Magnum Pistol"
+	[
+	]

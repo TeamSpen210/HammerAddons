@@ -1,0 +1,27 @@
+@PointClass base(BaseNPC, ResponseContext) 
+	appliesto(P1, P2)
+	studioprop("models/props_bts/rocket_sentry.mdl") 
+	autovis(NPCs, Portal Rocket Turret)
+= npc_rocket_turret: "P1 rocket sentry, aims a rocket at a target. " +
+		"The rocket itself will often get stuck inside the model, so that needs to be worked around."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Start Retracted" : 0
+		]
+
+	rocketspeed[P2](float) : "Rocket Speed" : 450 : "Speed the rocket will travel at."
+	rocketlifetime[P2](float) : "Rocket Lifetime" : 20 : "The rocket will automatically detonate after this number of seconds."
+
+	// Inputs
+	input Toggle(void) : "Toggles between activated and deactivated states."
+	input Enable(void) : "Activate Rocket Turret, and allow it to begin scanning."
+	input Disable(void) : "Deactivate and retract the Rocket Turret."
+	input SetTarget(target_destination) : "Sets the target for this turret to attack."
+	input Destroy(void) : "Sets this turret to it's destroyed state."
+
+	// Outputs
+	output OnFoundTarget(void) : "Fired when the rocket turret finds an unobstructed target."
+	output OnLostTarget(void) : "Fired when turret's target is blocked."
+	output OnDeath(void) : "Fired after this turret finishes it's destroy think and begins it's death think."
+	]

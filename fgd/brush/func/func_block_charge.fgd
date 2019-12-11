@@ -1,0 +1,3 @@
+@SolidClass appliesto(L4D2) base(func_brush) = func_block_charge: "Chargers will not charge through this brush"
+	[
+	]

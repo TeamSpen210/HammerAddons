@@ -1,0 +1,6 @@
+@PointClass appliesto(L4D2) base(WeaponSpawnSingle) 
+	studioprop("models/props_junk/gascan001a.mdl")
+	autovis(Weapons, L4D, Weapon Spawners)
+= weapon_gascan_spawn: "Gas Can"
+	[
+	]

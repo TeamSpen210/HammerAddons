@@ -1,0 +1,20 @@
+
+@PointClass base(BasePropPhysics) 
+	appliesto(ASW) 
+	studioprop("models/swarm/Barrel/barrel.mdl") 
+= asw_barrel_explosive: "A Barrel that explodes when shot."
+	[
+	bulletforceimmune(boolean) : "Immune to bullet forces" : 0 : "Used to determine whether or not bullet damage should cause the prop to move."
+
+	// Inputs
+	input Break(void) : "Breaks the breakable."
+	input SetHealth(integer) : "Sets a new value for the breakable's health. If the breakable's health reaches zero it will break."
+	input AddHealth(integer) : "Adds health to the breakable. If the breakable's health reaches zero it will break."
+	input RemoveHealth(integer) : "Removes health from the breakable. If the breakable's health reaches zero it will break."
+	input SetMass(float) : "Set mass of this object."
+
+	// Outputs
+	output OnBreak(void) : "Fired when this breakable breaks."
+	output OnTakeDamage(void) : "Fired each time this breakable takes any damage."
+	output OnHealthChanged(float) : "Fired when the health of this breakable changes, passing the new value of health as a percentage of max health, from [0..1]."
+	]

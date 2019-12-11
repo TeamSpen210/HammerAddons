@@ -1,0 +1,14 @@
+@PointClass base(Weapon) 
+	appliesto(EP1, EP2, HL2, P1, ASW)
+	autovis(Weapons, HL2 Weapons, Brickbat)
+= weapon_brickbat: "Brickbat"
+	[
+	brickbattype[engine](integer) : "Brickbat Type" : 0
+	brickbattype(choices) : "Brickbat Type" : 0 =
+		[
+		0: "Rock"
+		1: "Beer Bottle"
+		2: "Headcrab"
+		3: "Cremator Head"
+		]
+	]

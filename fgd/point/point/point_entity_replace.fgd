@@ -1,0 +1,55 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(MBase)
+	line(255 255 0, targetname, Target)
+	line(255 255 0, targetname, ReplacementEntity)
+	color(0 100 250)
+	iconsprite("editor/point_entity_replace.vmt") 
+= point_entity_replace : "An entity that replaces one entity with another."
+[
+	Target(target_destination) : "Entity to be replaced" : : "The entity that should be replaced. " +
+		"This is optional if you're only using the 'ReplaceEntity' input."
+	ReplacementEntity(target_destination) : "Replacement Entity" : : "The entity that should serve as the replacement."
+
+	ReplacementType[engine](integer) : "Replacement Type" : 0
+	ReplacementType(choices) : "Replacement Type" : 0 : "What IS the replacement entity?" =
+		[
+		0 : "Specific Entity (teleports directly)"
+		1 : "Classname (creates new entity)"
+		2 : "Template (target is point_template, uses contents)"
+		3 : "Template Relative (same as Template, keeps entities' relative position)"
+		4 : "Random Template (target is point_template, uses random template)"
+		5 : "Random Template Relative (same as Random Template, keeps entity's relative position)"
+		]
+
+	ReplacementLocation[engine](integer) : "Replacement Location" : 0
+	ReplacementLocation(choices) : "Replacement Location" : 0 : "Where should the replacement entit(ies) be teleported to?" =
+		[
+		0 : "Target Origin"
+		1 : "Target Center (WorldSpaceCenter)"
+		]
+	
+	RemoveOriginalEntity(boolean) : "Remove original entity" : 1 : "Removes the entity being replaced."
+
+	TakeTargetname(boolean) : "Take Targetname" : 0 : "Causes the replacement entity to take the target's name."	
+	TakeParent(boolean) : "Take Parent" : 0 : "Causes the replacement entity to take the target's current parent as well as its children."
+	TakeOwner(boolean) : "Take Owner" : 0 : "Causes the replacement entity to take the target's owner."
+	TakeModelStuff(boolean) : "Take Model Stuff" : 0 : "Causes the replacement entity to take the target's model stuff, including render fields and animation data."
+	
+	OtherStuff(string) : "Other Fields" : : "Specific variables that should transfer. " +
+		"Uses internal field names (e.g. ''m_bBoolean''), not keyvalues. " +
+		"This is really delicate, so be careful."
+	
+	TargetIsCaller(boolean) : "Fire outputs with original entity as caller" : 0 : "If enabled, OnReplace will fire with the original entity as the caller instead of this."
+
+	// Inputs
+	input Replace(void) : "Replaces the target entity with the replacement entity."
+	input ReplaceEntity(target_destination) : "Replaces the specified entity with the replacement entity."
+	input SetTarget(target_destination) : "Sets the entity to be replaced."
+	input SetReplacementEntity(target_destination) : "Sets the entity to replace the target."
+	
+	// Outputs
+	output OnReplace(ehandle) : "Fires for each replacement we undergo, " +
+		"passing the replacement entity as the activator and parameter. " +
+		"The caller can be the replaced entity or this entity depending on this entity's settings."
+]
+

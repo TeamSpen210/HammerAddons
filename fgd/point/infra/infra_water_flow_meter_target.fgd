@@ -1,0 +1,18 @@
+@PointClass base(BaseEntityPoint, EnableDisable)
+ 	appliesto(INFRA)
+ 	autovis(Point Entities, Camera Targets, Water Flow)
+	iconsprite("editor/infra_water_flow_meter_target.vmt")
+	sphere(range)
+= infra_water_flow_meter_target: "Water flow meter target"
+	[
+	// Inputs
+	input Trigger(void) : "Marks this target as repaired and increments the stat. " +
+		"Doesn't do anything if it's disabled or if it has already been repaired."
+	input Untrigger(void) : "Marks this target as broken again and decrements the stat. " +
+		"It can be triggered again to restore the stat but that won't replay the sound. " +
+		"Doesn't do anything if disabled."
+
+	// Outputs
+	output OnTriggered(void) : "Fired when this is triggered."
+	output OnUntriggered(void) : "Fired when this is untriggered."
+	]

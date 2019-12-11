@@ -1,0 +1,25 @@
+
+@BaseClass = BaseObject
+	[
+	teamnum[engine](integer) : "Team" : 2
+	teamnum(choices) : "Team" : 2 : "Team" =
+		[
+		2: "Red"
+		3: "Blue"
+		]
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		2: "Invulnerable" : 0
+		]
+
+	// Inputs
+	input SetBuilder(string) : "Sets the builder of this object to the player given (from an output)"
+	input Show(void) : "Makes the building visible and tries to re-enable it."
+	input Hide(void) : "Makes the building invisible and disables it."
+	input SetHealth(integer) : "Sets a new value for the breakable's health. If the breakable's health reaches zero it will break."
+	input AddHealth(integer) : "Adds health to the breakable. If the breakable's health reaches zero it will break."
+	input RemoveHealth(integer) : "Removes health from the breakable. If the breakable's health reaches zero it will break."
+	input Enable(void) : "Enable this entity."
+	input Disable(void) : "Disable this entity."
+	]

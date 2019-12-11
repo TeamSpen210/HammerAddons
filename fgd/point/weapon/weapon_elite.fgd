@@ -1,0 +1,7 @@
+
+@PointClass base(Weapon) 
+	appliesto(CSGO) 
+	autovis(Weapons, CSGO Weapons, CS Pistols)
+	studio("models/weapons/w_pist_elite_dropped.mdl") = weapon_elite: "Dual Berettas"
+	[
+	]

@@ -1,0 +1,111 @@
+@PointClass
+    appliesto(srctools)
+	autovis(Postcompiler, Entity Finder)
+    iconsprite("editor/comp_entity_finder")
+    sphere(radius)
+    cylinder(255 255 255, targetname, targetref, radius)
+    line(255 255 255, targetname, kv1_known)
+    line(255 255 255, targetname, kv2_known)
+    line(255 255 255, targetname, kv3_known)
+    line(255 255 255, targetname, kv4_known)
+    line(255 255 255, targetname, kv5_known)
+= comp_entity_finder:
+	"Finds the closest entity of a given type, then applies various transformations." +
+	"Outputs from this entity will be moved to the found entity." + 
+	"Further keyvalues can be set manually with SmartEdit off." 
+	[
+	targetname(target_source) readonly: "Targetname" : "<pack_rename>" : "Fake targetname, used to determine how containing instances are configured."
+	
+	targetcls(string): "Target Classname": : "Classname of the entity to find."
+	radius(float): "Search Radius": 64 : "Radius to search inside, or 0 for infinite."
+	searchfov(float): "Search Field Of View" : 180 : "The found entity must be within this many degrees of the direction of the finder."
+	angles(angle): "Search Direction": "0 0 0" : "If Search FOV is used, the direction to compare to."
+	targetref(target_destination): "Reference position" : : "If set, look for entities close to this entity instead of the comp_entity_finder."
+	blacklist(target_destination): "Search Blacklist" : : "If set, ignore entities matching this name."
+	teleporttarget(boolean): "Teleport Target To Me" : 0 : "Move the found entity to the location of this entity or that of the reference."
+	
+	sep1(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	kv1_mode[engine](string): "1 - Mode"
+	kv1_mode(choices): "1 - Mode": : "The first modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
+		[
+		"": "None"
+		"const2target": "Constant -> Target Ent KV"
+		"const2known": "Constant -> Known Ent KV"
+		"known2target": "Known Ent KV -> Target Ent KV"
+		"target2known": "Target Ent KV -> Known Ent KV"
+		"replacetarget": "Replace Outputs"
+		]
+	kv1_known(target_destination): "1 - Known Entity" : : "The known entity to access."
+	kv1_src(string): "1 - Source" : : "Constant value to use or keyvalue name to read from."
+	kv1_dest(string): "1 - Destination" : : "Keyvalue name to write to or !special name to replace."
+	
+	output OutName(void): "Needed to allow Hammer to add outputs to this."
+
+	sep2(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	// Same as above, up to kv5.
+	kv2_mode[engine](string): "2 - Mode"
+	kv2_mode(choices): "2 - Mode": : "The second modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
+		[
+		"": "None"
+		"const2target": "Constant -> Target KV"
+		"const2known": "Constant -> Target KV"
+		"known2target": "Known KV -> Target KV"
+		"target2known": "Target KV -> Known KV"
+		"replacetarget": "Replace Outputs"
+		]
+	kv2_known(target_destination): "2 - Known Entity" : : "The known entity to access."
+	kv2_src(string): "2 - Source" : : "Constant value or keyvalue name to read from."
+	kv2_dest(string): "2 - Destination" : : "Keyvalue name to write to or !special name to replace."
+
+	sep3(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	kv3_mode[engine](string): "3 - Mode"
+	kv3_mode(choices): "3 - Mode": : "The third modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
+		[
+		"": "None"
+		"const2target": "Constant -> Target KV"
+		"const2known": "Constant -> Target KV"
+		"known2target": "Known KV -> Target KV"
+		"target2known": "Target KV -> Known KV"
+		"replacetarget": "Replace Outputs"
+		]
+	kv3_known(target_destination): "3 - Known Entity" : : "The known entity to access."
+	kv3_src(string): "3 - Source" : : "Constant value or keyvalue name to read from."
+	kv3_dest(string): "3 - Destination" : : "Keyvalue name to write to or !special name to replace."
+	
+	sep4(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	kv4_mode[engine](string): "4 - Mode"
+	kv4_mode(choices): "4 - Mode": : "The fourth modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
+		[
+		"": "None"
+		"const2target": "Constant -> Target KV"
+		"const2known": "Constant -> Target KV"
+		"known2target": "Known KV -> Target KV"
+		"target2known": "Target KV -> Known KV"
+		"replacetarget": "Replace Outputs"
+		]
+	kv4_known(target_destination): "4 - Known Entity" : : "The known entity to access."
+	kv4_src(string): "4 - Source" : : "Constant value or keyvalue name to read from."
+	kv4_dest(string): "4 - Destination" : : "Keyvalue name to write to or !special name to replace."
+	
+	sep5(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	kv5_mode[engine](string): "5 - Mode"
+	kv5_mode(choices): "5 - Mode": : "The fifth modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
+		[
+		"": "None"
+		"const2target": "Constant -> Target KV"
+		"const2known": "Constant -> Target KV"
+		"known2target": "Known KV -> Target KV"
+		"target2known": "Target KV -> Known KV"
+		"replacetarget": "Replace Outputs"
+		]
+	kv5_known(target_destination): "5 - Known Entity" : : "The known entity to access."
+	kv5_src(string): "5 - Source" : : "Constant value or keyvalue name to read from."
+	kv5_dest(string): "5 - Destination" : : "Keyvalue name to write to or !special name to replace."
+	
+	// Code supports infinite number, just continue naming pattern.
+	]

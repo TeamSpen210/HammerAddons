@@ -1,0 +1,24 @@
+
+@SolidClass base(BaseEntityVisBrush, MasterEnt, Button) 
+ = func_rot_button: "A brush entity that's designed to be used for a rotating player-useable button. When used by the player, it rotates to a pressed position."
+	[
+	speed(integer) : "Speed" : 50 : "The speed that the button rotates, in degrees per second."
+	health(integer) : "Health (Obsolete)" : 0 : "Legacy method of specifying whether or not the button can be shot to activate it. Use the 'Damage Activates' spawnflag instead."
+
+	wait(integer) : "Delay Before Reset (-1 stay)" : 3 : "Amount of time, in seconds, after the button has been pressed before it returns to the starting position. Once it has returned, it can be used again. If the value is set to -1, the button never returns."
+	distance(integer) : "Distance (deg)" : 90 : "The amount, in degrees, that the button should rotate when it's pressed."
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Not solid" : 0
+		2: "Reverse Direction" : 0
+		32: "Toggle" : 0
+		64: "X Axis" : 0
+		128: "Y Axis" : 0
+		256: "Touch Activates" : 0
+		512: "Damage Activates" : 0
+		1024: "Use Activates" : 0
+		2048: "Starts locked" : 0
+		4096: "Sparks" : 0
+		]
+	]

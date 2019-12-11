@@ -1,0 +1,48 @@
+@BaseClass base(BaseEntityAnimating, SetModel, BreakableProp)
+	studioprop()
+	sphere(fademindist)
+	sphere(fademaxdist)
+= prop_dynamic_base
+	[
+	spawnflags(flags)  =
+		[
+		64: "Use Hitboxes for Renderbox" : 0
+		256: "Start with collision disabled" : 0
+		]
+
+	defaultanim(string) : "Default Animation" : : "The name of the idle animation that this prop will revert to whenever it finishes a random or forced animation."
+	randomanimation[since_ASW](boolean) : "Randomly Animate" : 0 : "If set, this prop will randomly choose and play animations, based upon the times specified in 'Min/Max Random Anim Time'. Inbetween the random animations, it will revert to playing the 'Default Animation'."
+	minanimtime(float) : "Min Random Anim Time" : 5 : "Minimum time between random animations."
+	maxanimtime(float) : "Max Random Anim Time" : 10 : "Maximum time between random animations."
+
+	disablebonefollowers[since_ASW](boolean) : "Disable Bone Followers" : 0 : "If set, the prop will not use bone followers, even if it has them defined."
+	
+	holdanimation[since_ASW](boolean) : "Hold Animation" : 0 : "If set, the prop will not loop its animation, but hold the last frame."
+	
+	suppressanimsounds[since_P2](boolean) : "Suppress Anim Sounds" : 0 : "If set, the prop will not play any sounds that are embedded in animations it plays."
+
+	is_autoaim_target[since_CSGO](boolean) : "Is Autoaim Target" : 0 : "If set, this prop will use the autoaim feature on consoles (slower look movement when this prop is directly under the crosshair)."
+	lagcompensate[L4D2](boolean) : "Lag Compensation" : 0 : "Set to Yes to lag compensate this prop, should be use very sparingly!"
+	glowbackfacemult[L4D2](float) : "Glow backface Multiplier" : "1.0" : "What to multiply glow by on backfaces,"
+
+	updatechildren[since_ASW](boolean) : "Update children" : 0 : "Update touches for any children that are attached to attachment points as this prop animates. " +
+		"This allows SetParentAttached triggers or func_brushes to touch properly."
+
+
+	// Inputs
+	input SetAnimation(string) : "Force the prop to play an animation. The parameter should be the name of the animation."
+	input SetDefaultAnimation(string) : "Set the Default Animation to the one specified in the parameter."
+	input SetPlaybackRate(float) : "Set the playback rate for the animation."
+	input SetBodyGroup(integer) : "Set the visible bodygroup, by index."
+	input TurnOn(void) : "Make the prop visible."
+	input TurnOff(void) : "Make the prop invisible."
+	input EnableCollision(void) : "Enable collision on the prop."
+	input DisableCollision(void) : "Disable collision on the prop."
+	input SetAnimationNoReset[since_ASW](string) : "Force the prop to play an animation unless the prop is already playing the animation. The parameter should be the name of the animation."
+	input BecomeRagdoll[since_P2](void) : "Change into a ragdoll immediately."
+	input FadeAndKill[since_P2](void) : "Fade out then remove this prop."
+
+	// Outputs
+	output OnAnimationBegun(void) : "Fired whenever a new animation has begun playing."
+	output OnAnimationDone(void) : "Fired whenever an animation is complete."
+	]

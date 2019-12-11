@@ -1,0 +1,17 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(TF2) = boss_alpha: "The Giant Robot Boss"
+	[
+
+	// Outputs
+	output OnStunned(void) : "Sent when the Boss becomes stunned."
+	output OnHealthBelow90Percent(void) : "Sent when the Boss' health drops below 90 percent."
+	output OnHealthBelow80Percent(void) : "Sent when the Boss' health drops below 80 percent."
+	output OnHealthBelow70Percent(void) : "Sent when the Boss' health drops below 70 percent."
+	output OnHealthBelow60Percent(void) : "Sent when the Boss' health drops below 60 percent."
+	output OnHealthBelow50Percent(void) : "Sent when the Boss' health drops below 50 percent."
+	output OnHealthBelow40Percent(void) : "Sent when the Boss' health drops below 40 percent."
+	output OnHealthBelow30Percent(void) : "Sent when the Boss' health drops below 30 percent."
+	output OnHealthBelow20Percent(void) : "Sent when the Boss' health drops below 20 percent."
+	output OnHealthBelow10Percent(void) : "Sent when the Boss' health drops below 10 percent."
+	output OnKilled(void) : "Sent when the Boss is killed."
+	]

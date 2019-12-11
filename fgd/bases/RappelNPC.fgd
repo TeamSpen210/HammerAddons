@@ -1,0 +1,10 @@
+@BaseClass base(BaseNPC) = RappelNPC
+	[
+	waitingtorappel(boolean) : "Waiting to Rappel?" : 0 : "If yes, this NPC spawns suspended in air and awaits a BeginRappel input. It will then spawn a zipline and slide down. When it hi" + "ts the ground, NPC will cut away the line and try to move forward a few feet to make room for the next NPC. The NPC will not att" + "empt to clear its landing space if it cannot do so by taking a few steps forward"
+
+	// Inputs
+	input BeginRappel(void) : "BeginRappel"
+
+	// Outputs
+	output OnRappelTouchdown(void) : "Fires when done rappeling"
+	]

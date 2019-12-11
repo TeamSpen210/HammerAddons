@@ -1,0 +1,7 @@
+// This is a full entity, with all normal behaviours.
+// However, it kills itself immediately so most are useless
+// TODO: might be useful to strip ones that can't function.
+@SolidClass base(BaseEntity) appliesto(Mbase)
+= func_lod: "A brush entity that's immediately removed upon spawning. Useful for invisible brush lights."
+	[
+	]

@@ -1,0 +1,33 @@
+
+@PointClass base(Item) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+	studio("models/items/healthkit.mdl") = item_dynamic_resupply: "A dynamic item. When the player enters the PVS of this entity, it will determine the item most needed by the player, spawn one of those items, and remove itself. To determine which item the player most needs, it calculates which of the Desired Health/Armor/Ammo ratios the player is farthest from.\n\nIf the player is above all the desired levels, then no item will be spawned, unless this item_dynamic_resupply was created by an item_item_crate. In that case, a random piece of ammo used by a weapon, that the player has, will be spawned. If the 'Fallback to Health Vial' spawnflag is set, a health vial will be spawned instead of the ammo.\n\nBy default, the item_dynamic_resupply uses the values inside the Master resupply, instead of using it's own values. This makes it easy to tweak the desired loadout of many resupplies. The BecomeMaster input allows you to switch Masters dynamically as the level progresses."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Use Master's values" : 1
+		2: "Is Master" : 0
+		8: "Fallback to Health Vial" : 0
+		16: "Alternate master" : 0
+		]
+
+	desiredhealth(float) : "Desired Health Ratio" : 1 : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max health."
+	desiredarmor(float) : "Desired Armor Ratio" : 0.3 : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max armor."
+	desiredammopistol(float) : "Desired Pistol Ammo Ratio" : 0.5 : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+	desiredammosmg1(float) : "Desired SMG1 Ammo Ratio" : 0.5 : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+	desiredammosmg1_grenade(float) : "Desired SMG1 Grenade Ammo Ratio" : 0.1 : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+	desiredammoar2(float) : "Desired AR2 Ammo Ratio" : 0.4 : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+	desiredammobuckshot(float) : "Desired Shotgun Ammo Ratio" : 0.5 : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+	desiredammorpg_round(float) : "Desired RPG Ammo Ratio" : 0 : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+	desiredammogrenade(float) : "Desired Grenade Ammo Ratio" : 0.1 : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+	desiredammo357(float) : "Desired 357 Ammo Ratio" : 0 : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+	desiredammocrossbow(float) : "Desired Crossbow Ammo Ratio" : 0 : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+	desiredammoar2_altfire(float) : "Desired AR2 Alt-fire Ammo Ratio" : 0 : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+
+	// Inputs
+	input CalculateType(void) : "Force the dynamic resupply to calculate which item it should spawn."
+	input BecomeMaster(void) : "Make this resupply the master resupply. All other resupplies set to Use Master's Values will now use this resupply's values."
+
+	// Outputs
+	output OnItem(ehandle) : "Fired with each item created by this box."
+	]

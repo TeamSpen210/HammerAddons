@@ -1,0 +1,26 @@
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	appliesto(INFRA)
+ 	autovis(Point Entities, Camera Targets, Damage Target)
+	iconsprite("editor/infra_camera_target.vmt")
+	sphere(range)
+= infra_camera_target: "Camera target"
+	[
+	range(float) : "Maximum Range" : 0 : "A picture of this target is only considered successful if the player is within this range of the entity. Set to zero or less for" + " infinite range."
+	includedintotalcount(boolean) : "Included in Total Count" : 1 : "Is this camera target included in the total camera target count? Awards a point regardless. This can be useful when a single cam" + "era target spans multiple maps, such as the dam in infra_c2_m1_reserve1 and infra_c2_m2_reserve2. We can set the camera target i" + "n infra_c2_m2_reserve2 not to be included in the total."
+	type(choices) : "Type" : "generic" : "Unless this camera target has a custom line for it, this will affect what Mark has to say about this camera target." =
+		[
+		"generic": "Generic"
+		"waterleak": "Water Leak"
+		"electrichazard": "Electric Hazard"
+		"blockedpath": "Blocked Path"
+		"crackedconcrete": "Cracked Concrete"
+		"extensivedamage": "Extensive Damage!"
+		"closecall": "Close Call!"
+		"silent": "Silent"
+		]
+
+
+	// Outputs
+	output OnPictureTaken(void) : "Fired when the player successfully takes a picture of this for the first time."
+	output OnSpotted(void) : "Fired when the player is in range and saw this entity."
+	]

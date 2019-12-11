@@ -1,0 +1,28 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(since_L4D2, MBase)
+	line(255 255 0, targetname, referencename)
+	line(255 255 0, targetname, filtername)
+	color(0 100 250)
+	iconsprite("editor/point_entity_finder")
+= point_entity_finder: "An entity that will find an entity and pass it along as the " +
+	"!caller with the OutEntity output. Requires using !caller as the parameter on the input."
+	[
+	filtername(filterclass) : "Filter Name" : : "Filter to use to narrow set of findable entities. See filter_activator_name for more explanation."
+	referencename(target_destination) : "Reference Entity" : : "Name of the entity to use when evaluating criteria. " +
+		"For example, when using 'Nearest', this is the entity that distance will be measured from. " +
+		"If left blank will use the point_entity_finder."
+
+	method[engine](integer) : "Search Method" : 0
+	method(choices) : "Search Method" : 0 =
+		[
+		0: "Nearest"
+		1: "Farthest"
+		2: "Random"
+		]
+
+	// Inputs
+	input FindEntity(void) : "Find an entity that meets the specified criteria.  Will fire OutEntity if found and pass the entity as !Caller."
+
+	// Outputs
+	output OnFoundEntity(void) : "Fired when FindEntity is input and an entity was found. Passes the found entity as !Caller."
+	]

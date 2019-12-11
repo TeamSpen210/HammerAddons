@@ -1,0 +1,40 @@
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/env_spark.vmt") 
+	color(200 200 0) 
+	studio("models/editor/cone_helper.mdl") 
+= env_spark: "An entity used to create sparks at its origin."
+	[
+	maxdelay(string) : "Max Delay" : 0 : "The longest delay between sparks (in seconds)."
+
+	magnitude[engine](integer) : "Magnitude" : 1
+	magnitude(choices) : "Magnitude" : 1 : "The size of the sparks." =
+		[
+		1: "Small"
+		2: "Medium"
+		5: "Large"
+		8: "Huge"
+		]
+
+	traillength[engine](integer) : "Spark Trail Length" : 1
+	traillength(choices) : "Spark Trail Length" : 1 =
+		[
+		1: "Short"
+		2: "Medium"
+		3: "Long"
+		]
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		64: "Start ON" : 0
+		128: "Glow" : 0
+		256: "Silent" : 0
+		512: "Directional" : 0
+		]
+
+
+	// Inputs
+	input StartSpark(void) : "Start the spark effect."
+	input StopSpark(void) : "Stop the spark effect."
+	input ToggleSpark(void) : "Toggle the on/off state of the spark effect."
+	input SparkOnce(void) : "Spark once."
+	]

@@ -1,0 +1,34 @@
+@PointClass 
+	autovis(AI, AI Goal)
+	base(BaseEntityPoint, EnableDisable) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
+= ai_goal_operator: "Indicates items in the world that some NPCs may operate upon."
+	[
+	actor(target_name_or_class) : "Actor to affect" : : "NPC that should perform this operation"
+	target(target_destination) : "Position entity" : : "Name of the entity that the NPC should move to in order to perform the operation."
+	contexttarget(target_destination) : "Context target" : : "(Optional) Name of an entity that the operator will use within context."
+	state(choices) : "Initial State" : "0" =
+		[
+		0: "Not ready (closed, locked, etc)"
+		1: "Ready (open and accessible)"
+		]
+
+	moveto(choices) : "How should NPC approach?" : "1" =
+		[
+		0: "DO NOT USE THIS SETTING"
+		1: "Walk"
+		2: "Run"
+		]
+
+
+	// Inputs
+	input Activate(void) : "Begin operating on the object"
+	input SetStateReady(void) : "Set the object's state to READY. Fire this input when the object has been unlocked/opened or otherwise made ready for interaction."
+	input SetStateFinished(void) : "Fire this input when the NPC has completed the interaction with this object."
+
+	// Outputs
+	output OnBeginApproach(void) : "Fired when the NPC begins to approach the position"
+	output OnMakeReady(void) : "Make the item ready to operate"
+	output OnBeginOperating(void) : "Fired when the NPC is ready to operate"
+	output OnFinished(void) : "The item is done"
+	]
