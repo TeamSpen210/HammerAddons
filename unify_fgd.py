@@ -659,10 +659,20 @@ def action_export(
             # But it itself should be added to the end regardless.
             ent.helpers.append(helper)
 
-    # Helpers aren't inherited, so this isn't useful anymore.
+    print('Culling unused bases...')
+    used_bases = set()  # type: Set[EntityDef]
     for ent in fgd.entities.values():
+        # Helpers aren't inherited, so this isn't useful anymore.
+        if ent.type is not EntityTypes.BASE:
+            used_bases.update(ent.iter_bases())
+
+    for classname, ent in list(fgd.entities.items()):
         if ent.type is EntityTypes.BASE:
-            ent.helpers.clear()
+            if ent not in used_bases:
+                del fgd.entities[classname]
+            else:
+                # Helpers aren't inherited, so this isn't useful anymore.
+                ent.helpers.clear()
 
     print('Exporting...')
 
