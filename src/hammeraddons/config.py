@@ -1,6 +1,6 @@
 """Handles user configuration common to the different scripts."""
 from pathlib import Path
-from typing import Tuple, Optional, Set
+from typing import Tuple, Set
 
 from srctools.game import Game
 
@@ -70,12 +70,11 @@ def parse(path: Path) -> Tuple[
         else:
             # Give up, write to working directory.
             folder = Path()
-        file_path = str(folder / CONF_NAME)
-        conf.path = file_path
+        conf.path = folder / CONF_NAME
 
-        LOGGER.warning('Writing default to "{}"', file_path)
+        LOGGER.warning('Writing default to "{}"', conf.path)
 
-        with AtomicWriter(file_path) as f:
+        with AtomicWriter(str(conf.path)) as f:
             conf.save(f)
 
     game = Game((folder / conf.get(str, 'gameinfo')).resolve())
@@ -92,6 +91,10 @@ def parse(path: Path) -> Tuple[
     game_root = game.root
 
     for prop in conf.get(Property, 'searchpaths'):  # type: Property
+        if prop.has_children():
+            raise ValueError('Config "searchpaths" value cannot have children.')
+        assert isinstance(prop.value, str)
+
         if prop.value.endswith('.vpk'):
             fsys = VPKFileSystem(str((game_root / prop.value).resolve()))
         else:
