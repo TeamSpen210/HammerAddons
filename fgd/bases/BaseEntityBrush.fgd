@@ -1,4 +1,4 @@
-@BaseClass wirebox(mins, maxs) = BaseEntityBrush
+@BaseClass = BaseEntityBrush
 	[
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	globalname(string) : "Global Entity Name" : : "Name by which this entity is linked to another entity in a different map. " +
@@ -22,6 +22,8 @@
 
 	linedivider_base(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
+	// We could have wirebox() for these, but don't. That messes up if these are unset.
+	// This is a pretty advanced feature, so it's fine that it has no preview.
 	mins(vector) : "Minimum Bounding Box Size" : : "Co-ordinate of the minimum bounding box corner, relative to entity origin. " +
 		"The bounding box is drawn from this corner to the other one. " +
 		"Requires Bounding Box collisions (solid 2) to be used. " +
