@@ -2,6 +2,13 @@
 	sphere(distmax)
 = BModelParticleSpawner
 	[
+	// These two values break dustmotes.
+	solid(choices) readonly: "Solid" : 0 : "This needs to be zero to allow this to not collide." = 
+		[
+		0: "Non-solid"
+		]
+	origin(origin) readonly: "Origin": "" : "If offset, this breaks."
+
 	startdisabled(boolean) : "Start Disabled" : 0
 	color(color255) : "Particle Color (R G B)" : "255 255 255"
 	spawnrate(integer) : "Particle Per Second" : 40 : "Number of particles to spawn, per second."
