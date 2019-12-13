@@ -73,8 +73,8 @@ def entity_finder(ctx: Context):
             cur_dist = float('inf')
             targ_ent = None
 
-            if blacklist.startswith('*'):
-                blacklist = blacklist[1:]
+            if blacklist.endswith('*'):
+                blacklist = blacklist[:-1]
 
                 def blacklist_func(name: str) -> bool:
                     """Check if the name matches the blacklist, with wildcards."""
