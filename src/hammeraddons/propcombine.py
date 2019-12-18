@@ -608,6 +608,13 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
                     # '$lod',
                 ):
                     return None
+            elif token_type is Token.BRACE_OPEN:
+                # Skip other "compound" sections we don't care about.
+                for body_type, body_value in tok:
+                    if body_type is Token.BRACE_CLOSE:
+                        break
+                else:
+                    raise tok.error("EOF reached without closing brace (})!")
 
     if model_name is None or ref_smd is None:
         # Malformed...
@@ -833,10 +840,6 @@ def combine(
         Only props with matching key can be possibly combined.
         If None it cannot be combined.
         """
-        # If a lighting origin was specified, that overrides the default.
-        if prop.flags & StaticPropFlags.HAS_LIGHTING_ORIGIN:
-            return None
-
         key = unify_mdl(prop.model)
 
         if key not in qc_map:
