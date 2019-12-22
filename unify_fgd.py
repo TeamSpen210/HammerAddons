@@ -245,11 +245,25 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
 
     with RawFileSystem(str(dbase)) as fsys:
         for file in dbase.rglob("*.fgd"):
-            fgd.parse_file(
+            # Use a temp FGD class, to allow us to verify no overwrites.
+            file_fgd = FGD()
+            file_fgd.parse_file(
                 fsys,
                 fsys[str(file.relative_to(dbase))],
                 eval_bases=False,
             )
+            for clsname, ent in file_fgd.entities.items():
+                if clsname in fgd.entities:
+                    raise ValueError(
+                        f'Duplicate "{clsname}" class '
+                        f'in {file.relative_to(dbase)}!'
+                    )
+                fgd.entities[clsname] = ent
+
+            for path, group in file_fgd.auto_visgroups.items():
+                fgd.auto_visgroups.setdefault(path, set()).update(group)
+            fgd.mat_exclusions.update(file_fgd.mat_exclusions)
+
             print('.', end='', flush=True)
 
     if extra_loc is not None:
