@@ -3,5 +3,5 @@
 	$spriteorientation "vp_parallel"
 	$spriteorigin "[ 0.50 0.50 ]"
 	$basetexture "editor/ts2do/logic_collision_pair"
-	$no_fullbright" 1
+	$no_fullbright 1
 }
