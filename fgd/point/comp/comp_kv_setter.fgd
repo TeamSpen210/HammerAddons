@@ -18,6 +18,8 @@
 	kv_value_global(string) : "Value - String" : : "The value to apply."
 	kv_value_local(target_destination) : "Value - Ent Name" : : "If set, use this fixed-up entity name."
 
+	invert(boolean) : "Invert Value" : 0 : "If enabled, invert the value so 0 and 1 are swapped."
+
 	// We need to provide "some" outputs to allow you to add some.
 	// These exist on everything, at least.
 	output OnUser1(void) : "Fired in response to FireUser1 input."
