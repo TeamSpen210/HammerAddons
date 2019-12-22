@@ -290,6 +290,23 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
 
     fgd.apply_bases()
     print('\nDone!')
+
+    from pprint import pprint
+    # print('Auto Visgroups: ')
+    # pprint({k: len(v) for k, v in fgd.auto_visgroups.items()})
+
+    print('Entities without visgroups:')
+    vis_ents = {name.casefold() for ents in fgd.auto_visgroups.values() for name in ents}
+    vis_count = ent_count = 0
+    for ent in fgd:
+        if ent.type is not EntityTypes.BASE:
+            ent_count += 1
+            if ent.classname.casefold() not in vis_ents:
+                print(' - ' + ent.classname)
+            else:
+                vis_count += 1
+    print(f'Visgroup count: {vis_count}/{ent_count} ({vis_count*100/ent_count:.2f}%) done!')
+
     return fgd
 
 
@@ -687,6 +704,18 @@ def action_export(
             else:
                 # Helpers aren't inherited, so this isn't useful anymore.
                 ent.helpers.clear()
+                
+    print('Culling visgroups...')
+    # Cull visgroups that no longer exist for us.
+    valid_ents = {
+        ent.classname.casefold()
+        for ent in fgd.entities.values()
+        if ent.type is not EntityTypes.BASE
+    }
+    for key, vis_ents in list(fgd.auto_visgroups.items()):  # type: Tuple[str, str], Set[str]
+        vis_ents.intersection_update(valid_ents)
+        if not vis_ents:
+            del fgd.auto_visgroups[key]
 
     print('Exporting...')
 
