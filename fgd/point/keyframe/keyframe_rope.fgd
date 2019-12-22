@@ -1,6 +1,15 @@
-@KeyframeClass base(BaseEntityPoint, KeyFrame, RopeKeyFrame) 
+// Valve originally had move_rope and keyframe_rope, intended in that order.
+// Engine-wise they're exactly identical.
+// So we want to combine the logic, but Hammer still thinks they're the same.
+// It only detects @MoveClass, so we're alright not using @KeyFrameClass.
+//@MoveClass and animator() is required to allow them to be the first in a chain.
+// keyframe() automatically renames when copied.
+
+@MoveClass base(BaseEntityPoint, RopeKeyFrame) 
 	studio("models/editor/axis_helper_thick.mdl") 
-	keyframe() 
-= keyframe_rope: "A node entity that marks a point in a rope. The first node in the rope should be a move_rope, followed by 1 or more keyframe_ropes."
+	animator() keyframe()
+= keyframe_rope: "A node entity that marks a point in a rope. " +
+	"Traditionally, one move_rope is used to start the chain and then is followed by one or more keyframe_rope entities. " +
+	"However they are freely interchangeable."
 	[
 	]
