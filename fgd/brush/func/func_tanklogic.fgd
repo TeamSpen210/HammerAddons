@@ -1,6 +1,6 @@
 @SolidClass base(BaseTank) 
 	appliesto(MBase) 
-= func_tank: "A special kind of turret designed to fire outputs instead of bullets, functioning solely through the I/O system."
+= func_tanklogic: "A special kind of turret designed to fire outputs instead of bullets, functioning solely through the I/O system."
 	[
 	shootsound[MBase](sound) : "Shoot Sound" : "" : "Plays a specific sound each time this tank fires."
 

@@ -2,7 +2,7 @@
 	appliesto(MBase)
 	autovis(AI, AI Relationship)
 	iconsprite("editor/ai_relationship.vmt") 
-	sphere() = ai_relationship: "AI Relationship - Sets relationships between entire classify classes in the AI."
+	sphere() = ai_relationship_classify: "AI Relationship - Sets relationships between entire classify classes in the AI."
 	[
 	subject[engine](integer) : "Subject(s)" : 0
 	subject(choices) : "Subject(s)" : 0 : "This is the NPC class whose disposition will change." =
