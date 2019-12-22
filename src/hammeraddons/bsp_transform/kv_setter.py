@@ -33,6 +33,9 @@ def kv_setter(ctx: Context) -> None:
         # Use fixup name if actually set.
         kv_value = setter['kv_value_local'] or setter['kv_value_global']
 
+        if conv_bool(setter['invert']):
+            kv_value = '0' if conv_bool(kv_value) else '1'
+
         if is_flags:
             try:
                 # Convert using Python's literal rules,
