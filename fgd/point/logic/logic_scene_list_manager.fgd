@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	color(0 0 255) 
-	iconsprite("editor/choreo_manager.vmt") 
+	iconsprite("editor/ficool2/logic_scene_list_manager.vmt") 
 	color(240 180 250) 
 	line(240 180 250, targetname, scene0) 
 	line(240 180 250, targetname, scene1) 
