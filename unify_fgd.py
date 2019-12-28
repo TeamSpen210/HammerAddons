@@ -118,7 +118,7 @@ def _polyfill(tag: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
     return deco
 
 
-@_polyfill('until_p1')
+@_polyfill('until_asw')
 def _polyfill_boolean(fgd: FGD):
     """Before Alien Swarm's Hammer, boolean was not available as a keyvalue type.
 
@@ -148,7 +148,7 @@ def _polyfill_particlesystem(fgd: FGD):
                     kv.type = ValueTypes.STRING
 
 
-@_polyfill('until_p1')
+@_polyfill('until_asw')
 def _polyfill_node_id(fgd: FGD):
     """Before Alien Swarm's Hammer, node_id was not available as a keyvalue type.
 
