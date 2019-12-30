@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityPoint, SystemLevelChoice)
+@PointClass base(BaseEntityPoint, RenderFields, SystemLevelChoice)
 	color(255 0 0) 
 	color(200 0 0) 
 	iconsprite("editor/env_sun.vmt") 

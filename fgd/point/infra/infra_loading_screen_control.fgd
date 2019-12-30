@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
+	appliesto(INFRA)
 	iconsprite("editor/infra_loading_screen_control.vmt")
  	autovis(Point Entities, Globals, Loading Screen)
 = infra_loading_screen_control: "Loading screen"

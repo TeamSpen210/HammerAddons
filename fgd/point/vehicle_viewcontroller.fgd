@@ -1,10 +1,9 @@
-
 @PointClass base(BaseDriveableVehicle) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
-	studioprop() = vehicle_viewcontroller: "Vehicle hack to control player view"
+	studioprop()
+= vehicle_viewcontroller: "Vehicle hack to control player view"
 	[
-
 	// Inputs
-	input ForcePlayerIn(string) : "Force the player into the vehicle. The animation to use can be specified in the parameter. Without a parameter, the player just teleports."
+	input ForcePlayerIn(string) : "Force the player into the vehicle. The animation to use can be specified in the parameter. " +
+		"Without a parameter, the player just teleports."
 	input ForcePlayerOut(void) : "Force the player out of the vehicle."
 	]

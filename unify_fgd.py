@@ -118,7 +118,7 @@ def _polyfill(tag: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
     return deco
 
 
-@_polyfill('until_p1')
+@_polyfill('until_asw')
 def _polyfill_boolean(fgd: FGD):
     """Before Alien Swarm's Hammer, boolean was not available as a keyvalue type.
 
@@ -148,7 +148,7 @@ def _polyfill_particlesystem(fgd: FGD):
                     kv.type = ValueTypes.STRING
 
 
-@_polyfill('until_p1')
+@_polyfill('until_asw')
 def _polyfill_node_id(fgd: FGD):
     """Before Alien Swarm's Hammer, node_id was not available as a keyvalue type.
 
@@ -245,11 +245,25 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
 
     with RawFileSystem(str(dbase)) as fsys:
         for file in dbase.rglob("*.fgd"):
-            fgd.parse_file(
+            # Use a temp FGD class, to allow us to verify no overwrites.
+            file_fgd = FGD()
+            file_fgd.parse_file(
                 fsys,
                 fsys[str(file.relative_to(dbase))],
                 eval_bases=False,
             )
+            for clsname, ent in file_fgd.entities.items():
+                if clsname in fgd.entities:
+                    raise ValueError(
+                        f'Duplicate "{clsname}" class '
+                        f'in {file.relative_to(dbase)}!'
+                    )
+                fgd.entities[clsname] = ent
+
+            for path, group in file_fgd.auto_visgroups.items():
+                fgd.auto_visgroups.setdefault(path, set()).update(group)
+            fgd.mat_exclusions.update(file_fgd.mat_exclusions)
+
             print('.', end='', flush=True)
 
     if extra_loc is not None:
@@ -276,6 +290,23 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
 
     fgd.apply_bases()
     print('\nDone!')
+
+    from pprint import pprint
+    # print('Auto Visgroups: ')
+    # pprint({k: len(v) for k, v in fgd.auto_visgroups.items()})
+
+    print('Entities without visgroups:')
+    vis_ents = {name.casefold() for ents in fgd.auto_visgroups.values() for name in ents}
+    vis_count = ent_count = 0
+    for ent in fgd:
+        if ent.type is not EntityTypes.BASE:
+            ent_count += 1
+            if ent.classname.casefold() not in vis_ents:
+                print(' - ' + ent.classname)
+            else:
+                vis_count += 1
+    print(f'Visgroup count: {vis_count}/{ent_count} ({vis_count*100/ent_count:.2f}%) done!')
+
     return fgd
 
 
@@ -673,6 +704,18 @@ def action_export(
             else:
                 # Helpers aren't inherited, so this isn't useful anymore.
                 ent.helpers.clear()
+                
+    print('Culling visgroups...')
+    # Cull visgroups that no longer exist for us.
+    valid_ents = {
+        ent.classname.casefold()
+        for ent in fgd.entities.values()
+        if ent.type is not EntityTypes.BASE
+    }
+    for key, vis_ents in list(fgd.auto_visgroups.items()):  # type: Tuple[str, str], Set[str]
+        vis_ents.intersection_update(valid_ents)
+        if not vis_ents:
+            del fgd.auto_visgroups[key]
 
     print('Exporting...')
 
@@ -683,7 +726,8 @@ def action_export(
         with open(output_path, 'w') as txt_f:
             fgd.export(txt_f)
             # BEE2 compatibility, don't make it run.
-            txt_f.write('\n// BEE 2 EDIT FLAG = 0 \n')
+            if 'P2' in tags:
+                txt_f.write('\n// BEE 2 EDIT FLAG = 0 \n')
 
 
 def main(args: List[str]=None):

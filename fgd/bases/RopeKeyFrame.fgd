@@ -6,6 +6,8 @@
 		1: "Auto Resize" : 0
 		]
 
+	nextkey(target_destination) : "Next Rope" : : "Name of the next rope along this path."
+
 	slack(integer) : "Slack" : 25 : "How much extra length the rope has (by default it has the length between its two endpoints in the editor)."
 	type(choices) : "Type" : "0" =
 		[
@@ -17,11 +19,22 @@
 
 	subdiv(integer) : "Subdivision" : 2 : "Number of subdivisions between each rope segment. Maximum value is 8. Higher values make smoother ropes, but are slower to render."
 	barbed(boolean) : "Barbed" : 0 : "Test effect that makes the rope look sharper and more barbed."
-	width(string) : "Width (1-64)" : "2" : "Width of the rope."
-	texturescale(string) : "Texture Scale" : "1" : "This changes the texture resolution. The default resolution is 4 pixels per inch. Larger values stretch the texture and smaller values scrunch it up."
+	width(float) : "Width (1-64)" : 2 : "Width of the rope."
+	texturescale(float) : "Texture Scale" : 1 : "This changes the texture resolution. The default resolution is 4 pixels per inch. Larger values stretch the texture and smaller values scrunch it up."
 	collide(boolean) : "Collide with world" : 0
-	dangling(boolean) : "Start Dangling" : 0 : "When set to Yes, the rope starts out detached from its target endpoint."
-	breakable(boolean) : "Breakable" : 0 : "When set to yes, the rope can be detached from either endpoint when shot."
+
+	dangling(boolean) : "Start Dangling" : 0
+	dangling(choices) : "Start Dangling" : 0 : "When set to Yes, the rope starts out detached from its target endpoint." = [
+		0 : "Start Attached"
+		1 : "Start Dangling"
+	]
+
+	breakable(boolean) : "Breakable" : 0
+	breakable(choices) : "Breakable" : 0 : "When set to yes, the rope can be detached from either endpoint when shot." = [
+		0 : "Indestructible"
+		1 : "Breakable"
+	]
+
 	ropematerial(material) : "Rope Material" : "cable/cable.vmt" : "The material to use when rendering the rope."
 	
 	usewind(choices) : "Wind" : "0" : "Is the rope affected by wind?" =
@@ -31,10 +44,15 @@
 		]
 	usewind[engine](boolean): "Use Wind": 0
 
+	// Useless remmnants of unused keyframe logic.
+	// We have to have these for Hammer to render ropes.
+	movespeed(integer) readonly: "Speed (unused)" : 64
+	positioninterpolator(integer) readonly: "Position Interpolator" : 2 : "Curve Type. Currently only Rope is fully supported."
+
 
 	// Inputs
 	input SetScrollSpeed(float) : "Set the speed at which the texture scrolls."
-	input SetForce(string) : "Apply a force instantaneously to the rope. The parameter should be a vector containing the force to be applied (X Y Z)."
+	input SetForce(vector) : "Apply a force instantaneously to the rope. The parameter should be a vector containing the force to be applied (X Y Z)."
 	input Break(void) : "Break the rope, if it's marked to do so."
 	
 	// Outputs
