@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(since_ASW) 
-	studioprop("models/editor/axis_helper_thick.mdl") 
 	color(200 200 0) 
 	studioprop("models/editor/vgui_arrows.mdl") 
 	sphere(width) 
