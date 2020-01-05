@@ -1,6 +1,6 @@
 """Transformations that can be applied to the BSP file."""
 from typing import Callable, Dict, Tuple, List
-from srctools import FileSystem, VMF, Output
+from srctools import FileSystem, VMF, Output, Entity
 from srctools.logger import get_logger
 from srctools.packlist import PackList
 
@@ -25,6 +25,7 @@ class Context:
         self.vmf = vmf
         self.pack = pack
         self._io_remaps = {}  # type: Dict[Tuple[str, str], List[Output]]
+        self._ent_code = {}  # type: Dict[Entity, str]
 
     def add_io_remap(self, name: str, *outputs: Output) -> None:
         """Register an output to be replaced.
@@ -37,6 +38,18 @@ class Context:
             inp_name = out.output.casefold()
             out.output = ''
             self._io_remaps[name, inp_name].append(out)
+
+    def add_code(self, ent: Entity, code: str) -> None:
+        """Register VScript code to be run on spawn for this entity.
+
+        This way multiple such options can be merged together.
+        """
+        try:
+            existing = self._ent_code[ent]
+        except KeyError:
+            self._ent_code[ent] = code
+        else:
+            self._ent_code[ent] = '{}\n{}'.format(existing, code)
 
 
 TransFunc = Callable[[Context], None]
@@ -52,6 +65,7 @@ def trans(name: str) -> Callable[[TransFunc], TransFunc]:
     return deco
 
 
+# noinspection PyProtectedMember
 def run_transformations(
     vmf: VMF,
     filesys: FileSystem,
@@ -67,27 +81,40 @@ def run_transformations(
         LOGGER.info('Running "{}"...', func_name)
         func(context)
 
-    LOGGER.info('Remapping outputs...')
-    for ent in vmf.entities:
-        for out in ent.outputs[:]:
-            try:
-                # noinspection PyProtectedMember
-                remaps = context._io_remaps[
-                    out.target.casefold(),
-                    out.input.casefold(),
-                ]
-            except KeyError:
-                continue
-            ent.outputs.remove(out)
-            for new_out in remaps:
-                ent.outputs.append(Output(
-                    out.output,
-                    new_out.target,
-                    new_out.input,
-                    new_out.params or out.params,
-                    out.delay + new_out.delay,
-                    times=min(new_out.only_once, out.only_once),
-                ))
+    if context._ent_code:
+        LOGGER.info('Injecting VScript code...')
+        for ent, code in context._ent_code.items():
+            init_scripts = ent['vscripts'].split()
+            path = pack.inject_file(
+                code.replace('`', '"').encode('utf8'),
+                'scripts/vscripts/inject',
+                'nut',
+            )
+            # Don't include scripts/vscripts/ in the value, that's assumed.
+            init_scripts.append(path[17:])
+            ent['vscripts'] = ' '.join(init_scripts)
+
+    if context._io_remaps:
+        LOGGER.info('Remapping outputs...')
+        for ent in vmf.entities:
+            for out in ent.outputs[:]:
+                try:
+                    remaps = context._io_remaps[
+                        out.target.casefold(),
+                        out.input.casefold(),
+                    ]
+                except KeyError:
+                    continue
+                ent.outputs.remove(out)
+                for new_out in remaps:
+                    ent.outputs.append(Output(
+                        out.output,
+                        new_out.target,
+                        new_out.input,
+                        new_out.params or out.params,
+                        out.delay + new_out.delay,
+                        times=min(new_out.only_once, out.only_once),
+                    ))
 
 
 def _load() -> None:

@@ -49,13 +49,7 @@ def vscript_init_code(ctx: Context):
                 break
             code += '\n' + extra
 
-        init_scripts = ent['vscripts'].split()
-        init_scripts.append(ctx.pack.inject_file(
-            code.replace('`', '"').encode('utf8'),
-            'scripts/vscripts/inject',
-            'nut'
-        )[17:])  # Don't include scripts/vscripts/
-        ent['vscripts'] = ' '.join(init_scripts)
+        ctx.add_code(ent, code)
 
 
 @trans('VScript RunScriptCode Strings')
