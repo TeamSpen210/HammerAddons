@@ -1,5 +1,7 @@
+"""Implements comp_scriptvar_setter."""
 import re
-from typing import Dict, Tuple,  Optional, Callable
+from collections import defaultdict
+from typing import Dict, Type, Optional, Callable, Union, Set, List
 
 from srctools.bsp_transform import trans, Context
 from srctools.logger import get_logger
@@ -7,6 +9,7 @@ from srctools import Entity, Vec, conv_float
 
 
 LOGGER = get_logger(__name__)
+MODES = {}  # type: Dict[str, Callable[[Entity, Entity], str]]
 
 
 def vs_vec(vec: Vec) -> str:
@@ -14,29 +17,83 @@ def vs_vec(vec: Vec) -> str:
     return 'Vector({})'.format(vec.join(', '))
 
 
-@trans('VScript Scriptvar')
+class VarData:
+    """The info stored on a variable."""
+    def __init__(self) -> None:
+        # Non-array values.
+        self.scalar = None  # type: Optional[str]
+        # Array values at a specific index.
+        self.specified_pos = {}  # type: Dict[int, str]
+        # Array values at anywhere that fits.
+        self.extra_pos = set()  # type: Set[str]
+
+    @property
+    def is_array(self) -> bool:
+        return bool(self.specified_pos or self.extra_pos)
+
+    def make_code(self) -> str:
+        """Generate the code for setting this."""
+        if self.is_array:
+            # First build an array big enough to fit everything.
+
+            array = [None] * (
+                max(self.specified_pos.keys(), default=0) + 1 +
+                len(self.extra_pos)
+            )  # type: List[Optional[str]]
+
+            for ind, value in self.specified_pos.items():
+                array[ind] = value
+
+            # Then insert each extra value in at the first space that fits.
+            # Use the start parameter to skip values we know are None.
+            ind = 0
+            for value in sorted(self.extra_pos):
+                ind = array.index(None, ind)
+                array[ind] = value
+
+            # Strip any overallocated Nones at the end.
+            while array[-1] is None:
+                array.pop()
+
+            return '[\n{}\n]'.format(', \n'.join([
+                '\t null' if x is None else '\t' + x
+                for x in array
+            ]))
+        else:
+            return self.scalar
+
+
+@trans('comp_scriptvar_setter')
 def comp_scriptvar(ctx: Context):
     """An entity to allow setting VScript variables to information from the map."""
-    # {ent: {variable: {index: value}}}
-    set_vars = {}  # type: Dict[Entity, Dict[str, Dict[Optional[int], str]]]
+    # {ent: {variable: data}}
+    set_vars = defaultdict(lambda: defaultdict(VarData))  # type: Dict[Entity, Dict[str, VarData]]
+    # If the index is None, there's no index.
+    # If an int, that specific one.
+    # If ..., blank index and it's inserted anywhere that fits.
 
-    for comp_ent in ctx.vmf.by_class['comp_scriptvar']:
+    for comp_ent in ctx.vmf.by_class['comp_scriptvar_setter']:
         comp_ent.remove()
         var_name = orig_var_name = comp_ent['variable']
-        index = None
+        index = None  # type: Union[int, Type[Ellipsis], None]
 
-        parsed_match = re.fullmatch(r'\s*([^[]+)\[([0-9]+)\]\s*', var_name)
+        parsed_match = re.fullmatch(r'\s*([^[]+)\[([0-9]*)\]\s*', var_name)
         if parsed_match:
             var_name, index_str = parsed_match.groups()
-            try:
-                index = int(index_str)
-            except (TypeError, ValueError):
-                LOGGER.warning(
-                    'Invalid variable index in '
-                    'comp_scriptvar at {} targetting "{}"!',
-                    comp_ent['origin'], comp_ent['target']
-                )
-                continue
+            if index_str:
+                try:
+                    index = int(index_str)
+                    if index < 0:
+                        raise ValueError  # No negatives.
+                except (TypeError, ValueError):
+                    LOGGER.warning(
+                        'Invalid variable index in '
+                        'comp_scriptvar at {} targetting "{}"!',
+                        comp_ent['origin'], comp_ent['target']
+                    )
+                    continue
+            else:
+                index = ...
         elif '[' in var_name or ']' in var_name:
             LOGGER.warning(
                 'Unparsable variable[index] in '
@@ -72,14 +129,48 @@ def comp_scriptvar(ctx: Context):
 
         ent = None
         for ent in ctx.vmf.search(comp_ent['target']):
-            ind_dict = set_vars.setdefault(ent, {}).setdefault(var_name, {})
-            if index in ind_dict:
+            var_data = set_vars[ent][var_name]
+            # Now we've got to match the assignment this is doing
+            # with other scriptvars.
+
+            # First, take care of scalar assignment.
+            if index is None:
+                if var_data.is_array:
+                    LOGGER.warning(
+                        "comp_scriptvar at {} can't set a non-array value "
+                        'on top of the array {} on the entity "{}"!',
+                        comp_ent['origin'], var_name, comp_ent['target'],
+                    )
+                elif var_data.scalar is not None:
+                    LOGGER.warning(
+                        'comp_scriptvar at {} overwrote '
+                        'the variable {} on "{}"!',
+                        comp_ent['origin'], var_name, comp_ent['target'],
+                    )
+                else:
+                    var_data.scalar = code
+                continue
+            # Else, we're setting an array value.
+            if var_data.scalar is not None:
                 LOGGER.warning(
-                    'comp_scriptvar at {} overwrote '
-                    'the variable {}  on "{}"!',
-                    comp_ent['origin'], orig_var_name, comp_ent['target'],
+                    "comp_scriptvar at {} can't set an array value "
+                    'on top of the non-array {} on the entity "{}"!',
+                    comp_ent['origin'], var_name, comp_ent['target'],
                 )
-            ind_dict[index] = code
+                continue
+            if index is Ellipsis:
+                var_data.extra_pos.add(code)
+            else:
+                # Allow duplicates that write the exact same thing,
+                # as a special case.
+                if var_data.specified_pos.get(index, code) != code:
+                    LOGGER.warning(
+                        "comp_scriptvar at {} can't "
+                        'overwrite {}[{}] on the entity "{}"!',
+                        comp_ent['origin'], var_name, index, comp_ent['target'],
+                    )
+                else:
+                    var_data.specified_pos[index] = code
 
         if ent is None:
             # No targets?
@@ -91,8 +182,12 @@ def comp_scriptvar(ctx: Context):
 
     for ent, var_dict in set_vars.items():
         full_code = []
-        for var_name, values in var_dict.items():
-
+        for var_name, var_data in var_dict.items():
+            full_code.append('{} <- {};'.format(
+                var_name, var_data.make_code()
+            ))
+        if full_code:
+            ctx.add_code(ent, '\n'.join(full_code))
 
 
 # Functions to call to compute the data to read.
@@ -147,6 +242,11 @@ def _mode_axes(norm: Vec) -> Callable[[Entity, Entity], str]:
     return mode_func
 
 
-mode_x = _mode_axes(Vec(x=1.0))
-mode_y = _mode_axes(Vec(y=1.0))
-mode_z = _mode_axes(Vec(z=1.0))
+MODES['x'] = _mode_axes(Vec(x=1.0))
+MODES['y'] = _mode_axes(Vec(y=1.0))
+MODES['z'] = _mode_axes(Vec(z=1.0))
+MODES.update(
+    (name[5:], func)
+    for name, func in globals().items()
+    if name.startswith('mode_')
+)

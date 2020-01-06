@@ -133,5 +133,6 @@ def _load() -> None:
         packing,
         portal2,
         sceneset,
+        scriptvar_setter,
     )
 _load()
