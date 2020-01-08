@@ -78,7 +78,7 @@ def main(argv: List[str]) -> None:
     vmf = bsp_file.read_ent_data()
     LOGGER.info('Done!')
 
-    run_transformations(vmf, fsys, packlist)
+    run_transformations(vmf, fsys, packlist, path, game_info)
 
     studiomdl_loc = conf.get(str, 'propcombine_studiomdl')
     if studiomdl_loc and args.propcombine:

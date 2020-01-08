@@ -1,8 +1,11 @@
 """Transformations that can be applied to the BSP file."""
+from pathlib import Path
 from typing import Callable, Dict, Tuple, List
+
 from srctools import FileSystem, VMF, Output, Entity
 from srctools.logger import get_logger
 from srctools.packlist import PackList
+from srctools.game import Game
 
 
 LOGGER = get_logger(__name__, 'bsp_trans')
@@ -20,10 +23,15 @@ class Context:
         filesys: FileSystem,
         vmf: VMF,
         pack: PackList,
+        bsp_path: str,
+        game: Game,
     ) -> None:
         self.sys = filesys
         self.vmf = vmf
         self.pack = pack
+        self.bsp_path = Path(bsp_path)
+        self.game = game
+
         self._io_remaps = {}  # type: Dict[Tuple[str, str], List[Output]]
         self._ent_code = {}  # type: Dict[Entity, str]
 
@@ -70,13 +78,12 @@ def run_transformations(
     vmf: VMF,
     filesys: FileSystem,
     pack: PackList,
+    bsp_path: str,
+    game: Game,
 ) -> None:
     """Run all transformations."""
-    context = Context(
-        filesys,
-        vmf,
-        pack,
-    )
+    context = Context(filesys, vmf, pack, bsp_path, game)
+
     for func_name, func in TRANSFORMS.items():
         LOGGER.info('Running "{}"...', func_name)
         func(context)
