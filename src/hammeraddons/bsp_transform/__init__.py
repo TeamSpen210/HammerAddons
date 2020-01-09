@@ -45,7 +45,7 @@ class Context:
         for out in outputs:
             inp_name = out.output.casefold()
             out.output = ''
-            self._io_remaps[name, inp_name].append(out)
+            self._io_remaps.setdefault((name, inp_name), []).append(out)
 
     def add_code(self, ent: Entity, code: str) -> None:
         """Register VScript code to be run on spawn for this entity.
