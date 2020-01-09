@@ -65,11 +65,7 @@ def vscript_runscriptcode_strings(ctx: Context):
                 continue
             if '`' not in out.params:
                 continue
-            out.params = ctx.pack.inject_file(
-                out.params.replace('`', '"').encode('utf8'),
-                'scripts/vscripts/inject',
-                'nut'
-            )[17:]  # Don't include scripts/vscripts/
+            out.params = ctx.pack.inject_vscript(out.params.replace('`', '"'))
             out.input = 'RunScriptFile'
 
 

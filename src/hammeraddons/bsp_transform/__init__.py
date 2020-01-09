@@ -92,11 +92,7 @@ def run_transformations(
         LOGGER.info('Injecting VScript code...')
         for ent, code in context._ent_code.items():
             init_scripts = ent['vscripts'].split()
-            path = pack.inject_file(
-                code.replace('`', '"').encode('utf8'),
-                'scripts/vscripts/inject',
-                'nut',
-            )
+            path = pack.inject_vscript(code.replace('`', '"'))
             # Don't include scripts/vscripts/ in the value, that's assumed.
             init_scripts.append(path[17:])
             ent['vscripts'] = ' '.join(init_scripts)
