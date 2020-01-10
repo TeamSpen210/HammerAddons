@@ -116,7 +116,7 @@ def run_transformations(
                         new_out.input,
                         new_out.params or out.params,
                         out.delay + new_out.delay,
-                        times=min(new_out.only_once, out.only_once),
+                        only_once=new_out.only_once and out.only_once,
                     ))
 
 
