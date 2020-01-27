@@ -2,9 +2,9 @@
 from pathlib import Path
 from typing import Callable, Dict, Tuple, List
 
-from srctools import FileSystem, VMF, Output, Entity
+from srctools import FileSystem, VMF, Output, Entity, FGD
 from srctools.logger import get_logger
-from srctools.packlist import PackList
+from srctools.packlist import PackList, load_fgd
 from srctools.game import Game
 
 
@@ -25,11 +25,13 @@ class Context:
         pack: PackList,
         bsp_path: str,
         game: Game,
+        fgd: FGD = None,
     ) -> None:
         self.sys = filesys
         self.vmf = vmf
         self.pack = pack
         self.bsp_path = Path(bsp_path)
+        self.fgd = fgd or load_fgd()
         self.game = game
 
         self._io_remaps = {}  # type: Dict[Tuple[str, str], List[Output]]
@@ -130,6 +132,7 @@ def _load() -> None:
         globals,
         instancing,
         kv_setter,
+        numeric_transition,
         movement,
         packing,
         portal2,
