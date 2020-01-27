@@ -1,0 +1,58 @@
+@PointClass
+	appliesto(srctools)
+	base(logic_relay) 
+	line(255 255 255, targetname, target)
+= comp_numeric_transition : "When triggered, animates a keyvalue/input over time with various options."
+	[
+	target(target_destination) : "Entity to Control" : : "The entity which the outputs will be directed to."
+	opt_name(string) : "Keyvalue/Input Name" : "SetSpeed" : "The name of the keyvalue or input to change." +
+		"If the target is not an entity findable by the postcompiler, IO Type must be set."
+		
+	io_type[engine](string) : "I/O Type" : "auto"
+	io_type(choices) : "I/O Type" : "auto" : "The method used to control an entity. " +
+		"If Input, use the input name provided." +
+		"If KeyValue, use AddOutput to change the keyvalue." +
+		"If Auto, examine the entity class that is being controlled to determine the appropriate mode." =
+		[
+		"auto" : "Automatic"
+		"io": "Input"
+		"kv" : "KeyValue (AddOutput)"
+		]
+		
+	transform(choices) : "Value Type" : "speed" : "The behaviour of the input, used to control what actual values are sent. Regardless of this value, the other options are 'position'-type values!" = [
+		"set" : "Instantly Set"
+		"moveto" : "Move to value"
+		"speed" : "Adjust Speed"
+		"light" : "Light Pattern"
+	]
+	
+	line_trans2(string) readonly : "-------------------------------------------"
+	
+	beat_interval(float) : "Beat Interval" : "0.1" : "Time between each output. Smaller values are more accurate, but increase the outputs generated."
+	delay(float) : "Start Delay" : "0.0" : "Wait this amount of time after being triggered before animating."
+	duration(float) : "Duration" : 5 : "Time the change will take."
+	startval(float) : "Start Value" : 0 : "Starting value. If the Value Type is Light Pattern, these may be a-z letters."
+	endval(float): "Ending Value" : 100 : "Ending value. If the Value Type is Light Pattern, these may be a-z letters."
+
+	line_trans3(string) readonly : "-------------------------------------------"
+	
+	easing_start(choices) : "Easing Start" : "linear" : "Controls how the animation begins." =
+		[
+		"linear" : "None"
+		"quad" : "Quadratic (x²)"
+		"cubic": "Cubic (x³)"
+		"quartic": "Quartic (x^4)" // No symbol for this one in CP1252 :(
+		// "exp" : "Exponential"
+		"sine" : "Sinusoidal"
+		]
+	easing_end(choices) : "Easing End" : "linear" : "Controls how the animation ends." =
+		[
+		"linear" : "None"
+		"quad" : "Quadratic (x²)"
+		"cubic": "Cubic (x³)"
+		"quartic": "Quartic (x^4)"
+		// "exp" : "Exponential"
+		"sine" : "Sinusoidal"
+		// "overshoot" : "Overshoot"
+		]
+	]
