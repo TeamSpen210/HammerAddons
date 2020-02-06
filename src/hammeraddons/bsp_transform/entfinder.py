@@ -122,9 +122,8 @@ def entity_finder(ctx: Context):
         finder.outputs.clear()
 
         # If the ent has no targetname, give it one.
-        if not found_ent['targetname']:
-            found_ent['targetname'] = '_found_entity_1'
-            found_ent.make_unique()
+        if not found_ent['targetname'] or conv_bool(finder['makeunique']):
+            found_ent.make_unique('_found_entity')
 
         # If specified, teleport to the item's location.
         if conv_bool(finder['teleporttarget']):
