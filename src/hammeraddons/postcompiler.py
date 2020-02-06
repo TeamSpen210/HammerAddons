@@ -109,10 +109,10 @@ def main(argv: List[str]) -> None:
 
         packlist.eval_dependencies()
 
-    with bsp_file.packfile() as pak_zip:
-        packlist.pack_into_zip(pak_zip, blacklist=pack_blacklist)
+    packlist.pack_into_zip(bsp_file, blacklist=pack_blacklist)
 
-    LOGGER.info('Packed files: \n{}'.format('\n'.join(pak_zip.namelist())))
+    with bsp_file.packfile() as pak_zip:
+        LOGGER.info('Packed files: \n{}'.format('\n'.join(pak_zip.namelist())))
 
     LOGGER.info('Writing BSP...')
     bsp_file.save()
