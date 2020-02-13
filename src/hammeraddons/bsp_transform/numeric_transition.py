@@ -142,7 +142,7 @@ def numeric_transition(ctx: Context) -> None:
         if transform_type == 'speed':
             # Compute the speed from x to x+1
             result = (
-                (compute_point(x) + compute_point(x + 1/point_count)) / beat_time
+                (compute_point(x + 1/point_count) - compute_point(x)) / beat_time
                 for x in points
             )
         elif transform_type == 'moveto':
