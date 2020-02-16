@@ -78,17 +78,25 @@ def main(argv: List[str]) -> None:
     vmf = bsp_file.read_ent_data()
     LOGGER.info('Done!')
 
-    run_transformations(vmf, fsys, packlist, path, game_info)
+    studiomdl_path = conf.get(str, 'studiomdl')
+    if studiomdl_path:
+        studiomdl_loc = (game_info.root / studiomdl_path).resolve()
+        if not studiomdl_loc.exists():
+            LOGGER.warning('No studiomdl found at "{}"!', studiomdl_loc)
+            studiomdl_loc = None
+    else:
+        studiomdl_loc = None
 
-    studiomdl_loc = conf.get(str, 'propcombine_studiomdl')
-    if studiomdl_loc and args.propcombine:
+    run_transformations(vmf, fsys, packlist, path, game_info, studiomdl_loc)
+
+    if studiomdl_loc is not None and args.propcombine:
         LOGGER.info('Combining props...')
         propcombine.combine(
             bsp_file,
             vmf,
             packlist,
             game_info,
-            game_info.root / studiomdl_loc,
+            studiomdl_loc,
             [
                 game_info.root / folder
                 for folder in

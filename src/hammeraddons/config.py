@@ -143,11 +143,18 @@ OPTIONS = [
         * "nopack" "folder/" prohibits files in this path from being packed.
     """),
     Opt(
-        'propcombine_studiomdl', '',
-        """Set the path to StudioMDL used to combine static props.
-        If unset combining props is disabled. 
+        'studiomdl', '',
+        """Set the path to StudioMDL so the compiler can generate props.
+        If unset these features are disabled.
         This is relative to the game root.
-        """
+        """,
+        fallback='propcombine_studiomdl',
+    ),
+
+    Opt(
+        'propcombine_studiomdl', '',
+        """Old name for "studiomdl".
+        """,
     ),
     Opt(
         'propcombine_qc_folder', Property('', []),

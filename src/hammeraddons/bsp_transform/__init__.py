@@ -26,6 +26,7 @@ class Context:
         bsp_path: str,
         game: Game,
         fgd: FGD = None,
+        studiomdl_loc: Path=None,
     ) -> None:
         self.sys = filesys
         self.vmf = vmf
@@ -33,6 +34,7 @@ class Context:
         self.bsp_path = Path(bsp_path)
         self.fgd = fgd or load_fgd()
         self.game = game
+        self.studiomdl = studiomdl_loc
 
         self._io_remaps = {}  # type: Dict[Tuple[str, str], List[Output]]
         self._ent_code = {}  # type: Dict[Entity, str]
@@ -82,9 +84,10 @@ def run_transformations(
     pack: PackList,
     bsp_path: str,
     game: Game,
+    studiomdl_loc: Path=None,
 ) -> None:
     """Run all transformations."""
-    context = Context(filesys, vmf, pack, bsp_path, game)
+    context = Context(filesys, vmf, pack, bsp_path, game, studiomdl_loc)
 
     for func_name, func in TRANSFORMS.items():
         LOGGER.info('Running "{}"...', func_name)
