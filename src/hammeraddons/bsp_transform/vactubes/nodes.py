@@ -60,7 +60,13 @@ class Node(ABC):
             for out in pass_outputs:
                 out.output = 'On' + PASS_OUT
             if ent['classname'].startswith('comp_'):
-                ent['classname'] = 'info_target'
+                # Remove the extra keyvalues we use.
+                ent.keys = {
+                    'classname': 'info_target',
+                    'targetname': ent['targetname'],
+                    'origin': ent['origin'],
+                    'angles': ent['angles'],
+                }
             ent.make_unique('_vac_node')
         elif not self.keep_ent:
             ent.remove()
@@ -233,7 +239,7 @@ class Dropper(Destroyer):
             best_dist = dist
             best_cube = cube
         if best_cube is None:
-            LOGGER.warning('Cube dropper at {} has no cube. Generating standard one...')
+            LOGGER.warning('Cube dropper at {} has no cube. Generating standard one...', ref_pos)
             best_cube = vmf.create_ent(
                 'prop_weighted_cube',
                 angles='0 0 0',

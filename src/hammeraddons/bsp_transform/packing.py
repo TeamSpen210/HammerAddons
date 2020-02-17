@@ -2,6 +2,7 @@
 import os
 from typing import Set
 
+from srctools import Entity
 from srctools.bsp_transform import trans, Context
 from srctools.logger import get_logger
 from srctools.packlist import FileType, SoundScriptMode, unify_path
@@ -24,23 +25,27 @@ def comp_precache_model(ctx: Context):
             ent.remove()
             continue
         already_done.add(os.path.normcase(model))
+        make_precache_prop(ent)
 
-        ent['classname'] = 'prop_dynamic_override'
 
-        # Disable shadows and similar things on this to make it as cheap
-        # as possible.
-        ent['rendermode'] = '10'
-        ent['disableshadowdepth'] = '1'
-        ent['disableshadows'] = '1'
-        ent['solid'] = '0'
-        ent['shadowdepthnocache'] = '2'
-        ent['spawnflags'] = '256'  # Start with collision off.
-        ent['SuppressAnimSounds'] = '1'
-        ent['DisableBoneFollowers'] = '1'  # Bone followers are extra ents, no thanks.
-        ent['PerformanceMode'] = '2'  # "Full gibs on all platforms."
+def make_precache_prop(ent: Entity) -> None:
+    """Alter this prop to act as a precache ent."""
+    ent['classname'] = 'prop_dynamic_override'
+    # Disable shadows and similar things on this to make it as cheap
+    # as possible.
+    ent['rendermode'] = '10'
+    ent['disableshadowdepth'] = '1'
+    ent['disableshadows'] = '1'
+    ent['solid'] = '0'
+    ent['shadowdepthnocache'] = '2'
+    ent['spawnflags'] = '256'  # Start with collision off.
+    ent['SuppressAnimSounds'] = '1'
+    ent['DisableBoneFollowers'] = '1'  # Bone followers are extra ents, no thanks.
+    ent['PerformanceMode'] = '2'  # "Full gibs on all platforms."
 
-        # Move to a corner of the map, so it won't be in PVS generally.
-        ent['origin'] = '-15872 -15872 -15872'
+    # Move to a corner of the map, so it won't be in PVS generally.
+    ent['origin'] = '-15872 -15872 -15872'
+
 
 SND_CACHE_FUNC = b'''\
 function Precache() {

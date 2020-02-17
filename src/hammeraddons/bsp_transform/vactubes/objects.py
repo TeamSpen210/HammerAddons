@@ -2,6 +2,7 @@ from typing import Optional, Tuple, List, Dict
 import os.path
 
 import srctools
+from srctools.bsp_transform.packing import make_precache_prop
 from srctools.packlist import PackList
 
 from srctools import Vec, VMF
@@ -51,8 +52,12 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[Dict[Tuple[str, int], VacObject], s
             srctools.conv_int(ent['skin']),
         )
         vac_objects.append(obj)
-        # Convert the ent into a precache command
-        ent['classname'] = 'comp_precache_model'
+        # Convert the ent into a precache ent, stripping the other keyvalues.
+        ent.keys = {
+            'model': ent['model']
+        }
+        make_precache_prop(ent)
+
         if obj.model_drop:
             cube_objects[
                 obj.model_drop.replace('\\', '/'),

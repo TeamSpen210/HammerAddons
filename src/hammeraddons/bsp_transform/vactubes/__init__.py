@@ -12,7 +12,6 @@ from srctools.smd import Mesh
 import srctools.logger
 from srctools import Vec, Output, conv_int
 from srctools.bsp_transform import trans, Context
-from srctools.bsp_transform.packing import comp_precache_model
 from srctools.bsp_transform.vactubes import nodes
 from srctools.bsp_transform.vactubes import animations, objects
 
@@ -104,9 +103,6 @@ def vactube_transform(ctx: Context) -> None:
     LOGGER.info('{} vactube objects found.', len(vac_objects))
     if not vac_objects:
         return  # Nothing for inside vactubes.
-
-    # Run this again, so it grabs our new ents if not already.
-    comp_precache_model(ctx)
 
     # Now join all the nodes to each other.
     # Tubes only have 90 degree bends, so a system should mostly be formed
