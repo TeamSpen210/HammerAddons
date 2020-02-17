@@ -219,7 +219,7 @@ def vactube_transform(ctx: Context) -> None:
         spawnflags=64 | 256,  # Use Hitboxes for Renderbox, collision disabled.
     )
     ctx.vmf.create_ent(
-        'prop_dynamic',
+        'prop_dynamic_override',  # In case you use the physics model.
         targetname='_vactube_temp_visual',
         parentname='_vactube_temp_mover,move',
         origin='-16384 0 1024',
