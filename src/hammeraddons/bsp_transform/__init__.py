@@ -141,5 +141,6 @@ def _load() -> None:
         portal2,
         sceneset,
         scriptvar_setter,
+        vactubes,
     )
 _load()
