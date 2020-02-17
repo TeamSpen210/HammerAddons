@@ -1,0 +1,6 @@
+VertexlitGeneric
+{
+$basetexture "models\props_backstage\vacum_scanner_tv_boxedturret"
+$surfaceprop metal
+$selfillum 1
+}

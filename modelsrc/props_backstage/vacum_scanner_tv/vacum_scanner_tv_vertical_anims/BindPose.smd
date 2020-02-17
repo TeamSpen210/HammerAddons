@@ -1,0 +1,11 @@
+// Created by Crowbar 0.55
+version 1
+nodes
+  0 "vacum_scanner_tv_vert" -1
+  1 "vacum_scanner_tv_vert_model" 0
+end
+skeleton
+  time 0
+    0 0.000000 0.000000 0.000000 1.570792 0.000005 -0.000005
+    1 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+end
