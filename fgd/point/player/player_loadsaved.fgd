@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	size(-8 -8 -8, 8 8 8) 
+	iconsprite("editor/ficool2/player_loadsaved")
 = player_loadsaved: "Load Auto-Saved game"
 	[
 	duration(string) : "Fade Duration (seconds)" : "2"

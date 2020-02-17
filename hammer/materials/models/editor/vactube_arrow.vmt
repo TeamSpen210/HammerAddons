@@ -1,0 +1,5 @@
+VertexlitGeneric
+	{
+	$basetexture "models/editor/vactube_arrow"
+	$alphatest 1
+	}

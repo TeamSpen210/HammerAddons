@@ -1,0 +1,9 @@
+// Created by Crowbar 0.55
+version 1
+nodes
+  0 "static_prop" -1
+end
+skeleton
+  time 0
+    0 0.000000 0.000000 0.000000 0.000000 0.000000 -1.570796
+end

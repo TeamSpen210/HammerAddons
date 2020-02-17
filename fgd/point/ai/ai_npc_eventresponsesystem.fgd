@@ -2,7 +2,7 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2)
 	autovis(AI, AI Event Response System) 
-	size(-8 -8 -8, 8 8 8) 
+	iconsprite("editor/ficool2/ai_npc_eventresponsesystem")
 = ai_npc_eventresponsesystem: "An entity that allows you to generate events for nearby friendly NPCs to respond to."
 	[
 

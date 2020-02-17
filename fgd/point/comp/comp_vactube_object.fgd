@@ -1,0 +1,26 @@
+@PointClass
+	appliesto(P2, srctools)
+	autovis(Vactubes, Vac Globals)
+	studioprop()
+= comp_vactube_object : "Registers objects that can appear in the tubing."
+[
+	model(studio) : "Vac Model" : : "Specifies the model used while in the vactube."
+	skin(integer) : "Vac Skin" : : "Skin for the vactube model."
+	offset(vecline) : "Offset" : : "The centerpoint of the model for positioning."
+	weight(int) : "Weight" : 1 : "The number of extra 'chances' for this to spawn."
+
+	tv_skin[engine](integer) : "TV Skin" : 0
+	tv_skin(choices) : "TV Skin" : 0 : "The skin to display on scanner TVs." = 
+	[
+		0 : "Blank"
+		1 : "Chair"
+		2 : "Table"
+		3 : "Cube"
+		4 : "Hover turret / Core / Sphere"
+		5 : "Turret"
+		6 : "Boxed Turret"
+	]
+	
+	cube_model(studio) : "Cube Model" : : "If set, the model for the real cube version."
+	cube_skin(integer) : "Cube Skin" : 0 : "The specific skin to detect on the real cubes."
+]

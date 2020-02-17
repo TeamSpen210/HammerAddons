@@ -1,0 +1,18 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(P2, srctools)
+	autovis(Vactubes, Vac Paths)
+	studio("models/editor/vactubes/end_point.mdl")
+	sphere(radius)
+= comp_vactube_end : "Marks the end point of a vactube. Objects reaching here will be cleaned up."
+[
+	radius(float) : "Cube Radius" : 0 : "The radius to search for cubes in for droppers. If zero, this is a regular endpoint, and the rest of the options have no effect."
+	autorespawn(boolean) : "Auto Respawn" : 1 : "Automatically respawn cubes when destroyed."
+
+	filtername(target_destination) : "Filter" : : "The filter_activator_name to set to point at the cube."
+	template(target_destination) : "Template" : : "The point_template to set to spawn the cube."
+
+	input RequestSpawn(void) : "Request a cube to be spawned and routed here."
+	input FireCubeUser1(void) : "FireUser1 at the cube, for dissolving existing ones."
+	output OnCubeArrived(void) : "Triggered when the cube has arrived to be dispensed."
+	output OnFizzled(void) : "Fired when the cube is fizzled, and autorespawn is enabled."
+]
