@@ -6,17 +6,18 @@ class Cargo {
 	cube_model = ""; // The real physics model used for the prop_weighted_cube.
 
     model = "";  // model to use for the fake "cube".
-    skin = "0"; // Skin to use.
+    skin = 0; // Skin to use.
     localpos = "0 0 0"; // Local offset.
     tv_skin = 0; // Skin on the Diversity Scanner TV.
-    constructor (vac_mdl, cube_mdl, off, tv) {
+    constructor (vac_mdl, vac_skin, cube_mdl, off, tv) {
 		model = vac_mdl;
+		skin = vac_skin;
 		cube_model = cube_mdl;
 		localpos = off;
 		tv_skin = tv;
     }
 	function _tostring () {
-	    return "<Cube \"" + model + "\", weight=" + weight + ", zoff=" + z_offset + ">";
+	    return "<Cargo \"" + model + "\", weight=" + weight + ", zoff=" + z_offset + ">";
 	}
 }
 
@@ -89,8 +90,8 @@ function show() {
 }
 
 // Helper functions to create and register the types.
-function obj(vac_mdl, cube_mdl, weight, off, tv) {
-	local cargo = Cargo(vac_mdl, cube_mdl, off, tv);
+function obj(vac_mdl, vac_skin, cube_mdl, weight, off, tv) {
+	local cargo = Cargo(vac_mdl, vac_skin, cube_mdl, off, tv);
     for (local i = 0; i < weight; i++) {
     	CARGOS.append(cargo);
     }
@@ -161,7 +162,7 @@ function make_cube() {
 	}
 
 	cargo.visual.SetModel(cargo_type.model);
-    EntFireByHandle(cargo.visual, "Skin", cargo_type.skin, 0, self, self);
+    EntFireByHandle(cargo.visual, "Skin", cargo_type.skin.tostring(), 0, self, self);
     EntFireByHandle(cargo.visual, "EnableDraw", "", 0, self, self);
     EntFireByHandle(cargo.visual, "SetLocalOrigin", cargo_type.localpos, 0, self, self);
     EntFireByHandle(cargo.mover, "SetAnimation", anim.name, 0, self, self);

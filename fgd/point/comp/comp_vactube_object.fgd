@@ -22,4 +22,5 @@
 	]
 	
 	cube_model(studio) : "Cube Model" : : "If set, the model for the real cube version."
+	cube_skin(integer) : "Cube Skin" : 0 : "The specific skin to detect on the real cubes."
 ]
