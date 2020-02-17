@@ -10,7 +10,7 @@ from srctools.compiler.propcombine import MDL_EXTS
 from srctools.smd import Mesh
 
 import srctools.logger
-from srctools import Vec, Output
+from srctools import Vec, Output, conv_int
 from srctools.bsp_transform import trans, Context
 from srctools.bsp_transform.packing import comp_precache_model
 from srctools.bsp_transform.vactubes import nodes
@@ -291,8 +291,9 @@ def vactube_transform(ctx: Context) -> None:
             cube_name = 'null'
             if isinstance(target, nodes.Dropper):
                 cube_model = target.cube['model'].replace('\\', '/')
+                cube_skin = conv_int(target.cube['skin'])
                 try:
-                    cube_name = vac_objects[cube_model].id
+                    cube_name = vac_objects[cube_model, cube_skin].id
                 except KeyError:
                     LOGGER.warning(
                         'Cube model "{}" doesn\'t '
