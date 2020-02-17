@@ -1,0 +1,24 @@
+@PointClass base(Angles)
+	appliesto(P2, srctools)
+	autovis(Vactubes, Vac Paths)
+	studioprop()
+= comp_vactube_junction : "Marks a junction in a vactube, where they're forced to change direction. Scanner models near straight nodes will be detected automatically."
+[
+	model(choices) : "Type" : "models/editor/vactubes/straight.mdl" : "The size and type of junction. Splitters split the tube into two paths." = [
+		"models/editor/vactubes/straight.mdl" : "Straight / Scanner"
+		"models/editor/vactubes/curve_1.mdl" : "Curve: 1"
+		"models/editor/vactubes/curve_2.mdl" : "Curve: 2"
+		"models/editor/vactubes/curve_3.mdl" : "Curve: 3"
+		"models/editor/vactubes/curve_4.mdl" : "Curve: 4"
+		"models/editor/vactubes/curve_5.mdl" : "Curve: 5"
+		"models/editor/vactubes/curve_6.mdl" : "Curve: 6"
+		"models/editor/vactubes/splitter_straight.mdl" : "Splitter: Straight"
+		"models/editor/vactubes/splitter_sides.mdl" : "Splitter: Left/Right"
+	]
+
+	skin(choices) : "Curve Direction" : 0 : "Reverse the direction, to make placing easier. Does not apply to splitters." = [
+		0 : "Forward"
+		1 : "Backward"
+	]
+	output OnPass(void) : "Fired when a cube passes by."
+]
