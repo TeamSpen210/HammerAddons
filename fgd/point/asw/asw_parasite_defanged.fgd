@@ -1,0 +1,4 @@
+@NpcClass base(asw_parasite) 
+= asw_parasite_defanged: "A defanged version of the parasite Swarm alien, which is unable to infest anything."
+	[
+	]
