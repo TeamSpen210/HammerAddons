@@ -201,7 +201,7 @@ def vactube_transform(ctx: Context) -> None:
         try:
             f = full_loc.with_suffix(ext).open('rb')
         except FileNotFoundError:
-            LOGGER.warning('No {}!', full_loc.with_suffix(ext))
+            pass
         else:
             with f:
                 ctx.pack.pack_file(Path('models', anim_mdl_name.with_suffix(ext)), data=f.read())
