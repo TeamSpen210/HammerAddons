@@ -25,6 +25,7 @@ class Context:
         pack: PackList,
         bsp_path: str,
         game: Game,
+        *,
         fgd: FGD = None,
         studiomdl_loc: Path=None,
     ) -> None:
@@ -87,7 +88,7 @@ def run_transformations(
     studiomdl_loc: Path=None,
 ) -> None:
     """Run all transformations."""
-    context = Context(filesys, vmf, pack, bsp_path, game, studiomdl_loc)
+    context = Context(filesys, vmf, pack, bsp_path, game, studiomdl_loc=studiomdl_loc)
 
     for func_name, func in TRANSFORMS.items():
         LOGGER.info('Running "{}"...', func_name)

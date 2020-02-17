@@ -85,6 +85,7 @@ def main(argv: List[str]) -> None:
             LOGGER.warning('No studiomdl found at "{}"!', studiomdl_loc)
             studiomdl_loc = None
     else:
+        LOGGER.warning('No studiomdl path provided.')
         studiomdl_loc = None
 
     run_transformations(vmf, fsys, packlist, path, game_info, studiomdl_loc)
