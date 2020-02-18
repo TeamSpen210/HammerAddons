@@ -3,7 +3,7 @@ import math
 from typing import Iterator, Tuple, List, Optional, Union
 
 from srctools.bsp_transform.vactubes import nodes
-from srctools import Vec, Output
+from srctools import Vec
 from srctools.smd import BoneFrame, Mesh
 from random import Random
 
@@ -110,17 +110,6 @@ class Animation:
             BoneFrame(self.move_bone, pos, Vec(next(self.rotator)))
         ]
         self.cur_frame += 1
-
-    def add_outs(self, outputs: List[Output]) -> None:
-        """Add outputs that fire at the current frame time."""
-        time = self.duration
-        self.outputs += [Output(
-                '',
-                out.target,
-                out.input,
-                out.params,
-                max(0.0, out.delay + time),
-        ) for out in outputs]
 
 
 def generate(sources: List[nodes.Spawner]) -> List[Animation]:
