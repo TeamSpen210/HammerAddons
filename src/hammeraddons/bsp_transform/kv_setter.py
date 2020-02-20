@@ -53,8 +53,18 @@ def kv_setter(ctx: Context) -> None:
         else:
             flag_mask = 1
             flag_enabled = False
+            kv_name = kv_name.strip()
 
         found_ent = None
+
+        if not is_flags and not kv_name and not setter.outputs:
+            # We have nothing to do?
+            LOGGER.warning(
+                'comp_kv_setter at ({}) is set to do nothing at all. '
+                'Provide a keyvalue to set, spawnflag to change or '
+                'outputs to append.',
+                setter['origin'],
+            )
 
         for found_ent in ctx.vmf.search(setter['target']):
             if is_flags:
@@ -63,7 +73,7 @@ def kv_setter(ctx: Context) -> None:
                     found_ent['spawnflags'] = spawnflags | flag_mask
                 else:
                     found_ent['spawnflags'] = spawnflags & ~flag_mask
-            else:
+            elif kv_name:  # Don't set empty KVs...
                 found_ent[kv_name] = kv_value
 
             for out in setter.outputs:
