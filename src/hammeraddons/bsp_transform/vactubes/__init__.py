@@ -98,10 +98,10 @@ def vactube_transform(ctx: Context) -> None:
         LOGGER.error('Vactubes present, but no studioMDL path provided!')
         return
 
-    vac_objects, objects_code = objects.parse(ctx.vmf, ctx.pack)
+    obj_count, vac_objects, objects_code = objects.parse(ctx.vmf, ctx.pack)
 
-    LOGGER.info('{} vactube objects found.', len(vac_objects))
-    if not vac_objects:
+    LOGGER.info('{} vactube objects found.', obj_count)
+    if not obj_count:
         return  # Nothing for inside vactubes.
 
     # Now join all the nodes to each other.

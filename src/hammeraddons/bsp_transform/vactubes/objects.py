@@ -34,7 +34,7 @@ class VacObject:
         return '<Vac Object "{}">'.format(os.path.basename(self.model_vac))
 
 
-def parse(vmf: VMF, pack: PackList) -> Tuple[Dict[Tuple[str, int], VacObject], str]:
+def parse(vmf: VMF, pack: PackList) -> Tuple[int, Dict[Tuple[str, int], VacObject], str]:
     """Parse out the cube objects from the map."""
     cube_objects: Dict[Tuple[str, int], VacObject] = {}
     vac_objects: List[VacObject] = []
@@ -75,4 +75,4 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[Dict[Tuple[str, int], VacObject], s
             f'{obj.id} <- obj("{obj.model_vac}", {obj.skin_vac}, '
             f'{model_code}, {obj.weight}, "{obj.offset}", {obj.skin_tv});\n'
         )
-    return cube_objects, pack.inject_vscript(''.join(code))
+    return len(vac_objects), cube_objects, pack.inject_vscript(''.join(code))
