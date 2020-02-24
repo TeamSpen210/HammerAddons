@@ -1,13 +1,41 @@
 @SolidClass base(Trigger)
 	appliesto(P2, +srctools)
 = comp_trigger_p2_goo:
-	"Implements Toxic Goo/Deadly Acid/Hazard Liquid." +
-	"" +
+	"Implements Toxic Goo and Bottomless Pits.\n" +
 	"This expands into a trigger_hurt and trigger_multiple with appropriate settings."
 	[
+	enablefade(boolean) : "Enable Fade" : 0 : "Use a player_loadsaved to fade out the view as the player falls/drowns." +
+		"Otherwise, just kill the player with a trigger_hurt."
+	fadepreset(choices) : "Fade Color - Preset" : "0 0 0" : "Use a preset color for the fade." =
+		[
+		"-1 -1 -1": "Custom"
+		"58 35 20": "Goo"
+		"0 0 0": "Black"
+		"56 95 141": "BTS Fog"
+		"37 35 33": "Old Aperture"
+		"50 70 80": "Wheatley / Destroyed"
+		"70 85 100": "Bottomless Pit"
+		"40 45 50": "Pit Falling Fog"
+		"16 19 22": "Fan Fog"
+		"14 20 22": "Darkness Fog"
+		"40 53 64": "Testchamber Fog"
+		"218 76	26": "P1 Orange"
+		]
+	fadecolor(color255) : "Fade Color - Custom" : "0 0 0" : "Specify your own fade color instead."
+	fadetime(float) : "Fade Time" : 0.5 : "The number of seconds the fade takes to fully occur."
+	
+	damagetype(choices) : "Damage Type" : 1327104 : "The type of damage to do to the player." = 
+		[
+		"32" : "Bottomless Pit (FALL)" // FALL
+		"16384" : "Water (DROWN)" // DROWN
+		"1048576": "Toxic Goo (ACID)" // ACID
+		]
+	
+	phys_offset(float): "Physics Offset" : 64.0 : "The distance below the hurt trigger to place the dissolving trigger. This ensures objects are hidden by the goo / fog before being destroyed."
+	
 	failsafe_delay(float): "Failsafe delay": "1.0" : "Delay after which non-cube entities will be killed."
 	dissolve_filter(filterclass): "Physics Filter" : : "Set to a filter entity to prevent certain entities from dissolving."
-	
+
 	output OnKillPlayer(void): "Fired when players touch the trigger."
 	output OnDissolvePhysics(void): "Fired when physics objects touch the trigger (and will be dissolved/killed soon)."
 	]
