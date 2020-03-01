@@ -118,7 +118,7 @@ def main(argv: List[str]) -> None:
 
         packlist.eval_dependencies()
 
-    packlist.pack_into_zip(bsp_file, blacklist=pack_blacklist)
+    packlist.pack_into_zip(bsp_file, blacklist=pack_blacklist, ignore_vpk=False)
 
     with bsp_file.packfile() as pak_zip:
         LOGGER.info('Packed files: \n{}'.format('\n'.join(pak_zip.namelist())))
