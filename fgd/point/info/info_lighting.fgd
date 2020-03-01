@@ -1,5 +1,5 @@
-// Not a real entity!
 @PointClass base(StaticTargetname)
+	appliesto(!engine) // Not a real entity!
 	iconsprite("editor/info_lighting.vmt") 
 	halfgridsnap
  	autovis(Point Entities, Props, Static Lighting Origins)

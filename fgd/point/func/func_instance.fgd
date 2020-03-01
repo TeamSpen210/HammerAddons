@@ -1,6 +1,5 @@
-// Internal entity.
 @PointClass base(Angles) 
-	appliesto(INSTANCING)
+	appliesto(INSTANCING, !engine) // Not an actual entity.
 	instance()
 	size(-2 -2 -2, 2 2 2)
 = func_instance: "An entity for placing an instance of a map file.  You may translate and rotate this entity. " +
