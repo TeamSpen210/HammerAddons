@@ -402,7 +402,7 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
             base_uses[base.classname].add(ent.classname)
 
         for game, tags in expanded.items():
-            if match_tags(appliesto, tags):
+            if match_tags(tags, appliesto):
                 counter[game] += 1
                 game_classes[game, typ].add(ent.classname)
                 has_ent.add(game)
