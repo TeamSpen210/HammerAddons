@@ -1,4 +1,4 @@
-@PointClass 
+@PointClass base(Angles)
 	iconsprite("editor/comp_kv_setter")
 	appliesto(srctools)
 	autovis(Postcompiler, KV Setter)
@@ -19,6 +19,8 @@
 	kv_value_local(target_destination) : "Value - Ent Name" : : "If set, use this fixed-up entity name."
 
 	invert(boolean) : "Invert Value" : 0 : "If enabled, invert the value so 0 and 1 are swapped."
+	rotate(boolean) : "Rotate Value" : 0 : "If enabled, treat the value as a vector and rotate it by the angles set on this entity first."
+	conv_ang(boolean) : "Convert To Angle" : 0 : "If enabled, convert a +X axis normal back into the Euler angle."
 
 	// We need to provide "some" outputs to allow you to add some.
 	// These exist on everything, at least.
