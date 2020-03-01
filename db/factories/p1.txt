@@ -624,7 +624,3 @@ weapon_stunstick
 window_pane
 world_items
 worldspawn
-Dropped TeamSpen210 from server (Server shutting down)
-Host_WriteConfiguration: Wrote cfg/config.cfg
-Unable to remove f:\steamlibrary\steamapps\common\portal\portal\textwindow_temp.html!
-Shutdown function ShutdownMixerControls() not in list!!!
