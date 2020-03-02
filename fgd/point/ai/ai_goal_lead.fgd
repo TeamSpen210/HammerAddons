@@ -5,10 +5,10 @@
 	iconsprite("editor/ai_goal_lead.vmt") 
 = ai_goal_lead: "AI Goal Lead"
 	[
-	searchtype(choices) : "Search Type" : "0" : "How to search for the entities using the targetname." =
+	searchtype[engine](integer) : "Search Type" : 0
+	searchtype(choices) : "Search Type" : 0 : "How to search for the entities using the targetname." =
 		[
 		0: "Entity Name"
 		1: "Classname"
 		]
-
 	]

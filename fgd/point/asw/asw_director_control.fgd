@@ -4,23 +4,9 @@
 	iconsprite("editor/info_target.vmt") = asw_director_control: "Alien Swarm Director Control"
 	[
 	targetname(target_source) : "Name" : "@director" : "The name that other entities refer to this entity by."
-	wanderers(choices) : "Wandering Aliens" : "0" : "Whether to spawn random drones around the players." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	hordes(choices) : "Hordes" : "1" : "Whether to spawn large groups of drones periodically." =
-		[
-		0: "No"
-		1: "Yes"
-		]
-
-	controlspawners(choices) : "Control Spawners" : "0" : "If enabled, asw_spawners will only work when the director is in an active spawning state." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	wanderers(boolean) : "Wandering Aliens" : "0" : "Whether to spawn random drones around the players." 
+	hordes(boolean) : "Hordes" : "1" : "Whether to spawn large groups of drones periodically." 
+	controlspawners(boolean) : "Control Spawners" : "0" : "If enabled, asw_spawners will only work when the director is in an active spawning state."
 
 
 	// Inputs

@@ -4,7 +4,8 @@
 	iconsprite("editor/asw_objective_kill_aliens.vmt") = asw_objective_kill_aliens: "Alien Swarm Mission Objective"
 	[
 	numkills(integer) : "Num Kills" : 1 : "How many aliens have to be killed for this objective to be complete."
-	alienclass(choices) : "Alien Class" : "0" : "Which type of alien must be killed" =
+	alienclass[engine](integer) : "Alien Class" : 0
+	alienclass(choices) : "Alien Class" : 0 : "Which type of alien must be killed" =
 		[
 		0: "asw_drone"
 		1: "asw_buzzer"

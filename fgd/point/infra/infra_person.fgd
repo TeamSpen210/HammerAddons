@@ -3,6 +3,7 @@
 	studio()
 = infra_person
 	[
+	model[engine](studio) : "Model" : "models/characters/male_formal_office_01.mdl"
 	model(choices) : "Model" : "models/characters/male_formal_office_01.mdl" : "Instead of choosing from the presets, you can also type in a model manually to this field." =
 		[
 		"models/characters/male_formal_office_01.mdl": "Male Formal Office"
@@ -13,6 +14,7 @@
 		"models/characters/amit.mdl": "Amit"
 		]
 
+	customization[engine](string) : "Customization" : "no_suits"
 	customization(choices) : "Customization" : : "Affects the randomization of this NPC's appearance. These can be specified in the appearance scripts." =
 		[
 		"no_suits": "No Suits"

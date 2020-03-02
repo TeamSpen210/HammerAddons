@@ -13,6 +13,7 @@
 		0 : "No (Use speech semaphore)"
 		1 : "Yes (Don't use speech semaphore)"
 	]
+	visiblewhenasleep[ASW](boolean) : "Visible when asleep" : 0 : "If true, this alien will still get drawn even when asleep (useful for aliens you see far below you)."
 
 	linedivider_npc(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 

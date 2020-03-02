@@ -4,6 +4,8 @@
 	studioprop()
 = comp_vactube_junction : "Marks a junction in a vactube, where they're forced to change direction. Scanner models near straight nodes will be detected automatically."
 [
+	// Not studio, we don't want to pack these.
+	model[engine](string) : "Type" : "models/editor/vactubes/straight.mdl"
 	model(choices) : "Type" : "models/editor/vactubes/straight.mdl" : "The size and type of junction. Splitters split the tube into two paths." = [
 		"models/editor/vactubes/straight.mdl" : "Straight / Scanner"
 		"models/editor/vactubes/curve_1.mdl" : "Curve: 1"
@@ -16,6 +18,7 @@
 		"models/editor/vactubes/splitter_sides.mdl" : "Splitter: Left/Right"
 	]
 
+	skin[engine](boolean) : "Reverse Curve?" : 0
 	skin(choices) : "Curve Direction" : 0 : "Reverse the direction, to make placing easier. Does not apply to splitters." = [
 		0 : "Forward"
 		1 : "Backward"

@@ -11,7 +11,8 @@
 
 	messagesound(sound) : "Sound Effect" : : "When the message is shown, this sound effect will be played, originating from this entity."
 	messagevolume(string) : "Volume 0-10" : "10" : "Volume of the sound effect."
-	messageattenuation(choices) : "Sound Radius" : "0" =
+	messageattenuation[engine](integer) : "Sound Radius" : 0
+	messageattenuation(choices) : "Sound Radius" : 0 =
 		[
 		0: "Small Radius"
 		1: "Medium Radius"

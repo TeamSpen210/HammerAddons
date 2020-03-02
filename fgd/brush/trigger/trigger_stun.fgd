@@ -4,18 +4,16 @@
 	trigger_delay(float) : "Trigger Delay" : 0 : "Delay after an entity touches that we fire our first stun."
 	stun_duration(float) : "Duration" : 0 : "Length of the stun effect."
 	move_speed_reduction(float) : "Move Speed Reduction" : 0 : "0 to 1 - Amount to reduce the player's move speed. 1 is 100% immobile."
-	stun_type(choices) : "Stun Type" : "0" =
+
+	stun_type[engine](integer) : "Stun Type" : 0
+	stun_type(choices) : "Stun Type" : 0 =
 		[
 		0: "Movement"
 		1: "Controls + Movement"
 		2: "Loser State + Controls + Movement"
 		]
 
-	stun_effects(choices) : "Stun Effects" : "0" =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	stun_effects(boolean) : "Stun Effects" : 0
 
 
 	// Outputs

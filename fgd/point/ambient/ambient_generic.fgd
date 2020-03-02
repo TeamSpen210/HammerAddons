@@ -21,7 +21,8 @@
 
 	sourceentityname(target_destination) : "Source Entity" : : "If an entity is specified, sound will come from this named entity instead of the location of ambient_generic."
 
-	soundflags[MBase](choices) :"Sound Flags" : 0 : "Additional options for your sound." =
+	soundflags[engine](integer) : "Sound Flasg" : 0
+	soundflags[MBase](choices) : "Sound Flags" : 0 : "Additional options for your sound." =
 	[
 		0: "None"
 		128: "[128] Pause when game is paused"

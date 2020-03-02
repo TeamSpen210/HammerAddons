@@ -6,7 +6,8 @@
 	rendercolor(color255) : "Color (R G B)" : "231 194 149"
 	mindelay(string) : "Min Delay" : "0.15" : "The shortest delay between sparks (in seconds)."
 	maxdelay(string) : "Max Delay" : "1" : "The longest delay between sparks (in seconds).  If the max delay is shorter than the min delay, the delay will equal the max."
-	magnitude(choices) : "Magnitude" : "50" : "The size of the sparks." =
+	magnitude[engine](integer) : "Magnitude" : 50
+	magnitude(choices) : "Magnitude" : 50 : "The size of the sparks." =
 		[
 		25: "Tiny"
 		50: "Small"

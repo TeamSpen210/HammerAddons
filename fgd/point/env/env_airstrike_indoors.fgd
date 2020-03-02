@@ -1,15 +1,16 @@
 @PointClass appliesto(L4D2) base(BaseEntityPoint) = env_airstrike_indoors: "Airstrike effect for indoors (crumbling ceiling)"
 	[
+	height[engine](integer) : "Effect Height" : -1
 	height(choices) : "Effect Height" : -1 : "Specifies which animation sequence to use for this effect. (Distance from floor to ceiling)" =
 		[
 		-1: "Automatic"
-		0: "128 inches"
-		1: "144 inches"
-		2: "152 inches"
-		3: "160 inches"
-		4: "190 inches"
-		5: "300 inches"
-		6: "320 inches"
+		0: "128 units"
+		1: "144 units"
+		2: "152 units"
+		3: "160 units"
+		4: "190 units"
+		5: "300 units"
+		6: "320 units"
 		]
 
 

@@ -4,6 +4,7 @@
 	autovis(TF2, TFBots, Bot Generator)
 = bot_generator: "Entity spawns <count> TFBots every <interval> seconds, with at most <maxActive> active at once"
 	[
+	team[engine](string) : "Team" : "auto"
 	team(choices) : "Team" : "auto" : "Team" =
 		[
 		"auto": "Any"
@@ -31,7 +32,7 @@
 	interval(float) : "Interval" : 0 : "Time (in seconds) between spawns"
 	action_point(target_destination) : "Action Point" : : "Put the name of a bot_action_point here to tell the spawned bot to move there."
 	
-	initail_command[engine](string) : "Initial Command" : "goto action point"
+	initial_command[engine](string) : "Initial Command" : "goto action point"
 	initial_command(choices) : "Initial Command" : "goto action point" : "Initial command to give this bot, if any." =
 		[
 		"goto action point": "Go to specified Action Point"

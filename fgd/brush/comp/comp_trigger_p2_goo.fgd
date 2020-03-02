@@ -6,6 +6,8 @@
 	[
 	enablefade(boolean) : "Enable Fade" : 0 : "Use a player_loadsaved to fade out the view as the player falls/drowns." +
 		"Otherwise, just kill the player with a trigger_hurt."
+
+	fadepreset[engine](color255) : "Fade Color - Preset" : "0 0 0"
 	fadepreset(choices) : "Fade Color - Preset" : "0 0 0" : "Use a preset color for the fade." =
 		[
 		"-1 -1 -1": "Custom"
@@ -24,6 +26,7 @@
 	fadecolor(color255) : "Fade Color - Custom" : "0 0 0" : "Specify your own fade color instead."
 	fadetime(float) : "Fade Time" : 0.5 : "The number of seconds the fade takes to fully occur."
 	
+	damagetype[engine](integer) : "Damage Type" : 1327104
 	damagetype(choices) : "Damage Type" : 1327104 : "The type of damage to do to the player." = 
 		[
 		"32" : "Bottomless Pit (FALL)" // FALL

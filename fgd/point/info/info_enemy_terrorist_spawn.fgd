@@ -19,7 +19,7 @@
 
 	start_asleep(boolean) : "Spawn alseep?" : 1 : "Do the bots that spawn here start alseep? If so, they will wait until they see or hear the player to move."
 	
-	default_behaviour[engine](int) : "Default Behaviour" : 0
+	default_behavior[engine](int) : "Default Behaviour" : 0
 	default_behavior(choices) : "Default Behavior" : 0 : "What behavior the bot should have when idle." =
 		[
 		0: "Defend Camp"
