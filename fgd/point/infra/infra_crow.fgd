@@ -2,6 +2,7 @@
 	studio("models/props_nature/varis.mdl")
 = infra_crow: "Crow"
 	[
+	deaf[engine](boolean) : "Deaf?" : 0
 	deaf(choices) : "Deaf?" : 0 =
 		[
 		0: "No."

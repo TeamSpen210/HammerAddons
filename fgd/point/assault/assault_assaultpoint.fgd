@@ -12,7 +12,8 @@
 	allowdiversion(boolean) : "Allow diversion" : 0 : "If you come in contact with enemies while approaching the assault point, divert to kill them. Resume the assault once contact is lost."
 	allowdiversionradius(float) : "Diversion Proximity" : 0 : "If Allow Diversion is set, NPC will only divert from assault to attack an enemy that is within this distance of the assault point. 0 = No limit."
 	nevertimeout(boolean) : "Never Timeout" : 0 : "If set, the assault never ends for NPCs assaulting this point. Useful for forcing NPCs back to a point."
-	strict(choices) : "Strict?" : "0" =
+	strict[engine](boolean) : "Strict?" : 0
+	strict(choices) : "Strict?" : 0 =
 		[
 		0: "No, NPC may move from point to attack"
 		1: "Yes, NPC may not move to attack"
@@ -25,7 +26,8 @@
 
 	forcecrouch(boolean) : "Force Crouch" : 0 : "NPCs using this assault point are forced into crouching while holding it."
 	urgent(boolean) : "Urgent" : 0 : "If true, NPCs will consider movement to this assault point as Urgent Navigation."
-	assaulttolerance(choices) : "Attack Tolerance" : "36" : "How far this NPC may move from the assault point to try to attack an enemy." =
+	assaulttolerance[engine](integer) : "Attack Tolerance" : 36
+	assaulttolerance(choices) : "Attack Tolerance" : 36 : "How far this NPC may move from the assault point to try to attack an enemy." =
 		[
 		36: "Tight (3ft)"
 		72: "Medium (6ft)"

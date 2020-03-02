@@ -19,6 +19,7 @@
 		"kv" : "KeyValue (AddOutput)"
 		]
 		
+	transform[engine](string) : "Value Type" : "speed"
 	transform(choices) : "Value Type" : "speed" : "The behaviour of the input, used to control what actual values are sent. Regardless of this value, the other options are 'position'-type values!" = [
 		"set" : "Instantly Set"
 		"moveto" : "Move to value"
@@ -36,6 +37,7 @@
 
 	line_trans3(string) readonly : "-------------------------------------------"
 	
+	easing_start[engine](string) : "Easing Start" : "linear"
 	easing_start(choices) : "Easing Start" : "linear" : "Controls how the animation begins." =
 		[
 		"linear" : "None"
@@ -45,6 +47,7 @@
 		// "exp" : "Exponential"
 		"sine" : "Sinusoidal"
 		]
+	easing_end[engine](string) : "Easing End" : "linear"
 	easing_end(choices) : "Easing End" : "linear" : "Controls how the animation ends." =
 		[
 		"linear" : "None"

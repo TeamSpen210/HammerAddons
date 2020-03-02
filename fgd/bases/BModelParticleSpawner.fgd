@@ -3,6 +3,7 @@
 = BModelParticleSpawner
 	[
 	// These two values break dustmotes.
+	solid[engine](integer) : "Solid" : 0
 	solid(choices) readonly: "Solid" : 0 : "This needs to be zero to allow this to not collide." = 
 		[
 		0: "Non-solid"

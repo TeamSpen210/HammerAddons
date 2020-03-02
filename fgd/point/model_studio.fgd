@@ -1,0 +1,3 @@
+@PointClass base(cycler) = model_studio: "An old dummy model entity, which acts exactly like cycler."
+	[
+	]

@@ -7,13 +7,14 @@
 	actor(target_name_or_class) : "Actor to affect" : : "NPC that should perform this operation"
 	target(target_destination) : "Position entity" : : "Name of the entity that the NPC should move to in order to perform the operation."
 	contexttarget(target_destination) : "Context target" : : "(Optional) Name of an entity that the operator will use within context."
-	state(choices) : "Initial State" : "0" =
+	state[engine](integer) : "Initial State" : 0
+	state(choices) : "Initial State" : 0 =
 		[
 		0: "Not ready (closed, locked, etc)"
 		1: "Ready (open and accessible)"
 		]
-
-	moveto(choices) : "How should NPC approach?" : "1" =
+	moveto[engine](integer) : "How should NPC approach?" : 1
+	moveto(choices) : "How should NPC approach?" : 1 =
 		[
 		0: "DO NOT USE THIS SETTING"
 		1: "Walk"

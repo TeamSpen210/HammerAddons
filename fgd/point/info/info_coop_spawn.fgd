@@ -18,7 +18,8 @@
 		3: "ATLAS"
 		]
 
-
+	// Don't use studio, we don't want to pack this.
+	model[engine](string) : "Hammer Model" : "models/editor/playerstart.mdl"
 	model(choices) : "[H] Player" : "models/editor/playerstart.mdl" : "The player model to show in Hammer." =
 	[
 		"models/editor/playerstart.mdl" 	: "Default"

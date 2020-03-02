@@ -40,6 +40,7 @@
 	abandonifenemyhides(boolean) : "Abandon if enemies hide" : 0 : "If no enemy detected recently, stop the standoff"
 
 	// Custom aggression
+	CustomCoverOnReload[engine](boolean) : "Custom: Take cover to reload" : 1
 	CustomCoverOnReload[MBase](choices) : "Custom: Take cover to reload" : 1 =
 	[
 		0 : "No"

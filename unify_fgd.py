@@ -383,6 +383,7 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
 
     game_classes: MutableMapping[Tuple[str, str], Set[str]] = defaultdict(set)
     base_uses: MutableMapping[str, Set[str]] = defaultdict(set)
+    all_ents: MutableMapping[str, Set[str]] = defaultdict(set)
 
     for ent in fgd:
         if ent.type is EntityTypes.BASE:
@@ -402,10 +403,13 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
             base_uses[base.classname].add(ent.classname)
 
         for game, tags in expanded.items():
-            if match_tags(appliesto, tags):
+            if match_tags(tags, appliesto):
                 counter[game] += 1
                 game_classes[game, typ].add(ent.classname)
                 has_ent.add(game)
+                # Allow explicitly saying certain ents aren't in the actual game.
+                if ent.type is not EntityTypes.BASE and '-engine' not in appliesto and '!engine' not in appliesto:
+                    all_ents[game].add(ent.classname.casefold())
 
         has_ent.discard('ALL')
 
@@ -441,6 +445,30 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
     for base, count in sorted(base_uses.items(), key=lambda x: (len(x[1]), x[0])):
         if fgd[base].type is EntityTypes.BASE:
             print(base, len(count), count if len(count) == 1 else '...')
+
+    print('\n\nEntity Dumps:')
+    for dump_path in Path('db', 'factories').glob('*.txt'):
+        with dump_path.open() as f:
+            dump_classes = {
+                cls.casefold().strip()
+                for cls in f
+                if not cls.isspace()
+            }
+        game = dump_path.stem.upper()
+        try:
+            defined_classes = all_ents[game]
+        except KeyError:
+            print(f'No dump for tag "{game}"!')
+            continue
+
+        extra = defined_classes - dump_classes
+        missing = dump_classes - defined_classes
+        if extra:
+            print(f'{game} - Extra: ')
+            print(', '.join(sorted(extra)))
+        if missing:
+            print(f'{game} - Missing: ')
+            print(', '.join(sorted(missing)))
 
 
 def action_import(

@@ -23,13 +23,13 @@
 	texturescale(float) : "Texture Scale" : 1 : "This changes the texture resolution. The default resolution is 4 pixels per inch. Larger values stretch the texture and smaller values scrunch it up."
 	collide(boolean) : "Collide with world" : 0
 
-	dangling(boolean) : "Start Dangling" : 0
+	dangling[engine](boolean) : "Start Dangling" : 0
 	dangling(choices) : "Start Dangling" : 0 : "When set to Yes, the rope starts out detached from its target endpoint." = [
 		0 : "Start Attached"
 		1 : "Start Dangling"
 	]
 
-	breakable(boolean) : "Breakable" : 0
+	breakable[engine](boolean) : "Breakable" : 0
 	breakable(choices) : "Breakable" : 0 : "When set to yes, the rope can be detached from either endpoint when shot." = [
 		0 : "Indestructible"
 		1 : "Breakable"

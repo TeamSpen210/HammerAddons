@@ -6,7 +6,8 @@
 	color(0 0 255) = asw_order_nearby_aliens
 	[
 	radius(float) : "Order Radius" : 400 : "All aliens within this radius of the specified class will receive orders."
-	alienclass(choices) : "Alien Class" : "0" : "Which type of alien to send orders to." =
+	alienclass[engine](integer) : "Alien Class" : 0
+	alienclass(choices) : "Alien Class" : 0 : "Which type of alien to send orders to." =
 		[
 		0: "asw_drone"
 		1: "asw_buzzer"

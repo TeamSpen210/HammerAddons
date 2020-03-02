@@ -1,7 +1,6 @@
 @PointClass base(info_overlay) 
 	appliesto(engine)
 	autovis(Overlays,Accessor)
-	size(-1 -1 0, 1 1 1) 
 	color(80 150 225) 
 	studio("models/editor/overlay_helper.mdl") 
 = info_overlay_accessor: "The version of overlays that exists in the compiled map. This links targetnames to the overlay lump."

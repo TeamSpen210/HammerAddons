@@ -7,6 +7,7 @@
 	next_action_point(target_destination) : "Next Action Point" : : "The next Action Point to approach after performing this one."
 	desired_distance(float) : "Desired Distance" : 5 : "The distance to get within when approaching this Action Point before the bot says it has reached it."
 	stay_time(float) : "Stay Time" : 0 : "How long the bot should stay at this action point (while perform any commands if applicable)."
+	command[engine](string) : "Command" : "taunt"
 	command(choices) : "Command" : : "Command to give to the bot when it gets within range of this Action Point." =
 		[
 		"taunt": "Taunt"
