@@ -3,12 +3,12 @@
 	autovis(Weapons, L4D, L4D Items)
 = weapon_scavenge_item_spawn: "Scavenge Item"
 	[
+	glowstate[engine](integer) : "Initial Glow State" : 3
 	glowstate(choices) : "Initial Glow State" : 3 =
 		[
 		0: "OFF"
 		3: "ON"
 		]
-
 
 	// Inputs
 	input SpawnItem(void) : "Spawn an instance of a scavenge mode item."

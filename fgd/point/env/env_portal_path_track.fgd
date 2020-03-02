@@ -26,7 +26,7 @@
 	radius(float) : "Path radius" : 0 : "Used by NPCs who follow track paths (attack chopper/gunship). This tells them the maximum distance they're allowed to be from the path at this node."
 
 
-	orientationtype(integer) : "Orientation Type" : 1
+	orientationtype[engine](integer) : "Orientation Type" : 1
 	orientationtype(choices) : "Orientation Type" : 1 : "The way that the path follower faces as it moves through this path track." =
 		[
 		0: "No change"

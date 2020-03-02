@@ -2,6 +2,7 @@
 	studio("models/survivors/survivor_biker.mdl")
 = info_l4d1_survivor_spawn: "Spawn a L4D1 survivor"
 	[
+	character[engine](integer) : "Character" : 5
 	character(choices) : "Character" : 5 : "Which survivor to spawn here" =
 		[
 		4: "Bill"

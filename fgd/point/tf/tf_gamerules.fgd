@@ -1,7 +1,8 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(TF2) = tf_gamerules: "Proxy entity for TF Gamerules"
 	[
-	hud_type(choices) : "Hud Type" : "0" : "Override the HUD type clients should display." =
+	hud_type[engine](integer) : "HUD Type" : 0
+	hud_type(choices) : "HUD Type" : 0 : "Override the HUD type clients should display." =
 		[
 		0: "Default"
 		1: "CTF HUD"
@@ -9,11 +10,7 @@
 		3: "Payload HUD"
 		]
 
-	ctf_overtime(choices) : "CTF Overtime" : "1" : "Allow Overtime for CTF maps." =
-		[
-		0: "No"
-		1: "Yes"
-		]
+	ctf_overtime(boolean) : "CTF Overtime" : "1" : "Allow Overtime for CTF maps."
 
 
 	// Inputs

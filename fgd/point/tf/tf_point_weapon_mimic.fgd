@@ -2,7 +2,8 @@
 	appliesto(TF2) 
 	studio("models/editor/cone_helper.mdl") = tf_point_weapon_mimic: "An entity that shoots like player weapons."
 	[
-	weapontype(choices) : "Weapon Type" : "0" : "Which projectiles to fire." =
+	weapontype[engine](integer) : "Weapon Type" : 0
+	weapontype(choices) : "Weapon Type" : 0 : "Which projectiles to fire." =
 		[
 		0: "Rockets"
 		1: "Grenades"

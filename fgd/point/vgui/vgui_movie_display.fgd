@@ -6,8 +6,10 @@
 	sphere(height) = vgui_movie_display: "Movie Display"
 	[
 	displaytext(string) : "Display Text"
-	MovieFilename(choices) : "Movie to display" : "media/aperture_logo.bik" : "The movie to display. You can also type in the filename of a custom movie here." =
-	[
+	MovieFilename(string) : "Movie To display" : "media/filename.bik" : "The movie to display."
+
+	MovieFilename[P2](choices) : "Movie to display" : "media/aperture_logo.bik" : "The movie to display. You can also type in the filename of a custom movie here." =
+		[
 		"media/coop_black_screen.bik"		: "Black Screen"
 		"media/aperture_logo.bik"			: "Aperture Logo"
 		
@@ -69,25 +71,25 @@
 		"media/attract_bot_trust.bik"		: "Extras: Bot Trust"
 		"media/attract_panels.bik"			: "Extras: Panels"
 		"media/attract_turrets.bik"			: "Extras: Turrets"
-]
+		]
 	groupname(string) : "Group Name"
 	looping(boolean) : "Loop Movie" : 0
 	
 	width(integer) : "Panel Width in World (Green)" : 256 : "Width of the panel in units."
 	height(integer) : "Panel Height in World (Blue)" : 128 : "Height of the panel in units."
-	stretch[P2](boolean) : "Stretch to Fill" : 0
-	forcedslave[P2](boolean) : "Forced slave" : 0
-	forceprecache[P2, !CSGO](boolean) : "Force precache" : 0 : "Precache the movie referred to by Movie Filename on entity spawn."
+	stretch[since_P2](boolean) : "Stretch to Fill" : 0
+	forcedslave[since_P2](boolean) : "Forced slave" : 0
+	forceprecache[since_P2, !CSGO](boolean) : "Force precache" : 0 : "Precache the movie referred to by Movie Filename on entity spawn."
 
 	// Inputs
 	input Enable(void) : "Make movie visible."
 	input Disable(void) : "Make movie invisible."
 	input SetDisplayText(string) : "Sets the display text."
-	input SetMovie[P2](string) : "Sets the movie to display."
-	input SetUseCustomUVs[P2](boolean) : "Use custom UVs."
-	input TakeOverAsMaster[P2](void) : "Start using this video as the master of it's group."
-	input SetUMin[P2](float) : "Set the minimum U."
-	input SetUMax[P2](float) : "Set the maximum U."
-	input SetVMin[P2](float) : "Set the minimum V."
-	input SetVMax[P2](float) : "Set the maximum V."
+	input SetMovie[since_P2](string) : "Sets the movie to display."
+	input SetUseCustomUVs[since_P2](boolean) : "Use custom UVs."
+	input TakeOverAsMaster[since_P2](void) : "Start using this video as the master of it's group."
+	input SetUMin[since_P2](float) : "Set the minimum U."
+	input SetUMax[since_P2](float) : "Set the maximum U."
+	input SetVMin[since_P2](float) : "Set the minimum V."
+	input SetVMax[since_P2](float) : "Set the maximum V."
 	]

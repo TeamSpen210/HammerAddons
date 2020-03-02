@@ -4,7 +4,8 @@
 	[
 	groupname(string) : "Group Name" : : "Giving nuggets a group name hints the game that they are intended to be a group"
 	respawntime(float) : "Respawn Time" : 30 : "Number of seconds between when a nugget is collected and when it respawns"
-	pointvalue(choices) : "Point Value" : "1" =
+	pointvalue[engine](integer) : "Point Value" : 1
+	pointvalue(choices) : "Point Value" : 1 =
 		[
 		1: "1"
 		5: "5"
