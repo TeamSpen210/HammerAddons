@@ -466,6 +466,25 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
             print(f'{game} - Missing definitions: ')
             print(', '.join(sorted(missing)))
 
+    print('\n\nMissing Class Resources:')
+    from srctools.packlist import CLASS_RESOURCES
+
+    missing = 0
+    for clsname in sorted(fgd.entities):
+        ent = fgd.entities[clsname]
+        if ent.type is not EntityTypes.BASE and clsname not in CLASS_RESOURCES:
+            print(clsname, end=', ')
+            missing += 1
+    print('\nMissing:', missing)
+
+    print('Extra ents: ')
+    for clsname in CLASS_RESOURCES:
+        if clsname not in fgd.entities:
+            print(clsname, end=', ')
+    print('\n')
+
+
+
 
 def action_import(
     dbase: Path,
