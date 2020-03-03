@@ -291,21 +291,17 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
     fgd.apply_bases()
     print('\nDone!')
 
-    from pprint import pprint
-    # print('Auto Visgroups: ')
-    # pprint({k: len(v) for k, v in fgd.auto_visgroups.items()})
-
-    print('Entities without visgroups:')
+    print('Entities without visgroups:\n')
     vis_ents = {name.casefold() for ents in fgd.auto_visgroups.values() for name in ents}
     vis_count = ent_count = 0
     for ent in fgd:
         if ent.type is not EntityTypes.BASE:
             ent_count += 1
             if ent.classname.casefold() not in vis_ents:
-                print(' - ' + ent.classname)
+                print(ent.classname, end=', ')
             else:
                 vis_count += 1
-    print(f'Visgroup count: {vis_count}/{ent_count} ({vis_count*100/ent_count:.2f}%) done!')
+    print(f'\nVisgroup count: {vis_count}/{ent_count} ({vis_count*100/ent_count:.2f}%) done!')
 
     return fgd
 
@@ -464,10 +460,10 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
         extra = defined_classes - dump_classes
         missing = dump_classes - defined_classes
         if extra:
-            print(f'{game} - Extra: ')
+            print(f'{game} - Extraneous definitions: ')
             print(', '.join(sorted(extra)))
         if missing:
-            print(f'{game} - Missing: ')
+            print(f'{game} - Missing definitions: ')
             print(', '.join(sorted(missing)))
 
 
