@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(+engine)
+= physics_entity_solver: "Internal entity, which temporarily disables collisions for physics objects inside doors and the like."
+	[
+	]   
