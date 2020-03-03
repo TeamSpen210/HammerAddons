@@ -1,4 +1,4 @@
-@PointClass 
+@PointClass appliesto(-engine)  // This is not actually an entity, it's handled specially by VBSP.
 	color(0 0 255) 
 	sidelist(sides) 
 	iconsprite("editor/env_cubemap.vmt") 

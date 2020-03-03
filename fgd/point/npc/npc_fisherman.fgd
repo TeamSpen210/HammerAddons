@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC) 
-	appliesto(EP1, EP2, HL2, P1, ASW)
+	appliesto(EP1, EP2, HL2, P1)
 	autovis(NPCs, Lost Coast Fisherman)
 	studio("models/lostcoast/fisherman/fisherman.mdl") 
 = npc_fisherman: "Fisherman NPC from Lost Coast."

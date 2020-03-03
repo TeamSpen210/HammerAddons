@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(engine)
+	autovis(Engine) 
+= _firesmoke: "Internal entity used for natural-type env_fires."
+	[
+	]
