@@ -1,0 +1,4 @@
+@PointClass base(BaseBeam) appliesto(+engine)
+= beam: "Internal entity serving as the base for different visual beams."
+	[
+	]

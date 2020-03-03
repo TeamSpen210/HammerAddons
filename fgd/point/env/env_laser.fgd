@@ -1,30 +1,16 @@
-@PointClass base(BaseEntityPoint)
+@PointClass base(BaseBeam)
 	iconsprite("editor/ficool2/env_laser.vmt")
 	line(255 255 255, targetname, LaserTarget) 
 	color(200 200 0) 
 = env_laser: "An entity that creates a laser beam between itself and a given target."
 	[
-	lasertarget(target_destination) : "Target of Laser" : : "Name of entity, or entities, to strike at. The target is randomly chosen if there are multiple entities matching the given name."
-	renderamt(integer) : "Brightness (1 - 255)" : 100
-	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255"
+	lasertarget(target_destination) : "Target of Laser" : : "Name of entity, or entities, to strike at. " +
+			"The target is randomly chosen if there are multiple entities matching the given name."
 	width(float) : "Width of Beam" : 2 : "The width of the laser beam, in pixels."
-	noiseamplitude(integer) : "Amount of noise (0-255)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
-	texture(material) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the laser beam."
+	
 	endsprite(material) : "End Sprite" : : "If specified, this sprite will be drawn at the end of the laser beam."
-	texturescroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
-	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
-	damage(string) : "Damage / second" : "100" : "How much damage this laser does. per second. to things it hits."
 
-	dissolvetype[engine](integer) : "Dissolve Type" : 0
-	dissolvetype(choices) : "Dissolve Type" : -1 =
-		[
-		-1: "None"
-		0: "Energy"
-		1: "Heavy electrical"
-		2: "Light electrical"
-		]
-
-	spawnflags(flags)  =
+	spawnflags(flags) =
 		[
 		1: "Start On" : 0
 		16: "StartSparks" : 0
@@ -34,9 +20,6 @@
 
 
 	// Inputs
-	input TurnOn(void) : "Turns the laser on."
-	input TurnOff(void) : "Turns the laser off."
-	input Toggle(void) : "Toggles the laser between on and off."
 	input SetTarget[MBase](target_destination) : "Sets the laser's target."
 
 	// Outputs
