@@ -403,9 +403,10 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
                 counter[game] += 1
                 game_classes[game, typ].add(ent.classname)
                 has_ent.add(game)
-                # Allow explicitly saying certain ents aren't in the actual game.
-                if ent.type is not EntityTypes.BASE and '-engine' not in appliesto and '!engine' not in appliesto:
-                    all_ents[game].add(ent.classname.casefold())
+            # Allow explicitly saying certain ents aren't in the actual game
+            # with the "engine" tag, or only adding them to this + the binary dump.
+            if ent.type is not EntityTypes.BASE and match_tags(tags | {'ENGINE'}, appliesto):
+                all_ents[game].add(ent.classname.casefold())
 
         has_ent.discard('ALL')
 
