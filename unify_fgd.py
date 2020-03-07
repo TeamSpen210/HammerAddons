@@ -353,7 +353,7 @@ def add_tag(tags: FrozenSet[str], new_tag: str) -> FrozenSet[str]:
     return frozenset(tag_set)
 
 
-def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
+def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> None:
     """Output a count of all entities in the database per game."""
     fgd = load_database(dbase, extra_db)
 
@@ -422,7 +422,7 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
 
     all_games: Set[str] = {*count_base, *count_point, *count_brush}
 
-    game_order = ['ALL'] + sorted(all_games - {'ALL'})
+    game_order = ['ALL'] + sorted(all_games - {'ALL'}, key=GAME_ORDER.index)
 
     row_temp = '{:<5} | {:^6} | {:^6} | {:^6}'
     header = row_temp.format('Game', 'Base', 'Point', 'Brush')
@@ -437,6 +437,23 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
             count_point[game],
             count_brush[game],
         ))
+
+    # If matplotlib is installed, render this as a nice graph.
+    if plot:
+        try:
+            import matplotlib.pyplot as plt
+        except ImportError:
+            pass
+        else:
+            disp_games = game_order[::-1]
+            point_count_list = [count_point[game] for game in disp_games]
+            solid_count_list = [count_brush[game] for game in disp_games]
+            plt.figure(0)
+            plt.barh(disp_games, point_count_list)
+            plt.barh(disp_games, solid_count_list)
+            plt.legend(["Point", "Brush"])
+            plt.xticks(range(0, 500, 50))
+            plt.show()
 
     print('\n\nBases:')
     for base, count in sorted(base_uses.items(), key=lambda x: (len(x[1]), x[0])):
@@ -799,6 +816,12 @@ def main(args: List[str]=None):
         "count",
         help=action_count.__doc__,
         aliases=["c"],
+    )
+    parser_count.add_argument(
+        "--plot",
+        action="store_true",
+        help="Use matplotlib to produce a graph of how many entities are "
+             "present in each engine branch.",
     )
 
     parser_exp = subparsers.add_parser(
