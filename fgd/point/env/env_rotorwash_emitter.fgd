@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint)
 	size(-4 -4 -4, 4 4 4)
+	appliesto(HL2, EP1, EP2, ASW, P1)
 = env_rotorwash_emitter: "Creates rotorwash."
 	[
-	altitude(float) : "Altitude" : 1024 : "Altitude the rotorwash will show up."
+	altitude(float) : "Altitude (Unused)" : 1024 : "Altitude the rotorwash will show up. This is defined in the entity, but isn't actually used for anything."
 	]
