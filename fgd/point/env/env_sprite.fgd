@@ -6,7 +6,7 @@
 = env_sprite: "An entity that controls the drawing of a sprite in the world."
 	[
 	framerate(float) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
-	model(material) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
+	model(sprite) : "Sprite Name" : "sprites/glow01.spr" : "Material of the sprite to be drawn."
 	scale(float) : "Scale" : 0.25 : "Scale multiplier of the sprite."
 	spawnflags(flags)  =
 		[

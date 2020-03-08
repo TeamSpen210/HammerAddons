@@ -7,8 +7,8 @@
 	lasertarget(target_destination) : "Target of Laser" : : "Name of entity, or entities, to strike at. " +
 			"The target is randomly chosen if there are multiple entities matching the given name."
 	width(float) : "Width of Beam" : 2 : "The width of the laser beam, in pixels."
-	
-	endsprite(material) : "End Sprite" : : "If specified, this sprite will be drawn at the end of the laser beam."
+
+	endsprite(sprite) : "End Sprite" : : "If specified, this sprite will be drawn at the end of the laser beam."
 
 	spawnflags(flags) =
 		[
