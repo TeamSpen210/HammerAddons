@@ -2,6 +2,7 @@
 	size(-2 -2 -2, 2 2 2)
 	frustum(lightfov, nearz, farz, lightcolor, -1)
 	studio("models/editor/cone_helper.mdl")
+	iconsprite("editor/env_projectedtexture")
 	line(255 255 255, targetname, target)
 	sphere(nearz)
 	sphere(farz)
