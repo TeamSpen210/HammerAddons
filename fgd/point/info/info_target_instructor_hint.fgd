@@ -1,6 +1,8 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(since_L4D2)
 	halfgridsnap
+	studio("models/editor/axis_helper.mdl") 
+	iconsprite("editor/info_target_instructor_hint.vmt")
 = info_target_instructor_hint: "A generic target that gets replicated to the client for hud hint targeting."
 	[
 	]
