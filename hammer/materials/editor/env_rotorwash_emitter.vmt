@@ -1,0 +1,7 @@
+"Sprite"
+{
+	"$spriteorientation" "vp_parallel"
+	"$spriteorigin" "[ 0.50 0.40625 ]"  // 26/64, makes the icon exactly centered over the blades.
+	"$baseTexture" "editor/env_rotorwash_emitter"
+	"$no_fullbright" 1
+}
