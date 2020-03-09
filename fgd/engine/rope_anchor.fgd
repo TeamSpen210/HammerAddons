@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(+engine, -L4D, -L4D2)
+= rope_anchor: "Entity used to spawn the rope used by rapelling Combine." +
+	"When placed in Hammer, this will drop a rope 384 units below it."
+	[
+	]
