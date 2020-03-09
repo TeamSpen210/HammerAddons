@@ -1,17 +1,29 @@
 @PointClass base(BaseEntityAnimating) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
-	studio("models/props_combine/suit_charger001.mdl") = item_suitcharger: "Battery recharger"
+	appliesto(EP1, EP2, HL2, P1, ASW)  
+	// Modified model with no animations, so it doesn't loop
+	// constantly.
+	studio("models/editor/item_suit_charger_hl2.mdl")
+= item_suitcharger: "Battery recharger"
 	[
-	_minlight(string) : "Minimum light level"
+	Charge[MBase](integer) : "Juice" : 0 : "Overrides the amount of suit power this charger contains. " +
+		"Use 0 for the default charge, which is usually the maximum juice. Use -1 if you want the charger to start empty."
+	MaxCharge[MBase](integer) : "Max Juice" : 0 : "Overrides the maximum suit power this charger contains. " +
+		"Use 0 for the default charge, 75/25/500 depending on spawnflags."
+	SetIncrementValue[MBase](integer) : "Increment Amount" : 0 : "How much charge should be given each 'increment', " +
+		"or each tenth-of-a-second interval in which the player is given armor while using this charger. " +
+		"Juice is also decreased accordingly. Use 0 for the default increment, 1."
+
 	spawnflags(flags) : "spawnflags" =
 		[
-		8192: "Citadel recharger" : 0
-		16384: "Kleiner's recharger" : 0
+		8192: "Citadel recharger (overcharge to 200% + heal)" : 0
+		16384: "Kleiner's recharger (25% charge)" : 0
 		]
-
 
 	// Inputs
 	input Recharge(void) : "Recharge to full"
+	input SetCharge(int) : "Sets the *maximum* charge, refilling the charger in the process."
+	input SetChargeNoMax[MBase](float) : "Sets the charger's current juice without doing anything with the maximum."
+	input SetIncrementValue[MBase](integer) : "Sets the charger's increment value."
 
 	// Outputs
 	output OutRemainingCharge(float) : "Remaining Charge."
