@@ -297,7 +297,7 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
     fgd.apply_bases()
     print('\nDone!')
 
-    print('Entities without visgroups:\n')
+    print('Entities without visgroups:')
     vis_ents = {
         name.casefold()
         for group in fgd.auto_visgroups.values()
@@ -305,12 +305,17 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
     }
     vis_count = ent_count = 0
     for ent in fgd:
-        if ent.type is not EntityTypes.BASE:
-            ent_count += 1
-            if ent.classname.casefold() not in vis_ents:
-                print(ent.classname, end=', ')
-            else:
-                vis_count += 1
+        # Base ents, worldspawn, or engine-only ents don't need visgroups.
+        if ent.type is EntityTypes.BASE or ent.classname == 'worldspawn':
+            continue
+        applies_to = get_appliesto(ent)
+        if '+ENGINE' in applies_to or 'ENGINE' in applies_to:
+            continue
+        ent_count += 1
+        if ent.classname.casefold() not in vis_ents:
+            print(ent.classname, end=', ')
+        else:
+            vis_count += 1
     print(f'\nVisgroup count: {vis_count}/{ent_count} ({vis_count*100/ent_count:.2f}%) done!')
 
     return fgd
