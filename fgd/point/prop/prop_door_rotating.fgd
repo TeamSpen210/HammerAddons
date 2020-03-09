@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityAnimating, SetModel, Glow) 
 	studioprop()
-	line(255, 255, 255, targetname, slavename)
+	// Can't have this along with no default model.
+	// line(255, 255, 255, targetname, slavename)
 = prop_door_rotating: "An entity used to place a door in the world."
 	[
 	slavename(target_destination) : "Slave Name" : : "The name of any doors that should be slaved to this door " +
