@@ -1,6 +1,6 @@
 @NpcClass base(TalkNPC, PlayerCompanion) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
-	autovis(NPCs, Rebels, Alyx)
+	autovis(Entities, NPCs, Rebels, Alyx)
 	studio() = npc_alyx: "Alyx"
 	[
 	model(studio) : "World model" : "models/alyx.mdl"

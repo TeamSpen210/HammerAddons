@@ -1,6 +1,6 @@
 @PointClass appliesto(L4D2) base(WeaponSpawn) 
 	studioprop("models/w_models/weapons/w_eq_bile_flask.mdl")
-	autovis(Weapons, L4D, Weapon Spawners)
+	autovis(Weapons, L4D Weapons, Weapon Spawners)
 = weapon_vomitjar_spawn: "Vomit Jar"
 	[
 	]

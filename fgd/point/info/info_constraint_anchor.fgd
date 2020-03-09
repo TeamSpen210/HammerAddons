@@ -1,5 +1,6 @@
 
 @PointClass base(BaseEntityPoint)
+	autovis(Entities, Constraints, Constraint Anchor)
 	halfgridsnap
 	iconsprite("editor/info_constraint_anchor.vmt") 
 	color(128 128 128) 

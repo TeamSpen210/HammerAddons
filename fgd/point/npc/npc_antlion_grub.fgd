@@ -1,6 +1,6 @@
 @NpcClass base(BaseEntityPhysics) 
 	appliesto(EP2, P1) 
-	autovis(NPCs, Antlions, Antlion Grub)
+	autovis(Entities, NPCs, Antlions, Antlion Grub)
 	studio("models/antlion_grub.mdl") 
 	sphere(fademindist) 
 	sphere(fademaxdist)

@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityAnimating, EnableDisable) 
 	studio("models/extras/info_speech.mdl") 
+	autovis(Commantary, Commentary Node)
 = point_commentary_node: "Commentary node for the developer commentary. " +
 	"Usually added after-the-fact by the commentary system, but can also be placed manually."
 	[

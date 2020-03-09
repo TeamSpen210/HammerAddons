@@ -1,7 +1,7 @@
 
 @NpcClass base(BaseNPC) 
 	appliesto(EP1, EP2, HL2, P1)  
-	autovis(NPCs, Combine, Crab Synth)
+	autovis(Entities, NPCs, Combine, Crab Synth)
 	studio("models/Synth.mdl") = npc_crabsynth: "Crab Synth"
 	[
 	]

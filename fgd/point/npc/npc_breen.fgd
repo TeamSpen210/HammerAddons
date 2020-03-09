@@ -1,7 +1,7 @@
 
 @NpcClass base(TalkNPC) 
 	appliesto(EP1, EP2, HL2, P1) 
-	autovis(NPCs, Combine, Dr. Breen)
+	autovis(Entities, NPCs, Combine, Dr. Breen)
 	studio() = npc_breen: "Dr Breen"
 	[
 	model(studio) : "World model" : "models/breen.mdl"

@@ -1,6 +1,6 @@
 @NpcClass base(BaseNPC, SetModel) 
 	appliesto(EP1, EP2, HL2, P1) 
-	autovis(NPCs, Missile Defense)
+	autovis(Entities, NPCs, Missile Defense)
 	studio("models/missile_defense.mdl") = npc_missiledefense: "Missile Defense"
 	[
 	]

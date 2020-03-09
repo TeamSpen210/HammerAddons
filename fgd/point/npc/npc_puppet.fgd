@@ -1,6 +1,6 @@
 @PointClass base(BaseNPC, SetModel)
 	studioprop() 
-	autovis(NPCs, Puppet NPC)
+	autovis(Entities, NPCs, Puppet NPC)
 	line(255 255 255, targetname, animationtarget) 
 = npc_puppet: "Puppet entity that mimics the animations of a target NPC."
 	[

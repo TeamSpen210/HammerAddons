@@ -1,6 +1,6 @@
 @NpcClass base(BaseNPC, BaseFadeProp) 
 	appliesto(EP1, EP2, HL2, P1) 
-	autovis(NPCs, Combine, Barnacle)
+	autovis(Entities, NPCs, Combine, Barnacle)
 	studio("models/Barnacle.mdl") 
 	sphere(fademindist) 
 	sphere(fademaxdist) = npc_barnacle: "Barnacle"

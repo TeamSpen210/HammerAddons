@@ -4,7 +4,7 @@
 	sphere(innerradius) 
 	sphere(outerradius) 
 	studio("models/combine_camera/combine_camera.mdl") 
-	autovis(NPCs, Combine, Combine Security Camera)
+	autovis(Entities, NPCs, Combine, Combine Security Camera)
 = npc_combine_camera: "Combine security camera"
 	[
 	spawnflags(flags) : "spawnflags" =

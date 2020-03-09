@@ -1,6 +1,6 @@
 @NpcClass base(BaseNPC) 
 	appliesto(EP1, EP2, P1) 
-	autovis(NPCs, Zombies, Zombine)
+	autovis(Entities, NPCs, Zombies, Zombine)
 	studio("models/Zombie/zombie_soldier.mdl") = npc_zombine: "Combine Soldier Zombie"
 	[
 
