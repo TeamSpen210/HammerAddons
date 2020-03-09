@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	appliesto(P2, srctools)
+	appliesto(+P2, +srctools, -engine)
 	autovis(Vactubes, Vac Paths)
 	studio("models/editor/vactubes/end_point.mdl")
 	sphere(radius)
