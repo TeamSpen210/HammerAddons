@@ -260,8 +260,14 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
                     )
                 fgd.entities[clsname] = ent
 
-            for path, group in file_fgd.auto_visgroups.items():
-                fgd.auto_visgroups.setdefault(path, set()).update(group)
+            for parent, visgroup in file_fgd.auto_visgroups.items():
+                try:
+                    existing_group = fgd.auto_visgroups[parent]
+                except KeyError:
+                    fgd.auto_visgroups[parent] = visgroup
+                else:  # Need to merge
+                    existing_group.ents.update(visgroup.ents)
+
             fgd.mat_exclusions.update(file_fgd.mat_exclusions)
 
             print('.', end='', flush=True)
@@ -292,7 +298,11 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
     print('\nDone!')
 
     print('Entities without visgroups:\n')
-    vis_ents = {name.casefold() for ents in fgd.auto_visgroups.values() for name in ents}
+    vis_ents = {
+        name.casefold()
+        for group in fgd.auto_visgroups.values()
+        for name in group.ents
+    }
     vis_count = ent_count = 0
     for ent in fgd:
         if ent.type is not EntityTypes.BASE:
@@ -773,9 +783,9 @@ def action_export(
         for ent in fgd.entities.values()
         if ent.type is not EntityTypes.BASE
     }
-    for key, vis_ents in list(fgd.auto_visgroups.items()):  # type: Tuple[str, str], Set[str]
-        vis_ents.intersection_update(valid_ents)
-        if not vis_ents:
+    for key, visgroup in list(fgd.auto_visgroups.items()):
+        visgroup.ents.intersection_update(valid_ents)
+        if not visgroup.ents:
             del fgd.auto_visgroups[key]
 
     print('Exporting...')
