@@ -1,8 +1,14 @@
-@SolidClass base(BaseEntityPoint) 
-	appliesto(ASW) = asw_snow_volume: "Causes snow when the marine is inside this volume."
+// This is actually a clientside only entity, specially parsed with dedicated code out of the ent lump.
+// So only the model, classname and snowtype keyvalues are touched.
+
+@SolidClass appliesto(ASW) 
+	autovis(Clientside, Snow Volume)
+= asw_snow_volume: "Causes snow when the marine is inside this volume."
 	[
 	snowtype[engine](integer) : "Snow Type" : 1
-	snowtype(choices) : "Snow Type" : 1 : "Type of snow that falls.  NOTE: This setting must be the same on all asw_snow_volumes in your map.  Heavier snow should be used in outdoor maps, where snow clouds/particles cover the level (snow particles WILL flow outside the volume bounds some)." =
+	snowtype(choices) : "Snow Type" : 1 : "Type of snow that falls.  NOTE: This setting must be the same on all asw_snow_volumes in your map.  " +
+		"Heavier snow should be used in outdoor maps, where snow clouds/particles cover the level " +
+		"(snow particles WILL flow outside the volume bounds some)." =
 		[
 		0: "Light, accurate bounds"
 		1: "Heavy, inaccurate bounds"
