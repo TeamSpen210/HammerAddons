@@ -338,7 +338,8 @@ def get_appliesto(ent: EntityDef) -> List[str]:
 
     if pos is None:
         pos = 0
-    arg_list = sorted(applies_to)
+    arg_list = list(map(str.upper, applies_to))
+    arg_list.sort()
     ent.helpers[:] = [
         help for help in ent.helpers
         if not isinstance(help, HelperExtAppliesTo)
@@ -505,7 +506,14 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
     missing = 0
     for clsname in sorted(fgd.entities):
         ent = fgd.entities[clsname]
-        if ent.type is not EntityTypes.BASE and clsname not in CLASS_RESOURCES:
+        if ent.type is EntityTypes.BASE:
+            continue
+
+        applies_to = get_appliesto(ent)
+        if '-ENGINE' in applies_to or '!ENGINE' in applies_to:
+            continue
+
+        if clsname not in CLASS_RESOURCES:
             print(clsname, end=', ')
             missing += 1
     print('\nMissing:', missing)
@@ -780,7 +788,7 @@ def action_export(
             else:
                 # Helpers aren't inherited, so this isn't useful anymore.
                 ent.helpers.clear()
-                
+
     print('Culling visgroups...')
     # Cull visgroups that no longer exist for us.
     valid_ents = {
