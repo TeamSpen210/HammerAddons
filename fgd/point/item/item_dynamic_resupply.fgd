@@ -18,6 +18,7 @@
 		[
 		1: "Use Master's values" : 1
 		2: "Is Master" : 0
+		4: "Force Spawn" : 0
 		8: "Fallback to Health Vial" : 0
 		16: "Alternate master" : 0
 		]
