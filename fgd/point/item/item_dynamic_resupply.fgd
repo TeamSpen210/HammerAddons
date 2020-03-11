@@ -6,7 +6,7 @@
 	"To determine which item the player most needs, it calculates which of the Desired Health/Armor/Ammo ratios the player is farthest from." +
 	"\n\n" +
 	"If the player is above all the desired levels, then no item will be spawned, " +
-	"unless this item_dynamic_resupply was created by an item_item_crate. " +
+	"unless the 'Spawn Even if Full' spawnflag is set or the item_dynamic_resupply was created by an item_item_crate. " +
 	"In that case, a random piece of ammo used by a weapon, that the player has, will be spawned. " +
 	"If the 'Fallback to Health Vial' spawnflag is set, a health vial will be spawned instead of the ammo." +
 	"\n\n" +
@@ -18,7 +18,7 @@
 		[
 		1: "Use Master's values" : 1
 		2: "Is Master" : 0
-		4: "Force Spawn" : 0
+		4: "Spawn Even if Full" : 0
 		8: "Fallback to Health Vial" : 0
 		16: "Alternate master" : 0
 		]
