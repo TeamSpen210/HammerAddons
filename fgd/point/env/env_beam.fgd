@@ -30,6 +30,7 @@
 		128: "Shade Start" : 0
 		256: "Shade End" : 0
 		512: "Taper Out" : 0
+		1024: "Ring Point": 0 [MESA]
 		// Pretty useless for mappers, but is present...
 		// 32768: "Temporary - not saved in save files" : 0
 		]
@@ -65,4 +66,6 @@
 
 	// Outputs
 	output OnTouchedByEntity(void) : "Fired when an entity touches the beam. Only fired if the entity passes the 'Touch Type' choice."
+	output OnTouchedByNPC[MESA](void) : "Fired when an npc touches the beam. Only fired if the entity passes the 'Touch Type' choice."
+	output OnTouchedByPlayer[MESA](void) : "Fired when an player touches the beam. Only fired if the entity passes the 'Touch Type' choice."
 	]

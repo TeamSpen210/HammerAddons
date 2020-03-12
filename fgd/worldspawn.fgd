@@ -23,6 +23,14 @@
 		1: "Yes, clear previous levels"
 		]
 
+	underwaterparticle[engine](string) : "Under Water Particles": "underwater_default"
+	underwaterparticle(choices) : "Under Water Particles" : "underwater_default" : "" =
+		[
+		"underwater_default" : "Rubish"
+		"underwater_ion" : "Blue Ions"
+		"underwater_tentacle_water" : "Tentacle Shit Water"	
+		]
+
 	timeofday[engine](integer) : "Time of day" : 0
 	timeofday[L4D2](choices) : "Time of day" : 0 =
 		[

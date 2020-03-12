@@ -25,6 +25,10 @@
 		0: "Energy"
 		1: "Heavy electrical"
 		2: "Light electrical"
+		3 : "Fade" [MESA]
+		4 : "Remove Now" [MESA]
+		5 : "Gluon Dissolve" [MESA]
+		6 : "Core" [MESA]
 		]
 
 	// Inputs

@@ -55,6 +55,7 @@ GAMES = [
     ('SFM', 'Source Filmmaker'),
     ('DOTA2', 'Dota 2'),
     ('PUNT', 'PUNT'),
+    ('MESA', 'Black Mesa'),
     ('P2DES', 'Portal 2: Desolation'),
 ]  # type: List[Tuple[str, str]]
 

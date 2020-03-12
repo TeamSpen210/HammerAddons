@@ -9,6 +9,17 @@
 		1: "Master (Has priority if multiple env_tonemap_controllers exist)" : 0
 		]
 
+	bUseNextGenBloom[MESA](boolean) : "Use Next Gen Bloom" : 0	
+	bUseCustomBloomNextGen_Threshold[MESA](boolean) : "Use Custom Next Gen Bloom Threshold" : 0
+	
+	fCustomBloomNextGen_Threshold[MESA](float)	: "Custom Next Gen Bloom Threshold": 0 : "Threshold for bright pass filter."
+	
+	bUseCustomBloomNextGen_tintExponent[MESA](boolean) : "Use Custom Next Gen Bloom Tint Exponent" : 0 
+	
+	m_fCustomBloomNextGen_r[MESA](float)	: "Custom Bloom Tint (R)": "1.0" : "m_fCustomBloomNextGen_r"
+	m_fCustomBloomNextGen_g[MESA](float)	: "Custom Bloom Tint (G)": "1.0" : "m_fCustomBloomNextGen_g"
+	m_fCustomBloomNextGen_b[MESA](float)	: "Custom Bloom Tint (B)": "1.0" : "m_fCustomBloomNextGen_b"
+	m_fCustomBloomNextGen_exponent[MESA](float)	: "Custom Bloom Tint Exponent": "1.0" : "m_fCustomBloomNextGen_exponent"
 
 	// Inputs
 	input SetTonemapScale(integer) : "Set the player's tonemap scale. It should be a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
@@ -25,4 +36,11 @@
 	input SetTonemapPercentBrightPixels[since_L4D2](float) : "Set a target for percentage of pixels above a certain brightness. (default: 2)"
 	input SetTonemapPercentTarget[since_L4D2](float) : "Set a custom brightness target for SetTonemapPercentBrightPixels. (default: 60)"
 	input SetTonemapMinAvgLum[since_L4D2](float) : "Sets custom tonemapping param (ask Alex for details; default: 3)."
+
+	input InputSetBloomNxtGen_Threshold[MESA](float) : "InputSetBloomNxtGen_Threshold"
+	
+	input InputSetBloomNxtGen_TintR[MESA](float) : "InputSetBloomNxtGen_TintR"
+	input InputSetBloomNxtGen_TintG[MESA](float) : "InputSetBloomNxtGen_TintG"
+	input InputSetBloomNxtGen_TintB[MESA](float) : "InputSetBloomNxtGen_TintB"
+	input InputSetBloomNxtGen_Exponent[MESA](float) : "InputSetBloomNxtGen_Exponent"
 	]

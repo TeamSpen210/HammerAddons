@@ -48,7 +48,7 @@
 	sleepstate[engine](integer) : "Sleep State" : 0
 	wakeradius(float) : "Wake Radius" : 0 : "Auto-wake if player within this distance"
 	wakesquad(boolean) : "Wake Squad" : 0 : "Wake all of the NPCs squadmates if the NPC is woken"
-	enemyfilter(target_destination) : "Enemy Filter" : : "Filter by which to filter potential enemies"
+	enemyfilter(filterclass) : "Enemy Filter" : : "Filter by which to filter potential enemies"
 	ignoreunseenenemies(boolean) : "Ignore unseen enemies" : 0 : "Prefer visible enemies, regardless of distance or relationship priority"
 	physdamagescale(float) : "Physics Impact Damage Scale" : 1.0 : "Scales damage energy when this character is hit by a physics object. With a value of 0 the NPC will take no damage from physics."
 

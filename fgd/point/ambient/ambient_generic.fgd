@@ -10,6 +10,7 @@
 		1: "Infinite Range" : 0
 		16: "Start Silent" : 1
 		32: "Is NOT Looped" : 1
+		64:"Do NOT Pause when game is Paused": 0 [MESA]
 		]
 
 	message(sound) : "Sound Name" : : "Name of the GameSound entry for the sound to play. Also supports direct .wav filenames."
@@ -34,6 +35,17 @@
 		1152: "Pause and don't overwrite"
 		1408: "Pause, ignore phonemes and don't overwrite"
 	]
+
+	m_bDontModifyPitchVolOnSpawn[engine](boolean) : "Don't Modify Pitch/Volume On Spawn" : 0
+	m_bDontModifyPitchVolOnSpawn[MESA](Choices) : "Don't Modify Pitch/Volume On Spawn" : 0 : "When the 'Start Silent' flag is left unchecked, " +
+		"a SOUNDSCRIPTED ambient_generic will first pull its pitch & volume values " + 
+		"from inside the entity itself upon map load/spawn, and NOT from what's dictated in the actual soundscript. " +
+		"This option, when enabled, will prevent this from happening and ensure no discontinuity " +
+		"occurs when toggling the sound off and on again. (Set to Disabled by default)" =
+		[
+		0 : "Disabled"
+		1 : "Enabled"
+		]
 
 	preset[engine](integer) : "Dynamic Presets" : 0
 	preset(choices) : "Dynamic Presets" : 0 : "If used, overrides many of the below properties (+pitch) to preset values." =

@@ -1,0 +1,24 @@
+@PointClass base(BaseEntityPoint) appliesto(MESA) 
+= newLights_Spawner : "newLights_Spawner"
+	[
+	LightType[engine](integer) : "LightType" : 0
+	LightType(Choices) : "LightType" : 0 =
+	[
+		0 : "Point Light"
+		1 : "Spot Light"
+	]
+	
+	NumLights(integer) : "NumLights" : 100 : "NumLights"
+	NumLightsInRow(integer) : "NumLightsInRow" : 10 : "NumLightsInRow"
+		
+	LightRange(float) : "Light Range" : 250 : "Light Range"	
+	LightIntensity(float) : "Light Intensity" : 4000 : "RGB * Intensity"	
+	RowSpaceing(float) : "RowSpaceing" : 100 : "RowSpaceing"
+	ColSpacing(float) : "ColSpacing" : 100 : "ColSpacing"	
+	
+	RandomColor(boolean) : "RandomColor" : 1
+	LightColor(color255) : "Light Color" : "255 255 255 1" : "This is the color of the light when random color is tunedOFF"
+	
+	SpawnDir_Forward(vector) : "SpawnDir_Forward" : "1.0 0.0 0.0" : "SpawnDir_Forward"	
+	SpawnDir_Right(vector) : "SpawnDir_Right" : "0.0 1.0 0.0" : "SpawnDir_Right"	
+	]
