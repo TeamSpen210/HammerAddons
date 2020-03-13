@@ -18,7 +18,7 @@
 		2: "Client-side simulation" : 0
 		]
 
-	exclusive[since_L4D](boolean) : "Exlusive" : "0" : "An exclusive color_correction entity disables and fades out all other color corrections when it is enabled. " +
+	exclusive[since_L4D, MESA](boolean) : "Exlusive" : "0" : "An exclusive color_correction entity disables and fades out all other color corrections when it is enabled. " +
 		"There should only be one active exclusive color_correction ent at any time."
 
 	// Inputs

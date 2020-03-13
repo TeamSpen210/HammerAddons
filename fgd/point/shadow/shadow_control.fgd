@@ -8,6 +8,9 @@
 	color(color255) : "Shadow Color" : "128 128 128" : "This is the color of the shadows."
 	distance(float) : "Maximum Distance" : 75 : "This is the maximum distance the shadow is allowed to cast, in Source units."
 	disableallshadows(boolean) : "All Shadows Disabled" : 0
+
+	ForceBlobShadows[MESA](boolean) : "Force Blob shadows" : 1
+
 	enableshadowsfromlocallights[since_L4D](boolean) : "Enable Shadows From Local Lights" : 1
 	enableshadowsfromlocallights[MBase](boolean) : "Enable Local Light Shadows" : 0 : "Enables RTT dynamic shadow angles, " +
 		"which cause shadows to face away from the nearest light source instead of always using this entity's direction. " +
@@ -20,5 +23,6 @@
 	input SetDistance(float) : "Set the maximum shadow cast distance."
 	input SetAngles(string) : "Set the shadow direction."
 	input SetShadowsDisabled(integer) : "Set shadows disabled state."
+	input SetForceBlobsEnabled[MESA](integer) : "Set shadows blob state."
 	input SetShadowsFromLocalLightsEnabled[MBase, since_L4D](integer) : "Set local light shadows enabled state."
 	]

@@ -19,6 +19,10 @@
 	input UnlockOrientation[P2](void) : "Unlock the current orientation of the train."
 	input SetMaxSpeed[P2](float) : "Set a new max speed for the train."
 
+	input SetVelocityType[MESA](integer) : ""
+	input EnableControls[MESA](void) : ""
+	input DisableControls[MESA](void) : ""
+
 	// Outputs
 	output OnStart(void) : "Fired when the train starts moving in either direction."
 	output OnNextPoint(string) : "Fires continuously every frame when the train is moving to its next destination."

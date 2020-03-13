@@ -39,6 +39,11 @@
 		1: "Yes"
 		]
 
+	spawnflags[MESA](flags) = 
+	[
+		4194304 : "Attempt to override gib with the character gib system" : 0
+	]
+
 	// Inputs
 	input Ignite(void) : "Ignite, burst into flames."
 	input IgniteLifetime(float) : "Ignite, with a parameter lifetime."

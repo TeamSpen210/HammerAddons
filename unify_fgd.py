@@ -42,6 +42,8 @@ GAMES = [
 
     # Not chronologically here, but it uses 2013 as the base.
     ('MBASE', 'Mapbase'),
+    # Mesa also appears to be about here...
+    ('MESA', 'Black Mesa'),
 
     ('TF2',  'Team Fortress 2'),
     ('P1', 'Portal'),
@@ -55,7 +57,6 @@ GAMES = [
     ('SFM', 'Source Filmmaker'),
     ('DOTA2', 'Dota 2'),
     ('PUNT', 'PUNT'),
-    ('MESA', 'Black Mesa'),
     ('P2DES', 'Portal 2: Desolation'),
 ]  # type: List[Tuple[str, str]]
 
@@ -71,6 +72,7 @@ FEATURES = {
     'EP2': {'INSTANCING'},
 
     'MBASE': {'HL2', 'EP1', 'EP2', 'INSTANCING'},
+    'MESA': {'INSTANCING', 'INST_IO'},
     
     'L4D': {'INSTANCING'},
     'L4D2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
@@ -111,15 +113,16 @@ POLYFILLS = []  # type: List[Tuple[str, Callable[[FGD], None]]]
 PolyfillFuncT = TypeVar('PolyfillFuncT', bound=Callable[[FGD], None])
 
 
-def _polyfill(tag: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
+def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
     """Register a polyfill, which backports newer FGD syntax to older engines."""
     def deco(func: PolyfillFuncT) -> PolyfillFuncT:
-        POLYFILLS.append((tag.upper(), func))
+        for tag in tags:
+            POLYFILLS.append((tag.upper(), func))
         return func
     return deco
 
 
-@_polyfill('until_asw')
+@_polyfill('until_asw', 'mesa')
 def _polyfill_boolean(fgd: FGD):
     """Before Alien Swarm's Hammer, boolean was not available as a keyvalue type.
 
