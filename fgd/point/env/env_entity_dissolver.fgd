@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, Mesa) 
 	iconsprite("editor/ficool2/env_entity_dissolver.vmt") 
 	line(255 255 255, targetname, target) 
 = env_entity_dissolver: "Dissolves the target entity when triggered. Only works on model entities. In Portal 2, this uses the Fizzler effects."
@@ -13,7 +13,10 @@
 		0: "Energy"
 		1: "Heavy electrical"
 		2: "Light electrical"
-		3: "Core Effect"
+		3: "Core Effect" [!Mesa]
+		3: "Fade" [Mesa]
+		4: "Remove Now" [Mesa]
+		5: "Core" [Mesa]
 		]
 
 	dissolvetype[P2](choices) : "Dissolve Type" : 0 : "The type of effect to use." =

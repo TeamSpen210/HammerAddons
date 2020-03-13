@@ -5,7 +5,7 @@
 	sphere(fademindist) 
 	sphere(fademaxdist) 
 	studioprop() 
-= prop_ragdoll: "A prop that physically simulates and can be articulated with internal joints. " +
+= prop_ragdoll_original: "A prop that physically simulates and can be articulated with internal joints. " +
 	"The joint constraints are part of the physics model." +
 	"This is the original real prop_ragdoll, not remapped breakable one."
 	[

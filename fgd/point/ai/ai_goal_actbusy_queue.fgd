@@ -2,7 +2,7 @@
 @PointClass base(BaseActBusy) 
 	autovis(AI, AI Goal)
 	autovis(AI, Act Busy)
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, Mesa) 
 = ai_goal_actbusy_queue: "AI Goal Act Busy Queue"
 	[
 	node_exit(target_destination) : "Exit Node" : : "The name of the node the first NPC in the queue should move to when he leaves the head of the queue."

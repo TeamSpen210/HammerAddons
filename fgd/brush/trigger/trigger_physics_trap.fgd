@@ -1,5 +1,5 @@
 @SolidClass base(Trigger, Angles) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, MESA) 
 = trigger_physics_trap: "A volumetric trigger that disintegrates enemies"
 	[
 	dissolvetype[engine](integer) : "Dissolve Type": 0
@@ -8,5 +8,8 @@
 		0: "Energy"
 		1: "Heavy electrical"
 		2: "Light electrical"
+		3 : "Fade" [MESA]
+		4 : "Remove Now" [MESA]
+		5 : "Core" [MESA]
 		]
 	]
