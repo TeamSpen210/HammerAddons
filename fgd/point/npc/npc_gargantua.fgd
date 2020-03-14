@@ -1,0 +1,10 @@
+@NPCClass base(BaseNPCAssault) appliesto(Mesa) 
+	studio("models/xenians/garg.mdl")
+	autovis(Entities, NPCs, Xen, Gargantua)
+= npc_gargantua : "Gargantua"
+	[
+	input chaseplayer(void) : "Chase the player."
+	input chaseend(void) : "Like the player so did not call you....so like you should like stop following him...like ok....yep"
+	input GargantuaExplode(void) : "Blow up the Gargantua."
+	output OnWishToDie(void) : "Empty"
+	]

@@ -1,0 +1,6 @@
+@NPCClass base(BaseNPC) appliesto(Mesa) 
+	studio("models/xenians/agrunt.mdl")
+	autovis(Entities, NPCs, Xen, Alien Grunt)
+= npc_alien_grunt_elite: "Elite Alien Grunt"
+	[
+	]

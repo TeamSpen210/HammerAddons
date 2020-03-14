@@ -1,0 +1,6 @@
+@NPCClass base(BMBaseHelicopter) appliesto(Mesa)
+	studio("models/xenians/manta_jet.mdl") 
+	autovis(Entities, NPCs, Xen, Manta)
+= npc_manta : "Manta"
+[
+]

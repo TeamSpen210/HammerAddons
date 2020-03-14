@@ -1,6 +1,9 @@
+@BaseClass appliesto(-mesa) studio("models/items/battery.mdl") = _item_battery_hl2 []
+@BaseClass appliesto(+mesa) studio("models/weapons/w_battery.mdl") = _item_battery_mesa []
 
-@PointClass base(Item) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
-	studio("models/items/battery.mdl") = item_battery: "HEV battery"
+@PointClass base(Item, BaseMesaPickup) 
+	appliesto(EP1, EP2, HL2, P1, ASW, Mesa) 
+	base(_item_battery_hl2, _item_battery_mesa)
+= item_battery: "HEV battery"
 	[
 	]

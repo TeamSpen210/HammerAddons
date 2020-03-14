@@ -1,0 +1,34 @@
+@NPCClass base(BMBaseHelicopter) appliesto(Mesa)
+	studio("models/props_vehicles/osprey.mdl")
+	line(255 255 255, targetname, NPCTemplate1)
+	line(255 255 255, targetname, NPCTemplate2)
+	line(255 255 255, targetname, NPCTemplate3)
+	line(255 255 255, targetname, NPCTemplate4)
+	line(255 255 255, targetname, NPCTemplate5)
+	line(255 255 255, targetname, NPCTemplate6)
+	line(255 255 255, targetname, NPCTemplate7)
+	line(255 255 255, targetname, NPCTemplate8)
+	autovis(Entities, NPCs, Military, Osprey Helicopter)
+= npc_osprey : "Osprey Helicopter"
+	[
+	// Inputs
+	input BeginRappellingGrunts(void) : "The Osprey should rappel grunts at the current path node"
+	input RemoveGrunts(void) : "Removes all grunts on the map that belong to the osprey"
+	input WaitHereTillReady(void) : "The Osprey will wait at this path node until it is ready to deploy new grunts"
+	input RappelToTarget(string) :  "Grunts rappeled from osprey will rappel down within range of the target"
+	input RemoveGrunts(void) : "Removes all the grunts the osprey owns on the map"
+	input KillRappelingGrunts(void) : "Kills the grunts which are currently rappeling down"
+
+	//Outputs
+	output OnReadyToMoveDeployZone(void) : "The Osprey has enough grunts to deploy and should therefore should move on to the next path node"
+	output OnReadyToRetreat(void) : "The Osprey has finished deploying grunts and should therefore should move on to the next path node"
+
+	NPCTemplate1(target_destination) : "Name of Template NPC 1"
+	NPCTemplate2(target_destination) : "Name of Template NPC 2"
+	NPCTemplate3(target_destination) : "Name of Template NPC 3"
+	NPCTemplate4(target_destination) : "Name of Template NPC 4"
+	NPCTemplate5(target_destination) : "Name of Template NPC 5"
+	NPCTemplate6(target_destination) : "Name of Template NPC 6"
+	NPCTemplate7(target_destination) : "Name of Template NPC 7"
+	NPCTemplate8(target_destination) : "Name of Template NPC 8"
+	]

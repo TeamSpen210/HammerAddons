@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, Angles) 
-	appliesto(since_L4D2)
+	appliesto(since_L4D2, Mesa)
 	sphere(fademindist)
 	sphere(fademaxdist)
 	iconsprite("editor/env_particles.vmt")

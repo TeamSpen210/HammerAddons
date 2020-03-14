@@ -1,5 +1,5 @@
-
 @BaseClass base(BaseEntityPhysics, TeamNum, EnableDisable, Toggle, FadeDistance) 
+	appliesto(!Mesa) // So these can swap to BaseMesaPickup
 	color(0 0 200) 
 	sphere(fademindist) 
 	sphere(fademaxdist) = Item

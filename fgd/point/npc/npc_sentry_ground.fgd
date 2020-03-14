@@ -1,0 +1,5 @@
+@NPCClass base(BaseSentry) appliesto(Mesa) 
+	studio("models/npcs/sentry_ground.mdl")
+= npc_sentry_ground : "Ground Sentry"
+	[
+	]

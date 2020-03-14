@@ -1,0 +1,5 @@
+@NpcClass base(npc_houndeye) appliesto(Mesa)
+	autovis(Entities, NPCs, Xen, Houndeye)
+	studioprop("models/xenians/houndeye_suicide.mdl") = npc_houndeye_suicide : "Houndeye (Suicide)"
+	[
+	]

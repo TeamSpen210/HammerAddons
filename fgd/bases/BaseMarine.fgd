@@ -1,0 +1,33 @@
+@BaseClass base(BaseNPC, RappelNPC) = BaseMarine
+	[
+	input Assault(string) : "Start an assault. Parameter passed in should be the name of the rally point."
+
+	NumGrenades[engine](integer) : "Number of Grenades"
+	NumGrenades(choices) : "Number of Grenades" : 5 =
+		[
+		0 : "None"
+		1 : "1"
+		2 : "2"
+		3 : "3"
+		4 : "4"
+		5 : "5"
+		-1 : "Unlimited"
+		]
+
+	additionalequipment[engine](string) : "Weapons" : "weapon_mp5"
+	additionalequipment(choices) : "Weapons" : "weapon_mp5" =
+		[
+		"weapon_glock" 		: "weapon_glock"
+		"weapon_mp5"		: "weapon_mp5"
+		"weapon_shotgun"	: "weapon_shotgun"
+		"weapon_rpg"		: "weapon_rpg"
+		"0" 				: "Random"
+		]
+
+	spawnflags(Flags) =
+		[
+		32768 : "No Weapon" : 0
+		262144 : "Disable Freeman Lines" : 0
+		524288 : "Disable Muzzle DLight" : 0
+		]
+	]

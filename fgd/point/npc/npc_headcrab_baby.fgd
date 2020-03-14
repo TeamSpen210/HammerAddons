@@ -1,0 +1,6 @@
+@NpcClass base(BaseHeadcrab) 
+	appliesto(Mesa) 
+	autovis(Entities, NPCs, Headcrabs, Baby Headcrab)
+	studio("models/xenians/bebcrab.mdl") = npc_headcrab_baby: "Baby Headcrab"
+	[
+	]

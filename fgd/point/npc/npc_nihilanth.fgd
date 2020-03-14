@@ -1,0 +1,38 @@
+@NpcClass base(BaseNPC) appliesto(Mesa) 
+	autovis(Entities, NPCs, Xen, Nihilanth)
+	studio("models/xenians/nihilanth.mdl")
+= npc_nihilanth : "Nihilanth" 
+	[
+	m_tNHState(integer) : "Nihilant State" : 0 : "Set the starting state of the Nihilanth."
+	
+	output OnFirstShockWave(void) : "OnFirstShockWave"
+	output OnMortarPhasee3(void) : "OnMortarPhasee3"
+	output OnDamageThresholdReached(void) : "Fired when damage threshold that has been previously set is triggered."
+	
+	output OnPhase2Enter(void) : "Fired when Phase 2 was begun."
+	output OnPhase3Enter(void) : "Fired when Phase 3 was begun."
+	output OnPhase4Enter(void) : "Fired when Phase 4 was begun."
+	
+	output OnBarrierRequest(void) : "On Barrier Request"
+	output OnEverythingMustPerish(void) : "On Everything Must Perish"
+
+	input InputChangeInternalState(integer) : "Change internal state of Nihilanth"
+	input InputOnPhaseEnd(void) : "Complete the current phase."
+	
+	input InputRegisterPylon(string) : "InputRegisterPylon"
+	
+	input InputSetRockBarrier1(string) : "InputSetRockBarrier1"
+	input InputSetRockBarrier2(string) : "InputSetRockBarrier2"
+	
+	input InputPlayerHealingPoolEnter(void) : "The player has entered a Healing Pool"
+	input InputPlayerHealingPoolExit(void) : "The player has left a Healing Pool"
+	
+	input InputEnableForcedIDLE(void) : "Enable Forced IDLE"
+	input InputDisableForcedIDLE(void) : "Disable Forced IDLE"
+	
+	input SetAttackPool(string) : "Set a specific attack pool to be enabled."
+	input SetGodMode(integer) : "Set 1 for god mode on, 0 for off"
+	input SetDamageThreshold(integer) : "Set damage threshold for OnDamageThresholdReached to trigger."
+	
+	input NotifyXenShieldIsDestroyed(void) : "Tell Nihilanth that a Xen Shield has been destroyed."
+	]

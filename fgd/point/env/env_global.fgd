@@ -97,6 +97,12 @@
 		"infra_B2_Keys": "INFRA: player has B2 Keys"
 		]
 
+	globalstate[Mesa](choices) : "Global State to Set" =
+		[
+		"predisaster" : "predisaster"
+		"friendly_encounter" : "Friendly encounter sequence (lower weapons, etc.)"
+		"gordon_invulnerable" : "Gordon is invulnerable"
+		]
 
 	initialstate[engine](integer) : "Initial State" : 0
 	initialstate(choices) : "Initial State" : 0 =

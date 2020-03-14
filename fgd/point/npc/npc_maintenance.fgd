@@ -1,0 +1,6 @@
+@NpcClass base(BaseNPC) appliesto(Mesa) 
+	autovis(Entities, NPCs, Maintenance Man)
+	studio("models/humans/maintenance/maintenance_1.mdl") 
+= npc_maintenance : "Maintenance Guy"
+	[
+	]

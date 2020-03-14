@@ -1,0 +1,34 @@
+@NPCClass base(prop_dynamic_base) appliesto(Mesa)
+	sphere(fademindist) sphere(fademaxdist)
+	sphere(ExplodeRadius)
+	studioprop()
+	autovis(Entities, NPCs, Xen, Interloper Barrel)
+= prop_barrel_interloper : "Interloper Barrel"
+	[
+	model(studio) : "World model" : "models/props_xen/interloper/int_cyst_large.mdl"
+
+	spawnflags(flags) =
+		[
+		64 : "Use Hitboxes for Renderbox" : 0
+		256 : "Start with collision disabled" : 0
+		]
+	
+	cactustype[engine](integer)
+	cactustype(choices) : "Cactus Type" : 6 =
+		[
+		0 : "Default"
+		1 : "SemiLarge"
+		2 : "Adolescent"
+		3 : "Infant"
+		4 : "Exploder"
+		5 : "Regen"
+		6 : "Interloper"
+		7 : "Interloper_Adol"
+		]	
+	m_bOverrideModel(boolean) : "Cactus Model Override" : 0
+	m_bDisableGibs(boolean) : "Disable GIBS" : 0
+	
+	lightRadius(float) : "lightRadius" : 400 : "Radius of light"
+	
+	output OnCactusExplode(void) : "OnCactusExplode"
+	]

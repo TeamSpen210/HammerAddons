@@ -1,10 +1,21 @@
+// Modified models with no animations, so it doesn't loop
+// constantly.
+@BaseClass appliesto(-Mesa) studio("models/editor/item_suit_charger_hl2.mdl") = _item_suitcharger_hl2 []
+@BaseClass appliesto(+Mesa) studio("models/editor/item_suit_charger_mesa.mdl") = _item_suitcharger_mesa []
+
 @PointClass base(BaseEntityAnimating) 
-	appliesto(EP1, EP2, HL2, P1, ASW)  
-	// Modified model with no animations, so it doesn't loop
-	// constantly.
-	studio("models/editor/item_suit_charger_hl2.mdl")
-= item_suitcharger: "Battery recharger"
+	appliesto(EP1, EP2, HL2, P1, ASW, Mesa)  
+= item_suitcharger: "HEV recharger"
 	[
+	charge[Mesa](float) : "Charge" : 75 : "How full the charger should be (0 - 100)"
+	skintype[engine](integer) : "Skin Type" : 0
+	skintype[Mesa](choices) : "Force Skin" : 0 =
+		[
+		"0" : "None"
+		"1" : "Clean"
+		"2" : "Dirty"
+		]
+
 	Charge[MBase](integer) : "Juice" : 0 : "Overrides the amount of suit power this charger contains. " +
 		"Use 0 for the default charge, which is usually the maximum juice. Use -1 if you want the charger to start empty."
 	MaxCharge[MBase](integer) : "Max Juice" : 0 : "Overrides the maximum suit power this charger contains. " +
@@ -13,22 +24,26 @@
 		"or each tenth-of-a-second interval in which the player is given armor while using this charger. " +
 		"Juice is also decreased accordingly. Use 0 for the default increment, 1."
 
-	spawnflags(flags) : "spawnflags" =
+	spawnflags[!Mesa](flags) : "spawnflags" =
 		[
 		8192: "Citadel recharger (overcharge to 200% + heal)" : 0
 		16384: "Kleiner's recharger (25% charge)" : 0
 		]
 
 	// Inputs
-	input Recharge(void) : "Recharge to full"
-	input SetCharge(int) : "Sets the *maximum* charge, refilling the charger in the process."
+	input Recharge[!Mesa](void) : "Recharge to full"
+	input SetCharge[!Mesa](int) : "Sets the *maximum* charge, refilling the charger in the process."
 	input SetChargeNoMax[MBase](float) : "Sets the charger's current juice without doing anything with the maximum."
 	input SetIncrementValue[MBase](integer) : "Sets the charger's increment value."
 
+	input Enable[Mesa](void) : "Enable"
+	input Disable[Mesa](void) : "Disable"
+
 	// Outputs
-	output OutRemainingCharge(float) : "Remaining Charge."
+	output OutRemainingCharge[!Mesa](float) : "Remaining Charge."
 	output OnHalfEmpty(void) : "Half-Empty"
 	output OnEmpty(void) : "Empty"
 	output OnFull(void) : "Recharged to full."
-	output OnPlayerUse(void) : "Fired when the player +USEs the charger."
+	output OnPlayerUse[-Mesa](void) : "Fired when the player +USEs the charger."
+	output OnUse[+Mesa](void) : "Fired when the player +USEs the charger."
 	]
