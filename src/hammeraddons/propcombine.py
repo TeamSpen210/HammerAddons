@@ -25,7 +25,7 @@ from srctools.game import Game
 
 from srctools.logger import get_logger
 from srctools.packlist import PackList
-from srctools.bsp import BSP, StaticProp, StaticPropFlags
+from srctools.bsp import BSP, StaticProp
 from srctools.mdl import Model
 from srctools.smd import Mesh
 from collections import defaultdict
@@ -664,26 +664,21 @@ def group_props_ent(
             Vec.from_str(ent['mins']),
             Vec.from_str(ent['maxs']),
         )
-        # Subtract off the midpoint, so these are pointing away from the center
-        # This only matters if the origin of the ent is outside the box.
-        midpoint = (mins + maxes) / 2
-        mins -= midpoint
-        mins -= midpoint
-        # Then adjust the origin to compensate.
-        origin += midpoint.rotate(*angles)
-
         # Enlarge slightly to ensure it never has a zero area.
         # Otherwise the normal could potentially be invalid.
         mins -= 0.05
         maxes += 0.05
-        planes = []  # type: List[Tuple[Vec, Vec]]
 
-        for offset in [mins, maxes]:
-            for axis in ('x', 'y', 'z'):
-                norm = Vec.with_axes(axis, offset).rotate(*angles)
-                planes.append((origin + norm, norm.norm()))
-
-        combine_sets[name, skinset].append(planes)
+        # For each direction, compute a position on the plane and
+        # the normal vector.
+        combine_sets[name, skinset].append([
+            (
+                origin + Vec.with_axes(axis, offset).rotate(*angles),
+                Vec.with_axes(axis, norm).rotate(*angles),
+            )
+            for offset, norm in zip([mins, maxes], (-1, 1))
+            for axis in ('x', 'y', 'z')
+        ])
 
     # Each of these groups cannot be merged with other ones.
     for group_key, group in prop_groups.items():
