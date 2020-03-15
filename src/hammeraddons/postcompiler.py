@@ -88,7 +88,7 @@ def main(argv: List[str]) -> None:
         LOGGER.warning('No studiomdl path provided.')
         studiomdl_loc = None
 
-    run_transformations(vmf, fsys, packlist, path, game_info, studiomdl_loc)
+    run_transformations(vmf, fsys, packlist, bsp_file, game_info, studiomdl_loc)
 
     if studiomdl_loc is not None and args.propcombine:
         LOGGER.info('Combining props...')

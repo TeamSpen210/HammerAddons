@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Callable, Dict, Tuple, List
 
 from srctools import FileSystem, VMF, Output, Entity, FGD
+from srctools.bsp import BSP
 from srctools.logger import get_logger
 from srctools.packlist import PackList, load_fgd
 from srctools.game import Game
@@ -23,7 +24,7 @@ class Context:
         filesys: FileSystem,
         vmf: VMF,
         pack: PackList,
-        bsp_path: str,
+        bsp: BSP,
         game: Game,
         *,
         fgd: FGD = None,
@@ -31,8 +32,9 @@ class Context:
     ) -> None:
         self.sys = filesys
         self.vmf = vmf
+        self.bsp = bsp
         self.pack = pack
-        self.bsp_path = Path(bsp_path)
+        self.bsp_path = Path(bsp.filename)
         self.fgd = fgd or load_fgd()
         self.game = game
         self.studiomdl = studiomdl_loc
@@ -83,12 +85,12 @@ def run_transformations(
     vmf: VMF,
     filesys: FileSystem,
     pack: PackList,
-    bsp_path: str,
+    bsp: BSP,
     game: Game,
     studiomdl_loc: Path=None,
 ) -> None:
     """Run all transformations."""
-    context = Context(filesys, vmf, pack, bsp_path, game, studiomdl_loc=studiomdl_loc)
+    context = Context(filesys, vmf, pack, bsp, game, studiomdl_loc=studiomdl_loc)
 
     for func_name, func in TRANSFORMS.items():
         LOGGER.info('Running "{}"...', func_name)
