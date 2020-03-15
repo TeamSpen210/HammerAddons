@@ -38,6 +38,11 @@ def main(argv: List[str]) -> None:
         action="store_true",
         help="Allow merging static props together.",
     )
+    parser.add_argument(
+        "--showgroups",
+        action="store_true",
+        help="Show propcombined props, by setting their tint to 0 255 0",
+    )
 
     parser.add_argument(
         "map",
@@ -107,6 +112,7 @@ def main(argv: List[str]) -> None:
             ],
             conf.get(int, 'propcombine_auto_range'),
             conf.get(int, 'propcombine_min_cluster'),
+            debug_tint=args.showgroups,
         )
         LOGGER.info('Done!')
 

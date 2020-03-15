@@ -6,6 +6,7 @@ draw call.
 import os
 import subprocess
 import random
+import colorsys
 from enum import Enum
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -555,7 +556,6 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
             allow_star_comments=True,
         )
         for token_type, token_value in tok:
-
             if token_type is Token.STRING:
                 token_value = token_value.casefold()
                 if token_value == '$scale':
@@ -788,6 +788,7 @@ def combine(
     qc_folders: List[Path]=None,
     auto_range: float=0,
     min_cluster: int=2,
+    debug_tint: bool=False,
 ) -> None:
     """Combine props in this map."""
 
@@ -926,7 +927,11 @@ def combine(
             LOGGER.warning("Couldn't parse props cache file:", exc_info=True)
 
         for group in grouper:
-            final_props.append(mdl_man.combine_group(group))
+            grouped_prop = mdl_man.combine_group(group)
+            if debug_tint:
+                # Compute a random hue, and convert back to RGB 0-255.
+                grouped_prop.tint = round(Vec(*colorsys.hsv_to_rgb(random.random(), 1, 1)) * 255)
+            final_props.append(grouped_prop)
 
     mdl_man.finalise()
 
