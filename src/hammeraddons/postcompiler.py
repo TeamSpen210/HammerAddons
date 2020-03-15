@@ -1,10 +1,12 @@
 """Runs before VRAD, to run operations on the final BSP."""
 import argparse
+import datetime
+import sys
+from pathlib import Path
 
 from srctools import Property
 from srctools.logger import init_logging
-from pathlib import Path
-import sys
+
 
 # Put the logs in the executable folders.
 LOGGER = init_logging(Path(sys.argv[0]).with_name('postcompiler.log'))
@@ -18,7 +20,7 @@ from typing import List
 
 
 def main(argv: List[str]) -> None:
-    LOGGER.info('Srctools postcompiler hook started!')
+    LOGGER.info('Srctools postcompiler hook started at {}!', datetime.datetime.now().isoformat())
 
     parser = argparse.ArgumentParser(
         description="Modifies the BSP file, allowing additional entities "
