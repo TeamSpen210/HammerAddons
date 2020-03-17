@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(engine)
-	autovis(Engine) 
 = _plasma: "Internal entity used for plasma-type env_fires."
 	[
 	]
