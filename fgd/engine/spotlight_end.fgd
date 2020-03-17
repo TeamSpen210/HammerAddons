@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(+engine)
+= spotlight_end: "Entity positioned at the end of spotlights."
+	[
+	]   

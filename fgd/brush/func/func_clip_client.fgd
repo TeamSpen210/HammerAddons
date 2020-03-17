@@ -1,4 +1,0 @@
-@SolidClass base(BaseEntityBrush, EnableDisable, Toggle) = func_clip_client : 
-	"A brush entity that's considered solid to clientside ragdolls and other clientside objects." 
-[
-]
