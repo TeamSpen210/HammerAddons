@@ -1,0 +1,7 @@
+@NPCClass base(TalkNPC, PlayerCompanion) 
+	appliesto(Mesa)
+	autovis(Entities, NPCs, Mesa Personel, Science Team, Dr. Kliener - Mesa)
+	studio("models/humans/scientist_kliener.mdl") 
+= npc_human_scientist_kleiner : "Dr. Kleiner"
+	[
+	]

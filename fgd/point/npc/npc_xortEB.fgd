@@ -2,7 +2,7 @@
 	studio("models/vortigaunt_slave.mdl")
 = npc_xortEB : "Xortigaunt"
 	[ 
-	XortStatep[engine](integer) : "Xort Internal State" : 1
+	XortState[engine](integer) : "Xort Internal State" : 1
 	XortState(choices) : "Xort Internal State" : 1 =
 		[
 		0 : "Neutral"

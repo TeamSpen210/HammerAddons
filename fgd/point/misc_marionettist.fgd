@@ -1,0 +1,40 @@
+@PointClass base(BaseEntityPoint) appliesto(Mesa) 
+= misc_marionettist : ""
+	[
+	innerdestinationradius(integer) : "Inner Destination Radius" : 32 : ""
+	innerpullspeed(integer) : "Inner Pull Speed" : 448 : ""
+	
+	outerdestinationradius(integer) : "Outer Destination Radius" : 128 : ""
+	outerpullspeed(integer) : "Outer Pull Speed" : 512 : ""
+
+	ignorecollisions(boolean) : "Should Ignore Collisions" : 0 
+
+	target01(target_destination) : "Target [Slot 01]" : "" : "Slot 01."
+	target02(target_destination) : "Target [Slot 02]" : "" : "Slot 02."
+	target03(target_destination) : "Target [Slot 03]" : "" : "Slot 03."
+	target04(target_destination) : "Target [Slot 04]" : "" : "Slot 04."
+	target05(target_destination) : "Target [Slot 05]" : "" : "Slot 05."
+	target06(target_destination) : "Target [Slot 06]" : "" : "Slot 06."
+	target07(target_destination) : "Target [Slot 07]" : "" : "Slot 07."
+	target08(target_destination) : "Target [Slot 08]" : "" : "Slot 08."
+	target09(target_destination) : "Target [Slot 09]" : "" : "Slot 09."
+	target10(target_destination) : "Target [Slot 10]" : "" : "Slot 10."
+	target11(target_destination) : "Target [Slot 11]" : "" : "Slot 11."
+	target12(target_destination) : "Target [Slot 12]" : "" : "Slot 12."
+	target13(target_destination) : "Target [Slot 13]" : "" : "Slot 13."
+	target14(target_destination) : "Target [Slot 14]" : "" : "Slot 14."
+	target15(target_destination) : "Target [Slot 15]" : "" : "Slot 15."
+	target16(target_destination) : "Target [Slot 16]" : "" : "Slot 16."
+
+	soundscriptstart(string) : "SoundScript Start" : "" : ""
+	soundscriptloop(string) : "SoundScript Loop" : "" : ""
+	soundscriptend(string) : "SoundScript End" : "" : ""
+
+	input Manipulate(target_destination) : ""
+	
+	input SetInnerDestinationRadius(string) : "Set Inner Destination Radius (Time:<Time> Value:<Value>)"
+	input SetInnerPullSpeed(string) : "Set Inner Pull Speed (Time:<Time> Value:<Value>)"
+	
+	input SetOuterDestinationRadius(string) : "Set Outer Destination Radius (Time:<Time> Value:<Value>)"
+	input SetOuterPullSpeed(string) : "Set Outer Pull Speed (Time:<Time> Value:<Value>)"
+	]

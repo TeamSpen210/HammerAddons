@@ -1,0 +1,5 @@
+@PointClass base(npc_maker, XenPortal)	appliesto(Mesa)
+	autovis(Entities, NPCs, Xen, Xen Portal FX)
+= env_xen_portal
+	[
+	]

@@ -32,4 +32,12 @@
 		2: "P-Body"
 		3: "ATLAS"
 		]
+
+	filterteam[Mesa](choices) : "Filter Team Number" : 2 : "The team number to filter by.  " +
+		"If the filter mode is Allow, only entities whose team number matches the given team will pass the filter. " +
+		"If the filter mode is Disallow, all entities EXCEPT those whose team number matches the given team will pass the filter." =
+		[
+		2 : "Hgrunt"
+		3 : "Scientist"
+		]
 	]

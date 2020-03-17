@@ -1,5 +1,5 @@
 @PointClass base(Propper) 
-	appliesto(PROPPER)
+	appliesto(-engine, PROPPER)
 	autovis(Propper)
 	iconsprite("editor/color_correction.vmt")
 = propper_skins: "Propper can create alternate skins by replacing a texture that is on your prop. " +

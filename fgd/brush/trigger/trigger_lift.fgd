@@ -1,0 +1,6 @@
+@SolidClass base(Trigger) appliesto(Mesa)
+= trigger_lift: ""
+	[
+	liftaccel(float) : "Lift Acceleration" : 100 : "Lift Acceleration"
+	clampspeed(float) : "Clamp Speed" : 512 : "Clamp Speed"
+	]

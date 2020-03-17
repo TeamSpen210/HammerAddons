@@ -1,5 +1,5 @@
 @SolidClass base(Propper, Origin) 
-	appliesto(PROPPER)
+	appliesto(-engine, PROPPER)
 	autovis(Propper)
 = propper_lod: "A low-res version of the model to show at long distance."
 	[

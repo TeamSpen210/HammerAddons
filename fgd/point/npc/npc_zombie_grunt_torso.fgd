@@ -1,0 +1,6 @@
+@NpcClass base(BaseZombie) 
+	appliesto(Mesa) 
+	autovis(Entities, NPCs, Zombies, Zombie Grunt Torso)
+	studio("models/Zombie/zombie_grunt_torso.mdl") = npc_zombie_grunt_torso : "Zombie Grunt Torso"
+	[
+	]

@@ -1,0 +1,26 @@
+@PointClass base(BaseEntityPoint) appliesto(Mesa)
+= point_weaponstrip: "Strip a weapon from the player"
+	[
+	Weapon[engine](integer)
+	Weapon(choices) : "Weapon to strip" : "2" =
+		[
+		"0" : "weapon_357"
+		"1" : "weapon_crossbow"
+		"2" : "weapon_crowbar"
+		"3" : "weapon_frag"
+		"4" : "weapon_glock"
+		"5" : "weapon_gluon"
+		"6" : "weapon_hivehand"
+		"7" : "weapon_mp5"
+		"8" : "weapon_rpg"
+		"9" : "weapon_satchel"
+		"10" : "weapon_shotgun"
+		"11" : "weapon_snark"
+		"12" : "weapon_tau"
+		"13" : "weapon_tripmine"
+		"14" : "weapon_headcrab"
+		"15" : "weapon_assassin_glock"
+		]
+
+	input StripWeapon(void)  : "Strip weapon from combatant"
+	]

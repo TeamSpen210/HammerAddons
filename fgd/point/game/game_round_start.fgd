@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityPoint) appliesto(Mesa) 
+ 	autovis(Point Entities, Globals, Game Round Start)
+= game_round_start: "Fires output when the round is starting."
+	[
+	output OnRoundStart(void) : "Fired when the round is starting."
+	]

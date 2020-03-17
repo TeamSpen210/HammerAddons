@@ -1,4 +1,4 @@
-@PointClass base(Node)
+@PointClass base(Node) appliesto(Mesa)
 	autovis(Entities, Nodes, Ground Node, Gonarch Node)
 	studio("models/editor/ground_node.mdl") 
 	line(232 219 8, targetname, reachtarget)

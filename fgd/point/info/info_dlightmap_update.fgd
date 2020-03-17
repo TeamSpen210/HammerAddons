@@ -1,0 +1,7 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(Mesa) 
+	iconsprite("editor/info_target.vmt") = info_dlightmap_update: "Does a thing."
+	[
+	input Enable(void) : "Make this do whatever it does."
+	input Disable(void) : "Stop this doing whatever it does."
+	]

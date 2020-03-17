@@ -1,6 +1,5 @@
-
 @SolidClass base(Trigger) 
-	appliesto(MBase, TF2) = trigger_apply_impulse: "A trigger that adds impulse to touching entities."
+	appliesto(MBase, TF2, Mesa) = trigger_apply_impulse: "A trigger that adds impulse to touching entities."
 	[
 	impulse_dir(angle) : "Impulse Direction (Pitch Yaw Roll)" : "0 0 0" : "Angles indicating the direction to push touching entities."
 	force(float) : "Impulse Force" : 300

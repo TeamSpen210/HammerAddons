@@ -1,0 +1,10 @@
+@PointClass base(BaseEntityPoint, PlayerClass) 
+	autovis(Point Entities, Globals, Player Spawn, Scientist Spawn)
+	appliesto(Mesa) 
+	studio("models/player/mp_marine.mdl") = info_player_scientist
+	[
+    itemstogive(string) : "List of items to spawn the player with."
+
+	input Enable(void) : "Enable this spawnpoint."
+	input Disable(void) : "Disable this spawnpoint."
+	]

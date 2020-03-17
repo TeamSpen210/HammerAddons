@@ -3,9 +3,10 @@
 	studio("models/grub_nugget_medium.mdl") = item_grubnugget: "Small nuggets dropped by Antlion Grubs. " +
 		"When manually spawned, the size value is not setup so they appear small, but give medium health."
 	[
-	denomination(choices) : "Denomination" : 1 : "Specify the size of the grub nugget." = [
-		1: "Small"
-		2: "Medium"
-		3: "Large"
-		]
+	//denomination[engine](integer) : "Denomination" : 1
+	//denomination[MBase](choices) : "Denomination" : 1 : "Specify the size of the grub nugget." = [
+	//	1: "Small"
+	//	2: "Medium"
+	//	3: "Large"
+	//	]
 	]

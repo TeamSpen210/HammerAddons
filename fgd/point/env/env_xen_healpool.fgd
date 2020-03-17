@@ -1,0 +1,10 @@
+@PointClass base(BaseEntityAnimating) 
+	appliesto(Mesa)
+	autovis(Auto, Point Entities, Props)
+	studio() 
+= env_xen_healpool : "Xen Healing Pool"
+	[
+	model(studio) : "World model" : "models/props_Xen/xen_healingpool_full.mdl"
+	healRate(float) : "Healing Rate" : 5 : ""
+	disableshadows(boolean) : "Disable Shadows" : 0
+	]

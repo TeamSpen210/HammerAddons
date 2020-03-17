@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	appliesto(EP1, EP2, HL2, P1, ASW, Mesa) 
+	appliesto(EP1, EP2, HL2, P1, ASW) 
 	size(-4 -4 -4, 4 4 4) 
 	line(255 255 255, targetname, enemyfilter)
 	line(255 255 255, targetname, friendfilter)

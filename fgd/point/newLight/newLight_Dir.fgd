@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityPoint) 
+@PointClass base(BaseEntityPoint) appliesto(Mesa)
 	lightprop("models/editor/spot.mdl") 
 	iconsprite("editor/light_new.vmt") 
 	lightcone() sphere(_zero_percent_distance) 

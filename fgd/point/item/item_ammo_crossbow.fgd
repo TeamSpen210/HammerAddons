@@ -3,7 +3,7 @@
 
 @PointClass base(Item, BaseMesaPickup)
 	base(_item_crossbow_hl2, _item_crossbow_mesa)
-	appliesto(EP1, EP2, HL2, P1, ASW, Mesa) 
+	appliesto(EP1, EP2, HL2, P1, Mesa) 
 	studio("models/items/CrossbowRounds.mdl") = item_ammo_crossbow: "Box of Crossbow ammo"
 	[
 	]

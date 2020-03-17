@@ -1,5 +1,5 @@
 @PointClass base(Propper) 
-	appliesto()
+	appliesto(-engine, PROPPER)
 	studio("models/editor/cone_helper.mdl")
 	line(255 255 0, targetname, my_model)
 	line(128 128 128, targetname, attachment_point)

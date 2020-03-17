@@ -1,0 +1,16 @@
+@FilterClass base(filter_base)
+	autovis(Logic, Filters)
+	appliesto(Mesa)
+	iconsprite("editor/filter_damage_type.vmt") 
+= filter_damage_class: "A damage filter that filters by the class name of the attacker or inflicter. This can only be used as a damage filter, not as an activator filter."
+	[
+	filterclass(string) : "Filter Classname" : : "The class name to filter by. If the filter mode is Allow, only entities whose "+
+		"class name matches the given string will pass the filter. If the filter mode is Disallow, "+
+		"all entities EXCEPT those whose class name matches the given string will pass the filter."
+
+	spawnflags(Flags) =
+		[
+		1 : "check against attacker" : 1
+		2 : "checks against inflicter" : 0
+		]
+	]

@@ -1,0 +1,9 @@
+@PointClass base(BaseEntityPoint) appliesto(Mesa) 
+ 	autovis(Point Entities, Globals, Game Rules)
+= game_mp_gamerules: "Manage the active gamerules."
+	[
+	input EnableCanisterDrops(void) : "Re-enable the canister drops on death. (Canisters drop by default)"
+	input DisableCanisterDrops(void) : "Disable canister drops on death. (Canisters drop by default)"
+
+	input SetPointsPerFrag(integer) : "Set how many points one frag is."
+	]

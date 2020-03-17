@@ -1,5 +1,5 @@
 @PointClass base(Propper) 
-	appliesto(PROPPER)
+	appliesto(-engine, PROPPER)
 	iconsprite("editor/gibshooter.vmt")
 	sphere(fademindist)
 	sphere(fademaxdist)

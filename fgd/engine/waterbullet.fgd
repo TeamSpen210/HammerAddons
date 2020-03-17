@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityAnimating) appliesto(+engine)
+	studio("models/weapons/w_bullet.mdl")
+= waterbullet: "Visible bullet seen when guns are fired into water."
+	[
+	]   

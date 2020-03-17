@@ -1,14 +1,22 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(TF2) 
+	appliesto(TF2, Mesa) 
  	autovis(Point Entities, Globals, Game Round End)
-= game_round_win: "Tells the game rules that the round has either been won (if a team is assigned) or enter Sudden Death mode (if no team is assigned)."
+= game_round_win: "Tells the game rules that the round has either been won (if a team is assigned) or (for TF2) enter Sudden Death mode (if no team is assigned)."
 	[
 	teamnum[engine](integer) : "Team" : 0
-	teamnum(choices) : "Team" : 0 : "Team" =
+	teamnum[TF2](choices) : "Team" : 0 : "Team" =
 		[
 		0: "None (Sudden Death)"
 		2: "Red"
 		3: "Blue"
+		]
+
+	team[engine](integer) : "Team" : 0
+	team[Mesa](choices) : "Team" : 0 : "Team" =
+		[
+		0 : "None"
+		2 : "Marines (Team-based game modes only)"
+		3 : "Scientists (Team-based game modes only)"
 		]
 
 	force_map_reset(boolean) : "Force map reset" : "1" : "Force the map to reset during the force respawn after the round is over."
@@ -20,5 +28,5 @@
 	input RoundWin(void) : "Tell the game rules the round is over."
 
 	// Outputs
-	output OnRoundWin(void) : "Sent when the entity tells the game rules the round is over."
+	output OnRoundWin[TF2](void) : "Sent when the entity tells the game rules the round is over."
 	]

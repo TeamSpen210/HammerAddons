@@ -1,0 +1,38 @@
+@PointClass base(BaseEntityPoint) appliesto(Mesa)
+	size(-4 -4 -4, 4 4 4)
+	line(128 128 255, targetname, target)
+= env_particle_beam
+	[
+	particlebeam[engine](string)
+	particlebeam(choices) : "Particle Beam Name" : "Lc Beam"  =
+		[
+		"lc_beam" : "Lc Beam"
+		]
+
+	target(target_destination) : "Beam Target" : ""
+	damage(float) : "Damage" : "1"
+	damagetick(float) : "Damage Tick" : "0.1"
+
+	burntrail(material) : "Burn Trail Material" : "effects/gluon_burn_trail.vmt"
+	burntrail_life(float) : "Burn Trail Life" : "4"
+	burntrail_size(float) : "Burn Trail Size" : "16"
+	burntrail_text(float) : "Burn Trail Textile" : "0.01"
+
+	burntrail_flags[engine](integer) : "Burn Trail Flags" : 0
+	burntrail_flags(choices) : "Burn Trail Flags" : "Shrink + Fade"  =
+		[
+		-1 : "Disabled"
+		0 : "None"
+		1 : "Shrink"
+		2 : "Fade"
+		3 : "Shrink + Fade"
+		]
+
+	input TurnOn(void) : "TurnOn"
+	input TurnOff(void) : "TurnOff"
+
+	spawnflags(flags) =
+		[
+		1 : "Start On" : 0
+		]
+	]

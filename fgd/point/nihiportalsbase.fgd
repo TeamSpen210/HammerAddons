@@ -1,0 +1,12 @@
+@PointClass base(BaseEntityAnimating) studioprop() appliesto(Mesa) 
+	autovis(World Details, Props, Nihilanth Battle)
+= nihiportalsbase: "nihiportalsbase"
+	[
+	model(studio) : "World Model" : "models/props_xen/c4a4/nihilanth_portalquad_02.mdl"
+	
+    m_fTimeToActivate(float) : "Time To Activate" : 0
+    m_fTimeToDie(float) : "Time To Die" : 9000
+	
+	m_bManualAwake(boolean) : "Manual Awake" : 0
+	m_bLightNeeded(boolean) : "Light Needed" : 0
+	]

@@ -1,5 +1,5 @@
 @PointClass base(Angles, Propper) 
-	appliesto()
+	appliesto(-engine, PROPPER)
 	iconsprite("editor/env_physexplosion.vmt")
 	autovis(Propper)
 = propper_physgun_interactions: "Defines non-standard interactions with the Gravity Gun/player holding behaviour. Used for physics props only."

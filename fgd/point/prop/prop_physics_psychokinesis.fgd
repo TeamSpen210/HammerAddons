@@ -1,0 +1,14 @@
+@PointClass base(BasePropPhysics) studioprop() appliesto(Mesa) 
+= prop_physics_psychokinesis : ""
+	[
+	// Inputs
+	input Ignite(void) : "Ignite, burst into flames."
+	input IgniteLifetime(float) : "Ignite, with a parameter lifetime."
+	input IgniteNumHitboxFires(integer) : "Ignite, with a parameternumber of hitbox fires."
+	input IgniteHitboxFireScale(float) : "Ignite, with a parameter hitbox fire scale."
+	
+	spawnflags(flags) = 
+		[
+		4194304 : "Attempt to override gib with the character gib system" : 0
+		]
+	]

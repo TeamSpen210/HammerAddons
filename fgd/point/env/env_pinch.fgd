@@ -1,0 +1,16 @@
+@PointClass base(BaseEntityPoint) appliesto(Mesa)
+= env_pinch
+	[
+	timer(float) : "Lifetime" : "1.8"
+	startsize(float) : "Start Size" : "10"
+	endsize(float) : "End Size" : "30"
+
+	spawnflags(Flags) =
+		[
+		65536 : "Remove after pinch fx is finished" : 1
+		]
+
+	input start(void) : "Dispatch the pinch fx"
+	input stop(void) : "Stop the pinch fx"
+	output OnFinish(void) : "Pinch FX is finished"
+	]
