@@ -23,6 +23,7 @@ from srctools.fgd import (
     KeyValues, ValueTypes,
     HelperExtAppliesTo,
     HelperWorldText,
+    AutoVisgroup,
 )
 from srctools.filesys import RawFileSystem
 
@@ -239,7 +240,7 @@ def ent_path(ent: EntityDef) -> str:
     return '{}/{}.fgd'.format(folder, ent.classname)
 
 
-def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
+def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> FGD:
     """Load the entire database from disk."""
     print('Loading database:')
     fgd = FGD()
@@ -269,17 +270,20 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
                 fgd.entities[clsname] = ent
                 ent_source[clsname] = rel_loc
 
-            for parent, visgroup in file_fgd.auto_visgroups.items():
-                try:
-                    existing_group = fgd.auto_visgroups[parent]
-                except KeyError:
-                    fgd.auto_visgroups[parent] = visgroup
-                else:  # Need to merge
-                    existing_group.ents.update(visgroup.ents)
+            if fgd_vis:
+                for parent, visgroup in file_fgd.auto_visgroups.items():
+                    try:
+                        existing_group = fgd.auto_visgroups[parent]
+                    except KeyError:
+                        fgd.auto_visgroups[parent] = visgroup
+                    else:  # Need to merge
+                        existing_group.ents.update(visgroup.ents)
 
-            fgd.mat_exclusions.update(file_fgd.mat_exclusions)
+                fgd.mat_exclusions.update(file_fgd.mat_exclusions)
 
             print('.', end='', flush=True)
+
+    load_visgroup_conf(fgd, dbase)
 
     if extra_loc is not None:
         print('\nLoading extra file:')
@@ -328,6 +332,46 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
     print(f'\nVisgroup count: {vis_count}/{ent_count} ({vis_count*100/ent_count:.2f}%) done!')
 
     return fgd
+
+
+def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
+    """Parse through the visgroup.cfg file, adding these visgroups."""
+    cur_path = []
+    try:
+        f = (dbase / 'visgroups.cfg').open()
+    except FileNotFoundError:
+        return
+    with f:
+        for line in f:
+            indent = len(line) - len(line.lstrip('\t'))
+            line = line.strip()
+            if not line:
+                continue
+            cur_path = cur_path[:indent]  # Dedent
+            if line.startswith('-'): # Visgroup.
+                try:
+                    vis_name, single_ent = line[1:].split('(`', 1)
+                except ValueError:
+                    vis_name = line[1:].strip()
+                    single_ent = None
+                else:
+                    vis_name = vis_name.strip()
+                    single_ent = single_ent.strip(' \t`)')
+                cur_path.append(vis_name)
+                try:
+                    visgroup = fgd.auto_visgroups[vis_name.casefold()]
+                except KeyError:
+                    if indent == 0:  # Don't add Auto itself.
+                        continue
+                    visgroup = fgd.auto_visgroups[vis_name.casefold()] = AutoVisgroup(vis_name, cur_path[-2])
+                if single_ent is not None:
+                    visgroup.ents.add(single_ent.casefold())
+
+            elif line.startswith('*'):  # Entity.
+                ent_name = line[1:].strip()
+                for vis_parent, vis_name in zip(cur_path, cur_path[1:]):
+                    visgroup = fgd.auto_visgroups[vis_name.casefold()]
+                    visgroup.ents.add(ent_name)
 
 
 def get_appliesto(ent: EntityDef) -> List[str]:
@@ -823,6 +867,58 @@ def action_export(
                 txt_f.write('\n// BEE 2 EDIT FLAG = 0 \n')
 
 
+def action_visgroup(
+    dbase: Path,
+    extra_loc: Path,
+    dest: Path,
+) -> None:
+    """Dump all auto-visgroups into the specified file, using a custom format."""
+    fgd = load_database(dbase, extra_loc, fgd_vis=True)
+
+    # TODO: This shouldn't be copied from fgd.export(), need to make the
+    #  parenting invariant guaranteed by the classes.
+    vis_by_parent = defaultdict(set)  # type: Dict[str, Set[AutoVisgroup]]
+
+    for visgroup in list(fgd.auto_visgroups.values()):
+        if not visgroup.parent:
+            visgroup.parent = 'Auto'
+        elif visgroup.parent.casefold() not in fgd.auto_visgroups:
+            # This is an "orphan" visgroup, not linked back to Auto.
+            # Connect it back there, by generating the parent.
+            parent_group = fgd.auto_visgroups[visgroup.parent.casefold()] = AutoVisgroup(visgroup.parent, 'Auto')
+            parent_group.ents.update(visgroup.ents)
+        vis_by_parent[visgroup.parent.casefold()].add(visgroup)
+
+    def write_vis(group: AutoVisgroup, indent: str) -> None:
+        """Write a visgroup and its children."""
+        children = sorted(vis_by_parent[group.name.casefold()], key=lambda g: g.name)
+        # Special case for singleton visgroups - no children, only 1 ent.
+        if not children and len(group.ents) == 1:
+            [single_ent] = group.ents
+            f.write('{}- {} (`{}`)\n'.format(indent, group.name, single_ent))
+            return
+
+        # First, write the child visgroups.
+        child_indent = indent + '\t'
+        f.write('{}- {}\n'.format(indent, group.name))
+        for child_group in children:
+            write_vis(child_group, child_indent)
+        # Then the actual children.
+        for child in sorted(group.ents):
+            # Visgroups are also in the list.
+            if child in fgd.auto_visgroups:
+                continue
+            # For ents in subfolders, each parent group also lists
+            # them. So we want to add it to the group who's children
+            # do not contain the ent.
+            if all(child not in group.ents for group in children):
+                f.write('{}* `{}`\n'.format(child_indent, child))
+
+    print('Writing...')
+    with dest.open('w') as f:
+        write_vis(AutoVisgroup('Auto', ''), '')
+
+
 def main(args: List[str]=None):
     """Entry point."""
     parser = argparse.ArgumentParser(
@@ -905,6 +1001,19 @@ def main(args: List[str]=None):
         help="The FGD files to import. "
     )
 
+    parser_vis = subparsers.add_parser(
+        "visgroup",
+        help=action_visgroup.__doc__,
+        aliases=["vis", "v"],
+    )
+
+    parser_vis.add_argument(
+        "-o", "--output",
+        default="visgroups.md",
+        type=Path,
+        help="Visgroup dump filename.",
+    )
+
     result = parser.parse_args(args)
 
     if result.mode is None:
@@ -953,6 +1062,8 @@ def main(args: List[str]=None):
         )
     elif result.mode in ("c", "count"):
         action_count(dbase, extra_db)
+    elif result.mode in ("visgroup", "v", "vis"):
+        action_visgroup(dbase, extra_db, result.output)
     else:
         raise AssertionError("Unknown mode! (" + result.mode + ")")
 
