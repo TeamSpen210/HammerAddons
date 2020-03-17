@@ -368,7 +368,7 @@ def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
                     visgroup.ents.add(single_ent.casefold())
 
             elif line.startswith('*'):  # Entity.
-                ent_name = line[1:].strip()
+                ent_name = line[1:].strip('\t `')
                 for vis_parent, vis_name in zip(cur_path, cur_path[1:]):
                     visgroup = fgd.auto_visgroups[vis_name.casefold()]
                     visgroup.ents.add(ent_name)
