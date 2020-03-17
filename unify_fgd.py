@@ -247,22 +247,27 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
     fgd.map_size_min = -16384
     fgd.map_size_max = 16384
 
+    # Classname -> filename
+    ent_source = {}  # Dict[str, str]
+
     with RawFileSystem(str(dbase)) as fsys:
         for file in dbase.rglob("*.fgd"):
             # Use a temp FGD class, to allow us to verify no overwrites.
             file_fgd = FGD()
+            rel_loc = str(file.relative_to(dbase))
             file_fgd.parse_file(
                 fsys,
-                fsys[str(file.relative_to(dbase))],
+                fsys[rel_loc],
                 eval_bases=False,
             )
             for clsname, ent in file_fgd.entities.items():
                 if clsname in fgd.entities:
                     raise ValueError(
                         f'Duplicate "{clsname}" class '
-                        f'in {file.relative_to(dbase)}!'
+                        f'in {rel_loc} and {ent_source[clsname]}!'
                     )
                 fgd.entities[clsname] = ent
+                ent_source[clsname] = rel_loc
 
             for parent, visgroup in file_fgd.auto_visgroups.items():
                 try:
