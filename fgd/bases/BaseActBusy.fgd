@@ -1,4 +1,4 @@
-@BaseClass 
+@BaseClass base(BaseEntityPoint)
 line(255 255 255, targetname, actor) = BaseActBusy
 	[
 	nextbusy[MBase](integer) : "Next Busy Time" : 0 : "Something."
