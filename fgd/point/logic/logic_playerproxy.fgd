@@ -40,6 +40,8 @@
 	input SetMaxInputArmor(integer) : "Sets the maximum armor value that could be set by armor inputs."
 
 	input LowerWeapon(void) : "Lowers the players weapon."
+	
+	input SuppressCrosshair[P1](void) : "Disable the player's crosshair."
 
 	input EnableCappedPhysicsDamage(void) : "Cause player to take less damage from physics objects, and never more than 30 points from any individual strike."
 	input DisableCappedPhysicsDamage(void) : "Undo effects of EnableCappedPhysicsDamage"
