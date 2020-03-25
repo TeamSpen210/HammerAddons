@@ -39,5 +39,6 @@
 	output OnTrigger(void) : "Fired whenever the trigger is activated."
 	output OnStartTouch(void) : "Fired when an entity starts touching this trigger. " +
 		"The touching entity must pass this trigger's filters to cause this output to fire."
-    output OnNotTouching(void) : "Fired when the TouchTest input is called. Does not call activators."
+	output OnTouching(void) : "Fired when the TouchTest input is called, and an entity is touching this. Does not call activators."
+    output OnNotTouching(void) : "Fired when the TouchTest input is called, and no entity is touching this. Does not call activators."
 	]
