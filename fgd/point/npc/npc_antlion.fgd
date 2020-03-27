@@ -10,7 +10,7 @@
 		[
 		65536: "Burrow when eluded" : 0
 		131072: "Use Ground Checks" : 0
-		262144: "Worker Type" : 0
+		262144: "Worker Type" : 0 [since_EP2]
 		]
 
 	radius(integer) : "Alert Radius" : 256
@@ -23,9 +23,10 @@
 	// Inputs
 	input Unburrow(void) : "Unburrow from the ground"
 	input Burrow(void) : "Burrow into the ground"
-	input BurrowAway(void) : "Burrow into the ground and remove the antlion"
-	input FightToPosition(string) : "Fight to position"
-	input StopFightToPosition[MBase](target_destination) : "Stop fighting to reach a position, if it currently is."
+	input BurrowAway(void) : "Burrow into the ground and then remove the antlion."
+	input FightToPosition(target_destination) : "Fight to position"
+	input StopFightToPosition(string) : "Stop fighting to reach a position, if it currently is. The parameter is ignored."
+	input JumpAtTarget(target_destination) : "Jump at/through this target."
 	input EnableJump(void) : "Allow non-navigational jumping"
 	input DisableJump(void) : "Disallow non-navigational jumping"
 	input IgnoreBugbait(void) : "Ignore bugbait"
@@ -33,6 +34,6 @@
 	input SetFollowTarget(string) : "Make the Antlion follow the given entity."
 
 	// Outputs
-	output OnReachedFightGoal(void) : "Fires when the antlion reaches his specified fight-to location"
+	output OnReachedFightGoal(void) : "Fires when the antlion reaches their specified fight-to location"
 	output OnUnBurrowed(void) : "Fires when the antlion unburrows"
 	]

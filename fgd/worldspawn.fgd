@@ -24,7 +24,7 @@
 		]
 
 	underwaterparticle[engine](string) : "Under Water Particles": "underwater_default"
-	underwaterparticle(choices) : "Under Water Particles" : "underwater_default" : "" =
+	underwaterparticle[Mesa](choices) : "Under Water Particles" : "underwater_default" : "" =
 		[
 		"underwater_default" : "Rubish"
 		"underwater_ion" : "Blue Ions"
