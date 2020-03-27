@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityAnimating)
+	appliesto(+engine)
+	studio("models/brokenglass_piece.mdl")
+= window_pane: "The individual shattered window pane for func_breakable_surf"
+	[
+	]   
