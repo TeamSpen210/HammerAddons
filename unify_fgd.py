@@ -113,6 +113,11 @@ POLYFILLS = []  # type: List[Tuple[str, Callable[[FGD], None]]]
 
 PolyfillFuncT = TypeVar('PolyfillFuncT', bound=Callable[[FGD], None])
 
+# This ends up being the C1 Reverse Line Feed in CP1252,
+# which Hammer displays as nothing. We can suffix visgroups with this to
+# have duplicates with the same name.
+VISGROUP_SUFFIX = '\x8D'
+
 
 def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
     """Register a polyfill, which backports newer FGD syntax to older engines."""
@@ -337,6 +342,9 @@ def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> FGD
 def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
     """Parse through the visgroup.cfg file, adding these visgroups."""
     cur_path = []
+    # Visgroups don't allow duplicating names. Work around that by adding an
+    # invisible suffix.
+    group_count = Counter()
     try:
         f = (dbase / 'visgroups.cfg').open()
     except FileNotFoundError:
@@ -348,15 +356,21 @@ def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
             if not line:
                 continue
             cur_path = cur_path[:indent]  # Dedent
-            if line.startswith('-'): # Visgroup.
+            if line.startswith('-') or '(' in line or ')' in line:  # Visgroup.
                 try:
-                    vis_name, single_ent = line[1:].split('(`', 1)
+                    vis_name, single_ent = line.lstrip('*-').split('(', 1)
                 except ValueError:
                     vis_name = line[1:].strip()
                     single_ent = None
                 else:
                     vis_name = vis_name.strip()
                     single_ent = single_ent.strip(' \t`)')
+
+                dupe_count = group_count[vis_name.casefold()]
+                if dupe_count:
+                    vis_name = vis_name + (VISGROUP_SUFFIX * dupe_count)
+                group_count[vis_name.casefold()] = dupe_count + 1
+
                 cur_path.append(vis_name)
                 try:
                     visgroup = fgd.auto_visgroups[vis_name.casefold()]
@@ -576,8 +590,6 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
         if clsname not in fgd.entities:
             print(clsname, end=', ')
     print('\n')
-
-
 
 
 def action_import(
@@ -860,7 +872,7 @@ def action_export(
         with open(output_path, 'wb') as bin_f, LZMAFile(bin_f, 'w') as comp:
             fgd.serialise(comp)
     else:
-        with open(output_path, 'w') as txt_f:
+        with open(output_path, 'w', encoding='iso-8859-1') as txt_f:
             fgd.export(txt_f)
             # BEE2 compatibility, don't make it run.
             if 'P2' in tags:
