@@ -37,3 +37,8 @@
 [tf2]: http://forums.tf2maps.net/showthread.php?t=4674
 [ts2do]: http://halflife2.filefront.com/file/HalfLife_2_Upgraded_Base_FGDs;48139
 [zps]: http://www.necrotalesgames.com/tools/index.php
+
+
+# Development
+
+* Mapbase's FGDs have been imported as a submodule, to track which version has been merged into this repo.
