@@ -11,7 +11,21 @@
 	skyname[L4D](string)           : "SkyBox Texture Name" : "sky_l4d_urban01_hdr" : "Texture used for the 2D skybox."
 	skyname[L4D2](string)          : "SkyBox Texture Name" : "sky_l4d_rural02_hdr" : "Texture used for the 2D skybox."
 	
-	chaptertitle(string) : "Chapter Title Message" : : "Chapter Title that appears onscreen when this level starts."
+	chaptertitle[-MBase](string) : "Chapter Title" : : "Chapter Title that appears onscreen when this level starts."
+	chaptertitle[+MBase](string) : "Chapter/Savegame Title" : "" : "A ''chapter'' title that this map should identify with. " +
+		"Outside of Mapbase, this is used to make the chapter title appear onscreen when the level starts, " +
+		"but now it can change the message seen in the save/load menus, can be seen in Discord RPC, " +
+		"and the onscreen message behavior is now disabled by default (doesn't affect existing maps) " +
+		"through the ''Display Chapter Title Message'' keyvalue."
+	chaptertitlenomessage[+Mbase](boolean) : "Display Chapter Title Message" : 1 : "Controls whether " +
+		"the Chapter Title Message should show up in a generated env_message " +
+		"when the map loads or whether it should only be used for savegame comments and RPC. " +
+		"This would normally be set to ''Yes'' outside of Mapbase." =
+		[	
+		0 : "Yes"
+		1 : "No"
+		]
+
 	startdark(boolean) : "Level Fade In" : 0
 	gametitle[!P2](boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts."
 

@@ -1,5 +1,5 @@
 @PointClass base(BaseDriveableVehicle) 
-	appliesto(HL2, EP1, EP2, P1, ASW)
+	appliesto(HL2, EP1, EP2, P1)
 	studioprop() 
 	autovis(Vehicles, Jeep)
 = prop_vehicle_jeep: "Driveable studiomodel jeep. In HL2 it's the Scout Car, in EP2 it's the Scout Car/Jalopy."
@@ -20,9 +20,10 @@
 	// HL2 Jeep inputs
 	input StartRemoveTauCannon[-EP1, -EP2](void) : "Start the tau removal sequence."
 	input FinishRemoveTauCannon[-EP1, -EP2](void) : "Finish the tau removal sequence."
-	// Mapbase re-adds these for the episodic jeep.
-	input DisablePhysGun[-MBase, -EP1, -EP2](void) : "Disable physgun interactions with the jeep."
-	input EnablePhysGun[-MBase, -EP1, -EP2](void) : "Enable physgun interactions with the jeep (default)."
+
+	// Mapbase re-adds these for the episodic jeep, so if any it's present.
+	input DisablePhysGun[MBase, EP1, EP2](void) : "Disable physgun interactions with the jeep."
+	input EnablePhysGun[MBase, EP1, EP2](void) : "Enable physgun interactions with the jeep (default)."
 
 	// Episodic Jeep Inputs
 	input LockEntrance[EP1, EP2](void) : "Stops NPC's from entering the vehicle until unlocked."
@@ -31,11 +32,14 @@
 	input UnlockExit[EP1, EP2](void) : "Allows NPC's to exit the vehicle."
 	input EnableRadar[EP1, EP2](void) : "Turn on the Jalopy radar"
 	input DisableRadar[EP1, EP2](void) : "Turn off the Jalopy radar"
-	input EnableRadarDetectEnemies[EP1, EP2](void) : "Enable Jalopy radar to detect Striders and Hunters"
+	input EnableRadarDetectEnemies[EP1, EP2](void) : "Allow the Jalopy radar to detect Striders and Hunters."
 	input AddBusterToCargo[EP1, EP2](void) : "Put a striderbuster in the cargo trigger"
 	input SetCargoHopperVisibility[EP1, EP2](boolean) : "Set the strider buster hopper thingy to be visible, or invisible."
 	input CreateLinkController[EP1, EP2](void) : "Automatically builds and attaches a link controller to the car, which cuts the node connections under the car while the car is standing still."
-	input DestroyLinkController[EP1, EP2](void) : "Destroys the link controller created by CreateLinkController."
+	input DestroyLinkController[EP1, EP2](void) : "Destroys the link controller created by CreateLinkController."	
+	input EnableHazardLights[EP1, EP2]( void ) : "Enables the jalopy's hazard lights."
+	input DisableHazardLights[EP1, EP2]( void ) : "Disables the jalopy's hazard lights."
+
 
 	// Outputs
 	output OnCompanionEnteredVehicle[EP1, EP2](void) : "Companion has entered the vehicle."
