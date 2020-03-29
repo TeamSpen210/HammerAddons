@@ -11,7 +11,7 @@
 
 	startburied(boolean) : "Start Buried" : 0
 
-	uniformsightdist[engine](boolean) : "Uniform Sign Difference" : 0
+	uniformsightdist[engine](boolean) : "Uniform Sight Difference" : 0
 	uniformsightdist(choices) : "Sight Distance" : 0 =
 		[
 		0: "Ignore distant targets not in a vehicle (default)."
@@ -22,6 +22,14 @@
 	// Inputs
 	input TurnOn(void) : "Restore this rollermine to normal functionality."
 	input TurnOff(void) : "Make this rollermine completely inert. Does not run AI and NPCs will ignore it."
+
+	input ConstraintBroken(void) : "Make the rollermine fall off of a vehicle."
+	input RespondToChirp(void) : "Play a chirp, used to respond to other rollermines nearby."
+	input RespondToExplodeChirp(void) : "Play a different chirp, then explode."
+	input JoltVehicle(void) : "Zap the vehicle we're on. This is automatically fired when it attaches, then re-fired with a delay to make it zap."
+	
+	input PowerDown[since_EP1](void) : "Shut down a hacked rollermine, then explode it after 4 seconds."
+
 
 	// Outputs
 	output OnPhysGunPickup(void) : "Picked up with physgun"
