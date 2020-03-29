@@ -1,0 +1,20 @@
+"GooInGlass"
+{
+	"$basetexture" "shadertest/GooInGlass"
+	"$envmap" "shadertest/GooInGlass_env"
+	"$bumpmap" "shadertest/GooInGlass_normal"
+	"$surfaceprop" "glass"
+	"$envmaptint" "[ 1.00 1.00 1.00 ]"
+	"$glassenvmap" "shadertest/GooInGlass_envglass"
+	"$glassenvmaptint" "[ 1.00 1.00 1.00 ]"
+
+	"Proxies"
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$bumptransform"
+			"texturescrollrate" 0.20
+			"texturescrollangle" 60
+		}
+	}
+}
