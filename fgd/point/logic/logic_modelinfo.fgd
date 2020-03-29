@@ -10,6 +10,8 @@
 	input SetTarget(target_destination) : "Sets this entity's target."
 	input GetNumSkins(void) : "Gets the number of skins on the target entity."
 	input LookupSequence(string) : "Looks up the specified sequence on the target entity."
+	input LookupActivity(string) : "Looks up the specified activity on the target entity. " +
+		"Uses the sequence outputs and outputs the first sequence with the given activity."
 
 	// Outputs
 	output OutNumSkins(integer) : "Outputs number of skins."

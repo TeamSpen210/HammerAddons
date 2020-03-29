@@ -42,7 +42,7 @@
 	input SetSpawnFrequency(float) : "Sets how often (in seconds) a new NPC will be spawned."
 
 	// Outputs
-	output OnSpawnNPC(string) : "Fired when an NPC is spawned. The activator is the NPC, and the string is the name of the NPC."
+	output OnSpawnNPC(ehandle) : "Fired when an NPC is spawned. The activator is the NPC, and the parameter is a pointer to the NPC."
 	output OnAllSpawned(void) : "Fired when the spawned is exhausted (all children have been spawned)."
 	output OnAllSpawnedDead(void) : "Fired when the spawner is exhausted (all children have been spawned) and all spawned children have died."
 	output OnAllLiveChildrenDead(void) : "Fired when all spawned children have died. This does not mean the spawner is exhausted, " +

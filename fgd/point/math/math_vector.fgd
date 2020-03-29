@@ -17,6 +17,7 @@
 		"Used for polling the counter when you don't want constant updates from the OutValue output."
 	
 	input Normalize(void): "Normalizes this entity's vector and fires the OutValue output with the result."
+	input NormalizeAngles(void): "Normalizes this entity's vector as angles and fires the OutValue output with the result."
 	
 	input SetX(float) : "Sets this entity's X coordinate."
 	input SetY(float) : "Sets this entity's Y coordinate."
