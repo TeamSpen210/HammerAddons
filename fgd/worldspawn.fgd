@@ -17,7 +17,7 @@
 		"but now it can change the message seen in the save/load menus, can be seen in Discord RPC, " +
 		"and the onscreen message behavior is now disabled by default (doesn't affect existing maps) " +
 		"through the ''Display Chapter Title Message'' keyvalue."
-	chaptertitlenomessage[+Mbase](boolean) : "Display Chapter Title Message" : 1 : "Controls whether " +
+	chaptertitlenomessage[+Mbase](choices) : "Display Chapter Title Message" : 1 : "Controls whether " +
 		"the Chapter Title Message should show up in a generated env_message " +
 		"when the map loads or whether it should only be used for savegame comments and RPC. " +
 		"This would normally be set to ''Yes'' outside of Mapbase." =
