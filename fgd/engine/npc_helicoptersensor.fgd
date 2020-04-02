@@ -1,0 +1,12 @@
+@NpcClass base(BaseEntityPoint) 
+	appliesto(+engine, EP1, EP2, HL2, P1)
+	size(-30 -30 -30, 30 30 30)
+= npc_helicoptersensor: "Sensor area attached to the back of the helicopter, which forwards commands onto the helicopter." +
+	"This can then be detected by triggers, to trigger bombs exactly when the helicopter passes."
+	[
+	input DropBomb(void) : "Immediately drops a bomb based on normal bomb dropping rules"
+	input DropBombStraightDown(void) : "Immediately drops a bomb directly downwards"
+	input DropBombAtTarget(target_destination) : "Immediately drops a bomb directly at the target destination, but only if the player isn't right there"
+	input DropBombAtTargetAlways(target_destination) : "Immediately drops a bomb directly at the target destination, no matter whether it's fair or not."
+	input DropBombDelay(float) : "Add a delay before the next bomb is dropped"
+	]

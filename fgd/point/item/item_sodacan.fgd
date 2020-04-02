@@ -1,0 +1,4 @@
+@PointClass base(BaseEntityAnimating)
+	studio("models/can.mdl") = item_sodacan : "HL1 soda can."
+	[
+	]

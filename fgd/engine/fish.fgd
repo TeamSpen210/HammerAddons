@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(+engine)
+= fish: "Individual fish spawned by func_fish_pool."
+	[
+	]

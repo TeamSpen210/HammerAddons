@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	// In Episodic it seems to be set to not save - so it doesn't need to actually be registered as an ent.
-	appliesto(+engine, HL2, Mesa)
+	appliesto(+engine, Mesa)
 	iconsprite("editor/info_target")
 = env_laser_dot: "This is used for the endpoint of the Rocket Launcher's laser targeting beam."
 	[

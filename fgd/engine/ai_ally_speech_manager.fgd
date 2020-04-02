@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(+engine)
+= ai_ally_speech_manager: "Manager entity for ally speech activity."
+	[
+	]
