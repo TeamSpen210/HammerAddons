@@ -15,4 +15,6 @@
 	// Inputs
 	input Zoom(void) : "Start controlling the player's FOV."
 	input UnZoom(void) : "Stop controlling the player's FOV."
+	input UnZoomWithRate[MBase](void) : "Stop controlling the player's FOV and returns to the original FOV with the same rate it used to reach it."
+	input SetZoomRate[MBase](float) : "Sets the amount of time it should take to reach the specified FOV."
 	]

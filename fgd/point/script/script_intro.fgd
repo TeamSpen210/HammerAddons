@@ -8,7 +8,8 @@
 		"Drawing the skybox *might* break the VortWarp shader used by the transcending vortigaunts in EP1/EP2."
 	DrawSky2[MBase](boolean) : "Draw skybox in camera view" : 0 : "Allows the skybox to be drawn in the second view. " +
 		"Otherwise draws a solid white background."
-
+	UseEyePosition[MBase](boolean) : "Use camera's eye position" : 0 : "Uses the camera view entity's eye position instead of its origin. Intended to be used with info_player_view_proxy." 
+	
 	// Inputs
 	input Activate(void) : "Take control of the player's view and start blending the two scenes."
 	input Deactivate(void) : "Stop controlling the view."

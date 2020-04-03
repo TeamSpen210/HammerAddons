@@ -1,0 +1,15 @@
+@PointClass base(BaseEntityPoint) appliesto(MBase)
+	iconsprite("editor/info_target.vmt") 
+= info_player_view_proxy : "Copies a player's view as if they're at a different position. Intended to be used with script_intro."
+	[
+	Enabled(boolean) : "Start Activated" : 0 : "Starts with position offsetting enabled."
+	
+	MeasureReference(target_destination) : "Measure Reference" : "" : "Used for logic_measure_movement-based offsetting. The movement of the player will be measured relative to this entity."
+	TargetReference(target_destination) : "Movement Reference" : "" : "Used for logic_measure_movement-based offsetting. The info_player_position_offset will move relative to this entity."
+	
+	TargetScale(float) : "Movement scale" : "1" : "Used for logic_measure_movement-based offsetting. This is a scale to *divide* the measured movements by before applying those movements to this entity."
+
+	// Inputs
+	input Activate(void) : "Begin offsetting."
+	input Deactivate(void) : "Stop offsetting."
+	]

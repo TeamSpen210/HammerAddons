@@ -34,6 +34,7 @@
 		4 : "Ignore Z" : 0 [MBase]
 		8 : "Use 'Ignore' flags for origin instead of angles" : 0 [MBase]
 		16 : "Use new teleportation rules (smoother movement)" : 1 [MBase]
+		32 : "Don't change target's angles" : 0 [MBase]
 	]
 
 	MeasureAttachment[MBase](string) : "Measurement Attachment" : "" : "Only useful for the ''Attachment point'' measurement type. " +

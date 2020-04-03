@@ -1,7 +1,7 @@
 @BaseClass appliesto(-Mesa) studio("models/items/357ammo.mdl") = _item_ammo_357_hl2 []
 @BaseClass appliesto(+Mesa) studio("models/weapons/w_357ammobox.mdl") = _item_ammo_357_mesa []
 
-@PointClass base(Item, BaseMesaPickup)
+@PointClass base(ItemAmmo, BaseMesaPickup)
 	base(_item_ammo_357_mesa, _item_ammo_357_hl2)
 	appliesto(EP1, EP2, HL2, P1, ASW, Mesa) 
 = item_ammo_357: "Box of 357 ammo"

@@ -3,7 +3,7 @@
 	line(255 255 0, targetname, propname) 
 = point_posecontroller: "An entity that controls a pose parameter of a prop and cycles the pose clientside."
 	[
-	propname(target_destination) : "Prop Name" : : "Name of the prop to control."
+	propname(target_destination) : "Target" : : "Name of the prop to control. Can be any animating entity."
 	poseparametername(string) : "Pose Parameter Name" : : "Name of the pose parameter to control. Setting this to an invalid value will crash the game!"
 	posevalue(float) : "Pose Parameter Value" : 0 : "Normalized value for the pose parameter from 0.0 and 1.0 (maps to min and max range)."
 	interpolationtime(float) : "Interpolation Time" : 0 : "Number of seconds (0.0 to 10.0) for client to match absolue pose values."
@@ -26,6 +26,7 @@
 	fmodamplitude(float) : "Frequency Modulation Amplitude" : 0 : "Modulation extents from 0.0f to 10.0."
 
 	// Inputs
+	input SetTarget[MBase](target_destination) : "Sets the prop to control."
 	input SetPoseParameterName(string) : "Sets the pose parameter to control."
 	input SetPoseValue(float) : "Set the pose parameter to a normalized value between 0.0 and 1.0 (maps to min and max range)."
 	input SetInterpolationTime(float) : "Set the interpolation time to a number of seconds between 0.0 and 10.0."

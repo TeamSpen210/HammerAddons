@@ -95,6 +95,7 @@
 	input SetModel[MBase](string) : "Sets this entity's model. Must include 'models/' as well as the extension."
 	input CreateSeparateRagdoll[MBase](void) : "Creates a separate serverside ragdoll at this entity's origin."
 	input CreateSeparateRagdollClient[MBase](void) : "Creates a separate clientside ragdoll at this entity's origin."
+	input SetPoseParameter[MBase](string) : "Sets the specified pose parameter to the specified value (e.g. ''aim_yaw 45'')."
 
 	// Outputs
 	output OnIgnite(void) : "Fired when this object catches fire."

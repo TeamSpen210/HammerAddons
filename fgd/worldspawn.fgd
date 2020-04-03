@@ -84,4 +84,7 @@
 
 	loadvscriptstatefromlastlevel[INFRA](boolean) : "Load VScript State from Last Level" : 0
 	destalphascale[INFRA](float) : "Dest Alpha Scale (Soft Particle Distance)" : 1024
+
+	// Inputs
+	input SetChapterTitle[MBase](string) : "Sets the chapter title this map should identify with."
 	]

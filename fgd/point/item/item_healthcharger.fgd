@@ -1,14 +1,17 @@
 // Modified models with no animations, so it doesn't loop
 // constantly.
-@BaseClass appliesto(-Mesa) studio("models/editor/item_health_charger_hl2.mdl") = _item_healthcharger_hl2 []
+@BaseClass appliesto(-Mesa, -MBase) studio("models/editor/item_health_charger_hl2.mdl") = _item_healthcharger_hl2 []
 @BaseClass appliesto(+Mesa) studio("models/editor/item_health_charger_mesa.mdl") = _item_healthcharger_mesa []
-
+@BaseClass appliesto(+MBase) studio() = _item_healthcharger_settable []
 
 @PointClass base(BaseEntityAnimating) 
 	appliesto(EP1, EP2, HL2, P1, ASW, Mesa) 
-	base(_item_healthcharger_mesa, _item_healthcharger_hl2)
+	base(_item_healthcharger_mesa, _item_healthcharger_hl2, _item_healthcharger_settable)
 = item_healthcharger: "Health Charger"
 	[
+	// Unfortunately can't use the custom model then...
+	model[MBase](studio) : "Model" : "models/props_combine/health_charger001.mdl" : "Set a custom model for the health charger."
+
 	charge[Mesa](float) : "Charge" : 50 : "How full the charger should be (0 - 100)"
 	skintype[engine](integer) : "Skin Type" : 0
 	skintype[Mesa](choices) : "Force Skin" : 0 =

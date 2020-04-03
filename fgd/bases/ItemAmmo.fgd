@@ -1,0 +1,7 @@
+@BaseClass base(Item) = ItemAmmo
+	[
+	AmmoMultiplier[MBase](float) : "Ammo Multiplier" : "1.0" : "Multiplies the amount of ammo this item gives. Using a negative number directly sets it to that number, rather than multiplying it."
+	
+	// Inputs
+	input SetAmmoMultiplier[MBase](float) : "Sets the multiplier for the amount of ammo this item gives."
+	]
