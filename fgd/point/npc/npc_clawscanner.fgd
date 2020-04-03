@@ -1,7 +1,7 @@
-@NpcClass base(npc_cscanner)  
+@NpcClass base(BaseNPC, CombineScanner)
 	appliesto(EP1, EP2, P1) 
-	autovis(Entities, NPCs, Combine, Combine Claw Scannner)
 	studio("models/shield_scanner.mdl") 
+	autovis(Entities, NPCs, Combine, Combine Claw Scannner)
 = npc_clawscanner: "Claw Scanner"
 	[
 	input DeployMine(void) : "Drop landmine (if carrying one)"
