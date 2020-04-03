@@ -1,4 +1,5 @@
 @NpcClass base(BaseNPC) appliesto(INFRA)
+	autovis(Entities, NPCs, Animals, Birds) 
 	studio("models/props_nature/varis.mdl")
 = infra_crow: "Crow"
 	[

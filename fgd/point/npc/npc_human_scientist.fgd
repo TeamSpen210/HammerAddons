@@ -1,0 +1,7 @@
+@NPCClass base(TalkNPC, PlayerCompanion) 
+	appliesto(Mesa)
+	autovis(Entities, NPCs, Mesa Personel, Science Team, Male Scientist)
+	studio("models/humans/scientist.mdl") 
+= npc_human_scientist : "Male Scientist"
+	[
+	]

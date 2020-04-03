@@ -1,0 +1,4 @@
+@PointClass base(prop_physics)
+= physics_prop: "Alternate name for prop_physics."
+	[
+	]

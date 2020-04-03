@@ -1,0 +1,18 @@
+@BaseClass base(BaseEntityAnimating) appliesto(Mesa) = BaseMesaPickup
+[
+	output OnPlayerPickup(void) : "Fires when the player picks up this object."
+	output OnPlayerDenied(void) : "Fires when the player attempts to pick up this object but is denied."
+
+	respawntime(float) : "Respawn Time" : "15" : "Time waited between respawns."
+
+	spawnflags(flags) =
+	[
+		1 : "Start Asleep" : 0
+		2 : "Motion Disabled" : 0
+		4 : "Hard Respawn" : 0
+        8 : "Silent Pickup" : 0
+	]
+
+	input Enable(void): "Enabled the pickup, also spawns it"
+	input Disable(void) : "Disable the pickup"
+]

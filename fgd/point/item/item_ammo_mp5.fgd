@@ -1,0 +1,6 @@
+@PointClass base(BaseMesaPickup)
+	appliesto(Mesa) 
+	studio("models/weapons/w_9mmARclip.mdl") 
+= item_ammo_mp5 : "MP5 Clip" 
+	[
+	]

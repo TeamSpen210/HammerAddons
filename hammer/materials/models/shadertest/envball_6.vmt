@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/ShaderTest/envball_6"
+	"$envmap" "env_cubemap"
+	"$bumpmap" "models/shadertest/envball_6_normal"
+	"$normalmapalphaenvmapmask" 1
+	"$envmapcontrast" "1"
+	"$envmaptint" "[1 1 1]"
+	"$envmapsaturation" "[1 1 1]"
+}
+
+

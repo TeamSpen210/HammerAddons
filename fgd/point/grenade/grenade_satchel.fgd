@@ -1,0 +1,6 @@
+@PointClass base(BaseGrenade)
+	appliesto(Mesa)
+	studio("models/weapons/w_satchel.mdl")
+	= grenade_satchel : "Satchel" 
+	[
+	]

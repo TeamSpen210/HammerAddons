@@ -23,6 +23,7 @@ from srctools.fgd import (
     KeyValues, ValueTypes,
     HelperExtAppliesTo,
     HelperWorldText,
+    AutoVisgroup,
 )
 from srctools.filesys import RawFileSystem
 
@@ -42,6 +43,8 @@ GAMES = [
 
     # Not chronologically here, but it uses 2013 as the base.
     ('MBASE', 'Mapbase'),
+    # Mesa also appears to be about here...
+    ('MESA', 'Black Mesa'),
 
     ('TF2',  'Team Fortress 2'),
     ('P1', 'Portal'),
@@ -70,6 +73,7 @@ FEATURES = {
     'EP2': {'INSTANCING'},
 
     'MBASE': {'HL2', 'EP1', 'EP2', 'INSTANCING'},
+    'MESA': {'INSTANCING', 'INST_IO'},
     
     'L4D': {'INSTANCING'},
     'L4D2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
@@ -109,16 +113,22 @@ POLYFILLS = []  # type: List[Tuple[str, Callable[[FGD], None]]]
 
 PolyfillFuncT = TypeVar('PolyfillFuncT', bound=Callable[[FGD], None])
 
+# This ends up being the C1 Reverse Line Feed in CP1252,
+# which Hammer displays as nothing. We can suffix visgroups with this to
+# have duplicates with the same name.
+VISGROUP_SUFFIX = '\x8D'
 
-def _polyfill(tag: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
+
+def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
     """Register a polyfill, which backports newer FGD syntax to older engines."""
     def deco(func: PolyfillFuncT) -> PolyfillFuncT:
-        POLYFILLS.append((tag.upper(), func))
+        for tag in tags:
+            POLYFILLS.append((tag.upper(), func))
         return func
     return deco
 
 
-@_polyfill('until_asw')
+@_polyfill('until_asw', 'mesa')
 def _polyfill_boolean(fgd: FGD):
     """Before Alien Swarm's Hammer, boolean was not available as a keyvalue type.
 
@@ -235,7 +245,7 @@ def ent_path(ent: EntityDef) -> str:
     return '{}/{}.fgd'.format(folder, ent.classname)
 
 
-def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
+def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> FGD:
     """Load the entire database from disk."""
     print('Loading database:')
     fgd = FGD()
@@ -243,28 +253,42 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
     fgd.map_size_min = -16384
     fgd.map_size_max = 16384
 
+    # Classname -> filename
+    ent_source = {}  # Dict[str, str]
+
     with RawFileSystem(str(dbase)) as fsys:
         for file in dbase.rglob("*.fgd"):
             # Use a temp FGD class, to allow us to verify no overwrites.
             file_fgd = FGD()
+            rel_loc = str(file.relative_to(dbase))
             file_fgd.parse_file(
                 fsys,
-                fsys[str(file.relative_to(dbase))],
+                fsys[rel_loc],
                 eval_bases=False,
             )
             for clsname, ent in file_fgd.entities.items():
                 if clsname in fgd.entities:
                     raise ValueError(
                         f'Duplicate "{clsname}" class '
-                        f'in {file.relative_to(dbase)}!'
+                        f'in {rel_loc} and {ent_source[clsname]}!'
                     )
                 fgd.entities[clsname] = ent
+                ent_source[clsname] = rel_loc
 
-            for path, group in file_fgd.auto_visgroups.items():
-                fgd.auto_visgroups.setdefault(path, set()).update(group)
-            fgd.mat_exclusions.update(file_fgd.mat_exclusions)
+            if fgd_vis:
+                for parent, visgroup in file_fgd.auto_visgroups.items():
+                    try:
+                        existing_group = fgd.auto_visgroups[parent]
+                    except KeyError:
+                        fgd.auto_visgroups[parent] = visgroup
+                    else:  # Need to merge
+                        existing_group.ents.update(visgroup.ents)
+
+                fgd.mat_exclusions.update(file_fgd.mat_exclusions)
 
             print('.', end='', flush=True)
+
+    load_visgroup_conf(fgd, dbase)
 
     if extra_loc is not None:
         print('\nLoading extra file:')
@@ -291,23 +315,77 @@ def load_database(dbase: Path, extra_loc: Path=None) -> FGD:
     fgd.apply_bases()
     print('\nDone!')
 
-    from pprint import pprint
-    # print('Auto Visgroups: ')
-    # pprint({k: len(v) for k, v in fgd.auto_visgroups.items()})
-
     print('Entities without visgroups:')
-    vis_ents = {name.casefold() for ents in fgd.auto_visgroups.values() for name in ents}
+    vis_ents = {
+        name.casefold()
+        for group in fgd.auto_visgroups.values()
+        for name in group.ents
+    }
     vis_count = ent_count = 0
     for ent in fgd:
-        if ent.type is not EntityTypes.BASE:
-            ent_count += 1
-            if ent.classname.casefold() not in vis_ents:
-                print(' - ' + ent.classname)
-            else:
-                vis_count += 1
-    print(f'Visgroup count: {vis_count}/{ent_count} ({vis_count*100/ent_count:.2f}%) done!')
+        # Base ents, worldspawn, or engine-only ents don't need visgroups.
+        if ent.type is EntityTypes.BASE or ent.classname == 'worldspawn':
+            continue
+        applies_to = get_appliesto(ent)
+        if '+ENGINE' in applies_to or 'ENGINE' in applies_to:
+            continue
+        ent_count += 1
+        if ent.classname.casefold() not in vis_ents:
+            print(ent.classname, end=', ')
+        else:
+            vis_count += 1
+    print(f'\nVisgroup count: {vis_count}/{ent_count} ({vis_count*100/ent_count:.2f}%) done!')
 
     return fgd
+
+
+def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
+    """Parse through the visgroup.cfg file, adding these visgroups."""
+    cur_path = []
+    # Visgroups don't allow duplicating names. Work around that by adding an
+    # invisible suffix.
+    group_count = Counter()
+    try:
+        f = (dbase / 'visgroups.cfg').open()
+    except FileNotFoundError:
+        return
+    with f:
+        for line in f:
+            indent = len(line) - len(line.lstrip('\t'))
+            line = line.strip()
+            if not line:
+                continue
+            cur_path = cur_path[:indent]  # Dedent
+            if line.startswith('-') or '(' in line or ')' in line:  # Visgroup.
+                try:
+                    vis_name, single_ent = line.lstrip('*-').split('(', 1)
+                except ValueError:
+                    vis_name = line[1:].strip()
+                    single_ent = None
+                else:
+                    vis_name = vis_name.strip()
+                    single_ent = single_ent.strip(' \t`)')
+
+                dupe_count = group_count[vis_name.casefold()]
+                if dupe_count:
+                    vis_name = vis_name + (VISGROUP_SUFFIX * dupe_count)
+                group_count[vis_name.casefold()] = dupe_count + 1
+
+                cur_path.append(vis_name)
+                try:
+                    visgroup = fgd.auto_visgroups[vis_name.casefold()]
+                except KeyError:
+                    if indent == 0:  # Don't add Auto itself.
+                        continue
+                    visgroup = fgd.auto_visgroups[vis_name.casefold()] = AutoVisgroup(vis_name, cur_path[-2])
+                if single_ent is not None:
+                    visgroup.ents.add(single_ent.casefold())
+
+            elif line.startswith('*'):  # Entity.
+                ent_name = line[1:].strip('\t `')
+                for vis_parent, vis_name in zip(cur_path, cur_path[1:]):
+                    visgroup = fgd.auto_visgroups[vis_name.casefold()]
+                    visgroup.ents.add(ent_name)
 
 
 def get_appliesto(ent: EntityDef) -> List[str]:
@@ -327,7 +405,8 @@ def get_appliesto(ent: EntityDef) -> List[str]:
 
     if pos is None:
         pos = 0
-    arg_list = sorted(applies_to)
+    arg_list = list(map(str.upper, applies_to))
+    arg_list.sort()
     ent.helpers[:] = [
         help for help in ent.helpers
         if not isinstance(help, HelperExtAppliesTo)
@@ -357,7 +436,7 @@ def add_tag(tags: FrozenSet[str], new_tag: str) -> FrozenSet[str]:
     return frozenset(tag_set)
 
 
-def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
+def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> None:
     """Output a count of all entities in the database per game."""
     fgd = load_database(dbase, extra_db)
 
@@ -407,9 +486,10 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
                 counter[game] += 1
                 game_classes[game, typ].add(ent.classname)
                 has_ent.add(game)
-                # Allow explicitly saying certain ents aren't in the actual game.
-                if ent.type is not EntityTypes.BASE and '-engine' not in appliesto and '!engine' not in appliesto:
-                    all_ents[game].add(ent.classname.casefold())
+            # Allow explicitly saying certain ents aren't in the actual game
+            # with the "engine" tag, or only adding them to this + the binary dump.
+            if ent.type is not EntityTypes.BASE and match_tags(tags | {'ENGINE'}, appliesto):
+                all_ents[game].add(ent.classname.casefold())
 
         has_ent.discard('ALL')
 
@@ -425,7 +505,7 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
 
     all_games: Set[str] = {*count_base, *count_point, *count_brush}
 
-    game_order = ['ALL'] + sorted(all_games - {'ALL'})
+    game_order = ['ALL'] + sorted(all_games - {'ALL'}, key=GAME_ORDER.index)
 
     row_temp = '{:<5} | {:^6} | {:^6} | {:^6}'
     header = row_temp.format('Game', 'Base', 'Point', 'Brush')
@@ -440,6 +520,23 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
             count_point[game],
             count_brush[game],
         ))
+
+    # If matplotlib is installed, render this as a nice graph.
+    if plot:
+        try:
+            import matplotlib.pyplot as plt
+        except ImportError:
+            pass
+        else:
+            disp_games = game_order[::-1]
+            point_count_list = [count_point[game] for game in disp_games]
+            solid_count_list = [count_brush[game] for game in disp_games]
+            plt.figure(0)
+            plt.barh(disp_games, point_count_list)
+            plt.barh(disp_games, solid_count_list)
+            plt.legend(["Point", "Brush"])
+            plt.xticks(range(0, 500, 50))
+            plt.show()
 
     print('\n\nBases:')
     for base, count in sorted(base_uses.items(), key=lambda x: (len(x[1]), x[0])):
@@ -464,11 +561,35 @@ def action_count(dbase: Path, extra_db: Optional[Path]) -> None:
         extra = defined_classes - dump_classes
         missing = dump_classes - defined_classes
         if extra:
-            print(f'{game} - Extra: ')
+            print(f'{game} - Extraneous definitions: ')
             print(', '.join(sorted(extra)))
         if missing:
-            print(f'{game} - Missing: ')
+            print(f'{game} - Missing definitions: ')
             print(', '.join(sorted(missing)))
+
+    print('\n\nMissing Class Resources:')
+    from srctools.packlist import CLASS_RESOURCES
+
+    missing = 0
+    for clsname in sorted(fgd.entities):
+        ent = fgd.entities[clsname]
+        if ent.type is EntityTypes.BASE:
+            continue
+
+        applies_to = get_appliesto(ent)
+        if '-ENGINE' in applies_to or '!ENGINE' in applies_to:
+            continue
+
+        if clsname not in CLASS_RESOURCES:
+            print(clsname, end=', ')
+            missing += 1
+    print('\nMissing:', missing)
+
+    print('Extra ents: ')
+    for clsname in CLASS_RESOURCES:
+        if clsname not in fgd.entities:
+            print(clsname, end=', ')
+    print('\n')
 
 
 def action_import(
@@ -732,7 +853,7 @@ def action_export(
             else:
                 # Helpers aren't inherited, so this isn't useful anymore.
                 ent.helpers.clear()
-                
+
     print('Culling visgroups...')
     # Cull visgroups that no longer exist for us.
     valid_ents = {
@@ -740,9 +861,9 @@ def action_export(
         for ent in fgd.entities.values()
         if ent.type is not EntityTypes.BASE
     }
-    for key, vis_ents in list(fgd.auto_visgroups.items()):  # type: Tuple[str, str], Set[str]
-        vis_ents.intersection_update(valid_ents)
-        if not vis_ents:
+    for key, visgroup in list(fgd.auto_visgroups.items()):
+        visgroup.ents.intersection_update(valid_ents)
+        if not visgroup.ents:
             del fgd.auto_visgroups[key]
 
     print('Exporting...')
@@ -751,11 +872,63 @@ def action_export(
         with open(output_path, 'wb') as bin_f, LZMAFile(bin_f, 'w') as comp:
             fgd.serialise(comp)
     else:
-        with open(output_path, 'w') as txt_f:
+        with open(output_path, 'w', encoding='iso-8859-1') as txt_f:
             fgd.export(txt_f)
             # BEE2 compatibility, don't make it run.
             if 'P2' in tags:
                 txt_f.write('\n// BEE 2 EDIT FLAG = 0 \n')
+
+
+def action_visgroup(
+    dbase: Path,
+    extra_loc: Path,
+    dest: Path,
+) -> None:
+    """Dump all auto-visgroups into the specified file, using a custom format."""
+    fgd = load_database(dbase, extra_loc, fgd_vis=True)
+
+    # TODO: This shouldn't be copied from fgd.export(), need to make the
+    #  parenting invariant guaranteed by the classes.
+    vis_by_parent = defaultdict(set)  # type: Dict[str, Set[AutoVisgroup]]
+
+    for visgroup in list(fgd.auto_visgroups.values()):
+        if not visgroup.parent:
+            visgroup.parent = 'Auto'
+        elif visgroup.parent.casefold() not in fgd.auto_visgroups:
+            # This is an "orphan" visgroup, not linked back to Auto.
+            # Connect it back there, by generating the parent.
+            parent_group = fgd.auto_visgroups[visgroup.parent.casefold()] = AutoVisgroup(visgroup.parent, 'Auto')
+            parent_group.ents.update(visgroup.ents)
+        vis_by_parent[visgroup.parent.casefold()].add(visgroup)
+
+    def write_vis(group: AutoVisgroup, indent: str) -> None:
+        """Write a visgroup and its children."""
+        children = sorted(vis_by_parent[group.name.casefold()], key=lambda g: g.name)
+        # Special case for singleton visgroups - no children, only 1 ent.
+        if not children and len(group.ents) == 1:
+            [single_ent] = group.ents
+            f.write('{}- {} (`{}`)\n'.format(indent, group.name, single_ent))
+            return
+
+        # First, write the child visgroups.
+        child_indent = indent + '\t'
+        f.write('{}- {}\n'.format(indent, group.name))
+        for child_group in children:
+            write_vis(child_group, child_indent)
+        # Then the actual children.
+        for child in sorted(group.ents):
+            # Visgroups are also in the list.
+            if child in fgd.auto_visgroups:
+                continue
+            # For ents in subfolders, each parent group also lists
+            # them. So we want to add it to the group who's children
+            # do not contain the ent.
+            if all(child not in group.ents for group in children):
+                f.write('{}* `{}`\n'.format(child_indent, child))
+
+    print('Writing...')
+    with dest.open('w') as f:
+        write_vis(AutoVisgroup('Auto', ''), '')
 
 
 def main(args: List[str]=None):
@@ -783,6 +956,12 @@ def main(args: List[str]=None):
         "count",
         help=action_count.__doc__,
         aliases=["c"],
+    )
+    parser_count.add_argument(
+        "--plot",
+        action="store_true",
+        help="Use matplotlib to produce a graph of how many entities are "
+             "present in each engine branch.",
     )
 
     parser_exp = subparsers.add_parser(
@@ -834,6 +1013,19 @@ def main(args: List[str]=None):
         help="The FGD files to import. "
     )
 
+    parser_vis = subparsers.add_parser(
+        "visgroup",
+        help=action_visgroup.__doc__,
+        aliases=["vis", "v"],
+    )
+
+    parser_vis.add_argument(
+        "-o", "--output",
+        default="visgroups.md",
+        type=Path,
+        help="Visgroup dump filename.",
+    )
+
     result = parser.parse_args(args)
 
     if result.mode is None:
@@ -882,6 +1074,8 @@ def main(args: List[str]=None):
         )
     elif result.mode in ("c", "count"):
         action_count(dbase, extra_db)
+    elif result.mode in ("visgroup", "v", "vis"):
+        action_visgroup(dbase, extra_db, result.output)
     else:
         raise AssertionError("Unknown mode! (" + result.mode + ")")
 

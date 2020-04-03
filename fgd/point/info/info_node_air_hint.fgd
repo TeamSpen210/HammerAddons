@@ -1,4 +1,6 @@
 @PointClass base(BaseEntityPoint, HintNode)
+	autovis(Entities, Nodes, Air Node)
+	autovis(Entities, Nodes, Hint Node)
 	studio("models/editor/air_node_hint.mdl")
 	color(232 171 8)
 	line(255 255 255, nodeid, TargetNode)

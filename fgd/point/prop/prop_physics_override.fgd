@@ -22,7 +22,7 @@
 		"6": "6 : When broken: Gas explosion (propane tanks, gas cans)"
 		"7": "7 : When punted: No damage on impact"
 		"8": "8 : Fire: Flammable"
-		"9": "9 : Fire: Explosive resistant (only ignites from nearby explosions, no damage, e.g. explosive barrels)"
+		"9": "9 : Fire: Explosive resistant (doesn't take damage from nearby explosions, only ignites, used in explosive barrels)"
 		"10": "10 : Fire: Ignite on half health (explosive barrels)"
 		//"11": "11 : Flare" // This is what prop_flare is for
 		"12": "12 : Allow player to hold directly overhead"

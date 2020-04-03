@@ -1,46 +1,11 @@
-@NpcClass base(BaseNPC) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
+@NpcClass base(BaseNPC, CombineScanner)
+	appliesto(EP1, EP2, HL2, P1) 
 	studio("models/combine_scanner.mdl")  
-	autovis(NPCs, Combine, City Scanner)
+	autovis(Entities, NPCs, Combine, City Scanner)
 = npc_cscanner: "City Scanner"
 	[
-	spawnflags(flags) : "spawnflags" =
-		[
-		65536: "No Dynamic Light" : 0
-		131072: "Strider Scout Scanner" : 0
-		]
-
-	CustomFlightSpeed[MBase](float) : "Custom Flight Speed" : "0" : "Overrides the scanner's default speed. 0 = use default"
-
-	spotlightlength(integer) : "Spotlight Length" : 500
-	spotlightwidth(integer) : "Spotlight Width" : 50
-
-	spotlightdisabled(boolean) : "Disable Spotlight" : 0
-	shouldinspect(boolean) : "Should inspect" : 1
-	onlyinspectplayers(boolean) : "Only Inspect Players" : 0
-	neverinspectplayers(boolean) : "Never Inspect Players" : 0
-
-	DisablePhotos[MBase](boolean) : "Never take photos" : 0 : "Prevents this scanner from ever taking photos. It may still chase and inspect, but it will never actually take any pictures or flashes."
-
-	// Inputs
-	input DisableSpotlight(void) : "Disable the spotlight."
-	input InspectTargetPhoto(target_destination) : "Tells the scanner to photograph the given entity, named by classname or by target name. !activator or !player works here also."
-	input InspectTargetSpotlight(target_destination) : "Tells the scanner to spotlight the given entity, named by classname or by target name. !activator or !player works here also."
-	input InputSetFlightSpeed(integer) : "Sets the flight speed of the scanner"
-	input InputShouldInspect(integer) : "Set whether should inspect or not"
-	input SetFollowTarget(target_destination) : "Set target to follow until told otherwise"
-	input ClearFollowTarget(void) : "Stop following our target"
-	input SetDistanceOverride(float) : "Override the distance the scanner will attempt to keep between inspection targets and itself"
-
-	// The FGD definitions have been moved to npc_clawscanner, but just the FGD definitions.
-	// You could still use Deploy/EquipMine on a npc_cscanner and it will still work.
-	//input DeployMine(void) : "Drop landmine (if carrying one)"
-	//input EquipMine(void) : "Equip with landmine"
-	
-	input DisablePhotos[MBase](void) : "Disables this scanner's ability to take photos."
-	input EnablePhotos[MBase](void) : "Enables this scanner's ability to take photos if it was previously disabled."
-	
-	// Outputs
-	output OnPhotographPlayer(void) : "Fired any time the scanner takes a picture of the player."
-	output OnPhotographNPC(void) : "Fired any time the scanner takes a picture of an NPC."
+	// This works even in episodic, but only claw scanners ever drop landmines.
+	// So you should just use that in that situation.
+	input DeployMine[-EP1, -EP2](void) : "Drop landmine (if carrying one)"
+	input EquipMine[-EP1, -EP2](void) : "Equip with landmine"
 	]

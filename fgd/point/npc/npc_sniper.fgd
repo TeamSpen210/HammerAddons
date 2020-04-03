@@ -1,7 +1,6 @@
-
 @NpcClass base(BaseNPC) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
-	autovis(NPCs, Combine, Combine Sniper)
+	appliesto(EP1, EP2, HL2, P1, Mesa) 
+	autovis(Entities, NPCs, Combine, Combine Sniper)
 	studio("models/combine_soldier.mdl")
 = npc_sniper: "Sniper"
 	[
@@ -14,6 +13,9 @@
 
 	BeamName[MBase](material) : "Beam Texture" : "effects/bluelaser1.vmt" : "The texture that should be used by the sniper's laser beam. Be sure to put '.vmt' at the end!"
 	BeamColor[MBase](color255) : "Beam Color" : "0 100 255" : "The color that should be used by the sniper's laser beam."
+
+	shielddistance[Mesa](float) : "Bullet shield distance" : 64 : "Obsolete"
+	shieldradius[Mesa](float) : "Bullet shield radius" : 48 : "Obsolete"
 
 	paintinterval(float) : "Paint interval" : 1 : "Sniper will keep a target painted for this many seconds before shooting. 'Faster Shooting' sniper flag multiplies this by 0.75."
 	paintintervalvariance(float) : "Paint interval variance" : 0.75 : "When shooting at NPCs, a random number between 0 and this is added to PaintInterval for every shot."

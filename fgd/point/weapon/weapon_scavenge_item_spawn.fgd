@@ -1,14 +1,14 @@
 @PointClass appliesto(L4D2) base(WeaponSpawnSingle) 
 	studioprop("models/props_junk/gascan001a.mdl")
-	autovis(Weapons, L4D, L4D Items)
+	autovis(Weapons, L4D Weapons, L4D Items)
 = weapon_scavenge_item_spawn: "Scavenge Item"
 	[
+	glowstate[engine](integer) : "Initial Glow State" : 3
 	glowstate(choices) : "Initial Glow State" : 3 =
 		[
 		0: "OFF"
 		3: "ON"
 		]
-
 
 	// Inputs
 	input SpawnItem(void) : "Spawn an instance of a scavenge mode item."

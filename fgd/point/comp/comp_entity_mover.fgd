@@ -1,6 +1,6 @@
 @PointClass 
 	iconsprite("editor/comp_entity_mover")
-	appliesto(srctools)
+	appliesto(srctools, -engine)
 	autovis(Postcompiler, Ent Mover)
 	sphere(distance)
 	line(255 255 255, targetname, target)

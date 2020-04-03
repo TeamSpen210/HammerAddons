@@ -1,0 +1,7 @@
+@NPCClass base(BaseNPC) appliesto(Mesa) 
+	studio("models/xenians/flock.mdl")
+	autovis(Entities, NPCs, Animals)
+	autovis(Entities, NPCs, Xen)
+= npc_flyer_flock: "Flying Flock" 
+	[
+	]

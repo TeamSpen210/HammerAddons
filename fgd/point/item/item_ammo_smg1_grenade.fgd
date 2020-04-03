@@ -1,6 +1,6 @@
-
-@PointClass base(Item) 
+@PointClass base(ItemAmmo) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
-	studio("models/items/AR2_Grenade.mdl") = item_ammo_smg1_grenade: "SMG1 Grenade"
+	studio("models/items/AR2_Grenade.mdl") 
+= item_ammo_smg1_grenade: "SMG1's grenade ammo."
 	[
 	]

@@ -1,7 +1,6 @@
-
 @NpcClass base(TalkNPC) 
-	appliesto(EP1, EP2, HL2, P1, ASW)
-	autovis(NPCs, Rebels, Mossman) 
+	appliesto(EP1, EP2, HL2, P1)
+	autovis(Entities, NPCs, Rebels, Mossman) 
 	studio("models/mossman.mdl") = npc_mossman: "Dr Mossman"
 	[
 	]

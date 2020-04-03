@@ -1,0 +1,89 @@
+@PointClass base(BaseEntityAnimating) studioprop() appliesto(Mesa) 
+= misc_xen_shield : ""
+	[
+	panel_modelname_template(string) : "Panels Model Name Template" : "models/xenians/shield/pentagonal.hexecontahedron/nihilanth/panel.%03d.mdl"
+	panels_amount(integer) : "Panels Amount" : 60
+	max_health_for_panel(integer) : "Panels Maximum Health" : 75
+
+	max_health(integer) : "Maximum Health" : 3000
+	
+	healing_per_tick_for_panel(integer) : "Panels Healing Points Per Tick" : 2
+	healing_tick_delta_for_panel(float) : "Panels Healing Tick Delta" : "0.125"
+	
+	healing_request_cooldown(float) : "Healing Request Cooldown" : "7.5"
+	hp_amount_to_request_heal(float) : "Healing Request Health Amount To Start" : "0.85"
+
+	pylon01(target_destination) : "Pylons Target [Slot 01]" : ""
+	pylon02(target_destination) : "Pylons Target [Slot 02]" : ""
+	pylon03(target_destination) : "Pylons Target [Slot 03]" : ""
+	pylon04(target_destination) : "Pylons Target [Slot 04]" : ""
+	pylon05(target_destination) : "Pylons Target [Slot 05]" : ""
+	pylon06(target_destination) : "Pylons Target [Slot 06]" : ""
+	pylon07(target_destination) : "Pylons Target [Slot 07]" : ""
+	pylon08(target_destination) : "Pylons Target [Slot 08]" : ""
+	pylon09(target_destination) : "Pylons Target [Slot 09]" : ""
+	pylon10(target_destination) : "Pylons Target [Slot 10]" : ""
+	pylon11(target_destination) : "Pylons Target [Slot 11]" : ""
+	pylon12(target_destination) : "Pylons Target [Slot 12]" : ""
+	pylon13(target_destination) : "Pylons Target [Slot 13]" : ""
+	pylon14(target_destination) : "Pylons Target [Slot 14]" : ""
+	pylon15(target_destination) : "Pylons Target [Slot 15]" : ""
+	pylon16(target_destination) : "Pylons Target [Slot 16]" : ""
+	
+	angular_velocity_value01(angle) : "Angular Velocity Values [Slot 01]" : "5.0 30.0 15.0"
+	angular_velocity_value02(angle) : "Angular Velocity Values [Slot 02]" : "-25.0 45.0 -5.0"
+	angular_velocity_value03(angle) : "Angular Velocity Values [Slot 03]" : "5.0 60.0 15.0"
+	angular_velocity_value04(angle) : "Angular Velocity Values [Slot 04]" : "25.0 45.0 0.0"
+	angular_velocity_value05(angle) : "Angular Velocity Values [Slot 05]" : "-5.0 15.0 -15.0"
+	angular_velocity_value06(angle) : "Angular Velocity Values [Slot 06]" : ""
+	angular_velocity_value07(angle) : "Angular Velocity Values [Slot 07]" : ""
+	angular_velocity_value08(angle) : "Angular Velocity Values [Slot 08]" : ""
+	angular_velocity_value09(angle) : "Angular Velocity Values [Slot 09]" : ""
+	angular_velocity_value10(angle) : "Angular Velocity Values [Slot 10]" : ""
+	angular_velocity_value11(angle) : "Angular Velocity Values [Slot 11]" : ""
+	angular_velocity_value12(angle) : "Angular Velocity Values [Slot 12]" : ""
+	angular_velocity_value13(angle) : "Angular Velocity Values [Slot 13]" : ""
+	angular_velocity_value14(angle) : "Angular Velocity Values [Slot 14]" : ""
+	angular_velocity_value15(angle) : "Angular Velocity Values [Slot 15]" : ""
+	angular_velocity_value16(angle) : "Angular Velocity Values [Slot 16]" : ""
+	angular_velocity_values_used(integer) : "Angular Velocity Values Used (2-16)" : 5
+	
+	health_color01(color1) : "Colors On Health (0.0-1.0): [Slot 01]" : "1.0 0.0 0.0"
+	health_color02(color1) : "Colors On Health (0.0-1.0): [Slot 02]" : "1.0 1.0 0.0"
+	health_color03(color1) : "Colors On Health (0.0-1.0): [Slot 03]" : "0.0 1.0 0.0"
+	health_color04(color1) : "Colors On Health (0.0-1.0): [Slot 04]" : "0.0 1.0 1.0"
+	health_color05(color1) : "Colors On Health (0.0-1.0): [Slot 05]" : "0.0 0.0 1.0"
+	health_color06(color1) : "Colors On Health (0.0-1.0): [Slot 06]" : ""
+	health_color07(color1) : "Colors On Health (0.0-1.0): [Slot 07]" : ""
+	health_color08(color1) : "Colors On Health (0.0-1.0): [Slot 08]" : ""
+	health_color09(color1) : "Colors On Health (0.0-1.0): [Slot 09]" : ""
+	health_color10(color1) : "Colors On Health (0.0-1.0): [Slot 10]" : ""
+	health_color11(color1) : "Colors On Health (0.0-1.0): [Slot 11]" : ""
+	health_color12(color1) : "Colors On Health (0.0-1.0): [Slot 12]" : ""
+	health_color13(color1) : "Colors On Health (0.0-1.0): [Slot 13]" : ""
+	health_color14(color1) : "Colors On Health (0.0-1.0): [Slot 14]" : ""
+	health_color15(color1) : "Colors On Health (0.0-1.0): [Slot 15]" : ""
+	health_color16(color1) : "Colors On Health (0.0-1.0): [Slot 16]" : ""
+	health_colors_used(integer) : "Colors On Health Used (2-16)" : 5
+	
+	intro_for_panel_minimum(float) : "Intro Duration Minimum For Panel" : "2.5"
+	intro_for_panel_maximum(float) : "Intro Duration Maximum For Panel" : "5.0"
+	
+	pause_for_panel_minimum(float) : "Intro Pause Duration Minimum For Panel" : "0.5"
+	pause_for_panel_maximum(float) : "Intro Pause Duration Maximum For Panel" : "2.5"
+	
+	death_for_panel(float) : "Death Duration For Panel" : "1.5"
+
+	per_panel_color_scheme(boolean) : "Per Panel Color Scheme" : 0
+	no_impact_on_alive_pylons(boolean) : "Disable Impact While Pylons Are Alive" : 1 
+	
+	input DestoyShieldCompletely(void) : "Request To Destoy Shield Completely"
+	input InputForceDegrade(void) : "Force Degrade"
+	
+	input StartIntroduction(void) : "Start Introduction"
+	
+	output OnShieldDegraded(void) : "Fired On Shield Degraded"
+	output OnShieldRemoved(void) : "Fired On Shield Removed"
+	output OnShieldPanelDestroyed(void) : "Fired On Shield Panel Destroyed"
+	output OnShieldIntroductionFinished(void) : "Fired On Shield Introduction Finished"
+	]

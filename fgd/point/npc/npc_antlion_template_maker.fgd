@@ -1,6 +1,5 @@
-
 @PointClass base(Angles, BaseNPCMaker) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
+	appliesto(EP1, EP2, HL2, P1) 
 	autovis(Templates, Antlion Generator)
 	line(192 192 192, targetname, templatename)
 	size(-8 -8 -8, 8 8 8) 
@@ -22,7 +21,7 @@
 	fighttarget(string) : "Fight target" : : "Targetname of an entity used as a goal for the children to fight to."
 	followtarget(string) : "Follow target" : : "Targetname of an entity used as a goal for the children to follow."
 	vehicledistance(float) : "Vehicle Spawn Distance" : 1 : "This is a modifier of the current spawn distance. Spawn distance on a vehicle is based on speed, so this is just a modifier for it."
-	workerspawnrate(float) : "Random Worker Spawn Rate" : 0 : "Percentage chance that a spawned antlion will be a worker. (0 = no chance, 1 = 100% chance)"
+	workerspawnrate[since_EP1](float) : "Random Worker Spawn Rate" : 0 : "Percentage chance that a spawned antlion will be a worker. (0 = no chance, 1 = 100% chance)"
 	ignorebugbait(boolean) : "Ignore Bugbait" : 0
 
 	pool_start(integer) : "Initial antlions in the pool." : 0 : "Number of antlions in the pool at map start."

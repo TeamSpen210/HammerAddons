@@ -1,0 +1,32 @@
+@PointClass base(Node) appliesto(Mesa)
+	autovis(Entities, Nodes, Ground Node, Gonarch Node)
+	studio("models/editor/ground_node.mdl") 
+	line(232 219 8, targetname, reachtarget)
+	sphere(m_flRadius)
+	color(232 219 8) 
+= info_bigmomma: "A navigation node for Bigmomma AKA Gonarch"
+	[
+	m_flRadius(float) : "Radius" : 1 : ""
+	m_flDelay(float) : "Delay" : 1 : ""
+
+	reachtarget(target_destination) : "Reach Target" : : ""
+	reachsequence(string) : "Reach Sequence" : "0" : " "
+	presequence(string) : "Pre-Sequence" : "0" : " "
+
+
+	spawnflags(Flags) =
+		[
+		1 : "Force human permission" : 0
+		2 : "Force small_centered permission" : 0
+		4 : "Force wide_human permission" : 0
+		8 : "Force tiny permissiont" : 0
+		16 : "Force wide_short permission" : 0
+		32 : "Force medium permission" : 0
+		64 : "Force tiny_centered permission" : 0
+		128 : "Force large permission" : 0
+		256 : "Force large_centered permission" : 0
+		512 : "Keep editor position" : 0
+		]
+
+	output OnAnimationEvent(void) : "OnAnimationEvent"
+	]

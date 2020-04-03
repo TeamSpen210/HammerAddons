@@ -1,5 +1,5 @@
 @PointClass base(Propper) 
-	appliesto(PROPPER)
+	appliesto(-engine, PROPPER)
 	iconsprite("editor/multi_manager.vmt")
 	line(64 64 0, targetname, startattachment)
 	line(255 255 255, targetname, startattachment, targetname, endattachment)

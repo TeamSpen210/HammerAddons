@@ -1,0 +1,5 @@
+@NPCClass base(BaseSentry) appliesto(Mesa) 
+	studio("models/npcs/sentry_ceiling.mdl")
+= npc_sentry_ceiling : "Ceiling Sentry"
+	[
+	]

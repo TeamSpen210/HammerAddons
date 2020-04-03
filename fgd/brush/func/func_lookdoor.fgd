@@ -1,6 +1,9 @@
-
 @SolidClass base(func_movelinear) 
-= func_lookdoor: "A door that moves either when looked by a targeted object or when a target object comes near the door.  Behavior can be either based on viewing direction or proximity alone, or on a combination of both.  If inverted the doors behavior will be the opposite."
+	appliesto(until_L4D, -TF2)
+= func_lookdoor: "A door that moves either when looked by a targeted object or " +
+	"when a target object comes near the door.  " +
+	"Behavior can be either based on viewing direction or proximity alone, or on a combination of both.  "+
+	"If inverted the doors behavior will be the opposite."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -11,7 +14,7 @@
 
 	proximitydistance(string) : "Proximity Distance" : "0.0" : "If non-zero, proximity range over which door will move"
 	proximityoffset(string) : "Proximity Offset" : "0.0" : "Offset from the target object"
-	fieldofview(string) : "FieldOfView" : "0.0" : "If non-zero, field of view over which door will move"
+	fieldofview(string) : "FieldOfView" : "0.0" : "If non-zero, field of view over which door will move. The target must then be a NPC/player!"
 
 	// Inputs
 	input InvertOn(void) : "InvertOn - when set behavior of door is inverted."

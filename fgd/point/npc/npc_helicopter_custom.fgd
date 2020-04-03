@@ -1,6 +1,6 @@
 @NpcClass base(BaseHelicopter) 
 	appliesto(MBase)
-	autovis(NPCs) 
+	autovis(Entities, NPCs) 
 	studioprop() = npc_helicopter_custom : "A custom helicopter. It can't attack. Aww..."
 	[
 	model(studio) : "World Model" : "models/combine_helicopter.mdl" : "Should probably still have the right attachments."

@@ -1,0 +1,10 @@
+@PointClass base(prop_physics) appliesto(Mesa)
+	studioprop()
+= prop_physics_respawnable : "This class is the same as prop_physics, except it respawns after it breaks"
+	[
+	RespawnTime(float) : "Respawn Time" : 60 : "Ammount in seconds this prop will respawn after it breaks."
+
+	input InputRespawn(void) : "Force respawn."
+
+	output OnMaterialize(void) : "The prop has Materialized"
+	]

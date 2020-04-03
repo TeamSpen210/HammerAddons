@@ -1,0 +1,4 @@
+@SolidClass base(BaseTank) appliesto(Mesa) 
+= func_tow : "TOW Missile System"
+	[
+	]

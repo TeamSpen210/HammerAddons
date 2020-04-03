@@ -1,4 +1,4 @@
-@PointClass 
+@PointClass appliesto(-engine) 
 	iconsprite("editor/ts_book.vmt") 
 	line(255 255 255, targetname, linename1) 
 	line(255 0 0, targetname, linename2) 

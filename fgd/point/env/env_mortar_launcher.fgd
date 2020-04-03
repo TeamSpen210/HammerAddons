@@ -1,0 +1,7 @@
+@PointClass base(BaseEntityPoint) appliesto(Mesa)
+	line(255 255 255, targetname, MortarLauncher)
+	studio("models/props_st/airstrike_map.mdl") 
+= env_mortar_controller : "Mortar Controller"
+	[
+	MortarLauncher(target_destination) : "Mortar Launcher"
+	]

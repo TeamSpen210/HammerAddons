@@ -1,0 +1,7 @@
+@PointClass base(BaseEntityPoint, Angles) 
+	size(-2 -2 -2, 2 2 2)
+	color(200 0 0)
+= spark_shower: "Temporary spark shower effect created by env_explosions." +
+	"When spawned, moves in the forward direction whilst producing sparks, until it fades out."
+	[
+	]

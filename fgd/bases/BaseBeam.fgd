@@ -1,0 +1,48 @@
+@BaseClass base(BaseEntityPoint, RenderFields, Reflection) 
+= BaseBeam: "This is the definition of the 'beam' class, but we don't want that in the entity list."
+	[
+	rendermode(choices) readonly : "Render Mode" : 2 : "Render mode is forced to Texture." = [
+		2: "Texture"
+	]
+	renderamt(integer) : "Brightness (1 - 255)" : 100
+	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255"
+
+	hdrcolorscale(float) : "HDR color scale." : 1.0 : "float value to multiply sprite color by when running in HDR mode."
+	noiseamplitude(float) : "Amount of noise (0-64)" : 0 : "The amount of noise in the beam. 0 is a perfectly straight beam."
+	
+	framerate(integer) : "Frames per 10 seconds" : 0 : "Framerate at which the beam texture should animate, if it has multiple frames."
+	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
+	
+	texture(sprite) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the beam."
+	texturescroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
+	
+	damage(string) : "Damage / second" : "0" : "How much damage this beam does per second to things while active. For continuous damage, the value should be greater than 10 or it may not work."
+
+	dissolvetype[engine](integer) : "Dissolve Type" : 0
+	dissolvetype(choices) : "Dissolve Type" : -1 =
+		[
+		-1: "None"
+		0: "Energy"
+		1: "Heavy electrical"
+		2: "Light electrical"
+		3 : "Fade" [MESA]
+		4 : "Remove Now" [MESA]
+		5 : "Gluon Dissolve" [MESA]
+		6 : "Core" [MESA]
+		]
+
+	// Inputs
+	input TurnOn(void) : "Turns the beam on."
+	input TurnOff(void) : "Turns the beam off."
+	input Toggle(void) : "Toggles the beam between on and off."
+
+	input Noise[MBase](float) : "Set the noise of the beam, in pixels."
+	input Width(float) : "Set the width of the beam, in pixels."
+	input ScrollSpeed(float) : "Set the scroll speed in units per second (0 - 100)."
+	input Alpha(integer) : "Sets the beam's alpha (0 - 255)."
+		
+	input Color(color255) : "Sets the beam's render color (R G B)."
+	input ColorRedValue(float) : "Sets the red color channel's value (0 - 255)."
+	input ColorGreenValue(float) : "Sets the green color channel's value (0 - 255)."
+	input ColorBlueValue(float) : "Sets the blue color channel's value (0 - 255)."
+	]

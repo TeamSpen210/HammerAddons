@@ -19,6 +19,8 @@
 	maxlivechildren(integer) : "Max Live NPCs" : 5 : "Maximum number of live children allowed at any one time (new ones will not be made until one dies). " +
 		"If set to -1, no limit is applied."
 
+	ForceScheduleOnSpawn[MESA](string) : "ForceScheduleOnSpawn" : "" : "Name of NPC schedule that we want to play on spawn."
+
 	hullcheckmode[engine](boolean) : "Hull Check Mode" : 0
 	hullcheckmode[ASW](choices) : "Hull Check Mode" : 0 : "How NPC's hull should be checked at spawn destination?" =
 		[
@@ -40,7 +42,7 @@
 	input SetSpawnFrequency(float) : "Sets how often (in seconds) a new NPC will be spawned."
 
 	// Outputs
-	output OnSpawnNPC(string) : "Fired when an NPC is spawned. The activator is the NPC, and the string is the name of the NPC."
+	output OnSpawnNPC(ehandle) : "Fired when an NPC is spawned. The activator is the NPC, and the parameter is a pointer to the NPC."
 	output OnAllSpawned(void) : "Fired when the spawned is exhausted (all children have been spawned)."
 	output OnAllSpawnedDead(void) : "Fired when the spawner is exhausted (all children have been spawned) and all spawned children have died."
 	output OnAllLiveChildrenDead(void) : "Fired when all spawned children have died. This does not mean the spawner is exhausted, " +

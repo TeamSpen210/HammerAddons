@@ -1,0 +1,6 @@
+@NPCClass base(BaseNPC) appliesto(Mesa)
+	studio("models/fauna/rat.mdl")
+	autovis(Entities, NPCs, Animals, Rats)
+= npc_rat : "Rat"
+	[
+	]

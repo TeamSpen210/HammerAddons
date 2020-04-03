@@ -1,5 +1,5 @@
 @NpcClass base(BaseLogicalNPC)
-	autovis(NPCs, EnemyFinder NPC)
+	autovis(Entities, NPCs, EnemyFinder NPC)
 	color(255 150 0) 
 	iconsprite("editor/npc_enemyfinder.vmt") 
 	sphere(MinSearchDist) 

@@ -9,7 +9,7 @@
 	m_sourceentityname(target_destination) : "Source Entity" : : "If specified, tesla lightning will originate from the specified entity. " +
 		"Otherwise, they originate from this entity."
 	m_soundname(sound) : "Sound Name" : "DoSpark" : "Sound to be played whenever lightning is created."
-	texture(material) : "Sprite Name" : "sprites/physbeam.vmt" : "Material to use for the tesla lightning beams."
+	texture(sprite) : "Sprite Name" : "sprites/physbeam.vmt" : "Material to use for the tesla lightning beams."
 	m_color(color255) : "Color" : "255 255 255"
 	m_flradius(float) : "Radius" : 200 : "Radius around the origin to find a point to strike with a tesla lightning beam."
 	beamcount_min(integer) : "Min # of Beams" : 6 : "Minimum number of tesla lightning beams to create when creating an arc."

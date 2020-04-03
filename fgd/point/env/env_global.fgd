@@ -12,7 +12,8 @@
 		"gordon_precriminal": "Gordon pre-criminal"
 		"antlion_allied": "Antlions are player allies"
 		"suit_no_sprint": "Suit sprint function not yet enabled"
-		"super_phys_gun": "Super phys gun is enabled"
+		"super_phys_gun": "Super phys gun is enabled" [!MBase]
+		"super_phys_gun": "Super phys gun is enabled (Mapbase: Counter 1 prevents item dissolve)" [MBase]
 		"friendly_encounter": "Friendly encounter sequence (lower weapons, etc.)"
 		"gordon_invulnerable": "Gordon is invulnerable"
 		"no_seagulls_on_jeep": "Don't spawn seagulls on the jeep"
@@ -97,6 +98,12 @@
 		"infra_B2_Keys": "INFRA: player has B2 Keys"
 		]
 
+	globalstate[Mesa](choices) : "Global State to Set" =
+		[
+		"predisaster" : "predisaster"
+		"friendly_encounter" : "Friendly encounter sequence (lower weapons, etc.)"
+		"gordon_invulnerable" : "Gordon is invulnerable"
+		]
 
 	initialstate[engine](integer) : "Initial State" : 0
 	initialstate(choices) : "Initial State" : 0 =

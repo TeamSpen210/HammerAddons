@@ -1,6 +1,5 @@
 @SolidClass base(BaseEntity)
-	color(0 255 255) 
-	line(255 255 255, targetname, target) 
+	color(0 255 255)  
 = func_areaportal: "A portal brush used to manage visibility in maps. " +
 	"Portals define areas, which are spaces that are connected in the map. " +
 	"Both sides of a portal cannot touch the same area, for example, a doughnut shaped map would require at least two portals to divide the map into two areas. " +

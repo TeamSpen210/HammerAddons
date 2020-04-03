@@ -1,0 +1,23 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/ShaderTest/envball_3"
+	"$envmap" "env_cubemap"
+	"$bumpmap" "models/shadertest/shieldnoise0_normal"
+	"$normalmapalphaenvmapmask" 1
+	"$envmapcontrast" "1"
+//	"$envmaptint" "[.5 .5 .5]"
+	"$envmapsaturation" "[1 1 1]"
+	"$bumpframe" "0"
+
+	"Proxies"
+	{
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$bumpmap" 
+			"animatedtextureframenumvar" "$bumpframe"
+			"animatedtextureframerate" 29.00
+		}
+	}
+}
+
+

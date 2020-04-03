@@ -1,0 +1,6 @@
+@BaseClass base(BaseEntityPhysics)
+= BaseGrenade
+	[
+	input Detonate(void) : "Fire to make the grenade explode."
+	output OnDetonate(void) : "Grenade has just exploded."
+	]

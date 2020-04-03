@@ -1,6 +1,6 @@
 @PointClass base(TalkNPC) 
 	appliesto(P2) 
-	autovis(NPCs, Aper. Personality Core)
+	autovis(Entities, NPCs, Aper. Personality Core)
 	studioprop() 
 = npc_personality_core: "Aperture Science Personality Construct. Animated balls with handles."
 	[

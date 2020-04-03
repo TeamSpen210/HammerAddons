@@ -1,5 +1,5 @@
-
 @PointClass base(BaseEntityPoint, PlayerClass) 
+	autovis(Point Entities, Globals, Player Spawn, T Spawn)
 	appliesto(CSGO) 
 	studio("models/player/tm_phoenix.mdl") = info_player_terrorist: "This entity marks the start point for terrorists. One of these needs to be placed for each team member. 20 start points is typical. Should be placed at least 128 units away from each other and surrounding walls."
 	[

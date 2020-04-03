@@ -15,6 +15,8 @@
 		32768: "Allow stretch" : 0
 		65536: "Start asleep" : 0
 		]
+	MimicName[MESA](string) : "Character Manifest Mimic Name" : "" : "Choose a name or a classname from the character manifest to dress the ragdoll."
+	health[MESA](integer) : "Health" : 100 : "The amount of damage the ragdoll takes before gibbing."
 
 	angleoverride(string) : "Override Animation" : : "Filled in by the engine via hammer_update_entity, do not edit by hand except to clear."
 

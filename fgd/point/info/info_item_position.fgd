@@ -5,6 +5,7 @@
 	[
 	model(studio) : "Helper Model"
 	group(integer) : "Group" : 0 : "Group Number"
+	rarity[engine](integer) : "Rarity" : 0
 	rarity(choices) : "Rarity" : 0 : "Item rarity at this location" =
 		[
 		0: "Common"

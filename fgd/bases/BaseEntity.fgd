@@ -58,8 +58,14 @@
 	
 	input AddSpawnFlags[MBase](integer) : "Adds spawnflag(s) to this entity. Many spawnflags have their respective numbers suffixed in this FGD."
 	input RemoveSpawnFlags[MBase](integer) : "Removes spawnflag(s) to this entity. Many spawnflags have their respective numbers suffixed in this FGD."
+
+	input AddSolidFlags[MBase](integer) : "Adds solid flags to this entity."
+	input RemoveSolidFlags[MBase](integer) : "Removes solid flags from this entity."
+
 	input ChangeVariable[MBase](string) : "Similar to AddOutput, except it changes an internal variable similar to logic_datadesc_accessor instead. Very dangerous, use with care."
 	
+	input SetEntityName[MBase](target_destination) : "Sets this entity's name that other entities should refer to it by."
+	input SetTarget[MBase](target_destination) : "Sets this entity's target. This is specific to certain entities, particularly logic entities that involve a target."
 	input SetOwnerEntity[MBase](target_destination) : "Sets this entity's owner entity. This has nothing to do with parenting and has more to do with collision and kill credits."
 	
 	input SetThinkNull[MBase](void) : "Sets this entity's general think function to null. Behavior varies from entity to entity.."

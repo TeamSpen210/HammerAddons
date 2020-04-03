@@ -4,6 +4,20 @@
 	sounds(choices) : "Press Sound" : 0 : "Sound played when pressed. Choose from sounds in the Buttons.snd* category." =
 		[
 		0: "None (Silent)"
+
+		40: "(BM) Vending Machine Button" [MESA]
+		41: "(BM) Xen Bridge Lever" [MESA]
+		42: "(BM) XEN Button Beep Click" [MESA]
+		43: "(BM) XEN Button Beep1" [MESA]
+		44: "(BM) XEN Button Beep2" [MESA]
+		48: "(BM) Access Denied (Retinal Scanner)" [MESA]
+		49: "(BM) Access Granted (Retinal Scanner)" [MESA]
+		50: "(BM) Access Use (Retinal Scanner)" [MESA]
+		51: "(BM) HECU Sentry BeamTrip" [MESA]
+
+		100: "Light Switch"
+		101: "Power Plug - Basic Electronics (soft)"
+
 		1: "Buttons.snd1: Big zap & Warmup"
 		2: "Buttons.snd2: Access Denied"
 		3: "Buttons.snd3: Access Granted"
@@ -32,18 +46,21 @@
 		26: "Buttons.snd26: Lever or Wheel: latch + large metal thud"
 		27: "Buttons.snd27: Lever or Wheel: smaller ratchet"
 		28: "Buttons.snd28: Lever or Wheel: smaller lever move"
-		31: "Buttons.snd31: Shock buzz"
-		32: "Buttons.snd32: Clickbeep"
-		33: "Buttons.snd33: Tech blip"
+
+		31: "Buttons.snd31: Shock buzz (missing)"
+		32: "Buttons.snd32: Clickbeep (missing)"
+		33: "Buttons.snd33: Tech blip (missing)"
+
 		34: "Buttons.snd34: Clickbeepbeep open"
 		35: "Buttons.snd35: Small high blip"
 		36: "Buttons.snd36: Small tech fuzz blip"
 		37: "Buttons.snd37: Small click bleep (change to lightswitch)"
-		40: "Buttons.snd40: Combine door lock - locked"
-		41: "Buttons.snd41: Combine blip growl"
-		42: "Buttons.snd42: Combine squick growl"
-		43: "Buttons.snd43: Combine whine purr"
-		44: "Buttons.snd44: Combine click talk"
+
+		40: "Buttons.snd40: Combine door lock - locked" [!MESA]
+		41: "Buttons.snd41: Combine blip growl" [!MESA]
+		42: "Buttons.snd42: Combine squick growl" [!MESA]
+		43: "Buttons.snd43: Combine whine purr" [!MESA]
+		44: "Buttons.snd44: Combine click talk" [!MESA]
 		45: "Buttons.snd45: Combine click growl fizz"
 		46: "Buttons.snd46: Combine click fizz (deny)"
 		47: "Buttons.snd47: Combine click talker"
@@ -54,6 +71,20 @@
 		"and fails because it's locked. These are sounds in the Buttons.snd* category." =
 		[
 		0: "None (Silent)"
+
+		40: "(BM) Vending Machine Button" [MESA]
+		41: "(BM) Xen Bridge Lever" [MESA]
+		42: "(BM) XEN Button Beep Click" [MESA]
+		43: "(BM) XEN Button Beep1" [MESA]
+		44: "(BM) XEN Button Beep2" [MESA]
+		48: "(BM) Access Denied (Retinal Scanner)" [MESA]
+		49: "(BM) Access Granted (Retinal Scanner)" [MESA]
+		50: "(BM) Access Use (Retinal Scanner)" [MESA]
+		51: "(BM) HECU Sentry BeamTrip" [MESA]
+
+		100: "Light Switch"
+		101: "Power Plug - Basic Electronics (soft)"
+
 		1: "Buttons.snd1: Big zap & Warmup"
 		2: "Buttons.snd2: Access Denied"
 		3: "Buttons.snd3: Access Granted"
@@ -82,18 +113,21 @@
 		26: "Buttons.snd26: Lever or Wheel: latch + large metal thud"
 		27: "Buttons.snd27: Lever or Wheel: smaller ratchet"
 		28: "Buttons.snd28: Lever or Wheel: smaller lever move"
-		31: "Buttons.snd31: Shock buzz"
-		32: "Buttons.snd32: Clickbeep"
-		33: "Buttons.snd33: Tech blip"
+
+		31: "Buttons.snd31: Shock buzz (missing)"
+		32: "Buttons.snd32: Clickbeep (missing)"
+		33: "Buttons.snd33: Tech blip (missing)"
+
 		34: "Buttons.snd34: Clickbeepbeep open"
 		35: "Buttons.snd35: Small high blip"
 		36: "Buttons.snd36: Small tech fuzz blip"
 		37: "Buttons.snd37: Small click bleep (change to lightswitch)"
-		40: "Buttons.snd40: Combine door lock - locked"
-		41: "Buttons.snd41: Combine blip growl"
-		42: "Buttons.snd42: Combine squick growl"
-		43: "Buttons.snd43: Combine whine purr"
-		44: "Buttons.snd44: Combine click talk"
+
+		40: "Buttons.snd40: Combine door lock - locked" [!MESA]
+		41: "Buttons.snd41: Combine blip growl" [!MESA]
+		42: "Buttons.snd42: Combine squick growl" [!MESA]
+		43: "Buttons.snd43: Combine whine purr" [!MESA]
+		44: "Buttons.snd44: Combine click talk" [!MESA]
 		45: "Buttons.snd45: Combine click growl fizz"
 		46: "Buttons.snd46: Combine click fizz (deny)"
 		47: "Buttons.snd47: Combine click talker"
@@ -103,6 +137,20 @@
 	unlocked_sound(choices) : "Unlocked Sound" : 0 : "Sound played when the button is unlocked. These are sounds in the Buttons.snd* category." =
 		[
 		0: "None (Silent)"
+
+		40: "(BM) Vending Machine Button" [MESA]
+		41: "(BM) Xen Bridge Lever" [MESA]
+		42: "(BM) XEN Button Beep Click" [MESA]
+		43: "(BM) XEN Button Beep1" [MESA]
+		44: "(BM) XEN Button Beep2" [MESA]
+		48: "(BM) Access Denied (Retinal Scanner)" [MESA]
+		49: "(BM) Access Granted (Retinal Scanner)" [MESA]
+		50: "(BM) Access Use (Retinal Scanner)" [MESA]
+		51: "(BM) HECU Sentry BeamTrip" [MESA]
+
+		100: "Light Switch"
+		101: "Power Plug - Basic Electronics (soft)"
+
 		1: "Buttons.snd1: Big zap & Warmup"
 		2: "Buttons.snd2: Access Denied"
 		3: "Buttons.snd3: Access Granted"
@@ -131,18 +179,21 @@
 		26: "Buttons.snd26: Lever or Wheel: latch + large metal thud"
 		27: "Buttons.snd27: Lever or Wheel: smaller ratchet"
 		28: "Buttons.snd28: Lever or Wheel: smaller lever move"
-		31: "Buttons.snd31: Shock buzz"
-		32: "Buttons.snd32: Clickbeep"
-		33: "Buttons.snd33: Tech blip"
+
+		31: "Buttons.snd31: Shock buzz (missing)"
+		32: "Buttons.snd32: Clickbeep (missing)"
+		33: "Buttons.snd33: Tech blip (missing)"
+
 		34: "Buttons.snd34: Clickbeepbeep open"
 		35: "Buttons.snd35: Small high blip"
 		36: "Buttons.snd36: Small tech fuzz blip"
 		37: "Buttons.snd37: Small click bleep (change to lightswitch)"
-		40: "Buttons.snd40: Combine door lock - locked"
-		41: "Buttons.snd41: Combine blip growl"
-		42: "Buttons.snd42: Combine squick growl"
-		43: "Buttons.snd43: Combine whine purr"
-		44: "Buttons.snd44: Combine click talk"
+
+		40: "Buttons.snd40: Combine door lock - locked" [!MESA]
+		41: "Buttons.snd41: Combine blip growl" [!MESA]
+		42: "Buttons.snd42: Combine squick growl" [!MESA]
+		43: "Buttons.snd43: Combine whine purr" [!MESA]
+		44: "Buttons.snd44: Combine click talk" [!MESA]
 		45: "Buttons.snd45: Combine click growl fizz"
 		46: "Buttons.snd46: Combine click fizz (deny)"
 		47: "Buttons.snd47: Combine click talker"

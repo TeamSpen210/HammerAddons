@@ -13,6 +13,7 @@
 		"LARGE_HULL": "Large"
 		]
 
+	SetClassify[enigne](integer) : "Classify" : 0
 	SetClassify[MBase](choices) : "Classify" : 0 : "Simulate this class. Useful for relationships." =
 		[
 		0 : "CLASS_NONE"

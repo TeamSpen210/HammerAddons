@@ -1,0 +1,8 @@
+@PointClass base(BaseEntityPoint) appliesto(Mesa)
+	sphere(Radius)
+= env_gon_mortar_area: "An entity to control mortar acid Spam volume"
+	[
+	Radius(float) : "Radius" : "100" : "Radius"
+	// RadiusY(float) : "RadiusY" : "100" : "Radius along world Y Axis"
+	// RadiusZ(float) : "RadiusZ" : "100" : "Radius along world Z Axis"
+	]

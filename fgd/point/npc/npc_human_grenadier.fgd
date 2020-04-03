@@ -1,0 +1,5 @@
+@NpcClass base(BaseMarine) appliesto(Mesa)
+	autovis(Entities, NPCs, Military, Military Grenadier)
+	studioprop("models/humans/marine.mdl") = npc_human_grenadier : "Human Grenadier"
+	[
+	]

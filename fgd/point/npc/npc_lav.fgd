@@ -1,0 +1,6 @@
+@PointClass base(BaseNPC) appliesto(Mesa)
+	studio("models/props_vehicles/lav.mdl")
+= npc_lav : "LAV-25 Infantry Vehicle"
+	[
+	input ForcePathCorner(string) : "Path_Corner Move"
+	]

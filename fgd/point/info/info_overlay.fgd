@@ -2,6 +2,7 @@
 // is converted to info_overlay_accesssor, which is a real
 // entity.
 @PointClass base(BaseEntityPoint)
+	appliesto(-engine)  // Not an ent, put in a seperate block.
 	autovis(Overlays,Normal)
 	size(-1 -1 0, 1 1 1)
 	color(80 150 225)

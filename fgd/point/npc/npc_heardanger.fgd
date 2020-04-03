@@ -1,7 +1,6 @@
-
 @PointClass base(BaseNPC, SetModel) 
 	appliesto(CSGO) 
-	autovis(NPCs, Danger Listener)
+	autovis(Entities, NPCs, Danger Listener)
 	studio() 
 = npc_heardanger: "A Generic NPC entity that hears and reports 'danger' and is not preserved on round restart. " +
 		"Danger sounds consist of gunshots, player sounds, bullet impacts, " +

@@ -1,4 +1,5 @@
 @PointClass base(Node)
+	autovis(Entities, Nodes, Ground Node)
 	studio("models/editor/ground_node.mdl") 
 	color(232 219 8) 
 = info_node: "A navigation node for ground moving NPCs. Navigation nodes are baked into the nodegraph so that NPCs can move to them. " +

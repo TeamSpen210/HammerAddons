@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityPoint)
-	appliesto(P2, srctools)
+	appliesto(+P2, +srctools, -engine)
 	autovis(Vactubes, Vac Paths)
-	studio("models/editor/vactubes/start_point.mdl")
+	studioprop("models/editor/vactubes/start_point.mdl")
 = comp_vactube_start : "Marks the start point of a vactube. This is where they spawn."
 [
 	speed(float) : "Object Speed" : 800.0 : "Set the speed of the objects produced from here, in units per second."

@@ -2,7 +2,8 @@
 	color(200 0 0) 
 	iconsprite("editor/logic_playerproxy.vmt")
  	autovis(Point Entities, Globals, Player Proxy)
-= logic_playerproxy: "An entity that is used to relay inputs/ouputs to the player and back to the world."
+ 	appliesto(!L4D, !L4D2, !TF2)
+= logic_playerproxy: "An entity that is used to relay inputs/outputs to the player and back to the world."
 	[
 	SetMaxInputArmor[MBase](integer) : "Max Input Armor" : 100 : "Sets the maximum armor a player can receive from the " +
 		"AddArmor, RemoveArmor, and SetArmor inputs. " +
@@ -39,6 +40,8 @@
 	input SetMaxInputArmor(integer) : "Sets the maximum armor value that could be set by armor inputs."
 
 	input LowerWeapon(void) : "Lowers the players weapon."
+	
+	input SuppressCrosshair[P1](void) : "Disable the player's crosshair."
 
 	input EnableCappedPhysicsDamage(void) : "Cause player to take less damage from physics objects, and never more than 30 points from any individual strike."
 	input DisableCappedPhysicsDamage(void) : "Undo effects of EnableCappedPhysicsDamage"

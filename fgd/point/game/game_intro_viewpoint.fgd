@@ -3,7 +3,8 @@
 	appliesto(TF2) 
 	studioprop("models/editor/camera.mdl") = game_intro_viewpoint: "A viewpoint in the intro camera."
 	[
-	teamnum(choices) : "Team" : "0" : "Team" =
+	teamnum[engine](integer) : "Team" : 0
+	teamnum(choices) : "Team" : 0 : "Team" =
 		[
 		0: "None (Shared)"
 		2: "Red"

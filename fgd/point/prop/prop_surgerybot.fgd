@@ -1,0 +1,13 @@
+@PointClass base(BaseEntityAnimating) 
+	appliesto(Mesa)
+	autovis(Auto, Point Entities, Props)
+	studioprop( "models/props_questionableethics/qe_surgery_bot_main.mdl" )
+= prop_surgerybot : "Surgery Bot"
+	[
+	startactive(boolean) : "Start Active" : 1
+
+	input TurnOff(void) : "Turn Off"
+	input TurnOn(void) : "Turn On"
+	input StopEffects(void) : ""
+	input StartEffects(void) : ""
+	]

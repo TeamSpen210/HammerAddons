@@ -1,0 +1,65 @@
+@PointClass base(BaseEntityPoint) appliesto(Mesa)
+	lightprop("models/editor/spot.mdl") 
+	iconsprite("editor/light_new.vmt") 
+	lightcone() sphere(_zero_percent_distance) 
+= newLight_Dir : "Next Gen Directional light"
+[
+	LightEnvEnabled[engine](boolean) : "LightEnvEnabled" : 1
+	LightEnvEnabled(Choices) : "LightEnvEnabled" : 1 : "Grab direction and color values from light_env ? " =
+	[
+		0 : "Disabled : Use Manual Angles"
+		1 : "Enabled : Fetch Angles from Light_Env"
+	]
+	//ShadowMode(integer) : "ShadowMode" : 1 : "0:None 1:CSM_Primary 2:CSM_Secondary"
+	//LightnGodRayMode(integer) : "LightnGodRayMode" : 1 : "0: Light 1:Godrays 2:Both"
+	
+	
+	//Enabled(integer) : "Enabled" : 1 : "Light Enabled or Disabled"
+	// LightColorAmbient(color255) : "Light Ambient Color" : "0 0 0 0" : "This is the ambient color of the sunlight."
+	// LightColor(color255) : "Light Color" : "255 255 255 1" : "This is the color of the sunlight."
+	// Intensity(float) : "Light Intensity" : 8000 : "RGB * Intensity"
+	// SpecMultiplier(float) : "SpecularMultiplier" : 1 : "0 to 1 RGB * Intensity * SpecularMultiplier"
+	 PushbackDist(float) : "PushbackDist" : 9999999 : "PushbackDist"	
+	// LightType(integer) : "Light Type" : 0 : "0:Static 1:Stationary 2:Dynamic"
+	
+	
+	EnableGodRays(boolean) : "Enable God Rays" : 1
+	
+	Density(float) : "Density" : "1.0" : "Density Controls the length of rays/volumetric shadows. 1.0 should work in 99% cases. Good value range is 0.5 to 1.5"	
+	Weight(float) : "Weight" : "1.0" : "Weight Controls the intensity of volumetric shadow. Blocking of rays by geometry. good values 0.1 - 10.0"	
+	Decay(float) : "Decay" : "1.0" : "Decay NOT being used"	
+	Exposure(float) : "Exposure" : "2.5" : "Exposure Controls the intensity of Rays during blending pass with main scene. 2.0 is a good start. Good values are 1.0 - 10.0"	
+	DistFactor(float) : "DistFactor" : "1.0" : "DistFactor Controls the falloff of rays / length. 1.0f is a good starting value increase or decrease in the increments of 0.1. 0.0 will make the rays dissappear only disk will be rendererd."		
+	DiskRadius(float) : "DiskRadius" : "0.02" : "DiskRadius Radius of Disk/circle of sun in texturespace. 1.0 will be full screen 0.5 is half screen etc"	
+	DiskInnerSizePercent(float) : "DiskInnerSizePercent" : "0.75" : "Used to control the thickness of circumference. Disk inner circle radius = DiskRadius * DiskInnerSizePercent"		
+	ColorInner(color255) : "ColorInner" : "128 200 255 255" : "This is the color of the inner circle"
+	ColorOuter(color255) : "ColorOuter" : "255 255 164 255" : "This is the color of the outer circle."
+	ColorRays(color255) : "ColorRays" : "200 200 255 255" : "This is the color of the rays."
+	
+	m_bUseToneMapRays(boolean) : "Use ToneMap On Rays" : 1
+	
+	// MaxDynShadowDist(float) : "MaxDynShadowDist" : "800" : "MaxDynShadowDist"	
+	// NumCascades(integer) : "NumCascades" : 3 : "NumCascades"
+	// PartitionExp(float) : "PartitionExp" : "0.85" : "PartitionExp for calculating cascade partition distances. 0 - 1 is lerp between exponential and linear. Exponential will make 1st and 2nd cascade smaller in size increasing shadow map resolution for close objects. Linear will make cascade sizes bigger and first cascade will cover more area"
+	
+	// BiasDepth_Static(float) : "BiasDepth_Static" : "0.01" : "Depth Bias for Static Cascade"	
+	// BiasSlope_Static(float) : "BiasSlope_Static" : "2.0" : "Slope Depth Bias for Static Cascade"	
+	// BiasNormal_Static(float) : "BiasNormal_Static" : "1.0" : "Normal Bias for Static Cascade"	
+	
+	// BiasDepth(float) : "BiasDepth" : "0.0001" : "Depth Bias for Dynamic Cascade"	
+	// BiasSlope(float) : "BiasSlope" : "2.0" : "Slope Depth Bias for Dynamic Cascade"	
+	// BiasNormal(float) : "BiasNormal" : "1.0" : "Normal Bias for Dynamic Cascade"	
+	
+	// ShadowRadius_Static(float) : "ShadowRadius_Static" : "1.0" : "Radius of shadow filter in texel width for Static Cascade"	
+	// ShadowRadius(float) : "ShadowRadius" : "1.0" : "Radius of shadow filter in texel width for Dynamic Cascade"
+	
+	// bNegLight(integer) : "Enable Prop Only Mode" : 0 : "Enable Prop Only Mode"
+	
+	////Inputs
+	//input TurnOn(void) : "Turn the light on."
+	//input TurnOff(void) : "Turn the light off."
+	//input Toggle(void) : "Toggle the light on/off."
+	input TurnOnGodRays(void) : "Turn the Godrays on."
+	input TurnOffGodRays(void) : "Turn the Godrays off."
+]
+

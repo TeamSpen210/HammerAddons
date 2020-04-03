@@ -1,0 +1,6 @@
+@NpcClass base(BaseZombie) 
+	appliesto(Mesa) 
+	autovis(Entities, NPCs, Zombies, Zombie Guard)
+	studio("models/Zombie/zombie_guard.mdl") = npc_zombie_security : "Zombie Guard"
+	[
+	]

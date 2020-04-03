@@ -1,6 +1,11 @@
 @SolidClass base(Trigger) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
+	appliesto(EP1, EP2, HL2, P1, ASW, Mesa) 
 = trigger_waterydeath: "A trigger volume that spawns leeches around entities inside it, " +
 	"and does damage to them until they die. Used to prevent players entering deep water."
 	[
+	BiteInterval[MBase](float) : "Bite Interval" : "0.3" : "The amount of time that should pass in between leech bites."
+	PainStep[MBase](float) : "Pain Step" : "2.0" : "Damage will increase by this number for each leech bite."
+	MaxPain[MBase](float) : "Max Pain" : "15.0" : "This is the maximum damage that could be attained after multiple pain steps."
+	
+	output OnDamage[MBase](integer) : "Fires each time an entity takes damage."
 	]

@@ -27,7 +27,7 @@
 
 	point_index(integer) : "Index" : 0 : "Index of this point (must be unique)."
 	
-	point_warm_on_cap[engine](integer) : "Warning Type" : 0
+	point_warn_on_cap[engine](integer) : "Warning Type" : 0
 	point_warn_on_cap(choices) : "Warning Type" : 0 : "Type of warning to issue to the team that owns the control point when the opposing team starts to capture it." =
 		[
 		0: "Normal Announcements"

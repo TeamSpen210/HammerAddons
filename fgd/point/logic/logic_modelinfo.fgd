@@ -5,14 +5,22 @@
 = logic_modelinfo : "Gets and outputs some model information from an entity."
 	[
 	target(target_destination) : "Target" : "" : "The entity whose model will be evaluated."
+	PoseParameterName(string) : "Pose Parameter Name" : "" : "(Optional) The pose parameter to use for pose parameter-related I/O."
 
 	// Inputs
 	input SetTarget(target_destination) : "Sets this entity's target."
 	input GetNumSkins(void) : "Gets the number of skins on the target entity."
 	input LookupSequence(string) : "Looks up the specified sequence on the target entity."
+	input LookupActivity(string) : "Looks up the specified activity on the target entity. " +
+		"Uses the sequence outputs and outputs the first sequence with the given activity."
+	
+	input SetPoseParameterName(string) : "Sets the pose parameter to target."
+	input SetPoseParameterValue(float) : "Sets the target pose parameter's current value."
+	input GetPoseParameter(void) : "Gets the current value of the target pose parameter and fires OutPoseParameterValue with it."
 
 	// Outputs
 	output OutNumSkins(integer) : "Outputs number of skins."
 	output OnHasSequence(integer) : "Fires when the target has the sequence requested. Outputs the sequence's index."
 	output OnLacksSequence(void) : "Fires when the target does not have the sequence requested."
+	output OutPoseParameterValue(float) : "Fires when the pose parameter value is requested, outputting its current value."
 	]

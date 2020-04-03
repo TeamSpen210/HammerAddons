@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(+engine)
+= spraycan: "Ultra temporary SprayCan entity to apply decal frame at a time. For PreAlpha CD" + 
+	"\n - Valve"
+	[
+	]   

@@ -1,0 +1,5 @@
+@SolidClass base(Trigger, EnableDisable) 
+= trigger_togglesave: "A trigger volume that autosaves each time the player touches it. " +
+	"After it is triggered, it must be Enabled before it will activate again."
+	[
+	]

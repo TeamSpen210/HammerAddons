@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(+engine)
+= physics_npc_solver: "Internal entity, which manages freeing objects stuck inside NPCs or the like."
+	[
+	]   

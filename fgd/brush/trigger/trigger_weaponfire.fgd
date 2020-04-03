@@ -1,0 +1,4 @@
+@SolidClass base(trigger_multiple) appliesto(Mesa)
+= trigger_weaponfire: "A thing."
+	[
+	]

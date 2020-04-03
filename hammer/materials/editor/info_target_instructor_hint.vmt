@@ -1,0 +1,8 @@
+Sprite
+{
+	$baseTexture "editor/info_target_instructor_hint"
+	$spriteorientation "vp_parallel"
+	$spriteorigin "[ 0.50 0.453125 ]"  // 29/64, positions perfectly in the center
+	$spriterendermode 2
+	$no_fullbright 1
+}

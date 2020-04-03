@@ -1,0 +1,13 @@
+@PointClass base(BaseEntityAnimating) appliesto(Mesa) 
+	studio("models/props_vehicles/oar_awesome_tram.mdl")
+= prop_train_awesome
+	[
+	spawnflags(flags) =
+		[
+		64 : "Use Hitboxes for Renderbox" : 0
+		256 : "Start with collision disabled" : 0
+		]
+
+	input EnableCollision(void) : "Enable collision on the prop."
+	input DisableCollision(void) : "Disable collision on the prop."
+	]

@@ -1,0 +1,26 @@
+@NPCClass base(TalkNPC, PlayerCompanion) 
+	appliesto(Mesa)
+	autovis(Entities, NPCs, Mesa Personel, Mesa Security Guard)
+	studio("models/humans/guard.mdl") 
+= npc_human_security : "Security Guard"
+	[
+	input EnableWeaponPickup(void) : "Enable Weapon Pickup"
+	input DisableWeaponPickup(void) : "Disable Weapon Pickup"
+	input GiveWeapon(string) : "Gives the NPC a weapon of the specified entity name."
+	output OnWeaponPickup(void) : "Fires when this NPC picks a weapon off the ground or a gun rack."
+
+	spawnflags(flags) =
+		[
+		32768: "Do not unholster weapon automatically" : 0
+		524288 : "Disable Muzzle DLight" : 0
+		]
+
+	additionalequipment[engine](string) : "Equipped Weapon" : 0
+	additionalequipment(choices) : "Equipped Weapon" : 0 =
+		[
+		"0" 				: "Default"
+		"weapon_glock" 		: "weapon_glock"
+		"weapon_357"		: "weapon_357"
+		"weapon_shotgun"	: "weapon_shotgun"
+		]
+	]

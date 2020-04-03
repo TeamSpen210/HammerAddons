@@ -5,8 +5,8 @@
 	[
 	spawnflags(flags)  =
 		[
-		1: "Clients/Players/Bots" : 1 [TF2, CSGO, CSS]
-		1: "Clients/Players" : 1 [!TF2, !CSGO, !CSS]
+		1: "Clients/Players/Bots" : 1 [TF2, CSGO, CSS, MESA]
+		1: "Clients/Players" : 1 [!TF2, !CSGO, !CSS, MESA]
 		2: "NPCs" : 0 [!ASW]
 		2: "Marines and Aliens" : 0 [ASW]
 		4: "func_pushable" : 0
@@ -20,7 +20,7 @@
 		1024: "Physics debris" : 0
 		2048: "Only NPCs in vehicles (respects player ally flag)" : 0
 		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 1 [!CSGO, !TF2]
-		4096: "Disallow Bots" : 0 [CSGO, TF2]
+		4096: "Disallow Bots" : 0 [CSGO, TF2, MESA]
 		]
 
 	StartDisabled(boolean) : "Start Disabled?" : 0
@@ -39,5 +39,6 @@
 	output OnTrigger(void) : "Fired whenever the trigger is activated."
 	output OnStartTouch(void) : "Fired when an entity starts touching this trigger. " +
 		"The touching entity must pass this trigger's filters to cause this output to fire."
-    output OnNotTouching(void) : "Fired when the TouchTest input is called. Does not call activators."
+	output OnTouching(void) : "Fired when the TouchTest input is called, and an entity is touching this. Does not call activators."
+    output OnNotTouching(void) : "Fired when the TouchTest input is called, and no entity is touching this. Does not call activators."
 	]

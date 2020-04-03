@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(+engine, Mesa)
+	iconsprite("editor/info_target")
+= env_laser_dot: "This is used for the endpoint of the Rocket Launcher's laser targeting beam."
+	[
+	]   

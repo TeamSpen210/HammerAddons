@@ -1,0 +1,8 @@
+Sprite
+{
+	$baseTexture "editor/item_dynamic_resupply"
+	$spriteorientation "vp_parallel"
+	$spriteorigin "[ 0.50 0.5 ]"
+	$spriterendermode 2
+	$no_fullbright 1
+}

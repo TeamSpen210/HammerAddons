@@ -55,8 +55,9 @@
 	input SetParentAttachment(string) : "Change this entity to attach to a specific attachment point on its parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment."
 	input SetParentAttachmentMaintainOffset(string) : "Change this entity to attach to a specific attachment point on it's parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment. The entity will maintain it's position relative to the parent at the time it is attached."
 	input ClearParent(void) : "Removes this entity from the the movement hierarchy, leaving it free to move independently."
-	input SetLocalAngles[since_ASW](string) : "Sets the rotation of the entity relative to the parent's rotation."
-	input SetLocalOrigin[since_ASW](string) : "Sets the position of the entity relative to the parent's position."
+	input SetLocalAngles[since_ASW, MBase](string) : "Sets the rotation of the entity relative to the parent's rotation."
+	input SetLocalOrigin[since_ASW, MBase](string) : "Sets the position of the entity relative to its parent if one exists. Otherwise relative to the world."
+	input SetAbsAngles[MBase](vector) : "Set this entity's angles, always relative to the world origin."
 	
 	input AddOutput(string) : "Adds an entity I/O connection to this entity or changes keyvalues dynamically. Format:" +
 		"\n'<output name> <targetname>:<inputname>:" + 
@@ -104,6 +105,10 @@
 	
 	input AddSpawnFlags[MBase](integer) : "Adds spawnflag(s) to this entity. Many spawnflags have their respective numbers suffixed in this FGD."
 	input RemoveSpawnFlags[MBase](integer) : "Removes spawnflag(s) to this entity. Many spawnflags have their respective numbers suffixed in this FGD."
+
+	input AddSolidFlags[MBase](integer) : "Adds solid flags to this entity."
+	input RemoveSolidFlags[MBase](integer) : "Removes solid flags from this entity."
+
 	input ChangeVariable[MBase](string) : "Similar to AddOutput, except it changes an internal variable similar to logic_datadesc_accessor instead. Very dangerous, use with care."
 	
 	input SetHealth[MBase](integer) : "Sets this entity's health."
@@ -112,12 +117,14 @@
 	
 	input SetMaxHealth[MBase](integer) : "Sets this entity's max health."
 	
+	input SetEntityName[MBase](target_destination) : "Sets this entity's name that other entities should refer to it by."
 	input SetTarget[MBase](target_destination) : "Sets this entity's target. This is specific to certain entities, particularly logic entities that involve a target."
 	input SetOwnerEntity[MBase](target_destination) : "Sets this entity's owner entity. This has nothing to do with parenting and has more to do with collision and kill credits."
 	
 	input SetThinkNull[MBase](void) : "Sets this entity's general think function to null. Behavior varies from entity to entity.."
 	
-	input Use[MBase](void) : "More or less replicates the player interacting with an entity. (+USE)"
+	input Use(void) : "More or less replicates the player interacting with an entity. (+USE)"
+	input Touch[MBase](target_destination) : "Simulates this entity touching the specified entity."
 
 	output OutUser1[MBase](string) : "Fires in response to PassUser1 input, with the parameter passed through unchanged."
 	output OutUser2[MBase](string) : "Fires in response to PassUser2 input, with the parameter passed through unchanged."

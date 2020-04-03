@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityAnimating)
+	appliesto(+engine)
+= viewmodel: "The entity used to control and render the player's viewmodel."
+	[
+	]   

@@ -1,0 +1,6 @@
+@PointClass base(BaseMesaPickup)
+	appliesto(Mesa) 
+	studio("models/weapons/w_rpgammo.mdl") 
+= item_grenade_rpg : "RPG Round" 
+	[
+	]

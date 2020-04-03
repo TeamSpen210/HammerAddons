@@ -1,7 +1,7 @@
 @PointClass base(WeaponSpawn) 
 	appliesto(L4D, L4D2)
 	studioprop("models/w_models/weapons/w_eq_pipebomb.mdl")
-	autovis(Weapons, L4D, Weapon Spawners)
+	autovis(Weapons, L4D Weapons, Weapon Spawners)
 = weapon_pipe_bomb_spawn: "Pipe Bomb"
 	[
 	]

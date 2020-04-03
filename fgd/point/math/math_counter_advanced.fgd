@@ -11,6 +11,8 @@
 	AlwaysOutputAsInt(boolean) : "Always Output As Int" : 0 : "If set to 'Yes', the stored value (and OutValue) " +
 		"will always be rounded to an integer before firing."
 
+	SetLerpPercent(float) : "Lerp Percent" : "0.5" : "The percentage used by the LerpTo input."
+
 	// Inputs
 	input PreserveValue(bool): "Sets whether this counter's value should be preserved after calculations. 1 = Yes, 0 = No"
 	input AlwaysOutputAsInt(bool): "Sets whether this counter's value should always output as an integer. 1 = Yes, 0 = No"
@@ -33,4 +35,7 @@
 	
 	input RandomInt(string) : "Generates a random integer between the specified bounds. Format = 'lowerbound upperbound', like '22 65'. Fires the OutValue output with the result."
 	input RandomFloat(string) : "Generates a random float between the specified bounds. Format = 'lowerbound upperbound', like '22.5 48.721'. Fires the OutValue output with the result."
+	
+	input LerpTo(float) : "Lerps this counter's value to the specified value based on the lerp percent."
+	input SetLerpPercent(float) : "Sets the lerp percent."
 	]

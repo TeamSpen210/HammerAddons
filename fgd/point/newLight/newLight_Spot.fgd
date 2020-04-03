@@ -1,0 +1,107 @@
+@PointClass base(BaseEntityPoint, Angles)
+	lightprop("models/editor/spot.mdl") 
+	iconsprite("editor/light_new.vmt") 
+	lightconenew (theta, phi, LightColor) 
+	sphere(range) 
+	appliesto(MESA) 
+= newLight_Spot : "Next Gen Spot light"
+	[
+	ReverseDir(boolean) : "ReverseDir" : 0 : "Reverse the direction of spotlight" 
+
+	Enabled[engine](integer) : "Enabled" : 1
+	Enabled(Choices) : "Enabled" : 1 : "Enable/Disable this Entity" =
+		[
+		0 : "Disabled"
+		1 : "Enabled"
+		]
+	
+	style[engine](integer) : "Appearance" : 0
+	style(Choices) : "Appearance" : 0 =
+		[
+		0 : "Normal"
+		10: "Fluorescent flicker"
+		2 : "Slow, strong pulse"
+		11: "Slow pulse, noblack"
+		5 : "Gentle pulse"
+		1 : "Flicker A"
+		6 : "Flicker B"
+		3 : "Candle A"
+		7 : "Candle B"
+		8 : "Candle C"
+		4 : "Fast strobe"
+		9 : "Slow strobe"
+		]
+	
+	LightColorAmbient(color255) : "Light Ambient Color" : "0 0 0 0" : "This is the ambient color of the sunlight."
+	LightColor(color255) : "Light Color" : "255 255 255 1" : "This is the color of the sunlight."
+	Intensity(float) : "Light Intensity" : 8000 : "RGB * Intensity"
+	SpecMultiplier(float) : "SpecularMultiplier" : 1 : "0 to 1 RGB * Intensity * SpecularMultiplier"
+	
+	Range(float) : "Range" : 1000 : "Range"
+	
+	// bUseOldFallOff(Choices) : "Use old Falloff ?" : 0 : "Use old Falloff ? " =
+	// [
+		// 0 : "Disabled"
+		// 1 : "Enabled"
+	// ]
+	
+	// falloffQuadratic(float) : "falloffQuadratic" : 0 : "falloffQuadratic"
+	// falloffLinear(float) : "falloffLinear" : 0 : "falloffLinear"
+	// falloffConstant(float) : "falloffConstant" : 1 : "falloffConstant"
+	
+	phi(float) : "OuterAngle" : 60 : "Double the value of lightcone for correct value, if you want 45 degrees in-game, put 90 here. hammer 45 deg = 90 in-game"
+	theta(float) : "InnerAngle" : 30 : "Double the value of lightcone for correct value, if you want 45 degrees in-game, put 90 here. hammer 45 deg = 90 in-game"
+	angularFallOff(float) : "AngularFallOff" : 2 : "AngularFallOff"
+	
+	LightType[engine](integer) : "Light Type" : 0
+	LightType(Choices) : "Light Type" : 0 : "0:Static 1:Stationary 2:Dynamic" =
+	[
+		0 : "Static"
+		1 : "Stationary"
+		2 : "Dynamic"
+	]
+	
+	HasShadow(boolean) : "HasShadow" : 0 : "Do You want this light to have shadows ?"
+	ShadowLod[engine](integer) : 0
+	ShadowLod(Choices) : "ShadowMapLOD" : 0 : "Resolution of ShadowMap used by this light." =
+	[
+		0 : "256"
+		1 : "512"
+		2 : "1024"
+	]
+	
+	NearZ(float) : "NearZ" : 2 : "NearZused by shadowmap camera for this light."
+	//FarZ(float) : "FarZ" : 100 : "FarZ"
+	DepthBias(float) : "DepthBias" : "0.0002" : "DepthBias - Offset added to depth values in shadowmaps."
+	SlopeDepthBias(float) : "SlopeDepthBias" : "0.2" : "Slope Depth Bias - For surfaces having aliasing due to steep angles with light."
+	NormalBias(float) : "NormalBias" : "1.0" : " While rendering objects into shadow maps each vertex will be moved along -ve Normal direction, giving it an appearance of shrinking while rendering to shadow maps. this property determines the amount of Units to be moved. Helps with shadow aliasing."
+
+	ShadowFOV(float) : "ShadowFOV" : "0" : "Fov used by shadowmap camera for this light. Keep it 0 to use Outer angle as the fov."
+	ShadowRadius(float) : "ShadowRadius" : "-1.0" : "Radius of shadow edges for soft shadows. If its value is negetive code will auto assign a value depending on shadowlod. These code based values can be adjusted via convars nr_shadow_rad_High,nr_shadow_rad_Med and nr_shadow_rad_Low"
+	
+	bTexLight(boolean) : "Enable Texture Light" : 0 : "Enable Texture Light"	
+	texName(string) : "Texture name for TexLight" : "" : "Texture name for TexLight"
+	TexCookieFramesX(integer) : "TexCookieFramesX" : 1 : "Num of frames in 1 row of Atlas"
+	TexCookieFramesY(integer) : "TexCookieFramesY" : 1 : "Num of frames in 1 column of Atlas"
+	TexCookieFps(float) : "TexCookieFps" : 0 : "FPS for Texture anim"
+	
+	bTexCookieScrollMode(boolean) : "Tex Cookie Scroll Mode" : 0 : "Tex Cookie Scroll Mode"
+	fScrollSpeedU(float) : "ScrollSpeedU" : 0 : "ScrollSpeedU"
+	fScrollSpeedV(float) : "ScrollSpeedV" : 0 : "ScrollSpeedV"
+	
+	bNegLight(boolean) : "Enable Prop Only Mode" : 0 : "Enable Prop Only Mode"
+	
+	m_bSRO_Brush(boolean) : "ShadowPass_Brush" : 1 : "Do we want to Render Brushes in shadow passes for this light?"
+	m_bSRO_StaticProp(boolean) : "ShadowPass_StaticProp" : 1 : "Do we want to Render StaticProps in shadow passes for this light?"
+	m_bSRO_DynProps(boolean) : "ShadowPass_DynProp" : 1 : "Do we want to Render Dynamic Props in shadow passes for this light?"
+	m_bSRO_Trans(boolean) : "ShadowPass_AlphaTest" : 1 : "Do we want to Render AlphaTested Objects in shadow passes for this light?" 
+
+	// Inputs
+	input TurnOn(void) : "Turn the light on."
+	input TurnOff(void) : "Turn the light off."
+	input Toggle(void) : "Toggle the light on/off."
+	// input TurnOnGodRays(void) : "Turn the Godrays on."
+	// input TurnOffGodRays(void) : "Turn the Godrays off."
+	input SetIntensityForLight(float) : "Change Light's intensity value. Doesnt effect the godrays"
+	input SetColorLight(color255) : "Change Light's Color value. Doesnt effect the godrays"
+]

@@ -1,9 +1,8 @@
-@PointClass  appliesto(MBase)
+@PointClass
 	base(BasePropPhysics, SetModel)
-	autovis(Props, Physics, Ragdoll)
 	studioprop()
 	sphere(radius) 
-= prop_sphere : "Creates a perfect sphere."
+= prop_sphere : "A variant of prop_physics which has a perfect sphere shape. It is normally restricted to a radius of 12 units."
 	[
-	radius(float) : "Radius" : 12 : ""
+	radius[MBase](float) : "Radius" : 12 : "The size of the sphere collision."
 	]

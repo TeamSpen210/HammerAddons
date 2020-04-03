@@ -1,0 +1,16 @@
+@FilterClass base(filter_base)
+	autovis(Logic, Filters)
+	appliesto(Mesa)
+	iconsprite("editor/filter_activator_class.vmt") 
+= filter_activator_flag :"Filters by the entity flags of the activator"	
+	[
+	flag[engine](integer) : "Flag" : 0
+	flag(choices) : "Flag" : 0 =
+		[
+		0 : "None"
+		1 : "On ground"
+		2 : "Crouching"
+		2097152 : "Grenade"
+		268435456 : "On fire"
+		]
+	]

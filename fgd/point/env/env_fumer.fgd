@@ -1,0 +1,19 @@
+@PointClass base(BaseEntityAnimating, EnableDisable) appliesto(Mesa) 
+	sphere(fademindist) sphere(fademaxdist) sphere(DetectionRadius) sphere(ExplodeRaius) studioprop()
+= env_fumer: "Fumer Entity" 
+	[
+	model(studio) : "Model" : "models/props_trainstation/trashcan_indoor001b.mdl" : "Model to use for this entity"
+
+	DetectionRadius(float) : "DetectionRadius" : 128 : "DetectionRadius"
+	
+	ExplodeRaius(float) : "ExplodeRaius" : 128 : "ExplodeRaius"
+	ExplodeDmg(float) : "ExplodeDmg" : 30 : "ExplodeDmg"
+	ExplodeForce(float) : "ExplodeForce" : 1 : "ExplodeForce"
+	
+	FlameTime(float) : "FlameTime" : 10 : "FlameTime"
+	
+	input TurnOff(void) : ""
+	input TurnOn(void) : ""
+	input ExplodeME(void) : ""
+	input SetCoolDown(float) : ""
+	]

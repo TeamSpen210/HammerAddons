@@ -54,29 +54,28 @@
 	locked_sentence(choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the door, and fails because it's locked." =
 		[
 		0: "None"
-		1: "Gen. Access Denied"
-		2: "Security Lockout"
-		3: "Blast Door"
-		4: "Fire Door"
-		5: "Chemical Door"
-		6: "Radiation Door"
-		7: "Gen. Containment"
-		8: "Maintenance Door"
-		9: "Broken Shut Door"
+		1: "[EA] Gen. Access Granted"
+		2: "[ED] Security Disengaged"
+		3: "[EF] Blast Door"
+		4: "[EFIRE] Fire Door"
+		5: "[ECHEM] Chemical Door"
+		6: "[ERAD] Radiation Door"
+		7: "[ECON] gen. Containment"
+		8: "[EH] Maintenance area"
 		]
 
 	unlocked_sentence[engine](integer) : "Unlocked Sentence" : 0
 	unlocked_sentence(choices) : "Unlocked Sentence" : 0 : "A sentence played when the door is unlocked." =
 		[
 		0: "None"
-		1: "Gen. Access Granted"
-		2: "Security Disengaged"
-		3: "Blast Door"
-		4: "Fire Door"
-		5: "Chemical Door"
-		6: "Radiation Door"
-		7: "Gen. Containment"
-		8: "Maintenance area"
+		1: "[EA] Gen. Access Granted"
+		2: "[ED] Security Disengaged"
+		3: "[EF] Blast Door"
+		4: "[EFIRE] Fire Door"
+		5: "[ECHEM] Chemical Door"
+		6: "[ERAD] Radiation Door"
+		7: "[ECON] gen. Containment"
+		8: "[EH] Maintenance area"
 		]
 
 	// Inputs

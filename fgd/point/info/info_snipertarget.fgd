@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
+	appliesto(EP1, EP2, HL2, P1, ASW, Mesa) 
 	iconsprite("editor/info_target.vmt") = info_snipertarget: "Sniper Target"
 	[
 	speed(integer) : "Sweep to speed" : 2
@@ -8,8 +8,8 @@
 		[
 		1: "Shoot Me" : 0
 		2: "No Interruptions" : 0
+		// 4 : "Snap Shot" : 0 OBSOLETE NOW but don't overwrite, in case some levels need legacy support.
 		8: "Resume if Interrupted" : 0
 		16: "Snap to me" : 0
 		]
-
 	]

@@ -7,6 +7,17 @@
 		[
 		1: "Start Off" : 0
 		]
+
+	rendertarget[engine](string) : "Render Target" : "_rt_Camera"
+	rendertarget[Mesa](choices) : "Render Target" : "_rt_Camera" =
+	[
+		"_rt_Camera" : "_rt_Camera"
+		"_rt_Camera2" : "_rt_Camera2"
+		"_rt_Camera3" : "_rt_Camera3"
+		"_rt_Camera4" : "_rt_Camera4"
+		"_rt_Camera5" : "_rt_Camera5"
+	]	
+
 	fov(float) : "FOV" : 90 : "Field of view in degrees"
 	usescreenaspectratio(boolean) : "Screen Aspect Ratio" : 0
 	fogenable(boolean) : "Fog Enable" : 0

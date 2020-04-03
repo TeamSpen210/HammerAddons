@@ -11,6 +11,8 @@
 		4: "Not puntable by Gravity Gun" : 0
 		8 : "Deny NPC pickup (reserve for player)" : 0 [MBase]
 		16 : "Preserve ammo values when picked up" : 0 [MBase]
+		32 : "Preserve name on player pickup" : 0 [MBase]
+		64 : "Always touchable (no obstruction checking)" : 0 [MBase]
 		]
 
 	SetAmmo1[MBase](integer) : "Ammo 1 Override" : 0 : "Overrides the amount of primary ammo this weapon has. Be sure to set 'Preserve ammo values when picked up' for this to be maintained upon pickup."

@@ -1,0 +1,12 @@
+@PointClass base(BaseEntityPoint) appliesto(Mesa) 
+ 	autovis(Point Entities, Globals, MP Round Time)
+= mp_round_time: "Manage the round time on a multiplayer match."
+	[
+	input AddRoundTime(integer) : "Add more time to the round"
+	input RemoveRoundTime(integer) : "Remove time from the round"
+	input AddWarmupTime(integer) : "Add more time to the warmup"
+	input RemoveWarmupTime(integer) : "Remove time from the warmup"
+
+	WarmupTime(integer) : "Warmup Time" : 0 : "How long warmup should be in seconds, 0 defaults to value in server cvars."
+	RoundTime(integer) : "Round Time" : 0 : "How long the round should be in seconds, 0 defaults to value in server cvars."
+	]

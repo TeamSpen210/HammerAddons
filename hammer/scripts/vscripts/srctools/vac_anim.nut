@@ -16,8 +16,9 @@ class Cargo {
 		localpos = off;
 		tv_skin = tv;
     }
-	function _tostring () {
-	    return "<Cargo \"" + model + "\", weight=" + weight + ", zoff=" + z_offset + ">";
+	function _tostring() { return tostring() }
+	function tostring() {
+	    return "<Cargo \"" + model + "#" + skin + "\", cube=" + cube_model + ", off=" + localpos + ", tv_skin=" + tv_skin + ">";
 	}
 }
 
@@ -34,6 +35,10 @@ class Output {
 		} else {
 			scanner = null;
 		}
+	}
+	function _tostring() { return tostring() }
+	function tostring() {
+	    return "<Output @" + time + ", targ: \""+target.GetName() + "\", scanner=" + scanner + ">";
 	}
 }
 
@@ -52,6 +57,7 @@ class Anim {
 		req_spawn = false;
 		pass_io = pass_io_lst;
 	}
+	function _tostring() { return tostring() }
 	function tostring() {
 	    return "<Anim \"" + name + "\", " + duration + "s, type = " + cargo_type + ", reqesting spawn=" + req_spawn + ">";
 	}
@@ -66,6 +72,10 @@ class EntSet {
 		reuse_time = time;
 		mover = mov;
 		visual = vis;
+	}
+	function _tostring() { return tostring() }
+	function tostring() {
+	    return "<EntSet time=" + reuse_time + ">";
 	}
 }
 
@@ -159,6 +169,9 @@ function make_cube() {
 		::vactube_objs.append(cargo);
 		// For tracking spawning, set this.
 		printl("Vactube ent count: " + (::vactube_objs.len() * 2).tostring());
+	} else {
+		// Teleport to the right position.
+		cargo.mover.SetAbsOrigin(self.GetOrigin());
 	}
 
 	cargo.visual.SetModel(cargo_type.model);

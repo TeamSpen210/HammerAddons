@@ -1,5 +1,4 @@
-@SolidClass
-	appliesto(since_L4D, TF2) 
+@SolidClass appliesto(-engine, since_L4D, TF2, Mesa) 
 = func_detail_blocker: 
 	"A brush entity that prevents detail sprites from being placed inside its volume."
 	[

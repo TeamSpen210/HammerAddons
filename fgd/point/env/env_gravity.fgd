@@ -1,0 +1,8 @@
+@PointClass base(BaseEntityPoint) appliesto(Mesa) 
+ 	autovis(Point Entities, Globals, Gravity Controller)
+= env_gravity: "Manage gravity and friction."
+	[
+	input SetGravity(integer) : "Set sv_gravity to specific amount."
+	input SetFriction(integer) : "Set sv_friction to specific amount."
+	input SetFallDamageScale(float) : "Set sv_falldamagescale to specific amount. (1 to default, 0 to nothing)"
+	]

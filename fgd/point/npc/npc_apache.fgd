@@ -1,0 +1,33 @@
+@NPCClass base(BMBaseHelicopter) appliesto(Mesa)
+	studio("models/props_vehicles/apache.mdl")
+	autovis(Entities, NPCs, Military, Apache Helicopter)
+= npc_apache : "Apache Helicopter"
+	[
+	input SetRocketTarget(target_destination) :  ""
+	input EnableRockets(void) : ""
+	input DisableRockets(void) : ""
+	input EnableMiniGun(void) : ""
+	input DisableMiniGun(void) : ""
+	input EnableRocketBarrage(void) : ""
+	input DisableRocketBarrage(void) : ""
+	input ForceIncrementDamageEffectLevel(integer) : ""
+
+	input OmniscientOn(void) : ""
+	input OmniscientOff(void) : ""
+	input BlindfireOn(void) : ""
+	input BlindfireOff(void) : ""
+
+	output OnWishToDie(void) : "Empty"
+
+	output m_OnBossStage0(void) : "Empty"
+	output m_OnBossStage1(void) : "Empty"
+	output m_OnBossStage2(void) : "Empty"
+	output m_OnBossStage3(void) : "Empty"
+
+	spawnflags(Flags) =
+		[
+		262144 : "disable dmg roll" : 0
+		524288 : "disable transition dmg" : 0
+		1048576 : "Enable Boss Stage Outputs" : 0
+		]
+	]

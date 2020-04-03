@@ -1,4 +1,5 @@
 @PointClass base(info_node_link) appliesto(MBase)
+	autovis(Entities, Nodes, Node Controller)
 	color(220 180 0) 
 	iconsprite("editor/info_node_link.vmt") 
 	line(255 255 255, targetname, damagefilter) 

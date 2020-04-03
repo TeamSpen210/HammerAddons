@@ -26,9 +26,10 @@
 	m_iszidle(string) : "Pre Action Idle Animation" : : "The name of the sequence (such as 'idle01') or activity (such as 'ACT_IDLE') to play before the action animation if the NPC must wait for the script to be triggered. Use 'Start on Spawn' flag or MoveToPosition input to play this idle animation."
 	m_iszentry(string) : "Entry Animation" : : "The name of the sequence (such as 'reload02') or activity (such as 'ACT_RELOAD') to play when the sequence starts, before transitioning to play the main action sequence."
 	m_iszplay(string) : "Action Animation" : : "The name of the main sequence (such as 'reload02') or activity (such as 'ACT_RELOAD') to play."
-	m_iszpostidle(string) : "Post Action Idle Animation" : : "The name of the sequence (such as 'idle01') or activity (such as 'ACT_IDLE') to play after the action animation."
+	m_iszpostidle(string) : "Post Action Idle Animation" : "" : "The name of the sequence (such as 'idle01') or activity (such as 'ACT_IDLE') to play after the action animation. " +
+		"If the ''Loop in Post Idle'' spawnflag is not ticked, this will act as an Exit Animation, similar to the Entry Animation."
 	m_iszcustommove(string) : "Custom Move Animation" : : "Used in conjunction with the 'Custom movement' setting for the 'Move to Position' property, specifies the sequence (such as 'crouch_run01') or activity (such as 'ACT_RUN') to use while moving to the scripted position."
-	m_bloopactionsequence(boolean) : "Loop Action Animation?" : 0
+	m_bloopactionsequence(boolean) : "Loop Action Animation?" : 0 : "Loops the action animation until the sequence is cancelled or interrupted."
 	m_bsynchpostidles(boolean) : "Synch Post Idles?" : 0
 	m_flradius(integer) : "Search Radius (0=everywhere)" : 0 : "Radius to search within for an NPC to use. 0 searches everywhere."
 	m_flrepeat(integer) : "Repeat Rate ms" : 0
@@ -77,10 +78,12 @@
 	input SetTarget[MBase](string) : "Set the target NPC to the specified entity."
 
 	// Outputs
+	output OnPreIdleSequence[MBase](void) : "Fires when the pre-idle animation begins."
 	output OnBeginSequence(void) : "Fires when the action animation begins playing."
 	output OnEndSequence(void) : "Fires when the action animation completes."
 	output OnCancelSequence(void) : "Fires when the sequence is cancelled."
 	output OnCancelFailedSequence(void) : "Fires when the sequence is cancelled without ever playing (OnCancelSequence will also fire)."
+	output OnFoundNPC[MBase](ehandle) : "Fires when a target NPC is found and begins moving to play the script. They are passed as a parameter."
 	output OnScriptEvent01(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 1 } in the QC."
 	output OnScriptEvent02(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 2 } in the QC."
 	output OnScriptEvent03(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 3 } in the QC."

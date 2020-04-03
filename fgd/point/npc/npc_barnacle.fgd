@@ -1,7 +1,6 @@
-
 @NpcClass base(BaseNPC, BaseFadeProp) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
-	autovis(NPCs, Combine, Barnacle)
+	appliesto(EP1, EP2, HL2, P1, Mesa) 
+	autovis(Entities, NPCs, Xen, Barnacle)
 	studio("models/Barnacle.mdl") 
 	sphere(fademindist) 
 	sphere(fademaxdist) = npc_barnacle: "Barnacle"
@@ -10,6 +9,8 @@
 		[
 		65536: "Cheap death" : 0
 		131072: "Ambush Mode" : 0
+		262144 : "Tongue will not penetate water" : 0 [Mesa]
+		524288 : "Don't spawn human skull on death" : 0 [Mesa]
 		]
 
 	restdist(float) : "Rest Distance" : 16 : "Distance above the ground that the tongue should lie when the barnacle is at rest"

@@ -1,7 +1,11 @@
 @PointClass base(Node) 
+	autovis(Entities, Nodes, Ground Node)
 	appliesto(ASW) 
 	studio("models/editor/ground_node.mdl") 
-	color(8 64 232) = info_node_marine_hint: "Follow hint node for marines.  It is also a navigation node for ground moving NPCs. Navigation nodes are baked into the nodegraph so that NPCs can move to them. Ground nodes fall to the ground when they spawn."
+	color(8 64 232) = info_node_marine_hint: "Follow hint node for marines. " +
+	"It is also a navigation node for ground moving NPCs. " +
+	"Navigation nodes are baked into the nodegraph so that NPCs can move to them. " +
+	"Ground nodes fall to the ground when they spawn."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

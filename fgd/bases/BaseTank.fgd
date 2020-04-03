@@ -32,8 +32,8 @@
 	barrely(string) : "Barrel Horizontal" : "0"
 	barrelz(string) : "Barrel Vertical" : "0"
 
-	spritesmoke(material) : "Smoke Sprite" : "" : "A specific sprite to use for the muzzle's smoke effect."
-	spriteflash(material) : "Flash Sprite" : "" : "A specific sprite to use for the muzzle's flash effect."
+	spritesmoke(sprite) : "Smoke Sprite" : "" : "A specific sprite to use for the muzzle's smoke effect."
+	spriteflash(sprite) : "Flash Sprite" : "" : "A specific sprite to use for the muzzle's flash effect."
 	spritescale(string) : "Sprite scale" : "1" : "The scale for smoke and flash sprites."
 
 	rotatestartsound(sound) : "Rotate Start Sound"

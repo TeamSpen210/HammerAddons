@@ -54,6 +54,10 @@
 	maxrange(float) : "Maximum hearing range (0=infinite)" : 240 : "Sounds beyond this range won't be heard, irrelevant of attenuation. " +
 		"WARNING: setting this to zero (or a value > 1024) when the microphone is in Speaker mode can be very bad for performance!!"
 
+	landmark[MBase](target_destination) : "Local Destination Landmark" : : "If specified, then sounds offset from the speaker by their initial offset from this landmark. Only applicable in Speaker mode."
+	
+	PitchScale[MBase](float) : "Pitch Scale" : "1.0" : "Scales the pitch of transmitted sounds."
+
 	// Inputs
 	input SetSpeakerName(string) : "Set the microphone to output through a different speaker entity."
 	input SetMeasureTarget[INFRA](string) : "Set the location to listen to sounds from."

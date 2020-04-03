@@ -1,0 +1,20 @@
+@NPCClass base(BaseNPC) appliesto(Mesa) 
+	studio("models/props_xen/xen_turret.mdl")
+	sphere(RangeOuter) sphere(RangeInner) 
+	autovis(Entities, NPCs, Xen, Xen Turret)
+= npc_xenturret : "Xen Turret"
+	[
+	RangeOuter(float) : "Outer Range" : 999999 : ""
+	RangeInner(float) : "Inner Range" : 99999 : ""
+	
+	m_Color(color255) : "Color" : "255 255 255"
+	nShield(integer) : "nShield" : 0
+	
+	output OnChargeStart(void) : ""
+	output OnChargeEnd(void) : ""
+	output OnAttackStart(void) : ""
+	output OnAttackEnd(void) : ""
+	
+	input InputDecreaseShield(void) : "Calling this input decreases the value of shield by 1"
+	input InputIncreaseShield(void) : "Calling this input increases the value of shield by 1"
+	]

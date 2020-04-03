@@ -4,8 +4,11 @@
 
 	spawnflags(Flags) = 
 		[
+		65536 : "Never spawn headcrab" : 0 [Mesa]
 		32768 :  "Never turn into a torso" : 0 [Mbase]
 		]
+	input BecomeTorso[Mesa](void) : "BecomeTorso"
 
 	output OnSwattedProp[Mbase](ehandle) : "Fires when this NPC swats a prop, passing the prop as the activator and parameter."
+	output OnCrab[Mbase](ehandle) : "Fires when the zombie releases a headcrab, passing the headcrab as the activator and parameter."
 	]

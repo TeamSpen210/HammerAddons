@@ -5,6 +5,7 @@
 = logic_entity_position : "Outputs an entity's position. Prediction operations can be performed as well."
 	[
 	target(target_destination) : "Target" : "" : "Who's position should be measured? Use the SetTarget input to change mid-game."
+	PositionType[engine](integer) : "Position Type" : 0
 	PositionType(choices) : "Position Type" : 0 : "What position should be measured." =
 	[
 		0 : "Origin (default)"
@@ -23,4 +24,5 @@
 
 	// Outputs
 	output OutPosition(vector) : "Outputs the position."
+	output OutAngles(vector) : "Outputs the angles."
 	]

@@ -1,6 +1,6 @@
 @PointClass appliesto(L4D2) base(WeaponSpawnSingle) 
 	studioprop("models/w_models/weapons/w_eq_incendiary_ammopack.mdl")
-	autovis(Weapons, L4D, L4D Items)
+	autovis(Weapons, L4D Weapons, L4D Items)
 = weapon_upgradepack_incendiary_spawn: "Upgrade Pack - Incendiary"
 	[
 	]

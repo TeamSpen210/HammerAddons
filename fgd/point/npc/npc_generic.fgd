@@ -1,0 +1,6 @@
+@NPCClass base(BaseNPC) appliesto(Mesa) 
+	studio("models/gman.mdl")
+	autovis(Entities, NPCs, Generic NPCs)
+= npc_generic : "Generic Actor"
+	[
+	]

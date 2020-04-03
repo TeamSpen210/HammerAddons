@@ -1,0 +1,11 @@
+@NpcClass base(BaseNPC) 
+	appliesto(Mesa) 
+	autovis(Entities, NPCs, Xen, Beneathticle)
+	studio("models/xenians/barnacle_underwater.mdl") 
+= npc_beneathticle: "Beneathticle"
+	[
+	TongueLength(float) : "Initial tongue length" : 0 : "How long the initial length of the tongue is."
+    TonguePullSpeed(float) : "Tongue pull speed" : 0 : "Units per second to pull the prey towards the mouth."
+    
+    input GoToNextHeight(string) : "Moves the tongue to the given z (param 1) over (param 2) seconds."
+	]

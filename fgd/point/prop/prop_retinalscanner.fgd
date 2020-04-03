@@ -1,0 +1,33 @@
+@PointClass base(prop_dynamic_base) appliesto(Mesa)
+	studioprop()
+= prop_retinalscanner : "Black Mesa's retinal scanner system."
+	[
+	model(studio) : "World model" : "models/props_lab/retinalscanner.mdl"
+
+	input Lock(void) : "Lock the scanner"
+	input Unlock(void) : "Unlock the scanner"
+	input LockSilent(void) : "Silent Lock the scanner"
+	input UnlockSilent(void) : "Silent Unlock the scanner"
+	input Press(void) : "Use the scanner"
+
+	output OnLocked(void) : "Called when locked"
+	output OnUnlocked(void) : "Called when unlocked"
+	output OnUseLocked(void) : "Called when used but locked"
+	output OnUseUnlocked(void) : "Called when used but unlocked"
+
+	locked(boolean) : "Start Locked" : 0
+
+	nextlockeduse(float) : "Next Locked Use" : 4 : "Amount in seconds this scanner will reset after it was used when locked."
+	nextunlockeduse(float) : "Next Unlocked Use" : 4 : "Amount in seconds this scanner will reset after it was used when unlocked."
+
+	lockedsound(sound) : "Locked Sound" : "" : "Sound to play when locked."
+	unlockedsound(sound) : "Unlocked Sound" : "" : "Sound to play when unlocked."
+
+	lockedusesound(sound) : "Locked Primary Use Sound" : "" : "Primary sound to play when used but locked."
+	unlockedusesound(sound) : "Unlocked Primary Use Sound" : "" : "Primary sound to play when used but unlocked."
+
+	lockedusevox(sound) : "Locked Secondary Use Sound" : "" : "Secondary sound to play when used but locked."
+	unlockedusevox(sound) : "Unlocked Secondary Use Sound" : "" : "Secondary sound to play when used but unlocked."
+	delaylockedvox(float) : "Delay Locked Secondary Sound" : 0 : "Secondary locked sound delay."
+	delayunlockedvox(float) : "Delay Unlocked Secondary Sound" : 0 : "Secondary unlocked sound delay."
+	]

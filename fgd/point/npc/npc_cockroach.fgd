@@ -1,0 +1,6 @@
+@NPCClass base(BaseNPC) appliesto(Mesa) 
+	studio("models/fauna/roach.mdl")
+	autovis(Entities, NPCs, Animals, Cockroach)
+= npc_cockroach: "Cockroach" 
+	[
+	]

@@ -1,8 +1,9 @@
-@PointClass base(BaseEntityPoint, SystemLevelChoice) 
-	appliesto(since_EP1)
+@PointClass base(BaseEntityPoint, SystemLevelChoice)
+	appliesto(!MESA) // Commented out?
 	size(-2 -2 -2, 2 2 2)
 	frustum(lightfov, nearz, farz, lightcolor, -1)
 	studio("models/editor/cone_helper.mdl")
+	iconsprite("editor/env_projectedtexture")
 	line(255 255 255, targetname, target)
 	sphere(nearz)
 	sphere(farz)
@@ -27,6 +28,10 @@
 		0: "Low"
 		1: "High"
 		]
+	shadowatten[MBase](float) : "Shadow Atten" : "0.0" : "The attenuation of the shadows, " +
+		"or how much the shadows should fade into the light of the projected texture, if at all. " +
+		"The player's flashlight uses 0.35 by default, " +
+		"although higher values may be needed for a visible effect."
 
 	lightonlytarget(boolean) : "Light Only Target" : 0 : "Limit flashlight effect to only effect target entity."
 	lightworld(boolean) : "Light World" : 0 : "Control whether flashlight effects static world geometry."
@@ -38,6 +43,12 @@
 	cameraspace(boolean) : "Camera Space" : 0 : "Angles are interpreted as being relative to camera."
 
 	colortransitiontime[since_ASW](float) : "Color Transition Time" : 0.5 : "Amount of time it takes for a color change to occur."
+
+	constant_attn[MBase](string)	: "Constant" : "0" : "The light's constant attenuation, giving the light no falloff. (This value is internally corrected with x*0.5)"
+	linear_attn[MBase](string)	: "Linear" : "1" : "The light's linear attenuation, giving the light linear decline. This is the most common attenuation for projected textures. (This value is internally corrected with x*100)"
+	quadratic_attn[MBase](string)	: "Quadratic" : "0" : "The light's quadratic attenuation, giving the light exponentially decreasing falloff. (This value is internally corrected with x*10000)"
+	
+
 	texturename(material) : "Texture Name" : "effects/flashlight001" : "VTF Texture to 'project' onto the enviroment."
 	textureframe(integer) : "Texture Frame" : 0 : "If the VTF is multi-frame, specify the frame to use."
 
@@ -86,6 +97,11 @@
 	input SetPattern[since_P2](string) : "Set a custom pattern of light brightness for this light. " +
 		"The Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. " +
 		"'aaggnnttzz' would be a steppy fade in from dark to light."
+
+	input SetConstant[MBase](float)    : "Sets the constant attenuation."
+	input SetLinear[MBase](float)      : "Sets the linear attenuation."
+	input SetQuadratic[MBase](float)   : "Sets the quadratic attenuation."
+	input SetShadowAtten[MBase](float) : "Sets the shadow attenuation."
 
 	input SetNearZ[since_P2](float) : "Sets the near Z distance."
 	input SetFarZ[since_P2](float) : "Sets the far Z distance."

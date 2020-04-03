@@ -1,0 +1,117 @@
+@NPCClass base(BaseNPCAssault) appliesto(Mesa) 
+	studio("models/xenians/gonarch.mdl")
+	autovis(Entities, NPCs, Xen, Gonarch)
+= npc_gonarch : "npc_gonarch"
+	[
+	model(studio) : "World model" : "models/xenians/gonarch.mdl"
+
+	spawnflags(Flags) =
+		[
+		65536 : "Create server-side ragdoll on death" : 0
+		131072 : "Use inside footsteps" : 0
+		]
+
+	cavernbreed(boolean) : "Cavern Guard Model and Texture" : "No"
+
+	shovetargets(string) : "Shove Targets" : ""
+	taunttargets(string) : "taunttargets" : ""
+	covertargetsHI(string) : "covertargetsHI" : ""
+	attacktargetsHI(string) : "attacktargetsHI" : ""
+
+	m_tGSState[engine](integer) : "Gonarch State" : 6
+	m_tGSState(choices) : "Gonarch State" : 6 =
+		[
+		0 : "0:IDLE"
+		1 : "1:INTRO"
+		2 : "2:DEFAULT_MAPA"
+		3 : "3:CHASE_MapB"
+		4 : "4:FinalArena_1"
+		5 : "5:Not_Being_USED_Anymore"
+		6 : "6:CUSTOM_MODE_AI"
+		7 : "7:TEST_BALL_SPIT"
+		8 : "8:TEST_BALL_wAVE"
+		9 : "9:TEST_SUMMON"
+		10 : "10:TEST_CHASE"
+		11 : "11:TEST_MORTAR"
+		12 : "12:TEST_CHARGE"
+		13 : "13:TEST_SHOCK_WAVE"
+		14 : "14:TEST_PHYS"
+		15 : "15:TEST_PHYS_2"
+		16 : "16:TEST_MORTAR_SPAM"
+		17 : "17:TEST_IDLE_FOREVER_WITH_SPECIAL_INTERRUPT"
+		18 : "18:MAPB_CLIFF"
+		19 : "19:FinalArena_3"
+		20 : "20:Mortar_ACID"
+		21 : "21:CrystalCave_MapC"
+		22 : "22:CHASE_MapC"
+		22 : "22:CHASE_MapC"
+		23 : "23:GonA_Run_To_Cave"
+		]
+	
+	bTouchKillActive(boolean) : "bTouchKillPlayerActive" : 0
+
+	// Inputs
+	//input Unburrow(void) : "Unburrow from the ground"
+	input SetShoveTarget(string) : "Sets a shove target to attack"
+	input SetChargeTarget(string) : "Sets a charge target to attack.  Parameters are the name of the entity to start at and the name of the entity to charge towards, separated by a space (i.e. start target)"
+	input ClearChargeTarget(void) : "Clear the charge target"
+	//input SetCoverFromAttack(integer) : "Sets whether or not the creature will protect itself from attacks"
+	input Ragdoll(void) : "Causes the Gonarch to die, regardless of health"
+
+	input SetBallSpitTarget(string) : "Sets a spit to attack.  Parameters are the name of the entity"
+	input SetMortarSpitTarget(string) : "Sets a spit to attack.  Parameters are the name of the entity"
+	input SetMortarSpitTarget_Single(string) : "Sets a spit target to attack. Single insta exploder.  Parameters are the name of the entity"
+	input SetChaseTarget(string) : "SetChaseTarget"
+	input SetGoalTarget(string) : "SetGoalTarget"
+	input SetGoalTargetFinalArena3(string) : "SetGoalTargetFinalArena3"
+	input SetGoalTargetGonACave(string) : "SetGoalTargetGonACave"
+	
+	input SummonedCrabDied(void) : "crab died"
+	input DoFloodBebCrabAttack(void) : "DoFloodBebCrabAttack"
+	input SetFloodingMax(integer) : "SetFloodingMax"
+	input SetFloodingMin(integer) : "SetFloodingMin"
+	input SetFloodingTimeBeforeNextAttack(float) : "SetFloodingTimeBeforeNextAttack"
+	input SetFloodingResetCrabCount(void) : "SetFloodingResetCrabCount"
+	input InputSummonDrop(void) : "InputSummonDrop"
+
+	input EnablePreferPhysicsAttack(void) : "Prefer to use physics attacks if at all possible, even when inside a cavern."
+	input DisablePreferPhysicsAttack(void) : "Do not prefer to use physics attacks if at all possible, even when inside a cavern."
+
+	input ChangeInternalState(integer) : "Change internal state of gonarch"
+	input ChangeGodMode(integer) : "Change God mode of gonarch (0/1). Gonarch will have invulnerability if God mode is turned on"
+	//input ChangeNPCState(integer) : "Change npc state "
+	
+	input InputSetPhase2(string) : "Move to gonarchphase2. Also Sets a charge target to attack.  Parameters are the name of the entity to start at and the name of the entity to charge towards, separated by a space (i.e. start target)"
+
+	input InputSetPhase3(string) : "Move to gonarchphase3. Also Sets a charge target to attack.  Parameters are the name of the entity to start at and the name of the entity to charge towards, separated by a space (i.e. start target)"
+
+	input StartPlayerDeathTaunt(void) : "StartPlayerDeathTaunt"
+	input InputPlayerFallingDown(void) : "InputPlayerFallingDown"
+	input PlayChargeCrash(void) : "PlayChargeCrash"
+	input SetHealth(integer) : "Set Gonarch's HP"
+	
+	input InputTurnOnHealingPool(void) : "InputTurnOnHealingPool"
+	input InputTurnOFFHealingPool(void) : "InputTurnOFFHealingPool"
+	
+	input InputSetAcidMortarVolume(string) : "InputSetAcidMortarVolume"
+	input InputDoAcidMortarAttack(void) : "InputDoAcidMortarAttack"
+    
+    input InputSetModel(string) : "Change the Gonarch's model."
+	
+    input InputEnableTouchKill(void) : "InputEnableTouchKill"
+    input InputDisableTouchKill(void) : "InputDisableTouchKill"
+	
+	// Outputs
+	output OnSeeHiddenPlayer(void) : "Fires when the current enemy is seen while trying to hide"
+	output OnSmellHiddenPlayer(void) : "Fires when the current enemy is smelled while trying to hide"
+	output OnSummon(void) : "gonarch is attempting to summon antlions"
+	// output OnGonarchDeathPhase(void) : "gonarch Phase Death Output event"
+	output OnGonarchDeathPhase1(void) : "gonarch Phase 1 Death Output event"
+	output OnGonarchDeathPhase2(void) : "gonarch Phase 2 Death Output event"
+	output OnGonarchDeathPhase3(void) : "gonarch Phase 3 Death Output event"
+	
+	
+	input InputSetDamageThreshold(float) : "Set Damage Threshold and activate OnDamageThreshold event"
+	input InputSetDamageThresholdPercent(float) : " Set Damage threshold relative to current health. 0.5 = 50% etc. Set Damage Threshold and activate OnDamageThreshold event. "
+	output OnDamageThreshold(void) : "If OnDamageThreshold system is active this will be fired when damage threshold is reached"
+	]

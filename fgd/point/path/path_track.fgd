@@ -14,8 +14,9 @@
 		4: "Branch Reverse" : 0
 		8: "Disable train" : 0
 		16: "Teleport to THIS path track" : 0
+		32: "Helicopter Force Angles" : 0 [MESA]
 		32: "Part of an uphill path" : 0 [TF2]
-		64: "Part of a downhill path" : 0 [TF2]
+		64: "Part of a downhill path" : 0 [TF2, MESA]
 		]
 
 	target(target_destination) : "Next Stop Target" : : "The next path_track in the path."

@@ -51,3 +51,8 @@ This implements a dynamic vactube system in a similar way to Valve's system, inc
 * For droppers, simply place the supplied `instances/cubedropper/dropper_vactube.vmf` instance, and run a path up to the vactube end entity in the top. Place a `prop_weighted_cube` inside the dropper to specify which cube type it will spawn. The specific route leading to the dropper will be detected and only replacement cubes will be sent this way. You'll want to add a splitter just before the dropper, so the tube can have decorative items flowing through it constantly. 
 * To place the vactube scanner TVs, simply add a "straight"-type junction inside the model, then place the `prop_dynamic`s for the screen and optionally the spinner. The screen will need the supplied `_new` model, so both orientations have all the skins. They will automatically be detected and flash on when objects pass.
 * To avoid visual collisions, you may want to turn off the automatic spawning on one or more spawn points, then use the outputs on a junction to manually spawn objects in sync with another path.
+
+
+# Development
+
+* Mapbase's FGDs have been imported as a submodule, to track which version has been merged into this repo.

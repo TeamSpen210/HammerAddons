@@ -1,7 +1,6 @@
-
 @NpcClass base(VehicleDriverNPC) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
-	autovis(NPCs, Vehicle Driver)
+	appliesto(EP1, EP2, HL2, P1) 
+	autovis(Entities, NPCs, Vehicle Driver)
 	autovis(Vehicles, Driver)
 	studio("models/roller.mdl") = npc_vehicledriver: "NPC used to drive a target vehicle."
 	[

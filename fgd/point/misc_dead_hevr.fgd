@@ -1,0 +1,25 @@
+@PointClass base(BaseEntityAnimating) appliesto(Mesa) 
+= misc_dead_hev : "Dead HEV Scientist"
+	[
+	spawnflags(flags) = 
+		[
+		4 : "Debris - Don't collide with the player or other debris" : 1
+		8192 : "Allow Dissolve" : 0
+		16384 : "Motion Disabled" : 0
+		32768 : "Allow stretch" : 0
+		65536 : "Start asleep" : 0
+		]
+    
+    model(studio) : "World Model" : "models/player/mp_scientist_hev.mdl"
+    spritecolor(color255) : "Ping Sprite/Glow Color" : "255 0 0 200"
+    lightcolor(color255) : "Ping Light Color" : "255 0 0 4"
+    lightradius(integer) : "Ping Light Radius" : 64
+    attachmentname(string) : "Ping Light Attachment Name" : "eyes"
+    
+	health(integer) : "Health" : 100 : "The amount of damage the ragdoll takes before gibbing."
+
+	input StartRagdollBoogie(void) : "Begins ragdoll boogie effect. Parameter override = number of seconds to boogie."
+	input EnableMotion(void) : "Enable physics motion/collision response."
+	input DisableMotion(void) : "Disable physics motion/collision response."
+	input FadeAndRemove(float) : "Fade out then remove (kill) self. Parameter override = duration of fade"
+	]

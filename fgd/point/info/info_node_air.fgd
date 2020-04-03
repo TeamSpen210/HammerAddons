@@ -1,4 +1,5 @@
 @PointClass base(Node) 
+	autovis(Entities, Nodes, Air Node)
 	studio("models/editor/air_node.mdl") 
 	color(232 171 8) 
 = info_node_air: "A navigation node for flying NPCs. Air navigation nodes are baked into the nodegraph so that NPCs can move to them. " +

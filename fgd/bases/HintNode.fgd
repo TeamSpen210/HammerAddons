@@ -1,5 +1,4 @@
 @BaseClass base(Node) 
-	 frustum(nodeFOV,-1,128,250 250 250,-1)
 = HintNode
 	[
 	spawnflags(flags)  =
@@ -44,6 +43,16 @@
 		1002: "HL1 World: Human Blood"
 		1003: "HL1 World: Alien Blood"
 
+		1200: "MiniBoss Node ( Garga & Bigmomma )" [MESA]
+		1201: "MiniBoss Charge ( Bigmomma )" [MESA]
+		1202: "Fear Point Ground" [MESA]
+		1203: "Fear Point Air" [MESA]
+		1204: "Heal Point Ground" [MESA]
+		1205: "Heal Point Air" [MESA]
+		1206: "Gonarch Cliff Hint" [MESA]
+		1207: "Nihi Ground Node" [MESA]
+		1208: "Nihi Air Node" [MESA]
+ 
 		1200: "Ep3 Blob Shake Position" [ASW]
 		1201: "Ep3 Blob Fire Cover Position" [ASW]
 		1202: "Ep3 Blob Brain Cover Position" [ASW]
@@ -64,6 +73,8 @@
 		360: "360 Degrees"
 		]
 
+	// Does not inherit from EnableDisable, as node itself will
+	// use that.  This is enabling/disabling of the hint only
 	starthintdisabled(boolean) : "Start Hint Disabled" : 0
 
 	group(string) : "Hint Group" : : "If specified, gives the hint a specific group name.  " +

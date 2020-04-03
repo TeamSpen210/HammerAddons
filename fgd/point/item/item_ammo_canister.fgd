@@ -1,0 +1,16 @@
+@PointClass base(BaseMesaPickup) appliesto(Mesa)
+	studio("models/weapons/w_weaponbox.mdl") = item_ammo_canister: "Ammo canister"
+	[
+	AmmoGlock(integer) : "AmmoGlock" : 0 : "AmmoGlock"
+	AmmoMp5(integer) : "AmmoMp5" : 0 : "AmmoMp5"
+	Ammo357(integer) : "Ammo357" : 0 : "Ammo357"
+	AmmoBolt(integer) : "AmmoBolt" : 0 : "AmmoBolt"
+	AmmoBuckshot(integer) : "AmmoBuckshot" : 0 : "AmmoBuckshot"
+	AmmoEnergy(integer) : "AmmoEnergy" : 0 : "AmmoEnergy"
+	AmmoMp5Grenade(integer) : "AmmoMp5Grenade" : 0 : "AmmoMp5Grenade"
+	AmmoRPG(integer) : "AmmoRPG" : 0 : "AmmoRPG"
+	AmmoSatchel(integer) : "AmmoSatchel" : 0 : "AmmoSatchel"
+	AmmoSnark(integer) : "AmmoSnark" : 0 : "AmmoSnark"
+	AmmoTripmine(integer) : "AmmoTripmine" : 0 : "AmmoTripmine"
+	AmmoFrag(integer) : "AmmoFrag" : 0 : "AmmoFrag"
+	]

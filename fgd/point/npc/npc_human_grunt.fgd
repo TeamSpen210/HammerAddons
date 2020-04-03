@@ -1,0 +1,5 @@
+@NpcClass base(BaseMarine) appliesto(Mesa)
+	autovis(Entities, NPCs, Military, Military Grunt)
+	studioprop("models/humans/marine.mdl") = npc_human_grunt : "Human Grunt"
+	[
+	]

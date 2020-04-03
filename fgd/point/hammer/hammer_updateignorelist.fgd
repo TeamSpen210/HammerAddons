@@ -1,7 +1,7 @@
 
 @PointClass base(BaseEntityPoint) 
 	color(200 0 0) 
-
+	iconsprite("editor/ficool2/hammer_updateignorelist")
 	line(200 0 0, targetname, ignoredname01)
 	line(200 0 0, targetname, ignoredname02)
 	line(200 0 0, targetname, ignoredname03)

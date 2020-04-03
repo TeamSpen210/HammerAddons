@@ -1,11 +1,13 @@
 // This is a real entity. However, as soon as it spawns it applies the mass center,
-// then kills itself.
+// then kills itself. So there's no point adding any other BaseEntityPoint options.
 @PointClass 
 	halfgridsnap
 	iconsprite("editor/ficool2/info_mass_center.vmt")
 	color(128 128 128) 
 	line(128 128 128, targetname, target) 
-= info_mass_center: "An entity that overrides the mass center of the target physics prop, or func_physbox, by moving it to the info_mass_center's location. This kills itself on spawn."
+	autovis(Entities, Constraints, Mass Center)
+= info_mass_center: "An entity that overrides the mass center of the target physics object, " +
+	"by moving it to the info_mass_center's location. This kills itself on spawn."
 	[
 	target(target_destination) : "Target object" : : "The entity whose mass center will be overridden."
 	]

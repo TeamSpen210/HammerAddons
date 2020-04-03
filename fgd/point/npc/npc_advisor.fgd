@@ -1,6 +1,6 @@
 @NpcClass base(BaseNPC) 
-	appliesto(EP2, P1, ASW) 
-	autovis(NPCs, Combine, Combine Advisor)
+	appliesto(EP2, ASW) 
+	autovis(Entities, NPCs, Combine, Combine Advisor)
 	studio() = npc_advisor: "An adorable sluglike alien with benevolent psychic powers."
 	[
 	model(studio) : "World model" : "models/advisor.mdl"

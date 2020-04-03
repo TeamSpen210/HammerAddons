@@ -1,0 +1,4 @@
+@PointClass base(prop_ragdoll)
+= prop_physics_ragdoll: "Alternate classname for prop_ragdoll"
+	[
+	]
