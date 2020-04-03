@@ -2,6 +2,7 @@
 	studioprop() 
 	autovis(Entities, NPCs, Puppet NPC)
 	line(255 255 255, targetname, animationtarget) 
+	size(-2 -2 -2, 2 2 2)
 = npc_puppet: "Puppet entity that mimics the animations of a target NPC."
 	[
 	animationtarget(target_destination) : "Animation target"
