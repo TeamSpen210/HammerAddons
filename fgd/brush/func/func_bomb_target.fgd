@@ -2,7 +2,7 @@
 	appliesto(CSGO) = func_bomb_target: "Bomb Target. The terrorists can place C4 explosives while standing in this zone.\n\n" +
 
 		"When the bomb is planted and explodes inside this area, the BombExplode outputs are fired. " +
-		"The game handles all of the bomb planting and scoring logic – " +
+		"The game handles all of the bomb planting and scoring logic - " +
 		"the BombExplode outputs are provided to add visual and damage effects."
 	[
 	heistbomb(boolean) : "Heist Mode bomb target" : 0 : "This is a Bomb Target designed for the Heist game mode."
