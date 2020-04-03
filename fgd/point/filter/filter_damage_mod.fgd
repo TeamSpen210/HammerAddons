@@ -6,6 +6,8 @@
 	[
 	SetDamageMultiplier(float) : "Damage Multiplier" : "1.0" : "Multiplies the damage by this scale."
 	SetDamageAddend(float) : "Damage Addend" : "0" : "Adds to or subtracts the damage by this number. This is done after the damage is multiplied by the damage scale."
+	SetDamageBitsAdded(integer) : "Damage Bits Added" : "0" : "Adds bits to the damage type. See the damage types in an entity like trigger_hurt to get their bit IDs."
+	SetDamageBitsRemoved(integer) : "Damage Bits Removed" : "0" : "Removes bits from the damage type. See the damage types in an entity like trigger_hurt to get their bit IDs."
 
 	NewAttacker(string) : "New Attacker" : : "If specified, the damage will be credited to this entity instead of the original attacker."
 	NewInflictor(string) : "New Inflictor" : : "If specified, the damage's inflictor will be changed to this entity instead of the original inflictor."
@@ -22,6 +24,9 @@
 	
 	input SetDamageMultiplier(float) : "Sets the damage multiplier."
 	input SetDamageAddend(float) : "Sets the damage addend."
+	
+	input SetDamageBitsAdded(integer) : "Sets the damage types added."
+	input SetDamageBitsRemoved(integer) : "Sets the damage types removed."
 	
 	input SetNewAttacker(target_destination) : "Sets the new attacker."
 	input SetNewInflictor(target_destination) : "Sets the new inflictor."

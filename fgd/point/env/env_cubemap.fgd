@@ -2,6 +2,7 @@
 	color(0 0 255) 
 	sidelist(sides) 
 	iconsprite("editor/env_cubemap.vmt") 
+	line(255 255 255, targetname, parallaxobb)
 = env_cubemap: "An entity that creates a sample point for the Cubic Environment Map."
 	[
 	cubemapsize[engine](integer) : "Cubemap Size" : 0
@@ -20,4 +21,9 @@
 		]
 
 	sides(sidelist) : "Brush faces" : : "(Optional) Brushes faces to directly attach to the env_cubemap. Press Pick then click on faces in the 3D View to select them. Use CTRL while clicking to add or remove from the selection."
+	
+	parallaxobb[MBase](target_destination) : "Cubemap Bounds" : : "MAPBASE VBSP ONLY: " +
+		"Optionally assigns this cubemap a bounding box for parallax correction " +
+		"(brush entity tied to parallax_obb). " +
+		"This means the cubemap reflection will move as the camera moves, similar to func_reflective_glass. "
 	]

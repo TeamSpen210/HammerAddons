@@ -1,0 +1,5 @@
+@SolidClass appliesto(-engine, MBase) // Consumed by MapBase's VBSP.
+= parallax_obb : "Bounding box for Parallax Corrected Cubemaps."
+[
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+]
