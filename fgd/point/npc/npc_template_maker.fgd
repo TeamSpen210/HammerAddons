@@ -1,6 +1,6 @@
 
 @PointClass base(BaseNPCMaker)  
-	iconsprite("editor/npc_maker.vmt") 
+	iconsprite("editor/ficool2/npc_template_maker.vmt") 
 	line(255 255 0, targetname, templatename) 
 	sphere(radius) 
 	line(255 255 0, targetname, destinationgroup) 
