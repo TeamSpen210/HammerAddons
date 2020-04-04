@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	iconsprite("editor/info_target.vmt")
+	iconsprite("editor/ficool2/info_npc_spawn_destination.vmt")
 = info_npc_spawn_destination: "NPC Spawn Destination. (Consult npc_template_maker help for more info)"
 	[
 	reusedelay(float) : "Reuse Delay" : 1 : "After an NPC is spawned at this destination, the delay before this destination is eligible for selection again."

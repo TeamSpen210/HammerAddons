@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	studio("models/editor/axis_helper.mdl") 
 	color(200 200 0) 
-	iconsprite("editor/ts2do/env_message.vmt") 
+	iconsprite("editor/ficool2/point_message.vmt") 
 	sphere(radius) = point_message: "An entity that displays a text message in the world, at its origin."
 	[
 	spawnflags(flags) : "spawnflags" =

@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	size(-2 -2 -2, 2 2 2)
+	iconsprite("editor/ficool2/point_gamestats_counter")
 	color(0 255 0)
 = point_gamestats_counter: "Generic game statistics counter."
 	[

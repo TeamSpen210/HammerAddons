@@ -2,7 +2,7 @@
 	appliesto(since_L4D2, Mesa)
 	sphere(fademindist)
 	sphere(fademaxdist)
-	iconsprite("editor/env_particles.vmt")
+	iconsprite("editor/ficool2/env_detail_controller.vmt")
  	autovis(Point Entities, Globals, Detail Controller)
 = env_detail_controller: "An entity that lets you control override the min and max fade distances for details sprites in the map."
 	[

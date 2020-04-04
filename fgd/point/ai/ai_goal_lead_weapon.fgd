@@ -2,7 +2,7 @@
 @PointClass base(LeadGoalBase) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2, Mesa) 
 	autovis(AI, AI Goal)
-	iconsprite("editor/ai_goal_lead.vmt") 
+	iconsprite("editor/ficool2/ai_goal_lead_weapon.vmt") 
 = ai_goal_lead_weapon: "AI Goal Lead (Weapon). " +
 	"A version of the ai_goal_lead entity that requires the player to have the specified weapon before the Actor(s) will lead the player to their target."
 	[

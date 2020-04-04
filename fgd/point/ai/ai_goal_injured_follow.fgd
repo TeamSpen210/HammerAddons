@@ -1,6 +1,6 @@
 @PointClass base(FollowGoal) 
 	appliesto(EP1, EP2, P1, ASW) 
 	autovis(AI, AI Goal)
-	iconsprite("editor/ai_goal_follow.vmt") = ai_goal_injured_follow: "AI Goal Injured Follow"
+	iconsprite("editor/ficool2/ai_goal_injured_follow.vmt") = ai_goal_injured_follow: "AI Goal Injured Follow"
 	[
 	]
