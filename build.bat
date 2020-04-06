@@ -1,4 +1,5 @@
-robocopy hammer build/hammer /S /PURGE
+robocopy hammer build/hammer  /S /PURGE
+robocopy instances build/instances /XF *.vmx /S /PURGE
 python unify_fgd.py exp p2 srctools -o "build/portal2.fgd"
 python unify_fgd.py exp p1 srctools -o "build/portal.fgd"
 python unify_fgd.py exp hl2 srctools -o "build/hl2.fgd"
