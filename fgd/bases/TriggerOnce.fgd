@@ -6,7 +6,7 @@
 	spawnflags(flags)  =
 		[
 		1: "Clients/Players/Bots" : 1 [TF2, CSGO, CSS, MESA]
-		1: "Clients/Players" : 1 [!TF2, !CSGO, !CSS, MESA]
+		1: "Clients/Players" : 1 [!TF2, !CSGO, !CSS, !MESA]
 		2: "NPCs" : 0 [!ASW]
 		2: "Marines and Aliens" : 0 [ASW]
 		4: "func_pushable" : 0
