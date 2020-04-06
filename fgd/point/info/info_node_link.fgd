@@ -28,7 +28,7 @@
 		16: "Crawl" [ASW, L4D2]
 		]
 
-	allowuse(string) : "Allow Pass When Off" : : "Entity or class to allow passage even when node is off"
+	allowuse(target_name_or_class) : "Allow Pass When Off" : : "Entity or class to allow passage even when node is off"
 	invertallow[ASW](boolean) : "Invert exclusion rules" : 0 : "Allowed entity is the only entity NOT allowed when this is set to 'yes'"
 
 	spawnflags(flags) =

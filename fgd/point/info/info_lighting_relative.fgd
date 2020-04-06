@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	iconsprite("editor/info_lighting.vmt") 
+	iconsprite("editor/ficool2/info_lighting_relative.vmt") 
 	halfgridsnap
 = info_lighting_relative
 	[

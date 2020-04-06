@@ -8,7 +8,7 @@
 	radius(float) : "Cube Radius" : 0 : "The radius to search for cubes in for droppers. If zero, this is a regular endpoint, and the rest of the options have no effect."
 	autorespawn(boolean) : "Auto Respawn" : 1 : "Automatically respawn cubes when destroyed."
 
-	filtername(target_destination) : "Filter" : : "The filter_activator_name to set to point at the cube."
+	filtername(target_destination) : "Filter + Reference" : : "The filter_activator_name to set to point at the cube. This is also used as the location to determine the distance to the cube."
 	template(target_destination) : "Template" : : "The point_template to set to spawn the cube."
 
 	input RequestSpawn(void) : "Request a cube to be spawned and routed here."
