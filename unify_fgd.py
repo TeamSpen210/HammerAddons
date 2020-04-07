@@ -542,7 +542,10 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
 
     print('\n\nBases:')
     for base, count in sorted(base_uses.items(), key=lambda x: (len(x[1]), x[0])):
-        if fgd[base].type is EntityTypes.BASE:
+        ent = fgd[base]
+        if ent.type is EntityTypes.BASE and (
+            ent.keyvalues or ent.outputs or ent.inputs
+        ):
             print(base, len(count), count if len(count) == 1 else '...')
 
     print('\n\nEntity Dumps:')
@@ -843,18 +846,31 @@ def action_export(
 
     print('Culling unused bases...')
     used_bases = set()  # type: Set[EntityDef]
+    # We only want to keep bases that provide keyvalues. We've merged the
+    # helpers in.
     for ent in fgd.entities.values():
-        # Helpers aren't inherited, so this isn't useful anymore.
         if ent.type is not EntityTypes.BASE:
-            used_bases.update(ent.iter_bases())
+            for base in ent.iter_bases():
+                if base.type is EntityTypes.BASE and (
+                    base.keyvalues or base.inputs or base.outputs
+                ):
+                    used_bases.add(base)
 
     for classname, ent in list(fgd.entities.items()):
         if ent.type is EntityTypes.BASE:
             if ent not in used_bases:
                 del fgd.entities[classname]
+                continue
             else:
                 # Helpers aren't inherited, so this isn't useful anymore.
                 ent.helpers.clear()
+        # Cull all base classes we don't use.
+        # Ents that inherit from each other always need to exist.
+        ent.bases = [
+            base
+            for base in ent.bases
+            if base.type is not EntityTypes.BASE or base in used_bases
+        ]
 
     print('Culling visgroups...')
     # Cull visgroups that no longer exist for us.
