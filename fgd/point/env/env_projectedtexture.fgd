@@ -107,5 +107,5 @@
 	input SetFarZ[since_P2](float) : "Sets the far Z distance."
 	input LightOnlyTarget[INFRA](bool) : "Set if the projected texture lights the target only."
 	input LightWorld[INFRA](bool) : "Set if the projected texture lights the world and static geometry."
-	input Ambient[INFRA](float) : "Set ambient light amount"
+	input Ambient[GMod, INFRA](float) : "Set ambient light amount"
 	]

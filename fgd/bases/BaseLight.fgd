@@ -35,6 +35,14 @@
 
 	_distance(integer) : "Maximum Distance" : 0 : "The distance that light is allowed to cast."
 
+	// GMOD: GOPORT
+	_castentityshadow[engine](boolean)
+	_castentityshadow[GMod](Choices) : "Cast entity shadows" : 0 : "Objects illuminated by this light will cast a directional shadow." =
+		[
+		0 : "Don't affect entity shadow angles"
+		1 : "Affect entity shadow angles"
+		]
+
 	// Inputs
 	input TurnOn(void) : "Turn the light on."
 	input TurnOff(void) : "The the light off."

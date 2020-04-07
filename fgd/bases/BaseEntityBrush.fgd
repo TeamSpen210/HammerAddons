@@ -20,6 +20,13 @@
 	vscript_init_code2[+VSCRIPT, +srctools](string) : "Init Code 2" : : "This code will be the second line executed after the Entity Scripts option."
 	// etc
 
+	gmod_allowphysgun[GMod](boolean) : "Allow Physics Gun" : 1 : "If set, " +
+		"players cannot use Physics Gun on this entity."
+	gmod_allowtools[Gmod](string) : "Sandbox Tool Whitelist" : "" : "If set, " +
+		"only given tools can be used on this entity.\n" +
+		"You need to supply the tool class names, the names of the .lua files of those tools.\n" +
+		"This also includes the context menu properties!"
+
 	linedivider_base(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// We could have wirebox() for these, but don't. That messes up if these are unset.

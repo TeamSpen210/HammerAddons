@@ -89,7 +89,7 @@
 	input EnableReceivingFlashlight[since_L4D](void) : "This object may recieve light or shadows from projected textures (flashlights)."
 	
 	input AlternativeSorting[SINCE_EP1](boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
-	input SetModelScale[EP1, EP2, MESA](vector) : "Takes two values separated by a space. The first is the target model scale. " +
+	input SetModelScale[EP1, EP2, MESA, !GMod](vector) : "Takes two values separated by a space. The first is the target model scale. " +
 		"The second value is the number of seconds the change in scale will be spread over."
 
 	input SetModel[MBase](string) : "Sets this entity's model. Must include 'models/' as well as the extension."

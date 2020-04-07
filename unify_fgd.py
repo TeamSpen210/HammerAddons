@@ -45,6 +45,7 @@ GAMES = [
     ('MBASE', 'Mapbase'),
     # Mesa also appears to be about here...
     ('MESA', 'Black Mesa'),
+    ('GMOD', "Gary's Mod"),
 
     ('TF2',  'Team Fortress 2'),
     ('P1', 'Portal'),
@@ -66,14 +67,15 @@ GAME_NAME = dict(GAMES)
 
 # Specific features that are backported to various games.
 
-FEATURES = {
+FEATURES: Dict[str, Set[str]] = {
     # 2013 engine backports this.
     'HL2': {'INSTANCING'},
     'EP1': {'INSTANCING'},
     'EP2': {'INSTANCING'},
 
-    'MBASE': {'HL2', 'EP1', 'EP2', 'INSTANCING'},
+    'MBASE': {'INSTANCING'},
     'MESA': {'INSTANCING', 'INST_IO'},
+    'GMOD': {'HL2', 'EP1', 'EP2'},
     
     'L4D': {'INSTANCING'},
     'L4D2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},

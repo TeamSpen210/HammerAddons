@@ -83,6 +83,7 @@
 		1024: "Use Activates" : 1
 		2048: "Starts locked" : 0
 		8192: "Jiggle when used while locked" : 0
+		16384: "Non-solid" : 0 [GMod]
 		]
 
 	startposition(float) : "Start Position" : "0" : "Postion when spawned. " +

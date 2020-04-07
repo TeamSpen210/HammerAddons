@@ -110,6 +110,8 @@
 	input UpdateEnemyMemory(string) : "Update (or Create) this NPC's memory of an enemy and its location"
 	input BecomeRagdoll(void) : "This NPC will instantly become a ragdoll with ZERO force (just go limp). OnDeath, OnHalfHealth, etc. Outputs will **NOT** BE FIRED."
 	
+	input SetMaxLookDistance[GMod](float) : "GMOD: Sets the maximum look distance for the NPC. Defaults are 2048 and 6000 for long range NPCs."
+
 	input SetBloodColor[MBase](integer) : "Changes this entity's blood color based on the internal enum in shareddefs.h."
 	input SetMoveType[MBase](integer) : "Sets this NPC's movetype."
 	input AddCapabilities[MBase](integer) : "Adds capabilities to this NPC."
