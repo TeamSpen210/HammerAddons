@@ -256,7 +256,7 @@ def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> FGD
     fgd.map_size_max = 16384
 
     # Classname -> filename
-    ent_source = {}  # Dict[str, str]
+    ent_source: Dict[str, str] = {}
 
     with RawFileSystem(str(dbase)) as fsys:
         for file in dbase.rglob("*.fgd"):
@@ -343,10 +343,10 @@ def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> FGD
 
 def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
     """Parse through the visgroup.cfg file, adding these visgroups."""
-    cur_path = []
+    cur_path: List[str] = []
     # Visgroups don't allow duplicating names. Work around that by adding an
     # invisible suffix.
-    group_count = Counter()
+    group_count: Dict[str, int] = Counter()
     try:
         f = (dbase / 'visgroups.cfg').open()
     except FileNotFoundError:
@@ -359,6 +359,7 @@ def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
                 continue
             cur_path = cur_path[:indent]  # Dedent
             if line.startswith('-') or '(' in line or ')' in line:  # Visgroup.
+                single_ent: Optional[str]
                 try:
                     vis_name, single_ent = line.lstrip('*-').split('(', 1)
                 except ValueError:
@@ -575,7 +576,7 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
     print('\n\nMissing Class Resources:')
     from srctools.packlist import CLASS_RESOURCES
 
-    missing = 0
+    missing_count = 0
     for clsname in sorted(fgd.entities):
         ent = fgd.entities[clsname]
         if ent.type is EntityTypes.BASE:
@@ -587,8 +588,8 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
 
         if clsname not in CLASS_RESOURCES:
             print(clsname, end=', ')
-            missing += 1
-    print('\nMissing:', missing)
+            missing_count += 1
+    print('\nMissing:', missing_count)
 
     print('Extra ents: ')
     for clsname in CLASS_RESOURCES:
