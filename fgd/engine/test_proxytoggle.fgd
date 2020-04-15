@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(+engine)
+= test_proxytoggle: "A basic entity to test the ability to automatically copy variables to the client."
+	[
+	]   

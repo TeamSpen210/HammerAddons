@@ -1,6 +1,6 @@
 @PointClass base(Weapon) 
 	autovis(Weapons, Cubemap Weapon)
-	appliesto(until_ASW)
+	appliesto(until_ASW, -MESA)
 	studio("models/shadertest/envballs.mdl") = weapon_cubemap: "Debugging weapon used to show cubemaps in a region."
 	[
 	]

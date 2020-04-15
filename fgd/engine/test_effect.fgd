@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(+engine)
+= test_effect: "An entity to test the engine's FX abilities, by randomly firing env_beams around this position."
+	[
+	input Use(void) : "Restart the effect."
+	]   

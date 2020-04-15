@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC) 
-	appliesto(EP2, ASW) 
+	appliesto(EP2) 
 	autovis(Entities, NPCs, Combine, Combine Advisor)
 	studio() = npc_advisor: "An adorable sluglike alien with benevolent psychic powers."
 	[

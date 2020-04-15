@@ -5,7 +5,7 @@
 @BaseClass appliesto(+MBase) studio() = _item_healthcharger_settable []
 
 @PointClass base(BaseEntityAnimating) 
-	appliesto(EP1, EP2, HL2, P1, ASW, Mesa) 
+	appliesto(EP1, EP2, HL2, P1, P2, Mesa) 
 	base(_item_healthcharger_mesa, _item_healthcharger_hl2, _item_healthcharger_settable)
 = item_healthcharger: "Health Charger"
 	[

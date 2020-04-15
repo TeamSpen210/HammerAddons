@@ -1,7 +1,8 @@
 @PointClass base(BaseEntityPoint) 
-	iconsprite("editor/ts2do/env_starfield.vmt") = env_starfield: "Starfield effect"
+	appliesto(-ASW, -L4D, -L4D2, -CSGO, -P2, -TF2)
+	iconsprite("editor/ts2do/env_starfield.vmt")
+= env_starfield: "Starfield effect"
 	[
-
 	// Inputs
 	input TurnOn(void) : "Turn on"
 	input TurnOff(void) : "Turn off"
