@@ -1,18 +1,7 @@
-@PointClass base(BaseEntityPhysics, TeamNum, EnableDisable) 
+@PointClass base(BaseEntityPhysics, TeamNum, EnableDisable, TFGameType) 
 	appliesto(TF2) 
 	studio("models/flag/briefcase.mdl") = item_teamflag: "Team Fortress flag entity."
 	[
-	gametype(choices) : "Game Type" : "0" : "Type of game this flag will be used for." =
-		[
-		0: "CTF"
-		1: "Attack/Defend"
-		2: "Territory Control"
-		3: "Invade"
-		4: "Resource Control"
-		5: "Robot Destruction"
-		]
-	gametype[engine](int) : "Game Type" : 0
-
 	returntime(integer) : "Return time (in seconds)" : 60 : "Length of time (in seconds) before dropped flag/intelligence returns to base."
 
 	neutraltype[engine](integer) : "Neutral flag (Invade)" : 1
@@ -65,6 +54,8 @@
 	input SetReturnTime(integer) : "Set the length of time (in seconds) before dropped flag/intelligence returns to base."
 	input ShowTimer(integer) : "Show a visible timer (in seconds)."
 	input ForceGlowDisabled(integer) : "Forcably block the glow effect for this flag. 1 = glow blocked, 0 = normal behavior"
+
+	input RoundActivate(void) : "Force the flag to be dropped if it's being carried by a player, then reset the flag to its original location AND reset to its Default."
 
 	// Outputs
 	output OnReturn(void) : "Sent when the flag is returned via timer."

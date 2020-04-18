@@ -24,6 +24,7 @@
 	input SetTeamCanCap(string) : "Set whether a specific team is allowed to capture this point. Format is: <team number> <(0/1)>. i.e. '2 0' would prevent RED from capturing this point, whereas '3 1' would allow BLUE to cap it."
 	input SetControlPoint(string) : "Assign area capture to the passed control point."
 	input CaptureCurrentCP(string) : "If we're being capped, forces the current point to capture."
+	input RoundSpawn(void) : "Find our control point"
 
 	// Outputs
 	output OnStartTeam1(void) : "Sent when RED start capture."

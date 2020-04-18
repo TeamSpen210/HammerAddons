@@ -1,0 +1,7 @@
+@PointClass base(BaseEntityAnimating) 
+	appliesto(TF2) 
+	studio()
+= entity_carrier : "Skybox Robot Carrier"
+	[
+	model(studio) : "Model" : "models/props_skybox/skybox_carrier.mdl" : "Change the model to something other than the default model." 
+	]

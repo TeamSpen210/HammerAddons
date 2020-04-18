@@ -7,6 +7,16 @@
 		1: "None"
 		2: "Halloween"
 		3: "Birthday"
+		4 : "Christmas"
+		5 : "End of the Line"
+		6 : "Community Update (???)"
+		7 : "Valentines Day"
+		8 : "Meet the Pyro"
+		9 : "Spy vs Engineer WAR (Unused)"
+		10 : "Full Moon"
+		11 : "Halloween or Full Moon"
+		12 : "Halloween or Full Moon or Valentines Day"
+		13 : "April Fools"
 		]
 
 	tauntinhell(boolean) : "Taunt In Hell" : "0" : "Should players taunt when teleported to Hell." 

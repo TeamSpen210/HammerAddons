@@ -1,6 +1,8 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(TF2) = tf_gamerules: "Proxy entity for TF Gamerules"
 	[
+	gamemode(string) : "Gamemode Type" : "" : "Server Tags."
+	
 	hud_type[engine](integer) : "HUD Type" : 0
 	hud_type(choices) : "HUD Type" : 0 : "Override the HUD type clients should display." =
 		[

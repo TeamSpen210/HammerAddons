@@ -1,0 +1,14 @@
+@BaseClass = TFGameType
+	[
+	GameType[engine](integer) : "Game Type" : 0 : "Type of game this flag will be used for."
+	GameType(choices) : "Game Type" : 0 : "Type of game this flag will be used for." =
+		[
+		0 : "Capture The Flag"
+		1 : "Attack/Defend / Mann Vs. Machine"
+		2 : "Territory Control"
+		3 : "Invade"
+		4 : "Special Delivery / King Of The Hell"
+		5 : "Robot Destruction"
+		6 : "Player Destruction"
+		]
+	]

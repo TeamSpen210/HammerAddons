@@ -20,20 +20,31 @@
 		256: "Shock"
 		512: "Sonic"
 		1024: "Energy Beam"
-		16384: "Drown"
+		2048 : "No Physics Force" [!srctools]
+		4096 : "Never Gib" [!srctools]
+		8192 : "Always Gib" [!srctools]
+		16384: "Drown (blue faded)"
 		32768: "Paralyse"
 		65536: "Nerve Gas" [!TF2]
 		65536: "Sawblade" [TF2]
 		131072: "Poison"
 		262144: "Radiation"
-		524288: "Drown Recover"
+		524288: "Drowning recovery"
 
 		1048576: "Chemical" [!TF2, until_ASW]
 		1048576: "Critical" [TF2]
 		1048576: "Acid" [since_ASW]
 
 		2097152: "Slow Burn"
-		16777216: "Force Gibs" [L4D2]
+		4194304 : "Slowfreeze"
+		8388608 : "Gravity Gun"
+		16777216 : "Ignite (no after-burn damage)" [TF2]
+		16777216 : "Force Gibs" [L4D2]
+		33554432 : "Airboat"
+		67108864 : "Dissolve"
+		134217728 : "Underwater is Invincible" [TF2]
+		268435456 : "Being on fire" [TF2]
+		536870912 : "Shotguns" [TF2]
 		]
 
 	damagepresets[engine](integer) : "Damage Presets" : 0

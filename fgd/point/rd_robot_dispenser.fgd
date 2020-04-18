@@ -1,0 +1,17 @@
+@PointClass base(BaseEntityPoint, BaseObject) 
+	appliesto(TF2) 
+= rd_robot_dispenser: "Robot Destruction Robot Dispenser Level 0.5"
+	[
+	spawnflags(flags) =
+		[
+		4: "Ignore line of sight check" : 1
+		8: "Don't heal disguised/stealthed spies" : 1
+		]
+	
+	touch_trigger(target_destination) : "Custom Touch Trigger"
+	
+	input FireHalloweenBonus(integer) : "Trigger bonus effect on players near this dispenser"
+	input SetDispenserLevel(integer) : "Set the dispenser level: 1, 2, or 3"
+	input Enable(void) : "Enable this entity."
+	input Disable(void) : "Disable this entity."
+	]

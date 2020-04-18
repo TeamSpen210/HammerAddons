@@ -5,8 +5,11 @@
 	unlock_point(integer) : "Unlock Point (in seconds)" : 30 : "Time to wait before unlocking the point in CP KOTH maps."
 
 	// Inputs
-	input SetRedTimer(integer) : "Set the time remaining for the RED timer."
+	input SetRedTimer(integer)  : "Set the time remaining for the RED timer."
 	input SetBlueTimer(integer) : "Set the time remaining for the BLUE timer."
-	input AddRedTimer(integer) : "Add time to the RED timer."
+	input AddRedTimer(integer)  : "Add time to the RED timer."
 	input AddBlueTimer(integer) : "Add time to the BLUE timer."
+
+	input RoundActivate(void) : "Find control points and its master."
+	input RoundSpawn(void)    : "Create new team_round_timer entities for both team."
 	]

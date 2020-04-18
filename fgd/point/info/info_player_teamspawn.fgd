@@ -41,4 +41,6 @@
 
 	round_bluespawn(target_destination) : "Blue spawn for round" : : "Blue spawn point when the associated round is being played."
 	round_redspawn(target_destination) : "Red spawn for round" : : "Red spawn point when the associated round is being played."
+	
+	input RoundSpawn(void) : "Re-find control points"
 	]

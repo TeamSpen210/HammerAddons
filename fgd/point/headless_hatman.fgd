@@ -1,0 +1,6 @@
+@PointClass base(BaseNPC, EnableDisable, TeamNum)
+	appliesto(TF2)
+	studio("models/bots/headless_hatman.mdl")
+= headless_hatman : "Horseless Headless Horsemann"
+	[
+	]

@@ -1,6 +1,8 @@
 
 @PointClass base(base_boss) 
-	appliesto(TF2) = tank_boss: "Tank Boss"
+	appliesto(TF2) 
+	studioprop("models/bots/boss_bot/static_boss_tank.mdl") 
+= tank_boss: "Tank Boss"
 	[
 	// Inputs
 	input DestroyIfAtCapturePoint(integer) : "Destroy If At CapturePoint"

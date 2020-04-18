@@ -16,6 +16,7 @@
 
 	// Inputs
 	input StartCommentary(void) : "Start the commentary, just like if the player +USEd this."
+	input StopCommentary(void) : "Force the commentary node to stop."
 	input StartUnstoppableCommentary(void) : "Start the commentary but don't let the player cancel it."
 
 	// Outputs

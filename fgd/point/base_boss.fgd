@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityPoint, TeamNum) 
+@PointClass base(BaseEntityAnimating, TeamNum, DamageFilter) 
 	studioprop()
 	appliesto(TF2) = base_boss: "A Basic Boss"
 	[
@@ -12,6 +12,10 @@
 	input Enable(void) : "Enable the Boss"
 	input Disable(void) : "Disable the Boss"
 	input SetSpeed(float) : "Change the speed of the Boss"
+	input SetHealth(integer) : "Set this boss's health."
+	input SetMaxHealth(integer) : "Set this boss's Max health."
+	input AddHealth(integer) : "Add health to this boss"
+	input RemoveHealth(integer) : "Remove health from this boss"
 
 	// Outputs
 	output OnHealthBelow90Percent(void) : "Sent when the Boss' health drops below 90 percent."
