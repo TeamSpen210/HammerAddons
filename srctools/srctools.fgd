@@ -96,18 +96,45 @@
     "Simplified version of logic_relay which is able to be optimised away by the compiler."+
     "" +
     "The various inputs and outputs are useful for bundling commands together, or using more appopriate verbs." +
-    "Inputs only work if given directly from entities (or via instance redirection), not ingame or dynamically."
+    "Inputs only work if given directly from entities (or via instance redirection), not ingame or dynamically." + 
+    "All inputs/outputs may pass through any parameter, if no override is specified."
     [
-    input Trigger(void): "Trigger the relay and fire the output."
+    ctrl_type(choices) : "Control Type" : 0 : "Controls how the value is interpreted for whether to break the connection from this." = 
+        [
+        0 : "Is Enabled?"
+        1 : "Is Disabled?"
+        ]
+    ctrl_value(boolean) : "Control Value" : 1 : "Decides whether to skip using the outputs from this. " +
+        "If the entity is disabled, all outputs are removed entirely."
+
+    input Trigger(string): "Trigger the relay and fire the output."
     
-    input Enable(void): "Fire the OnEnabled output."
-    input Disable(void): "Fire the OnDisabled output."
+    input TurnOn(string): "Fire the OnTurnedOn output."
+    input TurnOff(string): "Fire the OnTurnedOff output."
+
+    input FireUser1(string) : "Causes this relay's OnUser1 output to be fired."
+    input FireUser2(string) : "Causes this relay's OnUser2 output to be fired."
+    input FireUser3(string) : "Causes this relay's OnUser3 output to be fired."
+    input FireUser4(string) : "Causes this relay's OnUser4 output to be fired."
+    input FireUser5(string) : "Causes this relay's OnUser5 output to be fired."
+    input FireUser6(string) : "Causes this relay's OnUser6 output to be fired."
+    input FireUser7(string) : "Causes this relay's OnUser7 output to be fired."
+    input FireUser8(string) : "Causes this relay's OnUser8 output to be fired."
     
-    output OnTrigger(void): "Fired when the input is triggered."
-    output OnEnabled(void): "Fired when the input is enabled."
-    output OnDisabled(void): "Fired when the input is disabled."
+    output OnTrigger(string): "Fired when the relay is triggered."
+    output OnTurnedOn(string): "Fired when the relay is turned on."
+    output OnTurnedOff(string): "Fired when the relay is turned off."
+
+    output OnUser1(string) : "Fired in response to FireUser1 input."
+    output OnUser2(string) : "Fired in response to FireUser2 input."
+    output OnUser3(string) : "Fired in response to FireUser3 input."
+    output OnUser4(string) : "Fired in response to FireUser4 input."
+    output OnUser5(string) : "Fired in response to FireUser5 input."
+    output OnUser6(string) : "Fired in response to FireUser6 input."
+    output OnUser7(string) : "Fired in response to FireUser7 input."
+    output OnUser8(string) : "Fired in response to FireUser8 input."
 ]
-    
+
 @PointClass base(StaticTargetName) iconsprite("editor/math_counter.vmt") = comp_calc:
 	"Performs computations on entity values. Designed mainly for use in instances."
 	[
