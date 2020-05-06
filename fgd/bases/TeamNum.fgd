@@ -4,8 +4,10 @@
 	teamnum[TF2](choices) : "Team" : 0 =
 		[
 		0: "Any"
-		2: "Red"
-		3: "Blue"
+		2: "RED"
+		3: "BLU/ROBOTS"
+		5 : "Halloween Bosses"
+		1 : "Spectator / Halloween Souls"
 		]
 
 	teamnum[CSGO](choices) : "Team" : 0 =

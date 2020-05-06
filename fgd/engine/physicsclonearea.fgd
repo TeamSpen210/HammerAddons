@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(+engine, P1, P2)
+= physicsclonearea: "A region spawned around portals, which modifies the physics and collisions to allow entering the portal."
+	[
+	]   

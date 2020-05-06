@@ -69,12 +69,16 @@
 	input SetLocked(integer) : "Lock the control point. 0 = unlocked, 1 = locked"
 	input SetUnlockTime(integer) : "This will automatically unlock the control point in the specified amound of time (seconds)."
 
+	input RoundActivate(void) : "Return to its original team and locked."
+
 	// Outputs
 	output OnOwnerChangedToTeam1(void) : "Sent when owner is changed to RED."
 	output OnOwnerChangedToTeam2(void) : "Sent when owner is changed to BLUE."
 	output OnCapReset(void) : "Sent when owner is changed to neutral."
+
 	output OnRoundStartOwnedByTeam1(void) : "Sent when a round is starting and the point is owned by RED."
 	output OnRoundStartOwnedByTeam2(void) : "Sent when a round is starting and the point is owned by BLUE."
+	
 	output OnCapTeam1(void) : "Sent when RED capture this point."
 	output OnCapTeam2(void) : "Sent when BLUE capture this point."
 	output OnUnlocked(void) : "Sent when point is unlocked via the SetLocked(0) or SetUnlockTime inputs."

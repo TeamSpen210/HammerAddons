@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityAnimating, SetModel)
+	appliesto(TF2)
+	studio("models/items/ammopack_medium.mdl")
+= tf_ammo_pack : "Dropped AmmoPack"
+	[
+	]

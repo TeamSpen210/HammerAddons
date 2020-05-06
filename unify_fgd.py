@@ -471,6 +471,8 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
         if ent.type is EntityTypes.BASE:
             counter = count_base
             typ = 'Base'
+            # Ensure it's present, so we detect 0-use bases.
+            base_uses[ent.classname]  # noqa
         elif ent.type is EntityTypes.BRUSH:
             counter = count_brush
             typ = 'Brush'
@@ -529,7 +531,7 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
         try:
             import matplotlib.pyplot as plt
         except ImportError:
-            pass
+            plt = None
         else:
             disp_games = game_order[::-1]
             point_count_list = [count_point[game] for game in disp_games]
@@ -740,6 +742,8 @@ def action_export(
                 helper for helper in ent.helpers
                 if not helper.IS_EXTENSION
             ]
+            value: Union[IODef, KeyValues]
+            category: Dict[str, Dict[FrozenSet[str], Union[IODef, KeyValues]]]
             for category in [ent.inputs, ent.outputs, ent.keyvalues]:
                 # For each category, check for what value we want to keep.
                 # If only one, we keep that.
@@ -781,6 +785,7 @@ def action_export(
                             'tag!'.format(ent.classname, key)
                         )
                         if isinstance(value, KeyValues):
+                            assert value.val_list is not None
                             try:
                                 for choice_val, name, tag in value.val_list:
                                     int(choice_val)

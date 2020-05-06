@@ -1,0 +1,7 @@
+@PointClass base(base_boss) 
+	appliesto(TF2) 
+	studioprop("models/bots/merasmus/merasmus.mdl") 
+= merasmus_dancer: "Dancing Merasmus Animation"
+	[
+	modelscale(float) : "Model Scale" : "1.0" : "A multiplier for the size of the model."
+	]

@@ -16,6 +16,7 @@
 	setangvelocityscale(float) : "Angular Velocity scale/drag" : 1.0
 	setlinearforce(float) : "Linear force" : 0.0 : "Amount of force to apply while in the trigger (0 disables)"
 	setlinearforceangles(angle) : "Force Direction" : "0 0 0" : "Direction of linear force (Pitch Yaw Roll or Y Z X)"
+	
 	particletrailmaterial(material) : "Particle Trail Material" : : "Name of a material to use for the particle trail, no name means no particle trail"
 	particletraillifetime(float) : "Particle Trail Lifetime" : 4 : "Lifetime of the particles to emit"
 	particletrailstartsize(float) : "Particle Trail Starting Sprite Size" : 2 : "Starting size of the sprite to emit"

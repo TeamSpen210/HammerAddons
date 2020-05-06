@@ -1,0 +1,13 @@
+@SolidClass base(Trigger, TFAttribute) 
+	appliesto(TF2)
+= trigger_add_or_remove_tf_player_attributes: "A trigger that will add a attributes to players."
+	[
+	duration(float) : "Duration" : 0 : "The duration of the condition. NOTE: -1 duration means last until the player exits the trigger."
+	value(float) : "Value" : "1.0" : "The value which affects the attribute chosen."
+	add_or_remove(boolean) : "Add or Remove" : 0 : "Add or Remove Attribute."
+	add_or_remove(choices) : "Add or Remove" : 0 : "Add or Remove Attribute." =
+		[
+		0 : "Add"
+		1 : "Remove"
+		]
+	]

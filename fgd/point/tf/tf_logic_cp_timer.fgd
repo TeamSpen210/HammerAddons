@@ -10,4 +10,5 @@
 	output OnCountdown10SecRemain(void) : "Sent when 10 seconds remain."
 	output OnCountdown5SecRemain(void) : "Sent when 5 seconds remain."
 	output OnCountdownEnd(void) : "Sent when the timer expires and the point is not being captured."
+	input RoundSpawn(void) : ""
 	]

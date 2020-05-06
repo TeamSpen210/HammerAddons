@@ -1,0 +1,133 @@
+@BaseClass base(BaseEntityAnimating, TeamNum) = BaseTFProjectile []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2) 
+	studio("models/props_halloween/hwn_spellbook_flying.mdl") 
+= tf_projectile_spellmeteorshower : "Meteor Spell Particle" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_spellmeteorshower : "Meteor Spell Particle" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_spellfireball : "FireBall Spell Particle" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_spellspawnzombie : "Skeleton Spell" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_lightningorb : "Lightning orb Spell" []
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_mechanicalarmorb : "Short Circuit orb" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/weapons/w_models/w_arrow.mdl") 
+= tf_projectile_arrow : "" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/weapons/c_models/c_xms_festive_ornament.mdl")
+= tf_projectile_ball_ornament : "" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_balloffire : "Dragon's Fury's Flame" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/weapons/c_models/c_sd_cleaver/c_sd_cleaver.mdl")
+= tf_projectile_cleaver : "" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_energy_ball : "Cow Mangler 5000 Projectile" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_energy_ring : "Righteous Bison Projectile" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/weapons/w_models/w_flaregun_shell.mdl")
+= tf_projectile_flare : "Flare Projectile" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/weapons/c_models/c_grappling_hook/c_grappling_hook.mdl")
+= tf_projectile_grapplinghook : "Grappling Hook Projectile" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/weapons/w_models/w_repair_claw.mdl")
+= tf_projectile_healing_bolt : "Rescue Ranger Arrow" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/weapons/c_models/urinejar.mdl")
+= tf_projectile_jar : "Jarate" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/weapons/c_models/c_gascan/c_gascan.mdl")
+= tf_projectile_jar_gas : "Gas Passer Projectile" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/weapons/c_models/c_madmilk/c_madmilk.mdl")
+= tf_projectile_jar_milk : "Mad Milk Projectile" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/weapons/w_models/w_grenade_grenadelauncher.mdl")
+= tf_projectile_pipe : "Pipe Bomb" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/weapons/w_models/w_stickybomb.mdl")
+= tf_projectile_pipe_remote : "Sticky Bomb" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/weapons/w_models/w_rocket.mdl")
+= tf_projectile_rocket : "Rocket" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/buildables/sentry3_rockets.mdl")
+= tf_projectile_sentryrocket : "Sentry Level 3 Rockets" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_spellbats : "Bats spell" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_spellkartbats : "Bumper Car's Bats spell" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_spellkartorb : "" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_spellmirv : "" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_spellpumpkin : "" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/props_mvm/mvm_human_skull_collide.mdl")
+= tf_projectile_spellspawnboss : "" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/props_mvm/mvm_human_skull_collide.mdl")
+= tf_projectile_spellspawnhorde : "" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/props_mvm/mvm_human_skull_collide.mdl")
+= tf_projectile_spellspawnzombie : "" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_spelltransposeteleport : "" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/weapons/w_models/w_baseball.mdl")
+= tf_projectile_stun_ball : "" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+	studio("models/weapons/w_models/w_syringe_proj.mdl")
+= tf_projectile_syringe : "" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_throwable : "" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_throwable_breadmonster : "Self-Aware Beauty Mark" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_throwable_brick : "Bread that hurts people" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_throwable_repel : "Unused Balloon with no model" []
+
+@PointClass base(BaseTFProjectile) appliesto(TF2)
+= tf_projectile_mechanicalarmorb : "Short Circult Enegry Ball" []

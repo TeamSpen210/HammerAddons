@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityAnimating)
+	appliesto(+engine)
+= gib : "Temporary remmnants spawned when something is destroyed."
+	[
+	]   

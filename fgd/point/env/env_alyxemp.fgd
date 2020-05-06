@@ -1,6 +1,5 @@
-
 @PointClass base(BaseEntityPoint, Angles) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
+	appliesto(EP1, EP2, HL2, P1) 
 	size(-4 -4 -4, 4 4 4) 
 	color(0 0 255) 
 	line(0 0 255, targetname, EndTargetName) 

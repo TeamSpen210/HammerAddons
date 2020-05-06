@@ -1,0 +1,26 @@
+@SolidClass base(func_breakable) 
+= func_pushable: "A brush with primitive physics that can be pushed around."
+	[
+	size[engine](integer) : "Hull Size" : 0
+	size(choices) : "Hull Size" : 0 =
+		[
+		0: "Point size"
+		1: "Player size"
+		2: "Big Size"
+		3: "Player duck"
+		]
+	spawnflags(flags) =
+		[
+		1: "Only Break on Trigger" : 0
+		2: "Break on Touch" : 0
+		4: "Break on Pressure" : 0
+		512: "Break immediately on Physics" : 0
+		1024: "Don't take physics damage" : 0
+		2048: "Don't allow bullet penetration" : 0
+		
+		128  : "Breakable" : 0
+		]
+
+	friction(integer) : "Friction" : 50 : "This determines the amount of resistance the brush will give when the player pushes it. " +
+		"Range is 0 to 400, where 400 is the most resistance."
+	]

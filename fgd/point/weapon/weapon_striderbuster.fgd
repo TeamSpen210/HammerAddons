@@ -1,5 +1,5 @@
 @PointClass base(BasePropPhysics) 
-	appliesto(EP2, P1, ASW) 
+	appliesto(EP2, P1) 
 	autovis(Weapons, HL2 Weapons, Strider Buster)
 	studioprop() 
 	sphere(fademindist) 

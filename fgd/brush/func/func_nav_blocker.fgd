@@ -9,7 +9,7 @@
 		-1: "Everyone"
 		2: "RED"
 		3: "BLU"
-		5: "Boss"
+		5: "Halloween Bosses"
 		]
 
 	teamtoblock[CSGO](choices) : "Team(s) to block" : -1 : "Team(s) this entity should block" =
@@ -28,6 +28,8 @@
 
 	affectsflow[TF2, CSGO](boolean) : "Affects Flow?" : 0 : "Does this func_nav_blocker block flow in the level? " +
 		"Only func_nav_blockers with this enabled will cause flow recomputation on blocking/unblocking."
+
+	StartDisabled(boolean) : "Start Disabled" : 0
 
 	// Inputs
 	input BlockNav(string) : "Starts blocking nav areas."

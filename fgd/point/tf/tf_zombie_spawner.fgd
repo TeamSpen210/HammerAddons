@@ -1,8 +1,9 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(TF2) 
 	studio("models/bots/skeleton_sniper/skeleton_sniper.mdl") 
-= tf_zombie_spawner: "Entity that spawns zombies."
+= tf_zombie_spawner: "Entity that spawns Skeleton."
 	[
+	zombie_scale(float) : "Skeleton Scale" : 1 : "Scale the Skeleton"
 	zombie_lifetime(float) : "Skeleton Life Time" : 0 : "Skeleton life time in seconds. 0 means skeletons will stay alive until they're dead."
 	max_zombies(integer) : "Skeleton Count" : 1 : "Number of skeletons this point can have active in the world."
 	
