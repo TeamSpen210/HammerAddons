@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, RenderFields, SystemLevelChoice) 
-	studio("models/editor/axis_helper.mdl")
+	studio("models/editor/axis_helper_white.mdl")
 	sprite()
 	color(20 140 20)
 	sphere(GlowProxySize)
