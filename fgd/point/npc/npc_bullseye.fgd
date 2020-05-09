@@ -5,6 +5,10 @@
 	[
 	linedivider_npc(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
+	rendermode(choices) readonly : "Render Mode" : 1 : "This must be set to Color for Hammer to render the sprite correctly. It is not used in the engine." = 
+		[
+		1: "Color"
+		]
 	health(integer) : "Health" : 35 : "Unlike other NPCs level designers are allowed to set the health on bullseyes."
 	minangle(float) : "Minimum Angle" : 360: "Angle from the bullseye required for bullseye to be a valid enemy."
 	mindist(float) : "Minimum Distance" : 0 : "Distance from the bullseye required for bullseye to be a valid enemy."
