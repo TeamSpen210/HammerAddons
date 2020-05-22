@@ -2,6 +2,6 @@
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
 	autovis(Weapons, CSGO Weapons, CS Shotguns)
-	studio("models/weapons/w_shot_nova_dropped.mdl") = weapon_nova: "Nova"
+	studioprop("models/weapons/w_shot_nova_dropped.mdl") = weapon_nova: "Nova"
 	[
 	]

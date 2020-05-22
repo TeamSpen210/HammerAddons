@@ -1,6 +1,6 @@
 @PointClass base(Weapon) 
 	appliesto(EP1, EP2, HL2, P1) 
 	autovis(Weapons, HL2 Weapons, Metrocop StunStick)
-	studio("models/weapons/w_stunbaton.mdl") = weapon_stunstick: "StunStick"
+	studioprop("models/weapons/w_stunbaton.mdl") = weapon_stunstick: "StunStick"
 	[
 	]

@@ -4,7 +4,7 @@
 	studioprop() 
 	sphere(fademindist) 
 	sphere(fademaxdist) 
-	studio("models/magnusson_device.mdl") = weapon_striderbuster: "Strider Buster"
+	studioprop("models/magnusson_device.mdl") = weapon_striderbuster: "Strider Buster"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
