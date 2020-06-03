@@ -326,15 +326,16 @@ class Straight(Node):
 
         pos = Vec.from_str(ent['origin'])
         for prop in ent.map.by_class['prop_dynamic']:
-            if (Vec.from_str(prop['origin']) - pos).mag_sq() > (64 * 64):
+            if (Vec.from_str(prop['origin']) - pos).mag_sq() > 64**2:
                 continue
 
             model = prop['model'].casefold().replace('\\', '/')
-            if 'vacum_scanner_tv' in model:
+            # Allow spelling this correctly, if you're not Valve.
+            if 'vacum_scanner_tv' in model or 'vacuum_scanner_tv' in model:
                 self.scanner = prop
                 prop.make_unique('_vac_scanner')
                 ent.add_out(Output(self.pass_out_name, prop, "Skin", "0", 0.1))
-            elif 'vacum_scanner_motion' in model:
+            elif 'vacum_scanner_motion' in model or 'vacuum_scanner_motion' in model:
                 prop.make_unique('_vac_scanner')
                 ent.add_out(Output(self.pass_out_name, prop, "SetAnimation", "scan01"))
 
