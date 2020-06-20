@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "8419"
-	"mapversion" "93"
+	"mapversion" "103"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -20,7 +20,7 @@ viewsettings
 world
 {
 	"id" "1"
-	"mapversion" "93"
+	"mapversion" "103"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -30,10 +30,49 @@ world
 }
 entity
 {
+	"id" "2608"
+	"classname" "logic_auto"
+	"angles" "0 0 0"
+	"spawnflags" "1"
+	connections
+	{
+		"OnMapSpawn" "cube_makerForceSpawn01"
+	}
+	"origin" "0 0 -256"
+	editor
+	{
+		"color" "0 100 250"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 0]"
+	}
+}
+entity
+{
+	"id" "2653"
+	"classname" "comp_relay"
+	"ctrl_type" "0"
+	"ctrl_value" "1"
+	"targetname" "relay_ready"
+	connections
+	{
+		"OnTrigger" "proxyProxyRelay0-1"
+	}
+	"origin" "16 -16 -256"
+	editor
+	{
+		"color" "220 30 220"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 0]"
+	}
+}
+entity
+{
 	"id" "2533"
 	"classname" "func_instance_parms"
 	"parm1" "$autorespawn boolean 1"
-	"origin" "0 0 -256"
+	"origin" "-16 16 -256"
 	editor
 	{
 		"color" "220 30 220"
@@ -221,6 +260,7 @@ entity
 		"OnChangeToAllTrue" "close_trigEnable0.3-1"
 		"OnChangeToAllTrue" "drop_clipDisable0.3-1"
 		"OnChangeToAllTrue" "mdlSkin10.3-1"
+		"OnChangeToAllTrue" "dropper_statusTurnOn0-1"
 	}
 	"origin" "0 16 -256"
 	editor
@@ -240,7 +280,7 @@ entity
 	{
 		"OnProxyRelay" "manSetStateATrue0-1"
 	}
-	"origin" "-16 0 -256"
+	"origin" "-16 -16 -256"
 	editor
 	{
 		"color" "220 30 220"
@@ -274,19 +314,22 @@ entity
 entity
 {
 	"id" "1017"
-	"classname" "logic_auto"
-	"angles" "0 0 0"
-	"spawnflags" "1"
+	"classname" "comp_relay"
+	"ctrl_type" "0"
+	"ctrl_value" "1"
+	"targetname" "dropper_status"
 	connections
 	{
-		"OnMapSpawn" "cube_makerForceSpawn0-1"
+		"OnTurnedOn" "proxyProxyRelay0-1"
+		"OnTurnedOff" "proxyProxyRelay0-1"
 	}
-	"origin" "16 0 -256"
+	"origin" "16 16 -256"
 	editor
 	{
-		"color" "0 100 250"
+		"color" "220 30 220"
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
+		"comments" "Outputs fire to indicate when this is actively dispensing."
 		"logicalpos" "[0 0]"
 	}
 }
@@ -304,6 +347,7 @@ entity
 	{
 		"OnStartTouch" "land_trigDisable0-1"
 		"OnStartTouch" "manSetStateBTrue0-1"
+		"OnStartTouch" "relay_readyTrigger0-1"
 	}
 	solid
 	{
@@ -537,6 +581,7 @@ entity
 		"OnStartTouch" "mdlSetAnimationitem_dropper_close0-1"
 		"OnStartTouch" "drop_clipEnable0-1"
 		"OnStartTouch" "manSetStateAFalse0-1"
+		"OnStartTouch" "dropper_statusTurnOff0-1"
 	}
 	solid
 	{
