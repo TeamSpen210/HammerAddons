@@ -3,6 +3,7 @@ import math
 from typing import Iterator, Tuple, List, Optional, Union
 
 from srctools.bsp_transform.vactubes import nodes
+from srctools.bsp_transform.vactubes.nodes import DestType
 from srctools import Vec
 from srctools.smd import BoneFrame, Mesh
 from random import Random
@@ -64,6 +65,8 @@ class Animation:
         self.pass_points = []  # type: List[Tuple[float, nodes.Node]]
         # Set of nodes in this animation, to prevent loops.
         self.history = [start_node]  # type: List[nodes.Node]
+        # The kind of curve used for the current node.
+        self.curve_type = DestType.PRIMARY
 
         # The source of the cubes on this animation.
         self.start_node = start_node
@@ -74,7 +77,7 @@ class Animation:
         # When branching, the amount we overshot into this node from last time.
         self.start_overshoot = 0.0
 
-    def tee(self, split: nodes.Splitter, overshoot: float) -> 'Animation':
+    def tee(self, split: nodes.Splitter, split_type: DestType, overshoot: float) -> 'Animation':
         """Duplicate this animation so additional frames can be added.
 
         Note: Does not fully copy, the existing frame data is shared so
@@ -86,6 +89,7 @@ class Animation:
             self.mesh.animation.copy(),
             [],
         )
+        duplicate.curve_type = split_type
         duplicate.rotator = self.rotator.tee()
         duplicate.move_bone = self.move_bone
         duplicate.cur_frame = self.cur_frame
@@ -117,11 +121,6 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
     anims = [Animation(node) for node in sources]
 
     for anim in anims:
-        # Begin generating. Each animation will either have started
-        # at a spawn node, or have been a branching off point down a secondary
-        # path. That's the only time we generate along that point set.
-        is_sec = isinstance(anim.cur_node, nodes.Splitter)
-
         node = anim.cur_node
         speed = anim.start_node.speed / FPS
         offset = anim.start_node.origin.copy()
@@ -137,22 +136,25 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
             # First, check to see if we need to branch off.
             # If we're secondary, we are the branch off and so don't need to
             # do that again.
-            if not is_sec and isinstance(node, nodes.Splitter):
-                anims.append(anim.tee(node, overshoot))
+            if anim.curve_type is DestType.PRIMARY:
+                if DestType.SECONDARY in node.out_types:
+                    anims.append(anim.tee(node, DestType.SECONDARY, overshoot))
+                if DestType.TERTIARY in node.out_types:
+                    anims.append(anim.tee(node, DestType.TERTIARY, overshoot))
 
             needs_out = node.has_pass
             overshoot = 0
 
-            seg_len = node.path_len(is_sec)
+            seg_len = node.path_len(anim.curve_type)
             seg_frames = math.ceil((seg_len - overshoot) / speed)
             for i in range(int(seg_frames)):
                 # Make each frame.
                 pos = (overshoot + speed * i) / seg_len
-                if needs_out and pos > 0.25:
+                if needs_out and pos > 0.5:
                     anim.pass_points.append((anim.duration, node))
                     needs_out = False
                 # Place the point.
-                last_loc = node.vec_point(pos, is_sec)
+                last_loc = node.vec_point(pos, anim.curve_type)
                 anim.add_point(last_loc - offset)
 
             # If short, we might not have placed the output.
@@ -170,8 +172,8 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
                 break
 
             # Now generate the straight part between this node and the next.
-            next_node = node.output_sec if is_sec else node.output
-            cur_end = node.vec_point(1.0, is_sec)
+            next_node = node.outputs[anim.curve_type]
+            cur_end = node.vec_point(1.0, anim.curve_type)
             straight_off = next_node.vec_point(0.0) - cur_end
 
             if next_node in anim.history:
@@ -193,10 +195,11 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
                 overshoot += (speed * seg_frames) - straight_dist
 
             # And advance to the next node.
-            node = next_node
+            anim.cur_node = node = next_node
             anim.history.append(node)
 
-            # We only do secondary for the first node.
-            is_sec = False
+            # We only do secondary for the first node, we always continue
+            # to the primary value.
+            anim.curve_type = DestType.PRIMARY
 
     return anims

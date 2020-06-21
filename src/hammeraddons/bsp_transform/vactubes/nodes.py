@@ -1,7 +1,7 @@
 import math
 from abc import ABC, abstractmethod
 from enum import Enum
-from typing import Optional, Tuple, Iterator
+from typing import Tuple, Iterator, Iterable
 
 import srctools.logger
 from srctools import Vec, Entity, VMF, Output
@@ -12,11 +12,12 @@ PASS_OUT = 'User4'  # User output to use to trigger onPass etc outputs.
 CUBE_MODEL = 'models/props/metal_box.mdl'
 
 
-class ConnType(Enum):
-    """The kind of point."""
-    INPUT = 'input'
-    OUTPUT = 'output'
-    OUTPUT_SEC = 'output_sec'
+class DestType(Enum):
+    """The position of the output from a node.."""
+    PRIM = PRIMARY = 'primary'
+    SEC = SECONDARY = 'secondary'
+    TER = TERTIARY = 'tertiary'
+    OUT = PRIMARY
 
 
 def curve_point(radius: float, t: float) -> Tuple[float, float]:
@@ -34,13 +35,14 @@ class Node(ABC):
 
     This also defines the behaviour of the point.
 
-    This is a input->output connection, and optionally an input->output_sec
-    connection. For droppers the latter is the dropper.
+    This has up to 3 output connections, depending on type.
     """
     # The name of the output fired when cubes pass this.
     pass_out_name: str = 'onpass'
     # If true, keep the entity around regardless. User4 is reserved for the pass output.
     keep_ent: bool = False
+    # The outputs the item can use.
+    out_types: Iterable[DestType] = ()
 
     def __init__(self, ent: Entity) -> None:
         self.origin = Vec.from_str(ent['origin'])
@@ -48,8 +50,8 @@ class Node(ABC):
         self.ent = ent
 
         self.has_input = False  # We verify every node has an input if used.
-        self.output = None  # type: Optional[Node]
-        self.output_sec = None  # type: Optional[Node]
+        # DestType -> output.
+        self.outputs = dict.fromkeys(self.out_types, None)
         # Outputs fired when cubes reach this point.
         pass_outputs = [
             out for out in ent.outputs
@@ -71,8 +73,16 @@ class Node(ABC):
         elif not self.keep_ent:
             ent.remove()
 
+    def __repr__(self) -> str:
+        return '<{} "{}" @ {} {}>'.format(
+            self.__class__.__name__,
+            self.ent['targetname'],
+            self.origin,
+            self.angles,
+        )
+
     @abstractmethod
-    def path_len(self, sec: bool=False) -> float:
+    def path_len(self, dest: DestType=DestType.PRIMARY) -> float:
         """Return the length of the track for this node.
 
         If zero, it's just a point position.
@@ -80,7 +90,7 @@ class Node(ABC):
         raise NotImplementedError(self)
 
     @abstractmethod
-    def vec_point(self, t: float, sec: bool=False) -> Vec:
+    def vec_point(self, t: float, dest: DestType=DestType.PRIMARY) -> Vec:
         """Return the position of the track.
 
         T=0 means the start, T=1 is the end.
@@ -92,15 +102,8 @@ class Node(ABC):
         """Return the flow direction at the input point."""
 
     @abstractmethod
-    def output_norm(self) -> Vec:
+    def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
         """Return the flow direction at the output node."""
-
-    def output_sec_norm(self) -> Vec:
-        """Return the flow direction at the secondary output node.
-
-        Only junctions need this to be implemented.
-        """
-        raise AssertionError(self)
 
     def tv_name(self) -> str:
         """If a scanner, return the VScript for the scanner prop name."""
@@ -148,6 +151,8 @@ def parse(vmf: VMF) -> Iterator[Node]:
             yield Splitter(ent, True)
         elif model == "splitter_sides.mdl":
             yield Splitter(ent, False)
+        elif model == "fourway.mdl":
+            yield CrossSplitter(ent)
         else:
             raise ValueError(
                 f'Model "{ent["model"]}" is not a valid vactube '
@@ -159,6 +164,7 @@ class Spawner(Node):
     """The start point of the track."""
     pass_out_name = 'onspawned'
     keep_ent = True
+    out_types = [DestType.PRIMARY]
 
     def __init__(self, ent: Entity) -> None:
         super().__init__(ent)
@@ -173,33 +179,40 @@ class Spawner(Node):
         # Strip these keyvalues.
         del ent['speed'], ent['timer'], ent['time_min'], ent['time_max']
 
-    def vec_point(self, t: float, sec: bool = False) -> Vec:
+    def vec_point(self, t: float, dest: DestType=DestType.PRIMARY) -> Vec:
+        assert dest is DestType.PRIMARY, self
         return self.origin
 
-    def path_len(self, sec: bool = False) -> float:
+    def path_len(self, dest: DestType=DestType.PRIMARY) -> float:
+        assert dest is DestType.PRIMARY, self
         return 0.0
 
     def input_norm(self) -> Vec:
         raise AssertionError(self)
 
-    def output_norm(self) -> Vec:
+    def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
+        assert dest is DestType.PRIMARY
         return Vec(x=1).rotate(*self.angles)
 
 
 class Destroyer(Node):
     """The end of the track."""
     pass_out_name = 'oncubearrived'
+    out_types = []
 
-    def vec_point(self, t: float, sec: bool = False) -> Vec:
+    def vec_point(self, t: float, dest: DestType=DestType.PRIMARY) -> Vec:
+        assert dest is DestType.PRIMARY
         return self.origin
 
-    def path_len(self, sec: bool = False) -> float:
+    def path_len(self, dest: DestType=DestType.PRIMARY) -> float:
+        assert dest is DestType.PRIMARY
         return 0.0
 
     def input_norm(self) -> Vec:
         return Vec(x=-1).rotate(*self.angles)
 
-    def output_norm(self) -> Vec:
+    def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
+        """Destroyers have no outputs."""
         raise AssertionError(self)
 
 
@@ -279,20 +292,22 @@ class Dropper(Destroyer):
 
 class Curve(Node):
     """A simple corner node."""
+    out_types = [DestType.PRIMARY]
 
     def __init__(self, ent: Entity, radius: float, reversed: bool) -> None:
         super().__init__(ent)
         self.radius = radius
         self.reversed = reversed
 
-    def path_len(self, sec: bool = False) -> float:
+    def path_len(self, dest: DestType=DestType.PRIMARY) -> float:
         """Return the length of the curve."""
+        assert dest is DestType.PRIMARY
         # πD / 4
         return math.pi * (2.0 / 4.0) * self.radius
 
-    def vec_point(self, t: float, sec: bool = False) -> Vec:
+    def vec_point(self, t: float, dest: DestType=DestType.PRIMARY) -> Vec:
         """Return the position along the curve."""
-        assert sec is False
+        assert dest is DestType.PRIMARY
 
         if self.reversed:
             t = 1.0 - t
@@ -306,7 +321,9 @@ class Curve(Node):
         else:
             return Vec(y=1).rotate(*self.angles)
 
-    def output_norm(self) -> Vec:
+    def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
+        """Return the flow direction at the end of this curve type."""
+        assert dest is DestType.PRIMARY
         if self.reversed:
             return Vec(y=-1).rotate(*self.angles)
         else:
@@ -318,6 +335,7 @@ class Straight(Node):
 
     This also checks for TV scanners being present nearby.
     """
+    out_types = [DestType.PRIMARY]
     SCANNER_TV = ''
 
     def __init__(self, ent: Entity):
@@ -348,36 +366,42 @@ class Straight(Node):
         else:
             return 'null'
 
-    def path_len(self, sec: bool = False) -> float:
+    def path_len(self, dest: DestType=DestType.PRIMARY) -> float:
+        assert dest is DestType.PRIMARY
         return 32.0
 
-    def vec_point(self, t: float, sec: bool = False) -> Vec:
+    def vec_point(self, t: float, dest: DestType=DestType.PRIMARY) -> float:
+        assert dest is DestType.PRIMARY
         return self.origin + Vec(x=32.0*t - 16.0).rotate(*self.angles)
 
     def input_norm(self) -> Vec:
         return Vec(x=1.0).rotate(*self.angles)
 
-    def output_norm(self) -> Vec:
+    def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
+        """Return the flow direction at the end of this curve type."""
+        assert dest is DestType.PRIMARY
         return Vec(x=1.0).rotate(*self.angles)
 
 
 class Splitter(Node):
     """A T-intersection that either randomly routes cubes or directs them to a dropper."""
+    out_types = [DestType.PRIMARY, DestType.SECONDARY]
 
     def __init__(self, ent: Entity, straight: bool) -> None:
         """If straight is true, the primary dir goes forward."""
         super().__init__(ent)
         self.is_straight = straight
 
-    def path_len(self, sec: bool = False) -> float:
-        if self.is_straight and not sec:
+    def path_len(self, dest: DestType=DestType.PRIMARY) -> float:
+        if self.is_straight and dest is DestType.PRIMARY:
             return 128.0
         else:
             return 64.0 / 4.0 * math.pi
 
-    def vec_point(self, t: float, sec: bool = False) -> Vec:
+    def vec_point(self, t: float, dest: DestType=DestType.PRIMARY) -> Vec:
+        assert dest is not DestType.TERTIARY
         x, y = curve_point(64.0, t)
-        if sec:
+        if dest is DestType.SECONDARY:
             return self.origin + Vec(y, x, 0).rotate(*self.angles)
         elif self.is_straight:
             return self.origin + Vec(y=128*t).rotate(*self.angles)
@@ -385,13 +409,61 @@ class Splitter(Node):
             return self.origin + Vec(-y, x, 0).rotate(*self.angles)
 
     def input_norm(self) -> Vec:
+        """Return the flow direction at the input side."""
         return Vec(y=1).rotate(*self.angles)
 
-    def output_norm(self) -> Vec:
-        if self.is_straight:
-            return Vec(y=1).rotate(*self.angles)
+    def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
+        """Return the flow direction at the end of this curve type."""
+        if dest is DestType.SECONDARY:
+            return Vec(x=1).rotate(*self.angles)
         else:
-            return Vec(x=-1).rotate(*self.angles)
+            assert dest is DestType.PRIMARY
+            if self.is_straight:
+                return Vec(y=1).rotate(*self.angles)
+            else:
+                return Vec(x=-1).rotate(*self.angles)
 
-    def output_sec_norm(self) -> Vec:
-        return Vec(x=1).rotate(*self.angles)
+
+class CrossSplitter(Node):
+    """An X-intersection that either randomly routes cubes or directs them to a dropper.
+
+    Primary is left, secondary is forward, tertiary is right.
+    """
+    out_types = [DestType.PRIMARY, DestType.SECONDARY, DestType.TERTIARY]
+
+    def __init__(self, ent: Entity) -> None:
+        """If straight is true, the primary dir goes forward."""
+        super().__init__(ent)
+
+    def path_len(self, dest: DestType=DestType.PRIMARY) -> float:
+        if dest is DestType.SECONDARY:  # Straight through
+            return 128.0
+        else: # Either curve
+            return 64.0 / 4.0 * math.pi
+
+    def vec_point(self, t: float, dest: DestType=DestType.PRIMARY) -> Vec:
+        """Return the position this far through the given curve."""
+        x, y = curve_point(64.0, t)
+        if dest is DestType.PRIMARY:
+            return self.origin + Vec(y, x, 0).rotate(*self.angles)
+        elif dest is DestType.SECONDARY:
+            return self.origin + Vec(y=128*t).rotate(*self.angles)
+        elif dest is DestType.TERTIARY:
+            return self.origin + Vec(-y, x, 0).rotate(*self.angles)
+        else:
+            raise AssertionError(dest)
+
+    def input_norm(self) -> Vec:
+        """Return the flow direction at the input side."""
+        return Vec(y=1).rotate(*self.angles)
+
+    def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
+        """Return the flow direction at the end of this curve type."""
+        if dest is DestType.PRIMARY:
+            return Vec(x=1).rotate(*self.angles)
+        elif dest is DestType.SECONDARY:
+            return Vec(y=1).rotate(*self.angles)
+        elif dest is DestType.TERTIARY:
+            return Vec(x=-1).rotate(*self.angles)
+        else:
+            raise AssertionError(dest)

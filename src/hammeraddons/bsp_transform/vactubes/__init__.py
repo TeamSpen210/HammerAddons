@@ -55,7 +55,7 @@ def find_closest(
         if Vec.dot(src_norm, targ_norm) < ANG_THRESHOLD:
             continue
         for targ_point, targ in node_lst:
-            if node is targ:
+            if node is targ or targ.has_input:
                 continue
             # First check if we're beyond the target point
             off = (src_point - targ_point)
@@ -72,11 +72,11 @@ def find_closest(
 
     if best_node is None:
         if node.ent['targetname']:
-            name = f'"{node.ent["targetname"]}" '
+            name = ' "{}"'.format(node.ent["targetname"])
         else:
             name = ''
         raise ValueError(
-            f'No destination found for '
+            'No destination found for '
             f'junction {name} at ({node.origin})!'
         )
     # Mark the node as having an input, for sanity checking purposes.
@@ -132,23 +132,17 @@ def vactube_transform(ctx: Context) -> None:
         # Destroyers (or Droppers) have no inputs.
         if isinstance(node, nodes.Destroyer):
             continue
-        node.output = find_closest(
-            norm_inputs,
-            node,
-            node.vec_point(1.0),
-            node.output_norm(),
-        )
-        if isinstance(node, nodes.Splitter):
-            node.output_sec = find_closest(
+        for dest_type in node.out_types:
+            node.outputs[dest_type] = find_closest(
                 norm_inputs,
                 node,
-                node.vec_point(1.0, sec=True),
-                node.output_sec_norm(),
+                node.vec_point(1.0, dest_type),
+                node.output_norm(dest_type),
             )
         if isinstance(node, nodes.Spawner):
             sources.append(node)
 
-    # Run through them again, check to see if any miss inpus.
+    # Run through them again, check to see if any miss inputs.
     for node in all_nodes:
         if not node.has_input:
             raise ValueError(
