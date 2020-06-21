@@ -151,7 +151,7 @@ def parse(vmf: VMF) -> Iterator[Node]:
             yield Splitter(ent, True)
         elif model == "splitter_sides.mdl":
             yield Splitter(ent, False)
-        elif model == "fourway.mdl":
+        elif model == "splitter_triple.mdl":
             yield CrossSplitter(ent)
         else:
             raise ValueError(
