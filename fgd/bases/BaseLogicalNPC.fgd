@@ -93,6 +93,7 @@
 	
 	SetForceServerRagdoll[MBase](boolean) : "Force server ragdoll" : 0 : "Forces this NPC to turn into a serverside prop_ragdoll instead of a clientside ragdoll when it dies."
 	SpawnWithStartScripting[MBase](boolean) : "Spawn with StartScripting" : 0 : "Spawns the NPC in the StartScripting state."
+	BaseSpeedModifier[MBase](float) : "Speed Modifier" : "1.0" : "Multiplies how far a NPC travels while moving. Does not affect the animation itself."
 
 
 	// Inputs
@@ -141,6 +142,11 @@
 	input SetThinkNPC[MBase](float) : "Sets this entity's general think function to CallNPCThink. This is only necessary if it was disabled by SetThinkNull before."
 	input SetHintGroup[MBase](string) : "Sets this NPC's hint group."
 
+	input SetDistLook[MBase](float) : "Manually sets this NPC's sight distance. Pass '0' to reset."
+	input SetDistTooFar[MBase](float) : "Manually sets the distance in which NPCs will consider a target too far to attack. Pass '0' to reset."
+	
+	input SetSpeedModifier[MBase](float) : "Set a float value to multiply movement animation speed."
+	
 	// Outputs
 	output OnDamaged(void) : "Fired when this NPC takes damage."
 	output OnDeath(void) : "Fired when this NPC is killed."

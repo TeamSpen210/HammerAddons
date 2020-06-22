@@ -16,7 +16,7 @@
 		2097152: "Physgun is NOT allowed to pick this up." : 0
 		4194304: "Physgun is NOT allowed to punt this object." : 0
 		8388608: "Prevent motion enable on player bump" : 0
-		16777216: "Radius pickup (easer to pickup)" : 0 [MBase]
+		16777216: "Radius pickup (easier to pickup)" : 0 [MBase]
 		]
 
 	damagetype[engine](integer) : "Impact Damage Type" : 0

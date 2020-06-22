@@ -48,7 +48,9 @@
 		"The player's flashlight uses 0.35 by default, " +
 		"although higher values may be needed for a visible effect."
 
-	texturename(material) : "Texture Name" : "effects/flashlight001" : "VTF Texture to 'project' onto the enviroment."
+	texturename(material) : "Texture Name" : "effects/flashlight001" : "VTF Texture to 'project' onto the enviroment. " + 
+		"Please note that env_projectedtexture uses .vtf files directly and does not use .vmt files. " +
+		"The material browser is only available here to assist with finding textures since materials typically have the same name as their textures."
 	textureframe(integer) : "Texture Frame" : 0 : "If the VTF is multi-frame, specify the frame to use."
 
 	style[engine](integer) : "Appearance" : 0
