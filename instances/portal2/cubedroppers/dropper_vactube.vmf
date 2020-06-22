@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "8419"
-	"mapversion" "103"
+	"mapversion" "104"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -20,7 +20,7 @@ viewsettings
 world
 {
 	"id" "1"
-	"mapversion" "103"
+	"mapversion" "104"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -95,7 +95,7 @@ entity
 	{
 		"OnFizzled" "manSetStateATrue0-1"
 	}
-	"origin" "0 0 -32"
+	"origin" "0 0 -48"
 	editor
 	{
 		"color" "220 30 220"
@@ -301,7 +301,7 @@ entity
 	"postspawnspeed" "0"
 	"spawnflags" "0"
 	"targetname" "cube_maker"
-	"origin" "0 0 -32"
+	"origin" "0 0 -48"
 	editor
 	{
 		"color" "220 30 220"

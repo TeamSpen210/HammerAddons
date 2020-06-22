@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "8419"
-	"mapversion" "130"
+	"mapversion" "131"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -20,7 +20,7 @@ viewsettings
 world
 {
 	"id" "1"
-	"mapversion" "130"
+	"mapversion" "131"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -1076,7 +1076,6 @@ entity
 	"targetname" "respawn_rl"
 	connections
 	{
-		"OnSpawn" "tempForceSpawn0-1"
 		"OnTrigger" "manSetStateATrue0-1"
 	}
 	"origin" "16 0 -192"
