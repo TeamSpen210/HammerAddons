@@ -18,6 +18,7 @@
 		"models/combine_super_soldier.mdl": "Elite Soldier"
 		"models/combine_soldirt.mdl" : "Dirty Soldier/EP2 Soldier" [MBase]
 		"models/combine_super_soldirt.mdl" : "Dirty Elite Soldier/EP2 Elite" [MBase]
+		"models/combine_soldirt_prisonguard.mdl" : "Dirty Nova Prospekt Soldier" [MBase]
 		]
 
 	additionalequipment[engine](string) : "Weapons" : "weapon_smg1"
