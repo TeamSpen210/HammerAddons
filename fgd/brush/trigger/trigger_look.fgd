@@ -24,6 +24,9 @@
 	
 	UseLOS[MBase](boolean) : "Require LOS" : 0 : "If enabled, the player must have full LOS to the target entity in order to count as ''looking''."
 
+	LookEntityCaller(boolean) : "Use look entity as caller" : 0 : "When firing OnTrigger, use the triggered look entity as the output's caller. " +
+		"Useful for when multiple look targets exist."
+
 	// Outputs
 	output OnTrigger(void) : "Fired when the trigger is activated."
 	output OnTimeout(void) : "Fired after the timeout interval expires if the player never looked at the target."
