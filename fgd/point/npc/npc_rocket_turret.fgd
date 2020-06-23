@@ -1,7 +1,7 @@
 // Switch the model helper depending on game, since P1 can't swap models.
 @BaseClass appliesto(P1) studioprop("models/props_bts/rocket_sentry.mdl")
 	= _npc_rocket_turret_p1 []
-@BaseClass appliesto(P2) studioprop()
+@BaseClass appliesto(P2) studioprop() line(0 0 255, targetname, TripwireAimTarget) 
 	= _npc_rocket_turret_p2 []
 
 @PointClass base(BaseNPC, ResponseContext, _npc_rocket_turret_p1, _npc_rocket_turret_p2) 
