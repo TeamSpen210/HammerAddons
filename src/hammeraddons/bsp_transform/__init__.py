@@ -1,6 +1,7 @@
 """Transformations that can be applied to the BSP file."""
+from decimal import Decimal
 from pathlib import Path
-from typing import Callable, Dict, Tuple, List
+from typing import Callable, Dict, Tuple, List, Any
 
 from srctools import FileSystem, VMF, Output, Entity, FGD
 from srctools.bsp import BSP
@@ -88,11 +89,12 @@ TransFunc = Callable[[Context], None]
 TRANSFORMS = {}  # type: Dict[str, TransFunc]
 
 
-def trans(name: str) -> Callable[[TransFunc], TransFunc]:
+def trans(name: str, *, priority: int=0) -> Callable[[TransFunc], TransFunc]:
     """Add a transformation procedure to the list."""
     def deco(func: TransFunc) -> TransFunc:
         """Stores the transformation."""
         TRANSFORMS[name] = func
+        func.priority = priority
         return func
     return deco
 
@@ -109,7 +111,10 @@ def run_transformations(
     """Run all transformations."""
     context = Context(filesys, vmf, pack, bsp, game, studiomdl_loc=studiomdl_loc)
 
-    for func_name, func in TRANSFORMS.items():
+    for func_name, func in sorted(
+        TRANSFORMS.items(),
+        key=lambda tup: tup[1].priority,
+    ):
         LOGGER.info('Running "{}"...', func_name)
         func(context)
 
