@@ -18,6 +18,7 @@
 		"models/combine_super_soldier.mdl": "Elite Soldier"
 		"models/combine_soldirt.mdl" : "Dirty Soldier/EP2 Soldier" [MBase]
 		"models/combine_super_soldirt.mdl" : "Dirty Elite Soldier/EP2 Elite" [MBase]
+		"models/combine_soldirt_prisonguard.mdl" : "Dirty Nova Prospekt Soldier" [MBase]
 		]
 
 	additionalequipment[engine](string) : "Weapons" : "weapon_smg1"
@@ -30,25 +31,12 @@
 		"0": "Nothing"
 		]
 
-	numgrenades[engine](integer) : "Number of Grenades" : 5
-	numgrenades(choices) : "Number of Grenades" : 5 =
-		[
-		0: "None"
-		1: "1"
-		2: "2"
-		3: "3"
-		4: "4"
-		5: "5"
-		999999: "Unlimited"
-		]
-
 	teleportgrenades[engine](boolean) : "Teleportation" : 0
 	teleportgrenades[ASW](choices) : "Teleportation" : 0 =
 		[
 		0: "Disabled"
 		1: "Teleport Grenades"
 		]
-
 
 	tacticalvariant[engine](integer) : "Tactical Variant" : 0
 	tacticalvariant(choices) : "Tactical Variant" : 0 =
@@ -68,8 +56,11 @@
 		2: "Yes"
 		]
 
-	UnderthrowGrenades[MBase](boolean) : "Underthrow Grenades" : "0" : "If enabled, this soldier will 'underthrow' their grenades with ACT_SPECIAL_ATTACK1, which looks a lot more like the HL1 grunt animation. This includes grenades thrown during regular behavior and grenades forced with ThrowGrenadeAtTarget."
-	SetAlternateCapable[MBase](boolean) : "Alternate Capable" : "0" : "Makes the soldier capable of using both grenades AND energy balls at the same time, regardless of their elite status."
+	UnderthrowGrenades[MBase](boolean) : "Underthrow Grenades" : "0" : "If enabled, this soldier will 'underthrow' their grenades with ACT_SPECIAL_ATTACK1, " +
+		"which looks a lot more like the HL1 grunt animation. " +
+		"This includes grenades thrown during regular behavior and grenades forced with ThrowGrenadeAtTarget."
+	SetAlternateCapable[MBase](boolean) : "Alternate Capable" : "0" : "Makes the soldier capable of using both grenades AND energy balls at the same time, " +
+		"regardless of their elite status."
 
 
 	// Inputs

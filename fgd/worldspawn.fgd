@@ -81,6 +81,16 @@
 	detailmaterial(material)    : "Detail material file" : "detail/detailsprites"       : "Material for detail sprites to use for drawing detail props"
 	detailmaterial[TF2](string) : "Detail material file" : "detail/detailsprites_2fort" : "Material for detail sprites to use for drawing detail props"
 	
+	vscriptlanguage[engine](integer) : "VScript language" : 0 : "Sets the script language this map should use for entity scripts."
+	vscriptlanguage[MBase](choices) : "VScript language" : 0 : "Sets the script language this map should use for entity scripts." =
+		[	
+		0 : "Default (Squirrel)"
+		//1 : "GameMonkey (Unsupported)"
+		2 : "Squirrel"
+		//3 : "Lua (Unsupported)"
+		//4 : "Python (Unsupported)"
+		]
+
 	coldworld(boolean) : "World is cold" : 0 : "Emit steam from NPC's mouths and similar effects."
 	
 	paintinmap[P2](boolean) : "Enable Paint" : 0 : "Enable code for spreading paint on surfaces, and bouncing physics objects around."

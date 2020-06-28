@@ -31,6 +31,9 @@
 		2: "Preserve entity names (Don't do name fixup)" : 1
 		]
 
+	FixupMode[MBase](boolean) : "Expanded name fixup" : 0 : "Allows name fixup to target *all* instances of template names in keyvalues and I/O, including output parameters. " +
+		"Requires name fixup to be enabled (''Preserve entity names'' spawnflag disabled)."
+
 	template01(target_destination) : "Template 1"
 	template02(target_destination) : "Template 2"
 	template03(target_destination) : "Template 3"

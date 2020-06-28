@@ -9,9 +9,9 @@
 	SetDamageBitsAdded(integer) : "Damage Bits Added" : 0 : "Adds bits to the damage type. See a damage type keyvalue in an entity like filter_damage_type to get their bit representation."
 	SetDamageBitsRemoved(integer) : "Damage Bits Removed" : 0 : "Removes bits from the damage type. See a damage type keyvalue in an entity like filter_damage_type to get their bit representation."
 
-	NewAttacker(string) : "New Attacker" : : "If specified, the damage will be credited to this entity instead of the original attacker."
-	NewInflictor(string) : "New Inflictor" : : "If specified, the damage's inflictor will be changed to this entity instead of the original inflictor."
-	NewWeapon(string) : "New Weapon" : : "If specified, the damage's weapon will be changed to this entity instead of the original weapon."
+	NewAttacker(target_destination) : "New Attacker" : : "If specified, the damage will be credited to this entity instead of the original attacker."
+	NewInflictor(target_destination) : "New Inflictor" : : "If specified, the damage's inflictor will be changed to this entity instead of the original inflictor."
+	NewWeapon(target_destination) : "New Weapon" : : "If specified, the damage's weapon will be changed to this entity instead of the original weapon."
 
 	damagefilter(filterclass) : "Secondary Filter" : "" : "An optional secondary filter that can be used for either whose damage could be modified or as a real damage filter for whether any damage should be taken at all."
 	SecondaryFilterMode[engine](integer) : "Secondary Filter Mode" : 0

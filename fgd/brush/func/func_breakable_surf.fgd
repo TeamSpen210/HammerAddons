@@ -8,6 +8,7 @@
 		[
 		1: "Physics damage decals" : 0
 		2: "Take damage from held objects" : 0
+		4 : "Play break sound" : 0
 		]
 
 	health(integer) : "Health" : 5 : "The amount of damage the surface takes before breaking."

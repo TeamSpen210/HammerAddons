@@ -73,7 +73,7 @@ FEATURES: Dict[str, Set[str]] = {
     'EP1': {'INSTANCING'},
     'EP2': {'INSTANCING'},
 
-    'MBASE': {'INSTANCING'},
+    'MBASE': {'INSTANCING', 'VSCRIPT'},
     'MESA': {'INSTANCING', 'INST_IO'},
     'GMOD': {'HL2', 'EP1', 'EP2'},
     

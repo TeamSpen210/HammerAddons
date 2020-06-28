@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "8419"
-	"mapversion" "36"
+	"mapversion" "41"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -20,13 +20,56 @@ viewsettings
 world
 {
 	"id" "1"
-	"mapversion" "36"
+	"mapversion" "41"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
 	"maxblobcount" "250"
 	"maxpropscreenwidth" "-1"
 	"skyname" "sky_black_nofog"
+}
+entity
+{
+	"id" "1036"
+	"classname" "comp_relay"
+	"ctrl_type" "0"
+	"ctrl_value" "1"
+	"targetname" "relay_ready"
+	connections
+	{
+		"OnTrigger" "proxyProxyRelay0-1"
+	}
+	"origin" "16 16 -64"
+	editor
+	{
+		"color" "220 30 220"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"comments" "Fires to indicate the dropper is fully ready to drop again."
+		"logicalpos" "[0 0]"
+	}
+}
+entity
+{
+	"id" "1038"
+	"classname" "comp_relay"
+	"ctrl_type" "0"
+	"ctrl_value" "1"
+	"targetname" "dropper_status"
+	connections
+	{
+		"OnTurnedOn" "proxyProxyRelay0-1"
+		"OnTurnedOff" "proxyProxyRelay0-1"
+	}
+	"origin" "16 -16 -64"
+	editor
+	{
+		"color" "220 30 220"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"comments" "Outputs fire to indicate when this is actively dispensing."
+		"logicalpos" "[0 0]"
+	}
 }
 entity
 {
@@ -47,6 +90,8 @@ entity
 		"OnEndTouchAll" "manSetStateAFalse0-1"
 		"OnEndTouchAll" "close_trigDisable0-1"
 		"OnEndTouchAll" "drop_clipEnable0-1"
+		"OnEndTouchAll" "relay_readyTrigger3-1"
+		"OnEndTouchAll" "dropper_statusTurnOff0-1"
 	}
 	solid
 	{
@@ -237,7 +282,7 @@ entity
 	"angles" "0 0 0"
 	"Negated" "Allow entities that match criteria"
 	"targetname" "filter"
-	"origin" "0 0 -66.1267"
+	"origin" "0 16 -64"
 	editor
 	{
 		"color" "0 255 0"
@@ -444,21 +489,21 @@ entity
 entity
 {
 	"id" "391"
-	"classname" "logic_relay"
-	"angles" "0 0 0"
-	"spawnflags" "0"
-	"startdisabled" "$disable_autorespawn"
+	"classname" "comp_relay"
+	"ctrl_type" "0"
+	"ctrl_value" "$autorespawn"
 	"targetname" "respawn_rl"
 	connections
 	{
 		"OnTrigger" "manSetStateATrue0-1"
 	}
-	"origin" "-16 0 -64"
+	"origin" "16 0 -64"
 	editor
 	{
-		"color" "0 100 250"
+		"color" "220 30 220"
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
+		"comments" "Controls if it automatically respawns."
 		"logicalpos" "[0 -14768]"
 	}
 }
@@ -466,12 +511,12 @@ entity
 {
 	"id" "418"
 	"classname" "func_instance_parms"
-	"parm1" "$disable_autorespawn boolean 0"
+	"parm1" "$autorespawn boolean 1"
 	connections
 	{
 		"OnProxyRelay" "manSetStateATrue0-1"
 	}
-	"origin" "16 16 -64"
+	"origin" "-16 0 -64"
 	editor
 	{
 		"color" "220 30 220"
@@ -498,8 +543,9 @@ entity
 		"OnChangeToAllTrue" "close_trigEnable0.2-1"
 		"OnChangeToAllTrue" "!cubeEnablePortalFunnel0.3-1"
 		"OnChangeToAllTrue" "drop_clipDisable0-1"
+		"OnChangeToAllTrue" "dropper_statusTurnOn0-1"
 	}
-	"origin" "0 16 -64"
+	"origin" "0 -16 -64"
 	editor
 	{
 		"color" "0 100 250"
@@ -515,7 +561,7 @@ entity
 	"angles" "0 0 0"
 	"spawnflags" "2"
 	"targetname" "temp"
-	"origin" "0 -16 -64"
+	"origin" "1.39876e-006 0 0"
 	editor
 	{
 		"color" "220 30 220"
@@ -597,7 +643,7 @@ entity
 	{
 		"OnProxyRelay" "manSetStateATrue0-1"
 	}
-	"origin" "16 0 -64"
+	"origin" "0 0 -64"
 	editor
 	{
 		"color" "220 30 220"
