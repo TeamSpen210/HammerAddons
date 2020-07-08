@@ -1,6 +1,6 @@
 """Portal-2 specific transformations."""
 from srctools.bsp_transform import trans, Context
-from srctools import Output, conv_bool, conv_int, VMF
+from srctools import Output, conv_bool, conv_int, VMF, Vec
 
 
 @trans('Fix Laser Catcher Skins')
@@ -95,3 +95,40 @@ def precache_light_bridge(ctx: Context):
         effect_name='projected_wall_impact',
         start_active='0',
     )
+
+# Keyvalues to copy over to the trigger_catapult.
+CATAPULT_KEYS = [
+    ('playerspeed', '450'),
+    ('physicsspeed', '450'),
+    ('launchdirection', '0 0 0'),
+    ('launchtarget', ''),
+    ('useexactvelocity', '0'),
+    ('exactvelocitychoicetype', '0'),
+    ('applyangularimpulse', '1'),
+    ('airctrlsupressiontime', '-1'),
+    ('usethresholdcheck', '0'),
+    ('onlyvelocitycheck', '0'),
+    ('lowerthreshold', '0.15'),
+    ('upperthreshold', '0.30'),
+    ('entryangletolerance', '0.0'),
+]
+
+
+@trans('comp_faith_plate')
+def comp_faith_plate(ctx: Context) -> None:
+    """An entity to make faith plates more easily."""
+    for plate in ctx.vmf.by_class['comp_faith_plate']:
+        plate['classname'] = 'prop_dynamic'
+        pos = Vec.from_str(plate['origin'])
+        lx = Vec(x=1).rotate_by_str(plate['angles'])
+        ly = Vec(y=1).rotate_by_str(plate['angles'])
+        lz = Vec(z=1).rotate_by_str(plate['angles'])
+
+        trigger = ctx.vmf.create_ent(
+            'trigger_catapult',
+            origin=pos + 4 * lz,
+        )
+        trigger.make_unique(plate['targetname', 'plate'] + '_trig')
+
+        for key, default in CATAPULT_KEYS:
+            trigger[key] = plate.keys.pop(key, default)
