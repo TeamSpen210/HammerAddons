@@ -59,6 +59,7 @@ GAMES = [
     ('DOTA2', 'Dota 2'),
     ('PUNT', 'PUNT'),
     ('P2DES', 'Portal 2: Desolation'),
+    ('P2CE', 'Portal 2: Community Edition'),
 ]  # type: List[Tuple[str, str]]
 
 GAME_ORDER = [game for game, desc in GAMES]
@@ -83,6 +84,7 @@ FEATURES = {
     'CSGO': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
     'INFRA': {'P2', 'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'P2DES': {'P2', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
+    'P2CE': {'P2', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 }
 
 ALL_FEATURES = {
