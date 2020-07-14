@@ -13,7 +13,7 @@
 	[
 	damageforce(boolean) : "Damage Pushes Player" : 0 : "Being hit by this turret will push the player back."
 
-	spawnflags[P2](flags) : "spawnflags" =
+	spawnflags(flags) : "spawnflags" =
 		[
 		32: "Start Active" : 0
 		64: "Start Inactive" : 0

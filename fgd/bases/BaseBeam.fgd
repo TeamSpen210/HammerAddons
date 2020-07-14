@@ -1,8 +1,8 @@
 @BaseClass base(BaseEntityPoint, RenderFields, Reflection) 
 = BaseBeam: "This is the definition of the 'beam' class, but we don't want that in the entity list."
 	[
-	rendermode(choices) readonly : "Render Mode" : 2 : "Render mode is forced to Texture." = [
-		2: "Texture"
+	rendermode(choices) readonly : "Render Mode" : 1 : "Render mode is forced to Texture, but set to Color in Hammer to ensure correct rendering." = [
+		1: "Color"
 	]
 	renderamt(integer) : "Brightness (1 - 255)" : 100
 	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255"

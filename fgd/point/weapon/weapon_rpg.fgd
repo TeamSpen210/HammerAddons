@@ -1,6 +1,6 @@
 @PointClass base(Weapon) 
 	appliesto(EP1, EP2, HL2, P1)
 	autovis(Weapons, HL2 Weapons, Rocket Launcher) 
-	studio("models/weapons/w_rocket_launcher.mdl") = weapon_rpg: "Missile Launcher"
+	studioprop("models/weapons/w_rocket_launcher.mdl") = weapon_rpg: "Missile Launcher"
 	[
 	]

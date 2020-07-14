@@ -36,12 +36,13 @@ Icon
 .Spotlight-V100
 .Trashes
 
-# Portal 2 stuff
+# Source stuff
 *.vmx
 *.log
 *.prt
 *.filelist.txt
 *.bsp
+*.cache
 
 # Output of "compiled" FGDs
 build/

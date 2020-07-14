@@ -2,6 +2,6 @@
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
 	autovis(Weapons, CSGO Weapons, CS Equipment)
-	studio("models/weapons/w_eq_decoy_dropped.mdl") = weapon_decoy: "Decoy Grenade"
+	studioprop("models/weapons/w_eq_decoy_dropped.mdl") = weapon_decoy: "Decoy Grenade"
 	[
 	]

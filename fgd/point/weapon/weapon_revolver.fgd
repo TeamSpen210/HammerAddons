@@ -2,6 +2,6 @@
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
 	autovis(Weapons, CSGO Weapons, CS Pistols)
-	studio("models/weapons/w_pist_revolver_dropped.mdl") = weapon_revolver: "Revolver "
+	studioprop("models/weapons/w_pist_revolver_dropped.mdl") = weapon_revolver: "Revolver "
 	[
 	]

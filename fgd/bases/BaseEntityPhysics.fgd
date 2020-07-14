@@ -29,7 +29,7 @@
 	shadowcastdist(integer) : "Shadow Cast Distance" : : "Sets how far the entity casts dynamic shadows, in units. 0 means default distance from the shadow_control entity."
 	disableshadows(boolean) : "Disable Shadows?" : 0 : "Prevent the entity from creating cheap render-to-texture/dynamic shadows."
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents dynamic shadows (e.g. player and prop shadows) from appearing on this entity."
-	modelscale[EP1, EP2, TF2](float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
+	modelscale(float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
 	
 	linedivider_phys(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 

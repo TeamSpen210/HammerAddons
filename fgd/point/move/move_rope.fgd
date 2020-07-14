@@ -6,7 +6,7 @@
 // keyframe() causes them to automatically rename when copied.
 
 @MoveClass base(BaseEntityPoint, RopeKeyFrame) 
-	studio("models/editor/axis_helper.mdl")
+	studio("models/editor/axis_helper_thick.mdl")
 	iconsprite("editor/move_rope")
 	animator() keyframe()
 = move_rope: "A node entity that marks a point in a rope. " +

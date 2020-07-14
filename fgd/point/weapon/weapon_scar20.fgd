@@ -2,6 +2,6 @@
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
 	autovis(Weapons, CSGO Weapons, CS Sniper Rifles)
-	studio("models/weapons/w_snip_scar20_dropped.mdl") = weapon_scar20: "Scar20"
+	studioprop("models/weapons/w_snip_scar20_dropped.mdl") = weapon_scar20: "Scar20"
 	[
 	]
