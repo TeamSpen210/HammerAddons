@@ -1,0 +1,3 @@
+ai_addon
+ai_addon_builder
+ai_addon_factory

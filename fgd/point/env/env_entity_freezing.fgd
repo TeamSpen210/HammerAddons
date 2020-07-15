@@ -1,0 +1,12 @@
+@PointClass base(BaseEntityPoint)
+	color(200 200 0) 
+	line(255 128 0, targetname, target) 
+	iconsprite("editor/ficool2/env_entity_freezing.vmt")
+= env_entity_freezing: "An entity that freezes a specific entity. The entity will stop all bone-based animations and attacks, and will gain an icy texture."
+	[
+		target(target_destination) : "Entity to freeze" : : "Name of the entity to freeze."
+
+		input Freeze(target_destination) : "Freezes the specified entity(s). If no target is passed it'll use the target specified in the target field."
+		target(target_destination) : "Target(s) to Freeze" : "" : "Targetname of the entity(s) you want to freeze."
+		frozen(float) : "Freeze Time" : "5" : "How long to freeze the entity."
+	]
