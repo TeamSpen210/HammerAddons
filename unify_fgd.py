@@ -739,6 +739,9 @@ def action_export(
 
         print('Merging tags...')
         for ent in fgd:
+            # If it's set as not in engine, skip.
+            if not tags_not_engine.isdisjoint(get_appliesto(ent)):
+                continue
             # Strip applies-to helper and ordering helper.
             ent.helpers[:] = [
                 helper for helper in ent.helpers
@@ -752,25 +755,30 @@ def action_export(
                 # If there's an "ENGINE" tag, that's specifically for us.
                 # Otherwise, warn if there's a type conflict.
                 # If the final value is choices, warn too (not really a type).
-                for key, tag_map in category.items():
-                    # First strip anything not for us.
-                    tag_map = {
-                        tags: val
-                        for tags, val in
-                        tag_map.items()
-                        if tags.isdisjoint(tags_not_engine)
-                    }
+                for key, orig_tag_map in category.items():
+                    # Remake the map, excluding non-engine tags.
+                    # If any are explicitly matching us, just use that
+                    # directly.
+                    tag_map = {}
+                    for tags, value in orig_tag_map.items():
+                        if 'ENGINE' in tags or '+ENGINE' in tags:
+                            if value.type is ValueTypes.CHOICES:
+                                raise ValueError(
+                                    '{}.{}: Engine tags cannot be '
+                                    'CHOICES!'.format(ent.classname, key)
+                                )
+                            # Use just this.
+                            tag_map = {'': value}
+                            break
+                        elif '-ENGINE' not in tags and '!ENGINE' not in tags:
+                            tag_map[tags] = value
+
                     if not tag_map:
+                        # All were set as non-engine, so it's not present.
                         continue
                     elif len(tag_map) == 1:
+                        # Only one type, that's the one for the engine.
                         [value] = tag_map.values()
-                    elif tags_engine in tag_map:
-                        value = tag_map[tags_engine]
-                        if value.type is ValueTypes.CHOICES:
-                            raise ValueError(
-                                '{}.{}: Engine tags cannot be '
-                                'CHOICES!'.format(ent.classname, key)
-                            )
                     else:
                         # More than one tag.
                         # IODef and KeyValues have a type attr.
