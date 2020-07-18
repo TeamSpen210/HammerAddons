@@ -1,4 +1,4 @@
-@BaseClass base(_Breakable) = BreakableProp
+@BaseClass base(_Breakable, DamageFilter) = BreakableProp
 	[
 	spawnflags(flags)  =
 		[

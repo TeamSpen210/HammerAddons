@@ -4,7 +4,8 @@
  	autovis(Point Entities, Globals, Env Global)
 = env_global: "An entity to control a game-specific global states."
 	[
-	
+
+	globalstate[engine](string) : "Global State to Set"
 	globalstate(string) : "Global State to Set"
 	
 	globalstate[HL2, EP1, EP2](choices) : "Global State to Set" =

@@ -3,7 +3,7 @@
 	autovis(Entities, NPCs, Bullseye NPC)
 	color(255 0 0) = npc_bullseye: "Dummy NPC for targeting or other behavior."
 	[
-	linedivider_npc(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_npc[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	rendermode(choices) readonly : "Render Mode" : 1 : "This must be set to Color for Hammer to render the sprite correctly. It is not used in the engine." = 
 		[

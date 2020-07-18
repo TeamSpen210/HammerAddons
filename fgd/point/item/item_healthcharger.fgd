@@ -12,7 +12,7 @@
 	// Unfortunately can't use the custom model then...
 	model[MBase](studio) : "Model" : "models/props_combine/health_charger001.mdl" : "Set a custom model for the health charger."
 
-	charge[Mesa](float) : "Charge" : 50 : "How full the charger should be (0 - 100)"
+	charge[Mesa, engine](float) : "Juice" : 50 : "How full the charger should be (0 - 100)"
 	skintype[engine](integer) : "Skin Type" : 0
 	skintype[Mesa](choices) : "Force Skin" : 0 =
 		[

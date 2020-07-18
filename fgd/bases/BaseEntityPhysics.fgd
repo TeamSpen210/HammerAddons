@@ -22,7 +22,6 @@
 	LightingOrigin(target_destination) : "Lighting Origin" :  : "Select any entity (not info_lighting!) from which to sample lighting instead of the entity's origin."
 	LightingOriginHack(target_destination) : "Lighting Origin Offset" :  : "The info_lighting_relative from which to sample lighting instead of the entity's origin."
 	
-	damagefilter(target_destination) : "Damage Filter" :  : "When this entity receives damage, it will filter by this entity."
 	fademindist(float) : "Start Fade Distance/Pixels" : : "Distance at which the entity starts fading. If <0, the entity will disappear instantly when end fade is hit. The value will scale appropriately if the entity is in a 3D Skybox."
 	fademaxdist(float) : "End Fade Distance/Pixels" : : "Distance at which the entity ends fading. If <0, the entity won't disappear at all. The value will scale appropriately if the entity is in a 3D Skybox."
 	fadescale(float) : "Fade Scale" : : "If specified in the worldspawn, or if the engine is running below DirectX 8, entities will fade out even if the fade distances above aren't specified. This value gives more control over when this happens: numbers smaller than 1 cause the entity to fade out at further distances, and greater than 1 cause it to fade out at closer distances. Using 0 turns off the forced fade altogether."	
@@ -46,7 +45,6 @@
 	input SetLightingOriginHack(string) : "Offsets the entity's lighting origin by their distance from an info_lighting_relative."
 	input fademindist(float) : "Sets distance at which the entity starts fading. If <0, the entity will disappear instantly when end fade is hit. The value will scale appropriately if the entity is in a 3D Skybox."
 	input fademaxdist(float) : "Sets distance at which the entity ends fading. If <0, the entity won't disappear at all. The value will scale appropriately if the entity is in a 3D Skybox."
-	input SetDamageFilter(string) : "Sets a filter for this entity for when it receives damage. Pass in an empty string to clear the damage filter."
 	input DisableShadow(void) : "Allows the entity to draw a render target (dynamic) shadow."
 	input EnableShadow(void) : "Prevents the entity from drawing a render target (dynamic) shadow."
 	

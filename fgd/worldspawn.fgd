@@ -18,14 +18,10 @@
 		"but now it can change the message seen in the save/load menus, can be seen in Discord RPC, " +
 		"and the onscreen message behavior is now disabled by default (doesn't affect existing maps) " +
 		"through the ''Display Chapter Title Message'' keyvalue."
-	chaptertitlenomessage[+Mbase](choices) : "Display Chapter Title Message" : 1 : "Controls whether " +
+	chaptertitlenomessage[+Mbase](boolean) : "Display Chapter Title Message" : 1 : "Controls whether " +
 		"the Chapter Title Message should show up in a generated env_message " +
 		"when the map loads or whether it should only be used for savegame comments and RPC. " +
-		"This would normally be set to ''Yes'' outside of Mapbase." =
-		[	
-		0 : "Yes"
-		1 : "No"
-		]
+		"This would normally be set to ''Yes'' outside of Mapbase."
 
 	startdark(boolean) : "Level Fade In" : 0
 	gametitle[!P2](boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts."
@@ -79,7 +75,7 @@
 	detailvbsp[TF2](string) : "Detail .vbsp file" : "detail_2fort.vbsp" : "Detail .vbsp file to use for emitting detail props (found in directory <root>/modname)"
 
 	detailmaterial(material)    : "Detail material file" : "detail/detailsprites"       : "Material for detail sprites to use for drawing detail props"
-	detailmaterial[TF2](string) : "Detail material file" : "detail/detailsprites_2fort" : "Material for detail sprites to use for drawing detail props"
+	detailmaterial[TF2](material) : "Detail material file" : "detail/detailsprites_2fort" : "Material for detail sprites to use for drawing detail props"
 	
 	vscriptlanguage[engine](integer) : "VScript language" : 0 : "Sets the script language this map should use for entity scripts."
 	vscriptlanguage[MBase](choices) : "VScript language" : 0 : "Sets the script language this map should use for entity scripts." =

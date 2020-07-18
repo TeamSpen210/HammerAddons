@@ -1,11 +1,8 @@
-@BaseClass base(BaseEntityAnimating) 
+@BaseClass base(BaseEntityAnimating, DamageFilter) 
 	color(0 200 200) 
 	line(255 0 0, targetname, enemyfilter) 
 = BaseLogicalNPC
 	[
-	damagefilter[MBase](filterclass) : "Damage Filter" : "" : "Name of the filter entity that controls which entities can damage us."
-	input SetDamageFilter[MBase](target_destination) : "Sets the entity to use as damage filter. Pass in an empty string to clear the damage filter."
-
 	health(integer): "Health" : : "Overrides the NPC's default health. Cannot be higher than Max Health."
 	max_health(integer): "Max Health" : : "Overrides the NPC's max health. Health cannot exceed this amount."
 	squadname(string) : "Squad Name" : : "NPCs that are in the same squad (i.e. have matching squad names) will share information about enemies, and will take turns attacking and covering each other."
@@ -101,7 +98,7 @@
 	input SetEnemyFilter(target_destination) : "Changes this NPC's enemy filter to the named filter."
 	input SetHealth(integer) : "Set this NPC's health."
 	input SetHealthFraction[MBase](float) : "Sets the NPC's health as a fraction of its max health."
-	input physdamagescale(float) : "Sets the value that scales damage energy when this character is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility."
+	input PhysDamageScale(float) : "Sets the value that scales damage energy when this character is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility."
 	input Break(void) : "Makes the NPC die and disappear."
 	input StartScripting(void) : "Enter scripting state. In this state, NPCs ignore a variety of stimulus that would make them break out of their scripts: They ignore danger sounds, ignore +USE, don't idle speak or respond to other NPC's idle speech, and so on."
 	input StopScripting(void) : "Exit scripting state."

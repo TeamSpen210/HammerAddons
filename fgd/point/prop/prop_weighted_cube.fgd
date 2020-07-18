@@ -3,8 +3,8 @@
 	autovis(Test Elements, Cubes, Normal)
 	studioprop() = prop_weighted_cube: "Aperture Science Weighted Cube. Presses floor buttons, and can be moved around."
 	[
-	line_cube(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
-
+	line_cube[-engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	
 	cubetype[engine](integer) : "Cube Type" : 0
 	cubetype(choices) : "Cube Type" : "0" : "What cube type is this? Use a prop_monster_box for FrankenTurrets. " +
 		"If set to Custom, use AddOutput to change it back OnMapSpawn so gel skins behave correctly." =

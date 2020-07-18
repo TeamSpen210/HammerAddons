@@ -22,8 +22,7 @@
 	angleoverride(string) : "Override Animation" : : "Filled in by the engine via hammer_update_entity, do not edit by hand except to clear."
 
 	// Inputs
-	input StartRagdollBoogie[-MBase](void)  : "Begins ragdoll boogie effect. Parameter override = number of seconds to boogie."
-	input StartRagdollBoogie[+MBase](float) : "Begins ragdoll boogie effect. Parameter override = number of seconds to boogie."
+	input StartRagdollBoogie(float) : "Begins ragdoll boogie effect. Parameter override = number of seconds to boogie."
 	input Wake[MBase](void) : "Wakes up this physics object, if it is sleeping."
 	input Sleep[MBase](void) : "Puts this physics object to sleep. It will wake if given the Wake input, or if force is applied to it. Note that physics objects go to sleep automatically after coming to rest for a while, so you don't really need to use this."
 	input EnableMotion(void) : "Enable physics motion/collision response."

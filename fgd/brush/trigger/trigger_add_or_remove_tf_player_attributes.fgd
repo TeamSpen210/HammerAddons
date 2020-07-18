@@ -4,7 +4,7 @@
 	[
 	duration(float) : "Duration" : 0 : "The duration of the condition. NOTE: -1 duration means last until the player exits the trigger."
 	value(float) : "Value" : "1.0" : "The value which affects the attribute chosen."
-	add_or_remove(boolean) : "Add or Remove" : 0 : "Add or Remove Attribute."
+	add_or_remove[engine](boolean) : "Add or Remove" : 0 : "Add or Remove Attribute."
 	add_or_remove(choices) : "Add or Remove" : 0 : "Add or Remove Attribute." =
 		[
 		0 : "Add"

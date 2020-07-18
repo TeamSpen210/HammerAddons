@@ -41,8 +41,8 @@
 	input SetParentAttachment(string) : "Change this entity to attach to a specific attachment point on its parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment."
 	input SetParentAttachmentMaintainOffset(string) : "Change this entity to attach to a specific attachment point on it's parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment. The entity will maintain it's position relative to the parent at the time it is attached."
 	input ClearParent(void) : "Removes this entity from the the movement hierarchy, leaving it free to move independently."
-	input SetLocalAngles[since_ASW, MBase](string) : "Sets the rotation of the entity relative to the parent's rotation."
-	input SetLocalOrigin[since_ASW, MBase](string) : "Sets the position of the entity relative to its parent if one exists. Otherwise relative to the world."
+	input SetLocalAngles[since_ASW, MBase](vector) : "Sets the rotation of the entity relative to the parent's rotation."
+	input SetLocalOrigin[since_ASW, MBase](vector) : "Sets the position of the entity relative to its parent if one exists. Otherwise relative to the world."
 	input SetAbsAngles[MBase](vector) : "Set this entity's angles, always relative to the world origin."
 
 	input AddOutput(string) : "Adds an entity I/O connection to this entity or changes keyvalues dynamically. Format:" +
@@ -88,7 +88,6 @@
 	input CancelPending[MBase](void) : "Cancels any events fired by this entity that are currently pending in the I/O event queue."
 	
 	input FreeChildren[MBase](void) : "Unparents all direct children of this entity."
-	input SetLocalOrigin[MBase](vector) : "Sets this entity's origin in the map."
 	input SetLocalVelocity[MBase](vector) : "Sets this entity's current velocity."
 	input SetLocalAngularVelocity[MBase](vector) : "Sets this entity's current angular velocity."
 	

@@ -8,6 +8,8 @@
 	minfalloff(float) : "Lookup Falloff Start Distance" : "0.0" : "This is the distance to the start of the falloff region (-1 = everywhere)"
 	maxfalloff(float) : "Lookup Falloff End Distance" : "200.0" : "This is the distance to the end of the falloff region (-1 = everywhere)"
 	maxweight(float) : "Maximum Weight" : "1.0" : "This is the maximum weight for this lookup"
+	
+	filename[engine](string) : "Lookup Table Filename" : : "This is the lookup table filename"
 	filename(string) : "Lookup Table Filename" : : "This is the lookup table filename"
 	filename[TF2](choices): "Lookup Table Filename" : "" : "This is the lookup table filename" =
 		[
