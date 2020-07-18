@@ -43,7 +43,7 @@
 	
 	modelscale(float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
 	
-	linedivider_animbase(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_animbase[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	LightingOrigin(target_destination) : "Lighting Origin" :  : "Select any entity (not info_lighting!) from which to sample lighting instead of the entity's origin."
 	LightingOriginHack(target_destination) : "Lighting Origin Offset" :  : "The info_lighting_relative from which to sample lighting instead of the entity's origin."
@@ -66,7 +66,7 @@
 	shadowdepthnocache[engine](integer): "": 0
 	disableflashlight[since_L4D](boolean) : "Disable flashlight" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
 
-	linedivider_anim(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_anim[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs
 	input Skin(integer) : "Changes the model skin to the specified number."

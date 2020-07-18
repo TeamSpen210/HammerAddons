@@ -31,7 +31,7 @@
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents dynamic shadows (e.g. player and prop shadows) from appearing on this entity."
 	modelscale(float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
 	
-	linedivider_phys(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_phys[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs
 	input Skin(integer) : "Changes the model skin to the specified number."

@@ -14,7 +14,7 @@
 	parentname[srctools](target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
 	parent_attachment_point[srctools](string) : "Attachment Point" : : "If set, attach to this attachment point on the parent during spawn."
 
-	linedivider_vscript[+VSCRIPT](string) readonly : "-------------------------------------------------------------------------------------------------------" : ""
+	linedivider_vscript[+VSCRIPT, !engine](string) readonly : "-------------------------------------------------------------------------------------------------------" : ""
 
 	vscripts[VSCRIPT](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
 	thinkfunction[VSCRIPT](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
@@ -31,7 +31,7 @@
 		"You need to supply the tool class names, the names of the .lua files of those tools.\n" +
 		"This also includes the context menu properties!"
 
-	linedivider_base(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_base[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs
 	input Kill(void) : "Removes this entity from the world."

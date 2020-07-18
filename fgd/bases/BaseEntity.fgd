@@ -14,7 +14,7 @@
 		"Additional Init Code keyvalues can be added with SmartEdit off."
 	// etc
 
-	linedivider_base(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_base[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs
 	input Kill(void) : "Removes this entity from the world."
