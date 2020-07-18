@@ -775,7 +775,7 @@ def action_export(
                         # More than one tag.
                         # IODef and KeyValues have a type attr.
                         types = {val.type for val in tag_map.values()}
-                        if len(types) > 2:
+                        if len(types) > 1:
                             print('{}.{} has multiple types! ({})'.format(
                                 ent.classname,
                                 key,
