@@ -1,4 +1,4 @@
-@BaseClass base(BaseEntityBrush)
+@BaseClass base(BaseEntityVisBrush)
 	line(255 255 0, targetname, target) 
 = BaseTrain
 	[
