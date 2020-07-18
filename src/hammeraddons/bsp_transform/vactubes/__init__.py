@@ -95,8 +95,7 @@ def vactube_transform(ctx: Context) -> None:
     LOGGER.info('{} vactube nodes found.', len(all_nodes))
 
     if ctx.studiomdl is None:
-        LOGGER.error('Vactubes present, but no studioMDL path provided!')
-        return
+        raise ValueError('Vactubes present, but no studioMDL path provided!')
 
     obj_count, vac_objects, objects_code = objects.parse(ctx.vmf, ctx.pack)
 
