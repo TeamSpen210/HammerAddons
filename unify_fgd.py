@@ -734,6 +734,8 @@ def action_export(
         # Cache these constant sets.
         tags_empty = frozenset('')
         tags_engine = frozenset({'ENGINE'})
+        tags_not_engine = frozenset({'-ENGINE', '!ENGINE'})
+        just_dash = frozenset('-')
 
         print('Merging tags...')
         for ent in fgd:
@@ -751,7 +753,16 @@ def action_export(
                 # Otherwise, warn if there's a type conflict.
                 # If the final value is choices, warn too (not really a type).
                 for key, tag_map in category.items():
-                    if len(tag_map) == 1:
+                    # First strip anything not for us.
+                    tag_map = {
+                        tags: val
+                        for tags, val in
+                        tag_map.items()
+                        if tags.isdisjoint(tags_not_engine)
+                    }
+                    if not tag_map:
+                        continue
+                    elif len(tag_map) == 1:
                         [value] = tag_map.values()
                     elif tags_engine in tag_map:
                         value = tag_map[tags_engine]
