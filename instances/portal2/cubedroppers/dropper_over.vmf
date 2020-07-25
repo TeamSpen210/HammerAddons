@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "8419"
-	"mapversion" "127"
+	"mapversion" "129"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -20,7 +20,7 @@ viewsettings
 world
 {
 	"id" "1"
-	"mapversion" "127"
+	"mapversion" "129"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -56,8 +56,8 @@ world
 		{
 			"id" "309"
 			"plane" "(-96 -96 384) (-96 -96 16) (-96 96 16)"
-			"material" "PROPS/PLASTICWALL003A"
-			"uaxis" "[0 -1 0 640] 0.25"
+			"material" "METAL/METALWALL_BTS_006A"
+			"uaxis" "[0 -1 0 128] 0.25"
 			"vaxis" "[0 0 -1 64] 0.25"
 			"rotation" "0"
 			"lightmapscale" "16"
@@ -78,7 +78,7 @@ world
 		{
 			"id" "311"
 			"plane" "(-96 96 384) (-96 96 16) (-64 96 16)"
-			"material" "PROPS/PLASTICWALL003A"
+			"material" "METAL/METALWALL_BTS_006A"
 			"uaxis" "[-1 0 0 -128] 0.25"
 			"vaxis" "[0 0 -1 64] 0.25"
 			"rotation" "0"
@@ -89,8 +89,8 @@ world
 		{
 			"id" "312"
 			"plane" "(-96 -96 16) (-96 -96 384) (-64 -96 384)"
-			"material" "PROPS/PLASTICWALL003A"
-			"uaxis" "[1 0 0 -640] 0.25"
+			"material" "METAL/METALWALL_BTS_006A"
+			"uaxis" "[1 0 0 -128] 0.25"
 			"vaxis" "[0 0 -1 64] 0.25"
 			"rotation" "0"
 			"lightmapscale" "16"
@@ -154,7 +154,7 @@ world
 		{
 			"id" "317"
 			"plane" "(-64 96 384) (-64 96 16) (64 96 16)"
-			"material" "PROPS/PLASTICWALL003A"
+			"material" "METAL/METALWALL_BTS_006A"
 			"uaxis" "[-1 0 0 -128] 0.25"
 			"vaxis" "[0 0 -1 64] 0.25"
 			"rotation" "0"
@@ -219,8 +219,8 @@ world
 		{
 			"id" "322"
 			"plane" "(96 -96 16) (96 -96 384) (96 96 384)"
-			"material" "PROPS/PLASTICWALL003A"
-			"uaxis" "[0 1 0 -896] 0.25"
+			"material" "METAL/METALWALL_BTS_006A"
+			"uaxis" "[0 1 0 -384] 0.25"
 			"vaxis" "[0 0 -1 64] 0.25"
 			"rotation" "0"
 			"lightmapscale" "16"
@@ -230,7 +230,7 @@ world
 		{
 			"id" "323"
 			"plane" "(64 96 384) (64 96 16) (96 96 16)"
-			"material" "PROPS/PLASTICWALL003A"
+			"material" "METAL/METALWALL_BTS_006A"
 			"uaxis" "[-1 0 0 -128] 0.25"
 			"vaxis" "[0 0 -1 64] 0.25"
 			"rotation" "0"
@@ -241,8 +241,8 @@ world
 		{
 			"id" "324"
 			"plane" "(64 -96 16) (64 -96 384) (96 -96 384)"
-			"material" "PROPS/PLASTICWALL003A"
-			"uaxis" "[1 0 0 -640] 0.25"
+			"material" "METAL/METALWALL_BTS_006A"
+			"uaxis" "[1 0 0 -128] 0.25"
 			"vaxis" "[0 0 -1 64] 0.25"
 			"rotation" "0"
 			"lightmapscale" "16"
@@ -317,8 +317,8 @@ world
 		{
 			"id" "330"
 			"plane" "(-64 -96 16) (-64 -96 384) (64 -96 384)"
-			"material" "PROPS/PLASTICWALL003A"
-			"uaxis" "[1 0 0 -640] 0.25"
+			"material" "METAL/METALWALL_BTS_006A"
+			"uaxis" "[1 0 0 -128] 0.25"
 			"vaxis" "[0 0 -1 64] 0.25"
 			"rotation" "0"
 			"lightmapscale" "16"
@@ -338,8 +338,8 @@ world
 		{
 			"id" "331"
 			"plane" "(-96 -96 400) (96 -96 400) (96 -96 384)"
-			"material" "PROPS/PLASTICWALL003A"
-			"uaxis" "[1 0 0 -640] 0.25"
+			"material" "METAL/METALWALL_BTS_006A"
+			"uaxis" "[1 0 0 -128] 0.25"
 			"vaxis" "[0 0 -1 64] 0.25"
 			"rotation" "0"
 			"lightmapscale" "16"
@@ -349,7 +349,7 @@ world
 		{
 			"id" "332"
 			"plane" "(-96 96 384) (96 96 384) (96 96 400)"
-			"material" "PROPS/PLASTICWALL003A"
+			"material" "METAL/METALWALL_BTS_006A"
 			"uaxis" "[-1 0 0 -128] 0.25"
 			"vaxis" "[0 0 -1 64] 0.25"
 			"rotation" "0"
@@ -360,8 +360,8 @@ world
 		{
 			"id" "333"
 			"plane" "(-96 -96 400) (-96 -96 384) (-96 96 384)"
-			"material" "PROPS/PLASTICWALL003A"
-			"uaxis" "[0 -1 0 640] 0.25"
+			"material" "METAL/METALWALL_BTS_006A"
+			"uaxis" "[0 -1 0 128] 0.25"
 			"vaxis" "[0 0 -1 64] 0.25"
 			"rotation" "0"
 			"lightmapscale" "16"
@@ -371,8 +371,8 @@ world
 		{
 			"id" "334"
 			"plane" "(96 96 400) (96 96 384) (96 -96 384)"
-			"material" "PROPS/PLASTICWALL003A"
-			"uaxis" "[0 1 0 -896] 0.25"
+			"material" "METAL/METALWALL_BTS_006A"
+			"uaxis" "[0 1 0 -384] 0.25"
 			"vaxis" "[0 0 -1 64] 0.25"
 			"rotation" "0"
 			"lightmapscale" "16"
@@ -382,9 +382,9 @@ world
 		{
 			"id" "335"
 			"plane" "(96 -96 400) (-96 -96 400) (-96 96 400)"
-			"material" "PROPS/PLASTICWALL003A"
-			"uaxis" "[1 0 0 512] 0.25"
-			"vaxis" "[0 -1 0 512] 0.25"
+			"material" "METAL/METALWALL_BTS_006A"
+			"uaxis" "[1 0 0 384] 0.25"
+			"vaxis" "[0 -1 0 384] 0.25"
 			"rotation" "0"
 			"lightmapscale" "16"
 			"smoothing_groups" "0"
