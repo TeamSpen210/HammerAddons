@@ -55,7 +55,7 @@ def find_closest(
         if Vec.dot(src_norm, targ_norm) < ANG_THRESHOLD:
             continue
         for targ_point, targ in node_lst:
-            if node is targ or targ.has_input:
+            if node is targ:
                 continue
             # First check if we're beyond the target point
             off = (src_point - targ_point)
@@ -80,6 +80,7 @@ def find_closest(
             f'junction {name} at ({node.origin})!'
         )
     # Mark the node as having an input, for sanity checking purposes.
+    # Note that nodes can have multiple inputs, if they're merging paths.
     best_node.has_input = True
 
     return best_node
