@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "8419"
-	"mapversion" "131"
+	"mapversion" "137"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -20,7 +20,7 @@ viewsettings
 world
 {
 	"id" "1"
-	"mapversion" "131"
+	"mapversion" "137"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -474,9 +474,12 @@ entity
 	"kv5_known" "filter"
 	"kv5_mode" "target2known"
 	"kv5_src" "targetname"
+	"kv6_dest" "startasbox"
+	"kv6_mode" "const2target"
+	"kv6_src" "1"
 	"radius" "192"
 	"searchfov" "180"
-	"targetcls" "prop_weighted_cube"
+	"targetcls" "prop_weighted_cube prop_monster_box"
 	"targetname" "<pack_rename>"
 	"teleporttarget" "0"
 	connections
@@ -489,7 +492,7 @@ entity
 		"color" "220 30 220"
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
-		"comments" "This automatically sets up the cube. 1 makes the !cube output in the manager point at the cube to dissolve it. 2 sets the template name in the template. 3 ensures the cube starts with portal funnelling off. 4 then teleports the cube to the template position. Finaly this has an output to do auto-fizzling."
+		"comments" "This automatically sets up the cube. 1 makes the !cube output in the manager point at the cube to dissolve it. 2 sets the template name in the template. 3 ensures the cube starts with portal funnelling off. 4 then teleports the cube to the template position. 5 sets up the filter. 6 forces franken to box mode. Finaly this has an output to do auto-fizzling."
 		"logicalpos" "[0 -14768]"
 	}
 }
@@ -1194,7 +1197,7 @@ entity
 	"id" "1210"
 	"classname" "filter_activator_name"
 	"angles" "0 0 0"
-	"Negated" "Allow entities that match criteria"
+	"Negated" "0"
 	"targetname" "filter"
 	"origin" "0 -16 -192"
 	editor
@@ -1338,6 +1341,8 @@ entity
 		"OnEndTouchAll" "manSetStateAFalse0-1"
 		"OnEndTouchAll" "cube_fadeEnable0.9-1"
 		"OnEndTouchAll" "dropper_statusTurnOff0-1"
+		"OnEndTouchAll" "!activatorEnablePortalFunnel0-1"
+		"OnEndTouchAll" "!activatorBecomeMonster0-1"
 	}
 	solid
 	{

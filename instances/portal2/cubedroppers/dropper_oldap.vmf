@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "8419"
-	"mapversion" "41"
+	"mapversion" "43"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -20,7 +20,7 @@ viewsettings
 world
 {
 	"id" "1"
-	"mapversion" "41"
+	"mapversion" "43"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -92,6 +92,8 @@ entity
 		"OnEndTouchAll" "drop_clipEnable0-1"
 		"OnEndTouchAll" "relay_readyTrigger3-1"
 		"OnEndTouchAll" "dropper_statusTurnOff0-1"
+		"OnEndTouchAll" "!activatorEnablePortalFunnel0-1"
+		"OnEndTouchAll" "!activatorBecomeMonster0-1"
 	}
 	solid
 	{
@@ -671,9 +673,12 @@ entity
 	"kv4_known" "filter"
 	"kv4_mode" "target2known"
 	"kv4_src" "targetname"
+	"kv5_dest" "startasbox"
+	"kv5_mode" "const2target"
+	"kv5_src" "1"
 	"radius" "192"
 	"searchfov" "180"
-	"targetcls" "prop_weighted_cube"
+	"targetcls" "prop_weighted_cube prop_monster_box"
 	"targetname" "<pack_rename>"
 	"teleporttarget" "1"
 	connections
@@ -686,6 +691,7 @@ entity
 		"color" "220 30 220"
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
+		"comments" "This automatically sets up the cube. 1 makes the !cube output in the manager point at the cube to dissolve it. 2 sets the template name in the template. 3 ensures the cube starts with portal funnelling off. 4 sets up the filter. 5 forces franken to box mode. Finaly this has an output to do auto-fizzling."
 		"logicalpos" "[0 -14768]"
 	}
 }
