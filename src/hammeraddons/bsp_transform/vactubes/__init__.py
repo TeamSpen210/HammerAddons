@@ -95,13 +95,22 @@ def vactube_transform(ctx: Context) -> None:
     LOGGER.info('{} vactube nodes found.', len(all_nodes))
 
     if ctx.studiomdl is None:
-        raise ValueError('Vactubes present, but no studioMDL path provided!')
+        raise ValueError(
+            'Vactubes present, but no studioMDL path provided! '
+            'Set the path to studiomdl.exe in srctools.vdf.'
+        )
 
     obj_count, vac_objects, objects_code = objects.parse(ctx.vmf, ctx.pack)
+    groups = set(objects_code)
+
+    if not obj_count:
+        raise ValueError(
+            'Vactube nodes present, but no objects. '
+            'You need to add comp_vactube_objects to your map '
+            'to define the contents.'
+        )
 
     LOGGER.info('{} vactube objects found.', obj_count)
-    if not obj_count:
-        return  # Nothing for inside vactubes.
 
     # Now join all the nodes to each other.
     # Tubes only have 90 degree bends, so a system should mostly be formed
@@ -140,6 +149,18 @@ def vactube_transform(ctx: Context) -> None:
             )
         if isinstance(node, nodes.Spawner):
             sources.append(node)
+            if node.group not in groups:
+                group_warn = (
+                    f'Node {node} uses group "{node.group}", '
+                    'which has no objects registered!'
+                )
+                if '' in groups:
+                    # Fall back to ignoring the group, using the default
+                    # blank one which is present.
+                    LOGGER.warning("{} Using blank group.", group_warn)
+                    node.group = ""
+                else:
+                    raise ValueError(group_warn)
 
     # Run through them again, check to see if any miss inputs.
     for node in all_nodes:
@@ -282,12 +303,14 @@ def vactube_transform(ctx: Context) -> None:
                 cube_model = target.cube['model'].replace('\\', '/')
                 cube_skin = conv_int(target.cube['skin'])
                 try:
-                    cube_name = vac_objects[cube_model, cube_skin].id
+                    cube_name = vac_objects[start_node.group, cube_model, cube_skin].id
                 except KeyError:
                     LOGGER.warning(
-                        'Cube model "{}" doesn\'t '
-                        'travel in vactubes!\n\n'
-                        'Add a comp_vactube_object entity.',
+                        'Cube model "{}" is not a type of cube travelling '
+                        'in this vactube!\n\n'
+                        'Add a comp_vactube_object entity with this cube model'
+                        # Mention groups if they're used, otherwise it's not important.
+                        + (f' with the group "{start_node.group}".' if start_node.group else '.'),
                         cube_model,
                     )
                 else:
@@ -297,7 +320,7 @@ def vactube_transform(ctx: Context) -> None:
                 f'{cube_name}, [{pass_code}]);'
             )
         spawn_maker['vscripts'] = ' '.join([
-            'srctools/vac_anim.nut', objects_code,
+            'srctools/vac_anim.nut', objects_code[start_node.group],
             ctx.pack.inject_vscript('\n'.join(code)),
         ])
 

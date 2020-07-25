@@ -168,6 +168,7 @@ class Spawner(Node):
 
     def __init__(self, ent: Entity) -> None:
         super().__init__(ent)
+        self.group = ent['group'].casefold().strip()
         self.speed = srctools.conv_float(ent['speed'], 800.0)
         self.is_auto = srctools.conv_bool(ent['timer'])
         if self.is_auto:
