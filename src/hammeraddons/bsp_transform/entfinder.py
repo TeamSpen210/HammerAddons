@@ -2,7 +2,7 @@
 import itertools
 import math
 from enum import Enum
-from typing import Dict, Tuple
+from typing import Dict, Iterable
 
 from srctools.bsp_transform import trans, Context
 from srctools import conv_bool, conv_float, Vec, Entity
@@ -12,6 +12,7 @@ LOGGER = get_logger(__name__)
 
 
 class FinderModes(Enum):
+    """The kind of modification to apply to the found ent."""
     CONST_TARG = 'const2target'
     CONST_KNOWN = 'const2known'
     KNOWN_TO_TARG = 'known2target'
@@ -19,7 +20,8 @@ class FinderModes(Enum):
     OUTPUT_MERGE = 'replacetarget'
 
 NEEDS = {
-    # non-blank src, known ent
+    # For each mode, what data they need.
+    # In order: a source keyvalue, and a known entity
     FinderModes.CONST_TARG: (False, False),
     FinderModes.CONST_KNOWN: (False,  True),
     FinderModes.KNOWN_TO_TARG: (True, True),
@@ -35,7 +37,7 @@ def entity_finder(ctx: Context):
 
     for finder in ctx.vmf.by_class['comp_entity_finder']:
         finder.remove()
-        targ_class = finder['targetcls']
+        targ_classes = frozenset(finder['targetcls'].split())
         targ_radius = conv_float(finder['radius'])
         targ_ref = finder['targetref']
         blacklist = finder['blacklist'].casefold()
@@ -64,8 +66,15 @@ def entity_finder(ctx: Context):
                     targ_ref,
                     finder['origin'],
                 )
+        if len(targ_classes) == 0:
+            LOGGER.warning(
+                'Entity finder at <{}> has no '
+                'classname specified.',
+                finder['origin'],
+            )
+            continue
 
-        key = (targ_class, targ_radius, blacklist, targ_fov) + targ_pos.as_tuple()
+        key = (targ_classes, targ_radius, blacklist, targ_fov) + targ_pos.as_tuple()
         try:
             found_ent = target_cache[key]
         except KeyError:
@@ -88,7 +97,15 @@ def entity_finder(ctx: Context):
                     """No blacklist."""
                     return False
 
-            for targ_ent in ctx.vmf.by_class[targ_class]:
+            # If multiple, it's the union of the sets. If there's a single one
+            # we don't need to copy by_class[].
+            if len(targ_classes) == 1:
+                [single_class] = targ_classes
+                ent_set = ctx.vmf.by_class[single_class]
+            else:
+                ent_set = set.union(*[ctx.vmf.by_class[cls] for cls in targ_classes])
+
+            for targ_ent in ent_set:
                 if blacklist_func(targ_ent['targetname']):
                     continue
 
@@ -106,10 +123,23 @@ def entity_finder(ctx: Context):
                         cur_dist = dist_to
             del targ_ent
             if found_ent is None:
+                # Convert the set of classes to a nice string.
+                if len(targ_classes) == 0:
+                    cls_desc = ''
+                elif len(targ_classes) == 1:
+                    [single_class] = targ_classes
+                    cls_desc = single_class + ' '
+                else:
+                    [*first_classes, last_class] = sorted(targ_classes)
+                    cls_desc = '{} or {}'.format(
+                        ', '.join(first_classes),
+                        last_class
+                    )
+
                 LOGGER.warning(
-                    'Cannot find valid {} entity within {} units '
+                    'Cannot find valid {}entity within {} units '
                     'for entity finder at <{}>! (fov={}, in direction {})',
-                    targ_class,
+                    cls_desc,
                     targ_radius,
                     finder['origin'],
                     targ_fov,
