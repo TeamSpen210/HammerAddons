@@ -1,0 +1,7 @@
+UnlitGeneric
+	{
+	$basetexture "models/editor/ts/env_muzzleflash"
+	$model 1
+	$alphatest 1
+	$alphatestreference 0.5
+	}
