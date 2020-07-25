@@ -2,7 +2,7 @@
 from typing import Tuple, Dict
 
 from srctools.bsp_transform import trans, Context
-from srctools import Output, conv_bool, conv_float, Vec, Entity
+from srctools import Output, conv_bool, conv_float, Vec, Entity, conv_int
 
 
 @trans('P2 Coop Trigger')
@@ -77,6 +77,7 @@ def comp_trigger_goo(ctx: Context):
         hurt = trig.copy()
         diss = trig.copy()
         ctx.vmf.add_ents([hurt, diss])
+        spawnflags = conv_int(trig['spawnflags'])
 
         for keyvalue in [
             'dissolve_filter',
@@ -87,7 +88,8 @@ def comp_trigger_goo(ctx: Context):
             del diss[keyvalue], hurt[keyvalue]
 
         diss['classname'] = 'trigger_multiple'
-        diss['spawnflags'] = 1096  # Physics, physics debris, everything
+        # No clients, add physics. But otherwise leave it to the user.
+        diss['spawnflags'] = (spawnflags & ~1) | 8
         diss['wait'] = 0  # No delay.
         diss['filtername'] = trig['dissolve_filter']
         del diss['damagetype']
