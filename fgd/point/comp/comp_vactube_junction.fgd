@@ -4,6 +4,7 @@
 	studioprop()
 = comp_vactube_junction : "Marks a junction in a vactube, where they're forced to change direction. Scanner models near straight nodes will be detected automatically."
 [
+	targetname(target_source): "Debug Name" : : "These aren't entities, so this can't be targeted. But you can use this to help with identifying problems since the compiler will output it."
 	// Not studio, we don't want to pack these.
 	model[engine](string) : "Type" : "models/editor/vactubes/straight.mdl"
 	model(choices) : "Type" : "models/editor/vactubes/straight.mdl" : "The size and type of junction. Splitters split the tube into multiple paths. You can simply overlap two junctions to join paths, however." = [
