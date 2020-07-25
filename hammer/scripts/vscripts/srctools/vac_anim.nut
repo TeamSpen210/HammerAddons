@@ -136,11 +136,7 @@ function make_cube() {
 			return; // No positions...
 		}
 		anim = ANIM_DECO[RandomInt(0, ANIM_DECO.len()-1)];
-		if (RandomInt(1, 1000) == 2) {
-			cargo_type = CHICKEN;
-		} else {
-			cargo_type = CARGOS[RandomInt(0, CARGOS.len()-1)];
-		}
+		cargo_type = CARGOS[RandomInt(0, CARGOS.len()-1)];
 	}
 
 
