@@ -327,6 +327,12 @@ def vactube_transform(ctx: Context) -> None:
 
     # Now, go through each dropper and generate their logic.
     for dropper, anim in dropper_to_anim.items():
+        # Pick the appropriate output to fire once left the dropper.
+        if dropper.cube['classname'] == 'prop_monster_box':
+            cube_input = 'BecomeMonster'
+        else:
+            cube_input = 'EnablePortalFunnel'
+
         ctx.add_io_remap(
             dropper.ent['targetname'],
             # Used to dissolve the existing cube when respawning.
@@ -337,5 +343,6 @@ def vactube_transform(ctx: Context) -> None:
                 anim.start_node.ent['targetname'],
                 'RunScriptCode',
                 f'{anim.name}.req_spawn = true',
-            )
+            ),
+            Output('CubeReleased', '!activator', cube_input),
         )

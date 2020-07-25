@@ -246,7 +246,7 @@ class Dropper(Destroyer):
         best_dist = math.inf
         radius **= 2
         ref_pos = Vec.from_str(cube_filter['origin'])
-        for cube in vmf.by_class['prop_weighted_cube']:
+        for cube in vmf.by_class['prop_weighted_cube'] | vmf.by_class['prop_monster_box']:
             dist = (Vec.from_str(cube['origin']) - ref_pos).mag_sq()
             if dist > radius or dist > best_dist:
                 continue
@@ -267,8 +267,13 @@ class Dropper(Destroyer):
 
         # Now adjust the cube for dropper use.
         best_cube.make_unique('dropper_cube')
-        best_cube['allowfunnel'] = '0'
         best_cube['origin'] = ent['origin']
+        # Only regular cubes can disable funnelling, but frankenturrets
+        # require being in box form.
+        if best_cube['classname'] == 'prop_monster_box':
+            best_cube['startasbox'] = '1'
+        else:
+            best_cube['allowfunnel'] = '0'
 
         # Copy the cube name to filter and dropper.
         cube_filter['filtername'] = best_cube['targetname']
@@ -287,7 +292,6 @@ class Dropper(Destroyer):
                 if out.output.casefold() == 'onfizzled'
             ]
         ent.add_out(Output(Dropper.pass_out_name, template, 'ForceSpawn'))
-
         return Dropper(ent, template, best_cube)
 
 
