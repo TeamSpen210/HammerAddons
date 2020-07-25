@@ -114,4 +114,13 @@ def strip_ents(ctx: Context):
     ]:
         for ent in ctx.vmf.by_class[clsname]:
             ent.remove()
-            
+
+    # Strip extra keys added in the engine.
+    to_remove = []
+    for ent in ctx.vmf.entities:
+        to_remove.clear()
+        for key, value in ent.keys.items():
+            if 'divider' in key and value == "":
+                to_remove.append(key)
+        for key in to_remove:
+            del ent.keys[key]
