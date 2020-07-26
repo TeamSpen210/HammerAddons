@@ -45,6 +45,7 @@ GAMES = [
     ('MBASE', 'Mapbase'),
     # Mesa also appears to be about here...
     ('MESA', 'Black Mesa'),
+    ('GMOD', "Gary's Mod"),
 
     ('TF2',  'Team Fortress 2'),
     ('P1', 'Portal'),
@@ -66,14 +67,15 @@ GAME_NAME = dict(GAMES)
 
 # Specific features that are backported to various games.
 
-FEATURES = {
+FEATURES: Dict[str, Set[str]] = {
     # 2013 engine backports this.
     'HL2': {'INSTANCING'},
     'EP1': {'INSTANCING'},
     'EP2': {'INSTANCING'},
 
-    'MBASE': {'HL2', 'EP1', 'EP2', 'INSTANCING'},
+    'MBASE': {'INSTANCING', 'VSCRIPT'},
     'MESA': {'INSTANCING', 'INST_IO'},
+    'GMOD': {'HL2', 'EP1', 'EP2'},
     
     'L4D': {'INSTANCING'},
     'L4D2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
@@ -254,7 +256,7 @@ def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> FGD
     fgd.map_size_max = 16384
 
     # Classname -> filename
-    ent_source = {}  # Dict[str, str]
+    ent_source: Dict[str, str] = {}
 
     with RawFileSystem(str(dbase)) as fsys:
         for file in dbase.rglob("*.fgd"):
@@ -341,10 +343,10 @@ def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> FGD
 
 def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
     """Parse through the visgroup.cfg file, adding these visgroups."""
-    cur_path = []
+    cur_path: List[str] = []
     # Visgroups don't allow duplicating names. Work around that by adding an
     # invisible suffix.
-    group_count = Counter()
+    group_count: Dict[str, int] = Counter()
     try:
         f = (dbase / 'visgroups.cfg').open()
     except FileNotFoundError:
@@ -357,6 +359,7 @@ def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
                 continue
             cur_path = cur_path[:indent]  # Dedent
             if line.startswith('-') or '(' in line or ')' in line:  # Visgroup.
+                single_ent: Optional[str]
                 try:
                     vis_name, single_ent = line.lstrip('*-').split('(', 1)
                 except ValueError:
@@ -468,6 +471,8 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
         if ent.type is EntityTypes.BASE:
             counter = count_base
             typ = 'Base'
+            # Ensure it's present, so we detect 0-use bases.
+            base_uses[ent.classname]  # noqa
         elif ent.type is EntityTypes.BRUSH:
             counter = count_brush
             typ = 'Brush'
@@ -526,7 +531,7 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
         try:
             import matplotlib.pyplot as plt
         except ImportError:
-            pass
+            plt = None
         else:
             disp_games = game_order[::-1]
             point_count_list = [count_point[game] for game in disp_games]
@@ -540,7 +545,10 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
 
     print('\n\nBases:')
     for base, count in sorted(base_uses.items(), key=lambda x: (len(x[1]), x[0])):
-        if fgd[base].type is EntityTypes.BASE:
+        ent = fgd[base]
+        if ent.type is EntityTypes.BASE and (
+            ent.keyvalues or ent.outputs or ent.inputs
+        ):
             print(base, len(count), count if len(count) == 1 else '...')
 
     print('\n\nEntity Dumps:')
@@ -570,7 +578,7 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
     print('\n\nMissing Class Resources:')
     from srctools.packlist import CLASS_RESOURCES
 
-    missing = 0
+    missing_count = 0
     for clsname in sorted(fgd.entities):
         ent = fgd.entities[clsname]
         if ent.type is EntityTypes.BASE:
@@ -582,8 +590,8 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
 
         if clsname not in CLASS_RESOURCES:
             print(clsname, end=', ')
-            missing += 1
-    print('\nMissing:', missing)
+            missing_count += 1
+    print('\nMissing:', missing_count)
 
     print('Extra ents: ')
     for clsname in CLASS_RESOURCES:
@@ -726,35 +734,56 @@ def action_export(
         # Cache these constant sets.
         tags_empty = frozenset('')
         tags_engine = frozenset({'ENGINE'})
+        tags_not_engine = frozenset({'-ENGINE', '!ENGINE'})
+        just_dash = frozenset('-')
 
         print('Merging tags...')
         for ent in fgd:
+            # If it's set as not in engine, skip.
+            if not tags_not_engine.isdisjoint(get_appliesto(ent)):
+                continue
             # Strip applies-to helper and ordering helper.
             ent.helpers[:] = [
                 helper for helper in ent.helpers
                 if not helper.IS_EXTENSION
             ]
+            value: Union[IODef, KeyValues]
+            category: Dict[str, Dict[FrozenSet[str], Union[IODef, KeyValues]]]
             for category in [ent.inputs, ent.outputs, ent.keyvalues]:
                 # For each category, check for what value we want to keep.
                 # If only one, we keep that.
                 # If there's an "ENGINE" tag, that's specifically for us.
                 # Otherwise, warn if there's a type conflict.
                 # If the final value is choices, warn too (not really a type).
-                for key, tag_map in category.items():
-                    if len(tag_map) == 1:
+                for key, orig_tag_map in category.items():
+                    # Remake the map, excluding non-engine tags.
+                    # If any are explicitly matching us, just use that
+                    # directly.
+                    tag_map = {}
+                    for tags, value in orig_tag_map.items():
+                        if 'ENGINE' in tags or '+ENGINE' in tags:
+                            if value.type is ValueTypes.CHOICES:
+                                raise ValueError(
+                                    '{}.{}: Engine tags cannot be '
+                                    'CHOICES!'.format(ent.classname, key)
+                                )
+                            # Use just this.
+                            tag_map = {'': value}
+                            break
+                        elif '-ENGINE' not in tags and '!ENGINE' not in tags:
+                            tag_map[tags] = value
+
+                    if not tag_map:
+                        # All were set as non-engine, so it's not present.
+                        continue
+                    elif len(tag_map) == 1:
+                        # Only one type, that's the one for the engine.
                         [value] = tag_map.values()
-                    elif tags_engine in tag_map:
-                        value = tag_map[tags_engine]
-                        if value.type is ValueTypes.CHOICES:
-                            raise ValueError(
-                                '{}.{}: Engine tags cannot be '
-                                'CHOICES!'.format(ent.classname, key)
-                            )
                     else:
                         # More than one tag.
                         # IODef and KeyValues have a type attr.
                         types = {val.type for val in tag_map.values()}
-                        if len(types) > 2:
+                        if len(types) > 1:
                             print('{}.{} has multiple types! ({})'.format(
                                 ent.classname,
                                 key,
@@ -775,6 +804,7 @@ def action_export(
                             'tag!'.format(ent.classname, key)
                         )
                         if isinstance(value, KeyValues):
+                            assert value.val_list is not None
                             try:
                                 for choice_val, name, tag in value.val_list:
                                     int(choice_val)
@@ -841,18 +871,31 @@ def action_export(
 
     print('Culling unused bases...')
     used_bases = set()  # type: Set[EntityDef]
+    # We only want to keep bases that provide keyvalues. We've merged the
+    # helpers in.
     for ent in fgd.entities.values():
-        # Helpers aren't inherited, so this isn't useful anymore.
         if ent.type is not EntityTypes.BASE:
-            used_bases.update(ent.iter_bases())
+            for base in ent.iter_bases():
+                if base.type is EntityTypes.BASE and (
+                    base.keyvalues or base.inputs or base.outputs
+                ):
+                    used_bases.add(base)
 
     for classname, ent in list(fgd.entities.items()):
         if ent.type is EntityTypes.BASE:
             if ent not in used_bases:
                 del fgd.entities[classname]
+                continue
             else:
                 # Helpers aren't inherited, so this isn't useful anymore.
                 ent.helpers.clear()
+        # Cull all base classes we don't use.
+        # Ents that inherit from each other always need to exist.
+        ent.bases = [
+            base
+            for base in ent.bases
+            if base.type is not EntityTypes.BASE or base in used_bases
+        ]
 
     print('Culling visgroups...')
     # Cull visgroups that no longer exist for us.

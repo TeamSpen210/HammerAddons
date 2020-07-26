@@ -23,8 +23,8 @@
 	// Inputs
 	input LightOn(void) : "Turn the spotlight on."
 	input LightOff(void) : "Turn the spotlight off"
-	input SetColor[since_ASW](color255) : "Change the color of the spotlight."
-	input ForceUpdate[since_ASW](void) : "Force an update of the spotlight position and orientation."
+	input SetColor[since_ASW, GMod](color255) : "Change the color of the spotlight."
+	input ForceUpdate[since_ASW, GMod](void) : "Force an update of the spotlight position and orientation."
 
 	// Outputs
 	output OnLightOn(void) : "Fires when light turns on."

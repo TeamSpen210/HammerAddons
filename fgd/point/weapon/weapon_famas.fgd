@@ -2,6 +2,6 @@
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
 	autovis(Weapons, CSGO Weapons, CS Assault Rifles)
-	studio("models/weapons/w_rif_famas_dropped.mdl") = weapon_famas: "FAMAS"
+	studioprop("models/weapons/w_rif_famas_dropped.mdl") = weapon_famas: "FAMAS"
 	[
 	]

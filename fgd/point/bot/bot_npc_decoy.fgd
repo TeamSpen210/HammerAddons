@@ -1,0 +1,6 @@
+@PointClass base(BaseNPC, EnableDisable, TeamNum)
+	appliesto(TF2)
+	studio("models/player/sniper.mdl")
+= bot_npc_decoy : "Spy NextBot"
+	[
+	]

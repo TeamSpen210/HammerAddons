@@ -6,4 +6,5 @@
 
 	// Inputs
 	input SetAdvantageTeam(string) : "Set which team has the advantage."
+	input SetModelScale(string) : "Scale of teleport box."
 	]

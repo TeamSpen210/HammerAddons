@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(P2) 
 	studio("models/editor/angle_helper.mdl") 
+	iconsprite("editor/point_futbol_shooter")
 = point_futbol_shooter: "Fires prop_exploding_futbols at a target entity. " +
 	"Used in Wheatley's boss fight."
 	[

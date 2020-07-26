@@ -1,7 +1,7 @@
 
 @PointClass base(Weapon) 
-	appliesto(EP1, EP2, HL2, P1) 
+	appliesto(EP1, EP2, HL2, P1, Mesa) 
 	autovis(Weapons, HL2 Weapons, Crossbow)
-	studio("models/weapons/w_crossbow.mdl") = weapon_crossbow: "Crossbow"
+	studioprop("models/weapons/w_crossbow.mdl") = weapon_crossbow: "Crossbow"
 	[
 	]

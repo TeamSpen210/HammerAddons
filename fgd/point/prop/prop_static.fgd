@@ -50,7 +50,7 @@
 
 	preventpropcombine[PROPCOMBINE](boolean) : "Disable Prop Combine" : 0 : "Prevent this static prop from combining with any other static props in vbsp."
 
-	linedivider_levels(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_levels[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	mincpulevel[engine](integer): "Minimum CPU Level": 0
 	maxcpulevel[engine](integer): "Maximum CPU Level": 0
@@ -117,7 +117,7 @@
 
 	disablex360[since_L4D2](boolean) : "Disable on Xbox 360" : 0
 
-	linedivider_light(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_light[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	disableshadows(boolean) : "Disable Shadows" : 0
 	disablevertexlighting(boolean) : "Disable Vertex lighting" : 0 : "Disable per-vertex lighting on this prop."
@@ -129,14 +129,14 @@
 	
 	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's origin."
 
-	linedivider_lmap[TF2, MESA](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_lmap[TF2, MESA, !engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	generatelightmaps[TF2, MESA](boolean) : "Generate (and use) lightmaps for this static prop" : 0
 	lightmapresolutionx[TF2, MESA](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
 	lightmapresolutiony[TF2, MESA](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
 	
 
-	linedivider_fade(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_fade[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	screenspacefade[until_ASW](boolean) : "Screen Space Fade" : 0 : "The method by which the fading distance should be determined. If 'No', the fade distances is the distance from the player's view to the object, in inches. " +
 		"If 'Yes', the fade distance is the size of the object onscreen, in pixels."

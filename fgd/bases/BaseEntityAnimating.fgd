@@ -43,7 +43,7 @@
 	
 	modelscale(float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
 	
-	linedivider_animbase(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_animbase[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	LightingOrigin(target_destination) : "Lighting Origin" :  : "Select any entity (not info_lighting!) from which to sample lighting instead of the entity's origin."
 	LightingOriginHack(target_destination) : "Lighting Origin Offset" :  : "The info_lighting_relative from which to sample lighting instead of the entity's origin."
@@ -66,7 +66,7 @@
 	shadowdepthnocache[engine](integer): "": 0
 	disableflashlight[since_L4D](boolean) : "Disable flashlight" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
 
-	linedivider_anim(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_anim[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs
 	input Skin(integer) : "Changes the model skin to the specified number."
@@ -89,7 +89,7 @@
 	input EnableReceivingFlashlight[since_L4D](void) : "This object may recieve light or shadows from projected textures (flashlights)."
 	
 	input AlternativeSorting[SINCE_EP1](boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
-	input SetModelScale[EP1, EP2, MESA](vector) : "Takes two values separated by a space. The first is the target model scale. " +
+	input SetModelScale[EP1, EP2, MESA, !GMod](vector) : "Takes two values separated by a space. The first is the target model scale. " +
 		"The second value is the number of seconds the change in scale will be spread over."
 
 	input SetModel[MBase](string) : "Sets this entity's model. Must include 'models/' as well as the extension."

@@ -13,7 +13,7 @@
 	[
 	damageforce(boolean) : "Damage Pushes Player" : 0 : "Being hit by this turret will push the player back."
 
-	spawnflags[P2](flags) : "spawnflags" =
+	spawnflags(flags) : "spawnflags" =
 		[
 		32: "Start Active" : 0
 		64: "Start Inactive" : 0
@@ -84,6 +84,7 @@
 	input SetAsBouncePainted[P2](void) : "Force this turret to be painted with bounce paint."
 	input EnableMotion[P2](void) : "Enable physics motion."
 	input DisableMotion[P2](void) : "Disable physics motion."
+	input SetModel[engine](string) : "Was string in P1, now int in P2."
 	input SetModel[P2](integer) : "Change the model, where the parameter is an integer from 0-4. Requires the Load Defective Models keyvalue to be true!"
 
 	// Outputs

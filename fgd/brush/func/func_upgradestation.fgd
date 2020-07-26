@@ -1,4 +1,4 @@
-@SolidClass base(BaseEntityBrush, EnableDisable) 
+@SolidClass base(Trigger) 
 	appliesto(TF2) = func_upgradestation: "The upgrade station area for MvM, where players buy upgrades."
 	[
 	]

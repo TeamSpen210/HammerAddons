@@ -1,4 +1,5 @@
 @PointClass base(BaseNPC, SetModel)
+	appliesto(EP1, EP2)
 	studioprop() 
 	autovis(Entities, NPCs, Puppet NPC)
 	line(255 255 255, targetname, animationtarget) 

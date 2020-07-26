@@ -12,7 +12,7 @@
 	ForceBlobShadows[MESA](boolean) : "Force Blob shadows" : 1
 
 	enableshadowsfromlocallights[since_L4D](boolean) : "Enable Shadows From Local Lights" : 1
-	enableshadowsfromlocallights[MBase](boolean) : "Enable Local Light Shadows" : 0 : "Enables RTT dynamic shadow angles, " +
+	enableshadowsfromlocallights[MBase, GMod](boolean) : "Enable Local Light Shadows" : 0 : "Enables RTT dynamic shadow angles, " +
 		"which cause shadows to face away from the nearest light source instead of always using this entity's direction. " +
 		"This is a new feature and the original Half-Life 2 had no dynamic shadow angles. " +
 		"Leave this off if they are not desired." 
@@ -24,5 +24,5 @@
 	input SetAngles(string) : "Set the shadow direction."
 	input SetShadowsDisabled(integer) : "Set shadows disabled state."
 	input SetForceBlobsEnabled[MESA](integer) : "Set shadows blob state."
-	input SetShadowsFromLocalLightsEnabled[MBase, since_L4D](integer) : "Set local light shadows enabled state."
+	input SetShadowsFromLocalLightsEnabled[MBase, GMod, since_L4D](integer) : "Set local light shadows enabled state."
 	]

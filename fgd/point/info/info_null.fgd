@@ -4,7 +4,7 @@
 // If so, also apply this to func_null
 @PointClass base(BaseEntityPoint) 
 	color(200 0 0)
-	iconsprite("editor/ts2do/info_null.vmt")
+	iconsprite("editor/ficool2/info_null.vmt")
 = info_null: "An entity that's immediately removed on spawning. Useful as a spotlight target."
 	[
 	]

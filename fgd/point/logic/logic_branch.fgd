@@ -1,9 +1,12 @@
-
 @PointClass base(BaseEntityPoint) 
 	iconsprite("editor/logic_branch.vmt") 
 	color(0 100 250) = logic_branch: "Tests a boolean value and fires an output based on whether the value is true or false. Use this entity to branch between two potential sets of events."
 	[
-	initialvalue(boolean) : "Initial value" : 0 : "Initial value for the boolean value (0 or 1)."
+	initialvalue[engine](boolean) : "Initial value" : 0
+	initialvalue(choices) : "Initial value" : 0 : "Initial value for the boolean value (0 or 1)." = [
+		0 : "0 (False)"
+		1 : "1 (True)"
+	]
 
 	// Inputs
 	input SetValue(boolean) : "Set the boolean value without performing the comparison. Use this to hold a value for a future test."

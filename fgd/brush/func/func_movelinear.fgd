@@ -1,4 +1,4 @@
-@SolidClass base(BaseEntityBrush) 
+@SolidClass base(BaseEntityVisBrush) 
 	sphere(movedistance)
 = func_movelinear: "A brush entity that moves linearly along a given distance, in a given direction."
 	[

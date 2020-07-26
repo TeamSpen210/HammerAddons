@@ -2,6 +2,6 @@
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
 	autovis(Weapons, CSGO Weapons, CS Pistols)
-	studio("models/weapons/w_pist_223_dropped.mdl") = weapon_usp_silencer: "USP Silenced"
+	studioprop("models/weapons/w_pist_223_dropped.mdl") = weapon_usp_silencer: "USP Silenced"
 	[
 	]

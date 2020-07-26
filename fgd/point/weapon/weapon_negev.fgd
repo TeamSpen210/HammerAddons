@@ -2,6 +2,6 @@
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
 	autovis(Weapons, CSGO Weapons, CS Machine Guns)
-	studio("models/weapons/w_mach_negev_dropped.mdl") = weapon_negev: "Negev"
+	studioprop("models/weapons/w_mach_negev_dropped.mdl") = weapon_negev: "Negev"
 	[
 	]

@@ -1,0 +1,6 @@
+VertexLitGeneric
+{
+$baseTexture "models/editor/ts/portal_cyan"
+$translucent 1
+$model 1
+}

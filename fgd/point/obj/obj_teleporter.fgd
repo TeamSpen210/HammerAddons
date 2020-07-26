@@ -1,5 +1,4 @@
-
-@PointClass base(BaseEntityPoint, BaseObject) 
+@PointClass base(BaseEntityAnimating, BaseObject) 
 	appliesto(TF2) 
 	studio("models/buildables/teleporter_light.mdl") 
 	line(255 255 255, targetname, matchingteleporter)

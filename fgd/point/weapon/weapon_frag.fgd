@@ -1,7 +1,6 @@
-
 @PointClass base(Weapon) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
+	appliesto(EP1, EP2, HL2, P1, Mesa) 
 	autovis(Weapons, HL2 Weapons, Frag Grenade)
-	studio("models/weapons/w_grenade.mdl") = weapon_frag: "Frag Grenade"
+	studioprop("models/weapons/w_grenade.mdl") = weapon_frag: "Frag Grenade"
 	[
 	]

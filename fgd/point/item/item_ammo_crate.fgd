@@ -3,7 +3,7 @@
 @BaseClass appliesto(+MBase) studioprop("models/items/ammocrate_empty.mdl") = _item_ammo_crate_mbase []
 
 @PointClass base(BaseEntityAnimating) 
-	appliesto(EP1, EP2, HL2, P1, ASW, Mesa) 
+	appliesto(EP1, EP2, HL2, P1, Mesa) 
 	base(_item_ammo_crate_fixed, _item_ammo_crate_settable, _item_ammo_crate_mbase)
 = item_ammo_crate: "Ammo Crate"
 	[

@@ -11,16 +11,24 @@
 	parentname[srctools](target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
 	parent_attachment_point[srctools](string) : "Attachment Point" : : "If set, attach to this attachment point on the parent during spawn."
 
-	linedivider_vscript[+VSCRIPT](string) readonly : "-------------------------------------------------------------------------------------------------------" : ""
+	linedivider_vscript[+VSCRIPT, -engine](string) readonly : "-------------------------------------------------------------------------------------------------------" : ""
 
 	vscripts[VSCRIPT](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
 	thinkfunction[VSCRIPT](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
 
-	vscript_init_code[+VSCRIPT, +srctools](string) : "Init Code" : : "This code will be executed after the Entity Scripts option."
-	vscript_init_code2[+VSCRIPT, +srctools](string) : "Init Code 2" : : "This code will be the second line executed after the Entity Scripts option."
+	vscript_init_code[+VSCRIPT, +srctools](string) : "Init Code" : : "This code will be executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings."
+	vscript_init_code2[+VSCRIPT, +srctools](string) : "Init Code 2" : : "This code will be the second line executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings. " +
+		"Additional Init Code keyvalues can be added with SmartEdit off."
 	// etc
 
-	linedivider_base(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	gmod_allowphysgun[GMod](boolean) : "Allow Physics Gun" : 1 : "If set, " +
+		"players cannot use Physics Gun on this entity."
+	gmod_allowtools[Gmod](string) : "Sandbox Tool Whitelist" : "" : "If set, " +
+		"only given tools can be used on this entity.\n" +
+		"You need to supply the tool class names, the names of the .lua files of those tools.\n" +
+		"This also includes the context menu properties!"
+
+	linedivider_base[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// We could have wirebox() for these, but don't. That messes up if these are unset.
 	// This is a pretty advanced feature, so it's fine that it has no preview.
@@ -45,7 +53,7 @@
 		6: "VPhysics"
 	]
 
-	linedivider_basebrush(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_basebrush[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs
 	input Kill(void) : "Removes this entity from the world."
@@ -55,8 +63,8 @@
 	input SetParentAttachment(string) : "Change this entity to attach to a specific attachment point on its parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment."
 	input SetParentAttachmentMaintainOffset(string) : "Change this entity to attach to a specific attachment point on it's parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment. The entity will maintain it's position relative to the parent at the time it is attached."
 	input ClearParent(void) : "Removes this entity from the the movement hierarchy, leaving it free to move independently."
-	input SetLocalAngles[since_ASW, MBase](string) : "Sets the rotation of the entity relative to the parent's rotation."
-	input SetLocalOrigin[since_ASW, MBase](string) : "Sets the position of the entity relative to its parent if one exists. Otherwise relative to the world."
+	input SetLocalAngles[since_ASW, MBase](vector) : "Sets the rotation of the entity relative to the parent's rotation."
+	input SetLocalOrigin[since_ASW, MBase](vector) : "Sets the position of the entity relative to its parent if one exists. Otherwise relative to the world."
 	input SetAbsAngles[MBase](vector) : "Set this entity's angles, always relative to the world origin."
 	
 	input AddOutput(string) : "Adds an entity I/O connection to this entity or changes keyvalues dynamically. Format:" +
@@ -71,8 +79,11 @@
 	input DispatchEffect[until_L4D](string) : "Dispatch an effect from the entity's origin. See https://developer.valvesoftware.com/wiki/List_of_Client_Effects"
 
 	input RunScriptFile[VSCRIPT](string) : "Execute a game script file from disk."
-	input RunScriptCode[VSCRIPT](string) : "Execute a string of script source code."
+	input RunScriptCode[+VSCRIPT, -srctools](script) : "Execute a string of script source code."
+	input RunScriptCode[+VSCRIPT, +srctools](script) : "Execute a string of script source code. Backtick ( ` ) characters will be converted to quotes in-game for strings."
+	input RunScriptCodeQuotable[+MBase, +VSCRIPT](string) : "Execute a string of script source code which converts double apostrophes ('') to quotation marks for strings."
 	input CallScriptFunction[VSCRIPT](string) : "Execute the given function name."
+	input ClearScriptScope[+MBase, +VSCRIPT](void) : "Clears this entity's script scope"
 
 	// Outputs
 	output OnUser1(void) : "Fired in response to FireUser1 input."
@@ -99,7 +110,6 @@
 	input CancelPending[MBase](void) : "Cancels any events fired by this entity that are currently pending in the I/O event queue."
 	
 	input FreeChildren[MBase](void) : "Unparents all direct children of this entity."
-	input SetLocalOrigin[MBase](vector) : "Sets this entity's origin in the map."
 	input SetLocalVelocity[MBase](vector) : "Sets this entity's current velocity."
 	input SetLocalAngularVelocity[MBase](vector) : "Sets this entity's current angular velocity."
 	

@@ -1,5 +1,4 @@
-
-@PointClass base(BaseEntityPoint) 
+@PointClass base(BaseEntityAnimating) 
 	appliesto(TF2) 
 	studio("models/extras/info_speech.mdl") 
 = training_annotation: "Training Annotation"
