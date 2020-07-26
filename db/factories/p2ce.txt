@@ -1,3 +1,4 @@
 ai_addon
 ai_addon_builder
 ai_addon_factory
+logic_player_slowtime
