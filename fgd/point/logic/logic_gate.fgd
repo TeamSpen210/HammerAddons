@@ -1,0 +1,35 @@
+@PointClass base(BaseEntityPoint, EnableDisable)
+	iconsprite("editor/logic_gate.vmt") 
+	color(255 123 2) 
+= logic_gate: "A general logic gate with two inputs. Supports OR, AND, XOR and XAND operations, which can also be changed through inputs"
+	
+	[
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Spawn A enabled" : 0
+		2: "Spawn B enabled" : 0
+		]
+
+	// Keyvalues
+	mode(choices) : "Compare mode" : "1" : "The current compare mode. This can be changed through the SetMode input." = [
+		0 : "OR"
+		1 : "AND"
+		2 : "XOR"
+		3 : "XAND (Equals)"
+	]
+	
+	// Inputs
+	input GetValue(void) : "When triggered, the current state will be outputted as OutValue."
+	input SetStateA(integer) : "Sets the A state."
+	input SetStateB(integer) : "Sets the B state."
+	input SetMode(integer) : "Sets the mode. 0=OR,1=AND,2=XOR,3=XAND"
+
+	// Outputs
+	output OnResultTrue(void) : "Triggered when the state reaches true."
+	output OnResultFalse(void) : "Triggered when the state reaches false."
+	output OutValue(void) : "When this entity is triggered by GetValue, this output will be called with the current state as the parameter"
+
+
+
+	]
