@@ -577,3 +577,4 @@ wearable_item
 window_pane
 world_items
 worldspawn
+logic_player_slowtime
