@@ -11,6 +11,7 @@
 	message(string) : "Entity Message"
 	textsize(float) : "Text Size" : 10 : "Text Size."
 	color(color255) : "Color" : "255 255 255"
+	font(material) : "Font Material" : "editor/worldtext" : "The font material atlas to use for the text"
 
 	// Inputs
 	input Enable(void) : "Start displaying the message text, if the player is within the message radius."
