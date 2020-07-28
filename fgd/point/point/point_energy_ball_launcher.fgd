@@ -4,6 +4,12 @@
 	studio("models/editor/cone_helper.mdl")
 = point_energy_ball_launcher: "Launches Aperture Science High Energy Pellets. "
 	[
+
+	spawnflags(flags)  =
+		[
+		1: "Override ball material" : 0
+		]
+
 	ballcount(integer) : "Ball count" : 1 : "The number of Pellets that are alive at once."
 	maxspeed(float) : "Max ball speed" : 150.0 : "The maximum starting speed."
 	minspeed(float) : "Min ball speed" : 150.0 : "The minimum starting speed."
@@ -13,6 +19,15 @@
 		]
 
 	balllifetime(float) : "Ball Lifetime" : 12 : "The time in seconds the ball will live before self-destructing. A negative value will give infinite life, appearing green."
+	balldamage(float) : "Ball Damage" : 1500 : "The amount of damage to deal to the player on contact"
+	ballexplodeplayer(choices) : "Ball explodes on player contact" : 1 : "Whether or not the ball should interact with the player. " =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	ballmaterial1(material) : "Ball body material override" : "effects/eball_infinite_life" : "Override the main ball material. Remember to enable the flag! Default material behavior is used if the flag is not set!!!"
+	ballmaterial2(material) : "Ball flicker material override" : "effects/combinemuzzle1" : "Override the other ball material. Remember to enable the flag! Default material behavior is used if the flag is not set!!!"
+	ballknockback(float) : "Ball knockback multiplier" : 0 : "The ball's velocity is multiplied by this value to determine how strongly to knockback hit objects. Use 1 for 1:1 speed = knockback radio."
 	minlifeafterportal(float) : "Min life after portal transition" : 6 : "When energy balls created by this launcher pass through a portal their life is refreshed to be this number at minimum."
 
 	// Inputs
