@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	$basetexture editor/worldtextsheet
+	$alphatest 1
+	$nocull 1
+	$vertexcolor 1
+}
