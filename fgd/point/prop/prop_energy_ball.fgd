@@ -7,4 +7,5 @@
 	// Inputs
 	input Explode(void) : "Explode the pellet, creating a shockwave and shaking the camera."
 	input BallCaught(void) : "Trigger the OnBallCaught output for the point_energy_ball_launcher that created this ball, kill the pellet and disable the launcher."
+	input SetTime(float) : "Sets the remaining lifetime of the ball."
 	]
