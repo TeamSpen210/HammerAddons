@@ -19,15 +19,15 @@
 		]
 
 	balllifetime(float) : "Ball Lifetime" : 12 : "The time in seconds the ball will live before self-destructing. A negative value will give infinite life, appearing green."
-	balldamage(float) : "Ball Damage" : 1500 : "The amount of damage to deal to the player on contact"
-	ballexplodeplayer(choices) : "Ball explodes on player contact" : 1 : "Whether or not the ball should interact with the player. " =
+	balldamage[P2CE](float) : "Ball Damage" : 1500 : "The amount of damage to deal to the player on contact"
+	ballexplodeplayer[P2CE](choices) : "Ball explodes on player contact" : 1 : "Whether or not the ball should interact with the player. " =
 	[
 		0 : "No"
 		1 : "Yes"
 	]
-	ballmaterial1(material) : "Ball body material override" : "effects/eball_infinite_life" : "Override the main ball material. Remember to enable the flag! Default material behavior is used if the flag is not set!!!"
-	ballmaterial2(material) : "Ball flicker material override" : "effects/combinemuzzle1" : "Override the other ball material. Remember to enable the flag! Default material behavior is used if the flag is not set!!!"
-	ballknockback(float) : "Ball knockback multiplier" : 0 : "The ball's velocity is multiplied by this value to determine how strongly to knockback hit objects. Use 1 for 1:1 speed = knockback radio."
+	ballmaterial1[P2CE](material) : "Ball body material override" : "effects/eball_infinite_life" : "Override the main ball material. Remember to enable the flag! Default material behavior is used if the flag is not set!!!"
+	ballmaterial2[P2CE](material) : "Ball flicker material override" : "effects/combinemuzzle1" : "Override the other ball material. Remember to enable the flag! Default material behavior is used if the flag is not set!!!"
+	ballknockback[P2CE](float) : "Ball knockback multiplier" : 0 : "The ball's velocity is multiplied by this value to determine how strongly to knockback hit objects. Use 1 for 1:1 speed = knockback radio."
 	minlifeafterportal(float) : "Min life after portal transition" : 6 : "When energy balls created by this launcher pass through a portal their life is refreshed to be this number at minimum."
 
 	// Inputs
