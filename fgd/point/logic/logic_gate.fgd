@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable)
+appliesto(P2CE)
 	iconsprite("editor/logic_gate.vmt") 
 	color(255 123 2) 
 = logic_gate: "A general logic gate with two inputs. Supports AND, OR, NOT, NAND, NOR, XOR, and XNOR operations, which can also be changed through inputs."
