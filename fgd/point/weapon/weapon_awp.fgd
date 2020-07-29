@@ -2,6 +2,6 @@
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
 	autovis(Weapons, CSGO Weapons, CS Sniper Rifles)
-	studio("models/weapons/w_snip_awp_dropped.mdl") = weapon_awp: "AWP"
+	studioprop("models/weapons/w_snip_awp_dropped.mdl") = weapon_awp: "AWP"
 	[
 	]

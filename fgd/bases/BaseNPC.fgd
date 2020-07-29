@@ -15,7 +15,7 @@
 	]
 	visiblewhenasleep[ASW](boolean) : "Visible when asleep" : 0 : "If true, this alien will still get drawn even when asleep (useful for aliens you see far below you)."
 
-	linedivider_npc(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_npc[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs
 	input SetBodyGroup(integer) : "HACK: Sets this NPC's body group (from 0 - n). You'd better know what you are doing!"

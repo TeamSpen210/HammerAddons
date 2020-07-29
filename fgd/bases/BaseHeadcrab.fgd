@@ -7,6 +7,8 @@
 		[
 		65536: "Start hidden" : 0
 		131072: "Start hanging from ceiling" : 0
+		262144 :  "Don't drown" : 0 [MBase]
+		524288 :  "No melee insta-kill" : 0 [MBase]
 		]
 
 

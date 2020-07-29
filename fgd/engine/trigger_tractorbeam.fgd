@@ -1,0 +1,5 @@
+@PointClass base(Trigger)
+	appliesto(+engine, P2)
+= trigger_tractorbeam: "Internal trigger used to implement the region for Excursion Funnels."
+	[
+	]   

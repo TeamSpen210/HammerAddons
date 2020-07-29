@@ -1,4 +1,3 @@
-
 @BaseClass = BaseObject
 	[
 	teamnum[engine](integer) : "Team" : 2
@@ -15,6 +14,7 @@
 
 	// Inputs
 	input SetBuilder(string) : "Sets the builder of this object to the player given (from an output)"
+	input SetSolidToPlayer(string) : "Sets the builder solid to the player given (from an output)"
 	input Show(void) : "Makes the building visible and tries to re-enable it."
 	input Hide(void) : "Makes the building invisible and disables it."
 	input SetHealth(integer) : "Sets a new value for the breakable's health. If the breakable's health reaches zero it will break."
@@ -22,4 +22,11 @@
 	input RemoveHealth(integer) : "Removes health from the breakable. If the breakable's health reaches zero it will break."
 	input Enable(void) : "Enable this entity."
 	input Disable(void) : "Disable this entity."
+
+	// Outputs
+	output OnDamaged(void) : "Fired when the building is damaged."
+	output OnRepaired(void) : "Fired when the building is repaired."
+	output OnDisabled(void) : "Fired when the building is disabled."
+	output OnReenabled(void) : "Fired when the building is reenabled."
+	output OnObjectHealthChanged(void) : "Fired when the building's health is changed.."
 	]

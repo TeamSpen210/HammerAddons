@@ -28,8 +28,6 @@
 		"with the physgun or +USE. Overrides the prop's own QC carry angles if it has any. " +
 		"'0' doesn't override the carry angles."
 
-	animateeveryframe[P2](boolean) : "Animate Every Frame" : 0 : "Force this prop to animate every frame. Don't use this unless you know what you are doing."
-
 	// Inputs
 	input SetInteraction[MBase](integer) : "Adds an interaction to this entity."
 	input RemoveInteraction[MBase](integer) : "Removes an interaction from this entity."

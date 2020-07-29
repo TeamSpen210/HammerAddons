@@ -1,37 +1,39 @@
-@PointClass base(BaseEntityPhysics) 
+@PointClass base(BasePropPhysics) 
 	appliesto(P2) 
 	autovis(Test Elements, Cubes, Normal)
 	studioprop() = prop_weighted_cube: "Aperture Science Weighted Cube. Presses floor buttons, and can be moved around."
 	[
-	skin(integer) : "Skin (OLD)" : 0 : "The old skin property, mainly to show in Hammer. "
-
+	line_cube[-engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	
 	cubetype[engine](integer) : "Cube Type" : 0
 	cubetype(choices) : "Cube Type" : "0" : "What cube type is this? Use a prop_monster_box for FrankenTurrets. " +
 		"If set to Custom, use AddOutput to change it back OnMapSpawn so gel skins behave correctly." =
 		[
 		0: "[0] Weighted Storage Cube"
 		1: "[1] Weighted Companion Cube"
-		2: "[2] Weighted Pivot Cube"
+		2: "[2] Discouragement Redirection Cube"
 		3: "[3] Edgeless Safety Cube"
 		4: "[4] Antique Storage Cube"
-		6: "Custom model"
+		6: "[6] Custom model"
 		]
 
 	skintype[engine](boolean) : "Skin Type" : 0
-	skintype(choices) : "Skin Type" : "0" : "Is the cube clean or rusty? Storage and Pivot cubes are the only types with a rusty version." =
+	skintype(choices) : "Skin Type" : "0" : "Is the cube clean or rusty? Storage and Reflection cubes are the only types with a rusty version." =
 		[
 		0: "Clean"
 		1: "Rusted"
 		]
 
 	model[engine](studio) : "Model" : ""
-	model(choices) : "[H] Model" : "models/props/metal_box.mdl" : "The model to show in Hammer." =
+	model(choices) : "Model" : "models/props/metal_box.mdl" : "The model to show in Hammer, or a custom model for cube type 6." =
 		[
 		"models/props/metal_box.mdl": "Weighted Storage/Companion Cube"
-		"models/props/reflection_cube.mdl": "Weighted Pivot"
+		"models/props/reflection_cube.mdl": "Discouragement Redirection"
 		"models/props_gameplay/mp_ball.mdl": "Edgeless Safety"
 		"models/props_underground/underground_weighted_cube.mdl": "Antique"
 		]
+
+	skin(integer) : "Skin" : 0 : "The old skin property, mainly to show in Hammer. "
 
 	paintpower[engine](integer) : "Starting Paint" : 4
 	paintpower(choices) : "Starting paint" : "4" : "The cube starts painted with the set gel." =
@@ -44,7 +46,7 @@
 		]
 
 	allowfunnel(boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a floor portal."
-	newskins(integer) : "Use new skins" : 1 : "Use the values in the Cube Type and Skin Type fields instead of the Skin(OLD) field. You shouldn't need to touch this."
+	newskins(integer) readonly : "Use new skins" : 1 : "Use the values in the Cube Type and Skin Type fields instead of the Skin(OLD) field. You shouldn't need to touch this."
 
 	// Inputs
 	input EnablePortalFunnel(void) : "Enable portal funneling behavior."

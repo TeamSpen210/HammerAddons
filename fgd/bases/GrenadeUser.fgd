@@ -1,9 +1,8 @@
-
 @BaseClass = GrenadeUser
 	[
 	// Most grenade users shouldn't use grenades by default, override this in derived classes if otherwise
 	numgrenades[engine](integer) : "Number of Grenades" : 0
-	NumGrenades[MBase](choices) : "Number of Grenades" : 0 =
+	NumGrenades(choices) : "Number of Grenades" : 0 =
 		[
 		0 : "None"
 		1 : "1"

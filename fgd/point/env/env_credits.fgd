@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	iconsprite("editor/ts2do/env_credits.vmt") 
-= env_credits: "An entity to control the rolling credits."
+= env_credits: "The entity that controls the rolling credits, loaded from 'scripts/credits.txt'."
 	[
 	CreditsFile[MBase](string) : "Custom Credits File" : : "Allows a custom credits file to be loaded instead of the default 'scripts/credits.txt'."
 

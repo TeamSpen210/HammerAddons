@@ -1,4 +1,4 @@
-@BaseClass base(BaseEntityBrush)
+@BaseClass base(BaseEntityVisBrush)
 	line(255 255 0, targetname, target) 
 = BaseTrain
 	[
@@ -40,7 +40,7 @@
 	bank(string) : "Bank Angle on Turns" : 0
 	dmg(integer) : "Damage on Crush" : 0 : "The amount of damage this train does to entities that block it."
 
-	line_basetrain(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	line_basetrain[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	movesound(sound) : "Move Sound" : : "A sound that is played (and looped) while the train is moving."
 	movepingsound(sound) : "Move Ping Sound" : : "A sound that is played more frequently as the train speeds up."

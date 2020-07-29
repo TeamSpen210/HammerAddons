@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(+engine, P2)
+= projected_entity_ambient_sound_proxy: "Proxy entity to position the sounds from funnels and light bridges."
+	[
+	]   

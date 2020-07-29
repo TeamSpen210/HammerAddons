@@ -1,0 +1,4 @@
+@PointClass base(BaseEntityPoint)
+= env_rockettrail : "Continuous rocket flame for HL2 RPG missiles."
+	[
+	]

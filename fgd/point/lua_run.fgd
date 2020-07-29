@@ -1,0 +1,15 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(GMod)
+	iconsprite("editor/lua_run.vmt")
+= lua_run : "Runs Lua Code"
+	[
+	code(string) : "Code" : "" : "Lua code to run when triggered"
+
+	spawnflags(flags) =
+		[
+		1 : "Run code on spawn": 0
+		]
+
+	input RunCode(void) : "Run Code that was defined in the entity"
+	input RunPassedCode(string) : "Run code that was passed as a variable"
+	]

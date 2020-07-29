@@ -13,7 +13,7 @@
 		"LARGE_HULL": "Large"
 		]
 
-	SetClassify[enigne](integer) : "Classify" : 0
+	SetClassify[engine](integer) : "Classify" : 0
 	SetClassify[MBase](choices) : "Classify" : 0 : "Simulate this class. Useful for relationships." =
 		[
 		0 : "CLASS_NONE"
@@ -43,4 +43,8 @@
 		24 : "CLASS_HACKED_ROLLERMINE"
 		25 : "CLASS_COMBINE_HUNTER"
 		]
+
+	DefaultAnim(string) : "Default Animation" : "" : "The name of the idle animation that this prop will revert to whenever it finishes a random or forced animation."
+
+	RandomAnimation(boolean) : "Randomly Animate" : 0 : "If set, this prop will randomly choose and play animations, based upon the times specified in Min/Max Random Anim Time. Inbetween the random animations, it will revert to playing the 'Default Animation'."
 	]

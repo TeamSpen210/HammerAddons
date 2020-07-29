@@ -2,6 +2,6 @@
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
 	autovis(Weapons, CSGO Weapons, CS Equipment)
-	studio("models/weapons/w_eq_healthshot_dropped.mdl") = weapon_healthshot: "Medi-Shot"
+	studioprop("models/weapons/w_eq_healthshot_dropped.mdl") = weapon_healthshot: "Medi-Shot"
 	[
 	]

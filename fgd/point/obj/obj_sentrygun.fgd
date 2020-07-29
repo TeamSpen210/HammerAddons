@@ -1,7 +1,7 @@
-
-@PointClass base(BaseEntityPoint, BaseObject) 
+@PointClass base(BaseEntityAnimating, BaseObject) 
 	appliesto(TF2) 
-	studio("models/buildables/sentry3.mdl") = obj_sentrygun: "TF2 Sentrygun"
+	studio("models/buildables/sentry3.mdl") 
+= obj_sentrygun: "TF2 Sentrygun"
 	[
 	defaultupgrade[engine](integer) : "Starting Upgrade Level" : 0
 	defaultupgrade(choices) : "Starting Upgrade Level" : "0" =

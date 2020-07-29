@@ -37,9 +37,13 @@
 
 	// Inputs
 	input SetWinner(integer) : "Set the winner of the round to this team (0 for a stalemate)."
+	input SetWinnerAndForceCaps(integer) : "Set the winner of the round to this team and give them ownership of all points."
 	input SetCapLayout(string) : "Set the cap layout string."
 	input SetCapLayoutCustomPositionX(float) : "Set the cap layout custom X position [0,1]"
 	input SetCapLayoutCustomPositionY(float) : "Set the cap layout custom Y position [0,1]"
+
+	input RoundSpawn(void) : "Clear out old control points,round AND find the new control points,round and if successful, do CPMThink AND also tell  the resource to ResetControlPoints."
+	input RoundActivate(void) : "if we're using mini-rounds and haven't picked one yet, find one to play OR Tell the objective resource what control points are in use in the selected mini-round."
 
 	// Outputs
 	output OnWonByTeam1(void) : "Sent when RED wins the game."

@@ -4,22 +4,23 @@
  	autovis(Point Entities, Globals, Env Global)
 = env_global: "An entity to control a game-specific global states."
 	[
-	
+
+	globalstate[engine](string) : "Global State to Set"
 	globalstate(string) : "Global State to Set"
 	
 	globalstate[HL2, EP1, EP2](choices) : "Global State to Set" =
 		[
-		"gordon_precriminal": "Gordon pre-criminal"
-		"antlion_allied": "Antlions are player allies"
-		"suit_no_sprint": "Suit sprint function not yet enabled"
-		"super_phys_gun": "Super phys gun is enabled" [!MBase]
-		"super_phys_gun": "Super phys gun is enabled (Mapbase: Counter 1 prevents item dissolve)" [MBase]
+		"gordon_precriminal": "Gordon pre-criminal (Point Insertion behavior)"
+		"antlion_allied": "Antlions are player allies, respond to bugbait"
+		"suit_no_sprint": "Disable sprinting"
+		"super_phys_gun": "Enable Super Gravity Gun" [!MBase]
+		"super_phys_gun": "Enable Super Gravity Gun (Mapbase: Counter 1 prevents item dissolve)" [MBase]
 		"friendly_encounter": "Friendly encounter sequence (lower weapons, etc.)"
-		"gordon_invulnerable": "Gordon is invulnerable"
+		"gordon_invulnerable": "Player is invulnerable"
 		"no_seagulls_on_jeep": "Don't spawn seagulls on the jeep"
-		"ep2_alyx_injured": "Episode 2: Alyx injured"
-		"ep_alyx_darknessmode": "Episodic: Alyx darkness mode"
-		"hunters_to_run_over": "Ep2 Counter: Hunters to run over before they dodge"
+		"ep2_alyx_injured": "Episode 2: Alyx injured" [ep2]
+		"ep_alyx_darknessmode": "Episode 1: Alyx darkness mode" [ep1]
+		"hunters_to_run_over": "Ep2 Counter: Hunters to run over before they dodge" [ep2]
 		]
 
 	globalstate[P2, -INFRA](choices) : "Global State to Set" =
@@ -100,9 +101,9 @@
 
 	globalstate[Mesa](choices) : "Global State to Set" =
 		[
-		"predisaster" : "predisaster"
+		"predisaster" : "Pre-Disaster"
 		"friendly_encounter" : "Friendly encounter sequence (lower weapons, etc.)"
-		"gordon_invulnerable" : "Gordon is invulnerable"
+		"gordon_invulnerable" : "Player is invulnerable"
 		]
 
 	initialstate[engine](integer) : "Initial State" : 0
@@ -127,7 +128,7 @@
 	input Remove(void) : "Set state of global to DEAD."
 	input SetCounter(integer) : "Sets the counter value of this global."
 	input AddToCounter(integer) : "Adds to the counter value of this global. Negative numbers subtract."
-	input GetCounter[!INFRA, !MBASE](void) : "Causes the Counter output to be fired, passing the current counter value for this global."
+	input GetCounter[!INFRA, !MBASE](void) : "Causes the Counter output to be fired, passing the current counter value for this global. This doesn't work properly."
 	input GetCounter[INFRA](void) : "Causes the OnGetCounter output to be fired, passing the current counter value for this global."
 	input GetCounter[MBASE](void) : "Causes the OutCounter output to be fired, passing the current counter value for this global."
 

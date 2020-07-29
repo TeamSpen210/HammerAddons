@@ -1,4 +1,4 @@
-@BaseClass base(BaseNPC) = PlayerCompanion
+@BaseClass base(BaseNPC, MBaseGrenadeUser) = PlayerCompanion
 	[
 	spawnflags[Mesa](flags) =
 		[

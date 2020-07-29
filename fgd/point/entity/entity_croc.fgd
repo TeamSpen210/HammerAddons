@@ -1,0 +1,7 @@
+@PointClass base(BaseEntityAnimating) 
+	appliesto(TF2) 
+	studio()
+= entity_croc : "Crocodile"
+	[
+	model(studio) : "Model" : "models/props_island/crocodile/crocodile.mdl" : "Change the model to something other than the default model." 
+	]

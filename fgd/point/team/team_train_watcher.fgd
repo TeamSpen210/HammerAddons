@@ -50,6 +50,8 @@
 	input SetTrainCanRecede(boolean) : "Determines whether or not the train can recede."
 	input SetTrainRecedeTimeAndUpdate(integer) : "Set the number of seconds before the train starts to recede and update the current recede time."
 
+	input RoundActivate(void) : "Stop final alarm AND reactivate watcher"
+	
 	// Outputs
 	output OnTrainStartRecede(void) : "Sent when the train should start receding"
 	]

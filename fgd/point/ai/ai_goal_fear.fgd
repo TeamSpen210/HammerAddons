@@ -7,6 +7,12 @@
 [
 	actor(target_name_or_class) : "Actor(s) to affect" : "" : "NPC(s) that should engage in fear behavior."
 	target(target_destination) : "Fear Target" : "" : "Target to fear. Only applies whenever the actors' relationship to the target is D_FR. Supports wildcards and can be a classname or an entity name."
+	searchtype[engine](integer) : "Search Type" : 0
+	searchtype[MBase](choices) : "Search Type" : 0 : "How to search for the entities using the targetname." =
+		[
+		0: "Entity Name"
+		1: "Classname"
+		]
 	StartActive(boolean) : "Start Active" : 0
 
 	// Inputs

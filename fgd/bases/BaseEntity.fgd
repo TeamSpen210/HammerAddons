@@ -9,11 +9,12 @@
 	vscripts[VSCRIPT](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
 	thinkfunction[VSCRIPT](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
 
-	vscript_init_code[+VSCRIPT, +srctools](string) : "Init Code" : : "This code will be executed after the Entity Scripts option."
-	vscript_init_code2[+VSCRIPT, +srctools](string) : "Init Code 2" : : "This code will be the second line executed after the Entity Scripts option."
+	vscript_init_code[+VSCRIPT, +srctools](string) : "Init Code" : : "This code will be executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings."
+	vscript_init_code2[+VSCRIPT, +srctools](string) : "Init Code 2" : : "This code will be the second line executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings. " +
+		"Additional Init Code keyvalues can be added with SmartEdit off."
 	// etc
 
-	linedivider_base(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_base[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs
 	input Kill(void) : "Removes this entity from the world."
@@ -29,8 +30,11 @@
 	input Use(void) : "Same as a player invoking +use; may not do anything. Can also be invoked by creating an output that does not specify an input."
 
 	input RunScriptFile[VSCRIPT](string) : "Execute a game script file from disk."
-	input RunScriptCode[VSCRIPT](string) : "Execute a string of script source code."
+	input RunScriptCode[+VSCRIPT, -srctools](script) : "Execute a string of script source code."
+	input RunScriptCode[+VSCRIPT, +srctools](script) : "Execute a string of script source code. Backtick ( ` ) characters will be converted to quotes in-game for strings."
+	input RunScriptCodeQuotable[+MBase, +VSCRIPT](string) : "Execute a string of script source code which converts double apostrophes ('') to quotation marks for strings."
 	input CallScriptFunction[VSCRIPT](string) : "Execute the given function name."
+	input ClearScriptScope[+MBase, +VSCRIPT](void) : "Clears this entity's script scope"
 
 	// Outputs
 	output OnUser1(void) : "Fired in response to FireUser1 input."

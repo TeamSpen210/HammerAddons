@@ -12,6 +12,10 @@
 	input TimeUp(void) : "Input this from a round timer or something to indicate the game timer ended with no winner."
 	input SpeedBoostUsed(void) : "For stats tracking."
 	input JumpPadUsed(void) : "For stats tracking."
+	input statica(void) : "???"
+	input staticb(void) : "???"
+	input staticc(void) : "???"
+	input RoomTriggerOnTouch(void) : "???"
 
 	// Outputs
 	output OnBallFree(void) : "The ball is free - someone was holding it, and now they aren't."

@@ -13,10 +13,23 @@
 	maxgustdelay(integer) : "Max gust delay" : 20 : "Maximum time delay between random gusts."
 	gustduration(integer) : "Gust Duration" : 5 : "How long will the wind gust for."
 	gustdirchange(integer) : "Max gust dir change (degrees)" : 20 : "Maximum amount that the wind's direction changes due to a gust."
+	treeswayscale[MBase](float) : "Tree sway scale" : "1.0" : "The scale at which this env_wind affects $treeSway. Set to 0 to not affect $treeSway. (Only one env_wind should affect $treeSway)"
 	windradius[L4D, MBase](float) : "Radius" : -1 : "The radius this entity applies wind effects to.  -1 for global effect, other value to allow multiple or limited wind entities."
 	windradiusinner[MBase](float) : "Inner Radius" : 0 : "The inner-radius for the env_wind, which enables varying intensities at certain distances. 0 = no inner radius"
 
 	// Outputs
 	output OnGustStart(void) : "Fired when a wind gust begins."
 	output OnGustEnd(void) : "Fired when a wind gust ends."
+
+	input SetMinWind[MBase](float) : "Sets the minimum speed of the wind while idling."
+	input SetMaxWind[MBase](float) : "Sets the maximum speed of the wind while idling."
+	input SetMinGust[MBase](float) : "Sets the minimum speed of wind gusts."
+	input SetMaxGust[MBase](float) : "Sets the maximum speed of wind gusts."
+	input SetMinGustDelay[MBase](float) : "Sets the minimum time delay between random gusts."
+	input SetMaxGustDelay[MBase](float) : "Sets the maximum time delay between random gusts."
+	input SetGustDirChange[MBase](float) : "Sets the maximum amount that the wind's direction changes due to a gust."
+	input SetGustDuration[MBase](float) : "Sets how long the wind will gust for."
+	input SetWindRadius[MBase](float) : "Sets the radius in which this env_wind should simulate wind. -1 = everywhere"
+	input SetWindRadiusInner[MBase](float) : "Sets the inner-radius for the env_wind, which enables varying intensities at certain distances. 0 = no inner radius"
+	input SetTreeSwayScale[MBase](float) : "Sets the scale at which this env_wind affects $treeSway. Set to 0 to not affect $treeSway."
 	]

@@ -99,7 +99,7 @@
 
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows" : 0
 
-	viewhideflags[enigne](integer) : "View Hide Flags" : 0
+	viewhideflags[engine](integer) : "View Hide Flags" : 0
 	viewhideflags[MBase](choices) : "View ID nodraw" : 0 : "This keyvalue can control whether an entity should only draw on things like monitors or mirrors, " +
 		"or the opposite. The code for this is { m_iViewHideFlags & (1 << CurrentViewID()) } and supports any combination of view IDs." =
 		[

@@ -91,4 +91,5 @@
 	output OnCrateShotDownBeforeDropoff(float) : "Fires when the container was shot down before it dropped off soldiers. " +
 		"The parameter contains the number of soldiers that weren't successfully dropped off."
 	output OnCrateShotDownAfterDropoff(void) : "Fires when the container was shot down after it dropped off soldiers."
+	output OnSpawnNPC[MBase](ehandle) : "Fires when this dropship spawns a NPC."
 	]

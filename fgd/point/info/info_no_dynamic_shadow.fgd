@@ -1,7 +1,9 @@
-//Internal entity.
-@PointClass 
+@PointClass appliesto(-engine)
 	iconsprite("editor/info_no_dynamic_shadow.vmt") 
-	color(200 200 0) = info_no_dynamic_shadow: "Use this entity to mark surfaces that shouldn't receive dynamic shadows. Useful to apply to walls and floors where shadows are drawn improperly, giving away the location of enemies."
+	color(200 200 0) 
+= info_no_dynamic_shadow: "Use this entity to mark surfaces that shouldn't receive dynamic shadows. " +
+	"Useful to apply to walls and floors where shadows are drawn improperly, " +
+	"giving away the location of enemies."
 	[
 	sides(sidelist) : "Brush faces"
 	]

@@ -1,0 +1,13 @@
+// For classes which didn't support grenades before, but now do in Mapbase
+@BaseClass appliesto(MBase) base(GrenadeUser) = MBaseGrenadeUser
+	[
+	SetGrenadeCapabilities[engine](integer) : "Grenade capabilities" : 0 : "Sets this NPC's grenade capabilities."
+	SetGrenadeCapabilities(choices) : "Grenade capabilities" : 0 : "Controls this NPC's capability to throw grenades or use their weapon's secondary ability (energy balls/SMG grenades)." =
+		[
+		0 : "None"
+		1 : "Grenades"
+		2 : "Alt-firing"
+		3 : "Grenades + Alt-firing"
+		]
+	input SetGrenadeCapabilities(integer) : "Sets this NPC's grenade capabilities."
+	]

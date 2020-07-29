@@ -1,0 +1,7 @@
+@PointClass base(BaseEntityAnimating) 
+	appliesto(TF2) 
+	studio("models/props_forest/bird.mdl")
+= entity_bird : "entity_bird"
+	[
+	modelscale(float) : "Model Scale" : "1.0" : "A multiplier for the size of the model."
+	]

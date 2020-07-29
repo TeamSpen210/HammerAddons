@@ -4,7 +4,7 @@
 	studioprop() 
 = env_xen_healshower : "Xen Healing Shower"
 	[
-	model(studio) : "World model" : "models/props_Xen/xen_healingpool_full.mdl"
+	model(studio) : "World model" : "models/props_xen/interloper/healing_shower.mdl"
 	healRate(float) : "Healing Rate" : 5 : ""
 	disableshadows(boolean) : "Disable Shadows" : 0
 	]

@@ -1,0 +1,19 @@
+@PointClass base(BaseEntityPoint, BaseObject) 
+	appliesto(TF2) 
+= pd_dispenser: "Player Destruction Leader Dispenser" 
+	[
+	spawnflags(flags) =
+		[
+		4: "Ignore line of sight check" : 1
+		8: "Don't heal disguised/stealthed spies" : 1
+		]
+	
+	touch_trigger(target_destination) : "Custom Touch Trigger"
+	
+	input FireHalloweenBonus(integer) : "Trigger bonus effect on players near this dispenser"
+	input SetDispenserLevel(integer) : "Set the dispenser level: 1, 2, or 3"
+	input Enable(void) : "Enable this entity."
+	input Disable(void) : "Disable this entity."
+	input Show(void) : "Show the Dispenser."
+	input Hide(void) : "Hide the Dispenser."
+	]
