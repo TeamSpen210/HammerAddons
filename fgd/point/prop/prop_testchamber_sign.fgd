@@ -28,8 +28,6 @@
 		1 : "A bit dirty"
 		2 : "Very dirty"
 	]
-	width(integer) : "Width" : 90 : "Width of the sign. The default value is meant for signs with a 1 unit trim on the edges. Note: Editor model is fitted for this size"
-	height(integer) : "Height" : 190 : "Height of the sign. The default value is meant for signs with a 1 unit trim on the edges. Note: Editor model is fitted for this size"
 	sign_icon0name(choices) : "Icon 0 Type" : : "" =
 	[
 		""							: "Empty"
