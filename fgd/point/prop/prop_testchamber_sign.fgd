@@ -28,12 +28,6 @@
 		1 : "A bit dirty"
 		2 : "Very dirty"
 	]
-	sign_startup(choices) : "Startup animation" :  : "Which startup flicker animation to use" =
-	[
-		"normal_flicker" : "Normal flicker"
-		"dirty_flicker" : "Dirty flicker"
-		"broken_flicker" : "Broken flicker"
-	]
 	width(integer) : "Width" : 90 : "Width of the sign. The default value is meant for signs with a 1 unit trim on the edges. Note: Editor model is fitted for this size"
 	height(integer) : "Height" : 190 : "Height of the sign. The default value is meant for signs with a 1 unit trim on the edges. Note: Editor model is fitted for this size"
 	sign_icon0name(choices) : "Icon 0 Type" : : "" =
@@ -309,7 +303,7 @@
 
 
 	// Inputs
-	input TurnOn(void) : "Turns the sign on"
+	input TurnOn(string) : "Turns the sign on. Give the startup animation as the parameter. (normal_flicker, dirty_flicker, broken_flicker)"
 	input TurnOff(void) : "Turns the sign off"
 
 	]
