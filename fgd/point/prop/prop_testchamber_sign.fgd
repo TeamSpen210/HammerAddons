@@ -309,7 +309,7 @@
 
 
 	// Inputs
-	input SetActive(void) : "Turns the sign on"
-	input SetInactive(void) : "Turns the sign off"
+	input TurnOn(void) : "Turns the sign on"
+	input TurnOff(void) : "Turns the sign off"
 
 	]
