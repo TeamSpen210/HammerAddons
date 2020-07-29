@@ -1,4 +1,4 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(TF2) = tf_logic_mannpower: "Logic specifically for Mannpower Mode."
+	appliesto(TF2) = tf_logic_mannpower: "When present, this activates Mannpower Mode."
 	[
 	]

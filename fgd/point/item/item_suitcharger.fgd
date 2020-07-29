@@ -5,13 +5,13 @@
 @BaseClass appliesto(+MBase) studio() = _item_suitcharger_settable []
 
 @PointClass base(BaseEntityAnimating, _item_suitcharger_hl2, _item_suitcharger_mesa, _item_suitcharger_settable)
-	appliesto(EP1, EP2, HL2, P1, ASW, Mesa)  
+	appliesto(EP1, EP2, HL2, P1, Mesa)  
 = item_suitcharger: "HEV recharger"
 	[
 	// Unfortunately can't use the custom model then...
 	model[MBase](studio) : "Model" : "models/props_combine/suit_charger001.mdl"
 
-	charge[Mesa](float) : "Charge" : 75 : "How full the charger should be (0 - 100)"
+	charge[Mesa, engine](float) : "Charge" : 75 : "How full the charger should be (0 - 100)"
 	skintype[engine](integer) : "Skin Type" : 0
 	skintype[Mesa](choices) : "Force Skin" : 0 =
 		[

@@ -24,6 +24,7 @@
 		8 : "Candle C"
 		4 : "Fast strobe"
 		9 : "Slow strobe"
+		12 : "Underwater light mutation"
 	]
 	pattern(string) : "Custom Appearance" : "" : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 	_constant_attn(string)	: "Constant" : "0"
@@ -34,6 +35,14 @@
 	_hardfalloff(integer) : "Hard Falloff" : 0 : "If set, causes lights to fall to exactly zero beyond the zero percent distance. May cause unrealistic lightijng if not used carefully."
 
 	_distance(integer) : "Maximum Distance" : 0 : "The distance that light is allowed to cast."
+
+	// GMOD: GOPORT
+	_castentityshadow[engine](boolean)
+	_castentityshadow[GMod](Choices) : "Cast entity shadows" : 0 : "Objects illuminated by this light will cast a directional shadow." =
+		[
+		0 : "Don't affect entity shadow angles"
+		1 : "Affect entity shadow angles"
+		]
 
 	// Inputs
 	input TurnOn(void) : "Turn the light on."

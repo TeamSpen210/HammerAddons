@@ -8,5 +8,5 @@
 
 	// Inputs
 	input LaunchRock(void) : "Launch a rock"
-	input SetTarget(string) : "Target a new entity (by name)"
+	input SetTarget(target_destination) : "Target a new entity (by name)"
 	]

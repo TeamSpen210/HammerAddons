@@ -9,11 +9,13 @@
 	stun_type(choices) : "Stun Type" : 0 =
 		[
 		0: "Movement"
-		1: "Controls + Movement"
-		2: "Loser State + Controls + Movement"
+		1: "Sandman stun: Controls + Movement"
+		2: "Ghost Fear: Loser State + Controls + Movement"
 		]
 
-	stun_effects(boolean) : "Stun Effects" : 0
+	stun_effects(boolean) :  "Scared effects" : 0 : "Enables the 'scared' particle effects. " +
+		"Does not work if stun type is none. "+ 
+		"Scream sound only plays if stun type is Fear."
 
 
 	// Outputs

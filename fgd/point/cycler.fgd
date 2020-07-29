@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityAnimating, SetModel, SetSkin) 
+	appliesto(-L4D, -L4D2)
 	studio()
 = cycler: "An entity used to display a model for testing purposes. Shooting it with cycle through the model's animations."
 	[

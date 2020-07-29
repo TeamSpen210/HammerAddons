@@ -3,8 +3,9 @@
 	[
 	message(string) : "Map Description / Title"
 
-	skyname(string) : "SkyBox Texture Name" : : "Texture used for the 2D skybox."
+	skyname(string)                : "SkyBox Texture Name" :                       : "Texture used for the 2D skybox."
 	skyname[HL2, EP1, EP2](string) : "SkyBox Texture Name" : "sky_day01_01"        : "Texture used for the 2D skybox."
+	skyname[TF2](string)           : "SkyBox Texture Name" : "sky_tf2_04"          : "Texture used for the 2D skybox."
 	skyname[P2](string)            : "SkyBox Texture Name" : "sky_black_nofog"     : "Texture used for the 2D skybox."
 	skyname[ASW](string)           : "SkyBox Texture Name" : "blacksky"            : "Texture used for the 2D skybox."
 	skyname[CSGO](string)          : "SkyBox Texture Name" : "sky_dust"            : "Texture used for the 2D skybox."
@@ -17,14 +18,10 @@
 		"but now it can change the message seen in the save/load menus, can be seen in Discord RPC, " +
 		"and the onscreen message behavior is now disabled by default (doesn't affect existing maps) " +
 		"through the ''Display Chapter Title Message'' keyvalue."
-	chaptertitlenomessage[+Mbase](choices) : "Display Chapter Title Message" : 1 : "Controls whether " +
+	chaptertitlenomessage[+Mbase](boolean) : "Display Chapter Title Message" : 1 : "Controls whether " +
 		"the Chapter Title Message should show up in a generated env_message " +
 		"when the map loads or whether it should only be used for savegame comments and RPC. " +
-		"This would normally be set to ''Yes'' outside of Mapbase." =
-		[	
-		0 : "Yes"
-		1 : "No"
-		]
+		"This would normally be set to ''Yes'' outside of Mapbase."
 
 	startdark(boolean) : "Level Fade In" : 0
 	gametitle[!P2](boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts."
@@ -74,9 +71,22 @@
 	minpropscreenwidth(float) : "End Fade Pixels" : 0 : "Minimum number of pixels wide at which the prop is visible (0 = don't fade out). " +
 		"This number is ignored if the prop has a specific fade distance specified."
 	
-	detailvbsp(string) : "Detail.vbsp file" : "detail.vbsp" : "Detail.vbsp file to use for emitting detail props (found in directory <root>/modname)"
-	detailmaterial(material) : "Detail material file" : "detail/detailsprites" : "Material for detail sprites to use for drawing detail props"
+	detailvbsp(string)      : "Detail.vbsp file"  : "detail.vbsp"       : "Detail .vbsp file to use for emitting detail props (found in directory <root>/modname)"
+	detailvbsp[TF2](string) : "Detail .vbsp file" : "detail_2fort.vbsp" : "Detail .vbsp file to use for emitting detail props (found in directory <root>/modname)"
+
+	detailmaterial(material)    : "Detail material file" : "detail/detailsprites"       : "Material for detail sprites to use for drawing detail props"
+	detailmaterial[TF2](material) : "Detail material file" : "detail/detailsprites_2fort" : "Material for detail sprites to use for drawing detail props"
 	
+	vscriptlanguage[engine](integer) : "VScript language" : 0 : "Sets the script language this map should use for entity scripts."
+	vscriptlanguage[MBase](choices) : "VScript language" : 0 : "Sets the script language this map should use for entity scripts." =
+		[	
+		0 : "Default (Squirrel)"
+		//1 : "GameMonkey (Unsupported)"
+		2 : "Squirrel"
+		//3 : "Lua (Unsupported)"
+		//4 : "Python (Unsupported)"
+		]
+
 	coldworld(boolean) : "World is cold" : 0 : "Emit steam from NPC's mouths and similar effects."
 	
 	paintinmap[P2](boolean) : "Enable Paint" : 0 : "Enable code for spreading paint on surfaces, and bouncing physics objects around."

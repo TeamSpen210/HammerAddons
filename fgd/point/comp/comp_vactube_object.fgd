@@ -6,8 +6,11 @@
 [
 	model(studio) : "Vac Model" : : "Specifies the model used while in the vactube."
 	skin(integer) : "Vac Skin" : : "Skin for the vactube model."
-	offset(vecline) : "Offset" : : "The centerpoint of the model for positioning."
-	weight(int) : "Weight" : 1 : "The number of extra 'chances' for this to spawn."
+	offset(vecline) : "Offset" : : "The centerpoint of the model for positioning. Position this at the center of the model to ensure it doesn't stick out of the tube."
+	weight(int) : "Weight" : 1 : "The number of extra 'chances' for this to spawn. " +
+		"This works like a lottery - each cube has this many 'tickets', and then one is chosen randomly each time. If you have two choices with a weight of 9 and 1, the first will be chosen 90% of the time."
+	group(string) : "Group" : : "A vactube will only spawn objects with the same group name as it, " +
+		"so multiple vactubes can be set to have a different mix of items."
 
 	tv_skin[engine](integer) : "TV Skin" : 0
 	tv_skin(choices) : "TV Skin" : 0 : "The skin to display on scanner TVs." = 
@@ -21,6 +24,7 @@
 		6 : "Boxed Turret"
 	]
 	
-	cube_model(studio) : "Cube Model" : : "If set, the model for the real cube version."
+	cube_model(studio) : "Cube Model" : : "If set, this object can be spawned in droppers. " +
+		"This should be the model used on the real cube version so they can be matched to each other."
 	cube_skin(integer) : "Cube Skin" : 0 : "The specific skin to detect on the real cubes."
 ]

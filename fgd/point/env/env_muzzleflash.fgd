@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2, Mesa) 
-	iconsprite("editor/env_muzzleflash.vmt") 
+	studio("models/editor/env_muzzleflash.mdl")
 = env_muzzleflash: "Muzzle Flash"
 	[
 	parentattachment(string) : "Parent Attachment" : : "The name of an attachment on the parent to hierarchically attach to."

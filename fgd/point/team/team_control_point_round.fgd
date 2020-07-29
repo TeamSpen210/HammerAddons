@@ -15,6 +15,9 @@
 		3: "BLU"
 		]
 
+	// Inputs
+	input RoundSpawn(void) : "Clear out old control points AND find the new control points."
+
 
 	// Outputs
 	output OnStart(void) : "Sent when this round is selected to be played."

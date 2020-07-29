@@ -1,8 +1,8 @@
 
 @PointClass base(BaseEntityPoint) 
 	appliesto(P1, P2) 
-	size(-8 -8 -8, 8 8 8) 
-	color(200 0 0) = env_portal_credits: "An entity to control the rolling credits for portal."
+	iconsprite("editor/env_portal_credits")
+	color(200 0 0) = env_portal_credits: "The entity that controls the Portal credits, loaded from 'scripts/credits.txt'."
 	[
 
 	// Inputs

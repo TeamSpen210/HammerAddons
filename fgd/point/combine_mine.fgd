@@ -22,6 +22,10 @@
 		5 : "Physgun Launch (no bounce, explode on touch)"
 		]
 
+	CheapWarnSound[MBase](boolean) : "Cheap Warn Sound" : 0 : "Makes the mine's warn sound use generic sound methods instead of a sound patch, " +
+		"which is cheaper and doesn't continuously take up audio channels. " +
+		"Use this for areas with tons of active mines."
+
 	modification[engine](integer) : "Citizen modified" : 0 : "'Normal' is default Combine behavior. 'Cavern' detonates earlier in its jump, and has a different default skin."
 	modification[since_EP2](choices) : "Citizen modified" : 0 : "'Normal' is default Combine behavior. 'Cavern' detonates earlier in its jump, and has a different default skin." =
 		[
@@ -29,9 +33,9 @@
 		1: "Cavern"
 		]
 
-	Friendly[MBase](boolean): "Start Friendly" : 0 : "Makes this combine_mine friendly, as if it was placed by the player." 
-	enemyfilter[MBase](filterclass) : "Enemy Filter" : : "Makes this combine_mine target specific NPCs as enemies. It will also use its default targets unless ''Filter Exclusive'' is enabled."
-	friendfilter[MBase](filterclass) : "Friend Filter" : : "Makes this combine_mine target specific NPCs as friends. It will also use its default targets unless ''Filter Exclusive'' is enabled."
+	Friendly[MBase](boolean): "Start Friendly" : 0 : "Makes this mine friendly, as if it was placed by the player." 
+	enemyfilter[MBase](filterclass) : "Enemy Filter" : : "Makes this mine target specific NPCs as enemies. It will also use its default targets unless ''Filter Exclusive'' is enabled."
+	friendfilter[MBase](filterclass) : "Friend Filter" : : "Makes this mine target specific NPCs as friends. It will also use its default targets unless ''Filter Exclusive'' is enabled."
 	FilterExclusive[MBase](boolean): "Filter Exclusive" : 0 : "If enabled, the filters will be the exclusive factor in determining whether a mine is friendly or hostile towards a target. Entities that pass neither filter will be ignored by the mine."
 
 	// Inputs

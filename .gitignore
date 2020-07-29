@@ -36,15 +36,19 @@ Icon
 .Spotlight-V100
 .Trashes
 
-# Portal 2 stuff
+# Source stuff
 *.vmx
 *.log
 *.prt
 *.filelist.txt
 *.bsp
+*.cache
 
 # Output of "compiled" FGDs
 build/
 
 # Blender backup files
 *.blend1
+
+# This shouldn't be shipped, but it is useful to have to allow using studiomdl/vtex.
+hammer/gameinfo.txt

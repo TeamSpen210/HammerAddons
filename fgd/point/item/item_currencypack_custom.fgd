@@ -1,0 +1,6 @@
+@PointClass base(Item) 
+	appliesto(TF2) 
+	studio("models/items/currencypack_small.mdl") 
+= item_currencypack_custom : "Custom Credits Pickup"
+	[
+	]

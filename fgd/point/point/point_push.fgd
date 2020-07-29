@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
+	appliesto(-CSGO)
 	sphere(radius) 
 	sphere(inner_radius) 
 	studio("models/editor/cone_helper.mdl") 

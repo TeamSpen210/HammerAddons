@@ -2,6 +2,6 @@
 @PointClass base(Weapon) 
 	appliesto(CSGO) 
 	autovis(Weapons, CSGO Weapons, CS Machine Guns)
-	studio("models/weapons/w_mach_m249_dropped.mdl") = weapon_m249: "M249 Para"
+	studioprop("models/weapons/w_mach_m249_dropped.mdl") = weapon_m249: "M249 Para"
 	[
 	]

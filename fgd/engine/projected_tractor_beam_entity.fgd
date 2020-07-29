@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(+engine, P2)
+= projected_tractor_beam_entity: "The actual Excursion Funnel itself, projected from prop_tractor_beam."
+	[
+	]   

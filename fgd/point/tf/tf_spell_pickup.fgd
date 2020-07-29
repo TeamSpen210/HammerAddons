@@ -1,9 +1,6 @@
-
 @PointClass base(Item) 
 	appliesto(TF2) 
 	studio("models/props_halloween/hwn_spellbook_flying.mdl") 
-	sphere(fademindist) 
-	sphere(fademaxdist) 
 = tf_spell_pickup: "Spell"
 	[
 	tier[engine](integer) : "Spell Tier" : 0

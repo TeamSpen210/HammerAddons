@@ -55,7 +55,7 @@
 	// Inputs
 	input Enable(void) : "Enable the point_viewcontrol, and start controlling the player's view."
 	input Disable(void) : "Disable the point_viewcontrol, and stop controlling the player's view."
-	input SetTarget[since_P2](string) : "Set a new target for the camera to point at."
+	input SetTarget[since_P2](target_destination) : "Set a new target for the camera to point at."
 	input SetTargetAttachment[since_P2](string) : "Set a new attachment on the target for the camera to point at."
 	input ReturnToEyes[since_P2](void) : "Return the camera view to the player's eyes."
 	input TeleportToView[since_P2](void) : "Teleport the player to the current position of the camera."
