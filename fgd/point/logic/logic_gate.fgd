@@ -9,6 +9,7 @@ appliesto(P2CE)
 			[
 			1: "Spawn A enabled" : 0
 			2: "Spawn B enabled" : 0
+			4: "Output on every input (even if result doesn't change)" : 0
 			]
 
 		// Keyvalues
