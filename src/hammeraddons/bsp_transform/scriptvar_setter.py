@@ -5,11 +5,11 @@ from typing import Dict, Type, Optional, Callable, Union, Set, List
 
 from srctools.bsp_transform import trans, Context
 from srctools.logger import get_logger
-from srctools import Entity, Vec, conv_float
+from srctools import Entity, Vec, conv_float, conv_bool
 
 
 LOGGER = get_logger(__name__)
-MODES = {}  # type: Dict[str, Callable[[Entity, Entity], str]]
+MODES: Dict[str, Callable[[Entity, Entity], str]] = {}
 
 
 def vs_vec(vec: Vec) -> str:
@@ -116,7 +116,7 @@ def comp_scriptvar(ctx: Context):
                 )
 
         try:
-            mode_func = globals()['mode_' + comp_ent['mode']]
+            mode_func = MODES[comp_ent['mode']]
         except KeyError:
             LOGGER.warning(
                 'Invalid mode "{}" in '
@@ -194,6 +194,16 @@ def comp_scriptvar(ctx: Context):
 def mode_const(comp_ent: Entity, ent: Entity) -> str:
     """Set a simple constant."""
     return comp_ent['const']
+
+
+def mode_bool(comp_ent: Entity, ent: Entity) -> str:
+    """Convert the value to a boolean."""
+    return 'true' if conv_bool(comp_ent['const']) else 'false'
+
+
+def mode_inv_bool(comp_ent: Entity, ent: Entity) -> str:
+    """Convert the value to a boolean, and invert it."""
+    return 'false' if conv_bool(comp_ent['const']) else 'true'
 
 
 def mode_name(comp_ent: Entity, ent: Entity) -> str:
