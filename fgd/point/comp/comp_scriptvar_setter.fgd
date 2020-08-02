@@ -16,11 +16,13 @@
 
 	mode[engine](string) : "Mode" : "pos"
 	mode(choices) : "Mode" : "pos" : "The kind of data to read. " +
-		"For Constant, the position/reference is ignored completely. " +
+		"For Constants, the position/reference is ignored completely. " +
 		"For Entity Handle to be useful, only one reference entity should exist. " +
 		"For Offset, it's the offset of the reference relative to this entity." =
 		[
 		"const" : "Constant"
+		"bool" : "Boolean Constant"
+		"inv_bool" : "Inverted Boolean Constant"
 		"name" : "Entity Name"
 		"handle" : "Entity Handle"
 		"pos" : "Position"
