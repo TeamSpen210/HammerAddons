@@ -568,6 +568,7 @@ water_lod_control
 waterbullet
 weapon_cubemap
 weapon_portal_base
+weapon_paintgun
 weapon_portalgun
 weapon_promo_antenna_ball
 weapon_promo_antenna_egg
@@ -580,5 +581,4 @@ worldspawn
 
 logic_player_slowtime
 item_paint_power_pickup
-weapon_paintgun
 point_gel_sensor

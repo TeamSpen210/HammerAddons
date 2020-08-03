@@ -2,4 +2,7 @@
 	appliesto(P2CE) 
 	// Don't add a subfolder to this, Portal maps won't contain any other weapons.
 	autovis(Weapons)
-	studioprop("models/weapons/w_portalgun.mdl") = weapon_paintgun: "Paintgun" []
+	studioprop("models/weapons/w_portalgun.mdl") = weapon_paintgun: "Aperture Science Handheld Gel Accelerator"
+	[
+		// We don't have any keyvalues or IO yet
+	]
