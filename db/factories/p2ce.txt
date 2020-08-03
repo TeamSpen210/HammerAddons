@@ -577,4 +577,8 @@ wearable_item
 window_pane
 world_items
 worldspawn
+
 logic_player_slowtime
+item_paint_power_pickup
+weapon_paintgun
+point_gel_sensor

@@ -1,8 +1,8 @@
 @PointClass base(BaseEntityPoint) 
 	color(200 0 0) 
 	iconsprite("editor/logic_player_slowtime.vmt")
-= logic_player_slowtime: "An entity that slows time for a player."
+= logic_player_slowtime: "Start/stops player being in slow time"
 	[
-		input StartSlowingTime(float) : "Starts slowing time for the specified duration."
-		input StopSlowingTime(void) : "Stops slowing time immediately."
+		input StartSlowingTime(float) : "Start slowing time for the player (with a set duration)."
+		input StopSlowingTime(void) : "Stop slowing time for the player."
 	]
