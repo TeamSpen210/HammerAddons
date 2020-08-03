@@ -7,6 +7,11 @@
 	[
 	model(studio) : "Laser Relay Model" : "models/props/laser_receptacle.mdl" : "Choose a custom model for the relay."
 
+	filtercolor[P2CE](color255) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter lasers by this colour."
+
+	// Inputs
+	input SetFilterColor[P2CE](color255) : "Changes the laser filter colour."
+
 	// Outputs
 	output OnPowered(void) : "Fired when a laser hits the target."
 	output OnUnpowered(void) : "Fired when a laser has stopped hitting the target."

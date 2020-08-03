@@ -29,8 +29,12 @@
 		1: "Rusted"
 		]
 
+	beamcolor[P2CE](color255) : "Laser Beam Color (R G B A)" : "255 0 0 255" : "Sets the colour of the laser."
+
 	// Inputs
 	input Toggle(void) : "Toggle the laser on and off."
 	input TurnOn(void) : "Turn the laser on."
 	input TurnOff(void) : "Turn the laser off."
+
+	input SetBeamColor[P2CE](color255) : "Changes the laser colour."
 	]

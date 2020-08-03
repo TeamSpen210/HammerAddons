@@ -8,6 +8,8 @@
 	terminalpoint(boolean) : "Terminal Point" : 1 : "Will lasers auto-aim towards this? " +
 		"It may also make the laser stop here."
 
+	filtercolor[P2CE](color255) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter lasers by this colour."
+
 	// Outputs
 	output OnPowered(void) : "Fired when a laser hits the target."
 	output OnUnpowered(void) : "Fired when a laser has stopped hitting the target."

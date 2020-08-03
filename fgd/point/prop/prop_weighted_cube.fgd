@@ -47,6 +47,9 @@
 
 	allowfunnel(boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a floor portal."
 	newskins(integer) readonly : "Use new skins" : 1 : "Use the values in the Cube Type and Skin Type fields instead of the Skin(OLD) field. You shouldn't need to touch this."
+	
+	reflectmodifycolor[P2CE](color255) : "Laser Modifier Color (R G B A)" : "255 255 255 255" : "Set reflected lasers to this colour. Only applicable to reflection and Schrodinger cubes."
+	reflectfiltercolor[P2CE](color255) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter reflected lasers by this colour. Only applicable to reflection and Schrodinger cubes."
 
 	// Inputs
 	input EnablePortalFunnel(void) : "Enable portal funneling behavior."
@@ -58,6 +61,9 @@
 	input Dissolve(void) : "Fizzles the cube, firing the OnFizzled output."
 	input SilentDissolve(void) : "Kills the cube immediately and fires its OnFizzled output."
 	input ExitDisabledState(void) : "Exits the disabled state of a reflective cube."
+
+	input SetReflectModifyColor[P2CE](color255) : "Changes the laser modifier colour of the cube."
+	input SetReflectFilterColor[P2CE](color255) : "Changes the laser filter colour of the cube."
 
 	// Outputs
 	output OnFizzled(void) : "Fired when a cube is fizzled."
