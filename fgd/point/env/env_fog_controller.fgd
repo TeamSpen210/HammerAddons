@@ -47,4 +47,6 @@
 	input StartFogTransition[since_EP1](void) : "Start fog transition."
 	input SetMaxDensityLerpTo[since_CSGO](float) : "Set max density lerp to."
 	input SetZoomFogScale[since_CSGO](void) : "Set the value the fog will scale the default value by when players are zoomed in (scoped)."
+
+	input ActivateAllPlayers(void) : "Activates this fog controller for all players"
 	]
