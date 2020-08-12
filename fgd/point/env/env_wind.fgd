@@ -5,6 +5,12 @@
  	autovis(Point Entities, Globals, Wind)
 = env_wind: "An entity to control wind in the map. Partially functional."
 	[
+
+	spawnflags(flags)  =
+		[
+		1: "Start enabled" : 1
+		]
+
 	minwind(integer) : "Min normal speed" : 20 : "Minimum speed of the wind while idling."
 	maxwind(integer) : "Max normal speed" : 50 : "Maximum speed of the wind while idling."
 	mingust(integer) : "Min gust speed" : 100 : "Minimum speed of wind gusts."
@@ -20,6 +26,10 @@
 	// Outputs
 	output OnGustStart(void) : "Fired when a wind gust begins."
 	output OnGustEnd(void) : "Fired when a wind gust ends."
+
+	input Enable(void) : "Enables the wind"
+	input Disable(void) : "Enables the wind"
+	input Toggle(void) : "Enables the wind"
 
 	input SetMinWind[MBase](float) : "Sets the minimum speed of the wind while idling."
 	input SetMaxWind[MBase](float) : "Sets the maximum speed of the wind while idling."
