@@ -3,6 +3,7 @@
 	sounds[engine](integer) : "Press Sound" : 0
 	sounds(choices) : "Press Sound" : 0 : "Sound played when pressed. Choose from sounds in the Buttons.snd* category." =
 		[
+		-1: "Use custom sound" [P2CE]
 		0: "None (Silent)"
 
 		40: "(BM) Vending Machine Button" [MESA]
