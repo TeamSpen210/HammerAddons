@@ -5,5 +5,7 @@
 = point_devshot_camera: "An entity used by the -makedevshots system, which automatically takes screenshots at the position of every devshot camera in the level."
 	[
 	cameraname(string) : "Camera Name" : : "Used as the name of the directory to store screenshots from this camera. Must be unique within the level."
-	fov(integer) : "Camera FOV" : 75 : "FOV of this camera."
+	fov(integer) : "Camera FOV" : 90 : "FOV of this camera."
+
+	input TakeScreenshot(void) : "Takes a single screenshot from this camera only"
 	]
