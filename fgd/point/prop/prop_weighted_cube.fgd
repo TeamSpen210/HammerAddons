@@ -14,6 +14,7 @@
 		2: "[2] Discouragement Redirection Cube"
 		3: "[3] Edgeless Safety Cube"
 		4: "[4] Antique Storage Cube"
+		7: "[5] Schoedinger's Cube"
 		6: "[6] Custom model"
 		]
 
@@ -31,6 +32,7 @@
 		"models/props/reflection_cube.mdl": "Discouragement Redirection"
 		"models/props_gameplay/mp_ball.mdl": "Edgeless Safety"
 		"models/props_underground/underground_weighted_cube.mdl": "Antique"
+		"models/props/schrodinger_cube.mdl": "Schroedinger"
 		]
 
 	skin(integer) : "Skin" : 0 : "The old skin property, mainly to show in Hammer. "
@@ -48,8 +50,26 @@
 	allowfunnel(boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a floor portal."
 	newskins(integer) readonly : "Use new skins" : 1 : "Use the values in the Cube Type and Skin Type fields instead of the Skin(OLD) field. You shouldn't need to touch this."
 	
-	reflectmodifycolor[P2CE](color255) : "Laser Modifier Color (R G B A)" : "255 255 255 255" : "Set reflected lasers to this colour. Only applicable to reflection and Schrodinger cubes."
-	reflectfiltercolor[P2CE](color255) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter reflected lasers by this colour. Only applicable to reflection and Schrodinger cubes."
+	reflectmodifycolor[P2CE](choices) : "Laser Modifier Color (R G B A)" : "255 255 255 255" : "Set reflected lasers to this colour. Only applicable to reflection and Schrodinger cubes." =
+	[
+		"255 255 255 255" : "White"
+		"255 0 0 255" : "Default Red"
+		"100 255 100 255" : "Lethal Green"
+		"32 112 202 255" : "Blue"
+		"255 212 91 255" : "Yellow"
+		"212 60 146 255" : "Pink"
+		"65 97 0 255" : "Dark Green"
+	]
+	reflectfiltercolor[P2CE](choices) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter reflected lasers by this colour. Only applicable to reflection and Schrodinger cubes." =
+	[
+		"255 255 255 255" : "White"
+		"255 0 0 255" : "Default Red"
+		"100 255 100 255" : "Lethal Green"
+		"32 112 202 255" : "Blue"
+		"255 212 91 255" : "Yellow"
+		"212 60 146 255" : "Pink"
+		"65 97 0 255" : "Dark Green"
+	]
 
 	// Inputs
 	input EnablePortalFunnel(void) : "Enable portal funneling behavior."

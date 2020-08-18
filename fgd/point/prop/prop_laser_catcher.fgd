@@ -28,7 +28,16 @@
 
 	src_fix_skins[srctools](boolean) : "Fix Skins Logic" : 1 : "If set, add extra outputs to fix the bug with skins not changing after a reload from save."
 
-	filtercolor[P2CE](color255) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter lasers by this colour."
+	filtercolor[P2CE](choices) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter lasers by this colour." =
+	[
+		"255 255 255 255" : "White"
+		"255 0 0 255" : "Default Red"
+		"100 255 100 255" : "Lethal Green"
+		"32 112 202 255" : "Blue"
+		"255 212 91 255" : "Yellow"
+		"212 60 146 255" : "Pink"
+		"65 97 0 255" : "Dark Green"
+	]
 
 	// Inputs
 	input Skin(integer) : "Set the skin of the catcher manually."

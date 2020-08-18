@@ -29,7 +29,16 @@
 		1: "Rusted"
 		]
 
-	beamcolor[P2CE](color255) : "Laser Beam Color (R G B A)" : "255 0 0 255" : "Sets the colour of the laser."
+	beamcolor[P2CE](choices) : "Laser Beam Color (R G B A)" : "255 0 0 255" : "Sets the colour of the laser." =
+	[
+		"255 255 255 255" : "White"
+		"255 0 0 255" : "Default Red"
+		"100 255 100 255" : "Lethal Green"
+		"32 112 202 255" : "Blue"
+		"255 212 91 255" : "Yellow"
+		"212 60 146 255" : "Pink"
+		"65 97 0 255" : "Dark Green"
+	]
 
 	// Inputs
 	input Toggle(void) : "Toggle the laser on and off."
