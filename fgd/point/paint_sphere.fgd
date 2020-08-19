@@ -8,10 +8,11 @@
 	paint_type(choices) : "Paint Type" : 0 : "The type of Gel created." =
 		[
 		0: "Repulsion Gel"
-		1: "Reflection Gel / Adhesion Gel"
+		1: "Reflection Gel"
 		2: "Propulsion Gel"
 		3: "Conversion Gel"
 		4: "Cleansing Gel"
+		5: "Adhesion Gel"
 		]
 
 	radius(float) : "Radius" : 60.f : "Radius of paint sphere"
