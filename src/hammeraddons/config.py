@@ -100,11 +100,11 @@ def parse(path: Path) -> Tuple[
         else:
             fsys = RawFileSystem(str((game_root / prop.value).resolve()))
 
-        if prop.name == 'prefix':
+        if prop.name in ('prefix', 'priority'):
             fsys_chain.add_sys(fsys, priority=True)
         elif prop.name == 'nopack':
             blacklist.add(fsys)
-        elif prop.name == 'path':
+        elif prop.name in ('path', 'pack'):
             fsys_chain.add_sys(fsys)
         else:
             raise ValueError(
@@ -140,7 +140,7 @@ OPTIONS = [
         * "prefix" "folder/" adds the path to the start, so it overrides
             all others.
         * "path" "vpk_path.vpk" adds the path to the end, so it is checked last.
-        * "nopack" "folder/" prohibits files in this path from being packed.
+        * "nopack" "folder/" prohibits files in this path from being packed, you'll need to use one of the others also to add the path.
     """),
     Opt(
         'studiomdl', '',
