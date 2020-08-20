@@ -94,6 +94,7 @@ def vactube_transform(ctx: Context) -> None:
         # No vactubes.
         return
     LOGGER.info('{} vactube nodes found.', len(all_nodes))
+    LOGGER.debug('Nodes: {}', all_nodes)
 
     if ctx.studiomdl is None:
         raise ValueError(
@@ -307,13 +308,14 @@ def vactube_transform(ctx: Context) -> None:
                     cube_name = vac_objects[start_node.group, cube_model, cube_skin].id
                 except KeyError:
                     LOGGER.warning(
-                        'Cube model "{}" is not a type of cube travelling '
+                        'Cube model "{}", skin {} is not a type of cube travelling '
                         'in this vactube!\n\n'
                         'Add a comp_vactube_object entity with this cube model'
                         # Mention groups if they're used, otherwise it's not important.
                         + (f' with the group "{start_node.group}".' if start_node.group else '.'),
-                        cube_model,
+                        cube_model, cube_skin,
                     )
+                    continue  # Skip this animation so it's not broken.
                 else:
                     dropper_to_anim[target] = anim
             code.append(
