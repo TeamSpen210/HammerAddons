@@ -40,6 +40,12 @@
 		"65 97 0 255" : "Dark Green"
 	]
 
+	DisablePlayerCollision[P2CE](choices) : "Player Collision" : "Default Behavior" : "Override to disable player collision for this laser. If set to 0 (default), sv_player_collide_with_laser will determine whether or not to collide. If 1, laser collision will be disabled." =
+	[
+		0 : "Default Behavior"
+		1 : "Force Off"
+	]
+
 	// Inputs
 	input Toggle(void) : "Toggle the laser on and off."
 	input TurnOn(void) : "Turn the laser on."
