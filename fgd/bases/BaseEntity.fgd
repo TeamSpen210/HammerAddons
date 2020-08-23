@@ -35,6 +35,7 @@
 	input RunScriptCodeQuotable[+MBase, +VSCRIPT](string) : "Execute a string of script source code which converts double apostrophes ('') to quotation marks for strings."
 	input CallScriptFunction[VSCRIPT](string) : "Execute the given function name."
 	input ClearScriptScope[+MBase, +VSCRIPT](void) : "Clears this entity's script scope"
+	input CancelPending(void) : "Cancel any events fired by this relay that are currently pending in the I/O event queue."
 
 	// Outputs
 	output OnUser1(void) : "Fired in response to FireUser1 input."

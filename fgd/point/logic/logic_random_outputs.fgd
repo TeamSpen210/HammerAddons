@@ -22,7 +22,6 @@
 	// Inputs
 	input Trigger(void) : "Trigger this entity, causing its OnTrigger outputs to fire if it is enabled."
 	input Toggle(void) : "Toggle this entity between enabled and disabled."
-	input CancelPending(void) : "Cancel any events fired by this entity that are currently pending in the I/O event queue."
 
 	// Outputs
 	output OnSpawn(void) : "Fired when this entity is spawned. If this entity is set to only trigger once, it will delete itself after firing this output."
