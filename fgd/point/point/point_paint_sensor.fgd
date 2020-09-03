@@ -5,7 +5,7 @@
 	iconsprite("editor/point_gel_sensor.vmt")
 	sidelist()
 	sphere(radius)
-= point_gel_sensor: "An entity that detects when surfaces are painted."
+= point_paint_sensor: "An entity that detects when surfaces are painted."
 	[
 		radius(float) : "Search Radius" : 64 : "Radius to search inside, -1 to disable."
 		

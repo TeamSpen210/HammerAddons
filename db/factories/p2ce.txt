@@ -582,4 +582,4 @@ worldspawn
 
 logic_player_slowtime
 item_paint_power_pickup
-point_gel_sensor
+point_paint_sensor
