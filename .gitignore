@@ -52,3 +52,6 @@ build/
 
 # This shouldn't be shipped, but it is useful to have to allow using studiomdl/vtex.
 hammer/gameinfo.txt
+
+# Caches
+__pycache__
