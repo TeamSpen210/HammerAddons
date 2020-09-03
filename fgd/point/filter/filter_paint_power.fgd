@@ -1,0 +1,25 @@
+@FilterClass base(filter_base) 
+	appliesto(P2CE)
+	autovis(Logic, Filters)
+	iconsprite("editor/filter_paint_power.vmt")
+= filter_paint_power : "A filter that filters based on the current paint power of the entity."
+	[
+		paint_type[engine](integer) : "Paint Type" : 0 
+		paint_type(choices) : "Paint Type" : 0 : "The type of Gel to filter by. Used only in Colour mode." =
+		[
+			0: "(1) Repulsion Gel"
+			1: "(2) Reflection Gel"
+			2: "(3) Propulsion Gel"
+			3: "(4) Conversion Gel"
+			4: "(5) Cleansing Gel"
+			5: "(6) Adhesion Gel"
+		]
+
+		paint_mode[engine](integer) : "Paint Filter Mode" : 0
+		paint_mode(choices) : "Filter Mode" : 0 : "The filter mode to filter the painted power by." =
+		[
+			0: "Colour"
+			1: "Paintable"
+			2: "Unpaintable"
+		]
+	]

@@ -153,6 +153,7 @@ filter_damage_type
 filter_enemy
 filter_multi
 filter_player_held
+filter_paint_power
 filter_size
 fish
 fizzler_multiorigin_sound_player
