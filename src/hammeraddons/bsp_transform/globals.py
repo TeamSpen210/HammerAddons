@@ -76,7 +76,7 @@ def vscript_runscript_inputs(ctx: Context):
             out.input = 'RunScriptFile'
 
 
-@trans('Optimise logic_auto')
+@trans('Optimise logic_auto', priority=50)
 def optimise_logic_auto(ctx: Context):
     """Merge logic_auto entities to simplify the map."""
 
@@ -102,7 +102,7 @@ def optimise_logic_auto(ctx: Context):
         ).outputs = outputs
 
 
-@trans('Strip Entities')
+@trans('Strip Entities', priority=50)
 def strip_ents(ctx: Context):
     """Strip useless entities from the map."""
     for clsname in [
