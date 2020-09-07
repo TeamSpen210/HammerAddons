@@ -115,6 +115,9 @@ def main(argv: List[str]) -> None:
             debug_tint=args.showgroups,
         )
         LOGGER.info('Done!')
+    else:  # Strip these if they're present.
+        for ent in vmf.by_class['comp_propcombine_set']:
+             ent.remove()
 
     bsp_file.lumps[BSP_LUMPS.ENTITIES].data = bsp_file.write_ent_data(vmf)
 
