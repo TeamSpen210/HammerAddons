@@ -8,6 +8,7 @@ from srctools import Property, logger, AtomicWriter
 from srctools.filesys import FileSystemChain, FileSystem, RawFileSystem, VPKFileSystem
 from srctools.props_config import Opt, Config, TYPE
 
+from srctools.scripts.plugin import Plugin
 
 __all__ = [
     'LOGGER',
@@ -25,6 +26,7 @@ def parse(path: Path) -> Tuple[
     Game,
     FileSystemChain,
     Set[FileSystem],
+    Set[Plugin],
 ]:
     """From some directory, locate and parse the config file.
 
@@ -41,6 +43,7 @@ def parse(path: Path) -> Tuple[
         * Parsed gameinfo.
         * The chain of filesystems.
         * A packing blacklist.
+        * A list of plugins.
     """
     conf = Config(OPTIONS)
 
@@ -112,7 +115,16 @@ def parse(path: Path) -> Tuple[
                 'key "{}"!'.format(prop.real_name)
             )
 
-    return conf, game, fsys_chain, blacklist
+    plugins = set()  # type: Set[Plugin]
+
+    for prop in conf.get(Property, 'plugins'):  # type: Property
+        if prop.has_children():
+            raise ValueError('Config "plugins" value cannot have children.')
+        assert isinstance(prop.value, str)
+        
+        plugins.add(Plugin(prop.name, Path(prop.value)))
+
+    return conf, game, fsys_chain, blacklist, plugins
 
 
 OPTIONS = [
@@ -174,6 +186,11 @@ OPTIONS = [
         'propcombine_min_cluster', 2,
         """The minimum number of props required before propcombine will
         bother merging them. Should be greater than 1.
+        """,
+    ),
+    Opt(
+        'plugins', TYPE.RAW,
+        """Plugins to load. The key is the module name while the value is the path to it.
         """,
     ),
 ]

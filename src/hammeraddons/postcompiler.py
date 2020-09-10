@@ -58,7 +58,7 @@ def main(argv: List[str]) -> None:
 
     LOGGER.info("Map path is {}", path)
 
-    conf, game_info, fsys, pack_blacklist = config.parse(path)
+    conf, game_info, fsys, pack_blacklist, plugins = config.parse(path)
 
     fsys.open_ref()
 
@@ -94,6 +94,9 @@ def main(argv: List[str]) -> None:
     else:
         LOGGER.warning('No studiomdl path provided.')
         studiomdl_loc = None
+
+    for plugin in plugins:
+        plugin.load()
 
     run_transformations(vmf, fsys, packlist, bsp_file, game_info, studiomdl_loc)
 
