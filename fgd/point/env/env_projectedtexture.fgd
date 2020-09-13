@@ -53,6 +53,8 @@
 		"The material browser is only available here to assist with finding textures since materials typically have the same name as their textures."
 	textureframe(integer) : "Texture Frame" : 0 : "If the VTF is multi-frame, specify the frame to use."
 
+	volumetric[P2CE](boolean) : "Enable Volumetrics" : 0 : "Enables/disables volumetrics from this projected texture."
+	
 	style[engine](integer) : "Appearance" : 0
 	style[since_P2](choices) : "Appearance" : "0" =
 		[
@@ -109,4 +111,6 @@
 	input LightOnlyTarget[INFRA](bool) : "Set if the projected texture lights the target only."
 	input LightWorld[INFRA](bool) : "Set if the projected texture lights the world and static geometry."
 	input Ambient[GMod, INFRA](float) : "Set ambient light amount"
+	
+	input EnableVolumetrics[P2CE](boolean) : "Set if the volumetrics are enabled."
 	]
