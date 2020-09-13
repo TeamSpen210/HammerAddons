@@ -122,7 +122,7 @@ def parse(path: Path) -> Tuple[
             raise ValueError('Config "plugins" value cannot have children.')
         assert isinstance(prop.value, str)
         
-        plugins.add(Plugin(prop.name, Path(prop.value)))
+        plugins.add(Plugin(prop.name, game_root / Path(prop.value)))
 
     return conf, game, fsys_chain, blacklist, plugins
 
