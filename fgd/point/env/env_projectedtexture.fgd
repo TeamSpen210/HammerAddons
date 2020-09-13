@@ -54,6 +54,7 @@
 	textureframe(integer) : "Texture Frame" : 0 : "If the VTF is multi-frame, specify the frame to use."
 
 	volumetric[P2CE](boolean) : "Enable Volumetrics" : 0 : "Enables/disables volumetrics from this projected texture."
+	volumetricintensity[P2CE](float) : "Volumetric Intensity" : "1.0" : "Sets the intensity of the volumetric lighting."
 	
 	style[engine](integer) : "Appearance" : 0
 	style[since_P2](choices) : "Appearance" : "0" =
@@ -113,4 +114,5 @@
 	input Ambient[GMod, INFRA](float) : "Set ambient light amount"
 	
 	input EnableVolumetrics[P2CE](boolean) : "Set if the volumetrics are enabled."
+	input SetVolumetricIntensity[P2CE](float) : "Sets the volumetric lighting's intensity."
 	]
