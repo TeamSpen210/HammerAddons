@@ -8,7 +8,7 @@
 
 	spawnflags(flags)  =
 		[
-		1: "Start enabled" : 1
+		1: "Start disabled" : 1
 		]
 
 	minwind(integer) : "Min normal speed" : 20 : "Minimum speed of the wind while idling."
@@ -27,9 +27,9 @@
 	output OnGustStart(void) : "Fired when a wind gust begins."
 	output OnGustEnd(void) : "Fired when a wind gust ends."
 
-	input Enable(void) : "Enables the wind"
-	input Disable(void) : "Enables the wind"
-	input Toggle(void) : "Enables the wind"
+	input Enable[P2CE](void) : "Enables the wind."
+	input Disable[P2CE](void) : "Disables the wind."
+	input Toggle[P2CE](void) : "Toggles the wind."
 
 	input SetMinWind[MBase](float) : "Sets the minimum speed of the wind while idling."
 	input SetMaxWind[MBase](float) : "Sets the maximum speed of the wind while idling."
