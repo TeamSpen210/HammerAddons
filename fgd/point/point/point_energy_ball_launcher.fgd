@@ -17,7 +17,7 @@
 		[
 		0 : "HEP"
 		]
-
+	maxballbounces[P2CE](int) : "Ball Bounces" : -1 : "Sets on which bounce the ball should explode. For example, if set to 4, the ball will explode on the 4th bounce."
 	balllifetime(float) : "Ball Lifetime" : 12 : "The time in seconds the ball will live before self-destructing. A negative value will give infinite life, appearing green."
 	balldamage[P2CE](float) : "Ball Damage" : 1500 : "The amount of damage to deal to the player on contact"
 	ballexplodeplayer[P2CE](choices) : "Ball explodes on player contact" : 1 : "Whether or not the ball should interact with the player. " =
