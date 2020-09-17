@@ -19,7 +19,7 @@ class Plugin:
         mod = module_from_spec(spec)
 
         logname = '.' + self.name
-        mod.LOGGER = get_logger(__name__ + logname, "plugin" + logname)
+        mod.__srctools_logger__ = get_logger(__name__ + logname, "plugin" + logname)
 
         spec.loader.exec_module(mod)
 
