@@ -6,8 +6,8 @@ from srctools.logger import get_logger
 LOGGER = get_logger(__name__)
 
 class Plugin:
-    def __init__(self, name: str, path: Path) -> None:
-        self.name = name
+    def __init__(self, path: Path) -> None:
+        self.name = path.stem
         self.path = path
 
     def load(self):

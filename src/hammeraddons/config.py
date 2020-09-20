@@ -10,6 +10,8 @@ from srctools.props_config import Opt, Config, TYPE
 
 from srctools.scripts.plugin import Plugin
 
+from os import walk
+
 __all__ = [
     'LOGGER',
     'parse',
@@ -122,7 +124,25 @@ def parse(path: Path) -> Tuple[
             raise ValueError('Config "plugins" value cannot have children.')
         assert isinstance(prop.value, str)
         
-        plugins.add(Plugin(prop.name, game_root / Path(prop.value)))
+        path = (game_root / Path(prop.value)).resolve()
+        if prop.name == "path":
+            if not path.is_dir():
+                raise ValueError("'{}' is not a directory".format(path))
+
+            for p in path.iterdir():
+                if p.suffix == ".py":
+                    plugins.add(Plugin(p))
+        elif prop.name == "recursive":
+            if not path.is_dir():
+                raise ValueError("'{}' is not a directory".format(path))
+            for (dirpath, _, filenames) in walk(path):
+                for p in [Path(p) for p in filenames]:
+                    if p.suffix == ".py":
+                        plugins.add(Plugin(path / dirpath / p))
+        elif prop.name == "single":
+            plugins.add(Plugin(path))
+        else:
+            raise ValueError("Unknown plugins key {}".format(prop.real_name))
 
     return conf, game, fsys_chain, blacklist, plugins
 
@@ -190,7 +210,10 @@ OPTIONS = [
     ),
     Opt(
         'plugins', TYPE.RAW,
-        """Plugins to load. The key is the module name while the value is the path to it.
-        """,
-    ),
+        """\
+        Add plugins to the post compiler. The key defines the behaviour:
+        * "path" "folder/" loads all .py files in the folder.
+        * "recursive" "folder/" loads all .py files in the folder and in subfolders.
+        * "single" "folder/plugin.py" loads a single python file.
+    """),
 ]
