@@ -50,7 +50,11 @@ class Context:
         forms. The output name in the output is the input that will be replaced.
 
         If remove is set to False, the original output will be kept.
+        If the name is blank, this does nothing.
         """
+        if not name:
+            return
+
         name = name.casefold()
         for out in outputs:
             inp_name = out.output.casefold()
