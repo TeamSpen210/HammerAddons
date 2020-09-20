@@ -40,7 +40,7 @@
 	homingduration(float) : "Homing Duration" : "5" : "Number of seconds the homing effect lasts."
 	homingrampdown(float) : "Homing Ramp Down" : "1.0" : "Number of seconds it takes homing effect to decay after homing duration."
 
-	gravity(string) : "Gravity" : "1.0" : "Scale for effect of gravity. (1.0 = normal gravity)"
+	gravity(float) : "Gravity" : "1.0" : "Scale for effect of gravity. (1.0 = normal gravity)"
 	minrange(integer) : "Min Range" : 100 : "Minimum distance a target can be to be attacked."
 	maxrange(integer) : "Max Range" : 2048 : "Maximum distance a target can be to be attacked."
 	spinmagnitude(string) : "Spin Magnitude" : 0 : "Strength of spin in missile trajectory"

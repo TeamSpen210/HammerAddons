@@ -30,7 +30,7 @@
 
 	axis(axis) : "Hinge Axis"
 	distance(float) : "Rotation Distance (deg)" : 90 : "The amount, in degrees, that the door should rotate when opened."
-	speed(integer) : "Speed" : 100 : "The speed at which the door moves."
+	speed(float) : "Speed" : 100 : "The speed at which the door moves."
 
 	soundopenoverride(sound) : "Fully Open Sound" : : "Sound played when the door has finished opening."
 	soundcloseoverride(sound) : "Fully Closed Sound" : : "Sound played when the door has finished closing."
