@@ -20,7 +20,7 @@
 		1: "Yes"
 		]
 
-	model[engine](string) : "Model" : "models/npcs/personality_sphere/personality_sphere.mdl" 
+	model[engine](studio) : "Model" : "models/npcs/personality_sphere/personality_sphere.mdl" 
 	model(choices) : "[H] Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "Choose the model to show in hammer. Set to the same as Use Alternate Skins." =
 		[
 		"models/npcs/personality_sphere/personality_sphere.mdl": "Original (Wheatley)"

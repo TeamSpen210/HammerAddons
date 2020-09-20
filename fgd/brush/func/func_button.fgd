@@ -4,13 +4,13 @@
 	"Do not lock while pressed; it will not return when unlocked."
 	[
 	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "Specifies the direction of motion to move when the button is used."
-	speed(integer) : "Speed" : 5 : "The speed that the button moves, in units per second."
+	speed(float) : "Speed" : 5 : "The speed that the button moves, in units per second."
 
 	health(integer) : "Health (Obsolete)" : 0 : "Legacy method of specifying whether or not the button can be shot to activate it. Use the 'Damage Activates' spawnflag instead."
 
-	lip(integer) : "Lip" : 0 : "The amount the button will keep overlapping with the original position. The distance moved = the size of the brush on the movement axis - lip."
+	lip(float) : "Lip" : 0 : "The amount the button will keep overlapping with the original position. The distance moved = the size of the brush on the movement axis - lip."
 
-	wait(integer) : "Delay Before Reset (-1 stay)" : 3 : "Amount of time, in seconds, after the button has been pressed before it returns to the starting position. " +
+	wait(float) : "Delay Before Reset (-1 stay)" : 3 : "Amount of time, in seconds, after the button has been pressed before it returns to the starting position. " +
 		"Once it has returned, it can be used again. If the value is set to -1, the button never returns."
 		
 	spawnflags(flags) : "spawnflags" =

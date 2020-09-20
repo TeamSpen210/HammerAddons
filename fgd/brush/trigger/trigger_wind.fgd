@@ -2,6 +2,7 @@
 	line(255 255 255, targetname, filtername)
 = trigger_wind: "A trigger volume that pushes physics objects that touch it."
 	[
+	// Intentionally mismatched from CBaseEntity.
 	speed(integer) : "Speed" : 200 : "The baseline for how hard the wind blows."
 	speednoise(integer) : "Speed Noise" : 0 : "Noise added to wind speed +/-"
 	directionnoise(integer) : "Direction Noise" : 10 : "Noise added to wind direction."
