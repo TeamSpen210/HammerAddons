@@ -13,7 +13,7 @@ class Plugin:
     def __init__(self, path: Path) -> None:
         self.path = path
 
-    def load(self):
+    def load(self) -> None:
         name = self.path.stem
         spec = spec_from_file_location(name, self.path)
 

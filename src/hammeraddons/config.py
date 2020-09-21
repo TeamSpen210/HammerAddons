@@ -120,7 +120,7 @@ def parse(path: Path) -> Tuple[
     plugins = set()  # type: Set[Plugin]
 
     # find all the plugins and make plugin objects out of them
-    for prop in conf.get(Property, 'plugins'):  # type: Property\
+    for prop in conf.get(Property, 'plugins'):  # type: Property
         if prop.has_children():
             raise ValueError('Config "plugins" value cannot have children.')
         assert isinstance(prop.value, str)
