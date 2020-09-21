@@ -6,21 +6,26 @@ from srctools.logger import get_logger
 LOGGER = get_logger(__name__)
 
 class Plugin:
+    """A plugin loaded by the postcompiler.
+
+    This loads a module, and gives it a logger at __srctools_logger__
+    """
     def __init__(self, path: Path) -> None:
-        self.name = path.stem
         self.path = path
 
     def load(self):
-        spec = spec_from_file_location(self.name, self.path)
+        name = self.path.stem
+        spec = spec_from_file_location(name, self.path)
 
         if not spec:
-            raise ValueError('Plugin {} not found at "{}"'.format(self.name, self.path))
+            raise ValueError('Plugin {} not found at "{}"'.format(name, self.path))
 
         mod = module_from_spec(spec)
 
-        logname = '.' + self.name
+        logname = '.' + name
+        #this logger is put into the plugin so it has a consistant log name of "plugin.<plugin name>"
         mod.__srctools_logger__ = get_logger(__name__ + logname, "plugin" + logname)
 
         spec.loader.exec_module(mod)
 
-        LOGGER.info('Loaded plugin "{}" ({})', self.name, self.path)
+        LOGGER.info('Loaded plugin "{}" ({})', name, self.path)

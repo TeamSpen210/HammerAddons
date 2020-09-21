@@ -119,26 +119,24 @@ def parse(path: Path) -> Tuple[
 
     plugins = set()  # type: Set[Plugin]
 
-    for prop in conf.get(Property, 'plugins'):  # type: Property
+    # find all the plugins and make plugin objects out of them
+    for prop in conf.get(Property, 'plugins'):  # type: Property\
         if prop.has_children():
             raise ValueError('Config "plugins" value cannot have children.')
         assert isinstance(prop.value, str)
         
         path = (game_root / Path(prop.value)).resolve()
-        if prop.name == "path":
+        if prop.name in ("path", "recursive"):
             if not path.is_dir():
                 raise ValueError("'{}' is not a directory".format(path))
 
-            for p in path.iterdir():
-                if p.suffix == ".py":
-                    plugins.add(Plugin(p))
-        elif prop.name == "recursive":
-            if not path.is_dir():
-                raise ValueError("'{}' is not a directory".format(path))
-            for (dirpath, _, filenames) in walk(path):
-                for p in [Path(p) for p in filenames]:
-                    if p.suffix == ".py":
-                        plugins.add(Plugin(path / dirpath / p))
+            # want to recursive glob if key is recursive
+            pattern = "*.py" if prop.name == "path" else "**/*.py"
+
+            #find all .py files, make Plugins
+            for p in path.glob(pattern):
+                plugins.add(Plugin(path / p))
+
         elif prop.name == "single":
             plugins.add(Plugin(path))
         else:
