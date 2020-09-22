@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(engine, TF2)
+= vote_controller: "Controls player voting."
+	[
+	]
