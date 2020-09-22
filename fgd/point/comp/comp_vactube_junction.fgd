@@ -25,5 +25,12 @@
 		0 : "Forward"
 		1 : "Backward"
 	]
+
+	persist_tv[engine](boolean) : "Continually display items on TV" : 0
+	persist_tv(choices) : "TV Screen behaviour" : 0 : "Determine how items are shown on Scanner TVs." = [
+		0 : "Return to blank when item leaves"
+		1 : "Continue displaying until replaced"
+	]
+
 	output OnPass(void) : "Fired when a cube passes by."
 ]
