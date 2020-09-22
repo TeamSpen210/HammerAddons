@@ -143,7 +143,7 @@ OPTIONS = [
         * "nopack" "folder/" prohibits files in this path from being packed, you'll need to use one of the others also to add the path.
     """),
     Opt(
-        'studiomdl', '',
+        'studiomdl', 'bin/studiomdl.exe',
         """Set the path to StudioMDL so the compiler can generate props.
         If unset these features are disabled.
         This is relative to the game root.
