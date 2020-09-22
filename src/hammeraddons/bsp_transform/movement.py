@@ -31,7 +31,7 @@ def comp_entity_mover(ctx: Context):
         else:
             # Use angles + movement.
             offset = Vec(x=conv_float(mover['distance']))
-            offset.rotate_by_str(mover['direction'])
+            offset = offset.rotate_by_str(mover['direction'])
 
         found_ent = None
         for found_ent in ctx.vmf.search(mover['target']):
