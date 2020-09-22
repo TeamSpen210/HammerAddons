@@ -46,7 +46,7 @@ def find_closest(
     src_norm: Vec,
 ) -> nodes.Node:
     """Search through all the nodes to find the one most aligned to this."""
-    best_node = None  # type: Optional[nodes.Node]
+    best_node: Optional[nodes.Node] = None
     best_dist = math.inf
 
     # We're looking for if the point is inside the cylinder projecting out
@@ -135,7 +135,7 @@ def vactube_transform(ctx: Context) -> None:
         inputs_by_norm.items()
     ]
 
-    sources = []  # type: List[nodes.Spawner]
+    sources: List[nodes.Spawner] = []
 
     LOGGER.info('Linking nodes...')
     for node in all_nodes:
@@ -259,7 +259,7 @@ def vactube_transform(ctx: Context) -> None:
         anims_by_start[anim.start_node].append(anim)
 
     # And create a dict to link droppers to the animation they want.
-    dropper_to_anim = {}   # type: Dict[nodes.Dropper, animations.Animation]
+    dropper_to_anim: Dict[nodes.Dropper, animations.Animation] = {}
 
     for start_node, anims in anims_by_start.items():
         spawn_maker = start_node.ent
@@ -295,9 +295,10 @@ def vactube_transform(ctx: Context) -> None:
         code = [f'// Node: {start_node.ent["targetname"]}, {start_node.origin}']
         for anim in anims:
             target = anim.end_node
+            anim_speed = anim.start_node.speed
             pass_code = ','.join([
                 f'Output({time:.2f}, "{node.ent["targetname"]}", '
-                f'{node.tv_name()})'
+                f'{node.tv_code(anim_speed)})'
                 for time, node in anim.pass_points
             ])
             cube_name = 'null'
