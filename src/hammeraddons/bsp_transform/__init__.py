@@ -6,7 +6,7 @@ from typing import Callable, Dict, Tuple, List, Any
 from srctools import FileSystem, VMF, Output, Entity, FGD
 from srctools.bsp import BSP
 from srctools.logger import get_logger
-from srctools.packlist import PackList, load_fgd
+from srctools.packlist import PackList
 from srctools.game import Game
 
 
@@ -36,7 +36,7 @@ class Context:
         self.bsp = bsp
         self.pack = pack
         self.bsp_path = Path(bsp.filename)
-        self.fgd = fgd or load_fgd()
+        self.fgd = fgd or FGD.engine_dbase()
         self.game = game
         self.studiomdl = studiomdl_loc
 

@@ -11,9 +11,10 @@ from srctools.logger import init_logging
 # Put the logs in the executable folders.
 LOGGER = init_logging(Path(sys.argv[0]).with_name('postcompiler.log'))
 
+from srctools.fgd import FGD
 from srctools.bsp import BSP, BSP_LUMPS
 from srctools.bsp_transform import run_transformations
-from srctools.packlist import PackList, load_fgd
+from srctools.packlist import PackList
 from srctools.scripts import config
 from srctools.compiler import propcombine
 from typing import List
@@ -70,7 +71,7 @@ def main(argv: List[str]) -> None:
         '\n'.join([sys.path for sys, prefix in fsys.systems]),
     )
 
-    fgd = load_fgd()
+    fgd = FGD.engine_dbase()
 
     LOGGER.info('Loading soundscripts...')
     packlist.load_soundscript_manifest(
