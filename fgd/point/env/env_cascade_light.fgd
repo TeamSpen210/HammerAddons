@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(since_CSGO, MESA) 
-	iconsprite("editor/shadow_control.vmt") 
+	iconsprite("editor/env_cascade_light.vmt") 
+	lightprop("models/editor/spot.mdl") 
 = env_cascade_light: "An entity to control the sunlight that casts cascaded shadows in the map."
 	[
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "50 40 0" : "This is the shadow casting direction. " +
