@@ -18,8 +18,7 @@ from typing import (
 
 from srctools.fgd import (
     FGD, validate_tags, match_tags,
-    EntityDef, EntityTypes,
-    HelperTypes, IODef,
+    EntityDef, EntityTypes, IODef,
     KeyValues, ValueTypes,
     HelperExtAppliesTo,
     HelperWorldText,
@@ -120,6 +119,9 @@ PolyfillFuncT = TypeVar('PolyfillFuncT', bound=Callable[[FGD], None])
 # have duplicates with the same name.
 VISGROUP_SUFFIX = '\x8D'
 
+# Special classname which has all the keyvalues and IO of CBaseEntity.
+BASE_ENTITY = '_CBaseEntity_'
+
 
 def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
     """Register a polyfill, which backports newer FGD syntax to older engines."""
@@ -174,7 +176,7 @@ def _polyfill_node_id(fgd: FGD):
 
 
 @_polyfill('until_csgo')
-def _polyfill_worltext(fgd: FGD):
+def _polyfill_worldtext(fgd: FGD):
     """Strip worldtext(), since this is not available."""
     for ent in fgd:
         ent.helpers[:] = [
@@ -247,8 +249,8 @@ def ent_path(ent: EntityDef) -> str:
     return '{}/{}.fgd'.format(folder, ent.classname)
 
 
-def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> FGD:
-    """Load the entire database from disk."""
+def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> Tuple[FGD, EntityDef]:
+    """Load the entire database from disk. This returns the FGD, plus the CBaseEntity definition."""
     print('Loading database:')
     fgd = FGD()
 
@@ -338,7 +340,12 @@ def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> FGD
             vis_count += 1
     print(f'\nVisgroup count: {vis_count}/{ent_count} ({vis_count*100/ent_count:.2f}%) done!')
 
-    return fgd
+    try:
+        base_entity_def = fgd.entities.pop(BASE_ENTITY.casefold())
+        base_entity_def.type = EntityTypes.BASE
+    except KeyError:
+        base_entity_def = EntityDef(EntityTypes.BASE)
+    return fgd, base_entity_def
 
 
 def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
@@ -411,8 +418,8 @@ def get_appliesto(ent: EntityDef) -> List[str]:
     arg_list = list(map(str.upper, applies_to))
     arg_list.sort()
     ent.helpers[:] = [
-        help for help in ent.helpers
-        if not isinstance(help, HelperExtAppliesTo)
+        helper for helper in ent.helpers
+        if not isinstance(helper, HelperExtAppliesTo)
     ]
     ent.helpers.insert(pos, HelperExtAppliesTo(arg_list))
     return arg_list
@@ -441,7 +448,7 @@ def add_tag(tags: FrozenSet[str], new_tag: str) -> FrozenSet[str]:
 
 def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> None:
     """Output a count of all entities in the database per game."""
-    fgd = load_database(dbase, extra_db)
+    fgd, base_entity_def = load_database(dbase, extra_db)
 
     count_base: Dict[str, int] = Counter()
     count_point: Dict[str, int] = Counter()
@@ -724,7 +731,7 @@ def action_export(
 
     print('Tags expanded to: {}'.format(', '.join(tags)))
 
-    fgd = load_database(dbase, extra_db)
+    fgd, base_entity_def = load_database(dbase, extra_db)
 
     if engine_mode:
         # In engine mode, we don't care about specific games.
@@ -733,9 +740,7 @@ def action_export(
 
         # Cache these constant sets.
         tags_empty = frozenset('')
-        tags_engine = frozenset({'ENGINE'})
         tags_not_engine = frozenset({'-ENGINE', '!ENGINE'})
-        just_dash = frozenset('-')
 
         print('Merging tags...')
         for ent in fgd:
@@ -749,13 +754,16 @@ def action_export(
             ]
             value: Union[IODef, KeyValues]
             category: Dict[str, Dict[FrozenSet[str], Union[IODef, KeyValues]]]
-            for category in [ent.inputs, ent.outputs, ent.keyvalues]:
+            base_cat: Dict[str, Dict[FrozenSet[str], Union[IODef, KeyValues]]]
+            for attr_name in ['inputs', 'outputs', 'keyvalues']:
+                category = getattr(ent, attr_name)
+                base_cat = getattr(base_entity_def, attr_name)
                 # For each category, check for what value we want to keep.
                 # If only one, we keep that.
                 # If there's an "ENGINE" tag, that's specifically for us.
                 # Otherwise, warn if there's a type conflict.
                 # If the final value is choices, warn too (not really a type).
-                for key, orig_tag_map in category.items():
+                for key, orig_tag_map in list(category.items()):
                     # Remake the map, excluding non-engine tags.
                     # If any are explicitly matching us, just use that
                     # directly.
@@ -775,6 +783,7 @@ def action_export(
 
                     if not tag_map:
                         # All were set as non-engine, so it's not present.
+                        del category[key]
                         continue
                     elif len(tag_map) == 1:
                         # Only one type, that's the one for the engine.
@@ -815,11 +824,47 @@ def action_export(
                                 value.type = ValueTypes.INT
                             value.val_list = None
 
+                    # Check if this is a shared property among all ents,
+                    # and if so skip exporting.
+                    if ent.classname != BASE_ENTITY:
+                        base_value: Union[KeyValues, IODef]
+                        try:
+                            [base_value] = base_cat[key].values()
+                        except KeyError:
+                            pass
+                        except ValueError:
+                            raise ValueError(
+                                f'Base Entity {attr_name[:-1]} "{key}" '
+                                f'has multiple tags: {list(base_cat[key].keys())}'
+                            )
+                        else:
+                            if base_value.type is ValueTypes.CHOICES:
+                                print(
+                                    f'Base Entity {attr_name[:-1]} '
+                                    f'"{key}"  is a choices type!'
+                                )
+                            elif base_value.type is value.type:
+                                del category[key]
+                                continue
+                            else:
+                                print(f'{ent.classname}.{key}: {value.type} != base {base_value.type}')
+                        ent.bases = [base_entity_def]
+
                     # Blank this, it's not that useful.
                     value.desc = ''
-
                     category[key] = {tags_empty: value}
 
+        # Add in the base entity definition, and clear it out.
+        fgd.entities[BASE_ENTITY.casefold()] = base_entity_def
+        base_entity_def.desc = ''
+        base_entity_def.helpers = []
+        # Strip out all the tags.
+        for cat in [base_entity_def.inputs, base_entity_def.outputs, base_entity_def.keyvalues]:
+            for key, tag_map in cat.items():
+                [value] = tag_map.values()
+                cat[key] = {tags_empty: value}
+                if value.type is ValueTypes.CHOICES:
+                    raise ValueError('Choices key in CBaseEntity!')
     else:
         print('Culling incompatible entities...')
 
@@ -928,7 +973,7 @@ def action_visgroup(
     dest: Path,
 ) -> None:
     """Dump all auto-visgroups into the specified file, using a custom format."""
-    fgd = load_database(dbase, extra_loc, fgd_vis=True)
+    fgd, base_entity_def = load_database(dbase, extra_loc, fgd_vis=True)
 
     # TODO: This shouldn't be copied from fgd.export(), need to make the
     #  parenting invariant guaranteed by the classes.
