@@ -1,0 +1,200 @@
+// For use in the engine dump, the keyvalues available on CBaseEntity and therefore on all entities.
+// This way they don't need to be re-declared on every ent.
+
+@PointClass appliesto(engine) = _CBaseEntity_
+	[
+	classname(string) : "Classname" : : "The class of the entity, and is changed."
+	origin(origin) : "Position" : "0 0 0"
+	angles(angle) : "Pitch Yaw Roll (X Y Z)" : "0 0 0"
+
+	targetname(target_source) : "Name"
+	hammerid(integer) : "Hammer ID"
+	target(target_destination) : "Target" 
+	spawnflags(flags) = []
+
+
+	vscripts[VSCRIPT](scriptlist) : "Entity Scripts"
+	thinkfunction[VSCRIPT](string) : "Script think function"
+	nextthink(integer) : "Next Think"
+
+	globalname(string) : "Global Entity Name"
+
+	vscript_init_code[+VSCRIPT, +srctools](string) : "Init Code"
+	vscript_init_code2[+VSCRIPT, +srctools](string) : "Init Code"
+	vscript_init_code3[+VSCRIPT, +srctools](string) : "Init Code"
+	vscript_init_code4[+VSCRIPT, +srctools](string) : "Init Code"
+	vscript_init_code5[+VSCRIPT, +srctools](string) : "Init Code"
+
+	mincpulevel(integer) : "Min CPU Level" : 0
+	maxcpulevel(integer) : "Max CPU Level" : 0
+	mingpulevel(integer) : "Min GPU Level" : 0
+	maxgpulevel(integer) : "Max GPU Level" : 0
+
+	parentname(target_destination) : "Parent"
+	parent_attachment_point[srctools](string) : "Attachment Point"
+
+	teamnumber(integer) : "Team number" : : "Team number this entity is on."
+	pendingteamnumber(integer) : "Pending Team Number" : : "Team numer this entity will be on at the beginning of the next round."
+
+	responseContext(string) : "Response Context" : ""
+	addon(string) : "AI Addon" : : "Broken ASW feature."
+	
+	health(integer) : "Health"
+	max_health(integer) : "Max Health"
+	is_autoaim_target(boolean) : "Is Autoaim Target" : 0
+	damagefilter(filterclass) : "Damage Filter"
+	nodamageforces(boolean) : "No damage forces"
+
+	renderfx(integer) : "Render FX" : 0
+	rendermode(integer) : "Render Mode" : 0
+	renderamt(integer) : "Render Alpha" : 255
+	effects(integer) : "Effects" : 0
+	rendercolor(color255) : "Render Color" : "255 255 255"
+	modelindex(integer) : "Model Index" : 0 : "Internal model index, shouldn't be used."
+	model(studio) : "Model" : "" : "Model/sprite name, or brush index."
+	shadowcastdist(integer) : "Shadow Cast Distance" : 0
+	texframeindex(integer) : "Texture Frame" : 0
+	drawinfastreflection(boolean) : "Draw In Fast Reflections"
+	disableshadows(boolean) : "Disable Shadows"
+	disablereceiveshadows(boolean) : "Disable Recieving Shadows"
+	disableflashlight(boolean) : "Disable Projected Texture Shadows"
+	disableshadowdepth(boolean) : "Disable Shadow Depth"
+	shadowdepthnocache(integer) : "Cache in Shadow Depth"
+
+	viewhideflags(integer) : "View ID nodraw" : 0 : "This keyvalue can control whether an entity should only draw on things like monitors or mirrors, " +
+		"or the opposite. The code for this is { m_iViewHideFlags & (1 << CurrentViewID()) } and supports any combination of view IDs."
+	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
+		"This scale factor gives you some control over the fade. " +
+		"Using 0 here turns off the forcible fades. " +
+		"Numbers smaller than 1 cause the prop to fade out at further distances, " +
+		"and greater than 1 cause it to fade out at closer distances."
+
+	movetype(integer) : "Movement Type" : 0
+	collisiongroup(integer) : "Collision Group" : 0
+	speed(float) : "Speed" : 0
+	basevelocity(vector) : "Base Velocity"
+	velocity(vector) : "Velocity"
+	avelocity(vector) : "Angular Velocity"
+	waterlevel(integer) : "Water Level": 0 : "Depth of water the entity is in."
+	gravity(float) : "Gravity"
+	friction(float) : "Friction"
+	ltime(float) : "Local Time"
+	view_ofs(vector) : "View Offset"
+	lagCompensate(boolean) : "Enable lag compensation"
+
+
+	// Inputs
+	input Kill(void) : "Removes this entity from the world."
+	input KillHierarchy(void) : "Removes this entity and all its children from the world."
+
+	input SetParent(target_destination) : "Changes the entity's parent in the movement hierarchy."
+	input SetParentAttachment(string) : "Change this entity to attach to a specific attachment point on its parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment."
+	input SetParentAttachmentMaintainOffset(string) : "Change this entity to attach to a specific attachment point on it's parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment. The entity will maintain it's position relative to the parent at the time it is attached."
+	input ClearParent(void) : "Removes this entity from the the movement hierarchy, leaving it free to move independently."
+	input SetLocalAngles(vector) : "Sets the rotation of the entity relative to the parent's rotation."
+	input SetLocalOrigin(vector) : "Sets the position of the entity relative to its parent if one exists. Otherwise relative to the world."
+	input SetAbsAngles(vector) : "Set this entity's angles, always relative to the world origin."
+
+	input AddOutput(string) : "Adds an entity I/O connection to this entity or changes keyvalues dynamically. Format:" +
+		"\n'<output name> <targetname>:<inputname>:" + 
+		"<parameter>:<delay>:<max times to fire (-1 == infinite, 1 = only once)>'\n" +
+		"or 'keyvalue newval'. Very dangerous, use with care."
+	input FireUser1(void) : "Causes this entity's OnUser1 output to be fired."
+	input FireUser2(void) : "Causes this entity's OnUser2 output to be fired."
+	input FireUser3(void) : "Causes this entity's OnUser3 output to be fired."
+	input FireUser4(void) : "Causes this entity's OnUser4 output to be fired."
+	input Use(void) : "Same as a player invoking +use; may not do anything. Can also be invoked by creating an output that does not specify an input."
+	input DispatchEffect(string) : "Dispatch an effect from the entity's origin. See https://developer.valvesoftware.com/wiki/List_of_Client_Effects"
+
+	input RunScriptFile[VSCRIPT](string) : "Execute a game script file from disk."
+	input RunScriptCode[+VSCRIPT, -srctools](script) : "Execute a string of script source code."
+	input RunScriptCode[+VSCRIPT, +srctools](script) : "Execute a string of script source code. Backtick ( ` ) characters will be converted to quotes in-game for strings."
+	input CallScriptFunction[VSCRIPT](string) : "Execute the given function name."
+
+	input Alpha(integer) : "Set the entity's alpha (0 - 255)."
+	input Color(color255) : "Set the entity's color (R G B)."
+	input SetRenderMode(integer) : "Sets this entity's render mode."
+	input SetRenderFX(integer) : "Sets this entity's render FX."
+	input SetViewHideFlags(integer) : "Sets this entity's view ID nodraw flags (takes raw flag combination)."
+	input AddEffects(integer) : "Adds an entity effect."
+	input RemoveEffects(integer) : "Removes an entity effect."
+	input AddEFlags(integer) : "Adds an entity flag. NOTE: Entity flags are not the spawn flags you see in Hammer. Use AddSpawnFlags to add spawnflags."
+	input RemoveEFlags(integer) : "Removes an entity flag. NOTE: Entity flags are not the spawn flags you see in Hammer. Use RemoveSpawnFlags to remove spawnflags."
+
+	input AlternativeSorting(boolean) : "Set the translucency sorting algorithm."
+	input DispatchResponse(string) : "Dispatch an NPC response"
+	input SetTeam(integer): "Set the team."
+
+	input SetDamageFilter(target_destination) : "Set Damage Filter"
+	input EnableDamageForces(void)
+	input DisableDamageForces(void)
+
+	input AddContext(string) : "Set the given context values, given a  string in the format 'key1:value1,key2:value2,...'."
+	input RemoveContext(string) : "Remove the specified context value."
+	input ClearContext(void) : "Remove all the context."
+
+	input DisableShadow(void) : "Turn off the basic shadow underneath entities."
+	input EnableShadow(void) : "Turn on the basic shadow underneath entities."
+
+	input DisableDraw(void) : "Disable rendering this entity."
+	input EnableDraw(void) : "Enable rendering this entity."
+
+	input DisableReceivingFlashlight(void) : "Disable projected texture shadows on this entity."
+	input EnableReceivingFlashlight(void) : "Enable projected texture shadows on this entity."
+
+	input DisableDrawInFastReflection(void) : "Disable drawing in the world impostor pass and water."
+	input EnableDrawInFastReflection(void) : "Enable drawing in the world impostor pass and water."
+
+	input RemovePaint[P2CE](void) : "Remove paint from a brush."
+
+	input PassUser1(string) : "Causes this entity's OutUser1 output to be fired, passing along the parameter unchanged."
+	input PassUser2(string) : "Causes this entity's OutUser2 output to be fired, passing along the parameter unchanged."
+	input PassUser3(string) : "Causes this entity's OutUser3 output to be fired, passing along the parameter unchanged."
+	input PassUser4(string) : "Causes this entity's OutUser4 output to be fired, passing along the parameter unchanged."
+
+	input FireRandomUser(void) : "Fires OnUser1, OnUser2, OnUser3, or OnUser4 with a 25% chance of each."
+	input PassRandomUser(string) : "Fires OutUser1, OutUser2, OutUser3, or OutUser4 with a 25% chance of each. The parameter is passed along unchanged."
+	
+	input FireOutput(string) : "Fires the named output on this entity. Format: '<output name>:<activator>:<caller>:<parameter>:<delay>' (OnDeath:hl3cardgame:gaben). Everything beyond the output name is optional."
+	input RemoveOutput(string) : "Removes all instances of the named output on this entity. Wildcards are supported, meaning you could just pass '*' to wipe all outputs from this entity."
+	input AcceptInput(string) : "Fires the named input on this entity. Format: '<input name>:<parameter>:<activator>:<caller>:<output ID>' (SetTarget:cheese). Everything beyond the input name is optional. Mind the fact this is arranged differently from FireOutput, having the parameter right after the input name."
+	input CancelPending(void) : "Cancels any events fired by this entity that are currently pending in the I/O event queue."
+	
+	input FreeChildren(void) : "Unparents all direct children of this entity."
+	input SetLocalVelocity(vector) : "Sets this entity's current velocity."
+	input SetLocalAngularVelocity(vector) : "Sets this entity's current angular velocity."
+	
+	input AddSpawnFlags(integer) : "Adds spawnflag(s) to this entity. Many spawnflags have their respective numbers suffixed in this FGD."
+	input RemoveSpawnFlags(integer) : "Removes spawnflag(s) to this entity. Many spawnflags have their respective numbers suffixed in this FGD."
+
+	input AddSolidFlags(integer) : "Adds solid flags to this entity."
+	input RemoveSolidFlags(integer) : "Removes solid flags from this entity."
+
+	input ChangeVariable(string) : "Similar to AddOutput, except it changes an internal variable similar to logic_datadesc_accessor instead. Very dangerous, use with care."
+	
+	input SetHealth(integer) : "Sets this entity's health."
+	input AddHealth(integer) : "Adds to this entity's health."
+	input RemoveHealth(integer) : "Removes from this entity's health."
+	
+	input SetMaxHealth(integer) : "Sets this entity's max health."
+	
+	input SetEntityName(target_destination) : "Sets this entity's name that other entities should refer to it by."
+	input SetTarget(target_destination) : "Sets this entity's target. This is specific to certain entities, particularly logic entities that involve a target."
+	input SetOwnerEntity(target_destination) : "Sets this entity's owner entity. This has nothing to do with parenting and has more to do with collision and kill credits."
+	
+	input SetThinkNull(void) : "Sets this entity's general think function to null. Behavior varies from entity to entity.."
+	
+	input Touch(target_destination) : "Simulates this entity touching the specified entity."
+
+
+	// Outputs
+	output OnUser1(void) : "Fired in response to FireUser1 input."
+	output OnUser2(void) : "Fired in response to FireUser2 input."
+	output OnUser3(void) : "Fired in response to FireUser3 input."
+	output OnUser4(void) : "Fired in response to FireUser4 input."
+
+	output OutUser1(string) : "Fires in response to PassUser1 input, with the parameter passed through unchanged."
+	output OutUser2(string) : "Fires in response to PassUser2 input, with the parameter passed through unchanged."
+	output OutUser3(string) : "Fires in response to PassUser3 input, with the parameter passed through unchanged."
+	output OutUser4(string) : "Fires in response to PassUser4 input, with the parameter passed through unchanged."
+	]
