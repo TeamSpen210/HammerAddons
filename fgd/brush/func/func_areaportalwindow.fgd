@@ -18,6 +18,8 @@
 	BackgroundBModel(target_destination) : "Foreground Brush" : : "(Optional) brush model that is drawn after the fading brush model. This model should have alpha in its textures so you can see through it."
 	portalversion(integer) readonly: "Portal Version" : 1 : "(Don't change). Differentiates between shipping HL2 maps and maps using new engine features."
 
+	portalnumber[engine](integer): "Portal Number": : "In compiled maps, links the entity to the relevant visleaf intersection."
+	
 	// Inputs
 	input SetFadeStartDistance(integer) : "Set fade start distance."
 	input SetFadeEndDistance(integer) : "Set fade end distance."
