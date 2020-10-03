@@ -78,6 +78,32 @@ POLYFILLS = []  # type: List[Tuple[str, Callable[[FGD], None]]]
 VISGROUP_SUFFIX = '\x8D'
 
 
+def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
+    """Register a polyfill with an optional tag."""
+    def deco(func: PolyfillFuncT) -> PolyfillFuncT:
+        """Registers the function."""
+        for tag in tags:
+            POLYFILLS.append((tag.upper(), func))
+        if not tags:
+            POLYFILLS.append(('', func))
+        return func
+    return deco
+
+@_polyfill()
+def _polyfill_ext_valuetypes(fgd: FGD) -> None:
+    # Convert extension types to their real versions.
+    decay = {
+        ValueTypes.EXT_STR_TEXTURE: ValueTypes.STRING,
+        ValueTypes.EXT_ANGLE_PITCH: ValueTypes.FLOAT,
+        ValueTypes.EXT_ANGLES_LOCAL: ValueTypes.ANGLES,
+        ValueTypes.EXT_VEC_DIRECTION: ValueTypes.VEC,
+    }
+    for ent in fgd.entities.values():
+        for tag_map in ent.keyvalues.values():
+            for kv in tag_map.values():
+                kv.type = decay.get(kv.type, kv.type)
+
+
 def format_all_tags() -> str:
     """Append a formatted description of all allowed tags to a message."""
     
