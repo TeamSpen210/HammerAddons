@@ -752,6 +752,11 @@ def action_export(
                 helper for helper in ent.helpers
                 if not helper.IS_EXTENSION
             ]
+            # Force everything to inherit from CBaseEntity, since
+            # we're then removing any KVs that are present on that.
+            if ent.classname != BASE_ENTITY:
+                ent.bases = [base_entity_def]
+
             value: Union[IODef, KeyValues]
             category: Dict[str, Dict[FrozenSet[str], Union[IODef, KeyValues]]]
             base_cat: Dict[str, Dict[FrozenSet[str], Union[IODef, KeyValues]]]
@@ -848,7 +853,6 @@ def action_export(
                                 continue
                             else:
                                 print(f'{ent.classname}.{key}: {value.type} != base {base_value.type}')
-                        ent.bases = [base_entity_def]
 
                     # Blank this, it's not that useful.
                     value.desc = ''
