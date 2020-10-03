@@ -43,15 +43,23 @@
 	max_health(integer) : "Max Health"
 	is_autoaim_target(boolean) : "Is Autoaim Target" : 0
 	damagefilter(filterclass) : "Damage Filter"
+	nodamageforces(boolean) : "No damage forces?"
 
 	renderfx(integer) : "Render FX" : 0
 	rendermode(integer) : "Render Mode" : 0
+	renderamt(integer) : "Render Alpha" : 255
 	effects(integer) : "Effects" : 0
 	rendercolor(color255) : "Render Color" : "255 255 255"
 	modelindex(integer) : "Model Index" : 0 : "Internal model index, shouldn't be used."
 	model(studio) : "Model" : "" : "Model/sprite name, or brush index."
 	shadowcastdist(integer) : "Shadow Cast Distance" : 0
 	texframeindex(integer) : "Texture Frame" : 0
+	drawinfastreflection(boolean) : "Draw In Fast Reflections"
+	disableshadows(boolean) : "Disable Shadows"
+	disablereceiveshadows(boolean) : "Disable Recieving Shadows"
+	disableflashlight(boolean) : "Disable Projected Texture Shadows"
+	disableshadowdepth(boolean) : "Disable Shadow Depth"
+	shadowdepthnocache(integer) : "Cache in Shadow Depth"
 
 	movetype(integer) : "Movement Type" : 0
 	collisiongroup(integer) : "Collision Group" : 0
@@ -65,6 +73,7 @@
 	ltime(float) : "Local Time"
 	view_ofs(vector) : "View Offset"
 	lagCompensate(boolean) : "Enable lag compensation"
+
 
 
 	// Inputs
