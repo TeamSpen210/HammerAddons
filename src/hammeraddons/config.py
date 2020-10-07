@@ -8,6 +8,9 @@ from srctools import Property, logger, AtomicWriter
 from srctools.filesys import FileSystemChain, FileSystem, RawFileSystem, VPKFileSystem
 from srctools.props_config import Opt, Config, TYPE
 
+from srctools.scripts.plugin import Plugin
+
+from os import walk
 
 __all__ = [
     'LOGGER',
@@ -25,6 +28,7 @@ def parse(path: Path) -> Tuple[
     Game,
     FileSystemChain,
     Set[FileSystem],
+    Set[Plugin],
 ]:
     """From some directory, locate and parse the config file.
 
@@ -41,6 +45,7 @@ def parse(path: Path) -> Tuple[
         * Parsed gameinfo.
         * The chain of filesystems.
         * A packing blacklist.
+        * A list of plugins.
     """
     conf = Config(OPTIONS)
 
@@ -112,7 +117,32 @@ def parse(path: Path) -> Tuple[
                 'key "{}"!'.format(prop.real_name)
             )
 
-    return conf, game, fsys_chain, blacklist
+    plugins = set()  # type: Set[Plugin]
+
+    # find all the plugins and make plugin objects out of them
+    for prop in conf.get(Property, 'plugins'):  # type: Property
+        if prop.has_children():
+            raise ValueError('Config "plugins" value cannot have children.')
+        assert isinstance(prop.value, str)
+        
+        path = (game_root / Path(prop.value)).resolve()
+        if prop.name in ("path", "recursive"):
+            if not path.is_dir():
+                raise ValueError("'{}' is not a directory".format(path))
+
+            # want to recursive glob if key is recursive
+            pattern = "*.py" if prop.name == "path" else "**/*.py"
+
+            #find all .py files, make Plugins
+            for p in path.glob(pattern):
+                plugins.add(Plugin(path / p))
+
+        elif prop.name == "single":
+            plugins.add(Plugin(path))
+        else:
+            raise ValueError("Unknown plugins key {}".format(prop.real_name))
+
+    return conf, game, fsys_chain, blacklist, plugins
 
 
 OPTIONS = [
@@ -176,4 +206,12 @@ OPTIONS = [
         bother merging them. Should be greater than 1.
         """,
     ),
+    Opt(
+        'plugins', TYPE.RAW,
+        """\
+        Add plugins to the post compiler. The key defines the behaviour:
+        * "path" "folder/" loads all .py files in the folder.
+        * "recursive" "folder/" loads all .py files in the folder and in subfolders.
+        * "single" "folder/plugin.py" loads a single python file.
+    """),
 ]
