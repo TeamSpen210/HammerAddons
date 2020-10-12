@@ -2,10 +2,11 @@
 import argparse
 import datetime
 import sys
+from logging import FileHandler
 from pathlib import Path
 
 from srctools import Property
-from srctools.logger import init_logging
+from srctools.logger import init_logging, Formatter
 
 
 # Put the logs in the executable folders.
@@ -21,7 +22,6 @@ from typing import List
 
 
 def main(argv: List[str]) -> None:
-    LOGGER.info('Srctools postcompiler hook started at {}!', datetime.datetime.now().isoformat())
 
     parser = argparse.ArgumentParser(
         description="Modifies the BSP file, allowing additional entities "
@@ -57,6 +57,16 @@ def main(argv: List[str]) -> None:
     # Also if it's the VMF file, make it the BSP.
     path = Path(args.map).with_suffix('.bsp')
 
+    # Open and start writing to the map's log file.
+    handler = FileHandler(path.with_suffix('.log'))
+    handler.setFormatter(Formatter(
+        # One letter for level name
+        '[{levelname}] {module}.{funcName}(): {message}',
+        style='{',
+    ))
+    LOGGER.addHandler(handler)
+
+    LOGGER.info('Srctools postcompiler hook started at {}!', datetime.datetime.now().isoformat())
     LOGGER.info("Map path is {}", path)
 
     conf, game_info, fsys, pack_blacklist, plugins = config.parse(path)
