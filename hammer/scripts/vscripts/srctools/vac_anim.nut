@@ -183,7 +183,10 @@ function make_cube() {
     cargo.reuse_time = cur_time + anim.duration + 0.1; // Make sure enable/disable inputs don't get mixed up.
 
     foreach (pass_out in anim.pass_io) {
-		EntFireByHandle(pass_out.target, "FireUser4", "", pass_out.time, self, self);
+		// Do not pass an !activator here. The cargo props are shared, so 
+		// users shouldn't be doing anything to them. In particular, 
+		// OnPass -> kill outputs may be present which are not useful.
+		EntFireByHandle(pass_out.target, "FireUser4", "", pass_out.time, null, null);
 		if (pass_out.scanner != null && cargo_type.tv_skin != 0) {
 			if (pass_out.tv_offset < 0) { // Just fire on entry.
 				EntFireByHandle(pass_out.scanner, "Skin", cargo_type.tv_skin.tostring(), pass_out.time + pass_out.tv_offset, self, self);
