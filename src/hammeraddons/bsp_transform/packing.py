@@ -19,7 +19,8 @@ def comp_precache_model(ctx: Context):
         model = ent['model']
 
         # Precaching implies packing it.
-        ctx.pack.pack_file(model, FileType.MODEL)
+        skinset = {int(skin) for skin in ent['skinset'].split()}
+        ctx.pack.pack_file(model, FileType.MODEL, skinset=skinset)
 
         if os.path.normcase(model) in already_done:
             ent.remove()
@@ -42,6 +43,7 @@ def make_precache_prop(ent: Entity) -> None:
     ent['SuppressAnimSounds'] = '1'
     ent['DisableBoneFollowers'] = '1'  # Bone followers are extra ents, no thanks.
     ent['PerformanceMode'] = '2'  # "Full gibs on all platforms."
+    ent['srctools_nopack'] = '1'  # Don't pack, since this doesn't have the skinset.
 
     # Move to a corner of the map, so it won't be in PVS generally.
     ent['origin'] = '-15872 -15872 -15872'
