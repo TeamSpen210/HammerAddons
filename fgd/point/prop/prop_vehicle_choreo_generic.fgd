@@ -3,6 +3,10 @@
 	autovis(Vehicles, Generic Vehicles, Choreo Vehicle)
 	color(240 180 250) = prop_vehicle_choreo_generic: "Generic Choreo vehicle used for magical events."
 	[
+	spawnflags(flags)  =
+		[
+		16384: "Keep Player Position" : 0
+		]
 	// Only default to this model if we know it exists.
 	model(studio) : "World model" : : "Model to use."
 	model[HL2, EP1, EP2](studio) : "World model" : "models/vehicles/prisoner_pod.mdl": "Model to use."
