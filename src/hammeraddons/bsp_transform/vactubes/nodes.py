@@ -138,18 +138,11 @@ def parse(vmf: VMF) -> Iterator[Node]:
         model = model[23:]
         if model == "straight.mdl":
             yield Straight(ent)
-        elif model == "curve_1.mdl":
-            yield Curve(ent, 64.0, is_reversed)
-        elif model == "curve_2.mdl":
-            yield Curve(ent, 128.0, is_reversed)
-        elif model == "curve_3.mdl":
-            yield Curve(ent, 192.0, is_reversed)
-        elif model == "curve_4.mdl":
-            yield Curve(ent, 256.0, is_reversed)
-        elif model == "curve_5.mdl":
-            yield Curve(ent, 320.0, is_reversed)
-        elif model == "curve_6.mdl":
-            yield Curve(ent, 384.0, is_reversed)
+        elif model[:6] == "curve_" and model[-4:] == ".mdl":
+            # Each curve has a 64 units wider radius. Parse the model,
+            # so users can add larger curves if they want.
+            ind = int(model[6:-4])
+            yield Curve(ent, 64.0 * ind, is_reversed)
         elif model == "splitter_straight.mdl":
             yield Splitter(ent, True)
         elif model == "splitter_sides.mdl":
