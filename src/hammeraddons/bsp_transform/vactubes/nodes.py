@@ -128,11 +128,11 @@ def parse(vmf: VMF) -> Iterator[Node]:
     for ent in vmf.by_class['comp_vactube_junction']:
         is_reversed = srctools.conv_int(ent['skin']) == 1
 
-        model = ent['model'].casefold()
+        orig_mdl = model = ent['model'].casefold()
         del ent['model']
         if not model.startswith('models/editor/vactubes/'):
             raise ValueError(
-                f'Model "{ent["model"]}" is not a valid vactube '
+                f'Model "{orig_mdl}" is not a valid vactube '
                 f'junction type (at {ent["origin"]})'
             )
         model = model[23:]
@@ -151,7 +151,7 @@ def parse(vmf: VMF) -> Iterator[Node]:
             yield CrossSplitter(ent)
         else:
             raise ValueError(
-                f'Model "{ent["model"]}" is not a valid vactube '
+                f'Model "{orig_mdl}" is not a valid vactube '
                 f'junction type (at {ent["origin"]})'
             )
 
