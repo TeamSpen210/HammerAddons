@@ -1,18 +1,11 @@
 """Build the postcompiler script."""
-from PyInstaller.utils.hooks import get_module_file_attribute
-import os
 
-srctools_hooks = os.path.dirname(get_module_file_attribute('srctools.pyinstaller_hook'))
 
 a = Analysis(
     ['srctools/scripts/postcompiler.py'],
     binaries=[],
     datas=[],
     hiddenimports=[],
-    hookspath=[
-     srctools_hooks,
-    ],
-    runtime_hooks=[],
     excludes=[],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
