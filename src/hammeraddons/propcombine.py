@@ -109,15 +109,20 @@ class CollType(Enum):
     VPHYS = 6  # Collision model
 
 
-# 'key' used to match models to each other.
-PropPos = NamedTuple('PropPos', [
-    ('x', float), ('y', float), ('z', float),
-    ('pit', float), ('yaw', float), ('rol', float),
-    ('model', str),
-    ('skin', int),
-    ('scale', float),
-    ('solidity', CollType),
-])
+class PropPos(NamedTuple):
+    """Key used to match models to each other."""
+    x: float
+    y: float
+    z: float
+
+    pit: float
+    yaw: float
+    rol: float
+
+    model: str
+    skin: int
+    scale: float
+    solidity: CollType
 
 
 class MergedModel:
