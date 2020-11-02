@@ -4,23 +4,20 @@ This merges static props together, so they can be drawn with a single
 draw call.
 """
 import os
-import subprocess
 import random
 import colorsys
+import functools
+from collections import defaultdict
 from enum import Enum
 from pathlib import Path
-from tempfile import TemporaryDirectory
 from typing import (
     Optional, Tuple, Callable, NamedTuple,
     FrozenSet, Dict, List, Set,
     Iterator,
 )
 
-from srctools import (
-    Vec, VMF, Entity, conv_int, Property, AtomicWriter, KeyValError,
-)
+from srctools import Vec, VMF, Entity, conv_int
 from srctools.tokenizer import Tokenizer, Token
-
 from srctools.game import Game
 
 from srctools.logger import get_logger
@@ -28,7 +25,7 @@ from srctools.packlist import PackList
 from srctools.bsp import BSP, StaticProp
 from srctools.mdl import Model
 from srctools.smd import Mesh
-from collections import defaultdict
+from srctools.compiler.mdl_compiler import ModelCompiler
 
 
 LOGGER = get_logger(__name__)
@@ -46,7 +43,7 @@ $staticprop
 $modelname "{path}.mdl"
 $surfaceprop "{surf}"
 
-$body body "{ref_mesh}"
+$body body "reference.smd"
 
 $contents {contents}
 
@@ -54,25 +51,19 @@ $sequence idle anim act_idle 1
 '''
 
 QC_COLL_TEMPLATE = '''
-$collisionmodel "{}" {{
+$collisionmodel "physics.smd" {
     $maxconvexpieces 2048
     $automass
     $concave
-}}
+}
 '''
-
-
-MDL_EXTS = [
-    '.mdl',
-    '.phy',
-    '.dx90.vtx',
-    '.dx80.vtx',
-    '.sw.vtx',
-    '.vvd',
-]
 
 MAX_GROUP = 24  # Studiomdl does't allow more than this...
 
+# Cache of the SMD models we have already parsed, so we don't need
+# to parse them again. The second is the collision model.
+_mesh_cache = {}  # type: Dict[Tuple[QC, int], Mesh]
+_coll_cache = {}  # type: Dict[str, Mesh]
 
 class DynamicModel(Exception):
     """Used as flow control."""
@@ -125,385 +116,220 @@ class PropPos(NamedTuple):
     solidity: CollType
 
 
-class MergedModel:
-    """Represents a model that has been merged together."""
-    def __init__(self, name: str, has_coll: bool) -> None:
-        self.name = name
-        self.has_coll = has_coll
-        self.used = False
+def combine_group(
+    compiler: ModelCompiler,
+    props: List[StaticProp],
+    lookup_model: Callable[[str], Tuple[QC, Model]],
+) -> StaticProp:
+    """Merge the given props together, compiling a model if required."""
 
+    # We want to allow multiple props to reuse the same model.
+    # To do this try and match prop groups to each other, by "unifying"
+    # them into a consistent orientation.
+    #
+    # If there are matches in different orientations, they're most likely
+    # 90 degree or other rotations in the yaw axis. So we compute the average,
+    # and subtract that out.
 
-class ModelManager:
-    """Manages the set of merged models that have been generated."""
+    avg_pos = Vec()
+    avg_yaw = 0.0
 
-    def __init__(
-        self,
-        temp_folder: Path,
-        game: Game,
-        studiomdl_loc: Path,
-        pack: PackList,
-        qc_map: Dict[str, QC],
-        map_name: str,
-        get_model: Callable[[str], Optional[Model]],
-    ) -> None:
-        # The models already constructed.
-        self._mdl_cache = {}  # type: Dict[FrozenSet[PropPos], MergedModel]
+    visleafs = set()  # type: Set[int]
 
-        # Cache of the SMD models we have already parsed, so we don't need
-        # to parse them again. The second is the collision model.
-        self._mesh_cache = {}  # type: Dict[Tuple[QC, int], Mesh]
-        self._coll_cache = {}  # type: Dict[str, Mesh]
+    for prop in props:
+        avg_pos += prop.origin
+        avg_yaw += prop.angles.y
+        visleafs.update(prop.visleafs)
 
-        # The random indexes we use to produce filenames.
-        self._mdl_names = set()  # type: Set[str]
+    avg_pos /= len(props)
 
-        # Function to load and parse a MDL.
-        self.lookup_model = get_model
-        # The QCs we have parsed.
-        self.qc_map = qc_map
-
-        # The stuff we need to know to build models.
-        self.game = game
-        self.studiomdl_loc = str(studiomdl_loc.resolve())
-        self.model_folder = 'maps/{}/propcombine/'.format(map_name)
-        self.temp_folder = temp_folder
-        self.pack = pack
-
-        os.makedirs(self.model_folder, exist_ok=True)
-
-    def load(self) -> None:
-        """Load from the cache file."""
-        with open(str(self.game.path / 'models' / self.model_folder / 'cache.vdf')) as f:
-            prop_block = Property.parse(f)
-        for prop in prop_block:
-            pos_set = set()
-            for pos_block in prop.find_all('model'):
-                origin = round(pos_block.vec('origin'), 7)
-                angles = round(pos_block.vec('angles'), 7)
-                pos_set.add(PropPos(
-                    origin.x, origin.y, origin.z,
-                    angles.x, angles.y, angles.z,
-                    pos_block['filename'],
-                    pos_block.int('skin'),
-                    pos_block.float('scale', 1.0),
-                    CollType(pos_block.int('solid', CollType.VPHYS.value)),
-                ))
-            mdl_name = prop['name']
-            self._mdl_names.add(mdl_name)
-            self._mdl_cache[frozenset(pos_set)] = MergedModel(
-                mdl_name,
-                any(pos.solidity is not CollType.NONE for pos in pos_set),
-            )
-        LOGGER.info('Found {} existing grouped models.', len(self._mdl_cache))
-
-    def finalise(self) -> None:
-        """Write the constructed models to the cache file and remove unused models."""
-        used_models = set()
-
-        with AtomicWriter(
-            str(self.game.path / 'models' / self.model_folder / 'cache.vdf'),
-        ) as f:
-            for positions, mdl in self._mdl_cache.items():
-                if not mdl.used:
-                    continue
-
-                used_models.add(mdl.name)
-
-                prop = Property('PropGroup', [
-                    Property('name', mdl.name)
-                ])
-                for pos in positions:
-                    prop.append(Property('Model', [
-                        Property('filename', pos.model),
-                        Property('skin', str(pos.skin)),
-                        Property(
-                            'origin',
-                            '{} {} {}'.format(pos.x, pos.y, pos.z),
-                        ),
-                        Property(
-                            'angles',
-                            '{} {} {}'.format(pos.pit, pos.yaw, pos.rol)
-                        ),
-                        Property('scale', str(pos.scale)),
-                        Property('solid', str(pos.solidity.value)),
-                    ]))
-                for line in prop.export():
-                    f.write(line)
-
-        for mdl_file in (self.game.path / 'models' / self.model_folder).glob('*'):
-            if mdl_file.suffix not in {'.mdl', '.phy', '.vtx', '.vvd'}:
-                continue
-
-            # Strip all suffixes.
-            if mdl_file.name[:mdl_file.name.find('.')] in used_models:
-                continue
-
-            LOGGER.info('Culling {}...', mdl_file)
-            try:
-                mdl_file.unlink()
-            except FileNotFoundError:
-                pass
-
-    def combine_group(self, props: List[StaticProp]) -> StaticProp:
-        """Merge the given props together, compiling a model if required."""
-
-        # We want to allow multiple props to reuse the same model.
-        # To do this try and match prop groups to each other, by "unifying"
-        # them into a consistent orientation.
-        #
-        # If there are matches in different orientations, they're most likely
-        # 90 degree or other rotations in the yaw axis. So we compute the average,
-        # and subtract that out.
-
-        avg_pos = Vec()
-        avg_yaw = 0.0
-
-        visleafs = set()  # type: Set[int]
-
-        for prop in props:
-            avg_pos += prop.origin
-            avg_yaw += prop.angles.y
-            visleafs.update(prop.visleafs)
-
-        avg_pos /= len(props)
-
-        prop_pos = set()
-        for prop in props:
-            origin = round((prop.origin - avg_pos), 7)
-            angles = round(Vec(prop.angles), 7)
-            try:
-                coll = CollType(prop.solidity)
-            except ValueError:
-                raise ValueError(
-                     'Unknown prop_static collision type '
-                     '{} for "{}" at {}!'.format(
-                        prop.solidity,
-                        prop.model,
-                        prop.origin,
-                     )
-                )
-            prop_pos.add(PropPos(
-                origin.x, origin.y, origin.z,
-                angles.x, angles.y, angles.z,
-                prop.model,
-                prop.skin,
-                prop.scaling,
-                coll,
-            ))
-        prop_key = frozenset(prop_pos)
-
+    prop_pos = set()
+    for prop in props:
+        origin = round((prop.origin - avg_pos), 7)
+        angles = round(Vec(prop.angles), 7)
         try:
-            merged = self._mdl_cache[prop_key]
-        except KeyError:
-            # Need to build the model.
-            # We don't need to make a collision mesh if the prop is set to
-            # not use them.
-            has_coll = any(pos.solidity is not CollType.NONE for pos in prop_pos)
-
-            # Figure out a name to use.
-            while True:
-                mdl_name = 'merge_{:04x}'.format(random.getrandbits(16))
-                if mdl_name not in self._mdl_names:
-                    self._mdl_names.add(mdl_name)
-                    break
-
-            merged = self._mdl_cache[prop_key] = MergedModel(mdl_name, has_coll)
-            self.compile(prop_key, merged)
-
-        if not merged.used:
-            # Pack it in.
-            merged.used = True
-
-            full_model_path = Path(
-                self.game.path,
-                'models',
-                self.model_folder,
-                merged.name
+            coll = CollType(prop.solidity)
+        except ValueError:
+            raise ValueError(
+                 'Unknown prop_static collision type '
+                 '{} for "{}" at {}!'.format(
+                    prop.solidity,
+                    prop.model,
+                    prop.origin,
+                 )
             )
-            for ext in MDL_EXTS:
-                try:
-                    with open(str(full_model_path.with_suffix(ext)), 'rb') as fb:
-                        self.pack.pack_file(
-                            'models/{}{}{}'.format(
-                                self.model_folder, merged.name, ext,
-                            ),
-                            data=fb.read(),
-                        )
-                except FileNotFoundError:
-                    pass
+        prop_pos.add(PropPos(
+            origin.x, origin.y, origin.z,
+            angles.x, angles.y, angles.z,
+            prop.model,
+            prop.skin,
+            prop.scaling,
+            coll,
+        ))
+    # We don't want to build collisions if it's not used.
+    has_coll = any(pos.solidity is not CollType.NONE for pos in prop_pos)
+    mdl_name = compiler.get_model(
+        (frozenset(prop_pos), has_coll),
+        functools.partial(compile_func, lookup_model),
+    )
 
-            if not merged.has_coll:
-                # Make sure an older collision mesh isn't left behind!
-                try:
-                    os.remove(full_model_path.with_suffix('.phy'))
-                except FileNotFoundError:
-                    pass
+    # Many of these we require to be the same, so we can read them
+    # from any of the component props.
+    return StaticProp(
+        model=mdl_name,
+        origin=avg_pos,
+        angles=Vec(0, 270, 0),
+        scaling=1.0,
+        visleafs=sorted(visleafs),
+        solidity=(CollType.VPHYS if has_coll else CollType.NONE).value,
+        flags=props[0].flags,
+        lighting_origin=avg_pos,
+        tint=props[0].tint,
+        renderfx=props[0].renderfx,
+    )
 
-        # Many of these we require to be the same, so we can read them
-        # from any of the component props.
-        return StaticProp(
-            model='models/{}{}.mdl'.format(self.model_folder, merged.name),
-            origin=avg_pos,
-            angles=Vec(0, 270, 0),
-            scaling=1.0,
-            visleafs=sorted(visleafs),
-            solidity=CollType.VPHYS.value if merged.has_coll else 0,
-            flags=props[0].flags,
-            lighting_origin=avg_pos,
-            tint=props[0].tint,
-            renderfx=props[0].renderfx,
-        )
 
-    def compile(
-        self,
-        prop_pos: FrozenSet[PropPos],
-        merged: MergedModel,
-    ) -> None:
-        """Build this merged model."""
-        LOGGER.info('Compiling {}{}.mdl...', self.model_folder, merged.name)
+def compile_func(
+    lookup_model: Callable[[str], Tuple[QC, Model]],
+    mdl_key: Tuple[Set[PropPos], bool],
+    temp_folder: Path,
+    mdl_name: str,
+) -> None:
+    """Build this merged model."""
+    LOGGER.info('Compiling {}.mdl...', mdl_name)
+    prop_pos, has_coll = mdl_key
 
-        # Unify these properties.
-        surfprops = set()  # type: Set[str]
-        cdmats = set()  # type: Set[str]
-        contents = set()  # type: Set[int]
+    # Unify these properties.
+    surfprops = set()  # type: Set[str]
+    cdmats = set()  # type: Set[str]
+    contents = set()  # type: Set[int]
 
-        for prop in prop_pos:
-            mdl = self.lookup_model(prop.model)
-            assert mdl is not None, prop.model
-            surfprops.add(mdl.surfaceprop.casefold())
-            cdmats.update(mdl.cdmaterials)
-            contents.add(mdl.contents)
+    for prop in prop_pos:
+        qc, mdl = lookup_model(prop.model)
+        assert mdl is not None, prop.model
+        surfprops.add(mdl.surfaceprop.casefold())
+        cdmats.update(mdl.cdmaterials)
+        contents.add(mdl.contents)
 
-        if len(surfprops) > 1:
-            raise ValueError('Multiple surfaceprops? Should be filtered out.')
+    if len(surfprops) > 1:
+        raise ValueError('Multiple surfaceprops? Should be filtered out.')
 
-        if len(contents) > 1:
-            raise ValueError('Multiple contents? Should be filtered out.')
+    if len(contents) > 1:
+        raise ValueError('Multiple contents? Should be filtered out.')
 
-        [surfprop] = surfprops
-        [phy_content_type] = contents
+    [surfprop] = surfprops
+    [phy_content_type] = contents
 
-        ref_mesh = Mesh.blank('static_prop')
-        coll_mesh = None  #  type: Optional[Mesh]
+    ref_mesh = Mesh.blank('static_prop')
+    coll_mesh = None  #  type: Optional[Mesh]
 
-        for prop in prop_pos:
-            qc = self.qc_map[unify_mdl(prop.model)]
-            mdl = self.lookup_model(prop.model)
-            assert mdl is not None, prop.model
+    for prop in prop_pos:
+        qc, mdl = lookup_model(prop.model)
+        try:
+            child_ref = _mesh_cache[qc, prop.skin]
+        except KeyError:
+            LOGGER.info('Parsing ref "{}"', qc.ref_smd)
+            with open(qc.ref_smd, 'rb') as fb:
+                child_ref = Mesh.parse_smd(fb)
 
-            try:
-                child_ref = self._mesh_cache[qc, prop.skin]
-            except KeyError:
-                LOGGER.info('Parsing ref "{}"', qc.ref_smd)
-                with open(qc.ref_smd, 'rb') as fb:
-                    child_ref = Mesh.parse_smd(fb)
-
-                if prop.skin != 0 and prop.skin < len(mdl.skins):
-                    # We need to rename the materials to match the skin.
-                    swap_skins = dict(zip(
-                        mdl.skins[0],
-                        mdl.skins[prop.skin]
-                    ))
-                    for tri in child_ref.triangles:
-                        tri.mat = swap_skins.get(tri.mat, tri.mat)
-
-                # For some reason all the SMDs are rotated badly, but only
-                # if we append them.
+            if prop.skin != 0 and prop.skin < len(mdl.skins):
+                # We need to rename the materials to match the skin.
+                swap_skins = dict(zip(
+                    mdl.skins[0],
+                    mdl.skins[prop.skin]
+                ))
                 for tri in child_ref.triangles:
-                    for vert in tri:
-                        vert.pos.rotate(0, 90, 0, round_vals=False)
-                        vert.norm.rotate(0, 90, 0, round_vals=False)
+                    tri.mat = swap_skins.get(tri.mat, tri.mat)
 
-                self._mesh_cache[qc, prop.skin] = child_ref
+            # For some reason all the SMDs are rotated badly, but only
+            # if we append them.
+            for tri in child_ref.triangles:
+                for vert in tri:
+                    vert.pos.rotate(0, 90, 0, round_vals=False)
+                    vert.norm.rotate(0, 90, 0, round_vals=False)
 
-            child_coll = self._get_collision(qc, prop, child_ref)
+            _mesh_cache[qc, prop.skin] = child_ref
 
-            offset = Vec(prop.x, prop.y, prop.z)
-            angles = Vec(prop.pit, prop.yaw, prop.rol)
+        child_coll = build_collision(qc, prop, child_ref)
 
-            ref_mesh.append_model(child_ref, angles, offset, prop.scale * qc.ref_scale)
+        offset = Vec(prop.x, prop.y, prop.z)
+        angles = Vec(prop.pit, prop.yaw, prop.rol)
 
-            if merged.has_coll and child_coll is not None:
-                if coll_mesh is None:
-                    coll_mesh = Mesh.blank('static_prop')
-                coll_mesh.append_model(child_coll, angles, offset, prop.scale * qc.phy_scale)
+        ref_mesh.append_model(child_ref, angles, offset, prop.scale * qc.ref_scale)
 
-        with open(str(self.temp_folder / (merged.name + '_ref.smd')), 'wb') as fb:
-            ref_mesh.export(fb)
+        if has_coll and child_coll is not None:
+            if coll_mesh is None:
+                coll_mesh = Mesh.blank('static_prop')
+            coll_mesh.append_model(child_coll, angles, offset, prop.scale * qc.phy_scale)
+
+    with (temp_folder / 'reference.smd').open('wb') as fb:
+        ref_mesh.export(fb)
+
+    # Generate  a  blank animation.
+    with (temp_folder / 'anim.smd').open('wb') as fb:
+        Mesh.blank('static_prop').export(fb)
+
+    if coll_mesh is not None:
+        with (temp_folder / 'physics.smd').open('wb') as fb:
+            coll_mesh.export(fb)
+
+    with (temp_folder / 'model.qc').open('w') as f:
+        f.write(QC_TEMPLATE.format(
+            path=mdl_name,
+            surf=surfprop,
+            # For $contents, we need to decompose out each bit.
+            # This is the same as BSP's flags in public/bsp_flags.h
+            # However only a few types are allowable.
+            contents=' '.join([
+                cont
+                for mask, cont in [
+                    (0x1, '"solid"'),
+                    (0x8, '"grate"'),
+                    (0x2000000, '"monster"'),
+                    (0x20000000, '"ladder"'),
+                ]
+                if mask & phy_content_type
+                # 0 needs to produce this value.
+            ]) or '"notsolid"',
+        ))
+
+        for mat in sorted(cdmats):
+            f.write('$cdmaterials "{}"\n'.format(mat))
 
         if coll_mesh is not None:
-            with open(str(self.temp_folder / (merged.name + '_phy.smd')), 'wb') as fb:
-                coll_mesh.export(fb)
+            f.write(QC_COLL_TEMPLATE)
 
-        with open(str((self.temp_folder / merged.name).with_suffix('.qc')), 'w') as f:
-            f.write(QC_TEMPLATE.format(
-                path=self.model_folder + merged.name,
-                surf=surfprop,
-                ref_mesh=merged.name + '_ref.smd',
-                # For $contents, we need to decompose out each bit.
-                # This is the same as BSP's flags in public/bsp_flags.h
-                # However only a few types are allowable.
-                contents=' '.join([
-                    cont
-                    for mask, cont in [
-                        (0x1, '"solid"'),
-                        (0x8, '"grate"'),
-                        (0x2000000, '"monster"'),
-                        (0x20000000, '"ladder"'),
-                    ]
-                    if mask & phy_content_type
-                    # 0 needs to produce this value.
-                ]) or '"notsolid"',
-            ))
 
-            for mat in sorted(cdmats):
-                f.write('$cdmaterials "{}"\n'.format(mat))
-
-            if coll_mesh is not None:
-                f.write(QC_COLL_TEMPLATE.format(merged.name + '_phy.smd'))
-
-        args = [
-            self.studiomdl_loc,
-            '-nop4',
-            '-game', str(self.game.path),
-            str((self.temp_folder / merged.name).with_suffix('.qc')),
-        ]
-        subprocess.run(args, stdout=subprocess.DEVNULL)
-
-    def _get_collision(self, qc: QC, prop: PropPos, ref_mesh: Mesh) -> Optional[Mesh]:
-        """Get the correct collision mesh for this model."""
-        if prop.solidity is CollType.NONE:  # Non-solid
+def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> Optional[Mesh]:
+    """Get the correct collision mesh for this model."""
+    if prop.solidity is CollType.NONE:  # Non-solid
+        return None
+    elif prop.solidity is CollType.VPHYS or prop.solidity is CollType.BSP:
+        if qc.phy_smd is None:
             return None
-        elif prop.solidity is CollType.VPHYS or prop.solidity is CollType.BSP:
-            if qc.phy_smd is None:
-                return None
-            try:
-                return self._coll_cache[qc.phy_smd]
-            except KeyError:
-                LOGGER.info('Parsing coll "{}"', qc.phy_smd)
-                with open(qc.phy_smd, 'rb') as fb:
-                    coll = Mesh.parse_smd(fb)
+        try:
+            return _coll_cache[qc.phy_smd]
+        except KeyError:
+            LOGGER.info('Parsing coll "{}"', qc.phy_smd)
+            with open(qc.phy_smd, 'rb') as fb:
+                coll = Mesh.parse_smd(fb)
 
-                for tri in coll.triangles:
-                    for vert in tri:
-                        vert.pos.rotate(0, 90, 0, round_vals=False)
-                        vert.norm.rotate(0, 90, 0, round_vals=False)
+            for tri in coll.triangles:
+                for vert in tri:
+                    vert.pos.rotate(0, 90, 0, round_vals=False)
+                    vert.norm.rotate(0, 90, 0, round_vals=False)
 
-                self._coll_cache[qc.phy_smd] = coll
-                return coll
-        # Else, it's one of the three bounding box types.
-        # We don't really care about which.
-        bbox_min, bbox_max = Vec.bbox(
-            vert.pos
-            for tri in
-            ref_mesh.triangles
-            for vert in tri
-        )
-        return Mesh.build_bbox('static_prop', 'phy', bbox_min, bbox_max)
-
-    def use_count(self) -> int:
-        """Return the number of used models."""
-        return sum(1 for mdl in self._mdl_cache.values() if mdl.used)
+            _coll_cache[qc.phy_smd] = coll
+            return coll
+    # Else, it's one of the three bounding box types.
+    # We don't really care about which.
+    bbox_min, bbox_max = Vec.bbox(
+        vert.pos
+        for tri in
+        ref_mesh.triangles
+        for vert in tri
+    )
+    return Mesh.build_bbox('static_prop', 'phy', bbox_min, bbox_max)
 
 
 def load_qcs(qc_map: Dict[str, QC], qc_folder: Path) -> None:
@@ -636,7 +462,7 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
 def group_props_ent(
     prop_groups: Dict[Optional[tuple], List[StaticProp]],
     rejected: List[StaticProp],
-    get_model: Callable[[str], Optional[Model]],
+    get_model: Callable[[str], Tuple[Optional[QC], Optional[Model]]],
     bbox_ents: List[Entity],
     min_cluster: int,
 ) -> Iterator[List[StaticProp]]:
@@ -655,7 +481,7 @@ def group_props_ent(
 
         mdl_name = ent['prop']
         if mdl_name:
-            mdl = get_model(mdl_name)
+            qc, mdl = get_model(mdl_name)
             if mdl is not None:
                 skinset = frozenset({
                     tex.casefold().replace('\\', '/')
@@ -797,9 +623,6 @@ def combine(
     for ent in bbox_ents:
         ent.remove()
 
-    if studiomdl_loc is None:
-        studiomdl_loc = game.bin_folder() / 'studiomdl.exe'
-
     if not studiomdl_loc.exists():
         LOGGER.warning('No studioMDL! Cannot propcombine!')
         return
@@ -821,9 +644,17 @@ def combine(
 
     # Don't re-parse models continually.
     mdl_map = {}  # type: Dict[str, Model]
+    # Wipe these, if they're being used again.
+    _mesh_cache.clear()
+    _coll_cache.clear()
 
-    def get_model(filename: str) -> Optional[Model]:
+    def get_model(filename: str) -> Tuple[Optional[QC], Optional[Model]]:
+        """Given a filename, load/parse the QC and MDL data."""
         key = unify_mdl(filename)
+        try:
+            qc = qc_map[key]
+        except KeyError:
+            return None, None
         try:
             model = mdl_map[key]
         except KeyError:
@@ -831,9 +662,9 @@ def combine(
                 mdl_file = pack.fsys[filename]
             except FileNotFoundError:
                 # We don't have this model, we can't combine...
-                return None
+                return None, None
             model = mdl_map[key] = Model(pack.fsys, mdl_file)
-        return model
+        return qc, model
 
     def get_grouping_key(prop: StaticProp) -> Optional[tuple]:
         """Compute a grouping key for this prop.
@@ -841,15 +672,9 @@ def combine(
         Only props with matching key can be possibly combined.
         If None it cannot be combined.
         """
-        key = unify_mdl(prop.model)
+        qc, model = get_model(prop.model)
 
-        if key not in qc_map:
-            # We don't have source for this...
-            return None
-
-        model = get_model(prop.model)
-
-        if model is None:
+        if model is None or qc is None:
             return None
 
         return (
@@ -874,7 +699,7 @@ def combine(
 
     # This holds the list of all props we want in the map -
     # combined ones, and any we reject for whatever reason.
-    final_props = []  # type: List[StaticProp]
+    final_props: List[StaticProp] = []
 
     if bbox_ents:
         LOGGER.info('Propcombine sets present ({}), combining...', len(bbox_ents))
@@ -904,42 +729,30 @@ def combine(
     # no source files etc.
     final_props.extend(prop_groups.pop(None, []))
 
-    with TemporaryDirectory(prefix='autocomb_') as temp_dir:
-        # Generate a blank animation.
-        with open(temp_dir + '/anim.smd', 'wb') as f:
-            Mesh.blank('static_prop').export(f)
-
-        mdl_man = ModelManager(
-            Path(temp_dir),
-            game,
-            studiomdl_loc,
-            pack,
-            qc_map,
-            map_name,
-            get_model,
-        )
-
-        try:
-            mdl_man.load()
-        except FileNotFoundError:
-            pass  # Make a new one.
-        except (IOError, KeyValError):
-            LOGGER.warning("Couldn't parse props cache file:", exc_info=True)
-
+    with ModelCompiler(
+        game,
+        studiomdl_loc,
+        pack,
+        map_name,
+        'propcombine',
+    ) as compiler:
         for group in grouper:
-            grouped_prop = mdl_man.combine_group(group)
+            grouped_prop = combine_group(compiler, group, get_model)
             if debug_tint:
                 # Compute a random hue, and convert back to RGB 0-255.
                 grouped_prop.tint = round(Vec(*colorsys.hsv_to_rgb(random.random(), 1, 1)) * 255)
             final_props.append(grouped_prop)
 
-    mdl_man.finalise()
-
     LOGGER.info(
         'Combined {} props to {} props using {} groups.',
         prop_count,
         len(final_props),
-        mdl_man.use_count(),
+        compiler.model_folder,
     )
+    # If present, delete old cache file. We'll have cleaned up the models.
+    try:
+        os.remove(compiler.model_folder_abs / 'cache.vdf')
+    except FileNotFoundError:
+        pass
 
     bsp.write_static_props(final_props)

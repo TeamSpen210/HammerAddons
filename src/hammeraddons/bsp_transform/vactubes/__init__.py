@@ -6,7 +6,7 @@ from tempfile import TemporaryDirectory
 from typing import Tuple, Dict, List, Iterable, Optional
 import math
 
-from srctools.compiler.propcombine import MDL_EXTS
+from srctools.mdl import MDL_EXTS
 from srctools.smd import Mesh
 
 import srctools.logger
