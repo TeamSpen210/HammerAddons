@@ -40,7 +40,7 @@ QC = NamedTuple('QC', [
 
 QC_TEMPLATE = '''\
 $staticprop
-$modelname "{path}.mdl"
+$modelname "{path}"
 $surfaceprop "{surf}"
 
 $body body "reference.smd"
@@ -196,7 +196,7 @@ def compile_func(
     mdl_name: str,
 ) -> None:
     """Build this merged model."""
-    LOGGER.info('Compiling {}.mdl...', mdl_name)
+    LOGGER.info('Compiling {}...', mdl_name)
     prop_pos, has_coll = mdl_key
 
     # Unify these properties.
