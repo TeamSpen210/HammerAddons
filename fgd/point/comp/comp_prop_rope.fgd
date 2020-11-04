@@ -1,0 +1,29 @@
+@KeyFrameClass base(DXLevelChoice, SystemLevelChoice)
+	sphere(radius)
+	animator()
+= comp_prop_rope: "Generates ropes using a static prop."
+	[
+	nextkey(target_destination) : "Next Rope" : : "Name of the next rope along this path."
+
+	slack(integer) : "Slack" : 25 : "How much extra length the rope has, for 'catenary' mode (by default it has the length between its two endpoints in the editor)."
+	type(choices) : "Type" : "0" : "How to interpolate the rope. Straight makes it straight. Spline uses a spline curve, which smoothly blends between points. Catenary makes it hang down, like the original move_rope." =
+		[
+		"straight": "Straight"
+		"spline": "Spline Curve"
+		"catenary": "Catenary "
+		]
+	type[engine](string): "Type": 0
+
+	subdiv(integer) : "Subdivisions" : 2 : "Number of subdivisions between each rope segment. Maximum value is 8. Higher values make smoother ropes, but produce more faces."
+	sides(integer) : "Sides" : 8 : "Number of faces for each cylindrical section. Only the value at the start of the rope is used."
+	radius(float) : "Radius" : 6 : "Radius of this rope section."
+	texturescale(float) : "Texture Scale" : 1 : "This changes the texture resolution. The default resolution is 4 pixels per inch. Larger values stretch the texture and smaller values scrunch it up."
+
+	ropematerial(material) : "Rope Material" : "cable/cable.vmt" : "The material to use for the rope. Must be a model material."
+	
+	// Useless remmnants of unused keyframe logic.
+	// We have to have these for Hammer to render ropes.
+	movespeed(integer) readonly: "Speed (unused)" : 64
+	positioninterpolator(integer) readonly: "Position Interpolator" : 2 : "Curve Type. Currently only Rope is fully supported."
+
+	]
