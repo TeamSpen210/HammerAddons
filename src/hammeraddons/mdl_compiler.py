@@ -12,6 +12,7 @@ from typing import Dict, Callable, TypeVar, Tuple, Set, List, Optional, Hashable
 from pathlib import Path, PurePosixPath
 
 from srctools import AtomicWriter
+from srctools.bsp_transform import Context
 from srctools.game import Game
 from srctools.mdl import MDL_EXTS
 from srctools.packlist import PackList, LOGGER
@@ -54,6 +55,17 @@ class ModelCompiler:
         if studiomdl_loc is None:
             studiomdl_loc = game.bin_folder() / 'studiomdl.exe'
         self.studiomdl_loc = studiomdl_loc.resolve()
+
+    @classmethod
+    def from_ctx(cls, ctx: Context, folder_name: str) -> 'ModelCompiler':
+        """Convenience method to construct from the context's data."""
+        return cls(
+            ctx.game,
+            ctx.studiomdl,
+            ctx.pack,
+            ctx.bsp_path.stem,
+            folder_name,
+        )
 
     def use_count(self) -> int:
         """Return the number of used models."""
