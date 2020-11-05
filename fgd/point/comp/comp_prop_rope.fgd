@@ -1,29 +1,64 @@
-@KeyFrameClass base(DXLevelChoice, SystemLevelChoice)
+@KeyFrameClass base(StaticTargetname)
 	sphere(radius)
 	animator()
-= comp_prop_rope: "Generates ropes using a static prop."
+	appliesto(srctools, -engine)
+= comp_prop_rope: "Generates ropes using a static prop. comp_prop_cable is an alternate name, they can be interchanged."
 	[
+	group(target_source): "Group" : : "Each set of ropes must have a group name. Each name will be compiled to one rope."
 	nextkey(target_destination) : "Next Rope" : : "Name of the next rope along this path."
 
 	slack(integer) : "Slack" : 25 : "How much extra length the rope has, for 'catenary' mode (by default it has the length between its two endpoints in the editor)."
-	type(choices) : "Type" : "0" : "How to interpolate the rope. Straight makes it straight. Spline uses a spline curve, which smoothly blends between points. Catenary makes it hang down, like the original move_rope." =
-		[
-		"straight": "Straight"
-		"spline": "Spline Curve"
-		"catenary": "Catenary "
-		]
-	type[engine](string): "Type": 0
 
-	subdiv(integer) : "Subdivisions" : 2 : "Number of subdivisions between each rope segment. Maximum value is 8. Higher values make smoother ropes, but produce more faces."
+
+	// Valve's interoplator keyvalue just happens to provide the right visuals we want.
+	positioninterpolator[engine](integer): "Type": 2
+	positioninterpolator(choices) : "Type" : 2 : "How to interpolate the rope. Straight makes it straight. Spline uses a spline curve, which smoothly blends between points (no visuals). Catenary makes it hang down, like the original move_rope." =
+		[
+		0: "Straight"
+		1: "Spline Curve"
+		2: "Catenary "
+		]
+
+	segments(integer) : "Segments" : 2 : "Number of nodes to generate between each rope. Higher values make smoother ropes, but produce more faces."
 	sides(integer) : "Sides" : 8 : "Number of faces for each cylindrical section. Only the value at the start of the rope is used."
 	radius(float) : "Radius" : 6 : "Radius of this rope section."
-	texturescale(float) : "Texture Scale" : 1 : "This changes the texture resolution. The default resolution is 4 pixels per inch. Larger values stretch the texture and smaller values scrunch it up."
 
-	ropematerial(material) : "Rope Material" : "cable/cable.vmt" : "The material to use for the rope. Must be a model material."
+	material(material) : "Rope Material" : "cable/cable.vmt" : "The material to use for the rope. Must be a model material."
+	mat_scale(float) : "Lengthwise Material Scale" : 1 : "This changes the texture resolution along the rope, relative to the amount of width used. Larger values stretch the texture and smaller values scrunch it up."
+	mat_rotate[engine](boolean) : "Rotate Material" : 0
+	mat_rotate(choices) : "Material Orientation" : 0 : "Controls which direction the rope runs in the material, if your texture is rotated." = 
+	[
+		0 : "Vertical"
+		1 : "Horizontal"
+	]
+	// A selection of prop_static's keyvalues, excluding some that are rather irrelevant.
+	linedivider_staticprop[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	renderamt(integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
+	rendercolor(color255) : "Color (R G B)" : "255 255 255"
+
+	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
+	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
+	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, " +
+		"or if the engine is running under dx7 [hl2/ep1/portal] or dx8 [ep2/tf], " +
+		"then the engine will forcibly fade out props even if fademindist/fademaxdist " +
+		"isn't specified. " +
+		"This scale factor gives you some control over the fade. " +
+		"Using 0 here turns off the forcible fades. " +
+		"Numbers smaller than 1 cause the prop to fade out at further distances, " +
+		"and greater than 1 cause it to fade out at closer distances."
+
+	disableshadows(boolean) : "Disable Shadows" : 0
+	disablevertexlighting(boolean) : "Disable Vertex lighting" : 0 : "Disable per-vertex lighting on this prop."
+
+	drawinfastreflection(boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
+	enablelightbounce(boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
 	
-	// Useless remmnants of unused keyframe logic.
-	// We have to have these for Hammer to render ropes.
-	movespeed(integer) readonly: "Speed (unused)" : 64
-	positioninterpolator(integer) readonly: "Position Interpolator" : 2 : "Curve Type. Currently only Rope is fully supported."
+	linedivider_lmap[TF2, MESA, !engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
+	generatelightmaps[TF2, MESA](boolean) : "Generate (and use) lightmaps for this static prop" : 0
+	lightmapresolutionx[TF2, MESA](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
+	lightmapresolutiony[TF2, MESA](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
+
+	movespeed(integer) readonly: "Speed (unused)" : 1 : "This needs to be greater than zero to show the preview lines."
 	]
