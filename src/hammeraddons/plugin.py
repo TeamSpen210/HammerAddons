@@ -1,4 +1,5 @@
 import types
+import sys
 from pathlib import Path
 from importlib.util import spec_from_file_location, module_from_spec
 from typing import Optional
@@ -19,18 +20,19 @@ class Plugin:
 
     def load(self) -> None:
         """Load and execute the module."""
-        name = self.path.stem
+        name = 'srctools.bsp_tranform_plugin.' + self.path.stem
         spec = spec_from_file_location(name, self.path)
 
         if not spec:
-            raise FileNotFoundError('Plugin {} not found at "{}"'.format(name, self.path))
+            raise FileNotFoundError('Plugin file not found at "{}"'.format(self.path.stem, self.path))
 
         self.module = module_from_spec(spec)
 
-        logname = '.' + name
         # Provide a logger for the plugin, already setup.
-        self.module.LOGGER = get_logger(__name__ + logname, "plugin" + logname)
+        self.module.LOGGER = get_logger(name, "plugin:" + self.path.stem)
 
         spec.loader.exec_module(self.module)
+        # Make it importable here - needed for pickling and the like to work.
+        sys.modules[name] = self.module
 
-        LOGGER.info('Loaded plugin "{}" ({})', name, self.path)
+        LOGGER.info('Loaded plugin "{}" from {}', name, self.path)
