@@ -105,12 +105,12 @@ class ModelCompiler:
         """Write the constructed models to the cache file and remove unused models."""
         if exc_type is not None or exc_val is not None:
             return False
-        data = [
-            (key, mdl.name)
-            for key, mdl in
-            self._built_models.items()
-            if mdl.used
-        ]
+        data = []
+        used_mdls = {}
+        for key, mdl in self._built_models.items():
+            if mdl.used:
+                data.append((key, mdl.name))
+                used_mdls.add(mdl.name.casefold())
 
         with AtomicWriter(self.model_folder_abs / 'manifest.bin', is_bytes=True) as f:
             pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
@@ -120,7 +120,7 @@ class ModelCompiler:
                 continue
 
             # Strip all suffixes.
-            if mdl_file.name[:mdl_file.name.find('.')].casefold() in self._mdl_names:
+            if mdl_file.name[:mdl_file.name.find('.')].casefold() in used_mdls:
                 continue
 
             LOGGER.info('Culling {}...', mdl_file)
