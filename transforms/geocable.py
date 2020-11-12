@@ -1,4 +1,5 @@
 """"Compile static prop cables, instead of sprites."""
+import math
 from collections import defaultdict
 from enum import Enum
 from pathlib import Path
@@ -11,7 +12,7 @@ from srctools import Vec, Entity, conv_int, conv_float, logger
 from srctools.compiler.mdl_compiler import ModelCompiler
 from srctools.bsp_transform import Context, trans
 from srctools.bsp import StaticProp, StaticPropFlags
-from srctools.smd import Mesh, Vertex
+from srctools.smd import Mesh, Vertex, Triangle
 
 
 LOGGER = logger.get_logger(__name__)
@@ -23,6 +24,7 @@ $staticprop
 $modelname "{path}"
 
 $body body "cable.smd"
+$cdmaterials ""
 $sequence idle "cable.smd" act_idle 1
 '''
 
@@ -122,6 +124,9 @@ class Node:
         self.points_prev: List[Vertex] = []
         self.points_next: List[Vertex] = []
 
+    def __repr__(self) -> str:
+        return f'<Node "{self.id}" @ {self.pos}>'
+
     def __hash__(self) -> int:
         """Allow this to be hashed."""
         return hash((
@@ -157,20 +162,47 @@ def build_rope(
     mdl_name: str,
 ) -> None:
     """Construct the geometry for a rope."""
+    LOGGER.info('Building rope {}', mdl_name)
     nodes, connections = nodes_and_conn
     mesh = Mesh.blank('root')
     [bone] = mesh.bones.values()
+    bone_weight = [(bone, 1.0)]
 
-    bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes)
-    center = (bbox_min + bbox_max) / 2
+    id_to_node = {node.id: node for node in nodes}
+
+    # First connect all the nodes.
+    for id1, id2 in connections:
+        first = id_to_node[id1]
+        second = id_to_node[id2]
+        assert first.next is None, (first, second)
+        assert second.prev is None, (first, second)
+        first.next = second
+        second.prev = first
 
     for node in nodes:
-        rad = node.config.radius
-        mesh.append_model(
-            Mesh.build_bbox('root', node.config.material, Vec(-rad, -rad, -rad), Vec(rad, rad, rad)),
-            Vec(0, 270, 0),
-            node.pos - center,
-        )
+        if node.next is None:
+            continue
+        forward = (node.next.pos - node.pos).norm()
+        ang = forward.to_angle()
+        u = Vec(y=1).rotate(*ang)
+        v = Vec(z=1).rotate(*ang)
+
+        count = node.config.side_count
+        mat = node.config.material
+        delta = 2 * math.pi / count
+        radius_a = node.config.radius
+        radius_b = node.next.config.radius
+        for i in range(count):
+            left_ang = delta * i
+            right_ang = delta * (i + 1)
+            left = u * math.cos(left_ang) + v * math.sin(left_ang)
+            right = u * math.cos(right_ang) + v * math.sin(right_ang)
+            left_a = Vertex(node.pos + radius_a * left, left, 0.0, 0.0, bone_weight)
+            right_a = Vertex(node.pos + radius_a * right, right, 1.0, 0.0, bone_weight)
+            left_b = Vertex(node.next.pos + radius_b * left, left, 0.0, 1.0, bone_weight)
+            right_b = Vertex(node.next.pos + radius_b * right, right, 1.0, 1.0, bone_weight)
+            mesh.triangles.append(Triangle(mat, left_a, right_b, left_b))
+            mesh.triangles.append(Triangle(mat, left_a, right_a, right_b))
 
     with (temp_folder / 'cable.smd').open('wb') as fb:
         mesh.export(fb)
@@ -247,12 +279,15 @@ def comp_prop_rope(ctx: Context) -> None:
 
     with compiler:
         for group, nodes in all_nodes.items():
+            bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes.values())
+            center = (bbox_min + bbox_max) / 2
+            for node in nodes.values():
+                node.pos -= center
+
             model_name = compiler.get_model(
                 (frozenset(nodes.values()), frozenset(connections[group])),
                 build_rope,
             )
-            bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes.values())
-            center = (bbox_min + bbox_max) / 2
             static_props.append(StaticProp(
                 model=model_name,
                 origin=center,
@@ -261,5 +296,5 @@ def comp_prop_rope(ctx: Context) -> None:
                 visleafs=list(all_leafs),
                 solidity=0,
             ))
-
+    LOGGER.info('Built {} models.', len(all_nodes))
     ctx.bsp.write_static_props(static_props)
