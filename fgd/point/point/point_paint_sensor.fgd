@@ -13,4 +13,6 @@
 		target(target_destination) : "Target Entity" : : "Entity for which to watch for paint."
 
 		filtername(filterclass) : "Filter Name" : : "Filter to use to narrow set of findable entities. See filter_activator_name for more explanation."
+
+		output OnPainted(integer) : "Gets called when paint is detected. Parameter is set to the paint type index."
 	]
