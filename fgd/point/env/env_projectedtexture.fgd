@@ -115,4 +115,6 @@
 	
 	input EnableVolumetrics[P2CE](boolean) : "Set if the volumetrics are enabled."
 	input SetVolumetricIntensity[P2CE](float) : "Sets the volumetric lighting's intensity."
+
+	input SetBrightnessScale[P2CE](float) : "Sets the brightness."
 	]
