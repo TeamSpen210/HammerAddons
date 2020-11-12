@@ -46,7 +46,7 @@ class Config(NamedTuple):
     @staticmethod
     def _parse_min(ent: Entity, keyvalue: str, minimum: Number, message: str) -> Number:
         """Helper for passing all the numeric keys."""
-        value = (conv_float if isinstance(minimum, float) else conv_int)(keyvalue, minimum)
+        value = (conv_float if isinstance(minimum, float) else conv_int)(ent[keyvalue], minimum)
         if value < minimum:
             LOGGER.warning(message, ent['origin'])
             return minimum
