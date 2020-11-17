@@ -5,10 +5,10 @@ from enum import Enum
 from pathlib import Path
 from typing import (
     Optional, List, Tuple, NamedTuple, FrozenSet,
-    TypeVar, MutableMapping, NewType, Set,
+    TypeVar, MutableMapping, NewType, Set, Iterable, Dict, Iterator,
 )
 
-from srctools import Vec, Entity, conv_int, conv_float, logger
+from srctools import Vec, Entity, conv_int, conv_float, logger, Matrix
 from srctools.compiler.mdl_compiler import ModelCompiler
 from srctools.bsp_transform import Context, trans
 from srctools.bsp import StaticProp, StaticPropFlags
@@ -95,17 +95,8 @@ class Config(NamedTuple):
         )
 
 
-class Node:
-    """A part of the rope.
-
-    The node ID is used to match ropes to previous compilations - it'll be the
-    entity's hammerid.
-
-    The following attributes are used for equality/hashing
-        * The ID
-        * The position
-        * The config
-    """
+class NodeEnt:
+    """A node entity, and its associated configuration. This is used to match with earlier compiles."""
     def __init__(
         self,
         pos: Vec,
@@ -116,16 +107,10 @@ class Node:
         self.id = node_id
         self.config = config
         self.group = group  # Nodes with the same group compile together.
-        self.prev: Optional[Node] = None
-        self.next: Optional[Node] = None
         self.pos = pos
-        self.norm = Vec()  # Pointing from prev to next.
-        # The points for the cylinder, on these sides.
-        self.points_prev: List[Vertex] = []
-        self.points_next: List[Vertex] = []
 
     def __repr__(self) -> str:
-        return f'<Node "{self.id}" @ {self.pos}>'
+        return f'<NodeEnt "{self.id}" @ {self.pos}>'
 
     def __hash__(self) -> int:
         """Allow this to be hashed."""
@@ -137,7 +122,7 @@ class Node:
 
     def __eq__(self, other: object) -> object:
         """Allow this to be compared."""
-        if isinstance(other, Node):
+        if isinstance(other, NodeEnt):
             return (
                 self.id == other.id and
                 self.pos == other.pos and
@@ -147,7 +132,7 @@ class Node:
 
     def __ne__(self, other: object) -> object:
         """Allow this to be compared."""
-        if isinstance(other, Node):
+        if isinstance(other, NodeEnt):
             return (
                 self.id != other.id or
                 self.pos != other.pos or
@@ -156,19 +141,51 @@ class Node:
         return NotImplemented
 
 
+class Node:
+    """All the data for a node, used during constrction of the geo.
+
+    Unlike BasicNode, this is compared by identity, and has no ID.
+    """
+    def __init__(self, pos: Vec, config: Config) -> None:
+        self.config = config
+        self.prev: Optional[Node] = None
+        self.next: Optional[Node] = None
+        self.pos = pos
+        # Orientation of the segment up to the next.
+        self.orient = Matrix()
+        # The points for the cylinder, on these sides.
+        self.points_prev: List[Vertex] = []
+        self.points_next: List[Vertex] = []
+
+    @classmethod
+    def from_ent(cls, ent: NodeEnt) -> 'Node':
+        return Node(ent.pos.copy(), ent.config)
+
+    def clone(self) -> 'Node':
+        """Create a duplicate of this node, but with no connections."""
+        return Node(self.pos.copy(), self.config)
+
+    def __repr__(self) -> str:
+        return f'<Node at {self.pos}>'
+
+
 def build_rope(
-    nodes_and_conn: Tuple[FrozenSet[Node], FrozenSet[Tuple[NodeID, NodeID]]],
+    nodes_and_conn: Tuple[FrozenSet[NodeEnt], FrozenSet[Tuple[NodeID, NodeID]]],
     temp_folder: Path,
     mdl_name: str,
 ) -> None:
     """Construct the geometry for a rope."""
     LOGGER.info('Building rope {}', mdl_name)
-    nodes, connections = nodes_and_conn
+    ents, connections = nodes_and_conn
     mesh = Mesh.blank('root')
     [bone] = mesh.bones.values()
     bone_weight = [(bone, 1.0)]
 
-    id_to_node = {node.id: node for node in nodes}
+    id_to_node = {
+        node.id: Node(node.pos.copy(), node.config)
+        for node in ents
+    }
+    nodes: Set[Node] = set(id_to_node.values())
 
     # First connect all the nodes.
     for id1, id2 in connections:
@@ -182,10 +199,9 @@ def build_rope(
     for node in nodes:
         if node.next is None:
             continue
-        forward = (node.next.pos - node.pos).norm()
-        ang = forward.to_angle()
-        u = Vec(y=1).rotate(*ang)
-        v = Vec(z=1).rotate(*ang)
+        forward = node.orient.forward()
+        u = node.orient.left()
+        v = node.orient.up()
 
         count = node.config.side_count
         mat = node.config.material
@@ -216,16 +232,16 @@ def comp_prop_rope(ctx: Context) -> None:
     """Build static props for ropes."""
     compiler = ModelCompiler.from_ctx(ctx, 'ropes')
     # group -> id -> node.
-    all_nodes: MutableMapping[str, MutableMapping[NodeID, Node]] = defaultdict(dict)
+    all_nodes: MutableMapping[str, MutableMapping[NodeID, NodeEnt]] = defaultdict(dict)
     # Given a targetname, all the nodes with that name.
-    name_to_ids: MutableMapping[str, List[Node]] = defaultdict(list)
+    name_to_ids: MutableMapping[str, List[NodeEnt]] = defaultdict(list)
     # Store the node/next-key pairs for linking after they're all parsed.
-    temp_conns: List[Tuple[Node, str]] = []
+    temp_conns: List[Tuple[NodeEnt, str]] = []
 
     for ent in ctx.vmf.by_class['comp_prop_rope'] | ctx.vmf.by_class['comp_prop_cable']:
         ent.remove()
         conf = Config.parse(ent)
-        node = Node(
+        node = NodeEnt(
             Vec.from_str(ent['origin']),
             conf,
             NodeID(ent['hammerid']),
@@ -271,7 +287,7 @@ def comp_prop_rope(ctx: Context) -> None:
                 )
             connections[node.group].add((node.id, dest.id))
 
-    # TODO, compute the positions.
+    # TODO, compute the visleafs.
     static_props = list(ctx.bsp.static_props())
     all_leafs = set()
     for prop in static_props:
