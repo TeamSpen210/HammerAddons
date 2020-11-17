@@ -40,6 +40,21 @@ class InterpType(Enum):
     CATMULL_ROM = 1
     ROPE = 2
 
+class RopePhys:
+    """Holds the data for move_rope simulation."""
+    __slots__ = ['pos', 'prev_pos']
+    pos: Vec
+    prev_pos: Vec
+
+    def __init__(self, pos: Vec) -> None:
+        self.pos = pos
+        self.prev_pos = pos.copy()
+
+
+ROPE_GRAVITY = -1500
+SIM_TIME = 5.00
+TIME_STEP = 1/50
+
 
 class Config(NamedTuple):
     """Configuration specified in rope entities. This can be shared to reduce duplication."""
@@ -248,6 +263,7 @@ def build_rope(
     with (temp_folder / 'model.qc').open('w') as f:
         f.write(QC_TEMPLATE.format(path=mdl_name))
 
+
 def interpolate_straight(node1: Node, node2: Node, seg_count: int) -> List[Node]:
     """Simply interpolate in a straight line."""
     diff = (node2.pos - node1.pos) / (seg_count + 1)
@@ -293,9 +309,59 @@ def interpolate_catmull_rom(node1: Node, node2: Node, seg_count: int) -> List[No
 
 
 def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
-    """Compute the move_rope style hanging points."""
-    # TODO: Rope curve
-    return interpolate_catmull_rom(node1, node2, seg_count)
+    """Compute the move_rope style hanging points.
+
+    This uses a quite unusual implementation in Source, doing a physics simulation.
+    See the following files for this code:
+        - src/public/keyframe.cpp
+        - src/public/simple_physics.cpp
+        - src/public/rope_physics.cpp
+    """
+    diff = node2.pos - node1.pos
+    total_len = diff.mag() + node1.config.slack - 100
+    max_len = total_len / (seg_count + 2)
+    max_len_sqr = max_len ** 2
+
+    interp_diff = diff / (seg_count + 1)
+    points = [
+        RopePhys(node1.pos + interp_diff * i)
+        for i in range(0, seg_count + 2)
+    ]
+    springs = list(zip(points, points[1:]))
+
+    time = 0
+    step = TIME_STEP
+    gravity = Vec(z=ROPE_GRAVITY) * step**2
+
+    # Start/end doesn't move.
+    anchor1, *moveable, anchor2 = points
+
+    while time < SIM_TIME:
+        time += step
+        points[0].pos = node1.pos.copy()
+        points[-1].pos = node2.pos.copy()
+        # Gravity.
+        for node in moveable:
+            node.prev_pos, node.pos = node.pos, (
+                node.pos + (node.pos - node.prev_pos) * 0.98 + gravity
+            )
+
+        # Spring constraints.
+        for _ in range(3):
+            for phys1, phys2 in springs:
+                diff = phys1.pos - phys2.pos
+                dist = diff.mag_sq()
+                if dist > max_len_sqr:
+                    diff *= 0.5 * (1 - (max_len / math.sqrt(dist)))
+                    if phys1 is not anchor1:
+                        phys1.pos -= diff
+                    if phys2 is not anchor2:
+                        phys2.pos += diff
+
+    return [
+        Node(point.pos, node1.config)
+        for point in moveable
+    ]
 
 
 def interpolate_all(nodes: Set[Node]) -> None:
@@ -430,6 +496,8 @@ def comp_prop_rope(ctx: Context) -> None:
         all_leafs.update(prop.visleafs)
 
     with compiler:
+        compiler._built_models.clear()
+        compiler._mdl_names.clear()
         for group, nodes in all_nodes.items():
             bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes.values())
             center = (bbox_min + bbox_max) / 2
