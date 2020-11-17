@@ -391,42 +391,43 @@ def interpolate_all(nodes: Set[Node]) -> None:
         points[0].prev.next = points[0]
         points[-1].next.prev = points[-1]
 
+
 def compute_orients(nodes: Iterable[Node]) -> None:
     """Compute the appropriate orientation for each node."""
     # This is based on the info at:
     # https://janakiev.com/blog/framing-parametric-curves/
-    node: Node
-    tangents: Dict[int, Vec] = {}
-    all_nodes: Dict[int, Node] = {}
+    tangents: Dict[Node, Vec] = {}
+    all_nodes: Set[Node] = set()
     for node in nodes:
         if node.prev is node.next is None:
             continue
         node_prev = node.prev if node.prev is not None else node
         node_next = node.next if node.next is not None else node
-        tangents[id(node)] = (node_next.pos - node_prev.pos).norm()
-        all_nodes[id(node)] = node
+        tangents[node] = (node_next.pos - node_prev.pos).norm()
+        all_nodes.add(node)
 
     while all_nodes:
-        [_, node] = all_nodes.popitem()
-        node = node.find_start()
-        tanj = tangents[id(node)]
-        up = Vec(tanj.y, -tanj.z, 0).norm()
+        node1 = all_nodes.pop()
+        node1 = node1.find_start()
+        tanj1 = tangents[node1]
+        up = Vec(tanj1.y, -tanj1.z, 0).norm()
         if not up:  # Only occurs if pointing vertical.
             up = Vec(1, 0, 0)
-        node.orient = Matrix.from_basis(x=tanj, z=up)
-        while node.next is not None:
-            node1 = node.next
-            tanj = tangents[id(node)]
-            tanj1 = tangents[id(node1)]
-            b = Vec.cross(tanj, tanj1)
+        node1.orient = Matrix.from_basis(x=tanj1, z=up)
+        while node1.next is not None:
+            node2 = node1.next
+            all_nodes.discard(node2)
+            tanj1 = tangents[node1]
+            tanj2 = tangents[node2]
+            b = Vec.cross(tanj1, tanj2)
             if b.mag_sq() < 0.001:
-                node1.orient = node.orient.copy()
+                node2.orient = node1.orient.copy()
             else:
                 b = b.norm()
-                phi = math.acos(Vec.dot(tanj, tanj1))
-                up = node.orient.up() @ Matrix.axis_angle(b, -math.degrees(phi))
-                node1.orient = Matrix.from_basis(x=tanj1, z=up)
-            node = node1
+                phi = math.acos(Vec.dot(tanj1, tanj2))
+                up = node1.orient.up() @ Matrix.axis_angle(b, -math.degrees(phi))
+                node2.orient = Matrix.from_basis(x=tanj2, z=up)
+            node1 = node2
 
 
 @trans('Model Ropes')
