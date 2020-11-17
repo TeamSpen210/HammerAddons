@@ -37,9 +37,9 @@ class InterpType(Enum):
 
 
 class Config(NamedTuple):
-    """Configuration specified in rope entities."""
+    """Configuration specified in rope entities. This can be shared to reduce duplication."""
     material: str
-    subdiv_count: int
+    segments: int
     side_count: int
     radius: float
     interp: InterpType
@@ -57,9 +57,9 @@ class Config(NamedTuple):
     @classmethod
     def parse(cls, ent: Entity) -> 'Config':
         """Parse from an entity."""
-        subdiv = cls._parse_min(
-            ent, 'subdiv', 0,
-            'Subdivision count for rope at '
+        segments = cls._parse_min(
+            ent, 'segments', 0,
+            'Segment count for rope at '
             '{} must be positive or zero!'
         )
         side_count = cls._parse_min(
@@ -87,7 +87,7 @@ class Config(NamedTuple):
 
         return cls(
             ent['material'],
-            subdiv,
+            segments,
             side_count,
             radius,
             interp_type,
