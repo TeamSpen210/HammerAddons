@@ -29,11 +29,16 @@ $sequence idle "cable.smd" act_idle 1
 '''
 
 
+def lerp(x: float, in_min: float, in_max: float, out_min: float, out_max: float) -> float:
+    """Linearly interpolate from in to out."""
+    return out_min + (((x - in_min) * (out_max - out_min)) / (in_max - in_min))
+
+
 class InterpType(Enum):
     """Type of interpolation to use."""
     STRAIGHT = 0
-    SPLINE = 1
-    CATENARY = 2
+    CATMULL_ROM = 1
+    ROPE = 2
 
 
 class Config(NamedTuple):
@@ -196,6 +201,7 @@ def build_rope(
         first.next = second
         second.prev = first
 
+    interpolate_all(nodes)
     for node in nodes:
         if node.next is None:
             continue
@@ -226,7 +232,82 @@ def build_rope(
     with (temp_folder / 'model.qc').open('w') as f:
         f.write(QC_TEMPLATE.format(path=mdl_name))
 
+def interpolate_straight(node1: Node, node2: Node, seg_count: int) -> List[Node]:
+    """Simply interpolate in a straight line."""
+    diff = (node2.pos - node1.pos) / (seg_count + 1)
+    return [
+        Node(node1.pos + diff * i, node1.config)
+        for i in range(1, seg_count + 1)
+    ]
 
+
+def interpolate_catmull_rom(node1: Node, node2: Node, seg_count: int) -> List[Node]:
+    """Interpolate a spline curve, matching Valve's implementation."""
+    # If no points are found, extrapolate out the line.
+    diff = (node2.pos - node1.pos).norm()
+    if node1.prev is None:
+        p0 = node1.pos - diff
+    else:
+        p0 = node1.prev.pos
+    p1 = node1.pos
+    p2 = node2.pos
+    if node2.next is None:
+        p3 = node2.pos + diff
+    else:
+        p3 = node2.next.pos
+    t0 = 0
+    t1 = t0 + (p1-p0).mag()
+    t2 = t1 + (p2-p1).mag()
+    t3 = t2 + (p3-p2).mag()
+    points: List[Node] = []
+    for i in range(1, seg_count):
+        t = lerp(i, 0, seg_count, t1, t2)
+        A1 = (t1-t)/(t1-t0)*p0 + (t-t0)/(t1-t0)*p1
+        A2 = (t2-t)/(t2-t1)*p1 + (t-t1)/(t2-t1)*p2
+        A3 = (t3-t)/(t3-t2)*p2 + (t-t2)/(t3-t2)*p3
+
+        B1 = (t2-t)/(t2-t0)*A1 + (t-t0)/(t2-t0)*A2
+        B2 = (t3-t)/(t3-t1)*A2 + (t-t1)/(t3-t1)*A3
+
+        points.append(Node(
+            (t2-t)/(t2-t1)*B1 + (t-t1)/(t2-t1)*B2,
+            node1.config,
+        ))
+    return points
+
+
+def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
+    """Compute the move_rope style hanging points."""
+    # TODO: Rope curve
+    return interpolate_catmull_rom(node1, node2, seg_count)
+
+
+def interpolate_all(nodes: Set[Node]) -> None:
+    """Produce nodes in-between each user-made node."""
+    # Create the nodes and put them in a seperate list, then add them
+    # to the actual nodes list second. This way sections that have been interpolated
+    # don't affect the interpolation of neighbouring sections.
+
+    segments: List[List[Node]] = []
+    for node1 in nodes:
+        if node1.next is None or node1.config.segments <= 0:
+            continue
+        node2 = node1.next
+        interp_type = node1.config.interp
+        func = globals()['interpolate_' + interp_type.name.casefold()]
+        points = func(node1, node2, node1.config.segments)
+
+        for a, b in zip(points, points[1:]):
+            a.next = b
+            b.prev = a
+        points[0].prev = node1
+        points[-1].next = node2
+        segments.append(points)
+
+    for points in segments:
+        nodes.update(points)
+        points[0].prev.next = points[0]
+        points[-1].next.prev = points[-1]
 @trans('Model Ropes')
 def comp_prop_rope(ctx: Context) -> None:
     """Build static props for ropes."""
