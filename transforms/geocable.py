@@ -386,6 +386,19 @@ def interpolate_all(nodes: Set[Node]) -> None:
         points[0].prev.next = points[0]
         points[-1].next.prev = points[-1]
 
+    # Finally, split nodes with too much of an angle between them - we can't smooth.
+    for node in list(nodes):
+        if node.prev is None or node.next is None:
+            continue
+        off1 = node.pos - node.prev.pos
+        off2 = node.next.pos - node.pos
+        if Vec.dot(off1, off2) < 0.7:
+            new_node = Node(node.pos.copy(), node.config)
+            nodes.add(new_node)
+            new_node.next = node.next
+            node.next.prev = new_node
+            node.next = None
+
 
 def compute_orients(nodes: Iterable[Node]) -> None:
     """Compute the appropriate orientation for each node."""
