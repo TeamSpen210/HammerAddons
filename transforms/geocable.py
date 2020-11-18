@@ -8,7 +8,10 @@ from typing import (
     TypeVar, MutableMapping, NewType, Set, Iterable, Dict, Iterator,
 )
 
-from srctools import Vec, Entity, conv_int, conv_float, logger, Matrix
+from srctools import (
+    logger, conv_int, conv_float, conv_bool,
+    Vec, Entity, Matrix,
+)
 from srctools.compiler.mdl_compiler import ModelCompiler
 from srctools.bsp_transform import Context, trans
 from srctools.bsp import StaticProp, StaticPropFlags
@@ -64,6 +67,10 @@ class Config(NamedTuple):
     radius: float
     interp: InterpType
     slack: float
+    u_min: float
+    u_max: float
+    v_scale: float
+    flip_uv: bool
 
     @staticmethod
     def _parse_min(ent: Entity, keyvalue: str, minimum: Number, message: str) -> Number:
@@ -105,6 +112,12 @@ class Config(NamedTuple):
             )
             interp_type = InterpType.STRAIGHT
 
+        v_scale = abs(conv_float(ent['mat_scale'], 1.0))
+        u_min = abs(conv_float(ent['u_min'], 0.0))
+        u_max = abs(conv_float(ent['u_max'], 1.0))
+        # Rescale this, so that if it's 1, the pixels are square.
+        v_scale *= u_max - u_min
+
         return cls(
             ent['material'],
             segments,
@@ -112,6 +125,9 @@ class Config(NamedTuple):
             radius,
             interp_type,
             slack,
+            u_min, u_max,
+            v_scale,
+            conv_bool(ent['mat_rotate']),
         )
 
 
