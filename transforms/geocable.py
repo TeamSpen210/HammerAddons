@@ -251,6 +251,7 @@ def build_rope(
     compute_verts(nodes, bone)
 
     generate_straights(nodes, mesh)
+    generate_caps(nodes, mesh)
 
     with (temp_folder / 'cable.smd').open('wb') as fb:
         mesh.export(fb)
@@ -490,6 +491,36 @@ def generate_straights(nodes: Iterable[Node], mesh: Mesh) -> None:
             right_b = node2.points_prev[(i + skew + 1) % side_count]
             mesh.triangles.append(Triangle(mat, left_a, right_b, left_b))
             mesh.triangles.append(Triangle(mat, left_a, right_a, right_b))
+
+
+def generate_caps(nodes: Iterable[Node], mesh: Mesh) -> None:
+    """Cap off any unfinished sides.
+
+    We just use a simple fan layout.
+    """
+    def make_cap(orig):
+        # Recompute the UVs to use the first bit of the cable.
+        points = [
+            Vertex(
+                point.pos, point.norm,
+                lerp(Vec.dot(point.norm, node.orient.up()), -1, 1, node.config.u_min, node.config.u_max),
+                lerp(Vec.dot(point.norm, node.orient.left()), -1, 1, 0, v_max),
+                point.links,
+            )
+            for point in orig
+        ]
+        mesh.triangles.append(Triangle(mat, points[0], points[1], points[2]))
+        for a, b in zip(points[2:], points[3:]):
+            mesh.triangles.append(Triangle(mat, points[0], a, b))
+
+    for node in nodes:
+        v_max = node.config.u_max - node.config.u_min
+        mat = node.config.material
+        if node.prev is None:
+            make_cap(reversed(node.points_next))
+        if node.next is None:
+            make_cap(node.points_prev)
+
 
 @trans('Model Ropes')
 def comp_prop_rope(ctx: Context) -> None:
