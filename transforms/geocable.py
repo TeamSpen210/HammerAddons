@@ -71,7 +71,7 @@ class Config(NamedTuple):
     u_max: float
     v_scale: float
     flip_uv: bool
-    prop_rendercolor: Vec
+    prop_rendercolor: Tuple[float, float, float]
     prop_renderalpha: int
     prop_no_shadows: bool
     prop_no_vert_light: bool
@@ -139,7 +139,7 @@ class Config(NamedTuple):
             u_min, u_max,
             v_scale,
             conv_bool(ent['mat_rotate']),
-            Vec.from_str(ent['rendercolor'], 255, 255, 255),
+            tuple(Vec.from_str(ent['rendercolor'], 255, 255, 255)),
             alpha,
             conv_bool(ent['disableshadows']),
             conv_bool(ent['disablevertexlighting']),
@@ -695,7 +695,7 @@ def comp_prop_rope(ctx: Context) -> None:
                 visleafs=list(all_leafs),
                 solidity=0,
                 flags=flags,
-                tint=conf.prop_rendercolor,
+                tint=Vec(conf.prop_rendercolor),
                 renderfx=conf.prop_renderalpha,
                 lighting_origin=light_origin,
                 min_fade=conf.prop_fade_min_dist,
