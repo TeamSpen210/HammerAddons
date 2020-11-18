@@ -231,20 +231,7 @@ def build_rope(
     mesh = Mesh.blank('root')
     [bone] = mesh.bones.values()
 
-    id_to_node = {
-        node.id: Node(node.pos.copy(), node.config)
-        for node in ents
-    }
-    nodes: Set[Node] = set(id_to_node.values())
-
-    # First connect all the nodes.
-    for id1, id2 in connections:
-        first = id_to_node[id1]
-        second = id_to_node[id2]
-        assert first.next is None, (first, second)
-        assert second.prev is None, (first, second)
-        first.next = second
-        second.prev = first
+    nodes = build_node_tree(ents, connections)
 
     interpolate_all(nodes)
     compute_orients(nodes)
@@ -258,6 +245,53 @@ def build_rope(
 
     with (temp_folder / 'model.qc').open('w') as f:
         f.write(QC_TEMPLATE.format(path=mdl_name))
+
+
+def build_node_tree(ents: FrozenSet[NodeEnt], connections: FrozenSet[Tuple[NodeID, NodeID]]) -> Set[Node]:
+    """Convert the ents/connections definitions into a node tree."""
+    # Convert them all into the real node objects.
+    id_to_node = {
+        node.id: Node(node.pos.copy(), node.config)
+        for node in ents
+    }
+    nodes: Set[Node] = set(id_to_node.values())
+
+    def maybe_split(node: Node, attr: str) -> Node:
+        """Split nodes to ensure they only have 1 or 2 connections.
+
+        If it has more, or multiple in one side, it will be converted
+        to multiple theat end at the same point.
+        """
+        if node not in nodes:  # Already split, create a copy and return.
+            copy = node.clone()
+            nodes.add(copy)
+            return copy
+        if getattr(node, attr) is not None:
+            # Need to split this one.
+            if node.next is not None:
+                forward = node.clone()
+                nodes.add(forward)
+                forward.next = node.next
+                node.next.prev = forward
+            if node.prev is not None:
+                reverse = node.clone()
+                nodes.add(reverse)
+                reverse.prev = node.prev
+                node.prev.next = reverse
+            node.prev = node.next = None
+            copy = node.clone()
+            nodes.add(copy)
+            return copy
+        return node
+
+    for id1, id2 in connections:
+        first = maybe_split(id_to_node[id1], "next")
+        second = maybe_split(id_to_node[id2], "prev")
+
+        first.next = second
+        second.prev = first
+
+    return nodes
 
 
 def interpolate_straight(node1: Node, node2: Node, seg_count: int) -> List[Node]:
