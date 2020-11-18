@@ -71,6 +71,15 @@ class Config(NamedTuple):
     u_max: float
     v_scale: float
     flip_uv: bool
+    prop_rendercolor: Vec
+    prop_renderalpha: int
+    prop_no_shadows: bool
+    prop_no_vert_light: bool
+    prop_no_self_shadow: bool
+    prop_light_bounce: bool
+    prop_fade_min_dist: float
+    prop_fade_max_dist: float
+    prop_fade_scale: float
 
     @staticmethod
     def _parse_min(ent: Entity, keyvalue: str, minimum: Number, message: str) -> Number:
@@ -118,7 +127,9 @@ class Config(NamedTuple):
         # Rescale this, so that if it's 1, the pixels are square.
         v_scale *= (u_max - u_min) / (2*math.pi*radius)
 
-        return cls(
+        alpha = max(0, min(255, conv_int(ent['renderamt'], 255)))
+
+        return Config(
             ent['material'],
             segments,
             side_count,
@@ -128,6 +139,15 @@ class Config(NamedTuple):
             u_min, u_max,
             v_scale,
             conv_bool(ent['mat_rotate']),
+            Vec.from_str(ent['rendercolor'], 255, 255, 255),
+            alpha,
+            conv_bool(ent['disableshadows']),
+            conv_bool(ent['disablevertexlighting']),
+            conv_bool(ent['disableselfshadowing']),
+            conv_bool(ent['enablelightbounce']),
+            conv_float(ent['fademindist'], -1.0),
+            conv_float(ent['fademaxdist'], 0.0),
+            conv_float(ent['fadescale'], 0.0),
         )
 
 
@@ -640,6 +660,7 @@ def comp_prop_rope(ctx: Context) -> None:
         for group, nodes in all_nodes.items():
             bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes.values())
             center = (bbox_min + bbox_max) / 2
+            node = None
             for node in nodes.values():
                 node.pos -= center
 
@@ -647,6 +668,25 @@ def comp_prop_rope(ctx: Context) -> None:
                 (frozenset(nodes.values()), frozenset(connections[group])),
                 build_rope,
             )
+
+            # Use the node closest to the center.
+            light_origin = min(
+                (node.pos for node in nodes.values()),
+                key=lambda pos: (pos - center).mag_sq()
+            )
+
+            # Compute the flags. Just pick a random node, from above.
+            conf = node.config
+            flags = StaticPropFlags.NONE
+            if conf.prop_light_bounce:
+                flags |= StaticPropFlags.BOUNCED_LIGHTING
+            if conf.prop_no_shadows:
+                flags |= StaticPropFlags.NO_SHADOW
+            if conf.prop_no_vert_light:
+                flags |= StaticPropFlags.NO_PER_VERTEX_LIGHTING
+            if conf.prop_no_self_shadow:
+                flags |= StaticPropFlags.NO_SELF_SHADOWING
+
             static_props.append(StaticProp(
                 model=model_name,
                 origin=center,
@@ -654,6 +694,13 @@ def comp_prop_rope(ctx: Context) -> None:
                 scaling=1.0,
                 visleafs=list(all_leafs),
                 solidity=0,
+                flags=flags,
+                tint=conf.prop_rendercolor,
+                renderfx=conf.prop_renderalpha,
+                lighting_origin=light_origin,
+                min_fade=conf.prop_fade_min_dist,
+                max_fade=conf.prop_fade_max_dist,
+                fade_scale=conf.prop_fade_scale,
             ))
     LOGGER.info('Built {} models.', len(all_nodes))
     ctx.bsp.write_static_props(static_props)
