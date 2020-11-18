@@ -116,7 +116,7 @@ class Config(NamedTuple):
         u_min = abs(conv_float(ent['u_min'], 0.0))
         u_max = abs(conv_float(ent['u_max'], 1.0))
         # Rescale this, so that if it's 1, the pixels are square.
-        v_scale *= u_max - u_min
+        v_scale *= (u_max - u_min) / (2*math.pi*radius)
 
         return cls(
             ent['material'],
@@ -240,6 +240,15 @@ def build_rope(
     generate_straights(nodes, mesh)
     generate_caps(nodes, mesh)
 
+    # Move the UVs around so they don't extend too far.
+    for tri in mesh.triangles:
+        u = math.floor(min(point.tex_u for point in tri))
+        v = math.floor(min(point.tex_v for point in tri))
+        if u or v:
+            tri.point1 = tri.point1.with_uv(tri.point1.tex_u - u, tri.point1.tex_v - v)
+            tri.point2 = tri.point2.with_uv(tri.point2.tex_u - u, tri.point2.tex_v - v)
+            tri.point3 = tri.point2.with_uv(tri.point3.tex_u - u, tri.point3.tex_v - v)
+
     with (temp_folder / 'cable.smd').open('wb') as fb:
         mesh.export(fb)
 
@@ -348,8 +357,8 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
         - src/public/rope_physics.cpp
     """
     diff = node2.pos - node1.pos
-    total_len = diff.mag() + node1.config.slack - 100
-    max_len = total_len / (seg_count + 2)
+    total_len = diff.mag() + max(0.0, node1.config.slack - 100.0)
+    max_len = total_len / (seg_count + 1)
     max_len_sqr = max_len ** 2
 
     interp_diff = diff / (seg_count + 1)
@@ -510,19 +519,32 @@ def compute_verts(nodes: Iterable[Node], bone: Bone) -> None:
 
 def generate_straights(nodes: Iterable[Node], mesh: Mesh) -> None:
     """Finally, generate all the straight-side sections."""
-
     for node1 in nodes:
         node2 = node1.next
         if node2 is None:
             continue
         side_count = node1.config.side_count
         mat = node1.config.material
-        skew = 0
         for i in range(node1.config.side_count):
             left_a = node1.points_next[i]
             right_a = node1.points_next[(i + 1) % side_count]
-            left_b = node2.points_prev[(i + skew) % side_count]
-            right_b = node2.points_prev[(i + skew + 1) % side_count]
+            left_b = node2.points_prev[i % side_count].copy()
+            right_b = node2.points_prev[(i + 1) % side_count]
+            
+            # If it flips around, we need to fix that.
+            if right_a is node1.points_next[0]:
+                right_a = right_a.copy()
+                if node1.config.flip_uv:
+                    right_a.tex_v = node1.config.u_max
+                else:
+                    right_a.tex_u = node1.config.u_max
+            if right_b is node2.points_prev[0]:
+                right_b = right_b.copy()
+                if node2.config.flip_uv:
+                    right_b.tex_v = node2.config.u_max
+                else:
+                    right_b.tex_u = node2.config.u_max
+            
             mesh.triangles.append(Triangle(mat, left_a, right_b, left_b))
             mesh.triangles.append(Triangle(mat, left_a, right_a, right_b))
 
