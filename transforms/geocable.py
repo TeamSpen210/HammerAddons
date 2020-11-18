@@ -15,7 +15,7 @@ from srctools import (
 from srctools.compiler.mdl_compiler import ModelCompiler
 from srctools.bsp_transform import Context, trans
 from srctools.bsp import StaticProp, StaticPropFlags
-from srctools.smd import Mesh, Vertex, Triangle
+from srctools.smd import Mesh, Vertex, Triangle, Bone
 
 
 LOGGER = logger.get_logger(__name__)
@@ -209,7 +209,8 @@ class Node:
         return node
 
     def follow(self) -> Iterator['Node']:
-        """Iterate over every node after this one."""
+        """Iterate over every node."""
+        yield self
         node = self.next
         while node is not None and node is not self:
             yield node
@@ -229,7 +230,6 @@ def build_rope(
     ents, connections = nodes_and_conn
     mesh = Mesh.blank('root')
     [bone] = mesh.bones.values()
-    bone_weight = [(bone, 1.0)]
 
     id_to_node = {
         node.id: Node(node.pos.copy(), node.config)
@@ -248,30 +248,9 @@ def build_rope(
 
     interpolate_all(nodes)
     compute_orients(nodes)
+    compute_verts(nodes, bone)
 
-    for node in nodes:
-        if node.next is None:
-            continue
-        forward = node.orient.forward()
-        u = node.orient.left()
-        v = node.orient.up()
-
-        count = node.config.side_count
-        mat = node.config.material
-        delta = 2 * math.pi / count
-        radius_a = node.config.radius
-        radius_b = node.next.config.radius
-        for i in range(count):
-            left_ang = delta * i
-            right_ang = delta * (i + 1)
-            left = u * math.cos(left_ang) + v * math.sin(left_ang)
-            right = u * math.cos(right_ang) + v * math.sin(right_ang)
-            left_a = Vertex(node.pos + radius_a * left, left, 0.0, 0.0, bone_weight)
-            right_a = Vertex(node.pos + radius_a * right, right, 1.0, 0.0, bone_weight)
-            left_b = Vertex(node.next.pos + radius_b * left, left, 0.0, 1.0, bone_weight)
-            right_b = Vertex(node.next.pos + radius_b * right, right, 1.0, 1.0, bone_weight)
-            mesh.triangles.append(Triangle(mat, left_a, right_b, left_b))
-            mesh.triangles.append(Triangle(mat, left_a, right_a, right_b))
+    generate_straights(nodes, mesh)
 
     with (temp_folder / 'cable.smd').open('wb') as fb:
         mesh.export(fb)
@@ -446,6 +425,59 @@ def compute_orients(nodes: Iterable[Node]) -> None:
             node1 = node2
 
 
+def compute_verts(nodes: Iterable[Node], bone: Bone) -> None:
+    """Build the initial vertexes of each node."""
+    bone_weight = [(bone, 1.0)]
+    todo = set(nodes)
+
+    def vert(pos: Vec, off: Vec, u: float, v: float) -> Vertex:
+        """Make a vertex, with appropriate UVs."""
+        if config.flip_uv:
+            v, u = u, v
+        return Vertex(pos + off, off.norm(), u, v, bone_weight)
+
+    while todo:
+        start = todo.pop()
+        start = start.find_start()
+        if start.next is None:
+            continue
+        v_start = 0.0
+        for node1 in start.follow():
+            todo.discard(node1)
+            node2 = node1.next if node1.next is not None else node1
+            config = node1.config
+            count = node1.config.side_count
+            radius_a = node1.config.radius
+            radius_b = node2.config.radius
+            v_end = v_start + config.v_scale * (node2.pos - node1.pos).mag()
+            for i in range(count):
+                ang = lerp(i, 0, count, 0, 2*math.pi)
+                local = Vec(0, math.cos(ang), math.sin(ang))
+                u = lerp(i, 0, count, config.u_min, config.u_max)
+                node1.points_next.append(vert(node1.pos, radius_a * local @ node1.orient, u, v_start))
+                if node1.next is not None:
+                    node1.next.points_prev.append(vert(node2.pos, radius_b * local @ node2.orient, u, v_end))
+            v_start = v_end
+
+
+def generate_straights(nodes: Iterable[Node], mesh: Mesh) -> None:
+    """Finally, generate all the straight-side sections."""
+
+    for node1 in nodes:
+        node2 = node1.next
+        if node2 is None:
+            continue
+        side_count = node1.config.side_count
+        mat = node1.config.material
+        skew = 0
+        for i in range(node1.config.side_count):
+            left_a = node1.points_next[i]
+            right_a = node1.points_next[(i + 1) % side_count]
+            left_b = node2.points_prev[(i + skew) % side_count]
+            right_b = node2.points_prev[(i + skew + 1) % side_count]
+            mesh.triangles.append(Triangle(mat, left_a, right_b, left_b))
+            mesh.triangles.append(Triangle(mat, left_a, right_a, right_b))
+
 @trans('Model Ropes')
 def comp_prop_rope(ctx: Context) -> None:
     """Build static props for ropes."""
@@ -467,14 +499,6 @@ def comp_prop_rope(ctx: Context) -> None:
             ent['group'].casefold(),
         )
         all_nodes[node.group][node.id] = node
-        ctx.vmf.create_ent(
-            'env_sprite',
-            origin=node.pos,
-            model='sprites/glow01.spr',
-            spawnflags='1',
-            scale=0.25,
-            glowproxysize=2,
-        )
 
         if ent['targetname']:
             name_to_ids[ent['targetname'].casefold()].append(node)
