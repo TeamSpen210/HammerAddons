@@ -532,11 +532,11 @@ def generate_caps(nodes: Iterable[Node], mesh: Mesh) -> None:
 
     We just use a simple fan layout.
     """
-    def make_cap(orig):
+    def make_cap(orig, norm):
         # Recompute the UVs to use the first bit of the cable.
         points = [
             Vertex(
-                point.pos, point.norm,
+                point.pos, norm,
                 lerp(Vec.dot(point.norm, node.orient.up()), -1, 1, node.config.u_min, node.config.u_max),
                 lerp(Vec.dot(point.norm, node.orient.left()), -1, 1, 0, v_max),
                 point.links,
@@ -551,9 +551,9 @@ def generate_caps(nodes: Iterable[Node], mesh: Mesh) -> None:
         v_max = node.config.u_max - node.config.u_min
         mat = node.config.material
         if node.prev is None:
-            make_cap(reversed(node.points_next))
+            make_cap(reversed(node.points_next), -node.orient.forward())
         if node.next is None:
-            make_cap(node.points_prev)
+            make_cap(node.points_prev, node.orient.forward())
 
 
 @trans('Model Ropes')
@@ -615,8 +615,6 @@ def comp_prop_rope(ctx: Context) -> None:
         all_leafs.update(prop.visleafs)
 
     with compiler:
-        compiler._built_models.clear()
-        compiler._mdl_names.clear()
         for group, nodes in all_nodes.items():
             bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes.values())
             center = (bbox_min + bbox_max) / 2
