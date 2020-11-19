@@ -16,7 +16,7 @@ from typing import (
     Iterator,
 )
 
-from srctools import Vec, VMF, Entity, conv_int
+from srctools import Vec, VMF, Entity, conv_int, Angle, Matrix
 from srctools.tokenizer import Tokenizer, Token
 from srctools.game import Game
 
@@ -243,17 +243,18 @@ def compile_func(
 
             # For some reason all the SMDs are rotated badly, but only
             # if we append them.
+            rot = Matrix.from_yaw(90)
             for tri in child_ref.triangles:
                 for vert in tri:
-                    vert.pos.rotate(0, 90, 0, round_vals=False)
-                    vert.norm.rotate(0, 90, 0, round_vals=False)
+                    vert.pos @= rot
+                    vert.norm @= rot
 
             _mesh_cache[qc, prop.skin] = child_ref
 
         child_coll = build_collision(qc, prop, child_ref)
 
         offset = Vec(prop.x, prop.y, prop.z)
-        angles = Vec(prop.pit, prop.yaw, prop.rol)
+        angles = Angle(prop.pit, prop.yaw, prop.rol)
 
         ref_mesh.append_model(child_ref, angles, offset, prop.scale * qc.ref_scale)
 
@@ -314,10 +315,11 @@ def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> Optional[Mesh]:
             with open(qc.phy_smd, 'rb') as fb:
                 coll = Mesh.parse_smd(fb)
 
+            rot = Matrix.from_yaw(90)
             for tri in coll.triangles:
                 for vert in tri:
-                    vert.pos.rotate(0, 90, 0, round_vals=False)
-                    vert.norm.rotate(0, 90, 0, round_vals=False)
+                    vert.pos @= rot
+                    vert.norm @= rot
 
             _coll_cache[qc.phy_smd] = coll
             return coll
@@ -490,7 +492,7 @@ def group_props_ent(
                 })
 
         # Compute 6 planes to use for collision detection.
-        angles = Vec.from_str(ent['angles'])
+        mat = Matrix.from_angle(Angle.from_str(ent['angles']))
         mins, maxes = Vec.bbox(
             Vec.from_str(ent['mins']),
             Vec.from_str(ent['maxs']),
@@ -504,8 +506,8 @@ def group_props_ent(
         # the normal vector.
         combine_sets[name, skinset].append([
             (
-                origin + Vec.with_axes(axis, offset).rotate(*angles),
-                Vec.with_axes(axis, norm).rotate(*angles),
+                origin + Vec.with_axes(axis, offset) @ mat,
+                Vec.with_axes(axis, norm) @ mat,
             )
             for offset, norm in zip([mins, maxes], (-1, 1))
             for axis in ('x', 'y', 'z')
