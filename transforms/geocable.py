@@ -45,14 +45,15 @@ class InterpType(Enum):
 
 class RopePhys:
     """Holds the data for move_rope simulation."""
-    __slots__ = ['pos', 'prev_pos']
+    __slots__ = ['pos', 'prev_pos', 'radius']
     pos: Vec
     prev_pos: Vec
+    radius: float  # Just to transfer to the node.
 
-    def __init__(self, pos: Vec) -> None:
+    def __init__(self, pos: Vec, radius: float) -> None:
         self.pos = pos
         self.prev_pos = pos.copy()
-
+        self.radius = radius
 
 ROPE_GRAVITY = -1500
 SIM_TIME = 5.00
@@ -202,11 +203,12 @@ class Node:
 
     Unlike BasicNode, this is compared by identity, and has no ID.
     """
-    def __init__(self, pos: Vec, config: Config) -> None:
+    def __init__(self, pos: Vec, config: Config, radius: float) -> None:
         self.config = config
         self.prev: Optional[Node] = None
         self.next: Optional[Node] = None
         self.pos = pos
+        self.radius = radius
         # Orientation of the segment up to the next.
         self.orient = Matrix()
         # The points for the cylinder, on these sides.
@@ -215,11 +217,11 @@ class Node:
 
     @classmethod
     def from_ent(cls, ent: NodeEnt) -> 'Node':
-        return Node(ent.pos.copy(), ent.config)
+        return Node(ent.pos.copy(), ent.config, ent.config.radius)
 
     def clone(self) -> 'Node':
         """Create a duplicate of this node, but with no connections."""
-        return Node(self.pos.copy(), self.config)
+        return Node(self.pos.copy(), self.config, self.radius)
 
     def find_start(self) -> 'Node':
         """Find the start of this chain, or return self if it's a loop."""
@@ -280,7 +282,7 @@ def build_node_tree(ents: FrozenSet[NodeEnt], connections: FrozenSet[Tuple[NodeI
     """Convert the ents/connections definitions into a node tree."""
     # Convert them all into the real node objects.
     id_to_node = {
-        node.id: Node(node.pos.copy(), node.config)
+        node.id: Node(node.pos.copy(), node.config, node.config.radius)
         for node in ents
     }
     nodes: Set[Node] = set(id_to_node.values())
@@ -327,7 +329,7 @@ def interpolate_straight(node1: Node, node2: Node, seg_count: int) -> List[Node]
     """Simply interpolate in a straight line."""
     diff = (node2.pos - node1.pos) / (seg_count + 1)
     return [
-        Node(node1.pos + diff * i, node1.config)
+        Node(node1.pos + diff * i, node1.config, lerp(i, 0, seg_count+1, node1.radius, node2.radius))
         for i in range(1, seg_count + 1)
     ]
 
@@ -351,8 +353,8 @@ def interpolate_catmull_rom(node1: Node, node2: Node, seg_count: int) -> List[No
     t2 = t1 + (p2-p1).mag()
     t3 = t2 + (p3-p2).mag()
     points: List[Node] = []
-    for i in range(1, seg_count):
-        t = lerp(i, 0, seg_count, t1, t2)
+    for i in range(1, seg_count + 1):
+        t = lerp(i, 0, seg_count + 1, t1, t2)
         A1 = (t1-t)/(t1-t0)*p0 + (t-t0)/(t1-t0)*p1
         A2 = (t2-t)/(t2-t1)*p1 + (t-t1)/(t2-t1)*p2
         A3 = (t3-t)/(t3-t2)*p2 + (t-t2)/(t3-t2)*p3
@@ -363,6 +365,7 @@ def interpolate_catmull_rom(node1: Node, node2: Node, seg_count: int) -> List[No
         points.append(Node(
             (t2-t)/(t2-t1)*B1 + (t-t1)/(t2-t1)*B2,
             node1.config,
+            lerp(i, 0, seg_count + 1, node1.radius, node2.radius),
         ))
     return points
 
@@ -383,7 +386,10 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
 
     interp_diff = diff / (seg_count + 1)
     points = [
-        RopePhys(node1.pos + interp_diff * i)
+        RopePhys(
+            node1.pos + interp_diff * i,
+            lerp(i, 0, seg_count + 2, node1.radius, node2.radius),
+        )
         for i in range(0, seg_count + 2)
     ]
     springs = list(zip(points, points[1:]))
@@ -418,7 +424,7 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
                         phys2.pos += diff
 
     return [
-        Node(point.pos, node1.config)
+        Node(point.pos, node1.config, point.radius)
         for point in moveable
     ]
 
@@ -457,7 +463,7 @@ def interpolate_all(nodes: Set[Node]) -> None:
         off1 = node.pos - node.prev.pos
         off2 = node.next.pos - node.pos
         if Vec.dot(off1, off2) < 0.7:
-            new_node = Node(node.pos.copy(), node.config)
+            new_node = Node(node.pos.copy(), node.config, node.radius)
             nodes.add(new_node)
             new_node.next = node.next
             node.next.prev = new_node
@@ -524,16 +530,14 @@ def compute_verts(nodes: Iterable[Node], bone: Bone) -> None:
             node2 = node1.next if node1.next is not None else node1
             config = node1.config
             count = node1.config.side_count
-            radius_a = node1.config.radius
-            radius_b = node2.config.radius
             v_end = v_start + config.v_scale * (node2.pos - node1.pos).mag()
             for i in range(count):
                 ang = lerp(i, 0, count, 0, 2*math.pi)
                 local = Vec(0, math.cos(ang), math.sin(ang))
                 u = lerp(i, 0, count, config.u_min, config.u_max)
-                node1.points_next.append(vert(node1.pos, radius_a * local @ node1.orient, u, v_start))
+                node1.points_next.append(vert(node1.pos, node1.radius * local @ node1.orient, u, v_start))
                 if node1.next is not None:
-                    node1.next.points_prev.append(vert(node2.pos, radius_b * local @ node2.orient, u, v_end))
+                    node1.next.points_prev.append(vert(node2.pos, node2.radius * local @ node2.orient, u, v_end))
             v_start = v_end
 
 
@@ -548,7 +552,7 @@ def generate_straights(nodes: Iterable[Node], mesh: Mesh) -> None:
         for i in range(node1.config.side_count):
             left_a = node1.points_next[i]
             right_a = node1.points_next[(i + 1) % side_count]
-            left_b = node2.points_prev[i % side_count].copy()
+            left_b = node2.points_prev[i % side_count]
             right_b = node2.points_prev[(i + 1) % side_count]
             
             # If it flips around, we need to fix that.
