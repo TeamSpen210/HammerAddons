@@ -267,7 +267,7 @@ def build_rope(
         if u or v:
             tri.point1 = tri.point1.with_uv(tri.point1.tex_u - u, tri.point1.tex_v - v)
             tri.point2 = tri.point2.with_uv(tri.point2.tex_u - u, tri.point2.tex_v - v)
-            tri.point3 = tri.point2.with_uv(tri.point3.tex_u - u, tri.point3.tex_v - v)
+            tri.point3 = tri.point3.with_uv(tri.point3.tex_u - u, tri.point3.tex_v - v)
 
     with (temp_folder / 'cable.smd').open('wb') as fb:
         mesh.export(fb)
