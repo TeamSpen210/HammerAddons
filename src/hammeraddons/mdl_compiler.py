@@ -106,7 +106,7 @@ class ModelCompiler:
         if exc_type is not None or exc_val is not None:
             return False
         data = []
-        used_mdls = {}
+        used_mdls = set()
         for key, mdl in self._built_models.items():
             if mdl.used:
                 data.append((key, mdl.name))
