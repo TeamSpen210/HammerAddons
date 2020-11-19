@@ -5,7 +5,14 @@ a = Analysis(
     ['srctools/scripts/postcompiler.py'],
     binaries=[],
     datas=[],
-    hiddenimports=[],
+    hiddenimports=[
+        # Ensure these modules are available for plugins.
+        'abc', 'array', 'base64', 'binascii', 'binhex',
+        'bisect', 'colorsys', 'collections', 'csv', 'datetime',
+        'decimal', 'difflib', 'enum', 'fractions', 'functools',
+        'io', 'itertools', 'json', 'math', 'random', 're',
+        'statistics', 'string', 'struct',
+    ],
     excludes=[],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
