@@ -79,8 +79,8 @@ def parse(path: Path) -> Tuple[
 
         LOGGER.warning('Writing default to "{}"', conf.path)
 
-        with AtomicWriter(str(conf.path)) as f:
-            conf.save(f)
+    with AtomicWriter(str(conf.path)) as f:
+        conf.save(f)
 
     game = Game((folder / conf.get(str, 'gameinfo')).resolve())
 
