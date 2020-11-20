@@ -109,6 +109,18 @@ def main(argv: List[str]) -> None:
     for plugin in plugins:
         plugin.load()
 
+    use_comma_sep = conf.get(bool, 'use_comma_sep')
+    if use_comma_sep is None:
+        # Guess the format, by picking whatever the first output uses.
+        for ent in vmf.entities:
+            for out in ent.outputs:
+                use_comma_sep = out.comma_sep
+                break
+        if use_comma_sep is None:
+            LOGGER.warning('No outputs in map, could not determine BSP I/O format!')
+            LOGGER.warning('Set "use_comma_sep" in srctools.vdf.')
+        use_comma_sep = False
+
     run_transformations(vmf, fsys, packlist, bsp_file, game_info, studiomdl_loc)
 
     if studiomdl_loc is not None and args.propcombine:
@@ -133,7 +145,7 @@ def main(argv: List[str]) -> None:
         for ent in vmf.by_class['comp_propcombine_set']:
              ent.remove()
 
-    bsp_file.lumps[BSP_LUMPS.ENTITIES].data = bsp_file.write_ent_data(vmf)
+    bsp_file.lumps[BSP_LUMPS.ENTITIES].data = bsp_file.write_ent_data(vmf, use_comma_sep)
 
     if conf.get(bool, 'auto_pack') and args.allow_pack:
         LOGGER.info('Analysing packable resources...')

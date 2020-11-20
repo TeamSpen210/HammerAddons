@@ -180,12 +180,16 @@ OPTIONS = [
         """,
         fallback='propcombine_studiomdl',
     ),
-
     Opt(
-        'propcombine_studiomdl', '',
-        """Old name for "studiomdl".
-        """,
-    ),
+        'use_comma_sep', TYPE.BOOL,
+        """Before L4D, entity I/O used ',' to seperate the different parts.
+    
+       Later games used a special symbol to delimit the sections, allowing
+       commas to be used in outputs. The compiler will guess which to use
+       based on existing outputs in the map, but if this is incorrect 
+       (or if there aren't any in the map), use this to override.
+    """),
+
     Opt(
         'propcombine_qc_folder', Property('', []),
         """Define where the QC files are for combinable static props.
