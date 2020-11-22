@@ -112,7 +112,7 @@ class Config(NamedTuple):
             'Rope at {} cannot have a negative slack!',
         )
         try:
-            interp_type = InterpType(int(ent['interpolationtype', '2']))
+            interp_type = InterpType(int(ent['positioninterpolator', '2']))
         except ValueError:
             LOGGER.warning(
                 'Unknown interpolation type "{}" '
