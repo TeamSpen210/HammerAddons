@@ -21,7 +21,7 @@
 
 	segments(integer) : "Segments" : 2 : "Number of nodes to generate between each rope. Higher values make smoother ropes, but produce more faces."
 	sides(integer) : "Sides" : 8 : "Number of faces for each cylindrical section. Only the value at the start of the rope is used."
-	radius(float) : "Radius" : 6 : "Radius of this rope section."
+	radius(float) : "Radius" : 1.0 : "Radius of this rope section."
 
 	material(material) : "Rope Material" : "cable/cable.vmt" : "The material to use for the rope. Must be a model material."
 	mat_scale(float) : "Lengthwise Material Scale" : 1 : "This changes the texture resolution along the rope, relative to the amount of width used. Larger values stretch the texture and smaller values scrunch it up."
