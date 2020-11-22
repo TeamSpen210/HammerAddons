@@ -246,6 +246,7 @@ def build_rope(
     nodes_and_conn: Tuple[FrozenSet[NodeEnt], FrozenSet[Tuple[NodeID, NodeID]]],
     temp_folder: Path,
     mdl_name: str,
+    offset: Vec,
 ) -> None:
     """Construct the geometry for a rope."""
     LOGGER.info('Building rope {}', mdl_name)
@@ -668,9 +669,10 @@ def comp_prop_rope(ctx: Context) -> None:
             for node in nodes.values():
                 node.pos -= center
 
-            model_name = compiler.get_model(
+            model_name, result = compiler.get_model(
                 (frozenset(nodes.values()), frozenset(connections[group])),
                 build_rope,
+                center,
             )
 
             # Use the node closest to the center.
