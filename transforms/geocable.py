@@ -254,7 +254,7 @@ def build_rope(
     mesh = Mesh.blank('root')
     [bone] = mesh.bones.values()
 
-    nodes = build_node_tree(ents, connections)
+    nodes = build_node_tree(ents, connections, offset)
 
     interpolate_all(nodes)
     compute_orients(nodes)
@@ -279,7 +279,11 @@ def build_rope(
         f.write(QC_TEMPLATE.format(path=mdl_name))
 
 
-def build_node_tree(ents: FrozenSet[NodeEnt], connections: FrozenSet[Tuple[NodeID, NodeID]]) -> Set[Node]:
+def build_node_tree(
+    ents: FrozenSet[NodeEnt],
+    connections: FrozenSet[Tuple[NodeID, NodeID]],
+    offset: Vec,
+) -> Set[Node]:
     """Convert the ents/connections definitions into a node tree."""
     # Convert them all into the real node objects.
     id_to_node = {
@@ -322,6 +326,11 @@ def build_node_tree(ents: FrozenSet[NodeEnt], connections: FrozenSet[Tuple[NodeI
 
         first.next = second
         second.prev = first
+
+    for node in list(nodes):
+        if node.prev is None and node.next is None:
+            LOGGER.warning('Node at {} has no connections to it! Skipping.', node.pos + offset)
+            nodes.discard(node)
 
     return nodes
 
