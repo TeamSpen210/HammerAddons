@@ -168,9 +168,9 @@ def combine_group(
         ))
     # We don't want to build collisions if it's not used.
     has_coll = any(pos.solidity is not CollType.NONE for pos in prop_pos)
-    mdl_name = compiler.get_model(
+    mdl_name, result = compiler.get_model(
         (frozenset(prop_pos), has_coll),
-        functools.partial(compile_func, lookup_model),
+        compile_func, lookup_model,
     )
 
     # Many of these we require to be the same, so we can read them
@@ -190,10 +190,10 @@ def combine_group(
 
 
 def compile_func(
-    lookup_model: Callable[[str], Tuple[QC, Model]],
     mdl_key: Tuple[Set[PropPos], bool],
     temp_folder: Path,
     mdl_name: str,
+    lookup_model: Callable[[str], Tuple[QC, Model]],
 ) -> None:
     """Build this merged model."""
     LOGGER.info('Compiling {}...', mdl_name)

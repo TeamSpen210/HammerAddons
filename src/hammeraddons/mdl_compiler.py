@@ -8,8 +8,12 @@ import pickle
 import subprocess
 import tempfile
 import random
-from typing import Dict, Callable, TypeVar, Tuple, Set, List, Optional, Hashable
-from pathlib import Path, PurePosixPath
+from typing import (
+    Optional, TypeVar, Any,
+    Dict, Set, List, Hashable,
+    Callable, Tuple,
+)
+from pathlib import Path
 
 from srctools import AtomicWriter
 from srctools.bsp_transform import Context
@@ -19,13 +23,16 @@ from srctools.packlist import PackList, LOGGER
 
 
 ModelKey = TypeVar('ModelKey', bound=Hashable)
+InT = TypeVar('InT')
+OutT = TypeVar('OutT')
 
 
 class GenModel:
     """Tracks information about this model."""
-    def __init__(self, mdl_name: str, used: bool = False) -> None:
+    def __init__(self, mdl_name: str, result: InT=None) -> None:
         self.name = mdl_name  # This is just the filename.
-        self.used = used
+        self.used = False
+        self.result = result  # Return value from compile function.
 
     def __repr__(self) -> str:
         return f'<Model "{self.name}, used={self.used}>'
@@ -47,14 +54,14 @@ class ModelCompiler:
         # The random indexes we use to produce filenames.
         self._mdl_names: Set[str] = set()
 
-        self.game = game
+        self.game: Game = game
         self.model_folder = 'maps/{}/{}/'.format(map_name, folder_name)
         self.model_folder_abs = game.path / 'models' / self.model_folder
-        self.pack = pack
+        self.pack: PackList = pack
 
         if studiomdl_loc is None:
             studiomdl_loc = game.bin_folder() / 'studiomdl.exe'
-        self.studiomdl_loc = studiomdl_loc.resolve()
+        self.studiomdl_loc: Path = studiomdl_loc.resolve()
 
     @classmethod
     def from_ctx(cls, ctx: Context, folder_name: str) -> 'ModelCompiler':
@@ -76,7 +83,7 @@ class ModelCompiler:
         os.makedirs(self.model_folder, exist_ok=True)
         try:
             with (self.model_folder_abs / 'manifest.bin').open('rb') as f:
-                data: List[Tuple[ModelKey, str]] = pickle.load(f)
+                data: List[Tuple[ModelKey, str, InT]] = pickle.load(f)
                 assert isinstance(data, list)
         except FileNotFoundError:
             return self
@@ -92,9 +99,15 @@ class ModelCompiler:
         for mdl_name in self.model_folder_abs.glob('*.mdl'):
             self._mdl_names.add(str(mdl_name.stem).casefold())
 
-        for key, name in data:
+        for tup in data:
+            try:
+                name, key, result = tup
+                if not isinstance(name, str):
+                    continue
+            except ValueError:
+                continue  # Malformed, ignore.
             if name in self._mdl_names:
-                self._built_models[key] = GenModel(name)
+                self._built_models[key] = GenModel(name, result)
             else:
                 LOGGER.warning('Model in manifest but not present: {}', name)
 
@@ -109,7 +122,7 @@ class ModelCompiler:
         used_mdls = set()
         for key, mdl in self._built_models.items():
             if mdl.used:
-                data.append((key, mdl.name))
+                data.append((key, mdl.name, mdl.result))
                 used_mdls.add(mdl.name.casefold())
 
         with AtomicWriter(self.model_folder_abs / 'manifest.bin', is_bytes=True) as f:
@@ -132,20 +145,25 @@ class ModelCompiler:
     def get_model(
         self,
         key: ModelKey,
-        compile_func: Callable[[ModelKey, Path, str], None],
-    ) -> str:
+        compile_func: Callable[[ModelKey, Path, str, InT], OutT],
+        args: InT,
+    ) -> Tuple[str, OutT]:
         """Given a model key, either return the existing model, or compile it.
 
         Either way the result is the new model name, which also has been packed.
         The provided function will be called if it needs to be compiled, passing
         in the following arguments:
             * The key
-            * the temporary folder to write to
-            * the name of the model to generate.
+            * The temporary folder to write to
+            * The name of the model to generate.
+            * The args parameter, which can be anything.
         It should create "mdl.qc" in the folder, and then
-        StudioMDL will be called on the model to comile it.
+        StudioMDL will be called on the model to comile it. The return value will
+        be passed back from this function.
 
         If the model key is None, a new model will always be compiled.
+        The model key and return value must be pickleable, so they can be saved
+        for use in subsequent compiles.
         """
         try:
             model = self._built_models[key]
@@ -162,20 +180,20 @@ class ModelCompiler:
 
             with tempfile.TemporaryDirectory(prefix='mdl_compile') as folder:
                 path = Path(folder)
-                compile_func(key, path, f'{self.model_folder}{mdl_name}.mdl')
-                args = [
+                model.result = compile_func(key, path, f'{self.model_folder}{mdl_name}.mdl', args)
+                studio_args = [
                     str(self.studiomdl_loc),
                     '-nop4',
                     '-game', str(self.game.path),
                     str(path / 'model.qc'),
                 ]
-                res = subprocess.run(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                res = subprocess.run(studio_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 LOGGER.debug(
                     'Executing {}:\n{}',
-                    args,
+                    studio_args,
                     res.stdout.replace(b'\r\n', b'\n').decode('ascii', 'replace'),
                 )
-                res.check_returncode()
+                res.check_returncode()  # Or raise.
 
         if not model.used:
             # Pack it in.
@@ -195,4 +213,4 @@ class ModelCompiler:
                 except FileNotFoundError:
                     pass
 
-        return f'models/{self.model_folder}{model.name}.mdl'
+        return f'models/{self.model_folder}{model.name}.mdl', model.result
