@@ -14,7 +14,7 @@ from srctools import (
 )
 from srctools.compiler.mdl_compiler import ModelCompiler
 from srctools.bsp_transform import Context, trans
-from srctools.bsp import StaticProp, StaticPropFlags
+from srctools.bsp import StaticProp, StaticPropFlags, VisLeaf, VisTree
 from srctools.smd import Mesh, Vertex, Triangle, Bone
 
 
@@ -247,7 +247,7 @@ def build_rope(
     temp_folder: Path,
     mdl_name: str,
     offset: Vec,
-) -> None:
+) -> List[Tuple[Vec, float, Vec, float]]:
     """Construct the geometry for a rope."""
     LOGGER.info('Building rope {}', mdl_name)
     ents, connections = nodes_and_conn
@@ -277,6 +277,13 @@ def build_rope(
 
     with (temp_folder / 'model.qc').open('w') as f:
         f.write(QC_TEMPLATE.format(path=mdl_name))
+
+    # For visleaf computation, return a list of all the actual segments generated.
+    return [
+        (node.pos + offset, node.radius, node.next.pos + offset, node.next.radius)
+        for node in nodes
+        if node.next
+    ]
 
 
 def build_node_tree(
@@ -564,7 +571,7 @@ def generate_straights(nodes: Iterable[Node], mesh: Mesh) -> None:
             right_a = node1.points_next[(i + 1) % side_count]
             left_b = node2.points_prev[i % side_count]
             right_b = node2.points_prev[(i + 1) % side_count]
-            
+
             # If it flips around, we need to fix that.
             if right_a is node1.points_next[0]:
                 right_a = right_a.copy()
@@ -578,7 +585,7 @@ def generate_straights(nodes: Iterable[Node], mesh: Mesh) -> None:
                     right_b.tex_v = node2.config.u_max
                 else:
                     right_b.tex_u = node2.config.u_max
-            
+
             mesh.triangles.append(Triangle(mat, left_a, right_b, left_b))
             mesh.triangles.append(Triangle(mat, left_a, right_a, right_b))
 
@@ -610,6 +617,39 @@ def generate_caps(nodes: Iterable[Node], mesh: Mesh) -> None:
             make_cap(reversed(node.points_next), -node.orient.forward())
         if node.next is None:
             make_cap(node.points_prev, node.orient.forward())
+
+
+def compute_visleafs(
+    coll_data: List[Tuple[Vec, float, Vec, float]],
+    vis_tree_top: VisTree,
+) -> List[int]:
+    """Compute the visleafs this rope is present in."""
+    # Each tree node defines a plane. For each side we touch, we need to
+    # continue looking down that side of the tree for visleafs.
+    # We need to do this individually for each segment pair. That way
+    # we correctly handle cases like ropes encircling a room without entering it.
+    used_leafs: Set[int] = set()
+
+    # Check if we collide with either side of the tree (or both).
+    # This just involves doing a sphere-plane check with each side of the node.
+    # If both are on one side, the whole segment cannot cross.
+    for point1, radius1, point2, radius2 in coll_data:
+        todo_trees: List[VisTree] = [vis_tree_top]
+        for tree in todo_trees:
+            off1 = Vec.dot(tree.plane_norm, point1) - tree.plane_dist
+            off2 = Vec.dot(tree.plane_norm, point2) - tree.plane_dist
+            if off1 >= -radius1 or off2 >= -radius2:
+                if isinstance(tree.child_neg, VisLeaf):
+                    used_leafs.add(tree.child_neg.id)
+                else:
+                    todo_trees.append(tree.child_neg)
+            if off1 <= radius1 or off2 <= radius2:
+                if isinstance(tree.child_pos, VisLeaf):
+                    used_leafs.add(tree.child_pos.id)
+                else:
+                    todo_trees.append(tree.child_pos)
+
+    return sorted(used_leafs)
 
 
 @trans('Model Ropes')
@@ -666,9 +706,7 @@ def comp_prop_rope(ctx: Context) -> None:
 
     # TODO, compute the visleafs.
     static_props = list(ctx.bsp.static_props())
-    all_leafs = set()
-    for prop in static_props:
-        all_leafs.update(prop.visleafs)
+    vis_tree_top = ctx.bsp.vis_tree()
 
     with compiler:
         for group, nodes in all_nodes.items():
@@ -678,7 +716,7 @@ def comp_prop_rope(ctx: Context) -> None:
             for node in nodes.values():
                 node.pos -= center
 
-            model_name, result = compiler.get_model(
+            model_name, coll_data = compiler.get_model(
                 (frozenset(nodes.values()), frozenset(connections[group])),
                 build_rope,
                 center,
@@ -707,7 +745,7 @@ def comp_prop_rope(ctx: Context) -> None:
                 origin=center,
                 angles=Vec(0, 270, 0),
                 scaling=1.0,
-                visleafs=list(all_leafs),
+                visleafs=compute_visleafs(coll_data, vis_tree_top),
                 solidity=0,
                 flags=flags,
                 tint=Vec(conf.prop_rendercolor),
