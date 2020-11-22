@@ -101,7 +101,7 @@ class ModelCompiler:
 
         for tup in data:
             try:
-                name, key, result = tup
+                key, name, result = tup
                 if not isinstance(name, str):
                     continue
             except ValueError:
