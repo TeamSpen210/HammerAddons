@@ -178,7 +178,6 @@ OPTIONS = [
         If unset these features are disabled.
         This is relative to the game root.
         """,
-        fallback='propcombine_studiomdl',
     ),
     Opt(
         'use_comma_sep', TYPE.BOOL,
