@@ -2,6 +2,7 @@
 import argparse
 import datetime
 import sys
+from collections import defaultdict
 from logging import FileHandler
 from pathlib import Path
 
@@ -18,7 +19,7 @@ from srctools.bsp_transform import run_transformations
 from srctools.packlist import PackList
 from srctools.scripts import config
 from srctools.compiler import propcombine
-from typing import List
+from typing import List, Dict
 
 
 def main(argv: List[str]) -> None:
@@ -158,7 +159,26 @@ def main(argv: List[str]) -> None:
     packlist.pack_into_zip(bsp_file, blacklist=pack_blacklist, ignore_vpk=False)
 
     with bsp_file.packfile() as pak_zip:
-        LOGGER.info('Packed files: \n{}'.format('\n'.join(pak_zip.namelist())))
+        # List out all the files, but group together files with the same extension.
+        ext_for_name: Dict[str, List[str]] = defaultdict(list)
+        for file in pak_zip.infolist():
+            filename = Path(file.filename)
+            if '.' in filename.name:
+                stem, ext = filename.name.split('.', 1)
+                file_path = str(filename.parent / stem)
+            else:
+                file_path = file.filename
+                ext = ''
+
+            ext_for_name[file_path].append(ext)
+
+        LOGGER.info('Packed files: \n{}'.format('\n'.join([
+            (
+                f'{name}.{exts[0]}'
+                if len(exts) == 1 else
+                f'{name}.({"/".join(exts)})')
+            for name, exts in sorted(ext_for_name.items())
+        ])))
 
     LOGGER.info('Writing BSP...')
     bsp_file.save()
