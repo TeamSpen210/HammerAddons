@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import (
     Optional, Tuple, Callable, NamedTuple,
     FrozenSet, Dict, List, Set,
-    Iterator,
+    Iterator, Union,
 )
 
 from srctools import Vec, VMF, Entity, conv_int, Angle, Matrix
@@ -470,13 +470,13 @@ def group_props_ent(
 ) -> Iterator[List[StaticProp]]:
     """Given the groups of props, merge props according to the provided ents."""
     # (name, skinset) -> list of boxes, constructed as 6 (pos, norm) tuples.
-    combine_sets = defaultdict(list)  # type: Dict[Tuple[str, FrozenSet[str]], List[List[Tuple[Vec, Vec]]]]
+    combine_sets = defaultdict(list)  # type: Dict[Tuple[Union[str, int], FrozenSet[str]], List[List[Tuple[Vec, Vec]]]]
 
     empty_fs = frozenset('')
 
     for ent in bbox_ents:
         # Either provided name, or unique value.
-        name = ent['name'] or format(int(ent['hammerid']), 'X')
+        name = ent['name'] or ent.id
         origin = Vec.from_str(ent['origin'])
 
         skinset = empty_fs
@@ -528,14 +528,11 @@ def group_props_ent(
         for (name, skinset), boxes in combine_sets.items():
             if skinset and skinset != group_skinset:
                 continue  # No match
-            found = defaultdict(list)  # type: Dict[int, List[StaticProp]]
+            found = defaultdict(list)  # type: Dict[Union[str, int], List[StaticProp]]
             for prop in list(group):
                 for box in boxes:
                     if bsp_collision(prop.origin, box):
-                        # Group by this box object's identity.
-                        # That's a cheap way to keep each propcombine set
-                        # grouped uniquely.
-                        found[id(boxes)].append(prop)
+                        found[name].append(prop)
                         break
 
             for subgroup in found.values():
