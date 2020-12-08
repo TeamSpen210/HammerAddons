@@ -702,11 +702,12 @@ def combine(
     # This holds the list of all props we want in the map -
     # combined ones, and any we reject for whatever reason.
     final_props: List[StaticProp] = []
+    rejected: List[StaticProp] = []
 
     if bbox_ents:
         LOGGER.info('Propcombine sets present ({}), combining...', len(bbox_ents))
         grouper = group_props_ent(
-            prop_groups, final_props,
+            prop_groups, rejected,
             get_model,
             bbox_ents,
             min_cluster,
@@ -714,7 +715,7 @@ def combine(
     elif auto_range > 0:
         LOGGER.info('Automatically finding propcombine sets...')
         grouper = group_props_auto(
-            prop_groups, final_props,
+            prop_groups, rejected,
             auto_range,
             min_cluster,
         )
@@ -727,10 +728,19 @@ def combine(
         prop_groups[get_grouping_key(prop)].append(prop)
         prop_count += 1
 
+
     # These are models we cannot merge no matter what -
     # no source files etc.
-    final_props.extend(prop_groups.pop(None, []))
+    cannot_merge = prop_groups.pop(None, [])
+    final_props.extend(cannot_merge)
 
+    LOGGER.debug('Prop groups: \n{}', '\n'.join([
+        f'{group}: {len(props)}'
+        for group, props in
+        sorted(prop_groups.items(), key=lambda t: t[0])
+    ]))
+    
+    group_count = 0
     with ModelCompiler(
         game,
         studiomdl_loc,
@@ -744,12 +754,17 @@ def combine(
                 # Compute a random hue, and convert back to RGB 0-255.
                 grouped_prop.tint = round(Vec(*colorsys.hsv_to_rgb(random.random(), 1, 1)) * 255)
             final_props.append(grouped_prop)
+            group_count += 1
+
+    final_props.extend(rejected)
 
     LOGGER.info(
-        'Combined {} props to {} props using {} groups.',
+        'Combined {} props into {}:\n - {} grouped models\n - {} ineligable\n - {} had no group',
         prop_count,
         len(final_props),
-        compiler.model_folder,
+        group_count,
+        len(cannot_merge),
+        len(rejected),
     )
     # If present, delete old cache file. We'll have cleaned up the models.
     try:
