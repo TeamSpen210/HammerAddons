@@ -22,7 +22,7 @@ from srctools.game import Game
 
 from srctools.logger import get_logger
 from srctools.packlist import PackList
-from srctools.bsp import BSP, StaticProp
+from srctools.bsp import BSP, StaticProp, StaticPropFlags
 from srctools.mdl import Model
 from srctools.smd import Mesh
 from srctools.compiler.mdl_compiler import ModelCompiler
@@ -668,6 +668,9 @@ def combine(
             model = mdl_map[key] = Model(pack.fsys, mdl_file)
         return qc, model
 
+    # Ignore these two, they don't affect our new prop.
+    relevant_flags = ~(StaticPropFlags.HAS_LIGHTING_ORIGIN | StaticPropFlags.DOES_FADE)
+
     def get_grouping_key(prop: StaticProp) -> Optional[tuple]:
         """Compute a grouping key for this prop.
 
@@ -687,7 +690,7 @@ def combine(
                 model.iter_textures([prop.skin])
             }),
             model.flags.value,
-            prop.flags.value,
+            (prop.flags & relevant_flags).value,
             model.contents,
             model.surfaceprop,
             prop.renderfx,
