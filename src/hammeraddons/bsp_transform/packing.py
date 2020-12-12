@@ -150,6 +150,21 @@ def comp_pack(ctx: Context):
                 )
                 res_type = FileType.GENERIC
             ctx.pack.pack_file(value, res_type)
+            if res_type is FileType.SOUNDSCRIPT:
+                try:
+                    file = ctx.sys[value]
+                except FileNotFoundError:
+                    LOGGER.warning(
+                        'Soundscript "{}" does not '
+                        'exist (at {})',
+                        value, ent['origin'],
+                    )
+                    continue
+                # Force include the script, and then pack all sounds it used
+                # since the user explicitly specified it.
+                for sound in ctx.pack.load_soundscript(file, always_include=True):
+                    LOGGER.info('Sound: {}', sound)
+                    ctx.pack.pack_file(sound, FileType.GAME_SOUND)
 
 
 @trans('comp_pack_rename')
