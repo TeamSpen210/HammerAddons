@@ -3,10 +3,13 @@ import argparse
 import datetime
 import sys
 from collections import defaultdict
+from io import BytesIO
 from logging import FileHandler
 from pathlib import Path
+from zipfile import ZipFile
 
 from srctools import Property
+from srctools.filesys import ZipFileSystem
 from srctools.logger import init_logging, Formatter
 
 
@@ -97,6 +100,11 @@ def main(argv: List[str]) -> None:
     vmf = bsp_file.read_ent_data()
     LOGGER.info('Done!')
 
+    # Mount the existing packfile, so the cubemap files are recognised.
+    LOGGER.info('Mounting BSP packfile...')
+    zipfile = ZipFile(BytesIO(bsp_file.get_lump(BSP_LUMPS.PAKFILE)))
+    fsys.add_sys(ZipFileSystem('<BSP pakfile>', zipfile))
+
     studiomdl_path = conf.get(str, 'studiomdl')
     if studiomdl_path:
         studiomdl_loc = (game_info.root / studiomdl_path).resolve()
@@ -122,6 +130,7 @@ def main(argv: List[str]) -> None:
             LOGGER.warning('Set "use_comma_sep" in srctools.vdf.')
         use_comma_sep = False
 
+    LOGGER.info('Running transforms...')
     run_transformations(vmf, fsys, packlist, bsp_file, game_info, studiomdl_loc)
 
     if studiomdl_loc is not None and args.propcombine:
