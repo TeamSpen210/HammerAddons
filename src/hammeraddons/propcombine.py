@@ -3,6 +3,7 @@
 This merges static props together, so they can be drawn with a single
 draw call.
 """
+import math
 import os
 import random
 import colorsys
@@ -469,15 +470,25 @@ def group_props_ent(
     min_cluster: int,
 ) -> Iterator[List[StaticProp]]:
     """Given the groups of props, merge props according to the provided ents."""
-    # (name, skinset) -> list of boxes, constructed as 6 (pos, norm) tuples.
+    # (ID, skinset) -> list of boxes, constructed as 6 (pos, norm) tuples.
     combine_sets = defaultdict(list)  # type: Dict[Tuple[Union[str, int], FrozenSet[str]], List[List[Tuple[Vec, Vec]]]]
+    # Keep track of the used IDs, so we can print out unused ones.
+    used_sets = set()
+    # And then the location of those.
+    id_to_desc: List[Tuple[Union[str, object], str]] = []
 
     empty_fs = frozenset('')
 
     for ent in bbox_ents:
-        # Either provided name, or unique value.
-        name = ent['name'] or ent.id
         origin = Vec.from_str(ent['origin'])
+
+        # Group name
+        bbox_id = ent['name']
+        if bbox_id:
+            id_to_desc.append((bbox_id, f'group "{bbox_id}"'))
+        else:
+            bbox_id = ent.id  # Use a unique ID.
+            id_to_desc.append((bbox_id, f'at {origin}'))
 
         skinset = empty_fs
 
@@ -504,7 +515,7 @@ def group_props_ent(
 
         # For each direction, compute a position on the plane and
         # the normal vector.
-        combine_sets[name, skinset].append([
+        combine_sets[bbox_id, skinset].append([
             (
                 origin + Vec.with_axes(axis, offset) @ mat,
                 Vec.with_axes(axis, norm) @ mat,
@@ -525,14 +536,15 @@ def group_props_ent(
             group.clear()
             continue
 
-        for (name, skinset), boxes in combine_sets.items():
+        for (bbox_id, skinset), boxes in combine_sets.items():
             if skinset and skinset != group_skinset:
                 continue  # No match
             found = defaultdict(list)  # type: Dict[Union[str, int], List[StaticProp]]
             for prop in list(group):
                 for box in boxes:
                     if bsp_collision(prop.origin, box):
-                        found[name].append(prop)
+                        found[bbox_id].append(prop)
+                        used_sets.add(bbox_id)
                         break
 
             for subgroup in found.values():
@@ -545,6 +557,10 @@ def group_props_ent(
     # Finally, reject all the ones not in a bbox.
     for group in prop_groups.values():
         rejected.extend(group)
+    # And log unused groups
+    for bbox_id, desc in id_to_desc:
+        if bbox_id not in used_sets:
+            LOGGER.warning('Unused comp_propcombine_set {}', desc)
 
 
 def group_props_auto(
