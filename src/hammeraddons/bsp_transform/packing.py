@@ -136,7 +136,7 @@ def comp_pack(ctx: Context):
         ent.remove()
         for key, value in ent.keys.items():
             # Not important.
-            if key in {'classname', 'origin', 'angles', 'hammerid'}:
+            if key in {'classname', 'origin', 'angles', 'hammerid', 'skin'}:
                 continue
 
             # We allow numeric suffixes for multiple - generic45.
