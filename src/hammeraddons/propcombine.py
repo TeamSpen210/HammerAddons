@@ -662,6 +662,7 @@ def combine(
     # Wipe these, if they're being used again.
     _mesh_cache.clear()
     _coll_cache.clear()
+    missing_qcs: Set[str] = set()
 
     def get_model(filename: str) -> Tuple[Optional[QC], Optional[Model]]:
         """Given a filename, load/parse the QC and MDL data."""
@@ -669,6 +670,7 @@ def combine(
         try:
             qc = qc_map[key]
         except KeyError:
+            missing_qcs.add(key)
             return None, None
         try:
             model = mdl_map[key]
@@ -783,6 +785,7 @@ def combine(
         len(cannot_merge),
         len(rejected),
     )
+    LOGGER.debug('Models with unknown QCs: \n{}', '\n'.join(sorted(missing_qcs)))
     # If present, delete old cache file. We'll have cleaned up the models.
     try:
         os.remove(compiler.model_folder_abs / 'cache.vdf')
