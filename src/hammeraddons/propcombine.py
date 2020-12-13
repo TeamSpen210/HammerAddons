@@ -768,7 +768,8 @@ def combine(
             grouped_prop = combine_group(compiler, group, get_model)
             if debug_tint:
                 # Compute a random hue, and convert back to RGB 0-255.
-                grouped_prop.tint = round(Vec(*colorsys.hsv_to_rgb(random.random(), 1, 1)) * 255)
+                r, g, b = colorsys.hsv_to_rgb(random.random(), 1, 1)
+                grouped_prop.tint = Vec(round(r*255), round(g*255), round(b*255))
             final_props.append(grouped_prop)
             group_count += 1
 
