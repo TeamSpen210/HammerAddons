@@ -380,7 +380,7 @@ def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
         for line in f:
             indent = len(line) - len(line.lstrip('\t'))
             line = line.strip()
-            if not line:
+            if not line or line.startswith(('#', '//')):
                 continue
             cur_path = cur_path[:indent]  # Dedent
             if line.startswith('-') or '(' in line or ')' in line:  # Visgroup.
