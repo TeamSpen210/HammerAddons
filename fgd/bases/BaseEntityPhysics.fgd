@@ -1,6 +1,6 @@
 // Stripped down version of BaseAnimating for physically-simulated objects, which do not have some keyvalues
 
-@BaseClass base(BaseEntityPoint, RenderFields, Reflection) 
+@BaseClass base(BaseEntityPoint, RenderFields, Reflection, DamageFilter) 
 	sphere(fademindist) sphere(fademaxdist)
 = BaseEntityPhysics
 	[
