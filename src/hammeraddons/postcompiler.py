@@ -164,6 +164,8 @@ def main(argv: List[str]) -> None:
         packlist.pack_from_bsp(bsp_file)
 
         packlist.eval_dependencies()
+        if conf.get(bool, 'soundscript_manifest'):
+            packlist.write_manifest()
 
     packlist.pack_into_zip(bsp_file, blacklist=pack_blacklist, ignore_vpk=False)
 

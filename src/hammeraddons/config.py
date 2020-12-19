@@ -173,6 +173,14 @@ OPTIONS = [
         * "nopack" "folder/" prohibits files in this path from being packed, you'll need to use one of the others also to add the path.
     """),
     Opt(
+        'soundscript_manifest', False,
+        """Generate and pack game_sounds_manifest.txt, with all used soundscripts.
+        
+        This is needed to make packing soundscripts work for the Portal 2 
+        workshop.
+        """,
+    ),
+    Opt(
         'studiomdl', 'bin/studiomdl.exe',
         """Set the path to StudioMDL so the compiler can generate props.
         If unset these features are disabled.
