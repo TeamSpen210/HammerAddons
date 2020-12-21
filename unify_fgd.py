@@ -870,6 +870,12 @@ def action_export(
                             elif base_value.type is value.type:
                                 del category[key]
                                 continue
+                            elif attr_name == 'keyvalues' and key == 'model':
+                                # This can be sprite or model.
+                                pass
+                            elif base_value.type is ValueTypes.FLOAT and value.type is ValueTypes.INT:
+                                # Just constraining it down to a whole number.
+                                pass
                             else:
                                 print(f'{ent.classname}.{key}: {value.type} != base {base_value.type}')
 
