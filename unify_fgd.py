@@ -904,9 +904,10 @@ def action_export(
                 if not match_tags(tags, get_appliesto(base)):
                     ent.bases.remove(base)
 
-    for poly_tag, polyfill in POLYFILLS:
-        if not poly_tag or poly_tag in tags:
-            polyfill(fgd)
+    if not engine_mode:
+        for poly_tag, polyfill in POLYFILLS:
+            if not poly_tag or poly_tag in tags:
+                polyfill(fgd)
 
     print('Applying helpers to child entities and optimising...')
     for ent in fgd.entities.values():
