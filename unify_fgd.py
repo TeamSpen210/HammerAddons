@@ -97,6 +97,7 @@ def _polyfill_ext_valuetypes(fgd: FGD) -> None:
         ValueTypes.EXT_ANGLE_PITCH: ValueTypes.FLOAT,
         ValueTypes.EXT_ANGLES_LOCAL: ValueTypes.ANGLES,
         ValueTypes.EXT_VEC_DIRECTION: ValueTypes.VEC,
+        ValueTypes.EXT_VEC_LOCAL: ValueTypes.VEC,
     }
     for ent in fgd.entities.values():
         for tag_map in ent.keyvalues.values():
