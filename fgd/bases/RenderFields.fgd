@@ -1,4 +1,5 @@
-@BaseClass = RenderFields
+@BaseClass base(DXLevelChoice)
+= RenderFields
 	[
 	rendermode[engine](integer) : "Render Mode" : 0
 	rendermode(choices) : "Render Mode" : 0 : "Used to set a non-standard rendering mode on this entity. See also 'FX Amount' and 'FX Color'. \n" +
@@ -69,33 +70,6 @@
 		23: "Ragdoll (ragdolls the entity but does NOT kill it)" [TF2]
 		24: "Fade Wider Pulse" [TF2]
 		]
-
-	mindxlevel[ASW, EP1, EP2, HL2, P1, TF2](choices) : "Minimum DX Level" : "0" =
-		[
-		 0 : "Default (lowest)"
-		60 : "DirectX 6.0"	
-		70 : "DirectX 7.0"
-		80 : "DirectX 8.0 (4600Ti)"
-		81 : "DirectX 8.1 (FX5200)"
-		90 : "DirectX 9.0 SM2.0"
-		95 : "DirectX 9.5 SM3.0"
-		100: "DirectX 10.0"
-		]
-
-	maxdxlevel[ASW, EP1, EP2, HL2, P1, TF2](choices) : "Maximum DX Level" : "0" =
-		[
-		0: "Default (lowest)"
-		60: "DirectX 6.0"	
-		70: "DirectX 7.0"
-		80: "DirectX 8.0 (4600Ti)"
-		81: "DirectX 8.1 (FX5200)"
-		90: "DirectX 9.0 SM2.0"
-		95: "DirectX 9.5 SM3.0"
-		100: "DirectX 10.0"
-		]
-
-	mindxlevel[engine](integer): "Minimum DX Level": 0
-	maxdxlevel[engine](integer): "Maximum DX Level": 0
 
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows" : 0
 

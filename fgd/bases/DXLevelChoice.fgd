@@ -3,22 +3,25 @@
 	mindxlevel[engine](integer) : "Minimum DX Level" : 0
 	mindxlevel(choices) : "Minimum DX Level" : 0 = 
 		[
-		0 : "default (lowest)"
-		70 : "dx7"
-		80 : "dx8.0 (4600Ti)"
-		81 : "dx8.1 (FX5200)"
-		90 : "dx9 SM2.0"
-		95 : "dx9 SM3.0"
+		 0 : "Default (lowest)"
+		60 : "DirectX 6.0"	
+		70 : "DirectX 7.0"
+		80 : "DirectX 8.0 (4600Ti)"
+		81 : "DirectX 8.1 (FX5200)"
+		90 : "DirectX 9.0 SM2.0"
+		95 : "DirectX 9.5 SM3.0"
+		100: "DirectX 10.0"
 		]
 	maxdxlevel[engine](integer) : "Maximum DX Level" : 0
 	maxdxlevel(choices) : "Maximum DX Level" : 0 = 
 		[
-		0 : "default (highest)"
-		60 : "dx6"
-		70 : "dx7"
-		80 : "dx8.0 (4600Ti)"
-		81 : "dx8.1 (FX5200)"
-		90 : "dx9 SM2.0"
-		95 : "dx9 SM3.0"
+		0: "Default (lowest)"
+		60: "DirectX 6.0"	
+		70: "DirectX 7.0"
+		80: "DirectX 8.0 (4600Ti)"
+		81: "DirectX 8.1 (FX5200)"
+		90: "DirectX 9.0 SM2.0"
+		95: "DirectX 9.5 SM3.0"
+		100: "DirectX 10.0"
 		]
 	]
