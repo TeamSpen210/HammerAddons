@@ -704,7 +704,6 @@ def comp_prop_rope(ctx: Context) -> None:
                 )
             connections[node.group].add((node.id, dest.id))
 
-    # TODO, compute the visleafs.
     static_props = list(ctx.bsp.static_props())
     vis_tree_top = ctx.bsp.vis_tree()
 
