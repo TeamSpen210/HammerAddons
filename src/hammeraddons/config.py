@@ -159,7 +159,8 @@ OPTIONS = [
     """),
     Opt(
         'pack_vpk', False,
-        """Prevent files in VPKs from being packed into the map.
+        """Allow files in VPKs to be packed into the map. 
+        This is disabled by default since these are usually default files.
     """),
     Opt(
         'searchpaths', TYPE.RAW,
@@ -174,8 +175,7 @@ OPTIONS = [
     """),
     Opt(
         'soundscript_manifest', False,
-        """Generate and pack game_sounds_manifest.txt, with all used soundscripts.
-        
+        """Generate and pack game_sounds_manifest.txt, with all used soundscripts.     
         This is needed to make packing soundscripts work for the Portal 2 
         workshop.
         """,
@@ -183,7 +183,7 @@ OPTIONS = [
     Opt(
         'studiomdl', 'bin/studiomdl.exe',
         """Set the path to StudioMDL so the compiler can generate props.
-        If unset these features are disabled.
+        If blank these features are disabled.
         This is relative to the game root.
         """,
     ),
