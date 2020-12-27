@@ -3,28 +3,32 @@
 This merges static props together, so they can be drawn with a single
 draw call.
 """
-import math
 import os
 import random
 import colorsys
-import functools
+import shutil
+import subprocess
 from collections import defaultdict
 from enum import Enum
 from pathlib import Path
+from tempfile import TemporaryDirectory, mkdtemp
 from typing import (
     Optional, Tuple, Callable, NamedTuple,
     FrozenSet, Dict, List, Set,
     Iterator, Union,
 )
 
-from srctools import Vec, VMF, Entity, conv_int, Angle, Matrix
+from srctools import (
+    Vec, VMF, Entity, conv_int, Angle, Matrix, FileSystemChain,
+    Property, KeyValError,
+)
 from srctools.tokenizer import Tokenizer, Token
 from srctools.game import Game
 
 from srctools.logger import get_logger
 from srctools.packlist import PackList
 from srctools.bsp import BSP, StaticProp, StaticPropFlags
-from srctools.mdl import Model
+from srctools.mdl import Model, MDL_EXTS
 from srctools.smd import Mesh
 from srctools.compiler.mdl_compiler import ModelCompiler
 
@@ -458,6 +462,93 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
     )
 
 
+def decompile_model(
+    fsys: FileSystemChain,
+    cache_loc: Path,
+    crowbar: str,
+    filename: str,
+    checksum: bytes,
+) -> Optional[QC]:
+    """Use Crowbar to decompile models directly for propcombining."""
+    cache_folder = cache_loc / Path(filename).with_suffix('')
+    info_path = cache_folder / 'info.kv'
+    if cache_folder.exists():
+        try:
+            with info_path.open() as f:
+                cache_props = Property.parse(f).find_key('qc', [])
+        except (FileNotFoundError, KeyValError):
+            pass
+        else:
+            # Previous compilation.
+            if checksum == bytes.fromhex(cache_props['checksum', '']):
+                return QC(
+                    str(info_path),
+                    cache_props['ref'],
+                    cache_props['phy', None],
+                    cache_props.float('ref_scale', 1.0),
+                    cache_props.float('phy_scale', 1.0),
+                )
+            # Otherwise, re-decompile.
+    LOGGER.info('Decompiling {}...', filename)
+    # Extract out the model to a temp dir.
+    with TemporaryDirectory() as tempdir, fsys:
+        stem = Path(filename).stem
+        filename_no_ext = filename[:-4]
+        for mdl_ext in MDL_EXTS:
+            try:
+                file = fsys[filename_no_ext + mdl_ext]
+            except FileNotFoundError:
+                pass
+            else:
+                with file.open_bin() as src, Path(tempdir, stem + mdl_ext).open('wb') as dest:
+                    shutil.copyfileobj(src, dest)
+        LOGGER.debug('Extracted "{}" to "{}"', filename, tempdir)
+        result = subprocess.run([
+            crowbar, 'decompile',
+            '-i', str(Path(tempdir, stem + '.mdl')),
+            '-o', str(cache_folder),
+        ])
+        if result.returncode != 0:
+            LOGGER.warning('Could not decompile "{}"!', filename)
+            return None
+    # There should now be a QC file here.
+    for qc_path in cache_folder.glob('*.qc'):
+        qc_result = parse_qc(cache_folder, qc_path)
+        break
+    else:  # not found.
+        LOGGER.warning('No QC outputted into {}', cache_folder)
+        return None
+
+    if qc_result is None:
+        return None
+
+    (
+        model_name,
+        ref_scale, ref_smd,
+        phy_scale, phy_smd,
+    ) = qc_result
+    qc = QC(
+        str(qc_path).replace('\\', '/'),
+        str(ref_smd).replace('\\', '/'),
+        str(phy_smd).replace('\\', '/') if phy_smd else None,
+        ref_scale,
+        phy_scale,
+    )
+
+    cache_props = Property('qc', [
+        Property('checksum', checksum.hex()),
+        Property('ref', Path(ref_smd).name),
+        Property('ref_scale', format(ref_scale, '.6g')),
+    ])
+    if phy_smd is not None:
+        cache_props['phy'] = Path(phy_smd).name
+        cache_props['phy_scale'] = format(phy_scale, '.6g')
+    with info_path.open('w') as f:
+        for line in cache_props.export():
+            f.write(line)
+    return qc
+
+
 def group_props_ent(
     prop_groups: Dict[Optional[tuple], List[StaticProp]],
     rejected: List[StaticProp],
@@ -621,8 +712,11 @@ def combine(
     bsp_ents: VMF,
     pack: PackList,
     game: Game,
+    *,
     studiomdl_loc: Path=None,
     qc_folders: List[Path]=None,
+    crowbar_loc: str=None,
+    decomp_cache_loc: Path=None,
     auto_range: float=0,
     min_cluster: int=2,
     debug_tint: bool=False,
@@ -638,15 +732,16 @@ def combine(
         LOGGER.warning('No studioMDL! Cannot propcombine!')
         return
 
-    if not qc_folders:
+    if not qc_folders and decomp_cache_loc is None:
         # If gameinfo is blah/game/hl2/gameinfo.txt,
         # QCs should be in blah/content/ according to Valve's scheme.
         # But allow users to override this.
+        # If Crowbar's path is provided, that means they may want to just supply nothing.
         qc_folders = [game.path.parent.parent / 'content']
 
     # Parse through all the QC files.
     LOGGER.info('Parsing QC files. Paths: \n{}', '\n'.join(map(str, qc_folders)))
-    qc_map = {}  # type: Dict[str, QC]
+    qc_map: Dict[str, Optional[QC]] = {}
     for qc_folder in qc_folders:
         load_qcs(qc_map, qc_folder)
     LOGGER.info('Done! {} props.', len(qc_map))
@@ -654,7 +749,7 @@ def combine(
     map_name = Path(bsp.filename).stem
 
     # Don't re-parse models continually.
-    mdl_map = {}  # type: Dict[str, Model]
+    mdl_map: Dict[str, Optional[Model]] = {}
     # Wipe these, if they're being used again.
     _mesh_cache.clear()
     _coll_cache.clear()
@@ -675,10 +770,17 @@ def combine(
             if 'no_propcombine' in model.keyvalues.casefold():
                 mdl_map[key] = qc_map[key] = None
                 return None, None
+        if model is None:
+            return None, None
 
         try:
             qc = qc_map[key]
         except KeyError:
+            if crowbar_loc is not None:
+                qc = decompile_model(pack.fsys, decomp_cache_loc, crowbar_loc, filename, model.checksum)
+                if qc is not None:
+                    qc_map[key] = qc
+                    return qc, model
             missing_qcs.add(key)
             return None, None
         return qc, model
