@@ -668,11 +668,6 @@ def combine(
         """Given a filename, load/parse the QC and MDL data."""
         key = unify_mdl(filename)
         try:
-            qc = qc_map[key]
-        except KeyError:
-            missing_qcs.add(key)
-            return None, None
-        try:
             model = mdl_map[key]
         except KeyError:
             try:
@@ -681,6 +676,15 @@ def combine(
                 # We don't have this model, we can't combine...
                 return None, None
             model = mdl_map[key] = Model(pack.fsys, mdl_file)
+            if 'no_propcombine' in model.keyvalues.casefold():
+                mdl_map[key] = qc_map[key] = None
+                return None, None
+
+        try:
+            qc = qc_map[key]
+        except KeyError:
+            missing_qcs.add(key)
+            return None, None
         return qc, model
 
     # Ignore these two, they don't affect our new prop.
