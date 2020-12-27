@@ -31,13 +31,12 @@ from srctools.compiler.mdl_compiler import ModelCompiler
 
 LOGGER = get_logger(__name__)
 
-QC = NamedTuple('QC', [
-    ('path', str),  # QC path.
-    ('ref_smd', str),  # Location of main visible geometry.
-    ('phy_smd', Optional[str]),  # Relative location of collision model, or None
-    ('ref_scale', float),  # Scale of main model.
-    ('phy_scale', float),  # Scale of collision model.
-])
+class QC(NamedTuple):
+    path: str  # QC path.
+    ref_smd: str  # Location of main visible geometry.
+    phy_smd: Optional[str]  # Relative location of collision model, or None
+    ref_scale: float  # Scale of main model.
+    phy_scale: float  # Scale of collision model.
 
 QC_TEMPLATE = '''\
 $staticprop
@@ -65,9 +64,6 @@ MAX_GROUP = 24  # Studiomdl does't allow more than this...
 # to parse them again. The second is the collision model.
 _mesh_cache = {}  # type: Dict[Tuple[QC, int], Mesh]
 _coll_cache = {}  # type: Dict[str, Mesh]
-
-class DynamicModel(Exception):
-    """Used as flow control."""
 
 
 def unify_mdl(path: str):
