@@ -29,6 +29,10 @@ $modelname "{path}"
 $body body "cable.smd"
 $cdmaterials ""
 $sequence idle "cable.smd" act_idle 1
+
+$keyvalues {
+    no_propcombine 1
+}
 '''
 
 
