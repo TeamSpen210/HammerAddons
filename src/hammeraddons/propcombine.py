@@ -481,10 +481,13 @@ def decompile_model(
         else:
             # Previous compilation.
             if checksum == bytes.fromhex(cache_props['checksum', '']):
+                phy_smd = cache_props['phy', None]
+                if phy_smd is not None:
+                    phy_smd = str(cache_folder / phy_smd)
                 return QC(
                     str(info_path),
-                    cache_props['ref'],
-                    cache_props['phy', None],
+                    str(cache_folder / cache_props['ref']),
+                    phy_smd,
                     cache_props.float('ref_scale', 1.0),
                     cache_props.float('phy_scale', 1.0),
                 )
