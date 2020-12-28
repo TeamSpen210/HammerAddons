@@ -14,6 +14,11 @@
 		524288: "Can be an enemy" : 0
 		]
 
+	rendermode(choices) readonly : "Render Mode" : 1 : "This must be set to Color for Hammer to render the sprite correctly. It is not used in the engine." = 
+		[
+		1: "Color"
+		]
+		
 	fieldofview(string) : "FieldOfView" : "0.2" : "How far to look (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
 	minsearchdist(integer) : "Min Search Dist" : 0
 	maxsearchdist(integer) : "Max Search Dist" : 2048
