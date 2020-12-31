@@ -270,7 +270,7 @@ def ent_path(ent: EntityDef) -> str:
 
 def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> Tuple[FGD, EntityDef]:
     """Load the entire database from disk. This returns the FGD, plus the CBaseEntity definition."""
-    print('Loading database:')
+    print(f'Loading database {dbase}:')
     fgd = FGD()
 
     fgd.map_size_min = -16384
@@ -1056,9 +1056,10 @@ def main(args: List[str]=None):
                     "between engine versions.",
 
     )
+    script_dir = Path(sys.argv[0]).parent
     parser.add_argument(
         "-d", "--database",
-        default="fgd/",
+        default=str(script_dir / "fgd/"),
         help="The folder to write the FGD files to or from."
     )
     parser.add_argument(
