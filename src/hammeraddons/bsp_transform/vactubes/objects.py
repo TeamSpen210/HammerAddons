@@ -1,13 +1,15 @@
 from collections import defaultdict
-from typing import Optional, Tuple, List, Dict, Set
+from typing import Optional, Tuple, List, Dict
 import os.path
+import math
 
-import srctools
+import srctools.logger
 from srctools.bsp_transform.packing import make_precache_prop
 from srctools.packlist import PackList, FileType
 
 from srctools import Vec, VMF
 
+LOGGER = srctools.logger.get_logger(__name__)
 
 class VacObject:
     """An object that can appear in vactubes."""
@@ -81,9 +83,17 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[
     # Generate and pack the vactube object scripts.
     # Each group is the same, so it can be shared among them all.
     codes = {}
-    for group in sorted(vac_objects):
+    for group, objects in sorted(vac_objects.items(), key=lambda t: t[0]):
+        # First, see if there's a common multiple among the weights, allowing
+        # us to simplify.
+        multiple = objects[0].weight
+        for obj in objects[1:]:
+            multiple = math.gcd(multiple, obj.weight)
+        if multiple > 1:
+            LOGGER.info('Group "{}" has common factor of {}, simplifying.', group, multiple)
         code = []
-        for i, obj in enumerate(vac_objects[group]):
+        for i, obj in enumerate(objects):
+            obj.weight /= multiple
             if obj.model_drop:
                 model_code = f'"{obj.model_drop}"'
             else:
