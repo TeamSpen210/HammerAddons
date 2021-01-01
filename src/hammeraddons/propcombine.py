@@ -8,6 +8,7 @@ import random
 import colorsys
 import shutil
 import subprocess
+import itertools
 from collections import defaultdict
 from enum import Enum
 from pathlib import Path
@@ -80,15 +81,33 @@ def unify_mdl(path: str):
     return path
 
 
-def bsp_collision(point: Vec, planes: List[Tuple[Vec, Vec]]) -> bool:
-    """Check if the given position is inside a BSP node."""
-    for pos, norm in planes:
-        off = pos - point
-        # This is the actual distance, so we'll use a rather large
-        # "epsilon" to catch objects close to the edges.
-        if Vec.dot(off, norm) < -0.1:
-            return False
-    return True
+class CombineVolume:
+    """Parsed comp_propcombine_sets."""
+    def __init__(self, group_name: str, skinset: FrozenSet, origin: Vec) -> None:
+        self.group = group_name
+        self.skinset = skinset
+        self.volume = 0.0  # For sorting
+        self.used = False
+        # To do collision checks, for each volume construct a list of planes.
+        # Then we can check if a prop is inside any of those.
+        self.collision: List[List[Tuple[Vec, Vec]]] = []
+        if group_name:
+            self.desc = f'group "{group_name}"'
+        else:
+            self.desc = f'at {origin}'
+
+    def contains(self, point: Vec) -> bool:
+        """Check if the given position is inside the volume."""
+        for convex in self.collision:
+            for pos, norm in convex:
+                off = pos - point
+                # This is the actual distance, so we'll use a rather large
+                # "epsilon" to catch objects close to the edges.
+                if Vec.dot(off, norm) < -0.1:
+                    break  # Outside a plane, it doesn't match this convex.
+            else:  # Inside all these planes, it's inside.
+                return True
+        return False  # All failed, not present.
 
 
 class CollType(Enum):
@@ -560,28 +579,17 @@ def group_props_ent(
     min_cluster: int,
 ) -> Iterator[List[StaticProp]]:
     """Given the groups of props, merge props according to the provided ents."""
-    # (ID, skinset) -> list of boxes, constructed as 6 (pos, norm) tuples.
-    combine_sets = defaultdict(list)  # type: Dict[Tuple[Union[str, int], FrozenSet[str]], List[List[Tuple[Vec, Vec]]]]
-    # Keep track of the used IDs, so we can print out unused ones.
-    used_sets = set()
-    # And then the location of those.
-    id_to_desc: List[Tuple[Union[str, object], str]] = []
+    # Ents with group names. We have to split those by filter too.
+    grouped_sets: Dict[Tuple[str, FrozenSet[str]], CombineVolume] = {}
+    # Skinset filter -> volumes that match.
+    sets_by_skin: Dict[FrozenSet[str], List[CombineVolume]] = defaultdict(list)
 
     empty_fs = frozenset('')
 
     for ent in bbox_ents:
         origin = Vec.from_str(ent['origin'])
 
-        # Group name
-        bbox_id = ent['name']
-        if bbox_id:
-            id_to_desc.append((bbox_id, f'group "{bbox_id}"'))
-        else:
-            bbox_id = ent.id  # Use a unique ID.
-            id_to_desc.append((bbox_id, f'at {origin}'))
-
         skinset = empty_fs
-
         mdl_name = ent['prop']
         if mdl_name:
             qc, mdl = get_model(mdl_name)
@@ -598,14 +606,29 @@ def group_props_ent(
             Vec.from_str(ent['mins']),
             Vec.from_str(ent['maxs']),
         )
+        size = maxes - mins
         # Enlarge slightly to ensure it never has a zero area.
         # Otherwise the normal could potentially be invalid.
         mins -= 0.05
         maxes += 0.05
 
+        # Group name
+        group_name = ent['name']
+
+        if group_name:
+            try:
+                combine_set = grouped_sets[group_name, skinset]
+            except KeyError:
+                combine_set = grouped_sets[group_name, skinset] = CombineVolume(group_name, skinset, origin)
+                sets_by_skin[skinset].append(combine_set)
+        else:
+            combine_set = CombineVolume(group_name, skinset, origin)
+            sets_by_skin[skinset].append(combine_set)
+
+        combine_set.volume += size.x * size.y * size.z
         # For each direction, compute a position on the plane and
         # the normal vector.
-        combine_sets[bbox_id, skinset].append([
+        combine_set.collision.append([
             (
                 origin + Vec.with_axes(axis, offset) @ mat,
                 Vec.with_axes(axis, norm) @ mat,
@@ -613,6 +636,13 @@ def group_props_ent(
             for offset, norm in zip([mins, maxes], (-1, 1))
             for axis in ('x', 'y', 'z')
         ])
+
+    # We want to apply a ordering to groups, so smaller ones apply first, and
+    # filtered ones override all others.
+    for group_list in sets_by_skin.values():
+        group_list.sort(key=lambda group: group.volume)
+    # Groups with no filter have no skins in the group.
+    unfiltered_group = sets_by_skin.get(frozenset(), [])
 
     # Each of these groups cannot be merged with other ones.
     for group_key, group in prop_groups.items():
@@ -626,31 +656,27 @@ def group_props_ent(
             group.clear()
             continue
 
-        for (bbox_id, skinset), boxes in combine_sets.items():
-            if skinset and skinset != group_skinset:
-                continue  # No match
-            found = defaultdict(list)  # type: Dict[Union[str, int], List[StaticProp]]
+        for combine_set in itertools.chain(sets_by_skin.get(group_skinset, ()), unfiltered_group):
+            found = []
             for prop in list(group):
-                for box in boxes:
-                    if bsp_collision(prop.origin, box):
-                        found[bbox_id].append(prop)
-                        used_sets.add(bbox_id)
-                        break
+                if combine_set.contains(prop.origin):
+                    found.append(prop)
+                    combine_set.used = True
 
-            for subgroup in found.values():
-                actual = set(subgroup).intersection(group)
-                if len(actual) >= min_cluster:
-                    yield list(actual)
-                    for prop in actual:
-                        group.remove(prop)
+            actual = set(found).intersection(group)
+            if len(actual) >= min_cluster:
+                yield list(actual)
+                for prop in actual:
+                    group.remove(prop)
 
     # Finally, reject all the ones not in a bbox.
     for group in prop_groups.values():
         rejected.extend(group)
     # And log unused groups
-    for bbox_id, desc in id_to_desc:
-        if bbox_id not in used_sets:
-            LOGGER.warning('Unused comp_propcombine_set {}', desc)
+    for combine_set_list in sets_by_skin.values():
+        for combine_set in combine_set_list:
+            if not combine_set.used:
+                LOGGER.warning('Unused comp_propcombine_set {}', combine_set.group)
 
 
 def group_props_auto(
