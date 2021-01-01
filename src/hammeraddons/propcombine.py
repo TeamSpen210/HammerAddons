@@ -12,11 +12,11 @@ import itertools
 from collections import defaultdict
 from enum import Enum
 from pathlib import Path
-from tempfile import TemporaryDirectory, mkdtemp
+from tempfile import TemporaryDirectory
 from typing import (
     Optional, Tuple, Callable, NamedTuple,
     FrozenSet, Dict, List, Set,
-    Iterator, Union,
+    Iterator,
 )
 
 from srctools import (
@@ -198,7 +198,7 @@ def combine_group(
     return StaticProp(
         model=mdl_name,
         origin=avg_pos,
-        angles=Vec(0, 270, 0),
+        angles=Angle(0, 270, 0),
         scaling=1.0,
         visleafs=sorted(visleafs),
         solidity=(CollType.VPHYS if has_coll else CollType.NONE).value,
