@@ -134,26 +134,36 @@ def main(argv: List[str]) -> None:
     run_transformations(vmf, fsys, packlist, bsp_file, game_info, studiomdl_loc)
 
     if studiomdl_loc is not None and args.propcombine:
+        decomp_cache_loc = conf.get(str, 'propcombine_cache')
+        if decomp_cache_loc is not None:
+            decomp_cache_loc = (game_info.root / decomp_cache_loc).resolve()
+            decomp_cache_loc.mkdir(parents=True, exist_ok=True)
+        crowbar_loc = conf.get(str, 'propcombine_crowbar')
+        if crowbar_loc is not None:
+            crowbar_loc = str((game_info.root / crowbar_loc).resolve())
+
         LOGGER.info('Combining props...')
         propcombine.combine(
             bsp_file,
             vmf,
             packlist,
             game_info,
-            studiomdl_loc,
-            [
+            studiomdl_loc=studiomdl_loc,
+            qc_folders=[
                 game_info.root / folder
                 for folder in
                 conf.get(Property, 'propcombine_qc_folder').as_array(conv=Path)
             ],
-            conf.get(int, 'propcombine_auto_range'),
-            conf.get(int, 'propcombine_min_cluster'),
+            decomp_cache_loc=decomp_cache_loc,
+            crowbar_loc=crowbar_loc,
+            auto_range=conf.get(int, 'propcombine_auto_range'),
+            min_cluster=conf.get(int, 'propcombine_min_cluster'),
             debug_tint=args.showgroups,
         )
         LOGGER.info('Done!')
     else:  # Strip these if they're present.
         for ent in vmf.by_class['comp_propcombine_set']:
-             ent.remove()
+            ent.remove()
 
     bsp_file.lumps[BSP_LUMPS.ENTITIES].data = bsp_file.write_ent_data(vmf, use_comma_sep)
 
