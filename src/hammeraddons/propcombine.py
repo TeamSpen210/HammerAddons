@@ -158,15 +158,20 @@ def combine_group(
 
     for prop in props:
         avg_pos += prop.origin
-        avg_yaw += prop.angles.y
+        avg_yaw += prop.angles.yaw
         visleafs.update(prop.visleafs)
 
+    # Snap to nearest 15 degrees to keep the models themselves not
+    # strangely rotated.
+    avg_yaw = round(avg_yaw / (15 * len(props))) * 15.0
     avg_pos /= len(props)
+    yaw_rot = Matrix.from_yaw(-avg_yaw)
 
     prop_pos = set()
     for prop in props:
-        origin = round((prop.origin - avg_pos), 7)
+        origin = round((prop.origin - avg_pos) @ yaw_rot, 7)
         angles = round(Vec(prop.angles), 7)
+        angles.y -= avg_yaw
         try:
             coll = CollType(prop.solidity)
         except ValueError:
@@ -198,7 +203,7 @@ def combine_group(
     return StaticProp(
         model=mdl_name,
         origin=avg_pos,
-        angles=Angle(0, 270, 0),
+        angles=Angle(0, avg_yaw - 90, 0),
         scaling=1.0,
         visleafs=sorted(visleafs),
         solidity=(CollType.VPHYS if has_coll else CollType.NONE).value,
