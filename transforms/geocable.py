@@ -30,9 +30,9 @@ $body body "cable.smd"
 $cdmaterials ""
 $sequence idle "cable.smd" act_idle 1
 
-$keyvalues {
+$keyvalues {{
     no_propcombine 1
-}
+}}
 '''
 
 
@@ -509,10 +509,8 @@ def compute_orients(nodes: Iterable[Node]) -> None:
         node1 = all_nodes.pop()
         node1 = node1.find_start()
         tanj1 = tangents[node1]
-        up = Vec(tanj1.y, -tanj1.z, 0).norm()
-        if not up:  # Only occurs if pointing vertical.
-            up = Vec(1, 0, 0)
-        node1.orient = Matrix.from_basis(x=tanj1, z=up)
+        # Start with an arbitrary roll for the first orientation.
+        node1.orient = Matrix.from_angle(tanj1.to_angle())
         while node1.next is not None:
             node2 = node1.next
             all_nodes.discard(node2)
@@ -708,6 +706,7 @@ def comp_prop_rope(ctx: Context) -> None:
                 )
             connections[node.group].add((node.id, dest.id))
 
+    # TODO, compute the visleafs.
     static_props = list(ctx.bsp.static_props())
     vis_tree_top = ctx.bsp.vis_tree()
 
