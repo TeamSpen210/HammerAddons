@@ -524,7 +524,7 @@ def compute_orients(nodes: Iterable[Node]) -> None:
             else:
                 b = b.norm()
                 phi = math.acos(Vec.dot(tanj1, tanj2))
-                up = node1.orient.up() @ Matrix.axis_angle(b, -math.degrees(phi))
+                up = node1.orient.up() @ Matrix.axis_angle(b, math.degrees(phi))
                 node2.orient = Matrix.from_basis(x=tanj2, z=up)
             node1 = node2
 
