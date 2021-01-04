@@ -4,7 +4,7 @@ from enum import Enum
 from typing import Tuple, Iterator, Iterable
 
 import srctools.logger
-from srctools import Vec, Entity, VMF, Output, conv_bool
+from srctools import Vec, Entity, VMF, Output, conv_bool, Angle, Matrix
 
 
 LOGGER = srctools.logger.get_logger(__name__)
@@ -49,7 +49,7 @@ class Node(ABC):
 
     def __init__(self, ent: Entity) -> None:
         self.origin = Vec.from_str(ent['origin'])
-        self.angles = Vec.from_str(ent['angles'])
+        self.matrix = Matrix.from_angle(Angle.from_str(ent['angles']))
         self.ent = ent
 
         self.has_input = False  # We verify every node has an input if used.
@@ -81,7 +81,7 @@ class Node(ABC):
             self.__class__.__name__,
             self.ent['targetname'],
             self.origin,
-            self.angles,
+            self.matrix.to_angle(),
         )
 
     @abstractmethod
@@ -189,7 +189,7 @@ class Spawner(Node):
 
     def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
         assert dest is DestType.PRIMARY
-        return Vec(x=1).rotate(*self.angles)
+        return Vec(x=1) @ self.matrix
 
 
 class Destroyer(Node):
@@ -206,7 +206,7 @@ class Destroyer(Node):
         return 0.0
 
     def input_norm(self) -> Vec:
-        return Vec(x=-1).rotate(*self.angles)
+        return Vec(x=-1) @ self.matrix
 
     def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
         """Destroyers have no outputs."""
@@ -314,21 +314,21 @@ class Curve(Node):
             t = 1.0 - t
 
         x, y = curve_point(self.radius, t)
-        return self.origin + Vec(0, x, -y).rotate(*self.angles)
+        return self.origin + Vec(0, x, -y) @ self.matrix
 
     def input_norm(self) -> Vec:
         if self.reversed:
-            return Vec(z=1).rotate(*self.angles)
+            return Vec(z=1) @ self.matrix
         else:
-            return Vec(y=1).rotate(*self.angles)
+            return Vec(y=1) @ self.matrix
 
     def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
         """Return the flow direction at the end of this curve type."""
         assert dest is DestType.PRIMARY
         if self.reversed:
-            return Vec(y=-1).rotate(*self.angles)
+            return Vec(y=-1) @ self.matrix
         else:
-            return Vec(z=-1).rotate(*self.angles)
+            return Vec(z=-1) @ self.matrix
 
 
 class Straight(Node):
@@ -383,16 +383,16 @@ class Straight(Node):
     def vec_point(self, t: float, dest: DestType=DestType.PRIMARY) -> float:
         """Return points along the path inside this node."""
         assert dest is DestType.PRIMARY
-        return self.origin + Vec(x=32.0*t - 16.0).rotate(*self.angles)
+        return self.origin + Vec(x=32.0*t - 16.0) @ self.matrix
 
     def input_norm(self) -> Vec:
         """Return the flow direction into the start of this node."""
-        return Vec(x=1.0).rotate(*self.angles)
+        return Vec(x=1.0) @ self.matrix
 
     def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
         """Return the flow direction at the end of this curve type."""
         assert dest is DestType.PRIMARY
-        return Vec(x=1.0).rotate(*self.angles)
+        return Vec(x=1.0) @ self.matrix
 
 
 class Splitter(Node):
@@ -414,26 +414,26 @@ class Splitter(Node):
         assert dest is not DestType.TERTIARY
         x, y = curve_point(64.0, t)
         if dest is DestType.SECONDARY:
-            return self.origin + Vec(y, x, 0).rotate(*self.angles)
+            return self.origin + Vec(y, x, 0) @ self.matrix
         elif self.is_straight:
-            return self.origin + Vec(y=128*t).rotate(*self.angles)
+            return self.origin + Vec(y=128*t) @ self.matrix
         else:
-            return self.origin + Vec(-y, x, 0).rotate(*self.angles)
+            return self.origin + Vec(-y, x, 0) @ self.matrix
 
     def input_norm(self) -> Vec:
         """Return the flow direction at the input side."""
-        return Vec(y=1).rotate(*self.angles)
+        return Vec(y=1) @ self.matrix
 
     def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
         """Return the flow direction at the end of this curve type."""
         if dest is DestType.SECONDARY:
-            return Vec(x=1).rotate(*self.angles)
+            return Vec(x=1) @ self.matrix
         else:
             assert dest is DestType.PRIMARY
             if self.is_straight:
-                return Vec(y=1).rotate(*self.angles)
+                return Vec(y=1) @ self.matrix
             else:
-                return Vec(x=-1).rotate(*self.angles)
+                return Vec(x=-1) @ self.matrix
 
 
 class CrossSplitter(Node):
@@ -457,25 +457,25 @@ class CrossSplitter(Node):
         """Return the position this far through the given curve."""
         x, y = curve_point(64.0, t)
         if dest is DestType.PRIMARY:
-            return self.origin + Vec(y, x, 0).rotate(*self.angles)
+            return self.origin + Vec(y, x, 0) @ self.matrix
         elif dest is DestType.SECONDARY:
-            return self.origin + Vec(y=128*t).rotate(*self.angles)
+            return self.origin + Vec(y=128*t) @ self.matrix
         elif dest is DestType.TERTIARY:
-            return self.origin + Vec(-y, x, 0).rotate(*self.angles)
+            return self.origin + Vec(-y, x, 0) @ self.matrix
         else:
             raise AssertionError(dest)
 
     def input_norm(self) -> Vec:
         """Return the flow direction at the input side."""
-        return Vec(y=1).rotate(*self.angles)
+        return Vec(y=1) @ self.matrix
 
     def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
         """Return the flow direction at the end of this curve type."""
         if dest is DestType.PRIMARY:
-            return Vec(x=1).rotate(*self.angles)
+            return Vec(x=1) @ self.matrix
         elif dest is DestType.SECONDARY:
-            return Vec(y=1).rotate(*self.angles)
+            return Vec(y=1) @ self.matrix
         elif dest is DestType.TERTIARY:
-            return Vec(x=-1).rotate(*self.angles)
+            return Vec(x=-1) @ self.matrix
         else:
             raise AssertionError(dest)
