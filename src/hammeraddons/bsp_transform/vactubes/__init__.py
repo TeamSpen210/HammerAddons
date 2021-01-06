@@ -12,8 +12,7 @@ from srctools.smd import Mesh
 import srctools.logger
 from srctools import Vec, Output, conv_int
 from srctools.bsp_transform import trans, Context
-from srctools.bsp_transform.vactubes import nodes
-from srctools.bsp_transform.vactubes import animations, objects
+from srctools.bsp_transform.vactubes import nodes, animations, objects
 
 
 LOGGER = srctools.logger.get_logger(__name__)
@@ -42,10 +41,12 @@ $sequence {name} {{
 def find_closest(
     all_nodes: Iterable[Tuple[Vec, List[Tuple[Vec, nodes.Node]]]],
     node: nodes.Node,
-    src_point: Vec,
-    src_norm: Vec,
+    src_type: nodes.DestType,
 ) -> nodes.Node:
     """Search through all the nodes to find the one most aligned to this."""
+    src_point = node.vec_point(1.0, src_type)
+    src_norm = node.output_norm(src_type)
+
     best_node: Optional[nodes.Node] = None
     best_dist = math.inf
 
@@ -62,7 +63,7 @@ def find_closest(
             dist = -off.dot(src_norm)
             # On the other side, or not better than what we've got.
             # Allow a tiny amount of overlap.
-            if dist < -2.0 or dist > best_dist:
+            if dist < -8.0 or dist > best_dist:
                 continue
             # Now project the point onto the target's plane.
             # If inside, we've found it.
@@ -71,13 +72,8 @@ def find_closest(
                 best_dist = dist
 
     if best_node is None:
-        if node.ent['targetname']:
-            name = ' "{}"'.format(node.ent["targetname"])
-        else:
-            name = ''
         raise ValueError(
-            'No destination found for '
-            f'junction {name} at ({node.origin})!'
+            f'No destination found for {src_type.value} output of {node}! Junction at {src_point}.'
         )
     # Mark the node as having an input, for sanity checking purposes.
     # Note that nodes can have multiple inputs, if they're merging paths.
@@ -128,6 +124,15 @@ def vactube_transform(ctx: Context) -> None:
             node.has_input = True
         else:
             inputs_by_norm[node.input_norm().as_tuple()].append((node.vec_point(0.0), node))
+        #     ctx.vmf.create_ent('prop_dynamic', model='models/editor/cone_helper.mdl', rendercolor='32 32 255', origin=node.vec_point(0), angles=node.input_norm().to_angle())
+        # for out_type in node.out_types:
+        #     ctx.vmf.create_ent('prop_dynamic', model='models/editor/cone_helper.mdl', rendercolor='255 32 32', origin=node.vec_point(1.0, out_type), angles=node.output_norm(out_type).to_angle())
+        #     count = int(node.path_len(out_type) / 8)
+        #     for i in range(1, count):
+        #         ctx.vmf.create_ent('prop_dynamic', model='models/editor/axis_helper.mdl', origin=node.vec_point(i/count, out_type), angles='0 0 0')
+
+    # with open(str(ctx.bsp.filename)[:-4] + '_vac.vmf', 'w') as f:
+    #     ctx.vmf.export(f, inc_version=False)
 
     norm_inputs = [
         (Vec(norm), node_lst)
@@ -146,8 +151,7 @@ def vactube_transform(ctx: Context) -> None:
             node.outputs[dest_type] = find_closest(
                 norm_inputs,
                 node,
-                node.vec_point(1.0, dest_type),
-                node.output_norm(dest_type),
+                dest_type,
             )
         if isinstance(node, nodes.Spawner):
             sources.append(node)
