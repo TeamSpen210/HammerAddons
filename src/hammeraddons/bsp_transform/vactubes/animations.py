@@ -143,7 +143,6 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
                     anims.append(anim.tee(node, DestType.TERTIARY, overshoot))
 
             needs_out = node.has_pass
-            overshoot = 0
 
             seg_len = node.path_len(anim.curve_type)
             seg_frames = math.ceil((seg_len - overshoot) / speed)
@@ -163,7 +162,6 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
 
             # Recalculate the new overshoot.
             overshoot += speed * seg_frames - seg_len
-            overshoot = 0
 
             if isinstance(node, nodes.Destroyer):
                 # We reached the end, finalise!
@@ -193,6 +191,8 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
                     anim.add_point(pos - offset)
 
                 overshoot += (speed * seg_frames) - straight_dist
+            else:
+                overshoot += straight_off.mag()
 
             # And advance to the next node.
             anim.cur_node = node = next_node
