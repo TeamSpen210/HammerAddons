@@ -4,7 +4,7 @@ from enum import Enum
 from typing import Tuple, Iterator, Iterable
 
 import srctools.logger
-from srctools import Vec, Entity, VMF, Output, conv_bool, Angle, Matrix
+from srctools import Vec, Entity, VMF, Output, conv_bool, Angle, Matrix, lerp
 
 
 LOGGER = srctools.logger.get_logger(__name__)
@@ -77,7 +77,7 @@ class Node(ABC):
             ent.remove()
 
     def __repr__(self) -> str:
-        return '<{} "{}" @ {} {}>'.format(
+        return '<{} "{}" @ {}, {}>'.format(
             self.__class__.__name__,
             self.ent['targetname'],
             self.origin,
@@ -138,6 +138,10 @@ def parse(vmf: VMF) -> Iterator[Node]:
         model = model[23:]
         if model == "straight.mdl":
             yield Straight(ent)
+        elif model == "diag_curve.mdl":
+            yield DiagCurve(ent, is_reversed, False)
+        elif model == "diag_curve_mirror.mdl":
+            yield DiagCurve(ent, is_reversed, True)
         elif model[:6] == "curve_" and model[-4:] == ".mdl":
             # Each curve has a 64 units wider radius. Parse the model,
             # so users can add larger curves if they want.
@@ -329,6 +333,60 @@ class Curve(Node):
             return Vec(y=-1) @ self.matrix
         else:
             return Vec(z=-1) @ self.matrix
+
+
+class DiagCurve(Node):
+    """A 45 degree curve.
+
+    This has a lot of precise constants to match a specific model.
+    """
+    out_types = [DestType.PRIMARY]
+    CURVE_LEN = 155.0  # Manually integrated the curve function.
+    STRAIGHT_LEN = 56.0
+    TOTAL_LEN = CURVE_LEN + STRAIGHT_LEN
+    STRAIGHT_PERC = STRAIGHT_LEN / TOTAL_LEN
+
+    def __init__(self, ent: Entity, reversed: bool, flipped: bool) -> None:
+        super().__init__(ent)
+        self.reversed = reversed
+        # If flipped, we just want to flip the sign of the Y coord.
+        self.y = -1.0 if flipped else 1.0
+
+    def path_len(self, dest: DestType=DestType.PRIMARY) -> float:
+        """Return the length of the curve."""
+        assert dest is DestType.PRIMARY
+        return self.TOTAL_LEN
+
+    def vec_point(self, t: float, dest: DestType=DestType.PRIMARY) -> Vec:
+        """Return the position along the curve."""
+        assert dest is DestType.PRIMARY
+        if self.reversed:
+            t = 1.0 - t
+
+        if t < self.STRAIGHT_PERC:
+            x = 0
+            y = lerp(t, 0.0, self.STRAIGHT_PERC, 128, 72)
+        else:
+            ang = lerp(t, self.STRAIGHT_PERC, 1.0, 0.0, math.pi/4)
+            x = lerp(math.cos(ang), 1.0, math.cos(math.pi/4), 0, 64)
+            y = lerp(math.sin(ang), 0.0, math.sin(math.pi/4), 72, -64)
+
+        return Vec(x, self.y * y, 0) @ self.matrix + self.origin
+
+    def input_norm(self) -> Vec:
+        """Return the flow direction into the start of the curve."""
+        if self.reversed:
+            return Vec(x=-1, y=self.y).norm() @ self.matrix
+        else:
+            return Vec(y=-self.y) @ self.matrix
+
+    def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
+        """Return the flow direction at the end of the curve."""
+        assert dest is DestType.PRIMARY
+        if self.reversed:
+            return Vec(y=self.y) @ self.matrix
+        else:
+            return Vec(x=1, y=-self.y).norm() @ self.matrix
 
 
 class Straight(Node):
