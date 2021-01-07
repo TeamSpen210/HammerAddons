@@ -120,7 +120,7 @@ def comp_scriptvar(ctx: Context):
         except KeyError:
             LOGGER.warning(
                 'Invalid mode "{}" in '
-                'comp_scriptvar at {} targetting "{}"!',
+                'comp_scriptvar at {} targeting "{}"!',
                 comp_ent['mode'], comp_ent['origin'], comp_ent['target'],
             )
             continue
@@ -194,6 +194,11 @@ def comp_scriptvar(ctx: Context):
 def mode_const(comp_ent: Entity, ent: Entity) -> str:
     """Set a simple constant."""
     return comp_ent['const']
+    
+
+def mode_string(comp_ent: Entity, ent: Entity) -> str:
+    """Set a constant, as a string."""
+    return '"{}"'.format(comp_ent['const'])
 
 
 def mode_bool(comp_ent: Entity, ent: Entity) -> str:
@@ -242,6 +247,13 @@ def mode_off(comp_ent: Entity, ent: Entity) -> str:
     return vs_vec(offset * scale)
 
 
+def mode_dist(comp_ent: Entity, ent: Entity) -> str:
+    """Return the distance from the ent to the reference."""
+    scale = conv_float(comp_ent['const'], 1.0)
+    offset = Vec.from_str(ent['origin']) - Vec.from_str(comp_ent['origin'])
+    return offset.mag() * scale
+
+
 def _mode_axes(norm: Vec) -> Callable[[Entity, Entity], str]:
     """Return the given direction vector."""
     def mode_func(comp_ent: Entity, ent: Entity) -> str:
@@ -250,11 +262,24 @@ def _mode_axes(norm: Vec) -> Callable[[Entity, Entity], str]:
         scale = conv_float(comp_ent['const'], 1.0)
         return vs_vec(scale * out)
     return mode_func
+    
+
+def _mode_pos_axis(axis: str) -> Callable[[Entity, Entity], str]:
+    """Return a single axis of the ent's position."""
+    def mode_func(comp_ent: Entity, ent: Entity) -> str:
+        """Rotate the axis by the given value."""
+        pos = Vec.from_str(ent['origin'])
+        scale = conv_float(comp_ent['const'], 1.0)
+        return str(pos[axis] * scale)
+    return mode_func
 
 
 MODES['x'] = _mode_axes(Vec(x=1.0))
 MODES['y'] = _mode_axes(Vec(y=1.0))
 MODES['z'] = _mode_axes(Vec(z=1.0))
+MODES['pos_x'] = _mode_pos_axis('x')
+MODES['pos_y'] = _mode_pos_axis('y')
+MODES['pos_z'] = _mode_pos_axis('z')
 MODES.update(
     (name[5:], func)
     for name, func in globals().items()
