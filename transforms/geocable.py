@@ -98,6 +98,10 @@ class Config(NamedTuple):
     @classmethod
     def parse(cls, ent: Entity) -> 'Config':
         """Parse from an entity."""
+        # There's not really a material we can use for cables.
+        if not ent['material']:
+            raise ValueError(f'No material for rope "{ent["targetname"]}" at {ent["origin"]}')
+
         segments = cls._parse_min(
             ent, 'segments', 0,
             'Segment count for rope at '
