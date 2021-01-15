@@ -10,7 +10,7 @@ from typing import (
 
 from srctools import (
     logger, conv_int, conv_float, conv_bool,
-    Vec, Entity, Matrix,
+    Vec, Entity, Matrix, Angle,
 )
 from srctools.compiler.mdl_compiler import ModelCompiler
 from srctools.bsp_transform import Context, trans
@@ -311,7 +311,7 @@ def build_node_tree(
         """Split nodes to ensure they only have 1 or 2 connections.
 
         If it has more, or multiple in one side, it will be converted
-        to multiple theat end at the same point.
+        to multiple that end at the same point.
         """
         if node not in nodes:  # Already split, create a copy and return.
             copy = node.clone()
@@ -342,9 +342,9 @@ def build_node_tree(
         first.next = second
         second.prev = first
 
+    # Sometimes that ends up creating extra copies, so discard those.
     for node in list(nodes):
         if node.prev is None and node.next is None:
-            LOGGER.warning('Node at {} has no connections to it! Skipping.', node.pos + offset)
             nodes.discard(node)
 
     return nodes
@@ -662,10 +662,12 @@ def compute_visleafs(
 def comp_prop_rope(ctx: Context) -> None:
     """Build static props for ropes."""
     compiler = ModelCompiler.from_ctx(ctx, 'ropes')
-    # group -> id -> node.
-    all_nodes: MutableMapping[str, MutableMapping[NodeID, NodeEnt]] = defaultdict(dict)
+    # id -> node.
+    all_nodes: MutableMapping[NodeID, NodeEnt] = {}
     # Given a targetname, all the nodes with that name.
-    name_to_ids: MutableMapping[str, List[NodeEnt]] = defaultdict(list)
+    name_to_nodes: MutableMapping[str, List[NodeEnt]] = defaultdict(list)
+    # Group name -> nodes with that group.
+    group_to_node: Dict[str, List[NodeEnt]] = defaultdict(list)
     # Store the node/next-key pairs for linking after they're all parsed.
     temp_conns: List[Tuple[NodeEnt, str]] = []
 
@@ -678,10 +680,12 @@ def comp_prop_rope(ctx: Context) -> None:
             NodeID(ent['hammerid']),
             ent['group'].casefold(),
         )
-        all_nodes[node.group][node.id] = node
+        all_nodes[node.id] = node
 
+        if node.group:
+            group_to_node[node.group].append(node)
         if ent['targetname']:
-            name_to_ids[ent['targetname'].casefold()].append(node)
+            name_to_nodes[ent['targetname'].casefold()].append(node)
         if ent['nextkey']:
             temp_conns.append((node, ent['nextkey'].casefold()))
 
@@ -689,48 +693,80 @@ def comp_prop_rope(ctx: Context) -> None:
         return
     LOGGER.info('{} rope nodes found.', len(all_nodes))
 
-    connections: MutableMapping[str, Set[Tuple[NodeID, NodeID]]] = defaultdict(set)
+    connections_to: Dict[NodeID, List[NodeEnt]] = defaultdict(list)
+    connections_from: Dict[NodeID, List[NodeEnt]] = defaultdict(list)
 
     for node, target in temp_conns:
-        found = []
+        found: List[NodeEnt] = []
         if target.endswith('*'):
             search = target[:-1]
-            for name, nodes in name_to_ids.items():
+            for name, nodes in name_to_nodes.items():
                 if name.startswith(search):
                     found.extend(nodes)
         else:
-            found.extend(name_to_ids.get(target, ()))
+            found.extend(name_to_nodes.get(target, ()))
         found.sort()
         for dest in found:
-            if node.group != dest.group:
-                raise ValueError(
-                    'Ropes have differing groups: {} @ {}, {} @ {}',
-                    node.group, node.pos,
-                    dest.group, dest.pos,
-                )
-            connections[node.group].add((node.id, dest.id))
+            connections_from[node.id].append(dest)
+            connections_to[dest.id].append(node)
 
-    # TODO, compute the visleafs.
     static_props = list(ctx.bsp.static_props())
     vis_tree_top = ctx.bsp.vis_tree()
 
+    # To group nodes, take each group out, then search recursively through
+    # all connections from it to other nodes.
+    todo = set(all_nodes.values())
     with compiler:
-        for group, nodes in all_nodes.items():
-            bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes.values())
+        while todo:
+            node = todo.pop()
+            connections: Set[Tuple[NodeID, NodeID]] = set()
+            # We need the set for fast is-in checks, and the list
+            # so we can loop through while modifying it.
+            nodes: Set[NodeEnt] = {node}
+            unchecked: List[NodeEnt] = [node]
+            while unchecked:
+                node = unchecked.pop()
+                # Three links to others - connections to/from, and groups.
+                # We'll only ever follow a path once, so pop from the dicts.
+                if node.group:
+                    for subnode in group_to_node.pop(node.group, ()):
+                        if subnode not in nodes:
+                            nodes.add(subnode)
+                            unchecked.append(subnode)
+                for conn_node in connections_from.pop(node.id, ()):
+                    connections.add((node.id, conn_node.id))
+                    if conn_node not in nodes:
+                        nodes.add(conn_node)
+                        unchecked.append(conn_node)
+                for conn_node in connections_to.pop(node.id, ()):
+                    connections.add((conn_node.id, node.id))
+                    if conn_node not in nodes:
+                        nodes.add(conn_node)
+                        unchecked.append(conn_node)
+            todo -= nodes
+            if len(nodes) == 1:
+                LOGGER.warning('Node at {} has no connections to it! Skipping.', node.pos)
+                continue
+
+            bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes)
             center = (bbox_min + bbox_max) / 2
             node = None
-            for node in nodes.values():
+            for node in nodes:
                 node.pos -= center
 
             model_name, coll_data = compiler.get_model(
-                (frozenset(nodes.values()), frozenset(connections[group])),
+                (frozenset(nodes), frozenset(connections)),
                 build_rope,
                 center,
             )
 
-            # Use the node closest to the center.
+            # Use the node closest to the center. That way
+            # it shouldn't be inside walls, and be about representative of
+            # the whole model.
             light_origin = min(
-                (node.pos for node in nodes.values()),
+                (point
+                 for point1, radius1, point2, radius2 in coll_data
+                 for point in [point1, point2]),
                 key=lambda pos: (pos - center).mag_sq()
             )
 
@@ -749,7 +785,7 @@ def comp_prop_rope(ctx: Context) -> None:
             static_props.append(StaticProp(
                 model=model_name,
                 origin=center,
-                angles=Vec(0, 270, 0),
+                angles=Angle(0, 270, 0),
                 scaling=1.0,
                 visleafs=compute_visleafs(coll_data, vis_tree_top),
                 solidity=0,
