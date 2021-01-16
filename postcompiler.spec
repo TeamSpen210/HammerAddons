@@ -11,7 +11,7 @@ a = Analysis(
         'bisect', 'colorsys', 'collections', 'csv', 'datetime',
         'decimal', 'difflib', 'enum', 'fractions', 'functools',
         'io', 'itertools', 'json', 'math', 'random', 're',
-        'statistics', 'string', 'struct',
+        'statistics', 'string', 'struct', 'srctools',
     ],
     excludes=[],
     win_no_prefer_redirects=False,

@@ -177,19 +177,9 @@ def _load() -> None:
     the output.
     """
     from srctools.bsp_transform import (
-        antline,
-        brush_ents,
-        entfinder,
         globals,
         instancing,
-        kv_setter,
-        logic,
-        numeric_transition,
-        movement,
         packing,
-        portal2,
-        sceneset,
-        scriptvar_setter,
         tweaks,
         vactubes,
     )
