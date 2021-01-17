@@ -24,7 +24,7 @@
 	sides(integer) : "Sides" : 8 : "Number of faces for each cylindrical section. Only the value at the start of the rope is used."
 	radius(float) : "Radius" : 1.0 : "Radius of this rope section."
 
-	material(material) : "Rope Material" : "" : "The material to use for the rope. Must be a model material."
+	material(material) : "Rope Material" : "models/cables/generic_black" : "The material to use for the rope. Must be a model material."
 	mat_scale(float) : "Lengthwise Material Scale" : 1 : "This changes the texture resolution along the rope, relative to the amount of width used. Larger values stretch the texture and smaller values scrunch it up."
 	mat_rotate[engine](boolean) : "Rotate Material" : 0
 	mat_rotate(choices) : "Material Orientation" : 0 : "Controls which direction the rope runs in the material, if your texture is rotated." = 
