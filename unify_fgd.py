@@ -161,6 +161,7 @@ def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> FGD
                 fsys,
                 fsys[rel_loc],
                 eval_bases=False,
+                encoding='utf8',
             )
             for clsname, ent in file_fgd.entities.items():
                 if clsname in fgd.entities:
