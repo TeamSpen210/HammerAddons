@@ -41,8 +41,8 @@
 	easing_start(choices) : "Easing Start" : "linear" : "Controls how the animation begins." =
 		[
 		"linear" : "None"
-		"quad" : "Quadratic (x²)"
-		"cubic": "Cubic (x³)"
+		"quad" : "Quadratic (xÂ²)"
+		"cubic": "Cubic (xÂ³)"
 		"quartic": "Quartic (x^4)" // No symbol for this one in CP1252 :(
 		// "exp" : "Exponential"
 		"sine" : "Sinusoidal"
@@ -51,8 +51,8 @@
 	easing_end(choices) : "Easing End" : "linear" : "Controls how the animation ends." =
 		[
 		"linear" : "None"
-		"quad" : "Quadratic (x²)"
-		"cubic": "Cubic (x³)"
+		"quad" : "Quadratic (xÂ²)"
+		"cubic": "Cubic (xÂ³)"
 		"quartic": "Quartic (x^4)"
 		// "exp" : "Exponential"
 		"sine" : "Sinusoidal"
