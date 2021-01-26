@@ -3,8 +3,8 @@ import math
 from typing import Iterator, Tuple, List, Optional, Union
 
 from srctools.bsp_transform.vactubes import nodes
-from srctools.bsp_transform.vactubes.nodes import DestType
-from srctools import Vec
+from .nodes import DestType
+from srctools import Vec, Angle
 from srctools.smd import BoneFrame, Mesh
 from random import Random
 
@@ -111,7 +111,7 @@ class Animation:
     def add_point(self, pos: Vec) -> None:
         """Add the given point to the end of the animation."""
         self.mesh.animation[self.cur_frame] = [
-            BoneFrame(self.move_bone, pos, Vec(next(self.rotator)))
+            BoneFrame(self.move_bone, pos, Angle(next(self.rotator)))
         ]
         self.cur_frame += 1
 

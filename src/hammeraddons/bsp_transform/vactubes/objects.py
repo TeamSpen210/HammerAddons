@@ -4,7 +4,7 @@ import os.path
 import math
 
 import srctools.logger
-from srctools.bsp_transform.packing import make_precache_prop
+from ..packing import make_precache_prop
 from srctools.packlist import PackList, FileType
 
 from srctools import Vec, VMF
