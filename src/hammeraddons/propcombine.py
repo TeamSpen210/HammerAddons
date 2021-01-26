@@ -3,6 +3,7 @@
 This merges static props together, so they can be drawn with a single
 draw call.
 """
+import operator
 import os
 import random
 import colorsys
@@ -16,7 +17,7 @@ from tempfile import TemporaryDirectory
 from typing import (
     Optional, Tuple, Callable, NamedTuple,
     FrozenSet, Dict, List, Set,
-    Iterator,
+    Iterator, Union,
 )
 
 from srctools import (
@@ -505,18 +506,23 @@ def decompile_model(
         else:
             # Previous compilation.
             if checksum == bytes.fromhex(cache_props['checksum', '']):
+                ref_smd = cache_props['ref', '']
+                if not ref_smd:
+                    return None
                 phy_smd = cache_props['phy', None]
                 if phy_smd is not None:
                     phy_smd = str(cache_folder / phy_smd)
                 return QC(
                     str(info_path),
-                    str(cache_folder / cache_props['ref']),
+                    str(cache_folder / ref_smd),
                     phy_smd,
                     cache_props.float('ref_scale', 1.0),
                     cache_props.float('phy_scale', 1.0),
                 )
             # Otherwise, re-decompile.
     LOGGER.info('Decompiling {}...', filename)
+    qc: Optional[QC] = None
+
     # Extract out the model to a temp dir.
     with TemporaryDirectory() as tempdir, fsys:
         stem = Path(filename).stem
@@ -544,32 +550,35 @@ def decompile_model(
         break
     else:  # not found.
         LOGGER.warning('No QC outputted into {}', cache_folder)
-        return None
+        qc_result = None
+        qc_path = Path()
 
-    if qc_result is None:
-        return None
+    cache_props = Property('qc', [])
+    cache_props['checksum'] = checksum.hex()
 
-    (
-        model_name,
-        ref_scale, ref_smd,
-        phy_scale, phy_smd,
-    ) = qc_result
-    qc = QC(
-        str(qc_path).replace('\\', '/'),
-        str(ref_smd).replace('\\', '/'),
-        str(phy_smd).replace('\\', '/') if phy_smd else None,
-        ref_scale,
-        phy_scale,
-    )
+    if qc_result is not None:
+        (
+            model_name,
+            ref_scale, ref_smd,
+            phy_scale, phy_smd,
+        ) = qc_result
+        qc = QC(
+            str(qc_path).replace('\\', '/'),
+            str(ref_smd).replace('\\', '/'),
+            str(phy_smd).replace('\\', '/') if phy_smd else None,
+            ref_scale,
+            phy_scale,
+        )
 
-    cache_props = Property('qc', [
-        Property('checksum', checksum.hex()),
-        Property('ref', Path(ref_smd).name),
-        Property('ref_scale', format(ref_scale, '.6g')),
-    ])
-    if phy_smd is not None:
-        cache_props['phy'] = Path(phy_smd).name
-        cache_props['phy_scale'] = format(phy_scale, '.6g')
+        cache_props['ref'] = Path(ref_smd).name
+        cache_props['ref_scale'] = format(ref_scale, '.6g')
+
+        if phy_smd is not None:
+            cache_props['phy'] = Path(phy_smd).name
+            cache_props['phy_scale'] = format(phy_scale, '.6g')
+    else:
+        cache_props['ref'] = ''  # Mark as not present.
+
     with info_path.open('w') as f:
         for line in cache_props.export():
             f.write(line)
@@ -645,7 +654,7 @@ def group_props_ent(
     # We want to apply a ordering to groups, so smaller ones apply first, and
     # filtered ones override all others.
     for group_list in sets_by_skin.values():
-        group_list.sort(key=lambda group: group.volume)
+        group_list.sort(key=operator.attrgetter('volume'))
     # Groups with no filter have no skins in the group.
     unfiltered_group = sets_by_skin.get(frozenset(), [])
 
@@ -728,7 +737,7 @@ def group_props_auto(
                 if prop_off <= dist_sq:
                     cluster_list.append((prop, prop_off))
 
-            cluster_list.sort(key=lambda t: t[1])
+            cluster_list.sort(key=operator.itemgetter(1))
             selected_props = [
                 prop for prop, off in
                 cluster_list[:MAX_GROUP]
@@ -789,8 +798,11 @@ def combine(
     _coll_cache.clear()
     missing_qcs: Set[str] = set()
 
-    def get_model(filename: str) -> Tuple[Optional[QC], Optional[Model]]:
-        """Given a filename, load/parse the QC and MDL data."""
+    def get_model(filename: str) -> Union[Tuple[QC, Model], Tuple[None, None]]:
+        """Given a filename, load/parse the QC and MDL data.
+
+        Either both are returned, or neither are.
+        """
         key = unify_mdl(filename)
         try:
             model = mdl_map[key]
@@ -804,20 +816,22 @@ def combine(
             if 'no_propcombine' in model.keyvalues.casefold():
                 mdl_map[key] = qc_map[key] = None
                 return None, None
-        if model is None:
+        if model is None or key in missing_qcs:
             return None, None
 
         try:
             qc = qc_map[key]
         except KeyError:
-            if crowbar_loc is not None:
-                qc = decompile_model(pack.fsys, decomp_cache_loc, crowbar_loc, filename, model.checksum)
-                if qc is not None:
-                    qc_map[key] = qc
-                    return qc, model
-            missing_qcs.add(key)
+            if crowbar_loc is None:
+                missing_qcs.add(key)
+                return None, None
+            qc = decompile_model(pack.fsys, decomp_cache_loc, crowbar_loc, filename, model.checksum)
+            qc_map[key] = qc
+
+        if qc is None:
             return None, None
-        return qc, model
+        else:
+            return qc, model
 
     # Ignore these two, they don't affect our new prop.
     relevant_flags = ~(StaticPropFlags.HAS_LIGHTING_ORIGIN | StaticPropFlags.DOES_FADE)
@@ -891,7 +905,7 @@ def combine(
     LOGGER.debug('Prop groups: \n{}', '\n'.join([
         f'{group}: {len(props)}'
         for group, props in
-        sorted(prop_groups.items(), key=lambda t: t[0])
+        sorted(prop_groups.items(), key=operator.itemgetter(0))
     ]))
     
     group_count = 0
