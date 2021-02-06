@@ -1,38 +1,119 @@
+"""Logic for loading all the code in arbitary locations for plugin purposes."""
 import types
 import sys
+import operator
 from pathlib import Path
-from importlib.util import spec_from_file_location, module_from_spec
-from typing import Optional
+from collections import deque
+from importlib.util import spec_from_loader, module_from_spec
+from importlib.abc import MetaPathFinder
+from importlib.machinery import ModuleSpec, SourceFileLoader
+from typing import (
+    Union, Optional, Set, Sequence, AnyStr, Tuple, Iterable,
+    Iterator,
+)
 
 from srctools.logger import get_logger
 
 LOGGER = get_logger(__name__)
 
 
-class Plugin:
-    """A plugin loaded by the postcompiler.
+class Source:
+    """A location that contains plugins."""
+    def __init__(self, folder: Path, recurse: bool):
+        self.folder = folder  # Folder to look in.
+        self.recursive = recurse  # If we automatically load recursively or not.
+        # If non-empty, load only these modules.
+        self.autoload_files: Set[Path] = set()
 
-    This loads a module, and gives it a logger at LOGGER
+
+def parse_name(prefix: str, name: str) -> Union[Tuple[int, Path], Tuple[None, None]]:
+    """Parse out the source index and file path."""
+    pref_size = len(prefix) + 1
+    first_dot = name.find('.', pref_size)
+    if name.startswith(prefix) and first_dot > 0:
+        try:
+            ind = int(name[pref_size:first_dot], 16)
+        except ValueError:
+            return None, None
+        path = Path(name[first_dot + 1:].replace('.', '/'))
+        return ind, path
+    return None, None
+
+
+def build_name(prefix: str, source_ind: int, name: Path) -> str:
+    """Build a package name from the index and path."""
+    if name.name.casefold() == '__init__.py':
+        name = name.parent
+    name = name.with_suffix('')
+    dotted = str(name).replace('\\', '.').replace('/', '.')
+    return f'{prefix}_{source_ind:02x}.{dotted}'
+
+
+def _iter_folder(folder: Path, recursive: bool) -> Iterator[Path]:
+    """Yield .py files and subfolders (packages) in a folder.
+
+    We do a breadth-first search so parents are imported first.
     """
-    def __init__(self, path: Path) -> None:
-        self.path = path
-        self.module: Optional[types.ModuleType] = None
+    folders = deque([folder])
+    while folders:
+        for path in folders.popleft().iterdir():
+            if path.is_dir():
+                package = path / '__init__.py'
+                if package.exists():
+                    yield package
+                # Skip pycache since it doesn't have any sources.
+                if recursive and path.stem != '__pycache__':
+                    folders.append(path)
+            # Skip init, this would be hit above.
+            elif path.suffix.casefold() == '.py' and path.stem != '__init__':
+                yield path
 
-    def load(self) -> None:
-        """Load and execute the module."""
-        name = 'srctools.bsp_tranform_plugin.' + self.path.stem
-        spec = spec_from_file_location(name, self.path)
 
-        if not spec:
-            raise FileNotFoundError('Plugin file not found at "{}"'.format(self.path.stem, self.path))
+class PluginFinder(MetaPathFinder):
+    """Loads plugins.
 
-        self.module = module_from_spec(spec)
+    Plugins
+    """
+    def __init__(self, prefix: str, sources: Iterable[Source]) -> None:
+        self.prefix = prefix
+        self.sources = sorted(sources, key=operator.attrgetter('folder'))
 
-        # Provide a logger for the plugin, already setup.
-        self.module.LOGGER = get_logger(name, "plugin:" + self.path.stem)
+    def find_spec(
+        self,
+        fullname: str,
+        path: Optional[Sequence[AnyStr]],
+        target: Optional[types.ModuleType] = ...
+    ) -> Optional[ModuleSpec]:
+        """Load a module."""
+        source_ind, subpath = parse_name(self.prefix, fullname)
+        if source_ind is None or subpath is None or source_ind < 0:
+            return None
+        try:
+            source = self.sources[source_ind]
+        except IndexError:
+            return None
 
-        spec.loader.exec_module(self.module)
-        # Make it importable here - needed for pickling and the like to work.
-        sys.modules[name] = self.module
+        loader = SourceFileLoader(fullname, source.folder / subpath)
+        return spec_from_loader(fullname, loader)
 
-        LOGGER.info('Loaded plugin "{}" from {}', name, self.path)
+    def load_all(self) -> None:
+        """Load all the plugin modules."""
+        for i, source in enumerate(self.sources):
+            if source.autoload_files:
+                paths = source.autoload_files
+            else:
+                paths = _iter_folder(source.folder, source.recursive)
+            for path in paths:
+                name = build_name(self.prefix, i, path.relative_to(source.folder))
+                if name in sys.modules:
+                    # Already loaded, by user import.
+                    LOGGER.info('Plugin "{}" was preloaded automatically.', name)
+                    continue
+                LOGGER.info('Loading "{}" as "{}"', path, name)
+                loader = SourceFileLoader(name, str(path))
+                spec = spec_from_loader(name, loader)
+                sys.modules[name] = module = module_from_spec(spec)
+
+                # Provide a logger for the plugin, already setup.
+                module.LOGGER = get_logger(name, "plugin:" + str(path))
+                loader.exec_module(module)

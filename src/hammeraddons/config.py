@@ -1,6 +1,7 @@
 """Handles user configuration common to the different scripts."""
 from pathlib import Path
-from typing import Tuple, Set
+from typing import Tuple, Set, Dict
+import sys
 
 from srctools.game import Game
 
@@ -8,9 +9,8 @@ from srctools import Property, logger, AtomicWriter
 from srctools.filesys import FileSystemChain, FileSystem, RawFileSystem, VPKFileSystem
 from srctools.props_config import Opt, Config, TYPE
 
-from srctools.scripts.plugin import Plugin
+from srctools.scripts.plugin import Source as PluginSource, PluginFinder
 
-from os import walk
 
 __all__ = [
     'LOGGER',
@@ -28,7 +28,7 @@ def parse(path: Path) -> Tuple[
     Game,
     FileSystemChain,
     Set[FileSystem],
-    Set[Plugin],
+    PluginFinder,
 ]:
     """From some directory, locate and parse the config file.
 
@@ -45,7 +45,7 @@ def parse(path: Path) -> Tuple[
         * Parsed gameinfo.
         * The chain of filesystems.
         * A packing blacklist.
-        * A list of plugins.
+        * The plugin loader.
     """
     conf = Config(OPTIONS)
 
@@ -117,32 +117,54 @@ def parse(path: Path) -> Tuple[
                 'key "{}"!'.format(prop.real_name)
             )
 
-    plugins = set()  # type: Set[Plugin]
+    sources: Dict[Path, PluginSource] = {}
+
+    builtin_transforms = Path(sys.argv[0]).parent / 'transforms'
 
     # find all the plugins and make plugin objects out of them
-    for prop in conf.get(Property, 'plugins'):  # type: Property
+    for prop in conf.get(Property, 'plugins'):
         if prop.has_children():
             raise ValueError('Config "plugins" value cannot have children.')
         assert isinstance(prop.value, str)
         
         path = (game_root / Path(prop.value)).resolve()
-        if prop.name in ("path", "recursive"):
+        if prop.name in ('path', "recursive", 'folder'):
             if not path.is_dir():
                 raise ValueError("'{}' is not a directory".format(path))
 
-            # want to recursive glob if key is recursive
-            pattern = "*.py" if prop.name == "path" else "**/*.py"
+            is_recursive = prop.name == "recursive"
 
-            #find all .py files, make Plugins
-            for p in path.glob(pattern):
-                plugins.add(Plugin(path / p))
+            try:
+                source = sources[path]
+            except KeyError:
+                sources[path] = PluginSource(path, is_recursive)
+            else:
+                if is_recursive and not source.recursive:
+                    # Upgrade to recursive.
+                    source.recursive = True
 
-        elif prop.name == "single":
-            plugins.add(Plugin(path))
+        elif prop.name in ('single', 'file'):
+            parent = path.parent
+            try:
+                source = sources[parent]
+            except KeyError:
+                source = sources[parent] = PluginSource(parent, False)
+            source.autoload_files.add(path)
+
+        elif prop.name == "_builtin_":
+            # For development purposes, redirect builtin folder.
+            builtin_transforms = path
         else:
             raise ValueError("Unknown plugins key {}".format(prop.real_name))
 
-    return conf, game, fsys_chain, blacklist, plugins
+    LOGGER.debug('Builtin plugin path is {}', builtin_transforms)
+    if builtin_transforms not in sources:
+        sources[builtin_transforms] = PluginSource(builtin_transforms, True)
+
+    plugin_finder = PluginFinder('srctools.bsp_transforms.plugin', sources.values())
+    sys.meta_path.append(plugin_finder)
+
+    return conf, game, fsys_chain, blacklist, plugin_finder
 
 
 OPTIONS = [
@@ -236,5 +258,7 @@ OPTIONS = [
         * "path" "folder/" loads all .py files in the folder.
         * "recursive" "folder/" loads all .py files in the folder and in subfolders.
         * "single" "folder/plugin.py" loads a single python file.
+        The transforms folder inside the postcompiler folder is also always
+        loaded.
     """),
 ]

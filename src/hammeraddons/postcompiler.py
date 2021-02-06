@@ -73,7 +73,7 @@ def main(argv: List[str]) -> None:
     LOGGER.info('Srctools postcompiler hook started at {}!', datetime.datetime.now().isoformat())
     LOGGER.info("Map path is {}", path)
 
-    conf, game_info, fsys, pack_blacklist, plugins = config.parse(path)
+    conf, game_info, fsys, pack_blacklist, plugin = config.parse(path)
 
     fsys.open_ref()
 
@@ -115,8 +115,8 @@ def main(argv: List[str]) -> None:
         LOGGER.warning('No studiomdl path provided.')
         studiomdl_loc = None
 
-    for plugin in plugins:
-        plugin.load()
+    LOGGER.info('Loading plugins...')
+    plugin.load_all()
 
     use_comma_sep = conf.get(bool, 'use_comma_sep')
     if use_comma_sep is None:
