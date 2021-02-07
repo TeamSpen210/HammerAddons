@@ -181,6 +181,5 @@ def _load() -> None:
         instancing,
         packing,
         tweaks,
-        vactubes,
     )
 _load()
