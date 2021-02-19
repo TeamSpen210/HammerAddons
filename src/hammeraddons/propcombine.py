@@ -690,7 +690,7 @@ def group_props_ent(
     for combine_set_list in sets_by_skin.values():
         for combine_set in combine_set_list:
             if not combine_set.used:
-                LOGGER.warning('Unused comp_propcombine_set {}', combine_set.group)
+                LOGGER.warning('Unused comp_propcombine_set {}', combine_set.desc)
 
 
 def group_props_auto(
@@ -763,6 +763,7 @@ def combine(
     auto_range: float=0,
     min_cluster: int=2,
     debug_tint: bool=False,
+    debug_dump: bool=False,
 ) -> None:
     """Combine props in this map."""
 
@@ -926,6 +927,22 @@ def combine(
             group_count += 1
 
     final_props.extend(rejected)
+
+    if debug_dump:
+        dump_vmf = VMF()
+        for prop in rejected:
+            dump_vmf.create_ent(
+                'prop_static',
+                model=prop.model,
+                origin=prop.origin,
+                angles=prop.angles,
+                solid=prop.solidity,
+                rendercolor=prop.tint,
+            )
+        dump_fname = Path(bsp.filename).with_name(map_name + '_propcombine_reject.vmf')
+        LOGGER.info('Dumping uncombined props to {}...', dump_fname)
+        with dump_fname.open('w') as f:
+            dump_vmf.export(f)
 
     LOGGER.info(
         'Combined {} props into {}:\n - {} grouped models\n - {} ineligable\n - {} had no group',

@@ -46,7 +46,12 @@ def main(argv: List[str]) -> None:
     parser.add_argument(
         "--showgroups",
         action="store_true",
-        help="Show propcombined props, by setting their tint to 0 255 0",
+        help="Show propcombined props, by setting their tint to random groups",
+    )
+    parser.add_argument(
+        "--dumpgroups",
+        action="store_true",
+        help="Write all props without propcombine groups to a new VMF.",
     )
 
     parser.add_argument(
@@ -159,6 +164,7 @@ def main(argv: List[str]) -> None:
             auto_range=conf.get(int, 'propcombine_auto_range'),
             min_cluster=conf.get(int, 'propcombine_min_cluster'),
             debug_tint=args.showgroups,
+            debug_dump=args.dumpgroups,
         )
         LOGGER.info('Done!')
     else:  # Strip these if they're present.
