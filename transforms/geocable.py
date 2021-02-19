@@ -1,4 +1,5 @@
 """"Compile static prop cables, instead of sprites."""
+import itertools
 import math
 from collections import defaultdict
 from enum import Enum
@@ -10,7 +11,7 @@ from typing import (
 
 from srctools import (
     logger, conv_int, conv_float, conv_bool,
-    Vec, Entity, Matrix, Angle,
+    Vec, Entity, Matrix, Angle, lerp,
 )
 from srctools.compiler.mdl_compiler import ModelCompiler
 from srctools.bsp_transform import Context, trans
@@ -34,11 +35,6 @@ $keyvalues {{
     no_propcombine 1
 }}
 '''
-
-
-def lerp(x: float, in_min: float, in_max: float, out_min: float, out_max: float) -> float:
-    """Linearly interpolate from in to out."""
-    return out_min + (((x - in_min) * (out_max - out_min)) / (in_max - in_min))
 
 
 class InterpType(Enum):
