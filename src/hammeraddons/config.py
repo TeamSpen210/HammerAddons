@@ -119,7 +119,7 @@ def parse(path: Path) -> Tuple[
 
     sources: Dict[Path, PluginSource] = {}
 
-    builtin_transforms = Path(sys.argv[0]).parent / 'transforms'
+    builtin_transforms = (Path(sys.argv[0]).parent / 'transforms').resolve()
 
     # find all the plugins and make plugin objects out of them
     for prop in conf.get(Property, 'plugins'):
@@ -157,6 +157,8 @@ def parse(path: Path) -> Tuple[
         else:
             raise ValueError("Unknown plugins key {}".format(prop.real_name))
 
+    for source in sources.values():
+        LOGGER.debug('Plugin path: "{}", recursive={}, files={}', source.folder, source.recursive, sorted(source.autoload_files))
     LOGGER.debug('Builtin plugin path is {}', builtin_transforms)
     if builtin_transforms not in sources:
         sources[builtin_transforms] = PluginSource(builtin_transforms, True)
