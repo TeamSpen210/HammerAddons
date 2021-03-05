@@ -7,7 +7,4 @@
 	filterclass(string) : "Filter Classname" : : "The class name to filter by. " +
 		"If the filter mode is Allow, only entities whose class name matches the given string will pass the filter. " +
 		"If the filter mode is Disallow, all entities EXCEPT those whose class name matches the given string will pass the filter."
-
-	// Inputs
-	input SetFilterClass[INFRA](string) : "The class name to filter by."
 	]

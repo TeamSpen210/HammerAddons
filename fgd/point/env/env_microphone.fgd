@@ -28,8 +28,7 @@
 		51: "2 (DUPLICATE OF 1)"
 		52: "3 (DUPLICATE OF 1)"
 		53: "4 (DUPLICATE OF 1)"
-		54: "5 (DUPLICATE OF 1)" [!INFRA]
-		54: "5 INFRA: MODERN TV SPEAKER" [INFRA]
+		54: "5 (DUPLICATE OF 1)"
 		55: "6 SPEAKER, LOUDER"
 		56: "7 SPEAKER VERY SMALL"
 		57: "8 LOUDSPEAKER, ECHO"
@@ -46,7 +45,6 @@
 		16: "Swallows sounds routed through speakers" : 0
 		32: "Hears explosions" : 0
 		64: "Ignores non-attenuated sounds" : 0
-		128: "Ignores sound gain (stops reducing sound volume)" : 0 [INFRA]
 		]
 
 	sensitivity(float) : "Sensitivity (0 - 10)" : 1 : "Microphone sensitivity, 0=deaf, 1=default, 10=extremely sensitive). Only applicable in Measuring mode."
@@ -72,7 +70,6 @@
 
 	// Inputs
 	input SetSpeakerName(string) : "Set the microphone to output through a different speaker entity."
-	input SetMeasureTarget[INFRA](string) : "Set the location to listen to sounds from."
 	input SetPitchScale[MBase](float) : "Sets the pitch scale."
 	input SetChannel[MBase](integer) : "Sets the channel."
 

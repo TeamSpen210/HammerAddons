@@ -18,37 +18,35 @@
 		71: "G - Grate"
 		72: "H - Alien Flesh"
 		73: "I - Clip"
-		74: "J - Grass" [since_L4D] 
+		74: "J - Grass"
 		75: "K - Snow"
 		76: "L - Plastic"
 		77: "M - Metal"
 		78: "N - Sand"
 		79: "O - Foliage"
 		80: "P - Computer"
-		81: "Q - Asphalt" [since_L4D]
+		81: "Q - Asphalt"
 		82: "R - Reflective" [until_P1, P1, P2]
 		83: "S - Slosh"
 		84: "T - Tile"
-		85: "U - Cardboard" [since_L4D]
+		85: "U - Cardboard"
 		86: "V - Vent"
 		87: "W - Wood"
 		88: "X - Fake surfaces"
 		89: "Y - Glass"
-		90: "Z - Warp Shield" [since_EP1]
-
-		1: "1 - Clay" [since_L4D]
-		2: "2 - Plaster" [since_L4D]
-		3: "3 - Rock" [since_L4D]
-		4: "4 - Rubber" [since_L4D]
-		5: "5 - Sheet Rock" [since_L4D]
-		6: "6 - Cloth" [since_L4D]
-		7: "7 - Carpet" [since_L4D]
-		8: "8 - Paper" [since_L4D]
-		9: "9 - Upholstery" [since_L4D]
-
-		11: "11 - Mud" [L4D, L4D2]
-		11: "11 - Steam Pipe" [-L4D, -L4D2]
-		12: "12 - Sand Barrel" [since_CSGO]
+		90: "Z - Warp Shield"
+		1: "1 - Clay"
+		2: "2 - Plaster"
+		3: "3 - Rock"
+		4: "4 - Rubber"
+		5: "5 - Sheet Rock"
+		6: "6 - Cloth"
+		7: "7 - Carpet"
+		8: "8 - Paper"
+		9: "9 - Upholstery"
+		11: "11 - Mud"
+		12: "12 - Sand Barrel"
+		13: "13 - Dense Wood"
 		]
 
 
