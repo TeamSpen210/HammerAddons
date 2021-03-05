@@ -1,6 +1,0 @@
-@PointClass base(TalkNPC)
- 	appliesto(INFRA)
-	studio("models/characters/boss.mdl")
-= infra_boss
-	[
-	]

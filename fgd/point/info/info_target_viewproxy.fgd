@@ -1,8 +1,0 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(INFRA) 
-	iconsprite("editor/info_target.vmt")
-	studio("models/editor/axis_helper.mdl")
-= info_target_viewproxy: "A version of info_target that can persist across level transitions."
-	[
-	shouldtransition(boolean) : "Transition Across Levels" : 1 : "This is used in tunnel3, but not in metroride. In metroride we have a similar train setup on the other map so it makes no sense " + "to transition. In tunnel3 the setup is much simpler, so we can just transition the raft model and everything that goes with it."
-	]
