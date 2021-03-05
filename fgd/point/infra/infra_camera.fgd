@@ -1,6 +1,0 @@
-@PointClass base(Weapon) 
-	appliesto(INFRA)
-	studio("models/weapons/w_camera.mdl")
-= infra_camera: "Camera"
-	[
-	]
