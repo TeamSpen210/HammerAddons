@@ -25,9 +25,6 @@
 	hurtrate[MBase](float) : "Hurt Rate" : "0.5" : "Touchers will be hurt every X seconds while in this trigger_hurt."
 	thinkalways[L4D2](boolean) : "Always think every frame" : 0 : "Normally triggers think every half second, in some cases you may need to request it to damage every frame. This is expensive!"
 	
-	nohurtsounds[INFRA](boolean) : "No Hurt Sounds While Talking" : 0 : "Should Mark play hurt sounds if he's in the middle of something? " +
-		"Used in powerstation2 for the smoke in the control room to prevent it from interrupting Mark and Robin."
-
 	// Inputs
 	input SetDamage(float) : "Set a new amount of damage for this trigger."
 

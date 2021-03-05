@@ -40,8 +40,7 @@
 		22: "Pottery.Large"
 		23: "Pottery.Huge"
 		24: "Glass.Window"
-		25: "Wooden.Medium.NoStand" [since_L4D, !INFRA]
-		25: "Glass.CrackedWindow" [INFRA]
+		25: "Wooden.Medium.NoStand" [since_L4D]
 		]
 
 	health(integer) : "Strength" : 1 : "Number of points of damage to take before breaking. 0 means don't break."
