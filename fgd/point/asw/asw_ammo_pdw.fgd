@@ -1,6 +1,0 @@
-
-@PointClass base(ASWPickup) 
-	appliesto(ASW) 
-	studio("models/swarm/Ammo/ammopdw.mdl") = asw_ammo_pdw: "PDW Clip"
-	[
-	]

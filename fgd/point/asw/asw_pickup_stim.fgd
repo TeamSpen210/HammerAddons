@@ -1,9 +1,0 @@
-
-@PointClass base(ASWPickup) 
-	appliesto(ASW) 
-	studio("models/swarm/Stim/stim.mdl") = asw_pickup_stim: "Stim Pack"
-	[
-	bulletsingun(integer) : "Bullets In Gun" : 3
-	clips(integer) : "Clips" : 0
-	secondarybullets(integer) : "Secondary Bullets" : 0
-	]

@@ -1,6 +1,0 @@
-
-@PointClass base(ASWPickup) 
-	appliesto(ASW) 
-	studio("models/swarm/ammo/ammobag.mdl") = asw_pickup_ammo_bag: "Ammo Bag"
-	[
-	]

@@ -1,9 +1,0 @@
-
-@PointClass base(ASWPickup) 
-	appliesto(ASW) 
-	studio("models/weapons/MiningLaser/MiningLaser.mdl") = asw_pickup_mining_laser: "Mining Laser"
-	[
-	bulletsingun(integer) : "Bullets In Gun" : 50
-	clips(integer) : "Clips" : 5
-	secondarybullets(integer) : "Secondary Bullets" : 0
-	]

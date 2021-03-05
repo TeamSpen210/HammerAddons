@@ -1,9 +1,0 @@
-
-@PointClass base(ASWPickup) 
-	appliesto(ASW) 
-	studio("models/weapons/Prototype/prototyperifle.mdl") = asw_pickup_prifle: "Prototype Rifle"
-	[
-	bulletsingun(integer) : "Bullets In Gun" : 98
-	clips(integer) : "Clips" : 5
-	secondarybullets(integer) : "Secondary Bullets" : 4
-	]
