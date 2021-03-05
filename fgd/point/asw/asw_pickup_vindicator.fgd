@@ -1,9 +1,0 @@
-
-@PointClass base(ASWPickup) 
-	appliesto(ASW) 
-	studio("models/weapons/vindicator/vindicator.mdl") = asw_pickup_vindicator: "Vindicator"
-	[
-	bulletsingun(integer) : "Bullets In Gun" : 14
-	clips(integer) : "Clips" : 5
-	secondarybullets(integer) : "Secondary Bullets" : 4
-	]

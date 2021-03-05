@@ -1,9 +1,0 @@
-
-@PointClass base(ASWPickup) 
-	appliesto(ASW) 
-	studio("models/weapons/Shotgun/Shotgun.mdl") = asw_pickup_shotgun: "Shotgun"
-	[
-	bulletsingun(integer) : "Bullets In Gun" : 3
-	clips(integer) : "Clips" : 8
-	secondarybullets(integer) : "Secondary Bullets" : 0
-	]

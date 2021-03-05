@@ -1,9 +1,0 @@
-
-@PointClass base(ASWPickup) 
-	appliesto(ASW) 
-	studio("models/swarm/SentryGun/sentryguncase.mdl") = asw_pickup_sentry: "Sentry Gun Case"
-	[
-	bulletsingun(integer) : "Bullets In Gun" : 1
-	clips(integer) : "Clips" : 0
-	secondarybullets(integer) : "Secondary Bullets" : 0
-	]

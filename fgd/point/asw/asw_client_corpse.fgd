@@ -1,9 +1,0 @@
-
-@PointClass base(BaseEntityAnimating) 
-	appliesto(ASW) 
-= asw_client_corpse: "A clientside only prop that physically simulates and can be articulated with internal joints. The joint constraints are part of the physics model."
-	[
-	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "90 0 0" : "This entity's orientation in the world. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, roll is the rotation around the X axis."
-	model(studio) : "World Model" : "models/swarm/colonist/male/malecolonist.mdl"
-	ragdollsequence(string) : "Ragdoll Sequence" : : "Ragdoll's pose will come from the first frame of this sequence.  Note: NOT WORKING CURRENTLY"
-	]

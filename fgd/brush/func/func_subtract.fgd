@@ -1,5 +1,0 @@
-@SolidClass appliesto(ASW, -engine) 
-	color(0 180 0) 
-= func_subtract: "Subtracts geometry from other brushes (use vmf_subtract.exe)"
-	[
-	]

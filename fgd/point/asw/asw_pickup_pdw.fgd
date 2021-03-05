@@ -1,9 +1,0 @@
-
-@PointClass base(ASWPickup) 
-	appliesto(ASW) 
-	studio("models/weapons/pdw/pdw.mdl") = asw_pickup_pdw: "Personal Defense Weapon"
-	[
-	bulletsingun(integer) : "Bullets In Gun" : 80
-	clips(integer) : "Clips" : 5
-	secondarybullets(integer) : "Secondary Bullets" : 0
-	]
