@@ -14,11 +14,6 @@
 	"Hints require code support in the NPC, while scripts are generic and may require only animations to play. " +
 	"Use a hint if the behavior is driven by the AI, use a script if the behavior is driven by the map."
 	[
-	spawnflags[ASW](flags)  =
-		[
-		512: "Keep editor position" : 0
-		]
-
 
 	// Outputs
 	output OnNPCStartedUsing(string) : "Fired when an NPC has reached this node and started using it. Passes along the NPC."

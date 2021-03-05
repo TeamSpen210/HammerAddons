@@ -1,5 +1,4 @@
-@PointClass base(env_sprite) 
-	appliesto(since_ASW) 
+@PointClass base(env_sprite)
 = env_sprite_clientside: "An entity that controls the drawing of a sprite in the world, created clientside so cannot be parented to moving things and will use up no network bandwidth or CPU."
 	[
 	]

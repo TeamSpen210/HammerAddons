@@ -23,7 +23,7 @@
 	invertallow(boolean) : "Invert exclusion rules" : 0 : "Allowed entity is the only entity NOT allowed when this is set to 'yes'"
 
 	priority[engine](boolean): "Priority": 0
-	priority[ASW](choices) : "Priority" : 0 =
+	priority(choices) : "Priority" : 0 =
 		[
 		0: "Normal"
 		1: "Use As Last Resort"

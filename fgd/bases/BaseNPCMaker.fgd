@@ -22,7 +22,7 @@
 	ForceScheduleOnSpawn[MESA](string) : "ForceScheduleOnSpawn" : "" : "Name of NPC schedule that we want to play on spawn."
 
 	hullcheckmode[engine](boolean) : "Hull Check Mode" : 0
-	hullcheckmode[ASW](choices) : "Hull Check Mode" : 0 : "How NPC's hull should be checked at spawn destination?" =
+	hullcheckmode(choices) : "Hull Check Mode" : 0 : "How NPC's hull should be checked at spawn destination?" =
 		[
 		0: "Default"
 		1: "No hull check"

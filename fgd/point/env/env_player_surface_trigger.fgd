@@ -13,7 +13,7 @@
 		66: "B - Bloody Flesh"
 		67: "C - Concrete"
 		68: "D - Dirt"
-		69: "E - Eggshell" [since_EP2]
+		69: "E - Eggshell"
 		70: "F - Flesh"
 		71: "G - Grate"
 		72: "H - Alien Flesh"
@@ -47,7 +47,7 @@
 		9: "9 - Upholstery" [since_L4D]
 
 		11: "11 - Mud" [L4D, L4D2]
-		11: "11 - Steam Pipe" [since_ASW]
+		11: "11 - Steam Pipe" [-L4D, -L4D2]
 		12: "12 - Sand Barrel" [since_CSGO]
 		]
 

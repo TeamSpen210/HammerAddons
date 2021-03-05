@@ -25,11 +25,11 @@
 		2: "Jump"
 		4: "Fly"
 		8: "Climb"
-		16: "Crawl" [ASW, L4D2]
+		16: "Crawl" [L4D2]
 		]
 
 	allowuse(target_name_or_class) : "Allow Pass When Off" : : "Entity or class to allow passage even when node is off"
-	invertallow[ASW](boolean) : "Invert exclusion rules" : 0 : "Allowed entity is the only entity NOT allowed when this is set to 'yes'"
+	invertallow(boolean) : "Invert exclusion rules" : 0 : "Allowed entity is the only entity NOT allowed when this is set to 'yes'"
 
 	spawnflags(flags) =
 		[
@@ -42,21 +42,17 @@
 		64: "Force tiny centered connect" : 0
 		128: "Force large connect" : 0
 		256: "Force large centered connect" : 0
-		512: "(Don't drop placeholder)" : 0 [ASW]
 
-		512: "Force medium tall connect" : 0 [!ASW]
-		1024: "Force medium tall connect" : 0 [ASW]
+		512: "Force medium tall connect" : 0
 
 		1024: "Force tiny_fluid connect" : 0 [P2]
-		2048: "Force tiny fluid connect" : 0 [ASW]
-		4096: "Force medium big (Swarm Drone) connect" : 0 [ASW]
 		]
 
-	precisemovement[ASW](boolean) : "Precise Movement" : 0 : "Movement through this link must be precise. " +
+	precisemovement(boolean) : "Precise Movement" : 0 : "Movement through this link must be precise. " +
 		"Used for NPCs that have sloppy movement characteristics to move through things like doors or windows"
 		
 	priority[engine](integer) : "Priority" : 0
-	priority[ASW](choices) : "Priority" : 0 =
+	priority(choices) : "Priority" : 0 =
 		[
 		0: "Normal"
 		1: "Use As Last Resort"

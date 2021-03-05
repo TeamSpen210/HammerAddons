@@ -53,12 +53,6 @@
 		1207: "Nihi Ground Node" [MESA]
 		1208: "Nihi Air Node" [MESA]
  
-		1200: "Ep3 Blob Shake Position" [ASW]
-		1201: "Ep3 Blob Fire Cover Position" [ASW]
-		1202: "Ep3 Blob Brain Cover Position" [ASW]
-		1203: "Ep3 Blob Brain Regenerate Position" [ASW]
-		1204: "Ep3 Blob Spit Position" [ASW]
-		1205: "Ep3 Blob Spawn Regenerator Position" [ASW]
 		1300: "Aperture: Nest"
 		]
 
@@ -107,8 +101,7 @@
 		3: "Combat"
 		]
 
-	generictype[ASW](string) : "Generic Hint" : : "String identifying what the hint type is, if generic."
-	radius[ASW](integer) : "Radius" : 0 : "How close an NPC must be to consider this hint. 0 means infinite."
+	radius(integer) : "Radius" : 0 : "How close an NPC must be to consider this hint. 0 means infinite."
 
 	// Inputs
 	input EnableHint(void) : "Enable hint."

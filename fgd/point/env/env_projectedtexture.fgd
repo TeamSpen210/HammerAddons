@@ -12,7 +12,7 @@
 	spawnflags(flags)  =
 		[
 		1: "Enabled" : 1
-		2: "Always Update (moving light)" : 0 [since_ASW]
+		2: "Always Update (moving light)" : 0
 		]
 
 	target(target_destination) : "target" : : "target"
@@ -31,14 +31,13 @@
 
 	lightonlytarget(boolean) : "Light Only Target" : 0 : "Limit flashlight effect to only effect target entity."
 	lightworld(boolean) : "Light World" : 0 : "Control whether flashlight effects static world geometry."
-	simpleprojection[since_ASW](boolean) : "Simple Projection" : 0 : "Indicates if this is a simple, non-light casting texture projection"
+	simpleprojection(boolean) : "Simple Projection" : 0 : "Indicates if this is a simple, non-light casting texture projection"
 
 	lightcolor(color255) : "Light Color" : "255 255 255 200" : "Light Color RGB-Intensity"
-	brightnessscale[since_ASW](float) : "Brightness Scale" : 1.0 : "Scale the light color by this brightness"
+	brightnessscale(float) : "Brightness Scale" : 1.0 : "Scale the light color by this brightness"
 
 	cameraspace(boolean) : "Camera Space" : 0 : "Angles are interpreted as being relative to camera."
 
-	colortransitiontime[since_ASW](float) : "Color Transition Time" : 0.5 : "Amount of time it takes for a color change to occur."
 
 	constant_attn[MBase, TF2](float) : "Constant" : "0" : "The light's constant attenuation, giving the light no falloff. (This value is internally corrected with x*0.5)"
 	linear_attn[MBase, TF2](float) : "Linear" : "1" : "The light's linear attenuation, giving the light linear decline. This is the most common attenuation for projected textures. (This value is internally corrected with x*100)"
@@ -47,6 +46,7 @@
 		"or how much the shadows should fade into the light of the projected texture, if at all. " +
 		"The player's flashlight uses 0.35 by default, " +
 		"although higher values may be needed for a visible effect."
+	colortransitiontime(float) : "Color Transition Time" : 0.5 : "Amount of time it takes for a color change to occur."
 
 	texturename(material) : "Texture Name" : "effects/flashlight001" : "VTF Texture to 'project' onto the enviroment. " + 
 		"Please note that env_projectedtexture uses .vtf files directly and does not use .vmt files. " +
@@ -57,7 +57,7 @@
 	volumetricintensity[P2CE](float) : "Volumetric Intensity" : "1.0" : "Sets the intensity of the volumetric lighting."
 	
 	style[engine](integer) : "Appearance" : 0
-	style[since_P2](choices) : "Appearance" : "0" =
+	style(choices) : "Appearance" : "0" =
 		[
 		0: "Normal"
 		10: "Fluorescent flicker"
@@ -73,7 +73,7 @@
 		9: "Slow strobe"
 		]
 
-	pattern[since_P2](string) : "Custom Appearance" : : "Set a custom pattern of light brightness for this light. " +
+	pattern(string) : "Custom Appearance" : : "Set a custom pattern of light brightness for this light. " +
 		"Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. " +
 		"i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 	lightviewmodels[INFRA](boolean) : "Light View Models" : 1 : "Control whether flashlight effects view models."
@@ -89,16 +89,16 @@
 	input Target(target_destination): "Set a new target entity to point at."
 	input CameraSpace(boolean): "Set Camera Space."
 
-	input AlwaysUpdateOn[since_ASW](void) : "Turn on per frame updating (for moving lights)"
-	input AlwaysUpdateOff[since_ASW](void) : "Turn off per frame updating (for moving lights)"
+	input AlwaysUpdateOn(void) : "Turn on per frame updating (for moving lights)"
+	input AlwaysUpdateOff(void) : "Turn off per frame updating (for moving lights)"
 
 	// Disabled by Valve in the code, emits console message.
 	input SpotlightTexture[!CSGO, !P2](string) : "Set the spotlight texture"
 
 	input EnableShadows(boolean) : "Set if the shadows are enabled."
-	input LightColor[since_ASW](color255) : "Change the light color/brightness"
 	input SetLightStyle[since_P2](integer) : "Change the lightstyle (see Appearance field for possible values)."
 	input SetPattern[since_P2](string) : "Set a custom pattern of light brightness for this light. " +
+	input LightColor(color255) : "Change the light color/brightness"
 		"The Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. " +
 		"'aaggnnttzz' would be a steppy fade in from dark to light."
 

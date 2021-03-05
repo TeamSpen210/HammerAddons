@@ -26,16 +26,16 @@
 		16: "Snap to goal angles" : 0
 		32: "Make Player non-solid" : 0
 		64: "Interruptable by Player" : 0
-		128: "Set Fov" : 0 [MBase, since_ASW]
+		128: "Set Fov" : 0 [MBase]
 		256:"Allow fixed behavior (can move without look target, removal stops softlock, etc.)" : 1 [MBase]
 		]
 
 	speed(string) : "Initial Speed" : "0" : "The starting speed that the camera moves at, if it's on a path track."
 	acceleration(string) : "Acceleration units/sec^2" : "500" : "The speed at which the camera accelerates to path corner's desired speeds."
 	deceleration(string) : "Stop Deceleration units/sec^2" : "500" : "The speed at which the camera decelerates to path corner's desired speeds."
-	trackspeed[since_P2](float) : "Tracking Speed of the camera" : "40" : "The speed that the camera tries to follow it's look target."
-	fov[MBase, since_ASW](float) : "Field of view" : "90" : "Player FOV (if Set FOV spawnflag is set)"
-	fov_rate[MBase, since_ASW](float) : "Seconds to reach FOV target" : "1.0" : "Amount of time it should take to reach the specified FOV"
+	trackspeed(float) : "Tracking Speed of the camera" : "40" : "The speed that the camera tries to follow it's look target."
+	fov[MBase](float) : "Field of view" : "90" : "Player FOV (if Set FOV spawnflag is set)"
+	fov_rate[MBase](float) : "Seconds to reach FOV target" : "1.0" : "Amount of time it should take to reach the specified FOV"
 
 	DontSetPlayerView(boolean) : "Don't set player view" : 0 : "Prevents this point_viewcontrol from actually controlling the player's view. " +
 		"FOV, player-affecting spawnflags, etc. may still happen."
@@ -55,12 +55,6 @@
 	// Inputs
 	input Enable(void) : "Enable the point_viewcontrol, and start controlling the player's view."
 	input Disable(void) : "Disable the point_viewcontrol, and stop controlling the player's view."
-	input SetTarget[since_P2](target_destination) : "Set a new target for the camera to point at."
-	input SetTargetAttachment[since_P2](string) : "Set a new attachment on the target for the camera to point at."
-	input ReturnToEyes[since_P2](void) : "Return the camera view to the player's eyes."
-	input TeleportToView[since_P2](void) : "Teleport the player to the current position of the camera."
-	input SetTrackSpeed[since_P2](float) : "Set the speed that the camera will try to track it's target."
-	input SetPath[since_P2](string) : "Have the camera start following a new path."
 
 	input EnableControls[INFRA](void) : "Enables player's controls."
 	input DisableControls[INFRA](void) : "Disables player's controls."
@@ -68,6 +62,12 @@
 	input DisableCursor[INFRA](void) : "Disables player's mouse cursor."
 	input SetTargetNode[INFRA](string) : "Have the camera start following a new path."
 	input Reverse[INFRA](void) : "Should be fired when the camera is already moving along some path or reached the end of it. Causes it to move the same path but backwards."
+	input SetTarget(target_destination) : "Set a new target for the camera to point at."
+	input SetTargetAttachment(string) : "Set a new attachment on the target for the camera to point at."
+	input ReturnToEyes(void) : "Return the camera view to the player's eyes."
+	input TeleportToView(void) : "Teleport the player to the current position of the camera."
+	input SetTrackSpeed(float) : "Set the speed that the camera will try to track it's target."
+	input SetPath(string) : "Have the camera start following a new path."
 
 	// Outputs
 	output OnEndFollow(void) : "Fired when the point_viewcontrol deactivates, due to the Disable input being received, the Entity to Look At being destroyed, or the Hold Time expiring."

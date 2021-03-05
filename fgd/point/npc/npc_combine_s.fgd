@@ -31,13 +31,6 @@
 		"0": "Nothing"
 		]
 
-	teleportgrenades[engine](boolean) : "Teleportation" : 0
-	teleportgrenades[ASW](choices) : "Teleportation" : 0 =
-		[
-		0: "Disabled"
-		1: "Teleport Grenades"
-		]
-
 	tacticalvariant[engine](integer) : "Tactical Variant" : 0
 	tacticalvariant(choices) : "Tactical Variant" : 0 =
 		[
