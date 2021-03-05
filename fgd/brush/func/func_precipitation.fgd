@@ -19,7 +19,6 @@
 		9: "Particle Smoke" [since_L4D2]
 		]
 
-	snowdustamt[ASW](float) : "Amount of snow dusting (1-100)" : 50
 	minspeed[P2](float) : "Minimum speed (snowfall only)" : 25
 	maxspeed[P2](float) : "Maximum speed (snowfall only)" : 35
 

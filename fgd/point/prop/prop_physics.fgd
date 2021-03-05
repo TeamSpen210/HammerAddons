@@ -14,7 +14,6 @@
 	"Upon level load it will display a warning in the console and remove itself. " +
 	"Use a prop_physics_override instead."
 	[
-	bulletforceimmune[ASW](boolean) : "Immune to bullet forces" : 0 : "Used to determine whether or not bullet damage should cause the prop to move."
 	allowfunnel[P1, P2](boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a portal."
 
 	breakabletype[engine](integer) : "Exploitable by Player" : 0

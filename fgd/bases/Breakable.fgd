@@ -17,7 +17,7 @@
 
 	pressuredelay(float) : "Pressure Delay" : 0 : "Delay, in seconds, after 'broken' by pressure before breaking apart (allows for sound to play before breaking apart)."
 
-	breakmodelmessage[until_ASW, MESA](string) : "Break Model Message" : : "If set, will use this break model message instead of the normal break behavior."
+	breakmodelmessage[MESA](string) : "Break Model Message" : : "If set, will use this break model message instead of the normal break behavior."
 
 	minhealthdmg(integer) : "Minimum Damage to Hurt" : 0 : "The entity will ignore any damage events if the damage is less than this amount."	
 	health(integer) : "Health" : 0 : "Number of points of damage to take before breaking. 0 means don't break."

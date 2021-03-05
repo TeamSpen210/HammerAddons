@@ -1,6 +1,6 @@
 
 @PointClass base(BaseEntityPoint) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, Mesa) 
+	appliesto(EP1, EP2, HL2, P1, P2, Mesa) 
 	iconsprite("editor/assault_rally.vmt") 
 	line(255 255 255, targetname, assaultpoint) = assault_rallypoint: "(Assault) rally point"
 	[
@@ -14,7 +14,7 @@
 	
 	urgent(boolean) : "Urgent" : 0 : "If true, NPCs will consider movement to this rally point as Urgent Navigation. NPCs will ignore prop_physics obstructions, and eventually teleport to reach the point."
 	
-	lockpoint[since_ASW](boolean) : "Lock Point" : 1 : "Should this point be locked by a character using it."
+	lockpoint(boolean) : "Lock Point" : 1 : "Should this point be locked by a character using it."
 
 	// Outputs
 	output OnArrival(void) : "Fires when the NPC reaches this rally point."

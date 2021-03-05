@@ -1,5 +1,5 @@
 @NpcClass base(BaseHelicopter) 
-	appliesto(EP1, EP2, HL2, P1, ASW)  
+	appliesto(EP1, EP2, HL2, P1)  
 	autovis(Entities, NPCs, Combine, Combine Gunship)
 	studio("models/gunship.mdl") = npc_combinegunship: "Combine Gunship"
 	[
@@ -14,8 +14,8 @@
 		"0 = the value stored in sk_gunship_health_increments (default 5)."
 	CanGroundAttack[MBase](boolean) : "Can use ground attack automatically" : 0 : "Allows this gunship to use its belly cannon automatically during combat."
 	
-	maxangaccel[ASW](float) : "Max Angular Acceleration" : 1000 : "Maximum change in rotation speed. Setting this lower means it can't start or stop turning quickly."
-	maxangvelocity[ASW](vector) : "Max Pitch Velocity" : "300 120 300" : "Maximum rotation speed. Setting this lower means it can't turn quickly."
+	maxangaccel(float) : "Max Angular Acceleration" : 1000 : "Maximum change in rotation speed. Setting this lower means it can't start or stop turning quickly."
+	maxangvelocity(vector) : "Max Pitch Velocity" : "300 120 300" : "Maximum rotation speed. Setting this lower means it can't turn quickly."
 
 	// Inputs
 	input OmniscientOn(void) : "Gunship knows target's location even when target is out of sight or behind cover"

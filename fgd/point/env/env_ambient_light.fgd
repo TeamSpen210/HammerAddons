@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(since_ASW) 
+@PointClass base(BaseEntityPoint, EnableDisable)
 	sphere(minfalloff) 
 	sphere(maxfalloff) 
 	iconsprite("editor/color_correction.vmt") 

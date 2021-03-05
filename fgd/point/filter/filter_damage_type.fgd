@@ -21,11 +21,7 @@
 		2: "Bullet"
 		4: "Slash"
 		8: "Burn"
-
-		16: "Freeze" [!TF2, until_ASW]
-		16: "Train" [TF2]
-		16: "Vehicle" [since_ASW]
-
+		16: "Vehicle"
 		32: "Fall"
 		64: "Blast"
 		128: "Club"
@@ -39,13 +35,8 @@
 		131072: "Poison"
 		262144: "Radiation"
 		524288: "Drown Recover"
-
-		1048576: "Chemical" [!TF2, until_ASW]
-		1048576: "Critical" [TF2]
-		1048576: "Acid" [since_ASW]
-
+		1048576: "Acid"
 		2097152: "Slow Burn"
-		//4194304 : "Slow Freeze" // This does not appear to exist.
 		4194304: "Remove No Ragdoll"
 		16777216: "Full Gib" [L4D2]
 		16777216 : "Plasma" [until_L4D2]

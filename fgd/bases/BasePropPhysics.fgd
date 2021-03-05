@@ -40,10 +40,7 @@
 	forcetoenablemotion(float) : "Physics Impact Force to Override Motion" : 0 : "If specified, this object will start motion disabled. Any impact that imparts a force greater than this value on the physbox will enable motion."
 	puntsound(sound) : "Sound to make when punted."
 	
-	// Incomplete ASW feature.
-	addon[since_ASW](string) : "AI AddOn" : : "If specified this object will use this addon behavior when installed in a composite AI"
-
-
+	
 	// Inputs
 	input Wake(void) : "Wake up this physics object, if it is sleeping."
 	input Sleep(void) : "Put this physics object to sleep. It will wake if given the Wake input, or if force is applied to it. Note that physics objects go to sleep automatically after coming to rest for a while, so you don't really need to use this."

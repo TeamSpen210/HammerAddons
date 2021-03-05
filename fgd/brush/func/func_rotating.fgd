@@ -18,7 +18,7 @@
 		128: "Small Sound Radius" : 0
 		256: "Medium Sound Radius" : 0
 		512: "Large Sound Radius" : 1
-		1024: "Client-side Animation" : 0 [ASW]
+		1024: "Client-side Animation" : 0
 		]
 
 	dmg(integer) : "Blocking Damage" : 0 : "Damage done to any entity that blocks the rotation, per frame."
