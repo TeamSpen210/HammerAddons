@@ -1,5 +1,4 @@
 @PointClass base(BaseEntityPoint, Origin) 
-	appliesto(L4D, L4D2)
 = info_remarkable: "An object in the world such that characters seeing it will speak a TLK_REMARK concept"
 	[
 	contextsubject(string) : "Subject context" : : "Text to put in the SUBJECT context of the TLK_REMARK fired upon sighting this object."

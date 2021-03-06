@@ -23,13 +23,7 @@
 	fadeinduration(float) : "Lookup Fade In Duration" : "0.0" : "Duration of fade in on when enabled."
 	fadeoutduration(float) : "Lookup Fade out Duration" : "0.0" : "Dration of fade out on when disabled."
 
-	spawnflags[since_L4D](flags)  =
-		[
-		1: "Master" : 0
-		2: "Client-side simulation" : 0
-		]
-
-	exclusive[since_L4D, MESA](boolean) : "Exlusive" : "0" : "An exclusive color_correction entity disables and fades out all other color corrections when it is enabled. " +
+	exclusive[MESA](boolean) : "Exlusive" : "0" : "An exclusive color_correction entity disables and fades out all other color corrections when it is enabled. " +
 		"There should only be one active exclusive color_correction ent at any time."
 
 	// Inputs

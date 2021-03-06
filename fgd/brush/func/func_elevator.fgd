@@ -1,5 +1,4 @@
 @SolidClass base(BaseEntityVisBrush)
-	appliesto(L4D, L4D2)
 = func_elevator: "A brush entity that moves vertically."
 	[
 	top(vecline) : "Top floor position"
@@ -14,7 +13,6 @@
 	// Inputs
 	input MoveToFloor(string) : "Start the elevator moving to the specified floor."
 	input Disable(void) : "Stops the elevator and prevents it from moving again."
-	input SetMaxSpeed[L4D2](float) : "Set the max speed of the elevator."
 
 	// Outputs
 	output OnReachedTop(string) : "Fired when the brush reaches the top."

@@ -2,17 +2,15 @@
 	[
 	spawnflags(flags)  =
 		[
-		4096: "Start Asleep" : 0 [!L4D2]
-		8192: "Ignore +USE for Pickup" : 0 [!L4D2]
+		4096: "Start Asleep" : 0
+		8192: "Ignore +USE for Pickup" : 0
 		16384: "Debris - Don't collide with the player or other debris" : 0
 		32768: "Motion Disabled" : 0
 		65536: "Use Preferred Carry Angles" : 0
 		131072: "Enable motion on Physcannon grab" : 0	
-		262144: "Not affected by rotor wash" : 0 [!L4D2]
-		262144: "Ignore +USE for Pickup" : 0 [L4D2]
+		262144: "Not affected by rotor wash" : 0
 		524288: "Generate output on +USE " : 1
-		1048576: "Physgun can ALWAYS pick up. No matter what." : 0 [!L4D2]
-		1048576: "Start Asleep" : 0	[L4D2]
+		1048576: "Physgun can ALWAYS pick up. No matter what." : 0
 		2097152: "Physgun is NOT allowed to pick this up." : 0
 		4194304: "Physgun is NOT allowed to punt this object." : 0
 		8388608: "Prevent motion enable on player bump" : 0

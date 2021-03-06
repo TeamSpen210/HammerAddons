@@ -5,7 +5,5 @@
 
 	// Inputs
 	input Strip(void) : "Removes all weapons."
-	input StripWeaponsAndSuit[!L4D2](void) : "Strip player's weapons and his suit"
-	input StripActiveWeapon[L4D2](void) : "Removes the active weapon."
-	input StripWeaponByClassname[L4D2](string) : "Removes a weapon by classname, eg 'weapon_dieselcan'"
+	input StripWeaponsAndSuit(void) : "Strip player's weapons and his suit"
 	]

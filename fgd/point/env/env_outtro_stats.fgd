@@ -1,5 +1,4 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(L4D, L4D2)
 	size(-8 -8 -8, 8 8 8)
 = env_outtro_stats: "An entity to control the outtro stats at the end of a campaign."
 	[

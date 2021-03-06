@@ -40,7 +40,6 @@
 		22: "Pottery.Large"
 		23: "Pottery.Huge"
 		24: "Glass.Window"
-		25: "Wooden.Medium.NoStand" [since_L4D]
 		]
 
 	health(integer) : "Strength" : 1 : "Number of points of damage to take before breaking. 0 means don't break."
@@ -142,15 +141,6 @@
 		50: "item_ammo_box"
 
 		51: "prop_soda"
-		]
-
-
-	breakabletype[engine](integer) : "Breakable By" : 0 : "Who can break this?"
-	breakabletype[L4D, L4D2](choices) : "Breakable By" : 0 : "Who can break this?" =
-		[
-		0: "Everyone"
-		1: "All Infected"
-		2: "Only Tanks"
 		]
 
 

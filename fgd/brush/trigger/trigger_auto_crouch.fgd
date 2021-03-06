@@ -1,5 +1,4 @@
-@SolidClass base(Trigger) 
-	appliesto(L4D, L4D2)
+@SolidClass base(Trigger)
 = trigger_auto_crouch: "Allows players touching the trigger to auto-crouch."
 	[
 	]

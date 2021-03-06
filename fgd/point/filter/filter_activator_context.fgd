@@ -1,15 +1,9 @@
 @FilterClass base(filter_base) 
 	autovis(Logic, Filters)
-	appliesto(since_L4D, MBase) 
+	appliesto(MBase) 
 	iconsprite("editor/filter_context.vmt")
 = filter_activator_context: "A filter that filters by a context on the activator."
 	[
-	// Mapbase and L4D's implementation is unrelated, they don't share code/functionality.
-
-	responsecontext[since_L4D](string) : "Filter Context" : : "The context to filter by. " +
-		"If the filter mode is Allow, only entities that have a context matching the given string, of any value, will pass the filter. " +
-		"If the filter mode is Disallow, all entities EXCEPT those whose context matches the string will pass the filter."
-
 	ResponseContext[MBase](string) : "Filter Context" : : "The context(s) to filter by. Syntax is 'key:value,key:value'. "+
 		"Values in this field can use wilcards. For example, if this filter contains 'lastname:*', it will pass any entity with the context 'lastname', regardless of its value. "+
 		"Wildcards do not apply to context names and you cannot define the same context multiple times, but inputs like AddContext or RemoveContext can be used to add to the filter context."

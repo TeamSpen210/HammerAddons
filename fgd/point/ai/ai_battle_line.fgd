@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(-L4D, -L4D2)
+@PointClass base(BaseEntityPoint)
 	autovis(AI, AI Battle Line)
 	iconsprite("editor/ficool2/ai_battle_line")
  = ai_battle_line: "Battle line"

@@ -22,8 +22,6 @@
 	input SetPosition(string) : "Move the brush to a specific position, where 0 is the starting position and 1 is the opened position. " +
 		"Accepts any value, with negatives moving in the opposite direction."
 	input SetSpeed(float) : "Set the speed and update immediately."
-	input ResetPosition[L4D2](float) : "Set a new start position for our current location."
-	input TeleportToTarget[L4D2](target_destination) : "Teleport to this entity's origin."
 
 	// Outputs
 	output OnFullyOpen(void) : "Fired when the brush reaches the end position (starting position + (move direction * move distance))."

@@ -12,9 +12,8 @@
 		1: "Nonsolid"
 		]
 		
-	disappeardist[!L4D2](integer) : "Disappear Distance" : 2000 : "Distance at which these brushes should fade out."
 	DisappearMaxDist[MBase](integer) : "Maximum Disappear Distance" : 0 : "If specified, this would be distance at which these brushes should fade out completely. If 0, it will combine the regular disappear distance with the value stored in the 'lod_TransitionDist' convar, which is 800 by default."
-	disappearmindist[L4D2](integer) : "Disappear Min Distance" : 2000 : "Distance at which these brushes should starting fade out."
-	disappearmaxdist[L4D2](integer) : "Disappear Max Distance" : 2200 : "Distance at which these brushes should be completely faded out."
+	disappearmindist(integer) : "Disappear Min Distance" : 2000 : "Distance at which these brushes should starting fade out."
+	disappearmaxdist(integer) : "Disappear Max Distance" : 2200 : "Distance at which these brushes should be completely faded out."
 	disappearmaxdist[engine](integer) : "Disappear Max Distance" : 2200
 	]

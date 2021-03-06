@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(-L4D, -L4D2)
+@PointClass base(BaseEntityPoint)
 	autovis(AI, AI Change Target)
 	iconsprite("editor/ai_changetarget.vmt") 
 = ai_changetarget: "Change Target"
