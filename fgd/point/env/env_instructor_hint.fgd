@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(since_L4D2)
+@PointClass base(BaseEntityPoint)
 	iconsprite("editor/env_instructor_hint.vmt")
 	line(255 255 0, targetname, hint_target)
 	sphere(hint_range)
@@ -162,22 +161,6 @@
 	hint_timeout(integer) : "Timeout" : 0 : "The automatic timeout for the hint. 0 will persist until stopped with EndHint."
 	hint_range(float) : "Display Range" : 0 : "The visible range of the hint."
 	
-
-	hint_name[L4D2](string) : "Lesson Name" : : "Hints with the same lesson name use a common base and are treated as instances the same lesson type."
-	hint_display_limit[L4D2](integer) : "Display Limit" : 0 : "The number of times a hint can be seen. 0 means unlimited."
-
-	hint_instance_type[engine](integer) : "Instance Type" : 2
-	hint_instance_type[L4D2](choices) : "Instance Type" : 2 : "How many instances of a single lesson type can be open or active at the same time" =
-		[
-		0: "Multiple"
-		1: "Single Open"
-		2: "Fixed Replace"
-		3: "Single Active"
-		]
-
-	hint_auto_start[L4D2](boolean) : "Show on First Sight" : 1 : "When the player first sees it, it will automatically show for them."
-	hint_suppress_rest[L4D2](boolean) : "Suppress rest before moving" : 0 : "Suppress the initial icon display in center of screen?"
-
 	hint_gamepad_binding(string) : "Gamepad Bound Command" : : "If using 'show key bindings' for the onscreen icon, this field should be the command we want to show bindings for when gamepad is enabled (and PS3/X360)"
 
 	// Inputs

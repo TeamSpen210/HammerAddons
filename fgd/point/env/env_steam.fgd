@@ -28,8 +28,6 @@
 	renderamt(integer) : "Translucency" : 255
 	rollspeed(float) : "How fast does the particles spin" : 8
 
-	startnoise[L4D](sound) : "Start Sound" : : "Sound to play when starting emission."
-
 	// Inputs
 	input TurnOn(void) : "Turns the steam jet on."
 	input TurnOff(void) : "Turns the steam jet off."

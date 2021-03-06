@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(since_L4D) 
+@PointClass base(BaseEntityPoint, EnableDisable)
 	iconsprite("editor/info_game_event_proxy.vmt") 
 	sphere(range) 
 = info_game_event_proxy: "Entity that, when seen, generates a simple game event."

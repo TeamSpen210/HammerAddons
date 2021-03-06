@@ -56,15 +56,15 @@
 	shadowcastdist(integer) : "Shadow Cast Distance" : : "Sets how far the entity casts dynamic shadows, in units. 0 means default distance from the shadow_control entity."
 	disableshadows(boolean) : "Disable Shadows?" : 0 : "Prevent the entity from creating cheap render-to-texture/dynamic shadows."
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents dynamic shadows (e.g. player and prop shadows) from appearing on this entity."
-	disableshadowdepth[since_L4D](boolean) : "Disable ShadowDepth" : 0 : "Used to disable rendering into shadow depth (for flashlight) for this entity."
-	shadowdepthnocache[since_L4D](choices) : "Projected Texture Cache" : "0" : "Used to hint projected texture system whether it is sufficient to cache shadow volume of this entity or to force render it every frame instead." =
+	disableshadowdepth(boolean) : "Disable ShadowDepth" : 0 : "Used to disable rendering into shadow depth (for flashlight) for this entity."
+	shadowdepthnocache(choices) : "Projected Texture Cache" : "0" : "Used to hint projected texture system whether it is sufficient to cache shadow volume of this entity or to force render it every frame instead." =
 		[
 		0: "Default"
 		1: "No cache = render every frame"
 		2: "Cache it = render only once"
 		]
 	shadowdepthnocache[engine](integer): "": 0
-	disableflashlight[since_L4D](boolean) : "Disable flashlight" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
+	disableflashlight(boolean) : "Disable flashlight" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
 
 	linedivider_anim[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
@@ -85,8 +85,8 @@
 
 	input DisableShadow(void) : "Allows the entity to draw a render target (dynamic) shadow."
 	input EnableShadow(void) : "Prevents the entity from drawing a render target (dynamic) shadow."
-	input DisableReceivingFlashlight[since_L4D](void) : "This object will not recieve light or shadows from projected textures (flashlights)."
-	input EnableReceivingFlashlight[since_L4D](void) : "This object may recieve light or shadows from projected textures (flashlights)."
+	input DisableReceivingFlashlight(void) : "This object will not recieve light or shadows from projected textures (flashlights)."
+	input EnableReceivingFlashlight(void) : "This object may recieve light or shadows from projected textures (flashlights)."
 	
 	input AlternativeSorting[SINCE_EP1](boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
 	input SetModelScale[EP1, EP2, MESA, !GMod](vector) : "Takes two values separated by a space. The first is the target model scale. " +

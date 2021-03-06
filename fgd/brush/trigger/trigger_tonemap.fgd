@@ -1,5 +1,4 @@
-@SolidClass base(Trigger) 
-	appliesto(since_L4D)
+@SolidClass base(Trigger)
 = trigger_tonemap: "Changes tonemap controllers for players touching the trigger."
 	[
 	tonemapname(target_destination) : "Tonemap Name" : : "The name of the tonemap controller entity associated with this trigger."

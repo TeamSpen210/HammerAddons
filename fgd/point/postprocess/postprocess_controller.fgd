@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(since_L4D) 
+@PointClass base(BaseEntityPoint)
 	iconsprite("editor/postprocess_controller.vmt") 
 	color(255 255 255) 
 = postprocess_controller: "An entity that controls the postprocess settings in the map."
@@ -8,13 +7,11 @@
 	localcontraststrength(float) : "Local contrast strength [-1..x]" : "0"
 	localcontrastedgestrength(float) : "Local contrast edge strength [0..1]" : "0"
 
-	vignettestart[!L4D](float) : "Vignette start distance [0..1]" : "0.8"
-	vignettestart[L4D](float) : "Vignette start distance [0..1]" : "1"
-	vignetteend[!L4D](float) : "Vignette end distance [0..x]" : "1.1"
-	vignetteend[L4D](float) : "Vignette end distance [0..x]" : "2"
+	vignettestart(float) : "Vignette start distance [0..1]" : "0.8"
+	vignetteend(float) : "Vignette end distance [0..x]" : "1.1"
 
 	vignetteblurstrength(float) : "Vignette blur strength [0..1]" : "0"
-	fadetoblackstrength[since_L4D2](float) : "Fade to black strength [0..1]" : "0"
+	fadetoblackstrength(float) : "Fade to black strength [0..1]" : "0"
 
 	depthblurfocaldistance(float) : "Depth-blur focal plane distance [0..1]" : "0"
 	depthblurstrength(float) : "Depth-blur effect strength [0..x]" : "0"

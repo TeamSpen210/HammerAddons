@@ -42,7 +42,7 @@
 	output OnUser2(void) : "Fired in response to FireUser2 input."
 	output OnUser3(void) : "Fired in response to FireUser3 input."
 	output OnUser4(void) : "Fired in response to FireUser4 input."
-	output OnKilled[MBase, L4D](void) : "Fired when the entity is killed and removed from the game."
+	output OnKilled[MBase](void) : "Fired when the entity is killed and removed from the game."
 
 	// Mapbase BaseEntity changes:
 	input PassUser1[MBase](string) : "Causes this entity's OutUser1 output to be fired, passing along the parameter unchanged."

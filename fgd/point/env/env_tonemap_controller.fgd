@@ -4,7 +4,7 @@
 	color(200 0 0)
 = env_tonemap_controller: "An entity that controls the HDR tonemapping for the player. Think of it as a method of controlling the exposure of the player's eyes."
 	[
-	spawnflags[since_L4D](flags) : "spawnflags" =
+	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Master (Has priority if multiple env_tonemap_controllers exist)" : 0
 		]
@@ -31,11 +31,6 @@
 	input UseDefaultBloomScale(void) : "Revert to using the default bloom scale."
 	input SetBloomScaleRange[MBase](string) : "Specify a base and minimum bloom scale. Format is <max bloom> <min bloom>."
 	input SetTonemapRate(float) : "Set the rate for autoexposure adjustment."
-	input SetBloomExponent[since_L4D](float) : "Set a custom bloom exponent."
-	input SetBloomSaturation[since_L4D](float) : "Set a custom bloom saturation."
-	input SetTonemapPercentBrightPixels[since_L4D2](float) : "Set a target for percentage of pixels above a certain brightness. (default: 2)"
-	input SetTonemapPercentTarget[since_L4D2](float) : "Set a custom brightness target for SetTonemapPercentBrightPixels. (default: 60)"
-	input SetTonemapMinAvgLum[since_L4D2](float) : "Sets custom tonemapping param (ask Alex for details; default: 3)."
 
 	input InputSetBloomNxtGen_Threshold[MESA](float) : "InputSetBloomNxtGen_Threshold"
 	
@@ -43,4 +38,9 @@
 	input InputSetBloomNxtGen_TintG[MESA](float) : "InputSetBloomNxtGen_TintG"
 	input InputSetBloomNxtGen_TintB[MESA](float) : "InputSetBloomNxtGen_TintB"
 	input InputSetBloomNxtGen_Exponent[MESA](float) : "InputSetBloomNxtGen_Exponent"
+	input SetBloomExponent(float) : "Set a custom bloom exponent."
+	input SetBloomSaturation(float) : "Set a custom bloom saturation."
+	input SetTonemapPercentBrightPixels(float) : "Set a target for percentage of pixels above a certain brightness. (default: 2)"
+	input SetTonemapPercentTarget(float) : "Set a custom brightness target for SetTonemapPercentBrightPixels. (default: 60)"
+	input SetTonemapMinAvgLum(float) : "Sets custom tonemapping param (ask Alex for details; default: 3)."
 	]

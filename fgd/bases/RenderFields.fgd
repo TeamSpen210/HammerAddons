@@ -48,16 +48,11 @@
 		8: "Fast Become Solid"
 
 		14: "Constant Glow"
-		15: "Distort" [until_L4D]
-		16: "Hologram (Distort + fade)" [until_L4D]
-		23: "Cull By Distance (TEST)" [until_L4D]
-		24: "Spotlight FX" [until_L4D]
-		26: "Fade Near" [until_L4D]
 
-		15: "Fade Out" [since_L4D]
-		16: "Fade In" [since_L4D]
-		17: "Pulse Fast Wider" [since_L4D]
-		18: "Glow Shell" [since_L4D]
+		15: "Fade Out"
+		16: "Fade In"
+		17: "Pulse Fast Wider"
+		18: "Glow Shell"
 
 		// Todo, confirm which versions have these - via Pinsplash
 		17: "Scale Up" [TF2]
