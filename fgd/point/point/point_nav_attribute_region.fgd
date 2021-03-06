@@ -1,7 +1,0 @@
-@PointClass appliesto(L4D2) base(BaseEntityPoint, NavAttributeRegion) 
-	wirebox(mins, maxs)
-= point_nav_attribute_region: "A point entity that holds attributes to be applied to regions of nav areas during generation."
-	[
-	mins(vector) : "Mins" : "-4 -128 -80"
-	maxs(vector) : "Maxs" : "4 128 80"
-	]

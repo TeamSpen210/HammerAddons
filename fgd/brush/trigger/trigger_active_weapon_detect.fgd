@@ -1,7 +1,0 @@
-@SolidClass appliesto(L4D2) base(Trigger) = trigger_active_weapon_detect: "Fires output when touched by a player that has a specific weapon active"
-	[
-	weaponclassname(string) : "Weapon To Detect" : "weapon_dieselcan" : "weapon classname that player must have active"
-
-	// Outputs
-	output OnTouchedActiveWeapon(void) : "Touched a player who has our weapon active"
-	]

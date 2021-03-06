@@ -1,7 +1,0 @@
-@PointClass base(env_tonemap_controller) 
-	appliesto(L4D, L4D2)
-	iconsprite("editor/env_tonemap_controller.vmt")
- 	autovis(Point Entities, Globals, Tonemap Controller)
-= env_tonemap_controller_ghost: "An entity that controls the HDR tonemapping for ghost players."
-	[
-	]

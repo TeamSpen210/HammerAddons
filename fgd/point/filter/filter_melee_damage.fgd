@@ -1,6 +1,0 @@
-@FilterClass appliesto(L4D2)
-	autovis(Logic, Filters)
-	base(filter_base, DamageType) 
-= filter_melee_damage: "A damage filter that filters by the damage, allowing only melee damage. damagetype specifies which types of melee damage are all" + "owed"
-	[
-	]

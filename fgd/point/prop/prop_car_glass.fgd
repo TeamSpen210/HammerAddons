@@ -1,8 +1,0 @@
-@PointClass base(prop_dynamic) 
-	appliesto(L4D, L4D2)
-	studioprop()
-	sphere(fademindist)
-	sphere(fademaxdist)
-= prop_car_glass: "This class is the same as prop_dynamic, with a car alarm."
-	[
-	]
