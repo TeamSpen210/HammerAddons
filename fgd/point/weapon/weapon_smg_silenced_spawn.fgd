@@ -1,6 +1,0 @@
-@PointClass appliesto(L4D2) base(WeaponSpawn) 
-	studioprop("models/w_models/Weapons/w_smg_uzi.mdl")
-	autovis(Weapons, L4D Weapons, Weapon Spawners)
-= weapon_smg_silenced_spawn: "MicroUZI"
-	[
-	]

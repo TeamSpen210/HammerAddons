@@ -1,5 +1,0 @@
-@PointClass appliesto(L4D2) base(BaseEntityPhysics, SetModel) 
-	studioprop()
-= scripted_item_drop: "An item with basic physics that detects player touch."
-	[
-	]

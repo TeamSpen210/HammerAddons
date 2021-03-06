@@ -1,9 +1,0 @@
-@PointClass appliesto(L4D2) base(BaseEntityPoint) = game_scavenge_progress_display
-	[
-	max(float) : "Max" : 0 : "Number of items to collect."
-
-	// Inputs
-	input TurnOn(void) : "Turn the display on."
-	input TurnOff(void) : "Turn the display off."
-	input SetTotalItems(integer) : "Set the target (or total) number of scavenge itmes."
-	]

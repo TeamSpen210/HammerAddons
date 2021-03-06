@@ -1,6 +1,0 @@
-@PointClass appliesto(L4D2) base(WeaponSpawn) 
-	studioprop("models/w_models/weapons/w_grenade_launcher.mdl")
-	autovis(Weapons, L4D Weapons, Weapon Spawners)
-= weapon_grenade_launcher_spawn: "Grenade Launcher"
-	[
-	]

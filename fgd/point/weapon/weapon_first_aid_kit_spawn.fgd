@@ -1,7 +1,0 @@
-@PointClass base(WeaponSpawnSingle) 
-	appliesto(L4D, L4D2)
-	studioprop("models/w_models/weapons/w_eq_Medkit.mdl")
-	autovis(Weapons, L4D Weapons, Weapon Spawners)
-= weapon_first_aid_kit_spawn: "First Aid Kit"
-	[
-	]

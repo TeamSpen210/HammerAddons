@@ -1,4 +1,4 @@
-@SolidClass base(BaseEntityBrush, NavBlocker) 
+@SolidClass base(BaseEntityBrush) 
 	appliesto(TF2, L4D, L4D2, CSGO)
 = func_nav_blocker: "A brush entity that can block nav areas touching its AABB."
 	[
