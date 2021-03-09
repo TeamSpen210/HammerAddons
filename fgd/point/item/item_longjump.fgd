@@ -1,5 +1,5 @@
-@PointClass base(BaseMesaPickup) appliesto(Mesa) 
-	 studio("models/weapons/w_longjump.mdl") 
+@PointClass base(Item) 
+	 studio("models/w_longjump.mdl") 
 = item_longjump: "Longjump Module"
 	[
 	]

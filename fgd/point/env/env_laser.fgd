@@ -25,5 +25,4 @@
 	// Outputs
 	output OnTouchedByEntity[MBase](void) : "Fired when an entity touches the laser. " +
 		"Please note this fires for each frame the entity is touching, unlike env_beam."
-	output OnTouchedByPlayer[MESA](void) : "Fired when an player touches the beam. Only fired if the entity passes the 'Touch Type' choice."
 	]

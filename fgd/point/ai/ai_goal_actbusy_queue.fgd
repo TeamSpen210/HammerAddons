@@ -3,7 +3,7 @@
 	autovis(AI, AI Goal)
 	autovis(AI, Act Busy)
 	size(-8 -8 -8, 8 8 8)
-	appliesto(EP1, EP2, HL2, P1, P2, Mesa) 
+	appliesto(EP1, EP2, HL2, P1, P2) 
 = ai_goal_actbusy_queue: "AI Goal Act Busy Queue"
 	[
 	node_exit(target_destination) : "Exit Node" : : "The name of the node the first NPC in the queue should move to when he leaves the head of the queue."

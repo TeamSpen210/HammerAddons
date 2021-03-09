@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(!MESA) // Mesa tried rewriting this with particles etc, but is currently disabled.
+@PointClass base(BaseEntityPoint)
 	color(32 200 255) 
 	// Special model, so scale doesn't resize the sprite.
 	studio("models/editor/env_splash.mdl") 

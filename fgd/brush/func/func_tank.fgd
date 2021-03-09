@@ -1,10 +1,10 @@
 @SolidClass base(BaseTank) 
-	appliesto(HL2, EP1, EP2, P1, P2, CSGO, Mesa) = func_tank: "Brush Gun Turret"
+	appliesto(HL2, EP1, EP2, P1, P2, CSGO) = func_tank: "Brush Gun Turret"
 	[
 	shootsound[MBase](sound) : "Shoot Sound" : "" : "Plays a specific sound each time this tank fires."
 
 	ammotype[engine](string) : "Ammo Type"
-	ammotype[!Mesa](choices) : "Ammo Type" =
+	ammotype(choices) : "Ammo Type" =
 		[
 		"": "None"
 		"Pistol": "Pistol"
@@ -12,14 +12,6 @@
 		"AR2": "AR2"
 		"CombineHeavyCannon": "Combine Heavy Cannon"
 		"StriderMinigun" : "Strider Minigun"
-		]
-	ammotype[Mesa](choices) : "Ammo Type" =
-		[
-		"" : "None"
-		"9mm" : "9mm"
-		"357" : "357"
-		"buckshot" : "buckshot"
-		"energy" : "energy"
 		]
 
 	spawnflags(flags) : "spawnflags" =

@@ -10,6 +10,7 @@
 	hinttype(choices) : "Hint" : "0" =
 		[
 		0: "None"
+		1: "World: Door (Not Used)"
 		2: "World: Window"
 		12: "World: Act Busy Hint"
 		13: "World: Visually Interesting"
@@ -20,6 +21,7 @@
 		101: "Tactical: Crouch Cover Low"
 		102: "Waste Scanner Spawn" [HL2, EP1, EP2]
 		103: "Tactical: Entrance / Exit Pinch"
+		104: "Tactical: Guard (Not Used)"
 		105: "Tactical: Enemy Disadvantage Point"
 		106: "Tactical: Health Kit" [HL2, EP1, EP2]
 		107: "Tactical: High Ground"
@@ -43,17 +45,7 @@
 		1002: "HL1 World: Human Blood"
 		1003: "HL1 World: Alien Blood"
 
-		1200: "MiniBoss Node ( Garga & Bigmomma )" [MESA]
-		1201: "MiniBoss Charge ( Bigmomma )" [MESA]
-		1202: "Fear Point Ground" [MESA]
-		1203: "Fear Point Air" [MESA]
-		1204: "Heal Point Ground" [MESA]
-		1205: "Heal Point Air" [MESA]
-		1206: "Gonarch Cliff Hint" [MESA]
-		1207: "Nihi Ground Node" [MESA]
-		1208: "Nihi Air Node" [MESA]
- 
-		1300: "Aperture: Nest"
+		1200: "Portal 2: Nest"
 		]
 
 	hintactivity(string) : "Hint Activity" : : "Activity associated with this hint node. " +

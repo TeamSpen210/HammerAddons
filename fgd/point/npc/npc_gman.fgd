@@ -1,5 +1,5 @@
 @NpcClass base(TalkNPC) 
-	appliesto(EP1, EP2, HL2, P1, Mesa) 
+	appliesto(EP1, EP2, HL2, P1) 
 	autovis(Entities, NPCs, G-Man)
 	studio("models/gman.mdl") = npc_gman: "The G-Man."
 	[

@@ -105,11 +105,11 @@
 	
 	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's origin."
 
-	linedivider_lmap[TF2, MESA, !engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_lmap[TF2, !engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
-	generatelightmaps[TF2, MESA](boolean) : "Generate (and use) lightmaps for this static prop" : 0
-	lightmapresolutionx[TF2, MESA](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
-	lightmapresolutiony[TF2, MESA](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
+	generatelightmaps[TF2](boolean) : "Generate (and use) lightmaps for this static prop" : 0
+	lightmapresolutionx[TF2](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
+	lightmapresolutiony[TF2](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
 	
 
 	linedivider_fade[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
