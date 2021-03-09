@@ -1,8 +1,0 @@
-@PointClass base(BaseEntityPoint) appliesto(Mesa)
-	size(-4 -4 -4, 4 4 4)
-	autovis(Entities, Point Entities, Globals, Intro Credits)
-= env_introcredits
-	[
-	startactive(boolean) : "Start Active" : 0
-	input Activate(void) : "Activate"
-	]

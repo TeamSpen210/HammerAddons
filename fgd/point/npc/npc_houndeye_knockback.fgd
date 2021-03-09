@@ -1,5 +1,0 @@
-@NpcClass base(npc_houndeye) appliesto(Mesa)
-	autovis(Entities, NPCs, Xen, Houndeye)
-	studioprop("models/xenians/houndeye_knockback.mdl") = npc_houndeye_knockback : "Houndeye (Knockback)"
-	[
-	]

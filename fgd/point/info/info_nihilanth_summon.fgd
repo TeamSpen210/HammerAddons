@@ -1,5 +1,0 @@
-@PointClass base(BaseEntityPoint) appliesto(Mesa)
-	iconsprite("editor/info_target.vmt")  
-= info_nihilanth_summon: "Nihilanth summon spawn point"
-[
-]

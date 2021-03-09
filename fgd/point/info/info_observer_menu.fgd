@@ -1,6 +1,0 @@
-@PointClass base(BaseEntityPoint) appliesto(Mesa) 
-	studioprop("models/editor/camera.mdl") 
-= info_observer_menu : "A position for a menu fade in"
-	[
-	observerid(integer) : "ID" : 0 : "Corresponds to the index of a loading material for this map."
-	]
