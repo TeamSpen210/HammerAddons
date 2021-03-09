@@ -19,8 +19,6 @@
 	maxlivechildren(integer) : "Max Live NPCs" : 5 : "Maximum number of live children allowed at any one time (new ones will not be made until one dies). " +
 		"If set to -1, no limit is applied."
 
-	ForceScheduleOnSpawn[MESA](string) : "ForceScheduleOnSpawn" : "" : "Name of NPC schedule that we want to play on spawn."
-
 	hullcheckmode[engine](boolean) : "Hull Check Mode" : 0
 	hullcheckmode(choices) : "Hull Check Mode" : 0 : "How NPC's hull should be checked at spawn destination?" =
 		[

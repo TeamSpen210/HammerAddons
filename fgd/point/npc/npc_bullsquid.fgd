@@ -1,6 +1,6 @@
-@NpcClass base(BaseNPCAssault) appliesto(Mesa) 
+@NpcClass base(BaseNPCAssault)
 	autovis(Entities, NPCs, Xen, Bullsquid)
-	studio("models/xenians/bullsquid.mdl") 
+	studio("models/bullsquid.mdl") 
 = npc_bullsquid: "Bullsquid"
 	[
 	]

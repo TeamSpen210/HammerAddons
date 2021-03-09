@@ -30,6 +30,4 @@
 	// Outputs
 	output OnTrigger(void) : "Fired when the trigger is activated."
 	output OnTimeout(void) : "Fired after the timeout interval expires if the player never looked at the target."
-	output OnStopLooking[Mesa](void) : "When the player was looking the target, this output is fired as soon as player no longer looks at it."
-	output OnNotLooking[Mesa](void) : "fired every 'NotLookingFrequency' seconds while player is NOT looking at target."
 	]

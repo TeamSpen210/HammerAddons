@@ -8,7 +8,6 @@
 	movedistance(float) : "Move Distance" : 100 : "The distance from the starting point that the water brush should move, in units."
 	startsound(sound) : "Sound played when the water brush starts moving."
 	stopsound(sound) : "Sound played when the water brush stops moving."
-	WaterMaterial[MESA](material) : "Water Material" : "liquids/c4a1_water_green" : "The material to derive water information from"
 	waveheight(string) : "Wave Height" : "3.0"
 
 	// Inputs

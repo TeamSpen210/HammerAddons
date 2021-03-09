@@ -58,7 +58,6 @@
 		7: "Unbreakable Glass"
 		8: "Rocks"
 		9: "Metal Panel" [P2]
-		9: "Web" [MESA]
 		10: "None"
 		]
 
@@ -104,43 +103,6 @@
 		24: "weapon_shotgun"
 		25: "weapon_molotov"
 		26: "item_dynamic_resupply"
-		]
-
-	spawnobject[MESA](choices) : "Spawn On Break" : 0 : "When broken, an entity of the selected type will be created." =
-		[
-		1:	"item_battery"				
-		2:	"item_healthkit"			
-		24:	"weapon_shotgun"			
-
-		// black mesa items
-		27: "item_ammo_glock"
-		28: "item_ammo_mp5"
-		29: "item_ammo_357"
-		30: "item_ammo_crossbow"
-		31: "item_ammo_shotgun"
-		32: "item_ammo_energy"
-		33: "item_grenade_mp5"
-		34: "item_grenade_rpg"
-
-		35: "item_weapon_357"
-		36: "item_weapon_crossbow"
-		37: "item_weapon_crowbar"
-		38: "item_weapon_frag"
-		39: "item_weapon_glock"
-		40: "item_weapon_gluon"
-		41: "item_weapon_hivehand"
-		42: "item_weapon_mp5"
-		43: "item_weapon_rpg"
-		44: "item_weapon_satchel"
-		45: "item_weapon_shotgun"
-		46: "item_weapon_snark"
-		47: "item_weapon_tau"
-		48: "item_weapon_tripmine"
-
-		49: "item_syringe"
-		50: "item_ammo_box"
-
-		51: "prop_soda"
 		]
 
 

@@ -32,13 +32,6 @@
 		"no_taunting_orange": "Prevent Taunting P-Body"
 		]
 
-	globalstate[Mesa](choices) : "Global State to Set" =
-		[
-		"predisaster" : "Pre-Disaster"
-		"friendly_encounter" : "Friendly encounter sequence (lower weapons, etc.)"
-		"gordon_invulnerable" : "Player is invulnerable"
-		]
-
 	initialstate[engine](integer) : "Initial State" : 0
 	initialstate(choices) : "Initial State" : 0 =
 		[

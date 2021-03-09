@@ -28,5 +28,4 @@
 	]
 
 	input Trigger(void) : "Trigger the track change."
-	input ForceTrigger[MESA](void) : "Force the track change."
 	]

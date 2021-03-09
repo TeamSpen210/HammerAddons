@@ -1,16 +1,13 @@
-@BaseClass appliesto(-mesa, -MBase) studioprop("models/items/ammocrate_rockets.mdl") = _item_ammo_crate_fixed []
-@BaseClass appliesto(+mesa) studioprop() = _item_ammo_crate_settable []
+@BaseClass appliesto(-MBase) studioprop("models/items/ammocrate_pistol.mdl") = _item_ammo_crate_fixed []
 @BaseClass appliesto(+MBase) studioprop("models/items/ammocrate_empty.mdl") = _item_ammo_crate_mbase []
 
-@PointClass base(BaseEntityAnimating) 
-	appliesto(EP1, EP2, HL2, P1, Mesa) 
-	base(_item_ammo_crate_fixed, _item_ammo_crate_settable, _item_ammo_crate_mbase)
+@PointClass base(BaseEntityAnimating)
+	appliesto(EP1, EP2, HL2, P1)
+	base(_item_ammo_crate_fixed, _item_ammo_crate_mbase)
 = item_ammo_crate: "Ammo Crate"
 	[
-	model[Mesa](studio) : "Model" : "models/items/ammocrate_rockets.mdl" : "Model to use for the ammo crate"
-
 	ammotype[engine](string) : "Ammo Type" : 0
-	ammotype[!Mesa](choices) : "Ammo Type" : 0 =
+	ammotype(choices) : "Ammo Type" : 0 =
 		[
 		0: "Pistol"
 		1: "SMG1"
@@ -25,29 +22,14 @@
 		10 : "S.L.A.M." [MBase]
 		11 : "Empty" [MBase]
 		]
-	AmmoType[Mesa](choices) : "Ammo Type" : "grenade_rpg" =
-		[
-		"9mm" : "9mm Rounds"
-		"357" : ".357 Rounds"
-		"bolt" : "Bolts"
-		"buckshot" : "Buckshot"
-		"energy" : "Energy"
-		"grenade_mp5" : "Mp5 Grenade"
-		"grenade_rpg" : "RPG"
-		"grenade_frag" : "Frag Grenades"
-		"grenade_satchel" : "Satchels"
-		"grenade_tripmine" : "Tripmines"
-		]
 	
 	skin[MBase](integer) : "Skin" : 0 : "The ''Empty'' ammo crate can use multiple skins based on other crates. " +
 		"Changing the skin might be reflected in the viewport, " +
 		"but it will only apply to the empty ammo crate."
 
-	isDynamicMoving[Mesa](integer) : "CanMove" : 0 : "CanMove"
-	AmmoCount[Mesa](integer) : "Ammo Count" : 1 : "Ammo Count"
-
 	// Inputs
 	input Skin[MBase](integer) : "Changes the model skin to the specified number."
+	input Kill(void) : "Remotes the crate."
 
 	// Outputs
 	output OnUsed(void) : "Fires when +used by the player."

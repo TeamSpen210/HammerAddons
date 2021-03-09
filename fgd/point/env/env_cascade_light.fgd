@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(since_CSGO, MESA) 
+	appliesto(since_CSGO) 
 	iconsprite("editor/env_cascade_light.vmt") 
 	lightprop("models/editor/spot.mdl") 
 = env_cascade_light: "An entity to control the sunlight that casts cascaded shadows in the map."
@@ -19,21 +19,6 @@
 		"the CSM shadow angles are automatically harvested from the light_environment's angles. " +
 		"If false, this entity's angles are used."
 
-	LightRadius1[MESA](float) : "LightRadius1" : "0.001" : "Used for controlling shadow softness in cascade 1"
-	LightRadius2[MESA](float) : "LightRadius2" : "0.001" : "Used for controlling shadow softness in cascade 2"
-	LightRadius3[MESA](float) : "LightRadius3" : "0.001" : "Used for controlling shadow softness in cascade 3"
-	
-	Depthbias1[MESA](float) : "Depthbias1" : "0.00025" : "DepthBias for cascade 1"
-	Depthbias2[MESA](float) : "Depthbias2" : "0.00005" : "DepthBias for cascade 2"
-	Depthbias3[MESA](float) : "Depthbias3" : "0.00005" : "DepthBias for cascade 3"
-	
-	Slopescaledepthbias1[MESA](float) : "Slopescaledepthbias1" : "2.0" : "Slope DepthBias for cascade 1"
-	Slopescaledepthbias2[MESA](float) : "Slopescaledepthbias2" : "2.0" : "Slope DepthBias for cascade 2"
-	Slopescaledepthbias3[MESA](float) : "Slopescaledepthbias3" : "2.0" : "Slope DepthBias for cascade 3"
-	
-	ViewModelDepthbias[MESA](float) : "ViewModelDepthbias" : "0.000009" : "DepthBias for viewmodel cascade"
-	ViewModelSlopescaledepthbias[MESA](float) : "ViewModelSlopescaledepthbias" : "0.9" : "DepthBias for viewmodel cascade"
-	
 	CSMVolumeMode[engine](integer) : "Volume Mode"
 	CSMVolumeMode(choices) : "CSM_Volume_Mode" : 0 : "CSM Volume Modes " +
 		"- Auto: Static cache will update once every 10 frames (approx) covering max shadow distance or whole map around player. " +
@@ -47,9 +32,6 @@
 
 	// Inputs
 	input LightColor(color255) : "Set the light color."
+	input LightColorScale(integer) : "Set the light color scale"
 	input SetAngles(string) : "Set the sun direction."
-	
-	input SetCSMVolume[MESA](void) : "Set CSM Volume via trigger volume"
-	input SetCSMVolumeToSceneBounds[MESA](void) : "Set csm Volume to scene bounds"
-	input SetCSMVolumeViaCSMVolumeEntity[MESA](target_destination) : "Set csm Volume to csm volumne entity"
 	]

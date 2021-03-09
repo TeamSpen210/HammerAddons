@@ -17,14 +17,6 @@
 		4: "Concrete"
 		]
 
-	simulation[engine](integer) : "Simulate"
-	simulation(choices) : "Simulate" : "0" =
-		[
-		0: "Point"
-		1: "Physics"
-		2: "Ragdoll"
-		]
-
 	skin(integer) : "Gib Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin on all gi" + "bs produced by this shooter."
 	spawnflags(flags)  =
 		[
@@ -37,15 +29,4 @@
 
 	massoverride(float) : "Mass override" : 0 : "EPISODIC ONLY. Specify an arbitrary mass for the gibs emitted by me."
 
-	bloodcolor[engine](integer) : "Blood Color" : -1
-	bloodcolor[MESA](choices) : "Blood Color" : -1 =
-		[
-		-1 : "None"
-		0 : "Red (Human)"
-		1 : "Yellow (Alien)"
-		2 : "Green (Alien)"
-		3 : "Grey (Mech)"
-		]
-
-	touchkill[MESA](boolean) :"Explode on Impact" : 0
 	]

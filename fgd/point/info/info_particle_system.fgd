@@ -67,8 +67,7 @@
 	[
 	effect_name(particlesystem) : "Particle System Name"
 	start_active(boolean) : "Start Active?" : 0
-	flag_as_weather[TF2, MESA](boolean) : "Flag as Weather?" : 0 : "Is this particle system going to be used as a weather effect?"
-	orientation_follows_viewer[MESA](boolean) : "Orientation Follows Viewer?" : 0 
+	flag_as_weather[TF2](boolean) : "Flag as Weather?" : 0 : "Is this particle system going to be used as a weather effect?"
 
 	cpoint1(target_destination) : "Control Point 1" : : "If set, control point 1 of the effect will be at this entity's location."
 	cpoint2(target_destination) : "Control Point 2" : : "If set, control point 2 of the effect will be at this entity's location. If control point 1 is not set, this will be ignored."
