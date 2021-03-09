@@ -1,6 +1,0 @@
-@NPCClass base(BaseNPC) appliesto(Mesa) 
-	studio("models/props_xen/foliage/hacker_tree.mdl")
-	autovis(Entities, NPCs, Xen, Xen Deco)
-= npc_xentree : "Xen Tree"
-	[
-	]

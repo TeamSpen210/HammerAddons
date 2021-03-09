@@ -1,7 +1,0 @@
-@NPCClass base(BaseNPC) 
-	appliesto(Mesa)
-	autovis(Entities, NPCs, Xen, Tentacle)
-	 studio("models/xenians/tentacle.mdl")
-= npc_tentacle : "Tentacle"
-	[
-	]

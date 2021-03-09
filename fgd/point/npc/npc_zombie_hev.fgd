@@ -1,9 +1,0 @@
-@NpcClass base(BaseZombie) 
-	appliesto(Mesa) 
-	autovis(Entities, NPCs, Zombies, Zombie HEV)
-	studio("models/Zombie/zombie_hev.mdl") = npc_zombie_hev : "Zombie HEV"
-	[
-	flashlight_status(boolean) : "Start with Flashlight" : 1 : "Should the zombie start with flashlight enabled."
-	FlashLight_Shadows(boolean) : "FlashLight Shadows" : 0 : "USE IT WITH CAUTION. Enables dynamic shadows on flashlight"
-	input SetFlashLightState(boolean) : "Set FlashLight State"
-	]

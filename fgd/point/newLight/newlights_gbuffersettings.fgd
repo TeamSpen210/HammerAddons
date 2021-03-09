@@ -1,8 +1,0 @@
-@PointClass base(BaseEntityPoint) appliesto(MESA) 
-= newlights_gbuffersettings : "An entity to control some of the Gbuffer Settings via Hammer"
-[
-	Enable4WaysFastPath(boolean) : "Enable4WaysFastPath" : 1 : "Enable 4ways Fast path" 
-	DisableGbufferOnSecondaryCams(boolean) : "DisableGbufferOnSecondaryCams" : 0  : "Disable Gbuffer/NewLights/Fx for secondary cams like point cam, intro cam, water, reflection,refraction view"
-	DisableGbufferOnRefractions(boolean) : "DisableGbufferOnRefractions" : 0  : "Disable Gbuffer/NewLights/Fx for refraction view"
-	DisableGbufferOnReflections(boolean) : "DisableGbufferOnReflections" : 0  : "Disable Gbuffer/NewLights/Fx reflection view etc"
-]

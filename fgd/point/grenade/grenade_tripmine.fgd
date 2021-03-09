@@ -1,6 +1,0 @@
-@PointClass base(BaseGrenade)
-	appliesto(Mesa)
-	studio("models/weapons/w_tripmine.mdl")
-	= grenade_tripmine : "Tripmine" 
-	[
-	]

@@ -1,6 +1,0 @@
-@NPCClass base(BaseNPC) appliesto(Mesa) 
-	studio("models/xenians/protozoan.mdl")
-	autovis(Entities, NPCs, Xen, Xen Deco)
-= npc_protozoan : "Protozoan"
-	[
-	]

@@ -1,8 +1,0 @@
-@PointClass base(BaseEntityPoint) appliesto(Mesa)
-	iconsprite("editor/info_target.vmt")
-= env_tram_screen
-	[
-	panelname(string) : "Panel Name" : : "TramScreen"
-	functrainname(target_destination) : "Func Train To Trigger" : : ""
-	propname(target_destination) : "Prop To Attach" : : ""
-	]

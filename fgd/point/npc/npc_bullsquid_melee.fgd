@@ -1,6 +1,0 @@
-@NpcClass base(BaseNPCAssault) appliesto(Mesa)
-	autovis(Entities, NPCs, Xen, Bullsquid)
-	studio("models/xenians/bullsquid.mdl") 
-= npc_bullsquid_melee: "Bullsquid (Melee)"
-	[
-	]

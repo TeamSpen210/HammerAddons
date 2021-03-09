@@ -1,8 +1,0 @@
-@NPCClass base(BaseNPC) 
-	appliesto(Mesa)
-	autovis(Entities, NPCs, Xen, Live Snark)
-	 studio("models/xenians/snark.mdl")
-= npc_snark : "Armed Snark"
-	[
-	m_fLifeTime(float) : "myLifeTime" : 14 : "LifeTime. Default value is 14.5 secs"
-	]

@@ -1,5 +1,0 @@
-@NpcClass base(BaseMarine) appliesto(Mesa)
-	autovis(Entities, NPCs, Military, Military Commander)
-	studioprop("models/humans/marine.mdl") = npc_human_commander : "Human Commander"
-	[
-	]
