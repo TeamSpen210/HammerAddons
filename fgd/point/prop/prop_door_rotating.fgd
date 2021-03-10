@@ -57,7 +57,7 @@
 		8192: "Use closes" : 1
 		16384: "Door silent to NPCS (Does not alert NPCs)" : 0
 		32768: "Ignore player +USE" : 0
-		524288: "Start Breakable" : 0 [since_CSGO, GMod]
+		524288: "Start Breakable" : 0 [since_CSGO]
 		]
 
 	opendir[engine](integer) : "Open Direction" : 0
@@ -85,7 +85,7 @@
 	input AllowPlayerUse[MBase](void) : "Allows players to use the door. This just disables the 'Ignore player +USE' spawnflag."
 	input DisallowPlayerUse[MBase](void) : "Prevents players from using the door. This just enables the 'Ignore player +USE' spawnflag."
 
-	input MoveToRotationDistance[Gmod, since_P2](float) : "Sets the open distance (in degrees) and moves there."
+	input MoveToRotationDistance[since_P2](float) : "Sets the open distance (in degrees) and moves there."
 	input SetGlowEnabled[since_CSGO](void) : "Starts the glow."
 	input SetGlowDisabled[since_CSGO](void) : "Stops the glow."
 	input SetUnbreakable(void) : "The door can't be broken."
@@ -101,5 +101,5 @@
 	output OnUnblockedClosing(void) : "Fired when the door is unblocked while closing."
 	output OnUnblockedOpening(void) : "Fired when the door is unblocked while opening."
 	output OnLockedUse(void) : "Fired when the player uses the door, but it is locked."
-	output OnRotationDone[GMod, since_P2](void) : "Fired when the door arrives at it's goal angle."
+	output OnRotationDone[since_P2](void) : "Fired when the door arrives at it's goal angle."
 	]

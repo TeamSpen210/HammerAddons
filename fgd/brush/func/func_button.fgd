@@ -22,7 +22,7 @@
 		1024: "Use Activates" : 1
 		2048: "Starts locked" : 0
 		4096: "Sparks" : 0
-		16384: "Non-solid" : 0 [since_CSGO, GMod]
+		16384: "Non-solid" : 0 [since_CSGO]
 		]
 
 	customsound(sound) : "Sound Name" : : "The .wav(!!) sound file to use. (Only used when old 'sounds' keyvalue isn't set)"

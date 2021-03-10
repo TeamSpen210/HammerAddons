@@ -1,4 +1,4 @@
-@SolidClass appliesto(-engine, TF2, GMod) 
+@SolidClass appliesto(-engine, TF2) 
 = func_detail_blocker: 
 	"A brush entity that prevents detail sprites from being placed inside its volume."
 	[
