@@ -22,14 +22,6 @@
 	vscript_init_code[+VSCRIPT, +srctools](string) : "Init Code" : : "This code will be executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings."
 	vscript_init_code2[+VSCRIPT, +srctools](string) : "Init Code 2" : : "This code will be the second line executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings. " +
 		"Additional Init Code keyvalues can be added with SmartEdit off."
-	// etc
-
-	gmod_allowphysgun[GMod](boolean) : "Allow Physics Gun" : 1 : "If set, " +
-		"players cannot use Physics Gun on this entity."
-	gmod_allowtools[Gmod](string) : "Sandbox Tool Whitelist" : "" : "If set, " +
-		"only given tools can be used on this entity.\n" +
-		"You need to supply the tool class names, the names of the .lua files of those tools.\n" +
-		"This also includes the context menu properties!"
 
 	linedivider_base[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
