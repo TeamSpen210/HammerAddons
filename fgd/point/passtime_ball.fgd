@@ -1,7 +1,0 @@
-@PointClass base(BaseEntityAnimating, TeamNum) 
-	appliesto(TF2) 
-	studio("models/passtime/ball/passtime_ball.mdl")
-= passtime_ball : "Jack"
-	[
-	modelscale(float) : "Model Scale" : "1.0" : "A multiplier for the size of the model."
-	]

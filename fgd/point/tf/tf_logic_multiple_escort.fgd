@@ -1,4 +1,0 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(TF2) = tf_logic_multiple_escort: "When present, activates Playload Race Mode."
-	[
-	]

@@ -1,6 +1,0 @@
-@PointClass base(BaseNPC, EnableDisable, TeamNum)
-	appliesto(TF2)
-	studio("models/props_halloween/halloween_demoeye.mdl")
-= eyeball_boss : "Monoculus"
-	[
-	]

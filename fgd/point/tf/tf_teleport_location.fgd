@@ -1,4 +1,0 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(TF2) = tf_teleport_location: "Players teleport locations which will be delete on round start"
-	[
-	]

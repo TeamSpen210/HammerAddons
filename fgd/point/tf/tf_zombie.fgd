@@ -1,6 +1,0 @@
-@PointClass base(BaseNPC, EnableDisable, TeamNum)
-	appliesto(TF2)
-	studio("models/bots/skeleton_sniper/skeleton_sniper.mdl")
-= tf_zombie : "Skeleton"
-	[
-	]

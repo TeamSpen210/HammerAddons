@@ -1,6 +1,0 @@
-
-@SolidClass base(Trigger, TFCondition) 
-	appliesto(TF2) = trigger_add_tf_player_condition: "A trigger that will add a condition to tf players."
-	[
-	duration(float) : "Duration" : 0 : "The duration of the condition. NOTE: -1 duration means last until the player exits the trigger."
-	]

@@ -1,5 +1,0 @@
-
-@SolidClass base(Trigger, Toggle) 
-	appliesto(TF2) = func_nogrenades: "Grenades protected area."
-	[
-	]

@@ -1,5 +1,0 @@
-
-@SolidClass base(Trigger, TeamNum) 
-	appliesto(TF2) = func_changeclass: "Obsoleted by func_respawnroom. Allows players to change class without suiciding in its volume."
-	[
-	]

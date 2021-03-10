@@ -1,6 +1,0 @@
-@PointClass base(BaseEntityAnimating) 
-	studio("models/props_training/target_demoman.mdl")
-	appliesto(TF2) 
-= tf_target_dummy : "Red Demoman Target"
-	[
-	]
