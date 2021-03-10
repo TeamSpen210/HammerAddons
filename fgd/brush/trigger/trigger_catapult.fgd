@@ -1,5 +1,5 @@
 @SolidClass base(Trigger) 
-	appliesto(P2, TF2) 
+	appliesto(P2) 
 	line(255 255 0, targetname, launchTarget) 
 = trigger_catapult: "Catapult the player in a given direction at a given velocity."
 	[
@@ -19,7 +19,6 @@
 
 	applyangularimpulse(boolean) : "Apply angular impulse" : 1 : "Physics objects that are catapulted will get random rotational force."
 	airctrlsupressiontime(float) : "Air Control Supression Time" : -1.0 : "[Launch by target only!]If greater than zero, suppress player aircontrol for this number (in seconds). If less than zero use the default (quarter second)."
-	DirectionSuppressAirControl[TF2](vector) : "Direction to Suppress Air Control" : : "Appears to suppress air control in a certain direction."
 
 	usethresholdcheck(boolean) : "Use Threshold Check" : 0 : "Use the Lower and Upper Threshold to only trigger when the object is moving at a certain speed already."
 	onlyvelocitycheck(boolean) : "Only check velocity" : 0 : "Only check velocity of the touching object - don't actually catapult it.  Use in conjunction with OnCatapulted to create velocity checking triggers.  Only works when Use Threshold Check is enabled."

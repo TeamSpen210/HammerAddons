@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(-CSGO, -P2, -TF2)
+	appliesto(-CSGO, -P2)
 	iconsprite("editor/ts2do/env_starfield.vmt")
 = env_starfield: "Starfield effect"
 	[

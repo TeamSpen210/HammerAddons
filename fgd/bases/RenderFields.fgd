@@ -53,19 +53,9 @@
 		16: "Fade In"
 		17: "Pulse Fast Wider"
 		18: "Glow Shell"
-
-		// Todo, confirm which versions have these - via Pinsplash
-		17: "Scale Up" [TF2]
-		18: "Glow Shell" [TF2]
-		19: "Clamp Minimum Scale (sprites only)" [TF2]
-		20: "Environmental Rain" [TF2]
-		21: "Environmental Snow" [TF2]
-		22: "Spotlight FX" [TF2]
-		23: "Ragdoll (ragdolls the entity but does NOT kill it)" [TF2]
-		24: "Fade Wider Pulse" [TF2]
 		]
 
-	mindxlevel[EP1, EP2, HL2, P1, TF2](choices) : "Minimum DX Level" : "0" =
+	mindxlevel[EP1, EP2, HL2, P1](choices) : "Minimum DX Level" : "0" =
 		[
 		 0 : "Default (lowest)"
 		60 : "DirectX 6.0"	
@@ -77,7 +67,7 @@
 		100: "DirectX 10.0"
 		]
 
-	maxdxlevel[EP1, EP2, HL2, P1, TF2](choices) : "Maximum DX Level" : "0" =
+	maxdxlevel[EP1, EP2, HL2, P1](choices) : "Maximum DX Level" : "0" =
 		[
 		0: "Default (lowest)"
 		60: "DirectX 6.0"	

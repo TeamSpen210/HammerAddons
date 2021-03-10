@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityPoint) appliesto(+engine, -TF2)
+@PointClass base(BaseEntityPoint) appliesto(+engine)
 = lookdoorthinker: "Internal entity used to continually make func_lookdoor check the looker and update its position."
 	[
 	]

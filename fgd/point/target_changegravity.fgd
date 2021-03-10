@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(TF2) 
+@PointClass base(BaseEntityPoint)
 = target_changegravity : "Changes the gravity of the player who activates this entity."
 	[
 	gravity(integer) : "Gravity" : 1 : "Gravity."

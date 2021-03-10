@@ -13,8 +13,6 @@
 		4: "Branch Reverse" : 0
 		8: "Disable train" : 0
 		16: "Teleport to THIS path track" : 0
-		32: "Part of an uphill path" : 0 [TF2]
-		64: "Part of a downhill path" : 0 [TF2]
 		32768: "Alternate path" : 0
 		]
 

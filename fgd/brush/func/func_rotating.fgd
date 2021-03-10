@@ -11,8 +11,7 @@
 		2: "Reverse Direction" : 0
 		4: "X Axis" : 0
 		8: "Y Axis" : 0
-		16: "Acc/Dcc" : 0 [!TF2]
-		16: "Client-side Animation": 0 [TF2]
+		16: "Acc/Dcc" : 0
 		32: "Fan Pain" : 0
 		64: "Not Solid" : 0
 		128: "Small Sound Radius" : 0
