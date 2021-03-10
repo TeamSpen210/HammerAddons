@@ -1,5 +1,4 @@
-@PointClass base(BaseNPC, EnableDisable, TeamNum)
-	appliesto(TF2)
+@PointClass base(BaseNPC, EnableDisable)
 	studio("models/humans/group01/female_01.mdl")
 = simple_bot : "Simple NextBot"
 	[

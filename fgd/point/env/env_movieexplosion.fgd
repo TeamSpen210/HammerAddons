@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(TF2) 
+@PointClass base(BaseEntityPoint)
 = env_movieexplosion : ""
 	[
 	]
