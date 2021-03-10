@@ -3,7 +3,7 @@
 
 """
 import itertools
-from typing import Dict
+from typing import Dict, Optional, Set
 
 from srctools import conv_int, Entity, Output
 from srctools.logger import get_logger
@@ -51,30 +51,13 @@ def branch_listener_unique_state(ctx: Context) -> None:
 
     These generate a logic_branch unique to the specific ent.
     """
-    # For each listener, specifies the prefix we've chosen for the branches
-    # we generate.
-    base_names = {}  # type: Dict[Entity, str]
-    # We clear this for every entity, it maps a listener to the branch we made.
-    branches = {}  # type: Dict[Entity, Entity]
-
-    # First, find a prefix that's unused by any entities.
-    # Put assignment at the end so we use the unprefixed name if no one
-    # else is using this name.
-    group_prefix = '_br_unique'
-    for group_ind in itertools.count(1):
-        if not any(
-            name.casefold().startswith(group_prefix)
-            for name in
-            ctx.vmf.by_target
-            if name is not None
-        ):
-            break
-        group_prefix = '_br_unique' + str(group_ind)
-
-    listener_count = itertools.count()  # Unique names for each listener.
+    # For each listener, specifies the smallest index we haven't checked.
+    listener_ind = {}  # type: Dict[Entity, int]
 
     for ent in ctx.vmf.entities:
-        branches.clear()
+        branch: Optional[Entity] = None
+        # Track which listeners the branch has been added to.
+        cur_listeners: Set[Entity] = set()
         for out in ent.outputs[:]:
             try:
                 inp_name, inp_parm = LISTENER_INPUTS[out.input.casefold()]
@@ -93,15 +76,22 @@ def branch_listener_unique_state(ctx: Context) -> None:
                     continue
                 found_listener = True
 
-                # First, we need to pick a group name for this listener,
-                # and put it in the keyvalues.
-                try:
-                    branch_prefix = base_names[listener]
-                except KeyError:
-                    branch_prefix = base_names[listener] = '{}{}_'.format(group_prefix, next(listener_count))
-                    for i in range(1, 17):
+                # Generate the branch if needed.
+                if branch is None:
+                    branch = ctx.vmf.create_ent(
+                        'logic_branch',
+                        origin=ent['origin'],
+                        targetname=ent['targetname'] + '_branch',
+                        initialvalue='0',
+                    ).make_unique()
+
+                # Add it to the listener if we haven't yet.
+                if listener not in cur_listeners:
+                    for i in range(listener_ind.get(listener, 1), 17):
                         if not listener['branch{:02}'.format(i)]:
-                            listener['branch{:02}'.format(i)] = branch_prefix + '*'
+                            listener['branch{:02}'.format(i)] = branch['targetname']
+                            # Don't re-check stuff we've already done.
+                            listener_ind[listener] = i + 1
                             break
                     else:
                         LOGGER.warning(
@@ -110,16 +100,7 @@ def branch_listener_unique_state(ctx: Context) -> None:
                             listener['targetname'],
                         )
                         continue
-
-                # Then, generate the branch if needed.
-                try:
-                    branch = branches[listener]
-                except KeyError:
-                    branches[listener] = branch = ctx.vmf.create_ent(
-                        'logic_branch',
-                        origin=ent['origin'],
-                        initialvalue='0',
-                    ).make_unique(branch_prefix)
+                    cur_listeners.add(listener)
                 # And add in the outputs.
                 ent.add_out(Output(
                     out.output,
