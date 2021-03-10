@@ -1,7 +1,0 @@
-
-@PointClass base(BaseEntityPoint, BaseObject) 
-	appliesto(TF2) 
-	autovis(TF2, TFBots, Bot Hint)
-	studio("models/buildables/teleporter_blueprint_exit.mdl") = bot_hint_teleporter_exit: "TF2 Teleporter Exit Placement Hint for Bots"
-	[
-	]

@@ -1,7 +1,0 @@
-@PointClass base(base_boss) 
-	appliesto(TF2) 
-	studioprop("models/bots/boss_bot/boss_tank_part1_destruction.mdl") 
-= tank_destruction: "Tank Boss Destruction Animation"
-	[
-	modelscale(float) : "Model Scale" : "1.0" : "A multiplier for the size of the model."
-	]

@@ -1,4 +1,0 @@
-@PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(TF2) = tf_logic_medieval: "When present, this enables Medieval mode."
-	[
-	]
