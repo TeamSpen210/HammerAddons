@@ -1,7 +1,0 @@
-@FilterClass base(filter_base) 
-	autovis(Logic, Filters)
-	appliesto(MBase) 
-	iconsprite("editor/filter_script.vmt")
-= filter_script: "A filter which utilizes hooks in its entity scripts."
-	[
-	]
