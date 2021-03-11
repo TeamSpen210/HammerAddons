@@ -1,4 +1,4 @@
-@PointClass appliesto(MBase) 
+@PointClass
 	base(BaseEntityPoint, EnableDisable)
 	size(-8 -8 -8, 8 8 8)
 = game_globalvars : "Outputs a few global variables when requested."

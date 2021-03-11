@@ -5,14 +5,9 @@
 	[
 	spawnflags(flags) =
 		[
-		4096: "No ground attack" : 0 [!MBase]
-		8192 : "Use chopper model (Lost Coast chopper)" : 0 [MBase]
+		4096: "No ground attack" : 0
+		8192 : "Use chopper model (Lost Coast chopper)" : 0
 	]
-	
-	HealthIncrements[MBase](integer) : "Health Increments" : 0 : "The number of times this gunship must be damaged before dying. " +
-		"This value is multiplied by 0.5 on Easy and 1.5 on Hard. " + 
-		"0 = the value stored in sk_gunship_health_increments (default 5)."
-	CanGroundAttack[MBase](boolean) : "Can use ground attack automatically" : 0 : "Allows this gunship to use its belly cannon automatically during combat."
 	
 	maxangaccel(float) : "Max Angular Acceleration" : 1000 : "Maximum change in rotation speed. Setting this lower means it can't start or stop turning quickly."
 	maxangvelocity(vector) : "Max Pitch Velocity" : "300 120 300" : "Maximum rotation speed. Setting this lower means it can't turn quickly."

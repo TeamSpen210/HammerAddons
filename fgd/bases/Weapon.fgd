@@ -9,27 +9,9 @@
 		1: "Start constrained" : 0
 		2: "Deny player pickup (reserve for NPC)" : 0
 		4: "Not puntable by Gravity Gun" : 0
-		8 : "Deny NPC pickup (reserve for player)" : 0 [MBase]
-		16 : "Preserve ammo values when picked up" : 0 [MBase]
-		32 : "Preserve name on player pickup" : 0 [MBase]
-		64 : "Always touchable (no obstruction checking)" : 0 [MBase]
 		]
 
-	SetAmmo1[MBase](integer) : "Ammo 1 Override" : 0 : "Overrides the amount of primary ammo this weapon has. Be sure to set 'Preserve ammo values when picked up' for this to be maintained upon pickup."
-	SetAmmo2[MBase](integer) : "Ammo 2 Override" : 0 : "Overrides the amount of secondary ammo this weapon has. Be sure to set 'Preserve ammo values when picked up' for this to be maintained upon pickup."
-	
 	canbepickedup[CSGO](boolean) : "Is this weapon allowed to be picked up?" : 1
-
-	// Inputs
-	input EnablePlayerPickup[MBase](void) : "Enables player pickup if it was previously disabled."
-	input DisablePlayerPickup[MBase](void) : "Disables player pickup if it was previously enabled."
-	input EnableNPCPickup[MBase](void) : "Enables NPC pickup if it was previously disabled."
-	input DisableNPCPickup[MBase](void) : "Disables NPC pickup if it was previously enabled."
-	input BreakConstraint[MBase](void) : "Breaks the constraint on this weapon if it started constrained."
-	input SetAmmo1[MBase](integer) : "Sets the amount of primary ammo stored in this weapon."
-	input SetAmmo2[MBase](integer) : "Sets the amount of secondary ammo stored in this weapon."
-	input ForcePrimaryFire[MBase](void) : "Forces the weapon to fire its primary attack."
-	input ForceSecondaryFire[MBase](void) : "Forces the weapon to fire its secondary attack. Whether or not it actually fires a secondary attack depends on the weapon and who owns it."
 
 	// Outputs
 	output OnPlayerUse(void) : "Fires when the player +uses this weapon."

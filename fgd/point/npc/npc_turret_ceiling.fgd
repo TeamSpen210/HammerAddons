@@ -14,19 +14,10 @@
 
 	minhealthdmg(integer) : "Min req'd damage for hurting turret" : 0
 
-	health[MBase](integer) : "Health" : 100 : "Health was 1000 in the original Half-Life 2."
-	FieldOfView[MBase](float) : "FieldOfView" : "0.0" : "The ceiling turret's viewcone. (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
-
 	// Inputs
 	input Enable(void) : "Activate the turret."
 	input Disable(void) : "Deactivate the turret."
 	input Toggle(void) : "Toggle the turret on or off."
-
-	input DepleteAmmo[MBase](void) : "Depletes all the ammo from a turret, causing it to dry-fire."
-	input RestoreAmmo[MBase](void) : "Restores ammo to a turret, allowing it to fire live rounds again."
-	input CreateSprite[MBase](void) : "Creates the turret's light sprite if it was previously destroyed."
-	input DestroySprite[MBase](void) : "Destroys the turret's light sprite."
-	input FieldOfView[MBase](float) : "Sets this turret's field of view."
 
 	// Outputs
 	output OnDeploy(void) : "Turret is becoming active and dangerous."

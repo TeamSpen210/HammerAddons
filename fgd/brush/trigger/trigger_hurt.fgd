@@ -21,8 +21,6 @@
 
 	nodmgforce(boolean) : "Zero Damage Force" : 0 : "Should the damaged entity receive no physics force from this trigger."
 
-	hurtrate[MBase](float) : "Hurt Rate" : "0.5" : "Touchers will be hurt every X seconds while in this trigger_hurt."
-
 	// Inputs
 	input SetDamage(float) : "Set a new amount of damage for this trigger."
 

@@ -40,14 +40,6 @@
 	// not implemented
 	//ambient(float) : "Ambient" 0.0 : "Controls light ambient."
 
-	constant_attn[MBase](float) : "Constant" : "0" : "The light's constant attenuation, giving the light no falloff. (This value is internally corrected with x*0.5)"
-	linear_attn[MBase](float) : "Linear" : "1" : "The light's linear attenuation, giving the light linear decline. This is the most common attenuation for projected textures. (This value is internally corrected with x*100)"
-	quadratic_attn[MBase](float) : "Quadratic" : "0" : "The light's quadratic attenuation, giving the light exponentially decreasing falloff. (This value is internally corrected with x*10000)"
-	shadowatten[MBase](float) : "Shadow Atten" : "0.0" : "The attenuation of the shadows, " +
-		"or how much the shadows should fade into the light of the projected texture, if at all. " +
-		"The player's flashlight uses 0.35 by default, " +
-		"although higher values may be needed for a visible effect."
-
 	colortransitiontime(float) : "Color Transition Time" : 0.5 : "Amount of time it takes for a color change to occur."
 
 	texturename(material) : "Texture Name" : "effects/flashlight001" : "VTF Texture to 'project' onto the enviroment. " + 
@@ -101,11 +93,6 @@
 	input LightColor(color255) : "Change the light color/brightness"
 		"The Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. " +
 		"'aaggnnttzz' would be a steppy fade in from dark to light."
-
-	input SetConstant[MBase](float)    : "Sets the constant attenuation."
-	input SetLinear[MBase](float)      : "Sets the linear attenuation."
-	input SetQuadratic[MBase](float)   : "Sets the quadratic attenuation."
-	input SetShadowAtten[MBase](float) : "Sets the shadow attenuation."
 
 	input SetNearZ[since_P2](float) : "Sets the near Z distance."
 	input SetFarZ[since_P2](float) : "Sets the far Z distance."

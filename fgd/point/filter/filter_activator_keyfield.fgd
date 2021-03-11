@@ -1,6 +1,5 @@
 @FilterClass base(filter_base) 
 	autovis(Logic, Filters)
-	appliesto(MBase)
 	iconsprite("editor/filter_keyfield.vmt") 
 = filter_activator_keyfield : "A filter that filters by the activator's keyfields."
 [

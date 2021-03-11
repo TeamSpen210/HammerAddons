@@ -7,21 +7,18 @@
 = sky_camera: "An entity used to control the 3D Skybox. Its origin is used to determine the 3D Skybox's position relative to the map. " + 
 	"Place this entity, in the 3D Skybox, at the point where the origin of the map should be."
 	[
-	parentname[MBase](target_destination) : "Parent" : : "The name of the entity to move with. " +
+	parentname(target_destination) : "Parent" : : "The name of the entity to move with. " +
 		"NOTE: sky_camera's position is normally only updated on spawn. " +
 		"Fire the ForceUpdate or StartUpdating inputs to update the sky_camera's position! " +
 		"You might also want to enable Use Angles for Sky."
-	// Override to indicate that parenting isn't a good idea.
-	parentname[!MBase](target_destination) : "Parent" : : "The name of the entity to move with. " +
-		"NOTE: sky_camera's position is normally only updated on spawn, so this may not work."
 
-	spawnflags[MBase](flags) =
+	spawnflags(flags) =
 		[
-		1: "Master (takes priority if multiple sky_cameras exist)" : 0 [MBase]
-		2: "Continuously update position (for moving sky_cameras)" : 0 [MBase]
+		1: "Master (takes priority if multiple sky_cameras exist)" : 0
+		2: "Continuously update position (for moving sky_cameras)" : 0
 		]
 
-	skycolor[MBase](color255) : "Sky Color" : "255 255 255 0" : "Causes the skybox to use a solid color instead of the sky texture specified in worldspawn. " +
+	skycolor(color255) : "Sky Color" : "255 255 255 0" : "Causes the skybox to use a solid color instead of the sky texture specified in worldspawn. " +
 		"Blended alpha is unfortunately not supported, " +
 		"but an alpha of '0' disables the effect and any alpha greater than that (e.g. 255) enables the effect."
 
@@ -43,20 +40,20 @@
 	hdrcolorscale(float) : "HDR color scale." : 1 : "float value to multiply fog color by when running in HDR mode."
 
 	// Inputs
-	input ForceUpdate[MBase](void) : "Forces the 3D skybox to update with this sky_camera's position."
-	input StartUpdating[MBase](void) : "Begins per-tick skybox updating, which is needed if you want this sky_camera to move."
-	input StopUpdating[MBase](void) : "Ends per-tick skybox updating if it was enabled before."
+	input ForceUpdate(void) : "Forces the 3D skybox to update with this sky_camera's position."
+	input StartUpdating(void) : "Begins per-tick skybox updating, which is needed if you want this sky_camera to move."
+	input StopUpdating(void) : "Ends per-tick skybox updating if it was enabled before."
 	
-	input ActivateSkybox[MBase](void) : "Make this skybox the active one."
+	input ActivateSkybox(void) : "Make this skybox the active one."
 	input DeactivateSkybox(void) : "Stops making this sky_camera the active skybox if it is currently the active skybox, which causes the sky to clear."
 	
-	input SetFogStartDist[MBase](float) : "Sets the fog start distance."
-	input SetFogEndDist[MBase](float) : "Sets the fog end distance."
-	input TurnOnFog[MBase](void) : "Turns the fog on."
-	input TurnOffFog[MBase](void) : "Turns the fog off."
-	input SetFogColor[MBase](color255) : "Sets the primary fog color."
-	input SetFogColorSecondary[MBase](color255) : "Sets the secondary fog color."
-	input SetFarZ[MBase](integer): "Sets the far clip plane distance."
+	input SetFogStartDist(float) : "Sets the fog start distance."
+	input SetFogEndDist(float) : "Sets the fog end distance."
+	input TurnOnFog(void) : "Turns the fog on."
+	input TurnOffFog(void) : "Turns the fog off."
+	input SetFogColor(color255) : "Sets the primary fog color."
+	input SetFogColorSecondary(color255) : "Sets the secondary fog color."
+	input SetFarZ(integer): "Sets the far clip plane distance."
 	
-	input SetSkyColor[MBase](color255) : "Sets the sky color."
+	input SetSkyColor(color255) : "Sets the sky color."
 	]

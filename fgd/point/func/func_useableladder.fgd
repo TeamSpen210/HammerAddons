@@ -19,9 +19,7 @@
 	// Inputs
 	input Enable(void) : "Enable this ladder."
 	input Disable(void) : "Disable this ladder."
-	input ForcePlayerOn[MBase](void) : "Forces the player onto this ladder, no matter what."
-	input CheckPlayerOn[MBase](void) : "Acts like the player just +USEd this ladder, taking distance and obstructions into account."
-
+	
 	// Outputs
 	output OnPlayerGotOnLadder(void) : "Fired whenever a player gets on this ladder."
 	output OnPlayerGotOffLadder(void) : "Fired whenever a player gets off this ladder."

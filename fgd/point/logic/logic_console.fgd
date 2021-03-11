@@ -1,4 +1,4 @@
-@PointClass appliesto(MBase) 
+@PointClass
 	base(BaseEntityPoint)
 	iconsprite("editor/logic_console.vmt")
 = logic_console : "Sends messages to the console. Not to be confused with point_clientcommand or point_servercommand."

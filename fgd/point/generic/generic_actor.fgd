@@ -13,37 +13,6 @@
 		"LARGE_HULL": "Large"
 		]
 
-	SetClassify[engine](integer) : "Classify" : 0
-	SetClassify[MBase](choices) : "Classify" : 0 : "Simulate this class. Useful for relationships." =
-		[
-		0 : "CLASS_NONE"
-		1 : "CLASS_PLAYER"
-		2 : "CLASS_PLAYER_ALLY (Citizens)"
-		3 : "CLASS_PLAYER_ALLY_VITAL (Alyx, Dr. Kleiner, GameEndAlly vorts, etc.)"
-		4 : "CLASS_ANTLION"
-		5 : "CLASS_BARNACLE"
-		6 : "CLASS_BULLSEYE (npc_bullseyes)"
-		7 : "CLASS_CITIZEN_PASSIVE (pre-criminal citizens)"
-		//8 : "CLASS_CITIZEN_REBEL (Unused)"
-		9 : "CLASS_COMBINE (Soldiers, turrets, etc.)"
-		10 : "CLASS_COMBINE_GUNSHIP (Gunships, helicopters, dropships)"
-		//11 : "CLASS_CONSCRIPT (Unused)"
-		12 : "CLASS_HEADCRAB"
-		13 : "CLASS_MANHACK"
-		14 : "CLASS_METROPOLICE"
-		//15 : "CLASS_MILITARY (Unused)"
-		16 : "CLASS_SCANNER"
-		17 : "CLASS_STALKER"
-		18 : "CLASS_VORTIGAUNT (Non-vital vortigaunts only)"
-		19 : "CLASS_ZOMBIE"
-		20 : "CLASS_PROTOSNIPER (npc_snipers)"
-		21 : "CLASS_MISSILE"
-		22 : "CLASS_FLARE"
-		23 : "CLASS_EARTH_FAUNA (crows, seagulls, etc.)"
-		24 : "CLASS_HACKED_ROLLERMINE"
-		25 : "CLASS_COMBINE_HUNTER"
-		]
-
 	DefaultAnim(string) : "Default Animation" : "" : "The name of the idle animation that this prop will revert to whenever it finishes a random or forced animation."
 
 	RandomAnimation(boolean) : "Randomly Animate" : 0 : "If set, this prop will randomly choose and play animations, based upon the times specified in Min/Max Random Anim Time. Inbetween the random animations, it will revert to playing the 'Default Animation'."

@@ -1,8 +1,6 @@
 @SolidClass base(BaseTank) 
 	appliesto(HL2, EP1, EP2, P1, P2, CSGO) = func_tank: "Brush Gun Turret"
 	[
-	shootsound[MBase](sound) : "Shoot Sound" : "" : "Plays a specific sound each time this tank fires."
-
 	ammotype[engine](string) : "Ammo Type"
 	ammotype(choices) : "Ammo Type" =
 		[

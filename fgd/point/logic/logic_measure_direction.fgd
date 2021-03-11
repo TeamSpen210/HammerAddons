@@ -1,4 +1,4 @@
-@PointClass appliesto(MBase)
+@PointClass
 	base(logic_measure_movement) 
 	sphere(TraceDistance)
 	line(255 255 255, targetname, damagefilter)

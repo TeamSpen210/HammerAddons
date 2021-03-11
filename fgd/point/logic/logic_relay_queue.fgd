@@ -1,4 +1,4 @@
-@PointClass appliesto(MBase) 
+@PointClass
 	base(BaseentityPoint, EnableDisable) 
 	iconsprite("editor/logic_relay_queue.vmt") 
 = logic_relay_queue :

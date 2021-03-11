@@ -6,10 +6,6 @@
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Start Constrained" : 0
-		2 : "Deny player pickup (reserve for NPC)" : 0 [MBase]
-		4 : "Not puntable by Gravity Gun" : 0 [MBase]
-		8 : "Deny NPC pickup (reserve for player)" : 0 [MBase]
-		64 : "Always touchable (no obstruction checking)" : 0 [MBase]
 		]
 
 	// Outputs

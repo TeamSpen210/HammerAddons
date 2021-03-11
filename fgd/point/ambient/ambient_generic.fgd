@@ -22,7 +22,7 @@
 	sourceentityname(target_destination) : "Source Entity" : : "If an entity is specified, sound will come from this named entity instead of the location of ambient_generic."
 
 	soundflags[engine](integer) : "Sound Flasg" : 0
-	soundflags[MBase](choices) : "Sound Flags" : 0 : "Additional options for your sound." =
+	soundflags(choices) : "Sound Flags" : 0 : "Additional options for your sound." =
 	[
 		0: "None"
 		128: "[128] Pause when game is paused"
@@ -104,6 +104,6 @@
 	input FadeIn(integer) : "Fades the sound up to full volume over a specified number of seconds, with a range from 0 to 100 seconds."
 	input FadeOut(integer) : "Fades the sound to silence over a specified number of seconds, with a range from 0 to 100 seconds. " +
 		"Sound is forced to full volume first!"
-	input SetSound[MBase](string) : "Sets the sound this ambient_generic should play."
-	output OnSoundFinished[MBase](void) : "Fires when the sound finishes playing. NOTE: This sound should be set to pause when the game is paused."
+	input SetSound(string) : "Sets the sound this ambient_generic should play."
+	output OnSoundFinished(void) : "Fires when the sound finishes playing. NOTE: This sound should be set to pause when the game is paused."
 	]

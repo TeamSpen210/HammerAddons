@@ -10,8 +10,6 @@
 	// Inputs
 	input InputValue(integer) : "Adds a value to our set of inputs and fires CompareValues automatically, " +
 		"comparing existing inputs to this one if set to do so."
-	input InputValueNoFire[MBase](string) : "Adds a value to our set of inputs without firing CompareValues."
-	input SetReferenceValue[MBase](string) : "Sets our reference value."
 	input CompareValues(void) : "Compares the values and fires appropriate outputs."
 
 	// Outputs

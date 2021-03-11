@@ -59,7 +59,6 @@
 		]
 
 	locationproxy(target_destination) : "Location Proxy" : : "The name of an entity to use as a proxy to determine the location at which to make the sound. If you specify an entity here, the sound will be made at that entity's location (!player included)"
-	target[MBase](target_destination) : "Sound Owner" : "" : "An optional entity to use that the sound doesn't emit from, but is specified as the 'owner'. This is needed for certain sound contexts and other miscellaneous stuff. If not specified, the ai_sound will be used as the owner." 
 
 	// Inputs
 	input EmitAISound(void) : "Make the sound."

@@ -60,44 +60,11 @@
 		2 : "Waist"
 		3 : "Eyes"
 		]
-	
-	FriendlyFireOverride[engine](integer) : "Friendly fire override" : 2
-	FriendlyFireOverride[MBase](choices) : "Friendly fire override" : 2 : "Overrides whether friendly fire is allowed on this NPC or not. 'Disabled' makes this NPC immune to damage from its allies. 'Enabled' makes this NPC vulnerable to damage from its allies, including players. 'Default' uses the NPC's settings and won't change anything." = 
-	[
-		0 : "Disabled"
-		1 : "Enabled"
-		2 : "Default (No override)"
-	]
-	
-	SetDynamicInteractions[engine](integer) : "Dynamic interactions enabled" : 2
-	SetDynamicInteractions[MBase](choices) : "Dynamic interactions enabled" : 2 : "Episodic only. Enables or disables dynamic interactions on this NPC, if it has them. If set to Default, only dynamic interactions from the original episodes (Alyx, vorts, etc.) will be enabled. If set to Yes, dynamic interactions introduced with Mapbase will be enabled as well. If set to No, this NPC will never perform dynamic interactions." = 
-	[
-		0 : "No"
-		1 : "Yes"
-		2 : "Default (No override)"
-	]
-	
-	SetProficiencyOverride[engine](integer) : "Proficiency override" : 2
-	SetProficiencyOverride[MBase](choices) : "Proficiency override" : -1 : "Overrides this NPC's weapon proficiency." = 
-	[
-		-1 : "Default (No override)"
-		0 : "Poor"
-		1 : "Average"
-		2 : "Good"
-		3 : "Very Good"
-		4 : "Perfect"
-	]
-	
-	SetForceServerRagdoll[MBase](boolean) : "Force server ragdoll" : 0 : "Forces this NPC to turn into a serverside prop_ragdoll instead of a clientside ragdoll when it dies."
-	SpawnWithStartScripting[MBase](boolean) : "Spawn with StartScripting" : 0 : "Spawns the NPC in the StartScripting state."
-	BaseSpeedModifier[MBase](float) : "Speed Modifier" : "1.0" : "Multiplies how far a NPC travels while moving. Does not affect the animation itself."
-
 
 	// Inputs
 	input SetRelationship(string) : "Changes this entity's relationship with another entity or class. Format: <entityname/classname> <D_HT/D_FR/D_LI/D_NU> <priority>"
 	input SetEnemyFilter(target_destination) : "Changes this NPC's enemy filter to the named filter."
 	input SetHealth(integer) : "Set this NPC's health."
-	input SetHealthFraction[MBase](float) : "Sets the NPC's health as a fraction of its max health."
 	input PhysDamageScale(float) : "Sets the value that scales damage energy when this character is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility."
 	input Break(void) : "Makes the NPC die and disappear."
 	input StartScripting(void) : "Enter scripting state. In this state, NPCs ignore a variety of stimulus that would make them break out of their scripts: They ignore danger sounds, ignore +USE, don't idle speak or respond to other NPC's idle speech, and so on."
@@ -114,34 +81,7 @@
 	input ForceInteractionWithNPC(string) : "Force the NPC to use a dynamic interaction with another NPC. Parameter format: <target NPC name> <dynamic interaction name>"
 	input UpdateEnemyMemory(string) : "Update (or Create) this NPC's memory of an enemy and its location"
 	input BecomeRagdoll(void) : "This NPC will instantly become a ragdoll with ZERO force (just go limp). OnDeath, OnHalfHealth, etc. Outputs will **NOT** BE FIRED."
-	
-	input SetBloodColor[MBase](integer) : "Changes this entity's blood color based on the internal enum in shareddefs.h."
-	input SetMoveType[MBase](integer) : "Sets this NPC's movetype."
-	input AddCapabilities[MBase](integer) : "Adds capabilities to this NPC."
-	input RemoveCapabilities[MBase](integer) : "Removes capabilities from this NPC."
-	input SetCondition[MBase](integer) : "Sets a condition. Can use a condition's string ID or its integer."
-	input RemoveCondition[MBase](integer) : "Removes a condition. Can use a condition's string ID or its integer."
-	
-	input GiveWeapon[MBase](string) : "Gives the NPC a weapon of the specified class name. They will drop their current weapon if it is not holstered."
-	input GiveWeaponHolstered[MBase](string) : "Puts the weapon of the specified class name in the NPC's inventory. If they do not have a weapon equipped, they will unholster it when given the 'UnholsterWeapon' input or when they see an enemy."
-	input DropWeapon[MBase](string) : "Forces the NPC to drop its current weapon in front of it. No animation will play."
-	input ChangeWeapon[MBase](string) : "Causes the NPC to change to the specified weapon. They will holster their current weapon and unholster the specified weapon, creating it if they don't already have it."
-	input PickupWeapon[MBase](target_destination) : "Causes the NPC to seek and pick up the specified weapon."
-	input PickupItem[MBase](target_destination) : "Causes the NPC to seek and pick up the specified item."
-	
-	input SetFriendlyFire[MBase](integer) : "Overrides our friendly fire. 0 = No friendly fire, 1 = Friendly fire enabled, 2 = Default (No override)"
-	input SetDynamicInteractions[MBase](integer) : "Sets whether we could use dynamic interactions. 0 = Disabled, 1 = Enabled, 2 = Default."
-	input SetProficiencyOverride[MBase](integer) : "Sets our weapon's proficiency. Use integer."
-	input SetForceServerRagdoll[MBase](bool) : "Sets whether we should be a serverside ragdoll when we die."
 
-	input SetThinkNPC[MBase](float) : "Sets this entity's general think function to CallNPCThink. This is only necessary if it was disabled by SetThinkNull before."
-	input SetHintGroup[MBase](string) : "Sets this NPC's hint group."
-
-	input SetDistLook[MBase](float) : "Manually sets this NPC's sight distance. Pass '0' to reset."
-	input SetDistTooFar[MBase](float) : "Manually sets the distance in which NPCs will consider a target too far to attack. Pass '0' to reset."
-	
-	input SetSpeedModifier[MBase](float) : "Set a float value to multiply movement animation speed."
-	
 	// Outputs
 	output OnDamaged(void) : "Fired when this NPC takes damage."
 	output OnDeath(void) : "Fired when this NPC is killed."
@@ -160,17 +100,7 @@
 	output OnDenyCommanderUse(void) : "Fired when this NPC has refused to join the player's squad."
 	output OnSleep(void) : "Fired when this NPC enters a sleep state."
 	output OnWake(void) : "Fired when this NPC comes out of a sleep state."
-	output OnHolsterWeapon[MBase](string) : "Fired when the NPC holsters a weapon. Passes the weapon."
-	output OnUnholsterWeapon[MBase](string) : "Fired when the NPC unholsters a weapon. Passes the weapon."
 	output OnForcedInteractionStarted(void) : "Fired when the NPC starts a forced interaction."
 	output OnForcedInteractionAborted(void) : "Fired when the NPC aborts a forced interaction for some reason (target NPC died, couldn't be pathed to, etc)"
 	output OnForcedInteractionFinished(void) : "NPCs in actbusies can no longer perform dynamic interactions."
-	output OnItemPickup[MBase](void) : "Fires when a NPC picks up an item, e.g. a citizen picking up a health kit or a scripted item picked up in response to PickupItem."
-	output OnStateChange[MBase](integer) : "Fires when a NPC's state changes, outputting the new state. (1 = Idle, 2 = Alert, 3 = Combat...)"
-
-	output OnWeaponEquip[MBase](void) : "Fires when this NPC/player acquires a weapon through any means, including spawn equipment. Passes the weapon as the activator."
-	output OnWeaponDrop[MBase](void) : "Fires when this NPC/player drops a weapon, including when they die."
-
-	output OnKilledNPC[MBase](ehandle) : "Fires when we kill a NPC. Passes the victim."
-	output OnKilledPlayer[MBase](ehandle) : "Fires when we kill a player. Passes the killed player." 
 	]

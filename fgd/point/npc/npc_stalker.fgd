@@ -10,6 +10,4 @@
 		1: "Medium"
 		2: "High"
 		]
-	Aggression[MBase](boolean) : "Start Aggressive" : 0 : "Controls whether this stalker starts aggressive to the player and their allies without having to be provoked first."
-	Bleed[MBase](boolean) : "Bleed" : 1 : "Allows this stalker to bleed upon taking bleedable damage. They bleed saline."
 	]

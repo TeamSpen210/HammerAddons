@@ -10,8 +10,6 @@
 		"models/combine_strider_vsdog.mdl": "The Strider that fights Dog"
 		]
 
-	stompfilter[MBase](filterclass) : "Stomp Filter" : : "Which entities am I allowed to stomp? Don't forget to use the 'Can Stomp Player' spawnflag as well."
-
 	spawnflags(flags) : "spawnflags" =
 		[
 		65536: "Can Stomp Player" : 0

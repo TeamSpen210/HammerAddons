@@ -5,7 +5,6 @@
 		[
 		128 : "Disable auto player movement" : 1
 		2048 : "Auto-duck while in trigger" : 0
-		4096 : "Auto-walk while in trigger" : 0 [MBase]
-		8192 : "Disable jump while in trigger" [MBase]
+		4096 : "Auto-walk while in trigger" : 0
 		]
 	]

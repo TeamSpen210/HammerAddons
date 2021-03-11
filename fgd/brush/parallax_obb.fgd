@@ -1,4 +1,4 @@
-@SolidClass appliesto(-engine, MBase, P2CE) // Consumed by MapBase's VBSP.
+@SolidClass appliesto(-engine, P2CE)
 = parallax_obb : "Bounding box for Parallax Corrected Cubemaps."
 [
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."

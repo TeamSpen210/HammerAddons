@@ -7,7 +7,7 @@
 	
 	"This entity can also be used to select from a number of random targets via the PickRandom input. One of the OnCase outputs that is connected to another entity will be picked at random and fired."
 	[
-	MultipleCasesAllowed[MBase](boolean) : "Multiple case hits allowed" : 0 : "If an input value matches a given case, " +
+	MultipleCasesAllowed(boolean) : "Multiple case hits allowed" : 0 : "If an input value matches a given case, " +
 		"are we allowed to test the rest of the cases or should we stop there? " +
 		"Don't worry about this if you're only using this entity for PickRandom." 
 	
@@ -50,7 +50,6 @@
 	output OnCase14(void) : "Fired when the input value equals the Case14 value."
 	output OnCase15(void) : "Fired when the input value equals the Case15 value."
 	output OnCase16(void) : "Fired when the input value equals the Case16 value."
-	output OnDefault[!MBase](void) : "Fired when the input value does not equal any of the Case values."
-	output OnDefault[MBase, engine](string) : "Fired when the input value does not equal any of the Case values. Passes the input value."
-	output OnUsed[MBase](string) : "Fired when an input value is received, regardless of whether it matches a case. Passes the input value."
+	output OnDefault[engine](string) : "Fired when the input value does not equal any of the Case values. Passes the input value."
+	output OnUsed(string) : "Fired when an input value is received, regardless of whether it matches a case. Passes the input value."
 	]

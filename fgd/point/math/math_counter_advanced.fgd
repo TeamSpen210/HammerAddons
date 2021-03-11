@@ -1,4 +1,4 @@
-@PointClass appliesto(MBase) 
+@PointClass
 	base(BaseEntityPoint, EnableDisable, math_counter) 
 	iconsprite("editor/math_counter_advanced.vmt") 
 	= math_counter_advanced : "A special version of math_counter with the ability to perform advanced calculations. " +

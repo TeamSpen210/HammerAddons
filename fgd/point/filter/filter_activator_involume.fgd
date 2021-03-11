@@ -1,6 +1,5 @@
 @FilterClass base(filter_base) 
 	autovis(Logic, Filters)
-	appliesto(MBase)
 	iconsprite("editor/filter_involume.vmt") 
 	line(255 255 255, targetname, target)
 = filter_activator_involume : "A filter that tests whether the activator is within a volume."

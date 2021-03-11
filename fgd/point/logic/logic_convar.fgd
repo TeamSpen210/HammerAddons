@@ -1,4 +1,4 @@
-@PointClass appliesto(MBase) 
+@PointClass
 	base(BaseEntityPoint)
 	iconsprite("editor/logic_convar.vmt") 
 = logic_convar :

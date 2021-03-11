@@ -15,7 +15,6 @@
 	minimumstate[engine](integer) : "Minimum state" : 1
 	minimumstate(choices) : "Minimum state" : 1 =
 		[
-		0: "Don't care" [MBase]
 		1: "Idle"
 		2: "Alert"
 		3: "Combat"
@@ -24,7 +23,6 @@
 	maximumstate[engine](integer) : "Maximum state" : 3
 	maximumstate(choices) : "Maximum state" : 3 =
 		[
-		0: "Don't care" [MBase]
 		1: "Idle"
 		2: "Alert"
 		3: "Combat"
@@ -140,7 +138,6 @@
 	// Inputs
 	input Enable(void) : "Enable this entity"
 	input Disable(void) : "Disable this entity"
-	input SatisfyConditions[MBase](void) : "Forces the conditions to be satisfied."
 
 	// Outputs
 	output OnConditionsSatisfied(void) : "Fires when AI conditions satisfied"

@@ -1,12 +1,3 @@
 @BaseClass base(BaseNPC) = BaseZombie
 	[
-	Headless[Mbase](boolean) : "Headcrab-less" : 0 : "Toggles whether this zombie should have a headcrab on their head. They usually should."
-
-	spawnflags(Flags) = 
-		[
-		32768 :  "Never turn into a torso" : 0 [Mbase]
-		]
-
-	output OnSwattedProp[Mbase](ehandle) : "Fires when this NPC swats a prop, passing the prop as the activator and parameter."
-	output OnCrab[Mbase](ehandle) : "Fires when the zombie releases a headcrab, passing the headcrab as the activator and parameter."
 	]
