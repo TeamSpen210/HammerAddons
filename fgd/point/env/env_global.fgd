@@ -13,8 +13,7 @@
 		"gordon_precriminal": "Gordon pre-criminal (Point Insertion behavior)"
 		"antlion_allied": "Antlions are player allies, respond to bugbait"
 		"suit_no_sprint": "Disable sprinting"
-		"super_phys_gun": "Enable Super Gravity Gun" [!MBase]
-		"super_phys_gun": "Enable Super Gravity Gun (Mapbase: Counter 1 prevents item dissolve)" [MBase]
+		"super_phys_gun": "Enable Super Gravity Gun"
 		"friendly_encounter": "Friendly encounter sequence (lower weapons, etc.)"
 		"gordon_invulnerable": "Player is invulnerable"
 		"no_seagulls_on_jeep": "Don't spawn seagulls on the jeep"
@@ -54,12 +53,9 @@
 	input Remove(void) : "Set state of global to DEAD."
 	input SetCounter(integer) : "Sets the counter value of this global."
 	input AddToCounter(integer) : "Adds to the counter value of this global. Negative numbers subtract."
-	input GetCounter[!MBASE](void) : "Causes the Counter output to be fired, passing the current counter value for this global. This doesn't work properly."
-	input GetCounter[MBASE](void) : "Causes the OutCounter output to be fired, passing the current counter value for this global."
+	input GetCounter(void) : "Causes the Counter output to be fired, passing the current counter value for this global. This doesn't work properly."
 
 	// Outputs
-	// This counter output is overwritten by the KV above, making it non-functional.
-	// Mapbase renames it to fix that.
-	output Counter[!MBASE](integer) : "Fired in response to the GetCounter input, passing the current value of the counter."
-	output OutCounter[MBASE](integer) : "Fired in response to the GetCounter input, passing the current value of the counter."
+	// This counter output is overwritten by the KV above, making it non-functional. MBase fixes it.
+	output Counter(integer) : "Fired in response to the GetCounter input, passing the current value of the counter."
 	]

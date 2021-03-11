@@ -1,4 +1,4 @@
-@PointClass appliesto(MBase) 
+@PointClass
 	base(BaseentityPoint) 
 	iconsprite("editor/logic_sequence.vmt") 
 = logic_sequence :

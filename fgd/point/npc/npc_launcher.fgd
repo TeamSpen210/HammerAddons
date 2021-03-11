@@ -16,8 +16,6 @@
 
 	starton(boolean) : "Start On" : 0
 
-	OwnerEntity[MBase](target_destination) : "Owner Entity" : : "The entity that should 'own' the missiles, or receive credit/not collide with them."
-	
 	missilemodel(studio) : "Missile Model" : "models/weapons/w_missile.mdl"
 	launchsound(sound) : "Launch Sound" : "npc/waste_scanner/grenade_fire.wav"
 	flysound(sound) : "Fly Sound" : "Missile.Accelerate"
@@ -62,6 +60,4 @@
 
 	// Outputs
 	output OnLaunch(void) : "Fires when missile is launched"
-	output OutMissile[MBase](ehandle) : "Passes each missile launched"
-
 	]

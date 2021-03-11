@@ -40,5 +40,5 @@
 	// Inputs
 	input Activate(void) : "Begin the follow behavior"
 	input Deactivate(void) : "Cease the follow behavior"
-	input UpdateActors[MBase](void) : "Forces an update on this goal's actors."
+	input UpdateActors(void) : "Forces an update on this goal's actors."
 	]

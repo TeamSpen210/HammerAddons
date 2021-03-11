@@ -14,11 +14,5 @@
 		]
 
 	// Inputs
-	input ThrowGrenadeAtTarget[MBase](target_destination) : "Throws a grenade at the specified target."
-	
-	input SetGrenades[MBase](integer) : "Sets the number of grenades we have."
-	input AddGrenades[MBase](integer) : "Adds to the number of grenades we have. Use a negative number to remove grenades."
-	
-	output OnThrowGrenade[MBase](ehandle) : "Fires when we throw a grenade. Passes the grenade."
-	output OnOutOfGrenades[MBase](ehandle) : "Fires when we run out of grenades. Passes our last grenade, if there is one."
+	input ThrowGrenadeAtTarget(target_destination) : "Throws a grenade at the specified target."
 	]

@@ -1,11 +1,8 @@
-@NpcClass base(BaseNPC, RappelNPC, MBaseGrenadeUser)
+@NpcClass base(BaseNPC, RappelNPC)
 	appliesto(EP1, EP2, HL2, P1) 
 	autovis(Entities, NPCs, Combine, MetroPolice)
 	studio("models/Police.mdl") = npc_metropolice: "MetroPolice"
 	[
-	model[MBase](studio) : "Model" : "models/police.mdl" : "The model of this npc_metropolice. " +
-		"Keep in mind this overrides the 'Efficient' spawnflag which sets the model to police_cheaple.mdl."
-
 	additionalequipment[engine](string) : "Weapons": "weapon_pistol"
 	additionalequipment(choices) : "Weapons" : "weapon_pistol" =
 		[
@@ -41,22 +38,11 @@
 
 
 	// Inputs
-	input DisableManhackToss[MBase](void) : "Disables manhack toss"
 	input EnableManhackToss(void) : "Enables manhack toss (which had been disabled by the spawnflag)"
 	input SetPoliceGoal(string) : "Causes the NPC to police the area defined by an ai_goal_police"
 	input ActivateBaton(void) : "Set the baton to active"
 
-	input AdministerJustice[MBase](void) : "Orders this NPC to administer justice to the player as if they hit this NPC with a can or something. " +
-		"If this NPC cannot respond, it will look for another npc_metropolice to do it."
-	input SetWarnings[MBase](integer) : "Sets the number of warnings this NPC has given to the player."
-	input AddWarnings[MBase](integer) : "Adds to the number of warnings this NPC has given to the player."
-	input DeployManhack[MBase](void) : "Deploys a manhack immediately if one is available."
-	input AddManhacks[MBase](integer) : "Adds to the number of manhacks this NPC has available."
-	input SetManhacks[MBase](integer) : "Sets the number of manhacks this NPC has available."
-
 	// Outputs
 	output OnStunnedPlayer(void) : "Fires when the player is hit by a stunstick by this NPC."
 	output OnCupCopped(void) : "Fires if the player hits me with the cupcop can. ONLY use for x360 achievement."
-	output OnHitByPhysicsObject[Mbase](ehandle) : "Fired when the player hits this NPC with any prop. Passes the thrower as the activator and the prop as the parameter."
-	output OutManhack[Mbase](ehandle) : "Fired the moment when this NPC spawns a manhack. Passes the manhack."
 	]

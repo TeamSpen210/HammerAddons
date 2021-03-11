@@ -1,6 +1,6 @@
 
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(EP1, EP2, HL2, MBase, P1, CSGO) = env_gunfire: "Gunfire Effect"
+	appliesto(EP1, EP2, HL2, P1, CSGO) = env_gunfire: "Gunfire Effect"
 	[
 	target(target_destination) : "Target" : : "Shoot at this target. REMEMBER - this is an effect only! It does not do damage!"
 
@@ -80,11 +80,4 @@
 		"weapon_usp_silencer": "USP"
 		"weapon_m4a1_silencer": "M4A1 Silencer"
 		]
-
-	// Inputs
-	input FireBurst[MBase](integer) : "Fires a burst with the specified number of shots, regardless of the entity's current state, the maximum and minimum burst numbers, or any bursts currently being executed by this entity."
-	input SetTarget[MBase](target_destination) : "Sets the target to shoot at."
-	
-	// Outputs
-	output OnFire[MBase](void) : "Fires for each bullet fired by this entity."
 	]

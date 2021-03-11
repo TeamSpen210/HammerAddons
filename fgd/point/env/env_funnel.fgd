@@ -6,8 +6,5 @@
 	spawnflags(flags)  =
 		[
 		1: "Reverse (repel particles instead of suck in)" : 0
-		2 : "Don't remove after use (allows repeat)" : 0 [MBase]
 		]
-
-	input Activate[MBase](void) : "Activates the effect."
 	]

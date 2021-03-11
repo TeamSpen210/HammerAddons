@@ -144,5 +144,5 @@
 	input Start(void) : "Tell the particle system to start emitting."
 	input Stop(void) : "Tell the particle system to stop emitting."
 	input StopPlayEndCap(void) : "Tell the particle system to stop emitting and play its End Cap Effect."
-	input DestroyImmediately[MBase](void) : "Destroy the particle system and remove all particles immediately."
+	input DestroyImmediately(void) : "Destroy the particle system and remove all particles immediately."
 	]

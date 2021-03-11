@@ -10,6 +10,4 @@
 	input Explode(void) : "Explode the ball with some visual effects."
 	input Socketed[EP1, EP2](void) : "If this was fired by a player, tell Alyx that they socketed a ball so she can comment on it."
 	input FadeAndRespawn(void) : "Force the ball to expire in 0.1 seconds."
-	input SetLifetime[MBase](float) : "Set the lifetime of the ball to the given duration."
-	input AddLifetime[MBase](float) : "Add the given amount of additional lifetime."
 	]

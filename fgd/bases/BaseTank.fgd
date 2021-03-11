@@ -86,19 +86,6 @@
 		2: "Combine Cannon"
 		]
 
-	TraceFilter[MBase](filterclass) : "Trace Filter" : "" : "Entities that pass this filter will be ignored by this func_tank while it's aiming."
-
-	DontHitController[MBase](boolean) : "Don't hit controller" : 1 : "If enabled, bullets will not hit whoever is controlling this func_tank." 
-	ControllerGlued[MBase](boolean) : "NPC controller glued" : 0 : "If enabled, NPCs that mount this func_tank will " +
-		"disregard certain conditions that cause it to dismount automatically, " +
-		"like damage from behind or enemies getting beyond reach. " +
-		"They will still dismount for things like grenades." 
-	
-	PlayerBBoxDist[MBase](float) : "Player Crosshair Trace Offset" : "24" : "When a func_tank wants to aim at the player's crosshair, " +
-		"it draws a line to the point they're looking at. " +
-		"The line should start this many units ahead to avoid colliding with the player or any nearby objects. " +
-		"Decreasing the value is only recommended if 'Dont Hit Controller' is enabled."
-
 	// Inputs
 	input Activate(void) : "Turn the tank on"
 	input Deactivate(void) : "Turn the tank off (go dormant)"
@@ -110,10 +97,6 @@
 	input SetTargetEntity(string) : "Set the entity I should follow/attack to the passed in entity."
 	input ClearTargetEntity(void) : "Clear the entity I should be attacking."
 	input FindNPCToManTank(string) : "Find a nearby NPC to man this func_tank."
-	input TeleportNPCToManTank[MBase](target_destination) : "Teleports the specified NPC to man this func_tank. " +
-		"The parameter cannot be blank and the chosen NPC will man the tank instantly."
-	input ForceNPCToManTank[MBase](target_destination) : "Forces the specified NPC to snap to manning this func_tank, " +
-		"regardless of the NPC's current position. They will still turn to face it."
 	input StartFindingNPCs(void) : "Start searching for NPCs to man this func_tank."
 	input StopFindingNPCs(void) : "Stop searching for NPCs to man this func_tank."
 	input ForceNPCOff(void) : "Force the NPC manning this func_tank (if any) to leave."

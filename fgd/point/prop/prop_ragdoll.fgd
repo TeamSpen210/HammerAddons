@@ -10,6 +10,7 @@
 	spawnflags(flags)  =
 		[
 		4: "Debris - Don't collide with the player or other debris" : 1
+		4096: "Use LRU Retirement" : 0
 		8192: "Allow Dissolve" : 0
 		16384: "Motion Disabled" : 0
 		32768: "Allow stretch" : 0
@@ -20,8 +21,6 @@
 
 	// Inputs
 	input StartRagdollBoogie(float) : "Begins ragdoll boogie effect. Parameter override = number of seconds to boogie."
-	input Wake[MBase](void) : "Wakes up this physics object, if it is sleeping."
-	input Sleep[MBase](void) : "Puts this physics object to sleep. It will wake if given the Wake input, or if force is applied to it. Note that physics objects go to sleep automatically after coming to rest for a while, so you don't really need to use this."
 	input EnableMotion(void) : "Enable physics motion/collision response."
 	input DisableMotion(void) : "Disable physics motion/collision response."
 	input FadeAndRemove(float) : "Fade out then remove (kill) self. Parameter override = duration of fade"

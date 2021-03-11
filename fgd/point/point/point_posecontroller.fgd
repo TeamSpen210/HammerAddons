@@ -26,7 +26,6 @@
 	fmodamplitude(float) : "Frequency Modulation Amplitude" : 0 : "Modulation extents from 0.0f to 10.0."
 
 	// Inputs
-	input SetTarget[MBase](target_destination) : "Sets the prop to control."
 	input SetPoseParameterName(string) : "Sets the pose parameter to control."
 	input SetPoseValue(float) : "Set the pose parameter to a normalized value between 0.0 and 1.0 (maps to min and max range)."
 	input SetInterpolationTime(float) : "Set the interpolation time to a number of seconds between 0.0 and 10.0."

@@ -6,38 +6,23 @@
 	"If the input value is equal to the compare value, the OnEqualTo output is fired with the input value. " +
 	"If the input value is greater than the compare value, the OnGreaterThan output is fired with the input value."
 	[
-	// Mapbase makes everything strings so that you can compare any value type.
+	initialvalue[engine](string) : "Initial value" : : "Initial value for the input value."
+	comparevalue[engine](string) : "Compare value" : : "The value to compare against."
 
-	initialvalue[!MBase](integer) : "Initial value" : : "Initial value for the input value."
-	comparevalue[!MBase](integer) : "Compare value" : : "The value to compare against."
-
-	// Inputs
-	input SetValue[!MBase](float) : "Set the value that will be compared against the compare value."
-	input SetValueCompare[!MBase](float) : "Set the value that will be compared against the compare value and performs the comparison."
-	input SetCompareValue[!MBase](float) : "Set the compare value."
 	input Compare(void) : "Force a compare of the input value with the compare value."
 
-	// Outputs
-	output OnLessThan[!MBase](float) : "Fired when the input value is less than the compare value. Sends the input value as data."
-	output OnEqualTo[!MBase](float) : "Fired when the input value is equal to the compare value. Sends the input value as data."
-	output OnNotEqualTo[!MBase](float) : "Fired when the input value is different from the compare value. Sends the input value as data."
-	output OnGreaterThan[!MBase](float) : "Fired when the input value is greater than the compare value. Sends the input value as data."
+	input SetValue[engine](string) : "Set the value that will be compared against the compare value."
+	input SetValueCompare[engine](string) : "Set the value that will be compared against the compare value and performs the comparison."
+	input SetCompareValue[engine](string) : "Set the compare value."
 
-	initialvalue[MBase, engine](string) : "Initial value" : : "Initial value for the input value."
-	comparevalue[MBase, engine](string) : "Compare value" : : "The value to compare against."
-
-	input SetValue[MBase, engine](string) : "Set the value that will be compared against the compare value."
-	input SetValueCompare[MBase, engine](string) : "Set the value that will be compared against the compare value and performs the comparison."
-	input SetCompareValue[MBase, engine](string) : "Set the compare value."
-
-	output OnLessThan[MBase, engine](string) : "Fired when the input value is less than the compare value. Sends the input value as data."
-	output OnEqualTo[MBase, engine](string) : "Fired when the input value is equal to the compare value. Sends the input value as data."
-	output OnNotEqualTo[MBase, engine](string) : "Fired when the input value is different from the compare value. Sends the input value as data."
-	output OnGreaterThan[MBase, engine](string) : "Fired when the input value is greater than the compare value. Sends the input value as data."
+	output OnLessThan[engine](string) : "Fired when the input value is less than the compare value. Sends the input value as data."
+	output OnEqualTo[engine](string) : "Fired when the input value is equal to the compare value. Sends the input value as data."
+	output OnNotEqualTo[engine](string) : "Fired when the input value is different from the compare value. Sends the input value as data."
+	output OnGreaterThan[engine](string) : "Fired when the input value is greater than the compare value. Sends the input value as data."
 
 
 	// Extra values
-	input SetCompareValueCompare[MBase](string) : "Sets the compare value and performs the comparison."
-	output OnGreaterThanOrEqualTo[MBase](string) : "Fired when the input value is greater than or equal to the compare value. Sends the input value as data."
-	output OnLessThanOrEqualTo[MBase](string) : "Fired when the input value is greater than or equal to the compare value. Sends the input value as data."
+	input SetCompareValueCompare(string) : "Sets the compare value and performs the comparison."
+	output OnGreaterThanOrEqualTo(string) : "Fired when the input value is greater than or equal to the compare value. Sends the input value as data."
+	output OnLessThanOrEqualTo(string) : "Fired when the input value is greater than or equal to the compare value. Sends the input value as data."
 	]

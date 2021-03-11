@@ -9,8 +9,7 @@
 		]
 
 	message(string) : "Message Text" : : "Message to display onscreen."
-	message[MBase](string) : "Message Text" : "" : "Message to display onscreen. Use '/n' for newlines."
-
+	
 	x(float) : "X Position" : -1 : "Horizontal position on the player's screens to draw the text. " +
 		"The value should be between 0 and 1, where 0 is the far left of the screen and 1 is the far right. -1 centers the text."
 	y(float) : "Y Position" : -1 : "Vertical position on the player's screens to draw the text. " +
@@ -48,7 +47,7 @@
 
 	// Inputs
 	input Display(void) : "Display the message text."
-	input SetText[MBase](string) : "Set the text to display."
+	input SetText(string) : "Set the text to display."
 	input SetPosX[since_P2](float) : "Set the X position of the text. (0 - 1.0 = left to right) (-1 centers)"
 	input SetPosY[since_P2](float) : "Set the Y position of the text. (0 - 1.0 = top to bottom) (-1 centers)"
 	input SetTextColor[since_P2](color255) : "Set color of the front text."

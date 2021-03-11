@@ -1,4 +1,4 @@
-@PointClass appliesto(MBase)
+@PointClass
 	base(BaseEntityPoint) 
 	size(-8 -8 -8, 8 8 8)
 	line(255 255 255, targetname, target)

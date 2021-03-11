@@ -4,10 +4,6 @@
 	studio("models/combine_helicopter.mdl") 
 = npc_helicopter: "Helicopter"
 	[
-	model[MBase](studio) : "World Model" : "models/combine_helicopter.mdl" : "This model should have the right attachments."
-	
-	health[MBase](integer) : "Health" : 0 : "Overrides this helicopter's health. 0 = default npc_helicopter health (5600)."
-
 	spawnflags(flags) : "spawnflags" =
 		[
 		65536: "Loud rotor wash sound" : 0
@@ -21,7 +17,6 @@
 	initialspeed(float) : "Initial Speed" : 0
 	graceperiod(float) : "Grace Period" : 2.0 : "Time in seconds the helicopter has to see the player before he starts shooting"
 	patrolspeed(float) : "Patrol Speed" : 0 : "Speed at which the helicopter moves if he has no enemy."
-	FieldOfView[MBase](float) : "Field of View" : "-1.0" : "The helicoter's viewcone. (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
 	noncombat(boolean) : "Non-combat (Do not precache gibs)" : 0 :  "If enabled, this helicopter will not precache stuff that would only be seen in combat, " +
 		"like mines or gibs. Even damaging the helicopter in this state can crash the game, " +
 		"so you might want to use a damage filter too."
@@ -70,5 +65,4 @@
 	// Outputs
 	output OnHealthChanged(integer) : "Fires when the helicopter health changes. The integer is the percentage of health the chopper has from 0-100."
 	output OnShotDown(void) : "Fires the instant the helicopter is killed"
-	output OutBomb[MBase](ehandle) : "Fires for each bomb dropped."
 	]

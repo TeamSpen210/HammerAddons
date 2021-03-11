@@ -1,35 +1,8 @@
-// Modified models with no animations, so it doesn't loop
-// constantly.
-@BaseClass appliesto(-MBase) studio("models/editor/item_health_charger_hl2.mdl") = _item_healthcharger_hl2 []
-@BaseClass appliesto(+MBase) studio() = _item_healthcharger_settable []
-
 @PointClass base(BaseEntityAnimating)
+	studio("models/props_combine/health_charger001.mdl")
 	appliesto(EP1, EP2, HL2, P1, P2)
-	base(_item_healthcharger_hl2, _item_healthcharger_settable)
 = item_healthcharger: "Health Charger"
 	[
-	// Unfortunately can't use the custom model then...
-	model[MBase](studio) : "Model" : "models/props_combine/health_charger001.mdl" : "Set a custom model for the health charger."
-
-	Charge[engine](float) : "Juice" : 50 : "How full the charger should be (0 - 100)"
-	Charge[MBase](integer) : "Juice" : 0 : "Overrides the amount of health this charger contains. " +
-		"Use 0 for the default charge, which is usually the maximum juice. Use -1 if you want the charger to start empty."
-	MaxCharge[MBase](integer) : "Max Juice" : 0 : "Overrides the maximum health this charger contains. " +
-		"Use 0 for the default charge, 75."
-	SetIncrementValue[MBase](integer) : "Increment Health" : 0 : "How much charge should be given each 'increment', " +
-		"or each tenth-of-a-second interval in which the player is given health while using this charger. " +
-		"Juice is also decreased accordingly. Use 0 for the default increment, 1."
-	
-	// Inputs
-	input Recharge[MBase](void) : "Recharge to full"
-	input SetCharge[MBase](integer) : "Sets the *maximum* charge, refilling the charger in the process."
-	input SetChargeNoMax[MBase](float) : "Sets the charger's current juice without doing anything with the maximum."
-	input SetIncrementValue[MBase](integer) : "Sets the charger's increment value."
-
-	// Outputs
 	output OutRemainingHealth(float) : "Remaining Health."
-	output OnHalfEmpty[MBase](void) : "Half-Empty"
-	output OnEmpty[MBase](void) : "Empty"
-	output OnFull[MBase](void) : "Recharged to full."
 	output OnPlayerUse(void) : "Fired when the player +USEs the charger."
 	]

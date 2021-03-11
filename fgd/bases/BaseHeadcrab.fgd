@@ -7,8 +7,6 @@
 		[
 		65536: "Start hidden" : 0
 		131072: "Start hanging from ceiling" : 0
-		262144 :  "Don't drown" : 0 [MBase]
-		524288 :  "No melee insta-kill" : 0 [MBase]
 		]
 
 
@@ -16,5 +14,4 @@
 	input Unburrow(void) : "Unburrow"
 	input StartHangingFromCeiling(void) : "Start hanging from ceiling."
 	input DropFromCeiling(void) : "Drop if hanging from ceiling."
-	output OnLeap[MBase](void) : "Fires when the headcrab leaps at an enemy. !activator is the target."
 	]

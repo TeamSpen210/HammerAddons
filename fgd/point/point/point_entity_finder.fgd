@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(MBase)
+@PointClass base(BaseEntityPoint)
 	line(255 255 0, targetname, referencename)
 	line(255 255 0, targetname, filtername)
 	color(0 100 250)

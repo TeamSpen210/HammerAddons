@@ -1,8 +1,6 @@
 @BaseClass base(BaseEntityPoint)
 line(255 255 255, targetname, actor) = BaseActBusy
 	[
-	nextbusy[MBase](integer) : "Next Busy Time" : 0 : "Something."
-
 	actor(target_name_or_class) : "Actor(s) to affect" : : "NPC's that should act busy"
 	startactive(boolean) : "Start Active" : 0
 	searchtype[engine](integer) : "Search Type" : 0
@@ -19,7 +17,6 @@ line(255 255 255, targetname, actor) = BaseActBusy
 	input Activate(void) : "Begin acting busy"
 	input Deactivate(void) : "Cease acting busy"
 	input SetBusySearchRange(float) : "Update the busy search range for all actors."
-	input ForceThisNPCToStopBusy[MBase](string) : "Forces a specific NPC to stop acting busy."
 	input ForceNPCToActBusy(string) : "Force an NPC to act busy. Takes parameters, separated by spaces: <Targetname> <hint node targetname> <optional:teleport> <optional:$customactivityorsequence> <maximum time to actbusy>. If no hint node targetname is specified, it'll search for a random one. If no max time is specified, it'll use the default. Specifying 0 as the max time will make the NPC act busy until disturbed. If the optional teleport parameter is specified, the NPC will teleport to the act busy point. A custom move animation can be specified by prepending $ to the name of it. i.e. $ACT_RUN will make the NPC Run. Sequence names can be used instead of activities."
 	input ForceThisNPCToActBusy(string) : "Force an NPC outputted from another entity to act busy. (only usable from an output that specifies an entity)"
 	input ForceThisNPCToLeave(string) : "Force an NPC outputted from another entity to find a HINT_NPC_EXIT_POINT hintnode and vanish."
@@ -28,7 +25,4 @@ line(255 255 255, targetname, actor) = BaseActBusy
 	output OnNPCStartedBusy(ehandle) : "Fired when an NPC targeted by this goal starts an ActBusy animation."
 	output OnNPCFinishedBusy(ehandle) : "Fired when an NPC targeted by this goal finishes an ActBusy."
 	output OnNPCLeft(ehandle) : "Fired when an NPC target by this goal finishes a forced Leave."
-	output OnNPCStartedLeavingBusy[MBase](ehandle) : "Fired right when an NPC targeted by this goal begins to stop acting busy, which would be right as they play their exit animation."
-	output OnNPCMovingToBusy[MBase](ehandle) : "Fired when the NPC begins moving to the actbusy location."
-	output OnNPCAbortedMoveTo[MBase](ehandle) : "Fired if the NPC is forced to abort moving to the actbusy location."
 	]
