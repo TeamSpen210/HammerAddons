@@ -85,7 +85,7 @@
 	input AlwaysUpdateOff(void) : "Turn off per frame updating (for moving lights)"
 
 	// Disabled by Valve in the code, emits console message.
-	input SpotlightTexture[!CSGO, !P2](string) : "Set the spotlight texture"
+	input SpotlightTexture[!P2](string) : "Set the spotlight texture"
 
 	input EnableShadows(boolean) : "Set if the shadows are enabled."
 	input SetLightStyle[since_P2](integer) : "Change the lightstyle (see Appearance field for possible values)."

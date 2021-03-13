@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(-CSGO)
+@PointClass base(BaseEntityPoint, EnableDisable)
  	autovis(Point Entities, Globals, Achievements)
  	iconsprite("editor/logic_achievement")
 = logic_achievement: "Sends an achievement system related event from the map to the achievement system."

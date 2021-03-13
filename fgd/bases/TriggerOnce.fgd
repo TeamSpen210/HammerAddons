@@ -5,8 +5,7 @@
 	[
 	spawnflags(flags)  =
 		[
-		1: "Clients/Players/Bots" : 1 [CSGO]
-		1: "Clients/Players" : 1 [!CSGO]
+		1: "Clients/Players" : 1
 		2: "NPCs" : 0
 		4: "func_pushable" : 0
 		8: "Physics Objects" : 0
@@ -16,8 +15,7 @@
 		512: "Only clients *not* in vehicles" : 0
 		1024: "Physics debris" : 0
 		2048: "Only NPCs in vehicles (respects player ally flag)" : 0
-		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 1 [!CSGO]
-		4096: "Disallow Bots" : 0 [CSGO]
+		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 1
 		]
 
 	StartDisabled(boolean) : "Start Disabled?" : 0

@@ -22,10 +22,10 @@
 		1024: "Use Activates" : 1
 		2048: "Starts locked" : 0
 		4096: "Sparks" : 0
-		16384: "Non-solid" : 0 [since_CSGO]
+		16384: "Non-solid" : 0
 		]
 
 	customsound(sound) : "Sound Name" : : "The .wav(!!) sound file to use. (Only used when old 'sounds' keyvalue isn't set)"
 
-	min_use_angle[since_CSGO](float) : "Use Look-At Limit" : 0.8 : "Limit the usable look-at-angle. -1 is looking directly away, 0 is looking perpendicular, 1 is looking directly at."
+	min_use_angle(float) : "Use Look-At Limit" : 0.8 : "Limit the usable look-at-angle. -1 is looking directly away, 0 is looking perpendicular, 1 is looking directly at."
 	]

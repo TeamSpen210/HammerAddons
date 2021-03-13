@@ -11,10 +11,10 @@
 		1: "Snow"
 		2: "Ash"
 		3: "Snowfall"
-		7: "Particle Snow" [since_CSGO]
 		4: "Particle Rain"
 		5: "Particle Ash"
 		6: "Particle Rainstorm"
+		7: "Particle Snow"
 		]
 
 	minspeed[P2](float) : "Minimum speed (snowfall only)" : 25

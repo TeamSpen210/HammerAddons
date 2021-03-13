@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(CSGO) = logic_eventlistener_itemequip: "An entity that can listen to the item_equip event fired from code and fire and output when it happens and the weapon class or type defined, match."
+= logic_eventlistener_itemequip: "An entity that can listen to the item_equip event fired from code and fire and output when it happens and the weapon class or type defined, match."
 	[
 	weapontype[engine](integer) : "Weapon Type" : -1
 	weapontype(choices) : "Weapon Type" : -1 =

@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(since_CSGO) 
+@PointClass base(BaseEntityPoint, EnableDisable)
 	iconsprite("editor/env_cascade_light.vmt") 
 	lightprop("models/editor/spot.mdl") 
 = env_cascade_light: "An entity to control the sunlight that casts cascaded shadows in the map."
