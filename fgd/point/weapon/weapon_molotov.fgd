@@ -1,7 +1,0 @@
-
-@PointClass base(Weapon) 
-	appliesto(CSGO) 
-	autovis(Weapons, CSGO Weapons, CS Equipment)
-	studioprop("models/weapons/w_eq_molotov_dropped.mdl") = weapon_molotov: "Molotov"
-	[
-	]
