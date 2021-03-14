@@ -22,7 +22,7 @@
 
 	sides(sidelist) : "Brush faces" : : "(Optional) Brushes faces to directly attach to the env_cubemap. Press Pick then click on faces in the 3D View to select them. Use CTRL while clicking to add or remove from the selection."
 	
-	parallaxobb[P2CE](target_destination) : "Cubemap Bounds" : :
+	parallaxobb(target_destination) : "Cubemap Bounds" : :
 		"Optionally assigns this cubemap a bounding box for parallax correction " +
 		"(brush entity tied to parallax_obb). " +
 		"This means the cubemap reflection will move as the camera moves, similar to func_reflective_glass. "

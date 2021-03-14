@@ -28,8 +28,8 @@
 
 	model[engine](studio): "Funnel model" : "models/props/tractor_beam_emitter.mdl"
 
-	primarycolor[P2CE](color255) : "Primary Color (R G B A)" : "10 160 255 255" : "Colour of the funnel when it is moving forwards."
-	secondarycolor[P2CE](color255) : "Secondary Color (R G B A)" : "255 160 32 255" : "Colour of the funnel when it is moving backwards."
+	primarycolor(color255) : "Primary Color (R G B A)" : "10 160 255 255" : "Colour of the funnel when it is moving forwards."
+	secondarycolor(color255) : "Secondary Color (R G B A)" : "255 160 32 255" : "Colour of the funnel when it is moving backwards."
 
 	// Inputs
 	input SetLinearForce(float) : "Set the speed of the Funnel, and therefore the direction."

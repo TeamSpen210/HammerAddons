@@ -80,12 +80,12 @@
 	forcedslave(boolean) : "Forced slave" : 0
 	forceprecache(boolean) : "Force precache" : 0 : "Precache the movie referred to by Movie Filename on entity spawn."
 
-	noscanline[P2CE](boolean) : "Disable Scanline Overlay" : 0 : "Disables the default scanline overlay."
-	custom_uv[P2CE](boolean) : "Use Custom UVs" : 0 : "Enables custom uv coordinates to be used."
-	u_min[P2CE](float) : "U Min" : 0 : "U Min (Left) Coordinate (0-1). Needs Custom UVs to be enabled!"
-	u_max[P2CE](float) : "U Max" : 0 : "U Max (Right) Coordinate (0-1). Needs Custom UVs to be enabled!"
-	v_min[P2CE](float) : "V Min" : 1 : "V Min (Top) Coordinate (0-1). Needs Custom UVs to be enabled!"
-	v_max[P2CE](float) : "V Max" : 1 : "V Max (Bottom) Coordinate (0-1). Needs Custom UVs to be enabled!"
+	noscanline(boolean) : "Disable Scanline Overlay" : 0 : "Disables the default scanline overlay."
+	custom_uv(boolean) : "Use Custom UVs" : 0 : "Enables custom uv coordinates to be used."
+	u_min(float) : "U Min" : 0 : "U Min (Left) Coordinate (0-1). Needs Custom UVs to be enabled!"
+	u_max(float) : "U Max" : 0 : "U Max (Right) Coordinate (0-1). Needs Custom UVs to be enabled!"
+	v_min(float) : "V Min" : 1 : "V Min (Top) Coordinate (0-1). Needs Custom UVs to be enabled!"
+	v_max(float) : "V Max" : 1 : "V Max (Bottom) Coordinate (0-1). Needs Custom UVs to be enabled!"
 	volume(integer) : "Audio Volume" : 0 : "Audio volume to use for video playback. 0-10"
 
 	// Inputs

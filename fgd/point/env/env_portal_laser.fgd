@@ -29,7 +29,7 @@
 		1: "Rusted"
 		]
 
-	beamcolor[P2CE](choices) : "Laser Beam Color (R G B A)" : "255 0 0 255" : "Sets the colour of the laser." =
+	beamcolor(choices) : "Laser Beam Color (R G B A)" : "255 0 0 255" : "Sets the colour of the laser." =
 	[
 		"255 255 255 255" : "White"
 		"255 0 0 255" : "Default Red"
@@ -40,7 +40,7 @@
 		"65 97 0 255" : "Dark Green"
 	]
 
-	DisablePlayerCollision[P2CE](choices) : "Player Collision" : "Default Behavior" : "Override to disable player collision for this laser. If set to 0 (default), sv_player_collide_with_laser will determine whether or not to collide. If 1, laser collision will be disabled." =
+	DisablePlayerCollision(choices) : "Player Collision" : "Default Behavior" : "Override to disable player collision for this laser. If set to 0 (default), sv_player_collide_with_laser will determine whether or not to collide. If 1, laser collision will be disabled." =
 	[
 		0 : "Default Behavior"
 		1 : "Force Off"
@@ -51,5 +51,5 @@
 	input TurnOn(void) : "Turn the laser on."
 	input TurnOff(void) : "Turn the laser off."
 
-	input SetBeamColor[P2CE](color255) : "Changes the laser colour."
+	input SetBeamColor(color255) : "Changes the laser colour."
 	]
