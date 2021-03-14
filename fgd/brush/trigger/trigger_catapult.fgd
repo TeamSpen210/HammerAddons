@@ -1,5 +1,5 @@
 @SolidClass base(Trigger) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	line(255 255 0, targetname, launchTarget) 
 = trigger_catapult: "Catapult the player in a given direction at a given velocity."
 	[
@@ -22,7 +22,7 @@
 
 	usethresholdcheck(boolean) : "Use Threshold Check" : 0 : "Use the Lower and Upper Threshold to only trigger when the object is moving at a certain speed already."
 	onlyvelocitycheck(boolean) : "Only check velocity" : 0 : "Only check velocity of the touching object - don't actually catapult it.  Use in conjunction with OnCatapulted to create velocity checking triggers.  Only works when Use Threshold Check is enabled."
-	AbsoluteVelocityCheck[P2CE](boolean) : "Absolute Velocity Check" : 0 : "If enabled, the values in Lower Threshold and Upper Threshold represent real velocity values instead of percentages."
+	AbsoluteVelocityCheck(boolean) : "Absolute Velocity Check" : 0 : "If enabled, the values in Lower Threshold and Upper Threshold represent real velocity values instead of percentages."
 	
 	lowerthreshold(float) : "Lower Threshold" : 0.15 : "Flung object must be within this percentage value in order to activate fling. Specify a value between [0...1] (default is .15). This is only used if Use Threshold Check is set to yes."
 	upperthreshold(float) : "Upper Threshold" : 0.30 : "Flung object must be within this percentage value in order to activate fling. Specify a value between [0...1] (default is .30). This is only used if Use Threshold Check is set to yes."

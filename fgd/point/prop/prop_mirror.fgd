@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating, SetModel) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	studioprop() = prop_mirror: "A basic mirror model"
 	[
 	width(float) : "Width" : 64.0 : "The width of the mirror when there's no model"

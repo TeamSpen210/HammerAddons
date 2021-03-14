@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(P2)
+	appliesto(P2CE)
 	autovis(Overlays,Indicator Panel)
 	studioprop("models/editor/prop_indicator_panel.mdl") 
 	line(255 255 0, targetname, IndicatorLights) 

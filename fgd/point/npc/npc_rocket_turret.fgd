@@ -1,11 +1,6 @@
-// Switch the model helper depending on game, since P1 can't swap models.
-@BaseClass appliesto(P1) studioprop("models/props_bts/rocket_sentry.mdl")
-	= _npc_rocket_turret_p1 []
-@BaseClass appliesto(P2) studioprop() line(0 0 255, targetname, TripwireAimTarget) 
-	= _npc_rocket_turret_p2 []
-
-@PointClass base(BaseNPC, ResponseContext, _npc_rocket_turret_p1, _npc_rocket_turret_p2) 
-	appliesto(P1, P2) 
+@PointClass base(BaseNPC, ResponseContext)
+	studioprop() line(0 0 255, targetname, TripwireAimTarget) 
+	appliesto(P2CE) 
 	autovis(Entities, NPCs, Portal Rocket Turret)
 = npc_rocket_turret: "Portal 1 rocket sentry, aims a rocket at a target. " +
 		"In Portal 2, the rocket spawns with a speed of 0 and sometimes gets " +

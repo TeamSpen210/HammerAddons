@@ -1,5 +1,5 @@
 @PointClass base(BaseNPC, SetSkin) 
-	appliesto(P1, P2) 
+	appliesto(P2CE) 
 	studioprop("models/props/security_camera.mdl") 
 	autovis(Entities, NPCs, Portal Security Camera)
 = npc_security_camera: "Aperture Science Security Camera. " +

@@ -7,7 +7,7 @@
 	displaytext(string) : "Display Text"
 	MovieFilename(string) : "Movie To display" : "media/filename.webm" : "The movie to display."
 	MovieFilename[engine](string) : "Movie To display" : "media/filename.webm" : "The movie to display."
-	MovieFilename[P2](choices) : "Movie to display" : "media/aperture_logo.webm" : "The movie to display. You can also type in the filename of a custom movie here." =
+	MovieFilename[P2CE](choices) : "Movie to display" : "media/aperture_logo.webm" : "The movie to display. You can also type in the filename of a custom movie here." =
 		[
 		"media/coop_black_screen.webm"		: "Black Screen"
 		"media/aperture_logo.webm"			: "Aperture Logo"

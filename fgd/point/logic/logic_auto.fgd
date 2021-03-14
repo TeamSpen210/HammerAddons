@@ -36,7 +36,7 @@
 		"is_console": "Game is running on a console"
 		]
 
-	globalstate[P2](choices) : "Global State to Read" =
+	globalstate[P2CE](choices) : "Global State to Read" =
 		[
 		"": "--- None ---"
 		"is_console": "Game is running on a console"

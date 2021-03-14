@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating)
-	appliesto(+engine, P1, P2)
+	appliesto(+engine, P2CE)
 = portalsimulator_collisionentity: "This contains the modified physics meshes for the static geometry around portals."
 	[
 	]   

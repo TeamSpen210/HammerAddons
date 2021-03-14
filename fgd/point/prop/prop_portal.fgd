@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, PortalBase) 
-	appliesto(P1, P2) 
+	appliesto(P2CE) 
 	studioprop("models/editor/prop_portal.mdl") 
 	bbox(-32 -16 -64, 32 16 64) 
 = prop_portal: "A portal."

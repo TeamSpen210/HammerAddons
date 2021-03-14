@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating, SRCIndicator) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	autovis(Test Elements, Dis. Beam, Laser Catcher)
 	studioprop() = prop_laser_catcher: "Discouragement Beam Catcher that detects a laser, absorbing the beam. The entity will fire outputs when struck and unstruck."
 	[
@@ -28,9 +28,9 @@
 
 	src_fix_skins[srctools](boolean) : "Fix Skins Logic" : 1 : "If set, add extra outputs to fix the bug with skins not changing after a reload from save."
 	
-	uselaserfilter[P2CE](bool) : "Use Laser Filter" : 0 : "If enabled, this catcher can only be activated by the specified laser color."
+	uselaserfilter(bool) : "Use Laser Filter" : 0 : "If enabled, this catcher can only be activated by the specified laser color."
 	
-	filtercolor[P2CE](choices) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter lasers by this colour." =
+	filtercolor(choices) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter lasers by this colour." =
 	[
 		"255 255 255 255" : "White"
 		"255 0 0 255" : "Default Red"
@@ -44,7 +44,7 @@
 	// Inputs
 	input Skin(integer) : "Set the skin of the catcher manually."
 
-	input SetFilterColor[P2CE](color255) : "Changes the laser filter colour."
+	input SetFilterColor(color255) : "Changes the laser filter colour."
 
 	// Outputs
 	output OnPowered(void) : "Fired when a laser hits the target."

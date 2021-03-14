@@ -1,7 +1,6 @@
-
 @BaseClass = TeamNum
 	[		
-	teamnum[P2](choices) : "Team" : 0 = 
+	teamnum[P2CE](choices) : "Team" : 0 = 
 		[
 		0: "Chell/Bendy"
 		2: "P-Body"

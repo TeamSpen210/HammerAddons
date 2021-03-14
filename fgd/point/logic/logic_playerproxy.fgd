@@ -24,13 +24,13 @@
 
 	input SetLocatorTargetEntity(string) : "Set the entity that the HUD locator should track. (Usually a vehicle)"
 	
-	input AddPotatosToPortalgun[P2](void) : "Change portalgun bodygroup to show potatos."
-	input RemovePotatosFromPortalgun[P2](void) : "Change portalgun bodygroup to not show potatos."
-	input SetDropEnabled[P2](boolean) : "Set wether the player is allowed to drop a carried object."
-	input ForceVMGrabController[P2](void) : "Force the player to use the view model grab controller for all objects that are picked up."
-	input ForcePhysicsGrabController[P2](void) : "Force the player to use the physics grab controller for all objects that are picked up."
-	input ResetGrabControllerBehavior[P2](void) : "Resets the grab controller used by the player to its default behavior."
-	input SetMotionBlurAmount[P2](float) : "Forces the motion blur effect on the player. Set to < 0 to disable this override."
+	input AddPotatosToPortalgun[P2CE](void) : "Change portalgun bodygroup to show potatos."
+	input RemovePotatosFromPortalgun[P2CE](void) : "Change portalgun bodygroup to not show potatos."
+	input SetDropEnabled[P2CE](boolean) : "Set wether the player is allowed to drop a carried object."
+	input ForceVMGrabController[P2CE](void) : "Force the player to use the view model grab controller for all objects that are picked up."
+	input ForcePhysicsGrabController[P2CE](void) : "Force the player to use the physics grab controller for all objects that are picked up."
+	input ResetGrabControllerBehavior[P2CE](void) : "Resets the grab controller used by the player to its default behavior."
+	input SetMotionBlurAmount[P2CE](float) : "Forces the motion blur effect on the player. Set to < 0 to disable this override."
 
 	output OnFlashlightOn(float) : "Fired when the player turns on his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
 	output OnFlashlightOff(float) : "Fired when the player turns off his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
@@ -41,8 +41,9 @@
 	output OnStartSlowingTime(void) : "Fired when a Portal player initiates slow time."
 	output OnStopSlowingTime(void) : "Fired when a Portal player stops slowing time."
 	
-	output OnPrimaryPortalPlaced[P2](void) : "Fired when a Portal player successfully places the primary portal."
-	output OnSecondaryPortalPlaced[P2](void) : "Fired when a Portal player successfully places the secondary portal."
+	output OnPrimaryPortalPlaced[P2CE](void) : "Fired when a Portal player successfully places the primary portal."
+	output OnSecondaryPortalPlaced[P2CE](void) : "Fired when a Portal player successfully places the secondary portal."
+	output OnCoopPing[P2CE](void) : "Fired when a Portal player pings in coop."
 	output OnDuck(void) : "Fired when a player starts to duck."
 	output OnUnDuck(void) : "Fired when a player releases the duck button."
 	output OnJump(void) : "Fired when a player jumps."

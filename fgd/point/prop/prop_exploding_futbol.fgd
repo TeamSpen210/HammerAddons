@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPhysics) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	studioprop("models/npcs/personality_sphere_angry.mdl") 
 = prop_exploding_futbol: "The bombs used by Wheatley."
 	[

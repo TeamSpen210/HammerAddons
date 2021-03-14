@@ -1,5 +1,5 @@
 @SolidClass base(trigger_playerteam)
-	appliesto(P2, +srctools)
+	appliesto(P2CE, +srctools)
 = comp_trigger_coop: "Only activates once both Coop players have reached the trigger."
 [
 	output OnStartTouchBoth(void) : "Both players have entered the trigger."

@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPhysics) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	autovis(Test Elements, Cubes, Franken)
 	studioprop() = prop_monster_box: "FrankenCubes, they walk about when oriented correctly but otherwise behave like normal Storage Cubes."
 	[

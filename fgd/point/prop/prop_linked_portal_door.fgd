@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating, LinkedPortalDoor) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	studioprop("models/props/portal_door.mdl") 
 	line(255 255 0, targetname, lightingorigin) 
 = prop_linked_portal_door: "A door which is linked by a portal to another 'prop_linked_portal_door' entity. " +

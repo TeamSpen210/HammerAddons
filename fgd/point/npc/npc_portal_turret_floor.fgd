@@ -1,11 +1,6 @@
-// Switch the model helper depending on game.
-@BaseClass appliesto(P1) studioprop("models/props/turret_01.mdl")
-	= _npc_portal_turret_floor_p1_mdl []
-@BaseClass appliesto(P2) studioprop()
-	= _npc_portal_turret_floor_p2_mdl []
-
-@PointClass base(BaseNPC, _npc_portal_turret_floor_p1_mdl, _npc_portal_turret_floor_p2_mdl) 
-	appliesto(P1, P2) 
+@PointClass base(BaseNPC)
+	appliesto(P2CE) 
+	studioprop()
 	autovis(Entities, NPCs, Portal Turret)
 	sphere(turretRange) 
 	frustum(45, 16, TurretRange, 255 0 0 100, -1) 

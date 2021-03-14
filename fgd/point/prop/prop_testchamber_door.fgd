@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	autovis(Doors, Prop Door, Testchamber Door)
 	// Non-animating model, which prevents it continually opening 
 	// and fixes collision display.

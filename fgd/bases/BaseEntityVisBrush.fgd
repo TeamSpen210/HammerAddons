@@ -57,5 +57,5 @@
 
 	input AlternativeSorting[since_EP1](boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
 
-	input RemovePaint[P2](void) : "Remove paint from the brush entity."
+	input RemovePaint[P2CE](void) : "Remove paint from the brush entity."
 	]

@@ -16,7 +16,7 @@
 		3: "Citadel Core Effect"
 		]
 
-	dissolvetype[P2](choices) : "Dissolve Type" : 0 : "The type of effect to use." =
+	dissolvetype[P2CE](choices) : "Dissolve Type" : 0 : "The type of effect to use." =
 		[
 		0: "Empancipation"
 		3: "Vanish, with fizzler ash particles"

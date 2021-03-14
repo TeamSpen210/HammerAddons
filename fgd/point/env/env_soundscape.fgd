@@ -24,7 +24,7 @@
 		"GenericOutdoor": "Outdoor"
 		]
 
-	soundscape[P2](choices) : "Soundscape" : "Nothing" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the portal2/scripts/ directory." =
+	soundscape[P2CE](choices) : "Soundscape" : "Nothing" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the portal2/scripts/ directory." =
 		[
 		"TestChamber_Destruction.DestructionBase": "Dest - Destruction Base"
 		"TestChamber_Destruction.DestructionBeauty": "Dest - Destruction Beauty"

@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	iconsprite("editor/info_player_ping_detector.vmt") 
 	line(255 255 0, targetname, functankname)
 = info_player_ping_detector: "Detects a specific Co-op player's pings, and optionally rotates a func_tank to face towards them (as seen in the Calibration Course)"

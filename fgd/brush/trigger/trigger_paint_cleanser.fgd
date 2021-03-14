@@ -1,5 +1,5 @@
 @SolidClass base(Trigger) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 = trigger_paint_cleanser: "A trigger volume that erases any gel within it. " +
 	"Will destroy prop_paint_bombs and info_paint_sprayer gel, " +
 	"but will not stop gel from streaking under it. " + 

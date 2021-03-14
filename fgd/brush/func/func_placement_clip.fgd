@@ -1,4 +1,4 @@
 @SolidClass base(Trigger) 
-	appliesto(P2) = func_placement_clip: "Specifies a region where things cannot be built."
+	appliesto(P2CE) = func_placement_clip: "Specifies a region where things cannot be built."
 	[
 	]

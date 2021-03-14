@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	studioprop("models/editor/prop_indicator_panel.mdl") 
 = prop_tic_tac_toe_panel: "Unknown use, likely for some kind of ping detector."
 	[

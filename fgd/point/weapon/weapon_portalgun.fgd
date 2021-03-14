@@ -1,5 +1,5 @@
 @PointClass base(Weapon) 
-	appliesto(P1, P2) 
+	appliesto(P2CE) 
 	// Don't add a subfolder to this, Portal maps won't contain any other weapons.
 	autovis(Weapons)
 	studioprop("models/weapons/w_portalgun.mdl") = weapon_portalgun: "Aperture Science Handheld Portal Device"
@@ -25,7 +25,7 @@
 
 
 	skin[engine](integer) : "Stripes" : 0 : "Which stripes to show in Hammer."
-	skin[P2](choices) : "[H] Stripes" : 0 : "Which stripes to show in Hammer." =
+	skin(choices) : "[H] Stripes" : 0 : "Which stripes to show in Hammer." =
 		[
 		0: "None"
 		1: "Blue"

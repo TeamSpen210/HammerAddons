@@ -8,7 +8,7 @@
 	teamnum(integer) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team."
 	teamnum[engine](integer) : "Team Number" : -1
 	
-	teamnum[P2](choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
+	teamnum[P2CE](choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
 		[
 		-1: "Don't care"
 		1: "Team 1"

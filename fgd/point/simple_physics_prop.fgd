@@ -4,5 +4,5 @@
 		"Model-based entities converted by phys_convert are turned into this entity, as well as dissolving objects." +
 		"See prop_physics for more options."
 	[
-	allowfunnel[P2](boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a portal."
+	allowfunnel[P2CE](boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a portal."
 	]

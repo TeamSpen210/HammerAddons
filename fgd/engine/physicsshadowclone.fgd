@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating)
-	appliesto(+engine, P1, P2)
+	appliesto(+engine, P2CE)
 = physicsshadowclone: "This is spawned to replicate physics objects sticking partially through a portal onto the other side."
 	[
 	]   

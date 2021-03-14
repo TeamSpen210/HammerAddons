@@ -13,7 +13,7 @@
 
 
 	target_team[engine](integer) : "Target Team" : -1
-	target_team[P2](choices) : "Target Team" : -1 : "Which team (or all) to allow to touch this trigger." =
+	target_team[P2CE](choices) : "Target Team" : -1 : "Which team (or all) to allow to touch this trigger." =
 		[
 		-1: "All Teams"
 		0: "0 (Spectators)"

@@ -1,5 +1,5 @@
 @PointClass base(BasePropPhysics) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	autovis(Test Elements, Cubes, Normal)
 	studioprop() = prop_weighted_cube: "Aperture Science Weighted Cube. Presses floor buttons, and can be moved around."
 	[
@@ -50,8 +50,8 @@
 	allowfunnel(boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a floor portal."
 	newskins(integer) readonly : "Use new skins" : 1 : "Use the values in the Cube Type and Skin Type fields instead of the Skin(OLD) field. You shouldn't need to touch this."
 	
-	uselasermodifier[P2CE](boolean) : "Use Laser Modifier" : 0 : "If enabled, this cube will recolor incoming lasers to the modifier color."
-	reflectmodifycolor[P2CE](choices) : "Laser Modifier Color (R G B A)" : "255 0 0 255" : "Set reflected lasers to this colour. Only applicable to reflection and Schrodinger cubes." =
+	uselasermodifier(boolean) : "Use Laser Modifier" : 0 : "If enabled, this cube will recolor incoming lasers to the modifier color."
+	reflectmodifycolor(choices) : "Laser Modifier Color (R G B A)" : "255 0 0 255" : "Set reflected lasers to this colour. Only applicable to reflection and Schrodinger cubes." =
 	[
 		"255 255 255 255" : "White"
 		"255 0 0 255" : "Default Red"
@@ -61,8 +61,8 @@
 		"212 60 146 255" : "Pink"
 		"65 97 0 255" : "Dark Green"
 	]
-	uselaserfilter[P2CE](boolean) : "Use Laser Filter" : 0 : "If enabled, this cube can only redirect lasers that match the filter color. If disabled, any laser color can be redirected."
-	reflectfiltercolor[P2CE](choices) : "Laser Filter Color (R G B A)" : "255 0 0 255" : "Filter reflected lasers by this colour. Only applicable to reflection and Schrodinger cubes." =
+	uselaserfilter(boolean) : "Use Laser Filter" : 0 : "If enabled, this cube can only redirect lasers that match the filter color. If disabled, any laser color can be redirected."
+	reflectfiltercolor(choices) : "Laser Filter Color (R G B A)" : "255 0 0 255" : "Filter reflected lasers by this colour. Only applicable to reflection and Schrodinger cubes." =
 	[
 		"255 255 255 255" : "White"
 		"255 0 0 255" : "Default Red"
@@ -84,9 +84,9 @@
 	input SilentDissolve(void) : "Kills the cube immediately and fires its OnFizzled output."
 	input ExitDisabledState(void) : "Exits the disabled state of a reflective cube."
 
-	input SetReflectModifyColor[P2CE](color255) : "Changes the laser modifier colour of the cube."
-	input SetReflectFilterColor[P2CE](color255) : "Changes the laser filter colour of the cube."
-	input EmitLaser[P2CE](boolean) : "Makes this cube emit or stop emitting its own laser."
+	input SetReflectModifyColor(color255) : "Changes the laser modifier colour of the cube."
+	input SetReflectFilterColor(color255) : "Changes the laser filter colour of the cube."
+	input EmitLaser(boolean) : "Makes this cube emit or stop emitting its own laser."
 
 	// Outputs
 	output OnFizzled(void) : "Fired when a cube is fizzled."
@@ -94,8 +94,7 @@
 	output OnBluePickUp(void) : "ATLAS picked up the cube."
 	output OnPlayerPickup(void) : "Any player picked up the cube."
 	output OnPhysGunDrop(void) : "Any player dropped the cube."
-	output OnPainted[!P2CE](void) : "Cube got painted, only if the state changed."
-	output OnPainted[P2CE](integer) : "Cube got painted, only if the state changed. Has the paint type as parameter."
+	output OnPainted(integer) : "Cube got painted, only if the state changed. Has the paint type as parameter."
 	output OnPowered(void) : "Cube got powered by a laser."
 	output OnUnpowered(void) : "Cube is no longer powered by a laser."
 	]

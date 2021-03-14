@@ -22,7 +22,7 @@
 		"hunters_to_run_over": "Ep2 Counter: Hunters to run over before they dodge" [ep2]
 		]
 
-	globalstate[P2](choices) : "Global State to Set" =
+	globalstate[P2CE](choices) : "Global State to Set" =
 		[
 		"portalgun_nospawn": "Spawn without Portalgun"
 		"no_pinging_blue": "Prevent Pinging ATLAS"

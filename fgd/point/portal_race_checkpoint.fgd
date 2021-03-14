@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	studioprop("models/effects/cappoint_hologram.mdl") = portal_race_checkpoint: "Checkpoint for race maps. Wen touched, lights up briefly."
 	[
 	resettime(float) : "Reset Time" : 5.0 : "The time it takes for the checkpoint to reset after activation."

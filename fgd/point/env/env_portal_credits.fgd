@@ -1,14 +1,13 @@
-
 @PointClass base(BaseEntityPoint) 
-	appliesto(P1, P2) 
+	appliesto(P2CE) 
 	iconsprite("editor/env_portal_credits")
 	color(200 0 0) = env_portal_credits: "The entity that controls the Portal credits, loaded from 'scripts/credits.txt'."
 	[
-
 	// Inputs
 	input RollCredits(void) : "Start the intro credits rolling."
 	input RollOutroCredits(void) : "Start the outro credits rolling."
 	input ShowLogo(void) : "Show the HL2 logo."
+	input SetLogoLength(float) : "How long the logo shows."
 	input RollPortalOutroCredits(void) : "Start the Portal greenscreen outro credits."
 
 	// Outputs
