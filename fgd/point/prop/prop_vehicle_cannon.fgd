@@ -1,6 +1,5 @@
-
 @PointClass base(BaseDriveableVehicle, SetModel) 
-	appliesto(EP1, EP2, HL2, P1) 
+	appliesto(EP1, EP2, HL2) 
 	autovis(Vehicles, Generic Vehicles, Cannon)
 	studioprop() = prop_vehicle_cannon: "Driveable studiomodel cannon."
 	[

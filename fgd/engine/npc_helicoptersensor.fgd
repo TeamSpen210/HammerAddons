@@ -1,5 +1,5 @@
 @NpcClass base(BaseEntityPoint) 
-	appliesto(+engine, EP1, EP2, HL2, P1)
+	appliesto(+engine, EP1, EP2, HL2)
 	size(-30 -30 -30, 30 30 30)
 = npc_helicoptersensor: "Sensor area attached to the back of the helicopter, which forwards commands onto the helicopter." +
 	"This can then be detected by triggers, to trigger bombs exactly when the helicopter passes."

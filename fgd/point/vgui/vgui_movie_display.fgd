@@ -76,9 +76,9 @@
 	
 	width(integer) : "Panel Width in World (Green)" : 256 : "Width of the panel in units."
 	height(integer) : "Panel Height in World (Blue)" : 128 : "Height of the panel in units."
-	stretch[since_P2](boolean) : "Stretch to Fill" : 0
-	forcedslave[since_P2](boolean) : "Forced slave" : 0
-	forceprecache[since_P2](boolean) : "Force precache" : 0 : "Precache the movie referred to by Movie Filename on entity spawn."
+	stretch(boolean) : "Stretch to Fill" : 0
+	forcedslave(boolean) : "Forced slave" : 0
+	forceprecache(boolean) : "Force precache" : 0 : "Precache the movie referred to by Movie Filename on entity spawn."
 
 	noscanline[P2CE](boolean) : "Disable Scanline Overlay" : 0 : "Disables the default scanline overlay."
 	custom_uv[P2CE](boolean) : "Use Custom UVs" : 0 : "Enables custom uv coordinates to be used."
@@ -92,11 +92,11 @@
 	input Enable(void) : "Make movie visible."
 	input Disable(void) : "Make movie invisible."
 	input SetDisplayText(string) : "Sets the display text."
-	input SetMovie[since_P2](string) : "Sets the movie to display."
-	input SetUseCustomUVs[since_P2](boolean) : "Use custom UVs."
-	input TakeOverAsMaster[since_P2](void) : "Start using this video as the master of it's group."
-	input SetUMin[since_P2](float) : "Set the minimum U."
-	input SetUMax[since_P2](float) : "Set the maximum U."
-	input SetVMin[since_P2](float) : "Set the minimum V."
-	input SetVMax[since_P2](float) : "Set the maximum V."
+	input SetMovie(string) : "Sets the movie to display."
+	input SetUseCustomUVs(boolean) : "Use custom UVs."
+	input TakeOverAsMaster(void) : "Start using this video as the master of it's group."
+	input SetUMin(float) : "Set the minimum U."
+	input SetUMax(float) : "Set the maximum U."
+	input SetVMin(float) : "Set the minimum V."
+	input SetVMax(float) : "Set the maximum V."
 	]

@@ -20,8 +20,8 @@
 	input SetHitMax(float) : "Set the upper bound of the counter and fire the OutValue output with the current value."
 	input SetHitMin(float) : "Set the lower bound of the counter and fire the OutValue output with the current value."
 	input GetValue(void) : "Causes the counter fire its OnGetValue output with the current value of the counter. Used for polling the counter when you don't" + " want constant updates from the OutValue output."
-	input SetMaxValueNoFire[since_P2](float) : "Set the upper bound of the counter without firing any outputs."
-	input SetMinValueNoFire[since_P2](float) : "Set the lower bound of the counter without firing any outputs."
+	input SetMaxValueNoFire(float) : "Set the upper bound of the counter without firing any outputs."
+	input SetMinValueNoFire(float) : "Set the lower bound of the counter without firing any outputs."
 
 	// Outputs
 	output OutValue(float) : "Fired when the counter value changes."

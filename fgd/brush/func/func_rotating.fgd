@@ -38,8 +38,8 @@
 	input StartBackward(void) : "Start the rotator rotating backward at maximum speed."
 	input Toggle(void) : "Toggle the rotator between rotating and not rotating."
 	input Reverse(void) : "Reverse the direction of rotation of the rotator, preserving the current speed."
-	input GetSpeed[since_P2](void) : "Causes the func_rotating to fire its OnGetSpeed output with its current speed."
+	input GetSpeed(void) : "Causes the func_rotating to fire its OnGetSpeed output with its current speed."
 
 	// Outputs
-	output OnGetSpeed[since_P2](integer) : "Fired when the GetSpeed input is called.  The current speed of the func_rotating is passed with this output."
+	output OnGetSpeed(integer) : "Fired when the GetSpeed input is called.  The current speed of the func_rotating is passed with this output."
 	]

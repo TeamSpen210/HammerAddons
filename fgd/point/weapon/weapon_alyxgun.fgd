@@ -1,5 +1,5 @@
 @PointClass base(Weapon) 
-	appliesto(EP1, EP2, HL2, P1) 
+	appliesto(EP1, EP2, HL2) 
 	autovis(Weapons, HL2 Weapons, Alyx's Gun)
 	studioprop("models/weapons/W_Alyx_Gun.mdl") = weapon_alyxgun: "Alyx's Gun"
 	[

@@ -13,14 +13,14 @@
 		]
 
 	lookatplayerpings[engine](boolean): "Target" : 0
-	lookatplayerpings[P2](choices) : "Target" : 0 : "Target to follow: the player, or their pings (co-op mode only)" =
+	lookatplayerpings(choices) : "Target" : 0 : "Target to follow: the player, or their pings (co-op mode only)" =
 		[
 		0: "Players"
 		1: "Pings"
 		]
 
 	teamtolookat[engine](integer) : "Ping Type To Follow" : 1
-	teamtolookat[P2](choices) : "Ping Type To Follow" : 1 : "Which player's pings to look at." =
+	teamtolookat(choices) : "Ping Type To Follow" : 1 : "Which player's pings to look at." =
 		[
 		1: "Both"
 		2: "P-Body"
@@ -28,7 +28,7 @@
 		]
 
 	teamplayertolookat[engine](integer) : "Player To Follow" : 0
-	teamplayertolookat[P2](choices) : "Player To Follow" : 0 : "Which player the camera should follow." =
+	teamplayertolookat(choices) : "Player To Follow" : 0 : "Which player the camera should follow." =
 		[
 		0: "Both"
 		2: "P-Body"
@@ -41,18 +41,18 @@
 	input Toggle(void) : "Toggle following players."
 	input Ragdoll(void) : "Knock the camera off the wall."
 
-	input LookAtBlue[P2](void) : "Make the camera only follow ATLAS."
-	input LookAtOrange[P2](void) : "Make the camera only follow P-Body."
-	input LookAllTeams[P2](void) : "Make the camera follow all players."
+	input LookAtBlue(void) : "Make the camera only follow ATLAS."
+	input LookAtOrange(void) : "Make the camera only follow P-Body."
+	input LookAllTeams(void) : "Make the camera follow all players."
 
 	// Outputs
 	output OnDeploy(void) : "Camera is becoming active and dangerous."
 	output OnRetire(void) : "Camera is becoming inactive and harmless."
 	
-	output OnTaunted[P2](void) : "A player STARTED taunting the camera."
-	output OnTauntedBlue[P2](void) : "ATLAS STARTED taunting the camera."
-	output OnTauntedOrange[P2](void) : "P-Body STARTED taunting the camera."
-	output OnTauntedFinished[P2](void) : "A player FINISHED taunting the camera."
-	output OnTauntedBlueFinished[P2](void) : "ATLAS FINISHED taunting the camera."
-	output OnTauntedOrangeFinished[P2](void) : "P-Body FINISHED taunting the camera."
+	output OnTaunted(void) : "A player STARTED taunting the camera."
+	output OnTauntedBlue(void) : "ATLAS STARTED taunting the camera."
+	output OnTauntedOrange(void) : "P-Body STARTED taunting the camera."
+	output OnTauntedFinished(void) : "A player FINISHED taunting the camera."
+	output OnTauntedBlueFinished(void) : "ATLAS FINISHED taunting the camera."
+	output OnTauntedOrangeFinished(void) : "P-Body FINISHED taunting the camera."
 	]

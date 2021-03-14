@@ -32,8 +32,8 @@
 		2: "Priority, Furthest"
 		]
 
-	branchingmethod[engine](integer) : "Branching Assault Selection Method" : 0
-	branchingmethod[P2](choices) : "Branching Assault Selection Method" : 0 =
+	branchmethod[engine](integer) : "Branching Assault Selection Method" : 0
+	branchmethod(choices) : "Branching Assault Selection Method" : 0 =
 		[
 		0: "Random (default)"
 		1: "Closest"

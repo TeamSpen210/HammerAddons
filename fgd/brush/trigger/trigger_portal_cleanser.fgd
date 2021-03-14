@@ -14,11 +14,11 @@
 		2048: "Only NPCs in vehicles (respects player ally flag)" : 0
 		]
 		
-	visible[P2](boolean) : "Visible" : 1 : "If the fizzler is visible. This controls whether sounds will play."
-	usescanline[P2](boolean) : "Use Scanline" : 1 : "If the field uses a scanline particle effect."
+	visible(boolean) : "Visible" : 1 : "If the fizzler is visible. This controls whether sounds will play."
+	usescanline(boolean) : "Use Scanline" : 1 : "If the field uses a scanline particle effect."
 
 	// Inputs
-	input FizzleTouchingPortals[P2](void) : "Cause any portals in our volume to immediately fizzle."
+	input FizzleTouchingPortals(void) : "Cause any portals in our volume to immediately fizzle."
 
 	// Outputs
 	output OnDissolve(void) : "Fired whenever an entity is dissolved."

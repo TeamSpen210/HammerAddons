@@ -81,7 +81,7 @@
 	input SetRotationDistance(float) : "Set the distance (in degrees) between Open and Closed."
 	input SetSpeed(float) : "Set the speed at which the door rotates. 100 is default."
 	
-	input MoveToRotationDistance[since_P2](float) : "Sets the open distance (in degrees) and moves there."
+	input MoveToRotationDistance(float) : "Sets the open distance (in degrees) and moves there."
 	input SetGlowEnabled(void) : "Starts the glow."
 	input SetGlowDisabled(void) : "Stops the glow."
 	input SetUnbreakable(void) : "The door can't be broken."
@@ -97,5 +97,5 @@
 	output OnUnblockedClosing(void) : "Fired when the door is unblocked while closing."
 	output OnUnblockedOpening(void) : "Fired when the door is unblocked while opening."
 	output OnLockedUse(void) : "Fired when the player uses the door, but it is locked."
-	output OnRotationDone[since_P2](void) : "Fired when the door arrives at it's goal angle."
+	output OnRotationDone(void) : "Fired when the door arrives at it's goal angle."
 	]

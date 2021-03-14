@@ -18,8 +18,6 @@
 	input SetMaxInputArmor(integer) : "Sets the maximum armor value that could be set by armor inputs."
 
 	input LowerWeapon(void) : "Lowers the players weapon."
-	
-	input SuppressCrosshair[P1](void) : "Disable the player's crosshair."
 
 	input EnableCappedPhysicsDamage(void) : "Cause player to take less damage from physics objects, and never more than 30 points from any individual strike."
 	input DisableCappedPhysicsDamage(void) : "Undo effects of EnableCappedPhysicsDamage"
@@ -45,7 +43,7 @@
 	
 	output OnPrimaryPortalPlaced[P2](void) : "Fired when a Portal player successfully places the primary portal."
 	output OnSecondaryPortalPlaced[P2](void) : "Fired when a Portal player successfully places the secondary portal."
-	output OnDuck[since_P2](void) : "Fired when a player starts to duck."
-	output OnUnDuck[since_P2](void) : "Fired when a player releases the duck button."
-	output OnJump[since_P2](void) : "Fired when a player jumps."
+	output OnDuck(void) : "Fired when a player starts to duck."
+	output OnUnDuck(void) : "Fired when a player releases the duck button."
+	output OnJump(void) : "Fired when a player jumps."
 	]

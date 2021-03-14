@@ -13,10 +13,10 @@
 	canfireportal1(boolean) : "Can Fire Blue Portals" : 1 : "Can this portalgun create blue portals?"
 	canfireportal2(boolean) : "Can Fire Orange Portals" : 1 : "Can this portalgun create orange portals?"
 	
-	showingpotatos[P2](boolean) : "Show PoTaToS" : 0 : "Show PoTaToS on the portal gun."
+	showingpotatos(boolean) : "Show PoTaToS" : 0 : "Show PoTaToS on the portal gun."
 
 	startingteamnum[engine](integer) : "Player" : 0 : "Which player this gun belongs to.  Will decide which portals it fires before being picked up, as well as the skin."
-	startingteamnum[P2](choices) : "Player" : 0 : "Which player this gun belongs to.  Will decide which portals it fires before being picked up, as well as the skin." =
+	startingteamnum(choices) : "Player" : 0 : "Which player this gun belongs to.  Will decide which portals it fires before being picked up, as well as the skin." =
 		[
 		0: "Chell/Bendy"
 		2: "P-Body"
@@ -33,10 +33,8 @@
 		]
 
 	// Inputs
-	input ChargePortal1[P1](void) : "Does charge up effect for mounted portalgun."
-	input ChargePortal1[P2](void) : "Does charge up effect for mounted portalgun. Missing particles and sounds."
-	input ChargePortal2[P1](void) : "Does charge up effect for mounted portalgun."
-	input ChargePortal2[P2](void) : "Does charge up effect for mounted portalgun. Missing particles and sounds."
+	input ChargePortal1(void) : "Does charge up effect for mounted portalgun. Missing particles and sounds."
+	input ChargePortal2(void) : "Does charge up effect for mounted portalgun. Missing particles and sounds."
 	input FirePortal1(void) : "Projects the	'blue' portal onto a wall in the facing direction of the gun."
 	input FirePortal2(void) : "Projects the 'orange' portal onto a wall in the facing direction of the gun."
 	input FirePortalDirection1(vector) : "Fires the 'blue' portal in the specified direction."

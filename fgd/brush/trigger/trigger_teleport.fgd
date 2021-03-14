@@ -32,5 +32,5 @@
 	checkdestifclearforplayer(boolean) : "Only Spawn-Valid Destinations" : 0 : "Only teleport if there is a clear teleport destination."
 
 	// Inputs
-	input SetRemoteDestination[P2](string) : "Set a new target to teleport to."
+	input SetRemoteDestination(string) : "Set a new target to teleport to."
 	]

@@ -75,8 +75,7 @@
 	input TurnOn(void) : "Turn on the texture"
 	input TurnOff(void) : "Turn off the texture"
 
-	input SetFOV[!P2](float) : "Set FOV"
-	input FOV[P2](float) : "Set FOV of projection."
+	input FOV(float) : "Set FOV of projection."
 
 	input Target(target_destination): "Set a new target entity to point at."
 	input CameraSpace(boolean): "Set Camera Space."
@@ -85,17 +84,17 @@
 	input AlwaysUpdateOff(void) : "Turn off per frame updating (for moving lights)"
 
 	// Disabled by Valve in the code, emits console message.
-	input SpotlightTexture[!P2](string) : "Set the spotlight texture"
+	//input SpotlightTexture(string) : "Set the spotlight texture"
 
 	input EnableShadows(boolean) : "Set if the shadows are enabled."
-	input SetLightStyle[since_P2](integer) : "Change the lightstyle (see Appearance field for possible values)."
-	input SetPattern[since_P2](string) : "Set a custom pattern of light brightness for this light. " +
 	input LightColor(color255) : "Change the light color/brightness"
+	input SetLightStyle(integer) : "Change the lightstyle (see Appearance field for possible values)."
+	input SetPattern(string) : "Set a custom pattern of light brightness for this light. " +
 		"The Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. " +
 		"'aaggnnttzz' would be a steppy fade in from dark to light."
 
-	input SetNearZ[since_P2](float) : "Sets the near Z distance."
-	input SetFarZ[since_P2](float) : "Sets the far Z distance."
+	input SetNearZ(float) : "Sets the near Z distance."
+	input SetFarZ(float) : "Sets the far Z distance."
 	input LightOnlyTarget(bool) : "Set if the projected texture lights the target only."
 	input LightWorld(bool) : "Set if the projected texture lights the world and static geometry."
 

@@ -54,9 +54,9 @@
 	input EnableMotion(void) : "Enable physics motion/collision response."
 	input DisableMotion(void) : "Disable physics motion/collision response."
 	input ForceDrop(void) : "If this object is being carried by a player, with the physgun or +USE, force it to be dropped."
-	input Enable[since_P2](void) : "Show this object and allow it to collide, doesn't override notsolid."
-	input Disable[since_P2](void) : "Hide this object and stop collisions."
-	input BecomeDebris[P2](void) : "Change the collision to act like debris"
+	input Enable(void) : "Show this object and allow it to collide, doesn't override notsolid."
+	input Disable(void) : "Hide this object and stop collisions."
+	input BecomeDebris(void) : "Change the collision to act like debris"
 
 	// Outputs
 	output OnDamaged(void) : "Fired when this entity is damaged."

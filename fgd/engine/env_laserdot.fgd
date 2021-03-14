@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	appliesto(+engine, HL2, EP1, EP2, P1)
+	appliesto(+engine, HL2, EP1, EP2)
 	iconsprite("editor/info_target")
 = env_laserdot: "This is used for the endpoint of the Rocket Launcher's laser targeting beam."
 	[
