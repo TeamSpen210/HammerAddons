@@ -1,6 +1,5 @@
-
-@PointClass base(BaseEntityPoint, TeamNum, EnableDisable) 
-	appliesto(TF2)
+@PointClass base(BaseEntityPoint, TeamNum, EnableDisable)
+	appliesto(TF2_ENTITIES)
 	line(128 128 128, targetname, train)
 = team_train_watcher: "Entity that tracks the train progress through train escort maps"
 	[

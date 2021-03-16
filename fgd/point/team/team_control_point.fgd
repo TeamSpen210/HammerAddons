@@ -1,5 +1,5 @@
-@PointClass base(BaseEntityAnimating, EnableDisable) 
-	appliesto(TF2) 
+@PointClass base(BaseEntityAnimating, EnableDisable)
+	appliesto(TF2_ENTITIES)
 	studio("models/effects/cappoint_hologram.mdl") 
 = team_control_point: "Control Point"
 	[
