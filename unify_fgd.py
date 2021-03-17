@@ -44,7 +44,6 @@ GAMES = [
     # Not chronologically here, but it uses 2013 as the base.
     ('MBASE', 'Mapbase'),
 
-    ('TF2',  'Team Fortress 2'),
     ('P1', 'Portal'),
     ('P2', 'Portal 2'),
     ('CSGO', 'Counter-Strike Global Offensive'),
@@ -69,7 +68,6 @@ FEATURES: Dict[str, Set[str]] = {
 
     'MBASE': {'INSTANCING', 'VSCRIPT'},
     
-    'TF2': {'INSTANCING', 'PROP_SCALING'},
     'P2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'CSGO': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
     'P2DES': {'P2', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
