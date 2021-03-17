@@ -1,5 +1,4 @@
-@BaseClass base(BaseEntityPoint) 
-	appliesto(EP1, EP2, HL2) = FollowGoal
+@BaseClass base(BaseEntityPoint) = FollowGoal
 	[
 	actor(target_name_or_class) : "Actor(s) to affect"
 	goal(string) : "Target Entity" : : "The name of the entity to follow. If blank, and the actor likes the player, then defaults to player"

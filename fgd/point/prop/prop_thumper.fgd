@@ -11,7 +11,7 @@
 		256: "Large Thumper"
 		]
 
-	effectradius[EP1, EP2](integer) : "Effect Radius" : 1000 : "Radius of the thumper's sound. EPISODIC ONLY."
+	effectradius(integer) : "Effect Radius" : 1000 : "Radius of the thumper's sound. EPISODIC ONLY."
 
 	// Inputs
 	input Enable(void) : "Enable Thumper"

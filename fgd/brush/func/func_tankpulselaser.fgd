@@ -1,5 +1,5 @@
 @SolidClass base(BaseTank) 
-	appliesto(EP1, EP2, HL2) = func_tankpulselaser: "Brush Pulse Laser"
+= func_tankpulselaser: "Brush Pulse Laser"
 	[
 	pulsespeed(float) : "Pulse Speed" : 1000 : "How fast does pulse travel"
 	pulsecolor(color255) : "Pulse Color" : "255 0 0" : "Color of the pulse"

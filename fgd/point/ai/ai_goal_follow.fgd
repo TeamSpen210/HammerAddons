@@ -1,5 +1,4 @@
-@PointClass base(FollowGoal) 
-	appliesto(EP1, EP2, HL2) 
+@PointClass base(FollowGoal)
 	autovis(AI, AI Goal)
 	iconsprite("editor/ai_goal_follow.vmt") = ai_goal_follow: "AI Goal Follow"
 	[

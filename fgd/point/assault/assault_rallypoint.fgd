@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(EP1, EP2, HL2) 
+@PointClass base(BaseEntityPoint)
 	iconsprite("editor/assault_rally.vmt") 
 	line(255 255 255, targetname, assaultpoint) = assault_rallypoint: "(Assault) rally point"
 	[

@@ -74,7 +74,7 @@
 	nodamageforces(boolean) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move."
 
 	spawnobject[ENGINE](pointentityclass) : "Spawn On Break" : 0 : "When broken, an entity of the selected type will be created."
-	spawnobject[EP1, EP2, HL2](choices) : "Spawn On Break" : 0 : "When broken, an entity of the selected type will be created." =
+	spawnobject(choices) : "Spawn On Break" : 0 : "When broken, an entity of the selected type will be created." =
 		[
 		1: "item_battery"
 		2: "item_healthkit"

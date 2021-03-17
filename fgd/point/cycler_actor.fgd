@@ -1,5 +1,4 @@
-@PointClass base(BaseNPC, SetModel) 
-	appliesto(EP1, EP2, HL2) 
+@PointClass base(BaseNPC, SetModel)
 	studio() = cycler_actor: "Actor Cycler"
 	[
 	sentence(string) : "Sentence Group"

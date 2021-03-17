@@ -1,5 +1,4 @@
-@PointClass base(Angles, BaseNPCMaker) 
-	appliesto(EP1, EP2, HL2) 
+@PointClass base(Angles, BaseNPCMaker)
 	autovis(Templates, NPC Maker)
 	iconsprite("editor/npc_maker.vmt") = npc_maker: "NPC Maker"
 	[

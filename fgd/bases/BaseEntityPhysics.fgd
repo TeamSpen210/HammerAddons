@@ -48,9 +48,7 @@
 	input DisableShadow(void) : "Allows the entity to draw a render target (dynamic) shadow."
 	input EnableShadow(void) : "Prevents the entity from drawing a render target (dynamic) shadow."
 	
-	input AlternativeSorting[SINCE_EP1](boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
-	input SetModelScale[EP1, EP2](vector) : "Takes two values separated by a space. The first is the target model scale. " +
-		"The second value is the number of seconds the change in scale will be spread over."
+	input AlternativeSorting(boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
 
 	// Outputs
 	output OnIgnite(void) : "Fired when this object catches fire."

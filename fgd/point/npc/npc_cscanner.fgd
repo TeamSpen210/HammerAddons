@@ -6,6 +6,6 @@
 	[
 	// This works even in episodic, but only claw scanners ever drop landmines.
 	// So you should just use that in that situation.
-	input DeployMine[-EP1, -EP2](void) : "Drop landmine (if carrying one)"
-	input EquipMine[-EP1, -EP2](void) : "Equip with landmine"
+	input DeployMine(void) : "Drop landmine (if carrying one)"
+	input EquipMine(void) : "Equip with landmine"
 	]

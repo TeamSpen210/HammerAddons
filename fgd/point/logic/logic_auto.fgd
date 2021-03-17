@@ -20,21 +20,6 @@
 		"is_console": "Game is running on a console"
 		"is_pc": "Game is running on a PC"
 		]
-	globalstate[Hl2, EP1, EP2](choices) : "Global State to Read" : : "If set, this specifies a global state to check before firing. The OnMapSpawn output will only fire if the global state is set." =
-		[
-		"": "--- None ---"
-		"is_console": "Game is running on a console"
-		"is_pc": "Game is running on a PC"
-		
-		"gordon_precriminal": "Gordon pre-criminal"
-		"antlion_allied": "Antlions are player allies"
-		"suit_no_sprint": "Suit sprint function not yet enabled"
-		"super_phys_gun": "Super phys gun is enabled"
-		"friendly_encounter": "Friendly encounter sequence (lower weapons, etc.)"
-		"gordon_invulnerable": "Gordon is invulnerable"
-		"no_seagulls_on_jeep": "Don't spawn seagulls on the jeep"
-		"is_console": "Game is running on a console"
-		]
 
 	globalstate[P2CE](choices) : "Global State to Read" =
 		[

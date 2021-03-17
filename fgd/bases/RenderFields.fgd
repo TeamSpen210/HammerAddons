@@ -55,33 +55,6 @@
 		18: "Glow Shell"
 		]
 
-	mindxlevel[EP1, EP2, HL2](choices) : "Minimum DX Level" : "0" =
-		[
-		 0 : "Default (lowest)"
-		60 : "DirectX 6.0"	
-		70 : "DirectX 7.0"
-		80 : "DirectX 8.0 (4600Ti)"
-		81 : "DirectX 8.1 (FX5200)"
-		90 : "DirectX 9.0 SM2.0"
-		95 : "DirectX 9.5 SM3.0"
-		100: "DirectX 10.0"
-		]
-
-	maxdxlevel[EP1, EP2, HL2](choices) : "Maximum DX Level" : "0" =
-		[
-		0: "Default (lowest)"
-		60: "DirectX 6.0"	
-		70: "DirectX 7.0"
-		80: "DirectX 8.0 (4600Ti)"
-		81: "DirectX 8.1 (FX5200)"
-		90: "DirectX 9.0 SM2.0"
-		95: "DirectX 9.5 SM3.0"
-		100: "DirectX 10.0"
-		]
-
-	mindxlevel[engine](integer): "Minimum DX Level": 0
-	maxdxlevel[engine](integer): "Maximum DX Level": 0
-
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows" : 0
 
 	viewhideflags[engine](integer) : "View Hide Flags" : 0

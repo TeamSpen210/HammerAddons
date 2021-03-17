@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(EP1, EP2, HL2) 
+@PointClass base(BaseEntityPoint)
 	studio("models/editor/env_muzzleflash.mdl")
 = env_muzzleflash: "Muzzle Flash"
 	[

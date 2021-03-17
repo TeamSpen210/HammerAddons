@@ -4,7 +4,6 @@
 	message(string) : "Map Description / Title"
 
 	skyname(string)                : "SkyBox Texture Name" :                       : "Texture used for the 2D skybox."
-	skyname[HL2, EP1, EP2](string) : "SkyBox Texture Name" : "sky_day01_01"        : "Texture used for the 2D skybox."
 	skyname[P2CE](string)            : "SkyBox Texture Name" : "sky_black_nofog"     : "Texture used for the 2D skybox."
 
 	chaptertitle(string) : "Chapter Title" : : "Chapter Title that appears onscreen when this level starts."

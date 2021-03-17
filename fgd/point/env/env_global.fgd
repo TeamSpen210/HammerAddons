@@ -7,20 +7,6 @@
 
 	globalstate[engine](string) : "Global State to Set"
 	globalstate(string) : "Global State to Set"
-	
-	globalstate[HL2, EP1, EP2](choices) : "Global State to Set" =
-		[
-		"gordon_precriminal": "Gordon pre-criminal (Point Insertion behavior)"
-		"antlion_allied": "Antlions are player allies, respond to bugbait"
-		"suit_no_sprint": "Disable sprinting"
-		"super_phys_gun": "Enable Super Gravity Gun"
-		"friendly_encounter": "Friendly encounter sequence (lower weapons, etc.)"
-		"gordon_invulnerable": "Player is invulnerable"
-		"no_seagulls_on_jeep": "Don't spawn seagulls on the jeep"
-		"ep2_alyx_injured": "Episode 2: Alyx injured" [ep2]
-		"ep_alyx_darknessmode": "Episode 1: Alyx darkness mode" [ep1]
-		"hunters_to_run_over": "Ep2 Counter: Hunters to run over before they dodge" [ep2]
-		]
 
 	globalstate[P2CE](choices) : "Global State to Set" =
 		[

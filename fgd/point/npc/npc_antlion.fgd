@@ -10,7 +10,7 @@
 		[
 		65536: "Burrow when eluded" : 0
 		131072: "Use Ground Checks" : 0
-		262144: "Worker Type" : 0 [since_EP2]
+		262144: "Worker Type" : 0
 		]
 
 	radius(integer) : "Alert Radius" : 256

@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(EP1, EP2, HL2) 
+@PointClass base(BaseEntityPoint)
 	autovis(AI, AI Goal)
 	iconsprite("editor/ai_goal_standoff.vmt") = ai_goal_standoff: "AI Goal Standoff"
 	[

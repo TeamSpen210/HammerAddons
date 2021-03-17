@@ -19,11 +19,11 @@
 		16: "World: Visually Interesting (Stealth mode)"
 		100: "Tactical: Crouch Cover Medium"
 		101: "Tactical: Crouch Cover Low"
-		102: "Waste Scanner Spawn" [HL2, EP1, EP2]
+		102: "Tactical: Spawn (Not Used)"
 		103: "Tactical: Entrance / Exit Pinch"
 		104: "Tactical: Guard (Not Used)"
 		105: "Tactical: Enemy Disadvantage Point"
-		106: "Tactical: Health Kit" [HL2, EP1, EP2]
+		106: "Tactical: Health Kit (Not Used)"
 		107: "Tactical: High Ground"
 		400: "Antlion: Burrow Point"
 		401: "Antlion: Thumper Flee Point"
