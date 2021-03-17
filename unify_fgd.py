@@ -51,7 +51,6 @@ GAMES = [
     ('P1', 'Portal'),
     ('L4D', 'Left 4 Dead'),
     ('L4D2', 'Left 4 Dead 2'),
-    ('ASW', 'Alien Swam'),
     ('P2', 'Portal 2'),
     ('INFRA', 'INFRA'),
     ('CSGO', 'Counter-Strike Global Offensive'),
@@ -81,7 +80,6 @@ FEATURES: Dict[str, Set[str]] = {
     'L4D': {'INSTANCING'},
     'L4D2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'TF2': {'INSTANCING', 'PROP_SCALING'},
-    'ASW': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'P2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'CSGO': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
     'INFRA': {'P2', 'INSTANCING', 'INST_IO', 'VSCRIPT'},
@@ -132,7 +130,7 @@ def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
     return deco
 
 
-@_polyfill('until_asw', 'mesa')
+@_polyfill('mesa')
 def _polyfill_boolean(fgd: FGD):
     """Before Alien Swarm's Hammer, boolean was not available as a keyvalue type.
 
@@ -147,32 +145,6 @@ def _polyfill_boolean(fgd: FGD):
                         ('0', 'No', frozenset()),
                         ('1', 'Yes', frozenset())
                     ]
-
-
-@_polyfill('until_asw')
-def _polyfill_particlesystem(fgd: FGD):
-    """Before Alien Swarm's Hammer, the particle system viewer was not available.
-
-    Substitute with just a string.
-    """
-    for ent in fgd.entities.values():
-        for tag_map in ent.keyvalues.values():
-            for kv in tag_map.values():
-                if kv.type is ValueTypes.STR_PARTICLE:
-                    kv.type = ValueTypes.STRING
-
-
-@_polyfill('until_asw')
-def _polyfill_node_id(fgd: FGD):
-    """Before Alien Swarm's Hammer, node_id was not available as a keyvalue type.
-
-    Substitute with integer.
-    """
-    for ent in fgd.entities.values():
-        for tag_map in ent.keyvalues.values():
-            for kv in tag_map.values():
-                if kv.type is ValueTypes.TARG_NODE_SOURCE:
-                    kv.type = ValueTypes.INT
 
 
 @_polyfill('until_csgo')
