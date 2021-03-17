@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC) 
-	appliesto(EP1, EP2, HL2)  
+	appliesto(HL2_ENTITIES)  
 	autovis(Entities, NPCs, Rebels, Dog)
 	studio("models/dog.mdl") = npc_dog: "d0g"
 	[

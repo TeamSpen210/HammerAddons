@@ -1,5 +1,5 @@
 @NpcClass base(TalkNPC) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	autovis(Entities, NPCs, Rebels, Father Grigori)
 	studio("models/Monk.mdl") = npc_monk: "Father Grigori, the last human in Ravenholm."
 	[

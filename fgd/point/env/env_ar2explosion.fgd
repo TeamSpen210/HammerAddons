@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(HL2, EP1, EP2)
+	appliesto(HL2_ENTITIES)
 	iconsprite("editor/ts2do/env_ar2explosion.vmt")
 = env_ar2explosion: "AR2 explosion visual effect. Big, volume-filling brown cloud. Does not cause damage or emit sound."
 	[

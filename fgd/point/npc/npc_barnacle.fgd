@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC, BaseFadeProp) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	autovis(Entities, NPCs, Xen, Barnacle)
 	studio("models/Barnacle.mdl") 
 	sphere(fademindist) 

@@ -1,5 +1,5 @@
 @PointClass base(BaseNPC, AlyxInteractable) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	studio("models/combine_turrets/ground_turret.mdl")
 	autovis(Entities, NPCs, Combine, Ground Turret)
 = npc_turret_ground: "Combine ground turret"

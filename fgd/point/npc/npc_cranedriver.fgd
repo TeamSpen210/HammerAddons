@@ -1,5 +1,5 @@
 @NpcClass base(VehicleDriverNPC) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	studio("models/roller.mdl")  
 	autovis(Entities, NPCs, Crane Driver)
 	= npc_cranedriver: "NPC used to drive cranes."

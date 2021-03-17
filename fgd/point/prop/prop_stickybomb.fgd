@@ -1,5 +1,5 @@
 @PointClass base(weapon_striderbuster) 
-	appliesto(EP2)
+	appliesto(HL2_ENTITIES)
 = prop_stickybomb: "Alternate class for the Stiderbuster/Magnusson Device"
 	[
 	]

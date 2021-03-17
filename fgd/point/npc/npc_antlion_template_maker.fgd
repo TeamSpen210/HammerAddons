@@ -1,5 +1,5 @@
 @PointClass base(Angles, BaseNPCMaker) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	autovis(Templates, Antlion Generator)
 	line(192 192 192, targetname, templatename)
 	size(-8 -8 -8, 8 8 8) 

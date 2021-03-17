@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	autovis(AI, AI Citizen Response System)
 = ai_citizen_response_system: "If placed in the level, will manage citizens responses to player's actions."
 	[

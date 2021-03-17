@@ -1,5 +1,5 @@
 @PointClass base(Weapon) 
-	appliesto(HL2, EP1, EP2) 
+	appliesto(HL2_ENTITIES) 
 	studioprop("models/weapons/w_suitcase_passenger.mdl") = weapon_citizensuitcase: "A generic suitcase carried by Citizens."
 	[
 	]

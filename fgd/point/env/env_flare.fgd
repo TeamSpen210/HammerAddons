@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, RenderFields, Reflection) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES)	 
 	size(-4 -4 -4, 4 4 4) = env_flare: "HL2 flare glow."
 	[
 	scale(float) : "Scale" : 1

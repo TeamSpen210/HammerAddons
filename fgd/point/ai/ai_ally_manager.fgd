@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	autovis(AI, AI Ally Manager)
 	iconsprite("materials/editor/ficool2/ai_ally_manager.vmt")
  	autovis(Point Entities, Globals, Ally Manager)
