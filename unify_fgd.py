@@ -33,10 +33,6 @@ from srctools.filesys import RawFileSystem
 # If 'until_l4d' etc is used in FGD, only games before include it.
 
 GAMES = [
-    ('HLS',  'Half-Life: Source'),
-    ('DODS', 'Day of Defeat: Source'),
-    ('CSS',  'Counter-Strike: Source'),
-
     ('HL2',  'Half-Life 2'),
     ('EP1',  'Half-Life 2 Episode 1'),
     ('EP2',  'Half-Life 2 Episode 2'),
@@ -48,10 +44,6 @@ GAMES = [
     ('P2', 'Portal 2'),
     ('CSGO', 'Counter-Strike Global Offensive'),
 
-    ('SFM', 'Source Filmmaker'),
-    ('DOTA2', 'Dota 2'),
-    ('PUNT', 'PUNT'),
-    ('P2DES', 'Portal 2: Desolation'),
     ('P2CE', 'Portal 2: Community Edition'),
 ]  # type: List[Tuple[str, str]]
 
@@ -70,7 +62,6 @@ FEATURES: Dict[str, Set[str]] = {
     
     'P2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'CSGO': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
-    'P2DES': {'P2', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
     'P2CE': {'P2', 'HL2', 'EP1', 'EP2', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 }
 
