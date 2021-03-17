@@ -37,9 +37,6 @@ GAMES = [
     ('EP1',  'Half-Life 2 Episode 1'),
     ('EP2',  'Half-Life 2 Episode 2'),
 
-    ('P1', 'Portal'),
-    ('P2', 'Portal 2'),
-
     ('P2CE', 'Portal 2: Community Edition'),
 ]  # type: List[Tuple[str, str]]
 
@@ -54,8 +51,7 @@ FEATURES: Dict[str, Set[str]] = {
     'EP1': {'INSTANCING'},
     'EP2': {'INSTANCING'},
     
-    'P2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
-    'P2CE': {'P2', 'HL2', 'EP1', 'EP2', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
+    'P2CE': {'HL2', 'EP1', 'EP2', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 }
 
 ALL_FEATURES = {
