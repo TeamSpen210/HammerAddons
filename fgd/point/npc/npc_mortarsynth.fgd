@@ -1,6 +1,0 @@
-@NpcClass base(BaseNPC) 
-	appliesto(EP1, EP2, HL2) 
-	autovis(Entities, NPCs, Combine, Mortar Synth)
-	studio("models/mortarsynth.mdl") = npc_mortarsynth: "Mortar Synth"
-	[
-	]
