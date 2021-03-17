@@ -43,8 +43,6 @@ GAMES = [
 
     # Not chronologically here, but it uses 2013 as the base.
     ('MBASE', 'Mapbase'),
-    # Mesa also appears to be about here...
-    ('MESA', 'Black Mesa'),
     ('GMOD', "Gary's Mod"),
 
     ('TF2',  'Team Fortress 2'),
@@ -71,7 +69,6 @@ FEATURES: Dict[str, Set[str]] = {
     'EP2': {'INSTANCING'},
 
     'MBASE': {'INSTANCING', 'VSCRIPT'},
-    'MESA': {'INSTANCING', 'INST_IO'},
     'GMOD': {'HL2', 'EP1', 'EP2'},
     
     'TF2': {'INSTANCING', 'PROP_SCALING'},
@@ -122,23 +119,6 @@ def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
             POLYFILLS.append((tag.upper(), func))
         return func
     return deco
-
-
-@_polyfill('mesa')
-def _polyfill_boolean(fgd: FGD):
-    """Before Alien Swarm's Hammer, boolean was not available as a keyvalue type.
-
-    Substitute with choices.
-    """
-    for ent in fgd.entities.values():
-        for tag_map in ent.keyvalues.values():
-            for kv in tag_map.values():
-                if kv.type is ValueTypes.BOOL:
-                    kv.type = ValueTypes.CHOICES
-                    kv.val_list = [
-                        ('0', 'No', frozenset()),
-                        ('1', 'Yes', frozenset())
-                    ]
 
 
 @_polyfill('until_csgo')
