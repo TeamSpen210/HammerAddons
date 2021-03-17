@@ -33,10 +33,6 @@ from srctools.filesys import RawFileSystem
 # If 'until_l4d' etc is used in FGD, only games before include it.
 
 GAMES = [
-    ('HL2',  'Half-Life 2'),
-    ('EP1',  'Half-Life 2 Episode 1'),
-    ('EP2',  'Half-Life 2 Episode 2'),
-
     ('P2CE', 'Portal 2: Community Edition'),
 ]  # type: List[Tuple[str, str]]
 
@@ -46,12 +42,7 @@ GAME_NAME = dict(GAMES)
 # Specific features that are backported to various games.
 
 FEATURES: Dict[str, Set[str]] = {
-    # 2013 engine backports this.
-    'HL2': {'INSTANCING'},
-    'EP1': {'INSTANCING'},
-    'EP2': {'INSTANCING'},
-    
-    'P2CE': {'HL2', 'EP1', 'EP2', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
+    'P2CE': {'HL2_ENTITIES', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 }
 
 ALL_FEATURES = {
