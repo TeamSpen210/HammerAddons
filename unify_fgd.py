@@ -39,7 +39,6 @@ GAMES = [
 
     ('P1', 'Portal'),
     ('P2', 'Portal 2'),
-    ('CSGO', 'Counter-Strike Global Offensive'),
 
     ('P2CE', 'Portal 2: Community Edition'),
 ]  # type: List[Tuple[str, str]]
@@ -56,7 +55,6 @@ FEATURES: Dict[str, Set[str]] = {
     'EP2': {'INSTANCING'},
     
     'P2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
-    'CSGO': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
     'P2CE': {'P2', 'HL2', 'EP1', 'EP2', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 }
 
@@ -85,33 +83,10 @@ ALL_TAGS.update('UNTIL_' + t.upper() for t in GAME_ORDER)
 # If the tag is present, run to backport newer FGD syntax to older engines.
 POLYFILLS = []  # type: List[Tuple[str, Callable[[FGD], None]]]
 
-
-PolyfillFuncT = TypeVar('PolyfillFuncT', bound=Callable[[FGD], None])
-
 # This ends up being the C1 Reverse Line Feed in CP1252,
 # which Hammer displays as nothing. We can suffix visgroups with this to
 # have duplicates with the same name.
 VISGROUP_SUFFIX = '\x8D'
-
-
-def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
-    """Register a polyfill, which backports newer FGD syntax to older engines."""
-    def deco(func: PolyfillFuncT) -> PolyfillFuncT:
-        for tag in tags:
-            POLYFILLS.append((tag.upper(), func))
-        return func
-    return deco
-
-
-@_polyfill('until_csgo')
-def _polyfill_worltext(fgd: FGD):
-    """Strip worldtext(), since this is not available."""
-    for ent in fgd:
-        ent.helpers[:] = [
-            helper
-            for helper in ent.helpers
-            if not isinstance(helper, HelperWorldText)
-        ]
 
 
 def format_all_tags() -> str:
