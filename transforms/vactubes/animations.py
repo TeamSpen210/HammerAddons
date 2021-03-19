@@ -46,7 +46,7 @@ class RotGen(Iterator[Tuple[float, float, float]]):
         self.yaw = (self.yaw + self.yaw_sp) % 360
         self.rol = (self.rol + self.rol_sp) % 360
 
-        return math.radians(self.pit), math.radians(self.yaw), math.radians(self.rol)
+        return self.pit, self.yaw, self.rol
 
     def tee(self) -> 'RotGen':
         """Duplicate this rotator, so the clone maintains continuity with the last frame output."""
