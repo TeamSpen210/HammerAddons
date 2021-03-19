@@ -75,20 +75,27 @@ def find_closest(
         raise ValueError(
             f'No destination found for {src_type.value} output of {node}! Junction at {src_point}.'
         )
-    # Mark the node as having an input, for sanity checking purposes.
-    # Note that nodes can have multiple inputs, if they're merging paths.
-    best_node.has_input = True
-
     return best_node
 
 
 @trans('Portal 2 Vactubes')
 def vactube_transform(ctx: Context) -> None:
     """Implements the dynamic Vactube system."""
-    all_nodes = list(nodes.parse(ctx.vmf))
+    name_to_node: Dict[str, nodes.Node] = {}
+    all_nodes: List[nodes.Node] = []
+
+    for node in nodes.parse(ctx.vmf):
+        all_nodes.append(node)
+        name = node.name.casefold()
+        if name:
+            if name in name_to_node:
+                LOGGER.warning('Duplicate node with name "{}"!', node.name)
+            name_to_node[name] = node
+
     if not all_nodes:
         # No vactubes.
         return
+
     LOGGER.info('{} vactube nodes found.', len(all_nodes))
     LOGGER.debug('Nodes: {}', all_nodes)
 
@@ -148,11 +155,25 @@ def vactube_transform(ctx: Context) -> None:
         if isinstance(node, nodes.Destroyer):
             continue
         for dest_type in node.out_types:
-            node.outputs[dest_type] = find_closest(
+            override = node.ent[dest_type.manual_targ]
+            if override:
+                try:
+                    target = name_to_node[override.casefold()]
+                except KeyError:
+                    raise ValueError(f'Unknown node target "{override}" for node {node}!')
+                LOGGER.debug('Override: {} -> {}', node.name, target.name)
+            else:
+                target = find_closest(
                 norm_inputs,
                 node,
                 dest_type,
             )
+            node.outputs[dest_type] = target
+
+            # Mark the node as having an input, for sanity checking purposes.
+            # Note that nodes can have multiple inputs, if they're merging
+            # paths.
+            target.has_input = True
         if isinstance(node, nodes.Spawner):
             sources.append(node)
             if node.group not in groups:
