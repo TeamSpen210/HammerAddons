@@ -4,7 +4,7 @@
 	studioprop()
 = comp_vactube_junction : "Marks a junction in a vactube, where they're forced to change direction. Scanner models near straight nodes will be detected automatically."
 [
-	targetname(target_source): "Debug Name" : : "These aren't entities, so this can't be targeted. But you can use this to help with identifying problems since the compiler will output it."
+	targetname(target_source): "Junction Name" : : "Although junctions are linked automatically, this can be used to precisely link two junctions. You can use also this to help with identifying problems since the compiler will output it."
 	// Not studio, we don't want to pack these.
 	model[engine](string) : "Type" : "models/editor/vactubes/straight.mdl"
 	model(choices) : "Type" : "models/editor/vactubes/straight.mdl" : "The size and type of junction. Splitters split the tube into multiple paths. You can simply overlap two junctions to join paths, however." = [
@@ -33,6 +33,10 @@
 		0 : "Return to blank when item leaves"
 		1 : "Continue displaying until replaced"
 	]
+
+	target(target_destination) : "Next junction (optional)" : : "Although junctions are linked automatically, you can specify the name of another to force it to connect to a further away or non-aligned node."
+	target_sec(target_destination): "Secondary junction" : : "For splitters, this is the second output from the junction."
+	target_ter(target_destination): "Tertiary junction" : : "For the triple splitter, this is the rightmost output."
 
 	output OnPass(void) : "Fired when a cube passes by."
 ]

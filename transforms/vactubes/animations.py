@@ -176,7 +176,7 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
 
             if next_node in anim.history:
                 raise ValueError(
-                    f"Vactube junction at {next_node.origin} "
+                    f'Vactube junction "{next_node.name}" at {next_node.origin} '
                     f"loops back onto itself!"
                 )
 

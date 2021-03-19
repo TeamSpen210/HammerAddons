@@ -1,7 +1,7 @@
 import math
 from abc import ABC, abstractmethod
 from enum import Enum
-from typing import Tuple, Iterator, Iterable
+from typing import Tuple, Iterator, Iterable, Dict, Optional
 
 import srctools.logger
 from srctools import Vec, Entity, VMF, Output, conv_bool, Angle, Matrix, lerp
@@ -21,6 +21,17 @@ class DestType(Enum):
     SEC = SECONDARY = 'secondary'
     TER = TERTIARY = 'tertiary'
     OUT = PRIMARY
+
+    @property
+    def manual_targ(self) -> str:
+        """The name of the manual target keyvalue."""
+        v = self.value
+        if v == 'primary':
+            return 'target'
+        elif v == 'secondary':
+            return 'target_sec'
+        else:
+            return 'target_tri'
 
 
 def curve_point(radius: float, t: float) -> Tuple[float, float]:
@@ -54,7 +65,7 @@ class Node(ABC):
 
         self.has_input = False  # We verify every node has an input if used.
         # DestType -> output.
-        self.outputs = dict.fromkeys(self.out_types, None)
+        self.outputs: Dict[DestType, Optional[Node]] = dict.fromkeys(self.out_types, None)
         # Outputs fired when cubes reach this point.
         pass_outputs = [
             out for out in ent.outputs
@@ -76,10 +87,15 @@ class Node(ABC):
         elif not self.keep_ent:
             ent.remove()
 
+    @property
+    def name(self) -> str:
+        """The name of the entity."""
+        return self.ent['targetname']
+
     def __repr__(self) -> str:
         return '<{} "{}" @ {}, {}>'.format(
             self.__class__.__name__,
-            self.ent['targetname'],
+            self.name,
             self.origin,
             self.matrix.to_angle(),
         )
