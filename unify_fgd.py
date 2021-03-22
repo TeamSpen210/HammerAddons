@@ -181,7 +181,9 @@ def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> FGD
                     else:  # Need to merge
                         existing_group.ents.update(visgroup.ents)
 
-                fgd.mat_exclusions.update(file_fgd.mat_exclusions)
+            fgd.mat_exclusions.update(file_fgd.mat_exclusions)
+            for tags, mat_list in file_fgd.tagged_mat_exclusions.items():
+                fgd.tagged_mat_exclusions[tags] |= mat_list
 
             print('.', end='', flush=True)
 
@@ -792,6 +794,11 @@ def action_export(
             for base in ent.bases
             if base.type is not EntityTypes.BASE or base in used_bases
         ]
+
+    print('Merging in material exclusions...')
+    for mat_tags, materials in fgd.tagged_mat_exclusions.items():
+        if match_tags(tags, mat_tags):
+            fgd.mat_exclusions |= materials
 
     print('Culling visgroups...')
     # Cull visgroups that no longer exist for us.
