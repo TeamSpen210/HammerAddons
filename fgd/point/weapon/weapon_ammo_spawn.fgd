@@ -1,6 +1,5 @@
-@PointClass base(WeaponSpawn) 
+@PointClass base(WeaponSpawn, SetModel) 
 	appliesto(L4D, L4D2)
-	studioprop()
 	autovis(Weapons, L4D Weapons, Weapon Spawners)
 = weapon_ammo_spawn: "Ammo"
 	[
