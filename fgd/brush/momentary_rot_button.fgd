@@ -4,6 +4,7 @@
 	[
 	speed(float) : "Speed (deg/sec)" : 50 : "The amount, in degrees, that the wheel turns per second."
 	
+	glow[L4D2](target_destination) : "Glow Entity" : : "The name of an entity that will get the +use glow for this button."
 	sounds[engine](integer) : "Sounds" : 0
 	sounds(choices) : "Sounds" : 0 : "Sound played when pressed. Choose from sounds in the Buttons.snd* category." =
 		[
