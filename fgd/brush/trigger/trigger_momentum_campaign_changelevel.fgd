@@ -1,0 +1,6 @@
+@SolidClass base(MomentumTrigger, GameTypes, Campaign)
+	appliesto(MOMENTUM)
+= trigger_momentum_campaign_changelevel : "Trigger that changes the level to the specified world's stage of a given gametype. World number of -1 will teleport to the Hub." 
+	[
+	map_name_override(string) : "Map Name Override" : "" : "If set, this trigger will load this specific map name."
+	]

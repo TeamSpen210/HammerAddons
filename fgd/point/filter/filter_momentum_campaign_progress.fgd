@@ -1,0 +1,5 @@
+@FilterClass base(StaticTargetName, Campaign) 
+	appliesto(MOMENTUM)
+= filter_momentum_campaign_progress : "Filter that checks to see if the local player has beat the given stage of a given world."
+	[
+	]

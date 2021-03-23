@@ -1,0 +1,7 @@
+@BaseClass
+	appliesto(MOMENTUM)
+= Campaign
+	[
+	World(integer) : "World Number" : -1 : "The world number the stage is in. -1 (usually) defaults to the current world."
+	Stage(integer) : "Stage Number" : 0 : "The stage number."
+	]

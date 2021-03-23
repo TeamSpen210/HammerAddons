@@ -1,0 +1,20 @@
+@BaseClass
+	appliesto(MOMENTUM)
+= GameTypes
+	[
+	gametype[engine](integer) : "Game Type" : 0
+	gametype(choices) : "Game Type" : 0 : "The game type of the map." =
+		[
+		0 : "Unknown"
+		1 : "Surf"
+		2 : "Bhop"
+		3 : "Climb"
+		4 : "RJ"
+		5 : "SJ"
+		6 : "Tricksurf"
+		7 : "Ahop"
+		8 : "Parkour"
+		9 : "Conc"
+		10 : "Defrag"
+		]
+	]
