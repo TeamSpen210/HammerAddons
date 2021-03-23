@@ -1,0 +1,6 @@
+@SolidClass base(ZoneTrigger)
+	appliesto(MOMENTUM)
+= trigger_momentum_timer_stage : "Starting trigger for each stage of a map. trigger_momentum_timer_start is automatically stage 1!" 
+	[
+	teleport_destination(target_destination) : "Remote Destination" : : "The entity specifying the point to which the player should be teleported when restarting a stage."
+	]

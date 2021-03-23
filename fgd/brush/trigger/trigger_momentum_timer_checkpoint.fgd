@@ -1,0 +1,5 @@
+@SolidClass base(ZoneTrigger)
+	appliesto(MOMENTUM)
+= trigger_momentum_timer_checkpoint : "Trigger used to denote progress in a linear map. trigger_momentum_timer_start is automatically checkpoint (zone number) 1!" 
+	[
+	]

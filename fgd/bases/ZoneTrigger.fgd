@@ -1,0 +1,6 @@
+@BaseClass base(MomentumTrigger)
+	appliesto(MOMENTUM)
+= ZoneTrigger
+	[
+	zone_number(integer) : "Zone Number" : 0 : "The zone number of this trigger. NOTE: 0 is reserved for invalid/stop trigger, 1 is reserved for start! 2+ are free for your stage/checkpoint triggers, so start at 2!"
+	]
