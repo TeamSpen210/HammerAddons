@@ -1,0 +1,7 @@
+@BaseClass 
+	appliesto(MOMENTUM)
+= TrackNum
+	[
+	track_number(integer) : "Track Number" : -1 : "Track number that this entity belongs to." + 
+		" -1 = all tracks, 0 = main map, > 0 = bonus zone (of that number)."
+	]

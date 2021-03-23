@@ -1,0 +1,6 @@
+@SolidClass base(MomentumTrigger)
+	appliesto(MOMENTUM)
+= trigger_momentum_resetonehop : "Trigger that resets all of the onehop triggers the player has touched." 
+	[
+	output OnResetOnehops(void) : "Fires when all hops are being reset."
+	]

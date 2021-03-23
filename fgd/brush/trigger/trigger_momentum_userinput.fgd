@@ -1,0 +1,22 @@
+@SolidClass base(MomentumTrigger)
+	appliesto(MOMENTUM)
+= trigger_momentum_userinput : "Trigger that fires on user KeyPress if inside trigger."
+	[
+	output OnKeyPressed(void) : "Fires when the desired key is pressed"
+	output OnKeyHeld(void) : "Fires every tick while the desired key is held"
+	output OnKeyReleased(void) : "Fires when the desired key is released"
+
+	lookedkey[engine](integer) : "Key that fires" : 0
+	lookedkey(choices) : "Key that fires" : 0 =
+		[
+		0 : "Forward"
+		1 : "Back"
+		2 : "Move Left"
+		3 : "Move Right"
+		4 : "Jump"
+		5 : "Duck"
+		6 : "Attack"
+		7 : "Attack 2"
+		8 : "Reload"	
+		]
+	]

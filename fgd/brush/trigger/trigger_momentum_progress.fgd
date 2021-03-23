@@ -1,0 +1,8 @@
+@SolidClass base(MomentumTrigger)
+	appliesto(MOMENTUM)
+= trigger_momentum_progress : "Used for storing a discrete progress number in the player."
+	[
+	progress_number(integer) : "Progress Number" : -1 : "An optional number to assign to this progress trigger, used by filter_momentum_progress."
+	
+	output OnResetOnehops(void) : "Fired when the player touches this trigger."
+	]

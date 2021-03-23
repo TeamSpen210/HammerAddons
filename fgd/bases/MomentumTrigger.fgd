@@ -1,0 +1,5 @@
+@BaseClass base(Trigger, TrackNum)
+	appliesto(MOMENTUM)
+= MomentumTrigger 
+	[
+	]
