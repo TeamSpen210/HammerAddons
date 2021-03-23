@@ -1,20 +1,20 @@
-@BaseClass base(BaseEntityPoint)
-	color(0 0 200) 
-	sphere(fademindist) 
-	sphere(fademaxdist) 
+@BaseClass base(BaseEntityPoint, BaseFadeProp)
+	color(0 0 200)
 = Weapon
 	[
 	spawnflags(flags)  =
 		[
 		1: "Start constrained" : 0
-		2: "Deny player pickup (reserve for NPC)" : 0
-		4: "Not puntable by Gravity Gun" : 0
+		2: "Deny player pickup (reserve for NPC)" : 0 [-MOMENTUM]
+		4: "Not puntable by Gravity Gun" : 0 [HL2_ENTITIES]
 		]
 
 	// Outputs
 	output OnPlayerUse(void) : "Fires when the player +uses this weapon."
 	output OnPlayerPickup(void) : "Fires when the player picks up this weapon."
-	output OnNPCPickup(void) : "Fires when an NPC picks up this weapon."
-	output OnCacheInteraction(void) : "Fires when the player 'proves' they've found this weapon. " +
-		"Fires on: Player Touch, +USE pickup, Physcannon pickup, Physcannon pun" + "t."
+	output OnNPCPickup[-MOMENTUM](void) : "Fires when an NPC picks up this weapon."
+	output OnCacheInteraction[HL2_ENTITIES](void) : "Fires when the player 'proves' they've found this weapon. " +
+		"Fires on: Player Touch, +USE pickup, Physcannon pickup, Physcannon punt."
+	output OnCacheInteraction[-HL2_ENTITIES](void) : "Fires when the player 'proves' they've found this weapon. " +
+		"Fires on: Player Touch and +USE pickup."
 	]
