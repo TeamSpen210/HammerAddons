@@ -1,0 +1,13 @@
+@SolidClass base(StaticTargetName, EnableDisable, Toggle) 
+	appliesto(MOMENTUM)
+= func_nogrenades : "Rockets, stickybombs, conc grenades, and other explosives will not detonate/explode inside this area."
+	[
+	explosion_prevention_type[engine](integer) : "Determines the method of explosive prevention." : 0
+	explosion_prevention_type(choices) : "Method of explosive prevention." : 0 =
+		[
+		0: "[Default] Fizzle explosives upon detonation."
+		1: "Fizzle only airborne (handheld concs included) explosives upon detonation."
+		2: "Fizzle upon landing instead of on attempted detonation."
+		3: "Fizzle explosive immediately upon it entering the trigger."
+		]
+	]

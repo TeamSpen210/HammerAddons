@@ -1,0 +1,18 @@
+@PointClass base(StaticTargetName)
+	appliesto(MOMENTUM)
+	iconsprite("editor/momentum_serversettings.vmt")
+= point_momentum_serversettings : "An entity that sets the default specialized settings to the map."
+	[
+	Gravity(float) : "Gravity value" : 800 : "Set here the default gravity value."
+	MaxVelocity(float) : "Maximum velocity" : 3500 : "Set here the default max velocity value."
+	WaterAccelerate(float) : "Water accelerate speed" : 10 : "Set here the default water accelerate speed value."
+	AirAccelerate(float) : "Air accelerate speed" : 150 : "Set here the default air accelerate speed value."
+	Accelerate(float) : "Accelerate speed" : 5 : "Set here the default ground accelerate speed value."
+	Friction(integer) : "Friction" : 4 : "Set here the default friction value. The lower the number, the more slippery the player will move, the higher the number, the more slower and gripped the player is to the floor. 4 is default."
+	BackSpeed(float) : "Back speed" : "0.6" : "How much to slow down backwards motion."
+	StopSpeed(float) : "Stop speed" : 75 : "Set here the default ground accelerate speed value."
+	StepSize(float) : "Step size" : 18 : "Vertical view fixup when eyes are near a new plane."
+	WaterDist(float) : "Water distance" : 12 : "Vertical view fixup when eyes are near water plane."
+	FootSteps(integer) : "Foot steps sound" : 1 : "Enable/Disable foot steps sounds."
+	SwimSound(integer) : "Swim sound" : 1 : "Enable/Disable swimming sounds."
+	]
