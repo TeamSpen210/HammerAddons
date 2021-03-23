@@ -1,0 +1,42 @@
+@FilterClass base(filter_base)
+	appliesto(MOMENTUM)
+= filter_momentum_velocity : "Filter that checks the player's velocity"
+	[
+	Mode[engine](integer) : "Mode" : 0
+	Mode(choices) : "Mode" : 0 : "Set which mode to use for velocity comparisons" =
+		[
+		0 : "Total Velocity"
+		1 : "Per-axis"
+		]
+	Above[engine](integer) : "Above/Below" : 1
+	Above(choices) : "Above/Below" : 1 : "Sets whether to check if the player goes above or below the given velocity." =
+		[
+		0 : "Below"
+		1 : "Above"
+		]
+	EnableVertical[engine](integer) : "Enable Vertical" : 0
+	EnableVertical(choices) : "Enable Vertical" : 0 : "Check vertical velocity (total velocity mode only)" =
+		[
+		0 : "No"
+		1 : "Yes"
+		]
+	EnableHorizontal[engine](integer) : "Enable Horizontal" : 0
+	EnableHorizontal(choices) : "Enable Horizontal" : 0 : "Check horizontal velocity (total velocity mode only)" =
+		[
+		0 : "No"
+		1 : "Yes"
+		]
+
+	VerticalVelocity(float) : "Vertical velocity" : 500 : "The amount of units per second for vertical (Z axis) speed."
+	HorizontalVelocity(float) : "Horizontal velocity" : 1000 : "The amount of units per second for horizontal (XY axis) speed."
+
+	IgnoreSign[engine](integer) : "Use Absolute Value" : 0
+	IgnoreSign(choices) : "Use Absolute Value" : 0 : "Whether to check the absolute value of the velocity components (per-axis mode only)" =
+		[
+		0 : "No"
+		1 : "Yes"
+		]
+
+	VelocityVector(vector) : "Per-axis Velocity" : "0 0 0" : "The velocity vector for per-axis mode"
+	VelocityAxes(vector) : "Per-axis Enable" : "0 0 0" : "Which axes to use when checking velocity, zero means the corresponding axis is ignored (per-axis mode only)"
+	]

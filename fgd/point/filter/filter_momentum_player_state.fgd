@@ -1,0 +1,12 @@
+@FilterClass base(filter_base)
+	appliesto(MOMENTUM)
+= filter_momentum_player_state : "Filter that checks the players' movement state"
+	[
+	player_state[engine](integer) : "Player State" : 0
+	player_state(choices) : "Player State" : 0 =
+		[
+		0 : "Ground"
+		1 : "Surfing"
+		2 : "Bunnyhopping"
+		]
+	]
