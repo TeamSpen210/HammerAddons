@@ -1,0 +1,11 @@
+@SolidClass base(func_brush, MomentumPush)
+	appliesto(MOMENTUM)
+= func_shootboost : "Entity that pushes the player when it is damaged"
+	[
+	target(target_destination) : "Trigger" : : "If specified, the player must be inside this trigger for the boost to work."
+	
+	spawnflags(flags) = 
+		[ 
+		524288: "Use the direction vector as final force instead of calculating it by force amount" : 0
+		]
+	]
