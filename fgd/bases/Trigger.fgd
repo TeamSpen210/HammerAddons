@@ -1,6 +1,23 @@
 @BaseClass base(TriggerOnce)
 = Trigger
 	[
+	spawnflags(flags)  =
+		[
+		32: "Preserve angles even when a local landmark is not specified" : 0
+
+		// Restore the other spawnflags.
+		1: "Clients/Players" : 1
+		2: "NPCs" : 0
+		4: "func_pushable" : 0
+		8: "Physics Objects" : 0
+		16: "Only player ally NPCs" : 0
+		64: "Everything (not including physics debris)" : 0
+		512: "Only clients *not* in vehicles" : 0
+		1024: "Physics debris" : 0
+		2048: "Only NPCs in vehicles (respects player ally flag)" : 0
+		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 1
+		]
+
 	// Inputs
     input EndTouch(void) : "Fires the OnEndTouch output. If called by an entity inside the trigger, the OnEndTouch will be fired for them as the activator. Note that this input is passed even if the player is being treated as 'not' touching the trigger while outside it."
 

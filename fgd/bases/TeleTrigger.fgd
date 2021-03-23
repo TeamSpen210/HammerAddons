@@ -1,0 +1,46 @@
+@BaseClass base(MomentumTrigger)
+	appliesto(MOMENTUM)
+= TeleTrigger
+	[
+	target(target_destination) : "Remote Destination" : : "The entity specifying the point to which the player should be teleported."
+	
+	landmark(target_destination) : "Local Destination Landmark" : : "In landmark mode, teleported entities are offset from the target by their initial offset from the landmark, angles and velocity are also reoriented to the destination if enabled."
+	
+	velocityscale(vector) : "Velocity Scale Factor (X Y Z)" : "1 1 1" : "Scale the player's velocity per-axis"
+	
+	mode[engine](integer) : "Teleport mode" : 1
+	mode(choices) : "Teleport mode" : 1 = 
+		[
+		0 : "Default (do nothing)"
+		1 : "Reset velocity"
+		2 : "Keep negative Z (downwards) velocity only"
+		3 : "Redirect velocity to destination angles"
+		4 : "Landmark teleport"
+		]
+	
+	reorient_landmark[engine](integer) : "Reorient Landmark" : 0
+	reorient_landmark(choices) : "Reorient Landmark" : 0 : "(Landmark mode only) Reorient origin, angles and velocity from the landmark's local space to the destination's. This means the destination room does not have to face the same way." =
+		[
+		0 : "No"
+		1 : "Yes"
+		]
+	
+	resetang[engine](integer) : "Reset the player angles on teleport" : 1
+	resetang(choices) : "Reset the player angles on teleport" : 1 =
+		[
+		0 : "No"
+		1 : "Yes"
+		]
+
+	fail[engine](integer) : "Indicates whether this teleport is for failing a level" : 0
+	fail(choices) : "Indicates whether this teleport is for failing a level" : 0 =
+		[
+		0 : "No"
+		1 : "Yes"
+		]
+	
+	spawnflags(flags) =
+		[
+		8388608: "Teleport the player on EndTouch() instead of StartTouch()" : 0
+		]
+	]
