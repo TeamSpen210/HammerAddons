@@ -28,7 +28,7 @@
 
 	src_fix_skins[srctools](boolean) : "Fix Skins Logic" : 1 : "If set, add extra outputs to fix the bug with skins not changing after a reload from save."
 	
-	uselaserfilter[P2CE](bool) : "Use Laser Filter" : true : "If enabled, this catcher can only be activated by the specified laser color."
+	uselaserfilter[P2CE](bool) : "Use Laser Filter" : 0 : "If enabled, this catcher can only be activated by the specified laser color."
 	
 	filtercolor[P2CE](choices) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter lasers by this colour." =
 	[

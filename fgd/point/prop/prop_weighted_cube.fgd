@@ -50,7 +50,7 @@
 	allowfunnel(boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a floor portal."
 	newskins(integer) readonly : "Use new skins" : 1 : "Use the values in the Cube Type and Skin Type fields instead of the Skin(OLD) field. You shouldn't need to touch this."
 	
-	uselasermodifier[P2CE](bool) : "Use Laser Modifier" : true : "If enabled, this cube will recolor incoming lasers to the modifier color."
+	uselasermodifier[P2CE](boolean) : "Use Laser Modifier" : 0 : "If enabled, this cube will recolor incoming lasers to the modifier color."
 	reflectmodifycolor[P2CE](choices) : "Laser Modifier Color (R G B A)" : "255 0 0 255" : "Set reflected lasers to this colour. Only applicable to reflection and Schrodinger cubes." =
 	[
 		"255 255 255 255" : "White"
@@ -61,7 +61,7 @@
 		"212 60 146 255" : "Pink"
 		"65 97 0 255" : "Dark Green"
 	]
-	uselaserfilter[P2CE](bool) : "Use Laser Filter" : true : "If enabled, this cube can only redirect lasers that match the filter color. If disabled, any laser color can be redirected."
+	uselaserfilter[P2CE](boolean) : "Use Laser Filter" : 0 : "If enabled, this cube can only redirect lasers that match the filter color. If disabled, any laser color can be redirected."
 	reflectfiltercolor[P2CE](choices) : "Laser Filter Color (R G B A)" : "255 0 0 255" : "Filter reflected lasers by this colour. Only applicable to reflection and Schrodinger cubes." =
 	[
 		"255 255 255 255" : "White"

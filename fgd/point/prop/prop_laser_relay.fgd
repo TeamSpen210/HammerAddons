@@ -7,7 +7,7 @@
 	[
 	model(studio) : "Laser Relay Model" : "models/props/laser_receptacle.mdl" : "Choose a custom model for the relay."
 
-	uselaserfilter[P2CE](bool) : "Use Laser Filter" : true : "If enabled, this relay can only be activated by the specified laser color."
+	uselaserfilter[P2CE](bool) : "Use Laser Filter" : 0 : "If enabled, this relay can only be activated by the specified laser color."
 	
 	filtercolor[P2CE](choices) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter lasers by this colour." =
 	[
