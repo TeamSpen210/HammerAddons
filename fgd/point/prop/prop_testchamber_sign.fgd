@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(P2CE) 
-	studioprop("models/editor/prop_testchamber_sign.mdl") 
+	appliesto(P2CE)
+	studioprop("models/editor/prop_testchamber_sign.mdl")
 = prop_testchamber_sign: "Portal 2 Test chamber sign"
 	[
 
@@ -18,7 +18,14 @@
 		512: 	"Icon 9 active" : 0
 	]
 
+	enabled(boolean) : "Enabled" : 1 : "Whether or not to start on"
+
 	sign_levelname(string) : "Level name" : : "Name of the puzzle to display above the main number"
+	sign_startup_sequence(choices) : "Default Startup Sequence" : "Normal Flicker" : "Name of the startup sequence to use" = [
+		"normal_flicker"			: "Normal Flicker"
+		"dirty_flicker"				: "Dirty Flicker"
+		"broken_flicker"			: "Broken Flicker"
+	]
 	sign_current(integer) : "Current level number" : : "Number of the level you are currently in"
 	sign_total(integer) : "Total level number" : : "Number of levels in the testing track"
 	sign_dirt(choices) : "Dirt amount" : -1 : "How dirty the sign should be" =
@@ -301,7 +308,16 @@
 
 
 	// Inputs
-	input TurnOn(string) : "Turns the sign on. Give the startup animation as the parameter. (normal_flicker, dirty_flicker, broken_flicker)"
-	input TurnOff(void) : "Turns the sign off"
+	input TurnOn(string) : "Turns the sign on. You can optionally set the startup sequence as the parameter. (normal_flicker, dirty_flicker, broken_flicker)"
+	input TurnOff(void) : "Turns the sign off."
+
+	input SetCurrentLevel(integer) : "Sets the current level number."
+	input SetTotalLevel(integer) : "Sets the total level number."
+	input SetLevelName(string) : "Sets the name of the level to show."
+	input SetDirt(integer) : "Sets the amount of dirt."
+
+	input SetIconActive(integer) : "Turns the specified icon on"
+	input SetIconInactive(integer) : "Turns the specified icon off"
+
 
 	]
