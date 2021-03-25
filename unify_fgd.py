@@ -799,6 +799,7 @@ def action_export(
     for mat_tags, materials in fgd.tagged_mat_exclusions.items():
         if match_tags(tags, mat_tags):
             fgd.mat_exclusions |= materials
+    fgd.tagged_mat_exclusions.clear()
 
     print('Culling visgroups...')
     # Cull visgroups that no longer exist for us.
