@@ -490,7 +490,7 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
 def decompile_model(
     fsys: FileSystemChain,
     cache_loc: Path,
-    crowbar: str,
+    crowbar: Path,
     filename: str,
     checksum: bytes,
 ) -> Optional[QC]:
@@ -536,11 +536,13 @@ def decompile_model(
                 with file.open_bin() as src, Path(tempdir, stem + mdl_ext).open('wb') as dest:
                     shutil.copyfileobj(src, dest)
         LOGGER.debug('Extracted "{}" to "{}"', filename, tempdir)
-        result = subprocess.run([
-            crowbar, 'decompile',
+        args = [
+            str(crowbar), 'decompile',
             '-i', str(Path(tempdir, stem + '.mdl')),
             '-o', str(cache_folder),
-        ])
+        ]
+        LOGGER.debug('Executing {}', ' '.join(args))
+        result = subprocess.run(args)
         if result.returncode != 0:
             LOGGER.warning('Could not decompile "{}"!', filename)
             return None
@@ -758,7 +760,7 @@ def combine(
     *,
     studiomdl_loc: Path=None,
     qc_folders: List[Path]=None,
-    crowbar_loc: str=None,
+    crowbar_loc: Optional[Path]=None,
     decomp_cache_loc: Path=None,
     auto_range: float=0,
     min_cluster: int=2,

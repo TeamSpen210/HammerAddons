@@ -143,9 +143,12 @@ def main(argv: List[str]) -> None:
         if decomp_cache_loc is not None:
             decomp_cache_loc = (game_info.root / decomp_cache_loc).resolve()
             decomp_cache_loc.mkdir(parents=True, exist_ok=True)
-        crowbar_loc = conf.get(str, 'propcombine_crowbar')
-        if crowbar_loc is not None:
-            crowbar_loc = str((game_info.root / crowbar_loc).resolve())
+        if conf.get(bool, 'propcombine_crowbar'):
+            # argv[0] is the location of our script/exe, which lets us locate
+            # Crowbar from there.
+            crowbar_loc = Path(sys.argv[0], '../Crowbar.exe').resolve()
+        else:
+            crowbar_loc = None
 
         LOGGER.info('Combining props...')
         propcombine.combine(

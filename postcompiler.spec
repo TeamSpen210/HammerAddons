@@ -5,19 +5,22 @@ from pathlib import Path
 
 # Find the BSP transforms from HammerAddons.
 try:
-    transform_loc = Path(os.environ['BSP_TRANSFORMS']).resolve()
+    hammer_addons = Path(os.environ['HAMMER_ADDONS']).resolve()
 except KeyError:
-    transform_loc = Path('../HammerAddons/transforms/').resolve()
-if not transform_loc.exists():
+    hammer_addons = Path('../HammerAddons/').resolve()
+if not (hammer_addons / 'transforms').exists():
     raise ValueError(
-        f'Invalid BSP transforms location "{transform_loc}"!\n'
+        f'Invalid BSP transforms location "{hammer_addons}/transforms/"!\n'
         'Clone TeamSpen210/HammerAddons, or set the '
-        'environment variable BSP_TRANSFORMS to the location.'
+        'environment variable HAMMER_ADDONS to the location.'
     )
 
 DATAS = [
-    (str(file), str('transforms' / file.relative_to(transform_loc).parent))
-    for file in transform_loc.rglob('*.py')
+    (str(file), str(file.relative_to(hammer_addons).parent))
+    for file in (hammer_addons / 'transforms').rglob('*.py')
+] + [
+    (str(hammer_addons / 'crowbar_command/Crowbar.exe'), '.'),
+    (str(hammer_addons / 'crowbar_command/FluentCommandLineParser.dll'), '.'),
 ]
 print(DATAS)
 

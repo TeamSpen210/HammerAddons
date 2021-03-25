@@ -230,10 +230,8 @@ OPTIONS = [
         """
     ),
     Opt(
-        'propcombine_crowbar', TYPE.STR,
-        """The location of the Crowbar executable used to decompile models.
-        
-        If provided, this will be used to decompile models which don't have
+        'propcombine_crowbar', True,
+        """If enabled, Crowbar will be used to decompile models which don't have
         a QC in the provided QC folder.
         """
     ),
