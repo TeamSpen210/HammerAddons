@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityAnimating, SetModel) 
 	appliesto(L4D, L4D2)
+	iconsprite(editor/func_orator)
 	sphere(maxthenanydispatchdist)
 = func_orator: "A very simple model entity that has animations and response rules."
 	[

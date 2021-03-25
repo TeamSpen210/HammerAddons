@@ -1,5 +1,5 @@
-@PointClass 
-	size(-4 -4 -4, 4 4 4)
+@PointClass base(BaseEntityPoint)
+	iconsprite(editor/info_intermission)
 	color(0 180 0)
 	line(255 255 0, targetname, target)
 = info_intermission: "An entity that defines an intermission spot where dead players will float until they respawn."

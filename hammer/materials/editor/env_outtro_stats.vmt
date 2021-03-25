@@ -1,0 +1,7 @@
+"Sprite"
+{
+	"$baseTexture" "editor/env_outtro_stats"
+	"$spriteorientation" "vp_parallel"
+	"$spriteorigin" "[ 0.50 0.50 ]"
+	"$no_fullbright" 1
+}

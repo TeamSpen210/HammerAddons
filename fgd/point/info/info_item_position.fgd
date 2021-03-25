@@ -1,5 +1,6 @@
 @PointClass appliesto(L4D2) base(BaseEntityPoint) 
 	studioprop()
+	iconsprite(editor/info_item_position)
 = info_item_position: "An entity that represents a possible item location in a map. " +
 	"Scripts can search for these entities and use them to spawn objects for different game modes."
 	[
@@ -13,16 +14,16 @@
 		2: "Scarce"
 		]
 
-	replace01(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of the spawn group that have $var" + "iable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace02(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of the spawn groupe that have $va" + "riable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace03(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of the spawn group that have $var" + "iable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace04(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of the spawn group that have $var" + "iable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace05(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of the spawn group that have $var" + "iable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace06(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of the spawn group that have $var" + "iable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace07(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of the spawn group that have $var" + "iable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace08(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of the spawn group that have $var" + "iable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace09(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of the spawn group that have $var" + "iable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace10(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of the spawn group that have $var" + "iable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace01(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value. All entities inside of the spawn group that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace02(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value. All entities inside of the spawn group that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace03(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value. All entities inside of the spawn group that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace04(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value. All entities inside of the spawn group that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace05(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value. All entities inside of the spawn group that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace06(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value. All entities inside of the spawn group that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace07(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value. All entities inside of the spawn group that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace08(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value. All entities inside of the spawn group that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace09(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value. All entities inside of the spawn group that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace10(string) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value. All entities inside of the spawn group that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
 
 	// Inputs
 	input SetGroup(integer) : "Set the group number."

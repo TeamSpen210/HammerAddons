@@ -1,6 +1,7 @@
 @KeyframeClass base(BaseEntityPoint, KeyFrame) 
 	size(-6 -6 -6, 6 6 6)
 	color(255 200 0)
+	iconsprite(editor/keyframe_track)
 	keyframe()
 = keyframe_track: "Animation KeyFrame"
 	[

@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(L4D, L4D2)
+	iconsprite(editor/info_map_parameters_versus)
  	autovis(Point Entities, Globals, Map Parameters)
 = info_map_parameters_versus: "L4D-specific map parameters for versus games."
 	[

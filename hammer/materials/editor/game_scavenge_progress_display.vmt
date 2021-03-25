@@ -1,0 +1,7 @@
+"Sprite"
+{
+	"$baseTexture" "editor/game_scavenge_progress_display"
+	"$spriteorientation" "vp_parallel"
+	"$spriteorigin" "[ 0.50 0.50 ]"
+	"$no_fullbright" 1
+}
