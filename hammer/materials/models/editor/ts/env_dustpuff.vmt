@@ -1,0 +1,6 @@
+UnlitGeneric
+{
+	$baseTexture "models/editor/ts/env_dustpuff"
+	$alphatest 1
+	$model 1
+}
