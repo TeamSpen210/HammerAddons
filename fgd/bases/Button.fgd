@@ -1,4 +1,5 @@
-@BaseClass = Button
+@BaseClass base(Angles)
+ = Button
 	[
 	glow[L4D2](target_destination) : "Glow Entity" : : "The name of an entity that will get the +use glow for this button."
 	
