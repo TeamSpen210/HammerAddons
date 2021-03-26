@@ -10,5 +10,7 @@
 		4: "Gib Player" : 0
 		]
 
-	target(string) : "game_team_master to use"
+	target(target_destination) : "The game_team_master representing the required team."
+
+	input Use(void) : "Change the team of the !activator player."
 	]
