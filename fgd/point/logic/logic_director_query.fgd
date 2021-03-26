@@ -1,4 +1,7 @@
-@PointClass appliesto(L4D2) base(BaseEntityPoint) = logic_director_query: "Allows firing of output based on the Director's state."
+@PointClass base(BaseEntityPoint) 
+	appliesto(L4D2) 
+	iconsprite(editor/logic_director_query)
+= logic_director_query: "Allows firing of output based on the Director's state."
 	[
 	minangerrange(integer) : "Min Anger Range" : 1 : "Min remapping range of anger"
 	maxangerrange(integer) : "Max Anger Range" : 10 : "Max remapping range of anger"

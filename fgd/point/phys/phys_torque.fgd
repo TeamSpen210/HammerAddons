@@ -1,5 +1,6 @@
 @PointClass base(ForceController)
 	autovis(Entities, Constraints, Motor)
+	size(-8 -8 -8, 8 8 8)
 	halfgridsnap
 	line(255 255 255, targetname, attach1) 
 	color(128 128 128)

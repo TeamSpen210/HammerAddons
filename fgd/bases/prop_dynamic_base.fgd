@@ -1,4 +1,4 @@
-@BaseClass base(BaseEntityAnimating, SetModel, BreakableProp)
+@BaseClass base(BaseEntityAnimating, SetModel, BreakableProp, Glow)
 	studioprop()
 	sphere(fademindist)
 	sphere(fademaxdist)

@@ -9,7 +9,7 @@
 		[
 		0: "Blue Eye / Broken"
 		1: "Green Eye / Normal"
-		2: "Red Eye / NA"
+		2: "Orange Eye / NA"
 		3: "Purple Eye / NA"
 		]
 
@@ -20,7 +20,7 @@
 		1: "Yes"
 		]
 
-	model[engine](string) : "Model" : "models/npcs/personality_sphere/personality_sphere.mdl" 
+	model[engine](studio) : "Model" : "models/npcs/personality_sphere/personality_sphere.mdl" 
 	model(choices) : "[H] Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "Choose the model to show in hammer. Set to the same as Use Alternate Skins." =
 		[
 		"models/npcs/personality_sphere/personality_sphere.mdl": "Original (Wheatley)"
@@ -32,7 +32,7 @@
 		[
 		0: "Blue Eye / Broken"
 		1: "Green Eye / Normal"
-		2: "Red Eye / NA"
+		2: "Orange Eye / NA"
 		3: "Purple Eye / NA"
 		]
 

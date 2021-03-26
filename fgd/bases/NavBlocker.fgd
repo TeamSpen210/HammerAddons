@@ -1,14 +1,30 @@
 @BaseClass appliesto(L4D2) = NavBlocker
 	[
-	teamtoblock[engine](integer) : "Team(s) to block" : -1
-	teamtoblock(choices) : "Team(s) to block" : -1 : "Team(s) this entity should block" =
+	teamtoblock[engine](integer) : "Team(s) to block" : -1 : "Team(s) this entity should block."
+
+	teamtoblock[TF2](choices) : "Team(s) to block" : -1 : "Team(s) this entity should block." =
+		[
+		-1: "Everyone"
+		2: "RED"
+		3: "BLU"
+		5: "Halloween Bosses"
+		]
+
+	teamtoblock[CSGO](choices) : "Team(s) to block" : -1 : "Team(s) this entity should block" =
+		[
+		-1: "Everyone"
+		2: "Terrorists"
+		3: "Counter-Terrorists"
+		]
+
+	teamtoblock[L4D, L4D2](choices) : "Team(s) to block" : -1 : "Team(s) this entity should block" =
 		[
 		-1: "Everyone"
 		2: "Survivors"
 		3: "Infected"
 		]
 
-	affectsflow(boolean) : "Affects Flow?" : 0 : "Does this func_nav_blocker block flow in the level? " +
+	affectsflow[TF2, CSGO](boolean) : "Affects Flow?" : 0 : "Does this func_nav_blocker block flow in the level? " +
 		"Only func_nav_blockers with this enabled will " +
 		"cause flow recomputation on blocking/unblocking."
 

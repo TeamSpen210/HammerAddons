@@ -1,3 +1,6 @@
-@PointClass appliesto(L4D2) base(BaseEntityPoint, EnableDisable) = info_zombie_border: "No zombies will spawn behind this entity."
+@PointClass appliesto(L4D2) 
+	base(BaseEntityPoint, EnableDisable)
+	iconsprite(editor/info_zombie_border)
+= info_zombie_border: "No zombies will spawn behind this entity."
 	[
 	]

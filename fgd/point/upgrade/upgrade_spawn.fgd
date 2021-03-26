@@ -1,4 +1,7 @@
-@PointClass appliesto(L4D2) base(BaseEntityPoint) = upgrade_spawn
+@PointClass 
+	appliesto(L4D2) base(BaseEntityPoint)
+	iconsprite(editor/upgrade_spawn)
+= upgrade_spawn
 	[
 	laser_sight(integer) : "Laser Sight" : 1
 	upgradepack_incendiary(integer) : "UpgradePack - Incendiary" : 1

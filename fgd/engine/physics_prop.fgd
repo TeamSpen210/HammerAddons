@@ -1,4 +1,4 @@
-@PointClass base(prop_physics)
+@PointClass appliesto(engine) base(prop_physics)
 = physics_prop: "Alternate name for prop_physics."
 	[
 	]

@@ -8,6 +8,8 @@
 	onewayfacing(angle) : "Open direction" : "0 0 0" : "The portal will be open when the player is within 90 degrees of this direction."
 	avoidpop(boolean) : "Avoid latency pop" : 0 : "Enable this if it becomes noticeable that the portal stays closed momentarily after the player walks past it. The portal will open 80 units in advance."
 	
+	portalnumber[engine](integer): "Portal Number": : "In compiled maps, links the entity to the relevant visleaf intersection."
+	
 	input DisableOneWay(void) : "Disable the one-way behaviour of the portal."
 	input EnableOneWay(void) : "Enable the one-way behaviour of the portal."
 	input ToggleOneWay(void) : "Toggle the one-way behaviour of the portal."

@@ -1,4 +1,6 @@
-@PointClass appliesto(L4D2) base(BaseEntityPoint) 
+@PointClass 
+	appliesto(L4D2) base(BaseEntityPoint)
+	iconsprite(editor/info_ambient_mob_end)
 = info_ambient_mob_end: "End location for an ambient mob."
 	[
 	]

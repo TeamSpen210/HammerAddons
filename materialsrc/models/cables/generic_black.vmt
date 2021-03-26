@@ -1,0 +1,11 @@
+VertexLitGeneric
+{
+$basetexture "models/cables/generic_black"
+$model 1
+$bumpmap "dev/flat_normal"
+
+$phongboost 1
+$phongexponent 10
+
+$phongfresnelranges "[1 3 10]"
+}

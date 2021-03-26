@@ -1,4 +1,4 @@
-@BaseClass base(BaseEntityPhysics, BreakableProp, SystemLevelChoice, BaseFadeProp) 
+@BaseClass base(BaseEntityPhysics, BreakableProp, SystemLevelChoice, BaseFadeProp, Glow) 
 = BasePropPhysics: "For prop_physics-like entities."
 	[
 	spawnflags(flags) : "spawnflags" =
@@ -15,8 +15,11 @@
 		4096: "Debris with trigger interaction" : 0
 		8192: "Force server-side (Multiplayer only)" : 0
 		16384: "Radius pickup (easier to pickup)" : 0 [MBase]
-		32768: "Autoaim target" : 0 [!P2]
-		1048576: "Physgun can ALWAYS pick up. No matter what." : 0
+		32768: "Autoaim target" : 0 [!P2, !L4D2]
+		32768: "Enable +use glow effect" : 0 [L4D2]
+		// Valve comment:
+		// REMOVED for l4d2. Do not merge to other branches. We only network 16 bits of phys prop spawnflags and the below flag is unused by the code.
+		1048576: "Physgun can ALWAYS pick up. No matter what." : 0 [!L4D2]
 		2097152: "No collisions" : 0 [MBase]
 		8388608: "Debris collides with other debris" : 0 [INFRA]
 		8388608: "Zombies can't swat" : 0 [MBase]

@@ -1,6 +1,7 @@
 @MoveClass base(BaseEntityPoint, KeyFrame, Mover) 
 	size(-8 -8 -8, 8 8 8)
 	color(255 170 0)
+	iconsprite(editor/move_keyframed)
 	animator()
 = move_keyframed: "Keyframed Move Behavior"
 	[

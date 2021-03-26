@@ -30,9 +30,9 @@
 		256:"Allow fixed behavior (can move without look target, removal stops softlock, etc.)" : 1 [MBase]
 		]
 
-	speed(string) : "Initial Speed" : "0" : "The starting speed that the camera moves at, if it's on a path track."
-	acceleration(string) : "Acceleration units/sec^2" : "500" : "The speed at which the camera accelerates to path corner's desired speeds."
-	deceleration(string) : "Stop Deceleration units/sec^2" : "500" : "The speed at which the camera decelerates to path corner's desired speeds."
+	speed(float) : "Initial Speed" : "0" : "The starting speed that the camera moves at, if it's on a path track."
+	acceleration(float) : "Acceleration units/sec^2" : "500" : "The speed at which the camera accelerates to path corner's desired speeds."
+	deceleration(float) : "Stop Deceleration units/sec^2" : "500" : "The speed at which the camera decelerates to path corner's desired speeds."
 	trackspeed[since_P2](float) : "Tracking Speed of the camera" : "40" : "The speed that the camera tries to follow it's look target."
 	fov[MBase, since_ASW](float) : "Field of view" : "90" : "Player FOV (if Set FOV spawnflag is set)"
 	fov_rate[MBase, since_ASW](float) : "Seconds to reach FOV target" : "1.0" : "Amount of time it should take to reach the specified FOV"

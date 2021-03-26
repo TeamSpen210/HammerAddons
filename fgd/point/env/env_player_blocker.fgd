@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(L4D, L4D2)
 	wirebox(mins, maxs)
+	iconsprite(editor/env_player_blocker)
 = env_player_blocker: "An entity which blocks any PC/NPC from entering of the specified type."
 	[
 	mins(vector) : "Mins" : "-4 -128 -80"

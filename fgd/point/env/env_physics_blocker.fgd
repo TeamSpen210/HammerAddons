@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint) 
-	obb(boxmins, boxmaxs)
 	appliesto(L4D2)
+	obb(boxmins, boxmaxs)
+	iconsprite(editor/env_physics_blocker)
 = env_physics_blocker: "An entity which blocks players and physics objects."
 	[
 	boxmins(vector) : "Mins" : "-8 -8 -8"

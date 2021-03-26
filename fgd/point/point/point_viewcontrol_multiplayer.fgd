@@ -3,7 +3,7 @@
 	studioprop("models/editor/camera.mdl") 
 	frustum(fov, 16, 256, 255 255 255 10, -1) 
 	line(255 255 0, targetname, target_entity) 
-= point_viewcontrol_multiplayer: "A camera entity that controls all players' views. " +
+= point_viewcontrol_multiplayer: "A camera entity that controls players' views. which works in multiplayer. " +
 	"While it's active, the players will see out of the camera."
 	[
 	fov(float) : "Field of view" : 90 : "Player FOV"
@@ -13,13 +13,18 @@
 
 
 	target_team[engine](integer) : "Target Team" : -1
-	target_team[P2](choices) : "Target Team" : -1 : "Which team (or all) to allow to touch this trigger." =
+	target_team[P2](choices) : "Target Team" : -1 : "Which team (or all) to take over the camera for." =
+		[
+		-1: "All Players"
+		0: "Chell/Bendy"
+		2: "P-Body"
+		3: "ATLAS"
+		]
+	target_team[CSGO](choices) : "Target Team" : -1 : "Which team (or all) to take over the camera for." =
 		[
 		-1: "All Teams"
-		0: "0 (Spectators)"
-		1: "1"
-		2: "2 (Portal2 Orange)"
-		3: "3 (Portal2 Blue)"
+		2: "Terrorist"
+		3: "Counter-Terrorist"
 		]
 
 	spawnflags(flags)  =
@@ -32,5 +37,7 @@
 	// Inputs
 	input Enable(void) : "Enable the point_viewcontrol_multiplayer, and start controlling the players' view."
 	input Disable(void) : "Disable the point_viewcontrol_multiplayer, and stop controlling the players' view."
+	input AddPlayer(ehandle) : "Force the !activator player to be controlled by this."
+	input RemovePlayer(ehandle) : "Remove !activator player from being controlled."
 	input StartMovement(void) : "Start the movement to the target entity."
 	]

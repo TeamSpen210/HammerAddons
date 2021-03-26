@@ -1,0 +1,7 @@
+"Sprite"
+{
+	"$baseTexture" "editor/logic_director_query"
+	"$spriteorientation" "vp_parallel"
+	"$spriteorigin" "[ 0.50 0.50 ]"
+	"$no_fullbright" 1
+}

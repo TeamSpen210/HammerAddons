@@ -1,6 +1,7 @@
 @NpcClass base(BaseNPC) 
 	appliesto(EP1, EP2, HL2, P1) 
 	autovis(Entities, NPCs, Antlions, Antlion Guard)
+	line(128 0 0, targetname, shovetargets)
 	studio("models/antlion_guard.mdl") = npc_antlionguard: "Antlion Guard"
 	[
 	spawnflags(flags) : "spawnflags" =
@@ -9,16 +10,16 @@
 		131072: "Use inside footsteps" : 0
 		]
 
-	startburrowed(boolean) : "Start Burrowed" : 0
-	allowbark(boolean) : "Allow Bark" : 0
-	cavernbreed(boolean) : "Cavern Guard Model and Texture" : 0
+	startburrowed(boolean) : "Start Burrowed" : 0 : "Start hidden inside the ground, until told to unburrow."
+	allowbark(boolean) : "Allow Bark" : 0 : "Allow the antlion guard to bark, summoning antlions."
+	cavernbreed(boolean) : "Cavern Guard Model and Texture" : 0 : "Switch to the alternate EP2 cavern skin, and add glows."
 	incavern(boolean) : "Use inside-Cavern Behavior" : 0
 
-	shovetargets(string) : "Shove Targets"
+	shovetargets(target_destination) : "Shove Targets" : : "One or more named entities which the antlion guard will look to shove around first."
 
 	// Inputs
 	input Unburrow(void) : "Unburrow from the ground"
-	input SetShoveTarget(string) : "Sets a shove target to attack"
+	input SetShoveTarget(target_destination) : "Sets a shove target to attack."
 	input SetChargeTarget(string) : "Sets a charge target to attack.  Parameters are the name of the entity to start at and the name of the entity to charge towards, separated by a space (i.e. start target)"
 	input ClearChargeTarget(void) : "Clear the charge target"
 	input SetCoverFromAttack(integer) : "Sets whether or not the creature will protect itself from attacks"
@@ -27,6 +28,7 @@
 	input DisableBark(void) : "Stop the antlion guard from trying to summon antlions"
 	input InvestigateHint(string) : "Sniff around at a hint group until told otherwise"
 	input StopInvestigating(void) : "Stop trying to sniff out the player"
+	input SummonedAntlionDied(void) : "Fired by summoned antlions, lets the guard know that it has died."
 	input EnablePreferPhysicsAttack(void) : "Prefer to use physics attacks if at all possible, even when inside a cavern."
 	input DisablePreferPhysicsAttack(void) : "Do not prefer to use physics attacks if at all possible, even when inside a cavern."
 

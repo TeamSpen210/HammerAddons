@@ -23,7 +23,7 @@
 	minspeed[P2](float) : "Minimum speed (snowfall only)" : 25
 	maxspeed[P2](float) : "Maximum speed (snowfall only)" : 35
 	
-	input Alpha(void) : "Changes the density of the rain, " +
+	input Alpha(integer) : "Changes the density of the rain, " +
 	"and may add additional particle effects like fog or leaves. " +
 	"Accepts inputs from -1 to 255."
 	]

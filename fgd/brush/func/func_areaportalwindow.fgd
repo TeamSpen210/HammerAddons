@@ -13,12 +13,14 @@
 	[
 	target(target_destination) : "Rendered Window" : : "The name of a brush model to render as the window."
 	FadeStartDist(integer) : "Fade Start Distance" : 128 : "When the viewer is closer than this distance, the alpha is set to 'TranslucencyLimit'."
-	FadeDist(integer) : "Fade End Distance" : 512 : "When the viewer is at this distance, the portal becomes solid and closes off."
-	TranslucencyLimit(float) : "Translucency limit" : "0.2" : "This value limits the translucency of the bmodel and prevents it from becoming invisible when the viewer is right on top of it."
-	BackgroundBModel(target_destination) : "Foreground Brush" : : "(Optional) brush model that is drawn after the fading brush model. This model should have alpha in its textures so you can see through it."
+	FadeDist(integer) : "Fade End Distance" : 512 : "When the viewer is at this distance, the portal becomes solid and closes off. If set to zero, the window will always be closed."
+	TranslucencyLimit(float) : "Translucency limit" : "0" : "This can be used to limit the translucency of the window, preventing it from becoming entirely invisible. This could be used with an opaque material, acting as a window."
+	BackgroundBModel(target_destination) : "Foreground Brush" : : "(Optional) brush model that is drawn after the fading brush model. This model should be translucent so you can see through it."
 	portalversion(integer) readonly: "Portal Version" : 1 : "(Don't change). Differentiates between shipping HL2 maps and maps using new engine features."
 
+	portalnumber[engine](integer): "Portal Number": : "In compiled maps, links the entity to the relevant visleaf intersection."
+	
 	// Inputs
 	input SetFadeStartDistance(integer) : "Set fade start distance."
-	input SetFadeEndDistance(integer) : "Set fade end distance."
+	input SetFadeEndDistance(integer) : "Set fade end distance. If set to zero, this will force the window closed."
 	]

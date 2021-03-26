@@ -774,7 +774,7 @@
 		"allowed in medieval mode"                     : "allowed in medieval mode"
 		"crit on hard hit"                             : "crit on hard hit"
 		"kill refills meter"                           : "Melee kills refill ??? of your charge meter"
-		"taunt attach particle index"                  : "★ Unusual Effect: ???"
+		"taunt attach particle index"                  : "* Unusual Effect: ???"
 		"upgrade rate decrease"                        : "??? slower upgrade rate"
 		"voice pitch scale"                            : "??? voice pitch scale"
 		"gunslinger punch combo"                       : "+??? gunslinger damage bonus"

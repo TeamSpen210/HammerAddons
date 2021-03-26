@@ -1,0 +1,65 @@
+@MoveClass base(StaticTargetname)
+	sphere(radius)
+	animator() keyframe()
+	iconsprite("editor/comp_prop_cable")
+	appliesto(srctools, -engine)
+= comp_prop_cable: "Generates cables using a static prop. comp_prop_rope is an alternate name, they can be interchanged."
+	[
+	group(target_source): "Group" : : "Each set of cables must have a group name. Each name will be compiled to one cable."
+	nextkey(target_destination) : "Next Cable" : : "Name of the next cable along this path."
+
+	slack(integer) : "Slack" : 25 : "How much extra length the cable has, for 'catenary' mode (by default it has the length between its two endpoints in the editor)."
+
+
+	// Valve's interplator keyvalue just happens to provide the right visuals we want.
+	positioninterpolator[engine](integer): "Type": 2
+	positioninterpolator(choices) : "Type" : 2 : "How to interpolate the cable. Straight makes it straight. Spline uses a spline curve, which smoothly blends between points (no visuals). Catenary makes it hang down, like the original move_rope." =
+		[
+		0: "Straight"
+		1: "Spline Curve"
+		2: "Catenary "
+		]
+
+	segments(integer) : "Segments" : 2 : "Number of nodes to generate between each cable. Higher values make smoother cables, but produce more faces."
+	sides(integer) : "Sides" : 8 : "Number of faces for each cylindrical section. Only the value at the start of the cable is used."
+	radius(float) : "Radius" : 1.0 : "Radius of this cable section."
+
+	material(material) : "Cable Material" : "models/cables/generic_black" : "The material to use for the cable. Must be a model material."
+	mat_scale(float) : "Lengthwise Material Scale" : 1 : "This changes the texture resolution along the cable, relative to the amount of width used. Larger values stretch the texture and smaller values scrunch it up."
+	mat_rotate[engine](boolean) : "Rotate Material" : 0
+	mat_rotate(choices) : "Material Orientation" : 0 : "Controls which direction the cable runs in the material, if your texture is rotated." = 
+	[
+		0 : "Vertical"
+		1 : "Horizontal"
+	]
+	u_min(float): "Width Start" : 0.0 : "The distance along the texture to start. 0 is the left/bottom side, 1 is the right/top side. This allows using only part of the texture, if it contains multiple different cable styles."
+	u_max(float): "Width End"   : 1.0 : "The distance along the texture to end. 0 is the left/bottom side, 1 is the right/top side. This allows using only part of the texture, if it contains multiple different cable styles."
+	
+	// A selection of prop_static's keyvalues, excluding some that are rather irrelevant.
+	linedivider_staticprop[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	renderamt[since_L4D](integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
+	rendercolor[since_L4D](color255) : "Color (R G B)" : "255 255 255"
+
+	screenspacefade[until_ASW](boolean) : "Screen Space Fade" : 0 : "The method by which the fading distance should be determined. If 'No', the fade distances is the distance from the player's view to the object, in inches. " +
+		"If 'Yes', the fade distance is the size of the object onscreen, in pixels."
+	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
+	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
+	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, " +
+		"or if the engine is running under dx7 [hl2/ep1/portal] or dx8 [ep2/tf], " +
+		"then the engine will forcibly fade out props even if fademindist/fademaxdist " +
+		"isn't specified. " +
+		"This scale factor gives you some control over the fade. " +
+		"Using 0 here turns off the forcible fades. " +
+		"Numbers smaller than 1 cause the prop to fade out at further distances, " +
+		"and greater than 1 cause it to fade out at closer distances."
+
+	disableshadows(boolean) : "Disable Shadows" : 0
+	disableselfshadowing(boolean): "Disable Self-Shadowing": 0
+	disablevertexlighting(boolean) : "Disable Vertex lighting" : 0 : "Disable per-vertex lighting on this prop."
+
+	drawinfastreflection[since_L4D](boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
+	enablelightbounce[since_CSGO](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
+	
+	movespeed(integer) readonly: "Speed (unused)" : 1 : "This needs to be greater than zero to show the preview lines."
+	]

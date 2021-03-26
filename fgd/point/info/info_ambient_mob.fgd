@@ -1,3 +1,6 @@
-@PointClass appliesto(L4D2) base(BaseEntityPoint) = info_ambient_mob: "Universal ambient mob start/end. (Use with care!)"
+@PointClass 
+	appliesto(L4D2) base(BaseEntityPoint)
+	iconsprite(editor/info_ambient_mob)
+= info_ambient_mob: "Universal ambient mob start/end. (Use with care!)"
 	[
 	]

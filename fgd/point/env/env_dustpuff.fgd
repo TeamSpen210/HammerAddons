@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, Angles) 
-	iconsprite("editor/ficool2/env_dustpuff")
+	studio("models/editor/env_dustpuff.mdl")
 = env_dustpuff: "An entity that can emit dust puffs."
 	[
 	scale(float) : "Scale" : 8 : "Size of the dust puff."

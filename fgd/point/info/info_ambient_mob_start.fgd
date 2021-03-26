@@ -1,3 +1,6 @@
-@PointClass appliesto(L4D2) base(BaseEntityPoint) = info_ambient_mob_start: "Potential starting location for an ambient mob."
+@PointClass 
+	appliesto(L4D2) base(BaseEntityPoint)
+	iconsprite(editor/info_ambient_mob_start)
+= info_ambient_mob_start: "Potential starting location for an ambient mob."
 	[
 	]

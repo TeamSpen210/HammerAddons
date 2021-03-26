@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(+engine)
+= env_physwire: "A half-implemented entity which would have spawned a bunch of targets and ballsockets to form a wire."
+	[
+	Density(integer) : "Density" : 1 : "The number of links this would have generated"
+	]

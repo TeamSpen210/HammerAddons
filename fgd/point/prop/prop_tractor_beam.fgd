@@ -1,6 +1,5 @@
 @PointClass base(BaseProjector) 
 	appliesto(P2)
-	autovis(Test Elements, Excursion Funnel)
 	studioprop()
 = prop_tractor_beam: "Emitter for an Excursion Funnel."
 	[

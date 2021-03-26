@@ -1,4 +1,5 @@
-@PointClass appliesto(L4D2) base(BaseEntityPoint) 
+@PointClass appliesto(L4D2) base(BaseEntityPoint)
+	iconsprite(editor/weapon_item_spawn) 
 	autovis(Weapons, L4D Weapons, L4D Items)
 = weapon_item_spawn
 	[

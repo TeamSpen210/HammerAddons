@@ -1,5 +1,8 @@
-@BaseClass = Button
+@BaseClass base(Angles)
+ = Button
 	[
+	glow[L4D2](target_destination) : "Glow Entity" : : "The name of an entity that will get the +use glow for this button."
+	
 	sounds[engine](integer) : "Press Sound" : 0
 	sounds(choices) : "Press Sound" : 0 : "Sound played when pressed. Choose from sounds in the Buttons.snd* category." =
 		[
