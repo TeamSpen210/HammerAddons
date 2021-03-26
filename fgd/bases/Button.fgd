@@ -1,4 +1,5 @@
-@BaseClass = Button
+@BaseClass base(Angles)
+ = Button
 	[
 	sounds[engine](integer) : "Press Sound" : 0
 	sounds(choices) : "Press Sound" : 0 : "Sound played when pressed. Choose from sounds in the Buttons.snd* category." =
