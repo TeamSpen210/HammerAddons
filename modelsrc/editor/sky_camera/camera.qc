@@ -7,7 +7,6 @@ $BodyGroup "studio"
 	studio "camera_reference.smd"
 }
 
-$RenameMaterial "camera_sheet" "sky_camera"
 $CDMaterials "models\editor\ts\"
 
 $hbox 0 "polymsh" -4 -4 -8 4 10 12
