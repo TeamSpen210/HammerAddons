@@ -30,6 +30,7 @@ $modelname "{path}"
 $body body "cable.smd"
 $cdmaterials ""
 $sequence idle "cable.smd" act_idle 1
+$illumposition {light_origin}
 
 $keyvalues {{
     no_propcombine 1
@@ -42,6 +43,7 @@ class InterpType(Enum):
     STRAIGHT = 0
     CATMULL_ROM = 1
     ROPE = 2
+
 
 class RopePhys:
     """Holds the data for move_rope simulation."""
@@ -170,6 +172,15 @@ class NodeEnt:
         self.group = group  # Nodes with the same group compile together.
         self.pos = pos
 
+    def relative_to(self, off: Vec) -> 'NodeEnt':
+        """Return a copy relative to the specified origin."""
+        return NodeEnt(
+            self.pos - off,
+            self.config,
+            self.id,
+            self.group,
+        )
+
     def __repr__(self) -> str:
         return f'<NodeEnt "{self.id}" @ {self.pos}>'
 
@@ -251,7 +262,7 @@ def build_rope(
     temp_folder: Path,
     mdl_name: str,
     offset: Vec,
-) -> List[Tuple[Vec, float, Vec, float]]:
+) -> Tuple[Vec, List[Tuple[Vec, float, Vec, float]]]:
     """Construct the geometry for a rope."""
     LOGGER.info('Building rope {}', mdl_name)
     ents, connections = nodes_and_conn
@@ -276,18 +287,26 @@ def build_rope(
             tri.point2 = tri.point2.with_uv(tri.point2.tex_u - u, tri.point2.tex_v - v)
             tri.point3 = tri.point3.with_uv(tri.point3.tex_u - u, tri.point3.tex_v - v)
 
+
+    # Use the node closest to the center. That way
+    # it shouldn't be inside walls, and be about representative of
+    # the whole model.
+    light_origin = min((node.pos for node in nodes), key=Vec.mag_sq)
+
     with (temp_folder / 'cable.smd').open('wb') as fb:
         mesh.export(fb)
 
     with (temp_folder / 'model.qc').open('w') as f:
-        f.write(QC_TEMPLATE.format(path=mdl_name))
+        f.write(QC_TEMPLATE.format(path=mdl_name, light_origin=light_origin))
 
-    # For visleaf computation, return a list of all the actual segments generated.
-    return [
+    # For visleaf computation, build a list of all the actual segments generated.
+    coll_data = [
         (node.pos + offset, node.radius, node.next.pos + offset, node.next.radius)
         for node in nodes
         if node.next
     ]
+
+    return (light_origin, coll_data)
 
 
 def build_node_tree(
@@ -657,7 +676,7 @@ def compute_visleafs(
 @trans('Model Ropes')
 def comp_prop_rope(ctx: Context) -> None:
     """Build static props for ropes."""
-    compiler = ModelCompiler.from_ctx(ctx, 'ropes')
+    compiler = ModelCompiler.from_ctx(ctx, 'ropes', version=1)
     # id -> node.
     all_nodes: MutableMapping[NodeID, NodeEnt] = {}
     # Given a targetname, all the nodes with that name.
@@ -666,6 +685,8 @@ def comp_prop_rope(ctx: Context) -> None:
     group_to_node: Dict[str, List[NodeEnt]] = defaultdict(list)
     # Store the node/next-key pairs for linking after they're all parsed.
     temp_conns: List[Tuple[NodeEnt, str]] = []
+    # Dynamic ents which will be given the static props.
+    group_dyn_ents: Dict[str, List[Entity]] = defaultdict(list)
 
     for ent in ctx.vmf.by_class['comp_prop_rope'] | ctx.vmf.by_class['comp_prop_cable']:
         ent.remove()
@@ -684,6 +705,19 @@ def comp_prop_rope(ctx: Context) -> None:
             name_to_nodes[ent['targetname'].casefold()].append(node)
         if ent['nextkey']:
             temp_conns.append((node, ent['nextkey'].casefold()))
+
+    for ent in ctx.vmf.by_class['comp_prop_rope_dynamic'] | ctx.vmf.by_class['comp_prop_cable_dynamic']:
+        ent['classname'] = 'prop_dynamic'
+        group_name = ent['group']
+        del ent['group']
+        if group_name not in group_to_node:
+            if ent['targetname']:
+                LOGGER.warning('Dynamic rope "{}" has no nodes in group {}!', ent['targetname'], group_name)
+            else:
+                LOGGER.warning('Dynamic rope at ({}) has no nodes in group {}!', ent['origin'], group_name)
+            ent.remove()
+            continue
+        group_dyn_ents[group_name].append(ent)
 
     if not all_nodes:
         return
@@ -714,6 +748,7 @@ def comp_prop_rope(ctx: Context) -> None:
     todo = set(all_nodes.values())
     with compiler:
         while todo:
+            dyn_ents: List[Entity] = []
             node = todo.pop()
             connections: Set[Tuple[NodeID, NodeID]] = set()
             # We need the set for fast is-in checks, and the list
@@ -725,6 +760,7 @@ def comp_prop_rope(ctx: Context) -> None:
                 # Three links to others - connections to/from, and groups.
                 # We'll only ever follow a path once, so pop from the dicts.
                 if node.group:
+                    dyn_ents.extend(group_dyn_ents[node.group])
                     for subnode in group_to_node.pop(node.group, ()):
                         if subnode not in nodes:
                             nodes.add(subnode)
@@ -744,54 +780,61 @@ def comp_prop_rope(ctx: Context) -> None:
                 LOGGER.warning('Node at {} has no connections to it! Skipping.', node.pos)
                 continue
 
-            bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes)
-            center = (bbox_min + bbox_max) / 2
-            node = None
-            for node in nodes:
-                node.pos -= center
+            for ent in dyn_ents:
+                origin = Vec.from_str(ent['origin'])
+                dyn_nodes = frozenset({
+                    node.relative_to(origin)
+                    for node in nodes
+                })
+                model_name, light_pos_and_coll_data = compiler.get_model(
+                    (dyn_nodes, frozenset(connections)),
+                    build_rope,
+                    origin,
+                )
+                ent['model'] = model_name
+                ang = Angle.from_str(ent['angles'])
+                ang.yaw -= 90.0
+                ent['angles'] = ang
 
-            model_name, coll_data = compiler.get_model(
-                (frozenset(nodes), frozenset(connections)),
-                build_rope,
-                center,
-            )
+            if not dyn_ents:  # Static prop.
+                bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes)
+                center = (bbox_min + bbox_max) / 2
+                node = None
+                for node in nodes:
+                    node.pos -= center
 
-            # Use the node closest to the center. That way
-            # it shouldn't be inside walls, and be about representative of
-            # the whole model.
-            light_origin = min(
-                (point
-                 for point1, radius1, point2, radius2 in coll_data
-                 for point in [point1, point2]),
-                key=lambda pos: (pos - center).mag_sq()
-            )
+                model_name, (light_origin, coll_data) = compiler.get_model(
+                    (frozenset(nodes), frozenset(connections)),
+                    build_rope,
+                    center,
+                )
 
-            # Compute the flags. Just pick a random node, from above.
-            conf = node.config
-            flags = StaticPropFlags.NONE
-            if conf.prop_light_bounce:
-                flags |= StaticPropFlags.BOUNCED_LIGHTING
-            if conf.prop_no_shadows:
-                flags |= StaticPropFlags.NO_SHADOW
-            if conf.prop_no_vert_light:
-                flags |= StaticPropFlags.NO_PER_VERTEX_LIGHTING
-            if conf.prop_no_self_shadow:
-                flags |= StaticPropFlags.NO_SELF_SHADOWING
+                # Compute the flags. Just pick a random node, from above.
+                conf = node.config
+                flags = StaticPropFlags.NONE
+                if conf.prop_light_bounce:
+                    flags |= StaticPropFlags.BOUNCED_LIGHTING
+                if conf.prop_no_shadows:
+                    flags |= StaticPropFlags.NO_SHADOW
+                if conf.prop_no_vert_light:
+                    flags |= StaticPropFlags.NO_PER_VERTEX_LIGHTING
+                if conf.prop_no_self_shadow:
+                    flags |= StaticPropFlags.NO_SELF_SHADOWING
 
-            static_props.append(StaticProp(
-                model=model_name,
-                origin=center,
-                angles=Angle(0, 270, 0),
-                scaling=1.0,
-                visleafs=compute_visleafs(coll_data, vis_tree_top),
-                solidity=0,
-                flags=flags,
-                tint=Vec(conf.prop_rendercolor),
-                renderfx=conf.prop_renderalpha,
-                lighting_origin=light_origin,
-                min_fade=conf.prop_fade_min_dist,
-                max_fade=conf.prop_fade_max_dist,
-                fade_scale=conf.prop_fade_scale,
-            ))
+                static_props.append(StaticProp(
+                    model=model_name,
+                    origin=center,
+                    angles=Angle(0, 270, 0),
+                    scaling=1.0,
+                    visleafs=compute_visleafs(coll_data, vis_tree_top),
+                    solidity=0,
+                    flags=flags,
+                    tint=Vec(conf.prop_rendercolor),
+                    renderfx=conf.prop_renderalpha,
+                    lighting_origin=center + light_origin,
+                    min_fade=conf.prop_fade_min_dist,
+                    max_fade=conf.prop_fade_max_dist,
+                    fade_scale=conf.prop_fade_scale,
+                ))
     LOGGER.info('Built {} models.', len(all_nodes))
     ctx.bsp.write_static_props(static_props)
