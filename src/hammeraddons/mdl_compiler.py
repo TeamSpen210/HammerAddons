@@ -9,7 +9,7 @@ import subprocess
 import tempfile
 import random
 from typing import (
-    Optional, TypeVar, Any,
+    Optional, TypeVar,
     Dict, Set, List, Hashable,
     Callable, Tuple,
 )
@@ -39,7 +39,10 @@ class GenModel:
 
 
 class ModelCompiler:
-    """Manages the set of merged models that have been generated."""
+    """Manages the set of merged models that have been generated.
+
+    The version number can be incremented to invalidate previous compilations.
+    """
     def __init__(
         self,
         game: Game,
@@ -47,6 +50,7 @@ class ModelCompiler:
         pack: PackList,
         map_name: str,
         folder_name: str,
+        version: int=0,
     ) -> None:
         # The models already constructed.
         self._built_models: Dict[ModelKey, GenModel] = {}
@@ -58,13 +62,14 @@ class ModelCompiler:
         self.model_folder = 'maps/{}/{}/'.format(map_name, folder_name)
         self.model_folder_abs = game.path / 'models' / self.model_folder
         self.pack: PackList = pack
+        self.version = version
 
         if studiomdl_loc is None:
             studiomdl_loc = game.bin_folder() / 'studiomdl.exe'
         self.studiomdl_loc: Path = studiomdl_loc.resolve()
 
     @classmethod
-    def from_ctx(cls, ctx: Context, folder_name: str) -> 'ModelCompiler':
+    def from_ctx(cls, ctx: Context, folder_name: str, version: int=0) -> 'ModelCompiler':
         """Convenience method to construct from the context's data."""
         return cls(
             ctx.game,
@@ -72,6 +77,7 @@ class ModelCompiler:
             ctx.pack,
             ctx.bsp_path.stem,
             folder_name,
+            version,
         )
 
     def use_count(self) -> int:
@@ -81,10 +87,15 @@ class ModelCompiler:
     def __enter__(self) -> 'ModelCompiler':
         # Ensure the folder exists.
         os.makedirs(self.model_folder, exist_ok=True)
+        data: List[Tuple[ModelKey, str, InT]]
+        version = 0
         try:
             with (self.model_folder_abs / 'manifest.bin').open('rb') as f:
-                data: List[Tuple[ModelKey, str, InT]] = pickle.load(f)
-                assert isinstance(data, list)
+                result = pickle.load(f)
+                if isinstance(result, tuple):
+                    data, version = result
+                else:  # V0, no number.
+                    data = result
         except FileNotFoundError:
             return self
         except Exception:
@@ -94,6 +105,9 @@ class ModelCompiler:
                 self.model_folder,
                 exc_info=True,
             )
+            return self
+        if version != self.version:
+            # Different version, ignore the data.
             return self
 
         for mdl_name in self.model_folder_abs.glob('*.mdl'):
