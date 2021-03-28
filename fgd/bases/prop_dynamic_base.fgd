@@ -23,7 +23,7 @@
 
 	is_autoaim_target[since_CSGO](boolean) : "Is Autoaim Target" : 0 : "If set, this prop will use the autoaim feature on consoles (slower look movement when this prop is directly under the crosshair)."
 
-	animateeveryframe[GMod](boolean) : "Animate Every Frame" : 0 : "Force this prop to animate every frame. This ensures it immediately transitions to the next animation, but means it's contantly checking this."
+	animateeveryframe(boolean) : "Animate Every Frame" : 0 : "Force this prop to animate every frame. This ensures it immediately transitions to the next animation, but means it's contantly checking this."
 
 
 	// Inputs

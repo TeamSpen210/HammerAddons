@@ -37,6 +37,8 @@
 
 	cameraspace(boolean) : "Camera Space" : 0 : "Angles are interpreted as being relative to camera."
 
+	// not implemented
+	//ambient(float) : "Ambient" 0.0 : "Controls light ambient."
 
 	constant_attn[MBase, TF2](float) : "Constant" : "0" : "The light's constant attenuation, giving the light no falloff. (This value is internally corrected with x*0.5)"
 	linear_attn[MBase, TF2](float) : "Linear" : "1" : "The light's linear attenuation, giving the light linear decline. This is the most common attenuation for projected textures. (This value is internally corrected with x*100)"
@@ -108,7 +110,9 @@
 	input SetFarZ[since_P2](float) : "Sets the far Z distance."
 	input LightOnlyTarget(bool) : "Set if the projected texture lights the target only."
 	input LightWorld(bool) : "Set if the projected texture lights the world and static geometry."
-	input Ambient[GMod](float) : "Set ambient light amount"
+
+	// not implemented
+	//input Ambient(float) : "Set ambient light amount"
 	
 	input EnableVolumetrics[P2CE](boolean) : "Set if the volumetrics are enabled."
 	input SetVolumetricIntensity[P2CE](float) : "Sets the volumetric lighting's intensity."

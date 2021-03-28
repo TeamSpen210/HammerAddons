@@ -43,7 +43,6 @@ GAMES = [
 
     # Not chronologically here, but it uses 2013 as the base.
     ('MBASE', 'Mapbase'),
-    ('GMOD', "Gary's Mod"),
 
     ('TF2',  'Team Fortress 2'),
     ('P1', 'Portal'),
@@ -69,7 +68,6 @@ FEATURES: Dict[str, Set[str]] = {
     'EP2': {'INSTANCING'},
 
     'MBASE': {'INSTANCING', 'VSCRIPT'},
-    'GMOD': {'HL2', 'EP1', 'EP2'},
     
     'TF2': {'INSTANCING', 'PROP_SCALING'},
     'P2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
