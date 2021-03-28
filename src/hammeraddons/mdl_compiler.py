@@ -140,7 +140,7 @@ class ModelCompiler:
                 used_mdls.add(mdl.name.casefold())
 
         with AtomicWriter(self.model_folder_abs / 'manifest.bin', is_bytes=True) as f:
-            pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
+            pickle.dump((data, self.version), f, pickle.HIGHEST_PROTOCOL)
 
         for mdl_file in self.model_folder_abs.glob('*'):
             if mdl_file.suffix not in {'.mdl', '.phy', '.vtx', '.vvd'}:
