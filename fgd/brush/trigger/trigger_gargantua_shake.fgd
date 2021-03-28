@@ -1,4 +1,0 @@
-@SolidClass base(Trigger) appliesto(Mesa)
-= trigger_gargantua_shake: ""
-	[
-	]

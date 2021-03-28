@@ -1,9 +1,0 @@
-@NPCClass base(BaseNPC) appliesto(Mesa) 
-	studio("models/props_xen/xen_puffballfungus.mdl")
-	autovis(Entities, NPCs, Xen, Xen Deco)
-	sphere(RangeOuter) sphere(RangeInner)
-= npc_puffballfungus : "Xen Puffball Fungus"
-	[
-	RangeInner(float) : "Inner Range" : 250 : ""
-	RangeOuter(float) : "Outer Range" : 500 : ""
-	]

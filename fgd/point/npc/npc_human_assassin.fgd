@@ -1,5 +1,0 @@
-@NpcClass base(BaseNPC) appliesto(Mesa)
-	autovis(Entities, NPCs, Military, Human Assassin)
-	studioprop("models/humans/hassassin.mdl") = npc_human_assassin : "Houndeye (Knockback)"
-	[
-	]

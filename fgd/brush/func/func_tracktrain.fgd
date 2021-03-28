@@ -12,10 +12,6 @@
 	input LockOrientation[P2](void) : "Lock the current orientation of the train."
 	input UnlockOrientation[P2](void) : "Unlock the current orientation of the train."
 	input SetMaxSpeed[P2](float) : "Set a new max speed for the train."
-
-	input SetVelocityType[MESA](integer) : ""
-	input EnableControls[MESA](void) : ""
-	input DisableControls[MESA](void) : ""
 	input SetSpeedDirAccel(float) : "Accel/Decel to the specified speed, as a ratio of max speed. Negative values reverse the direction [-1, 1]"
 	input TeleportToPathNode(string) : "Teleport to a destination and stop there. This can be in a new path."
 	input MoveToPathNode(string) : "Start moving to a destination and stop when you get there. This must be in the same path."

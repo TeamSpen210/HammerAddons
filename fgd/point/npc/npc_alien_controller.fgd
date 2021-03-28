@@ -1,5 +1,0 @@
-@NpcClass base(BaseNPC) appliesto(Mesa)
-	autovis(Entities, NPCs, Xen, Alien Controller)
-	studioprop("models/xenians/controller.mdl") = npc_alien_controller : "Controller"
-	[
-	]

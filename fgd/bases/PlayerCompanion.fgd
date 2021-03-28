@@ -1,26 +1,8 @@
 @BaseClass base(BaseNPC, MBaseGrenadeUser) = PlayerCompanion
 	[
-	spawnflags[Mesa](flags) =
-		[
-		65536 : "Do not follow player" : 0
-		131072 : "Do not greet the player" : 0
-		1048576 : "Do not use fallback idle and questions" : 0
-		]
-
 	alwaystransition(boolean) : "Always transition" : 0 : "If yes, this NPC will always teleport to a Player Squad Transition Point if they're not within the trigger_transition volume."
 	dontpickupweapons(boolean) : "Prevent picking up weapons?" : 0 : "If yes, this NPC will NOT be allowed to pick up weapons they find on the ground."
 	gameendally(boolean) : "Is this a vital ally?" : 0 : "If yes, this NPC will cause the game to end if killed."
-
-	expressiontype[engine](integer) : "Expression Type" : 0
-	expressiontype[Mesa](choices) : "Expression Type" : 0 =
-		[
-		0 : "Random"
-		1 : "Scared"
-		2 : "Normal"
-		3 : "Angry"
-		]
-
-	CanSpeakWhileScripting[Mesa](boolean) : "Speak while scripting?" : 0 : ""
 
 	// Inputs
 	input OutsideTransition(void) : "Use this input to teleport the NPC to a hintnode with the Player Squad Transition Point hint type."
@@ -33,11 +15,10 @@
 	input MakeGameEndAlly(void) : "Make this NPC a game end ally."
 	input MakeRegularAlly(void) : "Make this NPC a regular ally."
 	
-	// Remove this from here in Mesa, so it's only on companions that have weapons (guards).
-	input EnableWeaponPickup[!Mesa](void) : "Enable Weapon Pickup"
-	input DisableWeaponPickup[!Mesa](void) : "Disable Weapon Pickup"
+	input EnableWeaponPickup(void) : "Enable Weapon Pickup"
+	input DisableWeaponPickup(void) : "Disable Weapon Pickup"
 	
-	input GiveWeapon[!Mesa](string) : "Gives the NPC a weapon of the specified entity name."
+	input GiveWeapon(string) : "Gives the NPC a weapon of the specified entity name."
 	
 	input SetReadinessPanic(void) : "Set readiness to panic state (Special)"
 	input SetReadinessLow(void) : "Set readiness to calmest state (Bored)"
@@ -47,14 +28,6 @@
 	
 	input ClearAllOutputs(void) : "Obliterate every output that this NPC has."
 
-	input EnableFollow[Mesa]( void ) : ""
-	input DisableFollow[Mesa]( void ) : ""
-	input CeaseFollowing[Mesa]( void ) : ""
-	input ForceFollowUntilToldNotTo[Mesa]( void ) : ""
-
-	input EnableGeneralIdles[Mesa]( void ) : ""
-	input DisableGeneralIdles[Mesa]( void ) : ""
-
 	// Outputs
-	output OnWeaponPickup[!Mesa](void) : "Fires when this NPC picks a weapon off the ground or a gun rack."
+	output OnWeaponPickup(void) : "Fires when this NPC picks a weapon off the ground or a gun rack."
 	]

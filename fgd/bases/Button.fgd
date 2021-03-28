@@ -6,16 +6,6 @@
 		-1: "Use custom sound" [P2CE]
 		0: "None (Silent)"
 
-		40: "(BM) Vending Machine Button" [MESA]
-		41: "(BM) Xen Bridge Lever" [MESA]
-		42: "(BM) XEN Button Beep Click" [MESA]
-		43: "(BM) XEN Button Beep1" [MESA]
-		44: "(BM) XEN Button Beep2" [MESA]
-		48: "(BM) Access Denied (Retinal Scanner)" [MESA]
-		49: "(BM) Access Granted (Retinal Scanner)" [MESA]
-		50: "(BM) Access Use (Retinal Scanner)" [MESA]
-		51: "(BM) HECU Sentry BeamTrip" [MESA]
-
 		100: "Light Switch"
 		101: "Power Plug - Basic Electronics (soft)"
 
@@ -57,11 +47,11 @@
 		36: "Buttons.snd36: Small tech fuzz blip"
 		37: "Buttons.snd37: Small click bleep (change to lightswitch)"
 
-		40: "Buttons.snd40: Combine door lock - locked" [!MESA]
-		41: "Buttons.snd41: Combine blip growl" [!MESA]
-		42: "Buttons.snd42: Combine squick growl" [!MESA]
-		43: "Buttons.snd43: Combine whine purr" [!MESA]
-		44: "Buttons.snd44: Combine click talk" [!MESA]
+		40: "Buttons.snd40: Combine door lock - locked" 
+		41: "Buttons.snd41: Combine blip growl"
+		42: "Buttons.snd42: Combine squick growl"
+		43: "Buttons.snd43: Combine whine purr"
+		44: "Buttons.snd44: Combine click talk"
 		45: "Buttons.snd45: Combine click growl fizz"
 		46: "Buttons.snd46: Combine click fizz (deny)"
 		47: "Buttons.snd47: Combine click talker"
@@ -73,16 +63,6 @@
 		[
 		0: "None (Silent)"
 
-		40: "(BM) Vending Machine Button" [MESA]
-		41: "(BM) Xen Bridge Lever" [MESA]
-		42: "(BM) XEN Button Beep Click" [MESA]
-		43: "(BM) XEN Button Beep1" [MESA]
-		44: "(BM) XEN Button Beep2" [MESA]
-		48: "(BM) Access Denied (Retinal Scanner)" [MESA]
-		49: "(BM) Access Granted (Retinal Scanner)" [MESA]
-		50: "(BM) Access Use (Retinal Scanner)" [MESA]
-		51: "(BM) HECU Sentry BeamTrip" [MESA]
-
 		100: "Light Switch"
 		101: "Power Plug - Basic Electronics (soft)"
 
@@ -124,11 +104,11 @@
 		36: "Buttons.snd36: Small tech fuzz blip"
 		37: "Buttons.snd37: Small click bleep (change to lightswitch)"
 
-		40: "Buttons.snd40: Combine door lock - locked" [!MESA]
-		41: "Buttons.snd41: Combine blip growl" [!MESA]
-		42: "Buttons.snd42: Combine squick growl" [!MESA]
-		43: "Buttons.snd43: Combine whine purr" [!MESA]
-		44: "Buttons.snd44: Combine click talk" [!MESA]
+		40: "Buttons.snd40: Combine door lock - locked"
+		41: "Buttons.snd41: Combine blip growl"
+		42: "Buttons.snd42: Combine squick growl"
+		43: "Buttons.snd43: Combine whine purr"
+		44: "Buttons.snd44: Combine click talk"
 		45: "Buttons.snd45: Combine click growl fizz"
 		46: "Buttons.snd46: Combine click fizz (deny)"
 		47: "Buttons.snd47: Combine click talker"
@@ -139,16 +119,6 @@
 		[
 		0: "None (Silent)"
 
-		40: "(BM) Vending Machine Button" [MESA]
-		41: "(BM) Xen Bridge Lever" [MESA]
-		42: "(BM) XEN Button Beep Click" [MESA]
-		43: "(BM) XEN Button Beep1" [MESA]
-		44: "(BM) XEN Button Beep2" [MESA]
-		48: "(BM) Access Denied (Retinal Scanner)" [MESA]
-		49: "(BM) Access Granted (Retinal Scanner)" [MESA]
-		50: "(BM) Access Use (Retinal Scanner)" [MESA]
-		51: "(BM) HECU Sentry BeamTrip" [MESA]
-
 		100: "Light Switch"
 		101: "Power Plug - Basic Electronics (soft)"
 
@@ -190,11 +160,11 @@
 		36: "Buttons.snd36: Small tech fuzz blip"
 		37: "Buttons.snd37: Small click bleep (change to lightswitch)"
 
-		40: "Buttons.snd40: Combine door lock - locked" [!MESA]
-		41: "Buttons.snd41: Combine blip growl" [!MESA]
-		42: "Buttons.snd42: Combine squick growl" [!MESA]
-		43: "Buttons.snd43: Combine whine purr" [!MESA]
-		44: "Buttons.snd44: Combine click talk" [!MESA]
+		40: "Buttons.snd40: Combine door lock - locked"
+		41: "Buttons.snd41: Combine blip growl"
+		42: "Buttons.snd42: Combine squick growl"
+		43: "Buttons.snd43: Combine whine purr"
+		44: "Buttons.snd44: Combine click talk"
 		45: "Buttons.snd45: Combine click growl fizz"
 		46: "Buttons.snd46: Combine click fizz (deny)"
 		47: "Buttons.snd47: Combine click talker"

@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, Angles) 
-	appliesto(Mesa)
+	appliesto(CSGO)
 	sphere(fademindist)
 	sphere(fademaxdist)
 	iconsprite("editor/ficool2/env_detail_controller.vmt")

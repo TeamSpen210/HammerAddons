@@ -1,6 +1,6 @@
 
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(EP1, EP2, HL2, MBase, P1, CSGO, Mesa) = env_gunfire: "Gunfire Effect"
+	appliesto(EP1, EP2, HL2, MBase, P1, CSGO) = env_gunfire: "Gunfire Effect"
 	[
 	target(target_destination) : "Target" : : "Shoot at this target. REMEMBER - this is an effect only! It does not do damage!"
 

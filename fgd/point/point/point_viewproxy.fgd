@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(since_P2, Mesa) 
+	appliesto(since_P2) 
 	color(200 0 0) 
 	studioprop("models/editor/camera.mdl") 
 	line(255 255 0, targetname, proxy) 

@@ -1,6 +1,0 @@
-@PointClass base(BaseMesaPickup)
-	appliesto(Mesa) 
-	studio("models/weapons/w_9mmclip.mdl") 
-= item_ammo_glock : "Glock Clip" 
-	[
-	]

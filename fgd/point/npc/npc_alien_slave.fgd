@@ -1,9 +1,0 @@
-@NPCClass base(BaseNPC) appliesto(Mesa) 
-	studio("models/vortigaunt_slave.mdl")
-	autovis(Entities, NPCs, Xen, Vortigaunt)
-	sphere(RangeOuter) sphere(RangeInner) 
-= npc_alien_slave : "Vortigaunt"
-	[
-	passive(boolean) : "Is Initially Passive" : 0
-	bPlayTeleportAnimOnSpawn(boolean) : "Play Teleport Anim On Spawn" : 0
-	]

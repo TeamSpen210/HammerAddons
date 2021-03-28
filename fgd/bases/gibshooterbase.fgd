@@ -15,6 +15,14 @@
 	m_flvariance(float) : "Course Variance" : "0.15" : "How much variance in the direction gibs are fired."
 	m_flgiblife(float) : "Gib Life" : 4 : "Time in seconds for gibs to live +/- 5%."
 
+	simulation[engine](integer) : "Simulate"
+	simulation(choices) : "Simulate" : "0" =
+		[
+		0: "Point"
+		1: "Physics"
+		2: "Ragdoll"
+		]
+
 	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from " +
 		"for all gibs spawned by this shooter, instead of their own origins."
 	spawnflags(flags)  =

@@ -1,6 +1,0 @@
-@NpcClass base(BaseZombie) 
-	appliesto(Mesa) 
-	autovis(Entities, NPCs, Zombies, Zombie Grunt)
-	studio("models/Zombie/zombie_grunt.mdl") = npc_zombie_grunt : "Zombie Grunt"
-	[
-	]
