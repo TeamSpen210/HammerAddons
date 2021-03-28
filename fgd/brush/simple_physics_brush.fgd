@@ -3,9 +3,4 @@
 	"Brush-based entities converted by phys_convert are turned into this entity. " +
 	"Use func_physbox instead for more options."
 	[
-	spawnflags[MBase](flags) =
-		[
-		4096  : "Start Asleep" : 0 [MBase]
-		16384 : "Debris - Don't collide with the player or other debris" : 0 [MBase]
-		]
 	]

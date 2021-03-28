@@ -1,22 +1,7 @@
-@BaseClass appliesto(-MBase) studio("models/grub_nugget_medium.mdl") = _item_grubnugget_fixed_model []
-@BaseClass appliesto(+MBase) studio()                                = _item_grubnugget_variable_model []
-
-@PointClass base(Item, _item_grubnugget_fixed_model, _item_grubnugget_variable_model) 
+@PointClass base(Item)
+	studio("models/grub_nugget_small.mdl")
 	appliesto(EP2) 
 = item_grubnugget: "Small nuggets dropped by Antlion Grubs. " +
 		"When manually spawned, the size value is not setup so they appear small, but give medium health."
 	[
-	model[engine](studio) : "Model" : "models/grub_nugget_small.mdl"
-	model[MBase](choices) : "Denomination" : "models/grub_nugget_small.mdl" : "Sets the nugget's size." =
-		[
-		"models/grub_nugget_small.mdl" : "Small"
-		"models/grub_nugget_medium.mdl" : "Medium"
-		"models/grub_nugget_large.mdl" : "Large"
-		]
-	//denomination[engine](integer) : "Denomination" : 1
-	//denomination[MBase](choices) : "Denomination" : 1 : "Specify the size of the grub nugget." = [
-	//	1: "Small"
-	//	2: "Medium"
-	//	3: "Large"
-	//	]
 	]

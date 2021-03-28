@@ -4,10 +4,6 @@
 	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator collides with me. " +
 		"See filter_activator_name for more explanation. Allow means 'Allow to Block' for this entity."
 
-	startdisabled[MBase](boolean) : "Start Disabled" : 0
-
-	input SetFilter[MBase](target_destination) : "Sets the filter used by this entity."
-	
 	input Enable(void) : "Enable this entity."
 	input Disable(void) : "Disable this entity."
 	]

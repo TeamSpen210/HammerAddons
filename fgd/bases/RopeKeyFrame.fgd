@@ -37,13 +37,12 @@
 
 	ropematerial(material) : "Rope Material" : "cable/cable.vmt" : "The material to use when rendering the rope."
 	
-	usewind[!Mbase](choices) : "Wind" : "0" : "Is the rope affected by wind?" =
+	usewind(choices) : "Wind" : "0" : "Is the rope affected by wind?" =
 		[
 		0: "Ignore Wind"
 		1: "Affected by Wind"
 		]
 	usewind[engine](boolean): "Use Wind": 0
-	NoWind[MBase](boolean) : "Disable Wind" : 0 : "When set to Yes, the rope will no longer act as though it's being affected by wind."
 
 	// Useless remmnants of unused keyframe logic.
 	// We have to have these for Hammer to render ropes.
@@ -55,7 +54,4 @@
 	input SetScrollSpeed(float) : "Set the speed at which the texture scrolls."
 	input SetForce(vector) : "Apply a force instantaneously to the rope. The parameter should be a vector containing the force to be applied (X Y Z)."
 	input Break(void) : "Break the rope, if it's marked to do so."
-	
-	// Outputs
-	output OnBreak[MBase](void) : "Fires when this rope breaks."
 	]

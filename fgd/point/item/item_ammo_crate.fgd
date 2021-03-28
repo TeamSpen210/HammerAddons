@@ -1,9 +1,6 @@
-@BaseClass appliesto(-MBase) studioprop("models/items/ammocrate_pistol.mdl") = _item_ammo_crate_fixed []
-@BaseClass appliesto(+MBase) studioprop("models/items/ammocrate_empty.mdl") = _item_ammo_crate_mbase []
-
 @PointClass base(BaseEntityAnimating)
+	studioprop("models/items/ammocrate_pistol.mdl")
 	appliesto(EP1, EP2, HL2, P1)
-	base(_item_ammo_crate_fixed, _item_ammo_crate_mbase)
 = item_ammo_crate: "Ammo Crate"
 	[
 	ammotype[engine](string) : "Ammo Type" : 0
@@ -19,19 +16,11 @@
 		7: "Crossbow Bolt"
 		8 : "AR2 Alt-Fire Balls"
 		9 : "SMG Alt-Fire Grenades"
-		10 : "S.L.A.M." [MBase]
-		11 : "Empty" [MBase]
 		]
-	
-	skin[MBase](integer) : "Skin" : 0 : "The ''Empty'' ammo crate can use multiple skins based on other crates. " +
-		"Changing the skin might be reflected in the viewport, " +
-		"but it will only apply to the empty ammo crate."
 
 	// Inputs
-	input Skin[MBase](integer) : "Changes the model skin to the specified number."
 	input Kill(void) : "Remotes the crate."
 
 	// Outputs
 	output OnUsed(void) : "Fires when +used by the player."
-	output OnAmmoTaken[MBase](void) : "Fires the instant ammo is taken from this crate."
 	]

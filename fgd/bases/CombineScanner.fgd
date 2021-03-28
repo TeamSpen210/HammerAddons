@@ -6,8 +6,6 @@
 		131072: "Strider Scout Scanner" : 0
 		]
 
-	CustomFlightSpeed[MBase](float) : "Custom Flight Speed" : "0" : "Overrides the scanner's default speed. 0 = use default"
-
 	spotlightlength(integer) : "Spotlight Length" : 500
 	spotlightwidth(integer) : "Spotlight Width" : 50
 
@@ -15,8 +13,6 @@
 	shouldinspect(boolean) : "Should inspect" : 1
 	onlyinspectplayers(boolean) : "Only Inspect Players" : 0
 	neverinspectplayers(boolean) : "Never Inspect Players" : 0
-
-	DisablePhotos[MBase](boolean) : "Never take photos" : 0 : "Prevents this scanner from ever taking photos. It may still chase and inspect, but it will never actually take any pictures or flashes."
 
 	// Inputs
 	input DisableSpotlight(void) : "Disable the spotlight."
@@ -27,9 +23,6 @@
 	input SetFollowTarget(target_destination) : "Set target to follow until told otherwise"
 	input ClearFollowTarget(void) : "Stop following our target"
 	input SetDistanceOverride(float) : "Override the distance the scanner will attempt to keep between inspection targets and itself"
-
-	input DisablePhotos[MBase](void) : "Disables this scanner's ability to take photos."
-	input EnablePhotos[MBase](void) : "Enables this scanner's ability to take photos if it was previously disabled."
 	
 	// Outputs
 	output OnPhotographPlayer(void) : "Fired any time the scanner takes a picture of the player."

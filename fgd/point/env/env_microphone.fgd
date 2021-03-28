@@ -52,26 +52,8 @@
 	maxrange(float) : "Maximum hearing range (0=infinite)" : 240 : "Sounds beyond this range won't be heard, irrelevant of attenuation. " +
 		"WARNING: setting this to zero (or a value > 1024) when the microphone is in Speaker mode can be very bad for performance!!"
 
-	landmark[MBase](target_destination) : "Local Destination Landmark" : : "If specified, then sounds offset from the speaker by their initial offset from this landmark. Only applicable in Speaker mode."
-	
-	PitchScale[MBase](float) : "Pitch Scale" : "1.0" : "Scales the pitch of transmitted sounds. Only applicable in Speaker mode."
-	channel[engine](integer) : "Channel" : 6 : "Sets the channel which sounds should transmit as. Only applicable in Speaker mode."
-	channel[MBase](choices)  : "Channel" : 6 : "Sets the channel which sounds should transmit as. Only applicable in Speaker mode." =
-		[
- 		0 : "CHAN_AUTO"
- 		1 : "CHAN_WEAPON"
- 		2 : "CHAN_VOICE"
- 		3 : "CHAN_ITEM"
- 		4 : "CHAN_BODY"
- 		5 : "CHAN_STREAM"
- 		6 : "CHAN_STATIC"
- 		7 : "CHAN_VOICE2"
-		]
-
 	// Inputs
 	input SetSpeakerName(string) : "Set the microphone to output through a different speaker entity."
-	input SetPitchScale[MBase](float) : "Sets the pitch scale."
-	input SetChannel[MBase](integer) : "Sets the channel."
 
 	// Outputs
 	output SoundLevel(float) : "Fired in Measuring mode whenever the sound level changes."

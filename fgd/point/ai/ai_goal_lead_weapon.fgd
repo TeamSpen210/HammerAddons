@@ -7,22 +7,13 @@
 	"A version of the ai_goal_lead entity that requires the player to have the specified weapon before the Actor(s) will lead the player to their target."
 	[
 	weaponname[engine](string) : "Weapon" : "weapon_bugbait" 
-	weaponname[!MBase](choices) : "Weapon" : "weapon_bugbait" : "The weapon the player must have in order for the actor to begin leading. " +
+	weaponname(choices) : "Weapon" : "weapon_bugbait" : "The weapon the player must have in order for the actor to begin leading. " +
 		"If the player takes more than 60 seconds, they'll be silently given a Bug Bait." =
 		[
 		"weapon_bugbait": "Bugbait"
 		"weapon_smg1": "SMG1"
 		"weapon_ar2": "AR2"
 		]
-	weaponname[MBase](choices) : "Weapon" : "weapon_bugbait" : "The weapon the player must have in order for the actor to begin leading. " +
-		"If the entity times out, this weapon will silently be given to the player automatically." =
-		[
-		"weapon_bugbait": "Bugbait"
-		"weapon_smg1": "SMG1"
-		"weapon_ar2": "AR2"
-		]
-
-	TimeoutTime[MBase](float) : "Timeout Time" : "60.0" : "How long after the ai_goal_lead_weapon is activated should it time out and just give the player the weapon? Enter 0 to use no timeout."
 
 	missingweaponconceptmodifier(string) : "Missing weapon concept modifier" : "" : "Appended to the keyvalues passed into the response rules when the 'TLK_LEAD_MISSINGWEAPON' concept is spoken."
 

@@ -15,7 +15,7 @@
 		"1 = target entity moves as much as the measured entity, " +
 		"2 = target entity moves half as far as the measured entity, and " +
 		"0.5 = target entity moves twice as far as the measured entity."
-	ShouldOutputPosition[MBase](boolean) : "Fire position outputs" : 0 : "Allows OutPosition and OutAngles to be fired " +
+	ShouldOutputPosition(boolean) : "Fire position outputs" : 0 : "Allows OutPosition and OutAngles to be fired " +
 		"with the resulting position while this entity is active. Does not apply to the GetPosition input."
 
 	measuretype[engine](boolean) : "Measurement Type" : 0
@@ -23,21 +23,20 @@
 		[
 		0: "Position"
 		1: "Eye position"
-		2 : "Attachment point" [MBase]
-		//3 : "Aim position" [MBase]
+		2 : "Attachment point"
 		]
 
-	spawnflags[MBase](Flags) = 
+	spawnflags(Flags) = 
 	[
-		1 : "Ignore X" : 0 [MBase]
-		2 : "Ignore Y" : 0 [MBase]
-		4 : "Ignore Z" : 0 [MBase]
-		8 : "Use 'Ignore' flags for origin instead of angles" : 0 [MBase]
-		16 : "Use new teleportation rules (smoother movement)" : 1 [MBase]
-		32 : "Don't change target's angles" : 0 [MBase]
+		1 : "Ignore X" : 0
+		2 : "Ignore Y" : 0
+		4 : "Ignore Z" : 0
+		8 : "Use 'Ignore' flags for origin instead of angles" : 0
+		16 : "Use new teleportation rules (smoother movement)" : 1
+		32 : "Don't change target's angles" : 0
 	]
 
-	MeasureAttachment[MBase](string) : "Measurement Attachment" : "" : "Only useful for the ''Attachment point'' measurement type. " +
+	MeasureAttachment(string) : "Measurement Attachment" : "" : "Only useful for the ''Attachment point'' measurement type. " +
 		"This attachment should be on the Entity to Measure and measurements will correspond to its position and angles."
 	
 
@@ -47,10 +46,10 @@
 	input Target(string) : "Set the Entity to Move, which will be moved to mimic the measured entity."
 	input SetTargetReference(string) : "Set the Movement Reference entity."
 	input SetTargetScale(float) : "Set the scale to divide the measured movements by."
-	input SetMeasureType[MBase](integer) : "Sets the measurement type."
-	input SetMeasureAttachment[MBase](string) : "Sets the measurement attachment."
-	input ShouldOutputPosition[MBase](bool) : "Sets whether we are allowed to fire position outputs while this entity is active."
-	input GetPosition[MBase](void) : "Initiates a single measurement with the current settings, only firing OutPosition and OutAngles without moving anything. (it doesn't need a target to be available)\n"+
+	input SetMeasureType(integer) : "Sets the measurement type."
+	input SetMeasureAttachment(string) : "Sets the measurement attachment."
+	input ShouldOutputPosition(bool) : "Sets whether we are allowed to fire position outputs while this entity is active."
+	input GetPosition(void) : "Initiates a single measurement with the current settings, only firing OutPosition and OutAngles without moving anything. (it doesn't need a target to be available)\n"+
 								     "This input ignores the 'Fire position outputs' keyvalue and instead repurposes it to modify who the outputs' activator should be.\n"+
 								     "If 'Fire position outputs' is enabled, the target will be used as the activator if it is available.\n"+
 								     "If 'Fire position outputs' is disabled, the activator that fired GetPosition will be used instead."
@@ -58,6 +57,6 @@
 	input Disable(void) : "Disable the logic_measure_movement."
 	
 	// Outputs
-	output OutPosition[MBase](vector)  : "Outputs the resulting position when allowed."
-	output OutAngles[MBase](vector)  : "Outputs the resulting angles when allowed."
+	output OutPosition(vector)  : "Outputs the resulting position when allowed."
+	output OutAngles(vector)  : "Outputs the resulting angles when allowed."
 	]

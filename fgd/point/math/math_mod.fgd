@@ -1,4 +1,4 @@
-@PointClass appliesto(MBase) 
+@PointClass
 	base(BaseEntityPoint, EnableDisable) 
 	iconsprite("editor/math_mod.vmt") = math_mod :
 	"A lightweight entity that performs simple calculations on the fly without needing a complicated I/O chain. "+

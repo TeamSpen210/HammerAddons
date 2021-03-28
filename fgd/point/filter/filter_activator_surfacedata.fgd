@@ -1,6 +1,5 @@
 @FilterClass base(filter_base) 
 	autovis(Logic, Filters)
-	appliesto(MBase)
 	iconsprite("editor/filter_generic.vmt") 
 = filter_activator_surfacedata : "A filter that tests the activator's surface data."
 	[

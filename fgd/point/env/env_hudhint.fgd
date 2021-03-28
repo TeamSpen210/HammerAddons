@@ -12,5 +12,4 @@
 	// Inputs
 	input ShowHudHint(void) : "Shows the hint message."
 	input HideHudHint(void) : "Hides the hint message."
-	input SetHudHint[MBase](string) : "Sets the hint message."
 	]

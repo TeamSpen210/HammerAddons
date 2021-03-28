@@ -1,5 +1,5 @@
-@BaseClass base(filter_base) appliesto(MBase) line(255 0 0, targetname, damagefilter) = BaseRedirectFilter
+@BaseClass base(filter_base) line(255 0 0, targetname, damagefilter) = BaseRedirectFilter
 [
 	damagefilter(filterclass) : "Target Filter" : "" : "The filter to pass to. You can also use the 'SetField' input."
-	input SetField[MBase](target_destination) : "Sets the filter to pass to."
+	input SetField(target_destination) : "Sets the filter to pass to."
 ]

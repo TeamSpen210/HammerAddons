@@ -1,4 +1,4 @@
-@PointClass appliesto(MBase) 
+@PointClass
 	base(BaseEntityPoint, EnableDisable) 
 	iconsprite("editor/math_generate.vmt") = math_generate :
 	"Continuously generates numbers using various generation modes based on material proxies."

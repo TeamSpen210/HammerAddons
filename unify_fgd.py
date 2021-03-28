@@ -37,9 +37,6 @@ GAMES = [
     ('EP1',  'Half-Life 2 Episode 1'),
     ('EP2',  'Half-Life 2 Episode 2'),
 
-    # Not chronologically here, but it uses 2013 as the base.
-    ('MBASE', 'Mapbase'),
-
     ('P1', 'Portal'),
     ('P2', 'Portal 2'),
     ('CSGO', 'Counter-Strike Global Offensive'),
@@ -57,8 +54,6 @@ FEATURES: Dict[str, Set[str]] = {
     'HL2': {'INSTANCING'},
     'EP1': {'INSTANCING'},
     'EP2': {'INSTANCING'},
-
-    'MBASE': {'INSTANCING', 'VSCRIPT'},
     
     'P2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'CSGO': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},

@@ -8,16 +8,7 @@
 	skyname[P2](string)            : "SkyBox Texture Name" : "sky_black_nofog"     : "Texture used for the 2D skybox."
 	skyname[CSGO](string)          : "SkyBox Texture Name" : "sky_dust"            : "Texture used for the 2D skybox."
 
-	chaptertitle[-MBase](string) : "Chapter Title" : : "Chapter Title that appears onscreen when this level starts."
-	chaptertitle[+MBase](string) : "Chapter/Savegame Title" : "" : "A ''chapter'' title that this map should identify with. " +
-		"Outside of Mapbase, this is used to make the chapter title appear onscreen when the level starts, " +
-		"but now it can change the message seen in the save/load menus, can be seen in Discord RPC, " +
-		"and the onscreen message behavior is now disabled by default (doesn't affect existing maps) " +
-		"through the ''Display Chapter Title Message'' keyvalue."
-	chaptertitlenomessage[+Mbase](boolean) : "Display Chapter Title Message" : 1 : "Controls whether " +
-		"the Chapter Title Message should show up in a generated env_message " +
-		"when the map loads or whether it should only be used for savegame comments and RPC. " +
-		"This would normally be set to ''Yes'' outside of Mapbase."
+	chaptertitle(string) : "Chapter Title" : : "Chapter Title that appears onscreen when this level starts."
 
 	startdark(boolean) : "Level Fade In" : 0
 	gametitle[!P2](boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts."
@@ -54,21 +45,8 @@
 
 	detailmaterial(material)    : "Detail material file" : "detail/detailsprites"       : "Material for detail sprites to use for drawing detail props"
 
-	vscriptlanguage[engine](integer) : "VScript language" : 0 : "Sets the script language this map should use for entity scripts."
-	vscriptlanguage[MBase](choices) : "VScript language" : 0 : "Sets the script language this map should use for entity scripts." =
-		[	
-		0 : "Default (Squirrel)"
-		//1 : "GameMonkey (Unsupported)"
-		2 : "Squirrel"
-		//3 : "Lua (Unsupported)"
-		//4 : "Python (Unsupported)"
-		]
-
 	coldworld(boolean) : "World is cold" : 0 : "Emit steam from NPC's mouths and similar effects."
 	
 	paintinmap[P2](boolean) : "Enable Paint" : 0 : "Enable code for spreading paint on surfaces, and bouncing physics objects around."
 	maxblobcount[P2](integer) : "Gel Blob Limit" : 250 : "Number of Gel blobs that can exist. Maximum is 250."
-
-	// Inputs
-	input SetChapterTitle[MBase](string) : "Sets the chapter title this map should identify with."
 	]
