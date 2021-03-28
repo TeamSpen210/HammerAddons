@@ -1,5 +1,0 @@
-@SolidClass base(trigger_hurt) 
-	appliesto(L4D, L4D2)
-= trigger_hurt_ghost: "A trigger volume that damages entities (and ghosts) that touch it."
-	[
-	]

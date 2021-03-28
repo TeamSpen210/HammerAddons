@@ -20,11 +20,9 @@
 		]
 
 	nodmgforce(boolean) : "Zero Damage Force" : 0 : "Should the damaged entity receive no physics force from this trigger."
-	damageforce[L4D2](vector) : "Damage Force Override"
 
 	hurtrate[MBase](float) : "Hurt Rate" : "0.5" : "Touchers will be hurt every X seconds while in this trigger_hurt."
-	thinkalways[L4D2](boolean) : "Always think every frame" : 0 : "Normally triggers think every half second, in some cases you may need to request it to damage every frame. This is expensive!"
-	
+
 	// Inputs
 	input SetDamage(float) : "Set a new amount of damage for this trigger."
 

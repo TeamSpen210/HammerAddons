@@ -31,8 +31,8 @@
 	model(studio) : "World Model" : : "Specify the model to place."
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
 	
-	renderamt[since_L4D](integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
-	rendercolor[since_L4D](color255) : "Color (R G B)" : "255 255 255"
+	renderamt(integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
+	rendercolor(color255) : "Color (R G B)" : "255 255 255"
 
 	uniformscale[PROP_SCALING](float) : "Uniform Scale Override" : 1 : "Resize the static prop."
 
@@ -59,29 +59,7 @@
 	mindxlevel[engine](integer): "Minimum DX Level": 0
 	maxdxlevel[engine](integer): "Maximum DX Level": 0
 
-	// DXlevel is used in v6 and 7 only, the replaced by cpu/gpu for 8+.
-
-	mindxlevel[since_TF2, until_L4D2, MESA](choices) : "Minimum DX Level" : 0 = 
-		[
-		0 : "default (lowest)"
-		70 : "dx7"
-		80 : "dx8.0 (4600Ti)"
-		81 : "dx8.1 (FX5200)"
-		90 : "dx9 SM2.0"
-		95 : "dx9 SM3.0"
-		]
-	maxdxlevel[since_TF2, until_L4D2, MESA](choices) : "Maximum DX Level" : 0 = 
-		[
-		0 : "default (highest)"
-		60 : "dx6"
-		70 : "dx7"
-		80 : "dx8.0 (4600Ti)"
-		81 : "dx8.1 (FX5200)"
-		90 : "dx9 SM2.0"
-		95 : "dx9 SM3.0"
-		]
-
-	mincpulevel[since_L4D2](choices) : "Minimum CPU Level" : 0 =
+	mincpulevel(choices) : "Minimum CPU Level" : 0 =
 		[
 		0: "default (low)"
 		1: "low"
@@ -89,7 +67,7 @@
 		3: "high"
 		]
 
-	maxcpulevel[since_L4D2](choices) : "Maximum CPU Level" : 0 =
+	maxcpulevel(choices) : "Maximum CPU Level" : 0 =
 		[
 		0: "default (high)"
 		1: "low"
@@ -97,7 +75,7 @@
 		3: "high"
 		]
 
-	mingpulevel[since_L4D2](choices) : "Minimum GPU Level" : 0 =
+	mingpulevel(choices) : "Minimum GPU Level" : 0 =
 		[
 		0: "default (very low)"
 		1: "very low"
@@ -106,7 +84,7 @@
 		4: "high"
 		]
 
-	maxgpulevel[since_L4D2](choices) : "Maximum GPU Level" : 0 =
+	maxgpulevel(choices) : "Maximum GPU Level" : 0 =
 		[
 		0: "default (high)"
 		1: "very low"
@@ -115,8 +93,6 @@
 		4: "high"
 		]
 
-	disablex360[since_L4D2](boolean) : "Disable on Xbox 360" : 0
-
 	linedivider_light[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	disableshadows(boolean) : "Disable Shadows" : 0
@@ -124,8 +100,8 @@
 	disableselfshadowing(boolean) : "Disable Self-Shadowing" : 0 : "When vertex lighting is enabled, prevent the geometry from self-shadowing -- casting shadows onto itself."
 	ignorenormals(boolean) : "Ignore Surface Normal" : 0 : "When vertex lighting is enabled, ignore the surface normal of faces when calculating the vertex lighting. Useful for thin, translucent objects such as leaves on foliage props."
 	
-	drawinfastreflection[since_L4D](boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
 	enablelightbounce[since_CSGO](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
+	drawinfastreflection(boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
 	
 	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's origin."
 

@@ -49,8 +49,6 @@ GAMES = [
 
     ('TF2',  'Team Fortress 2'),
     ('P1', 'Portal'),
-    ('L4D', 'Left 4 Dead'),
-    ('L4D2', 'Left 4 Dead 2'),
     ('P2', 'Portal 2'),
     ('CSGO', 'Counter-Strike Global Offensive'),
 
@@ -76,8 +74,6 @@ FEATURES: Dict[str, Set[str]] = {
     'MESA': {'INSTANCING', 'INST_IO'},
     'GMOD': {'HL2', 'EP1', 'EP2'},
     
-    'L4D': {'INSTANCING'},
-    'L4D2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'TF2': {'INSTANCING', 'PROP_SCALING'},
     'P2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'CSGO': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},

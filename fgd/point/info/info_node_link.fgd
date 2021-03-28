@@ -25,7 +25,7 @@
 		2: "Jump"
 		4: "Fly"
 		8: "Climb"
-		16: "Crawl" [L4D2]
+		16: "Crawl"
 		]
 
 	allowuse(target_name_or_class) : "Allow Pass When Off" : : "Entity or class to allow passage even when node is off"

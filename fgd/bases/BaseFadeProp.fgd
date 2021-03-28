@@ -4,7 +4,6 @@
 = BaseFadeProp
 	[
 	fademindist(float) : "Start Fade Dist" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist)."
-	fademindist[L4D](float) : "Start Fade Dist" : -1 : "Distance at which the prop starts to fade (<0 = subtract from fademaxdist)."
 
 	fademaxdist(float) : "End Fade Dist" : 0 : "Max fade distance at which the prop is visible (0 = don't fade out)."
 	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under low end/medium end/XBox360, then the engine will forc" + "ibly fade out props even if fademindist/fademaxdist isn't specified. This scale factor gives you some control over the fade. Usi" + "ng 0 here turns off the forcible fades. " +

@@ -38,8 +38,7 @@
 		1048576: "Acid"
 		2097152: "Slow Burn"
 		4194304: "Remove No Ragdoll"
-		16777216: "Full Gib" [L4D2]
-		16777216 : "Plasma" [until_L4D2]
+		16777216 : "Plasma"
 		33554432 : "Airboat (gun)"
 		67108864 : "Dissolve"
 		134217728 : "Blast Surface"

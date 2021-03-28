@@ -17,6 +17,4 @@
 		0: "VPhysics"
 		1: "BSP"
 		]
-
-	always_fire_blocked_outputs[L4D2](boolean) : "Always Fire Blocked Outputs" : 0
 	]

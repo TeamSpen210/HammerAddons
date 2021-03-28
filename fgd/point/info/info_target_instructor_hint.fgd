@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(since_L4D2)
+@PointClass base(BaseEntityPoint)
 	halfgridsnap
 	studio("models/editor/axis_helper.mdl") 
 	iconsprite("editor/info_target_instructor_hint.vmt")

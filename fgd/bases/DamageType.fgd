@@ -31,7 +31,6 @@
 		4194304 : "Slowfreeze"
 		8388608 : "Gravity Gun"
 		16777216 : "Ignite (no after-burn damage)" [TF2]
-		16777216 : "Force Gibs" [L4D2]
 		33554432 : "Airboat"
 		67108864 : "Dissolve"
 		134217728 : "Underwater is Invincible" [TF2]

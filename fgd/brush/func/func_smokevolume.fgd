@@ -15,7 +15,7 @@
 	rotationspeed(float) : "Rotation Speed (degrees/sec)" : 10 : "The speed that the particles should rotate, in degrees per second."
 	movementspeed(float) : "Movement Speed (units/sec)" : 10 : "The speed that the particles should move around, in units/inches per second."
 	density(float) : "Density [0..1]" : 1
-	maxdrawdistance[L4D](float) : "Max Draw Distance (0 is unlimited)" : 0
+	maxdrawdistance(float) : "Max Draw Distance (0 is unlimited)" : 0
 
 	// Inputs
 	input SetRotationSpeed(float) : "Set the particle rotation speed (in degrees per second)."

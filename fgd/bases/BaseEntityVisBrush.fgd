@@ -33,23 +33,23 @@
 	_minlight(float) : "Minimum Light Level" : 0 : "The minimum level of ambient light that hits this brush."
 
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents dynamic shadows (e.g. player and prop shadows) from appearing on this entity."
-	disableshadowdepth[since_L4D](boolean) : "Disable ShadowDepth" : 0 : "Used to disable rendering into shadow depth (for flashlight) for this entity."
-	shadowdepthnocache[since_L4D](choices) : "Projected Texture Cache" : "0" : "Used to hint projected texture system whether it is sufficient to cache shadow volume of this entity or to force render it every frame instead." =
+	disableshadowdepth(boolean) : "Disable ShadowDepth" : 0 : "Used to disable rendering into shadow depth (for flashlight) for this entity."
+	shadowdepthnocache(choices) : "Projected Texture Cache" : "0" : "Used to hint projected texture system whether it is sufficient to cache shadow volume of this entity or to force render it every frame instead." =
 		[
 		0: "Default"
 		1: "No cache = render every frame"
 		2: "Cache it = render only once"
 		]
 	shadowdepthnocache[engine](integer) : "Projected Texture Cache" : 0
-	disableflashlight[since_L4D](boolean) : "Disable flashlight" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
+	disableflashlight(boolean) : "Disable flashlight" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
 		
 	linedivider_visbrush[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs
 	input DisableShadow(void) : "Allows the entity to draw a render target (dynamic) shadow."
 	input EnableShadow(void) : "Prevents the entity from drawing a render target (dynamic) shadow."
-	input DisableReceivingFlashlight[since_L4D](void) : "This object will not recieve light or shadows from projected textures (flashlights)."
-	input EnableReceivingFlashlight[since_L4D](void) : "This object may recieve light or shadows from projected textures (flashlights)."
+	input DisableReceivingFlashlight(void) : "This object will not recieve light or shadows from projected textures (flashlights)."
+	input EnableReceivingFlashlight(void) : "This object may recieve light or shadows from projected textures (flashlights)."
 	
 	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
 	input DisableDamageForces(void) : "Damaging the entity does not apply physics forces to it."

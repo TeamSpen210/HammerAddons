@@ -18,9 +18,6 @@
 		2: "None"
 		]
 
-	spawnpositionname[L4D2](string) : "Spawn Position Name" : : "The name of the spawn position created when an instance is exported to the entity layer."
-	propagate_fixup[L4D2](boolean) : "Fixup Nested Instances" : 0 : "All nested instances will follow this instance's fixup rules. Any fixup rules in nested instances will be ignored."
-
 	replace01(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
 	replace02(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
 	replace03(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"

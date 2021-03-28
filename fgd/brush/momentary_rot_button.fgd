@@ -80,8 +80,6 @@
 		1: "Backward"
 		]
 
-
-	glow[L4D](target_destination) : "Glow Entity" : : "The name of an entity that will get the +use glow for this button."
 	solidbsp(boolean) : "Solid BSP" : 0 : "If set, use the SOLID_BSP collision type."
 
 	// Inputs
