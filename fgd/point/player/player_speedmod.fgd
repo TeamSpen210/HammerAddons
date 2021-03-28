@@ -9,7 +9,7 @@
 		4: "Suppress jump" : 0
 		8: "Suppress duck" : 0
 		16: "Suppress use" : 0
-		32: "Suppress sprint" : 0 [!P2]
+		32: "Suppress sprint" : 0
 		64: "Suppress attack" : 0
 		128: "Suppress zoom" : 0
 		256: "Don't suppress flashlight" : 0

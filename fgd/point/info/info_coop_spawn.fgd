@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, PlayerClass) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	autovis(Point Entities, Globals, Player Spawn)
 	studioprop()
 = info_coop_spawn: "Player spawns for cooperative mode."

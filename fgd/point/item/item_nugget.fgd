@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	studioprop("models/effects/cappoint_hologram.mdl") = item_nugget: "Aperture Incentivizing Nugget. Useless."
 	[
 	groupname(string) : "Group Name" : : "Giving nuggets a group name hints the game that they are intended to be a group"

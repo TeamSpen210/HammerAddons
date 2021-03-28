@@ -7,7 +7,7 @@
 	displaytext(string) : "Display Text"
 	MovieFilename(string) : "Movie To display" : "media/filename.webm" : "The movie to display."
 	MovieFilename[engine](string) : "Movie To display" : "media/filename.webm" : "The movie to display."
-	MovieFilename[P2](choices) : "Movie to display" : "media/aperture_logo.webm" : "The movie to display. You can also type in the filename of a custom movie here." =
+	MovieFilename[P2CE](choices) : "Movie to display" : "media/aperture_logo.webm" : "The movie to display. You can also type in the filename of a custom movie here." =
 		[
 		"media/coop_black_screen.webm"		: "Black Screen"
 		"media/aperture_logo.webm"			: "Aperture Logo"
@@ -76,27 +76,27 @@
 	
 	width(integer) : "Panel Width in World (Green)" : 256 : "Width of the panel in units."
 	height(integer) : "Panel Height in World (Blue)" : 128 : "Height of the panel in units."
-	stretch[since_P2](boolean) : "Stretch to Fill" : 0
-	forcedslave[since_P2](boolean) : "Forced slave" : 0
-	forceprecache[since_P2](boolean) : "Force precache" : 0 : "Precache the movie referred to by Movie Filename on entity spawn."
+	stretch(boolean) : "Stretch to Fill" : 0
+	forcedslave(boolean) : "Forced slave" : 0
+	forceprecache(boolean) : "Force precache" : 0 : "Precache the movie referred to by Movie Filename on entity spawn."
 
-	noscanline[P2CE](boolean) : "Disable Scanline Overlay" : 0 : "Disables the default scanline overlay."
-	custom_uv[P2CE](boolean) : "Use Custom UVs" : 0 : "Enables custom uv coordinates to be used."
-	u_min[P2CE](float) : "U Min" : 0 : "U Min (Left) Coordinate (0-1). Needs Custom UVs to be enabled!"
-	u_max[P2CE](float) : "U Max" : 0 : "U Max (Right) Coordinate (0-1). Needs Custom UVs to be enabled!"
-	v_min[P2CE](float) : "V Min" : 1 : "V Min (Top) Coordinate (0-1). Needs Custom UVs to be enabled!"
-	v_max[P2CE](float) : "V Max" : 1 : "V Max (Bottom) Coordinate (0-1). Needs Custom UVs to be enabled!"
+	noscanline(boolean) : "Disable Scanline Overlay" : 0 : "Disables the default scanline overlay."
+	custom_uv(boolean) : "Use Custom UVs" : 0 : "Enables custom uv coordinates to be used."
+	u_min(float) : "U Min" : 0 : "U Min (Left) Coordinate (0-1). Needs Custom UVs to be enabled!"
+	u_max(float) : "U Max" : 0 : "U Max (Right) Coordinate (0-1). Needs Custom UVs to be enabled!"
+	v_min(float) : "V Min" : 1 : "V Min (Top) Coordinate (0-1). Needs Custom UVs to be enabled!"
+	v_max(float) : "V Max" : 1 : "V Max (Bottom) Coordinate (0-1). Needs Custom UVs to be enabled!"
 	volume(integer) : "Audio Volume" : 0 : "Audio volume to use for video playback. 0-10"
 
 	// Inputs
 	input Enable(void) : "Make movie visible."
 	input Disable(void) : "Make movie invisible."
 	input SetDisplayText(string) : "Sets the display text."
-	input SetMovie[since_P2](string) : "Sets the movie to display."
-	input SetUseCustomUVs[since_P2](boolean) : "Use custom UVs."
-	input TakeOverAsMaster[since_P2](void) : "Start using this video as the master of it's group."
-	input SetUMin[since_P2](float) : "Set the minimum U."
-	input SetUMax[since_P2](float) : "Set the maximum U."
-	input SetVMin[since_P2](float) : "Set the minimum V."
-	input SetVMax[since_P2](float) : "Set the maximum V."
+	input SetMovie(string) : "Sets the movie to display."
+	input SetUseCustomUVs(boolean) : "Use custom UVs."
+	input TakeOverAsMaster(void) : "Start using this video as the master of it's group."
+	input SetUMin(float) : "Set the minimum U."
+	input SetUMax(float) : "Set the maximum U."
+	input SetVMin(float) : "Set the minimum V."
+	input SetVMax(float) : "Set the maximum V."
 	]

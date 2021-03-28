@@ -4,7 +4,7 @@
 	MovieFilename[engine](string) : "Movie to display" : ""
 	MovieFilename(string) : "Movie to display" : "" : "The movie to display from the media/ folder. The BIK file extension must be included."
 	
-	MovieFilename[P2](choices) : "Movie to display" : "aperture_logo.bik" : "The movie to display. You can also type in the filename of a custom movie that is present in the media/ folder. The BIK file extension must be included." =
+	MovieFilename[P2CE](choices) : "Movie to display" : "aperture_logo.bik" : "The movie to display. You can also type in the filename of a custom movie that is present in the media/ folder. The BIK file extension must be included." =
 	[
 		"coop_black_screen.bik"		: "Black Screen"
 		"aperture_logo.bik"			: "Aperture Logo"
@@ -69,14 +69,14 @@
 		"attract_turrets.bik"		: "Extras: Turrets"
 ]
 	allowskip(boolean) : "Allow User to Skip" : 0 : "Whether or not the user may skip the video with common keys"
-	loopvideo[P2](boolean) : "Loop Video" : 0 : "If set to true, the movie will loop forever"
-	fadeintime[P2](float) : "Fade In Time" : 0 : "Time it takes for the video to fade in"
+	loopvideo(boolean) : "Loop Video" : 0 : "If set to true, the movie will loop forever"
+	fadeintime(float) : "Fade In Time" : 0 : "Time it takes for the video to fade in"
 
 	// Inputs
 	input PlayMovie(void) : "Play the movie."
-	input PlayMovieForAllPlayers[P2](void) : "Play the movie for all connected players."
-	input PlayLevelTransitionMovie[P2](string) : "Plays a movie with specific settings used for level transitions.  Pass the name of the movie in the parameters.  To be fired at the end of a level."
-	input FadeAllMovies[P2](void) : "Fade movies out for all players connected."
+	input PlayMovieForAllPlayers(void) : "Play the movie for all connected players."
+	input PlayLevelTransitionMovie(string) : "Plays a movie with specific settings used for level transitions.  Pass the name of the movie in the parameters.  To be fired at the end of a level."
+	input FadeAllMovies(void) : "Fade movies out for all players connected."
 
 	// Outputs
 	output OnPlaybackFinished(void) : "Fired when the movie has completed playing back or was skipped by the user."

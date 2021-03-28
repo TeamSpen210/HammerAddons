@@ -1,7 +1,7 @@
 @PointClass 
 	autovis(Props, Physics)
 	base(prop_physics) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	sphere(fademindist) 
 	sphere(fademaxdist) 
 	studioprop() = prop_physics_paintable: "A version of prop_physics that can be painted by Gel. Does not appear to show up on the model."

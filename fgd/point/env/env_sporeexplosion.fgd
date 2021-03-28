@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(EP1, EP2, HL2, P1) 
+	appliesto(EP1, EP2, HL2) 
 	iconsprite("editor/ficool2/env_sporeexplosion.vmt")
 = env_sporeexplosion: "Bugbait Spore Effect"
 	[

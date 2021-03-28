@@ -1,6 +1,5 @@
-
 @BaseClass 
-	appliesto(P2) = PortalBase
+	appliesto(P2CE) = PortalBase
 	[
 	activated[engine](boolean) : "Start Activated" : 0
 	activated(choices) : "Start Activated" : 0 : "An inactive portal will not be drawn and will not teleport entities." =

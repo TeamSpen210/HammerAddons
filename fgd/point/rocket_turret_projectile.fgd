@@ -1,8 +1,7 @@
 @PointClass base(BaseEntityPoint,  ResponseContext, ToggleDraw) 
-	appliesto(P1, P2) 
+	appliesto(P2CE) 
 	studioprop("models/props_bts/rocket.mdl") = rocket_turret_projectile: "The rocket the Rocket Sentry fires."
 	[
-
 	// Inputs
 	input RemovePaint(void) : "Cleans the rocket?"
 

@@ -1,6 +1,5 @@
-
 @PointClass base(prop_glass_futbol, prop_exploding_futbol) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	studioprop("models/props/futbol.mdl") 
 	line(255 255 0, targetname, spawnername) = hot_potato: "This uses the futbol model. It can be carried around, but on impact it explodes, similar to prop_exploding_futbols."
 	[

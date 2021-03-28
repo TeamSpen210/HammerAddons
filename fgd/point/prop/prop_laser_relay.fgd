@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating, SRCIndicator, SetSkin) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	autovis(Test Elements, Dis. Beam, Laser Relay)
 	studioprop() 
 = prop_laser_relay: "Discouragement Beam Relay that detects lasers, whilst allowing it to pass through and hit other Relays. " +
@@ -7,9 +7,9 @@
 	[
 	model(studio) : "Laser Relay Model" : "models/props/laser_receptacle.mdl" : "Choose a custom model for the relay."
 
-	uselaserfilter[P2CE](bool) : "Use Laser Filter" : 0 : "If enabled, this relay can only be activated by the specified laser color."
+	uselaserfilter(bool) : "Use Laser Filter" : 0 : "If enabled, this relay can only be activated by the specified laser color."
 	
-	filtercolor[P2CE](choices) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter lasers by this colour." =
+	filtercolor(choices) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter lasers by this colour." =
 	[
 		"255 255 255 255" : "White"
 		"255 0 0 255" : "Default Red"
@@ -21,7 +21,7 @@
 	]
 
 	// Inputs
-	input SetFilterColor[P2CE](color255) : "Changes the laser filter colour."
+	input SetFilterColor(color255) : "Changes the laser filter colour."
 
 	// Outputs
 	output OnPowered(void) : "Fired when a laser hits the target."

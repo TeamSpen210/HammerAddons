@@ -1,5 +1,5 @@
 @PointClass base(BasePropPhysics) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	studioprop("models/props/futbol.mdl") 
 	line(255 255 0, targetname, spawnername) = prop_glass_futbol: "A fragile glass ball that the player can pick up and toss. On contact with surfaces it will shatter, and it can be put into holders to power them. It is affected by gel, but the shattering means this has little effect."
 	[

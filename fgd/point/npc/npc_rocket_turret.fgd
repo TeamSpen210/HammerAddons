@@ -1,11 +1,6 @@
-// Switch the model helper depending on game, since P1 can't swap models.
-@BaseClass appliesto(P1) studioprop("models/props_bts/rocket_sentry.mdl")
-	= _npc_rocket_turret_p1 []
-@BaseClass appliesto(P2) studioprop() line(0 0 255, targetname, TripwireAimTarget) 
-	= _npc_rocket_turret_p2 []
-
-@PointClass base(BaseNPC, ResponseContext, _npc_rocket_turret_p1, _npc_rocket_turret_p2) 
-	appliesto(P1, P2) 
+@PointClass base(BaseNPC, ResponseContext)
+	studioprop() line(0 0 255, targetname, TripwireAimTarget) 
+	appliesto(P2CE) 
 	autovis(Entities, NPCs, Portal Rocket Turret)
 = npc_rocket_turret: "Portal 1 rocket sentry, aims a rocket at a target. " +
 		"In Portal 2, the rocket spawns with a speed of 0 and sometimes gets " +
@@ -16,11 +11,11 @@
 		1: "Start Retracted" : 0
 		]
 
-	rocketspeed[P2](float) : "Rocket Speed" : 450 : "Speed the rocket will travel at."
-	rocketlifetime[P2](float) : "Rocket Lifetime" : 20 : "The rocket will automatically detonate after this number of seconds."
-	TripwireMode[P2](boolean) : "Tripwire Mode" : 0 : "Makes the turret aim in a specific direction instead of following the target. When the beam is crossed, a rocket instantly fires."
-	TripwireAimTarget[P2](target_destination) : "Tripwire Aim Target" : : "In tripwire mode, the entity to aim at."
-	model[P2](studio) : "[H] Model" : "models/props_bts/rocket_sentry.mdl" : "Model to display in Hammer. Use Init Code and a comp_precache_model to change the model in-game."
+	rocketspeed(float) : "Rocket Speed" : 450 : "Speed the rocket will travel at."
+	rocketlifetime(float) : "Rocket Lifetime" : 20 : "The rocket will automatically detonate after this number of seconds."
+	TripwireMode(boolean) : "Tripwire Mode" : 0 : "Makes the turret aim in a specific direction instead of following the target. When the beam is crossed, a rocket instantly fires."
+	TripwireAimTarget(target_destination) : "Tripwire Aim Target" : : "In tripwire mode, the entity to aim at."
+	model(studio) : "[H] Model" : "models/props_bts/rocket_sentry.mdl" : "Model to display in Hammer. Use Init Code and a comp_precache_model to change the model in-game."
 
 	// Inputs
 	input Toggle(void) : "Toggles between activated and deactivated states."

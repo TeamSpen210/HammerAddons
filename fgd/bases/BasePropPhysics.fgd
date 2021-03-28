@@ -15,7 +15,6 @@
 		4096: "Debris with trigger interaction" : 0
 		8192: "Force server-side (Multiplayer only)" : 0
 		16384: "Radius pickup (easier to pickup)" : 0
-		32768: "Autoaim target" : 0 [!P2]
 		1048576: "Physgun can ALWAYS pick up. No matter what." : 0
 		2097152: "No collisions" : 0
 		]

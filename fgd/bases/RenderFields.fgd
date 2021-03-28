@@ -55,7 +55,7 @@
 		18: "Glow Shell"
 		]
 
-	mindxlevel[EP1, EP2, HL2, P1](choices) : "Minimum DX Level" : "0" =
+	mindxlevel[EP1, EP2, HL2](choices) : "Minimum DX Level" : "0" =
 		[
 		 0 : "Default (lowest)"
 		60 : "DirectX 6.0"	
@@ -67,7 +67,7 @@
 		100: "DirectX 10.0"
 		]
 
-	maxdxlevel[EP1, EP2, HL2, P1](choices) : "Maximum DX Level" : "0" =
+	maxdxlevel[EP1, EP2, HL2](choices) : "Maximum DX Level" : "0" =
 		[
 		0: "Default (lowest)"
 		60: "DirectX 6.0"	

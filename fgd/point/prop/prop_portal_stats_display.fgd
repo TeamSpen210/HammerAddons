@@ -1,6 +1,5 @@
-
 @PointClass base(BaseEntityAnimating) 
-	appliesto(P1, P2) 
+	appliesto(P2CE) 
 	studio("models/props/Round_elevator_body.mdl") 
 	studioprop("models/props/Round_elevator_body.mdl") = prop_portal_stats_display: "Portal Stats Display, for P1's challenge mode."
 	[

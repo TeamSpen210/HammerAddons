@@ -47,8 +47,8 @@
 		"The material browser is only available here to assist with finding textures since materials typically have the same name as their textures."
 	textureframe(integer) : "Texture Frame" : 0 : "If the VTF is multi-frame, specify the frame to use."
 
-	volumetric[P2CE](boolean) : "Enable Volumetrics" : 0 : "Enables/disables volumetrics from this projected texture."
-	volumetricintensity[P2CE](float) : "Volumetric Intensity" : "1.0" : "Sets the intensity of the volumetric lighting."
+	volumetric(boolean) : "Enable Volumetrics" : 0 : "Enables/disables volumetrics from this projected texture."
+	volumetricintensity(float) : "Volumetric Intensity" : "1.0" : "Sets the intensity of the volumetric lighting."
 	
 	style[engine](integer) : "Appearance" : 0
 	style(choices) : "Appearance" : "0" =
@@ -75,8 +75,7 @@
 	input TurnOn(void) : "Turn on the texture"
 	input TurnOff(void) : "Turn off the texture"
 
-	input SetFOV[!P2](float) : "Set FOV"
-	input FOV[P2](float) : "Set FOV of projection."
+	input FOV(float) : "Set FOV of projection."
 
 	input Target(target_destination): "Set a new target entity to point at."
 	input CameraSpace(boolean): "Set Camera Space."
@@ -85,25 +84,25 @@
 	input AlwaysUpdateOff(void) : "Turn off per frame updating (for moving lights)"
 
 	// Disabled by Valve in the code, emits console message.
-	input SpotlightTexture[!P2](string) : "Set the spotlight texture"
+	//input SpotlightTexture(string) : "Set the spotlight texture"
 
 	input EnableShadows(boolean) : "Set if the shadows are enabled."
-	input SetLightStyle[since_P2](integer) : "Change the lightstyle (see Appearance field for possible values)."
-	input SetPattern[since_P2](string) : "Set a custom pattern of light brightness for this light. " +
 	input LightColor(color255) : "Change the light color/brightness"
+	input SetLightStyle(integer) : "Change the lightstyle (see Appearance field for possible values)."
+	input SetPattern(string) : "Set a custom pattern of light brightness for this light. " +
 		"The Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. " +
 		"'aaggnnttzz' would be a steppy fade in from dark to light."
 
-	input SetNearZ[since_P2](float) : "Sets the near Z distance."
-	input SetFarZ[since_P2](float) : "Sets the far Z distance."
+	input SetNearZ(float) : "Sets the near Z distance."
+	input SetFarZ(float) : "Sets the far Z distance."
 	input LightOnlyTarget(bool) : "Set if the projected texture lights the target only."
 	input LightWorld(bool) : "Set if the projected texture lights the world and static geometry."
 
 	// not implemented
 	//input Ambient(float) : "Set ambient light amount"
 	
-	input EnableVolumetrics[P2CE](boolean) : "Set if the volumetrics are enabled."
-	input SetVolumetricIntensity[P2CE](float) : "Sets the volumetric lighting's intensity."
+	input EnableVolumetrics(boolean) : "Set if the volumetrics are enabled."
+	input SetVolumetricIntensity(float) : "Sets the volumetric lighting's intensity."
 
-	input SetBrightnessScale[P2CE](float) : "Sets the brightness."
+	input SetBrightnessScale(float) : "Sets the brightness."
 	]

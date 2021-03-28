@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPhysics, BasePaintType) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	studio("models/editor/prop_paint_bomb.mdl") = prop_paint_bomb: "Large blob of gel which explodes on impact. Respawn with a point_template."
 	[
 	bombtype[engine](boolean) : "Bomb Type" : 0

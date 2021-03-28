@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC) 
-	appliesto(EP2, P1) 
+	appliesto(EP2) 
 	autovis(Entities, NPCs, Combine, Combine Hunter)
 	studio("models/hunter.mdl") 
 = npc_hunter: "A smaller, faster, strider that can pursue the player into buildings."

@@ -1,6 +1,5 @@
-
 @SolidClass base(BaseEntityBrush, Origin) 
-	appliesto(P1, P2) = func_portal_detector: "A region that fires an output if a portal is placed inside it."
+	appliesto(P2CE) = func_portal_detector: "A region that fires an output if a portal is placed inside it."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -8,7 +7,7 @@
 		]
 
 	linkagegroupid(integer) : "Portal pair ID that it detects" : 0
-	checkallids[P2](boolean) : "Check all portals" : 0 : "Ignore the Group ID and check for all portals."
+	checkallids(boolean) : "Check all portals" : 0 : "Ignore the Group ID and check for all portals."
 
 	// Inputs
 	input Disable(void) : "Turn off detecting functionality"
@@ -20,10 +19,10 @@
 	output OnStartTouchPortal2(void) : "Fired when the Orange portal is placed intersecting the portal detector."
 	output OnStartTouchLinkedPortal(void) : "Fired when linked portal is placed intersecting the portal detector."
 	output OnStartTouchBothLinkedPortals(void) : "Fired when both of a pair of portals is placed intersecting the portal detector."
-	output OnStartTouchPortal[P2](void) : "Fired when any portal touches the detector."
-	output OnEndTouchPortal[P2](void) : "Fired when any portal leaves the detector bounds."
-	output OnEndTouchPortal1[P2](void) : "Fired when the Blue portal has left the volume of the detector."
-	output OnEndTouchPortal2[P2](void) : "Fired when the Orange portal has left the volume of the detector."
-	output OnEndTouchLinkedPortal[P2](void) : "Fired when a portal with a linked partner has left the volume of the detector."
-	output OnEndTouchBothLinkedPortals[P2](void) : "Fired when both portals have left the volume of the detector."
+	output OnStartTouchPortal(void) : "Fired when any portal touches the detector."
+	output OnEndTouchPortal(void) : "Fired when any portal leaves the detector bounds."
+	output OnEndTouchPortal1(void) : "Fired when the Blue portal has left the volume of the detector."
+	output OnEndTouchPortal2(void) : "Fired when the Orange portal has left the volume of the detector."
+	output OnEndTouchLinkedPortal(void) : "Fired when a portal with a linked partner has left the volume of the detector."
+	output OnEndTouchBothLinkedPortals(void) : "Fired when both portals have left the volume of the detector."
 	]

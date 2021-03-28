@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, PortalBase) 
-	appliesto(P1, P2) 
+	appliesto(P2CE) 
 	studioprop("models/editor/prop_portal.mdl") 
 	bbox(-32 -16 -64, 32 16 64) 
 = prop_portal: "A portal."
@@ -14,10 +14,8 @@
 	portaltwo[engine](boolean) : "Portal Number" : 0
 	portaltwo(choices) : "Portal Number" : 1 : "Which of the pair is this portal?" =
 		[
-		0: "Portal 1 (Blue)" [P1]
-		1: "Portal 2 (Orange)" [P1]
-		0: "Portal 1 (Blue/Cyan/Yellow)" [P2]
-		1: "Portal 2 (Orange/Purple/Red)" [P2]
+		0: "Portal 1 (Blue/Cyan/Yellow)"
+		1: "Portal 2 (Orange/Purple/Red)"
 		]
 
 	linkagegroupid(integer) : "Portal Group" : 0 : "Portal pair ID that it belongs to, 0=SP, 1=ATLAS, 2=P-Body"
@@ -27,15 +25,15 @@
 		[
 		0: "Blue Portal"
 		1: "Orange Portal"
-		3: "Cyan Portal" [P2]
-		4: "Purple Portal" [P2]
-		5: "Yellow Portal" [P2]
-		6: "Red Portal" [P2]
+		3: "Cyan Portal"
+		4: "Purple Portal"
+		5: "Yellow Portal"
+		6: "Red Portal"
 		2: "Generic Portal"
 		]
 
-	halfwidth[P2](float) : "Half-Width of the Portal." : 0
-	halfheight[P2](float) : "Half-Height of the Portal." : 0
+	halfwidth(float) : "Half-Width of the Portal." : 0
+	halfheight(float) : "Half-Height of the Portal." : 0
 	
 
 	// Inputs
@@ -43,13 +41,13 @@
 	input SetActivatedState(boolean) : "An inactive portal will not be drawn and will not teleport entites"
 	input Fizzle(void) : "Makes a cool visual fizzle and properly shuts down the portal"
 	input NewLocation(string) : "Sets this portals location and angles. This expects 6 floats with space delimiters, the format is 'x y z pitch yaw roll'"
-	input Resize[P2](string) : "Resizes the portal. Format is 'halfwidth halfheight'"
-	input SetLinkageGroupId[P2](integer) : "Sets the portal linkage ID.  If portal is open it will close and reopen with new portal linked."
+	input Resize(string) : "Resizes the portal. Format is 'halfwidth halfheight'"
+	input SetLinkageGroupId(integer) : "Sets the portal linkage ID.  If portal is open it will close and reopen with new portal linked."
 
 	// Outputs
 	output OnPlacedSuccessfully(void) : "When a portal is placed without failure, this output is fired."
-	output OnEntityTeleportFromMe[P2](void) : "When any entity is teleported from this portal to the linked partner."
-	output OnPlayerTeleportFromMe[P2](void) : "When the player is teleported from this portal to the linked partner."
-	output OnEntityTeleportToMe[P2](void) : "When any entity is teleported from this linked partner to the portal."
-	output OnPlayerTeleportToMe[P2](void) : "When the player is teleported from this linked partner to the portal."
+	output OnEntityTeleportFromMe(void) : "When any entity is teleported from this portal to the linked partner."
+	output OnPlayerTeleportFromMe(void) : "When the player is teleported from this portal to the linked partner."
+	output OnEntityTeleportToMe(void) : "When any entity is teleported from this linked partner to the portal."
+	output OnPlayerTeleportToMe(void) : "When the player is teleported from this linked partner to the portal."
 	]

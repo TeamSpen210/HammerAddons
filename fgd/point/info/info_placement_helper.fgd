@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	line(255 255 0, targetname, proxy_name) 
 	line(255 255 0, targetname, attach_target_name) 
 	sphere(radius, 255 128 0) 

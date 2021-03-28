@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	studioprop("models/props/futbol_dispenser.mdl") = prop_glass_futbol_spawner: "Spawns futbols. Will re-create a futbol when its created futbol breaks."
 	[
 	startwithfutbol(boolean) : "Start with Futbol" : 1 : "Set true if this spawner starts with a futbol in it. " +

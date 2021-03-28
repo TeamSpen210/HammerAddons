@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityPoint) appliesto(P2) = point_survey : "Displays a survey to the player."
+@PointClass base(BaseEntityPoint) appliesto(P2CE) = point_survey : "Displays a survey to the player."
 [
 	surveyname(string) : "Survey Script Name" : "end_puzzle_survey" : "Name of a survey keyvalues file, from the 'scripts/surveys' folder."
 

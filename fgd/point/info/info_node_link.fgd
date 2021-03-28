@@ -45,7 +45,7 @@
 
 		512: "Force medium tall connect" : 0
 
-		1024: "Force tiny_fluid connect" : 0 [P2]
+		1024: "Force tiny_fluid connect" : 0
 		]
 
 	precisemovement(boolean) : "Precise Movement" : 0 : "Movement through this link must be precise. " +

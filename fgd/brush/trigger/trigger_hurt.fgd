@@ -5,7 +5,7 @@
 		"The damage is done every half-second. See also 'Damage Model' for extra details on how damage can be dealt."
 
 	// No visible health, most triggers should instakill.
-	damage[P1, P2](integer) : "Damage" : 100000 : "The amount of damage done to entities that touch this trigger. " +
+	damage[P2CE](integer) : "Damage" : 100000 : "The amount of damage done to entities that touch this trigger. " +
 		"The damage is done every half-second. See also 'Damage Model' for extra details on how damage can be dealt."
 
 	damagecap(integer) : "Damage Cap" : 20 : "The maximum amount of damage that can be dealt when using the Doubling w/Forgiveness damage model."

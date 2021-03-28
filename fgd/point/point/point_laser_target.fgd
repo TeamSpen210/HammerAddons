@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, SRCIndicator) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	studio("models/editor/axis_helper.mdl") 
 	iconsprite("editor/point_laser_target.vmt")
 	= point_laser_target: "Invisible Discouragement Beam detector, for logic use. " +
@@ -8,7 +8,7 @@
 	terminalpoint(boolean) : "Terminal Point" : 1 : "Will lasers auto-aim towards this? " +
 		"It may also make the laser stop here."
 
-	filtercolor[P2CE](color255) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter lasers by this colour."
+	filtercolor(color255) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter lasers by this colour."
 
 	// Outputs
 	output OnPowered(void) : "Fired when a laser hits the target."

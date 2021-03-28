@@ -17,14 +17,14 @@
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
 	hdrcolorscale(float) : "HDR color scale." : "0.7" : "float value to multiply sprite color by when running in HDR mode."
 	ignoresolid(boolean) : "Ignore Solid" : 0 : "If set, this spotlight won't trace for solids."
-	brightness[P2CE](integer) : "Brightness" : 64 : "Integer value representing spotlight brightness (0-255)"
+	brightness(integer) : "Brightness" : 64 : "Integer value representing spotlight brightness (0-255)"
 
 	// Inputs
 	input LightOn(void) : "Turn the spotlight on."
 	input LightOff(void) : "Turn the spotlight off"
 	input SetColor(color255) : "Change the color of the spotlight."
 	input ForceUpdate(void) : "Force an update of the spotlight position and orientation."
-	input SetBrightness[P2CE](integer) : "Set the brightness of the spotlight."
+	input SetBrightness(integer) : "Set the brightness of the spotlight."
 
 	// Outputs
 	output OnLightOn(void) : "Fires when light turns on."

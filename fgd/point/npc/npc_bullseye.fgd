@@ -23,7 +23,7 @@
 		2097152: "Collide against physics objects (Creates VPhysics Shadow)" : 0
 		]
 
-	alwaystransmit[P2](boolean) : "Always Transmit To Client" : 0 : "Always transmit this entity to the client."
+	alwaystransmit(boolean) : "Always Transmit To Client" : 0 : "Always transmit this entity to the client."
 	
 	// Inputs
 	output InputTargeted(void) : "Fires the OnTargeted output."

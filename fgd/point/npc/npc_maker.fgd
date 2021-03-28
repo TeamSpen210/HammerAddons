@@ -1,5 +1,5 @@
 @PointClass base(Angles, BaseNPCMaker) 
-	appliesto(EP1, EP2, HL2, P1, P2) 
+	appliesto(EP1, EP2, HL2) 
 	autovis(Templates, NPC Maker)
 	iconsprite("editor/npc_maker.vmt") = npc_maker: "NPC Maker"
 	[
@@ -16,13 +16,13 @@
 	additionalequipment[engine](string) : "Weapons" : "0"
 	additionalequipment(choices) : "Weapons" : "0" =
 		[
-		"weapon_357" : "357" [EP1, EP2, HL2, P1]
-		"weapon_pistol": "Pistol" [EP1, EP2, HL2, P1]
-		"weapon_ar2": "AR2" [EP1, EP2, HL2, P1]
-		"weapon_shotgun": "Shotgun" [EP1, EP2, HL2, P1]
-		"weapon_smg1": "SMG1" [EP1, EP2, HL2, P1]
-		"weapon_stunstick": "Stun Stick" [EP1, EP2, HL2, P1]
-		"weapon_annabelle": "Grigori's Shotgun" [EP1, EP2, HL2, P1]
+		"weapon_357" : "357" [EP1, EP2, HL2]
+		"weapon_pistol": "Pistol" [EP1, EP2, HL2]
+		"weapon_ar2": "AR2" [EP1, EP2, HL2]
+		"weapon_shotgun": "Shotgun" [EP1, EP2, HL2]
+		"weapon_smg1": "SMG1" [EP1, EP2, HL2]
+		"weapon_stunstick": "Stun Stick" [EP1, EP2, HL2]
+		"weapon_annabelle": "Grigori's Shotgun" [EP1, EP2, HL2]
 		"0": "Nothing"
 		]
 

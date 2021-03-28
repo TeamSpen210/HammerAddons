@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating)
-	appliesto(+engine, P2)
+	appliesto(+engine, P2CE)
 	studioprop("models/props/stopwatch_finish_line.mdl")
 = challenge_mode_end_node: "The ending flag for P2's timed Challenge Mode."
 	[

@@ -1,5 +1,5 @@
 @NpcClass base(BaseHelicopter) 
-	appliesto(EP1, EP2, HL2, P1) 
+	appliesto(EP1, EP2, HL2) 
 	autovis(Entities, NPCs, Combine, Combine Dropship) 
 	line(192 192 192, targetname, npctemplate)
 	line(192 192 192, targetname, npctemplate2)

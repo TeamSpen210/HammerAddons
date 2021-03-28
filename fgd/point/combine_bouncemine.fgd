@@ -1,5 +1,5 @@
 @PointClass base(combine_mine)
-	appliesto(EP1, EP2, HL2, P1) 
+	appliesto(EP1, EP2, HL2) 
 = combine_bouncemine: "An alternate name for the Combine Land Mine (combine_mine)."
 	[
 	]

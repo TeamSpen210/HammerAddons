@@ -1,7 +1,0 @@
-@PointClass base(BaseEntityAnimating)
-	appliesto(+engine, P1)
-	studioprop("models/props/radio_reference.mdl")
-= updateitem2: "The extra radios added to Portal to begin the ARG hinting at the release of Portal 2." +
-	"When brought nearby updateitem1, will switch to play the encoded messages."
-	[
-	]   

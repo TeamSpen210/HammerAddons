@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	appliesto(+engine, P2)
+	appliesto(+engine, P2CE)
 = fizzler_multiorigin_sound_player: "Proxy entity to position the sounds from fizzlers."
 	[
 	]   

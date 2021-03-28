@@ -17,14 +17,11 @@
 		7: "Particle Snow"
 		]
 
-	minspeed[P2](float) : "Minimum speed (snowfall only)" : 25
-	maxspeed[P2](float) : "Maximum speed (snowfall only)" : 35
+	innerdistance(float) : "Inner particle distance" : -1 : "Distance between the inner and outer particle systems. If not set, this will be automatically selected from the precipitation type keyvalue."
+	innernearparticle(particlesystem) : "Inner near system" : "" : "Name of the inner near particle system. If not set, this will be automatically selected from the precipitation type keyvalue."
+	innerfarparticle(particlesystem) : "Inner far system" : "" : "Name of the inner far particle system. If not set, this will be automatically selected from the precipitation type keyvalue."
+	outerparticle(particlesystem) : "Outer system" : "" : "Name of the outer particle system. If not set, this will be automatically selected from the precipitation type keyvalue."
 
-	innerdistance[P2CE](float) : "Inner particle distance" : -1 : "Distance between the inner and outer particle systems. If not set, this will be automatically selected from the precipitation type keyvalue."
-	innernearparticle[P2CE](particlesystem) : "Inner near system" : "" : "Name of the inner near particle system. If not set, this will be automatically selected from the precipitation type keyvalue."
-	innerfarparticle[P2CE](particlesystem) : "Inner far system" : "" : "Name of the inner far particle system. If not set, this will be automatically selected from the precipitation type keyvalue."
-	outerparticle[P2CE](particlesystem) : "Outer system" : "" : "Name of the outer particle system. If not set, this will be automatically selected from the precipitation type keyvalue."
-	
 	input Alpha(void) : "Changes the density of the rain, " +
 	"and may add additional particle effects like fog or leaves. " +
 	"Accepts inputs from -1 to 255."

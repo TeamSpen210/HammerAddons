@@ -1,5 +1,5 @@
 @PointClass base(BasePortButton) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	autovis(Test Elements, P2 Buttons, Floor)
 	studioprop() = prop_floor_button: "A 1500 MegaWatt Aperture Science Super-Colliding Super Button, which is pressed by a player or objects."
 	[

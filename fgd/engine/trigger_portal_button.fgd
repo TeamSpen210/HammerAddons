@@ -1,5 +1,5 @@
 @PointClass base(Trigger)
-	appliesto(+engine, P2)
+	appliesto(+engine, P2CE)
 = trigger_portal_button: "Internal trigger spawned by Portal buttons to detect cubes and players (depending on type)."
 	[
 	]   

@@ -24,7 +24,7 @@
 	output OnGustStart(void) : "Fired when a wind gust begins."
 	output OnGustEnd(void) : "Fired when a wind gust ends."
 
-	input Enable[P2CE](void) : "Enables the wind."
-	input Disable[P2CE](void) : "Disables the wind."
-	input Toggle[P2CE](void) : "Toggles the wind."
+	input Enable(void) : "Enables the wind."
+	input Disable(void) : "Disables the wind."
+	input Toggle(void) : "Toggles the wind."
 	]

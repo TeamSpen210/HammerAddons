@@ -1,5 +1,5 @@
 @PointClass base(BasePortButton) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	autovis(Test Elements, P2 Buttons, Floor)
 	studioprop() = prop_floor_ball_button: "A floor button which is only activated by a Sphere-type prop_weighted_cube."
 	[

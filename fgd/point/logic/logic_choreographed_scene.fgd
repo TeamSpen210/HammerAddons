@@ -51,10 +51,10 @@
 	
 	input Trigger(integer) : "Fires the OnTrigger output of the specified number."
 	
-	input SetTarget1[P2](target_destination) : "Sets Target 1 to the specified entity."
-	input SetTarget2[P2](target_destination) : "Sets Target 2 to the specified entity."
-	input SetTarget3[P2](target_destination) : "Sets Target 3 to the specified entity."
-	input SetTarget4[P2](target_destination) : "Sets Target 4 to the specified entity."
+	input SetTarget1(target_destination) : "Sets Target 1 to the specified entity."
+	input SetTarget2(target_destination) : "Sets Target 2 to the specified entity."
+	input SetTarget3(target_destination) : "Sets Target 3 to the specified entity."
+	input SetTarget4(target_destination) : "Sets Target 4 to the specified entity."
 
 	// Outputs
 	output OnStart(void) : "The scene has started"

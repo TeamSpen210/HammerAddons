@@ -1,5 +1,5 @@
 @SolidClass base(Trigger, RenderFields, Reflection) 
-	appliesto(P1, P2) = trigger_portal_cleanser: "A trigger volume that disolves any entities that touch it and fizzles active portals when the player touches it.|||An Aperture Science Material Emancipation Grid."
+	appliesto(P2CE) = trigger_portal_cleanser: "A trigger volume that disolves any entities that touch it and fizzles active portals when the player touches it.|||An Aperture Science Material Emancipation Grid."
 	[
 	spawnflags(flags)  =
 		[
@@ -14,11 +14,11 @@
 		2048: "Only NPCs in vehicles (respects player ally flag)" : 0
 		]
 		
-	visible[P2](boolean) : "Visible" : 1 : "If the fizzler is visible. This controls whether sounds will play."
-	usescanline[P2](boolean) : "Use Scanline" : 1 : "If the field uses a scanline particle effect."
+	visible(boolean) : "Visible" : 1 : "If the fizzler is visible. This controls whether sounds will play."
+	usescanline(boolean) : "Use Scanline" : 1 : "If the field uses a scanline particle effect."
 
 	// Inputs
-	input FizzleTouchingPortals[P2](void) : "Cause any portals in our volume to immediately fizzle."
+	input FizzleTouchingPortals(void) : "Cause any portals in our volume to immediately fizzle."
 
 	// Outputs
 	output OnDissolve(void) : "Fired whenever an entity is dissolved."

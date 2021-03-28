@@ -1,6 +1,5 @@
-
 @PointClass base(path_track) 
-	appliesto(P1, P2) 
+	appliesto(P2CE)
 = env_portal_path_track: "An unused variant of path_track, presumably intended for Unstationary Scaffolds. " +
 	"It produces a beam between each node, as well as (somewhat buggy) endpoint effects which are based on the entity's angles."
 	[

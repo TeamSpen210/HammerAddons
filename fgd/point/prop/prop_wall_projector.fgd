@@ -1,5 +1,5 @@
 @PointClass base(BaseProjector) 
-	appliesto(P2) 
+	appliesto(P2CE) 
 	autovis(Test Elements, Light Bridge)
 	studioprop("models/props/wall_emitter.mdl") 
 = prop_wall_projector: "Aperture Science Hard Light Bridge Projector. " +

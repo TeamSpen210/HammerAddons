@@ -1,5 +1,5 @@
 @PointClass base(BaseDriveableVehicle) 
-	appliesto(HL2, EP1, EP2, P1)
+	appliesto(HL2, EP1, EP2)
 	studioprop() 
 	autovis(Vehicles, Jeep)
 = prop_vehicle_jeep: "Driveable studiomodel jeep. In HL2 it's the Scout Car, in EP2 it's the Scout Car/Jalopy."
