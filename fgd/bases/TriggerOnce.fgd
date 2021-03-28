@@ -5,8 +5,8 @@
 	[
 	spawnflags(flags)  =
 		[
-		1: "Clients/Players/Bots" : 1 [CSGO, CSS]
-		1: "Clients/Players" : 1 [!CSGO, !CSS]
+		1: "Clients/Players/Bots" : 1 [CSGO]
+		1: "Clients/Players" : 1 [!CSGO]
 		2: "NPCs" : 0
 		4: "func_pushable" : 0
 		8: "Physics Objects" : 0

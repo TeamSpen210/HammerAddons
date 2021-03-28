@@ -18,8 +18,7 @@
 		32: "Preserve angles even when a local landmark is not specified" : 0
 
 		// Restore the other spawnflags.
-		1: "Clients/Players/Bots" : 1 [CSS]
-		1: "Clients/Players" : 1 [!CSS]
+		1: "Clients/Players" : 1
 		2: "NPCs" : 0
 		4: "func_pushable" : 0
 		8: "Physics Objects" : 0
