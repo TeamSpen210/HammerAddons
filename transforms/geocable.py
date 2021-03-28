@@ -37,6 +37,14 @@ $keyvalues {{
 }}
 '''
 
+QC_TEMPLATE_PHYS = '''\
+$collisionmodel "cable_phy.smd" {{
+    $automass
+    $concave
+    $maxconvexpieces {count}
+}}
+'''
+
 
 class InterpType(Enum):
     """Type of interpolation to use."""
@@ -74,6 +82,8 @@ class Config(NamedTuple):
     u_max: float
     v_scale: float
     flip_uv: bool
+    coll_segments: int
+    coll_side_count: int
     prop_rendercolor: Tuple[float, float, float]
     prop_renderalpha: int
     prop_no_shadows: bool
@@ -109,6 +119,12 @@ class Config(NamedTuple):
             ent, 'sides', 3,
             'Ropes cannot have less than 3 sides! (node at {})',
         )
+        coll_segments = cls._parse_min(
+            ent, 'coll_segments', 0,
+            'Collision segment count for rope at '
+            '{} must be positive or zero!'
+        )
+        coll_side_count = conv_int(ent['coll_sides'])
         radius = cls._parse_min(
             ent, 'radius', 0.1,
             'Radius for rope at {} must be positive!',
@@ -146,6 +162,8 @@ class Config(NamedTuple):
             u_min, u_max,
             v_scale,
             conv_bool(ent['mat_rotate']),
+            coll_segments,
+            coll_side_count,
             tuple(Vec.from_str(ent['rendercolor'], 255, 255, 255)),
             alpha,
             conv_bool(ent['disableshadows']),
@@ -155,6 +173,14 @@ class Config(NamedTuple):
             conv_float(ent['fademindist'], -1.0),
             conv_float(ent['fademaxdist'], 0.0),
             conv_float(ent['fadescale'], 0.0),
+        )
+
+    def coll(self) -> Optional['Config']:
+        """Extract the collision options from the ent."""
+        return self._replace(
+            material='phy',
+            segments=self.segments if self.coll_segments == -1 else self.coll_segments,
+            side_count=self.coll_side_count,
         )
 
 
@@ -267,16 +293,26 @@ def build_rope(
     LOGGER.info('Building rope {}', mdl_name)
     ents, connections = nodes_and_conn
     mesh = Mesh.blank('root')
+    coll_mesh = Mesh.blank('root')
     [bone] = mesh.bones.values()
 
-    nodes = build_node_tree(ents, connections, offset)
+    nodes, coll_nodes = build_node_tree(ents, connections, offset)
 
     interpolate_all(nodes)
     compute_orients(nodes)
-    compute_verts(nodes, bone)
+    compute_verts(nodes, bone, is_coll=False)
 
     generate_straights(nodes, mesh)
-    generate_caps(nodes, mesh)
+    generate_caps(nodes, mesh, is_coll=False)
+
+    if coll_nodes:
+        # Generate the collision mesh.
+        interpolate_all(coll_nodes)
+        compute_orients(coll_nodes)
+        compute_verts(coll_nodes, bone, is_coll=True)
+
+        generate_straights(coll_nodes, coll_mesh)
+        generate_caps(coll_nodes, coll_mesh, is_coll=True)
 
     # Move the UVs around so they don't extend too far.
     for tri in mesh.triangles:
@@ -295,9 +331,14 @@ def build_rope(
 
     with (temp_folder / 'cable.smd').open('wb') as fb:
         mesh.export(fb)
+    if coll_nodes:
+        with (temp_folder / 'cable_phy.smd').open('wb') as fb:
+            coll_mesh.export(fb)
 
     with (temp_folder / 'model.qc').open('w') as f:
         f.write(QC_TEMPLATE.format(path=mdl_name, light_origin=light_origin))
+        if coll_nodes:
+            f.write(QC_TEMPLATE_PHYS.format(count=sum(node.next is not None for node in coll_nodes)))
 
     # For visleaf computation, build a list of all the actual segments generated.
     coll_data = [
@@ -313,16 +354,20 @@ def build_node_tree(
     ents: FrozenSet[NodeEnt],
     connections: FrozenSet[Tuple[NodeID, NodeID]],
     offset: Vec,
-) -> Set[Node]:
+) -> Tuple[Set[Node], Set[Node]]:
     """Convert the ents/connections definitions into a node tree."""
     # Convert them all into the real node objects.
     id_to_node = {
-        node.id: Node(node.pos.copy(), node.config, node.config.radius)
+        node.id: (
+            Node(node.pos.copy(), node.config, node.config.radius),
+            Node(node.pos.copy(), node.config.coll(), node.config.radius) if node.config.coll_side_count >= 3 else None,
+        )
         for node in ents
     }
-    nodes: Set[Node] = set(id_to_node.values())
+    vis_nodes: Set[Node] = {vis for vis, coll in id_to_node.values()}
+    coll_nodes: Set[Node] = {coll for vis, coll in id_to_node.values() if coll is not None}
 
-    def maybe_split(node: Node, attr: str) -> Node:
+    def maybe_split(nodes: Set[Node], node: Node, attr: str) -> Node:
         """Split nodes to ensure they only have 1 or 2 connections.
 
         If it has more, or multiple in one side, it will be converted
@@ -351,18 +396,27 @@ def build_node_tree(
         return node
 
     for id1, id2 in connections:
-        first = maybe_split(id_to_node[id1], "next")
-        second = maybe_split(id_to_node[id2], "prev")
+        a_vis, a_coll = id_to_node[id1]
+        b_vis, b_coll = id_to_node[id2]
+        first = maybe_split(vis_nodes, a_vis, "next")
+        second = maybe_split(vis_nodes, b_vis, "prev")
 
         first.next = second
         second.prev = first
+        if a_coll is not None and b_coll is not None:
+            first = maybe_split(coll_nodes, a_coll, "next")
+            second = maybe_split(coll_nodes, b_coll, "prev")
+
+            first.next = second
+            second.prev = first
 
     # Sometimes that ends up creating extra copies, so discard those.
-    for node in list(nodes):
-        if node.prev is None and node.next is None:
-            nodes.discard(node)
+    for nodeset in [vis_nodes, coll_nodes]:
+        for node in list(nodeset):
+            if node.prev is None and node.next is None:
+                nodeset.discard(node)
 
-    return nodes
+    return vis_nodes, coll_nodes
 
 
 def interpolate_straight(node1: Node, node2: Node, seg_count: int) -> List[Node]:
@@ -546,7 +600,7 @@ def compute_orients(nodes: Iterable[Node]) -> None:
             node1 = node2
 
 
-def compute_verts(nodes: Iterable[Node], bone: Bone) -> None:
+def compute_verts(nodes: Iterable[Node], bone: Bone, is_coll: bool) -> None:
     """Build the initial vertexes of each node."""
     bone_weight = [(bone, 1.0)]
     todo = set(nodes)
@@ -569,13 +623,22 @@ def compute_verts(nodes: Iterable[Node], bone: Bone) -> None:
             config = node1.config
             count = node1.config.side_count
             v_end = v_start + config.v_scale * (node2.pos - node1.pos).mag()
+            # For collisions, adjust the normal so that it points away from the
+            # midpoint.
+            if is_coll:
+                coll_off = (node2.pos - node1.pos) / 2.0
+            else:
+                coll_off = Vec()
             for i in range(count):
                 ang = lerp(i, 0, count, 0, 2*math.pi)
                 local = Vec(0, math.cos(ang), math.sin(ang))
                 u = lerp(i, 0, count, config.u_min, config.u_max)
-                node1.points_next.append(vert(node1.pos, node1.radius * local @ node1.orient, u, v_start))
-                if node1.next is not None:
-                    node1.next.points_prev.append(vert(node2.pos, node2.radius * local @ node2.orient, u, v_end))
+                point_1 = node1.radius * local @ node1.orient
+                point_2 = node2.radius * local @ node2.orient
+
+                node1.points_next.append(vert(node1.pos + coll_off, point_1 - coll_off, u, v_start))
+                if node1 is not node2:
+                    node2.points_prev.append(vert(node2.pos - coll_off, point_2 + coll_off, u, v_end))
             v_start = v_end
 
 
@@ -611,16 +674,16 @@ def generate_straights(nodes: Iterable[Node], mesh: Mesh) -> None:
             mesh.triangles.append(Triangle(mat, left_a, right_a, right_b))
 
 
-def generate_caps(nodes: Iterable[Node], mesh: Mesh) -> None:
+def generate_caps(nodes: Iterable[Node], mesh: Mesh, is_coll: bool) -> None:
     """Cap off any unfinished sides.
 
     We just use a simple fan layout.
     """
-    def make_cap(orig, norm):
+    def make_cap(orig: 'Iterable[Vertex]', norm: Vec):
         # Recompute the UVs to use the first bit of the cable.
         points = [
             Vertex(
-                point.pos, norm,
+                point.pos, (point.norm if is_coll else norm),
                 lerp(Vec.dot(point.norm, node.orient.up()), -1, 1, node.config.u_min, node.config.u_max),
                 lerp(Vec.dot(point.norm, node.orient.left()), -1, 1, 0, v_max),
                 point.links,
@@ -800,8 +863,11 @@ def comp_prop_rope(ctx: Context) -> None:
                 bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes)
                 center = (bbox_min + bbox_max) / 2
                 node = None
+                has_coll = False
                 for node in nodes:
                     node.pos -= center
+                    if node.config.coll_side_count >= 3:
+                        has_coll = True
 
                 model_name, (light_origin, coll_data) = compiler.get_model(
                     (frozenset(nodes), frozenset(connections)),
@@ -827,7 +893,7 @@ def comp_prop_rope(ctx: Context) -> None:
                     angles=Angle(0, 270, 0),
                     scaling=1.0,
                     visleafs=compute_visleafs(coll_data, vis_tree_top),
-                    solidity=0,
+                    solidity=6 if has_coll else 0,
                     flags=flags,
                     tint=Vec(conf.prop_rendercolor),
                     renderfx=conf.prop_renderalpha,
