@@ -1,4 +1,0 @@
-@PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(TF2) = tf_logic_mann_vs_machine: "When present, this activates Mann VS Machine Mode."
-	[
-	]

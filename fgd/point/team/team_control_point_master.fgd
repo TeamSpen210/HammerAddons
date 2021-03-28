@@ -1,6 +1,6 @@
-
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(TF2) = team_control_point_master: "Control Point Master"
+	appliesto(TF2_ENTITIES)
+= team_control_point_master: "Control Point Master"
 	[
 	team_base_icon_2(material) : "Material for the RED Base icon" : "sprites/obj_icons/icon_base_red"
 	team_base_icon_3(material) : "Material for the BLUE Base icon" : "sprites/obj_icons/icon_base_blu"

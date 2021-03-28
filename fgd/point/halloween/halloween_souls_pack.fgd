@@ -1,5 +1,0 @@
-@PointClass base(BaseEntityAnimating, TeamNum) 
-	appliesto(TF2) 
-= halloween_souls_pack : "GARGOYLE SOUL"
-	[
-	]

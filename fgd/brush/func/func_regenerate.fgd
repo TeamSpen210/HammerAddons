@@ -1,8 +1,0 @@
-@SolidClass base(BaseEntityBrush, TeamNum, EnableDisable, Toggle) 
-	appliesto(TF2) 
-	line(255 0 0, targetname, associatedmodel)
-= func_regenerate: "Regeneration/item resupply zone for players."
-	[
-	associatedmodel(target_destination) : "Associated Model" : : "The prop_dynamic that represents this zone in the world. " +
-		"The associated model should have appropriate open and close animations for when players interact with the zone."
-	]

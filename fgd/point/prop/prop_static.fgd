@@ -105,13 +105,6 @@
 	
 	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's origin."
 
-	linedivider_lmap[TF2, !engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
-
-	generatelightmaps[TF2](boolean) : "Generate (and use) lightmaps for this static prop" : 0
-	lightmapresolutionx[TF2](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
-	lightmapresolutiony[TF2](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
-	
-
 	linedivider_fade[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	screenspacefade(boolean) : "Screen Space Fade" : 0 : "The method by which the fading distance should be determined. If 'No', the fade distances is the distance from the player's view to the object, in inches. " +

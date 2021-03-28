@@ -30,8 +30,7 @@
 		1024: "Energy Beam"
 		16384: "Drown"
 		32768: "Paralyse"
-		65536: "Nerve Gas" [!TF2]
-		65536: "Sawblade" [TF2]
+		65536: "Nerve Gas"
 		131072: "Poison"
 		262144: "Radiation"
 		524288: "Drown Recover"

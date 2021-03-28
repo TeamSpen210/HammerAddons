@@ -1,7 +1,0 @@
-@PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(TF2) 
-	studio("models/pickups/pickup_powerup_crit.mdl") 
-	sphere(fademindist) 
-	sphere(fademaxdist) = item_powerup_crit: "Temporary Crit Powerup. Powerup effect wears off. Powerup respawns automatically"
-	[
-	]

@@ -1,4 +1,0 @@
-@PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(TF2) = tf_logic_hybrid_ctf_cp: "When present, this activates Atack/Defend With Intelligence mode."
-	[
-	]

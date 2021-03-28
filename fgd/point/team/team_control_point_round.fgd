@@ -1,6 +1,6 @@
-
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(TF2) = team_control_point_round: "Control Point Round (you may have as many of these in the map as you would like)."
+	appliesto(TF2_ENTITIES)
+= team_control_point_round: "Control Point Round (you may have as many of these in the map as you would like)."
 	[
 	cpr_printname(string) : "Print Name" : : "LOCALIZED name to print on the RoundInfo panel"
 	cpr_priority(integer) : "Priority" : 0 : "The priority value for this round (must be >= 0). Higher priority rounds will be picked first. If multiple rounds have the same priority value, a random selection will be used."

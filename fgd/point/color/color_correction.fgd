@@ -11,14 +11,6 @@
 	
 	filename[engine](string) : "Lookup Table Filename" : : "This is the lookup table filename"
 	filename(string) : "Lookup Table Filename" : : "This is the lookup table filename"
-	filename[TF2](choices): "Lookup Table Filename" : "" : "This is the lookup table filename" =
-		[
-		"scripts/2fort_global.raw" : "2Fort"
-		"scripts/well_global.raw" : "Well"
-		"scripts/lakeside_event_global.raw" : "Ghost Fort"
-		"scripts/underworld_hell01.raw" : "Hell (Helltower)"
-		"scripts/pass_warehouse.raw" : "Brickyard"
-		]
 
 	fadeinduration(float) : "Lookup Fade In Duration" : "0.0" : "Duration of fade in on when enabled."
 	fadeoutduration(float) : "Lookup Fade out Duration" : "0.0" : "Dration of fade out on when disabled."
