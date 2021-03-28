@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	iconsprite("editor/info_target.vmt") = info_target_vehicle_transition: "Vehicle Transition Point"
 	[
 	]

@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	autovis(Entities, NPCs, Zombies, Classic Zombie Torso)
 	studio("models/Zombie/Classic_torso.mdl") = npc_zombie_torso: "Zombie Torso"
 	[

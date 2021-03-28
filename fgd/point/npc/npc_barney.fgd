@@ -1,5 +1,5 @@
 @NpcClass base(TalkNPC, BaseNPC, PlayerCompanion) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	autovis(Entities, NPCs, Rebels, Barney)
 	studio("models/Barney.mdl") = npc_barney: "Barney"
 	[

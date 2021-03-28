@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	sphere(innerradius) 
 	sphere(outerradius) 
 	studio("models/combine_camera/combine_camera.mdl") 

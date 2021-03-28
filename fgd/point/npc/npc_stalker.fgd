@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	autovis(Entities, NPCs, Combine, Stalker)
 	studio("models/Stalker.mdl") = npc_stalker: "Stalker"
 	[

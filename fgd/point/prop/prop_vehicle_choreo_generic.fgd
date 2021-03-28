@@ -9,7 +9,6 @@
 		]
 	// Only default to this model if we know it exists.
 	model(studio) : "World model" : : "Model to use."
-	model[HL2, EP1, EP2](studio) : "World model" : "models/vehicles/prisoner_pod.mdl": "Model to use."
 
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/choreo_vehicle.txt"
 	ignoremoveparent(boolean) : "Ignore Move Parent on Exit" : 0 : "Should the player ignore this vehicle's move parent when performing exit checks?"

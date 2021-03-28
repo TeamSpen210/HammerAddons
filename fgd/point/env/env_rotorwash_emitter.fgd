@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	appliesto(HL2, EP1, EP2)
+	appliesto(HL2_ENTITIES)
 	iconsprite("editor/env_rotorwash_emitter")
 = env_rotorwash_emitter: "Creates rotorwash."
 	[

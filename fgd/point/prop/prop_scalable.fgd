@@ -1,6 +1,6 @@
 @PointClass 
 	autovis(Props, Scalable)
-	appliesto(EP1, EP2)
+	appliesto(HL2_ENTITIES)
 	base(BaseEntityAnimating, SetModel)
 	studioprop() 
 = prop_scalable: "Scalable Prop"

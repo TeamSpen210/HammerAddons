@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	sphere(DamageRadius) 
 	studio("models/props_combine/headcrabcannister01b.mdl") = env_headcrabcanister: "Headcrab canister"
 	[

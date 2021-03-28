@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	line(255 255 255, targetname, targetentityname)
 	iconsprite("editor/point_apc_controller.vmt")
 = point_apc_controller: "APC Controller"

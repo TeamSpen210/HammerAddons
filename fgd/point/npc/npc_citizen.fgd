@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC, TalkNPC, PlayerCompanion) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	autovis(Entities, NPCs, Rebels, C17 Citizen)
 	studio() = npc_citizen: "Citizen"
 	[

@@ -1,5 +1,5 @@
 @PointClass base(Item) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	iconsprite("editor/item_dynamic_resupply.vmt")
 = item_dynamic_resupply: "A dynamic item. When the player enters the PVS of this entity, " +
 	"it will determine the item most needed by the player, spawn one of those items, and remove itself. " +

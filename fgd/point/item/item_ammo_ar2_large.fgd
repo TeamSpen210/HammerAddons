@@ -1,5 +1,5 @@
 @PointClass base(ItemAmmo) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES)
 	studio("models/items/combine_rifle_cartridge01.mdl") = item_ammo_ar2_large: "Large cartridge of AR2 ammo"
 	[
 	]

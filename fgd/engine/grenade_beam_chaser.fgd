@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	appliesto(+engine, HL2, EP1, EP2)
+	appliesto(+engine, HL2_ENTITIES)
 = grenade_beam_chaser: "The back end of the beam effect which follows grenades around."
 	[
 	]   

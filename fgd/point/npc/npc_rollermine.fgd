@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC, AlyxInteractable) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	autovis(Entities, NPCs, Combine, Rollermine)
 	studio("models/roller.mdl") = npc_rollermine: "Roller Mine"
 	[
@@ -28,7 +28,7 @@
 	input RespondToExplodeChirp(void) : "Play a different chirp, then explode."
 	input JoltVehicle(void) : "Zap the vehicle we're on. This is automatically fired when it attaches, then re-fired with a delay to make it zap."
 	
-	input PowerDown[since_EP1](void) : "Shut down a hacked rollermine, then explode it after 4 seconds."
+	input PowerDown(void) : "Shut down a hacked rollermine, then explode it after 4 seconds."
 
 
 	// Outputs

@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(EP1, EP2, HL2) 
+@PointClass base(BaseEntityPoint)
 	iconsprite("editor/ficool2/scripted_target.vmt") = scripted_target: "Scripted Target"
 	[
 	startdisabled(boolean) : "Start Disabled" : 1

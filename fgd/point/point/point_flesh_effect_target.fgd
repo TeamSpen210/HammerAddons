@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(EP2)
+	appliesto(HL2_ENTITIES)
 	sphere(radius) 
 = point_flesh_effect_target: "Area of affect for the $flesh shader effect."
 	[

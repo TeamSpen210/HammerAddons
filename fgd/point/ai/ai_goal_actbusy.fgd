@@ -2,7 +2,7 @@
 	autovis(AI, AI Goal)
 	autovis(AI, Act Busy)
 	size(-8 -8 -8, 8 8 8)
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 = ai_goal_actbusy: "AI Goal Act Busy"
 	[
 	seeentity(target_name_or_class) : "Sight Entity" : : "The Sight Entity (if you provide one) " +

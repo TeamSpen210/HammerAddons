@@ -1,5 +1,5 @@
 @PointClass base(combine_mine)
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 = bounce_bomb: "An alternate name for the Combine Land Mine (combine_mine)."
 	[
 	]

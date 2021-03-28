@@ -1,5 +1,5 @@
-@PointClass base(BaseDriveableVehicle, SetSkin) 
-	appliesto(EP1, EP2, HL2) 
+@PointClass base(BaseDriveableVehicle, SetSkin)
+	appliesto(HL2_ENTITIES)
 	autovis(Vehicles, Prisoner Pods)
 	studioprop() = prop_vehicle_prisoner_pod: "Combine prisoner pod that the player can ride in."
 	[

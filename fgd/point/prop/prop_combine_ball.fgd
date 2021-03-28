@@ -1,5 +1,5 @@
 @PointClass base(BasePropPhysics) 
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	studioprop() 
 	studio("models/effects/combineball.mdl") = prop_combine_ball: "The Combine Dark Energy Pellet, fired from the AR2 and held in energy fields. " +
 		"Use point_combine_energy_ball_launcher to spawn this, don't place directly." + 
@@ -8,6 +8,6 @@
 
 	// Inputs
 	input Explode(void) : "Explode the ball with some visual effects."
-	input Socketed[EP1, EP2](void) : "If this was fired by a player, tell Alyx that they socketed a ball so she can comment on it."
+	input Socketed(void) : "If this was fired by a player, tell Alyx that they socketed a ball so she can comment on it."
 	input FadeAndRespawn(void) : "Force the ball to expire in 0.1 seconds."
 	]

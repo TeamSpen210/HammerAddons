@@ -1,5 +1,5 @@
 @SolidClass base(BaseTank) 
-	appliesto(HL2, EP1, EP2) = func_tank: "Brush Gun Turret"
+= func_tank: "Brush Gun Turret"
 	[
 	ammotype[engine](string) : "Ammo Type"
 	ammotype(choices) : "Ammo Type" =

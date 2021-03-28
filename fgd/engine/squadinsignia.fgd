@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating)
-	appliesto(+engine, HL2, EP1, EP2)
+	appliesto(+engine, HL2_ENTITIES)
 	studio("models/chefhat.mdl")
 = squadinsignia: "A chef hat that attaches itself to the citzen set as the Owner (so can't be manually placed). Used when npc_citizen_insignia is enabled."
 	[

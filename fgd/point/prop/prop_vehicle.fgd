@@ -1,5 +1,4 @@
-@PointClass base(BaseVehicle, SetModel) 
-	appliesto(EP1, EP2, HL2) 
+@PointClass base(BaseVehicle, SetModel)
 	autovis(Vehicles, Generic Vehicles)
 	studioprop() = prop_vehicle: "Studiomodel vehicle that can be driven via inputs."
 	[

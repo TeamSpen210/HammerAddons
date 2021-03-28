@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(EP1, EP2, HL2) 
+@PointClass base(BaseEntityPoint)
 	sphere() 
 	iconsprite("editor/scripted_sentence.vmt") = scripted_sentence: "Scripted Sentence"
 	[

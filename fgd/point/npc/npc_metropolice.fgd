@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC, RappelNPC)
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	autovis(Entities, NPCs, Combine, MetroPolice)
 	studio("models/Police.mdl") = npc_metropolice: "MetroPolice"
 	[

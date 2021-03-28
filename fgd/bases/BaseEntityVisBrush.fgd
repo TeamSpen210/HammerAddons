@@ -55,7 +55,7 @@
 	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
 	input DisableDamageForces(void) : "Damaging the entity does not apply physics forces to it."
 
-	input AlternativeSorting[since_EP1](boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
+	input AlternativeSorting(boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
 
 	input RemovePaint[P2CE](void) : "Remove paint from the brush entity."
 	]

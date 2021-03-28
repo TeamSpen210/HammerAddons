@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityAnimating)
 	studio("models/editor/item_suit_charger_hl2.mdl")
-	appliesto(EP1, EP2, HL2)
+	appliesto(HL2_ENTITIES)
 = item_suitcharger: "HEV recharger"
 	[
 	spawnflags(flags) : "spawnflags" =

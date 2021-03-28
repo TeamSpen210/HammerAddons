@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	appliesto(EP1, EP2, HL2) 
+	appliesto(HL2_ENTITIES) 
 	size(-4 -4 -4, 4 4 4) 
 	line(255 255 255, targetname, enemyfilter)
 	line(255 255 255, targetname, friendfilter)
@@ -13,7 +13,7 @@
 	startdisarmed(boolean) : "Start Disarmed" : 0: "If yes, mine begins dormant."
 
 	modification[engine](integer) : "Citizen modified" : 0 : "'Normal' is default Combine behavior. 'Cavern' detonates earlier in its jump, and has a different default skin."
-	modification[since_EP2](choices) : "Citizen modified" : 0 : "'Normal' is default Combine behavior. 'Cavern' detonates earlier in its jump, and has a different default skin." =
+	modification(choices) : "Citizen modified" : 0 : "'Normal' is default Combine behavior. 'Cavern' detonates earlier in its jump, and has a different default skin." =
 		[
 		0: "Normal"
 		1: "Cavern"

@@ -1,5 +1,4 @@
-@PointClass base(LeadGoalBase) 
-	appliesto(EP1, EP2, HL2) 
+@PointClass base(LeadGoalBase)
 	autovis(AI, AI Goal)
 	iconsprite("editor/ficool2/ai_goal_lead_weapon.vmt") 
 = ai_goal_lead_weapon: "AI Goal Lead (Weapon). " +

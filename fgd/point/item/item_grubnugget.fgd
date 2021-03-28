@@ -1,6 +1,6 @@
 @PointClass base(Item)
 	studio("models/grub_nugget_small.mdl")
-	appliesto(EP2) 
+	appliesto(HL2_ENTITIES) 
 = item_grubnugget: "Small nuggets dropped by Antlion Grubs. " +
 		"When manually spawned, the size value is not setup so they appear small, but give medium health."
 	[
