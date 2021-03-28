@@ -1,5 +1,4 @@
-@PointClass base(BaseDriveableVehicle) 
-	appliesto(-CSGO)
+@PointClass base(BaseDriveableVehicle)
 	studioprop()
 = vehicle_viewcontroller: "Vehicle hack to control player view"
 	[

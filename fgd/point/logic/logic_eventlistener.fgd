@@ -16,15 +16,8 @@
 		2: "Team 2 (ORANGE)"
 		3: "Team 3 (BLUE)"
 		]
-	teamnum[CSGO](choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
-		[
-		-1: "Don't care"
-		2: "Terrorists"
-		3: "Counter-Terrorists"
-		]
 
-	// TODO: CSGO-only?
-	fetcheventdata[since_CSGO](boolean) : "Fetch Event Data" : "0" : "If set, will write the data from the event into the table 'event_data' on this entity."
+	fetcheventdata(boolean) : "Fetch Event Data" : "0" : "If set, will write the data from the event into the table 'event_data' on this entity."
 
 	// Inputs
 	input Enable(void) : "Enable the logic_eventlistener."

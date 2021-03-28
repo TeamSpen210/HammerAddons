@@ -1,5 +1,0 @@
-@PointClass base(BaseEntityPhysics) 
-	appliesto(CSGO) 
-	studio("models/props/coop_cementplant/exloding_barrel/exploding_barrel.mdl") = prop_exploding_barrel: "Exploding barrel.  BOOM!"
-	[
-	]

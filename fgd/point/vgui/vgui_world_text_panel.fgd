@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(CSGO) 
+@PointClass base(BaseEntityPoint)
 	studioprop("models/editor/vgui_arrows.mdl") 
 	sphere(width) 
 	sphere(height) 
@@ -23,4 +22,5 @@
 	input Enable(void) : "Make text visible."
 	input Disable(void) : "Make text invisible."
 	input SetDisplayText(string) : "Sets the display text."
+	input SetDisplayTextOption(string) : "Sets the display text option."
 	]

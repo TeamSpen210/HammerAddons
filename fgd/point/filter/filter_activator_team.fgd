@@ -9,14 +9,6 @@
 		"If the filter mode is Allow, only entities whose team number matches the given team will pass the filter. " +
 		"If the filter mode is Disallow, all entities EXCEPT those whose team number matches the given team will pass the filter."
 
-	filterteam[CSGO](choices) : "Filter Team Number" : 2 : "The team number to filter by. " +
-		"If the filter mode is Allow, only entities whose team number matches the given team will pass the filter. " +
-		"If the filter mode is Disallow, all entities EXCEPT those whose team number matches the given team will pass the filter." =
-		[
-		2: "Terrorist"
-		3: "Counter-Terrorist"
-		]
-
 	filterteam[P2](choices) : "Filter Team Number" : 0 : "The team number to filter by.  " +
 		"If the filter mode is Allow, only entities whose team number matches the given team will pass the filter. " +
 		"If the filter mode is Disallow, all entities EXCEPT those whose team number matches the given team will pass the filter." =

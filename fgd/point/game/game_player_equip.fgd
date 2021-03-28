@@ -3,19 +3,10 @@
 = game_player_equip:
 	"An entity that gives equipment to the player who activates it. " + 
 	"To use, add new keys to this entity, where each key is the classname of a weapon/item, " + 
-	"and the corresponding value is the number of those weapons/items to give to the player who uses this entity. " + 
-	"\n\nSince CSGO:\nIf the 'Use Only' spawnflag isn't set, then players can just touch this entity to get the equipment (or the TriggerForAllPlayers input can be used)." + 
-	"If the Strip Player First flag is set, the player will be stripped of all weapons and items (including armor) " +
-	"before being given the items specified in this entity."
+	"and the corresponding value is the number of those weapons/items to give to the player who uses this entity. "
 	[
 	spawnflags(flags)  =
 		[
 		1: "Use Only" : 0
-		2: "Strip All Weapons First" : 0 [since_CSGO]
-		4: "Only Strip Same Weapon Type" : 0 [since_CSGO]
 		]
-
-	// Inputs
-	input TriggerForAllPlayers[since_CSGO](void) : "This will force all connected players to take the weapon(s) specified."
-	input TriggerForActivatedPlayer[since_CSGO](string) : "This will force the player who activated to equip the specified weapon."
 	]

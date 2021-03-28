@@ -100,7 +100,7 @@
 	disableselfshadowing(boolean) : "Disable Self-Shadowing" : 0 : "When vertex lighting is enabled, prevent the geometry from self-shadowing -- casting shadows onto itself."
 	ignorenormals(boolean) : "Ignore Surface Normal" : 0 : "When vertex lighting is enabled, ignore the surface normal of faces when calculating the vertex lighting. Useful for thin, translucent objects such as leaves on foliage props."
 	
-	enablelightbounce[since_CSGO](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
+	enablelightbounce(boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
 	drawinfastreflection(boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
 	
 	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's origin."

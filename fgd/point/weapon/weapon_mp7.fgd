@@ -1,7 +1,0 @@
-
-@PointClass base(Weapon) 
-	appliesto(CSGO) 
-	autovis(Weapons, CSGO Weapons, CS Submachine Guns)
-	studioprop("models/weapons/w_smg_mp7_dropped.mdl") = weapon_mp7: "MP7"
-	[
-	]

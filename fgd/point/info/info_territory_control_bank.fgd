@@ -1,6 +1,0 @@
-
-@PointClass base(Territory) 
-	appliesto(CSGO) 
-	studio("models/props/cs_assault/consolepanelloadingbay.mdl") = info_territory_control_bank: "Bank Territory Control Point"
-	[
-	]

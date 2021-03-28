@@ -17,7 +17,7 @@
 	allowfunnel[P1, P2](boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a portal."
 
 	breakabletype[engine](integer) : "Exploitable by Player" : 0
-	exploitablebyplayer[CSGO, P2CE](choices) : "Exploitable by Player" : 0 =
+	exploitablebyplayer[P2CE](choices) : "Exploitable by Player" : 0 =
 		[
 		0: "Default"
 		1: "Explosive"

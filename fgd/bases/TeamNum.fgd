@@ -1,14 +1,6 @@
 
 @BaseClass = TeamNum
-	[
-	teamnum[CSGO](choices) : "Team" : 0 =
-		[
-		-1: "None"
-		0: "All Teams"
-		2: "Terrorist"
-		3: "Counter-Terrorist"
-		]
-		
+	[		
 	teamnum[P2](choices) : "Team" : 0 = 
 		[
 		0: "Chell/Bendy"

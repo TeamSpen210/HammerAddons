@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(-CSGO)
+@PointClass base(BaseEntityPoint)
 	sphere(radius) 
 	sphere(inner_radius) 
 	studio("models/editor/cone_helper.mdl") 
@@ -21,6 +20,7 @@
 	enabled(boolean) : "Start Enabled" : 1
 	magnitude(float) : "Magnitude" : 100 : "How strongly to push away from the center."
 	radius(float) : "Radius" : 128 : "Radius to affect items in."
+	inner_radius(float) : "Radius" : 128 : "Inner radius where the push eminates from."
 	influence_cone(float) : "Cone of Influence" : 0 : "If greater than zero, " +
 		"the cone (in degrees) within which the object must lie for it to be affected."
 

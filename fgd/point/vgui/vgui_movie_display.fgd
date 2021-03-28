@@ -78,7 +78,7 @@
 	height(integer) : "Panel Height in World (Blue)" : 128 : "Height of the panel in units."
 	stretch[since_P2](boolean) : "Stretch to Fill" : 0
 	forcedslave[since_P2](boolean) : "Forced slave" : 0
-	forceprecache[since_P2, !CSGO](boolean) : "Force precache" : 0 : "Precache the movie referred to by Movie Filename on entity spawn."
+	forceprecache[since_P2](boolean) : "Force precache" : 0 : "Precache the movie referred to by Movie Filename on entity spawn."
 
 	noscanline[P2CE](boolean) : "Disable Scanline Overlay" : 0 : "Disables the default scanline overlay."
 	custom_uv[P2CE](boolean) : "Use Custom UVs" : 0 : "Enables custom uv coordinates to be used."
