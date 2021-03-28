@@ -18,7 +18,6 @@
 		32768: "Autoaim target" : 0 [!P2]
 		1048576: "Physgun can ALWAYS pick up. No matter what." : 0
 		2097152: "No collisions" : 0 [MBase]
-		8388608: "Debris collides with other debris" : 0 [INFRA]
 		8388608: "Zombies can't swat" : 0 [MBase]
 		]
 

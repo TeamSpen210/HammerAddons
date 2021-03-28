@@ -299,8 +299,7 @@
 		"ACHIEVEMENT_EVENT_PORTAL_TRANSMISSION_RECEIVED": 	"Transmission Received"
 		]
 
-	// INFRA includes P2 as well, so we need to exclude it.
-	achievementname[P2, -INFRA](choices) : "Achievement Name" : : "The name of the achievement to be awarded when this entity receives a 'FireEvent' input." =
+	achievementname[P2](choices) : "Achievement Name" : : "The name of the achievement to be awarded when this entity receives a 'FireEvent' input." =
 		[
 		"ACH.SURVIVE_CONTAINER_RIDE": "Wake Up Call"
 		"ACH.WAKE_UP": "You Monster"
@@ -369,101 +368,6 @@
 		"ACH.TAUNT_CAMERA": "Asking for Trouble"
 		"ACH.ROCK_CRUSHES_ROBOT": "Rock Portal Scissors"
 		"ACH.SPREAD_THE_LOVE": "Friends List With Benefits"      
-		]
-
-	achievementname[INFRA](choices) : "Achievement Name" : : "The name of the achievement to be awarded when this entity receives a 'FireEvent' input." =
-		[
-		"CHAPTER_1" : "Complete Ch1 - Preparations"
-		"CHAPTER_2" : "Complete Ch2 - Just Another Day at Work"
-		"CHAPTER_3" : "Complete Ch3 - Forgotten World"
-		"CHAPTER_4" : "Complete Ch4 - Heavy Industry Of the Past"
-		"CHAPTER_5" : "Complete Ch5 - Fresh Water"
-		"CHAPTER_6" : "Complete Ch6 - Public Transport"
-		"CHAPTER_7" : "Complete Ch7 - Working Overtime"
-		"CHAPTER_8" : "Complete Ch8 - Late for a Meeting"
-		"CHAPTER_9" : "Complete Ch9 - To Save a City"
-		"CHAPTER_10" : "Complete Ch10 - Redemption"
-
-		"PART_1_COMPLETED" : "Complete Part 1"
-		"PART_2_COMPLETED" : "Complete Part 2"
-		"PART_3_BAD_ENDING" : "Complete with the bad ending"
-		"PART_3_GOOD_ENDING" : "Complete with the good ending"
-		"PART_3_MELTDOWN_ENDING" : "Complete with the meltdown ending"
-		"PART_3_SECRET_ENDING" : "Complete with the secret tenements ending"
-
-		"EE_BLUESCREEN" : "Bluescreen Easter Egg"
-		"PART_1_WATER_FLOW_METERS_ALL" : "Repair all the water flow meters"
-
-		"PART_1_PHOTOS_SOME" : "Part 1 - Photos 25%"
-		"PART_1_PHOTOS_MANY" : "Part 1 - Photos 50%"
-		"PART_1_PHOTOS_MOST" : "Part 1 - Photos 90%"
-		"PART_1_CORRUPTION_MOST" : "Part 1 - Corruption 90%"
-		"PART_1_GEOCACHES_MOST" : "Part 1 - Geocaches 90%"
-		"PART_1_REPAIR_MOST" : "Part 1 - Repairs 90%"
-
-		"PART_2_PHOTOS_SOME" : "Part 2 - Photos 25%"
-		"PART_2_PHOTOS_MANY" : "Part 2 - Photos 50%"
-		"PART_2_PHOTOS_MOST" : "Part 2 - Photos 90%"
-		"PART_2_CORRUPTION_MOST" : "Part 2 - Corruption 90%"
-		"PART_2_GEOCACHES_MOST" : "Part 2 - Geocaches 90%"
-		"PART_2_REPAIR_MOST" : "Part 2 - Repairs 90%"
-
-		"PART_3_PHOTOS_SOME" : "Part 3 - Photos 25%"
-		"PART_3_PHOTOS_MANY" : "Part 3 - Photos 50%"
-		"PART_3_PHOTOS_MOST" : "Part 3 - Photos 90%"
-		"PART_3_CORRUPTION_MOST" : "Part 3 - Corruption 90%"
-		"PART_3_GEOCACHES_MOST" : "Part 3 - Geocaches 90%"
-		"PART_3_REPAIR_MOST" : "Part  3 - Repairs 90%"
-
-		"-": "-------------"
-
-		"CHAPTER_1_SUICIDE" : "Ch1 - Jump off the balcony"
-
-		"CHAPTER_2_BOXES" : "Ch2: Cross without touching the boxes."
-		"CHAPTER_2_CRACK" : "Ch2: Hit the Hammer Valley Dam crack."
-		"CHAPTER_2_DAM" : "Ch2: Reactivate Hammer Valley Dam."
-		"CHAPTER_2_FUSE" : "Ch2: Toss the fuse into the slot."
-		"CHAPTER_2_STASH" : "Ch2: Find Heartman's money stash."
-
-		"CHAPTER_3_ADDICTED" : "Ch3: Drink the Osmo Olut"
-		"CHAPTER_3_DYNAMITE" : "Ch3: Detonate the dynamite"
-		"CHAPTER_3_HALLWAY" : "Ch3: Meet Morko in B2"
-		"CHAPTER_3_PUMPS" : "Ch3: Fix Pine Fell Water Plant"
-
-		"CHAPTER_4_CALL_DOCK" : "Ch4: Find the lost dock"
-
-		"CHAPTER_5_ALARMS" : "Get through the Hacker Den without triggering alarms"
-		"CHAPTER_5_CHEMISTRY" : "Analyse a water sample at Pitheath"
-		"CHAPTER_5_DRINKS" : "Bring a drink into the Pitheath control room"
-		"CHAPTER_5_KEBAB" : "Eat the kabab"
-		"CHAPTER_5_USB" : "Steal the USB from the Hacker Den"
-		"CHAPTER_5_WATERTREATMENT_REPAIRED" : "Ch5: Repair Pitheath Water Treatment"
-
-		"CHAPTER_6_TICKET" : "Ch6: Buy the train ticket"
-		"CHAPTER_6_WATERPLANT_REPAIRED" : "Ch6: Supply the city with fresh water"
-
-		"CHAPTER_7_BEER_MASTER" : "Ch7: Beer Master challenge"
-		"CHAPTER_7_BUNKER_SCIENTIST_WING" : "Ch7: Visit the bunker's accommodation wing"
-		"CHAPTER_7_COFFEE_MORKO" : "Ch7: Drink the special coffee"
-		"CHAPTER_7_COFFEE_OVERDOSE" : "Ch7: Overdose on coffee"
-		"CHAPTER_7_PLUTONIUM_CORE" : "Ch7: Perform the Demon Core Experiment"
-		"CHAPTER_7_UGU" : "Ch7: Find UGU"
-		"CHAPTER_7_WALTER_TAPE" : "Ch7: Listen to Walter's tape"
-		
-		"CHAPTER_8_BATTERY_STORE" : "Ch8: Break into the battery store"
-		"CHAPTER_8_HELP_ROBIN" : "Ch8: Save Robin's life"
-		"CHAPTER_8_KILL_ROBIN" : "Ch8: Let Robin die."
-		"CHAPTER_8_ISLE_BERG" :"Ch8: Find Xeander Berg's hideout"
-		"CHAPTER_8_SHROOM_TEA" : "Ch8: Vist the wasteland"
-		
-		"CHAPTER_9_DUCK" : "Ch9: Deliver the Duck."
-		"CHAPTER_9_LAB" : "Ch9: Discover the living Morko"
-		"CHAPTER_9_LUCK" :  "Ch9: Win the jackpot"
-		"CHAPTER_9_ROB" : "Ch9: Help Rob with his gift."
-		"CHAPTER_9_VILLA_STASH" : "Ch9: Found the Polonium"
-		
-		"CHAPTER_10_CARLA_AMIT" : "Ch10: Found Carla and Amit"
-		"CHAPTER_10_SNW_ROOM" : "Ch10 - Entered SNW Control Room"
 		]
 
 	// Inputs

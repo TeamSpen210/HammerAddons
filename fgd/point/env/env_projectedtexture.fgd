@@ -76,8 +76,6 @@
 	pattern(string) : "Custom Appearance" : : "Set a custom pattern of light brightness for this light. " +
 		"Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. " +
 		"i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
-	lightviewmodels[INFRA](boolean) : "Light View Models" : 1 : "Control whether flashlight effects view models."
-	lightnotpvsculled[INFRA](boolean) : "Light Not PVS Culled" : 0 : "Disable PVS culling optimization for this light (you shouldn't do this unless it's explicitly causing problems)."
 
 	// Inputs
 	input TurnOn(void) : "Turn on the texture"
@@ -109,9 +107,9 @@
 
 	input SetNearZ[since_P2](float) : "Sets the near Z distance."
 	input SetFarZ[since_P2](float) : "Sets the far Z distance."
-	input LightOnlyTarget[INFRA](bool) : "Set if the projected texture lights the target only."
-	input LightWorld[INFRA](bool) : "Set if the projected texture lights the world and static geometry."
-	input Ambient[GMod, INFRA](float) : "Set ambient light amount"
+	input LightOnlyTarget(bool) : "Set if the projected texture lights the target only."
+	input LightWorld(bool) : "Set if the projected texture lights the world and static geometry."
+	input Ambient[GMod](float) : "Set ambient light amount"
 	
 	input EnableVolumetrics[P2CE](boolean) : "Set if the volumetrics are enabled."
 	input SetVolumetricIntensity[P2CE](float) : "Sets the volumetric lighting's intensity."

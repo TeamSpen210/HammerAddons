@@ -91,9 +91,6 @@
 	paintinmap[P2](boolean) : "Enable Paint" : 0 : "Enable code for spreading paint on surfaces, and bouncing physics objects around."
 	maxblobcount[P2](integer) : "Gel Blob Limit" : 250 : "Number of Gel blobs that can exist. Maximum is 250."
 
-	loadvscriptstatefromlastlevel[INFRA](boolean) : "Load VScript State from Last Level" : 0
-	destalphascale[INFRA](float) : "Dest Alpha Scale (Soft Particle Distance)" : 1024
-
 	// Inputs
 	input SetChapterTitle[MBase](string) : "Sets the chapter title this map should identify with."
 	]

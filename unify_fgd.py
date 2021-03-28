@@ -52,7 +52,6 @@ GAMES = [
     ('L4D', 'Left 4 Dead'),
     ('L4D2', 'Left 4 Dead 2'),
     ('P2', 'Portal 2'),
-    ('INFRA', 'INFRA'),
     ('CSGO', 'Counter-Strike Global Offensive'),
 
     ('SFM', 'Source Filmmaker'),
@@ -82,7 +81,6 @@ FEATURES: Dict[str, Set[str]] = {
     'TF2': {'INSTANCING', 'PROP_SCALING'},
     'P2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'CSGO': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
-    'INFRA': {'P2', 'INSTANCING', 'INST_IO', 'VSCRIPT'},
     'P2DES': {'P2', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
     'P2CE': {'P2', 'HL2', 'EP1', 'EP2', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 }
