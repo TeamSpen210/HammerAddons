@@ -17,9 +17,5 @@
 		128: "Force large permission" : 0
 		256: "Force large_centered permission" : 0
 		512: "Keep editor position" : 0
-
-		1024: "Force medium tall permission" : 0 [ASW]
-		2048: "Force tiny fluid permission" : 0 [ASW]
-		4096: "Force medium big (Swarm Drone) permission" : 0 [ASW]
 		]
 	]

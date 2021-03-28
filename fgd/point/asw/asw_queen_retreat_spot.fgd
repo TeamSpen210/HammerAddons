@@ -1,8 +1,0 @@
-
-@PointClass base(BaseEntityPoint) 
-	appliesto(ASW) 
-	iconsprite("editor/asw_queen_retreat_spot.vmt")
-= asw_queen_retreat_spot: "Queen retreats to this spot, facing in this direction, "+ 
-	"at certain injury levels, before summoning the next attack wave."
-	[
-	]

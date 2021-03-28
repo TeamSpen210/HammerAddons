@@ -1,6 +1,0 @@
-
-@PointClass base(Weapon) 
-	appliesto(ASW) 
-	studio("models/items/itembox/itemboxsmall.mdl") = asw_weapon_blink: "Blink Pack"
-	[
-	]

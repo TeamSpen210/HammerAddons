@@ -13,7 +13,6 @@
 	// Todo - when did this get renamed??
 	input TeleportToPathTrack[until_L4D](string) : "Teleport train to the designated path track. This can be in a new path."
 	input TeleportToPathNode[since_L4D](string) : "Teleport to a destination and stop there. This can be in a new path."
-	input SetSpeedForwardModifier[!ASW, !L4D2](float) : "Applies the given modifier to all forward speeds. [0, 1]"
 	input MoveToPathNode[!L4D2](string) : "Start moving to a destination and stop when you get there. This must be in the same path."
 	input LockOrientation[P2](void) : "Lock the current orientation of the train."
 	input UnlockOrientation[P2](void) : "Unlock the current orientation of the train."

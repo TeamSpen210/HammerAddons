@@ -39,6 +39,6 @@
 	input SetOn(void) : "Turn the camera on."
 	input SetOff(void) : "Turn the camera off."
 	input SetSkyMode[MBase](void) : "Sets the sky mode. NOTE: 2 = draw sky texture, 1 = draw 3D skybox!"
-	input Activate[since_ASW](void) : "Turn the camera on, activate it and deactivate all other cameras."
-	input Deactivate[since_ASW](void) : "Turn the camera off, deactivate it."
+	input Activate(void) : "Turn the camera on, activate it and deactivate all other cameras."
+	input Deactivate(void) : "Turn the camera off, deactivate it."
 	]

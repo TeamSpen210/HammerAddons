@@ -1,7 +1,0 @@
-
-@PointClass base(ambient_generic) 
-	appliesto(ASW) 
-	iconsprite("editor/ambient_generic.vmt") 
-	sphere() = asw_ambient_generic: "Identical to normal ambient_generic."
-	[
-	]

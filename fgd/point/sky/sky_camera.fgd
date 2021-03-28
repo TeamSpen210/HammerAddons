@@ -51,7 +51,7 @@
 	input StartUpdating[MBase](void) : "Begins per-tick skybox updating, which is needed if you want this sky_camera to move."
 	input StopUpdating[MBase](void) : "Ends per-tick skybox updating if it was enabled before."
 	
-	input ActivateSkybox[MBase,since_ASW](void) : "Make this skybox the active one."
+	input ActivateSkybox[MBase](void) : "Make this skybox the active one."
 	input DeactivateSkybox(void) : "Stops making this sky_camera the active skybox if it is currently the active skybox, which causes the sky to clear."
 	
 	input SetFogStartDist[MBase](float) : "Sets the fog start distance."

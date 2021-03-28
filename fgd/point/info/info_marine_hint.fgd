@@ -1,7 +1,0 @@
-
-@PointClass base(Angles) 
-	appliesto(ASW) 
-	studio("models/editor/ground_node_hint.mdl") 
-	color(8 64 232) = info_marine_hint: "Follow hint node for marines"
-	[
-	]

@@ -1,5 +1,0 @@
-
-@SolidClass base(Trigger) 
-	appliesto(ASW) = trigger_asw_synup_chatter: "A trigger volume that will make Crash or Vegas comment on SynUp cola."
-	[
-	]

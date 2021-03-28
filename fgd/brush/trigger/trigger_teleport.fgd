@@ -12,8 +12,8 @@
 		"from the target by their initial offset from the landmark."
 
 	// This clearly moved from flag to keyvalue.
-	uselandmarkangles[since_ASW](boolean) : "Use Landmark Angles" : 0 : "Forces the teleported object to snap to the angles of the destination landmark."
-	spawnflags[until_ASW](flags)  =
+	uselandmarkangles(boolean) : "Use Landmark Angles" : 0 : "Forces the teleported object to snap to the angles of the destination landmark."
+	spawnflags(flags)  =
 		[
 		32: "Preserve angles even when a local landmark is not specified" : 0
 

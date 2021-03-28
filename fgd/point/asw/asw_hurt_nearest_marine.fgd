@@ -1,9 +1,0 @@
-
-@PointClass base(BaseEntityPoint) 
-	appliesto(ASW) 
-	iconsprite("editor/info_target.vmt") = asw_hurt_nearest_marine: "Hurts the nearest marine by a significant amount of damage, but doesn't kill him"
-	[
-
-	// Inputs
-	input HurtMarine(void) : "Hurts the nearest marine by a significant amount of damage, but doesn't kill him"
-	]

@@ -1,7 +1,0 @@
-
-@PointClass 
-	appliesto(ASW) 
-	color(0 0 200) 
-	studio("models/items/Ammobag/AmmoBag.mdl") = asw_ammo_drop: "Generic ammo pile"
-	[
-	]

@@ -1,6 +1,0 @@
-
-@PointClass base(ASWPickup) 
-	appliesto(ASW) 
-	studio("models/swarm/Ammo/ammoshotgun.mdl") = asw_ammo_shotgun: "Box of Shotgun ammo"
-	[
-	]

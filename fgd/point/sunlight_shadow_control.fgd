@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(since_ASW) 
+@PointClass base(BaseEntityPoint, EnableDisable)
 	iconsprite("editor/shadow_control.vmt") 
 	color(200 0 0) 
 	frustum(fov, nearz, distance, color, -1) 

@@ -48,7 +48,7 @@
 
 	// Inputs
 	input Display(void) : "Display the message text."
-	input SetText[since_ASW, MBase](string) : "Set the text to display."
+	input SetText[MBase](string) : "Set the text to display."
 	input SetPosX[since_P2](float) : "Set the X position of the text. (0 - 1.0 = left to right) (-1 centers)"
 	input SetPosY[since_P2](float) : "Set the Y position of the text. (0 - 1.0 = top to bottom) (-1 centers)"
 	input SetTextColor[since_P2](color255) : "Set color of the front text."

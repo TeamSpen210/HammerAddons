@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(since_ASW) 
+@PointClass base(BaseEntityPoint)
 	iconsprite("editor/logic_playmovie") = logic_playmovie: "Plays a movie and allows for various playback options"
 	[
 	MovieFilename[engine](string) : "Movie to display" : ""

@@ -162,7 +162,6 @@
 	hint_timeout(integer) : "Timeout" : 0 : "The automatic timeout for the hint. 0 will persist until stopped with EndHint."
 	hint_range(float) : "Display Range" : 0 : "The visible range of the hint."
 	
-	hint_gamepad_binding[since_P2](string) : "Gamepad Bound Command" : : "If using 'show key bindings' for the onscreen icon, this field should be the command we want to show bindings for when gamepad is enabled (and PS3/X360)"
 
 	hint_name[L4D2](string) : "Lesson Name" : : "Hints with the same lesson name use a common base and are treated as instances the same lesson type."
 	hint_display_limit[L4D2](integer) : "Display Limit" : 0 : "The number of times a hint can be seen. 0 means unlimited."
@@ -179,6 +178,7 @@
 	hint_auto_start[L4D2](boolean) : "Show on First Sight" : 1 : "When the player first sees it, it will automatically show for them."
 	hint_suppress_rest[L4D2](boolean) : "Suppress rest before moving" : 0 : "Suppress the initial icon display in center of screen?"
 
+	hint_gamepad_binding(string) : "Gamepad Bound Command" : : "If using 'show key bindings' for the onscreen icon, this field should be the command we want to show bindings for when gamepad is enabled (and PS3/X360)"
 
 	// Inputs
 	input ShowHint(string) : "Start showing the hint. If an entity name is passed as a parameter, the hint is shown only to that entity."
