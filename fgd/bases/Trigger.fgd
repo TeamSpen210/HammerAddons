@@ -16,6 +16,7 @@
 		1024: "Physics debris" : 0
 		2048: "Only NPCs in vehicles (respects player ally flag)" : 0
 		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 1
+		8192: "Allow ghosts to fire this trigger" [MOMENTUM]
 		]
 
 	// Inputs
