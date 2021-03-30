@@ -28,7 +28,7 @@
 	shadowcastdist(integer) : "Shadow Cast Distance" : : "Sets how far the entity casts dynamic shadows, in units. 0 means default distance from the shadow_control entity."
 	disableshadows(boolean) : "Disable Shadows?" : 0 : "Prevent the entity from creating cheap render-to-texture/dynamic shadows."
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents dynamic shadows (e.g. player and prop shadows) from appearing on this entity."
-	modelscale(float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
+	modelscale(float) : "Model Scale" : : "A multiplier for the size of the model."
 	
 	linedivider_phys[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
@@ -49,6 +49,8 @@
 	input EnableShadow(void) : "Prevents the entity from drawing a render target (dynamic) shadow."
 	
 	input AlternativeSorting(boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
+	
+	input SetModelScale(vector) : "Sets the scale of the model. Secondary parameter (space delimited) sets the duration of time to scale the model."
 
 	// Outputs
 	output OnIgnite(void) : "Fired when this object catches fire."
