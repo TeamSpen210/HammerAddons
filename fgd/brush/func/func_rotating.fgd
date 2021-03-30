@@ -21,8 +21,9 @@
 		]
 
 	dmg(integer) : "Blocking Damage" : 0 : "Damage done to any entity that blocks the rotation, per frame."
-	solidbsp[engine](boolean) : "Use SOLID_BSP" : 0
-	solidbsp(choices) : "Solid Type" : 0 =
+
+	solidbsp[engine](boolean) : "Solid Type" : 1
+	solidbsp(choices) : "Solid Type" : 1 : "How to calculate collisions. BSP is more rudimentarty but allows more stable collision with players." =
 		[
 		0: "VPhysics"
 		1: "BSP"

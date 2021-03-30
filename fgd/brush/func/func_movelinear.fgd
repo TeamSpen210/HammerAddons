@@ -16,6 +16,14 @@
 	startsound(sound) : "Start Sound" : :"Sound played when the brush starts moving."
 	stopsound(sound) : "Stop Sound" : : "Sound played when the brush stops moving."
 
+	solidbsp[engine](boolean) : "Solid Type" : 1
+	solidbsp(choices) : "Solid Type" : 1 : "How to calculate collisions. BSP is more rudimentarty but allows more stable collision with players." =
+		[
+		0: "VPhysics"
+		1: "BSP"
+		]
+
+
 	// Inputs
 	input Open(void) : "Move the brush to the end position (starting position + (move direction * move distance))."
 	input Close(void) : "Move the brush to the starting position."

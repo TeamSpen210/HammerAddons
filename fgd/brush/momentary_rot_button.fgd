@@ -79,7 +79,13 @@
 		1: "Backward"
 		]
 
-	solidbsp(boolean) : "Solid BSP" : 0 : "If set, use the SOLID_BSP collision type."
+	solidbsp[engine](boolean) : "Solid Type" : 1
+	solidbsp(choices) : "Solid Type" : 1 : "How to calculate collisions. BSP is more rudimentarty but allows more stable collision with players." =
+		[
+		0: "VPhysics"
+		1: "BSP"
+		]
+
 
 	// Inputs
 	input Lock(void) : "Lock the button, preventing it from functioning."

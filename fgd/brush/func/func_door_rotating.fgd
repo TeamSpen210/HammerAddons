@@ -10,11 +10,4 @@
 		]
 
 	distance(integer) : "Distance" : 90 : "The amount, in degrees, that the door should rotate when opened."
-
-	solidbsp[engine](boolean) : "Solid BSP Mode"
-	solidbsp(choices) : "Solid Type" : 0 : "How to calculate collisions. BSP is more rudimentarty but allows more stable collision with players."=
-		[
-		0: "VPhysics"
-		1: "BSP"
-		]
 	]

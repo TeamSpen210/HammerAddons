@@ -21,6 +21,13 @@
 		"if the player tries to block them with objects."
 	ignoredebris(boolean) : "Ignore Debris" : 0 : "If set this will change the door's collision group to one that ignore collisions with debris objects " +
 		"(note that this is not compatible with the non-solid-to-player spawnflag)."
+	
+	solidbsp[engine](boolean) : "Solid Type" : 1
+	solidbsp(choices) : "Solid Type" : 1 : "How to calculate collisions. BSP is more rudimentarty but allows more stable collision with players." =
+		[
+		0 : "VPhysics"
+		1 : "BSP"
+		]
 
 	health(integer) : "Door Health" : : "The health of the door (allows someone to shoot it open). 0 means invincible."
 
