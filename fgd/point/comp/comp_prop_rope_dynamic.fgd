@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityAnimating, BreakableProp, Glow)
 	sphere(fademindist)
 	sphere(fademaxdist)
-	iconsprite("editor/comp_prop_rope")
+	studio("models/editor/comp_prop_rope_dynamic.mdl")
 	appliesto(srctools, -engine)
 = comp_prop_rope_dynamic: "Allows using comp_prop_rope/comp_prop_cable as a dynamic prop."
 	[
@@ -9,6 +9,7 @@
 		[
 		256: "Start with collision disabled" : 0
 		]
+	angles(angle) readonly: "Orientation" : "0 0 0" : "The starting orientation can't be changed, simply move the nodes."
 
 	group(target_source): "Rope Group" : : "Specify the name of the group that will be compiled into this entity."
 
