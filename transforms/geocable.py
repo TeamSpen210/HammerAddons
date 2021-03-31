@@ -739,7 +739,6 @@ def compute_visleafs(
 @trans('Model Ropes')
 def comp_prop_rope(ctx: Context) -> None:
     """Build static props for ropes."""
-    compiler = ModelCompiler.from_ctx(ctx, 'ropes', version=1)
     # id -> node.
     all_nodes: MutableMapping[NodeID, NodeEnt] = {}
     # Given a targetname, all the nodes with that name.
@@ -785,6 +784,9 @@ def comp_prop_rope(ctx: Context) -> None:
     if not all_nodes:
         return
     LOGGER.info('{} rope nodes found.', len(all_nodes))
+    if ctx.studiomdl is None:
+        LOGGER.warning('Ropes cannot be compiled, no StudioMDL.exe found!')
+        return
 
     connections_to: Dict[NodeID, List[NodeEnt]] = defaultdict(list)
     connections_from: Dict[NodeID, List[NodeEnt]] = defaultdict(list)
@@ -809,7 +811,7 @@ def comp_prop_rope(ctx: Context) -> None:
     # To group nodes, take each group out, then search recursively through
     # all connections from it to other nodes.
     todo = set(all_nodes.values())
-    with compiler:
+    with ModelCompiler.from_ctx(ctx, 'ropes', version=1) as compiler:
         while todo:
             dyn_ents: List[Entity] = []
             node = todo.pop()
