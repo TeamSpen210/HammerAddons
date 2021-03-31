@@ -765,13 +765,13 @@ def action_export(
 
     print('Culling unused bases...')
     used_bases = set()  # type: Set[EntityDef]
-    # We only want to keep bases that provide keyvalues. We've merged the
-    # helpers in.
+    # We only want to keep bases that provide keyvalues or additional bases.
+    # We've merged the helpers in.
     for ent in fgd.entities.values():
         if ent.type is not EntityTypes.BASE:
             for base in ent.iter_bases():
                 if base.type is EntityTypes.BASE and (
-                    base.keyvalues or base.inputs or base.outputs
+                    base.keyvalues or base.inputs or base.outputs or base.bases
                 ):
                     used_bases.add(base)
 
