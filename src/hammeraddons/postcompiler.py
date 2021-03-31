@@ -156,7 +156,7 @@ def main(argv: List[str]) -> None:
             vmf,
             packlist,
             game_info,
-            studiomdl_loc=studiomdl_loc,
+            studiomdl_loc,
             qc_folders=[
                 game_info.root / folder
                 for folder in

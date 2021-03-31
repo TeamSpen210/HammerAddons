@@ -46,7 +46,7 @@ class ModelCompiler:
     def __init__(
         self,
         game: Game,
-        studiomdl_loc: Optional[Path],
+        studiomdl_loc: Path,
         pack: PackList,
         map_name: str,
         folder_name: str,
@@ -63,10 +63,7 @@ class ModelCompiler:
         self.model_folder_abs = game.path / 'models' / self.model_folder
         self.pack: PackList = pack
         self.version = version
-
-        if studiomdl_loc is None:
-            studiomdl_loc = game.bin_folder() / 'studiomdl.exe'
-        self.studiomdl_loc: Path = studiomdl_loc.resolve()
+        self.studiomdl_loc = studiomdl_loc
 
     @classmethod
     def from_ctx(cls, ctx: Context, folder_name: str, version: int=0) -> 'ModelCompiler':
