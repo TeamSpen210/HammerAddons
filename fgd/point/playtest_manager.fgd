@@ -1,6 +1,0 @@
-@PointClass
-	size(-8 -8 -8, 8 8 8) 
-	appliesto(Portal2)
-= playtest_manager: "Marker (?) entity found in the PeTI Workshop instance. Isn't implemented in the engine."
-	[
-	]
