@@ -213,9 +213,7 @@ light_environment
 light_glspot
 light_spot
 logic_achievement
-logic_active_autosave
 logic_auto
-logic_autosave
 logic_branch
 logic_branch_listener
 logic_case
@@ -350,9 +348,7 @@ test_proxytoggle
 test_traceline
 trigger
 trigger_auto_crouch
-trigger_autosave
 trigger_brush
-trigger_catapult
 trigger_cdaudio
 trigger_fog
 trigger_gravity

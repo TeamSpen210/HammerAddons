@@ -243,7 +243,6 @@ grenade_beam_chaser
 hammer_updateignorelist
 handle_dummy
 handle_test
-hl2_gamerules
 hot_potato
 hot_potato_catcher
 hot_potato_socket
