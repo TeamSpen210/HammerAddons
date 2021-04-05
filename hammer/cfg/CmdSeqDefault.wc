@@ -23,6 +23,17 @@
         {
             "enabled" "1"
             "special_cmd" "0"
+            "run" "$postcompiler_exe"
+            "params" "--propcombine $path\$file"
+            "ensure_check" "0"
+            "ensure_fn" ""
+            "use_process_wnd" "1"
+            "no_wait" "0"
+        }
+        "3"
+        {
+            "enabled" "1"
+            "special_cmd" "0"
             "run" "$vis_exe"
             "params" "-fast -game $gamedir $path\$file"
             "ensure_check" "0"
@@ -30,7 +41,7 @@
             "use_process_wnd" "1"
             "no_wait" "0"
         }
-        "3"
+        "4"
         {
             "enabled" "1"
             "special_cmd" "0"
@@ -41,7 +52,7 @@
             "use_process_wnd" "1"
             "no_wait" "0"
         }
-        "4"
+        "5"
         {
             "enabled" "1"
             "special_cmd" "257" // Copy File
@@ -52,7 +63,7 @@
             "use_process_wnd" "1"
             "no_wait" "0"
         }
-        "5"
+        "6"
         {
             "enabled" "1"
             "special_cmd" "0"
@@ -81,6 +92,17 @@
         {
             "enabled" "1"
             "special_cmd" "0"
+            "run" "$postcompiler_exe"
+            "params" "--propcombine $path\$file"
+            "ensure_check" "0"
+            "ensure_fn" ""
+            "use_process_wnd" "1"
+            "no_wait" "0"
+        }
+        "3"
+        {
+            "enabled" "1"
+            "special_cmd" "0"
             "run" "$vis_exe"
             "params" "-game $gamedir $path\$file"
             "ensure_check" "0"
@@ -88,7 +110,7 @@
             "use_process_wnd" "1"
             "no_wait" "0"
         }
-        "3"
+        "4"
         {
             "enabled" "1"
             "special_cmd" "0"
@@ -99,7 +121,7 @@
             "use_process_wnd" "1"
             "no_wait" "0"
         }
-        "4"
+        "5"
         {
             "enabled" "1"
             "special_cmd" "257" // Copy File
@@ -110,7 +132,7 @@
             "use_process_wnd" "1"
             "no_wait" "0"
         }
-        "5"
+        "6"
         {
             "enabled" "0"
             "special_cmd" "0"
