@@ -1,7 +1,7 @@
 @PointClass base(BasePortButton) 
-	appliesto(P2CE) 
-	autovis(Test Elements, P2 Buttons, Floor)
-	studioprop() = prop_floor_button: "A 1500 MegaWatt Aperture Science Super-Colliding Super Button, which is pressed by a player or objects."
+	appliesto(P2CE)
+	studioprop() 
+= prop_floor_button: "A 1500 MegaWatt Aperture Science Super-Colliding Super Button, which is pressed by a player or objects."
 	[
 	model[engine](studio) : "Button model" : "models/props/portal_button.mdl" : "Choose the amount of damage for the button, or type in a custom model."
 	model(choices) : "Button model" : "models/props/portal_button.mdl" : "Choose the amount of damage for the button, or type in a custom model." =

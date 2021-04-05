@@ -3,7 +3,6 @@
 	iconsprite("editor/gibshooter.vmt")
 	sphere(fademindist)
 	sphere(fademaxdist)
-	autovis(Propper)
 = propper_gibs: "When a prop breaks, you can cause one or more custom-made broken pieces to spawn in its place."
 	[
 	model(studio) : "Gib model"

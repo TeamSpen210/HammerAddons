@@ -1,6 +1,5 @@
 @FilterClass base(filter_base) 
 	appliesto(P2CE)
-	autovis(Logic, Filters)
 	iconsprite("editor/filter_paint_power.vmt")
 = filter_paint_power : "A filter that filters based on the current paint power of the entity."
 	[

@@ -2,8 +2,7 @@
 	appliesto(HL2_ENTITIES) 
 	iconsprite("editor/env_firesource") 
 	color(255 255 0) 
-	sphere(radius) 
-	autovis(Entities, NPCs, Combine, Hunter-Chopper, Avoidance Sphere)
+	sphere(radius)
 = npc_heli_avoidsphere: "Helicopter avoidance sphere"
 	[
 	spawnflags(flags) : "spawnflags" =

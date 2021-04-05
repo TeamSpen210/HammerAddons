@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	autovis(Lights, Dynamic Light) 
+@PointClass base(BaseEntityPoint)
 	iconsprite("editor/ficool2/light_dynamic.vmt") 
 	sphere(distance) 
 	lightcone() 

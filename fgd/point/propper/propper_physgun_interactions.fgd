@@ -1,7 +1,6 @@
 @PointClass base(Angles, Propper) 
 	appliesto(-engine, PROPPER)
 	iconsprite("editor/env_physexplosion.vmt")
-	autovis(Propper)
 = propper_physgun_interactions: "Defines non-standard interactions with the Gravity Gun/player holding behaviour. Used for physics props only."
 	[
 	preferred_carryangles(boolean) : "Use angles when carrying?" : 0 : "The player will always carry the prop at this entity's angles if possible."

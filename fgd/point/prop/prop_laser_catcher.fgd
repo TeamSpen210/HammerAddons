@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityAnimating, SRCIndicator) 
-	appliesto(P2CE) 
-	autovis(Test Elements, Dis. Beam, Laser Catcher)
-	studioprop() = prop_laser_catcher: "Discouragement Beam Catcher that detects a laser, absorbing the beam. The entity will fire outputs when struck and unstruck."
+	appliesto(P2CE)
+	studioprop() 
+= prop_laser_catcher: "Discouragement Beam Catcher that detects a laser, absorbing the beam. The entity will fire outputs when struck and unstruck."
 	[
 	skintype[engine](boolean) : "Skin Type" : 0
 	skintype(choices) : "Skin Type" : 0 : "Set the type of catcher to use." =

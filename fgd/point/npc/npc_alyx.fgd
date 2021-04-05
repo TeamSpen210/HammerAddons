@@ -1,7 +1,7 @@
 @NpcClass base(TalkNPC, PlayerCompanion) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Rebels, Alyx)
-	studio() = npc_alyx: "Alyx"
+	appliesto(HL2_ENTITIES)
+	studio() 
+= npc_alyx: "Alyx"
 	[
 	model(studio) : "World model" : "models/alyx.mdl"
 

@@ -1,7 +1,6 @@
 @NpcClass base(BaseNPC, CombineScanner)
 	appliesto(HL2_ENTITIES) 
-	studio("models/shield_scanner.mdl") 
-	autovis(Entities, NPCs, Combine, Combine Claw Scannner)
+	studio("models/shield_scanner.mdl")
 = npc_clawscanner: "Claw Scanner"
 	[
 	input DeployMine(void) : "Drop landmine (if carrying one)"

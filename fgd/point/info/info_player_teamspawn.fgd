@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint, PlayerClass, TeamNum, EnableDisable) 
 	appliesto(TF2_ENTITIES)
-	autovis(Point Entities, Globals, Player Spawn)
 	studio("models/editor/playerstart.mdl") 
 	line(255 0 0, targetname, round_redspawn)
 	line(0 255 0, targetname, round_bluespawn)

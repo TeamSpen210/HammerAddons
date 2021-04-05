@@ -1,5 +1,4 @@
 @PointClass base(LeadGoalBase)
-	autovis(AI, AI Goal)
 	iconsprite("editor/ai_goal_lead.vmt") 
 = ai_goal_lead: "AI Goal Lead"
 	[

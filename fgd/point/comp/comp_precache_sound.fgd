@@ -2,7 +2,6 @@
 	// This is implemented via a VScript method.
 	appliesto(+srctools, +VScript, -engine)
 	iconsprite("editor/comp_precache_sound")
-	autovis(Postcompiler, Precacher)
 = comp_precache_sound:
     "Force a specific sound to load, for runtime switching. Duplicates will be removed. More keyvalues can be added."
 	[

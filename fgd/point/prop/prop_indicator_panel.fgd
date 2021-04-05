@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(P2CE)
-	autovis(Overlays,Indicator Panel)
 	studioprop("models/editor/prop_indicator_panel.mdl") 
 	line(255 255 0, targetname, IndicatorLights) 
 = prop_indicator_panel: "Indicator signs for the end of modern antlines. Shows either a tick/cross, or a circular countdown. " +

@@ -1,5 +1,4 @@
-@FilterClass base(filter_base) 
-	autovis(Logic, Filters)
+@FilterClass base(filter_base)
 	iconsprite("editor/filter_held.vmt") 
 = filter_player_held: "A filter that only accepts objects held by the player."
 	[

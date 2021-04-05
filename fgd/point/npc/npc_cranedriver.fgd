@@ -1,8 +1,7 @@
 @NpcClass base(VehicleDriverNPC) 
 	appliesto(HL2_ENTITIES) 
-	studio("models/roller.mdl")  
-	autovis(Entities, NPCs, Crane Driver)
-	= npc_cranedriver: "NPC used to drive cranes."
+	studio("models/roller.mdl")
+= npc_cranedriver: "NPC used to drive cranes."
 	[
 	releasepause(float) : "Pause time before dropping a ForceDrop specified object." : 0
 

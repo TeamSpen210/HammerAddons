@@ -1,7 +1,7 @@
 @NpcClass base(BaseNPC) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Animals, Birds) 
-	studio("models/crow.mdl") = npc_crow: "Crow"
+	appliesto(HL2_ENTITIES)
+	studio("models/crow.mdl") 
+= npc_crow: "Crow"
 	[
 	deaf[engine](boolean) : "Deaf?"
 	deaf(choices) : "Deaf?" : "0" =

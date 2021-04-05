@@ -1,7 +1,7 @@
 @NpcClass base(BaseNPC, AlyxInteractable) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Combine, Rollermine)
-	studio("models/roller.mdl") = npc_rollermine: "Roller Mine"
+	appliesto(HL2_ENTITIES)
+	studio("models/roller.mdl") 
+= npc_rollermine: "Roller Mine"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

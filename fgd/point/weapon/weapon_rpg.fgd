@@ -1,6 +1,6 @@
 @PointClass base(Weapon) 
 	appliesto(HL2_ENTITIES)
-	autovis(Weapons, HL2 Weapons, Rocket Launcher) 
-	studioprop("models/weapons/w_rocket_launcher.mdl") = weapon_rpg: "Missile Launcher"
+	studioprop("models/weapons/w_rocket_launcher.mdl") 
+= weapon_rpg: "Missile Launcher"
 	[
 	]

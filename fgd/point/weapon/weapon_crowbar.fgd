@@ -1,6 +1,6 @@
 @PointClass base(Weapon) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Weapons, HL2 Weapons, Crowbar)
-	studioprop("models/weapons/w_crowbar.mdl") = weapon_crowbar: "Crowbar"
+	appliesto(HL2_ENTITIES)
+	studioprop("models/weapons/w_crowbar.mdl") 
+= weapon_crowbar: "Crowbar"
 	[
 	]

@@ -1,5 +1,4 @@
 @PointClass base(BaseEntityPoint)
-	autovis(AI, AI Change Hint Group)
 	sphere() 
 	iconsprite("editor/ficool2/ai_changehintgroup")
 = ai_changehintgroup: "Change Hint Group"

@@ -1,6 +1,6 @@
 @PointClass base(Weapon) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Weapons, HL2 Weapons, Annabelle)
-	studioprop("models/weapons/W_annabelle.mdl") = weapon_annabelle: "Annabelle (Grigori)"
+	appliesto(HL2_ENTITIES)
+	studioprop("models/weapons/W_annabelle.mdl") 
+= weapon_annabelle: "Annabelle (Grigori)"
 	[
 	]

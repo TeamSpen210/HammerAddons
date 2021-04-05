@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPCAssault)
-	autovis(Entities, NPCs, Xen, Houndeye)
-	studioprop("models/houndeye.mdl") = npc_houndeye : "Houndeye"
+	studioprop("models/houndeye.mdl") 
+= npc_houndeye : "Houndeye"
 	[
 	]

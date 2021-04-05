@@ -1,7 +1,7 @@
 @NpcClass base(TalkNPC) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Rebels, Father Grigori)
-	studio("models/Monk.mdl") = npc_monk: "Father Grigori, the last human in Ravenholm."
+	appliesto(HL2_ENTITIES)
+	studio("models/Monk.mdl") 
+= npc_monk: "Father Grigori, the last human in Ravenholm."
 	[
 	additionalequipment[engine](string) : "Weapons" : "weapon_annabelle"
 	additionalequipment(choices) : "Weapons" : "weapon_annabelle" =

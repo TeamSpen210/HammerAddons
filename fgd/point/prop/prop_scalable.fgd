@@ -1,5 +1,4 @@
-@PointClass 
-	autovis(Props, Scalable)
+@PointClass
 	appliesto(HL2_ENTITIES)
 	base(BaseEntityAnimating, SetModel)
 	studioprop() 

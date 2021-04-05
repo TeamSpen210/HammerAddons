@@ -1,6 +1,5 @@
 
 @PointClass base(BaseEntityPoint, Angles, DXLevelChoice, SystemLevelChoice)
-	autovis(Lights, Light FX)
 	studio("models/editor/cone_helper.mdl") 
 	sphere(spotlightlength) 
 	sphere(spotlightwidth) 

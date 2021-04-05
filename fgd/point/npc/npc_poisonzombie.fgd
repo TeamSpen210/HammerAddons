@@ -1,7 +1,7 @@
 @NpcClass base(BaseNPC) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Zombies, Poison Zombie)
-	studio("models/Zombie/Poison.mdl") = npc_poisonzombie: "A bloated, disgusting, fluid-spurting zombie created by a poison headcrab."
+	appliesto(HL2_ENTITIES)
+	studio("models/Zombie/Poison.mdl") 
+= npc_poisonzombie: "A bloated, disgusting, fluid-spurting zombie created by a poison headcrab."
 	[
 	crabcount[engine](integer) : "Crabs in nest" : 3
 	crabcount(choices) : "Crabs in nest" : 3 =

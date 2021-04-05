@@ -1,5 +1,4 @@
 @PointClass base(BaseEntityPoint)
-	autovis(AI, AI Relationship)
 	iconsprite("editor/ai_relationship.vmt") 
 	line(255 255 255, targetname, subject)
 	line(255 255 255, targetname, subject, targetname, target)

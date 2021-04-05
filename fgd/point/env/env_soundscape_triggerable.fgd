@@ -1,5 +1,4 @@
-@PointClass base(env_soundscape) 
-	autovis(Sounds, Soundscapes)
+@PointClass base(env_soundscape)
 	iconsprite("editor/env_soundscape_triggerable.vmt") 
 = env_soundscape_triggerable: "An entity that works like env_soundscape except that it works in conjunction with trigger_soundscape to determine when a player hears it."
 	[

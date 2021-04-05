@@ -1,7 +1,7 @@
 @NpcClass base(BaseNPC, TalkNPC, PlayerCompanion) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Rebels, C17 Citizen)
-	studio() = npc_citizen: "Citizen"
+	appliesto(HL2_ENTITIES)
+	studio() 
+= npc_citizen: "Citizen"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

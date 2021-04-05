@@ -1,6 +1,6 @@
 @PointClass base(Weapon) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Weapons, HL2 Weapons, Alyx's Gun)
-	studioprop("models/weapons/W_Alyx_Gun.mdl") = weapon_alyxgun: "Alyx's Gun"
+	appliesto(HL2_ENTITIES)
+	studioprop("models/weapons/W_Alyx_Gun.mdl") 
+= weapon_alyxgun: "Alyx's Gun"
 	[
 	]

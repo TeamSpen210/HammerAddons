@@ -1,6 +1,6 @@
 @PointClass base(BaseVehicle, SetModel)
-	autovis(Vehicles, Generic Vehicles)
-	studioprop() = prop_vehicle: "Studiomodel vehicle that can be driven via inputs."
+	studioprop() 
+= prop_vehicle: "Studiomodel vehicle that can be driven via inputs."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

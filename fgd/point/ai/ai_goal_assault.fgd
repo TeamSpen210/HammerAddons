@@ -1,5 +1,4 @@
 @PointClass base(BaseEntityPoint)
-	autovis(AI, AI Goal)
 	iconsprite("editor/ficool2/ai_goal_assault")
 = ai_goal_assault: "AI Goal Assault"
 	[

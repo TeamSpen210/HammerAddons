@@ -1,6 +1,6 @@
 @PointClass base(Weapon)
 	appliesto(MOMENTUM)
-	autovis(Weapons, Momentum Weapons)
-	studioprop("models/weapons/mom_rocketlauncher/w_mom_rocketlauncher.mdl") = weapon_momentum_rocketlauncher : "Rocket Launcher" 
+	studioprop("models/weapons/mom_rocketlauncher/w_mom_rocketlauncher.mdl")
+= weapon_momentum_rocketlauncher : "Rocket Launcher" 
 	[
 	]

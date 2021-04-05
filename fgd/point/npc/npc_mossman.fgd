@@ -1,6 +1,6 @@
 @NpcClass base(TalkNPC) 
 	appliesto(HL2_ENTITIES)
-	autovis(Entities, NPCs, Rebels, Mossman) 
-	studio("models/mossman.mdl") = npc_mossman: "Dr Mossman"
+	studio("models/mossman.mdl") 
+= npc_mossman: "Dr Mossman"
 	[
 	]

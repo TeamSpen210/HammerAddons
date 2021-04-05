@@ -1,7 +1,7 @@
 @NpcClass base(BaseNPC) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Combine, Strider)
-	studio() = npc_strider: "Strider"
+	appliesto(HL2_ENTITIES)
+	studio() 
+= npc_strider: "Strider"
 	[
 	model[engine](studio) : "Model" : "models/combine_strider.mdl"
 	model(choices) : "Model" : "models/combine_strider.mdl" : "Model to use." =

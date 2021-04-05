@@ -1,6 +1,6 @@
 @NpcClass base(BaseZombie) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Zombies, Classic Zombie)
-	studio("models/Zombie/Classic.mdl") = npc_zombie: "Zombie"
+	appliesto(HL2_ENTITIES)
+	studio("models/Zombie/Classic.mdl") 
+= npc_zombie: "Zombie"
 	[
 	]

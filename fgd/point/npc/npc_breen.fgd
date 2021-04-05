@@ -1,7 +1,7 @@
 @NpcClass base(TalkNPC) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Combine, Dr. Breen)
-	studio() = npc_breen: "Dr Breen"
+	appliesto(HL2_ENTITIES)
+	studio() 
+= npc_breen: "Dr Breen"
 	[
 	model(studio) : "World model" : "models/breen.mdl"
 	spawnflags(flags) : "spawnflags" =

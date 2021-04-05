@@ -3,7 +3,6 @@
 // entity.
 @PointClass base(BaseEntityPoint)
 	appliesto(-engine)  // Not an ent, put in a seperate block.
-	autovis(Overlays,Normal)
 	size(-1 -1 0, 1 1 1)
 	color(80 150 225)
 	studio("models/editor/overlay_helper.mdl")

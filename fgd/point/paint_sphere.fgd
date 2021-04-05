@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(P2CE) 
-	autovis(Test Elements, Paint, Paint Sprayer)
+	appliesto(P2CE)
 	sphere(radius) 
 	iconsprite("editor/paint_sphere.vmt") = paint_sphere: "Paint brushes inside the sphere."
 	[

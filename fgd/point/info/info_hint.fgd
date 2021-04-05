@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint, HintNode) 
 	studio("models/editor/node_hint.mdl")
-	autovis(Entities, Nodes, Hint Node)
 	color(255 255 255)
 	sphere(radius)
 = info_hint: "A hint that is not used for navigation. They don't go into the nodegraph, nor do they fall to the ground. " +

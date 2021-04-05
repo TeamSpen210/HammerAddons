@@ -1,5 +1,4 @@
 @PointClass base(TwoObjectPhysics)
-	autovis(Entities, Constraints, Hinge)
 	line(128 128 128, targetname, attach1) 
 	line(128 128 128, targetname, attach2) 
 	line(128 128 128, targetname, attach1, targetname, attach2) 

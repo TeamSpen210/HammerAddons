@@ -1,8 +1,8 @@
-@NpcClass base(BaseNPC) 
+@NpcClass base(BaseNPC)
 	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Antlions, Antlion Guard)
 	line(128 0 0, targetname, shovetargets)
-	studio("models/antlion_guard.mdl") = npc_antlionguard: "Antlion Guard"
+	studio("models/antlion_guard.mdl") 
+= npc_antlionguard: "Antlion Guard"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

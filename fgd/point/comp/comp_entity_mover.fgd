@@ -1,7 +1,6 @@
 @PointClass 
 	iconsprite("editor/comp_entity_mover")
 	appliesto(srctools, -engine)
-	autovis(Postcompiler, Ent Mover)
 	sphere(distance)
 	line(255 255 255, targetname, target)
 = comp_entity_mover : "Shift an entity by a given amount. This is useful to place entities into the void, for example."

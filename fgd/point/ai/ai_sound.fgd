@@ -1,5 +1,4 @@
 @PointClass base(BaseEntityPoint)
-	autovis(AI, AI Sound)
 	sphere(volume) 
 	line(255 255 255, targetname, locationproxy)
 	line(255 255 255, targetname, target, targetname, locationproxy)

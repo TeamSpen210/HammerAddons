@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
- 	autovis(Point Entities, Globals, Landmarks)
+@PointClass base(BaseEntityPoint)
 	appliesto(P2CE) 
 	iconsprite("editor/info_landmark") = info_landmark_exit: "Exit landmark"
 	[

@@ -1,7 +1,5 @@
 @PointClass base(BaseEntityPoint, HintNode) 
 	studio("models/editor/ground_node_hint.mdl")
-	autovis(Entities, Nodes, Ground Node)
-	autovis(Entities, Nodes, Hint Node)
 	color(232 219 8)
 	sphere(radius)
 = info_node_hint: "A navigation node for ground moving NPCs that includes some context information for NPCs that are interested in it. " +

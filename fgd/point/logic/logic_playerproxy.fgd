@@ -1,7 +1,6 @@
 @PointClass base(BaseEntityPoint, DamageFilter) 
 	color(200 0 0) 
 	iconsprite("editor/logic_playerproxy.vmt")
- 	autovis(Point Entities, Globals, Player Proxy)
 = logic_playerproxy: "An entity that is used to relay inputs/outputs to the player and back to the world."
 	[
 	input RequestPlayerHealth(void) : "Requests the current player's health from the proxy. This will fire the PlayerHealth output with the value."

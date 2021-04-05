@@ -1,6 +1,6 @@
 @NpcClass base(BaseHeadcrab)
 	appliesto(HL2_ENTITIES)
-	autovis(Entities, NPCs, Headcrabs, Poison Headcrab)
-	studio("models/Headcrabblack.mdl") = npc_headcrab_black: "Black Poison Headcrab"
+	studio("models/Headcrabblack.mdl") 
+= npc_headcrab_black: "Black Poison Headcrab"
 	[
 	]

@@ -1,7 +1,7 @@
 @PointClass base(BaseDriveableVehicle, SetModel)
-	studioprop() 
-	autovis(Vehicles, Generic Vehicles, Choreo Vehicle)
-	color(240 180 250) = prop_vehicle_choreo_generic: "Generic Choreo vehicle used for magical events."
+	studioprop()
+	color(240 180 250) 
+= prop_vehicle_choreo_generic: "Generic Choreo vehicle used for magical events."
 	[
 	spawnflags(flags)  =
 		[

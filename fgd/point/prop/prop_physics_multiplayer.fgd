@@ -1,5 +1,4 @@
 @PointClass
-	autovis(Props, Physics)
 	base(prop_physics) 
 	studioprop()
 	sphere(fademindist)

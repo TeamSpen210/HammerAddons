@@ -1,7 +1,7 @@
 @NpcClass base(BaseNPC) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Combine, Combine Advisor)
-	studio() = npc_advisor: "An adorable sluglike alien with benevolent psychic powers."
+	appliesto(HL2_ENTITIES)
+	studio() 
+= npc_advisor: "An adorable sluglike alien with benevolent psychic powers."
 	[
 	model(studio) : "World model" : "models/advisor.mdl"
 	levitationarea(string) : "Levitation Area" : : "Trigger volume inside which levitated objects reside"

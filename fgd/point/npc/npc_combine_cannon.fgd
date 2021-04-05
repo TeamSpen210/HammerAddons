@@ -1,8 +1,8 @@
 @NpcClass base(BaseNPC) 
 	appliesto(HL2_ENTITIES) 
-	sphere(sightdist) 
-	autovis(Entities, NPCs, Combine, Combine Cannon)
-	studio("models/combine_soldier.mdl") = npc_combine_cannon: "Combine Cannon"
+	sphere(sightdist)
+	studio("models/combine_soldier.mdl") 
+= npc_combine_cannon: "Combine Cannon"
 	[
 	sightdist(float) : "Sight radius" : 1024 : "Radius distance at which the cannon is able to aquire enemies."
 	]

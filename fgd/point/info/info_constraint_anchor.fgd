@@ -1,10 +1,10 @@
 
 @PointClass base(BaseEntityPoint)
-	autovis(Entities, Constraints, Constraint Anchor)
 	halfgridsnap
 	iconsprite("editor/info_constraint_anchor.vmt") 
 	color(128 128 128) 
-	line(128 128 128, targetname, parentname) = info_constraint_anchor: "An entity used to attach constraints to a local position on an entity. Usually constraints will attach to the center of mass of an object. Attach the desired constraint to this entity, and then parent this entity to the entity you want the constraint to apply to."
+	line(128 128 128, targetname, parentname)
+= info_constraint_anchor: "An entity used to attach constraints to a local position on an entity. Usually constraints will attach to the center of mass of an object. Attach the desired constraint to this entity, and then parent this entity to the entity you want the constraint to apply to."
 	[
 	massscale(float) : "Mass Scale" : 1 : "Amount to scale the mass of this body in the constraint solver."
 	]

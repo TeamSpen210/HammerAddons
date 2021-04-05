@@ -1,6 +1,5 @@
 @NpcClass base(TalkNPC, BaseNPC, PlayerCompanion) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Rebels, Barney)
+	appliesto(HL2_ENTITIES)
 	studio("models/Barney.mdl") = npc_barney: "Barney"
 	[
 	additionalequipment(choices) : "Weapons" : "weapon_pistol" =

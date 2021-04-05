@@ -1,7 +1,7 @@
-@NpcClass base(TalkNPC) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Rebels, Dr. Magnusson)
-	studio() = npc_magnusson: "Magnusson"
+@NpcClass base(TalkNPC)
+	appliesto(HL2_ENTITIES)
+	studio() 
+= npc_magnusson: "Magnusson"
 	[
 	model(studio) : "World model" : "models/magnusson.mdl"
 	]

@@ -1,7 +1,6 @@
 @PointClass base(BaseEntityAnimating) 
 	appliesto(HL2_ENTITIES) 
-	studio("models/combine_turrets/ceiling_turret.mdl") 
-	autovis(Entities, NPCs, Combine, Ceiling Turret)
+	studio("models/combine_turrets/ceiling_turret.mdl")
 = npc_turret_ceiling: "Combine Ceiling Turret"
 	[
 	spawnflags(flags) : "spawnflags" =

@@ -1,5 +1,4 @@
 @PointClass base(BaseEntityPoint)
-	autovis(AI, AI Goal)
 	iconsprite("editor/ai_goal_standoff.vmt") = ai_goal_standoff: "AI Goal Standoff"
 	[
 	actor(target_name_or_class) : "Actor(s) to affect"

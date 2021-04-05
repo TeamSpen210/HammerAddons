@@ -1,5 +1,4 @@
 @NpcClass base(BaseNPCAssault)
-	autovis(Entities, NPCs, Xen, Bullsquid)
 	studio("models/bullsquid.mdl") 
 = npc_bullsquid: "Bullsquid"
 	[

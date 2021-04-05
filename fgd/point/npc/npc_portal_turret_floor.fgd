@@ -1,7 +1,6 @@
 @PointClass base(BaseNPC)
 	appliesto(P2CE) 
 	studioprop()
-	autovis(Entities, NPCs, Portal Turret)
 	sphere(turretRange) 
 	frustum(45, 16, TurretRange, 255 0 0 100, -1) 
 = npc_portal_turret_floor: "Aperture Science Sentry Turret."

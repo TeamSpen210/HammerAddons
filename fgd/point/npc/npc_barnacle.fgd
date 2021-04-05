@@ -1,9 +1,9 @@
 @NpcClass base(BaseNPC, BaseFadeProp) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Xen, Barnacle)
+	appliesto(HL2_ENTITIES)
 	studio("models/Barnacle.mdl") 
 	sphere(fademindist) 
-	sphere(fademaxdist) = npc_barnacle: "Barnacle"
+	sphere(fademaxdist) 
+= npc_barnacle: "Barnacle"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

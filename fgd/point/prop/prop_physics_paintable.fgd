@@ -1,5 +1,4 @@
-@PointClass 
-	autovis(Props, Physics)
+@PointClass
 	base(prop_physics) 
 	appliesto(P2CE) 
 	sphere(fademindist) 

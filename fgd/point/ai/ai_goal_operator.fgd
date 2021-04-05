@@ -1,5 +1,4 @@
-@PointClass 
-	autovis(AI, AI Goal)
+@PointClass
 	base(BaseEntityPoint, EnableDisable) 
 	appliesto(HL2_ENTITIES) 
 = ai_goal_operator: "Indicates items in the world that some NPCs may operate upon."

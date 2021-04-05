@@ -1,7 +1,7 @@
 @NpcClass base(BaseNPC) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Zombies, Zombine)
-	studio("models/Zombie/zombie_soldier.mdl") = npc_zombine: "Combine Soldier Zombie"
+	appliesto(HL2_ENTITIES)
+	studio("models/Zombie/zombie_soldier.mdl") 
+= npc_zombine: "Combine Soldier Zombie"
 	[
 	input StartSprint(void) : "Forces the zombine to sprint."
 	input PullGrenade(void) : "Forces the zombine to pull a grenade."

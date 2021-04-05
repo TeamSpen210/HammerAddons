@@ -1,7 +1,5 @@
 @NpcClass base(BaseNPC) 
 	appliesto(HL2_ENTITIES)
-	autovis(NPCs, NPC Spotlight)
-	autovis(Lights, Spotlight NPC)
 	size(-2 -2 -2, 2 2 2)
 = npc_spotlight: "Spotlight"
 	[

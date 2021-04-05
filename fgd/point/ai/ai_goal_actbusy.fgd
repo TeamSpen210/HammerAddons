@@ -1,6 +1,4 @@
-@PointClass base(BaseActBusy) 
-	autovis(AI, AI Goal)
-	autovis(AI, Act Busy)
+@PointClass base(BaseActBusy)
 	size(-8 -8 -8, 8 8 8)
 	appliesto(HL2_ENTITIES) 
 = ai_goal_actbusy: "AI Goal Act Busy"

@@ -1,7 +1,6 @@
 @PointClass base(BaseNPC, SetModel)
 	appliesto(HL2_ENTITIES)
-	studioprop() 
-	autovis(Entities, NPCs, Puppet NPC)
+	studioprop()
 	line(255 255 255, targetname, animationtarget) 
 	size(-2 -2 -2, 2 2 2)
 = npc_puppet: "Puppet entity that mimics the animations of a target NPC."

@@ -1,6 +1,6 @@
 @PointClass base(Weapon) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Weapons, HL2 Weapons, Bugbait)
-	studioprop("models/weapons/w_bugbait.mdl") = weapon_bugbait: "Bug bait"
+	appliesto(HL2_ENTITIES)
+	studioprop("models/weapons/w_bugbait.mdl") 
+= weapon_bugbait: "Bug bait"
 	[
 	]

@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	iconsprite("editor/ambient_generic.vmt") 
-	autovis(Sounds, Generic Sound)
+	iconsprite("editor/ambient_generic.vmt")
 	sphere(radius) 
 	line(255 255 0, targetname, sourceEntityName) 
 = ambient_generic: "Universal ambient sound. Use it to play and control a single sound."

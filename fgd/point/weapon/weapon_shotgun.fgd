@@ -1,6 +1,6 @@
 @PointClass base(Weapon) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Weapons, HL2 Weapons, Shotgun)
-	studioprop("models/weapons/w_shotgun.mdl") = weapon_shotgun: "Shotgun"
+	appliesto(HL2_ENTITIES)
+	studioprop("models/weapons/w_shotgun.mdl") 
+= weapon_shotgun: "Shotgun"
 	[
 	]

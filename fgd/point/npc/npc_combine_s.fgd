@@ -1,7 +1,7 @@
 @NpcClass base(BaseNPC, RappelNPC, GrenadeUser) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Combine, Combine Soldier)
-	studio() = npc_combine_s: "Combine Soldier"
+	appliesto(HL2_ENTITIES)
+	studio() 
+= npc_combine_s: "Combine Soldier"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

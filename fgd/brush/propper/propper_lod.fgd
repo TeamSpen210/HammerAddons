@@ -1,6 +1,5 @@
 @SolidClass base(Propper, Origin) 
 	appliesto(-engine, PROPPER)
-	autovis(Propper)
 = propper_lod: "A low-res version of the model to show at long distance."
 	[
 	weldvertices(float) : "Welding threshold" : ".01" : "Vertices will be snapped together if within this tolerance. Larger numbers will merge vertices together, and may be useful for o" + "ptimizing your model."

@@ -1,7 +1,7 @@
 @PointClass base(BaseDriveableVehicle) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Vehicles, Crane)
-	studioprop() = prop_vehicle_crane: "Driveable studiomodel crane."
+	appliesto(HL2_ENTITIES)
+	studioprop() 
+= prop_vehicle_crane: "Driveable studiomodel crane."
 	[
 	magnetname(target_destination) : "Magnet entity"
 

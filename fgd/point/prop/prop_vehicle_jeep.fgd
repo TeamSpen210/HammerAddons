@@ -1,7 +1,6 @@
 @PointClass base(BaseDriveableVehicle) 
 	appliesto(HL2_ENTITIES)
-	studioprop() 
-	autovis(Vehicles, Jeep)
+	studioprop()
 = prop_vehicle_jeep: "Driveable studiomodel jeep. In HL2 it's the Scout Car, in EP2 it's the Scout Car/Jalopy."
 	[
 	model(studio) : "World model" : "models/jalopy.mdl"

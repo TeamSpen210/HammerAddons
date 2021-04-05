@@ -1,6 +1,6 @@
 @NpcClass base(BaseZombie) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Zombies, Fast Zombie Torso)
-	studio("models/Zombie/Fast_torso.mdl") = npc_fastzombie_torso: "Fast Zombie Torso"
+	appliesto(HL2_ENTITIES)
+	studio("models/Zombie/Fast_torso.mdl") 
+= npc_fastzombie_torso: "Fast Zombie Torso"
 	[
 	]

@@ -1,10 +1,10 @@
 @PointClass base(BasePropPhysics) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Weapons, HL2 Weapons, Strider Buster)
+	appliesto(HL2_ENTITIES)
 	studioprop() 
 	sphere(fademindist) 
 	sphere(fademaxdist) 
-	studioprop("models/magnusson_device.mdl") = weapon_striderbuster: "Strider Buster"
+	studioprop("models/magnusson_device.mdl") 
+= weapon_striderbuster: "Strider Buster"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

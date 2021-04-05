@@ -1,7 +1,6 @@
 @PointClass base(BaseNPC, ResponseContext)
 	studioprop() line(0 0 255, targetname, TripwireAimTarget) 
-	appliesto(P2CE) 
-	autovis(Entities, NPCs, Portal Rocket Turret)
+	appliesto(P2CE)
 = npc_rocket_turret: "Portal 1 rocket sentry, aims a rocket at a target. " +
 		"In Portal 2, the rocket spawns with a speed of 0 and sometimes gets " +
 		"stuck inside the model, so this will need to be worked around."

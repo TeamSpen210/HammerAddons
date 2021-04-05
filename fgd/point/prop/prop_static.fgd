@@ -23,8 +23,7 @@
 	color(255 255 0)
 	sphere(fademindist) 
 	sphere(fademaxdist) 
-	studioprop() 
-	autovis(Props, Static)
+	studioprop()
 	appliesto(!engine) // Not an actual entity.
 = prop_static: "A prop that doesn't move and doesn't animate."
 	[

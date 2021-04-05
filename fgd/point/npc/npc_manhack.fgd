@@ -1,7 +1,7 @@
 @NpcClass base(BaseNPC, AlyxInteractable) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Combine, Manhack)
-	studio("models/manhack.mdl") = npc_manhack: "Manhack"
+	appliesto(HL2_ENTITIES)
+	studio("models/manhack.mdl") 
+= npc_manhack: "Manhack"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

@@ -1,5 +1,4 @@
 @PointClass base(BaseEntityPoint)
-	autovis(Entities, Constraints, Keep Upright)
 	color(128 128 128) 
 	iconsprite("editor/ficool2/phys_keepupright.vmt") 
 	line(128 128 128, targetname, attach1) 

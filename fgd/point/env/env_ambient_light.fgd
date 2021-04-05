@@ -1,8 +1,7 @@
 @PointClass base(BaseEntityPoint, EnableDisable)
 	sphere(minfalloff) 
 	sphere(maxfalloff) 
-	iconsprite("editor/color_correction.vmt") 
- 	autovis(Point Entities, Globals, Ambient Light)
+	iconsprite("editor/color_correction.vmt")
 	color(200 0 0) = env_ambient_light: "An entity to control the color correction in the map."
 	[
 	color(color255) : "Color (R G B)" : "255 255 255"

@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	autovis(Entities, Constraints, Spring Constraint)
+@PointClass base(BaseEntityPoint)
 	halfgridsnap
 	color(128 128 128) 
 	iconsprite("editor/ficool2/phys_spring")

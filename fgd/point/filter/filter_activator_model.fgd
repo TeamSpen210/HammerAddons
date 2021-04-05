@@ -1,5 +1,4 @@
-@FilterClass base(filter_base) 
-	autovis(Logic, Filters)
+@FilterClass base(filter_base)
 	iconsprite("editor/filter_model.vmt")
 = filter_activator_model: "A filter that filters by the model of the activator."
 	[

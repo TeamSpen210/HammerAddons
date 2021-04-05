@@ -1,6 +1,6 @@
 @PointClass base(Angles, BaseNPCMaker)
-	autovis(Templates, NPC Maker)
-	iconsprite("editor/npc_maker.vmt") = npc_maker: "NPC Maker"
+	iconsprite("editor/npc_maker.vmt") 
+= npc_maker: "NPC Maker"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

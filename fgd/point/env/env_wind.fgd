@@ -1,8 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	iconsprite("editor/env_wind.vmt")
 	color(200 0 0)
-	sphere(windradius) sphere(windradiusinner) 
- 	autovis(Point Entities, Globals, Wind)
+	sphere(windradius) sphere(windradiusinner)
 = env_wind: "An entity to control wind in the map. Partially functional."
 	[
 

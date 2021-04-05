@@ -1,7 +1,7 @@
 @NpcClass base(BaseNPC, RappelNPC)
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Combine, MetroPolice)
-	studio("models/Police.mdl") = npc_metropolice: "MetroPolice"
+	appliesto(HL2_ENTITIES)
+	studio("models/Police.mdl") 
+= npc_metropolice: "MetroPolice"
 	[
 	additionalequipment[engine](string) : "Weapons": "weapon_pistol"
 	additionalequipment(choices) : "Weapons" : "weapon_pistol" =

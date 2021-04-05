@@ -1,8 +1,6 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(HL2_ENTITIES) 
-	autovis(AI, AI Ally Manager)
+	appliesto(HL2_ENTITIES)
 	iconsprite("materials/editor/ficool2/ai_ally_manager.vmt")
- 	autovis(Point Entities, Globals, Ally Manager)
 = ai_ally_manager: "AI Ally Manager"
 	[
 	maxallies(integer) : "Maximum number of allies" : 5

@@ -1,7 +1,6 @@
 @PointClass 
 	iconsprite("editor/comp_pack_replace_soundscript")
 	appliesto(srctools, -engine)
-	autovis(Postcompiler, Packing)
 = comp_pack_replace_soundscript:
 	"Replace a soundscript with a different one."
 	[

@@ -1,7 +1,7 @@
 @PointClass base(BasePropPhysics) 
-	appliesto(P2CE) 
-	autovis(Test Elements, Cubes, Normal)
-	studioprop() = prop_weighted_cube: "Aperture Science Weighted Cube. Presses floor buttons, and can be moved around."
+	appliesto(P2CE)
+	studioprop() 
+= prop_weighted_cube: "Aperture Science Weighted Cube. Presses floor buttons, and can be moved around."
 	[
 	line_cube[-engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 	

@@ -1,6 +1,6 @@
 @PointClass base(Weapon) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Weapons, HL2 Weapons, Gravity Gun)
-	studioprop("models/weapons/w_physics.mdl") = weapon_physcannon: "The Zero-Point Energy Field Manipulator, AKA Gravity Gun."
+	appliesto(HL2_ENTITIES)
+	studioprop("models/weapons/w_physics.mdl") 
+= weapon_physcannon: "The Zero-Point Energy Field Manipulator, AKA Gravity Gun."
 	[
 	]

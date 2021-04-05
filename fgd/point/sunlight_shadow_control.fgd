@@ -3,8 +3,7 @@
 	color(200 0 0) 
 	frustum(fov, nearz, distance, color, -1) 
 	sphere(distance) 
-	sphere(nearz) 
- 	autovis(Point Entities, Globals, Sunlight Shadow Controller)
+	sphere(nearz)
 = sunlight_shadow_control: "An entity to control the sunlight that casts shadows in the map."
 	[
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "50 40 0" : "This is the light cast direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis."

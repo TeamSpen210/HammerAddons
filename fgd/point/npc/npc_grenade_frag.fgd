@@ -1,7 +1,7 @@
 @NpcClass base(BaseNPC) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Hand Grenade)
-	studio("models/Weapons/w_grenade.mdl") = npc_grenade_frag: "Hand Grenade"
+	appliesto(HL2_ENTITIES)
+	studio("models/Weapons/w_grenade.mdl") 
+= npc_grenade_frag: "Hand Grenade"
 	[
 
 	// Inputs

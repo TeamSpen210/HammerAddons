@@ -1,7 +1,7 @@
 @NpcClass base(BaseLogicalNPC) 
-	iconsprite("editor/bullseye.vmt") 
-	autovis(Entities, NPCs, Bullseye NPC)
-	color(255 0 0) = npc_bullseye: "Dummy NPC for targeting or other behavior."
+	iconsprite("editor/bullseye.vmt")
+	color(255 0 0) 
+= npc_bullseye: "Dummy NPC for targeting or other behavior."
 	[
 	linedivider_npc[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 

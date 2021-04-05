@@ -1,7 +1,7 @@
 @PointClass base(BaseNPC, SetSkin) 
-	appliesto(P2CE) 
-	autovis(NPCs, Wheatley)
-	studioprop() = npc_wheatley_boss: "Wheatley NPC stub"
+	appliesto(P2CE)
+	studioprop() 
+= npc_wheatley_boss: "Wheatley NPC stub"
 	[
 	model(studio) : "Model" : "models/npcs/glados/glados_wheatley_boss.mdl"
 	]

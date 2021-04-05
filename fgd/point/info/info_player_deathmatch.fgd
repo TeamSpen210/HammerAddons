@@ -1,5 +1,4 @@
 @PointClass base(BaseEntityPoint, PlayerClass)
-	autovis(Point Entities, Globals, Player Spawn, Deathmatch Spawn)
 	studio("models/player/playerstart.mdl") = info_player_deathmatch: ""
 	[
 	]

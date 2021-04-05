@@ -1,6 +1,5 @@
 // The base filter class is actually an entity you can use.
-@FilterClass base(BaseEntityPoint) 
-	autovis(Logic, Filters)
+@FilterClass base(BaseEntityPoint)
 	color(0 255 0)
 	iconsprite("editor/ficool2/filter_base.vmt")
 = filter_base : "Base filter, which all other filters are based off of. This filter passes any entity whatsoever."

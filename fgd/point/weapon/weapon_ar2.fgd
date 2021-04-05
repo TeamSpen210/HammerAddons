@@ -1,6 +1,6 @@
 @PointClass base(Weapon) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Weapons, HL2 Weapons, AR2)
-	studioprop("models/weapons/w_irifle.mdl") = weapon_ar2: "Assault Rifle 2"
+	appliesto(HL2_ENTITIES)
+	studioprop("models/weapons/w_irifle.mdl") 
+= weapon_ar2: "Assault Rifle 2"
 	[
 	]

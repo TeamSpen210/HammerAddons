@@ -1,6 +1,6 @@
 @NpcClass base(BaseNPC) 
-	appliesto(HL2_ENTITIES) 
-	autovis(Entities, NPCs, Xen, Ichthyosaur)
-	studio("models/ichthyosaur.mdl") = npc_ichthyosaur: "Ichthyosaur."
+	appliesto(HL2_ENTITIES)
+	studio("models/ichthyosaur.mdl") 
+= npc_ichthyosaur: "Ichthyosaur."
 	[
 	]

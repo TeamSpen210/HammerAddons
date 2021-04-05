@@ -1,5 +1,4 @@
 @FilterClass base(filter_base)
-	autovis(Logic, Filters)
 	iconsprite("editor/filter_multiple.vmt") 
 	line(0 255 0, targetname, filter01)
 	line(0 255 0, targetname, filter02)

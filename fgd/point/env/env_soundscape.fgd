@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	sphere() 
-	autovis(Sounds, Soundscapes)
+	sphere()
 	iconsprite("editor/env_soundscape.vmt") 
 	line(255 255 255, targetname, position0) 
 	line(255 255 255, targetname, position1) 

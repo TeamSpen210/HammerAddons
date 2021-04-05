@@ -1,7 +1,6 @@
 @NpcClass base(npc_enemyfinder) 
 	appliesto(HL2_ENTITIES)
-	autovis(Entities, NPCs, EnemyFinder NPC)
- = npc_enemyfinder_combinecannon: "npc_enemyfinder, specifically for use with func_tank_combine_cannon. " + 
+= npc_enemyfinder_combinecannon: "npc_enemyfinder, specifically for use with func_tank_combine_cannon. " + 
 	"This enemyfinder will shoot through any damagable objects obstructing the LOS to the player."
 	[
 	snaptoent(target_destination) : "Name of entity to snap to" : : "Since it can be hard to position these entities with respect to the func_tank brushwork, " +

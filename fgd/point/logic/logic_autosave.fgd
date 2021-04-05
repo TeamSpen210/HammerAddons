@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityPoint) 
-	iconsprite("editor/logic_autosave.vmt") 
- 	autovis(Point Entities, Globals, Autosaves)
-	color(200 0 0) = logic_autosave: "An entity that is used to force an autosave."
+	iconsprite("editor/logic_autosave.vmt")
+	color(200 0 0) 
+= logic_autosave: "An entity that is used to force an autosave."
 	[
 	newlevelunit(boolean) : "Force New Level Unit" : 0 : "If set, the save will discard any savedata from previous levels, for the purpose of keeping savegame filesizes down. Can only be safely used if there is no way for the player to return to previous levels."
 	minimumhitpoints(integer) : "Minimum Hit Points" : 0 : "Don't save dangerous when player has less than this many hitpoints."

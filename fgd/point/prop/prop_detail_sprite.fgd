@@ -1,6 +1,5 @@
 @PointClass
 	base(Origin, Angles, DetailPropBase)
-	autovis(Props, Static)
 	iconsprite("editor/ficool2/prop_detail_sprite")
 	wirebox(position_ul, position_lr)
 	appliesto(!engine)

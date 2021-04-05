@@ -1,6 +1,5 @@
 @NpcClass base(BaseHelicopter) 
 	appliesto(HL2_ENTITIES)
-	autovis(Entities, NPCs, Combine, Hunter-Chopper) 
 	studio("models/combine_helicopter.mdl") 
 = npc_helicopter: "Helicopter"
 	[
