@@ -1,0 +1,8 @@
+// Material exclusion lists for different games.
+
+// Example:
+//
+// @MaterialExclusion(MOMENTUM) [
+//     "models"
+//     "vgui"
+// ]
