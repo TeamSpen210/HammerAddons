@@ -43,8 +43,8 @@ GAME_NAME = dict(GAMES)
 # Specific features that are backported to various games.
 
 FEATURES: Dict[str, Set[str]] = {
-    'P2CE': {'HL2_ENTITIES', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
-    'MOMENTUM': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'PROPCOMBINE'},
+    'P2CE': {'HL2_ENTITIES', 'INSTANCING', 'INST_IO', 'VSCRIPT', 'PROPCOMBINE'},
+    'MOMENTUM': {'INSTANCING', 'INST_IO', 'PROPCOMBINE'},
 }
 
 ALL_FEATURES = {
