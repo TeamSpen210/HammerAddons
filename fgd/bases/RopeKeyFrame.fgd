@@ -1,5 +1,5 @@
 
-@BaseClass base(DXLevelChoice, SystemLevelChoice) = RopeKeyFrame
+@BaseClass base(SystemLevelChoice) = RopeKeyFrame
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

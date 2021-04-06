@@ -1,5 +1,5 @@
 
-@PointClass base(BaseEntityPoint, Angles, DXLevelChoice, SystemLevelChoice)
+@PointClass base(BaseEntityPoint, Angles, SystemLevelChoice)
 	studio("models/editor/cone_helper.mdl") 
 	sphere(spotlightlength) 
 	sphere(spotlightwidth) 

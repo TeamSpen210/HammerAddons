@@ -43,10 +43,7 @@
 
 	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
 	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
-	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, " +
-		"or if the engine is running under dx7 [hl2/ep1/portal] or dx8 [ep2/tf], " +
-		"then the engine will forcibly fade out props even if fademindist/fademaxdist " +
-		"isn't specified. " +
+	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
 		"This scale factor gives you some control over the fade. " +
 		"Using 0 here turns off the forcible fades. " +
 		"Numbers smaller than 1 cause the prop to fade out at further distances, " +
