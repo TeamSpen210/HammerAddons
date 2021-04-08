@@ -3,6 +3,6 @@
 	[
 	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. " +
 		"Set this to a number other than 0 to use that skin instead of the default."
-	skinset[srctools](string) : "Used Skins" : : "Set this to a space seperated list of all the skin numbers which will be used. " +
+	skinset[srctools](string) : "Used Skins" : : "Set this to a space seperated list of all the skin numbers which will be used by this ent ('0 4 8' for example). " +
 		"This allows auto-packing to skip unused ones. If blank all skins are assumed to be used."
 	]
