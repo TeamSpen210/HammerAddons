@@ -24,7 +24,12 @@
 	
 	fademindist(float) : "Start Fade Distance/Pixels" : : "Distance at which the entity starts fading. If <0, the entity will disappear instantly when end fade is hit. The value will scale appropriately if the entity is in a 3D Skybox."
 	fademaxdist(float) : "End Fade Distance/Pixels" : : "Distance at which the entity ends fading. If <0, the entity won't disappear at all. The value will scale appropriately if the entity is in a 3D Skybox."
-	fadescale(float) : "Fade Scale" : : "If specified in the worldspawn, or if the engine is running below DirectX 8, entities will fade out even if the fade distances above aren't specified. This value gives more control over when this happens: numbers smaller than 1 cause the entity to fade out at further distances, and greater than 1 cause it to fade out at closer distances. Using 0 turns off the forced fade altogether."	
+	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
+		"This scale factor gives you some control over the fade. " +
+		"Using 0 here turns off the forcible fades. " +
+		"Numbers smaller than 1 cause the prop to fade out at further distances, " +
+		"and greater than 1 cause it to fade out at closer distances."
+
 	shadowcastdist(integer) : "Shadow Cast Distance" : : "Sets how far the entity casts dynamic shadows, in units. 0 means default distance from the shadow_control entity."
 	disableshadows(boolean) : "Disable Shadows?" : 0 : "Prevent the entity from creating cheap render-to-texture/dynamic shadows."
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents dynamic shadows (e.g. player and prop shadows) from appearing on this entity."
