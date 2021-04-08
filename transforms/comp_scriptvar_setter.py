@@ -1,31 +1,38 @@
 """Implements comp_scriptvar_setter."""
 import re
 from collections import defaultdict
-from typing import Dict, Type, Optional, Callable, Union, Set, List
+from typing import Dict, Type, Optional, Callable, Union
 
 from srctools.bsp_transform import trans, Context
+from srctools.fgd import FGD, ValueTypes
 from srctools.logger import get_logger
-from srctools import Entity, Vec, conv_float, conv_bool
+from srctools.tokenizer import escape_text
+from srctools import Entity, Vec, conv_float, conv_bool, Angle
 
 
 LOGGER = get_logger(__name__)
-MODES: Dict[str, Callable[[Entity, Entity], str]] = {}
+MODES: Dict[str, Callable[[Entity, Entity, FGD], str]] = {}
 
 
 def vs_vec(vec: Vec) -> str:
     """Convert the provided Vec into a VScript Vector constructor code."""
-    return 'Vector({})'.format(vec.join(', '))
+    return 'Vector({})'.format(vec.join())
+
+
+def squirrel_string(val: str) -> str:
+    """Wrap the value in double-quotes to make Squirrel code to construct the string."""
+    return f'"{escape_text(val)}"'
 
 
 class VarData:
     """The info stored on a variable."""
     def __init__(self) -> None:
         # Non-array values.
-        self.scalar = None  # type: Optional[str]
+        self.scalar: Optional[str] = None
         # Array values at a specific index.
-        self.specified_pos = {}  # type: Dict[int, str]
+        self.specified_pos: dict[int, str] = {}
         # Array values at anywhere that fits.
-        self.extra_pos = set()  # type: Set[str]
+        self.extra_pos: set[str] = set()
 
     @property
     def is_array(self) -> bool:
@@ -35,11 +42,10 @@ class VarData:
         """Generate the code for setting this."""
         if self.is_array:
             # First build an array big enough to fit everything.
-
-            array = [None] * (
+            array: list[Optional[str]] = [None] * (
                 max(self.specified_pos.keys(), default=0) + 1 +
                 len(self.extra_pos)
-            )  # type: List[Optional[str]]
+            )
 
             for ind, value in self.specified_pos.items():
                 array[ind] = value
@@ -67,17 +73,17 @@ class VarData:
 def comp_scriptvar(ctx: Context):
     """An entity to allow setting VScript variables to information from the map."""
     # {ent: {variable: data}}
-    set_vars = defaultdict(lambda: defaultdict(VarData))  # type: Dict[Entity, Dict[str, VarData]]
+    set_vars: dict[Entity, dict[str, VarData]] = defaultdict(lambda: defaultdict(VarData))
     # If the index is None, there's no index.
     # If an int, that specific one.
     # If ..., blank index and it's inserted anywhere that fits.
 
     for comp_ent in ctx.vmf.by_class['comp_scriptvar_setter']:
         comp_ent.remove()
-        var_name = orig_var_name = comp_ent['variable']
-        index = None  # type: Union[int, Type[Ellipsis], None]
+        var_name = comp_ent['variable']
+        index: Union[int, Type[Ellipsis], None] = None
 
-        parsed_match = re.fullmatch(r'\s*([^[]+)\[([0-9]*)\]\s*', var_name)
+        parsed_match = re.fullmatch(r'\s*([^[]+)\[([0-9]*)]\s*', var_name)
         if parsed_match:
             var_name, index_str = parsed_match.groups()
             if index_str:
@@ -125,9 +131,9 @@ def comp_scriptvar(ctx: Context):
             )
             continue
         else:
-            code = mode_func(comp_ent, ref_ent)
+            code = mode_func(comp_ent, ref_ent, ctx.fgd)
 
-        ent = None
+        ent: Optional[Entity] = None
         for ent in ctx.vmf.search(comp_ent['target']):
             var_data = set_vars[ent][var_name]
             # Now we've got to match the assignment this is doing
@@ -191,33 +197,33 @@ def comp_scriptvar(ctx: Context):
 
 
 # Functions to call to compute the data to read.
-def mode_const(comp_ent: Entity, ent: Entity) -> str:
+def mode_const(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
     """Set a simple constant."""
     return comp_ent['const']
     
 
-def mode_string(comp_ent: Entity, ent: Entity) -> str:
+def mode_string(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
     """Set a constant, as a string."""
     return '"{}"'.format(comp_ent['const'])
 
 
-def mode_bool(comp_ent: Entity, ent: Entity) -> str:
+def mode_bool(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
     """Convert the value to a boolean."""
     return 'true' if conv_bool(comp_ent['const']) else 'false'
 
 
-def mode_inv_bool(comp_ent: Entity, ent: Entity) -> str:
+def mode_inv_bool(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
     """Convert the value to a boolean, and invert it."""
     return 'false' if conv_bool(comp_ent['const']) else 'true'
 
 
-def mode_name(comp_ent: Entity, ent: Entity) -> str:
+def mode_name(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
     """Set the value to the entity name."""
     return '"{}"'.format(ent['targetname'])
 
 
-def mode_handle(comp_ent: Entity, ent: Entity) -> str:
-    """Compute and return a handle to tis entity."""
+def mode_handle(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+    """Compute and return a handle to this entity."""
     if ent['targetname']:
         return 'Entities.FindByName(null, "{}")'.format(ent['targetname'])
     else:
@@ -228,45 +234,71 @@ def mode_handle(comp_ent: Entity, ent: Entity) -> str:
         )
 
 
-def mode_pos(comp_ent: Entity, ent: Entity) -> str:
+def mode_keyvalue(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+    """Read a keyvalue from the entity, then match the type to a Squirrel type."""
+    if ent is comp_ent:
+        LOGGER.warning(
+            'No reference entity for keyvalue-mode '
+            'comp_scriptvar at {} targeting "{}"!',
+            comp_ent['origin'], comp_ent['target'],
+        )
+        return 'null'
+    keyvalue = comp_ent['const']
+    key = ent[comp_ent['const']]
+    try:
+        key_info = fgd[ent['classname']].kv[keyvalue]
+    except KeyError:
+        LOGGER.warning(
+            'No definition for keyvalue "{}" for {} entities: '
+            'comp_scriptvar at {} targeting "{}"!\nAssuming it\'s a string.',
+            keyvalue, ent['classname'],
+            comp_ent['origin'], comp_ent['target'],
+        )
+        return f'"{key}"'
+    if not key:
+        key = key_info.default
+    return KEYVALUES.get(key_info.type, squirrel_string)(key)
+
+
+def mode_pos(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
     """Return the position of the entity."""
     pos = Vec.from_str(ent['origin'])
     scale = conv_float(comp_ent['const'], 1.0)
     return vs_vec(scale * pos)
 
 
-def mode_ang(comp_ent: Entity, ent: Entity) -> str:
+def mode_ang(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
     """Return the angle of the entity, as a Vector."""
     return vs_vec(Vec.from_str(ent['angles']))
 
 
-def mode_off(comp_ent: Entity, ent: Entity) -> str:
+def mode_off(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
     """Return the offset from the ent to the reference."""
     scale = conv_float(comp_ent['const'], 1.0)
     offset = Vec.from_str(ent['origin']) - Vec.from_str(comp_ent['origin'])
     return vs_vec(offset * scale)
 
 
-def mode_dist(comp_ent: Entity, ent: Entity) -> str:
+def mode_dist(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
     """Return the distance from the ent to the reference."""
     scale = conv_float(comp_ent['const'], 1.0)
     offset = Vec.from_str(ent['origin']) - Vec.from_str(comp_ent['origin'])
-    return offset.mag() * scale
+    return str(offset.mag() * scale)
 
 
-def _mode_axes(norm: Vec) -> Callable[[Entity, Entity], str]:
+def _mode_axes(norm: Vec) -> Callable[[Entity, Entity, FGD], str]:
     """Return the given direction vector."""
-    def mode_func(comp_ent: Entity, ent: Entity) -> str:
+    def mode_func(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
         """Rotate the axis by the given value."""
-        out = norm.copy().rotate_by_str(ent['angles', '0 0 0'])
+        out = round(norm @ Angle.from_str(ent['angles', '0 0 0']), 6)
         scale = conv_float(comp_ent['const'], 1.0)
         return vs_vec(scale * out)
     return mode_func
     
 
-def _mode_pos_axis(axis: str) -> Callable[[Entity, Entity], str]:
+def _mode_pos_axis(axis: str) -> Callable[[Entity, Entity, FGD], str]:
     """Return a single axis of the ent's position."""
-    def mode_func(comp_ent: Entity, ent: Entity) -> str:
+    def mode_func(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
         """Rotate the axis by the given value."""
         pos = Vec.from_str(ent['origin'])
         scale = conv_float(comp_ent['const'], 1.0)
@@ -285,3 +317,32 @@ MODES.update(
     for name, func in globals().items()
     if name.startswith('mode_')
 )
+
+# Keyvalue types -> equivalent Squirrel code, if not just stringified.
+KEYVALUES = {
+    ValueTypes.VOID: lambda val: 'null',
+    ValueTypes.SPAWNFLAGS: str,
+
+    # Simple values
+    ValueTypes.BOOL: lambda v: 'true' if conv_bool(v) else 'false',
+    ValueTypes.INT: str,
+    ValueTypes.FLOAT: str,
+    ValueTypes.VEC: lambda val: vs_vec(Vec.from_str(val)),
+    ValueTypes.ANGLES: lambda val: vs_vec(Vec.from_str(val)),
+
+    ValueTypes.STR_VSCRIPT: lambda val: f'[{", ".join(map(squirrel_string, val.split()))}]',
+
+    ValueTypes.VEC_LINE: lambda val: vs_vec(Vec.from_str(val)),
+    ValueTypes.VEC_ORIGIN: lambda val: vs_vec(Vec.from_str(val)),
+    ValueTypes.VEC_AXIS: lambda val: vs_vec(Vec.from_str(val)),
+
+    # Space seperated, convert to an array.
+    ValueTypes.COLOR_1: lambda val: f'[{", ".join(val.split())}]',
+    ValueTypes.COLOR_255: lambda val: f'[{", ".join(val.split())}]',
+    ValueTypes.SIDE_LIST: lambda val: f'[{", ".join(val.split())}]',
+
+    ValueTypes.EXT_VEC_DIRECTION: lambda val: vs_vec(Vec.from_str(val)),
+    ValueTypes.EXT_VEC_LOCAL: lambda val: vs_vec(Vec.from_str(val)),
+    ValueTypes.EXT_ANGLE_PITCH: lambda val: vs_vec(Vec.from_str(val)),
+    ValueTypes.EXT_ANGLES_LOCAL: lambda val: vs_vec(Vec.from_str(val)),
+}
