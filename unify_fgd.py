@@ -71,6 +71,8 @@ ALL_TAGS.update('UNTIL_' + t.upper() for t in GAME_ORDER)
 # If the tag is present, run to backport newer FGD syntax to older engines.
 POLYFILLS = []  # type: List[Tuple[str, Callable[[FGD], None]]]
 
+PolyfillFuncT = TypeVar('PolyfillFuncT', bound=Callable[[FGD], None])
+
 # This ends up being the C1 Reverse Line Feed in CP1252,
 # which Hammer displays as nothing. We can suffix visgroups with this to
 # have duplicates with the same name.
