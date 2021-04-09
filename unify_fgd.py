@@ -544,7 +544,7 @@ def action_import(
 
     expanded = expand_tags(frozenset({engine_tag}))
 
-    print('Reading FGDs:'.format(len(fgd_paths)))
+    print('Reading {} FGDs:'.format(len(fgd_paths)))
     for path in fgd_paths:
         print(path)
         with RawFileSystem(str(path.parent)) as fsys:
