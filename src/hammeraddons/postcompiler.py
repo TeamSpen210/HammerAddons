@@ -125,15 +125,21 @@ def main(argv: List[str]) -> None:
 
     use_comma_sep = conf.get(bool, 'use_comma_sep')
     if use_comma_sep is None:
-        # Guess the format, by picking whatever the first output uses.
-        for ent in vmf.entities:
-            for out in ent.outputs:
-                use_comma_sep = out.comma_sep
-                break
-        if use_comma_sep is None:
-            LOGGER.warning('No outputs in map, could not determine BSP I/O format!')
+        # Guess the format, by checking existing outputs.
+        used_comma_sep = {
+            out.comma_sep
+            for ent in vmf.entities
+            for out in ent.outputs
+        }
+        try:
+            [use_comma_sep] = used_comma_sep
+        except ValueError:
+            if used_comma_sep:
+                LOGGER.warning("Both BSP I/O formats in map? This shouldn't be possible.")
+            else:
+                LOGGER.warning('No outputs in map, could not determine BSP I/O format!')
             LOGGER.warning('Set "use_comma_sep" in srctools.vdf.')
-        use_comma_sep = False
+            use_comma_sep = False  # Kinda arbitary.
 
     LOGGER.info('Running transforms...')
     run_transformations(vmf, fsys, packlist, bsp_file, game_info, studiomdl_loc)
