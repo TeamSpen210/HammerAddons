@@ -14,6 +14,8 @@
 	useareaportalfade(boolean) : "Fade Area Portal?" : 0 : "If the area portal should use the specified fade distances to fade out. Otherwise, it will be set to a distance of 10000 (effectively infinite)."
 	areaportalfadestart(float) : "Fade Start Distance" : 0 : "The distance at which the area portal starts fading out."
 	areaportalfadeend(float) : "Fade End Distance" : 0 : "The distance at which the area portal turns completely opaque."
+	open(boolean) : "Start Open" : 0 : "If set, the door starts in the open state."
+	locked(boolean) : "Start Locked" : 0 : "If set, the door starts locked and can no longer change open or closed state."
 
 	// Inputs
 	input Open(void) : "Open the door and cause the areaportal to return to fading."
