@@ -1,4 +1,4 @@
-@PointClass base(BaseLight, Angles) 
+@PointClass base(Angles) 
 	autovis(Lights, Environment Light)
 	iconsprite("editor/ficool2/light_environment.vmt") 
 	color(255 255 0)
