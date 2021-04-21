@@ -1,5 +1,4 @@
 """"Compile static prop cables, instead of sprites."""
-import itertools
 import math
 from collections import defaultdict
 from enum import Enum
@@ -120,7 +119,7 @@ class Config(NamedTuple):
             'Ropes cannot have less than 3 sides! (node at {})',
         )
         coll_segments = cls._parse_min(
-            ent, 'coll_segments', 0,
+            ent, 'coll_segments', -1,
             'Collision segment count for rope at '
             '{} must be positive or zero!'
         )
@@ -491,10 +490,14 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
     time = 0
     step = TIME_STEP
     gravity = Vec(z=ROPE_GRAVITY) * step**2
+    # Valve uses 3 iterations, but they only ever have 10 subdivisions.
+    # More causes the springs to fail and start sagging, so increase the
+    # iteration to compensate if you use more.
+    constraint_iter = range(max(6, int(seg_count/2)))
+    LOGGER.debug('Solving rope slack for {} nodes with {} spring iterations...', seg_count, constraint_iter)
 
     # Start/end doesn't move.
     anchor1, *moveable, anchor2 = points
-
     while time < SIM_TIME:
         time += step
         points[0].pos = node1.pos.copy()
@@ -506,16 +509,20 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
             )
 
         # Spring constraints.
-        for _ in range(3):
+        for _ in constraint_iter:
             for phys1, phys2 in springs:
                 diff = phys1.pos - phys2.pos
                 dist = diff.mag_sq()
                 if dist > max_len_sqr:
-                    diff *= 0.5 * (1 - (max_len / math.sqrt(dist)))
-                    if phys1 is not anchor1:
-                        phys1.pos -= diff
-                    if phys2 is not anchor2:
+                    diff *= 0.55 * (1 - (max_len / math.sqrt(dist)))
+                    if phys1 is anchor1:
                         phys2.pos += diff
+                    elif phys2 is anchor2:
+                        phys1.pos -= diff
+                    else:
+                        # Move towards the middle.
+                        phys1.pos -= 0.5 * diff
+                        phys2.pos += 0.5 * diff
 
     return [
         Node(point.pos, node1.config, point.radius)
@@ -800,7 +807,6 @@ def comp_prop_rope(ctx: Context) -> None:
                     found.extend(nodes)
         else:
             found.extend(name_to_nodes.get(target, ()))
-        found.sort()
         for dest in found:
             connections_from[node.id].append(dest)
             connections_to[dest.id].append(node)
@@ -811,7 +817,7 @@ def comp_prop_rope(ctx: Context) -> None:
     # To group nodes, take each group out, then search recursively through
     # all connections from it to other nodes.
     todo = set(all_nodes.values())
-    with ModelCompiler.from_ctx(ctx, 'ropes', version=1) as compiler:
+    with ModelCompiler.from_ctx(ctx, 'ropes', version=2) as compiler:
         while todo:
             dyn_ents: List[Entity] = []
             node = todo.pop()
