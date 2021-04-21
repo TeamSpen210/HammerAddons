@@ -1,15 +1,39 @@
-robocopy hammer build/hammer  /S /PURGE
-robocopy instances build/instances /XF *.vmx /S /PURGE
-robocopy transforms build/postcompiler/transforms /PURGE
-python unify_fgd.py exp p2 srctools -o "build/portal2.fgd"
-python unify_fgd.py exp p1 srctools -o "build/portal.fgd"
-python unify_fgd.py exp hl2 srctools -o "build/halflife2.fgd"
-python unify_fgd.py exp ep1 ep2 srctools -o "build/episodic.fgd"
-python unify_fgd.py exp gmod srctools -o "build/garrysmod.fgd"
-python unify_fgd.py exp csgo srctools -o "build/csgo.fgd"
-python unify_fgd.py exp tf2 srctools -o "build/tf.fgd"
-python unify_fgd.py exp asw srctools -o "build/asw.fgd"
-python unify_fgd.py exp l4d srctools -o "build/l4d.fgd"
-python unify_fgd.py exp l4d2 srctools -o "build/left4dead2.fgd"
-python unify_fgd.py exp infra srctools -o "build/infra.fgd"
-python unify_fgd.py exp mesa srctools -o "build/bms.fgd"
+@echo off
+
+SET games=p2 p1 hl2 ep1 ep2 gmod csgo tf2 asw l4d l4d2 infra mesa
+SET game=%1
+
+:: Make sure game isn't empty
+:while
+IF [%game%]==[] (echo Games: %games% & echo Enter game to build. Use ALL to build every game. & SET /P game= & GOTO :while)
+
+IF /I %game%==ALL (
+  CALL :copy_hammer_files
+  (FOR %%i in (%games%) do (
+    CALL :build_game "%%i"
+  ))
+  EXIT
+) ELSE (
+  (FOR %%i in (%games%) do (
+    IF /I %game%==%%i (
+      CALL :copy_hammer_files
+      CALL :build_game %game%
+      EXIT
+    )
+  ))
+  echo Unknown game. Exitting. & EXIT /B 1
+)
+
+:build_game
+  echo Building FGD for %1...
+  py unify_fgd.py exp %1 srctools -o "build/%1.fgd"
+  IF %ERRORLEVEL% NEQ 0 (echo Building FGD for %1 has failed. Exitting. & EXIT)
+  EXIT /B
+
+:copy_hammer_files
+  echo Copying Hammer files...
+  IF %ERRORLEVEL% LSS 8 robocopy hammer build/hammer /S /PURGE
+  IF %ERRORLEVEL% LSS 8 robocopy instances build/instances /XF *.vmx /S /PURGE
+  IF %ERRORLEVEL% LSS 8 robocopy transforms build/postcompiler/transforms /PURGE
+  IF %ERRORLEVEL% LSS 8 EXIT /B 0
+  echo Failed copying Hammer files. Exitting. & EXIT

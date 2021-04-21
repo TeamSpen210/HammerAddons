@@ -36,9 +36,9 @@ GAMES = [
     ('DODS', 'Day of Defeat: Source'),
     ('CSS',  'Counter-Strike: Source'),
 
-    ('HL2',  'Half-Life 2'),
-    ('EP1',  'Half-Life 2 Episode 1'),
-    ('EP2',  'Half-Life 2 Episode 2'),
+    ('HL2', 'Half-Life 2'),
+    ('EP1', 'Half-Life 2 Episode 1'),
+    ('EP2', 'Half-Life 2 Episode 2'),
 
     # Not chronologically here, but it uses 2013 as the base.
     ('MBASE', 'Mapbase'),
@@ -46,18 +46,18 @@ GAMES = [
     ('MESA', 'Black Mesa'),
     ('GMOD', "Gary's Mod"),
 
-    ('TF2',  'Team Fortress 2'),
-    ('P1', 'Portal'),
-    ('L4D', 'Left 4 Dead'),
-    ('L4D2', 'Left 4 Dead 2'),
-    ('ASW', 'Alien Swam'),
-    ('P2', 'Portal 2'),
+    ('TF2',   'Team Fortress 2'),
+    ('P1',    'Portal'),
+    ('L4D',   'Left 4 Dead'),
+    ('L4D2',  'Left 4 Dead 2'),
+    ('ASW',   'Alien Swarm'),
+    ('P2',    'Portal 2'),
     ('INFRA', 'INFRA'),
-    ('CSGO', 'Counter-Strike Global Offensive'),
+    ('CSGO',  'Counter-Strike Global Offensive'),
 
-    ('SFM', 'Source Filmmaker'),
+    ('SFM',   'Source Filmmaker'),
     ('DOTA2', 'Dota 2'),
-    ('PUNT', 'PUNT'),
+    ('PUNT',  'PUNT'),
     ('P2DES', 'Portal 2: Desolation'),
 ]  # type: List[Tuple[str, str]]
 
@@ -69,8 +69,8 @@ GAME_NAME = dict(GAMES)
 FEATURES: Dict[str, Set[str]] = {
     # 2013 engine backports this.
     'HL2': {'INSTANCING'},
-    'EP1': {'INSTANCING'},
-    'EP2': {'INSTANCING'},
+    'EP1': {'HL2', 'INSTANCING'},
+    'EP2': {'HL2', 'EP1', 'INSTANCING'},
 
     'MBASE': {'INSTANCING', 'VSCRIPT'},
     'MESA': {'INSTANCING', 'INST_IO'},
