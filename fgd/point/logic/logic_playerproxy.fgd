@@ -30,6 +30,10 @@
 	input ForcePhysicsGrabController[P2CE](void) : "Force the player to use the physics grab controller for all objects that are picked up."
 	input ResetGrabControllerBehavior[P2CE](void) : "Resets the grab controller used by the player to its default behavior."
 	input SetMotionBlurAmount[P2CE](float) : "Forces the motion blur effect on the player. Set to < 0 to disable this override."
+	input GivePortalGunFull[P2CE](void) : "Gives the player a portal gun with both colors. (Overrides if player is already holding one)"
+	input GivePortalGunPrimary[P2CE](void) : "Gives the player a portal gun with primary color. (Overrides if player is already holding one)"
+	input GivePortalGunSecondary[P2CE](void) : "Gives the player a portal gun with only secondary color. (Overrides if player is already holding one)"
+	input GivePortalGunNone[P2CE](void) : "Gives the player a portal gun with no activated colors. (Overrides if player is already holding one)"
 
 	output OnFlashlightOn(float) : "Fired when the player turns on his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
 	output OnFlashlightOff(float) : "Fired when the player turns off his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
