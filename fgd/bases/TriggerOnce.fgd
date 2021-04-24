@@ -3,9 +3,10 @@
 	line(255 255 255, targetname, filtername) 
 = TriggerOnce
 	[
-	spawnflags(flags)  =
+	spawnflags(flags) =
 		[
 		1: "Clients/Players" : 1
+		8192: "Allow ghosts to fire this trigger" : 0 [MOMENTUM]
 		2: "NPCs" : 0
 		4: "func_pushable" : 0
 		8: "Physics Objects" : 0
