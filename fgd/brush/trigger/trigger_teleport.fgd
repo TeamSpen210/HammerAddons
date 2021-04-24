@@ -1,12 +1,4 @@
-@SolidClass base(Trigger)
-	appliesto(-MOMENTUM)
-	line(255 255 255, targetname, filtername)
-	line(255 255 0, targetname, target)
-	line(0 255 0, target, landmark)
-= trigger_teleport: "A trigger volume that teleports entities that touch it. " +
-	"Entities are teleported to the Remote Destination, and have their angles set to that of the Remote Destination's. " +
-	"If a Local Destination Landmark is specified, teleported entities are offset from " +
-	"the target by their initial offset from the landmark, and their angles are left alone."
+@BaseClass appliesto(-MOMENTUM) base(Trigger) = _trigger_teleport
 	[
 	spawnflags(flags) =
 		[
@@ -36,9 +28,9 @@
 	// Inputs
 	input SetRemoteDestination(string) : "Set a new target to teleport to."
 	]
+@BaseClass appliesto(+MOMENTUM) base(TeleTrigger) = _trigger_teleport_mom []
 
-@SolidClass base(TeleTrigger)
-	appliesto(+MOMENTUM)
+@SolidClass base(_trigger_teleport, _trigger_teleport_mom)
 	line(255 255 255, targetname, filtername)
 	line(255 255 0, targetname, target)
 	line(0 255 0, target, landmark)
