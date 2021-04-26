@@ -1,4 +1,4 @@
-@SolidClass base(BaseEntityBrush, BaseDustParticleSpawner) = func_dustcloud: "A brush entity that spawns a translucent dust cloud within its volume."
+@SolidClass base(BaseDustParticleSpawner) = func_dustcloud: "A brush entity that spawns a translucent dust cloud within its volume."
 	[
 	alpha(integer) : "Alpha" : 30
 	sizemin(string) : "Minimum Particle Size" : 100

@@ -1,4 +1,4 @@
-@SolidClass base(BaseEntityBrush, BaseDustParticleSpawner) = func_dustmotes: "A brush entity that spawns sparkling dust motes within its volume."
+@SolidClass base(BaseDustParticleSpawner) = func_dustmotes: "A brush entity that spawns sparkling dust motes within its volume."
 	[
 	Alpha(integer) : "Particle Translucency (0 - 255)" : 30 : "Translucency of the particles."
 	SizeMin(string) : "Minimum Particle Size" : 100 : "This value determines the minimum size the particles can be."

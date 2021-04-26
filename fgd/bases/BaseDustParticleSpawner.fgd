@@ -2,13 +2,10 @@
 	sphere(distmax)
 = BaseDustParticleSpawner
 	[
-	// These two values break dustmotes.
-	solid[engine](integer) : "Solid" : 0
-	solid(choices) readonly: "Solid" : 0 : "This needs to be zero to allow this to not collide." = 
-		[
-		0: "Non-solid"
-		]
-	origin(origin) readonly: "Origin": "" : "If offset, this breaks."
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+
+	vscripts[VSCRIPT](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
+	thinkfunction[VSCRIPT](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
 
 	startdisabled(boolean) : "Start Disabled" : 0
 	color(color255) : "Particle Color (R G B)" : "255 255 255"
