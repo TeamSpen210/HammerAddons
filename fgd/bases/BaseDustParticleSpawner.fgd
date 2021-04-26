@@ -15,7 +15,7 @@
 	lifetimemax(integer) : "Maximum Particle Lifetime" : 5 : "Maximum number of seconds until each particle dies. Particles live for a random duration between 'Minimum Particle Lifetime' and this. Will be clamped to a max of 15."
 	distmax(integer) : "Maximum Visible Distance" : 1024 : "Maximum distance at which particles are visible. They fade to translucent at this distance."
 	frozen(boolean) : "Frozen" : 0 : "When set, this entity spawns the number of particles in SpawnRate immediately, and then goes inactive."
-	nowind(boolean) : "Unaffected by Wind" : 0 : "When set, wind doesn't affect the particles of this entity."
+	affectedbywind(boolean) : "Affected by Wind" : 1 : "When set, the dust will be affected by any env_wind entity settings in the map."
 
 	// Inputs
 	input TurnOn(void) : "Turn on."
