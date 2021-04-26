@@ -1,6 +1,6 @@
 @SolidClass base(BaseDustParticleSpawner) = func_dustcloud: "A brush entity that spawns a translucent dust cloud within its volume."
 	[
-	alpha(integer) : "Alpha" : 30
-	sizemin(string) : "Minimum Particle Size" : 100
-	sizemax(string) : "Maximum Particle Size" : 200
+	sizemin(string) : "Minimum Particle Size" : 100 : "This value determines the minimum size the particles can be."
+	sizemax(string) : "Maximum Particle Size" : 200 : "This value determines the maximum size the particles can be."
+	alpha(integer) : "Particle Translucency (0 - 255)" : 30 : "Translucency of the particles."
 	]
