@@ -1,6 +1,6 @@
 @BaseClass 
 	sphere(distmax)
-= BModelParticleSpawner
+= BaseDustParticleSpawner
 	[
 	// These two values break dustmotes.
 	solid[engine](integer) : "Solid" : 0
