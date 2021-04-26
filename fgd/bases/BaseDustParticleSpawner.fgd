@@ -11,6 +11,7 @@
 	color(color255) : "Particle Color (R G B)" : "255 255 255"
 	spawnrate(integer) : "Particle Per Second" : 40 : "Number of particles to spawn, per second."
 	speedmax(integer) : "Maximum Particle Speed" : 13 : "Maximum speed that the particles can move after spawning."
+	fallspeed(integer) : "Particle Fall Speed" : 0 : "How fast the particles fall to the ground. This value is subtracted from the particle speed in the Z-axis only."
 	lifetimemin(integer) : "Minimum Particle Lifetime" : 3 : "Minimum number of seconds until each particle dies. Particles live for a random duration between this and 'Maximum Particle Lifetime'."
 	lifetimemax(integer) : "Maximum Particle Lifetime" : 5 : "Maximum number of seconds until each particle dies. Particles live for a random duration between 'Minimum Particle Lifetime' and this. Will be clamped to a max of 15."
 	distmax(integer) : "Maximum Visible Distance" : 1024 : "Maximum distance at which particles are visible. They fade to translucent at this distance."
