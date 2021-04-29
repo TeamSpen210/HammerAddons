@@ -3,6 +3,7 @@
 	autovis(Entities, NPCs, Hover Turret)
 	studioprop("models/npcs/hover_turret.mdl")
 	line(255 255 255, targetname, attachtarget)
+	frustum(45, 16, 1024, 255 0 0 100, -1)
 = npc_hover_turret: "The cut Hover Turret, which hangs from the ceiling and fires a laser at the player. Missing its model by default, and somewhat buggy."
 [
 	canPushPlayer(boolean) : "Laser Pushes Player" : 0 : "Should the hover turret's laser deal knockback? Usually only works while the player is in the air."
