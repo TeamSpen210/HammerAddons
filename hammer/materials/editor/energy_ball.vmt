@@ -1,0 +1,7 @@
+Sprite
+{
+	$basetexture "editor/energy_ball"
+	$spriteorientation "vp_parallel"
+	$spriteorigin "[ 0.50 0.50 ]"
+	$no_fullbright 1
+}
