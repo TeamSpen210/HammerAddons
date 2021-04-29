@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityPoint, PlayerClass) 
 	autovis(Point Entities, Globals, Player Spawn, Deathmatch Spawn)
 	appliesto(HL2DM, Mesa, HL2, EP1, EP2, P1) 
-	studio("models/player/playerstart.mdl") = info_player_deathmatch: "Generic multiplayer spawn point, used in games which don't have their own."
+	studio("models/editor/playerstart.mdl") = info_player_deathmatch: "Generic multiplayer spawn point, used in games which don't have their own."
 	[
     itemstogive[Mesa](string) : "List of items to spawn the player with."
 
