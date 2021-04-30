@@ -26,7 +26,7 @@ IF /I %game%==ALL (
 
 :build_game
   echo Building FGD for %1...
-  py unify_fgd.py exp %1 srctools -o "build/%1.fgd"
+  python unify_fgd.py exp %1 srctools -o "build/%1.fgd"
   IF %ERRORLEVEL% NEQ 0 (echo Building FGD for %1 has failed. Exitting. & EXIT)
   EXIT /B
 
