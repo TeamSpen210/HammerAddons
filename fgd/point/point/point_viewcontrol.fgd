@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	studioprop("models/editor/camera.mdl") 
 	color(200 0 0) 
-	frustum(fov, 16, 256, 255 255 255 10, -1) 
+	frustum(fov, 16, 256, _frustum_color, -1) 
 	line(255 255 0, targetname, target) 
 	line(255 255 0, targetname, moveto) 
 = point_viewcontrol: "A camera entity that controls the player's view. While it's active, the player will see out of the camera."

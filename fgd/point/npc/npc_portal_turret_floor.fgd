@@ -8,7 +8,7 @@
 	appliesto(P1, P2) 
 	autovis(Entities, NPCs, Portal Turret)
 	sphere(turretRange) 
-	frustum(45, 16, TurretRange, 255 0 0 100, -1) 
+	frustum(45, 16, TurretRange, _frustum_color, -1) 
 = npc_portal_turret_floor: "Aperture Science Sentry Turret."
 	[
 	damageforce(boolean) : "Damage Pushes Player" : 0 : "Being hit by this turret will push the player back."

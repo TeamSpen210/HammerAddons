@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityPoint)
 	color(200 0 0) 
 	studioprop("models/editor/camera.mdl") 
-	frustum(fov, 16, 256, 255 255 255 10, -1) 
+	frustum(fov, 16, 256, _frustum_color, -1) 
 	line(255 255 0, targetname, target_entity) 
 = point_viewcontrol_multiplayer: "A camera entity that controls players' views. which works in multiplayer. " +
 	"While it's active, the players will see out of the camera."
