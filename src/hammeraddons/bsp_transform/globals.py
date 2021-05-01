@@ -116,7 +116,7 @@ def strip_ents(ctx: Context):
             ent.remove()
 
     # Strip extra keys added in the engine.
-    to_remove = []
+    to_remove: list[str] = []
     for ent in ctx.vmf.entities:
         to_remove.clear()
         for key, value in ent.keys.items():
