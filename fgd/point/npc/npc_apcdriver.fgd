@@ -1,6 +1,7 @@
 @NpcClass base(VehicleDriverNPC) 
-	appliesto(HL2_ENTITIES)
-	studio("models/roller.mdl") = npc_apcdriver: "NPC used to drive an APC vehicle."
+	appliesto(HL2_ENTITIES, +USE_VEHICLES)
+	studio("models/roller.mdl")
+= npc_apcdriver: "NPC used to drive an APC vehicle."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

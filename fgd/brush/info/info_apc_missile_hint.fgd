@@ -1,5 +1,5 @@
-@SolidClass base(BaseEntityBrush, Angles, EnableDisable) 
-	appliesto(HL2_ENTITIES) 
+@SolidClass base(BaseEntityBrush, Angles, EnableDisable)
+	appliesto(HL2_ENTITIES, +USE_VEHICLES)
 	line(255 0 0, targetname, target)
 = info_apc_missile_hint: "Something that helps APC missiles guide. If the missile can hit the associated target entitybetween the time it takes the current enemy to enter + leave the hint, then the missile will guide to the entity."
 	[

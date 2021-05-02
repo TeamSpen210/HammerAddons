@@ -1,4 +1,5 @@
 @NpcClass base(VehicleDriverNPC)
+	appliesto(+USE_VEHICLES)
 	studio("models/roller.mdl") 
 = npc_vehicledriver: "NPC used to drive a target vehicle."
 	[

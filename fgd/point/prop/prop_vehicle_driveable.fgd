@@ -1,4 +1,5 @@
 @PointClass base(BaseDriveableVehicle, SetModel)
+	appliesto(+USE_VEHICLES)
 	studioprop() 
 = prop_vehicle_driveable: "Generic driveable studiomodel vehicle."
 	[

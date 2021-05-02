@@ -1,4 +1,5 @@
 @PointClass base(BaseVehicle, SetModel)
+	appliesto(+USE_VEHICLES)
 	studioprop() 
 = prop_vehicle: "Studiomodel vehicle that can be driven via inputs."
 	[

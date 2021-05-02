@@ -1,4 +1,5 @@
-@BaseClass base(BasePropPhysics) 
+@BaseClass base(BasePropPhysics)
+	appliesto(+USE_VEHICLES)
 = BaseVehicle
 	[
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/jeep_test.txt"

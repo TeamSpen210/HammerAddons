@@ -1,5 +1,6 @@
-
-@BaseClass base(BaseNPC) = VehicleDriverNPC
+@BaseClass base(BaseNPC)
+	appliesto(+USE_VEHICLES)
+= VehicleDriverNPC
 	[
 	vehicle(target_destination) : "Vehicle to drive"
 	spawnflags(flags) : "spawnflags" =

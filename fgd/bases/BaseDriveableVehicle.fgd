@@ -1,4 +1,6 @@
-@BaseClass base(BaseVehicle) = BaseDriveableVehicle
+@BaseClass base(BaseVehicle)
+	appliesto(+USE_VEHICLES)
+= BaseDriveableVehicle
 	[
 	vehiclelocked(boolean) : "Start locked" : 0
 

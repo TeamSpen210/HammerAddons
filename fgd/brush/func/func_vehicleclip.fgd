@@ -1,4 +1,6 @@
-@SolidClass base(BaseEntityBrush) = func_vehicleclip: 
+@SolidClass base(BaseEntityBrush)
+	appliesto(+USE_VEHICLES)
+= func_vehicleclip: 
     "Acts as a functional clip or barrier affecting vehicle entities. " +
     "Should be used with the tools/toolscontrolclip texture." 
 	[
