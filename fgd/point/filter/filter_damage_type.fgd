@@ -12,7 +12,7 @@
 		2: "Bullet"
 		4: "Slash"
 		8: "Burn"
-		16: "Vehicle"
+		16: "Vehicle" [+USE_VEHICLES]
 		32: "Fall"
 		64: "Blast"
 		128: "Club"

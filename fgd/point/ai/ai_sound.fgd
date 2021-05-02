@@ -35,7 +35,7 @@
 		1024: "Physics Danger"
 		2048: "Sniper Danger (only scares sniper)"
 		4096: "Move Away - Most NPCs will clear the radius of this sound when heard."
-		8192: "Player Vehicle"
+		8192: "Player Vehicle" [+USE_VEHICLES]
 		16384: "Readiness - Low"
 		32768: "Readiness - Medium"
 		65536: "Readiness - High"

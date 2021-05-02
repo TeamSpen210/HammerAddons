@@ -7,11 +7,11 @@
 		2: "NPCs" : 0
 		8: "Physics Objects" : 1
 		16: "Only player ally NPCs" : 0
-		32: "Only clients in vehicles" : 0
+		32: "Only clients in vehicles" : 0 [+USE_VEHICLES]
 		64: "Everything (not including physics debris)" : 0
-		512: "Only clients *not* in vehicles" : 0
+		512: "Only clients *not* in vehicles" : 0 [+USE_VEHICLES]
 		1024: "Physics debris" : 0
-		2048: "Only NPCs in vehicles (respects player ally flag)" : 0
+		2048: "Only NPCs in vehicles (respects player ally flag)" : 0 [+USE_VEHICLES]
 		]
 		
 	visible(boolean) : "Visible" : 1 : "If the fizzler is visible. This controls whether sounds will play."
