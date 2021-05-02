@@ -23,10 +23,10 @@
 	input SetAnimLockedEntity(string) : "Sets Alyx to take her animation and cycle position from another entity."
 	input ClearAnimLockedEntity(void) : "Stops Alyx from taking her animation locking from another character."
 	input GiveEMP(boolean) : "Gives or removes the EMP tool."
-	input EnterVehicle(string) : "Make Alyx enter the vehicle specified by name."
-	input EnterVehicleImmediately(string) : "Make Alyx enter the vehicle specified by name immediately via teleportation."
-	input ExitVehicle(void) : "Make Alyx exit the vehicle she's in."
-	input CancelEnterVehicle(void) : "Stops Alyx from trying to enter the vehicle if she's outside of it."
+	input EnterVehicle[+USE_VEHICLES](string) : "Make Alyx enter the vehicle specified by name."
+	input EnterVehicleImmediately[+USE_VEHICLES](string) : "Make Alyx enter the vehicle specified by name immediately via teleportation."
+	input ExitVehicle[+USE_VEHICLES](void) : "Make Alyx exit the vehicle she's in."
+	input CancelEnterVehicle[+USE_VEHICLES](void) : "Stops Alyx from trying to enter the vehicle if she's outside of it." 
 
 	// Outputs
 	output OnFinishInteractWithObject(void) : "Fires when Alyx finishes interacting with an object (usually hacking it)."

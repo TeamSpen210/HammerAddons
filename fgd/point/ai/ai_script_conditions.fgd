@@ -111,16 +111,16 @@
 		2: "Don't care"
 		]
 
-	actorinvehicle[engine](integer) : "Actor in a vehicle" : 2
-	actorinvehicle(choices) : "Actor in a vehicle" : 2 : "Checks the actor's state in a vehicle" =
+	actorinvehicle[engine, +USE_VEHICLES](integer) : "Actor in a vehicle" : 2
+	actorinvehicle[+USE_VEHICLES](choices) : "Actor in a vehicle" : 2 : "Checks the actor's state in a vehicle" =
 		[
 		0: "No"
 		1: "Yes"
 		2: "Don't care"
 		]
 
-	playerinvehicle[engine](integer) : "Player in a vehicle" : 2
-	playerinvehicle(choices) : "Player in a vehicle" : 2 : "Checks the player's state in a vehicle" =
+	playerinvehicle[engine, +USE_VEHICLES](integer) : "Player in a vehicle" : 2
+	playerinvehicle[+USE_VEHICLES](choices) : "Player in a vehicle" : 2 : "Checks the player's state in a vehicle" =
 		[
 		0: "No"
 		1: "Yes"

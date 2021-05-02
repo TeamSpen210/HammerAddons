@@ -5,5 +5,5 @@
 	[
 
 	// Inputs
-	input AttachToVehicle(string) : "Attach to the jeep with the specified name."
+	input AttachToVehicle[+USE_VEHICLES](string) : "Attach to the jeep with the specified name."
 	]

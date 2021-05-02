@@ -42,7 +42,7 @@
 	dustoff4(target_destination) : "Name of dustoff point for NPC 4."
 	dustoff5(target_destination) : "Name of dustoff point for NPC 5."
 	dustoff6(target_destination) : "Name of dustoff point for NPC 6."
-	apcvehiclename(target_destination) : "Name of the APC to drop."
+	apcvehiclename[+USE_VEHICLES](target_destination) : "Name of the APC to drop."
 
 	invulnerable(boolean) : "Invulnerable" : "0"
 
