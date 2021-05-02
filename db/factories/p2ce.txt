@@ -216,7 +216,6 @@ func_tracktrain
 func_train
 func_traincontrols
 func_useableladder
-func_vehicleclip
 func_wall
 func_wall_toggle
 func_water
@@ -283,7 +282,6 @@ info_target
 info_target_instructor_hint
 info_target_personality_sphere
 info_teleport_destination
-info_vehicle_groundspawn
 infodecal
 instanced_scripted_scene
 item_nugget
@@ -356,7 +354,6 @@ npc_rocket_turret
 npc_security_camera
 npc_template_maker
 npc_turret_floor
-npc_vehicledriver
 npc_wheatley_boss
 paint_sphere
 paint_stream
@@ -483,9 +480,6 @@ prop_tic_tac_toe_panel
 prop_tractor_beam
 prop_under_button
 prop_under_floor_button
-prop_vehicle
-prop_vehicle_choreo_generic
-prop_vehicle_driveable
 prop_wall_projector
 prop_weighted_cube
 raggib
@@ -554,7 +548,6 @@ trigger_waterydeath
 trigger_weapon_dissolve
 trigger_weapon_strip
 trigger_wind
-vehicle_viewcontroller
 vgui_indicator_panel
 vgui_level_placard_display
 vgui_movie_display
