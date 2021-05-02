@@ -192,7 +192,21 @@ def main(argv: List[str]) -> None:
         if conf.get(bool, 'soundscript_manifest'):
             packlist.write_manifest()
 
-    packlist.pack_into_zip(bsp_file, blacklist=pack_blacklist, ignore_vpk=False)
+    dump_path = conf.get(str, 'pack_dump')
+    if dump_path:
+        packlist.pack_into_zip(
+            bsp_file,
+            blacklist=pack_blacklist,
+            ignore_vpk=False,
+            dump_loc=Path(game_info.root, dump_path.lstrip('#')).absolute().resolve(),
+            only_dump=dump_path.startswith('#'),
+        )
+    else:
+        packlist.pack_into_zip(
+            bsp_file,
+            blacklist=pack_blacklist,
+            ignore_vpk=False,
+        )
 
     with bsp_file.packfile() as pak_zip:
         # List out all the files, but group together files with the same extension.
