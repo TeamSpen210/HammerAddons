@@ -5,7 +5,7 @@
 	goal(string) : "Target Entity"
 	waitpointname(target_destination) : "Point to wait at if the target's not visible"
 	waitdistance(float) : "Wait until player gets this close"
-	leaddistance(float) : "Lead Distance" : 64 : "The player is considered to be lagging if he's beyond this distance.  The Actor will consider retrieving when the player is 4x 'Lead Distance' away."
+	leaddistance(float) : "Lead Distance" : 64 : "The player is considered to be lagging if they are beyond this distance. The Actor will consider retrieving when the player is 4x 'Lead Distance' away."
 	retrievedistance(float) : "Retrieve Distance" : 96 : "The distance from the player that the NPC should return to when retrieving a lagging player. Must be between ('Lead Distance' + 24) and ('Lead Distance' * 4) to avoid the leader ping-ponging."
 	successdistance(float) : "Success Distance" : 0 : "The distance from the player (to the NPC) that the player must be within for the Lead to succeed, once the NPC has reached the goal. If set to 0, it'll use the lead distance instead (for legacy support)."
 	run(boolean) : "Run instead of Walk" : 0
