@@ -7,8 +7,7 @@
 @PointClass base(BaseNPC, _npc_portal_turret_floor_p1_mdl, _npc_portal_turret_floor_p2_mdl) 
 	appliesto(P1, P2) 
 	autovis(Entities, NPCs, Portal Turret)
-	sphere(turretRange) 
-	frustum(45, 16, TurretRange, _frustum_color, -1) 
+	frustum(_frustum_fov, _frustum_near, TurretRange, _frustum_color, -1)
 = npc_portal_turret_floor: "Aperture Science Sentry Turret."
 	[
 	damageforce(boolean) : "Damage Pushes Player" : 0 : "Being hit by this turret will push the player back."
@@ -67,6 +66,9 @@
 		]
 
 	skin[P2](integer) : "[H] Skin" : 0 : "The skin to show, mainly for the normal model."
+
+	turretrange[P1, !engine](integer) readonly : "<Maximum Range>" : 1500 : "How far the turret will be able to see targets. Always 1500 in Portal 1, but this keyvalue is needed to display the preview."
+	_frustum_color[!engine](string) readonly : "<Frustum Color>" : "255 0 0" : "Ignore, needed to color the range preview."
 
 	// Inputs
 	input FireBullet(string) : "Causes the turret to instantly fire at the specified entity."

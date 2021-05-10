@@ -1,9 +1,11 @@
 @PointClass base(BaseEntityPoint) 
 	studioprop("models/editor/camera.mdl") 
 	iconsprite("editor/point_devshot_camera.vmt") 
-	frustum(fov, 16, 256, _frustum_color, -1) 
+	frustum(fov, _frustum_near, _frustum_far, _frustum_color, -1) 
 = point_devshot_camera: "An entity used by the -makedevshots system, which automatically takes screenshots at the position of every devshot camera in the level."
 	[
 	cameraname(string) : "Camera Name" : : "Used as the name of the directory to store screenshots from this camera. Must be unique within the level."
 	fov(integer) : "Camera FOV" : 75 : "FOV of this camera."
+
+	_frustum_far[!engine](integer) readonly : "<Far Plane>" : 1024 : "Ignore, needed to display the view frustum preview."
 	]
