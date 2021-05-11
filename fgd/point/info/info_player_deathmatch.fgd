@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint, PlayerClass)
-	studio("models/player/playerstart.mdl") = info_player_deathmatch: ""
+	studio("models/editor/playerstart.mdl")
+= info_player_deathmatch: ""
 	[
 	]
