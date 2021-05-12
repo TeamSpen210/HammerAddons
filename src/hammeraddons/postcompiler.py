@@ -145,10 +145,12 @@ def main(argv: List[str]) -> None:
     run_transformations(vmf, fsys, packlist, bsp_file, game_info, studiomdl_loc)
 
     if studiomdl_loc is not None and args.propcombine:
-        decomp_cache_loc = conf.get(str, 'propcombine_cache')
-        if decomp_cache_loc is not None:
-            decomp_cache_loc = (game_info.root / decomp_cache_loc).resolve()
+        decomp_cache_path = conf.get(str, 'propcombine_cache')
+        if decomp_cache_path is not None:
+            decomp_cache_loc = (game_info.root / decomp_cache_path).resolve()
             decomp_cache_loc.mkdir(parents=True, exist_ok=True)
+        else:
+            decomp_cache_loc = None
         if conf.get(bool, 'propcombine_crowbar'):
             # argv[0] is the location of our script/exe, which lets us locate
             # Crowbar from there.

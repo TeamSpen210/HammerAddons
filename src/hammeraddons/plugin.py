@@ -82,7 +82,7 @@ class PluginFinder(MetaPathFinder):
         self,
         fullname: str,
         path: Optional[Sequence[AnyStr]],
-        target: Optional[types.ModuleType] = ...
+        target: Optional[types.ModuleType] = None,
     ) -> Optional[ModuleSpec]:
         """Load a module."""
         source_ind, subpath = parse_name(self.prefix, fullname)
@@ -93,12 +93,13 @@ class PluginFinder(MetaPathFinder):
         except IndexError:
             return None
 
-        loader = SourceFileLoader(fullname, source.folder / subpath)
+        loader = SourceFileLoader(fullname, str(source.folder / subpath))
         return spec_from_loader(fullname, loader)
 
     def load_all(self) -> None:
         """Load all the plugin modules."""
         for i, source in enumerate(self.sources):
+            paths: Iterable[Path]
             if source.autoload_files:
                 paths = source.autoload_files
             else:
