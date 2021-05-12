@@ -67,23 +67,20 @@ GAME_NAME = dict(GAMES)
 # Specific features that are backported to various games.
 
 FEATURES: Dict[str, Set[str]] = {
-    # 2013 engine backports this.
-    'HL2': {'INSTANCING'},
-    'EP1': {'HL2', 'INSTANCING'},
-    'EP2': {'HL2', 'EP1', 'INSTANCING'},
+    'EP1': {'HL2'},
+    'EP2': {'HL2', 'EP1'},
 
-    'MBASE': {'INSTANCING', 'VSCRIPT'},
-    'MESA': {'INSTANCING', 'INST_IO'},
+    'MBASE': {'VSCRIPT'},
+    'MESA': {'INST_IO'},
     'GMOD': {'HL2', 'EP1', 'EP2'},
     
-    'L4D': {'INSTANCING'},
-    'L4D2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
-    'TF2': {'INSTANCING', 'PROP_SCALING'},
-    'ASW': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
-    'P2': {'INSTANCING', 'INST_IO', 'VSCRIPT'},
-    'CSGO': {'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
-    'INFRA': {'P2', 'INSTANCING', 'INST_IO', 'VSCRIPT'},
-    'P2DES': {'P2', 'INSTANCING', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
+    'L4D2': {'INST_IO', 'VSCRIPT'},
+    'TF2': {'PROP_SCALING'},
+    'ASW': {'INST_IO', 'VSCRIPT'},
+    'P2': {'INST_IO', 'VSCRIPT'},
+    'CSGO': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
+    'INFRA': {'P2', 'INST_IO', 'VSCRIPT'},
+    'P2DES': {'P2', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 }
 
 ALL_FEATURES = {
