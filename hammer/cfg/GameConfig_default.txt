@@ -8,7 +8,7 @@
         {
             "GameData0"		"..\..\p2ce\p2ce.fgd"
             "DefaultTextureScale"		"0.250000"
-            "DefaultLightmapScale"		"128"
+            "DefaultLightmapScale"		"16"
             "GameExe"		"chaos.exe"
             "DefaultSolidEntity"		"func_detail"
             "DefaultPointEntity"		"info_player_start"
