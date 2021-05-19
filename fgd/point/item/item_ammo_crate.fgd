@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityAnimating)
 	studioprop("models/items/ammocrate_pistol.mdl")
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 = item_ammo_crate: "Ammo Crate"
 	[
 	ammotype[engine](string) : "Ammo Type" : 0

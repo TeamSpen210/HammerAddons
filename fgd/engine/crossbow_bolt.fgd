@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating) 
-	appliesto(+engine, HL2_ENTITIES)
+	appliesto(+engine, +HL2_ENTITIES)
 = crossbow_bolt: "The projectile fired by the crossbow."
 	[
 	]

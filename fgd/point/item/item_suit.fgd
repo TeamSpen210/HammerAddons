@@ -1,5 +1,5 @@
 @PointClass base(Item) 
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 	studio("models/items/hevsuit.mdl")
 = item_suit: "HEV Suit"
 	[

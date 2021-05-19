@@ -1,5 +1,5 @@
 @NpcClass base(VehicleDriverNPC) 
-	appliesto(HL2_ENTITIES, +USE_VEHICLES) 
+	appliesto(+HL2_ENTITIES, +USE_VEHICLES) 
 	studio("models/roller.mdl")
 = npc_cranedriver: "NPC used to drive cranes."
 	[

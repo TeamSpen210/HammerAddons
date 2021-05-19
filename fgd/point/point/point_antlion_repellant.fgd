@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 	sphere(repelradius) 
 	iconsprite("editor/point_antlion_repellant.vmt")
 	color(0 0 255) = point_antlion_repellant: "Antlion Repellant"

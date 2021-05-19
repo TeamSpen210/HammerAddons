@@ -1,5 +1,5 @@
 @PointClass base(BasePropPhysics) 
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 	studioprop() 
 	sphere(fademindist) 
 	sphere(fademaxdist) 

@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC, SetModel) 
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 	studio("models/missile_defense.mdl") 
 = npc_missiledefense: "Missile Defense"
 	[

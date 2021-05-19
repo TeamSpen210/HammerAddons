@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC, AlyxInteractable) 
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 	studio("models/manhack.mdl") 
 = npc_manhack: "Manhack"
 	[

@@ -1,5 +1,5 @@
 @NpcClass base(BaseHelicopter) 
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 	studio("models/combine_helicopter.mdl") 
 = npc_helicopter: "Helicopter"
 	[

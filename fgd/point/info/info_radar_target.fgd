@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 	iconsprite("editor/info_target.vmt") 
 	sphere(radius) = info_radar_target: "Jalopy Radar Beacon"
 	[

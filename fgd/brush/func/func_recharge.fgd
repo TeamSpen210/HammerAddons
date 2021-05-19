@@ -1,5 +1,5 @@
 @SolidClass base(BaseEntityVisBrush) 
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 = func_recharge: "Old brush-based suit battery recharger."
 	[
 	spawnflags(flags) : "spawnflags" =

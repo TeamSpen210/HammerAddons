@@ -1,5 +1,5 @@
 @PointClass base(Angles, BaseNPCMaker) 
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 	line(192 192 192, targetname, templatename)
 	size(-8 -8 -8, 8 8 8) 
 	color(0 0 255) 

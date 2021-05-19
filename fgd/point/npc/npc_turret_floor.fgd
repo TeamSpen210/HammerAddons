@@ -1,5 +1,5 @@
 @PointClass base(BaseNPC) 
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 	studio("models/combine_turrets/floor_turret.mdl")
 = npc_turret_floor: "Combine Floor Turret"
 	[

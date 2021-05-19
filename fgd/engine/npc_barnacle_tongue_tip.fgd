@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating)
-	appliesto(+engine, HL2_ENTITIES)
+	appliesto(+engine, +HL2_ENTITIES)
 	studio("models/props_junk/rock001a.mdl") 
 = npc_barnacle_tongue_tip: "The endpoint of banacle tounges, used internally to attach physics to."
 	[

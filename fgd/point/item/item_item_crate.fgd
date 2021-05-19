@@ -1,6 +1,6 @@
 @PointClass base(BasePropPhysics, Angles, DamageFilter, BaseFadeProp) 
 	studioprop("models/items/item_item_crate.mdl")
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 = item_item_crate: "Item Crate"
 	[
 	cratetype[engine](integer) : "Crate Contents": 0

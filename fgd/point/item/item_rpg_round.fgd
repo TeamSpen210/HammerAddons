@@ -1,5 +1,5 @@
 @PointClass base(ItemAmmo) 
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 	studio("models/weapons/w_missile_closed.mdl") = item_rpg_round: "RPG Round"
 	[
 	]

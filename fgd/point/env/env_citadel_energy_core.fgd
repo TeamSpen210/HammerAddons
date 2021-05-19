@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, Angles) 
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 	studio("models/editor/cone_helper.mdl") 
 	iconsprite("editor/env_citadel_energy_core.vmt")
 = env_citadel_energy_core: "Special effect for the energy cores in the Citadel, or for the Portal Unstationary Scaffold. " +

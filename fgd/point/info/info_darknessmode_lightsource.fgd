@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 	sphere(LightRadius)
 = info_darknessmode_lightsource: "Specifies a lit location for Alyx's EP1 darkness mode."
 	[

@@ -1,5 +1,5 @@
 @PointClass base(item_ammo_smg1) 
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 = item_box_mrounds: "Alternate classname for a box of SMG1 ammo."
 	[
 	]

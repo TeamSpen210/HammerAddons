@@ -1,4 +1,4 @@
 @SolidClass base(func_brush) 
-	appliesto(HL2_ENTITIES) = func_bulletshield: "A shield that stops only bullets."
+	appliesto(+HL2_ENTITIES) = func_bulletshield: "A shield that stops only bullets."
 	[
 	]

@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityAnimating)
 	studio("models/props_combine/health_charger001.mdl")
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 = item_healthcharger: "Health Charger"
 	[
 	output OutRemainingHealth(float) : "Remaining Health."

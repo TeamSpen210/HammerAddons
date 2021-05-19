@@ -1,5 +1,5 @@
 @PointClass base(ItemAmmo) 
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 	studio("models/items/AR2_Grenade.mdl") 
 = item_ammo_smg1_grenade: "SMG1's grenade ammo."
 	[

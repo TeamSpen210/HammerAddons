@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(+engine, HL2_ENTITIES)
+	appliesto(+engine, +HL2_ENTITIES)
 = ar2explosion: "Internal entity used to implement the explosion itself."
 	[
 	]

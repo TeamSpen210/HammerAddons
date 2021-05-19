@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC) 
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 	size(-2 -2 -2, 2 2 2)
 = npc_spotlight: "Spotlight"
 	[

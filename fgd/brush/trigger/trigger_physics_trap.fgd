@@ -1,5 +1,5 @@
 @SolidClass base(Trigger, Angles) 
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 = trigger_physics_trap: "A volumetric trigger that disintegrates enemies"
 	[
 	dissolvetype[engine](integer) : "Dissolve Type": 0

@@ -1,5 +1,5 @@
 @PointClass base(npc_bullseye) 
-	appliesto(+engine, HL2_ENTITIES)
+	appliesto(+engine, +HL2_ENTITIES)
 = bullseye_strider_focus: "Duplicate of npc_bullseye, used so that ai_relationships don't accidentally alter relationships to these."
 	[
 	]

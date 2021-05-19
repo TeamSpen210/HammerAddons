@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating) 
-	appliesto(+engine, HL2_ENTITIES)
+	appliesto(+engine, +HL2_ENTITIES)
 	studioprop("models/weapons/w_bugbait.mdl")
 = npc_grenade_bugbait: "The midair prop seen when bugbait is thrown."
 	[

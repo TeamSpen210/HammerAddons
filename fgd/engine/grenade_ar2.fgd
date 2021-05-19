@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating) 
-	appliesto(+engine, HL2_ENTITIES)
+	appliesto(+engine, +HL2_ENTITIES)
 	studioprop("models/Weapons/ar2_grenade.mdl")
 = grenade_ar2: "The grenade fired by the SMG."
 	[

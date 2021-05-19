@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC) 
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 	studio("models/lostcoast/fisherman/fisherman.mdl") 
 = npc_fisherman: "Fisherman NPC from Lost Coast."
 	[

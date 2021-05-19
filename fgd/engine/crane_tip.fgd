@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating) 
-	appliesto(+engine, HL2_ENTITIES, +USE_VEHICLES)
+	appliesto(+engine, +HL2_ENTITIES, +USE_VEHICLES)
 = crane_tip: "The entity spawned for the tip of prop_vehicle_crane, supporting the cable."
 	[
 	]

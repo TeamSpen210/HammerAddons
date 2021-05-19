@@ -1,5 +1,5 @@
 @NpcClass base(npc_enemyfinder) 
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 = npc_enemyfinder_combinecannon: "npc_enemyfinder, specifically for use with func_tank_combine_cannon. " + 
 	"This enemyfinder will shoot through any damagable objects obstructing the LOS to the player."
 	[

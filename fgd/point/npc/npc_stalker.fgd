@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC) 
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 	studio("models/Stalker.mdl") 
 = npc_stalker: "Stalker"
 	[

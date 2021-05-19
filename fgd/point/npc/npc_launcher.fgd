@@ -1,5 +1,5 @@
 @PointClass base(BaseLogicalNPC) 
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 	size( -4 -16 -16, 4 16 16 ) 
 	studio("models/weapons/w_rocket_launcher.mdl")
 	sphere(minrange)

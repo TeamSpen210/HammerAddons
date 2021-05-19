@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC) 
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 	studio("models/antlion.mdl") 
 	sphere()
 = npc_antlion: "Antlions will run away from ai_sound, type: Thumper."

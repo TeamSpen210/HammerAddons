@@ -1,6 +1,6 @@
 @PointClass base(BaseActBusy)
 	size(-8 -8 -8, 8 8 8)
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 = ai_goal_actbusy: "AI Goal Act Busy"
 	[
 	seeentity(target_name_or_class) : "Sight Entity" : : "The Sight Entity (if you provide one) " +

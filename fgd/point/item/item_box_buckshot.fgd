@@ -1,5 +1,5 @@
 @PointClass base(ItemAmmo) 
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 	studio("models/items/BoxBuckshot.mdl") = item_box_buckshot: "Box Buckshot"
 	[
 	]

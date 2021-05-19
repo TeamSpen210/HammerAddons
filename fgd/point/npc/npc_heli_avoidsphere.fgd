@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 	iconsprite("editor/env_firesource") 
 	color(255 255 0) 
 	sphere(radius)

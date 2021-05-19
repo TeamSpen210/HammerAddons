@@ -1,5 +1,5 @@
 @PointClass base(BaseDriveableVehicle) 
-	appliesto(HL2_ENTITIES, +USE_VEHICLES)
+	appliesto(+HL2_ENTITIES, +USE_VEHICLES)
 	studioprop() 
 = prop_vehicle_crane: "Driveable studiomodel crane."
 	[

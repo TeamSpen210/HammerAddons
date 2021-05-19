@@ -1,5 +1,5 @@
 @SolidClass base(Trigger) 
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 = trigger_rpgfire: "A volumetric trigger that triggers whenever an RPG is fired within it."
 	[
 	]

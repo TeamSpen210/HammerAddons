@@ -1,5 +1,5 @@
 @NpcClass base(TalkNPC) 
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 	studio("models/gman.mdl") 
 = npc_gman: "The G-Man."
 	[

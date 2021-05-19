@@ -1,5 +1,5 @@
 @PointClass base(ItemAmmo)
-	appliesto(HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES)
 	studio("models/items/crossbowrounds.mdl") = item_ammo_crossbow: "Box of Crossbow ammo"
 	[
 	]

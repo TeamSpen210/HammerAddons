@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating)
-	appliesto(+engine, HL2_ENTITIES)
+	appliesto(+engine, +HL2_ENTITIES)
 	studio("models/leech.mdl")
 = ent_watery_leech: "The leeches produced by trigger_waterydeath."
 	[

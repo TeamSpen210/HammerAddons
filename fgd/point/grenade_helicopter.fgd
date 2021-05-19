@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPhysics) 
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 	studio("models/combine_helicopter/helicopter_bomb01.mdl") = grenade_helicopter: "HL2 Combine Helicopter's bomb."
 	[
 	spawnflags(flags) : "spawnflags" =

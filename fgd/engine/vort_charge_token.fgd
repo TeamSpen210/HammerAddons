@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	appliesto(+engine, HL2_ENTITIES)
+	appliesto(+engine, +HL2_ENTITIES)
 = vort_charge_token: "Glowing particles Vorts push towards a target to heal/charge it."
 	[
 	]   

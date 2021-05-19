@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	appliesto(+engine, HL2_ENTITIES)
+	appliesto(+engine, +HL2_ENTITIES)
 = grenade_beam: "The beam effect which follows grenades around."
 	[
 	]   

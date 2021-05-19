@@ -1,6 +1,6 @@
 @PointClass base(BaseActBusy)
 	size(-8 -8 -8, 8 8 8)
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 = ai_goal_actbusy_queue: "AI Goal Act Busy Queue"
 	[
 	node_exit(target_destination) : "Exit Node" : : "The name of the node the first NPC in the queue should move to when he leaves the head of the queue."

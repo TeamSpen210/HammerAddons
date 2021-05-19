@@ -1,5 +1,5 @@
 @PointClass base(BasePropPhysics) 
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 	studioprop("models/weapons/hunter_flechette.mdl")
  = hunter_flechette: "Explosive darts shot by Combine Hunters."
 	[

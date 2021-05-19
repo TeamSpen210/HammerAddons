@@ -1,5 +1,5 @@
 @PointClass base(item_ammo_pistol_large) 
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 = item_large_box_srounds: "Alternate classname for a large box of Pistol ammo."
 	[
 	]

@@ -1,5 +1,5 @@
 @NpcClass base(BaseNPC, CombineScanner)
-	appliesto(HL2_ENTITIES) 
+	appliesto(+HL2_ENTITIES) 
 	studio("models/shield_scanner.mdl")
 = npc_clawscanner: "Claw Scanner"
 	[
