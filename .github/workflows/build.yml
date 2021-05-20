@@ -12,6 +12,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
       - name: Install srctools
         run: .\install_srctools.bat
       - name: FGD build and folder copy
@@ -27,6 +31,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
       - name: Install srctools
         run: bash ./install_srctools.sh
       - name: FGD build and folder copy
