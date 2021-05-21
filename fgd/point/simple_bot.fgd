@@ -1,4 +1,5 @@
 @PointClass base(BaseNPC, EnableDisable)
+	appliesto(+USE_NEXTBOT)
 	studio("models/humans/group01/female_01.mdl")
 = simple_bot : "Simple NextBot"
 	[
