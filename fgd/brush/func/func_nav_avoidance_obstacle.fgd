@@ -1,4 +1,5 @@
 @SolidClass base(BaseEntityBrush)
+	appliesto(+USE_NAV_MESH)
 = func_nav_avoidance_obstacle: "A brush entity that tells bots to avoid nav areas touching its AABB."
 	[
 	StartDisabled(boolean) : "Start Disabled" : 0

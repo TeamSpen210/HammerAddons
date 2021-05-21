@@ -1,4 +1,5 @@
-@SolidClass base(NavCost) 
+@SolidClass base(NavCost)
+	appliesto(+USE_NAV_MESH)
 = func_nav_avoid: "Influence bots to avoid this region by increasing the pathfinding cost within it."
 	[
 	]

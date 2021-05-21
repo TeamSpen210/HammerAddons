@@ -1,4 +1,6 @@
 @PointClass base(BaseEntityPoint)
-	sphere(radius) = point_hiding_spot: "Adds a hiding spot to the nav mesh at this location."
+	appliesto(+USE_NAV_MESH)
+	sphere(radius)
+= point_hiding_spot: "Adds a hiding spot to the nav mesh at this location."
 	[
 	]

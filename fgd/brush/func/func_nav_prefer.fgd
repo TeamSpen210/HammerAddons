@@ -1,3 +1,5 @@
-@SolidClass base(NavCost) = func_nav_prefer: "Influence bots to prefer this region by decreasing the pathfinding cost within it."
+@SolidClass base(NavCost)
+	appliesto(+USE_NAV_MESH)
+= func_nav_prefer: "Influence bots to prefer this region by decreasing the pathfinding cost within it."
 	[
 	]
