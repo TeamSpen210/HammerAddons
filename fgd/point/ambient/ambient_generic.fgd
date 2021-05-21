@@ -24,14 +24,14 @@
 	soundflags(choices) : "Sound Flags" : 0 : "Additional options for your sound." =
 	[
 		0: "None"
-		128: "[128] Pause when game is paused"
+		128: "[128] Pause when game is paused" [ +USE_PAUSE ]
 		256: "[256] Ignore phonemes (no lip-syncing)"
 		1024: "[1024] Don't overwrite existing sound on channel (untested)"
 
-		384: "Pause and ignore phonemes"
+		384: "Pause and ignore phonemes" [ +USE_PAUSE ]
 		1280: "Ignore phonemes and don't overwrite"
-		1152: "Pause and don't overwrite"
-		1408: "Pause, ignore phonemes and don't overwrite"
+		1152: "Pause and don't overwrite" [ +USE_PAUSE ]
+		1408: "Pause, ignore phonemes and don't overwrite" [ +USE_PAUSE ]
 	]
 
 	preset[engine](integer) : "Dynamic Presets" : 0
