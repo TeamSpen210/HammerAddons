@@ -3,6 +3,7 @@
 	[
 	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator collides with me. " +
 		"See filter_activator_name for more explanation. Allow means 'Allow to Block' for this entity."
+	StartDisabled(boolean) : "Start Disabled?" : 0
 
 	input Enable(void) : "Enable this entity."
 	input Disable(void) : "Disable this entity."
