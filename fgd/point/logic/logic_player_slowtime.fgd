@@ -1,4 +1,5 @@
-@PointClass base(BaseEntityPoint) 
+@PointClass base(BaseEntityPoint)
+	appliesto(+P2CE, +USE_SLOWTIME)
 	color(200 0 0) 
 	iconsprite("editor/logic_player_slowtime.vmt")
 = logic_player_slowtime: "Start/stops player being in slow time"
