@@ -1,5 +1,5 @@
-@PointClass base(BaseEntityPoint) 
-	appliesto(+engine)
+@PointClass base(BaseEntityPoint)
+	appliesto(+engine, +USE_SAVE_RESTORE)
 = event_queue_saveload_proxy: "Internal entity used to store pending I/O events in the save game."
 	[
 	]

@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint)
+	appliesto(+USE_SAVE_RESTORE)
 	iconsprite("editor/ficool2/player_loadsaved")
 = player_loadsaved: "Load Auto-Saved game"
 	[

@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint)
+	appliesto(+USE_SAVE_RESTORE)
 	color(200 0 0)
 	iconsprite("editor/logic_active_autosave.vmt")
 = logic_active_autosave: "An entity that is used to look for opportunities to autosave."

@@ -11,8 +11,8 @@
 	startdark(boolean) : "Level Fade In" : 0
 	gametitle(boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts."
 
-	newunit[engine](boolean) : "New Level Unit" : 0
-	newunit(choices) : "New Level Unit" : 0 : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. " +
+	newunit[engine, +USE_SAVE_RESTORE](boolean) : "New Level Unit" : 0
+	newunit[+USE_SAVE_RESTORE](choices) : "New Level Unit" : 0 : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. " +
 		"Only set it to Yes if the player cannot return to any previous levels." =
 		[
 		0: "No, keep current"
