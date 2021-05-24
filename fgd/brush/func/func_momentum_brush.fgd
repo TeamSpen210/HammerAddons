@@ -1,4 +1,4 @@
-@SolidClass base(func_brush, Inputfilter, Campaign)
+@SolidClass base(func_brush, Campaign)
 	appliesto(MOMENTUM)
 = func_momentum_brush : "Brush entity used for the final stages in the campaign. The brush activates when the given stage of the given world is beat (or not beat, if this brush is inverted)" 
 	[
