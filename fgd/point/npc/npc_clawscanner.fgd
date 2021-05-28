@@ -1,6 +1,6 @@
 @NpcClass base(BaseNPC, CombineScanner)
-	appliesto(EP1, EP2, P1) 
-	studio("models/shield_scanner.mdl") 
+	appliesto(HL2, EP1, EP2, P1) 
+	studioprop("models/shield_scanner.mdl") 
 	autovis(Entities, NPCs, Combine, Combine Claw Scannner)
 = npc_clawscanner: "Claw Scanner"
 	[
