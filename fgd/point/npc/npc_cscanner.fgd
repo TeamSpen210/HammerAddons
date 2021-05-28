@@ -1,11 +1,16 @@
 @NpcClass base(BaseNPC, CombineScanner)
 	appliesto(EP1, EP2, HL2, P1) 
-	studio("models/combine_scanner.mdl")  
+	studioprop()  
 	autovis(Entities, NPCs, Combine, City Scanner)
 = npc_cscanner: "City Scanner"
 	[
-	// This works even in episodic, but only claw scanners ever drop landmines.
-	// So you should just use that in that situation.
-	input DeployMine[-EP1, -EP2](void) : "Drop landmine (if carrying one)"
-	input EquipMine[-EP1, -EP2](void) : "Equip with landmine"
+	model[!engine](choices) : "[H] Model" : "models/combine_scanner.mdl" : "These become Claw Scanners if the map name starts with 'd3_c17'. "+
+	"Use this to change the model shown in Hammer." =
+		[
+		"models/combine_scanner.mdl" : "City Scanner"
+		"models/shield_scanner.mdl" : "Claw Scanner"
+		]
+
+	input DeployMine(void) : "Drop landmine (if carrying one)"
+	input EquipMine(void) : "Equip with landmine"
 	]
