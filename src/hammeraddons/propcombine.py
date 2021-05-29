@@ -458,10 +458,13 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
                 elif token_value == '$collisionmodel':
                     phy_smd = qc_loc / tok.expect(Token.STRING)
                     phy_scale = scale_factor
-                    if tok.peek()[0] is Token.BRACE_OPEN:
-                        for body_type, body_value in tok.block('$collisionmodel'):
-                            if body_type is Token.STRING and body_value.casefold() == '$concave':
+                    next_typ, next_val = next(tok.skipping_newlines())
+                    if next_typ is Token.BRACE_OPEN:
+                        for body_value in tok.block('$collisionmodel', consume_brace=False):
+                            if body_value.casefold() == '$concave':
                                 is_concave = True
+                    else:
+                        tok.push_back(next_typ, next_val)
 
                 # We can't support this.
                 elif token_value in (
