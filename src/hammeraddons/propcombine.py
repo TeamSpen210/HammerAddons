@@ -37,12 +37,14 @@ from srctools.compiler.mdl_compiler import ModelCompiler
 
 LOGGER = get_logger(__name__)
 
+
 class QC(NamedTuple):
     path: str  # QC path.
     ref_smd: str  # Location of main visible geometry.
     phy_smd: Optional[str]  # Relative location of collision model, or None
     ref_scale: float  # Scale of main model.
     phy_scale: float  # Scale of collision model.
+    is_concave: bool  # If the collision model is known to be concave.
 
 QC_TEMPLATE = '''\
 $staticprop
@@ -376,7 +378,7 @@ def load_qcs(qc_map: Dict[str, QC], qc_folder: Path) -> None:
                 continue
 
             (
-                model_name,
+                model_name, is_concave,
                 ref_scale, ref_smd,
                 phy_scale, phy_smd,
             ) = qc_result
@@ -396,17 +398,19 @@ def load_qcs(qc_map: Dict[str, QC], qc_folder: Path) -> None:
                 str(phy_smd).replace('\\', '/') if phy_smd else None,
                 ref_scale,
                 phy_scale,
+                is_concave,
             )
 
 
 def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
-    str,
+    str, bool,
     float, Path,
-    float, Optional[Path]
+    float, Optional[Path],
 ]]:
     """Parse a single QC file."""
     model_name = ref_smd = phy_smd = None
     scale_factor = ref_scale = phy_scale = 1.0
+    is_concave = False
 
     with open(str(qc_path)) as f:
         tok = Tokenizer(
@@ -454,6 +458,10 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
                 elif token_value == '$collisionmodel':
                     phy_smd = qc_loc / tok.expect(Token.STRING)
                     phy_scale = scale_factor
+                    if tok.peek()[0] is Token.BRACE_OPEN:
+                        for body_type, body_value in tok.block('$collisionmodel'):
+                            if body_type is Token.STRING and body_value.casefold() == '$concave':
+                                is_concave = True
 
                 # We can't support this.
                 elif token_value in (
@@ -481,7 +489,7 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
         return None
 
     return (
-        model_name,
+        model_name, is_concave,
         ref_scale, ref_smd,
         phy_scale, phy_smd,
     )
@@ -501,6 +509,9 @@ def decompile_model(
         try:
             with info_path.open() as f:
                 cache_props = Property.parse(f).find_key('qc', [])
+            # Added later, remake if not present.
+            if 'concave' not in cache_props:
+                raise KeyValError
         except (FileNotFoundError, KeyValError):
             pass
         else:
@@ -518,6 +529,7 @@ def decompile_model(
                     phy_smd,
                     cache_props.float('ref_scale', 1.0),
                     cache_props.float('phy_scale', 1.0),
+                    cache_props.bool('concave'),
                 )
             # Otherwise, re-decompile.
     LOGGER.info('Decompiling {}...', filename)
@@ -560,7 +572,7 @@ def decompile_model(
 
     if qc_result is not None:
         (
-            model_name,
+            model_name, is_concave,
             ref_scale, ref_smd,
             phy_scale, phy_smd,
         ) = qc_result
@@ -570,6 +582,7 @@ def decompile_model(
             str(phy_smd).replace('\\', '/') if phy_smd else None,
             ref_scale,
             phy_scale,
+            is_concave,
         )
 
         cache_props['ref'] = Path(ref_smd).name
