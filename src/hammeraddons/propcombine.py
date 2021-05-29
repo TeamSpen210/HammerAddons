@@ -22,7 +22,7 @@ from typing import (
 
 from srctools import (
     Vec, VMF, Entity, conv_int, Angle, Matrix, FileSystemChain,
-    Property, KeyValError,
+    Property, KeyValError, bool_as_int,
 )
 from srctools.tokenizer import Tokenizer, Token
 from srctools.game import Game
@@ -511,7 +511,7 @@ def decompile_model(
                 cache_props = Property.parse(f).find_key('qc', [])
             # Added later, remake if not present.
             if 'concave' not in cache_props:
-                raise KeyValError
+                raise FileNotFoundError
         except (FileNotFoundError, KeyValError):
             pass
         else:
@@ -591,6 +591,7 @@ def decompile_model(
         if phy_smd is not None:
             cache_props['phy'] = Path(phy_smd).name
             cache_props['phy_scale'] = format(phy_scale, '.6g')
+        cache_props['concave'] = bool_as_int(is_concave)
     else:
         cache_props['ref'] = ''  # Mark as not present.
 
