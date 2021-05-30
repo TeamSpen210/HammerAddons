@@ -1,6 +1,7 @@
 """Runs before VRAD, to run operations on the final BSP."""
 import argparse
 import datetime
+import os
 import sys
 from collections import defaultdict
 from io import BytesIO
@@ -153,8 +154,11 @@ def main(argv: List[str]) -> None:
             decomp_cache_loc = None
         if conf.get(bool, 'propcombine_crowbar'):
             # argv[0] is the location of our script/exe, which lets us locate
-            # Crowbar from there.
-            crowbar_loc = Path(sys.argv[0], '../Crowbar.exe').resolve()
+            # Crowbar from there. The environment var is for testing.
+            if 'CROWBAR_LOC' in os.environ:
+                crowbar_loc = Path(os.environ['CROWBAR_LOC']).resolve()
+            else:
+                crowbar_loc = Path(sys.argv[0], '../Crowbar.exe').resolve()
         else:
             crowbar_loc = None
 
