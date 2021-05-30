@@ -1,0 +1,36 @@
+@BaseClass base(BasePropPhysics)
+= BasePortalCube : "The base for prop_weighted_cube and prop_scaled_cube"
+[
+	line_cube[-engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	paintpower[engine](integer) : "Starting Paint" : 4
+	paintpower(choices) : "Starting paint" : "4" : "The cube starts painted with the set gel." =
+		[
+		0: "Repulsion Gel"
+		1: "Adhesion Gel"
+		2: "Propulsion Gel"
+		3: "Conversion Gel"
+		4: "None"
+		]
+
+	allowfunnel(boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a floor portal."
+
+	// Inputs
+	input EnablePortalFunnel(void) : "Enable portal funneling behavior."
+	input DisablePortalFunnel(void) : "Disable portal funneling behavior."
+	input EnableMotion(void) : "Allow physics simulation."
+	input DisableMotion(void) : "Prevent Physics simulation, freezing the cube in place."
+	input SetPaint(integer) : "Force the cube to be painted with 0 (Repulsion), 2 (Propulsion), or 4 (No) gel."
+	
+	input Dissolve(void) : "Fizzles the cube, firing the OnFizzled output."
+	input SilentDissolve(void) : "Kills the cube immediately and fires its OnFizzled output."
+	input ExitDisabledState(void) : "Exits the disabled state of a reflective cube."
+
+	// Outputs
+	output OnFizzled(void) : "Fired when a cube is fizzled."
+	output OnOrangePickUp(void) : "P-Body picked up the cube."
+	output OnBluePickUp(void) : "ATLAS picked up the cube."
+	output OnPlayerPickup(void) : "Any player picked up the cube."
+	output OnPhysGunDrop(void) : "Any player dropped the cube."
+	output OnPainted(void) : "Cube got painted, only if the state changed."
+]
