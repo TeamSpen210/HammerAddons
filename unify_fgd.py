@@ -52,6 +52,7 @@ GAMES = [
     ('L4D2',  'Left 4 Dead 2'),
     ('ASW',   'Alien Swarm'),
     ('P2',    'Portal 2'),
+	('P2SIXENSE', 'Portal 2 Sixense MotionPack'),
     ('INFRA', 'INFRA'),
     ('CSGO',  'Counter-Strike Global Offensive'),
 
@@ -78,6 +79,7 @@ FEATURES: Dict[str, Set[str]] = {
     'TF2': {'PROP_SCALING'},
     'ASW': {'INST_IO', 'VSCRIPT'},
     'P2': {'INST_IO', 'VSCRIPT'},
+	'P2SIXENSE' : {'P2', 'INST_IO', 'VSCRIPT'},
     'CSGO': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
     'INFRA': {'P2', 'INST_IO', 'VSCRIPT'},
     'P2DES': {'P2', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
