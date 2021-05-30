@@ -17,8 +17,9 @@ from tempfile import TemporaryDirectory
 from typing import (
     Optional, Tuple, Callable, NamedTuple,
     FrozenSet, Dict, List, Set,
-    Iterator, Union,
+    Iterator, Union, AbstractSet,
 )
+from srctools._math import quickhull
 
 from srctools import (
     Vec, VMF, Entity, conv_int, Angle, Matrix, FileSystemChain,
@@ -31,7 +32,7 @@ from srctools.logger import get_logger
 from srctools.packlist import PackList
 from srctools.bsp import BSP, StaticProp, StaticPropFlags
 from srctools.mdl import Model, MDL_EXTS
-from srctools.smd import Mesh
+from srctools.smd import Mesh, Triangle, Vertex
 from srctools.compiler.mdl_compiler import ModelCompiler
 
 
@@ -69,9 +70,9 @@ $collisionmodel "physics.smd" {
 MAX_GROUP = 24  # Studiomdl does't allow more than this...
 
 # Cache of the SMD models we have already parsed, so we don't need
-# to parse them again. The second is the collision model.
+# to parse them again. For the collision model, we store them pre-split.
 _mesh_cache = {}  # type: Dict[Tuple[QC, int], Mesh]
-_coll_cache = {}  # type: Dict[str, Mesh]
+_coll_cache = {}  # type: Dict[str, List[Mesh]]
 
 
 def unify_mdl(path: str):
@@ -218,7 +219,7 @@ def combine_group(
 
 
 def compile_func(
-    mdl_key: Tuple[Set[PropPos], bool],
+    mdl_key: Tuple[AbstractSet[PropPos], bool],
     temp_folder: Path,
     mdl_name: str,
     lookup_model: Callable[[str], Tuple[QC, Model]],
@@ -249,7 +250,10 @@ def compile_func(
     [phy_content_type] = contents
 
     ref_mesh = Mesh.blank('static_prop')
-    coll_mesh = None  #  type: Optional[Mesh]
+    coll_mesh = Mesh.blank('static_prop')
+    [coll_bone] = coll_mesh.bones.values()
+    bone_link = [(coll_bone, 1.0)]
+    coll_groups: dict[Mesh, float] = {}
 
     for prop in prop_pos:
         qc, mdl = lookup_model(prop.model)
@@ -282,14 +286,24 @@ def compile_func(
         child_coll = build_collision(qc, prop, child_ref)
 
         offset = Vec(prop.x, prop.y, prop.z)
-        angles = Angle(prop.pit, prop.yaw, prop.rol)
+        matrix = Matrix.from_angle(Angle(prop.pit, prop.yaw, prop.rol))
 
-        ref_mesh.append_model(child_ref, angles, offset, prop.scale * qc.ref_scale)
+        ref_mesh.append_model(child_ref, matrix, offset, prop.scale * qc.ref_scale)
 
         if has_coll and child_coll is not None:
-            if coll_mesh is None:
-                coll_mesh = Mesh.blank('static_prop')
-            coll_mesh.append_model(child_coll, angles, offset, prop.scale * qc.phy_scale)
+            scale = prop.scale * qc.phy_scale
+            group = Mesh(coll_mesh.bones, coll_mesh.animation, [])
+            for part in child_coll:
+                for orig_tri in part.triangles:
+                    new_tri = orig_tri.copy()
+                    for vert in new_tri:
+                        vert.links[:] = bone_link
+                        vert.norm @= matrix
+                        vert.pos *= scale
+                        vert.pos.localise(offset, matrix)
+                    group.triangles.append(new_tri)
+            if group.triangles:
+                coll_groups[group] = group.compute_volume()
 
     with (temp_folder / 'reference.smd').open('wb') as fb:
         ref_mesh.export(fb)
@@ -298,7 +312,47 @@ def compile_func(
     with (temp_folder / 'anim.smd').open('wb') as fb:
         Mesh.blank('static_prop').export(fb)
 
-    if coll_mesh is not None:
+    if coll_groups:
+        LOGGER.info('Optimising collisions:')
+        # Attempt to merge together collision groups.
+        todo: set[Mesh] = set(coll_groups)
+        # Pairs we know don't combine correctly.
+        failures: set[tuple[Mesh, Mesh]] = set()
+        zero_norm = Vec()
+        while todo:
+            mesh1 = todo.pop()
+            for mesh2 in todo:
+                if (mesh1, mesh2) in failures or (mesh2, mesh1) in failures:
+                    continue
+                combined = Mesh(coll_mesh.bones, coll_mesh.animation, [
+                    Triangle(
+                        'phys',
+                        Vertex(v1, zero_norm, 0.0, 0.0, bone_link),
+                        Vertex(v2, zero_norm, 0.0, 0.0, bone_link),
+                        Vertex(v3, zero_norm, 0.0, 0.0, bone_link),
+                    )
+                    for v1, v2, v3 in quickhull(
+                        vert.pos
+                        for tri in itertools.chain(mesh1.triangles, mesh2.triangles)
+                        for vert in tri
+                    )
+                ])
+                combined_vol = combined.compute_volume()
+                diff = abs(coll_groups[mesh1] + coll_groups[mesh2] - combined_vol)
+                LOGGER.debug('Volume diff: {}', diff)
+                if diff < 1:  # Arbitrary
+                    todo.discard(mesh2)
+                    todo.add(combined)
+                    LOGGER.info('{} + {} -> {}', id(mesh1), id(mesh2), id(combined))
+                    coll_groups[combined] = combined_vol
+                    break
+                else:
+                    failures.add((mesh1, mesh2))
+            else:
+                # Failed against all, this is fully optimised.
+                mesh1.smooth_normals()
+                coll_mesh.triangles += mesh1.triangles
+        LOGGER.info('Done.')
         with (temp_folder / 'physics.smd').open('wb') as fb:
             coll_mesh.export(fb)
 
@@ -325,17 +379,17 @@ def compile_func(
         for mat in sorted(cdmats):
             f.write('$cdmaterials "{}"\n'.format(mat))
 
-        if coll_mesh is not None:
+        if coll_mesh.triangles:
             f.write(QC_COLL_TEMPLATE)
 
 
-def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> Optional[Mesh]:
+def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> List[Mesh]:
     """Get the correct collision mesh for this model."""
     if prop.solidity is CollType.NONE:  # Non-solid
-        return None
+        return []
     elif prop.solidity is CollType.VPHYS or prop.solidity is CollType.BSP:
         if qc.phy_smd is None:
-            return None
+            return []
         try:
             return _coll_cache[qc.phy_smd]
         except KeyError:
@@ -349,8 +403,12 @@ def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> Optional[Mesh]:
                     vert.pos @= rot
                     vert.norm @= rot
 
-            _coll_cache[qc.phy_smd] = coll
-            return coll
+            if qc.is_concave:
+                coll_group = coll.split_collision()
+            else:
+                coll_group = [coll]
+            _coll_cache[qc.phy_smd] = coll_group
+            return coll_group
     # Else, it's one of the three bounding box types.
     # We don't really care about which.
     bbox_min, bbox_max = Vec.bbox(
@@ -359,7 +417,7 @@ def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> Optional[Mesh]:
         ref_mesh.triangles
         for vert in tri
     )
-    return Mesh.build_bbox('static_prop', 'phy', bbox_min, bbox_max)
+    return [Mesh.build_bbox('static_prop', 'phy', bbox_min, bbox_max)]
 
 
 def load_qcs(qc_map: Dict[str, QC], qc_folder: Path) -> None:
@@ -935,6 +993,7 @@ def combine(
         pack,
         map_name,
         'propcombine',
+        version=2,
     ) as compiler:
         for group in grouper:
             grouped_prop = combine_group(compiler, group, get_model)
