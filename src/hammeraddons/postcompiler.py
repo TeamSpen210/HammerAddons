@@ -178,6 +178,7 @@ def main(argv: List[str]) -> None:
             crowbar_loc=crowbar_loc,
             auto_range=conf.get(int, 'propcombine_auto_range'),
             min_cluster=conf.get(int, 'propcombine_min_cluster'),
+            volume_tolerance=conf.get(float, 'propcombine_volume_tolerance'),
             debug_tint=args.showgroups,
             debug_dump=args.dumpgroups,
         )

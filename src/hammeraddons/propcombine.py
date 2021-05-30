@@ -144,6 +144,7 @@ def combine_group(
     compiler: ModelCompiler,
     props: List[StaticProp],
     lookup_model: Callable[[str], Tuple[QC, Model]],
+    volume_tolerance: float,
 ) -> StaticProp:
     """Merge the given props together, compiling a model if required."""
 
@@ -199,7 +200,7 @@ def combine_group(
     has_coll = any(pos.solidity is not CollType.NONE for pos in prop_pos)
     mdl_name, result = compiler.get_model(
         (frozenset(prop_pos), has_coll),
-        compile_func, lookup_model,
+        compile_func, (lookup_model, volume_tolerance),
     )
 
     # Many of these we require to be the same, so we can read them
@@ -222,11 +223,12 @@ def compile_func(
     mdl_key: Tuple[AbstractSet[PropPos], bool],
     temp_folder: Path,
     mdl_name: str,
-    lookup_model: Callable[[str], Tuple[QC, Model]],
+    args: Tuple[Callable[[str], Tuple[QC, Model]], float],
 ) -> None:
     """Build this merged model."""
     LOGGER.info('Compiling {}...', mdl_name)
     prop_pos, has_coll = mdl_key
+    lookup_model, volume_tolerance = args
 
     # Unify these properties.
     surfprops = set()  # type: Set[str]
@@ -839,6 +841,7 @@ def combine(
     decomp_cache_loc: Path=None,
     auto_range: float=0,
     min_cluster: int=2,
+    volume_tolerance: float=1.0,
     debug_tint: bool=False,
     debug_dump: bool=False,
 ) -> None:
@@ -996,7 +999,7 @@ def combine(
         version=2,
     ) as compiler:
         for group in grouper:
-            grouped_prop = combine_group(compiler, group, get_model)
+            grouped_prop = combine_group(compiler, group, get_model, volume_tolerance)
             if debug_tint:
                 # Compute a random hue, and convert back to RGB 0-255.
                 r, g, b = colorsys.hsv_to_rgb(random.random(), 1, 1)
