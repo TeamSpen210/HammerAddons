@@ -64,7 +64,7 @@
 		"infra_pumping_station_repaired": "INFRA: Tunnel2 water supply is repaired"
 		"infra_pumping_station_stopped": "INFRA: Tunnel2 water supply is stopped"
 		"infra_watertreatment_repaired": "INFRA: Watertreatment is repaired"
-		"infra_player_no_creditcard": "INFRA: player lost his creditcard"
+		"infra_player_no_creditcard": "INFRA: player lost their creditcard"
 		"infra_player_osmo_called": "INFRA: player called osmo-olut customer service"
 		"infra_player_dock_called": "INFRA: player called dock guy"
 		"infra_reserve1_dam_picture_taken": "INFRA: player took picture of the dam"

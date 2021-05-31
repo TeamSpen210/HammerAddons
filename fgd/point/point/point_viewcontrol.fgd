@@ -45,10 +45,10 @@
 	drawlocalplayer[INFRA](boolean) : "Draw Local Player" : 0 : "Should the local player be drawn when viewing from this camera?"
 	drawviewmodel[INFRA](boolean) : "Draw View Model" : 0 : "Should the view model be drawn when viewing from this camera?"
 	drawhud[INFRA](boolean) : "Draw HUD" : 1 : "Should the HUD be drawn when viewing from this camera?"
-	allowcontrols[INFRA](boolean) : "Allow Controls" : 0 : "Should the player be allowed to use his movement controls?"
-	freezeinstead[INFRA](boolean) : "Freeze Instead" : 0 : "If controls are disabled, should the player be disallowed from using any of his controls (+use, +attack, VGUI screens etc.)?"
+	allowcontrols[INFRA](boolean) : "Allow Controls" : 0 : "Should the player be allowed to use their movement controls?"
+	freezeinstead[INFRA](boolean) : "Freeze Instead" : 0 : "If controls are disabled, should the player be disallowed from using any of their controls (+use, +attack, VGUI screens etc.)?"
 	disableatend[INFRA](boolean) : "Disable at End" : 0 : "Disable the camera once it reaches the end of its path?"
-	holsterweapons[INFRA](boolean) : "Holster Weapons" : 0 : "Should the player holster his weapons while under control of the camera?"
+	holsterweapons[INFRA](boolean) : "Holster Weapons" : 0 : "Should the player holster their weapons while under control of the camera?"
 	teleportplayertoend[INFRA](boolean) : "Teleport Player to End" : 0 : "Should the player be teleported to the end once the camera reaches the end of its path?"
 	pathlengthinseconds[INFRA](float) : "Path Length in Seconds" : 5 : "How long does this path last? Smaller numbers means faster camera."
 

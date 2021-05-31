@@ -34,7 +34,7 @@
 
 	globalstate[INFRA](choices) : "Global State to Set" =
 		[
-		"infra_no_tools": "INFRA: player doesn't start with his tools"
+		"infra_no_tools": "INFRA: player doesn't start with their tools"
 		"infra_waterflow_reserve1": "INFRA: reserve1 water flow meter turned on"
 		"infra_waterflow_reserve2": "INFRA: reserve2 water flow meter turned on"
 		"infra_waterflow_tunnel1": "INFRA: tunnel1 water flow meter turned on"
@@ -44,7 +44,7 @@
 		"infra_pumping_station_repaired": "INFRA: tunnel2 water supply is repaired"
 		"infra_pumping_station_stopped": "INFRA: tunnel2 water supply is stopped"
 		"infra_watertreatment_repaired": "INFRA: watertreatment is repaired"
-		"infra_player_no_creditcard": "INFRA: player lost his creditcard"
+		"infra_player_no_creditcard": "INFRA: player lost their creditcard"
 		"infra_player_osmo_called": "INFRA: player called osmo olut customer service"
 		"infra_player_dock_called": "INFRA: player called dock guy"
 		"infra_reserve1_dam_picture_taken": "INFRA: player took picture of the dam"

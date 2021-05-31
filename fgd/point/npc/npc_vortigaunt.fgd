@@ -5,15 +5,15 @@
 	[
 	model(studio) : "World model" : "models/vortigaunt.mdl"
 	armorrechargeenabled(boolean) : "Allow Armor Recharging" : 1
-	healthregenerateenabled(boolean) : "Regenerate Health" : 0 : "Whether or not the vortigaunt will recover his own health over time like vital allies, while in combat."
+	healthregenerateenabled(boolean) : "Regenerate Health" : 0 : "Whether or not the vortigaunt will recover their own health over time like vital allies, while in combat."
 
 	// Inputs
 	input EnableArmorRecharge(void) : "Allow armor recharging on players"
 	input DisableArmorRecharge(void) : "Do not allow armor recharging on players"
 	input ExtractBugbait(string) : "Causes the vortigaunt to extract bugbait from the named target passed in."
 	input ChargeTarget(string) : "Force the vortigaunt to charge the named target."
-	input EnableHealthRegeneration(void) : "Allow the vortigaunt to start regenerating his health over time, like vital allies."
-	input DisableHealthRegeneration(void) : "Stop the vortigaunt from regenerating his health. (Default behavior)"
+	input EnableHealthRegeneration(void) : "Allow the vortigaunt to start regenerating their health over time, like vital allies."
+	input DisableHealthRegeneration(void) : "Stop the vortigaunt from regenerating their health. (Default behavior)"
 	input TurnBlue(boolean) : "If true, turn blue. If false, turn green. (Episodic)."
 	input TurnBlack(boolean) : "If true, turn black. If false, be seen. (Episodic)."
 	input BeginCarryNPC(void) : "Begin to override our animations for 'carrying' an NPC. (Episodic)"

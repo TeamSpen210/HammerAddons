@@ -24,29 +24,29 @@
 		]
 
 	desiredhealth(float) : "Desired Health Ratio" : 1 : "A ratio from 0 to 1." +
-		"Attempt to fill the player up to this percentage of his max health."
+		"Attempt to fill the player up to this percentage of their max health."
 	desiredarmor(float) : "Desired Armor Ratio" : 0.3 : "A ratio from 0 to 1." +
-		"Attempt to fill the player up to this percentage of his max armor."
+		"Attempt to fill the player up to this percentage of their max armor."
 	desiredammopistol(float) : "Desired Pistol Ammo Ratio" : 0.5 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
 	desiredammosmg1(float) : "Desired SMG1 Ammo Ratio" : 0.5 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
 	desiredammosmg1_grenade(float) : "Desired SMG1 Grenade Ammo Ratio" : 0.1 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
 	desiredammoar2(float) : "Desired AR2 Ammo Ratio" : 0.4 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
 	desiredammobuckshot(float) : "Desired Shotgun Ammo Ratio" : 0.5 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
 	desiredammorpg_round(float) : "Desired RPG Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
 	desiredammogrenade(float) : "Desired Grenade Ammo Ratio" : 0.1 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
 	desiredammo357(float) : "Desired 357 Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
 	desiredammocrossbow(float) : "Desired Crossbow Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
 	desiredammoar2_altfire(float) : "Desired AR2 Alt-fire Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
 
 	// Inputs
 	input CalculateType(void) : "Force the dynamic resupply to calculate which item it should spawn."
