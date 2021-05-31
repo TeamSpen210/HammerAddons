@@ -5,7 +5,7 @@
 	[
 	startasbox(boolean) : "Start As Box" : 0 : "Start the FrankenTurret in cube form."
 	boxswitchspeed(float) : "Box Switch Speed" : 400 : "Speed to force switch to a box."
-	allowsilentdissolve(boolean) : "Allow SilentDissolve input" : 0 : "Allow the SilentDissolve input to dissolve this FrankenCube."
+	allowsilentdissolve(boolean) : "Allow SilentDissolve input" : 1 : "Allow the SilentDissolve input to dissolve this FrankenCube."
 
 	model[engine](studio) : "Model" : "models/npcs/monsters/monster_a.mdl"
 	model(choices) : "[H] Pose" : "models/npcs/monsters/monster_a.mdl" : "What pose to show in Hammer." =
