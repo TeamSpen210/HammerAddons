@@ -6,6 +6,13 @@ SET games=momentum p2ce
 SET "build_dir=build"
 SET bin_dir=bin/win64
 
+:: Setup hammer folder copy exclusions (*_momentum, *_p2ce, etc)
+SET "robocopy_exclusions=scripts "
+FOR %%i in (%games%) do (
+  CALL SET "game_exclude=*_%%i "
+  SET "robocopy_exclusions=!robocopy_exclusions!!game_exclude!"
+)
+
 SET game=%1
 :: Make sure game isn't empty by asking the user for what game to build
 :while
@@ -35,6 +42,7 @@ IF /I %game%==ALL (
 
 :build_p2ce
   CALL :copy_hammer_files p2ce
+  CALL :copy_vscript_files
   CALL :copy_postcompiler_files
   CALL :build_game_fgd p2ce
   EXIT /B
@@ -54,10 +62,17 @@ IF /I %game%==ALL (
 
 :copy_hammer_files
   echo Copying Hammer files...
-  robocopy hammer %build_dir%/hammer /S /PURGE
+  robocopy hammer %build_dir%/hammer /S /PURGE /XD %robocopy_exclusions%
 
   IF %ERRORLEVEL% LSS 8 EXIT /B 0
   echo Failed copying Hammer files for %1. Exitting. & EXIT
+
+:copy_vscript_files
+  echo Copying VScript files (hammer/scripts)...
+  robocopy hammer/scripts %build_dir%/hammer/scripts /S /PURGE
+
+  IF %ERRORLEVEL% LSS 8 EXIT /B 0
+  echo Failed copying VScript files (hammer/scripts). Exitting. & EXIT
 
 :copy_postcompiler_files
   echo Copying postcompiler transforms...
