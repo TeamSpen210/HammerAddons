@@ -63,6 +63,7 @@ IF /I %game%==ALL (
 :copy_hammer_files
   echo Copying Hammer files...
   robocopy hammer %build_dir%/hammer /S /PURGE /XD %robocopy_exclusions%
+  IF %ERRORLEVEL% LSS 8 robocopy hammer/cfg_%1 %build_dir%/hammer/cfg /S
 
   IF %ERRORLEVEL% LSS 8 EXIT /B 0
   echo Failed copying Hammer files for %1. Exitting. & EXIT

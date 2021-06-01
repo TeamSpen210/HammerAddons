@@ -37,6 +37,7 @@ copy_hammer_files() {
   echo "Copying Hammer files..."
   mkdir -p "$build_dir"
   rsync -a "${copy_exclusions[@]}" "hammer" "$build_dir"
+  rsync -a hammer/cfg_$1/* $build_dir/hammer/cfg
 
   if [ $? -ne 0 ]; then
     echo "Failed copying Hammer files. Exitting." & exit 1

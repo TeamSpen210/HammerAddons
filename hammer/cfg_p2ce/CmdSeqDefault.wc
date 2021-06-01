@@ -1,0 +1,147 @@
+"Command Sequences"
+{
+    // Special commands (for special_cmd):
+    // 256 - Change Directory
+    // 257 - Copy File
+    // 258 - Delete File
+    // 259 - Rename File
+    // And they have no "run" string
+    "Fast"
+    {
+        "1"
+        {
+            "enabled" "1"
+            "special_cmd" "0"
+            "run" "$bsp_exe"
+            "params" "-game $gamedir $path\$file"
+            "ensure_check" "0"
+            "ensure_fn" ""
+            "use_process_wnd" "1"
+            "no_wait" "0"
+        }
+        "2"
+        {
+            "enabled" "1"
+            "special_cmd" "0"
+            "run" "$postcompiler_exe"
+            "params" "--propcombine $path\$file"
+            "ensure_check" "0"
+            "ensure_fn" ""
+            "use_process_wnd" "1"
+            "no_wait" "0"
+        }
+        "3"
+        {
+            "enabled" "1"
+            "special_cmd" "0"
+            "run" "$vis_exe"
+            "params" "-fast -game $gamedir $path\$file"
+            "ensure_check" "0"
+            "ensure_fn" "" 
+            "use_process_wnd" "1"
+            "no_wait" "0"
+        }
+        "4"
+        {
+            "enabled" "1"
+            "special_cmd" "0"
+            "run" "$light_exe"
+            "params" "-fast -hdr -StaticPropLighting -StaticPropPolys -game $gamedir $path\$file"
+            "ensure_check" "0"
+            "ensure_fn" "" 
+            "use_process_wnd" "1"
+            "no_wait" "0"
+        }
+        "5"
+        {
+            "enabled" "1"
+            "special_cmd" "257" // Copy File
+            "run" ""
+            "params" "$path\$file.bsp $bspdir\$file.bsp"
+            "ensure_check" "0"
+            "ensure_fn" "" 
+            "use_process_wnd" "1"
+            "no_wait" "0"
+        }
+        "6"
+        {
+            "enabled" "1"
+            "special_cmd" "0"
+            "run" "$game_exe"
+            "params" "-dev -console -allowdebug -game $gamedir +map $file"
+            "ensure_check" "0"
+            "ensure_fn" "" 
+            "use_process_wnd" "1"
+            "no_wait" "1" // All game_exe things apparently have no wait, but it isn't used so whatever
+        }
+    }
+    "HDR Full Compile"
+    {
+        "1"
+        {
+            "enabled" "1"
+            "special_cmd" "0"
+            "run" "$bsp_exe"
+            "params" "-game $gamedir $path\$file"
+            "ensure_check" "0"
+            "ensure_fn" ""
+            "use_process_wnd" "1"
+            "no_wait" "0"
+        }
+        "2"
+        {
+            "enabled" "1"
+            "special_cmd" "0"
+            "run" "$postcompiler_exe"
+            "params" "--propcombine $path\$file"
+            "ensure_check" "0"
+            "ensure_fn" ""
+            "use_process_wnd" "1"
+            "no_wait" "0"
+        }
+        "3"
+        {
+            "enabled" "1"
+            "special_cmd" "0"
+            "run" "$vis_exe"
+            "params" "-game $gamedir $path\$file"
+            "ensure_check" "0"
+            "ensure_fn" "" 
+            "use_process_wnd" "1"
+            "no_wait" "0"
+        }
+        "4"
+        {
+            "enabled" "1"
+            "special_cmd" "0"
+            "run" "$light_exe"
+            "params" "-hdr -StaticPropLighting -StaticPropPolys -game $gamedir $path\$file"
+            "ensure_check" "0"
+            "ensure_fn" "" 
+            "use_process_wnd" "1"
+            "no_wait" "0"
+        }
+        "5"
+        {
+            "enabled" "1"
+            "special_cmd" "257" // Copy File
+            "run" ""
+            "params" "$path\$file.bsp $bspdir\$file.bsp"
+            "ensure_check" "0"
+            "ensure_fn" "" 
+            "use_process_wnd" "1"
+            "no_wait" "0"
+        }
+        "6"
+        {
+            "enabled" "0"
+            "special_cmd" "0"
+            "run" "$game_exe"
+            "params" "-dev -console -allowdebug -game $gamedir +map $file"
+            "ensure_check" "0"
+            "ensure_fn" "" 
+            "use_process_wnd" "1"
+            "no_wait" "1" // All game_exe things apparently have no wait, but it isn't used so whatever
+        }
+    }
+}

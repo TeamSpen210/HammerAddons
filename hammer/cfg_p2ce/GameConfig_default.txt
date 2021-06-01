@@ -23,27 +23,4 @@
             "MaterialExcludeCount"		"0"
         }
     }
-    "Momentum"
-    {
-        // NOTE: All of these paths are in relation to where hammer.exe is!!!
-        "GameDir"		"..\..\momentum"
-        "Hammer"
-        {
-            "GameData0"		"..\..\momentum\momentum.fgd"
-            "DefaultTextureScale"		"0.250000"
-            "DefaultLightmapScale"		"128"
-            "GameExe"		"chaos.exe"
-            "DefaultSolidEntity"		"func_detail"
-            "DefaultPointEntity"		"light"
-            "BSP"		"vbsp.exe"
-            "Vis"		"vvis.exe"
-            "Light"		"vrad.exe"
-            "PostCompiler"		"postcompiler\postcompiler.exe"
-            "GameExeDir"		""
-            "MapDir"		"..\..\momentum\mapsrc"
-            "BSPDir"		"..\..\momentum\maps"
-            "CordonTexture"		"tools/toolsskybox"
-            "MaterialExcludeCount"		"0"
-        }
-    }
 }
