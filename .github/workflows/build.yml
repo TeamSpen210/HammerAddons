@@ -39,9 +39,3 @@ jobs:
         run: bash ./install_srctools.sh
       - name: FGD build and folder copy
         run: bash ./build.sh all
-      - name: Artifact upload
-        uses: actions/upload-artifact@v2
-        with:
-          name: build_${{ runner.os }}-${{ github.sha }}
-          path: ./build/*
-          if-no-files-found: error
