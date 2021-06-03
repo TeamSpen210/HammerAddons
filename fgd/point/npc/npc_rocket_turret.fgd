@@ -7,6 +7,7 @@
 @PointClass base(BaseNPC, ResponseContext, _npc_rocket_turret_p1, _npc_rocket_turret_p2) 
 	appliesto(P1, P2) 
 	autovis(Entities, NPCs, Portal Rocket Turret)
+	sphere(_sphere_radius)
 = npc_rocket_turret: "Portal 1 rocket sentry, aims a rocket at a target. " +
 		"In Portal 2, the rocket spawns with a speed of 0 and sometimes gets " +
 		"stuck inside the model, so this will need to be worked around."
@@ -21,6 +22,8 @@
 	TripwireMode[P2](boolean) : "Tripwire Mode" : 0 : "Makes the turret aim in a specific direction instead of following the target. When the beam is crossed, a rocket instantly fires."
 	TripwireAimTarget[P2](target_destination) : "Tripwire Aim Target" : : "In tripwire mode, the entity to aim at."
 	model[P2](studio) : "[H] Model" : "models/props_bts/rocket_sentry.mdl" : "Model to display in Hammer. Use Init Code and a comp_precache_model to change the model in-game."
+
+	_sphere_radius[!engine](integer) readonly : "<Maximum Range>" : 8192 : "How far the turret will be able to see targets. Always 8192, but this keyvalue is needed to display the preview."
 
 	// Inputs
 	input Toggle(void) : "Toggles between activated and deactivated states."

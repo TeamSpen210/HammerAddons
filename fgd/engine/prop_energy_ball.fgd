@@ -1,0 +1,10 @@
+
+@PointClass base(BasePropPhysics) 
+	appliesto(P1, P2, +engine) = prop_energy_ball: "Aperture Science High Energy Pellet. Bounces off surfaces, travels through portals and kills players on contact. After a time period it will explode and be respawned. " +
+	"Doesn't work properly when placed directly, use a point_energy_ball_launcher instead."
+	[
+
+	// Inputs
+	input Explode(void) : "Explode the pellet, creating a shockwave and shaking the camera."
+	input BallCaught[P2](void) : "Trigger the OnBallCaught output for the point_energy_ball_launcher that created this ball, kill the pellet and disable the launcher."
+	]

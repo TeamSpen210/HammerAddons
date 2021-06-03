@@ -4,7 +4,7 @@
 	sphere(inner_radius) 
 	studio("models/editor/cone_helper.mdl") 
 	iconsprite("editor/ficool2/point_push")
-	frustum(influence_cone, inner_radius, radius, 255 255 255 10, -1) 
+	frustum(influence_cone, inner_radius, radius, _frustum_color, -1) 
 = point_push: "Pulls objects to, or pushes them away from a point. " +
 		"In Portal 2, if a portal is placed nearby it will transfer the suction and " +
 		"produce a 'broken_tube_suck' effect for Diversity Vents."

@@ -68,7 +68,7 @@
 		"'they've breached the door!' when drones bash the door down?"
 
 	doautoshootchatter(boolean) : "Do Auto Shoot Shout" : "0" : "If set, a marine will shout out 'shoot it down!' as soon as they enter the door area. " +
-		"Use this for sealed doors that you expect the player to shoot his way through."
+		"Use this for sealed doors that you expect the player to shoot their way through."
 
 	// Inputs
 	input Open(void) : "Open the door, if it is not fully open."

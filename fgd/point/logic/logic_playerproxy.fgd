@@ -57,8 +57,8 @@
 	input SetMotionBlurAmount[P2](float) : "Forces the motion blur effect on the player. Set to < 0 to disable this override."
 
 	// Outputs
-	output OnFlashlightOn(float) : "Fired when the player turns on his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
-	output OnFlashlightOff(float) : "Fired when the player turns off his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
+	output OnFlashlightOn(float) : "Fired when the player turns on their flashlight. This output has the value of how much energy the player had when this happened [0..1]."
+	output OnFlashlightOff(float) : "Fired when the player turns off their flashlight. This output has the value of how much energy the player had when this happened [0..1]."
 
 	output OnSquadMemberKilled[MBase](void) : "Fires when a member of the player's squad dies. Fires with this member as the activator."
 	

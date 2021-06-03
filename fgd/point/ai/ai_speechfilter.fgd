@@ -7,7 +7,7 @@
 	[
 	subject(target_destination) : "Subject(s)" : : "This is the NPC(s) whose speech we're filtering. May be a targetname or a classname."
 	idlemodifier(float) : "Idle modifier." : "1.0" : "Multiplier to the percentage chance that our NPC(s) will idle speak. Set to 0 to prevent all idle speech."
-	neversayhello(boolean) : "Greet Player?" : 0 : "If set to Yes, our NPC(s) won't greet the player when they first meet him."
+	neversayhello(boolean) : "Greet Player?" : 0 : "If set to Yes, our NPC(s) won't greet the player when they first meet them."
 
 
 	// Inputs
