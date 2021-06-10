@@ -15,7 +15,7 @@
 	startstate(boolean) : "Start Disabled" : 0
 
 	lethaldamage[engine](boolean) : "Lethal" : 0
-	lethaldamage(choices) : "Lethal" : 0 : "Instant kill on contact. Buggy when rediected through cubes/portals." =
+	lethaldamage(choices) : "Lethal" : 0 : "Instant kill on contact. Buggy when redirected through cubes/portals." =
 		[
 		0: "Non-lethal"
 		1: "Lethal"
