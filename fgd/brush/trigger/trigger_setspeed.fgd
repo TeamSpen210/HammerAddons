@@ -1,6 +1,5 @@
-@SolidClass base(MomentumTrigger)
-	appliesto(MOMENTUM)
-= trigger_momentum_setspeed : "Trigger for setting speed of the momentum player." 
+@SolidClass base(StaticTargetName, EnableDisable, Toggle)
+= trigger_setspeed : "Trigger for setting speed of the player." 
 	[
 	KeepHorizontalSpeed(integer) : "Keep horizontal speed" : 0 : "If you want to keep the horizontal (x/y axis velocity based) speed, set it to 1."
 	KeepVerticalSpeed(integer) : "Keep vertical speed" : 0 : "If you want to keep the vertical (z axis velocity based) speed, set it to 1."

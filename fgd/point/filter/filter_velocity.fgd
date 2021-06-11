@@ -1,6 +1,5 @@
 @FilterClass base(filter_base)
-	appliesto(MOMENTUM)
-= filter_momentum_velocity : "Filter that checks the player's velocity"
+= filter_velocity : "Filter that checks the player's velocity"
 	[
 	Mode[engine](integer) : "Mode" : 0
 	Mode(choices) : "Mode" : 0 : "Set which mode to use for velocity comparisons" =
