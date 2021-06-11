@@ -1,0 +1,11 @@
+@SolidClass base(StaticTargetName, EnableDisable, Toggle) 
+	appliesto(MOMENTUM)
+= trigger_stick_explosive : "Conc grenades, stickybombs, and other explosives will stick to or inside this area."
+	[
+	stick_type[engine](integer) : "Method of explosive stick." : 0
+	stick_type(choices) : "Method of explosive stick." : 0 =
+		[
+		0: "Stick on collision inside this area."
+		1: "Stick on entering this area."
+		]
+	]
