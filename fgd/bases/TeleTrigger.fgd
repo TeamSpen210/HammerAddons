@@ -32,8 +32,8 @@
 		1 : "Yes"
 		]
 
-	fail[engine](integer) : "Indicates whether this teleport is for failing a level" : 0
-	fail(choices) : "Indicates whether this teleport is for failing a level" : 0 =
+	fail[engine](integer) : "Teleport is for failing a level" : 0
+	fail(choices) : "Teleport is for failing a level" : 0 =
 		[
 		0 : "No"
 		1 : "Yes"
