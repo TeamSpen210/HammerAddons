@@ -2,10 +2,16 @@
 	appliesto(MOMENTUM)
 = trigger_stick_explosive : "Conc grenades, stickybombs, and other explosives will stick to or inside this area."
 	[
+	startdisabled(boolean) : "Start Disabled" : 0
 	stick_type[engine](integer) : "Method of explosive stick." : 0
 	stick_type(choices) : "Method of explosive stick." : 0 =
 		[
 		0: "Stick on collision inside this area."
 		1: "Stick on entering this area."
 		]
+
+	input Stick(void) : "Sticks all explosives in this area"
+	input Unstick(void) : "Unsticks all explosives in this area"
+	input Explode(void) : "Explodes all explosives in this area"
+	input Fizzle(void) : "Fizzles all explosives in this area"
 	]
