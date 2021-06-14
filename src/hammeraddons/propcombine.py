@@ -209,7 +209,7 @@ def combine_group(
         visleafs=sorted(visleafs),
         solidity=(CollType.VPHYS if has_coll else CollType.NONE).value,
         flags=props[0].flags,
-        lighting_origin=avg_pos,
+        lighting=avg_pos,
         tint=props[0].tint,
         renderfx=props[0].renderfx,
     )
