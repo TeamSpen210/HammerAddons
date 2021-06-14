@@ -1,6 +1,7 @@
 """Runs before VRAD, to run operations on the final BSP."""
 import argparse
 import datetime
+import os
 import sys
 from collections import defaultdict
 from io import BytesIO
@@ -145,14 +146,19 @@ def main(argv: List[str]) -> None:
     run_transformations(vmf, fsys, packlist, bsp_file, game_info, studiomdl_loc)
 
     if studiomdl_loc is not None and args.propcombine:
-        decomp_cache_loc = conf.get(str, 'propcombine_cache')
-        if decomp_cache_loc is not None:
-            decomp_cache_loc = (game_info.root / decomp_cache_loc).resolve()
+        decomp_cache_path = conf.get(str, 'propcombine_cache')
+        if decomp_cache_path is not None:
+            decomp_cache_loc = (game_info.root / decomp_cache_path).resolve()
             decomp_cache_loc.mkdir(parents=True, exist_ok=True)
+        else:
+            decomp_cache_loc = None
         if conf.get(bool, 'propcombine_crowbar'):
             # argv[0] is the location of our script/exe, which lets us locate
-            # Crowbar from there.
-            crowbar_loc = Path(sys.argv[0], '../Crowbar.exe').resolve()
+            # Crowbar from there. The environment var is for testing.
+            if 'CROWBAR_LOC' in os.environ:
+                crowbar_loc = Path(os.environ['CROWBAR_LOC']).resolve()
+            else:
+                crowbar_loc = Path(sys.argv[0], '../Crowbar.exe').resolve()
         else:
             crowbar_loc = None
 
@@ -192,7 +198,21 @@ def main(argv: List[str]) -> None:
         if conf.get(bool, 'soundscript_manifest'):
             packlist.write_manifest()
 
-    packlist.pack_into_zip(bsp_file, blacklist=pack_blacklist, ignore_vpk=False)
+    dump_path = conf.get(str, 'pack_dump')
+    if dump_path:
+        packlist.pack_into_zip(
+            bsp_file,
+            blacklist=pack_blacklist,
+            ignore_vpk=False,
+            dump_loc=Path(game_info.root, dump_path.lstrip('#')).absolute().resolve(),
+            only_dump=dump_path.startswith('#'),
+        )
+    else:
+        packlist.pack_into_zip(
+            bsp_file,
+            blacklist=pack_blacklist,
+            ignore_vpk=False,
+        )
 
     # List out all the files, but group together files with the same extension.
     ext_for_name: Dict[str, List[str]] = defaultdict(list)

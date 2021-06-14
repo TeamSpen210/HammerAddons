@@ -23,6 +23,7 @@ from srctools.packlist import PackList, LOGGER
 
 
 ModelKey = TypeVar('ModelKey', bound=Hashable)
+AnyModelKey = Hashable
 InT = TypeVar('InT')
 OutT = TypeVar('OutT')
 
@@ -53,7 +54,7 @@ class ModelCompiler:
         version: int=0,
     ) -> None:
         # The models already constructed.
-        self._built_models: Dict[ModelKey, GenModel] = {}
+        self._built_models: Dict[AnyModelKey, GenModel] = {}
 
         # The random indexes we use to produce filenames.
         self._mdl_names: Set[str] = set()
@@ -84,7 +85,7 @@ class ModelCompiler:
     def __enter__(self) -> 'ModelCompiler':
         # Ensure the folder exists.
         os.makedirs(self.model_folder, exist_ok=True)
-        data: List[Tuple[ModelKey, str, InT]]
+        data: List[Tuple[AnyModelKey, str, object]]
         version = 0
         try:
             with (self.model_folder_abs / 'manifest.bin').open('rb') as f:
@@ -152,6 +153,7 @@ class ModelCompiler:
                 mdl_file.unlink()
             except FileNotFoundError:
                 pass
+        return False
 
     def get_model(
         self,

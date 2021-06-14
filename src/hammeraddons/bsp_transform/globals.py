@@ -1,7 +1,6 @@
 """Apply transformations that work on (almost) all entities."""
 import itertools
 from collections import defaultdict
-from typing import Dict, Tuple, List
 
 from srctools.bsp_transform import trans, Context
 from srctools.logger import get_logger
@@ -13,7 +12,7 @@ LOGGER = get_logger(__name__)
 
 
 @trans('Attachment Points')
-def att_points(ctx: Context):
+def att_points(ctx: Context) -> None:
     """Allow setting attachment points in a separate field to the parent name."""
     for ent in ctx.vmf.entities:
         if not ent['parent_attachment_point']:
@@ -32,7 +31,7 @@ def att_points(ctx: Context):
 
 
 @trans('VScript Init Code')
-def vscript_init_code(ctx: Context):
+def vscript_init_code(ctx: Context) -> None:
     """Add vscript_init_code keyvalues.
 
     The specified code is appended as a script file to the end of the scripts.
@@ -54,7 +53,7 @@ def vscript_init_code(ctx: Context):
 
 
 @trans('VScript RunScript Inputs')
-def vscript_runscript_inputs(ctx: Context):
+def vscript_runscript_inputs(ctx: Context) -> None:
     """Handle RunScript* inputs.
 
     For RunScriptCode, allow using quotes in the parameter.
@@ -77,13 +76,24 @@ def vscript_runscript_inputs(ctx: Context):
 
 
 @trans('Optimise logic_auto', priority=50)
-def optimise_logic_auto(ctx: Context):
+def optimise_logic_auto(ctx: Context) -> None:
     """Merge logic_auto entities to simplify the map."""
 
     # (global state) -> outputs
-    states = defaultdict(list)  # type: Dict[Tuple[str, bool], List[Output]]
+    states = defaultdict(list)  # type: dict[tuple[str, bool], list[Output]]
 
     for auto in ctx.vmf.by_class['logic_auto']:
+        # If the auto uses any keys that we don't recognise, leave it alone.
+        # This catches stuff like it being named and in a template,
+        # VScript, or any other hijinks.
+        if any(
+            value and key.casefold() not in {
+                'origin', 'angles', 'spawnflags',
+                'globalstate',
+            }
+            for key, value in auto.keys.items()
+        ):
+            continue
         auto.remove()
         state = auto['globalstate', '']
         only_once = auto['spawnflags', '0'] == '1'
@@ -98,12 +108,12 @@ def optimise_logic_auto(ctx: Context):
             classname='logic_auto',
             globalstate=state,
             origin='0 0 0',
-            spawnflags=int(only_once),
+            spawnflags=only_once,
         ).outputs = outputs
 
 
 @trans('Strip Entities', priority=50)
-def strip_ents(ctx: Context):
+def strip_ents(ctx: Context) -> None:
     """Strip useless entities from the map."""
     for clsname in [
         # None of these are defined by the engine itself.
@@ -116,7 +126,7 @@ def strip_ents(ctx: Context):
             ent.remove()
 
     # Strip extra keys added in the engine.
-    to_remove = []
+    to_remove: list[str] = []
     for ent in ctx.vmf.entities:
         to_remove.clear()
         for key, value in ent.keys.items():

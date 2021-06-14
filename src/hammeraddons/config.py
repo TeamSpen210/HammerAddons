@@ -187,6 +187,12 @@ OPTIONS = [
         This is disabled by default since these are usually default files.
     """),
     Opt(
+        'pack_dump', TYPE.STR,
+        """If set, copy all the packed resoures to this additional location.
+        You can also prefix this with a # character to only copy to this 
+        destination, not the BSP pakfile.
+    """),
+    Opt(
         'searchpaths', TYPE.RAW,
         """\
         Add additional search paths to the game. Each key-value pair

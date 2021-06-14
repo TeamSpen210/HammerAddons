@@ -173,7 +173,7 @@ def comp_pack_rename(ctx: Context):
 
     # Optimisation, don't re-read files multiple times.
     # We're storing the data anyway.
-    file_data = {}
+    file_data: dict[str, bytes] = {}
 
     for ent in ctx.vmf.by_class['comp_pack_rename']:
         ent.remove()
