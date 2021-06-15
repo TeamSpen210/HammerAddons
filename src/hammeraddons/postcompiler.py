@@ -103,7 +103,6 @@ def main(argv: List[str]) -> None:
     bsp_file = BSP(path)
 
     LOGGER.info('Reading entities...')
-    vmf = bsp_file.read_ent_data()
     LOGGER.info('Done!')
 
     # Mount the existing packfile, so the cubemap files are recognised.
@@ -129,7 +128,7 @@ def main(argv: List[str]) -> None:
         # Guess the format, by checking existing outputs.
         used_comma_sep = {
             out.comma_sep
-            for ent in vmf.entities
+            for ent in bsp_file.ents.entities
             for out in ent.outputs
         }
         try:
@@ -143,7 +142,7 @@ def main(argv: List[str]) -> None:
             use_comma_sep = False  # Kinda arbitary.
 
     LOGGER.info('Running transforms...')
-    run_transformations(vmf, fsys, packlist, bsp_file, game_info, studiomdl_loc)
+    run_transformations(bsp_file.ents, fsys, packlist, bsp_file, game_info, studiomdl_loc)
 
     if studiomdl_loc is not None and args.propcombine:
         decomp_cache_path = conf.get(str, 'propcombine_cache')
@@ -165,7 +164,7 @@ def main(argv: List[str]) -> None:
         LOGGER.info('Combining props...')
         propcombine.combine(
             bsp_file,
-            vmf,
+            bsp_file.ents,
             packlist,
             game_info,
             studiomdl_loc,
@@ -183,14 +182,12 @@ def main(argv: List[str]) -> None:
         )
         LOGGER.info('Done!')
     else:  # Strip these if they're present.
-        for ent in vmf.by_class['comp_propcombine_set']:
+        for ent in bsp_file.ents.by_class['comp_propcombine_set']:
             ent.remove()
-
-    bsp_file.lumps[BSP_LUMPS.ENTITIES].data = bsp_file.write_ent_data(vmf, use_comma_sep)
 
     if conf.get(bool, 'auto_pack') and args.allow_pack:
         LOGGER.info('Analysing packable resources...')
-        packlist.pack_fgd(vmf, fgd)
+        packlist.pack_fgd(bsp_file.ents, fgd)
 
         packlist.pack_from_bsp(bsp_file)
 
