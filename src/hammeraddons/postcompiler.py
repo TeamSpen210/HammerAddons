@@ -184,6 +184,8 @@ def main(argv: List[str]) -> None:
     else:  # Strip these if they're present.
         for ent in bsp_file.ents.by_class['comp_propcombine_set']:
             ent.remove()
+        for ent in bsp_file.ents.by_class['comp_propcombine_volume']:
+            ent.remove()
 
     if conf.get(bool, 'auto_pack') and args.allow_pack:
         LOGGER.info('Analysing packable resources...')
