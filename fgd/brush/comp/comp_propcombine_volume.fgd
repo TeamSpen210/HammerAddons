@@ -1,0 +1,10 @@
+@SolidClass
+	appliesto(srctools, -engine)
+	autovis(Postcompiler, Propcombine)
+= comp_propcombine_volume : "Specifies a group of props that will be combined together. Note that unlike the propcombine_set point-entity version, this does impact some brush limits, so it is suggested to use the point version in instances and prefabs."
+	[
+	name(string) : "Name" : : "Two sets with the same name will be treated as one."
+
+	prop(studio) : "Group Model" : : "If set, a combinable model used to define which others will be combined."
+	skin(integer) : "Group Skin" : 0 : "The skin for the Group Model."
+	]
