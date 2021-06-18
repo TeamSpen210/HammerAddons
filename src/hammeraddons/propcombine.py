@@ -29,7 +29,7 @@ from srctools.game import Game
 
 from srctools.logger import get_logger
 from srctools.packlist import PackList
-from srctools.bsp import BSP, StaticProp, StaticPropFlags, BModel
+from srctools.bsp import BSP, StaticProp, StaticPropFlags, BModel, VisLeaf
 from srctools.mdl import Model, MDL_EXTS
 from srctools.smd import Mesh
 from srctools.compiler.mdl_compiler import ModelCompiler
@@ -178,7 +178,7 @@ def combine_group(
     avg_pos = Vec()
     avg_yaw = 0.0
 
-    visleafs = set()  # type: Set[int]
+    visleafs: Set[VisLeaf] = set()
 
     for prop in props:
         avg_pos += prop.origin
@@ -229,7 +229,7 @@ def combine_group(
         origin=avg_pos,
         angles=Angle(0, avg_yaw - 90, 0),
         scaling=1.0,
-        visleafs=sorted(visleafs),
+        visleafs=visleafs,
         solidity=(CollType.VPHYS if has_coll else CollType.NONE).value,
         flags=props[0].flags,
         lighting=avg_pos,
