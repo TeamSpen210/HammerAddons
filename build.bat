@@ -29,12 +29,12 @@ IF /I %game%==ALL (
     SET "build_dir=!game_build_dir!/%%i"
     CALL :build_%%i
   )
-  EXIT
+  EXIT /B
 ) ELSE (
   FOR %%i in (%games%) do (
     IF /I %game%==%%i (
       CALL :build_%%i
-      EXIT
+      EXIT /B
     )
   )
   echo Unknown game. Exitting. & EXIT /B 1
@@ -57,7 +57,7 @@ IF /I %game%==ALL (
   mkdir "%build_dir%/%1"
   python unify_fgd.py exp %1 srctools -o "%build_dir%/%1/%1.fgd"
 
-  IF %ERRORLEVEL% NEQ 0 (echo Building FGD for %1 has failed. Exitting. & EXIT)
+  IF %ERRORLEVEL% NEQ 0 (echo Building FGD for %1 has failed. Exitting. & EXIT /B)
   EXIT /B
 
 :copy_hammer_files
@@ -66,18 +66,18 @@ IF /I %game%==ALL (
   IF %ERRORLEVEL% LSS 8 robocopy hammer/cfg_%1 %build_dir%/hammer/cfg /S
 
   IF %ERRORLEVEL% LSS 8 EXIT /B 0
-  echo Failed copying Hammer files for %1. Exitting. & EXIT
+  echo Failed copying Hammer files for %1. Exitting. & EXIT /B
 
 :copy_vscript_files
   echo Copying VScript files (hammer/scripts)...
   robocopy hammer/scripts %build_dir%/hammer/scripts /S /PURGE
 
   IF %ERRORLEVEL% LSS 8 EXIT /B 0
-  echo Failed copying VScript files (hammer/scripts). Exitting. & EXIT
+  echo Failed copying VScript files (hammer/scripts). Exitting. & EXIT /B
 
 :copy_postcompiler_files
   echo Copying postcompiler transforms...
   robocopy transforms %build_dir%/%bin_dir%/postcompiler/transforms /S /PURGE
   
   IF %ERRORLEVEL% LSS 8 EXIT /B 0
-  echo Failed copying postcompiler transforms. Exitting. & EXIT
+  echo Failed copying postcompiler transforms. Exitting. & EXIT /B
