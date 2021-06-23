@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 games="momentum p2ce"
 
@@ -94,6 +94,6 @@ else
       build_$game
       exit
     fi
-    echo "Unknown game. Exitting." & exit 1
   done
+  echo "Unknown game. Exitting." & exit 1
 fi
