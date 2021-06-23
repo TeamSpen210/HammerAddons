@@ -83,6 +83,9 @@ def main(argv: List[str]) -> None:
 
     fsys.open_ref()
 
+    LOGGER.info('Loading plugins...')
+    plugin.load_all()
+
     packlist = PackList(fsys)
 
     LOGGER.info('Gameinfo: {}', game_info.path)
@@ -120,9 +123,6 @@ def main(argv: List[str]) -> None:
     else:
         LOGGER.warning('No studiomdl path provided.')
         studiomdl_loc = None
-
-    LOGGER.info('Loading plugins...')
-    plugin.load_all()
 
     use_comma_sep = conf.get(bool, 'use_comma_sep')
     if use_comma_sep is None:
