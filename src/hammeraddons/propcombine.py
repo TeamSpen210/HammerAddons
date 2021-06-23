@@ -17,7 +17,7 @@ from tempfile import TemporaryDirectory
 from typing import (
     Optional, Tuple, Callable, NamedTuple,
     FrozenSet, Dict, List, Set,
-    Iterator, Union,
+    Iterator, Union, MutableMapping,
 )
 
 from srctools import (
@@ -130,7 +130,7 @@ def make_collision_brush(origin: Vec, angles: Angle, brush: BModel) -> Callable[
         """Check if the given position is inside the volume."""
         local_point = (point - origin) @ inv_angles
         leaf = brush.node.test_point(local_point)
-        return leaf is not None and leaf.brushes
+        return leaf is not None and len(leaf.brushes) > 0
     return check
 
 
@@ -614,7 +614,7 @@ def group_props_ent(
     prop_groups: Dict[Optional[tuple], List[StaticProp]],
     rejected: List[StaticProp],
     get_model: Callable[[str], Tuple[Optional[QC], Optional[Model]]],
-    brush_models: List[BModel],
+    brush_models: MutableMapping[Entity, BModel],
     grouper_ents: List[Entity],
     min_cluster: int,
 ) -> Iterator[List[StaticProp]]:
@@ -669,12 +669,13 @@ def group_props_ent(
             combine_set.volume += size.x * size.y * size.z
             combine_set.collision.append(make_collision_bbox(origin, angles, mins, maxes))
         elif ent['classname'] == 'comp_propcombine_volume':
-            # Brushwork collision.
-            if not ent['model'].startswith('*'):
+            # Brushwork collision. Pop from the dict, so the brush model is removed.
+            try:
+                brush = brush_models.pop(ent)
+            except KeyError:
                 raise ValueError(
                     f'No model for propcombine volume {repr(combine_set)} at '
                     f'{str(origin)}')
-            brush: BModel = brush_models[int(ent['model'][1:])]
             # Use the bounding box as a volume approximation,
             # it's only needed for sorting the volumes.
             size = brush.maxes - brush.mins
@@ -800,11 +801,11 @@ def combine(
     """Combine props in this map."""
     # First parse out the bbox and volume ents, so they are always removed.
     grouper_ents = list(bsp_ents.by_class['comp_propcombine_set'] | bsp_ents.by_class['comp_propcombine_volume'])
-    for ent in grouper_ents:
-        ent.remove()
 
     if not studiomdl_loc.exists():
         LOGGER.warning('No studioMDL! Cannot propcombine!')
+        for ent in grouper_ents:
+            ent.remove()
         return
 
     if not qc_folders and decomp_cache_loc is None:
@@ -924,10 +925,9 @@ def combine(
         LOGGER.info('No propcombine groups provided.')
         return
 
-    for prop in bsp.static_props():
+    for prop in bsp.props:
         prop_groups[get_grouping_key(prop)].append(prop)
         prop_count += 1
-
 
     # These are models we cannot merge no matter what -
     # no source files etc.
@@ -990,4 +990,4 @@ def combine(
     except FileNotFoundError:
         pass
 
-    bsp.write_static_props(final_props)
+    bsp.props = final_props

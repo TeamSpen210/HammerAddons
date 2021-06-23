@@ -185,6 +185,7 @@ def main(argv: List[str]) -> None:
         for ent in bsp_file.ents.by_class['comp_propcombine_set']:
             ent.remove()
         for ent in bsp_file.ents.by_class['comp_propcombine_volume']:
+            bsp_file.bmodels.pop(ent, None)  # Ignore if not present.
             ent.remove()
 
     if conf.get(bool, 'auto_pack') and args.allow_pack:
