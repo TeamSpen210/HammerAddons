@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 games="momentum p2ce"
 
@@ -15,7 +15,7 @@ done
 game=$1
 # Make sure game isn't empty by asking the user for what game to build
 if [ $# -eq 0 ]; then
-  echo Games: "${games[*]}" & echo Enter game to build. Use ALL to build every game. & read -p "" game
+  echo Games: "${games[*]}" && echo Enter game to build. Use ALL to build every game. && read -p "" game
 fi
 
 echo "Removing previous build in $build_dir"
@@ -40,7 +40,7 @@ copy_hammer_files() {
   rsync -a hammer/cfg_$1/* $build_dir/hammer/cfg
 
   if [ $? -ne 0 ]; then
-    echo "Failed copying Hammer files. Exitting." & exit 1
+    echo "Failed copying Hammer files. Exitting." && exit 1
   fi
   return 0
 }
@@ -51,7 +51,7 @@ build_game_fgd() {
   python3 unify_fgd.py exp $1 srctools -o "$build_dir/$1/$1.fgd"
 
   if [ $? -ne 0 ]; then
-    echo "Building FGD for $1 has failed. Exitting." & exit 1
+    echo "Building FGD for $1 has failed. Exitting." && exit 1
   fi
   return 0
 }
@@ -62,7 +62,7 @@ copy_vscript_files() {
   cp -rf hammer/scripts "$build_dir/hammer"
 
   if [ $? -ne 0 ]; then
-    echo "Failed copying VScript files (hammer/scripts). Exitting." & exit 1
+    echo "Failed copying VScript files (hammer/scripts). Exitting." && exit 1
   fi
   return 0
 }
@@ -73,7 +73,7 @@ copy_postcompiler_files() {
   cp -rf transforms "$build_dir/$bin_dir/postcompiler"
 
   if [ $? -ne 0 ]; then
-    echo "Failed copying postcompiler transforms. Exitting." & exit 1
+    echo "Failed copying postcompiler transforms. Exitting." && exit 1
   fi
   return 0
 }
@@ -94,6 +94,6 @@ else
       build_$game
       exit
     fi
-    echo "Unknown game. Exitting." & exit 1
   done
+  echo "Unknown game. Exitting." && exit 1
 fi
