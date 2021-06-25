@@ -51,12 +51,7 @@
 		1 : "Yes"
 		]
 
-	fail[engine](integer) : "Teleport is for failing a level" : 0
-	fail(choices) : "Teleport is for failing a level" : 0 =
-		[
-		0 : "No"
-		1 : "Yes"
-		]
+	fail[MOMENTUM](boolean) : "Teleport is for failing a level" : 0
 	
 	uselandmarkangles[engine](integer) : "Use Landmark Angles" : 0
 	uselandmarkangles(choices) : "Use Landmark Angles" : 0 : "(Landmark mode only) Forces the teleported object to snap to the angles of the destination landmark." =
