@@ -1,6 +1,5 @@
 @PointClass base(StaticTargetName)
-	appliesto(MOMENTUM)
-= env_momentum_surface_teleport
+= env_surface_teleport: "Teleports the player to the Remote Destination when they stand on a specified material."
 	[
 	target(target_destination) : "Remote Destination" : : "The entity specifying the point to which the player should be teleported."
 

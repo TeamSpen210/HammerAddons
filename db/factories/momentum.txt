@@ -42,7 +42,6 @@ env_lightglow
 env_lightrail_endpoint
 env_message
 env_microphone
-env_momentum_surface_teleport
 env_particle_performance_monitor
 env_particle_trail
 env_particlefire
@@ -78,6 +77,7 @@ env_spritetrail
 env_steam
 env_steamjet
 env_sun
+env_surface_teleport
 env_texturetoggle
 env_tilt
 env_tonemap_controller

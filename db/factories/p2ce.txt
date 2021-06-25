@@ -133,6 +133,7 @@ env_spritetrail
 env_steam
 env_steamjet
 env_sun
+env_surface_teleport
 env_texturetoggle
 env_tilt
 env_tonemap_controller
