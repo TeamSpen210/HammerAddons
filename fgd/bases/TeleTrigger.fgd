@@ -1,10 +1,28 @@
-@BaseClass base(MomentumTrigger)
-	appliesto(MOMENTUM)
-= TeleTrigger
+@BaseClass base(Trigger) = TeleTrigger
 	[
+	spawnflags(flags) =
+		[
+		32: "Preserve angles even when a local landmark is not specified" : 0
+		8388608: "Teleport the player on leaving the trigger instead of entering it" : 0
+		
+		// Restore the other spawnflags.
+		1: "Clients/Players" : 1
+		8192: "Allow ghosts to fire this trigger" : 0 [MOMENTUM]
+		2: "NPCs" : 0
+		4: "func_pushable" : 0
+		8: "Physics Objects" : 0
+		16: "Only player ally NPCs" : 0
+		64: "Everything (not including physics debris)" : 0
+		512: "Only clients *not* in vehicles" : 0 [+USE_VEHICLES]
+		1024: "Physics debris" : 0
+		2048: "Only NPCs in vehicles (respects player ally flag)" : 0 [+USE_VEHICLES]
+		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 1
+		]
+
 	target(target_destination) : "Remote Destination" : : "The entity specifying the point to which the player should be teleported."
 	
-	landmark(target_destination) : "Local Destination Landmark" : : "In landmark mode, teleported entities are offset from the target by their initial offset from the landmark, angles and velocity are also reoriented to the destination if enabled."
+	landmark(target_destination) : "Local Destination Landmark" : : "In landmark mode, teleported entities are offset from the target by " + 
+		"their initial offset from the landmark. Angles and velocity are also reoriented to the destination if enabled."
 	
 	velocityscale(vector) : "Velocity Scale Factor (X Y Z)" : "1 1 1" : "Scale the player's velocity per-axis"
 	
@@ -19,7 +37,8 @@
 		]
 	
 	reorient_landmark[engine](integer) : "Reorient Landmark" : 0
-	reorient_landmark(choices) : "Reorient Landmark" : 0 : "(Landmark mode only) Reorient origin, angles and velocity from the landmark's local space to the destination's. This means the destination room does not have to face the same way." =
+	reorient_landmark(choices) : "Reorient Landmark" : 0 : "(Landmark mode only) Reorient origin, angles and velocity from the landmark's" + 
+		"local space to the destination's. This means the destination room does not have to face the same way." =
 		[
 		0 : "No"
 		1 : "Yes"
@@ -39,22 +58,19 @@
 		1 : "Yes"
 		]
 	
-	spawnflags(flags) =
+	uselandmarkangles[engine](integer) : "Use Landmark Angles" : 0
+	uselandmarkangles(choices) : "Use Landmark Angles" : 0 : "(Landmark mode only) Forces the teleported object to snap to the angles of the destination landmark." =
 		[
-		32: "Preserve angles even when a local landmark is not specified" : 0
-		8388608: "Teleport the player on EndTouch() instead of StartTouch()" : 0
-		
-		// Restore the other spawnflags.
-		1: "Clients/Players" : 1
-		8192: "Allow ghosts to fire this trigger" : 0 [MOMENTUM]
-		2: "NPCs" : 0
-		4: "func_pushable" : 0
-		8: "Physics Objects" : 0
-		16: "Only player ally NPCs" : 0
-		64: "Everything (not including physics debris)" : 0
-		512: "Only clients *not* in vehicles" : 0 [+USE_VEHICLES]
-		1024: "Physics debris" : 0
-		2048: "Only NPCs in vehicles (respects player ally flag)" : 0 [+USE_VEHICLES]
-		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 1
+		0 : "No"
+		1 : "Yes"
 		]
+
+	checkdestifclearforplayer[engine](integer) : "Only Spawn-Valid Destinations" : 0
+	checkdestifclearforplayer(choices) : "Only Spawn-Valid Destinations" : 0 : "Only teleport if there is a clear teleport destination." =
+		[
+		0 : "No"
+		1 : "Yes"
+		]
+
+	input SetRemoteDestination(string) : "Set a new remote teleport destination."
 	]
