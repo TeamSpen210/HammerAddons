@@ -30,7 +30,7 @@ OutT = TypeVar('OutT')
 
 class GenModel:
     """Tracks information about this model."""
-    def __init__(self, mdl_name: str, result: InT=None) -> None:
+    def __init__(self, mdl_name: str, result: OutT=None) -> None:
         self.name = mdl_name  # This is just the filename.
         self.used = False
         self.result = result  # Return value from compile function.
@@ -113,23 +113,23 @@ class ModelCompiler:
 
         for tup in data:
             try:
-                key, name, result = tup
+                key, name, mdl_result = tup
                 if not isinstance(name, str):
                     continue
             except ValueError:
                 continue  # Malformed, ignore.
             if name in self._mdl_names:
-                self._built_models[key] = GenModel(name, result)
+                self._built_models[key] = GenModel(name, mdl_result)
             else:
                 LOGGER.warning('Model in manifest but not present: {}', name)
 
         LOGGER.info('Found {} existing models/{}*', len(self._built_models), self.model_folder)
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> bool:
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         """Write the constructed models to the cache file and remove unused models."""
         if exc_type is not None or exc_val is not None:
-            return False
+            return
         data = []
         used_mdls = set()
         for key, mdl in self._built_models.items():
@@ -153,7 +153,6 @@ class ModelCompiler:
                 mdl_file.unlink()
             except FileNotFoundError:
                 pass
-        return False
 
     def get_model(
         self,
