@@ -19,11 +19,7 @@
 	maxballbounces(int) : "Ball Bounces" : -1 : "Sets on which bounce the ball should explode. For example, if set to 4, the ball will explode on the 4th bounce."
 	balllifetime(float) : "Ball Lifetime" : 12 : "The time in seconds the ball will live before self-destructing. A negative value will give infinite life, appearing green."
 	balldamage(float) : "Ball Damage" : 1500 : "The amount of damage to deal to the player on contact"
-	ballexplodeplayer(choices) : "Ball explodes on player contact" : 1 : "Whether or not the ball should interact with the player. " =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
+	ballexplodeplayer(boolean) : "Ball explodes on player contact" : 1 : "Whether or not the ball should interact with the player."
 	ballmaterial1(material) : "Ball body material override" : "effects/eball_infinite_life" : "Override the main ball material. Remember to enable the flag! Default material behavior is used if the flag is not set!!!"
 	ballmaterial2(material) : "Ball flicker material override" : "effects/combinemuzzle1" : "Override the other ball material. Remember to enable the flag! Default material behavior is used if the flag is not set!!!"
 	ballknockback(float) : "Ball knockback multiplier" : 0 : "The ball's velocity is multiplied by this value to determine how strongly to knockback hit objects. Use 1 for 1:1 speed = knockback radio."

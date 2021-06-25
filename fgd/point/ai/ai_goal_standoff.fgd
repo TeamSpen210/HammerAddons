@@ -36,12 +36,7 @@
 	abandonifenemyhides(boolean) : "Abandon if enemies hide" : 0 : "If no enemy detected recently, stop the standoff"
 
 	// Custom aggression
-	CustomCoverOnReload[engine](boolean) : "Custom: Take cover to reload" : 1
-	CustomCoverOnReload(choices) : "Custom: Take cover to reload" : 1 =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
+	CustomCoverOnReload(boolean) : "Custom: Take cover to reload" : 1
 	CustomMinTimeShots(float) : "Custom: Min time wait to shoot" : 2 : "Minimum duration of time after a burst of shooting before trying again"
 	CustomMaxTimeShots(float) : "Custom: Max time wait to shoot" : 4 : "Minimum duration of time after a burst of shooting before trying again"
 	CustomMinShots(integer)   : "Custom: Min shots in a burst"   : 1

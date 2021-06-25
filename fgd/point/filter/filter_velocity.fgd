@@ -13,28 +13,13 @@
 		0 : "Below"
 		1 : "Above"
 		]
-	EnableVertical[engine](integer) : "Enable Vertical" : 0
-	EnableVertical(choices) : "Enable Vertical" : 0 : "Check vertical velocity (total velocity mode only)" =
-		[
-		0 : "No"
-		1 : "Yes"
-		]
-	EnableHorizontal[engine](integer) : "Enable Horizontal" : 0
-	EnableHorizontal(choices) : "Enable Horizontal" : 0 : "Check horizontal velocity (total velocity mode only)" =
-		[
-		0 : "No"
-		1 : "Yes"
-		]
+	EnableVertical(boolean) : "Enable Vertical" : 0 : "Check vertical velocity (total velocity mode only)"
+	EnableHorizontal(boolean) : "Enable Horizontal" : 0 : "Check horizontal velocity (total velocity mode only)"
 
 	VerticalVelocity(float) : "Vertical velocity" : 500 : "The amount of units per second for vertical (Z axis) speed."
 	HorizontalVelocity(float) : "Horizontal velocity" : 1000 : "The amount of units per second for horizontal (XY axis) speed."
 
-	IgnoreSign[engine](integer) : "Use Absolute Value" : 0
-	IgnoreSign(choices) : "Use Absolute Value" : 0 : "Whether to check the absolute value of the velocity components (per-axis mode only)" =
-		[
-		0 : "No"
-		1 : "Yes"
-		]
+	IgnoreSign(boolean) : "Use Absolute Value" : 0 : "Whether to check the absolute value of the velocity components (per-axis mode only)"
 
 	VelocityVector(vector) : "Per-axis Velocity" : "0 0 0" : "The velocity vector for per-axis mode"
 	VelocityAxes(vector) : "Per-axis Enable" : "0 0 0" : "Which axes to use when checking velocity, zero means the corresponding axis is ignored (per-axis mode only)"

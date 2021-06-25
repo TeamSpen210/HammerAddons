@@ -36,36 +36,16 @@
 		4 : "Landmark teleport"
 		]
 	
-	reorient_landmark[engine](integer) : "Reorient Landmark" : 0
-	reorient_landmark(choices) : "Reorient Landmark" : 0 : "(Landmark mode only) Reorient origin, angles and velocity from the landmark's" + 
-		"local space to the destination's. This means the destination room does not have to face the same way." =
-		[
-		0 : "No"
-		1 : "Yes"
-		]
+	reorient_landmark(boolean) : "Reorient Landmark" : 0 : "(Landmark mode only) Reorient origin, angles and velocity from the landmark's" + 
+		"local space to the destination's. This means the destination room does not have to face the same way."
 	
-	resetang[engine](integer) : "Reset the player angles on teleport" : 1
-	resetang(choices) : "Reset the player angles on teleport" : 1 =
-		[
-		0 : "No"
-		1 : "Yes"
-		]
+	resetang(boolean) : "Reset the player angles on teleport" : 1
 
 	fail[MOMENTUM](boolean) : "Teleport is for failing a level" : 0
 	
-	uselandmarkangles[engine](integer) : "Use Landmark Angles" : 0
-	uselandmarkangles(choices) : "Use Landmark Angles" : 0 : "(Landmark mode only) Forces the teleported object to snap to the angles of the destination landmark." =
-		[
-		0 : "No"
-		1 : "Yes"
-		]
-
-	checkdestifclearforplayer[engine](integer) : "Only Spawn-Valid Destinations" : 0
-	checkdestifclearforplayer(choices) : "Only Spawn-Valid Destinations" : 0 : "Only teleport if there is a clear teleport destination." =
-		[
-		0 : "No"
-		1 : "Yes"
-		]
+	uselandmarkangles(boolean) : "Use Landmark Angles" : 0 : "(Landmark mode only) Forces the teleported object to snap to the angles of the destination landmark."
+	
+	checkdestifclearforplayer(boolean) : "Only Spawn-Valid Destinations" : 0 : "Only teleport if there is a clear teleport destination."
 
 	input SetRemoteDestination(string) : "Set a new remote teleport destination."
 	]

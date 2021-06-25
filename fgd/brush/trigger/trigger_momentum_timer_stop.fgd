@@ -2,10 +2,5 @@
 	appliesto(MOMENTUM)
 = trigger_momentum_timer_stop : "Trigger that stops the timer."
 	[
-	cancel[engine](integer) : "Cancel Timer" : 0
-	cancel(choices) : "Cancel Timer" : 0 : "If true, the run will not be submitted." =
-		[
-		0 : "False"
-		1 : "True"
-		]
+	cancel(boolean) : "Cancel Timer" : 0 : "Stop the timer without submitting a run."
 	]
