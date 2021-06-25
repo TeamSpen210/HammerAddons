@@ -21,7 +21,7 @@
         }
         "2"
         {
-            "enabled" "1"
+            "enabled" "0"
             "special_cmd" "0"
             "run" "$postcompiler_exe"
             "params" "--propcombine $path\$file"
@@ -90,7 +90,7 @@
         }
         "2"
         {
-            "enabled" "1"
+            "enabled" "0"
             "special_cmd" "0"
             "run" "$postcompiler_exe"
             "params" "--propcombine $path\$file"
