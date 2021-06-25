@@ -18,7 +18,8 @@
 		1: "Don't move" : 0
 		32: "Toggle" : 0
 		256: "Touch Activates" : 0
-		512: "Damage Activates" : 0
+		512: "Damage Activates" : 0 [-MOMENTUM]
+		512: "Damage Activates" : 1 [+MOMENTUM]
 		1024: "Use Activates" : 1
 		2048: "Starts locked" : 0
 		4096: "Sparks" : 0
