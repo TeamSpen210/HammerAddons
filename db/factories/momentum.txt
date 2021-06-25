@@ -349,6 +349,7 @@ test_traceline
 trigger
 trigger_auto_crouch
 trigger_brush
+trigger_catapult
 trigger_cdaudio
 trigger_fog
 trigger_gravity
@@ -356,7 +357,6 @@ trigger_hierarchy
 trigger_impact
 trigger_look
 trigger_momentum_campaign_changelevel
-trigger_momentum_catapult
 trigger_momentum_limitmovement
 trigger_momentum_multihop
 trigger_momentum_onehop
