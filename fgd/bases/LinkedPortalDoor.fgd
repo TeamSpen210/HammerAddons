@@ -1,5 +1,5 @@
 @BaseClass 
-	appliesto(P2CE) 
+	appliesto(+USE_PORTALS) 
 	line(255 255 0, targetname, partnername) 
 = LinkedPortalDoor: "An entity that can be linked to another door and create a passage between them dynamically."
 	[
