@@ -5,6 +5,7 @@
     // 257 - Copy File
     // 258 - Delete File
     // 259 - Rename File
+    // 261 - Copy File if it exists
     // And they have no "run" string
     "Fast"
     {
