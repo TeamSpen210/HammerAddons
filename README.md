@@ -25,13 +25,12 @@
 * New sprites for almost all entities, both custom made and from a number of [other sources](#development).
 * Adds lots more AutoVisgroups for easily hiding entities.
 * New `comp_` entities. These are mainly intended for use in instances, allowing modifying entities outside of the instance to conform or doing normally impossible things like positioning things in the void.
-* Improvments for games supporing VScript:
+* Improvements for games supporting VScript:
 	* In any `RunScriptCode` input, backticks can be used for string literals, instead of the disallowed `"` character. 
 	* In addition to the normal `Entity Scripts` section, a new `Init Code` field can be used to write code that's packed and added to those scripts. Useful for setting configuration options etc. Backticks can be used here too.
 
 ## Installation
 
-* Download the latest release from the [releases tab][releases].
 * Follow [this guide][installationwiki].
 * If using BEEMOD2.4, change Hammer -> Options -> Build Programs to use `vrad_original.exe`.
 
