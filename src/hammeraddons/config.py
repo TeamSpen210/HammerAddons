@@ -23,7 +23,7 @@ LOGGER = logger.get_logger(__name__)
 CONF_NAME = 'srctools.vdf'
 
 
-def parse(path: Path) -> Tuple[
+def parse(path: Path, game_folder: str='') -> Tuple[
     Config,
     Game,
     FileSystemChain,
@@ -82,7 +82,16 @@ def parse(path: Path) -> Tuple[
     with AtomicWriter(str(conf.path)) as f:
         conf.save(f)
 
-    game = Game((folder / conf.get(str, 'gameinfo')).resolve())
+    if not game_folder:
+        game_folder = conf.get(str, 'gameinfo')
+    if not game_folder:
+        raise ValueError(
+            'No game folder specified!\n'
+            'Add -game $gamedir to the command line, or set it in '
+            f'"{conf.path}".'
+        )
+    game = Game((folder / game_folder).resolve())
+    LOGGER.info('Game folder: {}', game.path)
 
     fsys_chain = game.get_filesystem()
 
@@ -171,7 +180,7 @@ def parse(path: Path) -> Tuple[
 
 OPTIONS = [
     Opt(
-        'gameinfo', 'portal2/',
+        'gameinfo', TYPE.STR,
         """The main game folder. portal2/ for Portal 2, csgo/ for CSGO, etc.
         This is relative to the config file.
     """),
