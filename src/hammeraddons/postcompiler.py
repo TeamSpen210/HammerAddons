@@ -34,6 +34,15 @@ def main(argv: List[str]) -> None:
     )
 
     parser.add_argument(
+        "-game", "--game",
+        dest="game_folder",
+        default="",
+        help="Specify the folder containing gameinfo.txt, and thus the "
+             "location of the game. This overrides the option specified "
+             "in srctools.vdf.",
+    )
+
+    parser.add_argument(
         "--nopack",
         dest="allow_pack",
         action="store_false",
@@ -76,12 +85,19 @@ def main(argv: List[str]) -> None:
     ))
     LOGGER.addHandler(handler)
 
-    LOGGER.info('Srctools postcompiler hook started at {}!', datetime.datetime.now().isoformat())
+    LOGGER.info('HammerAddons postcompiler started at {}!', datetime.datetime.now().isoformat())
     LOGGER.info("Map path is {}", path)
 
-    conf, game_info, fsys, pack_blacklist, plugin = config.parse(path)
+    (
+        conf, game_info,
+        fsys, pack_blacklist,
+        plugin,
+    ) = config.parse(path, args.game_folder)
 
     fsys.open_ref()
+
+    LOGGER.info('Loading plugins...')
+    plugin.load_all()
 
     packlist = PackList(fsys)
 
@@ -119,9 +135,6 @@ def main(argv: List[str]) -> None:
     else:
         LOGGER.warning('No studiomdl path provided.')
         studiomdl_loc = None
-
-    LOGGER.info('Loading plugins...')
-    plugin.load_all()
 
     use_comma_sep = conf.get(bool, 'use_comma_sep')
     if use_comma_sep is None:
@@ -238,7 +251,7 @@ def main(argv: List[str]) -> None:
     LOGGER.info('Writing BSP...')
     bsp_file.save()
 
-    LOGGER.info("srctools VRAD hook finished!")
+    LOGGER.info("HammerAddons postcompiler complete!")
 
 if __name__ == '__main__':
     main(sys.argv[1:])
