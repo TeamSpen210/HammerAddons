@@ -51,25 +51,13 @@
 | `comp_vactube_object`              | Registers objects that can appear in the tubing.                                                                                                                                                                                                                                                                                                                                                                      |
 | `comp_vactube_start`               | Marks the start point of a vactube. This is where they spawn.                                                                                                                                                                                                                                                                                                                                                         |
 
-<br>
 
 ## Installation
 
 * Follow [this guide][installationwiki].
 * If using BEEMOD2.4, change Hammer -> Options -> Build Programs to use `vrad_original.exe`.
 
-## Using Vactubes (Portal 2 only)
 
-This addon implements a dynamic vactube system similar to Valve's, including randomised objects, complex junctions and dropper support.
-
-* To use, place and configure `comp_vactube_object` entities to specify which items can appear in tubes.
-* When building vactube paths, place a comp_vactube_start entity at the beginning of the track, and a `comp_vactube_end` at the end. 
-* Then at each corner/junction in a vactube place a `comp_vactube_junction` ent, picking the appropriate type. These all need to be rotated appropriately so the arrows point in the correct direction to be matched up by the compiler. 
-* To split a path into multiple tubes, you'll need to use one of the "splitter" junction types. 
-* To join multiple back into a single pipe, simply overlap two junctions such that their outputs both point down the same route. 
-* For droppers, place the supplied `instances/cubedropper/dropper_vactube.vmf` instance, and run a path up to the vactube end entity in the top. Place a `prop_weighted_cube` inside the dropper to specify which cube type it will spawn. The specific route leading to the dropper will be detected and only replacement cubes will be sent this way. Add a splitter just before the dropper, so the tube can have decorative items flowing through it constantly. 
-* To place the vactube scanner TVs, simply add a "straight"-type junction inside the model, then place the `prop_dynamic`s for the screen and optionally the spinner. The screen will need the supplied `_new` model, so both orientations have all the skins. They will automatically be detected and flash on when objects pass.
-* To avoid visual collisions, you may want to turn off the automatic spawning on one or more spawn points, then use the outputs on a junction to manually spawn objects in sync with another path.
 
 ## Development
 
