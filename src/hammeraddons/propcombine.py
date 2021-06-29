@@ -935,6 +935,7 @@ def combine(
         for prop in rejected:
             dump_vmf.create_ent(
                 'prop_static',
+                skin=prop.skin,
                 model=prop.model,
                 origin=prop.origin,
                 angles=prop.angles,
