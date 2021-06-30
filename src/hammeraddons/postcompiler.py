@@ -3,31 +3,33 @@ import argparse
 import datetime
 import os
 import sys
+import warnings
 from collections import defaultdict
 from io import BytesIO
 from logging import FileHandler
 from pathlib import Path
 from zipfile import ZipFile
+from typing import List, Dict
 
-from srctools import Property
-from srctools.filesys import ZipFileSystem
 from srctools.logger import init_logging, Formatter
 
 
 # Put the logs in the executable folders.
 LOGGER = init_logging(Path(sys.argv[0]).with_name('postcompiler.log'))
+warnings.filterwarnings(category=DeprecationWarning, module='srctools', action='once')
 
+from srctools import Property
+from srctools.filesys import ZipFileSystem
 from srctools.fgd import FGD
 from srctools.bsp import BSP, BSP_LUMPS
 from srctools.bsp_transform import run_transformations
 from srctools.packlist import PackList
 from srctools.scripts import config
 from srctools.compiler import propcombine
-from typing import List, Dict
 
 
 def main(argv: List[str]) -> None:
-
+    """Run the postcompiler."""
     parser = argparse.ArgumentParser(
         description="Modifies the BSP file, allowing additional entities "
                     "and bugfixes.",
