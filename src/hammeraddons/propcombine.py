@@ -17,7 +17,7 @@ from tempfile import TemporaryDirectory
 from typing import (
     Optional, Tuple, Callable, NamedTuple,
     FrozenSet, Dict, List, Set,
-    Iterator, Union,
+    Iterator, Union, MutableMapping,
 )
 
 from srctools import (
@@ -29,7 +29,7 @@ from srctools.game import Game
 
 from srctools.logger import get_logger
 from srctools.packlist import PackList
-from srctools.bsp import BSP, StaticProp, StaticPropFlags
+from srctools.bsp import BSP, StaticProp, StaticPropFlags, BModel, VisLeaf
 from srctools.mdl import Model, MDL_EXTS
 from srctools.smd import Mesh
 from srctools.compiler.mdl_compiler import ModelCompiler
@@ -83,32 +83,55 @@ def unify_mdl(path: str):
 
 
 class CombineVolume:
-    """Parsed comp_propcombine_sets."""
+    """Parsed comp_propcombine_* ents."""
     def __init__(self, group_name: str, skinset: FrozenSet, origin: Vec) -> None:
         self.group = group_name
         self.skinset = skinset
-        self.volume = 0.0  # For sorting
+        # For sorting.
+        self.volume = 0.0
         self.used = False
-        # To do collision checks, for each volume construct a list of planes.
-        # Then we can check if a prop is inside any of those.
-        self.collision: List[List[Tuple[Vec, Vec]]] = []
+        self.mins = Vec()
+        self.maxes = Vec()
+        # Each volume in the group, specifying its collision behaviour.
+        self.collision: List[Callable[[Vec], bool]] = []
+
         if group_name:
             self.desc = f'group "{group_name}"'
         else:
             self.desc = f'at {origin}'
 
     def contains(self, point: Vec) -> bool:
+        """Check if the volume contains this point."""
+        return any(coll(point) for coll in self.collision)
+
+
+def make_collision_bbox(origin: Vec, angles: Angle, mins: Vec, maxes: Vec) -> Callable[[Vec], bool]:
+    """Produce a bounding box collision checker."""
+    # Transpose the angles, giving us the inverse transform.
+    inv_angles = Matrix.from_angle(angles).transpose()
+
+    def check(point: Vec) -> bool:
+        """Check if the given position is inside the bbox."""
+        local_point = (point - origin) @ inv_angles
+        return local_point.in_bbox(mins, maxes)
+    return check
+
+
+def make_collision_brush(origin: Vec, angles: Angle, brush: BModel) -> Callable[[Vec], bool]:
+    """Produce a collision checker using a brush entity."""
+    # Transpose the angles, giving us the inverse transform.
+    inv_angles = Matrix.from_angle(angles).transpose()
+    # brushes = {
+    #     br for leaf in brush.node.iter_leafs()
+    #     for br in leaf.brushes
+    # }
+
+    def check(point: Vec) -> bool:
         """Check if the given position is inside the volume."""
-        for convex in self.collision:
-            for pos, norm in convex:
-                off = pos - point
-                # This is the actual distance, so we'll use a rather large
-                # "epsilon" to catch objects close to the edges.
-                if Vec.dot(off, norm) < -0.1:
-                    break  # Outside a plane, it doesn't match this convex.
-            else:  # Inside all these planes, it's inside.
-                return True
-        return False  # All failed, not present.
+        local_point = (point - origin) @ inv_angles
+        leaf = brush.node.test_point(local_point)
+        return leaf is not None and len(leaf.brushes) > 0
+    return check
 
 
 class CollType(Enum):
@@ -155,7 +178,7 @@ def combine_group(
     avg_pos = Vec()
     avg_yaw = 0.0
 
-    visleafs = set()  # type: Set[int]
+    visleafs: Set[VisLeaf] = set()
 
     for prop in props:
         avg_pos += prop.origin
@@ -206,17 +229,17 @@ def combine_group(
         origin=avg_pos,
         angles=Angle(0, avg_yaw - 90, 0),
         scaling=1.0,
-        visleafs=sorted(visleafs),
+        visleafs=visleafs,
         solidity=(CollType.VPHYS if has_coll else CollType.NONE).value,
         flags=props[0].flags,
-        lighting_origin=avg_pos,
+        lighting=avg_pos,
         tint=props[0].tint,
         renderfx=props[0].renderfx,
     )
 
 
 def compile_func(
-    mdl_key: Tuple[Set[PropPos], bool],
+    mdl_key: Tuple[FrozenSet[PropPos], bool],
     temp_folder: Path,
     mdl_name: str,
     lookup_model: Callable[[str], Tuple[QC, Model]],
@@ -591,7 +614,8 @@ def group_props_ent(
     prop_groups: Dict[Optional[tuple], List[StaticProp]],
     rejected: List[StaticProp],
     get_model: Callable[[str], Tuple[Optional[QC], Optional[Model]]],
-    bbox_ents: List[Entity],
+    brush_models: MutableMapping[Entity, BModel],
+    grouper_ents: List[Entity],
     min_cluster: int,
 ) -> Iterator[List[StaticProp]]:
     """Given the groups of props, merge props according to the provided ents."""
@@ -602,7 +626,7 @@ def group_props_ent(
 
     empty_fs = frozenset('')
 
-    for ent in bbox_ents:
+    for ent in grouper_ents:
         origin = Vec.from_str(ent['origin'])
 
         skinset = empty_fs
@@ -616,17 +640,7 @@ def group_props_ent(
                     mdl.iter_textures([conv_int(ent['skin'])])
                 })
 
-        # Compute 6 planes to use for collision detection.
-        mat = Matrix.from_angle(Angle.from_str(ent['angles']))
-        mins, maxes = Vec.bbox(
-            Vec.from_str(ent['mins']),
-            Vec.from_str(ent['maxs']),
-        )
-        size = maxes - mins
-        # Enlarge slightly to ensure it never has a zero area.
-        # Otherwise the normal could potentially be invalid.
-        mins -= 0.05
-        maxes += 0.05
+        angles = Angle.from_str(ent['angles'])
 
         # Group name
         group_name = ent['name']
@@ -641,17 +655,34 @@ def group_props_ent(
             combine_set = CombineVolume(group_name, skinset, origin)
             sets_by_skin[skinset].append(combine_set)
 
-        combine_set.volume += size.x * size.y * size.z
-        # For each direction, compute a position on the plane and
-        # the normal vector.
-        combine_set.collision.append([
-            (
-                origin + Vec.with_axes(axis, offset) @ mat,
-                Vec.with_axes(axis, norm) @ mat,
+        if ent['classname'] == 'comp_propcombine_set':
+            # Bounding box collision.
+            mins, maxes = Vec.bbox(
+                Vec.from_str(ent['mins']),
+                Vec.from_str(ent['maxs']),
             )
-            for offset, norm in zip([mins, maxes], (-1, 1))
-            for axis in ('x', 'y', 'z')
-        ])
+            size = maxes - mins
+            # Enlarge slightly to ensure it never has a zero area.
+            # This ensures items on the edge are included.
+            mins -= 0.05
+            maxes += 0.05
+            combine_set.volume += size.x * size.y * size.z
+            combine_set.collision.append(make_collision_bbox(origin, angles, mins, maxes))
+        elif ent['classname'] == 'comp_propcombine_volume':
+            # Brushwork collision. Pop from the dict, so the brush model is removed.
+            try:
+                brush = brush_models.pop(ent)
+            except KeyError:
+                raise ValueError(
+                    f'No model for propcombine volume {repr(combine_set)} at '
+                    f'{str(origin)}')
+            # Use the bounding box as a volume approximation,
+            # it's only needed for sorting the volumes.
+            size = brush.maxes - brush.mins
+            combine_set.volume += size.x * size.y * size.z
+            combine_set.collision.append(make_collision_brush(origin, angles, brush))
+        else:
+            raise AssertionError(ent['classname'])
 
     # We want to apply a ordering to groups, so smaller ones apply first, and
     # filtered ones override all others.
@@ -768,14 +799,13 @@ def combine(
     debug_dump: bool=False,
 ) -> None:
     """Combine props in this map."""
-
-    # First parse out the bbox ents, so they are always removed.
-    bbox_ents = list(bsp_ents.by_class['comp_propcombine_set'])
-    for ent in bbox_ents:
-        ent.remove()
+    # First parse out the bbox and volume ents, so they are always removed.
+    grouper_ents = list(bsp_ents.by_class['comp_propcombine_set'] | bsp_ents.by_class['comp_propcombine_volume'])
 
     if not studiomdl_loc.exists():
         LOGGER.warning('No studioMDL! Cannot propcombine!')
+        for ent in grouper_ents:
+            ent.remove()
         return
 
     if not qc_folders and decomp_cache_loc is None:
@@ -868,19 +898,19 @@ def combine(
     prop_count = 0
 
     # First, construct groups of props that can possibly be combined.
-    prop_groups = defaultdict(list)  # type: Dict[Optional[tuple], List[StaticProp]]
+    prop_groups: dict[Optional[tuple], list[StaticProp]] = defaultdict(list)
 
     # This holds the list of all props we want in the map -
     # combined ones, and any we reject for whatever reason.
-    final_props: List[StaticProp] = []
-    rejected: List[StaticProp] = []
+    final_props: list[StaticProp] = []
+    rejected: list[StaticProp] = []
 
-    if bbox_ents:
-        LOGGER.info('Propcombine sets present ({}), combining...', len(bbox_ents))
+    if grouper_ents:
+        LOGGER.info('Propcombine sets present ({}), combining...', len(grouper_ents))
         grouper = group_props_ent(
             prop_groups, rejected,
             get_model,
-            bbox_ents,
+            bsp.bmodels, grouper_ents,
             min_cluster,
         )
     elif auto_range > 0:
@@ -895,10 +925,9 @@ def combine(
         LOGGER.info('No propcombine groups provided.')
         return
 
-    for prop in bsp.static_props():
+    for prop in bsp.props:
         prop_groups[get_grouping_key(prop)].append(prop)
         prop_count += 1
-
 
     # These are models we cannot merge no matter what -
     # no source files etc.
@@ -962,4 +991,4 @@ def combine(
     except FileNotFoundError:
         pass
 
-    bsp.write_static_props(final_props)
+    bsp.props = final_props
