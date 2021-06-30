@@ -5,10 +5,8 @@ import os
 import sys
 import warnings
 from collections import defaultdict
-from io import BytesIO
 from logging import FileHandler
 from pathlib import Path
-from zipfile import ZipFile
 from typing import List, Dict
 
 from srctools.logger import init_logging, Formatter
@@ -125,8 +123,7 @@ def main(argv: List[str]) -> None:
 
     # Mount the existing packfile, so the cubemap files are recognised.
     LOGGER.info('Mounting BSP packfile...')
-    zipfile = ZipFile(BytesIO(bsp_file.get_lump(BSP_LUMPS.PAKFILE)))
-    fsys.add_sys(ZipFileSystem('<BSP pakfile>', zipfile))
+    fsys.add_sys(ZipFileSystem('<BSP pakfile>', bsp_file.pakfile))
 
     studiomdl_path = conf.get(str, 'studiomdl')
     if studiomdl_path:
