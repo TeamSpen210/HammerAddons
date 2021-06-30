@@ -713,13 +713,13 @@ def generate_caps(nodes: Iterable[Node], mesh: Mesh, is_coll: bool) -> None:
 def compute_visleafs(
     coll_data: List[Tuple[Vec, float, Vec, float]],
     vis_tree_top: VisTree,
-) -> List[int]:
+) -> List[VisLeaf]:
     """Compute the visleafs this rope is present in."""
     # Each tree node defines a plane. For each side we touch, we need to
     # continue looking down that side of the tree for visleafs.
     # We need to do this individually for each segment pair. That way
     # we correctly handle cases like ropes encircling a room without entering it.
-    used_leafs: Set[int] = set()
+    used_leafs: Set[VisLeaf] = set()
 
     # Check if we collide with either side of the tree (or both).
     # This just involves doing a sphere-plane check with each side of the node.
@@ -727,20 +727,20 @@ def compute_visleafs(
     for point1, radius1, point2, radius2 in coll_data:
         todo_trees: List[VisTree] = [vis_tree_top]
         for tree in todo_trees:
-            off1 = Vec.dot(tree.plane_norm, point1) - tree.plane_dist
-            off2 = Vec.dot(tree.plane_norm, point2) - tree.plane_dist
+            off1 = Vec.dot(tree.plane.normal, point1) - tree.plane.dist
+            off2 = Vec.dot(tree.plane.normal, point2) - tree.plane.dist
             if off1 >= -radius1 or off2 >= -radius2:
                 if isinstance(tree.child_neg, VisLeaf):
-                    used_leafs.add(tree.child_neg.id)
+                    used_leafs.add(tree.child_neg)
                 else:
                     todo_trees.append(tree.child_neg)
             if off1 <= radius1 or off2 <= radius2:
                 if isinstance(tree.child_pos, VisLeaf):
-                    used_leafs.add(tree.child_pos.id)
+                    used_leafs.add(tree.child_pos)
                 else:
                     todo_trees.append(tree.child_pos)
 
-    return sorted(used_leafs)
+    return list(used_leafs)
 
 
 @trans('Model Ropes')
@@ -812,7 +812,6 @@ def comp_prop_rope(ctx: Context) -> None:
             connections_to[dest.id].append(node)
 
     static_props = list(ctx.bsp.static_props())
-    vis_tree_top = ctx.bsp.vis_tree()
 
     # To group nodes, take each group out, then search recursively through
     # all connections from it to other nodes.
@@ -900,12 +899,12 @@ def comp_prop_rope(ctx: Context) -> None:
                     origin=center,
                     angles=Angle(0, 270, 0),
                     scaling=1.0,
-                    visleafs=compute_visleafs(coll_data, vis_tree_top),
+                    visleafs=compute_visleafs(coll_data, ctx.bsp.vis_tree()),
                     solidity=6 if has_coll else 0,
                     flags=flags,
                     tint=Vec(conf.prop_rendercolor),
                     renderfx=conf.prop_renderalpha,
-                    lighting_origin=center + light_origin,
+                    lighting=center + light_origin,
                     min_fade=conf.prop_fade_min_dist,
                     max_fade=conf.prop_fade_max_dist,
                     fade_scale=conf.prop_fade_scale,
