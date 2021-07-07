@@ -8,7 +8,7 @@ from importlib.util import spec_from_loader, module_from_spec
 from importlib.abc import MetaPathFinder
 from importlib.machinery import ModuleSpec, SourceFileLoader
 from typing import (
-    Union, Optional, Set, Sequence, AnyStr, Tuple, Iterable,
+    Union, Optional, Set, Sequence, Tuple, Iterable,
     Iterator,
 )
 
@@ -81,7 +81,7 @@ class PluginFinder(MetaPathFinder):
     def find_spec(
         self,
         fullname: str,
-        path: Optional[Sequence[AnyStr]],
+        path: Optional[Sequence[Union[str, bytes]]],
         target: Optional[types.ModuleType] = None,
     ) -> Optional[ModuleSpec]:
         """Load a module."""
@@ -116,5 +116,5 @@ class PluginFinder(MetaPathFinder):
                 sys.modules[name] = module = module_from_spec(spec)
 
                 # Provide a logger for the plugin, already setup.
-                module.LOGGER = get_logger(name, "plugin:" + str(path))
+                setattr(module, 'LOGGER', get_logger(name, "plugin:" + str(path)))
                 loader.exec_module(module)
