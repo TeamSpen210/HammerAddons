@@ -1,6 +1,16 @@
 @echo off
+setlocal EnableDelayedExpansion
 
 SET games=p2 p1 hl2 ep1 ep2 gmod csgo tf2 asw l4d l4d2 infra mesa
+
+:: If set, override the FGD filename generated.
+SET filename.p2=portal2
+SET filename.p1=portal
+SET filename.ep1=episodic
+SET filename.tf2=tf
+SET filename.l4d=left4dead 
+SET filename.l4d2=left4dead2
+SET filename.mesa=blackmesa
 SET game=%1
 
 :: Make sure game isn't empty
@@ -10,7 +20,7 @@ IF [%game%]==[] (echo Games: %games% & echo Enter game to build. Use ALL to buil
 IF /I %game%==ALL (
   CALL :copy_hammer_files
   (FOR %%i in (%games%) do (
-    CALL :build_game "%%i"
+    CALL :build_game %%i
   ))
   EXIT
 ) ELSE (
@@ -25,9 +35,11 @@ IF /I %game%==ALL (
 )
 
 :build_game
-  echo Building FGD for %1...
-  py unify_fgd.py exp %1 srctools -o "build/%1.fgd"
-  IF %ERRORLEVEL% NEQ 0 (echo Building FGD for %1 has failed. Exitting. & EXIT)
+  SET tag=%1
+  IF DEFINED filename.%tag% (SET fname=!filename.%tag%!) ELSE (SET fname=%tag%)
+  echo Building FGD for %1 as "%fname%.fgd"...
+  py unify_fgd.py exp "%tag%" srctools -o "build/%fname%.fgd"
+  IF %ERRORLEVEL% NEQ 0 (echo Building FGD for %tag% has failed. Exitting. & EXIT)
   EXIT /B
 
 :copy_hammer_files
