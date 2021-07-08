@@ -523,7 +523,7 @@ def decompile_model(
     if cache_folder.exists():
         try:
             with info_path.open() as f:
-                cache_props = Property.parse(f).find_key('qc', [])
+                cache_props = Property.parse(f).find_block('qc', or_blank=True)
         except (FileNotFoundError, KeyValError):
             pass
         else:
@@ -612,7 +612,6 @@ def decompile_model(
 
 def group_props_ent(
     prop_groups: Dict[Optional[tuple], List[StaticProp]],
-    rejected: List[StaticProp],
     get_model: Callable[[str], Tuple[Optional[QC], Optional[Model]]],
     brush_models: MutableMapping[Entity, BModel],
     grouper_ents: List[Entity],
@@ -699,7 +698,6 @@ def group_props_ent(
         # No point merging single/empty groups.
         group_skinset = group_key[0]
         if len(group) < min_cluster:
-            rejected.extend(group)
             group.clear()
             continue
 
@@ -716,9 +714,6 @@ def group_props_ent(
                 for prop in actual:
                     group.remove(prop)
 
-    # Finally, reject all the ones not in a bbox.
-    for group in prop_groups.values():
-        rejected.extend(group)
     # And log unused groups
     for combine_set_list in sets_by_skin.values():
         for combine_set in combine_set_list:
@@ -728,7 +723,6 @@ def group_props_ent(
 
 def group_props_auto(
     prop_groups: Dict[Optional[tuple], List[StaticProp]],
-    rejected: List[StaticProp],
     dist: float,
     min_cluster: int,
 ) -> Iterator[List[StaticProp]]:
@@ -741,7 +735,6 @@ def group_props_auto(
     for group in prop_groups.values():
         # No point merging single/empty groups.
         if len(group) < 2:
-            rejected.extend(group)
             continue
 
         todo = set(group)
@@ -757,13 +750,12 @@ def group_props_auto(
                         break
 
             if len(cluster) < min_cluster:
-                rejected.append(center)
                 continue
 
             bbox_min, bbox_max = Vec.bbox(prop.origin for prop in cluster)
             center_pos = (bbox_min + bbox_max) / 2
 
-            cluster_list = []
+            cluster_list: list[tuple[StaticProp, float]] = []
 
             for prop in cluster:
                 prop_off = (center_pos - prop.origin).mag_sq()
@@ -779,8 +771,6 @@ def group_props_auto(
 
             if len(selected_props) >= min_cluster:
                 yield selected_props
-            else:
-                rejected.extend(selected_props)
 
 
 def combine(
@@ -900,15 +890,30 @@ def combine(
     # First, construct groups of props that can possibly be combined.
     prop_groups: dict[Optional[tuple], list[StaticProp]] = defaultdict(list)
 
-    # This holds the list of all props we want in the map -
-    # combined ones, and any we reject for whatever reason.
+    # This holds the list of all props we want in the map at the end.
     final_props: list[StaticProp] = []
-    rejected: list[StaticProp] = []
 
-    if grouper_ents:
+    if grouper_ents and auto_range > 0:
+        LOGGER.info('{} propcombine sets present and auto-grouping enabled, combining...', len(grouper_ents))
+        # Do ents first, that removes values from the lists in prop_groups,
+        # then the auto grouper handles that.
+        grouper = itertools.chain(
+            group_props_ent(
+                prop_groups,
+                get_model,
+                bsp.bmodels, grouper_ents,
+                min_cluster,
+            ),
+            group_props_auto(
+                prop_groups,
+                auto_range,
+                min_cluster,
+            )
+        )
+    elif grouper_ents:
         LOGGER.info('Propcombine sets present ({}), combining...', len(grouper_ents))
         grouper = group_props_ent(
-            prop_groups, rejected,
+            prop_groups,
             get_model,
             bsp.bmodels, grouper_ents,
             min_cluster,
@@ -916,7 +921,7 @@ def combine(
     elif auto_range > 0:
         LOGGER.info('Automatically finding propcombine sets...')
         grouper = group_props_auto(
-            prop_groups, rejected,
+            prop_groups,
             auto_range,
             min_cluster,
         )
@@ -939,7 +944,11 @@ def combine(
         for group, props in
         sorted(prop_groups.items(), key=operator.itemgetter(0))
     ]))
-    
+
+    # Create a set of every prop, then remove the ones we group.
+    # We'll then be left with props we didn't group and so should persist.
+    rejected = set(itertools.chain.from_iterable(prop_groups.values()))
+
     group_count = 0
     with ModelCompiler(
         game,
@@ -950,6 +959,7 @@ def combine(
     ) as compiler:
         for group in grouper:
             grouped_prop = combine_group(compiler, group, get_model)
+            rejected.difference_update(group)
             if debug_tint:
                 # Compute a random hue, and convert back to RGB 0-255.
                 r, g, b = colorsys.hsv_to_rgb(random.random(), 1, 1)
@@ -977,7 +987,7 @@ def combine(
             dump_vmf.export(f)
 
     LOGGER.info(
-        'Combined {} props into {}:\n - {} grouped models\n - {} ineligable\n - {} had no group',
+        'Combined {} props into {}:\n - {} grouped models\n - {} ineligable\n - {} failed to combine',
         prop_count,
         len(final_props),
         group_count,

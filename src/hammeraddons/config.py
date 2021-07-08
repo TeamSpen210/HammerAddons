@@ -135,7 +135,7 @@ def parse(path: Path, game_folder: str='') -> Tuple[
         if prop.has_children():
             raise ValueError('Config "plugins" value cannot have children.')
         assert isinstance(prop.value, str)
-        
+
         path = (game_root / Path(prop.value)).resolve()
         if prop.name in ('path', "recursive", 'folder'):
             if not path.is_dir():
@@ -256,9 +256,7 @@ OPTIONS = [
     ),
     Opt(
         'propcombine_auto_range', 0,
-        """If greater than zero, combine props at least this close together.
-        This is ignored if comp_propcombine_set entities are in the map.
-        """,
+        """If greater than zero, combine props at least this close together.""",
     ),
     Opt(
         'propcombine_min_cluster', 2,
