@@ -74,7 +74,7 @@ FEATURES: Dict[str, Set[str]] = {
     'MBASE': {'VSCRIPT'},
     'MESA': {'INST_IO'},
     'GMOD': {'HL2', 'EP1', 'EP2'},
-    
+
     'L4D2': {'INST_IO', 'VSCRIPT'},
     'TF2': {'PROP_SCALING'},
     'ASW': {'INST_IO', 'VSCRIPT'},
@@ -86,8 +86,8 @@ FEATURES: Dict[str, Set[str]] = {
 }
 
 ALL_FEATURES = {
-    tag.upper() 
-    for t in FEATURES.values() 
+    tag.upper()
+    for t in FEATURES.values()
     for tag in t
 }
 
@@ -206,7 +206,7 @@ def _polyfill_ext_valuetypes(fgd: FGD) -> None:
 
 def format_all_tags() -> str:
     """Append a formatted description of all allowed tags to a message."""
-    
+
     return (
         '- Games: {}\n'
         '- SINCE_<game>\n'
@@ -229,7 +229,7 @@ def expand_tags(tags: FrozenSet[str]) -> FrozenSet[str]:
     for tag in tags:
         try:
             exp_tags.update(FEATURES[tag.upper()])
-        except KeyError: 
+        except KeyError:
             pass
         try:
             pos = GAME_ORDER.index(tag.upper())
@@ -237,11 +237,11 @@ def expand_tags(tags: FrozenSet[str]) -> FrozenSet[str]:
             pass
         else:
             exp_tags.update(
-                'SINCE_' + tag 
+                'SINCE_' + tag
                 for tag in GAME_ORDER[:pos+1]
             )
             exp_tags.update(
-                'UNTIL_' + tag 
+                'UNTIL_' + tag
                 for tag in GAME_ORDER[pos+1:]
             )
     return frozenset(exp_tags)
@@ -744,7 +744,7 @@ def action_export(
     engine_mode: bool,
 ) -> None:
     """Create an FGD file using the given tags."""
-    
+
     if engine_mode:
         tags = frozenset({'ENGINE'})
     else:
@@ -1182,9 +1182,9 @@ def main(args: List[str]=None):
             result.tags = ['ENGINE']
         elif not result.tags:
             parser.error("At least one tag must be specified!")
-            
+
         tags = validate_tags(result.tags)
-        
+
         for tag in tags:
             if tag not in ALL_TAGS:
                 parser.error(
