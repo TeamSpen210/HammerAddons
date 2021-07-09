@@ -27,6 +27,7 @@
 		12 : "Underwater light mutation"
 	]
 	pattern(string) : "Custom Appearance" : "" : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
+	fadetickinterval(integer) : "Fade Tick Interval" : "0.1" : "The tick interval of the light's fade, in seconds. Lower values cause a faster fade."
 	_constant_attn(string)	: "Constant" : "0"
 	_linear_attn(string)	: "Linear" : "0"
 	_quadratic_attn(string)	: "Quadratic" : "1"
