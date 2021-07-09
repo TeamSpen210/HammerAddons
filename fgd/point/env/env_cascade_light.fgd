@@ -3,7 +3,7 @@
 	lightprop("models/editor/spot.mdl") 
 = env_cascade_light: "An entity to control the sunlight that casts cascaded shadows in the map."
 	[
-	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "50 40 0" : "This is the shadow casting direction. " +
+	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "50 43 0" : "This is the shadow casting direction. " +
 		"Pitch is rotation around the Y axis, " +
 		"yaw is the rotation around the Z axis, and " +
 		"roll is the rotation around the X axis. " +
