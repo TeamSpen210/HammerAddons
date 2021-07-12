@@ -157,6 +157,7 @@ class PropPos(NamedTuple):
     rol: float
 
     model: str
+    checksum: bytes
     skin: int
     scale: float
     solidity: CollType
@@ -209,10 +210,13 @@ def combine_group(
                     prop.origin,
                  )
             )
+        qc, mdl = lookup_model(prop.model)
+        assert mdl is not None, prop.model
         prop_pos.add(PropPos(
             origin.x, origin.y, origin.z,
             angles.x, angles.y, angles.z,
             prop.model,
+            mdl.checksum,
             prop.skin,
             prop.scaling,
             coll,
