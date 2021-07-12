@@ -3,10 +3,12 @@
 This merges static props together, so they can be drawn with a single
 draw call.
 """
+import fnmatch
 import operator
 import os
 import random
 import colorsys
+import re
 import shutil
 import subprocess
 import itertools
@@ -17,7 +19,7 @@ from tempfile import TemporaryDirectory
 from typing import (
     Optional, Tuple, Callable, NamedTuple,
     FrozenSet, Dict, List, Set,
-    Iterator, Union, MutableMapping,
+    Iterator, Union, MutableMapping, Iterable,
 )
 
 from srctools import (
@@ -783,6 +785,7 @@ def combine(
     qc_folders: List[Path]=None,
     crowbar_loc: Optional[Path]=None,
     decomp_cache_loc: Path=None,
+    blacklist: Iterable[str]=(),
     auto_range: float=0,
     min_cluster: int=2,
     debug_tint: bool=False,
@@ -797,6 +800,14 @@ def combine(
         for ent in grouper_ents:
             ent.remove()
         return
+
+    # Convert the blacklist into a regex, for fast comparison.
+    blacklist_re = re.compile('|'.join(sorted([
+        '(?s:%)'.replace(
+            '%', fnmatch.translate(mdl_name.casefold().replace("\\", "/")),
+        )
+        for mdl_name in blacklist
+    ], key=len)))
 
     if not qc_folders and decomp_cache_loc is None:
         # If gameinfo is blah/game/hl2/gameinfo.txt,
@@ -830,6 +841,9 @@ def combine(
         try:
             model = mdl_map[key]
         except KeyError:
+            if blacklist_re.match(key) is not None:
+                mdl_map[key] = qc_map[key] = None
+                return None, None
             try:
                 mdl_file = pack.fsys[filename]
             except FileNotFoundError:
@@ -839,6 +853,7 @@ def combine(
             if 'no_propcombine' in model.keyvalues.casefold():
                 mdl_map[key] = qc_map[key] = None
                 return None, None
+
         if model is None or key in missing_qcs:
             return None, None
 

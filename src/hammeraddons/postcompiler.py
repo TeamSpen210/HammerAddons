@@ -189,6 +189,7 @@ def main(argv: List[str]) -> None:
             crowbar_loc=crowbar_loc,
             auto_range=conf.get(int, 'propcombine_auto_range'),
             min_cluster=conf.get(int, 'propcombine_min_cluster'),
+            blacklist=conf.get(Property, 'propcombine_blacklist').as_array(),
             debug_tint=args.showgroups,
             debug_dump=args.dumpgroups,
         )
@@ -254,4 +255,3 @@ def main(argv: List[str]) -> None:
 
 if __name__ == '__main__':
     main(sys.argv[1:])
-

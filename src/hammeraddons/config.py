@@ -265,6 +265,14 @@ OPTIONS = [
         """,
     ),
     Opt(
+        'propcombine_blacklist', Property('', []),
+        """Models specified here will never be propcombined.
+        
+        You can specify a full path, or one with * wildcards. Alternatively,
+        set 'no_propcombine' in the model $keyvalues.
+        """,
+    ),
+    Opt(
         'plugins', TYPE.RAW,
         """\
         Add plugins to the post compiler. The key defines the behaviour:
