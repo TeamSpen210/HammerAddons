@@ -255,6 +255,14 @@ OPTIONS = [
         """Cache location for models decompiled for combining."""
     ),
     Opt(
+        'propcombine_volume_tolerance', 1.0,
+        """When propcombining, an attempt will be made to merge collision meshes.
+        
+        If shrink wrapping a pair of meshes changes the volume less than this,
+        the combined version will be used.
+        """
+    ),
+    Opt(
         'propcombine_auto_range', 0,
         """If greater than zero, combine props at least this close together.""",
     ),

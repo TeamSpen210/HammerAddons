@@ -21,10 +21,11 @@ from typing import (
     FrozenSet, Dict, List, Set,
     Iterator, Union, MutableMapping, Iterable,
 )
+from srctools._math import quickhull
 
 from srctools import (
     Vec, VMF, Entity, conv_int, Angle, Matrix, FileSystemChain,
-    Property, KeyValError,
+    Property, KeyValError, bool_as_int,
 )
 from srctools.tokenizer import Tokenizer, Token
 from srctools.game import Game
@@ -33,11 +34,12 @@ from srctools.logger import get_logger
 from srctools.packlist import PackList
 from srctools.bsp import BSP, StaticProp, StaticPropFlags, BModel, VisLeaf
 from srctools.mdl import Model, MDL_EXTS
-from srctools.smd import Mesh
+from srctools.smd import Mesh, Triangle, Vertex
 from srctools.compiler.mdl_compiler import ModelCompiler
 
 
 LOGGER = get_logger(__name__)
+
 
 class QC(NamedTuple):
     path: str  # QC path.
@@ -45,6 +47,7 @@ class QC(NamedTuple):
     phy_smd: Optional[str]  # Relative location of collision model, or None
     ref_scale: float  # Scale of main model.
     phy_scale: float  # Scale of collision model.
+    is_concave: bool  # If the collision model is known to be concave.
 
 QC_TEMPLATE = '''\
 $staticprop
@@ -69,9 +72,9 @@ $collisionmodel "physics.smd" {
 MAX_GROUP = 24  # Studiomdl does't allow more than this...
 
 # Cache of the SMD models we have already parsed, so we don't need
-# to parse them again. The second is the collision model.
+# to parse them again. For the collision model, we store them pre-split.
 _mesh_cache = {}  # type: Dict[Tuple[QC, int], Mesh]
-_coll_cache = {}  # type: Dict[str, Mesh]
+_coll_cache = {}  # type: Dict[str, List[Mesh]]
 
 
 def unify_mdl(path: str):
@@ -167,6 +170,7 @@ def combine_group(
     compiler: ModelCompiler,
     props: List[StaticProp],
     lookup_model: Callable[[str], Tuple[QC, Model]],
+    volume_tolerance: float,
 ) -> StaticProp:
     """Merge the given props together, compiling a model if required."""
 
@@ -225,7 +229,7 @@ def combine_group(
     has_coll = any(pos.solidity is not CollType.NONE for pos in prop_pos)
     mdl_name, result = compiler.get_model(
         (frozenset(prop_pos), has_coll),
-        compile_func, lookup_model,
+        compile_func, (lookup_model, volume_tolerance),
     )
 
     # Many of these we require to be the same, so we can read them
@@ -248,11 +252,12 @@ def compile_func(
     mdl_key: Tuple[FrozenSet[PropPos], bool],
     temp_folder: Path,
     mdl_name: str,
-    lookup_model: Callable[[str], Tuple[QC, Model]],
+    args: Tuple[Callable[[str], Tuple[QC, Model]], float],
 ) -> None:
     """Build this merged model."""
     LOGGER.info('Compiling {}...', mdl_name)
     prop_pos, has_coll = mdl_key
+    lookup_model, volume_tolerance = args
 
     # Unify these properties.
     surfprops = set()  # type: Set[str]
@@ -276,7 +281,10 @@ def compile_func(
     [phy_content_type] = contents
 
     ref_mesh = Mesh.blank('static_prop')
-    coll_mesh = None  #  type: Optional[Mesh]
+    coll_mesh = Mesh.blank('static_prop')
+    [coll_bone] = coll_mesh.bones.values()
+    bone_link = [(coll_bone, 1.0)]
+    coll_groups: dict[Mesh, float] = {}
 
     for prop in prop_pos:
         qc, mdl = lookup_model(prop.model)
@@ -309,14 +317,24 @@ def compile_func(
         child_coll = build_collision(qc, prop, child_ref)
 
         offset = Vec(prop.x, prop.y, prop.z)
-        angles = Angle(prop.pit, prop.yaw, prop.rol)
+        matrix = Matrix.from_angle(Angle(prop.pit, prop.yaw, prop.rol))
 
-        ref_mesh.append_model(child_ref, angles, offset, prop.scale * qc.ref_scale)
+        ref_mesh.append_model(child_ref, matrix, offset, prop.scale * qc.ref_scale)
 
         if has_coll and child_coll is not None:
-            if coll_mesh is None:
-                coll_mesh = Mesh.blank('static_prop')
-            coll_mesh.append_model(child_coll, angles, offset, prop.scale * qc.phy_scale)
+            scale = prop.scale * qc.phy_scale
+            group = Mesh(coll_mesh.bones, coll_mesh.animation, [])
+            for part in child_coll:
+                for orig_tri in part.triangles:
+                    new_tri = orig_tri.copy()
+                    for vert in new_tri:
+                        vert.links[:] = bone_link
+                        vert.norm @= matrix
+                        vert.pos *= scale
+                        vert.pos.localise(offset, matrix)
+                    group.triangles.append(new_tri)
+            if group.triangles:
+                coll_groups[group] = group.compute_volume()
 
     with (temp_folder / 'reference.smd').open('wb') as fb:
         ref_mesh.export(fb)
@@ -325,7 +343,47 @@ def compile_func(
     with (temp_folder / 'anim.smd').open('wb') as fb:
         Mesh.blank('static_prop').export(fb)
 
-    if coll_mesh is not None:
+    if coll_groups:
+        LOGGER.info('Optimising collisions:')
+        # Attempt to merge together collision groups.
+        todo: set[Mesh] = set(coll_groups)
+        # Pairs we know don't combine correctly.
+        failures: set[tuple[Mesh, Mesh]] = set()
+        zero_norm = Vec()
+        while todo:
+            mesh1 = todo.pop()
+            for mesh2 in todo:
+                if (mesh1, mesh2) in failures or (mesh2, mesh1) in failures:
+                    continue
+                combined = Mesh(coll_mesh.bones, coll_mesh.animation, [
+                    Triangle(
+                        'phys',
+                        Vertex(v1, zero_norm, 0.0, 0.0, bone_link),
+                        Vertex(v2, zero_norm, 0.0, 0.0, bone_link),
+                        Vertex(v3, zero_norm, 0.0, 0.0, bone_link),
+                    )
+                    for v1, v2, v3 in quickhull(
+                        vert.pos
+                        for tri in itertools.chain(mesh1.triangles, mesh2.triangles)
+                        for vert in tri
+                    )
+                ])
+                combined_vol = combined.compute_volume()
+                diff = abs(coll_groups[mesh1] + coll_groups[mesh2] - combined_vol)
+                LOGGER.debug('Volume diff: {}', diff)
+                if diff < volume_tolerance:
+                    todo.discard(mesh2)
+                    todo.add(combined)
+                    LOGGER.info('{} + {} -> {}', id(mesh1), id(mesh2), id(combined))
+                    coll_groups[combined] = combined_vol
+                    break
+                else:
+                    failures.add((mesh1, mesh2))
+            else:
+                # Failed against all, this is fully optimised.
+                mesh1.smooth_normals()
+                coll_mesh.triangles += mesh1.triangles
+        LOGGER.info('Done.')
         with (temp_folder / 'physics.smd').open('wb') as fb:
             coll_mesh.export(fb)
 
@@ -352,17 +410,17 @@ def compile_func(
         for mat in sorted(cdmats):
             f.write('$cdmaterials "{}"\n'.format(mat))
 
-        if coll_mesh is not None:
+        if coll_mesh.triangles:
             f.write(QC_COLL_TEMPLATE)
 
 
-def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> Optional[Mesh]:
+def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> List[Mesh]:
     """Get the correct collision mesh for this model."""
     if prop.solidity is CollType.NONE:  # Non-solid
-        return None
+        return []
     elif prop.solidity is CollType.VPHYS or prop.solidity is CollType.BSP:
         if qc.phy_smd is None:
-            return None
+            return []
         try:
             return _coll_cache[qc.phy_smd]
         except KeyError:
@@ -376,8 +434,12 @@ def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> Optional[Mesh]:
                     vert.pos @= rot
                     vert.norm @= rot
 
-            _coll_cache[qc.phy_smd] = coll
-            return coll
+            if qc.is_concave:
+                coll_group = coll.split_collision()
+            else:
+                coll_group = [coll]
+            _coll_cache[qc.phy_smd] = coll_group
+            return coll_group
     # Else, it's one of the three bounding box types.
     # We don't really care about which.
     bbox_min, bbox_max = Vec.bbox(
@@ -386,7 +448,7 @@ def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> Optional[Mesh]:
         ref_mesh.triangles
         for vert in tri
     )
-    return Mesh.build_bbox('static_prop', 'phy', bbox_min, bbox_max)
+    return [Mesh.build_bbox('static_prop', 'phy', bbox_min, bbox_max)]
 
 
 def load_qcs(qc_map: Dict[str, QC], qc_folder: Path) -> None:
@@ -405,7 +467,7 @@ def load_qcs(qc_map: Dict[str, QC], qc_folder: Path) -> None:
                 continue
 
             (
-                model_name,
+                model_name, is_concave,
                 ref_scale, ref_smd,
                 phy_scale, phy_smd,
             ) = qc_result
@@ -425,17 +487,19 @@ def load_qcs(qc_map: Dict[str, QC], qc_folder: Path) -> None:
                 str(phy_smd).replace('\\', '/') if phy_smd else None,
                 ref_scale,
                 phy_scale,
+                is_concave,
             )
 
 
 def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
-    str,
+    str, bool,
     float, Path,
-    float, Optional[Path]
+    float, Optional[Path],
 ]]:
     """Parse a single QC file."""
     model_name = ref_smd = phy_smd = None
     scale_factor = ref_scale = phy_scale = 1.0
+    is_concave = False
 
     with open(str(qc_path)) as f:
         tok = Tokenizer(
@@ -483,6 +547,13 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
                 elif token_value == '$collisionmodel':
                     phy_smd = qc_loc / tok.expect(Token.STRING)
                     phy_scale = scale_factor
+                    next_typ, next_val = next(tok.skipping_newlines())
+                    if next_typ is Token.BRACE_OPEN:
+                        for body_value in tok.block('$collisionmodel', consume_brace=False):
+                            if body_value.casefold() == '$concave':
+                                is_concave = True
+                    else:
+                        tok.push_back(next_typ, next_val)
 
                 # We can't support this.
                 elif token_value in (
@@ -510,7 +581,7 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
         return None
 
     return (
-        model_name,
+        model_name, is_concave,
         ref_scale, ref_smd,
         phy_scale, phy_smd,
     )
@@ -530,6 +601,9 @@ def decompile_model(
         try:
             with info_path.open() as f:
                 cache_props = Property.parse(f).find_block('qc', or_blank=True)
+            # Added later, remake if not present.
+            if 'concave' not in cache_props:
+                raise FileNotFoundError
         except (FileNotFoundError, KeyValError):
             pass
         else:
@@ -547,6 +621,7 @@ def decompile_model(
                     phy_smd,
                     cache_props.float('ref_scale', 1.0),
                     cache_props.float('phy_scale', 1.0),
+                    cache_props.bool('concave'),
                 )
             # Otherwise, re-decompile.
     LOGGER.info('Decompiling {}...', filename)
@@ -589,7 +664,7 @@ def decompile_model(
 
     if qc_result is not None:
         (
-            model_name,
+            model_name, is_concave,
             ref_scale, ref_smd,
             phy_scale, phy_smd,
         ) = qc_result
@@ -599,6 +674,7 @@ def decompile_model(
             str(phy_smd).replace('\\', '/') if phy_smd else None,
             ref_scale,
             phy_scale,
+            is_concave,
         )
 
         cache_props['ref'] = Path(ref_smd).name
@@ -607,6 +683,7 @@ def decompile_model(
         if phy_smd is not None:
             cache_props['phy'] = Path(phy_smd).name
             cache_props['phy_scale'] = format(phy_scale, '.6g')
+        cache_props['concave'] = bool_as_int(is_concave)
     else:
         cache_props['ref'] = ''  # Mark as not present.
 
@@ -792,6 +869,7 @@ def combine(
     blacklist: Iterable[str]=(),
     auto_range: float=0,
     min_cluster: int=2,
+    volume_tolerance: float=1.0,
     debug_tint: bool=False,
     debug_dump: bool=False,
 ) -> None:
@@ -975,9 +1053,10 @@ def combine(
         pack,
         map_name,
         'propcombine',
+        version=2,
     ) as compiler:
         for group in grouper:
-            grouped_prop = combine_group(compiler, group, get_model)
+            grouped_prop = combine_group(compiler, group, get_model, volume_tolerance)
             rejected.difference_update(group)
             if debug_tint:
                 # Compute a random hue, and convert back to RGB 0-255.

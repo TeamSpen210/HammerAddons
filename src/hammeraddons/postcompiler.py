@@ -190,6 +190,7 @@ def main(argv: List[str]) -> None:
             auto_range=conf.get(int, 'propcombine_auto_range'),
             min_cluster=conf.get(int, 'propcombine_min_cluster'),
             blacklist=conf.get(Property, 'propcombine_blacklist').as_array(),
+            volume_tolerance=conf.get(float, 'propcombine_volume_tolerance'),
             debug_tint=args.showgroups,
             debug_dump=args.dumpgroups,
         )
