@@ -344,46 +344,51 @@ def compile_func(
         Mesh.blank('static_prop').export(fb)
 
     if coll_groups:
-        LOGGER.info('Optimising collisions:')
-        # Attempt to merge together collision groups.
-        todo: set[Mesh] = set(coll_groups)
-        # Pairs we know don't combine correctly.
-        failures: set[tuple[Mesh, Mesh]] = set()
-        zero_norm = Vec()
-        while todo:
-            mesh1 = todo.pop()
-            for mesh2 in todo:
-                if (mesh1, mesh2) in failures or (mesh2, mesh1) in failures:
-                    continue
-                combined = Mesh(coll_mesh.bones, coll_mesh.animation, [
-                    Triangle(
-                        'phys',
-                        Vertex(v1, zero_norm, 0.0, 0.0, bone_link),
-                        Vertex(v2, zero_norm, 0.0, 0.0, bone_link),
-                        Vertex(v3, zero_norm, 0.0, 0.0, bone_link),
-                    )
-                    for v1, v2, v3 in quickhull(
-                        vert.pos
-                        for tri in itertools.chain(mesh1.triangles, mesh2.triangles)
-                        for vert in tri
-                    )
-                ])
-                combined_vol = combined.compute_volume()
-                diff = abs(coll_groups[mesh1] + coll_groups[mesh2] - combined_vol)
-                LOGGER.debug('Volume diff: {}', diff)
-                if diff < volume_tolerance:
-                    todo.discard(mesh2)
-                    todo.add(combined)
-                    LOGGER.info('{} + {} -> {}', id(mesh1), id(mesh2), id(combined))
-                    coll_groups[combined] = combined_vol
-                    break
+        if volume_tolerance > 0:
+            LOGGER.info('Optimising collisions:')
+            # Attempt to merge together collision groups.
+            todo: set[Mesh] = set(coll_groups)
+            # Pairs we know don't combine correctly.
+            failures: set[tuple[Mesh, Mesh]] = set()
+            zero_norm = Vec()
+            while todo:
+                mesh1 = todo.pop()
+                for mesh2 in todo:
+                    if (mesh1, mesh2) in failures or (mesh2, mesh1) in failures:
+                        continue
+                    combined = Mesh(coll_mesh.bones, coll_mesh.animation, [
+                        Triangle(
+                            'phys',
+                            Vertex(v1, zero_norm, 0.0, 0.0, bone_link),
+                            Vertex(v2, zero_norm, 0.0, 0.0, bone_link),
+                            Vertex(v3, zero_norm, 0.0, 0.0, bone_link),
+                        )
+                        for v1, v2, v3 in quickhull(
+                            vert.pos
+                            for tri in itertools.chain(mesh1.triangles, mesh2.triangles)
+                            for vert in tri
+                        )
+                    ])
+                    combined_vol = combined.compute_volume()
+                    diff = abs(coll_groups[mesh1] + coll_groups[mesh2] - combined_vol)
+                    LOGGER.debug('Volume diff: {}', diff)
+                    if diff < volume_tolerance:
+                        todo.discard(mesh2)
+                        todo.add(combined)
+                        LOGGER.info('{} + {} -> {}', id(mesh1), id(mesh2), id(combined))
+                        coll_groups[combined] = combined_vol
+                        break
+                    else:
+                        failures.add((mesh1, mesh2))
                 else:
-                    failures.add((mesh1, mesh2))
-            else:
-                # Failed against all, this is fully optimised.
-                mesh1.smooth_normals()
+                    # Failed against all, this is fully optimised.
+                    mesh1.smooth_normals()
+                    coll_mesh.triangles += mesh1.triangles
+            LOGGER.info('Done.')
+        else:
+            # Just use unaltered.
+            for mesh1 in coll_groups:
                 coll_mesh.triangles += mesh1.triangles
-        LOGGER.info('Done.')
         with (temp_folder / 'physics.smd').open('wb') as fb:
             coll_mesh.export(fb)
 
@@ -1053,7 +1058,10 @@ def combine(
         pack,
         map_name,
         'propcombine',
-        version=2,
+        version={
+            'ver': 1,
+            'vol_tolerance': volume_tolerance,
+        },
     ) as compiler:
         for group in grouper:
             grouped_prop = combine_group(compiler, group, get_model, volume_tolerance)

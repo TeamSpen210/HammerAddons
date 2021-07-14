@@ -51,7 +51,7 @@ class ModelCompiler:
         pack: PackList,
         map_name: str,
         folder_name: str,
-        version: int=0,
+        version: object=0,
     ) -> None:
         # The models already constructed.
         self._built_models: Dict[AnyModelKey, GenModel] = {}
@@ -67,7 +67,7 @@ class ModelCompiler:
         self.studiomdl_loc = studiomdl_loc
 
     @classmethod
-    def from_ctx(cls, ctx: Context, folder_name: str, version: int=0) -> 'ModelCompiler':
+    def from_ctx(cls, ctx: Context, folder_name: str, version: object=0) -> 'ModelCompiler':
         """Convenience method to construct from the context's data."""
         return cls(
             ctx.game,
