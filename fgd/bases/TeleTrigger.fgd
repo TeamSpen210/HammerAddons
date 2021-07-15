@@ -39,7 +39,8 @@
 	reorient_landmark(boolean) : "Reorient Landmark" : 0 : "(Landmark mode only) Reorient origin, angles and velocity from the landmark's" + 
 		"local space to the destination's. This means the destination room does not have to face the same way."
 	
-	resetang(boolean) : "Reset the player angles on teleport" : 1
+	resetang[+P2CE](boolean) : "Reset the player angles on teleport" : 0
+	resetang[-P2CE](boolean) : "Reset the player angles on teleport" : 1
 
 	fail[MOMENTUM](boolean) : "Teleport is for failing a level" : 0
 	
