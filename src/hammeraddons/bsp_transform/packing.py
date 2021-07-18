@@ -11,7 +11,7 @@ from srctools.packlist import FileType, SoundScriptMode, unify_path
 LOGGER = get_logger(__name__, 'trans.packing')
 
 
-@trans('comp_precache_model')
+@trans('comp_precache_model', priority=100)
 def comp_precache_model(ctx: Context):
     """Force precaching a specific model."""
     already_done = set()  # type: Set[str]
@@ -56,7 +56,7 @@ function Precache() {
 '''
 
 
-@trans('comp_precache_sound')
+@trans('comp_precache_sound', priority=100)
 def comp_precache_sound(ctx: Context):
     """Force precaching a set of sounds."""
     sounds = set()
@@ -93,7 +93,7 @@ def comp_precache_sound(ctx: Context):
     )
 
 
-@trans('comp_pack_replace_soundscript')
+@trans('comp_pack_replace_soundscript', priority=100)
 def comp_pack_replace_soundscript(ctx: Context):
     """Replace a soundscript with a different one."""
     old_scripts = set()
@@ -129,7 +129,7 @@ PACK_TYPES = {
 }
 
 
-@trans('comp_pack')
+@trans('comp_pack', priority=100)
 def comp_pack(ctx: Context):
     """Force packing resources."""
     for ent in ctx.vmf.by_class['comp_pack']:
@@ -167,7 +167,7 @@ def comp_pack(ctx: Context):
                     ctx.pack.pack_file(sound, FileType.GAME_SOUND)
 
 
-@trans('comp_pack_rename')
+@trans('comp_pack_rename', priority=100)
 def comp_pack_rename(ctx: Context):
     """Pack a file, under a different name."""
 
