@@ -30,7 +30,7 @@
 		]
 
 	lightonlytarget(boolean) : "Light Only Target" : 0 : "Limit flashlight effect to only effect target entity."
-	lightworld(boolean) : "Light World" : 0 : "Control whether flashlight effects static world geometry."
+	lightworld(boolean) : "Light World" : 1 : "Control whether flashlight effects static world geometry."
 	simpleprojection[since_ASW](boolean) : "Simple Projection" : 0 : "Indicates if this is a simple, non-light casting texture projection"
 
 	lightcolor(color255) : "Light Color" : "255 255 255 200" : "Light Color RGB-Intensity"
