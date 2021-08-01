@@ -633,7 +633,7 @@ def decompile_model(
     qc: Optional[QC] = None
 
     # Extract out the model to a temp dir.
-    with TemporaryDirectory() as tempdir, fsys:
+    with TemporaryDirectory() as tempdir:
         stem = Path(filename).stem
         filename_no_ext = filename[:-4]
         for mdl_ext in MDL_EXTS:
