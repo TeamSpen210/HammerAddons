@@ -1,5 +1,7 @@
 """"Compile static prop cables, instead of sprites."""
 import math
+import struct
+from random import Random
 from collections import defaultdict
 from enum import Enum
 from pathlib import Path
@@ -12,7 +14,7 @@ import attr
 
 from srctools import (
     logger, conv_int, conv_float, conv_bool,
-    Vec, Entity, Matrix, Angle, lerp,
+    Vec, Entity, Matrix, Angle, lerp, FileSystem,
 )
 from srctools.compiler.mdl_compiler import ModelCompiler
 from srctools.bsp_transform import Context, trans
@@ -54,6 +56,15 @@ class InterpType(Enum):
     ROPE = 2
 
 
+class SegPropOrient(Enum):
+    """Type of orientation for props placed on ropes."""
+    NONE = 'none'
+    FULL_ROT = 'follow'
+    YAW_ONLY = 'yaw'
+    RAND_YAW = 'rand_yaw'
+    RAND_FULL = 'rand'
+
+
 @attr.define
 class RopePhys:
     """Holds the data for move_rope simulation."""
@@ -68,6 +79,30 @@ class RopePhys:
 ROPE_GRAVITY = -1500
 SIM_TIME = 5.00
 TIME_STEP = 1/50
+
+
+@attr.frozen
+class SegPropConf:
+    """Defines configuration for a set of props placed across the rope."""
+    weight: int
+    model: str
+    orient: SegPropOrient
+    angles: Matrix
+
+    def __hash__(self) -> int:
+        """Handle hashing the matrix."""
+        return hash(
+            (self.weight, self.model, self.orient) +
+            self.angles.to_angle().as_tuple()
+        )
+
+
+@attr.define
+class SegProp:
+    """Definition for an actually placed segment prop."""
+    model: str
+    offset: Vec
+    orient: Matrix
 
 
 @attr.s(auto_attribs=True, frozen=True, hash=True, eq=True)
@@ -85,6 +120,7 @@ class Config:
     flip_uv: bool
     coll_segments: int
     coll_side_count: int
+    seg_props: FrozenSet[SegPropConf]
     prop_rendercolor: Tuple[float, float, float]
     prop_renderalpha: int
     prop_no_shadows: bool
@@ -105,7 +141,7 @@ class Config:
         return value
 
     @classmethod
-    def parse(cls, ent: Entity) -> 'Config':
+    def parse(cls, ent: Entity, name_to_segprops: Dict[str, FrozenSet[SegPropConf]]) -> 'Config':
         """Parse from an entity."""
         # There's not really a material we can use for cables.
         if not ent['material']:
@@ -153,6 +189,11 @@ class Config:
 
         alpha = max(0, min(255, conv_int(ent['renderamt'], 255)))
 
+        try:
+            seg_props = name_to_segprops[ent['bunting'].casefold()]
+        except KeyError:
+            seg_props = frozenset()
+
         return cls(
             ent['material'],
             segments,
@@ -165,6 +206,7 @@ class Config:
             conv_bool(ent['mat_rotate']),
             coll_segments,
             coll_side_count,
+            seg_props,
             tuple(Vec.from_str(ent['rendercolor'], 255, 255, 255)),
             alpha,
             conv_bool(ent['disableshadows']),
@@ -263,11 +305,13 @@ def build_rope(
     nodes_and_conn: Tuple[FrozenSet[NodeEnt], FrozenSet[Tuple[NodeID, NodeID]]],
     temp_folder: Path,
     mdl_name: str,
-    offset: Vec,
-) -> Tuple[Vec, List[Tuple[Vec, float, Vec, float]]]:
+    args: Tuple[Vec, FileSystem],
+) -> Tuple[Vec, List[Tuple[Vec, float, Vec, float]], List[SegProp]]:
     """Construct the geometry for a rope."""
     LOGGER.info('Building rope {}', mdl_name)
     ents, connections = nodes_and_conn
+    offset, fsys = args
+
     mesh = Mesh.blank('root')
     coll_mesh = Mesh.blank('root')
     [bone] = mesh.bones.values()
@@ -280,6 +324,8 @@ def build_rope(
 
     generate_straights(nodes, mesh)
     generate_caps(nodes, mesh, is_coll=False)
+
+    seg_props = list(place_seg_props(nodes, fsys, mesh))
 
     if coll_nodes:
         # Generate the collision mesh.
@@ -322,7 +368,7 @@ def build_rope(
         if node.next
     ]
 
-    return (light_origin, coll_data)
+    return (light_origin, coll_data, seg_props)
 
 
 def build_node_tree(
@@ -686,6 +732,62 @@ def generate_caps(nodes: Iterable[Node], mesh: Mesh, is_coll: bool) -> None:
             make_cap(node.points_prev, node.orient.forward())
 
 
+def place_seg_props(nodes: Iterable[Node], fsys: FileSystem, mesh: Mesh) -> Iterator[SegProp]:
+    """Place segment props, across the nodes."""
+    weight_cache: dict[frozenset[SegPropConf], list[SegPropConf]] = {}
+    mesh_cache: dict[str, Mesh] = {}
+    for node in nodes:
+        # Don't place at endpoints, or if we have no props to place.
+        if node.prev is None or node.next is None or not node.config.seg_props:
+            continue
+        try:
+            weights = weight_cache[node.config.seg_props]
+        except KeyError:
+            weights = weight_cache[node.config.seg_props] = [
+                conf
+                for conf in node.config.seg_props
+                for _ in range(conf.weight)
+            ]
+        rand = Random(struct.pack(
+            '6f',
+            *node.pos,
+            *node.orient.forward(),
+        ))
+
+        conf = rand.choice(weights)
+        if conf.orient is SegPropOrient.RAND_FULL:
+            # We cover all orientations, so pre-rotation value is irrelevant.
+            angles = Matrix.from_angle(Angle(
+                rand.uniform(0.0, 360.0),
+                rand.uniform(0.0, 360.0),
+                rand.uniform(0.0, 360.0),
+            ))
+        elif conf.orient is SegPropOrient.NONE:
+            angles = conf.angles
+        elif conf.orient is SegPropOrient.FULL_ROT:
+            angles = conf.angles @ node.orient
+        elif conf.orient is SegPropOrient.YAW_ONLY:
+            angles = conf.angles @ Matrix.from_yaw(
+                node.orient.forward().to_angle().yaw,
+            )
+        elif conf.orient is SegPropOrient.RAND_YAW:
+            angles = conf.angles @ Matrix.from_yaw(rand.uniform(0, 360.0))
+        else:
+            raise AssertionError(f'Unknown orient type {conf.orient!r}')
+
+        folded_model = conf.model.casefold()
+        if folded_model.endswith('.mdl'):
+            yield SegProp(conf.model, node.pos, angles)
+            continue
+        try:
+            prop_mesh = mesh_cache[folded_model]
+        except KeyError:
+            LOGGER.info('Parsing bunting mesh "{}"...', conf.model)
+            with fsys[conf.model].open_bin() as f:
+                prop_mesh = mesh_cache[folded_model] = Mesh.parse_smd(f)
+        mesh.append_model(prop_mesh, angles, node.pos)
+
+
 def compute_visleafs(
     coll_data: List[Tuple[Vec, float, Vec, float]],
     vis_tree_top: VisTree,
@@ -732,10 +834,27 @@ def comp_prop_rope(ctx: Context) -> None:
     temp_conns: List[Tuple[NodeEnt, str]] = []
     # Dynamic ents which will be given the static props.
     group_dyn_ents: Dict[str, List[Entity]] = defaultdict(list)
+    # Name -> segprop configurations.
+    name_to_segprops_lst: dict[str, list[SegPropConf]] = defaultdict(list)
+
+    for ent in ctx.vmf.by_class['comp_prop_rope_bunting']:
+        ent.remove()
+        name_to_segprops_lst[ent['targetname'].casefold()].append(SegPropConf(
+            conv_int(ent['weight'], 1),
+            ent['model'],
+            SegPropOrient(ent['orient']),
+            Matrix.from_angle(Angle.from_str(ent['angles'])),
+        ))
+
+    # Put into a set, so they're immutable and have no ordering.
+    name_to_segprops_set: dict[str, frozenset[SegPropConf]] = {
+        name: frozenset(lst)
+        for name, lst in name_to_segprops_lst.items()
+    }
 
     for ent in ctx.vmf.by_class['comp_prop_rope'] | ctx.vmf.by_class['comp_prop_cable']:
         ent.remove()
-        conf = Config.parse(ent)
+        conf = Config.parse(ent, name_to_segprops_set)
         node = NodeEnt(
             Vec.from_str(ent['origin']),
             conf,
@@ -787,7 +906,6 @@ def comp_prop_rope(ctx: Context) -> None:
             connections_from[node.id].append(dest)
             connections_to[dest.id].append(node)
 
-
     # To group nodes, take each group out, then search recursively through
     # all connections from it to other nodes.
     todo = set(all_nodes.values())
@@ -831,10 +949,10 @@ def comp_prop_rope(ctx: Context) -> None:
                     node.relative_to(origin)
                     for node in nodes
                 })
-                model_name, light_pos_and_coll_data = compiler.get_model(
+                model_name, (_, _, seg_props) = compiler.get_model(
                     (dyn_nodes, frozenset(connections)),
                     build_rope,
-                    origin,
+                    (origin, ctx.pack.fsys),
                 )
                 ent['model'] = model_name
                 ang = Angle.from_str(ent['angles'])
@@ -851,10 +969,10 @@ def comp_prop_rope(ctx: Context) -> None:
                     if node.config.coll_side_count >= 3:
                         has_coll = True
 
-                model_name, (light_origin, coll_data) = compiler.get_model(
+                model_name, (light_origin, coll_data, seg_props) = compiler.get_model(
                     (frozenset(nodes), frozenset(connections)),
                     build_rope,
-                    center,
+                    (center, ctx.pack.fsys),
                 )
 
                 # Compute the flags. Just pick a random node, from above.
@@ -869,12 +987,13 @@ def comp_prop_rope(ctx: Context) -> None:
                 if conf.prop_no_self_shadow:
                     flags |= StaticPropFlags.NO_SELF_SHADOWING
 
+                leafs = compute_visleafs(coll_data, ctx.bsp.vis_tree())
                 ctx.bsp.props.append(StaticProp(
                     model=model_name,
                     origin=center,
                     angles=Angle(0, 270, 0),
                     scaling=1.0,
-                    visleafs=compute_visleafs(coll_data, ctx.bsp.vis_tree()),
+                    visleafs=leafs,
                     solidity=6 if has_coll else 0,
                     flags=flags,
                     tint=Vec(conf.prop_rendercolor),
@@ -884,4 +1003,20 @@ def comp_prop_rope(ctx: Context) -> None:
                     max_fade=conf.prop_fade_max_dist,
                     fade_scale=conf.prop_fade_scale,
                 ))
+                for seg_prop in seg_props:
+                    ctx.bsp.props.append(StaticProp(
+                        model=seg_prop.model,
+                        origin=center + seg_prop.offset,
+                        angles=(seg_prop.orient @ Matrix.from_yaw(270)).to_angle(),
+                        scaling=1.0,
+                        visleafs=leafs,  # TODO: compute individual leafs here?
+                        solidity=6,
+                        flags=flags,
+                        tint=Vec(conf.prop_rendercolor),
+                        renderfx=conf.prop_renderalpha,
+                        lighting=center + seg_prop.offset,
+                        min_fade=conf.prop_fade_min_dist,
+                        max_fade=conf.prop_fade_max_dist,
+                        fade_scale=conf.prop_fade_scale,
+                    ))
     LOGGER.info('Built {} models.', len(all_nodes))

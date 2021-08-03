@@ -1,0 +1,8 @@
+Sprite
+{
+	$baseTexture "editor/comp_prop_rope_bunting"
+	$spriteorientation "vp_parallel"
+	$spriteorigin "[ 0.50 0.50 ]"
+	$spriterendermode 2
+	$no_fullbright 1
+}
