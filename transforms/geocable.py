@@ -4,9 +4,11 @@ from collections import defaultdict
 from enum import Enum
 from pathlib import Path
 from typing import (
-    Optional, List, Tuple, NamedTuple, FrozenSet,
+    Optional, List, Tuple, FrozenSet,
     TypeVar, MutableMapping, NewType, Set, Iterable, Dict, Iterator,
 )
+
+import attr
 
 from srctools import (
     logger, conv_int, conv_float, conv_bool,
@@ -52,24 +54,24 @@ class InterpType(Enum):
     ROPE = 2
 
 
+@attr.define
 class RopePhys:
     """Holds the data for move_rope simulation."""
-    __slots__ = ['pos', 'prev_pos', 'radius']
     pos: Vec
-    prev_pos: Vec
+    prev_pos: Vec = attr.ib(
+        init=False,
+        default=attr.Factory(lambda s: s.pos.copy(), takes_self=True)
+    )
     radius: float  # Just to transfer to the node.
 
-    def __init__(self, pos: Vec, radius: float) -> None:
-        self.pos = pos
-        self.prev_pos = pos.copy()
-        self.radius = radius
 
 ROPE_GRAVITY = -1500
 SIM_TIME = 5.00
 TIME_STEP = 1/50
 
 
-class Config(NamedTuple):
+@attr.s(auto_attribs=True, frozen=True, hash=True, eq=True)
+class Config:
     """Configuration specified in rope entities. This can be shared to reduce duplication."""
     material: str
     segments: int
@@ -151,7 +153,7 @@ class Config(NamedTuple):
 
         alpha = max(0, min(255, conv_int(ent['renderamt'], 255)))
 
-        return Config(
+        return cls(
             ent['material'],
             segments,
             side_count,
@@ -176,26 +178,23 @@ class Config(NamedTuple):
 
     def coll(self) -> Optional['Config']:
         """Extract the collision options from the ent."""
-        return self._replace(
+        return attr.evolve(
+            self,
             material='phy',
             segments=self.segments if self.coll_segments == -1 else self.coll_segments,
             side_count=self.coll_side_count,
         )
 
 
+@attr.define(eq=True)
 class NodeEnt:
     """A node entity, and its associated configuration. This is used to match with earlier compiles."""
-    def __init__(
-        self,
-        pos: Vec,
-        config: Config,
-        node_id: NodeID,
-        group: str,
-    ) -> None:
-        self.id = node_id
-        self.config = config
-        self.group = group  # Nodes with the same group compile together.
-        self.pos = pos
+    pos: Vec
+    config: Config = attr.ib(repr=False)
+    id: NodeID
+    # Nodes with the same group compile together. But it doesn't matter for
+    # comparisons.
+    group: str = attr.ib(eq=False)
 
     def relative_to(self, off: Vec) -> 'NodeEnt':
         """Return a copy relative to the specified origin."""
@@ -206,57 +205,35 @@ class NodeEnt:
             self.group,
         )
 
-    def __repr__(self) -> str:
-        return f'<NodeEnt "{self.id}" @ {self.pos}>'
-
     def __hash__(self) -> int:
-        """Allow this to be hashed."""
+        """Hash the vector with the rest of the values."""
         return hash((
             self.id,
             self.pos.x, self.pos.y, self.pos.z,
             self.config,
         ))
 
-    def __eq__(self, other: object) -> object:
-        """Allow this to be compared."""
-        if isinstance(other, NodeEnt):
-            return (
-                self.id == other.id and
-                self.pos == other.pos and
-                self.config == other.config
-            )
-        return NotImplemented
 
-    def __ne__(self, other: object) -> object:
-        """Allow this to be compared."""
-        if isinstance(other, NodeEnt):
-            return (
-                self.id != other.id or
-                self.pos != other.pos or
-                self.config != other.config
-            )
-        return NotImplemented
-
-
+@attr.define(eq=False)
 class Node:
-    """All the data for a node, used during constrction of the geo.
+    """All the data for a node, used during construction of the geo.
 
-    Unlike BasicNode, this is compared by identity, and has no ID.
+    Unlike NodeEnt, this is compared by identity, and has no ID.
     """
-    def __init__(self, pos: Vec, config: Config, radius: float) -> None:
-        self.config = config
-        self.prev: Optional[Node] = None
-        self.next: Optional[Node] = None
-        self.pos = pos
-        self.radius = radius
-        # Orientation of the segment up to the next.
-        self.orient = Matrix()
-        # The points for the cylinder, on these sides.
-        self.points_prev: List[Vertex] = []
-        self.points_next: List[Vertex] = []
+    pos: Vec
+    config: Config
+    radius: float
+    prev: Optional['Node'] = None
+    next: Optional['Node'] = None
+    # Orientation of the segment up to the next.
+    orient: Matrix = attr.Factory(Matrix)
+    # The points for the cylinder, on these sides.
+    points_prev: List[Vertex] = attr.Factory(list)
+    points_next: List[Vertex] = attr.Factory(list)
 
     @classmethod
     def from_ent(cls, ent: NodeEnt) -> 'Node':
+        """Construct from the data in a NodeEnt."""
         return Node(ent.pos.copy(), ent.config, ent.config.radius)
 
     def clone(self) -> 'Node':
@@ -322,7 +299,6 @@ def build_rope(
             tri.point2 = tri.point2.with_uv(tri.point2.tex_u - u, tri.point2.tex_v - v)
             tri.point3 = tri.point3.with_uv(tri.point3.tex_u - u, tri.point3.tex_v - v)
 
-
     # Use the node closest to the center. That way
     # it shouldn't be inside walls, and be about representative of
     # the whole model.
@@ -366,7 +342,7 @@ def build_node_tree(
     vis_nodes: Set[Node] = {vis for vis, coll in id_to_node.values()}
     coll_nodes: Set[Node] = {coll for vis, coll in id_to_node.values() if coll is not None}
 
-    def maybe_split(nodes: Set[Node], node: Node, attr: str) -> Node:
+    def maybe_split(nodes: Set[Node], node: Node, direction: str) -> Node:
         """Split nodes to ensure they only have 1 or 2 connections.
 
         If it has more, or multiple in one side, it will be converted
@@ -376,7 +352,7 @@ def build_node_tree(
             copy = node.clone()
             nodes.add(copy)
             return copy
-        if getattr(node, attr) is not None:
+        if getattr(node, direction) is not None:
             # Need to split this one.
             if node.next is not None:
                 forward = node.clone()
