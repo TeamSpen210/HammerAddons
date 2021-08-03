@@ -787,7 +787,6 @@ def comp_prop_rope(ctx: Context) -> None:
             connections_from[node.id].append(dest)
             connections_to[dest.id].append(node)
 
-    static_props = list(ctx.bsp.static_props())
 
     # To group nodes, take each group out, then search recursively through
     # all connections from it to other nodes.
@@ -870,7 +869,7 @@ def comp_prop_rope(ctx: Context) -> None:
                 if conf.prop_no_self_shadow:
                     flags |= StaticPropFlags.NO_SELF_SHADOWING
 
-                static_props.append(StaticProp(
+                ctx.bsp.props.append(StaticProp(
                     model=model_name,
                     origin=center,
                     angles=Angle(0, 270, 0),
@@ -886,4 +885,3 @@ def comp_prop_rope(ctx: Context) -> None:
                     fade_scale=conf.prop_fade_scale,
                 ))
     LOGGER.info('Built {} models.', len(all_nodes))
-    ctx.bsp.write_static_props(static_props)
