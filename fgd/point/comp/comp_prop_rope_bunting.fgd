@@ -5,6 +5,7 @@
 	[
 	weight(integer) : "Weight" : 1 : "If multiple are defined with the same weighting, this specifies the relative probabilities." +
 		"This works like a lottery - each model has this many 'tickets', and then one is chosen randomly each time. If you have two choices with a weight of 9 and 1, the first will be chosen 90% of the time."
+	placement_interval(integer) : "Placement Interval" : 1 : "Place this prop every X segments, not including the start/end of the rope."
 	model(studio) : "Model" : : "Specifies the model to place. This can either be an MDL which is placed as invidual prop_statics, " +
 		"or a SMD (relative to a game folder) which is merged into the rope model."
 	
@@ -16,6 +17,7 @@
 		[
 		"follow" : "Follow Rope"
 		"yaw" : "Yaw Only"
+		"pitch_yaw" : "Pitch and Yaw"
 		"none" : "No Rotation"
 		"rand_yaw" : "Random Yaw"
 		"rand": "Random"

@@ -1,4 +1,5 @@
 """"Compile static prop cables, instead of sprites."""
+import itertools
 import math
 import struct
 from random import Random
@@ -61,6 +62,7 @@ class SegPropOrient(Enum):
     NONE = 'none'
     FULL_ROT = 'follow'
     YAW_ONLY = 'yaw'
+    PITCH_YAW = 'pitch_yaw'
     RAND_YAW = 'rand_yaw'
     RAND_FULL = 'rand'
 
@@ -85,6 +87,7 @@ TIME_STEP = 1/50
 class SegPropConf:
     """Defines configuration for a set of props placed across the rope."""
     weight: int
+    place_interval: int  # Place every X segments.
     model: str
     orient: SegPropOrient
     angles: Matrix
@@ -92,7 +95,7 @@ class SegPropConf:
     def __hash__(self) -> int:
         """Handle hashing the matrix."""
         return hash(
-            (self.weight, self.model, self.orient) +
+            (self.weight, self.model, self.orient, self.place_interval) +
             self.angles.to_angle().as_tuple()
         )
 
@@ -294,6 +297,13 @@ class Node:
         yield self
         node = self.next
         while node is not None and node is not self:
+            yield node
+            node = node.next
+
+    def follow_no_endpoints(self) -> Iterator['Node']:
+        """Iterate over the nodes between this and the end."""
+        node = self.next
+        while node is not None and node is not self and node.next is not None:
             yield node
             node = node.next
 
@@ -734,58 +744,63 @@ def generate_caps(nodes: Iterable[Node], mesh: Mesh, is_coll: bool) -> None:
 
 def place_seg_props(nodes: Iterable[Node], fsys: FileSystem, mesh: Mesh) -> Iterator[SegProp]:
     """Place segment props, across the nodes."""
-    weight_cache: dict[frozenset[SegPropConf], list[SegPropConf]] = {}
     mesh_cache: dict[str, Mesh] = {}
-    for node in nodes:
-        # Don't place at endpoints, or if we have no props to place.
-        if node.prev is None or node.next is None or not node.config.seg_props:
+    for start_node in nodes:
+        # Find start nodes, we then loop in order over the nodes.
+        if start_node.prev is not None:
             continue
-        try:
-            weights = weight_cache[node.config.seg_props]
-        except KeyError:
-            weights = weight_cache[node.config.seg_props] = [
+        for i, node in enumerate(start_node.follow_no_endpoints()):
+            weights = [
                 conf
                 for conf in node.config.seg_props
-                for _ in range(conf.weight)
+                if i % conf.place_interval == 0
+                for _ in itertools.repeat(None, conf.weight)
             ]
-        rand = Random(struct.pack(
-            '6f',
-            *node.pos,
-            *node.orient.forward(),
-        ))
-
-        conf = rand.choice(weights)
-        if conf.orient is SegPropOrient.RAND_FULL:
-            # We cover all orientations, so pre-rotation value is irrelevant.
-            angles = Matrix.from_angle(Angle(
-                rand.uniform(0.0, 360.0),
-                rand.uniform(0.0, 360.0),
-                rand.uniform(0.0, 360.0),
+            if not weights:
+                # None to place here, skip.
+                continue
+            rand = Random(struct.pack(
+                '6f',
+                *node.pos,
+                *node.orient.forward(),
             ))
-        elif conf.orient is SegPropOrient.NONE:
-            angles = conf.angles
-        elif conf.orient is SegPropOrient.FULL_ROT:
-            angles = conf.angles @ node.orient
-        elif conf.orient is SegPropOrient.YAW_ONLY:
-            angles = conf.angles @ Matrix.from_yaw(
-                node.orient.forward().to_angle().yaw,
-            )
-        elif conf.orient is SegPropOrient.RAND_YAW:
-            angles = conf.angles @ Matrix.from_yaw(rand.uniform(0, 360.0))
-        else:
-            raise AssertionError(f'Unknown orient type {conf.orient!r}')
 
-        folded_model = conf.model.casefold()
-        if folded_model.endswith('.mdl'):
-            yield SegProp(conf.model, node.pos, angles)
-            continue
-        try:
-            prop_mesh = mesh_cache[folded_model]
-        except KeyError:
-            LOGGER.info('Parsing bunting mesh "{}"...', conf.model)
-            with fsys[conf.model].open_bin() as f:
-                prop_mesh = mesh_cache[folded_model] = Mesh.parse_smd(f)
-        mesh.append_model(prop_mesh, angles, node.pos)
+            conf = rand.choice(weights)
+            if conf.orient is SegPropOrient.RAND_FULL:
+                # We cover all orientations, so pre-rotation value is irrelevant.
+                angles = Matrix.from_angle(Angle(
+                    rand.uniform(0.0, 360.0),
+                    rand.uniform(0.0, 360.0),
+                    rand.uniform(0.0, 360.0),
+                ))
+            elif conf.orient is SegPropOrient.NONE:
+                angles = conf.angles
+            elif conf.orient is SegPropOrient.FULL_ROT:
+                angles = conf.angles @ node.orient
+            elif conf.orient is SegPropOrient.YAW_ONLY:
+                angles = conf.angles @ Matrix.from_yaw(
+                    node.orient.forward().to_angle().yaw,
+                )
+            elif conf.orient is SegPropOrient.PITCH_YAW:
+                forward_ang = node.orient.forward().to_angle()
+                forward_ang.roll = 0
+                angles = conf.angles @ forward_ang
+            elif conf.orient is SegPropOrient.RAND_YAW:
+                angles = conf.angles @ Matrix.from_yaw(rand.uniform(0, 360.0))
+            else:
+                raise AssertionError(f'Unknown orient type {conf.orient!r}')
+
+            folded_model = conf.model.casefold()
+            if folded_model.endswith('.mdl'):
+                yield SegProp(conf.model, node.pos, angles)
+                continue
+            try:
+                prop_mesh = mesh_cache[folded_model]
+            except KeyError:
+                LOGGER.info('Parsing bunting mesh "{}"', conf.model)
+                with fsys[conf.model].open_bin() as f:
+                    prop_mesh = mesh_cache[folded_model] = Mesh.parse_smd(f)
+            mesh.append_model(prop_mesh, angles, node.pos)
 
 
 def compute_visleafs(
@@ -840,13 +855,15 @@ def comp_prop_rope(ctx: Context) -> None:
     for ent in ctx.vmf.by_class['comp_prop_rope_bunting']:
         ent.remove()
         name_to_segprops_lst[ent['targetname'].casefold()].append(SegPropConf(
-            conv_int(ent['weight'], 1),
+            max(1, conv_int(ent['weight'], 1)),
+            max(1, conv_int(ent['placement_interval'], 1)),
             ent['model'],
             SegPropOrient(ent['orient']),
             Matrix.from_angle(Angle.from_str(ent['angles'])),
         ))
 
     # Put into a set, so they're immutable and have no ordering.
+    # We use that to identify the same config in previous compiles.
     name_to_segprops_set: dict[str, frozenset[SegPropConf]] = {
         name: frozenset(lst)
         for name, lst in name_to_segprops_lst.items()
