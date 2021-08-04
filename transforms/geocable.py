@@ -108,6 +108,8 @@ VAC_SEG_CONF = SegPropConf(
     angles=Matrix(),
 )
 VAC_SEG_CONF_SET = frozenset({VAC_SEG_CONF})
+VAC_RADIUS = 45.0
+VAC_MAT = 'models/props_backstage/vacum_pipe'
 
 
 @attr.define
@@ -131,6 +133,7 @@ class Config:
     u_max: float
     v_scale: float
     flip_uv: bool
+    is_vactube: bool
     coll_segments: int
     coll_side_count: int
     seg_props: FrozenSet[SegPropConf]
@@ -162,9 +165,9 @@ class Config:
             '{} must be positive or zero!'
         )
 
-        if ent['classname'] == 'comp_vactube_spline':
+        if ent['classname'].casefold() == 'comp_vactube_spline':
             # More restricted config, most are preset.
-
+            is_vactube = True
             if conv_bool(ent['opaque']):
                 material = 'models/props_backstage/vacum_pipe_opaque'
             else:
@@ -172,15 +175,16 @@ class Config:
             side_count = 24
             coll_side_count = 12
             coll_segments = math.ceil(segments / 2)
-            radius = 45
-            slack = 0 # Unused.
+            radius = VAC_RADIUS
+            slack = 0  # Unused.
             interp_type = InterpType.CATMULL_ROM
             u_min = 0.0
             u_max = 1.0
             v_scale = 1.0
             flip_uv = False
-            seg_props = frozenset({VAC_SEG_CONF_SET})
+            seg_props = VAC_SEG_CONF_SET
         else:
+            is_vactube = False
             # There's not really a vanilla material we can use for cables.
             material = ent['material']
             if not material:
@@ -218,8 +222,6 @@ class Config:
             v_scale = abs(conv_float(ent['mat_scale'], 1.0))
             u_min = abs(conv_float(ent['u_min'], 0.0))
             u_max = abs(conv_float(ent['u_max'], 1.0))
-            # Rescale this, so that if it's 1, the pixels are square.
-            v_scale *= (u_max - u_min) / (2*math.pi*radius)
             flip_uv = conv_bool(ent['mat_rotate'])
 
             try:
@@ -228,6 +230,8 @@ class Config:
                 seg_props = frozenset()
 
         alpha = max(0, min(255, conv_int(ent['renderamt'], 255)))
+        # Rescale this, so that if it's 1, the pixels are square.
+        v_scale *= (u_max - u_min) / (2*math.pi*radius)
 
         return cls(
             material,
@@ -239,6 +243,7 @@ class Config:
             u_min, u_max,
             v_scale,
             flip_uv,
+            is_vactube,
             coll_segments,
             coll_side_count,
             seg_props,
@@ -768,6 +773,8 @@ def generate_caps(nodes: Iterable[Node], mesh: Mesh, is_coll: bool) -> None:
     for node in nodes:
         v_max = node.config.u_max - node.config.u_min
         mat = node.config.material
+        if node.config.is_vactube:  # No caps on vactubes.
+            continue
         if node.prev is None:
             make_cap(reversed(node.points_next), -node.orient.forward())
         if node.next is None:
