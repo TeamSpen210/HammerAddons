@@ -371,6 +371,7 @@ def build_rope(
 
     mesh.triangles.extend(generate_straights(nodes))
     generate_caps(nodes, mesh, is_coll=False)
+    mesh.triangles.extend(generate_vac_beams(nodes, bone))
 
     seg_props = list(place_seg_props(nodes, fsys, mesh))
 
@@ -380,7 +381,7 @@ def build_rope(
         compute_orients(coll_nodes)
         compute_verts(coll_nodes, bone, is_coll=True)
 
-        generate_straights(coll_nodes, coll_mesh)
+        coll_mesh.triangles.extend(generate_straights(coll_nodes))
         generate_caps(coll_nodes, coll_mesh, is_coll=True)
 
     # Move the UVs around so they don't extend too far.
@@ -779,6 +780,92 @@ def generate_caps(nodes: Iterable[Node], mesh: Mesh, is_coll: bool) -> None:
             make_cap(reversed(node.points_next), -node.orient.forward())
         if node.next is None:
             make_cap(node.points_prev, node.orient.forward())
+
+
+def generate_vac_beams(nodes: Iterable[Node], bone: Bone) -> Iterator[Triangle]:
+    """Generate the 4 beams surrounding vactubes."""
+    bone_weight = [(bone, 1.0)]
+    todo = set(nodes)
+    length_scale = 1 / (2*math.pi*VAC_RADIUS)
+    rand = Random()
+    # From original model, the V positions in the texture.
+    VERT_START = 0.260
+    VERT_MID = 0.626
+    VERT_END = 0.992
+    # For the U axis, there's 4 beam texture sets arranged identically,
+    # but we only use the first 3, the 4th is for straight_b.
+    BEAMS = [
+        (0.008684, Matrix.from_roll(0)),
+        (0.214734, Matrix.from_roll(90)),
+        (0.415821, Matrix.from_roll(180)),
+        (0.008684, Matrix.from_roll(270)),
+    ]
+    BEAM_IN = 39.3218
+    BEAM_OUT = 51.75
+    BEAM_WID = 2.17316
+    node_pos: Vec
+
+    # return Vertex(pos + off, norm, u, v, bone_weight)
+
+    while todo:
+        start = todo.pop()
+        start = start.find_start()
+        if start.next is None or not start.config.is_vactube:
+            continue
+        v_start = VERT_START
+        for node1 in start.follow():
+            if node1.next is None:
+                continue
+            node2 = node1.next
+            todo.discard(node1)
+
+            pos1 = node1.pos
+            pos2 = node2.pos
+
+            if v_start > VERT_MID:
+                v_start = VERT_START
+            v_end = v_start + length_scale * (pos2 - pos1).mag()
+            if v_end > 0.992:
+                v_end -= v_start - VERT_START
+                v_start = VERT_START
+
+            for u_off, orient in BEAMS:
+                orient1 = orient @ node1.orient
+                orient2 = orient @ node2.orient
+                # Constructing a beam on the +Y side of the model, with pipe along X axis.
+
+                # +Z side.
+                yield Triangle(
+                    VAC_MAT,
+                    Vertex(
+                        pos1 + Vec(0, BEAM_IN, BEAM_WID) @ orient1,
+                        orient1.up(), u_off, v_start, bone_weight,
+                    ),
+                    Vertex(
+                        pos1 + Vec(0, BEAM_OUT, BEAM_WID) @ orient1,
+                        orient1.up(), u_off + 0.07, v_start, bone_weight,
+                    ),
+                    Vertex(
+                        pos2 + Vec(0, BEAM_IN, BEAM_WID) @ orient2,
+                        orient1.up(), u_off, v_end, bone_weight,
+                    ),
+                )
+                yield Triangle(
+                    VAC_MAT,
+                    Vertex(
+                        pos2 + Vec(0, BEAM_IN, BEAM_WID) @ orient2,
+                        orient1.up(), u_off, v_end, bone_weight,
+                    ),
+                    Vertex(
+                        pos1 + Vec(0, BEAM_OUT, BEAM_WID) @ orient1,
+                        orient1.up(), u_off + 0.07, v_start, bone_weight,
+                    ),
+                    Vertex(
+                        pos2 + Vec(0, BEAM_OUT, BEAM_WID) @ orient2,
+                        orient2.up(), u_off + 0.07, v_end, bone_weight,
+                    )
+                )
+            v_start = v_end
 
 
 def place_seg_props(nodes: Iterable[Node], fsys: FileSystem, mesh: Mesh) -> Iterator[SegProp]:
