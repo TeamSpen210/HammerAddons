@@ -100,6 +100,16 @@ class SegPropConf:
         )
 
 
+VAC_SEG_CONF = SegPropConf(
+    weight=1,
+    place_interval=1,
+    model='modelsrc/vactube_ring.smd',
+    orient=SegPropOrient.FULL_ROT,
+    angles=Matrix(),
+)
+VAC_SEG_CONF_SET = frozenset({VAC_SEG_CONF})
+
+
 @attr.define
 class SegProp:
     """Definition for an actually placed segment prop."""
@@ -146,59 +156,81 @@ class Config:
     @classmethod
     def parse(cls, ent: Entity, name_to_segprops: Dict[str, FrozenSet[SegPropConf]]) -> 'Config':
         """Parse from an entity."""
-        # There's not really a material we can use for cables.
-        if not ent['material']:
-            raise ValueError(f'No material for rope "{ent["targetname"]}" at {ent["origin"]}')
-
         segments = cls._parse_min(
             ent, 'segments', 0,
             'Segment count for rope at '
             '{} must be positive or zero!'
         )
-        side_count = cls._parse_min(
-            ent, 'sides', 3,
-            'Ropes cannot have less than 3 sides! (node at {})',
-        )
-        coll_segments = cls._parse_min(
-            ent, 'coll_segments', -1,
-            'Collision segment count for rope at '
-            '{} must be positive or zero!'
-        )
-        coll_side_count = conv_int(ent['coll_sides'])
-        radius = cls._parse_min(
-            ent, 'radius', 0.1,
-            'Radius for rope at {} must be positive!',
-        )
-        slack = cls._parse_min(
-            ent, 'slack', 0.0,
-            'Rope at {} cannot have a negative slack!',
-        )
-        try:
-            interp_type = InterpType(int(ent['positioninterpolator', '2']))
-        except ValueError:
-            LOGGER.warning(
-                'Unknown interpolation type "{}" '
-                'for rope at {}!',
-                ent['interpolationtype'],
-                ent['origin'],
-            )
-            interp_type = InterpType.STRAIGHT
 
-        v_scale = abs(conv_float(ent['mat_scale'], 1.0))
-        u_min = abs(conv_float(ent['u_min'], 0.0))
-        u_max = abs(conv_float(ent['u_max'], 1.0))
-        # Rescale this, so that if it's 1, the pixels are square.
-        v_scale *= (u_max - u_min) / (2*math.pi*radius)
+        if ent['classname'] == 'comp_vactube_spline':
+            # More restricted config, most are preset.
+
+            if conv_bool(ent['opaque']):
+                material = 'models/props_backstage/vacum_pipe_opaque'
+            else:
+                material = 'models/props_backstage/vacum_pipe_glass'
+            side_count = 24
+            coll_side_count = 12
+            coll_segments = math.ceil(segments / 2)
+            radius = 45
+            slack = 0 # Unused.
+            interp_type = InterpType.CATMULL_ROM
+            u_min = 0.0
+            u_max = 1.0
+            v_scale = 1.0
+            flip_uv = False
+            seg_props = frozenset({VAC_SEG_CONF_SET})
+        else:
+            # There's not really a vanilla material we can use for cables.
+            material = ent['material']
+            if not material:
+                raise ValueError(f'No material for rope "{ent["targetname"]}" at {ent["origin"]}')
+
+            side_count = cls._parse_min(
+                ent, 'sides', 3,
+                'Ropes cannot have less than 3 sides! (node at {})',
+            )
+            coll_segments = cls._parse_min(
+                ent, 'coll_segments', -1,
+                'Collision segment count for rope at '
+                '{} must be positive or zero!'
+            )
+            coll_side_count = conv_int(ent['coll_sides'])
+            radius = cls._parse_min(
+                ent, 'radius', 0.1,
+                'Radius for rope at {} must be positive!',
+            )
+            slack = cls._parse_min(
+                ent, 'slack', 0.0,
+                'Rope at {} cannot have a negative slack!',
+            )
+            try:
+                interp_type = InterpType(int(ent['positioninterpolator', '2']))
+            except ValueError:
+                LOGGER.warning(
+                    'Unknown interpolation type "{}" '
+                    'for rope at {}!',
+                    ent['interpolationtype'],
+                    ent['origin'],
+                )
+                interp_type = InterpType.STRAIGHT
+
+            v_scale = abs(conv_float(ent['mat_scale'], 1.0))
+            u_min = abs(conv_float(ent['u_min'], 0.0))
+            u_max = abs(conv_float(ent['u_max'], 1.0))
+            # Rescale this, so that if it's 1, the pixels are square.
+            v_scale *= (u_max - u_min) / (2*math.pi*radius)
+            flip_uv = conv_bool(ent['mat_rotate'])
+
+            try:
+                seg_props = name_to_segprops[ent['bunting'].casefold()]
+            except KeyError:
+                seg_props = frozenset()
 
         alpha = max(0, min(255, conv_int(ent['renderamt'], 255)))
 
-        try:
-            seg_props = name_to_segprops[ent['bunting'].casefold()]
-        except KeyError:
-            seg_props = frozenset()
-
         return cls(
-            ent['material'],
+            material,
             segments,
             side_count,
             radius,
@@ -206,7 +238,7 @@ class Config:
             slack,
             u_min, u_max,
             v_scale,
-            conv_bool(ent['mat_rotate']),
+            flip_uv,
             coll_segments,
             coll_side_count,
             seg_props,
@@ -869,7 +901,11 @@ def comp_prop_rope(ctx: Context) -> None:
         for name, lst in name_to_segprops_lst.items()
     }
 
-    for ent in ctx.vmf.by_class['comp_prop_rope'] | ctx.vmf.by_class['comp_prop_cable']:
+    for ent in itertools.chain(
+        ctx.vmf.by_class['comp_prop_rope'],
+        ctx.vmf.by_class['comp_prop_cable'],
+        ctx.vmf.by_class['comp_vactube_spline'],
+    ):
         ent.remove()
         conf = Config.parse(ent, name_to_segprops_set)
         node = NodeEnt(
