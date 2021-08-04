@@ -369,7 +369,7 @@ def build_rope(
     compute_orients(nodes)
     compute_verts(nodes, bone, is_coll=False)
 
-    generate_straights(nodes, mesh)
+    mesh.triangles.extend(generate_straights(nodes))
     generate_caps(nodes, mesh, is_coll=False)
 
     seg_props = list(place_seg_props(nodes, fsys, mesh))
@@ -718,7 +718,7 @@ def compute_verts(nodes: Iterable[Node], bone: Bone, is_coll: bool) -> None:
             v_start = v_end
 
 
-def generate_straights(nodes: Iterable[Node], mesh: Mesh) -> None:
+def generate_straights(nodes: Iterable[Node]) -> Iterator[Triangle]:
     """Finally, generate all the straight-side sections."""
     for node1 in nodes:
         node2 = node1.next
@@ -746,8 +746,8 @@ def generate_straights(nodes: Iterable[Node], mesh: Mesh) -> None:
                 else:
                     right_b.tex_u = node2.config.u_max
 
-            mesh.triangles.append(Triangle(mat, left_a, right_b, left_b))
-            mesh.triangles.append(Triangle(mat, left_a, right_a, right_b))
+            yield Triangle(mat, left_a, right_b, left_b)
+            yield Triangle(mat, left_a, right_a, right_b)
 
 
 def generate_caps(nodes: Iterable[Node], mesh: Mesh, is_coll: bool) -> None:
