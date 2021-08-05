@@ -5,7 +5,7 @@ import operator
 from pathlib import Path
 from collections import deque
 from importlib.util import spec_from_loader, module_from_spec
-from importlib.abc import MetaPathFinder
+from importlib.abc import MetaPathFinder, Loader
 from importlib.machinery import ModuleSpec, SourceFileLoader
 from typing import (
     Union, Optional, Set, Sequence, Tuple, Iterable,
@@ -69,6 +69,16 @@ def _iter_folder(folder: Path, recursive: bool) -> Iterator[Path]:
                 yield path
 
 
+class PluginRootLoader(Loader):
+    """Fake loader to create the pseduo-module all plugins are installed into."""
+    def __init__(self, filename: str) -> None:
+        self.filename = filename
+
+    def create_module(self, spec: ModuleSpec) -> Optional[types.ModuleType]:
+        """Use the default behaviour."""
+        return None
+
+
 class PluginFinder(MetaPathFinder):
     """Loads plugins.
 
@@ -92,13 +102,29 @@ class PluginFinder(MetaPathFinder):
             source = self.sources[source_ind]
         except IndexError:
             return None
-
-        loader = SourceFileLoader(fullname, str(source.folder / subpath))
+        path = source.folder / subpath
+        filename = str(path / '__init__.py') if path.is_dir() else str(path)
+        loader = SourceFileLoader(fullname, filename)
         return spec_from_loader(fullname, loader)
 
     def load_all(self) -> None:
         """Load all the plugin modules."""
+        # Inject our prefix as a pseudo-module, so it can be imported.
+        sys.modules[self.prefix] = module = module_from_spec(ModuleSpec(
+            self.prefix,
+            PluginRootLoader(self.prefix + '.py'),
+            is_package=True,
+        ))
+        module.__doc__ = 'Plugin pseduo-package.'
         for i, source in enumerate(self.sources):
+            source_modname = f'{self.prefix}_{i:02x}'
+            sys.modules[source_modname] = module = module_from_spec(ModuleSpec(
+                source_modname,
+                PluginRootLoader(source_modname + '.py'),
+                is_package=True,
+            ))
+            module.__doc__ = 'Plugin pseduo-package.'
+
             paths: Iterable[Path]
             if source.autoload_files:
                 paths = source.autoload_files
@@ -111,7 +137,9 @@ class PluginFinder(MetaPathFinder):
                     LOGGER.info('Plugin "{}" was preloaded automatically.', name)
                     continue
                 LOGGER.info('Loading "{}" as "{}"', path, name)
-                loader = SourceFileLoader(name, str(path))
+
+                filename = str(path / '__init__.py') if path.is_dir() else str(path)
+                loader = SourceFileLoader(name, filename)
                 spec = spec_from_loader(name, loader)
                 sys.modules[name] = module = module_from_spec(spec)
 
