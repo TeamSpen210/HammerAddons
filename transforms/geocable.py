@@ -27,6 +27,12 @@ LOGGER = logger.get_logger(__name__)
 NodeID = NewType('NodeID', str)
 Number = TypeVar('Number', int, float)
 
+try:
+    from .vactubes import nodes as vac_node_mod
+except ImportError:
+    LOGGER.exception('No vactube transform:')
+    vac_node_mod = None
+
 QC_TEMPLATE = '''\
 $staticprop
 $modelname "{path}"
@@ -55,6 +61,18 @@ class InterpType(Enum):
     STRAIGHT = 0
     CATMULL_ROM = 1
     ROPE = 2
+
+
+class RopeType(Enum):
+    """Type of rope, for indicating special functionality."""
+    ROPE = 'rope'
+    VAC_PROP = 'vac_prop'  # Static prop
+    VAC_FUNCTIONAL = 'vactube_functional'  # Also produces path for vactube system.
+
+    @property
+    def is_vactube(self) -> bool:
+        """Check if this is a vactube."""
+        return self._value_ != 'rope'
 
 
 class SegPropOrient(Enum):
@@ -124,6 +142,7 @@ class SegProp:
 @attr.s(auto_attribs=True, frozen=True, hash=True, eq=True)
 class Config:
     """Configuration specified in rope entities. This can be shared to reduce duplication."""
+    type: RopeType
     material: str
     segments: int
     side_count: int
@@ -134,7 +153,6 @@ class Config:
     u_max: float
     v_scale: float
     flip_uv: bool
-    is_vactube: bool
     coll_segments: int
     coll_side_count: int
     seg_props: FrozenSet[SegPropConf]
@@ -157,6 +175,11 @@ class Config:
             return minimum
         return value
 
+    @property
+    def is_vactube(self) -> bool:
+        """Check if this is a vactube."""
+        return self.type.is_vactube
+
     @classmethod
     def parse(cls, ent: Entity, name_to_segprops: Dict[str, FrozenSet[SegPropConf]]) -> 'Config':
         """Parse from an entity."""
@@ -168,7 +191,8 @@ class Config:
 
         if ent['classname'].casefold() == 'comp_vactube_spline':
             # More restricted config, most are preset.
-            is_vactube = True
+            skin = conv_int(ent['skin'])
+            rope_type = RopeType.VAC_FUNCTIONAL if skin == 1 else RopeType.VACTUBE
             if conv_bool(ent['opaque']):
                 material = 'models/props_backstage/vacum_pipe_opaque'
             else:
@@ -185,7 +209,7 @@ class Config:
             flip_uv = False
             seg_props = VAC_SEG_CONF_SET
         else:
-            is_vactube = False
+            rope_type = RopeType.ROPE
             # There's not really a vanilla material we can use for cables.
             material = ent['material']
             if not material:
@@ -235,6 +259,7 @@ class Config:
         v_scale *= (u_max - u_min) / (2*math.pi*radius)
 
         return cls(
+            rope_type,
             material,
             segments,
             side_count,
@@ -244,7 +269,6 @@ class Config:
             u_min, u_max,
             v_scale,
             flip_uv,
-            is_vactube,
             coll_segments,
             coll_side_count,
             seg_props,
@@ -266,7 +290,7 @@ class Config:
             material='phy',
             segments=self.segments if self.coll_segments == -1 else self.coll_segments,
             side_count=self.coll_side_count,
-            radius=VAC_COLL_RADIUS if self.is_vactube else self.radius,
+            radius=VAC_COLL_RADIUS if self.type.is_vactube else self.radius,
         )
 
 
@@ -355,7 +379,7 @@ def build_rope(
     temp_folder: Path,
     mdl_name: str,
     args: Tuple[Vec, FileSystem],
-) -> Tuple[Vec, List[Tuple[Vec, float, Vec, float]], List[SegProp]]:
+) -> Tuple[Vec, List[Tuple[Vec, float, Vec, float]], List[SegProp], List[List[Vec]]]:
     """Construct the geometry for a rope."""
     LOGGER.info('Building rope {}', mdl_name)
     ents, connections = nodes_and_conn
@@ -376,8 +400,9 @@ def build_rope(
 
     # All or nothing.
     is_vactube = next(iter(nodes)).config.is_vactube
+    vac_points: List[List[Vec]] = []
     if is_vactube:
-        mesh.triangles.extend(generate_vac_beams(nodes, bone))
+        mesh.triangles.extend(generate_vac_beams(nodes, bone, vac_points))
 
     seg_props = list(place_seg_props(nodes, fsys, mesh))
 
@@ -425,7 +450,7 @@ def build_rope(
         if node.next
     ]
 
-    return (light_origin, coll_data, seg_props)
+    return (light_origin, coll_data, seg_props, vac_points)
 
 
 def build_node_tree(
@@ -791,8 +816,11 @@ def generate_caps(nodes: Iterable[Node], mesh: Mesh, is_coll: bool) -> None:
             make_cap(node.points_prev, node.orient.forward())
 
 
-def generate_vac_beams(nodes: Iterable[Node], bone: Bone) -> Iterator[Triangle]:
-    """Generate the 4 beams surrounding vactubes."""
+def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: List[List[Vec]]) -> Iterator[Triangle]:
+    """Generate the 4 beams surrounding vactubes.
+
+    Also save off the vactube points for functional tubes.
+    """
     bone_weight = [(bone, 1.0)]
     todo = set(nodes)
     length_scale = 1 / (2*math.pi*VAC_RADIUS)
@@ -814,19 +842,28 @@ def generate_vac_beams(nodes: Iterable[Node], bone: Bone) -> Iterator[Triangle]:
     BEAM_WID = 2.17316
     node_pos: Vec
 
-    # return Vertex(pos + off, norm, u, v, bone_weight)
-
     while todo:
         start = todo.pop()
         start = start.find_start()
         if start.next is None or not start.config.is_vactube:
             continue
+
+        points: Optional[List[Vec]]
+        if start.config.type is RopeType.VAC_FUNCTIONAL:
+            points = []
+            vac_points.append(points)
+        else:
+            points = None
+
         v_start = VERT_START
         for node1 in start.follow():
+            todo.discard(node1)
+
+            if points is not None:
+                points.append(node1.pos)
             if node1.next is None:
                 continue
             node2 = node1.next
-            todo.discard(node1)
 
             pos1 = node1.pos
             pos2 = node2.pos
@@ -1064,7 +1101,7 @@ def compute_visleafs(
     return list(used_leafs)
 
 
-@trans('Model Ropes')
+@trans('Model Ropes', priority=-10)  # Needs to be before vactubes.
 def comp_prop_rope(ctx: Context) -> None:
     """Build static props for ropes."""
     # id -> node.
@@ -1198,7 +1235,7 @@ def comp_prop_rope(ctx: Context) -> None:
                     node.relative_to(origin)
                     for node in nodes
                 })
-                model_name, (_, _, seg_props) = compiler.get_model(
+                model_name, (_, _, seg_props, _) = compiler.get_model(
                     (dyn_nodes, frozenset(connections)),
                     build_rope,
                     (origin, ctx.pack.fsys),
@@ -1218,11 +1255,15 @@ def comp_prop_rope(ctx: Context) -> None:
                     if node.config.coll_side_count >= 3:
                         has_coll = True
 
-                model_name, (light_origin, coll_data, seg_props) = compiler.get_model(
+                model_name, (light_origin, coll_data, seg_props, vac_points) = compiler.get_model(
                     (frozenset(nodes), frozenset(connections)),
                     build_rope,
                     (center, ctx.pack.fsys),
                 )
+
+                if vac_points and vac_node_mod is not None:
+                    for track in vac_points:
+                        vac_node_mod.SPLINES.append(vac_node_mod.Spline(center, track))
 
                 # Compute the flags. Just pick a random node, from above.
                 conf = node.config
