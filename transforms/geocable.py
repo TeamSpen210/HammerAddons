@@ -294,7 +294,7 @@ class Config:
         )
 
 
-@attr.define(eq=True)
+@attr.frozen
 class NodeEnt:
     """A node entity, and its associated configuration. This is used to match with earlier compiles."""
     pos: Vec
@@ -302,7 +302,7 @@ class NodeEnt:
     id: NodeID
     # Nodes with the same group compile together. But it doesn't matter for
     # comparisons.
-    group: str = attr.ib(eq=False)
+    group: str = attr.ib(eq=False, hash=False)
 
     def relative_to(self, off: Vec) -> 'NodeEnt':
         """Return a copy relative to the specified origin."""
@@ -1235,7 +1235,7 @@ def comp_prop_rope(ctx: Context) -> None:
                     node.relative_to(origin)
                     for node in nodes
                 })
-                model_name, (_, _, seg_props, _) = compiler.get_model(
+                model_name, _ = compiler.get_model(
                     (dyn_nodes, frozenset(connections)),
                     build_rope,
                     (origin, ctx.pack.fsys),
@@ -1250,13 +1250,14 @@ def comp_prop_rope(ctx: Context) -> None:
                 center = (bbox_min + bbox_max) / 2
                 node = None
                 has_coll = False
+                local_nodes: set[NodeEnt] = set()
                 for node in nodes:
-                    node.pos -= center
+                    local_nodes.add(attr.evolve(node, pos=node.pos - center))
                     if node.config.coll_side_count >= 3:
                         has_coll = True
 
                 model_name, (light_origin, coll_data, seg_props, vac_points) = compiler.get_model(
-                    (frozenset(nodes), frozenset(connections)),
+                    (frozenset(local_nodes), frozenset(connections)),
                     build_rope,
                     (center, ctx.pack.fsys),
                 )
