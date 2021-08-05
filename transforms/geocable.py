@@ -109,6 +109,7 @@ VAC_SEG_CONF = SegPropConf(
 )
 VAC_SEG_CONF_SET = frozenset({VAC_SEG_CONF})
 VAC_RADIUS = 45.0
+VAC_COLL_RADIUS = 52.0
 VAC_MAT = 'models/props_backstage/vacum_pipe'
 
 
@@ -265,6 +266,7 @@ class Config:
             material='phy',
             segments=self.segments if self.coll_segments == -1 else self.coll_segments,
             side_count=self.coll_side_count,
+            radius=VAC_COLL_RADIUS if self.is_vactube else self.radius,
         )
 
 
@@ -304,7 +306,7 @@ class Node:
     """
     pos: Vec
     config: Config
-    radius: float
+    radius: float = attr.Factory(lambda s: s.config.radius, takes_self=True)
     prev: Optional['Node'] = None
     next: Optional['Node'] = None
     # Orientation of the segment up to the next.
@@ -428,8 +430,8 @@ def build_node_tree(
     # Convert them all into the real node objects.
     id_to_node = {
         node.id: (
-            Node(node.pos.copy(), node.config, node.config.radius),
-            Node(node.pos.copy(), node.config.coll(), node.config.radius) if node.config.coll_side_count >= 3 else None,
+            Node(node.pos.copy(), node.config),
+            Node(node.pos.copy(), node.config.coll()) if node.config.coll_side_count >= 3 else None,
         )
         for node in ents
     }
