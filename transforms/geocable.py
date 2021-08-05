@@ -102,7 +102,7 @@ class SegPropConf:
 
 VAC_SEG_CONF = SegPropConf(
     weight=1,
-    place_interval=1,
+    place_interval=4,
     model='modelsrc/vactube_ring.smd',
     orient=SegPropOrient.FULL_ROT,
     angles=Matrix(),
@@ -373,7 +373,11 @@ def build_rope(
 
     mesh.triangles.extend(generate_straights(nodes))
     generate_caps(nodes, mesh, is_coll=False)
-    mesh.triangles.extend(generate_vac_beams(nodes, bone))
+
+    # All or nothing.
+    is_vactube = next(iter(nodes)).config.is_vactube
+    if is_vactube:
+        mesh.triangles.extend(generate_vac_beams(nodes, bone))
 
     seg_props = list(place_seg_props(nodes, fsys, mesh))
 
@@ -407,6 +411,9 @@ def build_rope(
             coll_mesh.export(fb)
 
     with (temp_folder / 'model.qc').open('w') as f:
+        # Desolation needs this hint.
+        if is_vactube and hasattr(Mesh, 'NEED_TRANSLUCENT_MOSTLYOPAQUE'):
+            f.write('$mostlyopaque\n')
         f.write(QC_TEMPLATE.format(path=mdl_name, light_origin=light_origin))
         if coll_nodes:
             f.write(QC_TEMPLATE_PHYS.format(count=sum(node.next is not None for node in coll_nodes)))
