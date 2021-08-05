@@ -192,14 +192,20 @@ class Config:
         if ent['classname'].casefold() == 'comp_vactube_spline':
             # More restricted config, most are preset.
             skin = conv_int(ent['skin'])
-            rope_type = RopeType.VAC_FUNCTIONAL if skin == 1 else RopeType.VACTUBE
+            rope_type = RopeType.VAC_FUNCTIONAL if skin == 1 else RopeType.VAC_PROP
             if conv_bool(ent['opaque']):
                 material = 'models/props_backstage/vacum_pipe_opaque'
             else:
                 material = 'models/props_backstage/vacum_pipe_glass'
+
+            # Side counts are the same as the original models.
             side_count = 24
-            coll_side_count = 12
-            coll_segments = math.ceil(segments / 2)
+            if conv_bool(ent['collisions']):
+                coll_side_count = 12
+                coll_segments = math.ceil(segments / 2)
+            else:
+                coll_side_count = 0
+                coll_segments = -1
             radius = VAC_RADIUS
             slack = 0  # Unused.
             interp_type = InterpType.CATMULL_ROM

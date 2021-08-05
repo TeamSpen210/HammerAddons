@@ -15,6 +15,7 @@
 		1: "Vactube Junction"
 	]
 	segments(integer) : "Segments" : 2 : "Number of nodes to generate for this. Higher values make smoother tubes, but produce more faces."
+	collisions(boolean) : "Enable Collisions" : 1 : "Sholuld a collision mesh should be generated?"
 
 	// A selection of prop_static's keyvalues, excluding some that are rather irrelevant.
 	linedivider_staticprop[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
