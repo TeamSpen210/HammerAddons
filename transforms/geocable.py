@@ -865,6 +865,37 @@ def generate_vac_beams(nodes: Iterable[Node], bone: Bone) -> Iterator[Triangle]:
                         orient1.up(), u_off + 0.07, v_start, bone_weight,
                     ),
                 )
+                # +Y (outside)
+                yield Triangle(
+                    VAC_MAT,
+                    Vertex(
+                        pos2 + Vec(0, BEAM_OUT, +BEAM_WID) @ orient2,
+                        orient2.left(), u_off + 0.07, v_end, bone_weight,
+                    ),
+                    Vertex(
+                        pos2 + Vec(0, BEAM_OUT, -BEAM_WID) @ orient2,
+                        orient2.left(), u_off + 0.095, v_end, bone_weight,
+                    ),
+                    Vertex(
+                        pos1 + Vec(0, BEAM_OUT, +BEAM_WID) @ orient1,
+                        orient1.left(), u_off + 0.07, v_start, bone_weight,
+                    )
+                )
+                yield Triangle(
+                    VAC_MAT,
+                    Vertex(
+                        pos1 + Vec(0, BEAM_OUT, +BEAM_WID) @ orient1,
+                        orient1.left(), u_off + 0.07, v_start, bone_weight,
+                    ),
+                    Vertex(
+                        pos2 + Vec(0, BEAM_OUT, -BEAM_WID) @ orient2,
+                        orient2.left(), u_off + 0.095, v_end, bone_weight,
+                    ),
+                    Vertex(
+                        pos1 + Vec(0, BEAM_OUT, -BEAM_WID) @ orient1,
+                        orient1.left(), u_off + 0.095, v_start, bone_weight,
+                    )
+                )
             v_start = v_end
 
 
