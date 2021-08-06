@@ -28,7 +28,7 @@ NodeID = NewType('NodeID', str)
 Number = TypeVar('Number', int, float)
 
 try:
-    from .vactubes import nodes as vac_node_mod
+    from .vactubes import nodes as vac_node_mod  # type: ignore
 except ImportError:
     LOGGER.exception('No vactube transform:')
     vac_node_mod = None
@@ -853,17 +853,17 @@ def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: List[List[
     def vert_node1(y: float, z: float, norm: tuple[float, float, float], u: float) -> Vertex:
         """Helper for generating at the first node."""
         return Vertex(
-            pos1 + Vec(0.0, y, z) @ orient1,
-            Vec(norm) @ orient1,
+            pos1 + (0.0, y, z) @ orient1,
+            norm @ orient1,
             u_off + u, v_start,
             bone_weight,
         )
 
-    def vert_node2(y: float, z: float, norm: tuple[float, float, float], u: float) -> Vertex:
+    def vert_node2(y: float, z: float, norm: Tuple[float, float, float], u: float) -> Vertex:
         """Helper for generating a vert at the second node."""
         return Vertex(
-            pos2 + Vec(0.0, y, z) @ orient2,
-            Vec(norm) @ orient2,
+            pos2 + (0.0, y, z) @ orient2,
+            norm @ orient2,
             u_off + u, v_end,
             bone_weight,
         )
@@ -897,7 +897,7 @@ def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: List[List[
             if v_start > VERT_MID:
                 v_start = VERT_START
             v_end = v_start + length_scale * (pos2 - pos1).mag()
-            if v_end > 0.992:
+            if v_end > VERT_END:
                 v_end -= v_start - VERT_START
                 v_start = VERT_START
 
