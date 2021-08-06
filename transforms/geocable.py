@@ -557,7 +557,7 @@ def interpolate_catmull_rom(node1: Node, node2: Node, seg_count: int) -> List[No
     t1 = t0 + (p1-p0).mag()
     t2 = t1 + (p2-p1).mag()
     t3 = t2 + (p3-p2).mag()
-    points: List[Node] = []
+    points: list[Node] = []
     for i in range(1, seg_count + 1):
         t = lerp(i, 0, seg_count + 1, t1, t2)
         A1 = (t1-t)/(t1-t0)*p0 + (t-t0)/(t1-t0)*p1
@@ -687,8 +687,8 @@ def compute_orients(nodes: Iterable[Node]) -> None:
     """Compute the appropriate orientation for each node."""
     # This is based on the info at:
     # https://janakiev.com/blog/framing-parametric-curves/
-    tangents: Dict[Node, Vec] = {}
-    all_nodes: Set[Node] = set()
+    tangents: dict[Node, Vec] = {}
+    all_nodes: set[Node] = set()
     for node in nodes:
         if node.prev is node.next is None:
             continue
@@ -850,6 +850,24 @@ def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: List[List[
     BEAM_WID = 2.17316
     node_pos: Vec
 
+    def vert_node1(y: float, z: float, norm: tuple[float, float, float], u: float) -> Vertex:
+        """Helper for generating at the first node."""
+        return Vertex(
+            pos1 + Vec(0.0, y, z) @ orient1,
+            Vec(norm) @ orient1,
+            u_off + u, v_start,
+            bone_weight,
+        )
+
+    def vert_node2(y: float, z: float, norm: tuple[float, float, float], u: float) -> Vertex:
+        """Helper for generating a vert at the second node."""
+        return Vertex(
+            pos2 + Vec(0.0, y, z) @ orient2,
+            Vec(norm) @ orient2,
+            u_off + u, v_end,
+            bone_weight,
+        )
+
     while todo:
         start = todo.pop()
         start = start.find_start()
@@ -891,126 +909,54 @@ def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: List[List[
                 # +Z side (left side)
                 yield Triangle(
                     VAC_MAT,
-                    Vertex(
-                        pos1 + Vec(0, BEAM_IN, BEAM_WID) @ orient1,
-                        orient1.up(), u_off, v_start, bone_weight,
-                    ),
-                    Vertex(
-                        pos2 + Vec(0, BEAM_IN, BEAM_WID) @ orient2,
-                        orient1.up(), u_off, v_end, bone_weight,
-                    ),
-                    Vertex(
-                        pos1 + Vec(0, BEAM_OUT, BEAM_WID) @ orient1,
-                        orient1.up(), u_off + 0.07, v_start, bone_weight,
-                    ),
+                    vert_node1(BEAM_IN, +BEAM_WID, (0, 0, 1), 0.0),
+                    vert_node2(BEAM_IN, +BEAM_WID, (0, 0, 1), 0.0),
+                    vert_node1(BEAM_OUT, +BEAM_WID, (0, 0, 1), 0.07),
                 )
                 yield Triangle(
                     VAC_MAT,
-                    Vertex(
-                        pos2 + Vec(0, BEAM_IN, BEAM_WID) @ orient2,
-                        orient1.up(), u_off, v_end, bone_weight,
-                    ),
-                    Vertex(
-                        pos2 + Vec(0, BEAM_OUT, BEAM_WID) @ orient2,
-                        orient2.up(), u_off + 0.07, v_end, bone_weight,
-                    ),
-                    Vertex(
-                        pos1 + Vec(0, BEAM_OUT, BEAM_WID) @ orient1,
-                        orient1.up(), u_off + 0.07, v_start, bone_weight,
-                    ),
+                    vert_node2(BEAM_IN, +BEAM_WID, (0, 0, 1), 0.0),
+                    vert_node2(BEAM_OUT, +BEAM_WID, (0, 0, 1), 0.07),
+                    vert_node1(BEAM_OUT, +BEAM_WID, (0, 0, 1), 0.07),
                 )
                 # +Y (outside)
                 yield Triangle(
                     VAC_MAT,
-                    Vertex(
-                        pos2 + Vec(0, BEAM_OUT, +BEAM_WID) @ orient2,
-                        orient2.left(), u_off + 0.07, v_end, bone_weight,
-                    ),
-                    Vertex(
-                        pos2 + Vec(0, BEAM_OUT, -BEAM_WID) @ orient2,
-                        orient2.left(), u_off + 0.095, v_end, bone_weight,
-                    ),
-                    Vertex(
-                        pos1 + Vec(0, BEAM_OUT, +BEAM_WID) @ orient1,
-                        orient1.left(), u_off + 0.07, v_start, bone_weight,
-                    )
+                    vert_node2(BEAM_OUT, +BEAM_WID, (0, 1, 0), 0.07),
+                    vert_node2(BEAM_OUT, -BEAM_WID, (0, 1, 0), 0.095),
+                    vert_node1(BEAM_OUT, +BEAM_WID, (0, 1, 0), 0.07),
                 )
                 yield Triangle(
                     VAC_MAT,
-                    Vertex(
-                        pos1 + Vec(0, BEAM_OUT, +BEAM_WID) @ orient1,
-                        orient1.left(), u_off + 0.07, v_start, bone_weight,
-                    ),
-                    Vertex(
-                        pos2 + Vec(0, BEAM_OUT, -BEAM_WID) @ orient2,
-                        orient2.left(), u_off + 0.095, v_end, bone_weight,
-                    ),
-                    Vertex(
-                        pos1 + Vec(0, BEAM_OUT, -BEAM_WID) @ orient1,
-                        orient1.left(), u_off + 0.095, v_start, bone_weight,
-                    )
+                    vert_node1(BEAM_OUT, +BEAM_WID, (0, 1, 0), 0.07),
+                    vert_node2(BEAM_OUT, -BEAM_WID, (0, 1, 0), 0.095),
+                    vert_node1(BEAM_OUT, -BEAM_WID, (0, 1, 0), 0.095),
                 )
                 # -Z (right side)
                 yield Triangle(
                     VAC_MAT,
-                    Vertex(
-                        pos1 + Vec(0.0, BEAM_OUT, -BEAM_WID) @ orient1,
-                        -orient1.up(), u_off + 0.095, v_start, bone_weight,
-                    ),
-                    Vertex(
-                        pos2 + Vec(0.0, BEAM_IN, -BEAM_WID) @ orient2,
-                        -orient2.up(), u_off + 0.166, v_end, bone_weight,
-                    ),
-                    Vertex(
-                        pos1 + Vec(0.0, BEAM_IN, -BEAM_WID) @ orient1,
-                        -orient1.up(), u_off + 0.166, v_end, bone_weight
-                    ),
+                    vert_node1(BEAM_OUT, -BEAM_WID, (0, 0, -1), 0.095),
+                    vert_node2(BEAM_IN, -BEAM_WID, (0, 0, -1), 0.166),
+                    vert_node1(BEAM_IN, -BEAM_WID, (0, 0, -1), 0.166),
                 )
                 yield Triangle(
                     VAC_MAT,
-                    Vertex(
-                        pos1 + Vec(0.0, BEAM_OUT, -BEAM_WID) @ orient1,
-                        -orient1.up(), u_off + 0.095, v_start, bone_weight,
-                    ),
-                    Vertex(
-                        pos2 + Vec(0.0, BEAM_OUT, -BEAM_WID) @ orient2,
-                        -orient2.up(), u_off + 0.095, v_end, bone_weight,
-                    ),
-                    Vertex(
-                        pos2 + Vec(0.0, BEAM_IN, -BEAM_WID) @ orient2,
-                        -orient2.up(), u_off + 0.166, v_end, bone_weight,
-                    ),
+                    vert_node1(BEAM_OUT, -BEAM_WID, (0, 0, -1), 0.095),
+                    vert_node2(BEAM_OUT, -BEAM_WID, (0, 0, -1), 0.095),
+                    vert_node2(BEAM_IN, -BEAM_WID, (0, 0, -1), 0.166),
                 )
                 # -Y side (inner)
                 yield Triangle(
                     VAC_MAT,
-                    Vertex(
-                        pos1 + Vec(0.0, BEAM_IN, -BEAM_WID) @ orient1,
-                        -orient1.left(), u_off + 0.166, v_start, bone_weight,
-                    ),
-                    Vertex(
-                        pos2 + Vec(0.0, BEAM_IN, -BEAM_WID) @ orient2,
-                        -orient2.left(), u_off + 0.166, v_end, bone_weight,
-                    ),
-                    Vertex(
-                        pos1 + Vec(0.0, BEAM_IN, +BEAM_WID) @ orient1,
-                        -orient1.left(), u_off + 0.191, v_start, bone_weight,
-                    ),
+                    vert_node1(BEAM_IN, -BEAM_WID, (0, -1, 0), 0.166),
+                    vert_node2(BEAM_IN, -BEAM_WID, (0, -1, 0), 0.166),
+                    vert_node1(BEAM_IN, +BEAM_WID, (0, -1, 0), 0.191),
                 )
                 yield Triangle(
                     VAC_MAT,
-                    Vertex(
-                        pos2 + Vec(0.0, BEAM_IN, -BEAM_WID) @ orient2,
-                        -orient2.left(), u_off + 0.166, v_end, bone_weight,
-                    ),
-                    Vertex(
-                        pos2 + Vec(0.0, BEAM_IN, +BEAM_WID) @ orient2,
-                        -orient2.left(), u_off + 0.191, v_end, bone_weight,
-                    ),
-                    Vertex(
-                        pos1 + Vec(0.0, BEAM_IN, +BEAM_WID) @ orient1,
-                        -orient1.left(), u_off + 0.191, v_start, bone_weight,
-                    ),
+                    vert_node2(BEAM_IN, -BEAM_WID, (0, -1, 0), 0.166),
+                    vert_node2(BEAM_IN, +BEAM_WID, (0, -1, 0), 0.191),
+                    vert_node1(BEAM_IN, +BEAM_WID, (0, -1, 0), 0.191),
                 )
             v_start = v_end
 
