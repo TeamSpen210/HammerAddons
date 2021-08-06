@@ -2,6 +2,7 @@
 	sphere(radius)
 	animator() keyframe()
 	iconsprite("editor/comp_prop_cable")
+	line(128 128 128, targetname, bunting)
 	appliesto(srctools, -engine)
 = comp_prop_cable: "Generates cables using a static prop. comp_prop_rope is an alternate name, they can be interchanged."
 	[
@@ -23,6 +24,19 @@
 	segments(integer) : "Segments" : 2 : "Number of nodes to generate between each cable. Higher values make smoother cables, but produce more faces."
 	sides(integer) : "Sides" : 8 : "Number of faces for each cylindrical section. Only the value at the start of the cable is used."
 	radius(float) : "Radius" : 1.0 : "Radius of this cable section."
+
+	coll_segments[engine](integer) : "Collision Segments" : 0
+	coll_sides[engine](integer) : "Collision Sides" : 0
+	coll_segments(choices) : "Collision Segments" : -1 : "Number of nodes to generate between each cable. Higher values make smoother cables, but produce more faces." =
+		[
+		-1: "Same as visual geometry"
+		]
+	coll_sides(choices) : "Collision Sides" : 0 : "Number of faces for each cylindrical collision section." = 
+		[
+		0 : "No collisions"
+		1 : "No collisions"
+		2 : "No collisions"
+		]
 
 	material(material) : "Cable Material" : "models/cables/generic_black" : "The material to use for the cable. Must be a model material."
 	mat_scale(float) : "Lengthwise Material Scale" : 1 : "This changes the texture resolution along the cable, relative to the amount of width used. Larger values stretch the texture and smaller values scrunch it up."

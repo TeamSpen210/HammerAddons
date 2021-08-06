@@ -28,8 +28,8 @@
 		3: "Defend Investigate"
 		]
 
-	bot_difficulty(integer) : "Bot Difficulty (int)" : 0 : "How hard the bot is to fight and what his skill level is. [0-7] (0 = super easy, 7 = super human)."
-	is_agressive(boolean) : "Is agressive?" : 0 : "Is the bot agreesive for his difficulty level?"
+	bot_difficulty(integer) : "Bot Difficulty (int)" : 0 : "How hard the bot is to fight and what their skill level is. [0-7] (0 = super easy, 7 = super human)."
+	is_agressive(boolean) : "Is agressive?" : 0 : "Is the bot agressive for their difficulty level?"
 	hide_radius(float) : "Hide Radius" : 1000 : "Range around the spawn spot the bot will try to hide. Set to 0 to hold position and never try to hide."
 
 	// Inputs

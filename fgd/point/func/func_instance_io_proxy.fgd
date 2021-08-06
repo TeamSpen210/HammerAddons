@@ -2,7 +2,7 @@
 // But VBSP shuffles outputs around, it's unknown if other keyvalues
 // will be kept.
 @PointClass 
-	appliesto(+INSTANCING, +INST_IO)
+	appliesto(INST_IO)
 	iconsprite("editor/func_instance_io_proxy.vmt") 
 = func_instance_io_proxy: "Place one copy of this entity inside of an instance.  " +
 	"Sending messages to entities inside the instance from the Proxy's OnProxyRelay output will allow you to trigger these " +

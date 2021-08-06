@@ -1,0 +1,26 @@
+@PointClass base(BaseEntityAnimating, BreakableProp, Glow)
+	sphere(fademindist)
+	sphere(fademaxdist)
+	studio("models/editor/comp_prop_rope_dynamic.mdl")
+	appliesto(srctools, -engine)
+= comp_prop_rope_dynamic: "Allows using comp_prop_rope/comp_prop_cable as a dynamic prop."
+	[
+	spawnflags(flags)  =
+		[
+		256: "Start with collision disabled" : 0
+		]
+	angles(angle) readonly: "Orientation" : "0 0 0" : "The starting orientation can't be changed, simply move the nodes."
+
+	group(target_source): "Rope Group" : : "Specify the name of the group that will be compiled into this entity."
+
+	// Not inheriting from prop_dynamic_base, since most of the animation KVs are pointless.
+	glowbackfacemult[L4D2](float) : "Glow backface Multiplier" : "1.0" : "What to multiply glow by on backfaces."
+
+	// Inputs
+	input TurnOn(void) : "Make the rope set visible."
+	input TurnOff(void) : "Make the rope set invisible."
+	input EnableCollision(void) : "Enable collision on the rope set."
+	input DisableCollision(void) : "Disable collision on the rope set."
+	input BecomeRagdoll[since_P2](void) : "Change into a ragdoll immediately."
+	input FadeAndKill[since_P2](void) : "Fade out then remove this rope set."
+	]

@@ -7,7 +7,7 @@ from srctools.logger import get_logger
 LOGGER = get_logger(__name__)
 
 
-@trans('comp_relay')
+@trans('comp_relay', priority=10)
 def comp_relay(ctx: Context):
     """Implements comp_relay, allowing zero-overhead relay ents for managing outputs.
 

@@ -7,7 +7,9 @@
 	worldtext()
 = hammer_notes: "Fake entity to store notes and comments inside. Won`t spawn."
 	[
-	// If not in CSGO, this isn't going to do anything.
+	// If not in CSGO, this isn't going to do anything, so remove the size/color KVs,
+	// and change help.
+	message[until_CSGO](string) : "Message" : : "A text field for entering any notes."
 	message[since_CSGO](string) : "Display Message" : : "Text to display in the 3D view."
 	textsize[since_CSGO](float) : "Text Size" : 10 : "Text Size."
 	color[since_CSGO](color255) : "Color" : "255 255 255"

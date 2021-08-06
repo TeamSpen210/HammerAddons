@@ -1,0 +1,7 @@
+@PointClass base(BasePortalCube) 
+	studioprop("models/props/sixense/box/sixensebox.mdl")
+	appliesto(P2SIXENSE)
+	autovis(Test Elements, Cubes, Scalable)
+= prop_scaled_cube : "Scalable Cube"
+[
+]

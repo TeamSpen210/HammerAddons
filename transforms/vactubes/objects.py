@@ -104,4 +104,4 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[
             )
         codes[group] = pack.inject_vscript('\n'.join(code))
 
-    return len(vac_objects), cube_objects, codes
+    return sum(map(len, vac_objects.values())), cube_objects, codes

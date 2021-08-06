@@ -1,0 +1,12 @@
+@SolidClass base(Trigger) 
+	appliesto(P2SIXENSE)
+= trigger_player_fall_aim : "Aims falling player towards center along given axis."
+[
+	player_fall_aim_axis[engine](integer) : "Aim along this axis" : 0
+	player_fall_aim_axis(choices) : "Aim along this axis" : 0 : "This xy player position dimension will be aligned with the aim trigger." =
+	[
+		0 : "Trigger center"
+		1 : "Light Bridge X"
+		2 : "Light Bridge Y"
+	]
+]

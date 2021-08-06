@@ -1,0 +1,48 @@
+@MoveClass base(StaticTargetname, Angles)
+	sphere(radius)
+	animator() keyframe()
+	iconsprite("editor/comp_prop_rope")
+	appliesto(srctools, -engine)
+= comp_vactube_spline: "Constructs a custom vactube model, using a set of path points."
+	[
+	nextkey(target_destination) : "Next Rope" : : "Name of the next spline node."
+	opaque(boolean) : "Opaque Tube" : 0 : "Whether the tube should be glass, or the black opaque version."
+
+	skin[engine](integer) : "Act as Junction" : 0
+	skin(choices) : "Mode" : 0 : "Whether this will link to comp_vactube_junctions, or just be a static prop." = 
+	[
+		0: "Static Prop"
+		1: "Vactube Junction"
+	]
+	segments(integer) : "Segments" : 2 : "Number of nodes to generate for this. Higher values make smoother tubes, but produce more faces."
+	collisions(boolean) : "Enable Collisions" : 1 : "Sholuld a collision mesh should be generated?"
+
+	// A selection of prop_static's keyvalues, excluding some that are rather irrelevant.
+	linedivider_staticprop[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	renderamt[since_L4D](integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
+	rendercolor[since_L4D](color255) : "Color (R G B)" : "255 255 255"
+
+	screenspacefade[until_ASW](boolean) : "Screen Space Fade" : 0 : "The method by which the fading distance should be determined. If 'No', the fade distances is the distance from the player's view to the object, in inches. " +
+		"If 'Yes', the fade distance is the size of the object onscreen, in pixels."
+	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
+	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
+	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, " +
+		"or if the engine is running under dx7 [hl2/ep1/portal] or dx8 [ep2/tf], " +
+		"then the engine will forcibly fade out props even if fademindist/fademaxdist " +
+		"isn't specified. " +
+		"This scale factor gives you some control over the fade. " +
+		"Using 0 here turns off the forcible fades. " +
+		"Numbers smaller than 1 cause the prop to fade out at further distances, " +
+		"and greater than 1 cause it to fade out at closer distances."
+
+	disableshadows(boolean) : "Disable Shadows" : 0
+	disableselfshadowing(boolean): "Disable Self-Shadowing": 0
+	disablevertexlighting(boolean) : "Disable Vertex lighting" : 0 : "Disable per-vertex lighting on this prop."
+
+	drawinfastreflection[since_L4D](boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
+	enablelightbounce[since_CSGO](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
+	
+	movespeed(integer) readonly: "Speed (unused)" : 1 : "This needs to be greater than zero to show the preview lines."
+	positioninterpolator(integer) readonly : "Rope Mode" : 1 : "Needs to be set to '1' to produce the spline curve preview."
+	]

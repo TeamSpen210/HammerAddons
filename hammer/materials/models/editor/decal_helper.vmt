@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/Editor/decal_helper"
+	"$translucent" "1"
+}

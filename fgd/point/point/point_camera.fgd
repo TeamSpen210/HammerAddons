@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint)
 	studioprop("models/editor/camera.mdl") 
-	frustum(FOV,fogstart,fogend,250 250 250,-1)
+	frustum(FOV,fogstart,fogend,_frustum_color,-1)
 = point_camera: "Camera"
 	[
 	spawnflags(flags) : "spawnflags" =

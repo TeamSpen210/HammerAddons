@@ -2,10 +2,9 @@
 import itertools
 import math
 from enum import Enum
-from typing import Dict, Iterable
 
 from srctools.bsp_transform import trans, Context
-from srctools import conv_bool, conv_float, Vec, Entity
+from srctools import conv_bool, conv_float, Vec, Entity, Angle
 from srctools.logger import get_logger
 
 LOGGER = get_logger(__name__)
@@ -33,7 +32,7 @@ NEEDS = {
 @trans('comp_entity_finder')
 def entity_finder(ctx: Context):
     """Finds the closest entity of a given type."""
-    target_cache = {}  # type: Dict[tuple, Entity]
+    target_cache: dict[tuple, Entity] = {}
 
     for finder in ctx.vmf.by_class['comp_entity_finder']:
         finder.remove()
@@ -52,7 +51,7 @@ def entity_finder(ctx: Context):
             )
             targ_fov = 180.0
         targ_dot = math.cos(math.radians(targ_fov))
-        normal = Vec(x=1).rotate_by_str(finder['angles'])
+        normal = Vec(x=1) @ Angle.from_str(finder['angles'])
 
         targ_pos = Vec.from_str(finder['origin'])
         if targ_ref:

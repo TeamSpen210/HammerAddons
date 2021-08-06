@@ -29,35 +29,48 @@
 
 	// See src/public/const.h for the enum list.
 	renderfx[engine](integer) : "Render FX" : 0
-	renderfx(choices) : "Render FX" : 0 : "Various somewhat legacy alpha effects. Material Proxies are more modern." =
+	renderfx(choices) : "Render FX" : 0 : "Various somewhat legacy alpha effects. Material Proxies are more customisable, but these are quick to set. Fade in/out are applied whenever the FX is changed. Different entities automatically get slight offsets to avoid synchronisation." =
 		[
 		0: "Normal"
-		1: "Slow Pulse"
-		2: "Fast Pulse"
-		3: "Slow Wide Pulse"
-		4: "Fast Wide Pulse"
+		// alpha + amt * sin(period)
+		1: "Pulse +-16, 1.5 sec period" // π/2
+		2: "Pulse +-16, 0.4 sec period" // π/8
+		3: "Pulse +-64, 1.5 sec period" // π/2
+		4: "Pulse +-64, 0.4 sec period" // π/8
+		24: "Pulse +-255, 0.26 sec period" [TF2]
+		17: "Pulse +-255, 0.26 sec period" [since_L4D]
 
-		9: "Slow Strobe"
-		10: "Fast Strobe"
-		11: "Faster Strobe"
-		12: "Slow Flicker"
-		13: "Fast Flicker"
+        // sin(period) > 0?
+		9: "Strobe every 0.8 sec" // π/4
+		10: "Strobe every 0.2 sec" // π/16
+		11: "Strobe every 0.09 sec"  // π/36
+		
+		// sin(period1) + sin(period2) > 0?
+		12: "Slow Flicker (1.5 sec, 0.18 sec)" // π/2, π/17
+		13: "Fast Flicker (0.2 sec, 0.14 sec)" // π/16, π/23
 
-		5: "Slow Fade Away"
-		6: "Fast Fade Away"
-		7: "Slow Become Solid"
-		8: "Fast Become Solid"
+		5: "Slow Fade Out (-1 per frame)" [until_L4D]
+		6: "Fast Fade Out (-4 per frame)" [until_L4D]
+		7: "Slow Fade In (+1 per frame)" [until_L4D]
+		8: "Fast Fade In (+4 per frame)" [until_L4D]
+		
+		5:  "Fade Out (4 sec)" [since_L4D]
+		6:  "Fade Out (1 sec)" [since_L4D]
+		7:  "Fade In (4 sec)" [since_L4D]
+		8:  "Fade In (1 sec)" [since_L4D]
+		
+		// 0 sec fade time, only really useful in code since it
+		// can set the start time.
+		15: "Fade Out (instant)" [since_L4D]
+		16: "Fade In (instant)" [since_L4D]
 
 		14: "Constant Glow"
 		15: "Distort" [until_L4D]
-		16: "Hologram (Distort + fade)" [until_L4D]
+		16: "Hologram (Distort + dist fade)" [until_L4D]
 		23: "Cull By Distance (TEST)" [until_L4D]
 		24: "Spotlight FX" [until_L4D]
 		26: "Fade Near" [until_L4D]
-
-		15: "Fade Out" [since_L4D]
-		16: "Fade In" [since_L4D]
-		17: "Pulse Fast Wider" [since_L4D]
+		
 		18: "Glow Shell" [since_L4D]
 
 		// Todo, confirm which versions have these - via Pinsplash
@@ -68,7 +81,6 @@
 		21: "Environmental Snow" [TF2]
 		22: "Spotlight FX" [TF2]
 		23: "Ragdoll (ragdolls the entity but does NOT kill it)" [TF2]
-		24: "Fade Wider Pulse" [TF2]
 		]
 
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows" : 0

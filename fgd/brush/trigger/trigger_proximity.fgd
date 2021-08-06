@@ -5,7 +5,7 @@
 	"The NearestPlayerDistance output will be 0 when the player is at the center point, and 1 when the player is at the radius."
 	[
 	measuretarget(target_destination) : "Point to Measure From" : : "The name of a target entity who's origin is the point to measure the player's distance from."
-	radius(float) : "Radius to measure within" : 256 : "The radius to which the distance should be mapped. If the player is outside the radius he will be ignored."
+	radius(float) : "Radius to measure within" : 256 : "The radius to which the distance should be mapped. If the player is outside the radius they will be ignored."
 
 	// Outputs
 	output NearestEntityDistance(float) : "Fired continuously when entities are touching the trigger volume. " +

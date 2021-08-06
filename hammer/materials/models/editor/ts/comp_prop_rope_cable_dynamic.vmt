@@ -1,0 +1,6 @@
+UnLitGeneric
+	{
+	$baseTexture "models/editor/ts/comp_prop_rope_cable_dynamic"
+	$alphatest 1
+	$model 1
+	}

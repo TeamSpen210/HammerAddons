@@ -18,7 +18,8 @@
 	mode(choices) : "Mode" : "pos" : "The kind of data to read. " +
 		"For Constants, the position/reference is ignored completely. " +
 		"For Entity Handle to be useful, only one reference entity should exist. " +
-		"For Offset and Distance, it's the offset of the reference relative to this entity." =
+		"For Offset and Distance, it's the offset of the reference relative to this entity. " +
+		"For Entity KeyValue, the constant is the keyvalue name, then the value is converted to an appropriate Squirrel type. " =
 		[
 		"const" : "Constant"
 		"string" : "Stringified Constant"
@@ -26,6 +27,7 @@
 		"inv_bool" : "Inverted Boolean Constant"
 		"name" : "Entity Name"
 		"handle" : "Entity Handle"
+		"keyvalue": "Entity KeyValue"
 		"pos" : "Position"
 		"pos_x" : "Position - X only"
 		"pos_y" : "Position - Y only"

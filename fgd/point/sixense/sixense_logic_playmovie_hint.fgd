@@ -1,0 +1,18 @@
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/logic_playmovie.vmt")
+	appliesto(P2SIXENSE)
+= sixense_logic_playmovie_hint : "Plays a Sixense hint movie and allows for various playback options"
+[
+	// TODO: add choices dropdown here
+	MovieFilename(string) : "Movie to play" : "" : "Filename of the movie to play"
+	SubtitlesStringID(string) : "Subtitles String ID" : "" : "String ID of hint subtitles"
+	allowskip(boolean) : "Allow User to Skip" : 1 : "Whether or not the user may skip the video with common keys"
+	fadeintime(float) : "Fade In Time" : 1 : "Time it takes for the video to fade in"
+	fadeouttime(float) : "Fade Out Time" : 1 : "Time it takes for the video to fade out"
+
+	input PlayMovie(void) : "Play the movie."
+	input FadeMovie(void) : "Fade movie out."
+
+	// Outputs
+	output OnPlaybackFinished(void) : "Fired when the movie has completed playing back or was skipped by the user."
+]

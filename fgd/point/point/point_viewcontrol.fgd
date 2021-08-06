@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	studioprop("models/editor/camera.mdl") 
 	color(200 0 0) 
-	frustum(fov, 16, 256, 255 255 255 10, -1) 
+	frustum(fov, _frustum_near, _frustum_far, _frustum_color, -1) 
 	line(255 255 0, targetname, target) 
 	line(255 255 0, targetname, moveto) 
 = point_viewcontrol: "A camera entity that controls the player's view. While it's active, the player will see out of the camera."
@@ -45,12 +45,14 @@
 	drawlocalplayer[INFRA](boolean) : "Draw Local Player" : 0 : "Should the local player be drawn when viewing from this camera?"
 	drawviewmodel[INFRA](boolean) : "Draw View Model" : 0 : "Should the view model be drawn when viewing from this camera?"
 	drawhud[INFRA](boolean) : "Draw HUD" : 1 : "Should the HUD be drawn when viewing from this camera?"
-	allowcontrols[INFRA](boolean) : "Allow Controls" : 0 : "Should the player be allowed to use his movement controls?"
-	freezeinstead[INFRA](boolean) : "Freeze Instead" : 0 : "If controls are disabled, should the player be disallowed from using any of his controls (+use, +attack, VGUI screens etc.)?"
+	allowcontrols[INFRA](boolean) : "Allow Controls" : 0 : "Should the player be allowed to use their movement controls?"
+	freezeinstead[INFRA](boolean) : "Freeze Instead" : 0 : "If controls are disabled, should the player be disallowed from using any of their controls (+use, +attack, VGUI screens etc.)?"
 	disableatend[INFRA](boolean) : "Disable at End" : 0 : "Disable the camera once it reaches the end of its path?"
-	holsterweapons[INFRA](boolean) : "Holster Weapons" : 0 : "Should the player holster his weapons while under control of the camera?"
+	holsterweapons[INFRA](boolean) : "Holster Weapons" : 0 : "Should the player holster their weapons while under control of the camera?"
 	teleportplayertoend[INFRA](boolean) : "Teleport Player to End" : 0 : "Should the player be teleported to the end once the camera reaches the end of its path?"
 	pathlengthinseconds[INFRA](float) : "Path Length in Seconds" : 5 : "How long does this path last? Smaller numbers means faster camera."
+
+	_frustum_far[!engine](integer) readonly : "<Far Plane>" : 1024 : "Ignore, needed to display the view frustum preview."
 
 	// Inputs
 	input Enable(void) : "Enable the point_viewcontrol, and start controlling the player's view."

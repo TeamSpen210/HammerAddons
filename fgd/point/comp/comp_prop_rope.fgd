@@ -2,6 +2,7 @@
 	sphere(radius)
 	animator() keyframe()
 	iconsprite("editor/comp_prop_rope")
+	line(128 128 128, targetname, bunting)
 	appliesto(srctools, -engine)
 = comp_prop_rope: "Generates ropes using a static prop. comp_prop_cable is an alternate name, they can be interchanged."
 	[
@@ -24,6 +25,19 @@
 	sides(integer) : "Sides" : 8 : "Number of faces for each cylindrical section. Only the value at the start of the rope is used."
 	radius(float) : "Radius" : 1.0 : "Radius of this rope section."
 
+	coll_segments[engine](integer) : "Collision Segments" : 0
+	coll_sides[engine](integer) : "Collision Sides" : 0
+	coll_segments(choices) : "Collision Segments" : -1 : "Number of nodes to generate between each rope. Higher values make smoother ropes, but produce more faces." =
+		[
+		-1: "Same as visual geometry"
+		]
+	coll_sides(choices) : "Collision Sides" : 0 : "Number of faces for each cylindrical collision section." = 
+		[
+		0 : "No collisions"
+		1 : "No collisions"
+		2 : "No collisions"
+		]
+
 	material(material) : "Rope Material" : "models/cables/generic_black" : "The material to use for the rope. Must be a model material."
 	mat_scale(float) : "Lengthwise Material Scale" : 1 : "This changes the texture resolution along the rope, relative to the amount of width used. Larger values stretch the texture and smaller values scrunch it up."
 	mat_rotate[engine](boolean) : "Rotate Material" : 0
@@ -34,6 +48,8 @@
 	]
 	u_min(float): "Width Start" : 0.0 : "The distance along the texture to start. 0 is the left/bottom side, 1 is the right/top side. This allows using only part of the texture, if it contains multiple different rope styles."
 	u_max(float): "Width End"   : 1.0 : "The distance along the texture to end. 0 is the left/bottom side, 1 is the right/top side. This allows using only part of the texture, if it contains multiple different rope styles."
+
+	bunting(target_destination) : "Bunting Definition" : : "Set to the name of a comp_prop_rope_bunting, to define models which will be placed at each segment across the rope."
 	
 	// A selection of prop_static's keyvalues, excluding some that are rather irrelevant.
 	linedivider_staticprop[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""

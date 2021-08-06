@@ -15,7 +15,7 @@
 	input Close(void) : "Plays the vehicle's close animation and locks the vehicle for entry or exit."
 	input EnterVehicle(void) : "Forces the activator (or player) into the vehicle."
 	input ExitVehicle(void) : "Boots the prisoner out of the vehicle."
-	input Viewlock(bool) : "Set true to prevent Gordon from looking around *at all*. Set false to let him look within limits."
+	input Viewlock(bool) : "Set true to prevent the player from looking around *at all*. Set false to let them look within limits."
 	input SetCanShoot(bool) : "Set if the driver can shoot their weapon."
 	input SetMaxPitch(float) : "Set max pitch for driver."
 	input SetMinPitch(float) : "Set min pitch for driver."

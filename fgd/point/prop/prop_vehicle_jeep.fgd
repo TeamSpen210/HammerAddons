@@ -2,50 +2,55 @@
 	appliesto(HL2, EP1, EP2, P1)
 	studioprop() 
 	autovis(Vehicles, Jeep)
-= prop_vehicle_jeep: "Driveable studiomodel jeep. In HL2 it's the Scout Car, in EP2 it's the Scout Car/Jalopy."
+= prop_vehicle_jeep: "Driveable jeep. In HL2 it's the Scout Car, in EP2 and Portal it's the Jalopy." // Portal also uses the Ep2 car
 	[
-	model[-EP1, -EP2](studio) : "World model" : "models/buggy.mdl"
-	model[EP1, EP2](studio) : "World model" : "models/jalopy.mdl"
+	vehiclescript[EP1, EP2, P1](string) : "Vehicle Script File" : "scripts/vehicles/jalopy.txt"
 
-	cargovisible[EP1, EP2](boolean) : "Hopper Visible" : "0" : "Is the striderbuster cargo hopper visible?"
+	model[-EP1, -EP2, -P1](studio) : "World Model" : "models/buggy.mdl"
+	model[EP1, EP2, P1](studio) : "World Model" : "models/vehicle.mdl"
+
+	cargovisible[EP1, EP2, P1](boolean) : "Hopper Visible" : "0" : "Is the Magnusson cargo hopper visible?"
 
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "HUD Locator Precache" : 0
 		]
 
-	NoHazardLights[EP1, EP2](boolean) : "No Hazard Lights" : 0 : "Stops the jalopy's hazard lights from turning on and flashing when the player exits the vehicle."
-	EnableGun[-EP1, -EP2](boolean) : "Has Gun" : 0 : "Whether the jeep's tau cannon is enabled or disabled."
+	NoHazardLights[+MBase, EP1, EP2](boolean) : "No Hazard Lights" : 0 : "Stops the jalopy's hazard lights from turning on and flashing when the player exits the vehicle."
+	EnableGun[-EP1, -EP2, -P1](boolean) : "Has Gun" : 0 : "Whether the jeep's tau cannon is enabled or disabled."
+	EnableGun[EP1, EP2, P1](boolean) : "Has Gun" : 0 : "Whether the jeep's tau cannon is enabled or disabled. Doesn't work correctly with the jalopy model."
 
 	// HL2 Jeep inputs
-	input StartRemoveTauCannon[-EP1, -EP2](void) : "Start the tau removal sequence."
-	input FinishRemoveTauCannon[-EP1, -EP2](void) : "Finish the tau removal sequence."
+	input StartRemoveTauCannon(void) : "Start the tau removal sequence."
+	input FinishRemoveTauCannon(void) : "Finish the tau removal sequence."
 
 	// Mapbase re-adds these for the episodic jeep, so if any it's present.
-	input DisablePhysGun[MBase, EP1, EP2](void) : "Disable physgun interactions with the jeep."
-	input EnablePhysGun[MBase, EP1, EP2](void) : "Enable physgun interactions with the jeep (default)."
+	input DisablePhysGun[MBase, EP1, EP2, P1](void) : "Disable physgun interactions with the jeep."
+	input EnablePhysGun[MBase, EP1, EP2, P1](void) : "Enable physgun interactions with the jeep (default)."
 
 	// Episodic Jeep Inputs
-	input LockEntrance[EP1, EP2](void) : "Stops NPC's from entering the vehicle until unlocked."
-	input UnlockEntrance[EP1, EP2](void) : "Allows NPC's to enter the vehicle."
-	input LockExit[EP1, EP2](void) : "Stops NPC's from exiting the vehicle until unlocked."
-	input UnlockExit[EP1, EP2](void) : "Allows NPC's to exit the vehicle."
-	input EnableRadar[EP1, EP2](void) : "Turn on the Jalopy radar"
-	input DisableRadar[EP1, EP2](void) : "Turn off the Jalopy radar"
-	input EnableRadarDetectEnemies[EP1, EP2](void) : "Allow the Jalopy radar to detect Striders and Hunters."
-	input AddBusterToCargo[EP1, EP2](void) : "Put a striderbuster in the cargo trigger"
-	input SetCargoHopperVisibility[EP1, EP2](boolean) : "Set the strider buster hopper thingy to be visible, or invisible."
-	input CreateLinkController[EP1, EP2](void) : "Automatically builds and attaches a link controller to the car, which cuts the node connections under the car while the car is standing still."
-	input DestroyLinkController[EP1, EP2](void) : "Destroys the link controller created by CreateLinkController."	
-	input EnableHazardLights[EP1, EP2]( void ) : "Enables the jalopy's hazard lights."
-	input DisableHazardLights[EP1, EP2]( void ) : "Disables the jalopy's hazard lights."
+	input LockEntrance[EP1, EP2, P1](void) : "Stops NPC's from entering the vehicle until unlocked."
+	input UnlockEntrance[EP1, EP2, P1](void) : "Allows NPC's to enter the vehicle."
+	input LockExit[EP1, EP2, P1](void) : "Stops NPC's from exiting the vehicle until unlocked."
+	input UnlockExit[EP1, EP2, P1](void) : "Allows NPC's to exit the vehicle."
+	input EnableRadar[EP1, EP2, P1](void) : "Turn on the Jalopy radar"
+	input DisableRadar[EP1, EP2, P1](void) : "Turn off the Jalopy radar"
+	input EnableRadarDetectEnemies[EP1, EP2, P1](void) : "Allow the Jalopy radar to detect Striders and Hunters."
+	input AddBusterToCargo[EP1, EP2, P1](void) : "Put a striderbuster in the cargo trigger"
+	input SetCargoHopperVisibility[EP1, EP2, P1](boolean) : "Set the Magnusson cargo hopper to be visible, or invisible."
+	input CreateLinkController[EP1, EP2, P1](void) : "Automatically builds and attaches a link controller to the car, which cuts the node connections under the car while the car is standing still."
+	input DestroyLinkController[EP1, EP2, P1](void) : "Destroys the link controller created by CreateLinkController."
+
+	// Mapbase Episodic Inputs
+	input EnableHazardLights[+MBase, EP1, EP2]( void ) : "Enables the jalopy's hazard lights."
+	input DisableHazardLights[+MBase, EP1, EP2]( void ) : "Disables the jalopy's hazard lights."
 
 
 	// Outputs
-	output OnCompanionEnteredVehicle[EP1, EP2](void) : "Companion has entered the vehicle."
-	output OnCompanionExitedVehicle[EP1, EP2](void) : "Companion has exited the vehicle."
-	output OnHostileEnteredVehicle[EP1, EP2](void) : "Hostile has entered the vehicle."
-	output OnHostileExitedVehicle[EP1, EP2](void) : "Hostile has exited the vehicle."
+	output OnCompanionEnteredVehicle[EP1, EP2, P1](void) : "Companion has entered the vehicle."
+	output OnCompanionExitedVehicle[EP1, EP2, P1](void) : "Companion has exited the vehicle."
+	output OnHostileEnteredVehicle[EP1, EP2, P1](void) : "Hostile has entered the vehicle."
+	output OnHostileExitedVehicle[EP1, EP2, P1](void) : "Hostile has exited the vehicle."
 	]
 
 @PointClass base(BaseDriveableVehicle) 
@@ -54,7 +59,9 @@
 	autovis(Vehicles, Jeep)
 = prop_vehicle_jeep_old: "Copy of the original HL2 Jeep for use in Episodic."
 	[
-	model[](studio) : "World model" : "models/buggy.mdl"
+	model(studio) : "World Model" : "models/buggy.mdl"
+
+	EnableGun(boolean) : "Has Gun" : 0 : "Whether the jeep's tau cannon is enabled or disabled."
 
 	// HL2 Jeep inputs
 	input StartRemoveTauCannon(void) : "Start the tau removal sequence."

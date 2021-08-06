@@ -1,0 +1,25 @@
+@PointClass base(info_placement_helper)
+	appliesto(P2SIXENSE)
+= sixense_info_placement_helper : "Tweak placement helper"
+[
+	tweaking_behavior[engine](integer) : "Tweaking Behavior" : 0
+	tweaking_behavior(choices) : "Tweaking Behavior" : 0 : "Portal Tweaking behavior for this placement helper." =
+	[
+		0 : "None"
+		1 : "Tweaking Disabled"
+		2 : "Tweak Only Rotation"
+		3 : "Tweak Align"
+		4 : "Tweak Only Rotation Align"
+	]
+
+	tweaking_align_rot_angle(float) : "Tweaking Align Rotation Start Angle" : 25 : "Rotation must be within this offset angle from axis to start alignment."
+
+	tweaking_align_pos_axis[engine](integer) : "Tweaking Align Position Axis" : 3
+	tweaking_align_pos_axis(choices) : "Tweaking Align Position Axis " : 3 : "This position dimension will be aligned with the placement helper's." =
+	[
+		0 : "X"
+		1 : "Y"
+		2 : "Z"
+		3 : "None"
+	]
+]

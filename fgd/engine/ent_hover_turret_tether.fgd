@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityAnimating)
+	appliesto(P2, +engine)
+= ent_hover_turret_tether: "The ceiling tether for Hover Turrets. Generated automatically when the hover turret has an attachTarget set."
+[
+]

@@ -1,8 +1,6 @@
 @PointClass base(BasePropPhysics) 
-	appliesto(EP1, EP2, HL2, P1, P2) 
-	studioprop() 
-	studio("models/effects/combineball.mdl") = prop_combine_ball: "The Combine Dark Energy Pellet, fired from the AR2 and held in energy fields. " +
-		"Use point_combine_energy_ball_launcher to spawn this, don't place directly." + 
+	appliesto(EP1, EP2, HL2, P1, P2, +engine) = prop_combine_ball: "The Combine Dark Energy Pellet, fired from the AR2 and held in energy fields. " +
+		"Use point_combine_ball_launcher to spawn this, don't place directly." + 
 		"prop_energy_ball is the Portal version with some slightly different behaviour."
 	[
 

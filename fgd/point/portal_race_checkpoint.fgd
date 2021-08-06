@@ -1,8 +1,9 @@
 @PointClass base(BaseEntityAnimating) 
 	appliesto(P2) 
-	studioprop("models/effects/cappoint_hologram.mdl") = portal_race_checkpoint: "Checkpoint for race maps. Wen touched, lights up briefly."
+	studioprop("models/effects/cappoint_hologram.mdl") = portal_race_checkpoint: "Checkpoint for race maps. When touched, lights up and ticks down like a pedestal button."
 	[
 	resettime(float) : "Reset Time" : 5.0 : "The time it takes for the checkpoint to reset after activation."
+	UniDirectional(boolean) : "Uni Directional" : 0 : "Found in Valve map."
 
 	// Inputs
 	input Activate(void) : "Activates the checkpoint."

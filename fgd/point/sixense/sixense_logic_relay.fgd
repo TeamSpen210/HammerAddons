@@ -1,0 +1,5 @@
+@PointClass base(logic_relay)
+	appliesto(P2SIXENSE) 
+= sixense_logic_relay : "Duplicate of logic_relay, used to detect if the Sixense DLC is installed."
+[
+]

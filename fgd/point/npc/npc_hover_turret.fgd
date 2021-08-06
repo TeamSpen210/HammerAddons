@@ -1,0 +1,16 @@
+@PointClass base(BaseNPC)
+	appliesto(P2) 
+	autovis(Entities, NPCs, Hover Turret)
+	studioprop("models/npcs/hover_turret.mdl")
+	line(255 255 255, targetname, attachtarget)
+	frustum(_frustum_fov, _frustum_near, _frustum_far, _frustum_color, -1)
+= npc_hover_turret: "The cut Hover Turret, which hangs from the ceiling and fires a laser at the player. Missing its model by default, and somewhat buggy."
+[
+	canPushPlayer(boolean) : "Laser Pushes Player" : 0 : "Should the hover turret's laser deal knockback? Usually only works while the player is in the air."
+	sentryRotateSpeed(float) : "Idle Rotation Speed" : "10" : "While idle, the hover turret will rotate at this speed."
+	attachTarget(target_destination) : "Tether Attach Target" : : "An entity (usually info_target) which the hover turret should hang from."
+
+	// We can't check the code to see what hover turrets' range is, it seems to be about 2048.
+	_frustum_far[!engine](integer) readonly : "<Maximum Range>" : 2048 : "How far the turret will be able to see targets. Always 2048, but this keyvalue is needed to display the preview."
+	_frustum_color[!engine](string) readonly : "<Frustum Color>" : "0 255 255" : "Ignore, needed to color the range preview."
+]
