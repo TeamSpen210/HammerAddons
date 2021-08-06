@@ -1,6 +1,6 @@
 """Handles user configuration common to the different scripts."""
 from pathlib import Path
-from typing import Tuple, Set, Dict
+from typing import Tuple, Set
 import sys
 
 from srctools.game import Game
@@ -19,7 +19,6 @@ __all__ = [
 ]
 
 LOGGER = logger.get_logger(__name__)
-
 CONF_NAME = 'srctools.vdf'
 
 
@@ -95,7 +94,7 @@ def parse(path: Path, game_folder: str='') -> Tuple[
 
     fsys_chain = game.get_filesystem()
 
-    blacklist = set()  # type: Set[FileSystem]
+    blacklist: set[FileSystem] = set()
 
     if not conf.get(bool, 'pack_vpk'):
         for fsys, prefix in fsys_chain.systems:
@@ -104,7 +103,7 @@ def parse(path: Path, game_folder: str='') -> Tuple[
 
     game_root = game.root
 
-    for prop in conf.get(Property, 'searchpaths'):  # type: Property
+    for prop in conf.get(Property, 'searchpaths'):
         if prop.has_children():
             raise ValueError('Config "searchpaths" value cannot have children.')
         assert isinstance(prop.value, str)
@@ -126,7 +125,7 @@ def parse(path: Path, game_folder: str='') -> Tuple[
                 'key "{}"!'.format(prop.real_name)
             )
 
-    sources: Dict[Path, PluginSource] = {}
+    sources: dict[Path, PluginSource] = {}
 
     builtin_transforms = (Path(sys.argv[0]).parent / 'transforms').resolve()
 

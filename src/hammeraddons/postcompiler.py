@@ -94,8 +94,6 @@ def main(argv: List[str]) -> None:
         plugin,
     ) = config.parse(path, args.game_folder)
 
-    fsys.open_ref()
-
     LOGGER.info('Loading plugins...')
     plugin.load_all()
 
