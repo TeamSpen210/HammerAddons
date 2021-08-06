@@ -395,7 +395,7 @@ def build_rope(
     coll_mesh = Mesh.blank('root')
     [bone] = mesh.bones.values()
 
-    nodes, coll_nodes = build_node_tree(ents, connections, offset)
+    nodes, coll_nodes = build_node_tree(ents, connections)
 
     interpolate_all(nodes)
     compute_orients(nodes)
@@ -462,19 +462,21 @@ def build_rope(
 def build_node_tree(
     ents: FrozenSet[NodeEnt],
     connections: FrozenSet[Tuple[NodeID, NodeID]],
-    offset: Vec,
 ) -> Tuple[Set[Node], Set[Node]]:
     """Convert the ents/connections definitions into a node tree."""
     # Convert them all into the real node objects.
-    id_to_node = {
-        node.id: (
-            Node(node.pos.copy(), node.config),
-            Node(node.pos.copy(), node.config.coll()) if node.config.coll_side_count >= 3 else None,
-        )
-        for node in ents
-    }
-    vis_nodes: Set[Node] = {vis for vis, coll in id_to_node.values()}
-    coll_nodes: Set[Node] = {coll for vis, coll in id_to_node.values() if coll is not None}
+    id_to_node: dict[str, tuple[Node, Optional[Node]]] = {}
+    vis_nodes: set[Node] = set()
+    coll_nodes: Set[Node] = set()
+    for node in ents:
+        vis_node = Node(node.pos.copy(), node.config)
+        vis_nodes.add(vis_node)
+        if node.config.coll_side_count >= 3:
+            coll_node = Node(node.pos.copy(), node.config.coll())
+            coll_nodes.add(coll_node)
+        else:
+            coll_node = None
+        id_to_node[node.id] = (vis_node, coll_node)
 
     def maybe_split(nodes: Set[Node], node: Node, direction: str) -> Node:
         """Split nodes to ensure they only have 1 or 2 connections.
