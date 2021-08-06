@@ -106,6 +106,7 @@ class SegPropConf:
     """Defines configuration for a set of props placed across the rope."""
     weight: int
     place_interval: int  # Place every X segments.
+    distance: float  # Alternatively place with this minimum distance.
     model: str
     orient: SegPropOrient
     angles: Matrix
@@ -120,7 +121,8 @@ class SegPropConf:
 
 VAC_SEG_CONF = SegPropConf(
     weight=1,
-    place_interval=4,
+    place_interval=0,
+    distance=128.0,
     model='modelsrc/vactube_ring.smd',
     orient=SegPropOrient.FULL_ROT,
     angles=Matrix(),
@@ -964,17 +966,25 @@ def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: List[List[
 def place_seg_props(nodes: Iterable[Node], fsys: FileSystem, mesh: Mesh) -> Iterator[SegProp]:
     """Place segment props, across the nodes."""
     mesh_cache: dict[str, Mesh] = {}
+    prop_dists: dict[SegPropConf, float] = {}
     for start_node in nodes:
         # Find start nodes, we then loop in order over the nodes.
         if start_node.prev is not None:
             continue
+        prop_dists.clear()
         for i, node in enumerate(start_node.follow_no_endpoints()):
-            weights = [
-                conf
-                for conf in node.config.seg_props
-                if i % conf.place_interval == 0
-                for _ in itertools.repeat(None, conf.weight)
-            ]
+            weights: List[SegPropConf] = []
+            dist = (node.pos - node.next.pos).mag()
+            for conf in node.config.seg_props:
+                if conf.distance:
+                    if prop_dists.setdefault(conf, 0.0) > conf.distance:
+                        prop_dists[conf] -= conf.distance
+                        weights.extend(itertools.repeat(conf, conf.weight))
+                    else:
+                        prop_dists[conf] += dist
+                elif i % conf.place_interval == 0:
+                    weights.extend(itertools.repeat(conf, conf.weight))
+
             if not weights:
                 # None to place here, skip.
                 continue
@@ -1076,6 +1086,7 @@ def comp_prop_rope(ctx: Context) -> None:
         name_to_segprops_lst[ent['targetname'].casefold()].append(SegPropConf(
             max(1, conv_int(ent['weight'], 1)),
             max(1, conv_int(ent['placement_interval'], 1)),
+            0.0,
             ent['model'],
             SegPropOrient(ent['orient']),
             Matrix.from_angle(Angle.from_str(ent['angles'])),
