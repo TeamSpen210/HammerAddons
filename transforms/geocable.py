@@ -842,8 +842,8 @@ def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: List[List[
     BEAMS = [
         (0.008684, Matrix.from_roll(0)),
         (0.214734, Matrix.from_roll(90)),
-        (0.415821, Matrix.from_roll(180)),
-        (0.008684, Matrix.from_roll(270)),
+        (0.008684, Matrix.from_roll(180)),
+        (0.415821, Matrix.from_roll(270)),
     ]
     BEAM_IN = 39.3218
     BEAM_OUT = 51.75
