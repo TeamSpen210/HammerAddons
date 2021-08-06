@@ -1,6 +1,7 @@
 """Implements the various curve types for vactubes."""
 import math
 import bisect
+import random
 from abc import ABC, abstractmethod
 from enum import Enum
 from typing import Tuple, Iterator, Iterable, Dict, Optional, List, ClassVar
@@ -193,6 +194,13 @@ class Spawner(Node):
         self.group = ent['group'].casefold().strip()
         self.speed = srctools.conv_float(ent['speed'], 800.0)
         self.is_auto = srctools.conv_bool(ent['timer'])
+        self.seed = ent['seed']
+        if not self.seed:
+            # Generate a new seed, and notify the user so they can copy it down
+            # if they want to use it themselves.
+            self.seed = format(random.getrandbits(64), '08X')
+        LOGGER.info('Spawner "{}" using random seed "{}"', self.name, self.seed)
+
         if self.is_auto:
             self.time_min = srctools.conv_float(ent['time_min'], 0.5)
             self.time_max = srctools.conv_float(ent['time_max'], 1.0)
