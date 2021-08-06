@@ -74,18 +74,18 @@ class Animation:
         [self.move_bone] = self.mesh.bones.values()
         self.cur_frame = 0
         # For nodes with OnPass outputs, the time to fire each of those.
-        self.pass_points = []  # type: List[Tuple[float, nodes.Node]]
+        self.pass_points: list[tuple[float, nodes.Node]] = []
         # Set of nodes in this animation, to prevent loops.
-        self.history = [start_node]  # type: List[nodes.Node]
+        self.history: list[nodes.Node] = [start_node]
         # The kind of curve used for the current node.
         self.curve_type = DestType.PRIMARY
 
         # The source of the cubes on this animation.
         self.start_node = start_node
         # Either the start point, or the splitter to move in the secondary direction.
-        self.cur_node = start_node  # type: Union[nodes.Spawner, nodes.Splitter]
+        self.cur_node: Union[nodes.Spawner, nodes.Splitter] = start_node
         # Once done, the ending node so we can determine if it's a dropper or not.
-        self.end_node = None  # type: Optional[nodes.Destroyer]
+        self.end_node: Optional[nodes.Destroyer] = None
         # When branching, the amount we overshot into this node from last time.
         self.start_overshoot = 0.0
 
