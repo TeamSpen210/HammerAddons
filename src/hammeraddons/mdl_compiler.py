@@ -8,11 +8,7 @@ import pickle
 import subprocess
 import tempfile
 import random
-from typing import (
-    Optional, TypeVar,
-    Dict, Set, List, Hashable,
-    Callable, Tuple,
-)
+from typing import Callable, Tuple, TypeVar, Hashable
 from pathlib import Path
 
 from srctools import AtomicWriter
@@ -54,10 +50,10 @@ class ModelCompiler:
         version: object=0,
     ) -> None:
         # The models already constructed.
-        self._built_models: Dict[AnyModelKey, GenModel] = {}
+        self._built_models: dict[AnyModelKey, GenModel] = {}
 
         # The random indexes we use to produce filenames.
-        self._mdl_names: Set[str] = set()
+        self._mdl_names: set[str] = set()
 
         self.game: Game = game
         self.model_folder = 'maps/{}/{}/'.format(map_name, folder_name)
@@ -83,9 +79,10 @@ class ModelCompiler:
         return sum(1 for mdl in self._built_models.values() if mdl.used)
 
     def __enter__(self) -> 'ModelCompiler':
+        """Load the previously compiled models and prepare for compiles."""
         # Ensure the folder exists.
         os.makedirs(self.model_folder, exist_ok=True)
-        data: List[Tuple[AnyModelKey, str, object]]
+        data: list[tuple[AnyModelKey, str, object]]
         version = 0
         try:
             with (self.model_folder_abs / 'manifest.bin').open('rb') as f:
@@ -130,14 +127,16 @@ class ModelCompiler:
         """Write the constructed models to the cache file and remove unused models."""
         if exc_type is not None or exc_val is not None:
             return
-        data = []
-        used_mdls = set()
+        data: list[tuple[InT, str, OutT]] = []
+        used_mdls: set[str] = set()
         for key, mdl in self._built_models.items():
             if mdl.used:
                 data.append((key, mdl.name, mdl.result))
                 used_mdls.add(mdl.name.casefold())
 
         with AtomicWriter(self.model_folder_abs / 'manifest.bin', is_bytes=True) as f:
+            # Compatibility isn't a concern, since it'll just mean we have to
+            # rebuild the models.
             pickle.dump((data, self.version), f, pickle.HIGHEST_PROTOCOL)
 
         for mdl_file in self.model_folder_abs.glob('*'):
@@ -165,10 +164,11 @@ class ModelCompiler:
         Either way the result is the new model name, which also has been packed.
         The provided function will be called if it needs to be compiled, passing
         in the following arguments:
-            * The key
+            * The key, used to detect if the model was compiled previously.
             * The temporary folder to write to
             * The name of the model to generate.
-            * The args parameter, which can be anything.
+            * The args parameter, which can be anything. This is useful for
+              passing data that can't be pickled, but the function still needs.
         It should create "mdl.qc" in the folder, and then
         StudioMDL will be called on the model to comile it. The return value will
         be passed back from this function.
@@ -217,9 +217,7 @@ class ModelCompiler:
                 try:
                     with open(str(full_model_path.with_suffix(ext)), 'rb') as fb:
                         self.pack.pack_file(
-                            'models/{}{}{}'.format(
-                                self.model_folder, model.name, ext,
-                            ),
+                            f'models/{self.model_folder}{model.name}{ext}',
                             data=fb.read(),
                         )
                 except FileNotFoundError:
