@@ -26,7 +26,7 @@
 | `comp_entity_finder`                               | Finds the closest entity of a given type, then applies various transformations. Outputs from this entity will be moved to the found entity. Further keyvalues can be set manually with SmartEdit off. |
 | `comp_entity_mover`                                | Shift an entity by a given amount. This is useful to place entities into the void, for example. |
 | `comp_kv_setter`                                   | Sets a keyvalue on an entity to a new value. This is useful to compute spawnflags, or to adjust keyvalues when the target entity's options can't be set to a fixup variable. |
-| `comp_numeric_transtition`                         | When triggered, animates a keyvalue/input over time with various options. |
+| `comp_numeric_transition`                          | When triggered, animates a keyvalue/input over time with various options. |
 | `comp_pack`                                        | Explicitly identify resources to pack into the map. If more are needed, add additional keyvalues with SmartEdit off. |
 | `comp_pack_rename`                                 | Pack a file into the BSP, under a different name than it starts with. |
 | `comp_pack_replace_soundscript`                    | Replace a soundscript with a different one. |
