@@ -928,7 +928,7 @@ def combine(
         try:
             model = mdl_map[key]
         except KeyError:
-            if blacklist_re.match(key) is not None:
+            if blacklist_re.fullmatch(key) is not None:
                 mdl_map[key] = qc_map[key] = None
                 return None, None
             try:
