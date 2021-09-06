@@ -7,7 +7,7 @@
 
 	spawnflags(flags)  =
 		[
-		1: "Start disabled" : 1
+		1: "Start disabled" : 0
 		]
 
 	minwind(integer) : "Min normal speed" : 20 : "Minimum speed of the wind while idling."
