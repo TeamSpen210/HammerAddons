@@ -73,7 +73,7 @@ def parse(path: Path, game_folder: str='') -> Tuple[
                 break
         else:
             # Give up, write to working directory.
-            folder = Path()
+            folder = Path().absolute()
         conf.path = folder / CONF_NAME
 
         LOGGER.warning('Writing default to "{}"', conf.path)
