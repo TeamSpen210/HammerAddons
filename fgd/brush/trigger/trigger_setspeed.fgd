@@ -1,4 +1,4 @@
-@SolidClass base(StaticTargetName, EnableDisable, Toggle)
+@SolidClass base(Trigger)
 = trigger_setspeed : "Trigger for setting speed of the player." 
 	[
 	KeepHorizontalSpeed(integer) : "Keep horizontal speed" : 0 : "If you want to keep the horizontal (x/y axis velocity based) speed, set it to 1."

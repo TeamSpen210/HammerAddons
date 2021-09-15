@@ -1,4 +1,4 @@
-@SolidClass base(StaticTargetName, EnableDisable, Toggle)
+@SolidClass base(Trigger)
 = trigger_userinput : "Trigger that fires on user KeyPress if inside trigger."
 	[
 	output OnKeyPressed(void) : "Fires when the desired key is pressed"
