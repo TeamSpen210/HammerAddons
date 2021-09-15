@@ -1,4 +1,4 @@
-@SolidClass base(StaticTargetName, EnableDisable, Toggle) 
+@SolidClass base(Trigger) 
 	appliesto(MOMENTUM)
 = func_nogrenades : "Rockets, stickybombs, conc grenades, and other explosives will not detonate/explode inside this area."
 	[
