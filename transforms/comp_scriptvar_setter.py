@@ -1,7 +1,8 @@
 """Implements comp_scriptvar_setter."""
+from __future__ import annotations
 import re
 from collections import defaultdict
-from typing import Dict, Type, Optional, Callable, Union
+from typing import Type, Optional, Callable, Union
 
 from srctools.bsp_transform import trans, Context
 from srctools.fgd import FGD, ValueTypes
@@ -11,7 +12,7 @@ from srctools import Entity, Vec, conv_float, conv_bool, Angle
 
 
 LOGGER = get_logger(__name__)
-MODES: Dict[str, Callable[[Entity, Entity, FGD], str]] = {}
+MODES: dict[str, Callable[[Entity, Entity, FGD], str]] = {}
 
 
 def vs_vec(vec: Vec) -> str:
@@ -73,7 +74,7 @@ class VarData:
 def comp_scriptvar(ctx: Context):
     """An entity to allow setting VScript variables to information from the map."""
     # {ent: {variable: data}}
-    set_vars: dict[Entity, dict[str, VarData]] = defaultdict(lambda: defaultdict(VarData))
+    set_vars: dict[Entity | None, dict[str, VarData]] = defaultdict(lambda: defaultdict(VarData))
     # If the index is None, there's no index.
     # If an int, that specific one.
     # If ..., blank index and it's inserted anywhere that fits.
@@ -82,6 +83,16 @@ def comp_scriptvar(ctx: Context):
         comp_ent.remove()
         var_name = comp_ent['variable']
         index: Union[int, Type[Ellipsis], None] = None
+
+        # Specify ent = None for globals.
+        ent_list: list[Entity | None]
+        if var_name.startswith('::'):
+            var_name = var_name[2:]
+            ent_list = [None]
+        elif comp_ent['target']:
+            ent_list = list(ctx.vmf.search(comp_ent['target']))
+        else:
+            ent_list = [None]
 
         parsed_match = re.fullmatch(r'\s*([^[]+)\[([0-9]*)]\s*', var_name)
         if parsed_match:
@@ -134,7 +145,7 @@ def comp_scriptvar(ctx: Context):
             code = mode_func(comp_ent, ref_ent, ctx.fgd)
 
         ent: Optional[Entity] = None
-        for ent in ctx.vmf.search(comp_ent['target']):
+        for ent in ent_list:
             var_data = set_vars[ent][var_name]
             # Now we've got to match the assignment this is doing
             # with other scriptvars.
@@ -178,7 +189,7 @@ def comp_scriptvar(ctx: Context):
                 else:
                     var_data.specified_pos[index] = code
 
-        if ent is None:
+        if not ent_list:
             # No targets?
             LOGGER.warning(
                 'No entities found with name "{}", for '
@@ -189,18 +200,21 @@ def comp_scriptvar(ctx: Context):
     for ent, var_dict in set_vars.items():
         full_code = []
         for var_name, var_data in var_dict.items():
-            full_code.append('{} <- {};'.format(
-                var_name, var_data.make_code()
-            ))
+            full_code.append(f'{"::" if ent is None else ""}{var_name} <- {var_data.make_code()};')
         if full_code:
-            ctx.add_code(ent, '\n'.join(full_code))
+            if ent is not None:
+                ctx.add_code(ent, '\n'.join(full_code))
+            else:
+                # This is for global variable states. We can't put it on worldspawn (crash),
+                # so place an info_null.
+                ctx.add_code(ctx.vmf.create_ent('info_null'), '\n'.join(full_code))
 
 
 # Functions to call to compute the data to read.
 def mode_const(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
     """Set a simple constant."""
     return comp_ent['const']
-    
+
 
 def mode_string(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
     """Set a constant, as a string."""
@@ -294,7 +308,7 @@ def _mode_axes(norm: Vec) -> Callable[[Entity, Entity, FGD], str]:
         scale = conv_float(comp_ent['const'], 1.0)
         return vs_vec(scale * out)
     return mode_func
-    
+
 
 def _mode_pos_axis(axis: str) -> Callable[[Entity, Entity, FGD], str]:
     """Return a single axis of the ent's position."""
