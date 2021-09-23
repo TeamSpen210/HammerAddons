@@ -17,6 +17,8 @@
     ctrl_value(boolean) : "Control Value" : 1 : "Decides whether to skip using the outputs from this. " +
     	"If the entity is disabled, all outputs are removed entirely."
 
+    delay(float) : "Extra Delay" : 0.0 : "Add this delay to all outputs. This allows you to control this via $fixup values, for instance."
+
     input Trigger(string): "Trigger the relay and fire the output."
     
     input TurnOn(string): "Fire the OnTurnedOn output."

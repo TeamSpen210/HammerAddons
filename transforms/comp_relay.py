@@ -1,5 +1,5 @@
 """Implements simple logic."""
-from srctools import conv_bool
+from srctools import conv_bool, conv_float
 from srctools.bsp_transform import trans, Context
 from srctools.logger import get_logger
 
@@ -34,6 +34,8 @@ def comp_relay(ctx: Context):
         # If ctrl_type is 0, ctrl_value needs to be 1 to be enabled.
         # If ctrl_type is 1, ctrl_value needs to be 0 to be enabled.
         enabled = conv_bool(relay['ctrl_type']) != conv_bool(relay['ctrl_value'])
+
+        extra_delay = conv_float(relay['delay'])
         for out in relay.outputs:
             try:
                 inp_name = out_names[out.output.casefold()]
@@ -46,6 +48,7 @@ def comp_relay(ctx: Context):
                 continue
             if enabled:
                 out.output = inp_name
+                out.delay += extra_delay
                 ctx.add_io_remap(relay_name, out, remove=should_remove)
             elif should_remove:  # Still add a remap, to remove the outputs.
                 ctx.add_io_remap_removal(relay_name, inp_name)
