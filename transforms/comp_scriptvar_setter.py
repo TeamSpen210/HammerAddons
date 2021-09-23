@@ -206,7 +206,7 @@ def comp_scriptvar(ctx: Context):
                 ctx.add_code(ent, '\n'.join(full_code))
             else:
                 # This is for global variable states. We can't put it on worldspawn (crash),
-                # so place an info_null.
+                # so place an info_null. This'll run the script, then die.
                 ctx.add_code(ctx.vmf.create_ent('info_null'), '\n'.join(full_code))
 
 
