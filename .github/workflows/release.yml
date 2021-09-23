@@ -1,0 +1,61 @@
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version'
+        required: true
+
+name: Manual Release
+jobs:
+  manual_release:
+    runs-on: windows-latest
+    
+    env:
+      FGD_BUILD_DIR: build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install srctools
+        run: .\install_srctools.bat
+
+      - name: FGD build and folder copy
+        run: .\build.bat all
+
+      - name: Artifact upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: build_${{ github.event.inputs.version }}-${{ github.sha }}
+          path: ./build/*
+          if-no-files-found: error
+          
+      - name: Zip Momentum Content
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          directory: ./${{ env.FGD_BUILD_DIR }}
+          path: momentum
+          filename: 'fgd-momentum.zip'
+          
+      - name: Zip P2CE Content
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          directory: ./${{ env.FGD_BUILD_DIR }}
+          path: p2ce
+          filename: 'fgd-p2ce.zip'
+          
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          files: |
+            ${{ env.FGD_BUILD_DIR }}/fgd-momentum.zip
+            ${{ env.FGD_BUILD_DIR }}/fgd-p2ce.zip
+          fail_on_unmatched_files: true
