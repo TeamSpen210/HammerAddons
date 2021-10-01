@@ -69,11 +69,11 @@ def parse(path: Path, game_folder: str='') -> Tuple[
 
         # Try to write out a default file in the game folder.
         for folder in path.parents:
-            if folder.parent.stem == 'common':
+            if folder.parent.stem in ('common', 'sourcemods'):
                 break
         else:
-            # Give up, write to working directory.
-            folder = Path().absolute()
+            # Give up, put next to the input path.
+            folder = path.parent
         conf.path = folder / CONF_NAME
 
         LOGGER.warning('Writing default to "{}"', conf.path)
