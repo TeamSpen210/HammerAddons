@@ -103,17 +103,17 @@ def sequential_call(ctx: Context) -> None:
 
         max_delay = 0.0
         for ent, delay in ent_and_delay:
-            if time_variance > 0:
+            if time_variance > 0.0:
                 delay += random.uniform(-time_variance, time_variance)
             max_delay = max(max_delay, delay)
             if make_unique:
                 ent.make_unique(seq_call['targetname'] + '_')
             for out in outputs_rep:
                 out = out.copy()
-                out.delay += delay
+                out.delay = round(out.delay + delay, 2)
                 if out.target.casefold() == '!found':
                     out.target = ent['targetname']
                 seq_call.outputs.append(out)
         for out in outputs_final:
-            out.delay += max_delay
+            out.delay = round(out.delay + max_delay, 2)
             seq_call.outputs.append(out)
