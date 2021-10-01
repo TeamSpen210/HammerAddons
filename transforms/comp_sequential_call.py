@@ -111,7 +111,7 @@ def sequential_call(ctx: Context) -> None:
             for out in outputs_rep:
                 out = out.copy()
                 out.delay = round(out.delay + delay, 2)
-                if out.target.casefold() == '!found':
+                if out.target.casefold() == '!seq':
                     out.target = ent['targetname']
                 seq_call.outputs.append(out)
         for out in outputs_final:

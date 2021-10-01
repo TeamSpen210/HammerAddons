@@ -23,6 +23,6 @@
 	time_variance(float) : "Time Variance" : 0.0 : "After computing the delay, randomly add/subtract this much from the delay to add noise."
 
 	output OnSeqStart(void) : "Fired at the start of the sequence."
-	output OnSeq(void) : "Fired once for each entity - use !activator to refer to the target."
+	output OnSeq(void) : "Fired once for each entity - use !seq to refer to the target."
 	output OnSeqEnd(void) : "Fired once all delayed outputs are complete."
 	]
