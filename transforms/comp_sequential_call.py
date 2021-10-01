@@ -111,8 +111,8 @@ def sequential_call(ctx: Context) -> None:
             for out in outputs_rep:
                 out = out.copy()
                 out.delay += delay
-                if out.output.casefold() == '!found':
-                    out.output = ent['targetname']
+                if out.target.casefold() == '!found':
+                    out.target = ent['targetname']
                 seq_call.outputs.append(out)
         for out in outputs_final:
             out.delay += max_delay
