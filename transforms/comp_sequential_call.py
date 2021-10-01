@@ -58,7 +58,7 @@ def sequential_call(ctx: Context) -> None:
         else:
             raise ValueError(
                 f'Unknown order mode "{order_mode}" for sequential call '
-                f'"{seq_call["targetname"]}" at {seq_call["origin"]}'
+                f'"{seq_call["targetname"]}" at ({seq_call["origin"]}).'
             )
 
         ent_and_delay: Iterator[tuple[Entity, float]] = []
@@ -81,7 +81,7 @@ def sequential_call(ctx: Context) -> None:
         else:
             raise ValueError(
                 f'Unknown time mode "{time_mode}" for sequential call '
-                f'"{seq_call["targetname"]}" at {seq_call["origin"]}'
+                f'"{seq_call["targetname"]}" at ({seq_call["origin"]}).'
             )
 
         outputs_rep: list[Output] = []
@@ -100,6 +100,13 @@ def sequential_call(ctx: Context) -> None:
                     out.output = 'OnTrigger'
                 outputs_other.append(out)
         seq_call.outputs[:] = outputs_other
+
+        if not outputs_rep:
+            LOGGER.warning(
+                'Sequential call "{}" at ({}) has no OnSeq outputs, '
+                "so there's nothing to repeat for each entity.",
+                seq_call['targetname'], seq_call['origin'],
+            )
 
         max_delay = 0.0
         for ent, delay in ent_and_delay:
