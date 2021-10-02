@@ -904,11 +904,12 @@ def combine(
         qc_folders = [game.path.parent.parent / 'content']
 
     # Parse through all the QC files.
-    LOGGER.info('Parsing QC files. Paths: \n{}', '\n'.join(map(str, qc_folders)))
     qc_map: Dict[str, Optional[QC]] = {}
-    for qc_folder in qc_folders:
-        load_qcs(qc_map, qc_folder)
-    LOGGER.info('Done! {} props.', len(qc_map))
+    if qc_folders:
+        LOGGER.info('Parsing QC files. Paths: \n{}', '\n'.join(map(str, qc_folders)))
+        for qc_folder in qc_folders:
+            load_qcs(qc_map, qc_folder)
+        LOGGER.info('Done! {} prop QCs found.', len(qc_map))
 
     map_name = Path(bsp.filename).stem
 
