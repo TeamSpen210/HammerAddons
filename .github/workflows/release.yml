@@ -39,16 +39,14 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          directory: ./${{ env.FGD_BUILD_DIR }}
-          path: momentum
+          directory: ./${{ env.FGD_BUILD_DIR }}/momentum/
           filename: 'fgd-momentum.zip'
           
       - name: Zip P2CE Content
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          directory: ./${{ env.FGD_BUILD_DIR }}
-          path: p2ce
+          directory: ./${{ env.FGD_BUILD_DIR }}/p2ce/
           filename: 'fgd-p2ce.zip'
           
       - name: Create Release
@@ -56,6 +54,6 @@ jobs:
         with:
           tag_name: ${{ github.event.inputs.version }}
           files: |
-            ${{ env.FGD_BUILD_DIR }}/fgd-momentum.zip
-            ${{ env.FGD_BUILD_DIR }}/fgd-p2ce.zip
+            ${{ env.FGD_BUILD_DIR }}/momentum/fgd-momentum.zip
+            ${{ env.FGD_BUILD_DIR }}/p2ce/fgd-p2ce.zip
           fail_on_unmatched_files: true
