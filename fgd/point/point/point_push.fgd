@@ -21,6 +21,7 @@
 	enabled(boolean) : "Start Enabled" : 1
 	magnitude(float) : "Magnitude" : 100 : "How strongly to push away from the center."
 	radius(float) : "Radius" : 128 : "Radius to affect items in."
+	inner_radius(float) : "LOS Radius" : 0 : "If 'Test LOS' is enabled, collision checks will check this far from the center. This allows models to be placed in the middle."
 	influence_cone(float) : "Cone of Influence" : 0 : "If greater than zero, " +
 		"the cone (in degrees) within which the object must lie for it to be affected."
 
