@@ -6,5 +6,5 @@ except ImportError:
 else:
     # Cleanup and discard module.
     import sys as _sys
-    del _sys.modules[_version.__name__]
-    del _version, _sys
+    del _sys.modules[_version.__name__] # noqa
+    del _version, _sys # noqa
