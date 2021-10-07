@@ -2,6 +2,8 @@
 import os
 from pathlib import Path
 
+import versioningit
+
 
 # Find the BSP transforms from HammerAddons.
 try:
@@ -14,6 +16,19 @@ if not (hammer_addons / 'transforms').exists():
         'Clone TeamSpen210/HammerAddons, or set the '
         'environment variable HAMMER_ADDONS to the location.'
     )
+
+version = versioningit.get_version(hammer_addons, {
+    'vcs': {'method': 'git'},
+    'default-version': '(dev)',
+    'format': {
+        'distance': '{version}.dev_{distance}+{rev}',
+        'dirty': '{version}+dirty_{build_date:%Y%m%d}',
+        'distance-dirty': '{version}.dev_{distance}+{rev}.dirty_{build_date:%Y%m%d}',
+    },
+})
+
+with open(Path(SPECPATH, 'srctools', 'compiler', '_version.py'), 'w') as f:
+    f.write(f'__version__ = {version!r}\n')
 
 DATAS = [
     (str(file), str(file.relative_to(hammer_addons).parent))

@@ -16,14 +16,14 @@ from srctools.logger import init_logging, Formatter
 LOGGER = init_logging(Path(sys.argv[0]).with_name('postcompiler.log'))
 warnings.filterwarnings(category=DeprecationWarning, module='srctools', action='once')
 
-from srctools import Property
+from srctools import Property, __version__ as version_lib
 from srctools.filesys import ZipFileSystem
 from srctools.fgd import FGD
 from srctools.bsp import BSP, BSP_LUMPS
 from srctools.bsp_transform import run_transformations
 from srctools.packlist import PackList
 from srctools.scripts import config
-from srctools.compiler import propcombine
+from srctools.compiler import propcombine, __version__ as version_haddons
 
 
 def main(argv: List[str]) -> None:
@@ -85,7 +85,7 @@ def main(argv: List[str]) -> None:
     ))
     LOGGER.addHandler(handler)
 
-    LOGGER.info('HammerAddons postcompiler started at {}!', datetime.datetime.now().isoformat())
+    LOGGER.info('HammerAddons postcompiler, srctools=v{}, addons=v{}', version_lib, version_haddons)
     LOGGER.info("Map path is {}", path)
 
     (
