@@ -28,7 +28,7 @@
 		1: "Rusted"
 		]
 
-	beamcolor(choices) : "Laser Beam Color (R G B A)" : "255 0 0 255" : "Sets the colour of the laser." =
+	beamcolor(choices) : "Laser Beam Color" : "255 0 0 255" : "The color of the laser. You can also specify a custom RGBA color here." =
 	[
 		"255 255 255 255" : "White"
 		"255 0 0 255" : "Default Red"

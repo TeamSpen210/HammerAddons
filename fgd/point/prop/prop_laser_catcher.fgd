@@ -30,7 +30,7 @@
 	
 	uselaserfilter(bool) : "Use Laser Filter" : 0 : "If enabled, this catcher can only be activated by the specified laser color."
 	
-	filtercolor(choices) : "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter lasers by this colour." =
+	filtercolor(choices) : "Laser Filter Color" : "255 255 255 255" : "Filter lasers by this color. You can also specify a custom RGBA color here." =
 	[
 		"255 255 255 255" : "White"
 		"255 0 0 255" : "Default Red"
