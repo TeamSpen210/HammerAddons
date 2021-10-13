@@ -3,7 +3,7 @@ import random
 import re
 from collections.abc import Iterator
 
-from srctools import Vec, Entity, Output, conv_bool, conv_float
+from srctools import Vec, Entity, Output, conv_bool, conv_float, lerp
 from srctools.bsp_transform import trans, Context
 import srctools.logger
 
@@ -41,7 +41,7 @@ def sequential_call(ctx: Context) -> None:
         make_unique = conv_bool(seq_call['uniquify'])
         origin = Vec.from_str(seq_call['origin'])
 
-        if order_mode == 'dist':
+        if order_mode.startswith('dist'):
             dist_to_ent: dict[Entity, float] = {
                 ent: (Vec.from_str(ent['origin']) - origin).mag()
                 for ent in target_ents
@@ -51,10 +51,10 @@ def sequential_call(ctx: Context) -> None:
             dist_to_ent = {}
             max_dist = 0.0
 
-        if order_mode == 'dist':
-            target_ents.sort(key=dist_to_ent.__getitem__)
-        elif order_mode == 'suffix':
-            target_ents.sort(key=num_suffix)
+        if order_mode.startswith('dist'):
+            target_ents.sort(key=dist_to_ent.__getitem__, reverse=order_mode.endswith('_inv'))
+        elif order_mode.startswith('suffix'):
+            target_ents.sort(key=num_suffix, reverse=order_mode.endswith('_inv'))
         else:
             raise ValueError(
                 f'Unknown order mode "{order_mode}" for sequential call '
@@ -66,15 +66,18 @@ def sequential_call(ctx: Context) -> None:
             # No total delay, skip computation and any divide by zero.
             ent_and_delay[:] = zip(target_ents, itertools.repeat(0.0))
         elif time_mode == 'total':
+            time_start, time_end = (time_val, 0.0) if order_mode.endswith('_inv') else (0.0, time_val)
             # Special case, if total and dist selected, lerp by distance, not evenly spaced.
-            ent_and_delay_l = []
-            if order_mode == 'dist':
-                for ent in target_ents:
-                    ent_and_delay_l.append((
-                        ent,
-                        dist_to_ent[ent] / max_dist * time_val,
-                    ))
-            ent_and_delay = iter(ent_and_delay_l)
+            if order_mode.startswith('dist'):
+                ent_and_delay = (
+                    (ent, lerp(dist_to_ent[ent], 0.0, max_dist, time_start, time_end))
+                    for ent in target_ents
+                )
+            else:
+                ent_and_delay = (
+                    (ent, lerp(i, 0, len(target_ents), time_start, time_end))
+                    for i, ent in enumerate(target_ents)
+                )
         elif time_mode == 'interval':
             # [(ent, time_val * i) for i, ent in enumerate(target_ents)]
             ent_and_delay = zip(target_ents, map(time_val.__mul__, itertools.count()))

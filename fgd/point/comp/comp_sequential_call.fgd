@@ -9,7 +9,9 @@
 	order_mode(choices) : "Ordering Mode" : "dist": "Choose how entities are ordered. Numeric suffix finds numbers at the end of the entity name, and sorts by that order." =
 		[
 		"dist" : "Distance to this"
-		"suffix" : "Numeric Suffix"
+		"dist_inv" : "Inverted distance to this"
+		"suffix" : "Numeric Suffix, Ascending"
+		"suffix_inv": "Numeric Suffix, Decending"
 		]
 	uniquify(boolean) : "Make Entities Unique?" : 0 : "Append a suffix to ensure all entities are unique. Should be enabled if not using a *-wildcard."
 
