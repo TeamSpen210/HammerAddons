@@ -4,6 +4,9 @@ from pathlib import Path
 
 import versioningit
 
+# PyInstaller-injected.
+SPECPATH: str
+workpath: str
 
 # Find the BSP transforms from HammerAddons.
 try:
@@ -27,7 +30,7 @@ version = versioningit.get_version(hammer_addons, {
     },
 })
 
-with open(Path(SPECPATH, 'srctools', 'compiler', '_version.py'), 'w') as f:
+with open(Path(SPECPATH, 'src', 'srctools', 'compiler', '_version.py'), 'w') as f:
     f.write(f'__version__ = {version!r}\n')
 
 DATAS = [
@@ -40,7 +43,7 @@ DATAS = [
 print(DATAS)
 
 a = Analysis(
-    ['srctools/scripts/postcompiler.py'],
+    ['src/srctools/scripts/postcompiler.py'],
     binaries=[],
     datas=DATAS,
     hiddenimports=[
@@ -52,7 +55,6 @@ a = Analysis(
         'statistics', 'string', 'struct',
         'srctools', 'attrs',
     ],
-    excludes=['srctools.test'],
     noarchive=False
 )
 
