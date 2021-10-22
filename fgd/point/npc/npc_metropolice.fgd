@@ -44,5 +44,5 @@
 
 	// Outputs
 	output OnStunnedPlayer(void) : "Fires when the player is hit by a stunstick by this NPC."
-	output OnCupCopped(void) : "Fires if the player hits me with the cupcop can. ONLY use for x360 achievement."
+	output OnCupCopped(void) : "Fires if the player hits me with the cupcop can."
 	]

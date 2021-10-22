@@ -35,8 +35,6 @@
 		4: "high"
 		]
 
-	disablex360(boolean) : "Disable X360" : 0
-
 
 	mincpulevel[engine](integer): "Minimum CPU Level": 0
 	maxcpulevel[engine](integer): "Maximum CPU Level": 0
