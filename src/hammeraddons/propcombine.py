@@ -166,10 +166,20 @@ class PropPos(NamedTuple):
     solidity: CollType
 
 
+# The types used during compilation.
+PropCombiner = ModelCompiler[
+    Tuple[FrozenSet[PropPos], bool],  # Key for deduplication.
+    # Additional parameters used during compile
+    Tuple[Callable[[str], Union[Tuple[QC, Model], Tuple[None, None]]], float],
+    # Result of the function
+    None,
+]
+
+
 def combine_group(
-    compiler: ModelCompiler,
+    compiler: PropCombiner,
     props: List[StaticProp],
-    lookup_model: Callable[[str], Tuple[QC, Model]],
+    lookup_model: Callable[[str], Union[Tuple[QC, Model], Tuple[None, None]]],
     volume_tolerance: float,
 ) -> StaticProp:
     """Merge the given props together, compiling a model if required."""
@@ -252,7 +262,7 @@ def compile_func(
     mdl_key: Tuple[FrozenSet[PropPos], bool],
     temp_folder: Path,
     mdl_name: str,
-    args: Tuple[Callable[[str], Tuple[QC, Model]], float],
+    args: Tuple[Callable[[str], Union[Tuple[QC, Model], Tuple[None, None]]], float],
 ) -> None:
     """Build this merged model."""
     LOGGER.info('Compiling {}...', mdl_name)
@@ -266,6 +276,7 @@ def compile_func(
 
     for prop in prop_pos:
         qc, mdl = lookup_model(prop.model)
+        assert qc is not None, prop.model
         assert mdl is not None, prop.model
         surfprops.add(mdl.surfaceprop.casefold())
         cdmats.update(mdl.cdmaterials)
@@ -288,6 +299,8 @@ def compile_func(
 
     for prop in prop_pos:
         qc, mdl = lookup_model(prop.model)
+        assert qc is not None, prop.model
+        assert mdl is not None, prop.model
         try:
             child_ref = _mesh_cache[qc, prop.skin]
         except KeyError:
@@ -456,7 +469,7 @@ def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> List[Mesh]:
     return [Mesh.build_bbox('static_prop', 'phy', bbox_min, bbox_max)]
 
 
-def load_qcs(qc_map: Dict[str, QC], qc_folder: Path) -> None:
+def load_qcs(qc_folder: Path) -> Iterator[Tuple[str, QC]]:
     """Parse through all the QC files to match to compiled models."""
     for dirpath, dirnames, filenames in os.walk(str(qc_folder)):
         qc_loc = Path(dirpath)
@@ -486,7 +499,7 @@ def load_qcs(qc_map: Dict[str, QC], qc_folder: Path) -> None:
                 LOGGER.warning('Collision mesh not a SMD/DMX:\n{}', ref_smd)
                 continue
 
-            qc_map[unify_mdl(model_name)] = QC(
+            yield unify_mdl(model_name), QC(
                 str(qc_path).replace('\\', '/'),
                 str(ref_smd).replace('\\', '/'),
                 str(phy_smd).replace('\\', '/') if phy_smd else None,
@@ -614,16 +627,16 @@ def decompile_model(
         else:
             # Previous compilation.
             if checksum == bytes.fromhex(cache_props['checksum', '']):
-                ref_smd = cache_props['ref', '']
-                if not ref_smd:
+                ref_smd_name = cache_props['ref', '']
+                if not ref_smd_name:
                     return None
-                phy_smd = cache_props['phy', None]
-                if phy_smd is not None:
-                    phy_smd = str(cache_folder / phy_smd)
+                phy_smd_name = cache_props['phy', None]
+                if phy_smd_name is not None:
+                    phy_smd_name = str(cache_folder / phy_smd_name)
                 return QC(
                     str(info_path),
-                    str(cache_folder / ref_smd),
-                    phy_smd,
+                    str(cache_folder / ref_smd_name),
+                    phy_smd_name,
                     cache_props.float('ref_scale', 1.0),
                     cache_props.float('phy_scale', 1.0),
                     cache_props.bool('concave'),
@@ -908,7 +921,8 @@ def combine(
     if qc_folders:
         LOGGER.info('Parsing QC files. Paths: \n{}', '\n'.join(map(str, qc_folders)))
         for qc_folder in qc_folders:
-            load_qcs(qc_map, qc_folder)
+            for mdl_name, loaded_qc in load_qcs(qc_folder):
+                qc_map[mdl_name] = loaded_qc
         LOGGER.info('Done! {} prop QCs found.', len(qc_map))
 
     map_name = Path(bsp.filename).stem
@@ -948,7 +962,7 @@ def combine(
         try:
             qc = qc_map[key]
         except KeyError:
-            if crowbar_loc is None:
+            if crowbar_loc is None or decomp_cache_loc is None:
                 missing_qcs.add(key)
                 return None, None
             qc = decompile_model(pack.fsys, decomp_cache_loc, crowbar_loc, filename, model.checksum)
@@ -996,6 +1010,7 @@ def combine(
     # This holds the list of all props we want in the map at the end.
     final_props: list[StaticProp] = []
 
+    grouper: Iterator[List[StaticProp]]
     if grouper_ents and auto_range > 0:
         LOGGER.info('{} propcombine sets present and auto-grouping enabled, combining...', len(grouper_ents))
         # Do ents first, that removes values from the lists in prop_groups,
@@ -1053,7 +1068,7 @@ def combine(
     rejected = set(itertools.chain.from_iterable(prop_groups.values()))
 
     group_count = 0
-    with ModelCompiler(
+    with PropCombiner(
         game,
         studiomdl_loc,
         pack,

@@ -7,7 +7,7 @@ import warnings
 from collections import defaultdict
 from logging import FileHandler
 from pathlib import Path
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 from srctools.logger import init_logging, Formatter
 
@@ -124,6 +124,7 @@ def main(argv: List[str]) -> None:
     fsys.add_sys(ZipFileSystem('<BSP pakfile>', bsp_file.pakfile))
 
     studiomdl_path = conf.get(str, 'studiomdl')
+    studiomdl_loc: Optional[Path]
     if studiomdl_path:
         studiomdl_loc = (game_info.root / studiomdl_path).resolve()
         if not studiomdl_loc.exists():
@@ -156,6 +157,8 @@ def main(argv: List[str]) -> None:
 
     if studiomdl_loc is not None and args.propcombine:
         decomp_cache_path = conf.get(str, 'propcombine_cache')
+        decomp_cache_loc: Optional[Path]
+        crowbar_loc: Optional[Path]
         if decomp_cache_path is not None:
             decomp_cache_loc = (game_info.root / decomp_cache_path).resolve()
             decomp_cache_loc.mkdir(parents=True, exist_ok=True)
