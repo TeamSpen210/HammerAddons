@@ -8,7 +8,7 @@ import pickle
 import subprocess
 import tempfile
 import random
-from typing import Callable, Tuple, TypeVar, Hashable
+from typing import Callable, Tuple, TypeVar, Hashable, Generic, Any
 from pathlib import Path
 
 from srctools import AtomicWriter
@@ -19,12 +19,11 @@ from srctools.packlist import PackList, LOGGER
 
 
 ModelKey = TypeVar('ModelKey', bound=Hashable)
-AnyModelKey = Hashable
 InT = TypeVar('InT')
 OutT = TypeVar('OutT')
 
 
-class GenModel:
+class GenModel(Generic[OutT]):
     """Tracks information about this model."""
     def __init__(self, mdl_name: str, result: OutT=None) -> None:
         self.name = mdl_name  # This is just the filename.
@@ -35,7 +34,7 @@ class GenModel:
         return f'<Model "{self.name}, used={self.used}>'
 
 
-class ModelCompiler:
+class ModelCompiler(Generic[ModelKey, InT, OutT]):
     """Manages the set of merged models that have been generated.
 
     The version number can be incremented to invalidate previous compilations.
@@ -50,7 +49,7 @@ class ModelCompiler:
         version: object=0,
     ) -> None:
         # The models already constructed.
-        self._built_models: dict[AnyModelKey, GenModel] = {}
+        self._built_models: dict[ModelKey, GenModel[OutT]] = {}
 
         # The random indexes we use to produce filenames.
         self._mdl_names: set[str] = set()
@@ -65,6 +64,8 @@ class ModelCompiler:
     @classmethod
     def from_ctx(cls, ctx: Context, folder_name: str, version: object=0) -> 'ModelCompiler':
         """Convenience method to construct from the context's data."""
+        if ctx.studiomdl is None:
+            raise ValueError('No StudioMDL!')
         return cls(
             ctx.game,
             ctx.studiomdl,
@@ -78,15 +79,15 @@ class ModelCompiler:
         """Return the number of used models."""
         return sum(1 for mdl in self._built_models.values() if mdl.used)
 
-    def __enter__(self) -> 'ModelCompiler':
+    def __enter__(self) -> 'ModelCompiler[ModelKey, InT, OutT]':
         """Load the previously compiled models and prepare for compiles."""
         # Ensure the folder exists.
         os.makedirs(self.model_folder, exist_ok=True)
-        data: list[tuple[AnyModelKey, str, object]]
+        data: list[tuple[ModelKey, str, OutT]]
         version = 0
         try:
             with (self.model_folder_abs / 'manifest.bin').open('rb') as f:
-                result = pickle.load(f)
+                result: Any = pickle.load(f)
                 if isinstance(result, tuple):
                     data, version = result
                 else:  # V0, no number.
