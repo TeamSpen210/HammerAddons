@@ -109,7 +109,7 @@ def comp_pack_replace_soundscript(ctx: Context):
     new_scripts.difference_update(old_scripts)
 
     for script in old_scripts:
-        ctx.pack.soundscript_files[script] = SoundScriptMode.EXCLUDE
+        ctx.pack.soundscript.force_exclude(script)
     for script in new_scripts:
         try:
             ctx.pack.load_soundscript(ctx.sys[script], always_include=True)
@@ -164,7 +164,7 @@ def comp_pack(ctx: Context):
                 # since the user explicitly specified it.
                 for sound in ctx.pack.load_soundscript(file, always_include=True):
                     LOGGER.info('Sound: {}', sound)
-                    ctx.pack.pack_file(sound, FileType.GAME_SOUND)
+                    ctx.pack.pack_file(sound.name, FileType.GAME_SOUND)
 
 
 @trans('comp_pack_rename', priority=100)
