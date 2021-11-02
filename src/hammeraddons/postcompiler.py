@@ -111,7 +111,7 @@ def main(argv: List[str]) -> None:
     packlist.load_soundscript_manifest(
         conf.path.with_name('srctools_sndscript_data.vdf')
     )
-    LOGGER.info('Done! ({} sounds)', len(packlist.soundscripts))
+    LOGGER.info('Done! ({} sounds)', len(packlist.soundscript))
 
     LOGGER.info('Reading BSP...')
     bsp_file = BSP(path)
