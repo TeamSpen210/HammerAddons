@@ -112,6 +112,9 @@ def main(argv: List[str]) -> None:
         conf.path.with_name('srctools_sndscript_data.vdf')
     )
     LOGGER.info('Done! ({} sounds)', len(packlist.soundscript))
+    LOGGER.info('Loading particles...')
+    packlist.load_particle_manifest()
+    LOGGER.info('Done! ({} particles)', len(packlist.particles))
 
     LOGGER.info('Reading BSP...')
     bsp_file = BSP(path)
