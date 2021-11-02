@@ -53,7 +53,7 @@ a = Analysis(
         'decimal', 'difflib', 'enum', 'fractions', 'functools',
         'io', 'itertools', 'json', 'math', 'random', 're',
         'statistics', 'string', 'struct',
-        'srctools', 'attrs',
+        'srctools', 'attr',
     ],
     noarchive=False
 )
