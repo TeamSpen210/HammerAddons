@@ -219,6 +219,16 @@ OPTIONS = [
         """,
     ),
     Opt(
+        'particles_manifest', '',
+        """If set to a path, generate and pack a particles manifest under this name.     
+        This is needed to make packing particles work. "<map name>" is replaced with the map name.
+        Depending on your game, these are some of the correct paths:
+        * particles/particles_manifest.txt
+        * maps/<map name>_particles.txt
+        * particles/<map name>_manifest.txt
+        """,
+    ),
+    Opt(
         'studiomdl', 'bin/studiomdl.exe',
         """Set the path to StudioMDL so the compiler can generate props.
         If blank these features are disabled.

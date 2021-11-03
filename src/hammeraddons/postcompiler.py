@@ -1,6 +1,5 @@
 """Runs before VRAD, to run operations on the final BSP."""
 import argparse
-import datetime
 import os
 import sys
 import warnings
@@ -19,7 +18,7 @@ warnings.filterwarnings(category=DeprecationWarning, module='srctools', action='
 from srctools import Property, __version__ as version_lib
 from srctools.filesys import ZipFileSystem
 from srctools.fgd import FGD
-from srctools.bsp import BSP, BSP_LUMPS
+from srctools.bsp import BSP
 from srctools.bsp_transform import run_transformations
 from srctools.packlist import PackList
 from srctools.scripts import config
@@ -115,6 +114,10 @@ def main(argv: List[str]) -> None:
     LOGGER.info('Loading particles...')
     packlist.load_particle_manifest()
     LOGGER.info('Done! ({} particles)', len(packlist.particles))
+    LOGGER.debug('Known particles: \n{}', "\n".join([
+        f'{fname}: {mode.value}' for fname, mode in
+        packlist.particles._files.items()
+    ]))
 
     LOGGER.info('Reading BSP...')
     bsp_file = BSP(path)
@@ -215,6 +218,11 @@ def main(argv: List[str]) -> None:
         packlist.eval_dependencies()
         if conf.get(bool, 'soundscript_manifest'):
             packlist.write_soundscript_manifest()
+        man_name = conf.get(str, 'particles_manifest')
+        if man_name:
+            man_name = man_name.replace('<map name>', path.stem)
+            LOGGER.info('Writing particle manifest "{}"...', man_name)
+            packlist.write_particles_manifest(man_name)
 
     dump_path = conf.get(str, 'pack_dump')
     if dump_path:
