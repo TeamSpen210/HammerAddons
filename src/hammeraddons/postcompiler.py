@@ -214,7 +214,7 @@ def main(argv: List[str]) -> None:
 
         packlist.eval_dependencies()
         if conf.get(bool, 'soundscript_manifest'):
-            packlist.write_manifest()
+            packlist.write_soundscript_manifest()
 
     dump_path = conf.get(str, 'pack_dump')
     if dump_path:
