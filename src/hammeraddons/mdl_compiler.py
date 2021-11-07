@@ -128,7 +128,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         """Write the constructed models to the cache file and remove unused models."""
         if exc_type is not None or exc_val is not None:
             return
-        data: list[tuple[InT, str, OutT]] = []
+        data: list[tuple[ModelKey, str, OutT]] = []
         used_mdls: set[str] = set()
         for key, mdl in self._built_models.items():
             if mdl.used:
