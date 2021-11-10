@@ -102,8 +102,8 @@ class PluginFinder(MetaPathFinder):
             source = self.sources[source_ind]
         except IndexError:
             return None
-        path = source.folder / subpath
-        filename = str(path / '__init__.py') if path.is_dir() else str(path)
+        new_path = source.folder / subpath
+        filename = str(new_path / '__init__.py') if new_path.is_dir() else str(new_path)
         loader = SourceFileLoader(fullname, filename)
         return spec_from_loader(fullname, loader)
 
