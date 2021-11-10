@@ -224,8 +224,8 @@ OPTIONS = [
         This is needed to make packing particles work. "<map name>" is replaced with the map name.
         Depending on your game, these are some of the correct paths:
         * particles/particles_manifest.txt
-        * maps/<map name>_particles.txt
-        * particles/<map name>_manifest.txt
+        * maps/<map name>_particles.txt (TF2)
+        * particles/<map name>_manifest.txt (L4D2, Portal 2)
         """,
     ),
     Opt(
