@@ -1,6 +1,6 @@
 """Handles user configuration common to the different scripts."""
 from pathlib import Path
-from typing import Tuple, Set
+from typing import Tuple, Set, Dict
 import sys
 
 from srctools.game import Game
@@ -94,7 +94,7 @@ def parse(path: Path, game_folder: str='') -> Tuple[
 
     fsys_chain = game.get_filesystem()
 
-    blacklist: set[FileSystem] = set()
+    blacklist: Set[FileSystem] = set()
 
     if not conf.get(bool, 'pack_vpk'):
         for fsys, prefix in fsys_chain.systems:
@@ -125,7 +125,7 @@ def parse(path: Path, game_folder: str='') -> Tuple[
                 'key "{}"!'.format(prop.real_name)
             )
 
-    sources: dict[Path, PluginSource] = {}
+    sources: Dict[Path, PluginSource] = {}
 
     builtin_transforms = (Path(sys.argv[0]).parent / 'transforms').resolve()
 

@@ -1,6 +1,6 @@
 """Transformations for packing and precaching resources."""
 import os
-from typing import Set
+from typing import Set, Dict
 
 from srctools import Entity
 from srctools.bsp_transform import trans, Context
@@ -14,7 +14,7 @@ LOGGER = get_logger(__name__, 'trans.packing')
 @trans('comp_precache_model', priority=100)
 def comp_precache_model(ctx: Context):
     """Force precaching a specific model."""
-    already_done = set()  # type: Set[str]
+    already_done: Set[str] = set()
     for ent in ctx.vmf.by_class['comp_precache_model']:
         model = ent['model']
 
@@ -173,7 +173,7 @@ def comp_pack_rename(ctx: Context):
 
     # Optimisation, don't re-read files multiple times.
     # We're storing the data anyway.
-    file_data: dict[str, bytes] = {}
+    file_data: Dict[str, bytes] = {}
 
     for ent in ctx.vmf.by_class['comp_pack_rename']:
         ent.remove()

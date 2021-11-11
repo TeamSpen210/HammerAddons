@@ -295,7 +295,7 @@ def compile_func(
     coll_mesh = Mesh.blank('static_prop')
     [coll_bone] = coll_mesh.bones.values()
     bone_link = [(coll_bone, 1.0)]
-    coll_groups: dict[Mesh, float] = {}
+    coll_groups: Dict[Mesh, float] = {}
 
     for prop in prop_pos:
         qc, mdl = lookup_model(prop.model)
@@ -360,9 +360,9 @@ def compile_func(
         if volume_tolerance > 0:
             LOGGER.info('Optimising collisions:')
             # Attempt to merge together collision groups.
-            todo: set[Mesh] = set(coll_groups)
+            todo: Set[Mesh] = set(coll_groups)
             # Pairs we know don't combine correctly.
-            failures: set[tuple[Mesh, Mesh]] = set()
+            failures: Set[Tuple[Mesh, Mesh]] = set()
             zero_norm = Vec()
             while todo:
                 mesh1 = todo.pop()
@@ -856,7 +856,7 @@ def group_props_auto(
             bbox_min, bbox_max = Vec.bbox(prop.origin for prop in cluster)
             center_pos = (bbox_min + bbox_max) / 2
 
-            cluster_list: list[tuple[StaticProp, float]] = []
+            cluster_list: List[Tuple[StaticProp, float]] = []
 
             for prop in cluster:
                 prop_off = (center_pos - prop.origin).mag_sq()
@@ -1005,10 +1005,10 @@ def combine(
     prop_count = 0
 
     # First, construct groups of props that can possibly be combined.
-    prop_groups: dict[Optional[tuple], list[StaticProp]] = defaultdict(list)
+    prop_groups: Dict[Optional[tuple], List[StaticProp]] = defaultdict(list)
 
     # This holds the list of all props we want in the map at the end.
-    final_props: list[StaticProp] = []
+    final_props: List[StaticProp] = []
 
     grouper: Iterator[List[StaticProp]]
     if grouper_ents and auto_range > 0:

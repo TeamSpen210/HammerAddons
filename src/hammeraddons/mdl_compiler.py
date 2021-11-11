@@ -8,7 +8,7 @@ import pickle
 import subprocess
 import tempfile
 import random
-from typing import Callable, Tuple, TypeVar, Hashable, Generic, Any
+from typing import Callable, Tuple, Dict, Set, TypeVar, Hashable, Generic, Any, List
 from pathlib import Path
 
 from srctools import AtomicWriter
@@ -49,10 +49,10 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         version: object=0,
     ) -> None:
         # The models already constructed.
-        self._built_models: dict[ModelKey, GenModel[OutT]] = {}
+        self._built_models: Dict[ModelKey, GenModel[OutT]] = {}
 
         # The random indexes we use to produce filenames.
-        self._mdl_names: set[str] = set()
+        self._mdl_names: Set[str] = set()
 
         self.game: Game = game
         self.model_folder = 'maps/{}/{}/'.format(map_name, folder_name)
@@ -83,7 +83,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         """Load the previously compiled models and prepare for compiles."""
         # Ensure the folder exists.
         os.makedirs(self.model_folder, exist_ok=True)
-        data: list[tuple[ModelKey, str, OutT]]
+        data: List[Tuple[ModelKey, str, OutT]]
         version = 0
         try:
             with (self.model_folder_abs / 'manifest.bin').open('rb') as f:
@@ -128,8 +128,8 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         """Write the constructed models to the cache file and remove unused models."""
         if exc_type is not None or exc_val is not None:
             return
-        data: list[tuple[ModelKey, str, OutT]] = []
-        used_mdls: set[str] = set()
+        data: List[Tuple[ModelKey, str, OutT]] = []
+        used_mdls: Set[str] = set()
         for key, mdl in self._built_models.items():
             if mdl.used:
                 data.append((key, mdl.name, mdl.result))
