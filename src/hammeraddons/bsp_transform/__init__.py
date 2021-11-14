@@ -1,7 +1,6 @@
 """Transformations that can be applied to the BSP file."""
-from decimal import Decimal
 from pathlib import Path
-from typing import Callable, Dict, Tuple, List, Any
+from typing import Callable, Dict, Tuple, List
 
 from srctools import FileSystem, VMF, Output, Entity, FGD
 from srctools.bsp import BSP
@@ -21,7 +20,7 @@ class Context:
     This allows them to ignore data they don't use.
     """
     def __init__(
-        self, 
+        self,
         filesys: FileSystem,
         vmf: VMF,
         pack: PackList,
@@ -40,8 +39,8 @@ class Context:
         self.game = game
         self.studiomdl = studiomdl_loc
 
-        self._io_remaps = {}  # type: Dict[Tuple[str, str], Tuple[List[Output], bool]]
-        self._ent_code = {}  # type: Dict[Entity, str]
+        self._io_remaps: Dict[Tuple[str, str], Tuple[List[Output], bool]] = {}
+        self._ent_code: Dict[Entity, str] = {}
 
     def add_io_remap(self, name: str, *outputs: Output, remove: bool=True) -> None:
         """Register an output to be replaced.
@@ -90,7 +89,8 @@ class Context:
 
 
 TransFunc = Callable[[Context], None]
-TRANSFORMS = {}  # type: Dict[str, TransFunc]
+TRANSFORMS: Dict[str, TransFunc] = {}
+TRANSFORM_PRIORITY: Dict[str, int] = {}
 
 
 def trans(name: str, *, priority: int=0) -> Callable[[TransFunc], TransFunc]:
@@ -98,7 +98,7 @@ def trans(name: str, *, priority: int=0) -> Callable[[TransFunc], TransFunc]:
     def deco(func: TransFunc) -> TransFunc:
         """Stores the transformation."""
         TRANSFORMS[name] = func
-        func.priority = priority
+        TRANSFORM_PRIORITY[name] = priority
         return func
     return deco
 
@@ -117,7 +117,7 @@ def run_transformations(
 
     for func_name, func in sorted(
         TRANSFORMS.items(),
-        key=lambda tup: tup[1].priority,
+        key=lambda tup: TRANSFORM_PRIORITY[tup[0]],
     ):
         LOGGER.info('Running "{}"...', func_name)
         func(context)
