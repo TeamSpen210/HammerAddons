@@ -2,7 +2,8 @@
 = func_precipitation: "A brush entity that creates rain and snow inside its volume."
 	[
 	renderamt(integer) : "Density (0-100%)" : 5 : "This is the amount of particles that fall down from top side of brush. " +
-		"However distance from first particle to second depends on a brush volume size!"
+		"However distance from first particle to second depends on a brush volume size! " +
+		"This can be changed later with the 'Alpha' input."
 	rendercolor(color255) : "Color (R G B)" : "100 100 100" : "Color added to sprites which are rendered transparently (probably rain and snow particles)"
 	preciptype[engine](integer) : "Precipitation Type" : 0
 	preciptype(choices) : "Precipitation Type" : 0 =
@@ -11,12 +12,18 @@
 		1: "Snow"
 		2: "Ash"
 		3: "Snowfall"
-		4: "Particle Rain" [since_L4D]
-		5: "Particle Ash" [since_L4D]
-		6: "Particle Rainstorm" [since_L4D2]
-		7: "Particle Snow" [since_CSGO, INFRA]
+		4: "Particle Rain" [since_L4D, MBase]
+		5: "Particle Ash" [since_L4D, MBase]
+		6: "Particle Rainstorm" [since_L4D2, MBase]
+		7: "Particle Snow" [since_CSGO, INFRA, MBase]
 		8: "Particle Bugs" [since_L4D2]
 		9: "Particle Smoke" [since_L4D2]
+		]
+	
+	spawnflags(flags) =
+		[
+		1 : "Particle types only: Clamp precipitation to brush bounds" : 1 [MBase]
+		2 : "Particle types only: Suppress outer particle (recommended if clamping)" : 1 [MBase]
 		]
 
 	snowdustamt[ASW](float) : "Amount of snow dusting (1-100)" : 50

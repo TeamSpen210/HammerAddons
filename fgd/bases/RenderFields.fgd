@@ -23,6 +23,16 @@
 		9: "World Space Glow"
 		10: "Don't Render"
 		]
+	
+	EFlags[engine](integer) : "EFlags" : 0
+	EFlags[MBase](choices) : "EFlags" : 0 : "Special internal entity flags normally only set by the code. Be careful with this keyvalue." =
+		[
+		131072 : "Pretend to be in skybox (always transmits to client)"
+		33554432 : "Don't block NPC LOS"
+		134217728 : "No dissolve"
+		268435456 : "No supercharged gravity gun ragdoll"
+		1073741824 : "No gravity gun interaction at all"
+		]
 
 	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "A color to mix with the model/sprite."
 	renderamt(integer) : "FX Alpha (0 - 255)" : 255 : "Transparency amount, requires a Render Mode other than Normal. 0 is invisible, 255 is fully visible."

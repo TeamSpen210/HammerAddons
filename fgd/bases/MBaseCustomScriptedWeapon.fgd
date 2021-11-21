@@ -1,0 +1,14 @@
+// TODO: Move to its own FGD? Needs to access Weapon base class somehow
+@BaseClass base(Weapon, SetModel) 
+	appliesto(MBase)
+	color(0 0 220) 
+	sphere(fademindist) sphere(fademaxdist) 
+= MBaseCustomScriptedWeapon
+	[
+	vscripts_client(string) : "Client-side Entity Scripts" : "" : "Name(s) of script files that are executed on the client. " +
+		"Weapons need to have a clientside counterpart for prediction in multiplayer, " +
+		"but this is not needed in singleplayer mapping."
+	
+	weapondatascript_name(string) : "Weapon Script Name" : "" : "Name of the weapon script this entity should use. " +
+		"Uses the classname (weapon_custom_scripted1) by default."
+	]

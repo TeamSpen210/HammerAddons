@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint)
 	studioprop("models/editor/camera.mdl") 
-	frustum(FOV,fogstart,fogend,_frustum_color,-1)
+	frustum(FOV,fogstart,fogend,250 250 250,-1)
 = point_camera: "Camera"
 	[
 	spawnflags(flags) : "spawnflags" =
@@ -10,13 +10,24 @@
 
 	rendertarget[engine](string) : "Render Target" : "_rt_Camera"
 	rendertarget[Mesa](choices) : "Render Target" : "_rt_Camera" =
-	[
+		[
 		"_rt_Camera" : "_rt_Camera"
 		"_rt_Camera2" : "_rt_Camera2"
 		"_rt_Camera3" : "_rt_Camera3"
 		"_rt_Camera4" : "_rt_Camera4"
 		"_rt_Camera5" : "_rt_Camera5"
-	]	
+		]	
+	RenderTarget[MBase](choices) : "Render target" : "" : "Makes this camera target a specific RT texture instead of just _rt_Camera, allowing for multiple active point_cameras. " +
+		"Monitors for this camera must use materials which draw the target texture." +
+		"You can manually type in any RT texture name if you know what you're doing." =
+		[
+		"_rt_Camera" : "_rt_Camera (default)"
+		"_rt_Camera0" : "_rt_Camera0"
+		"_rt_Camera1" : "_rt_Camera1"
+		"_rt_Camera2" : "_rt_Camera2"
+		"_rt_WaterReflection" : "_rt_WaterReflection (requires no nearby water/mirrors)"
+		"_rt_WaterRefraction" : "_rt_WaterRefraction (requires no nearby water/mirrors)"
+		]
 
 	fov(float) : "FOV" : 90 : "Field of view in degrees"
 	usescreenaspectratio(boolean) : "Screen Aspect Ratio" : 0
@@ -35,10 +46,12 @@
 
 	// Inputs
 	input ChangeFOV(string) : "Changes camera's FOV over time"
-	input SetOnAndTurnOthersOff(void) : "Turn the camera on, and turn all other cameras off."
+	input SetOnAndTurnOthersOff[-MBase](void) : "Turn the camera on, and turn all other cameras off."
+	input SetOnAndTurnOthersOff[+MBase](void) : "Turn the camera on, and turn all other cameras off. Does not affect cameras using different render targets."
 	input SetOn(void) : "Turn the camera on."
 	input SetOff(void) : "Turn the camera off."
-	input SetSkyMode[MBase](void) : "Sets the sky mode. NOTE: 2 = draw sky texture, 1 = draw 3D skybox!"
+	input SetSkyMode[MBase](integer) : "Sets the sky mode. NOTE: 2 = draw sky texture, 1 = draw 3D skybox!"
 	input Activate[since_ASW](void) : "Turn the camera on, activate it and deactivate all other cameras."
 	input Deactivate[since_ASW](void) : "Turn the camera off, deactivate it."
+	input SetRenderTarget[MBase](string) : "Sets the render target."
 	]

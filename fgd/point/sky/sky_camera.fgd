@@ -63,4 +63,9 @@
 	input SetFarZ[MBase](integer): "Sets the far clip plane distance."
 	
 	input SetSkyColor[MBase](color255) : "Sets the sky color."
+	
+	input CopyFogController[MBase](target_destination) : "Copies the target fog controller's exact fog parameters."
+	input CopyFogControllerWithScale[MBase](target_destination) : "Copies the target fog controller's exact fog parameters."
+	
+	input SetScale[MBase](integer) : "Sets the skybox scale."
 	]

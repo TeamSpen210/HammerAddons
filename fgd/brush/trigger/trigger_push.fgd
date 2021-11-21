@@ -8,11 +8,13 @@
 		256: "Affects Ladders (Half-Life 2)" : 0
 		]
 
-	speed(integer) : "Speed of Push" : 40 : "The speed at which to push entities away, in inches / second."
+	speed(integer) : "Speed of Push" : 40 : "The speed at which to push entities away, in units / second."
 	alternateticksfix(float) : "Scale force for alternate ticks" : 0 : "If nonzero, scale the force by this amount when running with alternate ticks. This fixes problems with an overly large force due" + " to the longer frametime on when running with sv_alternateticks 1."
 	triggeronstarttouch[L4D2](boolean) : "Trigger on Start Touch" : 0 : "Trigger on start touch instead of on touch."
 
-	// Inputs
+	// Inputs	
+	input SetSpeed[MBase](float) : "Set the speed at which to push entities away."
+	input SetPushDir[MBase](vector) : "Set the angles indicating the direction to push touched entities."
 	input SetPushDirection[ASW](vector) : "Sets the angles indicating the direction to push touched entities."
-	input SetPushSpeed(integer) : "Set the push speed in inches / second."
+	input SetPushSpeed(integer) : "Set the push speed in units / second."
 	]

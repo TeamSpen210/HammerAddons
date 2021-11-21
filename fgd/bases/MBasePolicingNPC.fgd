@@ -1,0 +1,5 @@
+@BaseClass appliesto(MBase) = MBasePolicingNPC
+	[
+	// Inputs
+	input SetPoliceGoal(target_destination) : "Causes the NPC to be assigned to the specified ai_goal_police. Pass no parameter to clear the goal."
+	]

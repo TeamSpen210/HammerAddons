@@ -1,4 +1,4 @@
-@NpcClass base(BaseNPC, RappelNPC, GrenadeUser) 
+@NpcClass base(BaseNPC, RappelNPC, GrenadeUser, MBasePolicingNPC) 
 	appliesto(EP1, EP2, HL2, P1) 
 	autovis(Entities, NPCs, Combine, Combine Soldier)
 	studio() = npc_combine_s: "Combine Soldier"
@@ -46,11 +46,11 @@
 		2: "Pressure until within 30ft, then normal"
 		3 : "Grenade Happy" [MBase]
 		]
-
-	usemarch[engine](integer) : "Walk Easy" : 0
-	usemarch(choices) : "Walk Easy" : 0 : "When true, will use a variety of more casual walking animations instead of the standard walk. "+
-		"For use in crowds. WARNING: this animation only has a north component. " +
-		"For use under very special circumstances only." =
+	usemarch[engine](integer) : "Use March" : 0
+	usemarch(choices) : "Use March" : "0" : "When true, will use a special walking animation which blends itself between the idle walking animation and the regular walking animation, " +
+		"allowing for a variety of casual walking animations instead of the standard walk. " +
+		"Used in EP2 for the soldiers in the bridge convoy. " +
+		"WARNING: This animation only has a north component, so it can't sidestep or walk backwards. " =
 		[
 		0: "No"
 		2: "Yes"

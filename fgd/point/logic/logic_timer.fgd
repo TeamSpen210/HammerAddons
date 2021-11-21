@@ -12,7 +12,8 @@
 	lowerrandombound(string) : "Minimum Random Interval" : : "If 'Use Random Time' is set, this is the minimum time between timer fires. The time will be a random number between this and the 'Maximum Random Interval'."
 	upperrandombound(string) : "Maximum Random Interval" : : "If 'Use Random Time' is set, this is the maximum time between timer fires. The time will be a random number between the 'Minimum Random Interval' and this."
 	refiretime(string) : "Refire Interval" : : "If 'Use Random Time' isn't set, this is the time between timer fires, in seconds."
-
+	UseBoundsForTimerInputs[MBase](boolean) : "Limit Timer Inputs" : 0 : "Allows the Minumum/Maximum Random Interval keyvalues to limit the total timer value when it receives AddToTimer or SubtractFromTimer inputs."
+	
 	// Inputs
 	input RefireTime(integer) : "Set a new Refire Interval."
 	input ResetTimer(void) : "Reset the timer. It will fire after the Refire Interval expires."

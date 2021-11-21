@@ -77,9 +77,21 @@
 	detailmaterial(material)    : "Detail material file" : "detail/detailsprites"       : "Material for detail sprites to use for drawing detail props"
 	detailmaterial[TF2](material) : "Detail material file" : "detail/detailsprites_2fort" : "Material for detail sprites to use for drawing detail props"
 	
-	vscriptlanguage[engine](integer) : "VScript language" : 0 : "Sets the script language this map should use for entity scripts."
-	vscriptlanguage[MBase](choices) : "VScript language" : 0 : "Sets the script language this map should use for entity scripts." =
+	vscriptlanguage[engine](integer) : "VScript language (Server)" : 0 : "Sets the script language this map should use for entity scripts on the server."
+	vscriptlanguage[MBase](choices) : "VScript language (Server)" : 0 : "Sets the script language this map should use for entity scripts on the server." =
 		[	
+		-1 : "None (Disable VScript)"
+		0 : "Default (Squirrel)"
+		//1 : "GameMonkey (Unsupported)"
+		2 : "Squirrel"
+		//3 : "Lua (Unsupported)"
+		//4 : "Python (Unsupported)"
+		]
+	vscriptlanguage_client[engine](integer) : "VScript language (Client)" : -2 : "Sets the script language this map should use for entity scripts on the client."
+	vscriptlanguage_client[MBase](choices) : "VScript language (Client)" : -2 : "Sets the script language this map should use for entity scripts on the client." =
+		[	
+		-2 : "Use Server language"
+		-1 : "None (Disable VScript)"
 		0 : "Default (Squirrel)"
 		//1 : "GameMonkey (Unsupported)"
 		2 : "Squirrel"

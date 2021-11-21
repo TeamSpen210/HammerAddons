@@ -6,7 +6,7 @@
 		"The model should have a 'nozzle' attachment point, " +
 		"which is where gas will escape and thrust will be produced from."
 	[
-	model(studio) : "World model" : : "The model used for the cannister. The original model is fire_equipment/w_weldtank.mdl."
+	model(studio) : "World model" : "models/props_c17/canister01a.mdl" : "The model used for the cannister. The original model in FGDs is specified as fire_equipment/w_weldtank.mdl, but that does not exist."
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Start Asleep" : 0
@@ -22,7 +22,7 @@
 	fuel(float) : "Fuel Seconds" : "12.0" : "The amount of time that gas leaks from the cannister before being considered empty."
 	rendercolor(color255) : "Smoke Color (R G B)" : "255 255 255"
 	renderamt(integer) : "Smoke Alpha (0 - 255)" : 128
-	gassound(sound) : "Thruster Sound" : "ambient/objects/cannister_loop.wav" : "The sound played when the gas is escaping from the cannister."
+	gassound(sound) : "Thruster Sound" : "PhysicsCannister.ThrusterLoop" : "The sound played when the gas is escaping from the cannister."
 
 	// Inputs
 	input Activate(string) : "Start gas escaping from the cannister."

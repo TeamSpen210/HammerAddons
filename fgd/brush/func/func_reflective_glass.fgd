@@ -7,4 +7,27 @@
 	"and you can only have 1 reflective glass in your view frustum ( + pvs ) at a time. " +
 	"Players will not see their own reflection unless they are in thirdperson mode."
 	[
+	ReflectRenderTarget[engine](string) : "_rt_WaterReflection"
+	ReflectRenderTarget[MBase](choices) : "Reflection render target" : "_rt_WaterReflection" : "Makes this mirror target a specific RT texture for its reflection instead of just _rt_WaterReflection. " +
+		"You can manually type in any RT texture name if you know what you're doing or leave this blank to disable reflection entirely." =
+	[
+		"_rt_WaterReflection" : "_rt_WaterReflection (default)"
+		"_rt_WaterRefraction" : "_rt_WaterRefraction (requires no nearby refract mirrors)"
+		"_rt_Camera" : "_rt_Camera (requires no active point_camera)"
+		"" : "None (disables reflection)"
+	]
+	
+	RefractRenderTarget[engine](string) : "_rt_WaterRefraction"
+	RefractRenderTarget[MBase](choices) : "Refraction render target" : "_rt_WaterRefraction" : "Makes this mirror target a specific RT texture for its refraction instead of just _rt_WaterRefraction. " +
+		"You can manually type in any RT texture name if you know what you're doing or leave this blank to disable refraction entirely." =
+	[
+		"_rt_WaterRefraction" : "_rt_WaterRefraction (default)"
+		"_rt_WaterReflection" : "_rt_WaterReflection (requires no nearby reflect mirrors)"
+		"_rt_Camera" : "_rt_Camera (requires no active point_camera)"
+		"" : "None (disables refraction)"
+	]
+	
+	// Inputs
+	input SetReflectRenderTarget[MBase](string) : "Sets the reflection render target."
+	input SetRefractRenderTarget[MBase](string) : "Sets the refraction render target."
 	]

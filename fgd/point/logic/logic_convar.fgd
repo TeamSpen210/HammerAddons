@@ -9,7 +9,7 @@
 	[
 	// Keys
 	SetConVar(string) : "ConVar" : : "The ConVar to read. Can be serverside or clientside(?)"
-	SetTestValue(string) : "Compare value" : : "The value to compare with the ConVar's value during comparisons. You could use <, !=, etc. at the beginning similar to a Response System criterion."
+	SetTestValue(string) : "Compare value" : : "The value to compare with the ConVar's value during comparisons. This keyvalue supports matchers (<, >, !=, etc.)."
 	
 	// Inputs
 	input SetConVar(string) : "Sets the ConVar whose variable will be retrieved."

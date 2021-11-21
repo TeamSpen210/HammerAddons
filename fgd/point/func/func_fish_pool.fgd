@@ -4,6 +4,21 @@
 = func_fish_pool: "Creates a school of interactive fish that swim near this entity."
 	[
 	model(studio) : "World model" : "models/Junkola.mdl"
+	skin[MBase](integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. " +
+		"Set this to a number other than 0 to use that skin instead of the default."
+	
 	fish_count(integer) : "Fish Count" : 10 : "Number of Fish in this Pool"
 	max_range(float) : "Max Range" : 150 : "How far away a Fish can wander (max 255)"
+
+	LoudPanicRange[MBase](float) : "Loud Panic Range" : 500 : "How far away an event has to be to make the fish in this pool panic."
+	QuietPanicRange[MBase](float) : "Quiet Panic Range" : 75 : "How far away a quiet event (a footstep) has to be to make the fish in this pool panic."
+	
+	// Inputs
+	input SpawnFish[MBase](void) : "Spawns an additonal fish. This ignores the fish count keyvalue."
+	input PanicLoudFromPoint[MBase](vector) : "Causes a loud panic event at the specified location vector."
+	input PanicQuietFromPoint[MBase](vector) : "Causes a quiet panic event at the specified location vector."
+	input Skin[MBase](integer) : "Changes the fish skin to the specified number."
+	
+	// Outputs
+	output OnSpawnFish[MBase](ehandle) : "Fires when a fish is spawned, passing the fish as the activator."
 	]

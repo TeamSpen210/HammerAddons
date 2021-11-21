@@ -1,0 +1,4 @@
+// For classes which didn't support rappeling before, but now do in Mapbase.
+@BaseClass base(RappelNPC) appliesto(MBase) = MBaseRappel
+	[
+	]

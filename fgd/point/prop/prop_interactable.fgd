@@ -1,5 +1,6 @@
 @PointClass base(prop_dynamic_base) 
 	appliesto(MBase)
+	wirebox(use_mins, use_maxs)
 	studioprop()
 = prop_interactable:
 	"A prop designed to be interacted with like a button. " +
@@ -26,7 +27,11 @@
 	OutSequence(string) : "Out Sequence" : "" : "Optional sequence to play after the button was interacted with and the cooldown is finished, " +
 		"representing a button coming back 'out' after an 'in' animation."
 	LockedSequence(string) : "Locked Sequence" : "" : "Optional sequence to play when the prop_interactable is interacted with while locked."
+		
+	use_mins(vector) : "+USE Mins" : "-0 -0 -0" : "Optional box for only permitting +USE interactions within. The prop_interactable should not change its angles while this is used."
+	use_maxs(vector) : "+USE Maxs" : "0 0 0" : "Optional box for only permitting +USE interactions within. The prop_interactable should not change its angles while this is used."
 	
+
 	// Inputs
 	input Lock(void) : "Locks this prop_interactable, making it uninteractable."
 	input Unlock(void) : "Unlocks this prop_interactable, making it interactable."

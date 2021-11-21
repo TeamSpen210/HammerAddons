@@ -1,0 +1,6 @@
+@PointClass 
+	base(MBaseCustomScriptedWeapon) 
+	appliesto(MBase)
+	studioprop() 
+	sphere(fademindist) sphere(fademaxdist) 
+= weapon_custom_scripted1: "Scripted Weapon 1" []

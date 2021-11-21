@@ -65,7 +65,8 @@
 	output PlayerDied(void)             : "Fires when the player dies."
 	output PlayerDamaged[MBase](void)   : "Fires when the player is damaged."
 	output PlayerMissedAR2AltFire(void)	: "Player fired an AR2 combine ball that didn't kill any enemies."
-	
+	output OnPlayerSpawn[MBase](void) : "Fires when the player respawns, if 'Allow SP respawn' is enabled in hl2_gamerules."
+
 	output OnStartSlowingTime[!TF2, ASW](void) : "Fired when a Portal player initiates slow time."
 	output OnStopSlowingTime[!TF2, ASW](void) : "Fired when a Portal player stops slowing time."
 	

@@ -1,0 +1,40 @@
+@SolidClass base(func_brush) 
+	appliesto(MBase)
+= func_fake_worldportal:
+	"Used to produce perfectly reflective glass that renders world + entities. " +
+	"Typically, you want your glass brush to have nodraw on all non-reflective surfaces " +
+	"and you want to use a shader like lightmappedreflective in your material applied " +
+	"to the non-nodraw surfaces. See hl2/materials/glass/reflectiveglass001.vmt for an example. " +
+	"NOTE: currently, you cannot use reflective glass in scenes with water, and you can only " +
+	"have 1 reflective glass in your view frustum ( + pvs ) at a time."
+	[
+	target(target_destination) : "Target Plane" : "" : "Target entity to render from."
+	PlaneAngles(angle) : "Plane Direction (Pitch Yaw Roll)" : "0 0 0" : "Angles indicating the direction to look in. (added onto target entity's angles)"
+	
+	SkyMode[engine](integer) : "Sky Mode" : 2
+	SkyMode(choices) : "Sky Mode" : 2 : "How to draw the sky through this view." =
+		[
+		2 : "Draw sky texture"
+		1 : "Draw 3D skybox"
+		]
+	
+	scale(integer) : "View scale" : 0 : "Scales the view, similar to sky_camera scale."
+	
+	RenderTarget[engine](string) : "Render target" : ""
+	RenderTarget(choices) : "Render target" : "" : "Makes this fake world portal target a specific RT texture instead of just _rt_WaterReflection. " +
+		"You can manually type in any RT texture name if you know what you're doing." =
+		[
+		"" : "_rt_WaterReflection (default)"
+		"_rt_Camera" : "_rt_Camera (requires no active point_camera)"
+		"_rt_WaterRefraction" : "_rt_WaterRefraction (requires no nearby refract mirrors)"
+		]
+	
+	FogController(target_destination) : "Fog Controller" : "" : "Makes this fake world portal use the properties of a specific env_fog_controller when rendering the scene. If no fog controller is specified, the scene will use the local player's fog parameters."
+	
+	// Inputs
+	input SetTargetPlane(target_destination) : "Sets the target plane."
+	input SetTargetPlaneAngle(vector) : "Sets the target plane direction."
+	input SetSkyMode(integer) : "Sets the sky mode. NOTE: 2 = draw sky texture, 1 = draw 3D skybox!"
+	input SetRenderTarget(string) : "Sets the render target."
+	input SetFogController(target_destination) : "Sets the fog controller."
+	]

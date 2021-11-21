@@ -24,6 +24,7 @@
 	// Inputs
 	input LightOn(void) : "Turn the spotlight on."
 	input LightOff(void) : "Turn the spotlight off"
+	input LightToggle[MBase](void) : "Toggles the spotlight on or off"
 	input SetColor[since_ASW, GMod](color255) : "Change the color of the spotlight."
 	input ForceUpdate[since_ASW, GMod](void) : "Force an update of the spotlight position and orientation."
 

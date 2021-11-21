@@ -1,4 +1,4 @@
-@NpcClass base(BaseNPC, RappelNPC, MBaseGrenadeUser)
+@NpcClass base(BaseNPC, RappelNPC, MBaseGrenadeUser, MBasePolicingNPC)
 	appliesto(EP1, EP2, HL2, P1) 
 	autovis(Entities, NPCs, Combine, MetroPolice)
 	studio("models/Police.mdl") = npc_metropolice: "MetroPolice"
@@ -43,7 +43,7 @@
 	// Inputs
 	input DisableManhackToss[MBase](void) : "Disables manhack toss"
 	input EnableManhackToss(void) : "Enables manhack toss (which had been disabled by the spawnflag)"
-	input SetPoliceGoal(string) : "Causes the NPC to police the area defined by an ai_goal_police"
+	input SetPoliceGoal[!MBase](string) : "Causes the NPC to police the area defined by an ai_goal_police"
 	input ActivateBaton(void) : "Set the baton to active"
 
 	input AdministerJustice[MBase](void) : "Orders this NPC to administer justice to the player as if they hit this NPC with a can or something. " +

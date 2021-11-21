@@ -37,6 +37,12 @@
 	enemyfilter[MBase](filterclass) : "Enemy Filter" : : "Makes this mine target specific NPCs as enemies. It will also use its default targets unless ''Filter Exclusive'' is enabled."
 	friendfilter[MBase](filterclass) : "Friend Filter" : : "Makes this mine target specific NPCs as friends. It will also use its default targets unless ''Filter Exclusive'' is enabled."
 	FilterExclusive[MBase](boolean): "Filter Exclusive" : 0 : "If enabled, the filters will be the exclusive factor in determining whether a mine is friendly or hostile towards a target. Entities that pass neither filter will be ignored by the mine."
+	LOSMask[engine](integer) : "LOS flags" : 16395
+	LOSMask[MBase](choices) : "LOS method" : 16395 : "Controls what the mine can't see through when looking for enemies. Useful for when you want mines to see through grates and fences." =
+	[
+		16395 : "Default - Solid entities (MASK_SOLID_BRUSHONLY)"
+		16449 : "NPC LOS (MASK_BLOCKLOS)"
+	]
 
 	// Inputs
 	input Disarm(void) : "Disarm this mine (open hooks and shut off) if not placed by player."

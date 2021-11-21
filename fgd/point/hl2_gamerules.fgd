@@ -34,8 +34,7 @@
 	SetLegacyFlashlight[engine](integer) : "Legacy Flashlight" : 0
 	SetLegacyFlashlight(choices) : "Legacy Flashlight" : : "Sets whether the EP2 flashlight or the original flashlight from HL2 and Episode One should be used. " +
 		"'No' means use the EP2 version, " +
-		"'Yes' means use the original flashlight, and 'Default' doesn't change anything. " +
-		"This is pretty much only relevant to the Episodic version." =
+		"'Yes' means use the original flashlight, and 'Default' doesn't change anything. " =
 		[
 		"" : "Default"
 		0 : "No"
@@ -51,6 +50,8 @@
 		3 : "Allow pickup, but never apply energy"
 		]
 
+	SetAllowSPRespawn(boolean) : "Allow SP respawn" : 0 : "Allows players to respawn in singleplayer instead of being forced to reload the last save upon dying. Use OnPlayerSpawn in logic_playerproxy to fire an output each time the player respawns."
+
 	//input EpisodicOn(void) : "Turns on Episodic mode."
 	//input EpisodicOff(void) : "Turns off Episodic mode."
 	//input SetFriendlyFire(integer) : "Sets the global friendly fire override."
@@ -58,4 +59,5 @@
 	input SetPlayerSquadAutosummon(bool) : "Sets player squad autosummon."
 	input SetLegacyFlashlight(bool) : "Sets legacy flashlight."
 	input SetStunstickPickupBehavior(bool) : "Sets stunstick pickup behavior."
+	input SetAllowSPRespawn(bool) : "Sets SP respawning."
 	]

@@ -18,6 +18,8 @@
 		2: "None"
 		]
 
+	remap_vecline[MBase](boolean) : "Remap Vector Lines" : 0 : "Remaps vecline keyvalues to the instance's origin. vecline is a type of vector which displays a line back to the entity's origin. This is often used on entities like phys_hinge for displaying an axis."
+
 	spawnpositionname[L4D2](string) : "Spawn Position Name" : : "The name of the spawn position created when an instance is exported to the entity layer."
 	propagate_fixup[L4D2](boolean) : "Fixup Nested Instances" : 0 : "All nested instances will follow this instance's fixup rules. Any fixup rules in nested instances will be ignored."
 

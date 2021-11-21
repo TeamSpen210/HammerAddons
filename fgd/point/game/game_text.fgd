@@ -38,14 +38,15 @@
 		"stored in channels. Select which channel this text should be placed in, " +
 		"which will overwrite any active message already in that channel." =
 		[
-		0: "Channel 0 (unused)"
+		0: "Channel 0 (warning: may be used by some HUD elements)"
 		1: "Channel 1 (medium text size)"
 		2: "Channel 2 (small text size)"
 		3: "Channel 3 (large text size)"
 		4: "Channel 4 (medium text size)"
-		5: "Channel 5 (unused)"
+		5: "Channel 5 (warning: may be used by some HUD elements)"
 		]
-
+	autobreak(boolean) : "Automatically break lines" : 0 : "Allows text to automatically shift to the next line whenever it can't fit on a player's screen. " +
+		"This accounts for a player's aspect ratio and adds hyphens when necessary." 
 	// Inputs
 	input Display(void) : "Display the message text."
 	input SetText[since_ASW, MBase](string) : "Set the text to display."
