@@ -9,7 +9,7 @@ line(255 255 255, targetname, target) = BaseHelicopter
 		32: "No Rotorwash" : 0
 		64: "Await Input" : 0
 		]
-	AllowsAnyDamage[MBase](boolean) : "Allows any damage" : 0 : "Allows this NPC to take any amount of any type of damage, including bullet or melee damage. " + 
+	AllowAnyDamage[MBase](boolean) : "Allow Any Damage" : 0 : "Allows this NPC to take any amount of any type of damage, including bullet or melee damage. " + 
 		"This is supposed to allow this NPC to be taken down in a previously impossible way and should be used with an actual damage filter."
 
 

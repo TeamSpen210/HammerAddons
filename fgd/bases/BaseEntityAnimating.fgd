@@ -63,7 +63,7 @@
 		2: "Cache it = render only once"
 		]
 	shadowdepthnocache[engine](integer): "": 0
-	disableflashlight[since_L4D](boolean) : "Disable flashlight" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
+	disableflashlight[since_L4D, MBase](boolean) : "Disable flashlight" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
 
 	linedivider_anim[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
@@ -83,8 +83,8 @@
 	
 	input DisableShadow(void) : "Allows the entity to draw a render target (dynamic) shadow."
 	input EnableShadow(void) : "Prevents the entity from drawing a render target (dynamic) shadow."
-	input DisableReceivingFlashlight[since_L4D](void) : "This object will not recieve light or shadows from projected textures (flashlights)."
-	input EnableReceivingFlashlight[since_L4D](void) : "This object may recieve light or shadows from projected textures (flashlights)."
+	input DisableReceivingFlashlight[since_L4D, MBase](void) : "This object will not recieve light or shadows from projected textures (flashlights)."
+	input EnableReceivingFlashlight[since_L4D, MBase](void) : "This object may recieve light or shadows from projected textures (flashlights)."
 	
 	input AlternativeSorting[SINCE_EP1](boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
 	input SetModelScale[EP1, EP2, MESA, !GMod](vector) : "Takes two values separated by a space. The first is the target model scale. " +

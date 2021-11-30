@@ -44,12 +44,15 @@
 		16449 : "NPC LOS (MASK_BLOCKLOS)"
 	]
 
+	SetUnavoidable[MBase](boolean) : "Unavoidable" : 0 : "If true, this mine will not be avoided by companion NPCs."
+
 	// Inputs
 	input Disarm(void) : "Disarm this mine (open hooks and shut off) if not placed by player."
 	input Bounce[MBase](void) : "Causes this mine to instantly bounce straight up into the air."
 	input BounceAtTarget[MBase](target_destination) : "Causes this mine to bounce at the specified entity, regardless of distance."
 	input SetEnemyFilter[MBase](target_destination) : "Changes this mine's enemy filter to the named filter."
 	input SetFriendFilter[MBase](target_destination) : "Changes this mine's friend filter to the named filter."
+	input SetUnavoidable[MBase](bool) : "Sets whether this mine will not be avoided by companion NPCs."
 
 	// Outputs
 	output OnPulledUp(void) : "Fires when this mine is uprooted with physgun."

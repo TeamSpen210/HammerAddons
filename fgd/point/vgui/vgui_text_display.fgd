@@ -1,0 +1,46 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(MBase) 
+	studioprop("models/editor/vgui_arrows.mdl") 
+	sphere(textsize) 
+= vgui_text_display: "Displays a VGUI text label oriented in the world. Can be considered Mapbase's equivalent of point_worldtext. The panel itself can be displayed with the 'r_vguitext_bg' cvar."
+	[
+	spawnflags(flags) =
+		[
+		1: "Start Disabled" : 0
+		]
+
+	message(string) : "Entity Message"
+
+	alignment[engine](integer) : "Text Alignment" : 7
+	alignment(choices) : "Text Alignment" : 7 : "The text's alignment in relation to the panel size. " +
+		"With 'South', the text will be centered between the origin and the sphere's left bound relative to the angles the text is facing." =
+		[
+			0 : "[0] Northwest"
+			1 : "[1] North"
+			2 : "[2] Northeast"
+			3 : "[3] West"
+			4 : "[4] Center"
+			5 : "[5] East"
+			6 : "[6] Southwest"
+			7 : "[7] South"
+			8 : "[8] Southeast"
+		]
+	font(string) : "Font" : : "The font to use from resource/ClientScheme.res. A blank value is equivalent to the default font. Not all fonts may function. Commonly defined fonts include 'DefaultSmall' and 'Trebuchet18'/'Trebuchet24'."
+	resolution(integer) : "Panel Resolution" : 200 : "The number of pixels available to the text. The higher the resolution is, the smaller the text will be. " +
+		"(NOTE: Changing the resolution with inputs later will scale the screen itself.)"
+	textsize(float) : "Panel Size" : 100 : "The size of the text panel in the world. This is previewed with a sphere, but it actually extends 'north-west' relative to the direction it's facing. " +
+		"Due to the limited in-editor previewing abilities, it's recommended to use the 'SetPanelSize' input in-game with the 'ent_fire' command to fine-tune this value. " +
+			"Use 'r_vguitext_bg' to display the panel in-game."
+	
+	renderamt(integer) : "Alpha (0 - 255)" : 255 : "The opacity of the text."
+	rendercolor(color255) : "Color" : "255 255 255"
+
+	// Inputs
+	input Enable(void) : "Start displaying the message text."
+	input Disable(void) : "Stop displaying the message text."
+	input Toggle(void) : "Toggle displaying the message text."
+	input SetMessage(string) : "Set the message text."
+	input SetTextAlignment(integer) : "Set text alignment by enum number."
+	input SetResolution(integer) : "Set the resolution. Might affect screen size."
+	input SetPanelSize(float) : "Set the text panel size."
+	]

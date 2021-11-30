@@ -14,6 +14,7 @@
 		16384: "Motion Disabled" : 0
 		32768: "Allow stretch" : 0
 		65536: "Start asleep" : 0
+		131072 : "Fixed constraints (make statue)" : 0 [MBase]
 		]
 	MimicName[MESA](string) : "Character Manifest Mimic Name" : "" : "Choose a name or a classname from the character manifest to dress the ragdoll."
 	health[MESA](integer) : "Health" : 100 : "The amount of damage the ragdoll takes before gibbing."

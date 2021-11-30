@@ -16,6 +16,7 @@
 		524288: "Ignore avoid spheres+boxes" : 0
 		1048576: "More aggressive attacks" : 0
 		2097152: "Cast long shadow" : 0
+		4194304 : "Aim at enemies even when gun is off" : 0 [MBase]
 		]
 
 	initialspeed(float) : "Initial Speed" : 0

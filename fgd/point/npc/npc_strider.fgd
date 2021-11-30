@@ -42,6 +42,7 @@
 	input DisableAggressiveBehavior(void) : "Stop using aggressive behavior. (Revert to normal)"
 	input StopShootingMinigunForSeconds(float) : "Stop shooting the minigun for a period of time (specify seconds as parameter)"
 	input DisableCrouch(void) : "Prevent the Strider from crouching"
+	input EnableCrouch[MBase](void) : "Allow the Strider to crouch again if it was prevented before"
 	input DisableMoveToLOS(void) : "Prevent the Strider from seeking Line of Sight to target. (Hold position)"
 	input DisableCollisionWith(string) : "Disable collision with a given object."
 	input EnableCollisionWith(string) : "Reenable collision with a given object."

@@ -57,6 +57,8 @@
 	landmark[MBase](target_destination) : "Local Destination Landmark" : : "If specified, then sounds offset from the speaker by their initial offset from this landmark. Only applicable in Speaker mode."
 	
 	PitchScale[MBase](float) : "Pitch Scale" : "1.0" : "Scales the pitch of transmitted sounds. Only applicable in Speaker mode."
+	VolumeScale[MBase](float) : "Volume Scale" : "1.0" : "Scales the volume of transmitted sounds. Only applicable in Speaker mode."
+	
 	channel[engine](integer) : "Channel" : 6 : "Sets the channel which sounds should transmit as. Only applicable in Speaker mode."
 	channel[MBase](choices)  : "Channel" : 6 : "Sets the channel which sounds should transmit as. Only applicable in Speaker mode." =
 		[

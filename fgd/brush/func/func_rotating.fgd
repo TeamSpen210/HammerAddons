@@ -22,6 +22,10 @@
 		]
 
 	dmg(integer) : "Blocking Damage" : 0 : "Damage done to any entity that blocks the rotation, per frame."
+
+	minpitch[MBase](integer) : "Minimum Sound Pitch" : 30 : "Minimum pitch for the rotating sound when it plays based on the speed of the rotating brush."
+	maxpitch[MBase](integer) : "Maximum Sound Pitch" : 100 : "Maximum pitch for the rotating sound when it plays based on the speed of the rotating brush."
+
 	solidbsp[engine](boolean) : "Use SOLID_BSP" : 0
 	solidbsp(choices) : "Solid Type" : 0 =
 		[
