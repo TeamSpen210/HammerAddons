@@ -2,7 +2,7 @@
 from pathlib import Path
 from typing import Callable, Dict, Tuple, List
 
-from srctools import FileSystem, VMF, Output, Entity, FGD
+from srctools import EmptyMapping, FileSystem, Property, VMF, Output, Entity, FGD
 from srctools.bsp import BSP
 from srctools.logger import get_logger
 from srctools.packlist import PackList
@@ -38,6 +38,7 @@ class Context:
         self.fgd = fgd or FGD.engine_dbase()
         self.game = game
         self.studiomdl = studiomdl_loc
+        self.config = Property.root()
 
         self._io_remaps: Dict[Tuple[str, str], Tuple[List[Output], bool]] = {}
         self._ent_code: Dict[Entity, str] = {}
@@ -111,6 +112,7 @@ def run_transformations(
     bsp: BSP,
     game: Game,
     studiomdl_loc: Path=None,
+    config: Dict[str, Property]=EmptyMapping,
 ) -> None:
     """Run all transformations."""
     context = Context(filesys, vmf, pack, bsp, game, studiomdl_loc=studiomdl_loc)
@@ -120,6 +122,11 @@ def run_transformations(
         key=lambda tup: TRANSFORM_PRIORITY[tup[0]],
     ):
         LOGGER.info('Running "{}"...', func_name)
+        try:
+            context.config = config[func_name.casefold()]
+        except KeyError:
+            context.config = Property(func_name, [])
+        LOGGER.debug('Config: {!r}', context.config)
         func(context)
 
     if context._ent_code:

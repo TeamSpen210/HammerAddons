@@ -156,10 +156,21 @@ def main(argv: List[str]) -> None:
             else:
                 LOGGER.warning('No outputs in map, could not determine BSP I/O format!')
             LOGGER.warning('Set "use_comma_sep" in srctools.vdf.')
-            use_comma_sep = False  # Kinda arbitary.
+            use_comma_sep = False  # Kinda arbitrary.
+    transform_conf = {
+        prop.name: prop
+        for prop in conf.get(Property, 'transform_opts')
+    }
 
     LOGGER.info('Running transforms...')
-    run_transformations(bsp_file.ents, fsys, packlist, bsp_file, game_info, studiomdl_loc)
+    run_transformations(
+        bsp_file.ents,
+        fsys, packlist,
+        bsp_file,
+        game_info,
+        studiomdl_loc,
+        transform_conf,
+    )
 
     if studiomdl_loc is not None and args.propcombine:
         decomp_cache_path = conf.get(str, 'propcombine_cache')

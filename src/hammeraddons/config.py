@@ -299,4 +299,10 @@ OPTIONS = [
         The transforms folder inside the postcompiler folder is also always
         loaded.
     """),
+    Opt(
+        'transform_opts', TYPE.RAW,
+        """Specify additional options specific to transforms. Each key here is the name of the 
+        transform, and the value is then decided by that transform.
+        """
+    ),
 ]
