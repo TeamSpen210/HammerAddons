@@ -1,5 +1,5 @@
 """Instance-related improvements."""
-from typing import Dict, Tuple
+from typing import Dict, Optional, Tuple
 
 from srctools import Entity
 from srctools.bsp_transform import trans, Context
@@ -11,20 +11,53 @@ LOGGER = get_logger(__name__)
 RELAY_MAX = 30 + 1
 
 
-@trans('Proxy limits')
-def proxy_limits(ctx: Context):
-    """Duplicate proxies when required to allow infinite instance IO."""
+@trans('func_instance_io_proxy')
+def io_proxy_tweaks(ctx: Context) -> None:
+    """Tweak proxy relays to fix issues.
 
+    This either collapses them entirely into callers, or keeps them and duplicates
+    them when required to avoid using too many outputs. Collapsing eliminates the
+    redundant entity use, but means you can't see the instance boundary in 'developer 2'
+    displays or ent_fire the command yourself. It also can duplicate outputs, if many entities
+    are triggering the instance.
+
+    Options:
+        * collapse: If set, remove func_instance_io_proxy entities from the map
+    """
+    if ctx.config.bool('collapse'):
+        collapse_proxy_relays(ctx)
+    else:
+        duplicate_proxy_relays(ctx)
+
+
+def collapse_proxy_relays(ctx: Context) -> None:
+    """Collapse proxies into their callers."""
+    for proxy in list(ctx.vmf.by_class['func_instance_io_proxy']):
+        proxy_name = proxy['targetname']
+        proxy.remove()
+        for out in proxy.outputs:
+            if out.output.casefold().startswith('onproxyrelay'):
+                ctx.add_io_remap(proxy_name, out)
+            else:
+                LOGGER.warning(
+                    '{}:{} is not a proxyrelay output?',
+                    proxy_name,
+                    out.output,
+                )
+
+
+def duplicate_proxy_relays(ctx: Context) -> None:
+    """Duplicate proxies when required to allow infinite instance IO."""
     # Proxy name, ProxyRelayX -> new name, new index
-    new_names = {}  # type: Dict[Tuple[str, int], Tuple[str, int]]
+    new_names: Dict[Tuple[str, int], Tuple[str, int]] = {}
 
     # First edit proxy outputs, then edit everything else.
     for orig_proxy in list(ctx.vmf.by_class['func_instance_io_proxy']):
         # Set to max, so the next will be generated immediately.
         cur_num = RELAY_MAX
-        newest_proxy = None  # type: Entity
+        newest_proxy: Optional[Entity] = None
         orig_proxy.remove()  # Remove the original, add new ones.
-        proxy_nums = {}  # type: Dict[int, Tuple[Entity, int]]
+        proxy_nums: Dict[int, Tuple[Entity, int]] = {}
 
         proxy_name = orig_proxy['targetname']
 
