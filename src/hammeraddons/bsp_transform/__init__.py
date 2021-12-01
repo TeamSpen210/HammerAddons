@@ -138,6 +138,8 @@ def run_transformations(
 
     if context._io_remaps:
         LOGGER.info('Remapping outputs...')
+        for (name, inp_name), outs in context._io_remaps.items():
+            LOGGER.debug('Remap {}.{} = {}', name, inp_name, outs)
         for ent in vmf.entities:
             todo = ent.outputs[:]
             # Recursively convert only up to 500 times.
@@ -170,9 +172,9 @@ def run_transformations(
                 todo = deferred
             else:
                 LOGGER.error(
-                    'Entity "{}" ({}) has infinite loop when expanding '
+                    'Entity "{}" ({}) @ {} has infinite loop when expanding '
                     ' compiler outputs to real ones! Final output list: \n{}',
-                    ent['targetname'], ent['classname'],
+                    ent['targetname'], ent['classname'], ent['origin'],
                     '\n'.join(['* {}\n'.format(out) for out in ent.outputs])
                 )
 
