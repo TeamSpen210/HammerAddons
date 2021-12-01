@@ -18,7 +18,7 @@ OUT_FLICK_ON = 'OnUser4'
 
 @trans('comp_flicker')
 def comp_flicker(ctx: Context) -> None:
-    """When triggered, fres on/off inputs repeatedly to simulate a flicker-on effect."""
+    """When triggered, fires on/off inputs repeatedly to simulate a flicker-on effect."""
     for ent in ctx.vmf.by_class['comp_flicker']:
         ent['classname'] = 'info_target'
         ent_name = ent['targetname']

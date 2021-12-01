@@ -1,7 +1,7 @@
 @PointClass
 	appliesto(srctools, -engine)
 	base(BaseEntityPoint)
-	iconsprite("editor/comp_numeric_transition") 
+	iconsprite("editor/comp_flicker") 
 	line(255 255 255, targetname, target_mdl)
 = comp_flicker: "Fires on/off inputs repeatedly to simulate a flicker-on effect. " +
 	"This converts to an info_target, and uses all of the FireUserX inputs/outputs."

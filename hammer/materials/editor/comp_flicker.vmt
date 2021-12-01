@@ -1,0 +1,8 @@
+Sprite
+{
+	$baseTexture "editor/comp_flicker"
+	$spriteorientation "vp_parallel"
+	$spriteorigin "[ 0.50 0.5 ]"
+	$spriterendermode 2
+	$no_fullbright 1
+}
