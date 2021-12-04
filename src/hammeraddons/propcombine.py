@@ -1109,7 +1109,7 @@ def combine(
             dump_vmf.export(f)
 
     LOGGER.info(
-        'Combined {} props into {}:\n - {} grouped models\n - {} ineligable\n - {} failed to combine',
+        'Combined {} props into {}:\n - {} grouped models\n - {} ineligible\n - {} failed to combine',
         prop_count,
         len(final_props),
         group_count,

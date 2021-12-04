@@ -82,7 +82,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
     def __enter__(self) -> 'ModelCompiler[ModelKey, InT, OutT]':
         """Load the previously compiled models and prepare for compiles."""
         # Ensure the folder exists.
-        os.makedirs(self.model_folder, exist_ok=True)
+        os.makedirs(self.model_folder_abs, exist_ok=True)
         data: List[Tuple[ModelKey, str, OutT]]
         version = 0
         try:
@@ -171,7 +171,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
             * The args parameter, which can be anything. This is useful for
               passing data that can't be pickled, but the function still needs.
         It should create "mdl.qc" in the folder, and then
-        StudioMDL will be called on the model to comile it. The return value will
+        StudioMDL will be called on the model to compile it. The return value will
         be passed back from this function.
 
         If the model key is None, a new model will always be compiled.
