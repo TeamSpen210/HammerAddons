@@ -82,7 +82,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
     def __enter__(self) -> 'ModelCompiler[ModelKey, InT, OutT]':
         """Load the previously compiled models and prepare for compiles."""
         # Ensure the folder exists.
-        os.makedirs(self.model_folder, exist_ok=True)
+        os.makedirs(self.model_folder_abs, exist_ok=True)
         data: List[Tuple[ModelKey, str, OutT]]
         version = 0
         try:
