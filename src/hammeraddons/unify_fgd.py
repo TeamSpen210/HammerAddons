@@ -110,6 +110,7 @@ TAGS_SPECIAL = {
   'ENGINE',  # Tagged on entries that specify machine-oriented types and defaults.
   'SRCTOOLS',  # Implemented by the srctools post-compiler.
   'PROPPER',  # Propper's added pseudo-entities.
+  'COMPLETE',  # KVs that exist, but aren't often or usually used.
   'BEE2',  # BEEmod's templates.
 }
 
