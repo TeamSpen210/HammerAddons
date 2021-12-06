@@ -1,5 +1,5 @@
 @PointClass base(prop_static) 
-	appliesto(!engine)
+	appliesto(!engine, +complete)
 = static_prop: "Alternate name for prop_static."
 	[
 	]

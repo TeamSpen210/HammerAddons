@@ -41,10 +41,10 @@
 	solid(choices) : "Collisions" : 6 =
 		[
 		0: "Not Solid"
-		1: "Use BSP (QPhysics)"
+		1: "Use BSP (QPhysics)" [complete]
 		2: "Use Bounding Box"
-		3: "Use Oriented Bounding Box"
-		4: "Use Oriented Bounding Box, constrained to Yaw only"
+		3: "Use Oriented Bounding Box" [complete]
+		4: "Use Oriented Bounding Box, constrained to Yaw only" [complete]
 		6: "Use VPhysics"
 		]
 
@@ -61,7 +61,7 @@
 
 	// DXlevel is used in v6 and 7 only, the replaced by cpu/gpu for 8+.
 
-	mindxlevel[since_TF2, until_L4D2, MESA](choices) : "Minimum DX Level" : 0 = 
+	mindxlevel[+complete, since_TF2, until_L4D2, MESA](choices) : "Minimum DX Level" : 0 = 
 		[
 		0 : "default (lowest)"
 		70 : "dx7"
@@ -70,7 +70,7 @@
 		90 : "dx9 SM2.0"
 		95 : "dx9 SM3.0"
 		]
-	maxdxlevel[since_TF2, until_L4D2, MESA](choices) : "Maximum DX Level" : 0 = 
+	maxdxlevel[+complete, since_TF2, until_L4D2, MESA](choices) : "Maximum DX Level" : 0 = 
 		[
 		0 : "default (highest)"
 		60 : "dx6"
@@ -81,7 +81,7 @@
 		95 : "dx9 SM3.0"
 		]
 
-	mincpulevel[since_L4D2](choices) : "Minimum CPU Level" : 0 =
+	mincpulevel[+complete, since_L4D2](choices) : "Minimum CPU Level" : 0 =
 		[
 		0: "default (low)"
 		1: "low"
@@ -89,7 +89,7 @@
 		3: "high"
 		]
 
-	maxcpulevel[since_L4D2](choices) : "Maximum CPU Level" : 0 =
+	maxcpulevel[+complete, since_L4D2](choices) : "Maximum CPU Level" : 0 =
 		[
 		0: "default (high)"
 		1: "low"
@@ -97,7 +97,7 @@
 		3: "high"
 		]
 
-	mingpulevel[since_L4D2](choices) : "Minimum GPU Level" : 0 =
+	mingpulevel[+complete, since_L4D2](choices) : "Minimum GPU Level" : 0 =
 		[
 		0: "default (very low)"
 		1: "very low"
@@ -106,7 +106,7 @@
 		4: "high"
 		]
 
-	maxgpulevel[since_L4D2](choices) : "Maximum GPU Level" : 0 =
+	maxgpulevel[+complete, since_L4D2](choices) : "Maximum GPU Level" : 0 =
 		[
 		0: "default (high)"
 		1: "very low"
@@ -115,7 +115,7 @@
 		4: "high"
 		]
 
-	disablex360[since_L4D2](boolean) : "Disable on Xbox 360" : 0
+	disablex360[+complete, since_L4D2](boolean) : "Disable on Xbox 360" : 0
 
 	linedivider_light[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 

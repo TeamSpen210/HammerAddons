@@ -112,8 +112,8 @@
 	input Enable(void) : "Enable the button, allowing it to be USEed."
 	input Disable(void) : "Disable the button, making it silently ignore the player."
 
-	input _DisableUpdateTarget(void): "Prevent the Position output from firing. Used when lock jiggling is triggered."
-	input _EnableUpdateTarget(void): "Allow the Position output to fire again. Used when lock jiggling is triggered."
+	input _DisableUpdateTarget[complete](void): "Prevent the Position output from firing. Used when lock jiggling is triggered."
+	input _EnableUpdateTarget[complete](void): "Allow the Position output to fire again. Used when lock jiggling is triggered."
 
 	// Outputs
 	output Position(integer) : "Fired whenever the button moves. " +
