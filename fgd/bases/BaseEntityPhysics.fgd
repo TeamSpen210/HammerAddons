@@ -8,11 +8,11 @@
 	solid(choices) : "Collisions" : 6 : "Method of collision for this entity. Can be changed at runtime with AddOutput." =
 		[
 		0: "None"
-		1: "BSP (QPhysics)"
+		1: "BSP (QPhysics)" [complete]
 		2: "Bounding Box"
 		3: "Oriented Bounding Box"
 		4: "Oriented Bounding Box, constrained to Yaw only"
-		5: "Custom (defined per-entity, if not defined the entity will have bizarre collision behavior)"
+		5: "Custom (defined per-entity, if not defined the entity will have bizarre collision behavior)" [complete]
 		6: "VPhysics"
 		]
 

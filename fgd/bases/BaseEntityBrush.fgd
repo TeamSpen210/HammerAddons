@@ -32,17 +32,18 @@
 
 	// We could have wirebox() for these, but don't. That messes up if these are unset.
 	// This is a pretty advanced feature, so it's fine that it has no preview.
-	mins(vector) : "Minimum Bounding Box Size" : : "Co-ordinate of the minimum bounding box corner, relative to entity origin. " +
+	mins[complete](vector) : "Minimum Bounding Box Size" : : "Co-ordinate of the minimum bounding box corner, relative to entity origin. " +
 		"The bounding box is drawn from this corner to the other one. " +
 		"Requires Bounding Box collisions (solid 2) to be used. " +
 		"Can be used to overwrite the collision shape of a brush, although it can only be a cuboid. Can be AddOutputed to change shape at runtime."
-	maxs(vector) : "Maximum Bounding Box Size" : : "Co-ordinate of the maximum bounding box corner, relative to entity origin. " +
+	maxs[complete](vector) : "Maximum Bounding Box Size" : : "Co-ordinate of the maximum bounding box corner, relative to entity origin. " +
 		"The bounding box is drawn from this corner to the other one. " +
 		"Requires Bounding Box collisions (solid 2) to be used. " +
 		"Can be used to overwrite the collision shape of a brush, although it can only be a cuboid. Can be AddOutputed to change shape at runtime."
 
+	// Ent usually configures this.
 	solid[engine](integer) : "Collisions" : 6
-	solid(choices) : "Collisions" : 6 : "Method of collision for this entity. Can be changed at runtime with AddOutput." =
+	solid[complete](choices) : "Collisions" : 6 : "Method of collision for this entity. Can be changed at runtime with AddOutput." =
 	[
 		0: "None"
 		1: "BSP (QPhysics)"
