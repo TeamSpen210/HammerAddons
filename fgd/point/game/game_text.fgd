@@ -13,7 +13,7 @@
 
 	x(float) : "X Position" : -1 : "Horizontal position on the player's screens to draw the text. " +
 		"The value should be between 0 and 1, where 0 is the far left of the screen and 1 is the far right. -1 centers the text."
-	y(float) : "Y Position" : -1 : "Vertical position on the player's screens to draw the text. " +
+	y(float) : "Y Position" : 0.6 : "Vertical position on the player's screens to draw the text. " +
 		"The value should be between 0 and 1, where 0 is the top of the screen and 1 is the bottom. -1 centers the text."
 
 	effect[engine](integer) : "Text Effect" : 0
