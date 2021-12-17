@@ -27,13 +27,6 @@ jobs:
 
       - name: FGD build and folder copy
         run: .\build.bat all
-
-      - name: Artifact upload
-        uses: actions/upload-artifact@v2
-        with:
-          name: build_${{ github.event.inputs.version }}-${{ github.sha }}
-          path: ./build/*
-          if-no-files-found: error
           
       - name: Zip Momentum Content
         uses: thedoctor0/zip-release@master
@@ -48,6 +41,15 @@ jobs:
           type: 'zip'
           directory: ./${{ env.FGD_BUILD_DIR }}/p2ce/
           filename: 'fgd-p2ce.zip'
+
+      - name: Artifact Upload
+        uses: actions/upload-artifact@v2.3.1
+        with:
+          name: build_${{ github.event.inputs.version }}-${{ github.sha }}
+          path: |
+            ./${{ env.FGD_BUILD_DIR }}/momentum/fgd-momentum.zip
+            ./${{ env.FGD_BUILD_DIR }}/p2ce/fgd-p2ce.zip
+          if-no-files-found: error
           
       - name: Create Release
         uses: softprops/action-gh-release@v1
