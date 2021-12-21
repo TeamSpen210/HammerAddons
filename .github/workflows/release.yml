@@ -23,7 +23,7 @@ jobs:
           python-version: '3.9'
 
       - name: Install srctools
-        run: .\install_srctools.bat
+        run: python -m pip install srctools==2.2.3
 
       - name: FGD build and folder copy
         run: .\build.bat all
