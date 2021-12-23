@@ -34,6 +34,12 @@
 	input GivePortalGunPrimary[P2CE](void) : "Gives the player a portal gun with primary color. (Overrides if player is already holding one)"
 	input GivePortalGunSecondary[P2CE](void) : "Gives the player a portal gun with only secondary color. (Overrides if player is already holding one)"
 	input GivePortalGunNone[P2CE](void) : "Gives the player a portal gun with no activated colors. (Overrides if player is already holding one)"
+	input GiveBoots[P2CE](void) : "Gives the player long fall boots."
+	input RemoveBoots[P2CE](void) : "Removes long fall boots from the player, if they have them."
+	input GivePaintGunFull[P2CE](void) : "Gives the player a fully upgraded paint gun."
+	input GivePaintGunBasic[P2CE](void) : "Gives the player a non-upgraded paint gun."
+	input RemovePortalGun[P2CE](void) : "Removes the portal gun from the player, if they have it."
+	input RemovePaintGun[P2CE](void) : "Removes the paint gun from the player, if they have it."
 
 	output OnFlashlightOn(float) : "Fired when the player turns on his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
 	output OnFlashlightOff(float) : "Fired when the player turns off his flashlight. This output has the value of how much energy the player had when this happened [0..1]."

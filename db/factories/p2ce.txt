@@ -287,6 +287,7 @@ info_teleport_destination
 infodecal
 instanced_scripted_scene
 item_nugget
+item_boots
 item_sodacan
 item_suit
 item_suitcharger

@@ -1,0 +1,6 @@
+@PointClass base(Item) 
+	appliesto(P2CE) 
+	studio("models/items/item_boots.mdl")
+= item_boots: "Long Fall Boots"
+	[
+	]
