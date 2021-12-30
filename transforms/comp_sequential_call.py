@@ -49,7 +49,7 @@ def sequential_call(ctx: Context) -> None:
             max_dist = max(dist_to_ent.values())
         else:
             dist_to_ent = {}
-            max_dist = 0.0
+            max_dist = 1.0  # Ensure divide-by-zero check ignores this.
 
         if order_mode.startswith('dist'):
             target_ents.sort(key=dist_to_ent.__getitem__, reverse=order_mode.endswith('_inv'))
