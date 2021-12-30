@@ -111,6 +111,7 @@ def sequential_call(ctx: Context) -> None:
                 seq_call['targetname'], seq_call['origin'],
             )
 
+        target = seq_call['target'].rstrip('*')
         max_delay = 0.0
         for ent, delay in ent_and_delay:
             if time_variance > 0.0:
@@ -121,7 +122,7 @@ def sequential_call(ctx: Context) -> None:
             for out in outputs_rep:
                 out = out.copy()
                 out.delay = round(out.delay + delay, 2)
-                if out.target.casefold() == '!seq':
+                if out.target.casefold() == '!seq' or out.target == target:
                     out.target = ent['targetname']
                 seq_call.outputs.append(out)
         for out in outputs_final:
