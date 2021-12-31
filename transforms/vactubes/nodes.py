@@ -21,6 +21,20 @@ SCANNER_LENGTH = 80
 SPLINES: List['Spline'] = []
 
 
+def make_standard_cube(vmf: VMF) -> Entity:
+    """Create a regular cube."""
+    return vmf.create_ent(
+        'prop_weighted_cube',
+        angles='0 0 0',
+        newskins='1',
+        skintype='0',
+        cubetype='0',
+        skin='0',
+        paintpower='4',
+        model=CUBE_MODEL,
+    )
+
+
 class DestType(Enum):
     """The position of the output from a node.."""
     PRIM = PRIMARY = 'primary'
@@ -338,16 +352,7 @@ class Dropper(Destroyer):
             best_cube = cube
         if best_cube is None:
             LOGGER.warning('Cube dropper at {} has no cube. Generating standard one...', ref_pos)
-            best_cube = vmf.create_ent(
-                'prop_weighted_cube',
-                angles='0 0 0',
-                newskins='1',
-                skintype='0',
-                cubetype='0',
-                skin='0',
-                paintpower='4',
-                model=CUBE_MODEL,
-            )
+            best_cube = make_standard_cube(vmf)
 
         # Now adjust the cube for dropper use.
         best_cube.make_unique('dropper_cube')
