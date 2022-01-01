@@ -22,7 +22,7 @@
 		]
 
 	proxy(target_destination) : "Proxy Entity" : : "Name of the entity that the camera uses to translate the view."
-	proxyattachment(target_destination) : "Attachment Point" : : "Use this attachment on the proxy's parent for position and orientation."
+	proxyattachment(string) : "Attachment Point" : : "Use this attachment on the proxy's parent for position and orientation."
 	tiltfraction(float) : "Tilt Fraction" : 0.5 : "How much the angle of the proxy affects the angle of the view. 0.0 will keep the players view angles unmodified. 1.0 will add in the whole tilt from the proxy."
 	usefakeacceleration(boolean) : "Use Fake Acceleration" : 0 : "If the player maintains an offset from the proxy apply fake acceleration on the player based on the movement of the proxy."
 	skewaccelerationforward(boolean) : "Skew Acceleration Forward" : 1 : "If this is set fake acceleration will be more noticeable in the direction of the proxy."
