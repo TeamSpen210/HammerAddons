@@ -10,7 +10,7 @@
 ## Features
 
 * Auto-packing - Automatically packs non-stock game files into the bsp. Filtered based on search paths in the included custom gameinfo and FGD database. Assets can also be packed manually with `comp_pack` entities.
-* Static prop combining - merges together adjacent props to allow them to be efficently drawn in batches. To use, decompile props and configure the folder & studioMDL's path then place `comp_propcombine_set` entities.
+* Static prop combining - merges together adjacent props to allow them to be efficently drawn in batches. To use, specify studioMDL's path then place `comp_propcombnine_volume` or `comp_propcombine_set` entities.
 * A [unified FGD database][unifiedfgd], allowing keyvalues to be shared among games, and accurately defining when features were added and removed.
 * Many more entity options, and an improved editor layout.
 * New sprites for almost all entities, both custom made and from a number of [other sources](#development).
@@ -23,12 +23,13 @@ Below are short explanations, see the "Help" display on the entity properties in
 
 | Entity                                             | Description |
 |----------------------------------------------------|-------------|
+  `comp_flicker`                                     | Fires on/off and skin inputs repeatedly to simulate a flicker-on effect. |
 | `comp_choreo_sceneset`                             | Chains a set of choreographed scenes together. |
 | `comp_entity_finder`                               | Finds the closest entity of a given type, then applies various transformations. Outputs from this entity will be moved to the found entity. Further keyvalues can be set manually with SmartEdit off. |
 | `comp_entity_mover`                                | Shift an entity by a given amount. This is useful to place entities into the void, for example. |
 | `comp_kv_setter`                                   | Sets a keyvalue on an entity to a new value. This is useful to compute spawnflags, or to adjust keyvalues when the target entity's options can't be set to a fixup variable. |
 | `comp_numeric_transition`                          | When triggered, animates a keyvalue/input over time with various options. |
-| `comp_pack`                                        | Explicitly identify resources to pack into the map. If more are needed, add additional keyvalues with SmartEdit off. |
+| `comp_pack`                                        | Explicitly identify resources to pack into the map, in addition to automatic detection. |
 | `comp_pack_rename`                                 | Pack a file into the BSP, under a different name than it starts with. |
 | `comp_pack_replace_soundscript`                    | Replace a soundscript with a different one. |
 | `comp_precache_model`                              | Force a specific model to load, for runtime switching. Duplicates will be removed. |
