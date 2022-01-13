@@ -33,9 +33,18 @@ def comp_relay(ctx: Context):
         )
         # If ctrl_type is 0, ctrl_value needs to be 1 to be enabled.
         # If ctrl_type is 1, ctrl_value needs to be 0 to be enabled.
-        enabled = conv_bool(relay['ctrl_type']) != conv_bool(relay['ctrl_value'])
+        if 'ctrl_type' in relay:
+            enabled = conv_bool(relay['ctrl_type'], False) != conv_bool(relay['ctrl_value'], True)
+        else:
+            # Missing, assume true if ctrl_value also isn't present.
+            enabled = conv_bool(relay['ctrl_value'], True)
 
         extra_delay = conv_float(relay['delay'])
+
+        LOGGER.debug(
+            'relay "{}", enabled={}, delay={}, remove={}, {} outputs',
+            relay_name, enabled, extra_delay, should_remove, len(relay.outputs),
+        )
         for out in relay.outputs:
             try:
                 inp_name = out_names[out.output.casefold()]
