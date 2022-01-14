@@ -7,5 +7,6 @@
 	partnername(target_destination) : "Linked Partner" : : "Another 'linked_portal_door' entity which will link to this one."
 	width(integer) : "Half-Width (G)" : 64 : "Half the width of the portal, on the Green axis."
 	height(integer) : "Half-Height (B)" : 64 : "Half the height of the portal, on the Blue axis."
+	isstatic(boolean) : "Static Portal" : 0 : "If set to true, this portal does not ever move or toggle, and allows VRAD to cast light through it."
 	startactive(boolean) : "Start Active" : 0 : "Whether to start the linkage as active from the start."
 	]
