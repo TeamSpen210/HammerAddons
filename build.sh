@@ -1,5 +1,5 @@
 #!/bin/sh
-games="p2 p1 hl2 ep1 ep2 gmod csgo tf2 asw l4d l4d2 infra mesa"
+games="p2 p1 hl2 ep1 ep2 gmod csgo tf2 asw l4d l4d2 infra mesa stanley"
 game=$1
 if [ $# -eq 0 ]; then
   echo Games: "${games[*]}" & echo Enter game to build. Use ALL to build every game. & read -p "" game
