@@ -1,36 +1,34 @@
 @PointClass base(BaseEntityPoint, EnableDisable)
-appliesto(P2CE)
 	iconsprite("editor/logic_gate.vmt") 
 	color(255 123 2) 
 = logic_gate: "A general logic gate with two inputs. Supports AND, OR, NOT, NAND, NOR, XOR, and XNOR operations, which can also be changed through inputs."
-	
 	[
-		spawnflags(flags) : "spawnflags" =
-			[
-			1: "Spawn A enabled" : 0
-			2: "Spawn B enabled" : 0
-			4: "Output on every input (even if result doesn't change)" : 0
-			]
-
-		// Keyvalues
-		mode(choices) : "Compare mode" : "1" : "The current compare mode. This can be changed through the SetMode input." = [
-			0 : "AND (Both)"
-			1 : "OR (Either)"
-			2 : "NOT (Negation)"
-			3 : "NAND (Neither And)"
-			4 : "NOR (Neither Or)"
-			5 : "XOR (Odd)"
-			6 : "XNOR (Equals)"
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Spawn A enabled" : 0
+		2: "Spawn B enabled" : 0
+		4: "Output on every input (even if result doesn't change)" : 0
 		]
-		
-		// Inputs
-		input GetValue(void) : "When triggered, the current state will be outputted as OutValue."
-		input SetStateA(integer) : "Sets the A state."
-		input SetStateB(integer) : "Sets the B state."
-		input SetMode(integer) : "Sets the mode. 0=AND,1=OR,2=NOT,3=NAND,4=NOR,5=XOR,6=XNOR"
 
-		// Outputs
-		output OnResultTrue(void) : "Triggered when the state reaches true."
-		output OnResultFalse(void) : "Triggered when the state reaches false."
-		output OutValue(void) : "When this entity is triggered by GetValue, this output will be called with the current state as the parameter"
+	// Keyvalues
+	mode(choices) : "Compare mode" : "1" : "The current compare mode. This can be changed through the SetMode input." = [
+		0 : "AND (Both)"
+		1 : "OR (Either)"
+		2 : "NOT (Negation)"
+		3 : "NAND (Neither And)"
+		4 : "NOR (Neither Or)"
+		5 : "XOR (Odd)"
+		6 : "XNOR (Equals)"
+	]
+	
+	// Inputs
+	input GetValue(void) : "When triggered, the current state will be outputted as OutValue."
+	input SetStateA(integer) : "Sets the A state."
+	input SetStateB(integer) : "Sets the B state."
+	input SetMode(integer) : "Sets the mode. 0=AND,1=OR,2=NOT,3=NAND,4=NOR,5=XOR,6=XNOR"
+
+	// Outputs
+	output OnResultTrue(void) : "Triggered when the state reaches true."
+	output OnResultFalse(void) : "Triggered when the state reaches false."
+	output OutValue(void) : "When this entity is triggered by GetValue, this output will be called with the current state as the parameter"
 	]
