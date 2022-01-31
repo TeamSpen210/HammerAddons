@@ -25,7 +25,7 @@ OutT = TypeVar('OutT')
 
 class GenModel(Generic[OutT]):
     """Tracks information about this model."""
-    def __init__(self, mdl_name: str, result: OutT=None) -> None:
+    def __init__(self, mdl_name: str, result: OutT) -> None:
         self.name = mdl_name  # This is just the filename.
         self.used = False
         self.result = result  # Return value from compile function.
@@ -189,11 +189,9 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
                     self._mdl_names.add(mdl_name)
                     break
 
-            model = self._built_models[key] = GenModel(mdl_name)
-
             with tempfile.TemporaryDirectory(prefix='mdl_compile') as folder:
                 path = Path(folder)
-                model.result = compile_func(key, path, f'{self.model_folder}{mdl_name}.mdl', args)
+                result = compile_func(key, path, f'{self.model_folder}{mdl_name}.mdl', args)
                 studio_args = [
                     str(self.studiomdl_loc),
                     '-nop4',
@@ -207,6 +205,8 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
                     res.stdout.replace(b'\r\n', b'\n').decode('ascii', 'replace'),
                 )
                 res.check_returncode()  # Or raise.
+
+            model = self._built_models[key] = GenModel(mdl_name, result)
 
         if not model.used:
             # Pack it in.

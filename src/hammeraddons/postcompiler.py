@@ -107,6 +107,7 @@ def main(argv: List[str]) -> None:
     fgd = FGD.engine_dbase()
 
     LOGGER.info('Loading soundscripts...')
+    assert conf.path is not None
     packlist.load_soundscript_manifest(
         conf.path.with_name('srctools_sndscript_data.vdf')
     )
