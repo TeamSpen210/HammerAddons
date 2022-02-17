@@ -233,7 +233,7 @@ class Config:
 
         if enum_type is not None:
             try:
-                return enum_type(val)  # type: ignore
+                return enum_type(val)
             except ValueError:
                 LOGGER.warning(
                     'Option "{}" is not a valid value. '
@@ -241,7 +241,7 @@ class Config:
                     name,
                     '\n'.join([mem.value for mem in enum_type])
                 )
-                return next(iter(enum_type))  # type: ignore
+                return next(iter(enum_type))
 
         # Vec is mutable, don't allow modifying the original.
         if expected_type is Vec or expected_type is Property:
