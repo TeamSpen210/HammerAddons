@@ -141,6 +141,8 @@ class PluginFinder(MetaPathFinder):
                 filename = str(path / '__init__.py') if path.is_dir() else str(path)
                 loader = SourceFileLoader(name, filename)
                 spec = spec_from_loader(name, loader)
+                if spec is None:
+                    raise AssertionError(f'No spec for {name!r}!')
                 sys.modules[name] = module = module_from_spec(spec)
 
                 # Provide a logger for the plugin, already setup.

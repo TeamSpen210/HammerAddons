@@ -97,6 +97,7 @@ def duplicate_proxy_relays(ctx: Context) -> None:
                     new_index = cur_num = 1
                 else:
                     new_index = cur_num
+                    assert newest_proxy is not None
                 cur_num += 1
                 cur_proxy = newest_proxy
                 proxy_nums[index] = cur_proxy, new_index
