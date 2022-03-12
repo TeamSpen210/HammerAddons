@@ -7,6 +7,31 @@
     // 259 - Rename File
     // 261 - Copy File if it exists
     // And they have no "run" string
+    "Zonmaker Only"
+    {
+        "1"
+        {
+            "enabled" "1"
+            "special_cmd" "0"
+            "run" "zonmaker.exe"
+            "params" "$path\$file.vmf"
+            "ensure_check" "0"
+            "ensure_fn" ""
+            "use_process_wnd" "1"
+            "no_wait" "0"
+        }
+        "2"
+        {
+            "enabled" "1"
+            "special_cmd" "261" // Copy File if it exists
+            "run" ""
+            "params" "$path\$file.zon $bspdir\..\zones\$file.zon"
+            "ensure_check" "0"
+            "ensure_fn" "" 
+            "use_process_wnd" "1"
+            "no_wait" "0"
+        }
+    }
     "Fast"
     {
         "1"
