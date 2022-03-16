@@ -6,7 +6,7 @@
 	appliesto(srctools, -engine)
 = comp_prop_cable: "Generates cables using a static prop. comp_prop_rope is an alternate name, they can be interchanged."
 	[
-	group(target_source): "Group" : : "Each set of cables must have a group name. Each name will be compiled to one cable."
+	group(target_source): "Group" : : "If set, all cables with the same group will be compiled to one model."
 	nextkey(target_destination) : "Next Cable" : : "Name of the next cable along this path."
 
 	slack(integer) : "Slack" : 25 : "How much extra length the cable has, for 'catenary' mode (by default it has the length between its two endpoints in the editor)."
