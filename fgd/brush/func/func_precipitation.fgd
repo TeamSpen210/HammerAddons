@@ -22,8 +22,6 @@
 	innerfarparticle(particlesystem) : "Inner far system" : "" : "Name of the inner far particle system. If not set, this will be automatically selected from the precipitation type keyvalue."
 	outerparticle(particlesystem) : "Outer system" : "" : "Name of the outer particle system. If not set, this will be automatically selected from the precipitation type keyvalue."
 
-	legacybehavior(boolean) : "Legacy Rain Behavior" : 0 : "Enables old, broken behavior of rain, where rain occurs in the center of map with no Z-culling. Most older (pre-Chaos) maps get around this by using func_precipitation_blockers. Defaults to true if not present. Only applies to the 'Rain' Precipitation Type."
-
 	input Alpha(integer) : "Changes the density of the rain, " +
 	"and may add additional particle effects like fog or leaves. " +
 	"Accepts inputs from -1 to 255."
