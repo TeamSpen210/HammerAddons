@@ -490,13 +490,13 @@ def load_qcs(qc_folder: Path) -> Iterator[Tuple[str, QC]]:
                 phy_scale, phy_smd,
             ) = qc_result
 
-            # We can't parse FBX files right now.
-            if ref_smd.suffix.casefold() not in ('.smd', '.dmx_DISABLE'):
-                LOGGER.warning('Reference mesh not a SMD/DMX:\n{}', ref_smd)
+            # We can't parse non-SMD files.
+            if ref_smd.suffix.casefold() != '.smd':
+                LOGGER.warning('Reference mesh not a SMD:\n{}', ref_smd)
                 continue
 
-            if phy_smd is not None and phy_smd.suffix.casefold() not in ('.smd', '.dmx_DISABLE'):
-                LOGGER.warning('Collision mesh not a SMD/DMX:\n{}', ref_smd)
+            if phy_smd is not None and phy_smd.suffix.casefold() != '.smd':
+                LOGGER.warning('Collision mesh not a SMD:\n{}', ref_smd)
                 continue
 
             yield unify_mdl(model_name), QC(
@@ -892,6 +892,11 @@ def combine(
     debug_dump: bool=False,
 ) -> None:
     """Combine props in this map."""
+    LOGGER.debug(
+        'Propcombine: decomp cache={}, crowbar={}, studiomdl={}',
+        decomp_cache_loc, crowbar_loc, studiomdl_loc,
+    )
+
     # First parse out the bbox and volume ents, so they are always removed.
     grouper_ents = list(bsp_ents.by_class['comp_propcombine_set'] | bsp_ents.by_class['comp_propcombine_volume'])
 
@@ -945,15 +950,19 @@ def combine(
         except KeyError:
             if blacklist_re.fullmatch(key) is not None:
                 mdl_map[key] = qc_map[key] = None
+                LOGGER.debug('Model {} was blacklisted.', filename)
                 return None, None
             try:
                 mdl_file = pack.fsys[filename]
             except FileNotFoundError:
                 # We don't have this model, we can't combine...
+                mdl_map[key] = qc_map[key] = None
+                LOGGER.debug('Model {} was not found in the filesystem.', filename)
                 return None, None
             model = mdl_map[key] = Model(pack.fsys, mdl_file)
             if 'no_propcombine' in model.keyvalues.casefold():
                 mdl_map[key] = qc_map[key] = None
+                LOGGER.debug('Model {} is blacklisted in the QC.', filename)
                 return None, None
 
         if model is None or key in missing_qcs:
@@ -963,6 +972,7 @@ def combine(
             qc = qc_map[key]
         except KeyError:
             if crowbar_loc is None or decomp_cache_loc is None:
+                LOGGER.debug('Model {} has no QC!', filename)
                 missing_qcs.add(key)
                 return None, None
             qc = decompile_model(pack.fsys, decomp_cache_loc, crowbar_loc, filename, model.checksum)
