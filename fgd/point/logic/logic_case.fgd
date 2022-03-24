@@ -50,6 +50,6 @@
 	output OnCase14(void) : "Fired when the input value equals the Case14 value."
 	output OnCase15(void) : "Fired when the input value equals the Case15 value."
 	output OnCase16(void) : "Fired when the input value equals the Case16 value."
-	output OnDefault[engine](string) : "Fired when the input value does not equal any of the Case values. Passes the input value."
+	output OnDefault(string) : "Fired when the input value does not equal any of the Case values. Passes the input value."
 	output OnUsed(string) : "Fired when an input value is received, regardless of whether it matches a case. Passes the input value."
 	]
