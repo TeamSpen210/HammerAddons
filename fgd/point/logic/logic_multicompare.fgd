@@ -6,6 +6,7 @@
 	[
 	integervalue(integer) : "Integer Value (optional)" : : "The value all inputs are compared to if ''Should use Reference Value'' is enabled."
 	ShouldComparetoValue(boolean) : "Should use Integer Value" : 0 : "If enabled, all inputs are compared to the reference value. If not enabled, they are instead compared to the last input added."
+	strlenallowed(boolean) : "Use string length" : 0 : "Use the length of the string in the compare value rather than its actual value."
 
 	// Inputs
 	input InputValue(integer) : "Adds a value to our set of inputs and fires CompareValues automatically, " +

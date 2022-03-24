@@ -8,6 +8,7 @@
 	[
 	initialvalue(string) : "Initial value" : : "Initial value for the input value."
 	comparevalue(string) : "Compare value" : : "The value to compare against."
+	strlenallowed(boolean) : "Use string length" : 0 : "Use the length of the string in the compare value rather than its actual value."
 
 	input Compare(void) : "Force a compare of the input value with the compare value."
 	input SetValue(string) : "Set the value that will be compared against the compare value."
