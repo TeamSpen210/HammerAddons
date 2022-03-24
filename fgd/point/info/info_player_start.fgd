@@ -1,16 +1,12 @@
-@PointClass base(BaseEntityPoint, PlayerClass, SetModel)
+@PointClass base(BaseEntityPoint, PlayerClass)
+	studio("models/editor/playerstart.mdl")
 = info_player_start: "This entity indicates the position and facing direction at which the player will spawn. " +
-    "Any number of info_player_start entities may be placed in a map for when working in cordoned-off portions of the map. " +
-    "When multiple info_player_start entities are present in a map, " +
-    "set the 'Master' spawnflag on one of them to indicate which one should be used when running the entire map."
-    [
-    model[!engine](studio) : "[H] In Hammer Model" : "models/editor/playerstart.mdl" : "Specify the model"
-    skin[!engine](integer) : "[H] Skin" : 0 : "Some models have multiple versions of their textures, called skins. " +
-    "Set this to a number other than 0 to use that skin instead of the default."
-    skinset[srctools](string) : "[H] Used Skins" : : "Set this to a space seperated list of all the skin numbers which will be used. " +
-        "This allows auto-packing to skip unused ones. If blank all skins are assumed to be used."
-    spawnflags(flags)  =
-        [
-        1: "Master (Has priority if multiple info_player_starts exist)" : 0
-        ]
-    ]
+	"Any number of info_player_start entities may be placed in a map for when working in cordoned-off portions of the map. " +
+	"When multiple info_player_start entities are present in a map, " +
+	"set the 'Master' spawnflag on one of them to indicate which one should be used when running the entire map."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Master (Has priority if multiple info_player_starts exist)" : 0
+		]
+	]
