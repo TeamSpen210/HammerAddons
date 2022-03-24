@@ -50,9 +50,9 @@
 	input SetMeasureAttachment(string) : "Sets the measurement attachment."
 	input ShouldOutputPosition(bool) : "Sets whether we are allowed to fire position outputs while this entity is active."
 	input GetPosition(void) : "Initiates a single measurement with the current settings, only firing OutPosition and OutAngles without moving anything. (it doesn't need a target to be available)\n"+
-								     "This input ignores the 'Fire position outputs' keyvalue and instead repurposes it to modify who the outputs' activator should be.\n"+
-								     "If 'Fire position outputs' is enabled, the target will be used as the activator if it is available.\n"+
-								     "If 'Fire position outputs' is disabled, the activator that fired GetPosition will be used instead."
+									 "This input ignores the 'Fire position outputs' keyvalue and instead repurposes it to modify who the outputs' activator should be.\n"+
+									 "If 'Fire position outputs' is enabled, the target will be used as the activator if it is available.\n"+
+									 "If 'Fire position outputs' is disabled, the activator that fired GetPosition will be used instead."
 	input Enable(void) : "Enable the logic_measure_movement."
 	input Disable(void) : "Disable the logic_measure_movement."
 	

@@ -3,8 +3,8 @@
 	[
 	message(string) : "Map Description / Title"
 
-	skyname(string)                : "SkyBox Texture Name" :                       : "Texture used for the 2D skybox."
-	skyname[P2CE](string)            : "SkyBox Texture Name" : "sky_black_nofog"     : "Texture used for the 2D skybox."
+	skyname(string) : "SkyBox Texture Name" : : "Texture used for the 2D skybox."
+	skyname[P2CE](string) : "SkyBox Texture Name" : "sky_black_nofog" : "Texture used for the 2D skybox."
 
 	chaptertitle(string) : "Chapter Title" : : "Chapter Title that appears onscreen when this level starts."
 
@@ -37,9 +37,9 @@
 	minpropscreenwidth(float) : "End Fade Pixels" : 0 : "Minimum number of pixels wide at which the prop is visible (0 = don't fade out). " +
 		"This number is ignored if the prop has a specific fade distance specified."
 	
-	detailvbsp(string)      : "Detail.vbsp file"  : "detail.vbsp"       : "Detail .vbsp file to use for emitting detail props (found in directory <root>/modname)"
+	detailvbsp(string) : "Detail.vbsp file" : "detail.vbsp" : "Detail .vbsp file to use for emitting detail props (found in directory <root>/modname)"
 
-	detailmaterial(material)    : "Detail material file" : "detail/detailsprites"       : "Material for detail sprites to use for drawing detail props"
+	detailmaterial(material) : "Detail material file" : "detail/detailsprites" : "Material for detail sprites to use for drawing detail props"
 
 	coldworld(boolean) : "World is cold" : 0 : "Emit steam from NPC's mouths and similar effects."
 	

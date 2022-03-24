@@ -1,13 +1,13 @@
 @PointClass
-    appliesto(srctools, -engine)
-    iconsprite("editor/comp_entity_finder")
-    sphere(radius)
-    cylinder(255 255 255, targetname, targetref, radius)
-    line(255 255 255, targetname, kv1_known)
-    line(255 255 255, targetname, kv2_known)
-    line(255 255 255, targetname, kv3_known)
-    line(255 255 255, targetname, kv4_known)
-    line(255 255 255, targetname, kv5_known)
+	appliesto(srctools, -engine)
+	iconsprite("editor/comp_entity_finder")
+	sphere(radius)
+	cylinder(255 255 255, targetname, targetref, radius)
+	line(255 255 255, targetname, kv1_known)
+	line(255 255 255, targetname, kv2_known)
+	line(255 255 255, targetname, kv3_known)
+	line(255 255 255, targetname, kv4_known)
+	line(255 255 255, targetname, kv5_known)
 = comp_entity_finder:
 	"Finds the closest entity of a given type, then applies various transformations." +
 	"Outputs from this entity will be moved to the found entity." + 

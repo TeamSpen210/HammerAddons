@@ -3,7 +3,7 @@
 	appliesto(+srctools, +VScript, -engine)
 	iconsprite("editor/comp_precache_sound")
 = comp_precache_sound:
-    "Force a specific sound to load, for runtime switching. Duplicates will be removed. More keyvalues can be added."
+	"Force a specific sound to load, for runtime switching. Duplicates will be removed. More keyvalues can be added."
 	[
 	sound1(sound): "Sound" : : "Pack and precache a raw sound file or a soundscript."
 	sound2(sound): "Sound" : : "Pack and precache a raw sound file or a soundscript."

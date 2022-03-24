@@ -28,13 +28,13 @@
 	input Toggle(void) : "Toggles this trigger between enabled and disabled states." 
 	input TouchTest(void) : "Triggers either the OnTouching or OnNotTouching outputs for whether anything is touching this entity."
 
-    input StartTouch(void) : "Fires the OnStartTouch output. " +
-    	"If called by an entity inside the trigger, the OnStartTouch will be fired for them as the activator. Note that this input is passed even if the player is being treated as 'not' touching the trigger while inside it."
+	input StartTouch(void) : "Fires the OnStartTouch output. " +
+		"If called by an entity inside the trigger, the OnStartTouch will be fired for them as the activator. Note that this input is passed even if the player is being treated as 'not' touching the trigger while inside it."
 
 	// Outputs
 	output OnTrigger(void) : "Fired whenever the trigger is activated."
 	output OnStartTouch(void) : "Fired when an entity starts touching this trigger. " +
 		"The touching entity must pass this trigger's filters to cause this output to fire."
 	output OnTouching(void) : "Fired when the TouchTest input is called, and an entity is touching this. Does not call activators."
-    output OnNotTouching(void) : "Fired when the TouchTest input is called, and no entity is touching this. Does not call activators."
+	output OnNotTouching(void) : "Fired when the TouchTest input is called, and no entity is touching this. Does not call activators."
 	]

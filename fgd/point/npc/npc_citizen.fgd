@@ -16,7 +16,7 @@
 		16777216: "Use RenderBox in ActBusies" : 0
 		]
 
-    additionalequipment[engine](string) : "Weapons" : 0
+	additionalequipment[engine](string) : "Weapons" : 0
 	additionalequipment(choices) : "Weapons" : 0 =
 		[
 		"weapon_smg1": "SMG1"
@@ -30,7 +30,7 @@
 		"0": "Nothing"
 		]
 
-    ammosupply[engine](string) : "Ammo to Resupply" : 0
+	ammosupply[engine](string) : "Ammo to Resupply" : 0
 	ammosupply(choices) : "Ammo to Resupply (if spawnflag set)" : "SMG1" =
 		[
 		"Pistol": "Pistol"
@@ -45,7 +45,7 @@
 
 	ammoamount(integer) : "Amount of ammo to give" : 1
 
-    citizentype[engine](integer) : "Type" : 0
+	citizentype[engine](integer) : "Type" : 0
 	citizentype(choices) : "Type" : "Default" =
 		[
 		0: "Default"
@@ -55,7 +55,7 @@
 		4: "Unique"
 		]
 
-    expressiontype[engine](integer) : "Expression Type" : 0
+	expressiontype[engine](integer) : "Expression Type" : 0
 	expressiontype(choices) : "Expression Type" : "Random" =
 		[
 		0: "Random"
@@ -64,7 +64,7 @@
 		3: "Angry"
 		]
 
-    model[engine](string) : "Model" : "models/humans/group01/male_01.mdl"
+	model[engine](string) : "Model" : "models/humans/group01/male_01.mdl"
 	model(choices) : "Model" : "models/humans/group01/male_01.mdl" =
 		[
 		"models/humans/group01/male_01.mdl": "Male 1"
