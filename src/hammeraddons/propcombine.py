@@ -539,6 +539,10 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
                         # $body name "file.smd"
                         if ref_smd:
                             # Multiple bodygroups, can't deal with that.
+                            LOGGER.debug(
+                                'QC "{}" has multiple bodygroups: {}, {}',
+                                qc_path, ref_smd, (qc_loc /  body_value),
+                            )
                             return None
                         else:
                             ref_smd = qc_loc / body_value
@@ -555,6 +559,10 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
                         elif body_type is Token.STRING:
                             if body_value.casefold() == "studio":
                                 if ref_smd:
+                                    LOGGER.debug(
+                                        'QC "{}" has multiple bodygroups: {}, {}',
+                                        qc_path, ref_smd, tok.peek(),
+                                    )
                                     return None
                                 else:
                                     ref_smd = qc_loc / tok.expect(Token.STRING)
@@ -584,6 +592,7 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
                     # Allow LOD models, propcombine is better than that.
                     # '$lod',
                 ):
+                    LOGGER.debug('QC "{}": Option {} is not supported', qc_path, token_value)
                     return None
             elif token_type is Token.BRACE_OPEN:
                 # Skip other "compound" sections we don't care about.
@@ -670,6 +679,7 @@ def decompile_model(
             return None
     # There should now be a QC file here.
     for qc_path in cache_folder.glob('*.qc'):
+        LOGGER.debug('Parse decompiled QC "{}"...', qc_path)
         qc_result = parse_qc(cache_folder, qc_path)
         break
     else:  # not found.
