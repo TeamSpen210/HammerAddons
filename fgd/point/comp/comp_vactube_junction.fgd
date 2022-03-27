@@ -34,9 +34,9 @@
 		1 : "Continue displaying until replaced"
 	]
 
-	target(target_destination) : "Next junction (optional)" : : "Although junctions are linked automatically, you can specify the name of another to force it to connect to a further away or non-aligned node."
-	target_sec(target_destination): "Secondary junction" : : "For splitters, this is the second output from the junction."
-	target_ter(target_destination): "Tertiary junction" : : "For the triple splitter, this is the rightmost output."
+	target(target_destination) : "Next junction override" : : "Although junctions are linked automatically, you can specify the name of another to force it to connect to a further away or non-aligned node."
+	target_sec(target_destination): "Secondary junction override" : : "For splitters, this overrides the second output from the junction."
+	target_ter(target_destination): "Tertiary junction override" : : "For the triple splitter, this overrides the rightmost output."
 
 	output OnPass(void) : "Fired when a cube passes by."
 ]
