@@ -21,15 +21,10 @@ from typing import (
     FrozenSet, Dict, List, Set,
     Iterator, Union, MutableMapping, Iterable,
 )
-from srctools._math import quickhull
-
-from srctools import (
-    Vec, VMF, Entity, conv_int, Angle, Matrix, FileSystemChain,
-    Property, KeyValError, bool_as_int,
-)
+from srctools import VMF, Entity, conv_int, FileSystemChain, Property, KeyValError, bool_as_int
+from srctools.math import Vec, Angle, Matrix, quickhull
 from srctools.tokenizer import Tokenizer, Token
 from srctools.game import Game
-
 from srctools.logger import get_logger
 from srctools.packlist import PackList
 from srctools.bsp import BSP, StaticProp, StaticPropFlags, BModel, VisLeaf
