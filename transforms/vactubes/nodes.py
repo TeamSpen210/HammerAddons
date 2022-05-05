@@ -99,7 +99,7 @@ class Node(ABC):
                 # Remove the extra keyvalues we use.
                 ent['classname'] = 'info_target'
                 for key in list(ent.keys()):
-                    if key not in ['origin', 'targetname', 'angles']:
+                    if key not in ['classname', 'origin', 'targetname', 'angles']:
                         del ent[key]
             ent.make_unique('_vac_node')
         elif not self.keep_ent:
