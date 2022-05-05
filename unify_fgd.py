@@ -540,7 +540,7 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
 
     game_order = ['ALL'] + sorted(all_games - {'ALL'}, key=GAME_ORDER.index)
 
-    row_temp = '{:<5} | {:^6} | {:^6} | {:^6}'
+    row_temp = '{:^9} | {:^6} | {:^6} | {:^6}'
     header = row_temp.format('Game', 'Base', 'Point', 'Brush')
 
     print(header)
