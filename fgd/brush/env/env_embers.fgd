@@ -1,4 +1,4 @@
-@SolidClass base(BaseEntityBrush) 
+@SolidClass base(BaseEffectBrush) 
 	color(200 200 0)
 = env_embers: "An entity used to create a volume in which to spawn fire embers."
 	[
@@ -19,5 +19,4 @@
 		1: "Start On" : 0
 		2: "Toggle" : 0
 		]
-
 	]

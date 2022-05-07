@@ -1,4 +1,4 @@
-@SolidClass base(BaseEntityBrush) 
+@SolidClass base(BaseEffectBrush) 
 = func_smokevolume: "A brush entity that spawns smoke particles within its volume."
 	[
 	spawnflags(flags)  =
