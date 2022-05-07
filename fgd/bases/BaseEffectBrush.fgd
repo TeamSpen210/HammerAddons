@@ -1,0 +1,16 @@
+@BaseClass = BaseEffectBrush
+	[
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	globalname(string) : "Global Entity Name" : : "Name by which this entity is linked to another entity in a different map. " +
+		"When the player transitions to a new map, entities in the new map with globalnames matching entities in the previous map " +
+		"will have the previous map's state copied over their state."
+
+	parentname[!srctools](target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent. Set an attachment point via 'parentname,attachment'."
+	parentname[srctools](target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	parent_attachment_point[srctools](string) : "Attachment Point" : : "If set, attach to this attachment point on the parent during spawn."
+
+	vscripts[VSCRIPT](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
+	thinkfunction[VSCRIPT](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
+
+	linedivider_base[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	]
