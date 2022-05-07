@@ -2,6 +2,11 @@
 	color(200 200 0)
 = env_embers: "An entity used to create a volume in which to spawn fire embers."
 	[
+	angles(angle) : "Pitch Yaw Roll (X Y Z)" : "0 0 0" : "This entity's orientation in the world. " +
+		"Roll is the rotation around the X axis, " +
+		"pitch is rotation around the Y axis and " +
+		"yaw is the rotation around the Z axis."
+
 	particletype[engine](integer) : "Ember type" : 0
 	particletype(choices) : "Ember type" : 0 =
 		[
