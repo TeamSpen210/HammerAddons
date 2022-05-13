@@ -9,7 +9,7 @@ from srctools import Property, logger, AtomicWriter
 from srctools.filesys import FileSystemChain, FileSystem, RawFileSystem, VPKFileSystem
 from srctools.props_config import Opt, Config, TYPE
 
-from srctools.scripts.plugin import Source as PluginSource, PluginFinder
+from .plugin import Source as PluginSource, PluginFinder, BUILTIN as BUILTIN_PLUGIN
 
 
 __all__ = [
@@ -125,53 +125,32 @@ def parse(path: Path, game_folder: str='') -> Tuple[
                 'key "{}"!'.format(prop.real_name)
             )
 
-    sources: Dict[Path, PluginSource] = {}
+    sources: Dict[str, PluginSource] = {}
 
-    builtin_transforms = (Path(sys.argv[0]).parent / 'transforms').resolve()
+    if hasattr(sys, 'frozen'):
+        builtin_transforms = (Path(sys.executable).parent / 'transforms').resolve()
+    else:
+        # Assume working directory is HammerAddons.
+        builtin_transforms = Path('transforms').resolve()
 
-    # find all the plugins and make plugin objects out of them
+    # Find all the plugins and make plugin objects out of them
+    unnamed_ind = 1
     for prop in conf.get(Property, 'plugins'):
-        if prop.has_children():
-            raise ValueError('Config "plugins" value cannot have children.')
-        assert isinstance(prop.value, str)
+        source = PluginSource.parse(game_root, prop)
+        if not source.id:
+            source.id = f'unnamed_{unnamed_ind}'
+            unnamed_ind += 1
+        if source.id in sources:
+            raise ValueError(f'Plugin "{source.id}" declared twice!')
+        sources[source.id] = source
 
-        path = (game_root / Path(prop.value)).resolve()
-        if prop.name in ('path', "recursive", 'folder'):
-            if not path.is_dir():
-                raise ValueError("'{}' is not a directory".format(path))
-
-            is_recursive = prop.name == "recursive"
-
-            try:
-                source = sources[path]
-            except KeyError:
-                sources[path] = PluginSource(path, is_recursive)
-            else:
-                if is_recursive and not source.recursive:
-                    # Upgrade to recursive.
-                    source.recursive = True
-
-        elif prop.name in ('single', 'file'):
-            parent = path.parent
-            try:
-                source = sources[parent]
-            except KeyError:
-                source = sources[parent] = PluginSource(parent, False)
-            source.autoload_files.add(path)
-
-        elif prop.name == "_builtin_":
-            # For development purposes, redirect builtin folder.
-            builtin_transforms = path
-        else:
-            raise ValueError("Unknown plugins key {}".format(prop.real_name))
+    if BUILTIN_PLUGIN not in sources:
+        sources[BUILTIN_PLUGIN] = PluginSource(BUILTIN_PLUGIN, builtin_transforms, recursive=True)
 
     for source in sources.values():
-        LOGGER.debug('Plugin path: "{}", recursive={}, files={}', source.folder, source.recursive, sorted(source.autoload_files))
-    LOGGER.debug('Builtin plugin path is {}', builtin_transforms)
-    if builtin_transforms not in sources:
-        sources[builtin_transforms] = PluginSource(builtin_transforms, True)
+        LOGGER.debug('- {!r}', source)
 
-    plugin_finder = PluginFinder('srctools.bsp_transforms.plugin', sources.values())
+    plugin_finder = PluginFinder('srctools.bsp_transforms.plugin', sources)
     sys.meta_path.append(plugin_finder)
 
     return conf, game, fsys_chain, blacklist, plugin_finder
@@ -292,12 +271,12 @@ OPTIONS = [
     Opt(
         'plugins', TYPE.RAW,
         """\
-        Add plugins to the post compiler. The key defines the behaviour:
-        * "path" "folder/" loads all .py files in the folder.
-        * "recursive" "folder/" loads all .py files in the folder and in subfolders.
-        * "single" "folder/plugin.py" loads a single python file.
+        Add plugins to the post compiler. Each block is a package of plugins in some folder.
+        The name must be a Python identifier - the plugins are mounted at "srctools.bsp_transforms.plugin.blockname.filename".
+        * "path" must be set to either a single Python file, or a folder of files.
+        * If "recurse" is set, subfolders are recursively loaded as packages.
         The transforms folder inside the postcompiler folder is also always
-        loaded.
+        loaded, under the name "builtin".
     """),
     Opt(
         'transform_opts', TYPE.RAW,

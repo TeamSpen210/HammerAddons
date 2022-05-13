@@ -1,52 +1,93 @@
 """Logic for loading all the code in arbitary locations for plugin purposes."""
 import types
 import sys
-import operator
 from pathlib import Path
 from collections import deque
 from importlib.util import spec_from_loader, module_from_spec
 from importlib.abc import MetaPathFinder, Loader
 from importlib.machinery import ModuleSpec, SourceFileLoader
-from typing import (
-    Union, Optional, Set, Sequence, Tuple, Iterable,
-    Iterator,
-)
+from typing import Dict, Union, Optional, Set, Sequence, Tuple, Iterable, Iterator
+from typing_extensions import Final
 
+import attrs
+
+from srctools import Property
 from srctools.logger import get_logger
 
 LOGGER = get_logger(__name__)
+BUILTIN: Final = 'builtin'
 
 
+@attrs.define
 class Source:
     """A location that contains plugins."""
-    def __init__(self, folder: Path, recurse: bool):
-        self.folder = folder  # Folder to look in.
-        self.recursive = recurse  # If we automatically load recursively or not.
-        # If non-empty, load only these modules.
-        self.autoload_files: Set[Path] = set()
+    id: str
+    folder: Path  # Folder to look in.
+    recursive: bool = False  # If we automatically load recursively or not.
+    # If non-empty load only these modules.
+    files: Set[Path] = attrs.Factory(set)
+
+    @classmethod
+    def parse(cls, root: Path, prop: Property) -> 'Source':
+        """Parse from a property."""
+        if prop.has_children():
+            if not prop.real_name:
+                raise ValueError('Plugins must have a unique ID!')
+            if not prop.real_name.isidentifier() or '.' in prop.real_name:
+                raise ValueError(
+                    f'Plugin names must be a valid identifier '
+                    f'(words, numbers, underscore), not "{prop.real_name}"!'
+                )
+            try:
+                path = (root / Path(prop['path'])).resolve()
+            except LookupError:
+                raise ValueError(f'Plugin "{prop.real_name}" must have a path!') from None
+            if path.is_dir():
+                return Source(
+                    prop.real_name,
+                    path,
+                    recursive=prop.bool('recurse'),
+                )
+            else:
+                return Source(
+                    prop.real_name,
+                    path.parent,
+                    files={path},
+                )
+        else:  # Legacy style.
+            LOGGER.warning('Plugins should use block definition style!')
+            path = (root / Path(prop.value)).resolve()
+            if prop.name in ('path', "recursive", 'folder'):
+                if not path.is_dir():
+                    raise ValueError(f"'{path}' is not a directory!")
+
+                return Source('', path, prop.name == "recursive")
+            elif prop.name in ('single', 'file'):
+                return Source('', path.parent, files={path})
+            elif prop.name == '_builtin_':
+                return Source(BUILTIN, path, recursive=True)
+            else:
+                raise ValueError("Unknown plugins key {}".format(prop.real_name))
 
 
-def parse_name(prefix: str, name: str) -> Union[Tuple[int, Path], Tuple[None, None]]:
+def parse_name(prefix: str, name: str) -> Union[Tuple[str, Path], Tuple[None, None]]:
     """Parse out the source index and file path."""
     pref_size = len(prefix) + 1
     first_dot = name.find('.', pref_size)
     if name.startswith(prefix) and first_dot > 0:
-        try:
-            ind = int(name[pref_size:first_dot], 16)
-        except ValueError:
-            return None, None
+        source = name[pref_size:first_dot]
         path = Path(name[first_dot + 1:].replace('.', '/'))
-        return ind, path
+        return source, path
     return None, None
 
 
-def build_name(prefix: str, source_ind: int, name: Path) -> str:
+def build_name(prefix: str, source: str, name: Path) -> str:
     """Build a package name from the index and path."""
     if name.name.casefold() == '__init__.py':
         name = name.parent
     name = name.with_suffix('')
     dotted = str(name).replace('\\', '.').replace('/', '.')
-    return f'{prefix}_{source_ind:02x}.{dotted}'
+    return f'{prefix}.{source}.{dotted}'
 
 
 def _iter_folder(folder: Path, recursive: bool) -> Iterator[Path]:
@@ -80,13 +121,10 @@ class PluginRootLoader(Loader):
 
 
 class PluginFinder(MetaPathFinder):
-    """Loads plugins.
-
-    Plugins
-    """
-    def __init__(self, prefix: str, sources: Iterable[Source]) -> None:
+    """Loads plugins."""
+    def __init__(self, prefix: str, sources: Dict[str, Source]) -> None:
         self.prefix = prefix
-        self.sources = sorted(sources, key=operator.attrgetter('folder'))
+        self.sources = sources
 
     def find_spec(
         self,
@@ -95,11 +133,11 @@ class PluginFinder(MetaPathFinder):
         target: Optional[types.ModuleType] = None,
     ) -> Optional[ModuleSpec]:
         """Load a module."""
-        source_ind, subpath = parse_name(self.prefix, fullname)
-        if source_ind is None or subpath is None or source_ind < 0:
+        source_id, subpath = parse_name(self.prefix, fullname)
+        if source_id is None or subpath is None:
             return None
         try:
-            source = self.sources[source_ind]
+            source = self.sources[source_id]
         except IndexError:
             return None
         new_path = source.folder / subpath
@@ -116,8 +154,8 @@ class PluginFinder(MetaPathFinder):
             is_package=True,
         ))
         module.__doc__ = 'Plugin pseduo-package.'
-        for i, source in enumerate(self.sources):
-            source_modname = f'{self.prefix}_{i:02x}'
+        for source in self.sources.values():
+            source_modname = f'{self.prefix}.{source.id}'
             sys.modules[source_modname] = module = module_from_spec(ModuleSpec(
                 source_modname,
                 PluginRootLoader(source_modname + '.py'),
@@ -125,13 +163,14 @@ class PluginFinder(MetaPathFinder):
             ))
             module.__doc__ = 'Plugin pseduo-package.'
 
+        for source in self.sources.values():
             paths: Iterable[Path]
-            if source.autoload_files:
-                paths = source.autoload_files
+            if source.files:
+                paths = source.files
             else:
                 paths = _iter_folder(source.folder, source.recursive)
             for path in paths:
-                name = build_name(self.prefix, i, path.relative_to(source.folder))
+                name = build_name(self.prefix, source.id, path.relative_to(source.folder))
                 if name in sys.modules:
                     # Already loaded, by user import.
                     LOGGER.info('Plugin "{}" was preloaded automatically.', name)
@@ -146,5 +185,5 @@ class PluginFinder(MetaPathFinder):
                 sys.modules[name] = module = module_from_spec(spec)
 
                 # Provide a logger for the plugin, already setup.
-                setattr(module, 'LOGGER', get_logger(name, "plugin:" + str(path)))
+                setattr(module, 'LOGGER', get_logger(name, f"plugin.{source.id}:{path}"))
                 loader.exec_module(module)
