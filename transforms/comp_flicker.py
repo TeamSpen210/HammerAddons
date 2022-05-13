@@ -80,5 +80,19 @@ def comp_flicker(ctx: Context) -> None:
 
                 delay = lerp(time, min_point, max_point, flicker_min, flicker_max)
                 time += delay + random.uniform(-variance, variance)
+
+                delay = lerp(
+                    time,
+                    min_point, max_point,
+                    flicker_min, flicker_max,
+                )
+                # Clamp to specified min/max.
+                delay = min(flicker_max, max(flicker_min, delay)) + random.uniform(-variance, variance)
+                # And enforce monotonicity.
+                if delay < 0.01:
+                    delay = 0.01
+
+                time += delay
+
             # Force on exactly at the end time.
             ent.add_out(Output(out_name, '!self', INP_TURN_OFF if start_state else INP_TURN_ON, delay=time))
