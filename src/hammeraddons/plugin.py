@@ -1,13 +1,13 @@
 """Logic for loading all the code in arbitary locations for plugin purposes."""
-import types
-import sys
 from pathlib import Path
 from collections import deque
-from importlib.util import spec_from_loader, module_from_spec
-from importlib.abc import MetaPathFinder, Loader
+from importlib.util import spec_from_loader
+from importlib.abc import MetaPathFinder
 from importlib.machinery import ModuleSpec, SourceFileLoader
 from typing import Dict, Union, Optional, Set, Sequence, Tuple, Iterable, Iterator
 from typing_extensions import Final
+import importlib
+import types
 
 import attrs
 
@@ -110,21 +110,19 @@ def _iter_folder(folder: Path, recursive: bool) -> Iterator[Path]:
                 yield path
 
 
-class PluginRootLoader(Loader):
-    """Fake loader to create the pseduo-module all plugins are installed into."""
-    def __init__(self, filename: str) -> None:
-        self.filename = filename
-
-    def create_module(self, spec: ModuleSpec) -> Optional[types.ModuleType]:
-        """Use the default behaviour."""
-        return None
-
-
 class PluginFinder(MetaPathFinder):
     """Loads plugins."""
     def __init__(self, prefix: str, sources: Dict[str, Source]) -> None:
         self.prefix = prefix
         self.sources = sources
+        # All names in a package hierarchy need to exist, so we need to produce a module for
+        # each source folder, and the root prefix. Using loader=None here gives a namespace
+        # package which is all we need.
+        self.ns_packages = {
+            (name := f'{self.prefix}.{source.id}'): ModuleSpec(name, None, is_package=True)
+            for source in self.sources.values()
+        }
+        self.ns_packages[prefix] = ModuleSpec(prefix, None, is_package=True)
 
     def find_spec(
         self,
@@ -132,7 +130,12 @@ class PluginFinder(MetaPathFinder):
         path: Optional[Sequence[Union[str, bytes]]],
         target: Optional[types.ModuleType] = None,
     ) -> Optional[ModuleSpec]:
-        """Load a module."""
+        """Locate the module spec for a module, if it's one of ours."""
+        # First check the various roots, and return the namespace package if so.
+        try:
+            return self.ns_packages[fullname]
+        except KeyError:
+            pass
         source_id, subpath = parse_name(self.prefix, fullname)
         if source_id is None or subpath is None:
             return None
@@ -141,28 +144,13 @@ class PluginFinder(MetaPathFinder):
         except IndexError:
             return None
         new_path = source.folder / subpath
-        filename = str(new_path / '__init__.py') if new_path.is_dir() else str(new_path)
-        loader = SourceFileLoader(fullname, filename)
-        return spec_from_loader(fullname, loader)
+        if new_path.is_dir():
+            new_path /= '__init__.py'
+        # SourceFileLoader can do all the hard work for us given a source file.
+        return spec_from_loader(fullname, SourceFileLoader(fullname, str(new_path)))
 
     def load_all(self) -> None:
         """Load all the plugin modules."""
-        # Inject our prefix as a pseudo-module, so it can be imported.
-        sys.modules[self.prefix] = module = module_from_spec(ModuleSpec(
-            self.prefix,
-            PluginRootLoader(self.prefix + '.py'),
-            is_package=True,
-        ))
-        module.__doc__ = 'Plugin pseduo-package.'
-        for source in self.sources.values():
-            source_modname = f'{self.prefix}.{source.id}'
-            sys.modules[source_modname] = module = module_from_spec(ModuleSpec(
-                source_modname,
-                PluginRootLoader(source_modname + '.py'),
-                is_package=True,
-            ))
-            module.__doc__ = 'Plugin pseduo-package.'
-
         for source in self.sources.values():
             paths: Iterable[Path]
             if source.files:
@@ -171,19 +159,6 @@ class PluginFinder(MetaPathFinder):
                 paths = _iter_folder(source.folder, source.recursive)
             for path in paths:
                 name = build_name(self.prefix, source.id, path.relative_to(source.folder))
-                if name in sys.modules:
-                    # Already loaded, by user import.
-                    LOGGER.info('Plugin "{}" was preloaded automatically.', name)
-                    continue
                 LOGGER.info('Loading "{}" as "{}"', path, name)
-
-                filename = str(path / '__init__.py') if path.is_dir() else str(path)
-                loader = SourceFileLoader(name, filename)
-                spec = spec_from_loader(name, loader)
-                if spec is None:
-                    raise AssertionError(f'No spec for {name!r}!')
-                sys.modules[name] = module = module_from_spec(spec)
-
-                # Provide a logger for the plugin, already setup.
-                setattr(module, 'LOGGER', get_logger(name, f"plugin.{source.id}:{path}"))
-                loader.exec_module(module)
+                # Do an import, which will call back to find_spec().
+                importlib.import_module(name)
