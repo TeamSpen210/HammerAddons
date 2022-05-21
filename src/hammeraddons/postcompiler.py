@@ -22,8 +22,11 @@ from srctools.bsp import BSP
 from srctools.packlist import PackList
 from srctools.scripts import config
 
-from hammeraddons import propcombine, __version__ as version_haddons
-from hammeraddons.bsp_transform import run_transformations
+from .bsp_transform import run_transformations
+from . import propcombine, __version__ as version_haddons
+from .move_shim import install as install_depmodule_hook
+
+install_depmodule_hook()
 
 
 def main(argv: List[str]) -> None:
