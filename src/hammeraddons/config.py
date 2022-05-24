@@ -149,7 +149,7 @@ def parse(path: Path, game_folder: str='') -> Tuple[
     for source in sources.values():
         LOGGER.debug('- {!r}', source)
 
-    plugin_finder = PluginFinder('srctools.bsp_transforms.plugin', sources)
+    plugin_finder = PluginFinder('hammeraddons.bsp_transforms.plugin', sources)
     sys.meta_path.append(plugin_finder)
 
     return conf, game, fsys_chain, blacklist, plugin_finder
