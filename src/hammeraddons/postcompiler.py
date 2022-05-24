@@ -154,14 +154,16 @@ def main(argv: List[str]) -> None:
             for out in ent.outputs
         }
         try:
-            [use_comma_sep] = used_comma_sep
+            [bsp_file.out_comma_sep] = used_comma_sep
         except ValueError:
             if used_comma_sep:
                 LOGGER.warning("Both BSP I/O formats in map? This shouldn't be possible.")
             else:
                 LOGGER.warning('No outputs in map, could not determine BSP I/O format!')
             LOGGER.warning('Set "use_comma_sep" in srctools.vdf.')
-            use_comma_sep = False  # Kinda arbitrary.
+            bsp_file.out_comma_sep = False  # Kinda arbitrary.
+    else:
+        bsp_file.out_comma_sep = use_comma_sep
     transform_conf = {
         prop.name: prop
         for prop in conf.get(Property, 'transform_opts')
