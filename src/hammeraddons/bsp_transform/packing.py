@@ -3,9 +3,10 @@ import os
 from typing import Set, Dict
 
 from srctools import Entity
-from srctools.bsp_transform import trans, Context
 from srctools.logger import get_logger
-from srctools.packlist import FileType, SoundScriptMode, unify_path
+from srctools.packlist import FileType, unify_path
+
+from hammeraddons.bsp_transform import trans, Context
 
 
 LOGGER = get_logger(__name__, 'trans.packing')

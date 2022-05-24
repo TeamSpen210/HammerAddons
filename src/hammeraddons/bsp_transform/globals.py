@@ -3,10 +3,11 @@ import itertools
 from typing import List, Tuple, Dict
 from collections import defaultdict
 
-from srctools.bsp_transform import trans, Context
 from srctools.logger import get_logger
 from srctools import Output
 from srctools.packlist import FileType
+
+from hammeraddons.bsp_transform import trans, Context
 
 
 LOGGER = get_logger(__name__)

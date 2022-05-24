@@ -19,10 +19,11 @@ from srctools import Property, __version__ as version_lib
 from srctools.filesys import ZipFileSystem
 from srctools.fgd import FGD
 from srctools.bsp import BSP
-from srctools.bsp_transform import run_transformations
 from srctools.packlist import PackList
 from srctools.scripts import config
-from srctools.compiler import propcombine, __version__ as version_haddons
+
+from hammeraddons import propcombine, __version__ as version_haddons
+from hammeraddons.bsp_transform import run_transformations
 
 
 def main(argv: List[str]) -> None:

@@ -2,17 +2,15 @@
 
 
 """
-import itertools
 from typing import Dict, Optional, Set
 
-from srctools import conv_int, Entity, Output
-from srctools.logger import get_logger
-
-from srctools.bsp_transform import trans, Context
+from srctools import conv_int, Entity, Output, logger
 from srctools.packlist import ALT_NAMES
 
+from hammeraddons.bsp_transform import trans, Context
 
-LOGGER = get_logger(__name__)
+
+LOGGER = logger.get_logger(__name__)
 
 
 @trans('trigger_brush Input Filters')

@@ -11,13 +11,14 @@ import random
 from typing import Callable, Tuple, Dict, Set, TypeVar, Hashable, Generic, Any, List
 from pathlib import Path
 
-from srctools import AtomicWriter
-from srctools.bsp_transform import Context
+from srctools import AtomicWriter, logger
 from srctools.game import Game
 from srctools.mdl import MDL_EXTS
-from srctools.packlist import PackList, LOGGER
+from srctools.packlist import PackList
 
+from hammeraddons.bsp_transform import Context
 
+LOGGER = logger.get_logger(__name__)
 ModelKey = TypeVar('ModelKey', bound=Hashable)
 InT = TypeVar('InT')
 OutT = TypeVar('OutT')

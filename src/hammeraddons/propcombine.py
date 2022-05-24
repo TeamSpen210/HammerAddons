@@ -30,7 +30,8 @@ from srctools.packlist import PackList
 from srctools.bsp import BSP, StaticProp, StaticPropFlags, BModel, VisLeaf
 from srctools.mdl import Model, MDL_EXTS
 from srctools.smd import Mesh, Triangle, Vertex
-from srctools.compiler.mdl_compiler import ModelCompiler
+
+from hammeraddons.mdl_compiler import ModelCompiler
 
 
 LOGGER = get_logger(__name__)

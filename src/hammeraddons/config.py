@@ -4,11 +4,10 @@ from typing import Tuple, Set, Dict
 import sys
 
 from srctools.game import Game
-
 from srctools import Property, logger, AtomicWriter
 from srctools.filesys import FileSystemChain, FileSystem, RawFileSystem, VPKFileSystem
-from srctools.props_config import Opt, Config, TYPE
 
+from .props_config import Opt, Config, TYPE
 from .plugin import Source as PluginSource, PluginFinder, BUILTIN as BUILTIN_PLUGIN
 
 
