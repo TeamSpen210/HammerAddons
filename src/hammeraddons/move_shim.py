@@ -12,20 +12,28 @@ import warnings
 from hammeraddons import bsp_transform, mdl_compiler, plugin, propcombine, config, props_config
 
 
+def mod_to_spec(mod: types.ModuleType) -> ModuleSpec:
+    """Fetch the module's __spec__."""
+    spec = mod.__spec__
+    assert spec is not None, mod
+    return spec
+
+
 moves: Dict[str, ModuleSpec] = {
-    'srctools.bsp_transform': bsp_transform.__spec__,
+    'srctools.bsp_transform': mod_to_spec(bsp_transform),
     # Loader = none means this acts like a namespace package, which is all we need.
     'srctools.compiler': ModuleSpec(
         'srctools.compiler',
         None,
         is_package=True,
     ),
-    'srctools.compiler.mdl_compiler': mdl_compiler.__spec__,
-    'srctools.compiler.propcombine': propcombine.__spec__,
-    'srctools.scripts.config': config.__spec__,
-    'srctools.props_config': props_config.__spec__,
-    'srctools.plugin': plugin.__spec__,
+    'srctools.compiler.mdl_compiler': mod_to_spec(mdl_compiler),
+    'srctools.compiler.propcombine': mod_to_spec(propcombine),
+    'srctools.scripts.config': mod_to_spec(config),
+    'srctools.props_config': mod_to_spec(props_config),
+    'srctools.plugin': mod_to_spec(plugin),
 }
+del mod_to_spec
 
 
 class DeprecatedFinder(MetaPathFinder):
