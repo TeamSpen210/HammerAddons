@@ -3,7 +3,7 @@
 A list of options are passed in, which parse each option to a basic type.
 """
 import inspect
-from enum import Enum, EnumMeta
+from enum import Enum
 from pathlib import Path
 from typing import TypeVar, Union, Any, List, Type, Optional, Dict, IO, overload
 
@@ -66,21 +66,23 @@ class Opt:
         # Remove indentation, and trailing carriage return
         self.doc = inspect.cleandoc(doc).rstrip().splitlines()
         if fallback is not None:
-            self.doc.append(
-                'If unset, the default is read from `{}`.'.format(default)
-            )
+            self.doc.append(f'If unset, the default is read from `{default}`.')
 
 
 class Config:
     """Allows parsing a set of Property option blocks."""
+    defaults: List[Opt]
+    settings: Dict[str, Union[None, str, int, float, bool, Vec, Property]]
+    path: Optional[Path]
+
     def __init__(self, defaults: Union[List[Opt], 'Config']) -> None:
         if isinstance(defaults, Config):
-            self.defaults = defaults.defaults  # type: List[Opt]
+            self.defaults = defaults.defaults
         else:
             self.defaults = defaults
 
-        self.settings = {}  # type: Dict[str, Union[None, str, int, float, bool, Vec, Property]]
-        self.path = None  # type: Optional[Path]
+        self.settings = {}
+        self.path = None
 
     def load(self, opt_blocks: Property) -> None:
         """Read settings from the given property block."""
@@ -118,10 +120,7 @@ class Config:
 
             # Non-RAW types cannot have a property block, only a value.
             if prop.has_children():
-                raise ValueError(
-                    'Cannot use property block for '
-                    '"{}"'.format(opt.name)
-                )
+                raise ValueError(f'Cannot use property block for "{opt.name}"')
 
             if opt.type is TYPE.VEC:
                 # Pass nones so we can check if it failed..
@@ -143,12 +142,11 @@ class Config:
             try:
                 self.settings[opt.id] = self.settings[opt.fallback]
             except KeyError:
-                raise Exception('Bad fallback for "{}"!'.format(opt.id))
+                raise Exception(f'Bad fallback for "{opt.id}"!')
             # Check they have the same type.
             if opt.type is not options[opt.fallback].type:
                 raise ValueError(
-                    '"{}" cannot fall back to "{}" - different '
-                    'type!'.format(opt.id, opt.fallback)
+                    f'"{opt.id}" cannot fall back to "{opt.fallback}" - different type!'
                 )
 
         if set_vals:
@@ -207,9 +205,7 @@ class Config:
         try:
             val = self.settings[name.casefold()]
         except KeyError:
-            raise TypeError(
-                'Option "{}" does not exist!'.format(name)
-            ) from None
+            raise TypeError(f'Option "{name}" does not exist!') from None
 
         if val is None:
             if expected_type is Property:
@@ -217,19 +213,16 @@ class Config:
             else:
                 return None
 
+        enum_type: Optional[Type[Enum]]
         if issubclass(expected_type, Enum):
-            enum_type = expected_type  # type: Optional[Type[Enum]]
+            enum_type = expected_type
             expected_type = str
         else:
             enum_type = None
 
         # Don't allow subclasses (bool/int)
         if type(val) is not expected_type:
-            raise ValueError('Option "{}" is {} (code expected {})'.format(
-                name,
-                type(val),
-                expected_type,
-            ))
+            raise ValueError(f'Option "{name}" is {type(val)} (code expected {expected_type})')
 
         if enum_type is not None:
             try:
@@ -241,7 +234,7 @@ class Config:
                     name,
                     '\n'.join([mem.value for mem in enum_type])
                 )
-                return next(iter(enum_type))
+                return next(iter(enum_type))  # type: ignore
 
         # Vec is mutable, don't allow modifying the original.
         if expected_type is Vec or expected_type is Property:
@@ -270,7 +263,7 @@ class Config:
                 if isinstance(default, bool):
                     default = '1' if default else '0'
 
-                file.write('\t// Default Value: "{}"\n'.format(default))
+                file.write(f'\t// Default Value: "{default}"\n')
 
             try:
                 value = self.settings[option.id]
@@ -282,11 +275,11 @@ class Config:
 
             if value is None:
                 # Comment out the unset value.
-                file.write('\t// "{}" ""\n'.format(option.name))
+                file.write(f'\t// "{option.name}" ""\n')
             elif isinstance(value, Property):
                 value.name = option.name
                 for line in value.export():
                     file.write('\t' + line)
             else:
-                file.write('\t"{}" "{}"\n'.format(option.name, value))
+                file.write(f'\t"{option.name}" "{value}"\n')
         file.write('\t}\n')
