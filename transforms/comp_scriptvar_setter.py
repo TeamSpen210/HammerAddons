@@ -4,11 +4,12 @@ import re
 from collections import defaultdict
 from typing import Type, Optional, Callable, Union
 
-from srctools.bsp_transform import trans, Context
 from srctools.fgd import FGD, ValueTypes
 from srctools.logger import get_logger
 from srctools.tokenizer import escape_text
 from srctools import Entity, Vec, conv_float, conv_bool, Angle
+
+from hammeraddons.bsp_transform import trans, Context
 
 
 LOGGER = get_logger(__name__)

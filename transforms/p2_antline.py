@@ -7,8 +7,9 @@ toggles that.
 from typing import List, Set
 
 from srctools import Entity, Output
-from srctools.bsp_transform import trans, Context
 from srctools.logger import get_logger
+
+from hammeraddons.bsp_transform import trans, Context
 
 
 LOGGER = get_logger(__name__)

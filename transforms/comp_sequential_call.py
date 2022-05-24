@@ -4,8 +4,9 @@ import re
 from collections.abc import Iterator
 
 from srctools import Vec, Entity, Output, conv_bool, conv_float, lerp
-from srctools.bsp_transform import trans, Context
 import srctools.logger
+
+from hammeraddons.bsp_transform import trans, Context
 
 LOGGER = srctools.logger.get_logger(__name__)
 DIGIT_PATTERN = re.compile('[0-9]+')

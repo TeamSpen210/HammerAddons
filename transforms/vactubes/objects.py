@@ -81,7 +81,8 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[
         vac_objects[obj.group].append(obj)
         # Convert the ent into a precache ent, stripping the other keyvalues.
         mdl_name = ent['model']
-        ent.keys = {'model': mdl_name}
+        ent.clear()
+        ent['model'] = mdl_name
         make_precache_prop(ent)
         pack.pack_file(mdl_name, FileType.MODEL, skinset={obj.skin_vac})
 

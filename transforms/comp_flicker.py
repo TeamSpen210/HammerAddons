@@ -2,7 +2,8 @@
 import random
 
 from srctools import Output, lerp, logger, conv_float
-from srctools.bsp_transform import trans, Context
+
+from hammeraddons.bsp_transform import trans, Context
 
 LOGGER = logger.get_logger(__name__)
 INP_TURN_OFF = 'FireUser1'

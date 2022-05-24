@@ -11,7 +11,8 @@ from srctools.smd import Mesh
 
 import srctools.logger
 from srctools import Vec, Output, conv_int
-from srctools.bsp_transform import trans, Context
+
+from hammeraddons.bsp_transform import trans, Context
 from . import nodes, animations, objects
 
 

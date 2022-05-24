@@ -17,11 +17,11 @@ from srctools import (
     logger, conv_int, conv_float, conv_bool,
     Vec, Entity, Matrix, Angle, lerp, FileSystem,
 )
-from srctools.compiler.mdl_compiler import ModelCompiler
-from srctools.bsp_transform import Context, trans
 from srctools.bsp import StaticProp, StaticPropFlags, VisLeaf, VisTree
 from srctools.smd import Mesh, Vertex, Triangle, Bone
 
+from hammeraddons.mdl_compiler import ModelCompiler
+from hammeraddons.bsp_transform import Context, trans
 
 LOGGER = logger.get_logger(__name__)
 NodeID = NewType('NodeID', str)

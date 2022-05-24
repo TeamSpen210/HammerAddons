@@ -4,8 +4,9 @@ from string import ascii_lowercase
 from typing import Callable, Dict, List, Optional
 
 from srctools import conv_float, Output
-from srctools.bsp_transform import trans, Context
 from srctools.logger import get_logger
+
+from hammeraddons.bsp_transform import trans, Context
 
 LOGGER = get_logger(__name__)
 

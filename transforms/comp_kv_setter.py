@@ -4,8 +4,9 @@ This is useful to compute spawnflags, or to adjust keyvalues when the target
 entity's options can't be set to a fixup variable.
 """
 from srctools import conv_int, conv_bool, Vec
-from srctools.bsp_transform import trans, Context
 from srctools.logger import get_logger
+
+from hammeraddons.bsp_transform import trans, Context
 
 LOGGER = get_logger(__name__)
 

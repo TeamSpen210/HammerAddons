@@ -1,8 +1,9 @@
 """Various transformations that move other entities around."""
 
-from srctools import conv_int, conv_bool, Vec, conv_float
-from srctools.bsp_transform import trans, Context
+from srctools import Vec, conv_float
 from srctools.logger import get_logger
+
+from hammeraddons.bsp_transform import trans, Context
 
 
 LOGGER = get_logger(__name__)
