@@ -1,5 +1,4 @@
 """Build the postcompiler script."""
-import os
 from pathlib import Path
 
 import versioningit
@@ -8,19 +7,9 @@ import versioningit
 SPECPATH: str
 workpath: str
 
-# Find the BSP transforms from HammerAddons.
-try:
-    hammer_addons = Path(os.environ['HAMMER_ADDONS']).resolve()
-except KeyError:
-    hammer_addons = Path('../HammerAddons/').resolve()
-if not (hammer_addons / 'transforms').exists():
-    raise ValueError(
-        f'Invalid BSP transforms location "{hammer_addons}/transforms/"!\n'
-        'Clone TeamSpen210/HammerAddons, or set the '
-        'environment variable HAMMER_ADDONS to the location.'
-    )
+root = Path(SPECPATH)  # noqa
 
-version = versioningit.get_version(hammer_addons, {
+version = versioningit.get_version(SPECPATH, {
     'vcs': {'method': 'git'},
     'default-version': '(dev)',
     'format': {
@@ -30,20 +19,21 @@ version = versioningit.get_version(hammer_addons, {
     },
 })
 
-with open(Path(SPECPATH, 'src', 'srctools', 'compiler', '_version.py'), 'w') as f:
+with open(Path(SPECPATH, 'src', 'hammeraddons', '_version.py'), 'w') as f:
     f.write(f'__version__ = {version!r}\n')
 
 DATAS = [
-    (str(file), str(file.relative_to(hammer_addons).parent))
-    for file in (hammer_addons / 'transforms').rglob('*.py')
+    (str(file), str(file.relative_to(root).parent))
+    for file in (root / 'transforms').rglob('*.py')
 ] + [
-    (str(hammer_addons / 'crowbar_command/Crowbar.exe'), '.'),
-    (str(hammer_addons / 'crowbar_command/FluentCommandLineParser.dll'), '.'),
+    (str(root / 'crowbar_command/Crowbar.exe'), '.'),
+    (str(root / 'crowbar_command/FluentCommandLineParser.dll'), '.'),
 ]
-print(DATAS)
+for src, dest in DATAS:
+    print(src, '->', dest)
 
 a = Analysis(
-    ['src/srctools/scripts/postcompiler.py'],
+    ['src/hammeraddons/postcompiler.py'],
     binaries=[],
     datas=DATAS,
     hiddenimports=[
