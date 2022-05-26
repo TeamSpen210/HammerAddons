@@ -343,7 +343,6 @@ trigger_momentum_progress
 trigger_momentum_promptinput
 trigger_momentum_push
 trigger_momentum_resetonehop
-trigger_momentum_slide
 trigger_momentum_teleport_progress
 trigger_momentum_timer_start
 trigger_momentum_timer_stop
