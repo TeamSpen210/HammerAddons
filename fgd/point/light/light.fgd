@@ -5,6 +5,7 @@
 	line(255 255 255, targetname, target)
 = light: "An invisible omnidirectional lightsource."
 	[
+	_removeaftercompile(boolean) : "Remove After Compile" : 0 : "If set, removes this entity after processing the map with VRAD"
 	spawnflags(flags)  =
 		[
 		1: "Initially dark" : 0

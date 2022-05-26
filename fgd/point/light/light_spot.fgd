@@ -11,6 +11,7 @@
 	_inner_cone(integer) : "Inner (bright) angle" : 30
 	_cone(integer) : "Outer (fading) angle" : 45
 	_exponent(integer) : "Focus" : 1
+	_removeaftercompile(boolean) : "Remove After Compile" : 0 : "If set, removes this entity after processing the map with VRAD"
 	pitch(angle_negative_pitch) : "Pitch" : -90
 	spawnflags(flags)  =
 		[
