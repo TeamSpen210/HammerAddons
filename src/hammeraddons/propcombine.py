@@ -181,7 +181,7 @@ PropCombiner = ModelCompiler[
 ]
 
 
-def combine_group(
+async def combine_group(
     compiler: PropCombiner,
     props: List[StaticProp],
     lookup_model: Callable[[str], Union[Tuple[QC, Model], Tuple[None, None]]],
@@ -242,7 +242,7 @@ def combine_group(
         ))
     # We don't want to build collisions if it's not used.
     has_coll = any(pos.solidity is not CollType.NONE for pos in prop_pos)
-    mdl_name, result = compiler.get_model(
+    mdl_name, result = await compiler.get_model(
         (frozenset(prop_pos), has_coll),
         compile_func, (lookup_model, volume_tolerance),
     )
@@ -1110,7 +1110,7 @@ async def combine(
         },
     ) as compiler:
         for group in grouper:
-            grouped_prop = combine_group(compiler, group, get_model, volume_tolerance)
+            grouped_prop = await combine_group(compiler, group, get_model, volume_tolerance)
             rejected.difference_update(group)
             if debug_tint:
                 # Compute a random hue, and convert back to RGB 0-255.

@@ -8,13 +8,18 @@ import pickle
 import subprocess
 import tempfile
 import random
-from typing import Callable, Tuple, Dict, Set, TypeVar, Hashable, Generic, Any, List
+from typing import (
+    Awaitable, Callable, Optional, Tuple, Dict, Set, TypeVar, Hashable, Generic, Any,
+    List,
+)
 from pathlib import Path
 
 from srctools import AtomicWriter, logger
 from srctools.game import Game
 from srctools.mdl import MDL_EXTS
 from srctools.packlist import PackList
+
+import trio
 
 from hammeraddons.bsp_transform import Context
 
@@ -51,16 +56,19 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
     ) -> None:
         # The models already constructed.
         self._built_models: Dict[ModelKey, GenModel[OutT]] = {}
+        # Tracks models when built multiple times.
+        self._building: Dict[ModelKey, trio.Event] = {}
 
         # The random indexes we use to produce filenames.
         self._mdl_names: Set[str] = set()
 
         self.game: Game = game
-        self.model_folder = 'maps/{}/{}/'.format(map_name, folder_name)
+        self.model_folder = f'maps/{map_name}/{folder_name}/'
         self.model_folder_abs = game.path / 'models' / self.model_folder
         self.pack: PackList = pack
         self.version = version
         self.studiomdl_loc = studiomdl_loc
+        self.limiter = trio.CapacityLimiter(8)
 
     @classmethod
     def from_ctx(cls, ctx: Context, folder_name: str, version: object=0) -> 'ModelCompiler':
@@ -155,10 +163,10 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
             except FileNotFoundError:
                 pass
 
-    def get_model(
+    async def get_model(
         self,
         key: ModelKey,
-        compile_func: Callable[[ModelKey, Path, str, InT], OutT],
+        compile_func: Callable[[ModelKey, Path, str, InT], Awaitable[OutT]],
         args: InT,
     ) -> Tuple[str, OutT]:
         """Given a model key, either return the existing model, or compile it.
@@ -179,10 +187,22 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         The model key and return value must be pickleable, so they can be saved
         for use in subsequent compiles.
         """
-        try:
-            model = self._built_models[key]
-        except KeyError:
+        model: Optional[ModelKey] = None
+        while True:
+            try:
+                model = self._built_models[key]
+                break
+            except KeyError:
+                try:
+                    evt = self._building[key]
+                    await evt.wait()
+                    continue
+                except KeyError:
+                    break
+
+        if model is None:
             # Need to build the model.
+            evt = self._building[key] = trio.Event() # Ensure other tasks know we're busy.
             # Figure out a name to use.
             while True:
                 mdl_name = 'mdl_{:04x}'.format(random.getrandbits(16))
@@ -199,7 +219,8 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
                     '-game', str(self.game.path),
                     str(path / 'model.qc'),
                 ]
-                res = subprocess.run(studio_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                async with self.limiter:
+                    res = await trio.run_process(studio_args, capture_stdout=True, check=False)
                 LOGGER.debug(
                     'Executing {}:\n{}',
                     studio_args,
@@ -208,6 +229,8 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
                 res.check_returncode()  # Or raise.
 
             model = self._built_models[key] = GenModel(mdl_name, result)
+            evt.set()
+            del self._building[key]
 
         if not model.used:
             # Pack it in.
