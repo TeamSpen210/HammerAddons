@@ -1,6 +1,7 @@
 """Transformations that can be applied to the BSP file."""
 from pathlib import Path
-from typing import Callable, Dict, Mapping, Tuple, List
+from typing import Optional, Callable, Awaitable, Dict, Mapping, Tuple, List
+import inspect
 
 from srctools import EmptyMapping, FileSystem, Property, VMF, Output, Entity, FGD
 from srctools.bsp import BSP
@@ -89,23 +90,31 @@ class Context:
             self._ent_code[ent] = '{}\n{}'.format(existing, code)
 
 
-TransFunc = Callable[[Context], None]
+TransFunc = Callable[[Context], Awaitable[None]]
+TransFuncOrSync = Callable[[Context], Optional[Awaitable[None]]]
 TRANSFORMS: Dict[str, TransFunc] = {}
 TRANSFORM_PRIORITY: Dict[str, int] = {}
 
 
-def trans(name: str, *, priority: int=0) -> Callable[[TransFunc], TransFunc]:
+def trans(name: str, *, priority: int=0) -> Callable[[TransFuncOrSync], TransFunc]:
     """Add a transformation procedure to the list."""
-    def deco(func: TransFunc) -> TransFunc:
+    def deco(func: TransFuncOrSync) -> TransFunc:
         """Stores the transformation."""
-        TRANSFORMS[name] = func
         TRANSFORM_PRIORITY[name] = priority
-        return func
+        if inspect.iscoroutinefunction(func):
+            TRANSFORMS[name] = func  # type: ignore # inspect needs typeguard
+            return func  # type: ignore # ^^^
+        else:
+            async def async_wrapper(ctx: Context) -> None:
+                """Just freeze all other tasks to run this."""
+                func(ctx)
+            TRANSFORMS[name] = async_wrapper
+            return async_wrapper
     return deco
 
 
 # noinspection PyProtectedMember
-def run_transformations(
+async def run_transformations(
     vmf: VMF,
     filesys: FileSystem,
     pack: PackList,
@@ -127,7 +136,7 @@ def run_transformations(
         except KeyError:
             context.config = Property(func_name, [])
         LOGGER.debug('Config: {!r}', context.config)
-        func(context)
+        await func(context)
 
     if context._ent_code:
         LOGGER.info('Injecting VScript code...')
@@ -185,7 +194,7 @@ def _load() -> None:
     This loads the transformations. We do it in a function to allow discarding
     the output.
     """
-    from srctools.bsp_transform import (
+    from . import (
         globals,
         instancing,
         packing,

@@ -171,7 +171,7 @@ async def main(argv: List[str]) -> None:
     }
 
     LOGGER.info('Running transforms...')
-    run_transformations(
+    await run_transformations(
         bsp_file.ents,
         fsys, packlist,
         bsp_file,
