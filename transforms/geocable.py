@@ -383,7 +383,7 @@ class Node:
         return f'<Node at {self.pos}>'
 
 
-def build_rope(
+async def build_rope(
     nodes_and_conn: Tuple[FrozenSet[NodeEnt], FrozenSet[Tuple[NodeID, NodeID]]],
     temp_folder: Path,
     mdl_name: str,

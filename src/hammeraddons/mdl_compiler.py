@@ -221,7 +221,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
 
         with tempfile.TemporaryDirectory(prefix='mdl_compile') as folder:
             path = Path(folder)
-            result = compile_func(key, path, f'{self.model_folder}{mdl_name}.mdl', args)
+            result = await compile_func(key, path, f'{self.model_folder}{mdl_name}.mdl', args)
             studio_args = [
                 str(self.studiomdl_loc),
                 '-nop4',

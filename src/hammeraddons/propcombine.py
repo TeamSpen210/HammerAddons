@@ -10,7 +10,6 @@ import random
 import colorsys
 import re
 import shutil
-import subprocess
 import itertools
 from collections import defaultdict
 from enum import Enum
@@ -19,7 +18,7 @@ from tempfile import TemporaryDirectory
 from typing import (
     Optional, Tuple, Callable, NamedTuple,
     FrozenSet, Dict, List, Set,
-    Iterator, Union, MutableMapping, Iterable
+    Iterator, Union, MutableMapping, Iterable,
 )
 
 from srctools import VMF, Entity, conv_int, FileSystemChain, Property, KeyValError, bool_as_int
@@ -30,10 +29,11 @@ from srctools.logger import get_logger
 from srctools.packlist import PackList
 from srctools.bsp import BSP, StaticProp, StaticPropFlags, BModel, VisLeaf
 from srctools.mdl import Model, MDL_EXTS
-from srctools.smd import Mesh, Triangle, Vertex
+from srctools.smd import Bone, Mesh, Triangle, Vertex
 import trio
 
-from hammeraddons.mdl_compiler import ModelCompiler
+from .mdl_compiler import ModelCompiler
+from .acache import ACache
 
 
 LOGGER = get_logger(__name__)
@@ -75,11 +75,12 @@ MAX_VERTS = 65536//3
 
 # Cache of the SMD models we have already parsed, so we don't need
 # to parse them again. For the collision model, we store them pre-split.
-_mesh_cache: Dict[Tuple[QC, int], Mesh] = {}
-_coll_cache: Dict[str, List[Mesh]] = {}
+_mesh_cache: ACache[Tuple[QC, int], Mesh] = ACache()
+_coll_cache: ACache[str, List[Mesh]] = ACache()
 
 # Limit the amount of decompile/recompiles we do simultaneously.
 LIM_PROCESS = trio.CapacityLimiter(8)
+LIM_PARSE = trio.CapacityLimiter(16)
 
 
 def unify_mdl(path: str):
@@ -242,7 +243,7 @@ async def combine_group(
         ))
     # We don't want to build collisions if it's not used.
     has_coll = any(pos.solidity is not CollType.NONE for pos in prop_pos)
-    mdl_name, result = await compiler.get_model(
+    mdl_name, _ = await compiler.get_model(
         (frozenset(prop_pos), has_coll),
         compile_func, (lookup_model, volume_tolerance),
     )
@@ -263,7 +264,7 @@ async def combine_group(
     )
 
 
-def compile_func(
+async def compile_func(
     mdl_key: Tuple[FrozenSet[PropPos], bool],
     temp_folder: Path,
     mdl_name: str,
@@ -306,33 +307,9 @@ def compile_func(
         qc, mdl = lookup_model(prop.model)
         assert qc is not None, prop.model
         assert mdl is not None, prop.model
-        try:
-            child_ref = _mesh_cache[qc, prop.skin]
-        except KeyError:
-            LOGGER.info('Parsing ref "{}"', qc.ref_smd)
-            with open(qc.ref_smd, 'rb') as fb:
-                child_ref = Mesh.parse_smd(fb)
 
-            if prop.skin != 0 and prop.skin < len(mdl.skins):
-                # We need to rename the materials to match the skin.
-                swap_skins = dict(zip(
-                    mdl.skins[0],
-                    mdl.skins[prop.skin]
-                ))
-                for tri in child_ref.triangles:
-                    tri.mat = swap_skins.get(tri.mat, tri.mat)
-
-            # For some reason all the SMDs are rotated badly, but only
-            # if we append them.
-            rot = Matrix.from_yaw(90)
-            for tri in child_ref.triangles:
-                for vert in tri:
-                    vert.pos @= rot
-                    vert.norm @= rot
-
-            _mesh_cache[qc, prop.skin] = child_ref
-
-        child_coll = build_collision(qc, prop, child_ref)
+        child_ref = await _mesh_cache.fetch((qc, prop.skin), build_reference, prop, qc, mdl)
+        child_coll = await _coll_cache.fetch(qc.phy_smd, build_collision, qc, prop, child_ref)
 
         offset = Vec(prop.x, prop.y, prop.z)
         matrix = Matrix.from_angle(Angle(prop.pit, prop.yaw, prop.rol))
@@ -363,46 +340,11 @@ def compile_func(
 
     if coll_groups:
         if volume_tolerance > 0:
-            LOGGER.info('Optimising collisions:')
-            # Attempt to merge together collision groups.
-            todo: Set[Mesh] = set(coll_groups)
-            # Pairs we know don't combine correctly.
-            failures: Set[Tuple[Mesh, Mesh]] = set()
-            zero_norm = Vec()
-            while todo:
-                mesh1 = todo.pop()
-                for mesh2 in todo:
-                    if (mesh1, mesh2) in failures or (mesh2, mesh1) in failures:
-                        continue
-                    combined = Mesh(coll_mesh.bones, coll_mesh.animation, [
-                        Triangle(
-                            'phys',
-                            Vertex(v1, zero_norm, 0.0, 0.0, bone_link),
-                            Vertex(v2, zero_norm, 0.0, 0.0, bone_link),
-                            Vertex(v3, zero_norm, 0.0, 0.0, bone_link),
-                        )
-                        for v1, v2, v3 in quickhull(
-                            vert.pos
-                            for tri in itertools.chain(mesh1.triangles, mesh2.triangles)
-                            for vert in tri
-                        )
-                    ])
-                    combined_vol = combined.compute_volume()
-                    diff = abs(coll_groups[mesh1] + coll_groups[mesh2] - combined_vol)
-                    LOGGER.debug('Volume diff: {}', diff)
-                    if diff < volume_tolerance:
-                        todo.discard(mesh2)
-                        todo.add(combined)
-                        LOGGER.info('{} + {} -> {}', id(mesh1), id(mesh2), id(combined))
-                        coll_groups[combined] = combined_vol
-                        break
-                    else:
-                        failures.add((mesh1, mesh2))
-                else:
-                    # Failed against all, this is fully optimised.
-                    mesh1.smooth_normals()
-                    coll_mesh.triangles += mesh1.triangles
-            LOGGER.info('Done.')
+            await trio.to_thread.run_sync(
+                optimise_collision,
+                volume_tolerance, bone_link,
+                coll_mesh, coll_groups,
+            )
         else:
             # Just use unaltered.
             for mesh1 in coll_groups:
@@ -435,34 +377,59 @@ def compile_func(
 
         if coll_mesh.triangles:
             f.write(QC_COLL_TEMPLATE)
+    LOGGER.debug('Wrote {}/model.qc', temp_folder)
 
 
-def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> List[Mesh]:
+async def build_reference(prop: StaticProp, qc: QC, mdl: Model) -> Mesh:
+    """Load and parse the reference SMD."""
+    LOGGER.info('Parsing ref "{}#{}"', qc.ref_smd, prop.skin)
+    async with LIM_PARSE:
+        with open(qc.ref_smd, 'rb') as fb:
+            mesh = await trio.to_thread.run_sync(Mesh.parse_smd, fb)
+
+    if prop.skin != 0 and prop.skin < len(mdl.skins):
+        # We need to rename the materials to match the skin.
+        swap_skins = dict(zip(
+            mdl.skins[0],
+            mdl.skins[prop.skin]
+        ))
+        for tri in mesh.triangles:
+            tri.mat = swap_skins.get(tri.mat, tri.mat)
+
+    # For some reason all the SMDs are rotated badly, but only
+    # if we append them.
+    rot = Matrix.from_yaw(90)
+    for tri in mesh.triangles:
+        for vert in tri:
+            vert.pos @= rot
+            vert.norm @= rot
+    return mesh
+
+
+async def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> List[Mesh]:
     """Get the correct collision mesh for this model."""
     if prop.solidity is CollType.NONE:  # Non-solid
         return []
     elif prop.solidity is CollType.VPHYS or prop.solidity is CollType.BSP:
         if qc.phy_smd is None:
             return []
-        try:
-            return _coll_cache[qc.phy_smd]
-        except KeyError:
-            LOGGER.info('Parsing coll "{}"', qc.phy_smd)
+
+        LOGGER.info('Parsing coll "{}"', qc.phy_smd)
+        async with LIM_PARSE:
             with open(qc.phy_smd, 'rb') as fb:
-                coll = Mesh.parse_smd(fb)
+                coll = await trio.to_thread.run_sync(Mesh.parse_smd, fb)
 
-            rot = Matrix.from_yaw(90)
-            for tri in coll.triangles:
-                for vert in tri:
-                    vert.pos @= rot
-                    vert.norm @= rot
+        rot = Matrix.from_yaw(90)
+        for tri in coll.triangles:
+            for vert in tri:
+                vert.pos @= rot
+                vert.norm @= rot
 
-            if qc.is_concave:
-                coll_group = coll.split_collision()
-            else:
-                coll_group = [coll]
-            _coll_cache[qc.phy_smd] = coll_group
-            return coll_group
+        if qc.is_concave:
+            return await trio.to_thread.run_sync(coll.split_collision)
+        else:
+            return [coll]
+
     # Else, it's one of the three bounding box types.
     # We don't really care about which.
     bbox_min, bbox_max = Vec.bbox(
@@ -472,6 +439,52 @@ def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> List[Mesh]:
         for vert in tri
     )
     return [Mesh.build_bbox('static_prop', 'phy', bbox_min, bbox_max)]
+
+
+def optimise_collision(
+    tolerance: float,
+    bone_link: List[Tuple[Bone, float]],
+    coll_mesh: Mesh,
+    groups: Dict[Mesh, float],
+) -> None:
+    """Attempt to merge together collision groups."""
+    todo: Set[Mesh] = set(groups)
+    # Pairs we know don't combine correctly.
+    failures: Set[Tuple[Mesh, Mesh]] = set()
+    zero_norm = Vec()
+    while todo:
+        mesh1 = todo.pop()
+        for mesh2 in todo:
+            if (mesh1, mesh2) in failures or (mesh2, mesh1) in failures:
+                continue
+            combined = Mesh(coll_mesh.bones, coll_mesh.animation, [
+                Triangle(
+                    'phys',
+                    Vertex(v1, zero_norm, 0.0, 0.0, bone_link),
+                    Vertex(v2, zero_norm, 0.0, 0.0, bone_link),
+                    Vertex(v3, zero_norm, 0.0, 0.0, bone_link),
+                )
+                for v1, v2, v3 in quickhull(
+                    vert.pos
+                    for tri in itertools.chain(mesh1.triangles, mesh2.triangles)
+                    for vert in tri
+                )
+            ])
+            combined_vol = combined.compute_volume()
+            diff = abs(groups[mesh1] + groups[mesh2] - combined_vol)
+            LOGGER.debug('Volume diff: {}', diff)
+            if diff < tolerance:
+                todo.discard(mesh2)
+                todo.add(combined)
+                LOGGER.info('{} + {} -> {}', id(mesh1), id(mesh2), id(combined))
+                groups[combined] = combined_vol
+                break
+            else:
+                failures.add((mesh1, mesh2))
+        else:
+            # Failed against all, this is fully optimised.
+            mesh1.smooth_normals()
+            coll_mesh.triangles += mesh1.triangles
 
 
 def load_qcs(qc_folder: Path) -> Iterator[Tuple[str, QC]]:
@@ -1036,6 +1049,9 @@ async def combine(
 
     # First, construct groups of props that can possibly be combined.
     prop_groups: Dict[Optional[tuple], List[StaticProp]] = defaultdict(list)
+    for prop in bsp.props:
+        prop_groups[get_grouping_key(prop)].append(prop)
+        prop_count += 1
 
     # This holds the list of all props we want in the map at the end.
     final_props: List[StaticProp] = []
@@ -1078,10 +1094,6 @@ async def combine(
         LOGGER.info('No propcombine groups provided.')
         return
 
-    for prop in bsp.props:
-        prop_groups[get_grouping_key(prop)].append(prop)
-        prop_count += 1
-
     # These are models we cannot merge no matter what -
     # no source files etc.
     cannot_merge = prop_groups.pop(None, [])
@@ -1096,7 +1108,6 @@ async def combine(
     # Create a set of every prop, then remove the ones we group.
     # We'll then be left with props we didn't group and so should persist.
     rejected = set(itertools.chain.from_iterable(prop_groups.values()))
-
     group_count = 0
     with PropCombiner(
         game,
@@ -1109,7 +1120,8 @@ async def combine(
             'vol_tolerance': volume_tolerance,
         },
     ) as compiler:
-        for group in grouper:
+        async def do_combine(group: List[StaticProp]) -> None:
+            nonlocal group_count
             grouped_prop = await combine_group(compiler, group, get_model, volume_tolerance)
             rejected.difference_update(group)
             if debug_tint:
@@ -1118,6 +1130,10 @@ async def combine(
                 grouped_prop.tint = Vec(round(r*255), round(g*255), round(b*255))
             final_props.append(grouped_prop)
             group_count += 1
+
+        async with trio.open_nursery() as nursery:
+            for group_ in grouper:
+                nursery.start_soon(do_combine, group_)
 
     final_props.extend(rejected)
 
