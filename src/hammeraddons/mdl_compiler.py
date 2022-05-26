@@ -5,15 +5,15 @@ We can then reuse already compiled versions.
 """
 import os
 import pickle
-import subprocess
 import tempfile
 import random
 from typing import (
-    Awaitable, Callable, Optional, Tuple, Dict, Set, TypeVar, Hashable, Generic, Any,
+    Awaitable, Callable, Tuple, Set, TypeVar, Hashable, Generic, Any,
     List,
 )
 from pathlib import Path
 
+from hammeraddons.acache import ACache
 from srctools import AtomicWriter, logger
 from srctools.game import Game
 from srctools.mdl import MDL_EXTS
@@ -55,9 +55,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         version: object=0,
     ) -> None:
         # The models already constructed.
-        self._built_models: Dict[ModelKey, GenModel[OutT]] = {}
-        # Tracks models when built multiple times.
-        self._building: Dict[ModelKey, trio.Event] = {}
+        self._built_models: ACache[ModelKey, GenModel[OutT]] = ACache()
 
         # The random indexes we use to produce filenames.
         self._mdl_names: Set[str] = set()
@@ -86,7 +84,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
 
     def use_count(self) -> int:
         """Return the number of used models."""
-        return sum(1 for mdl in self._built_models.values() if mdl.used)
+        return sum(1 for _, mdl in self._built_models if mdl.used)
 
     def __enter__(self) -> 'ModelCompiler[ModelKey, InT, OutT]':
         """Load the previously compiled models and prepare for compiles."""
@@ -126,7 +124,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
             except ValueError:
                 continue  # Malformed, ignore.
             if name in self._mdl_names:
-                self._built_models[key] = GenModel(name, mdl_result)
+                self._built_models.load(key, GenModel(name, mdl_result))
             else:
                 LOGGER.warning('Model in manifest but not present: {}', name)
 
@@ -139,7 +137,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
             return
         data: List[Tuple[ModelKey, str, OutT]] = []
         used_mdls: Set[str] = set()
-        for key, mdl in self._built_models.items():
+        for key, mdl in self._built_models:
             if mdl.used:
                 data.append((key, mdl.name, mdl.result))
                 used_mdls.add(mdl.name.casefold())
@@ -187,50 +185,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         The model key and return value must be pickleable, so they can be saved
         for use in subsequent compiles.
         """
-        model: Optional[ModelKey] = None
-        while True:
-            try:
-                model = self._built_models[key]
-                break
-            except KeyError:
-                try:
-                    evt = self._building[key]
-                    await evt.wait()
-                    continue
-                except KeyError:
-                    break
-
-        if model is None:
-            # Need to build the model.
-            evt = self._building[key] = trio.Event() # Ensure other tasks know we're busy.
-            # Figure out a name to use.
-            while True:
-                mdl_name = 'mdl_{:04x}'.format(random.getrandbits(16))
-                if mdl_name not in self._mdl_names:
-                    self._mdl_names.add(mdl_name)
-                    break
-
-            with tempfile.TemporaryDirectory(prefix='mdl_compile') as folder:
-                path = Path(folder)
-                result = compile_func(key, path, f'{self.model_folder}{mdl_name}.mdl', args)
-                studio_args = [
-                    str(self.studiomdl_loc),
-                    '-nop4',
-                    '-game', str(self.game.path),
-                    str(path / 'model.qc'),
-                ]
-                async with self.limiter:
-                    res = await trio.run_process(studio_args, capture_stdout=True, check=False)
-                LOGGER.debug(
-                    'Executing {}:\n{}',
-                    studio_args,
-                    res.stdout.replace(b'\r\n', b'\n').decode('ascii', 'replace'),
-                )
-                res.check_returncode()  # Or raise.
-
-            model = self._built_models[key] = GenModel(mdl_name, result)
-            evt.set()
-            del self._building[key]
+        model = await self._built_models.fetch(key, ModelCompiler._compile, self, key, compile_func, args)
 
         if not model.used:
             # Pack it in.
@@ -249,3 +204,38 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
                     pass
 
         return f'models/{self.model_folder}{model.name}.mdl', model.result
+
+    async def _compile(
+        self,
+        key: ModelKey,
+        compile_func: Callable[[ModelKey, Path, str, InT], Awaitable[OutT]],
+        args: InT,
+    ) -> GenModel[OutT]:
+        """Actually build the model."""
+        # Figure out a name to use.
+        while True:
+            mdl_name = 'mdl_{:04x}'.format(random.getrandbits(16))
+            if mdl_name not in self._mdl_names:
+                self._mdl_names.add(mdl_name)
+                break
+
+        with tempfile.TemporaryDirectory(prefix='mdl_compile') as folder:
+            path = Path(folder)
+            result = compile_func(key, path, f'{self.model_folder}{mdl_name}.mdl', args)
+            studio_args = [
+                str(self.studiomdl_loc),
+                '-nop4',
+                '-game', str(self.game.path),
+                str(path / 'model.qc'),
+            ]
+            LOGGER.debug("Execute {}", studio_args)
+            async with self.limiter:
+                res = await trio.run_process(studio_args, capture_stdout=True, check=False)
+            LOGGER.debug(
+                'Log for {}:\n{}',
+                str(path / 'model.qc'),
+                res.stdout.replace(b'\r\n', b'\n').decode('ascii', 'replace'),
+            )
+            res.check_returncode()  # Or raise.
+
+        return GenModel(mdl_name, result)
