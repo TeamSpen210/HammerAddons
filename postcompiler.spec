@@ -45,7 +45,10 @@ a = Analysis(
         'statistics', 'string', 'struct',
         'srctools', 'attr',
     ],
-    noarchive=False
+    excludes=[
+        'IPython',  # Via trio
+    ],
+    noarchive=False,
 )
 
 pyz = PYZ(a.pure, a.zipped_data)

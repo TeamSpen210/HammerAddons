@@ -3,6 +3,7 @@ import sys
 import warnings
 from collections import defaultdict
 from pathlib import Path
+import trio  # Registers MultiError traceback hook
 
 from srctools.logger import init_logging, Formatter
 
@@ -21,7 +22,6 @@ from srctools.fgd import FGD
 from srctools.bsp import BSP
 from srctools.packlist import PackList
 from srctools.scripts import config
-import trio
 
 from hammeraddons.bsp_transform import run_transformations
 from hammeraddons import propcombine, __version__ as version_haddons
