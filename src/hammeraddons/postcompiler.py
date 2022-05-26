@@ -200,7 +200,7 @@ async def main(argv: List[str]) -> None:
             crowbar_loc = None
 
         LOGGER.info('Combining props...')
-        propcombine.combine(
+        await propcombine.combine(
             bsp_file,
             bsp_file.ents,
             packlist,

@@ -19,8 +19,9 @@ from tempfile import TemporaryDirectory
 from typing import (
     Optional, Tuple, Callable, NamedTuple,
     FrozenSet, Dict, List, Set,
-    Iterator, Union, MutableMapping, Iterable,
+    Iterator, Union, MutableMapping, Iterable
 )
+
 from srctools import VMF, Entity, conv_int, FileSystemChain, Property, KeyValError, bool_as_int
 from srctools.math import Vec, Angle, Matrix, quickhull
 from srctools.tokenizer import Tokenizer, Token
@@ -30,6 +31,7 @@ from srctools.packlist import PackList
 from srctools.bsp import BSP, StaticProp, StaticPropFlags, BModel, VisLeaf
 from srctools.mdl import Model, MDL_EXTS
 from srctools.smd import Mesh, Triangle, Vertex
+import trio
 
 from hammeraddons.mdl_compiler import ModelCompiler
 
@@ -65,12 +67,19 @@ $collisionmodel "physics.smd" {
 }
 '''
 
-MAX_GROUP = 24  # Studiomdl does't allow more than this...
+MAX_GROUP = 24  # StudioMDL doesn't allow more than this...
+# Exceed this and StudioMDL cuts into multiple bodygroups.
+# So at that point we should produce multiple grouped props.
+MAX_VERTS = 65536//3
+
 
 # Cache of the SMD models we have already parsed, so we don't need
 # to parse them again. For the collision model, we store them pre-split.
-_mesh_cache = {}  # type: Dict[Tuple[QC, int], Mesh]
-_coll_cache = {}  # type: Dict[str, List[Mesh]]
+_mesh_cache: Dict[Tuple[QC, int], Mesh] = {}
+_coll_cache: Dict[str, List[Mesh]] = {}
+
+# Limit the amount of decompile/recompiles we do simultaneously.
+LIM_PROCESS = trio.CapacityLimiter(8)
 
 
 def unify_mdl(path: str):
@@ -610,7 +619,7 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
     )
 
 
-def decompile_model(
+async def decompile_model(
     fsys: FileSystemChain,
     cache_loc: Path,
     crowbar: Path,
@@ -651,32 +660,34 @@ def decompile_model(
     qc: Optional[QC] = None
 
     # Extract out the model to a temp dir.
-    with TemporaryDirectory() as tempdir:
-        stem = Path(filename).stem
-        filename_no_ext = filename[:-4]
-        for mdl_ext in MDL_EXTS:
-            try:
-                file = fsys[filename_no_ext + mdl_ext]
-            except FileNotFoundError:
-                pass
-            else:
-                with file.open_bin() as src, Path(tempdir, stem + mdl_ext).open('wb') as dest:
-                    shutil.copyfileobj(src, dest)
-        LOGGER.debug('Extracted "{}" to "{}"', filename, tempdir)
-        args = [
-            str(crowbar), 'decompile',
-            '-i', str(Path(tempdir, stem + '.mdl')),
-            '-o', str(cache_folder),
-        ]
-        LOGGER.debug('Executing {}', ' '.join(args))
-        result = subprocess.run(args)
-        if result.returncode != 0:
-            LOGGER.warning('Could not decompile "{}"!', filename)
-            return None
+    async with LIM_PROCESS:
+        with TemporaryDirectory() as tempdir:
+            stem = Path(filename).stem
+            filename_no_ext = filename[:-4]
+            for mdl_ext in MDL_EXTS:
+                try:
+                    file = fsys[filename_no_ext + mdl_ext]
+                except FileNotFoundError:
+                    pass
+                else:
+                    with file.open_bin() as src, Path(tempdir, stem + mdl_ext).open('wb') as dest:
+                        shutil.copyfileobj(src, dest)
+            LOGGER.debug('Extracted "{}" to "{}"', filename, tempdir)
+            args = [
+                str(crowbar), 'decompile',
+                '-i', str(Path(tempdir, stem + '.mdl')),
+                '-o', str(cache_folder),
+            ]
+            LOGGER.debug('Executing {}', ' '.join(args))
+            result = await trio.run_process(args, capture_stdout=True, check=False)
+            if result.returncode != 0:
+                LOGGER.warning('Could not decompile "{}"!', filename)
+                LOGGER.debug('{}', result.stdout.replace(b'\r\n', b'\n').decode('ascii', 'replace'))
+                return None
     # There should now be a QC file here.
     for qc_path in cache_folder.glob('*.qc'):
         LOGGER.debug('Parse decompiled QC "{}"...', qc_path)
-        qc_result = parse_qc(cache_folder, qc_path)
+        qc_result = await trio.to_thread.run_sync(parse_qc, cache_folder, qc_path)
         break
     else:  # not found.
         LOGGER.warning('No QC outputted into {}', cache_folder)
@@ -880,7 +891,7 @@ def group_props_auto(
                 yield selected_props
 
 
-def combine(
+async def combine(
     bsp: BSP,
     bsp_ents: VMF,
     pack: PackList,
@@ -928,7 +939,7 @@ def combine(
         qc_folders = [game.path.parent.parent / 'content']
 
     # Parse through all the QC files.
-    qc_map: Dict[str, Optional[QC]] = {}
+    qc_map: Dict[str, Union[QC, None]] = {}
     if qc_folders:
         LOGGER.info('Parsing QC files. Paths: \n{}', '\n'.join(map(str, qc_folders)))
         for qc_folder in qc_folders:
@@ -938,56 +949,59 @@ def combine(
 
     map_name = Path(bsp.filename).stem
 
-    # Don't re-parse models continually.
-    mdl_map: Dict[str, Optional[Model]] = {}
+    # Holds the QC and mdl for a prop, if available.
+    mdl_map: Dict[str, Tuple[QC, Model]] = {}
     # Wipe these, if they're being used again.
     _mesh_cache.clear()
     _coll_cache.clear()
     missing_qcs: Set[str] = set()
 
-    def get_model(filename: str) -> Union[Tuple[QC, Model], Tuple[None, None]]:
-        """Given a filename, load/parse the QC and MDL data.
-
-        Either both are returned, or neither are.
-        """
-        key = unify_mdl(filename)
+    async def load_model(key: str, filename: str) -> None:
+        """Given a filename, load/parse the QC and MDL data."""
+        if blacklist_re.fullmatch(key) is not None:
+            LOGGER.debug('Model {} was blacklisted.', filename)
+            return
         try:
-            model = mdl_map[key]
-        except KeyError:
-            if blacklist_re.fullmatch(key) is not None:
-                mdl_map[key] = qc_map[key] = None
-                LOGGER.debug('Model {} was blacklisted.', filename)
-                return None, None
-            try:
-                mdl_file = pack.fsys[filename]
-            except FileNotFoundError:
-                # We don't have this model, we can't combine...
-                mdl_map[key] = qc_map[key] = None
-                LOGGER.debug('Model {} was not found in the filesystem.', filename)
-                return None, None
-            model = mdl_map[key] = Model(pack.fsys, mdl_file)
-            if 'no_propcombine' in model.keyvalues.casefold():
-                mdl_map[key] = qc_map[key] = None
-                LOGGER.debug('Model {} is blacklisted in the QC.', filename)
-                return None, None
+            mdl_file = pack.fsys[filename]
+        except FileNotFoundError:
+            # We don't have this model, we can't combine...
+            LOGGER.debug('Model {} was not found in the filesystem.', filename)
+            return
 
-        if model is None or key in missing_qcs:
-            return None, None
+        model = await trio.to_thread.run_sync(Model, pack.fsys, mdl_file)
+        if 'no_propcombine' in model.keyvalues.casefold():
+            LOGGER.debug('Model {} is blacklisted in the QC.', filename)
+            return
+
+        if model is None:
+            return
 
         try:
             qc = qc_map[key]
         except KeyError:
             if crowbar_loc is None or decomp_cache_loc is None:
                 LOGGER.debug('Model {} has no QC!', filename)
-                missing_qcs.add(key)
-                return None, None
-            qc = decompile_model(pack.fsys, decomp_cache_loc, crowbar_loc, filename, model.checksum)
-            qc_map[key] = qc
+                missing_qcs.add(filename)
+                return
+            qc = await decompile_model(pack.fsys, decomp_cache_loc, crowbar_loc, filename, model.checksum)
 
-        if qc is None:
+        if qc is not None:
+            mdl_map[key] = qc, model
+
+    async with trio.open_nursery() as nursery:
+        # Dict to deduplicate.
+        for key_, filename_ in {
+            unify_mdl(prop.model): prop.model
+            for prop in bsp.props
+        }.items():
+            nursery.start_soon(load_model, key_, filename_)
+
+    def get_model(filename: str) -> Union[Tuple[QC, Model], Tuple[None, None]]:
+        """Fetch the parsed model and QC, or None if not possible."""
+        try:
+            return mdl_map[unify_mdl(filename)]
+        except KeyError:
             return None, None
-        else:
-            return qc, model
 
     # Ignore these two, they don't affect our new prop.
     relevant_flags = ~(StaticPropFlags.HAS_LIGHTING_ORIGIN | StaticPropFlags.DOES_FADE)
@@ -998,9 +1012,9 @@ def combine(
         Only props with matching key can be possibly combined.
         If None it cannot be combined.
         """
-        qc, model = get_model(prop.model)
-
-        if model is None or qc is None:
+        try:
+            qc, model = mdl_map[unify_mdl(prop.model)]
+        except KeyError:
             return None
 
         return (
