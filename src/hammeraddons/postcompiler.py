@@ -1,19 +1,19 @@
 """Runs before VRAD, to run operations on the final BSP."""
-import argparse
-import os
 import sys
 import warnings
 from collections import defaultdict
-from logging import FileHandler
 from pathlib import Path
-from typing import List, Dict, Optional
 
 from srctools.logger import init_logging, Formatter
-
 
 # Put the logs in the executable folders.
 LOGGER = init_logging(Path(sys.argv[0]).with_name('postcompiler.log'))
 warnings.filterwarnings(category=DeprecationWarning, module='srctools', action='once')
+
+import argparse
+import os
+from logging import FileHandler
+from typing import List, Dict, Optional
 
 from srctools import Property, __version__ as version_lib
 from srctools.filesys import ZipFileSystem
@@ -21,6 +21,7 @@ from srctools.fgd import FGD
 from srctools.bsp import BSP
 from srctools.packlist import PackList
 from srctools.scripts import config
+import trio
 
 from hammeraddons.bsp_transform import run_transformations
 from hammeraddons import propcombine, __version__ as version_haddons
@@ -29,7 +30,7 @@ from hammeraddons.move_shim import install as install_depmodule_hook
 install_depmodule_hook()
 
 
-def main(argv: List[str]) -> None:
+async def main(argv: List[str]) -> None:
     """Run the postcompiler."""
     parser = argparse.ArgumentParser(
         description="Modifies the BSP file, allowing additional entities "
@@ -285,4 +286,4 @@ def main(argv: List[str]) -> None:
     LOGGER.info("HammerAddons postcompiler complete!")
 
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    trio.run(main, sys.argv[1:])
