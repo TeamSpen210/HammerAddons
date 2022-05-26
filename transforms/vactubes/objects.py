@@ -3,11 +3,12 @@ from typing import Optional, Tuple, List, Dict
 import os.path
 import math
 
-import srctools.logger
-from srctools.bsp_transform.packing import make_precache_prop
 from srctools.packlist import PackList, FileType
-
 from srctools import Vec, VMF
+import srctools.logger
+
+from hammeraddons.bsp_transform.packing import make_precache_prop
+
 
 LOGGER = srctools.logger.get_logger(__name__)
 
