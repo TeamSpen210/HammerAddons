@@ -3,8 +3,9 @@
 Implement deprecation warnings while keeping that functional.
 """
 from typing import Optional, Union, Sequence, Dict
-from importlib.abc import MetaPathFinder
+from importlib.abc import MetaPathFinder, Loader
 from importlib.machinery import ModuleSpec
+from importlib.util import spec_from_loader, module_from_spec
 import sys
 import types
 import warnings
@@ -12,28 +13,49 @@ import warnings
 from hammeraddons import bsp_transform, mdl_compiler, plugin, propcombine, config, props_config
 
 
-def mod_to_spec(mod: types.ModuleType) -> ModuleSpec:
-    """Fetch the module's __spec__."""
-    spec = mod.__spec__
-    assert spec is not None, mod
-    return spec
-
-
-moves: Dict[str, ModuleSpec] = {
-    'srctools.bsp_transform': mod_to_spec(bsp_transform),
+moves: Dict[str, types.ModuleType] = {
+    'srctools.bsp_transform': bsp_transform,
     # Loader = none means this acts like a namespace package, which is all we need.
-    'srctools.compiler': ModuleSpec(
+    'srctools.compiler': module_from_spec(ModuleSpec(
         'srctools.compiler',
         None,
         is_package=True,
-    ),
-    'srctools.compiler.mdl_compiler': mod_to_spec(mdl_compiler),
-    'srctools.compiler.propcombine': mod_to_spec(propcombine),
-    'srctools.scripts.config': mod_to_spec(config),
-    'srctools.props_config': mod_to_spec(props_config),
-    'srctools.plugin': mod_to_spec(plugin),
+    )),
+    'srctools.compiler.mdl_compiler': mdl_compiler,
+    'srctools.compiler.propcombine': propcombine,
+    'srctools.scripts.config': config,
+    'srctools.props_config': props_config,
+    'srctools.plugin': plugin,
 }
-del mod_to_spec
+
+
+class ModuleProxy(types.ModuleType):
+    """Redirect to another module."""
+    def __init__(self, orig: types.ModuleType) -> None:
+        super().__init__(orig.__name__, getattr(orig, '__doc__', ''))
+        super().__setattr__(self, '_module', orig)
+
+    def __getattr__(self, name: str) -> None:
+        return getattr(super().__getattribute__('_module'), name)
+
+    def __setattr__(self, name: str, value: object) -> None:
+        if name.startswith('__'):
+            super().__setattr__(name, value)
+        else:
+            setattr(super().__getattribute__('_module'), name, value)
+
+
+class SwapLoader(Loader):
+    """When loaded redirect to the original module."""
+    def __init__(self, orig: types.ModuleType):
+        self.orig = orig
+
+    def create_module(self, spec: ModuleSpec) -> Optional[types.ModuleType]:
+        """Create the proxy."""
+        return ModuleProxy(self.orig)
+
+    def exec_module(self, module: types.ModuleType) -> None:
+        """Do nothing."""
 
 
 class DeprecatedFinder(MetaPathFinder):
@@ -51,7 +73,11 @@ class DeprecatedFinder(MetaPathFinder):
             return None
         else:
             warnings.warn(f'Import {result.name} instead.', DeprecationWarning, stacklevel=2)
-            return result
+            return spec_from_loader(
+                fullname,
+                SwapLoader(result),
+                is_package=fullname == 'srctools.compiler',
+            )
 
 
 def install() -> None:
