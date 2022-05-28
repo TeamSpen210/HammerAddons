@@ -33,7 +33,7 @@ class ModuleProxy(types.ModuleType):
     """Redirect to another module."""
     def __init__(self, orig: types.ModuleType) -> None:
         super().__init__(orig.__name__, getattr(orig, '__doc__', ''))
-        super().__setattr__(self, '_module', orig)
+        super().__setattr__('_module', orig)
 
     def __getattr__(self, name: str) -> None:
         return getattr(super().__getattribute__('_module'), name)
@@ -72,7 +72,7 @@ class DeprecatedFinder(MetaPathFinder):
         except KeyError:
             return None
         else:
-            warnings.warn(f'Import {result.name} instead.', DeprecationWarning, stacklevel=2)
+            warnings.warn(f'Import {result.__name__} instead.', DeprecationWarning, stacklevel=2)
             return spec_from_loader(
                 fullname,
                 SwapLoader(result),
