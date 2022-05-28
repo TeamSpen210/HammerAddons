@@ -146,6 +146,8 @@ class PluginFinder(MetaPathFinder):
         new_path = source.folder / subpath
         if new_path.is_dir():
             new_path /= '__init__.py'
+        else:
+            new_path = new_path.with_suffix('.py')
         # SourceFileLoader can do all the hard work for us given a source file.
         return spec_from_loader(fullname, SourceFileLoader(fullname, str(new_path)))
 
