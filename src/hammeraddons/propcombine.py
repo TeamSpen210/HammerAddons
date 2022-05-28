@@ -30,7 +30,9 @@ from srctools.packlist import PackList
 from srctools.bsp import BSP, StaticProp, StaticPropFlags, BModel, VisLeaf
 from srctools.mdl import Model, MDL_EXTS
 from srctools.smd import Bone, Mesh, Triangle, Vertex
+
 import trio
+import attrs
 
 from .mdl_compiler import ModelCompiler
 from .acache import ACache
@@ -39,7 +41,8 @@ from .acache import ACache
 LOGGER = get_logger(__name__)
 
 
-class QC(NamedTuple):
+@attrs.frozen
+class QC:
     path: str  # QC path.
     ref_smd: str  # Location of main visible geometry.
     phy_smd: Optional[str]  # Relative location of collision model, or None
@@ -155,7 +158,8 @@ class CollType(Enum):
     VPHYS = 6  # Collision model
 
 
-class PropPos(NamedTuple):
+@attrs.frozen
+class PropPos:
     """Key used to match models to each other."""
     x: float
     y: float
