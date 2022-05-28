@@ -218,6 +218,7 @@ async def main(argv: List[str]) -> None:
             volume_tolerance=conf.get(float, 'propcombine_volume_tolerance'),
             debug_tint=args.showgroups,
             debug_dump=args.dumpgroups,
+            pack_models=conf.get(bool, 'propcombine_pack') or False,
         )
         LOGGER.info('Done!')
     else:  # Strip these if they're present.

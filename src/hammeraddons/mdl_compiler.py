@@ -53,6 +53,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         map_name: str,
         folder_name: str,
         version: object=0,
+        pack_models: bool=True,
     ) -> None:
         # The models already constructed.
         self._built_models: ACache[ModelKey, GenModel[OutT]] = ACache()
@@ -67,6 +68,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         self.version = version
         self.studiomdl_loc = studiomdl_loc
         self.limiter = trio.CapacityLimiter(8)
+        self.pack_models = pack_models
 
     @classmethod
     def from_ctx(cls, ctx: Context, folder_name: str, version: object=0) -> 'ModelCompiler':
@@ -192,16 +194,17 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
             model.used = True
 
             full_model_path = self.model_folder_abs / model.name
-            LOGGER.debug('Packing model {}.mdl:', full_model_path)
-            for ext in MDL_EXTS:
-                try:
-                    with open(str(full_model_path.with_suffix(ext)), 'rb') as fb:
-                        self.pack.pack_file(
-                            f'models/{self.model_folder}{model.name}{ext}',
-                            data=fb.read(),
-                        )
-                except FileNotFoundError:
-                    pass
+            if self.pack_models:
+                LOGGER.debug('Packing model {}.mdl:', full_model_path)
+                for ext in MDL_EXTS:
+                    try:
+                        with open(str(full_model_path.with_suffix(ext)), 'rb') as fb:
+                            self.pack.pack_file(
+                                f'models/{self.model_folder}{model.name}{ext}',
+                                data=fb.read(),
+                            )
+                    except FileNotFoundError:
+                        pass
 
         return f'models/{self.model_folder}{model.name}.mdl', model.result
 

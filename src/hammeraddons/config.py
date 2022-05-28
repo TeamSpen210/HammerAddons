@@ -268,6 +268,10 @@ OPTIONS = [
         """,
     ),
     Opt(
+        'propcombine_pack', True,
+        """If set, force-pack the combined props."""
+    ),
+    Opt(
         'plugins', TYPE.RAW,
         """\
         Add plugins to the post compiler. Each block is a package of plugins in some folder.

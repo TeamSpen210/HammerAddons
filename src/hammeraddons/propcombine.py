@@ -924,6 +924,7 @@ async def combine(
     volume_tolerance: float=1.0,
     debug_tint: bool=False,
     debug_dump: bool=False,
+    pack_models: bool=True,
 ) -> None:
     """Combine props in this map."""
     LOGGER.debug(
@@ -1118,11 +1119,12 @@ async def combine(
         studiomdl_loc,
         pack,
         map_name,
-        'propcombine',
+        folder_name='propcombine',
         version={
             'ver': 1,
             'vol_tolerance': volume_tolerance,
         },
+        pack_models=pack_models,
     ) as compiler:
         async def do_combine(group: List[StaticProp]) -> None:
             nonlocal group_count
