@@ -13,14 +13,15 @@ from typing import (
 )
 from pathlib import Path
 
-from hammeraddons.acache import ACache
-from srctools import AtomicWriter, logger
+from srctools import logger
 from srctools.game import Game
 from srctools.mdl import MDL_EXTS
 from srctools.packlist import PackList
 
 import trio
+from atomicwrites import atomic_write
 
+from hammeraddons.acache import ACache
 from hammeraddons.bsp_transform import Context
 
 LOGGER = logger.get_logger(__name__)
@@ -144,7 +145,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
                 data.append((key, mdl.name, mdl.result))
                 used_mdls.add(mdl.name.casefold())
 
-        with AtomicWriter(self.model_folder_abs / 'manifest.bin', is_bytes=True) as f:
+        with atomic_write(self.model_folder_abs / 'manifest.bin', mode='wb', overwrite=True) as f:
             # Compatibility isn't a concern, since it'll just mean we have to
             # rebuild the models.
             pickle.dump((data, self.version), f, pickle.HIGHEST_PROTOCOL)

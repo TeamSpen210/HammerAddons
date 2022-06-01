@@ -3,3 +3,4 @@ typing_extensions ~= 4.1.0
 srctools ~= 2.2.5
 trio ~= 0.20.0
 trio-typing>=0.7.0
+atomicwrites ~= 1.4.0

@@ -3,8 +3,10 @@ from pathlib import Path
 from typing import Tuple, Set, Dict
 import sys
 
+from atomicwrites import atomic_write
+
 from srctools.game import Game
-from srctools import Property, logger, AtomicWriter
+from srctools import Property, logger
 from srctools.filesys import FileSystemChain, FileSystem, RawFileSystem, VPKFileSystem
 
 from .props_config import Opt, Config, TYPE
@@ -77,7 +79,7 @@ def parse(path: Path, game_folder: str='') -> Tuple[
 
         LOGGER.warning('Writing default to "{}"', conf.path)
 
-    with AtomicWriter(str(conf.path)) as f:
+    with atomic_write(conf.path, overwrite=True) as f:
         conf.save(f)
 
     if not game_folder:
