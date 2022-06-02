@@ -154,7 +154,6 @@ func_water_analog
 func_weight_button
 funCBaseFlex
 game_gib_manager
-game_player_equip
 game_ragdoll_manager
 game_text
 game_ui
