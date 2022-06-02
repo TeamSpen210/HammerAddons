@@ -3,8 +3,10 @@
 	[
 	spawnflags(flags)  =
 		[
+		1: "Clients/Players" : 1
 		128 : "Disable auto player movement" : 1
 		2048 : "Auto-duck while in trigger" : 0
 		4096 : "Auto-walk while in trigger" : 0
+		8192: "Allow ghosts to fire this trigger" : 0 [MOMENTUM]
 		]
 	]
