@@ -33,8 +33,8 @@
 	parentname(target_destination) : "Parent"
 	parent_attachment_point[srctools](string) : "Attachment Point"
 
-	teamnumber(integer) : "Team number" : : "Team number this entity is on."
-	pendingteamnumber(integer) : "Pending Team Number" : : "Team numer this entity will be on at the beginning of the next round."
+	teamnumber[+USE_TEAM](integer) : "Team number" : : "Team number this entity is on."
+	pendingteamnumber[+USE_TEAM](integer) : "Pending Team Number" : : "Team numer this entity will be on at the beginning of the next round."
 
 	responseContext(string) : "Response Context" : ""
 	addon(string) : "AI Addon" : : "Broken ASW feature."
@@ -123,7 +123,7 @@
 
 	input AlternativeSorting(boolean) : "Set the translucency sorting algorithm."
 	input DispatchResponse(string) : "Dispatch an NPC response"
-	input SetTeam(integer): "Set the team."
+	input SetTeam[+USE_TEAM](integer): "Set the team."
 
 	input SetDamageFilter(target_destination) : "Set Damage Filter"
 	input EnableDamageForces(void)

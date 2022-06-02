@@ -20,7 +20,7 @@
 	isenabled(boolean) : "Start Enabled" : 1
 
 	teamnum[engine](integer) : "Team Number" : -1
-	teamnum(choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
+	teamnum[+USE_TEAM](choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
 		[
 		-1: "Don't care"
 		1: "Team 1"

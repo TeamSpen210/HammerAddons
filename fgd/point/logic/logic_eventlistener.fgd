@@ -5,7 +5,7 @@
 	eventname(string) : "Event Name" : : "The name of the event that you want to listen for."
 	isenabled(boolean) : "Start Enabled" : 1
 
-	teamnum(integer) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team."
+	teamnum[+USE_TEAM](integer) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team."
 	teamnum[engine](integer) : "Team Number" : -1
 	
 	teamnum[P2CE](choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =

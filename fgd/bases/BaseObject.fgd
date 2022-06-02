@@ -1,7 +1,7 @@
 @BaseClass = BaseObject
 	[
 	teamnum[engine](integer) : "Team" : 2
-	teamnum(choices) : "Team" : 2 : "Team" =
+	teamnum[+USE_TEAM](choices) : "Team" : 2 : "Team" =
 		[
 		2: "Red"
 		3: "Blue"

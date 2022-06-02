@@ -7,10 +7,10 @@
 		3: "ATLAS"
 		]
 		
-	teamnum(integer) : "Team"
+	teamnum[+USE_TEAM](integer) : "Team"
 	teamnum[engine](integer): "Team": 0
 
 
 	// Inputs
-	input SetTeam(integer) : "Changes the entity's team."
+	input SetTeam[+USE_TEAM](integer) : "Changes the entity's team."
 	]

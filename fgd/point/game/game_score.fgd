@@ -6,7 +6,7 @@
 	spawnflags(flags)  =
 		[
 		1: "Allow Negative" : 0
-		2: "Team Points" : 0
+		2: "Team Points" : 0 [+USE_TEAM]
 		]
 
 	points(integer) : "Points to add (+/-)" : 1
