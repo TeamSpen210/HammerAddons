@@ -41,6 +41,6 @@
 	output OnLoadGame(void) : "Fired when the map is loaded from a saved game."
 	output OnMapTransition(void) : "Fired when the map is loaded due to a level transition."
 	output OnBackgroundMap(void) : "Fired when the map is loaded as a background to the main menu."
-	output OnMultiNewMap(void) : "Fired only in multiplayer, when a new map is loaded."
-	output OnMultiNewRound(void) : "Fired only in multiplayer, when a new round is started. Only fired in multiplayer games that use round-based gameplay."
+	output OnMultiNewMap[+USE_MULTIPLAYER](void) : "Fired only in multiplayer, when a new map is loaded."
+	output OnMultiNewRound[+USE_MULTIPLAYER](void) : "Fired only in multiplayer, when a new round is started. Only fired in multiplayer games that use round-based gameplay."
 	]
