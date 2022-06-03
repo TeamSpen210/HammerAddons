@@ -46,21 +46,22 @@ class ACache(Generic[KeyT, ValueT]):
         /, *args: Args.args, **kwargs: Args.kwargs,
     ) -> ValueT:
         """Retreive from the cache, or compute the value."""
-        try:
-            result = self._cache[key]
-        except KeyError:
-            self._cache[key] = evt = trio.Event()
+        while True:
             try:
-                self._cache[key] = result = await func(*args, **kwargs)
-            except Exception:
-                # Undo everything.
-                if self._cache[key] is evt:
-                    del self._cache[key]
-                raise
-            finally:
-                evt.set()
+                result = self._cache[key]
+            except KeyError:
+                self._cache[key] = evt = trio.Event()
+                try:
+                    self._cache[key] = result = await func(*args, **kwargs)
+                except Exception:
+                    # Undo everything.
+                    if self._cache[key] is evt:
+                        del self._cache[key]
+                    raise
+                finally:
+                    evt.set()
+                return result
+            if isinstance(result, trio.Event):
+                await result.wait()
+                continue
             return result
-        while isinstance(result, trio.Event):
-            await result.wait()
-            result = self._cache[key]
-        return result
