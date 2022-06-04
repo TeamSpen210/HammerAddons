@@ -92,7 +92,6 @@ env_message
 env_microphone
 env_movieexplosion
 env_muzzleflash
-env_outtro_stats
 env_particle_performance_monitor
 env_particle_trail
 env_particlefire

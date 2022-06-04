@@ -1,4 +1,4 @@
-@PointClass
+@PointClass appliesto(+HL2_ENTITIES)
 	base(BaseEntityAnimating, Angles, DamageFilter) 
 	studio( "models/weapons/w_slam.mdl" ) 
 	sphere(DmgRadius)

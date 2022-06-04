@@ -1,5 +1,5 @@
 @PointClass appliesto(+USE_MULTIPLAYER)
-	base(BaseEntityPoint, MasterEnt)
+		base(BaseEntityPoint, MasterEnt)
 	iconsprite("editor/game_end.vmt")
 = game_end: "An entity that ends a multiplayer game."
 	[

@@ -177,7 +177,6 @@ info_landmark
 info_landmark_entry
 info_landmark_exit
 info_mass_center
-info_momentum_map
 info_node
 info_node_air
 info_node_air_hint

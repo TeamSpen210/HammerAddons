@@ -1,6 +1,0 @@
-@PointClass base(StaticTargetName, Campaign, GameTypes)
-	appliesto(MOMENTUM)
-= info_momentum_map : "An entity used to describe map information."
-	[
-	author(string) : "Map Author" : "" : "The map's original author(s)."
-	]
