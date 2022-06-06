@@ -12,6 +12,7 @@ jobs:
     
     env:
       FGD_BUILD_DIR: build
+      MD_BUILD_DIR: build_md
 
     steps:
       - name: Checkout
@@ -28,19 +29,36 @@ jobs:
       - name: FGD build and folder copy
         run: .\build.bat fgd all
           
-      - name: Zip Momentum Content
+      - name: Zip Momentum FGD
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
           directory: ./${{ env.FGD_BUILD_DIR }}/momentum/
           filename: 'fgd-momentum.zip'
           
-      - name: Zip P2CE Content
+      - name: Zip P2CE FGD
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
           directory: ./${{ env.FGD_BUILD_DIR }}/p2ce/
           filename: 'fgd-p2ce.zip'
+          
+      - name: MD build
+        run: .\build.bat md all
+        
+      - name: Zip Momentum MD
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          directory: ./${{ env.MD_BUILD_DIR }}/momentum/
+          filename: 'md-momentum.zip'
+        
+      - name: Zip P2CE MD
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          directory: ./${{ env.MD_BUILD_DIR }}/p2ce/
+          filename: 'md-p2ce.zip'
 
       - name: Artifact Upload
         uses: actions/upload-artifact@v2.3.1
@@ -49,6 +67,8 @@ jobs:
           path: |
             ./${{ env.FGD_BUILD_DIR }}/momentum/fgd-momentum.zip
             ./${{ env.FGD_BUILD_DIR }}/p2ce/fgd-p2ce.zip
+            ./${{ env.MD_BUILD_DIR }}/momentum/md-momentum.zip
+            ./${{ env.MD_BUILD_DIR }}/p2ce/md-p2ce.zip
           if-no-files-found: error
           
       - name: Create Release
@@ -58,4 +78,6 @@ jobs:
           files: |
             ${{ env.FGD_BUILD_DIR }}/momentum/fgd-momentum.zip
             ${{ env.FGD_BUILD_DIR }}/p2ce/fgd-p2ce.zip
+            ${{ env.MD_BUILD_DIR }}/momentum/md-momentum.zip
+            ${{ env.MD_BUILD_DIR }}/p2ce/md-p2ce.zip
           fail_on_unmatched_files: true
