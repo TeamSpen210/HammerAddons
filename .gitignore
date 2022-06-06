@@ -47,6 +47,9 @@ Icon
 # Output of "compiled" FGDs
 build/
 
+# Output of generated markdown
+build_md/
+
 # Blender backup files
 *.blend1
 

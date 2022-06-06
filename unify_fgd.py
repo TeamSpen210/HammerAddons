@@ -2,6 +2,8 @@
 
 This allows sharing definitions among different engine versions.
 """
+import html
+import os
 import sys
 import argparse
 from collections import Counter, defaultdict
@@ -621,6 +623,21 @@ def get_clean_fgd(
     return fgd
 
 
+def collapse_bases(
+    bases: List[EntityDef | str],
+) -> List[EntityDef | str]:
+    """Collapses all bases into one list."""
+
+    if len(bases) == 0:
+        return bases
+
+    acc_bases = []
+    for base in bases:
+        acc_bases += base.bases
+
+    return bases + collapse_bases(acc_bases)
+
+
 def add_tag(tags: FrozenSet[str], new_tag: str) -> FrozenSet[str]:
     """Modify these tags such that they allow the new tag."""
     is_inverted = new_tag.startswith(('!', '-'))
@@ -987,6 +1004,134 @@ def action_visgroup(
         write_vis(AutoVisgroup('Auto', ''), '')
 
 
+def action_exportmd(
+    dbase: Path,
+    tags: FrozenSet[str],
+    output_path: Path,
+) -> None:
+    """Create markdown documentation for FGDs using the given tags."""
+    
+    fgd = get_clean_fgd(dbase, None, tags, False, True)
+
+    print('Exporting markdown...')
+
+    separator = '-------------------\n<br/>\n\n'
+    for ent in fgd:
+        if ent.type == EntityTypes.BASE:
+            continue
+
+        if ent.type == EntityTypes.BRUSH:
+            subfolder = 'brush'
+        elif ent.type == EntityTypes.POINT:
+            subfolder = 'point'
+        elif ent.type == EntityTypes.FILTER:
+            subfolder = 'filter'
+        else:
+            subfolder = 'misc'
+
+        full_folder_path = Path(output_path, subfolder)
+        try:
+            os.mkdir(full_folder_path)
+        except OSError as _error:
+            pass
+        
+        sf_info_header = [
+            '## Spawnflags\n'
+            '| Num | Desc | Default | Inherited from |\n'
+            '--- | --- | --- | --- |\n'
+        ]
+        kv_info_header = [
+            '## Keyvalues\n'
+            '| Name | Type | Default | Desc | Inherited from |\n'
+            '--- | --- | --- | --- | --- |\n'
+        ]
+        input_info_header = [
+            '## Inputs\n'
+            '| Name | Type | Desc | Inherited from |\n'
+            '--- | --- | --- | --- |\n'
+        ]
+        output_info_header = [
+            '## Outputs\n'
+            '| Name | Type | Desc | Inherited from |\n'
+            '--- | --- | --- | --- |\n'
+        ]
+
+        ent_out_path = Path(full_folder_path, '{}.md'.format(ent.classname))
+        with open(ent_out_path, 'w+') as txt_f:
+            txt_info : List[str] = []
+            txt_info.append('# {}\n'.format(ent.classname))
+            txt_info.append(html.escape('{}\n'.format(ent.desc)))
+
+            sf_info : List[str] = []
+            kv_info : List[str] = []
+            input_info : List[str] = []
+            output_info : List[str] = []
+
+            # Combine the bases into this for a full kv listing in the entity
+            entities = collapse_bases(ent.bases)
+            entities.append(ent) # So bases are listed first, with the entity's own info last
+            
+            for entity in entities:
+
+                dervied_class = '' if entity.classname == ent.classname else entity.classname
+
+                for kv_dict in entity.keyvalues.values():
+                    for kv in kv_dict.values():
+                        if kv.name.find('linedivider_') != -1:
+                            continue
+
+                        if kv.type == ValueTypes.SPAWNFLAGS:
+                            for val in kv.val_list:
+                                escaped_desc = html.escape(val[1]).replace('\n', '<br/>')
+                                sf_info.append('|{num}|{desc}|{defval}|{basename}|'.format(num=val[0], desc=escaped_desc, defval=val[2], basename=dervied_class))
+                            continue
+
+                        default_value = kv.default
+                        if kv.type == ValueTypes.BOOL:
+                            default_value = 'Yes' if kv.default == 1 else 'No'
+
+                        if kv.type == ValueTypes.CHOICES:
+                            disp_type = ''
+                            for idx, choice in enumerate(kv.choices_list):
+                                if choice[0] == kv.default:
+                                    default_value = '{} ({})'.format(choice[1], kv.default)
+                                
+                                disp_type += ('<br/>{}: {}' if idx != 0 else '{}: {}').format(choice[0], choice[1])
+                        else:
+                            disp_type = kv.type.value
+
+                        escaped_desc = html.escape(kv.desc).replace('\n', '<br/>')
+                        kv_info.append('|{dname}|{type}|{defval}|{desc}|{basename}|\n'.format(dname=kv.disp_name, type=disp_type, defval=default_value, desc=escaped_desc, basename=dervied_class))
+
+                for input_dict in entity.inputs.values():
+                    for input in input_dict.values():
+                        escaped_desc = html.escape(input.desc).replace('\n', '<br/>')
+                        input_info.append('|{dname}|{type}|{desc}|{basename}|\n'.format(dname=input.name, type=input.type.value, desc=escaped_desc, basename=dervied_class))
+
+                for output_dict in entity.outputs.values():
+                    for output in output_dict.values():
+                        escaped_desc = html.escape(output.desc).replace('\n', '<br/>')
+                        output_info.append('|{dname}|{type}|{desc}|{basename}|\n'.format(dname=output.name, type=output.type.value, desc=escaped_desc, basename=dervied_class))
+
+            if len(sf_info) > 0:
+                sf_info.append(separator)
+                txt_info += sf_info_header + sf_info
+            
+            if len(kv_info) > 0:
+                kv_info.append(separator)
+                txt_info += kv_info_header + kv_info
+
+            if len(input_info) > 0:
+                input_info.append(separator)
+                txt_info += input_info_header + input_info
+                
+            if len(output_info) > 0:
+                output_info.append(separator)
+                txt_info += output_info_header + output_info
+            
+            txt_f.writelines(txt_info)
+            
+
 def main(args: List[str]=None):
     """Entry point."""
     parser = argparse.ArgumentParser(
@@ -1019,6 +1164,24 @@ def main(args: List[str]=None):
         action="store_true",
         help="Use matplotlib to produce a graph of how many entities are "
              "present in each engine branch.",
+    )
+
+    parser_expmd = subparsers.add_parser(
+        "exportmd",
+        help=action_exportmd.__doc__,
+        aliases=["expmd"],
+    )
+
+    parser_expmd.add_argument(
+        "-o", "--output",
+        default="build_md",
+        help="Destination folder for markdown gen."
+    )
+    parser_expmd.add_argument(
+        "tags",
+        nargs="*",
+        help="Tags to include in the output.",
+        default=None,
     )
 
     parser_exp = subparsers.add_parser(
@@ -1129,6 +1292,25 @@ def main(args: List[str]=None):
             result.binary,
             result.engine,
         )
+    elif result.mode in ("exportmd", "expmd"):
+        if not result.tags:
+            parser.error("At least one tag must be specified!")
+        
+        tags = validate_tags(result.tags)
+        
+        for tag in tags:
+            if tag not in ALL_TAGS:
+                parser.error(
+                    'Invalid tag "{}"! Allowed tags: \n'.format(tag) +
+                    format_all_tags()
+                )
+        
+        action_exportmd(
+            dbase,
+            tags,
+            result.output,
+        )
+
     elif result.mode in ("c", "count"):
         action_count(dbase, extra_db)
     elif result.mode in ("visgroup", "v", "vis"):
