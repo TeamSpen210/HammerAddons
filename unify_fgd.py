@@ -352,6 +352,275 @@ def get_appliesto(ent: EntityDef) -> List[str]:
     return arg_list
 
 
+def get_clean_fgd(
+    dbase: Path,
+    extra_db: Optional[Path],
+    tags: FrozenSet[str],
+    engine_mode: bool,
+    verbose: bool,
+) -> FGD:
+    """Gets a clean FGD, after tag expansion, optimization, mat exclusions, and culling incompatible entities, unused bases, and visgroups."""
+
+    if engine_mode:
+        tags = frozenset({'ENGINE'})
+    else:
+        tags = expand_tags(tags)
+
+    if verbose:
+        print('Tags expanded to: {}'.format(', '.join(tags)))
+
+    fgd, base_entity_def = load_database(dbase, extra_db)
+
+    if engine_mode:
+        # In engine mode, we don't care about specific games.
+        if verbose:
+            print('Collapsing bases...')
+        fgd.collapse_bases()
+
+        # Cache these constant sets.
+        tags_empty = frozenset('')
+        tags_not_engine = frozenset({'-ENGINE', '!ENGINE'})
+
+        if verbose:
+            print('Merging tags...')
+        for ent in fgd:
+            # If it's set as not in engine, skip.
+            if not tags_not_engine.isdisjoint(get_appliesto(ent)):
+                continue
+            # Strip applies-to helper and ordering helper.
+            ent.helpers[:] = [
+                helper for helper in ent.helpers
+                if not helper.IS_EXTENSION
+            ]
+            # Force everything to inherit from CBaseEntity, since
+            # we're then removing any KVs that are present on that.
+            if ent.classname != BASE_ENTITY:
+                ent.bases = [base_entity_def]
+
+            value: Union[IODef, KeyValues]
+            category: Dict[str, Dict[FrozenSet[str], Union[IODef, KeyValues]]]
+            base_cat: Dict[str, Dict[FrozenSet[str], Union[IODef, KeyValues]]]
+            for attr_name in ['inputs', 'outputs', 'keyvalues']:
+                category = getattr(ent, attr_name)
+                base_cat = getattr(base_entity_def, attr_name)
+                # For each category, check for what value we want to keep.
+                # If only one, we keep that.
+                # If there's an "ENGINE" tag, that's specifically for us.
+                # Otherwise, warn if there's a type conflict.
+                # If the final value is choices, warn too (not really a type).
+                for key, orig_tag_map in list(category.items()):
+                    # Remake the map, excluding non-engine tags.
+                    # If any are explicitly matching us, just use that
+                    # directly.
+                    tag_map = {}
+                    for tags, value in orig_tag_map.items():
+                        if 'ENGINE' in tags or '+ENGINE' in tags:
+                            if value.type is ValueTypes.CHOICES:
+                                raise ValueError(
+                                    '{}.{}: Engine tags cannot be '
+                                    'CHOICES!'.format(ent.classname, key)
+                                )
+                            # Use just this.
+                            tag_map = {'': value}
+                            break
+                        elif '-ENGINE' not in tags and '!ENGINE' not in tags:
+                            tag_map[tags] = value
+
+                    if not tag_map:
+                        # All were set as non-engine, so it's not present.
+                        del category[key]
+                        continue
+                    elif len(tag_map) == 1:
+                        # Only one type, that's the one for the engine.
+                        [value] = tag_map.values()
+                    else:
+                        # More than one tag.
+                        # IODef and KeyValues have a type attr.
+                        types = {val.type for val in tag_map.values()}
+                        if len(types) > 1 and verbose:
+                            print('{}.{} has multiple types! ({})'.format(
+                                ent.classname,
+                                key,
+                                ', '.join([typ.value for typ in types])
+                            ))
+                        # Pick the one with shortest tags arbitrarily.
+                        _, value = min(
+                            tag_map.items(),
+                            key=lambda t: len(t[0]),
+                        )
+
+                    # If it's CHOICES, we can't know what type it is.
+                    # Guess either int or string, if we can convert.
+                    if value.type is ValueTypes.CHOICES:
+                        if verbose:
+                            print(
+                                '{}.{} uses CHOICES type, '
+                                'provide ENGINE '
+                                'tag!'.format(ent.classname, key)
+                            )
+                        if isinstance(value, KeyValues):
+                            assert value.val_list is not None
+                            try:
+                                for choice_val, name, tag in value.val_list:
+                                    int(choice_val)
+                            except ValueError:
+                                # Not all are ints, it's a string.
+                                value.type = ValueTypes.STRING
+                            else:
+                                value.type = ValueTypes.INT
+                            value.val_list = None
+
+                    # Check if this is a shared property among all ents,
+                    # and if so skip exporting.
+                    if ent.classname != BASE_ENTITY:
+                        base_value: Union[KeyValues, IODef]
+                        try:
+                            [base_value] = base_cat[key].values()
+                        except KeyError:
+                            pass
+                        except ValueError:
+                            raise ValueError(
+                                f'Base Entity {attr_name[:-1]} "{key}" '
+                                f'has multiple tags: {list(base_cat[key].keys())}'
+                            )
+                        else:
+                            if base_value.type is ValueTypes.CHOICES:
+                                if verbose:
+                                    print(
+                                        f'Base Entity {attr_name[:-1]} '
+                                        f'"{key}"  is a choices type!'
+                                    )
+                            elif base_value.type is value.type:
+                                del category[key]
+                                continue
+                            elif attr_name == 'keyvalues' and key == 'model':
+                                # This can be sprite or model.
+                                pass
+                            elif base_value.type is ValueTypes.FLOAT and value.type is ValueTypes.INT:
+                                # Just constraining it down to a whole number.
+                                pass
+                            elif verbose:
+                                print(f'{ent.classname}.{key}: {value.type} != base {base_value.type}')
+
+                    # Blank this, it's not that useful.
+                    value.desc = ''
+                    category[key] = {tags_empty: value}
+
+        # Add in the base entity definition, and clear it out.
+        fgd.entities[BASE_ENTITY.casefold()] = base_entity_def
+        base_entity_def.desc = ''
+        base_entity_def.helpers = []
+        # Strip out all the tags.
+        for cat in [base_entity_def.inputs, base_entity_def.outputs, base_entity_def.keyvalues]:
+            for key, tag_map in cat.items():
+                [value] = tag_map.values()
+                cat[key] = {tags_empty: value}
+                if value.type is ValueTypes.CHOICES:
+                    raise ValueError('Choices key in CBaseEntity!')
+    else:
+        if verbose:
+            print('Culling incompatible entities...')
+
+        ents = list(fgd.entities.values())
+        fgd.entities.clear()
+
+        for ent in ents:
+            applies_to = get_appliesto(ent)
+            if match_tags(tags, applies_to):
+                fgd.entities[ent.classname] = ent
+                ent.strip_tags(tags)
+
+            # Remove bases that don't apply.
+            for base in ent.bases[:]:
+                if not match_tags(tags, get_appliesto(base)):
+                    ent.bases.remove(base)
+
+    if not engine_mode:
+        for poly_tag, polyfill in POLYFILLS:
+            if not poly_tag or poly_tag in tags:
+                polyfill(fgd)
+
+    if verbose:
+        print('Applying helpers to child entities and optimising...')
+    for ent in fgd.entities.values():
+        # Merge them together.
+        helpers = []
+        for base in ent.bases:
+            helpers.extend(base.helpers)
+        helpers.extend(ent.helpers)
+
+        # Then optimise this list.
+        ent.helpers.clear()
+        for helper in helpers:
+            if helper in ent.helpers:  # No duplicates
+                continue
+            # Strip applies-to helper.
+            if isinstance(helper, HelperExtAppliesTo):
+                continue
+
+            # For each, check if it makes earlier ones obsolete.
+            overrides = helper.overrides()
+            if overrides:
+                ent.helpers[:] = [
+                    helper for helper in ent.helpers
+                    if helper.TYPE not in overrides
+                ]
+
+            # But it itself should be added to the end regardless.
+            ent.helpers.append(helper)
+
+    if verbose:
+        print('Culling unused bases...')
+    used_bases = set()  # type: Set[EntityDef]
+    # We only want to keep bases that provide keyvalues or additional bases.
+    # We've merged the helpers in.
+    for ent in fgd.entities.values():
+        if ent.type is not EntityTypes.BASE:
+            for base in ent.iter_bases():
+                if base.type is EntityTypes.BASE and (
+                    base.keyvalues or base.inputs or base.outputs or base.bases
+                ):
+                    used_bases.add(base)
+
+    for classname, ent in list(fgd.entities.items()):
+        if ent.type is EntityTypes.BASE:
+            if ent not in used_bases:
+                del fgd.entities[classname]
+                continue
+            else:
+                # Helpers aren't inherited, so this isn't useful anymore.
+                ent.helpers.clear()
+        # Cull all base classes we don't use.
+        # Ents that inherit from each other always need to exist.
+        ent.bases = [
+            base
+            for base in ent.bases
+            if base.type is not EntityTypes.BASE or base in used_bases
+        ]
+
+    if verbose:
+        print('Merging in material exclusions...')
+    for mat_tags, materials in fgd.tagged_mat_exclusions.items():
+        if match_tags(tags, mat_tags):
+            fgd.mat_exclusions |= materials
+    fgd.tagged_mat_exclusions.clear()
+
+    if verbose:
+        print('Culling visgroups...')
+    # Cull visgroups that no longer exist for us.
+    valid_ents = {
+        ent.classname.casefold()
+        for ent in fgd.entities.values()
+        if ent.type is not EntityTypes.BASE
+    }
+    for key, visgroup in list(fgd.auto_visgroups.items()):
+        visgroup.ents.intersection_update(valid_ents)
+        if not visgroup.ents:
+            del fgd.auto_visgroups[key]
+
+    return fgd
+
+
 def add_tag(tags: FrozenSet[str], new_tag: str) -> FrozenSet[str]:
     """Modify these tags such that they allow the new tag."""
     is_inverted = new_tag.startswith(('!', '-'))
@@ -651,252 +920,7 @@ def action_export(
 ) -> None:
     """Create an FGD file using the given tags."""
     
-    if engine_mode:
-        tags = frozenset({'ENGINE'})
-    else:
-        tags = expand_tags(tags)
-
-    print('Tags expanded to: {}'.format(', '.join(tags)))
-
-    fgd, base_entity_def = load_database(dbase, extra_db)
-
-    if engine_mode:
-        # In engine mode, we don't care about specific games.
-        print('Collapsing bases...')
-        fgd.collapse_bases()
-
-        # Cache these constant sets.
-        tags_empty = frozenset('')
-        tags_not_engine = frozenset({'-ENGINE', '!ENGINE'})
-
-        print('Merging tags...')
-        for ent in fgd:
-            # If it's set as not in engine, skip.
-            if not tags_not_engine.isdisjoint(get_appliesto(ent)):
-                continue
-            # Strip applies-to helper and ordering helper.
-            ent.helpers[:] = [
-                helper for helper in ent.helpers
-                if not helper.IS_EXTENSION
-            ]
-            # Force everything to inherit from CBaseEntity, since
-            # we're then removing any KVs that are present on that.
-            if ent.classname != BASE_ENTITY:
-                ent.bases = [base_entity_def]
-
-            value: Union[IODef, KeyValues]
-            category: Dict[str, Dict[FrozenSet[str], Union[IODef, KeyValues]]]
-            base_cat: Dict[str, Dict[FrozenSet[str], Union[IODef, KeyValues]]]
-            for attr_name in ['inputs', 'outputs', 'keyvalues']:
-                category = getattr(ent, attr_name)
-                base_cat = getattr(base_entity_def, attr_name)
-                # For each category, check for what value we want to keep.
-                # If only one, we keep that.
-                # If there's an "ENGINE" tag, that's specifically for us.
-                # Otherwise, warn if there's a type conflict.
-                # If the final value is choices, warn too (not really a type).
-                for key, orig_tag_map in list(category.items()):
-                    # Remake the map, excluding non-engine tags.
-                    # If any are explicitly matching us, just use that
-                    # directly.
-                    tag_map = {}
-                    for tags, value in orig_tag_map.items():
-                        if 'ENGINE' in tags or '+ENGINE' in tags:
-                            if value.type is ValueTypes.CHOICES:
-                                raise ValueError(
-                                    '{}.{}: Engine tags cannot be '
-                                    'CHOICES!'.format(ent.classname, key)
-                                )
-                            # Use just this.
-                            tag_map = {'': value}
-                            break
-                        elif '-ENGINE' not in tags and '!ENGINE' not in tags:
-                            tag_map[tags] = value
-
-                    if not tag_map:
-                        # All were set as non-engine, so it's not present.
-                        del category[key]
-                        continue
-                    elif len(tag_map) == 1:
-                        # Only one type, that's the one for the engine.
-                        [value] = tag_map.values()
-                    else:
-                        # More than one tag.
-                        # IODef and KeyValues have a type attr.
-                        types = {val.type for val in tag_map.values()}
-                        if len(types) > 1:
-                            print('{}.{} has multiple types! ({})'.format(
-                                ent.classname,
-                                key,
-                                ', '.join([typ.value for typ in types])
-                            ))
-                        # Pick the one with shortest tags arbitrarily.
-                        _, value = min(
-                            tag_map.items(),
-                            key=lambda t: len(t[0]),
-                        )
-
-                    # If it's CHOICES, we can't know what type it is.
-                    # Guess either int or string, if we can convert.
-                    if value.type is ValueTypes.CHOICES:
-                        print(
-                            '{}.{} uses CHOICES type, '
-                            'provide ENGINE '
-                            'tag!'.format(ent.classname, key)
-                        )
-                        if isinstance(value, KeyValues):
-                            assert value.val_list is not None
-                            try:
-                                for choice_val, name, tag in value.val_list:
-                                    int(choice_val)
-                            except ValueError:
-                                # Not all are ints, it's a string.
-                                value.type = ValueTypes.STRING
-                            else:
-                                value.type = ValueTypes.INT
-                            value.val_list = None
-
-                    # Check if this is a shared property among all ents,
-                    # and if so skip exporting.
-                    if ent.classname != BASE_ENTITY:
-                        base_value: Union[KeyValues, IODef]
-                        try:
-                            [base_value] = base_cat[key].values()
-                        except KeyError:
-                            pass
-                        except ValueError:
-                            raise ValueError(
-                                f'Base Entity {attr_name[:-1]} "{key}" '
-                                f'has multiple tags: {list(base_cat[key].keys())}'
-                            )
-                        else:
-                            if base_value.type is ValueTypes.CHOICES:
-                                print(
-                                    f'Base Entity {attr_name[:-1]} '
-                                    f'"{key}"  is a choices type!'
-                                )
-                            elif base_value.type is value.type:
-                                del category[key]
-                                continue
-                            elif attr_name == 'keyvalues' and key == 'model':
-                                # This can be sprite or model.
-                                pass
-                            elif base_value.type is ValueTypes.FLOAT and value.type is ValueTypes.INT:
-                                # Just constraining it down to a whole number.
-                                pass
-                            else:
-                                print(f'{ent.classname}.{key}: {value.type} != base {base_value.type}')
-
-                    # Blank this, it's not that useful.
-                    value.desc = ''
-                    category[key] = {tags_empty: value}
-
-        # Add in the base entity definition, and clear it out.
-        fgd.entities[BASE_ENTITY.casefold()] = base_entity_def
-        base_entity_def.desc = ''
-        base_entity_def.helpers = []
-        # Strip out all the tags.
-        for cat in [base_entity_def.inputs, base_entity_def.outputs, base_entity_def.keyvalues]:
-            for key, tag_map in cat.items():
-                [value] = tag_map.values()
-                cat[key] = {tags_empty: value}
-                if value.type is ValueTypes.CHOICES:
-                    raise ValueError('Choices key in CBaseEntity!')
-    else:
-        print('Culling incompatible entities...')
-
-        ents = list(fgd.entities.values())
-        fgd.entities.clear()
-
-        for ent in ents:
-            applies_to = get_appliesto(ent)
-            if match_tags(tags, applies_to):
-                fgd.entities[ent.classname] = ent
-                ent.strip_tags(tags)
-
-            # Remove bases that don't apply.
-            for base in ent.bases[:]:
-                if not match_tags(tags, get_appliesto(base)):
-                    ent.bases.remove(base)
-
-    if not engine_mode:
-        for poly_tag, polyfill in POLYFILLS:
-            if not poly_tag or poly_tag in tags:
-                polyfill(fgd)
-
-    print('Applying helpers to child entities and optimising...')
-    for ent in fgd.entities.values():
-        # Merge them together.
-        helpers = []
-        for base in ent.bases:
-            helpers.extend(base.helpers)
-        helpers.extend(ent.helpers)
-
-        # Then optimise this list.
-        ent.helpers.clear()
-        for helper in helpers:
-            if helper in ent.helpers:  # No duplicates
-                continue
-            # Strip applies-to helper.
-            if isinstance(helper, HelperExtAppliesTo):
-                continue
-
-            # For each, check if it makes earlier ones obsolete.
-            overrides = helper.overrides()
-            if overrides:
-                ent.helpers[:] = [
-                    helper for helper in ent.helpers
-                    if helper.TYPE not in overrides
-                ]
-
-            # But it itself should be added to the end regardless.
-            ent.helpers.append(helper)
-
-    print('Culling unused bases...')
-    used_bases = set()  # type: Set[EntityDef]
-    # We only want to keep bases that provide keyvalues or additional bases.
-    # We've merged the helpers in.
-    for ent in fgd.entities.values():
-        if ent.type is not EntityTypes.BASE:
-            for base in ent.iter_bases():
-                if base.type is EntityTypes.BASE and (
-                    base.keyvalues or base.inputs or base.outputs or base.bases
-                ):
-                    used_bases.add(base)
-
-    for classname, ent in list(fgd.entities.items()):
-        if ent.type is EntityTypes.BASE:
-            if ent not in used_bases:
-                del fgd.entities[classname]
-                continue
-            else:
-                # Helpers aren't inherited, so this isn't useful anymore.
-                ent.helpers.clear()
-        # Cull all base classes we don't use.
-        # Ents that inherit from each other always need to exist.
-        ent.bases = [
-            base
-            for base in ent.bases
-            if base.type is not EntityTypes.BASE or base in used_bases
-        ]
-
-    print('Merging in material exclusions...')
-    for mat_tags, materials in fgd.tagged_mat_exclusions.items():
-        if match_tags(tags, mat_tags):
-            fgd.mat_exclusions |= materials
-    fgd.tagged_mat_exclusions.clear()
-
-    print('Culling visgroups...')
-    # Cull visgroups that no longer exist for us.
-    valid_ents = {
-        ent.classname.casefold()
-        for ent in fgd.entities.values()
-        if ent.type is not EntityTypes.BASE
-    }
-    for key, visgroup in list(fgd.auto_visgroups.items()):
-        visgroup.ents.intersection_update(valid_ents)
-        if not visgroup.ents:
-            del fgd.auto_visgroups[key]
+    fgd = get_clean_fgd(dbase, extra_db, tags, engine_mode, True)
 
     print('Exporting...')
 
