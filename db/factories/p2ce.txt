@@ -276,6 +276,7 @@ info_player_deathmatch
 info_player_ping_detector
 info_player_start
 info_player_teamspawn
+info_playtest_manager
 info_portal_score
 info_projecteddecal
 info_radial_link_controller
