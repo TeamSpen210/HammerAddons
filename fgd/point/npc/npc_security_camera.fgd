@@ -1,6 +1,6 @@
 @PointClass base(BaseNPC, SetSkin)
 	appliesto(P2CE)
-	studioprop("models/props/security_camera.mdl")
+	studioprop()
 = npc_security_camera: "Aperture Science Security Camera. " +
 		"Follows either the player or their pings (Portal 2). " +
 		"When a portal is opened behind it it will fall off the wall. " + 
@@ -33,6 +33,8 @@
 		2: "P-Body"
 		3: "ATLAS"
 		]
+
+	model(studio) : "Camera Model" : "models/props/security_camera.mdl" : "Model to be used in game"
 
 	// Inputs
 	input Enable(void) : "Start following players."

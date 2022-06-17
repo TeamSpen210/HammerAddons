@@ -14,7 +14,7 @@
 	rocketlifetime(float) : "Rocket Lifetime" : 20 : "The rocket will automatically detonate after this number of seconds."
 	TripwireMode(boolean) : "Tripwire Mode" : 0 : "Makes the turret aim in a specific direction instead of following the target. When the beam is crossed, a rocket instantly fires."
 	TripwireAimTarget(target_destination) : "Tripwire Aim Target" : : "In tripwire mode, the entity to aim at."
-	model(studio) : "[H] Model" : "models/props_bts/rocket_sentry.mdl" : "Model to display in Hammer. Use Init Code and a comp_precache_model to change the model in-game."
+	model(studio) : "Model" : "models/props_bts/rocket_sentry.mdl" : "Model to use in-game"
 
 	// Inputs
 	input Toggle(void) : "Toggles between activated and deactivated states."
