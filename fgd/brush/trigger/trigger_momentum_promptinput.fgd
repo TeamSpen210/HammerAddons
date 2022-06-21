@@ -1,0 +1,10 @@
+@SolidClass base(trigger_userinput) 
+	line(255 255 255, targetname, filtername)
+= trigger_momentum_promptinput: "Trigger that prompts the player to press a button if inside trigger. Has support for up to 3 keys."
+	[
+	negate(boolean) : "Negate" : 0 : "If true, prompts will fire when keys are held rather than when they aren't."
+	message(string) : "Prompt Message" : "" : "Message to display to the player for prompts."
+	playerspeed(float) : "Player Speed" : "0.1" : "On prompting, the player's speed will be changed by this factor (use <1 for slowdowns, >1 for speedups)."
+	zoomrate(float) : "Player Zoom Rate" : "0.2" : "Amount of time (in seconds) to move between current FOV and zoomfov."
+	zoomfov(integer) : "Player Zoom FOV" : 0 : "FOV to zoom to on prompting. Use 0 for no zoom."
+	]

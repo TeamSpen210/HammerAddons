@@ -340,6 +340,7 @@ trigger_momentum_limitmovement
 trigger_momentum_multihop
 trigger_momentum_onehop
 trigger_momentum_progress
+trigger_momentum_promptinput
 trigger_momentum_push
 trigger_momentum_resetonehop
 trigger_momentum_slide

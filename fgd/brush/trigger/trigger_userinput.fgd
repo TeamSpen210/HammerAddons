@@ -16,6 +16,40 @@
 		5 : "Duck"
 		6 : "Attack"
 		7 : "Attack 2"
-		8 : "Reload"	
+		8 : "Reload"
+		9 : "Speed"
+		10: "Walk"
+		]
+	lookedkey2[engine](integer) : "Second key to use that fires, if held down at same time as other keys" : -1
+	lookedkey2(choices) : "Second key to use that fires, if held down at same time as other keys" : -1 =
+		[
+		-1: "None"
+		0 : "Forward"
+		1 : "Back"
+		2 : "Move Left"
+		3 : "Move Right"
+		4 : "Jump"
+		5 : "Duck"
+		6 : "Attack"
+		7 : "Attack 2"
+		8 : "Reload"
+		9 : "Speed"
+		10: "Walk"
+		]
+	lookedkey3[engine](integer) : "Third key to use that fires, if held down at same time as other keys" : -1
+	lookedkey3(choices) : "Third key to use that fires, if held down at same time as other keys" : -1 =
+		[
+		-1: "None"
+		0 : "Forward"
+		1 : "Back"
+		2 : "Move Left"
+		3 : "Move Right"
+		4 : "Jump"
+		5 : "Duck"
+		6 : "Attack"
+		7 : "Attack 2"
+		8 : "Reload"
+		9 : "Speed"
+		10: "Walk"
 		]
 	]
