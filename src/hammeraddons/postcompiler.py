@@ -16,7 +16,7 @@ import os
 from logging import FileHandler
 from typing import List, Dict, Optional
 
-from srctools import Property, __version__ as version_lib
+from srctools import __version__ as version_lib
 from srctools.filesys import ZipFileSystem
 from srctools.fgd import FGD
 from srctools.bsp import BSP
@@ -131,7 +131,7 @@ async def main(argv: List[str]) -> None:
     LOGGER.info('Mounting BSP packfile...')
     fsys.add_sys(ZipFileSystem('<BSP pakfile>', bsp_file.pakfile))
 
-    studiomdl_path = conf.get(str, 'studiomdl')
+    studiomdl_path = conf.get(config.STUDIOMDL)
     studiomdl_loc: Optional[Path]
     if studiomdl_path:
         studiomdl_loc = (game_info.root / studiomdl_path).resolve()
@@ -142,7 +142,7 @@ async def main(argv: List[str]) -> None:
         LOGGER.warning('No studiomdl path provided.')
         studiomdl_loc = None
 
-    use_comma_sep = conf.get(bool, 'use_comma_sep')
+    use_comma_sep = conf.get(config.USE_COMMA_SEP)
     if use_comma_sep is None:
         # Guess the format, by checking existing outputs.
         used_comma_sep = {
@@ -161,10 +161,7 @@ async def main(argv: List[str]) -> None:
             bsp_file.out_comma_sep = False  # Kinda arbitrary.
     else:
         bsp_file.out_comma_sep = use_comma_sep
-    transform_conf = {
-        prop.name: prop
-        for prop in conf.get(Property, 'transform_opts')
-    }
+    transform_conf = {prop.name: prop for prop in conf.get(config.TRANSFORM_OPTS)}
 
     LOGGER.info('Running transforms...')
     await run_transformations(
@@ -178,7 +175,7 @@ async def main(argv: List[str]) -> None:
     )
 
     if studiomdl_loc is not None and args.propcombine:
-        decomp_cache_path = conf.get(str, 'propcombine_cache')
+        decomp_cache_path = conf.get(config.PROPCOMBINE_CACHE)
         decomp_cache_loc: Optional[Path]
         crowbar_loc: Optional[Path]
         if decomp_cache_path is not None:
@@ -186,7 +183,7 @@ async def main(argv: List[str]) -> None:
             decomp_cache_loc.mkdir(parents=True, exist_ok=True)
         else:
             decomp_cache_loc = None
-        if conf.get(bool, 'propcombine_crowbar'):
+        if conf.get(config.PROPCOMBINE_CROWBAR):
             # argv[0] is the location of our script/exe, which lets us locate
             # Crowbar from there. The environment var is for testing.
             if 'CROWBAR_LOC' in os.environ:
@@ -206,16 +203,16 @@ async def main(argv: List[str]) -> None:
             qc_folders=[
                 game_info.root / folder
                 for folder in
-                conf.get(Property, 'propcombine_qc_folder').as_array(conv=Path)
+                conf.get(config.PROPCOMBINE_QC_FOLDER).as_array(conv=Path)
             ],
             decomp_cache_loc=decomp_cache_loc,
             crowbar_loc=crowbar_loc,
-            auto_range=conf.get(int, 'propcombine_auto_range'),
-            min_cluster=conf.get(int, 'propcombine_min_cluster'),
-            blacklist=conf.get(Property, 'propcombine_blacklist').as_array(),
-            volume_tolerance=conf.get(float, 'propcombine_volume_tolerance'),
+            auto_range=conf.get(config.PROPCOMBINE_AUTO_RANGE),
+            min_cluster=conf.get(config.PROPCOMBINE_MIN_CLLUSTER),
+            blacklist=conf.get(config.PROPCOMBINE_BLACKLIST).as_array(),
+            volume_tolerance=conf.get(config.PROPCOMBINE_VOLUME_TOLERANCE),
             debug_dump=args.dumpgroups,
-            pack_models=conf.get(bool, 'propcombine_pack') or False,
+            pack_models=conf.get(config.PROPCOMBINE_PACK) or False,
         )
         LOGGER.info('Done!')
 
@@ -226,22 +223,22 @@ async def main(argv: List[str]) -> None:
         bsp_file.bmodels.pop(ent, None)  # Ignore if not present.
         ent.remove()
 
-    if conf.get(bool, 'auto_pack') and args.allow_pack:
+    if conf.get(config.AUTO_PACK) and args.allow_pack:
         LOGGER.info('Analysing packable resources...')
         packlist.pack_fgd(bsp_file.ents, fgd)
 
         packlist.pack_from_bsp(bsp_file)
 
         packlist.eval_dependencies()
-        if conf.get(bool, 'soundscript_manifest'):
+        if conf.get(config.SOUNDSCRIPT_MANIFEST):
             packlist.write_soundscript_manifest()
-        man_name = conf.get(str, 'particles_manifest')
+        man_name = conf.get(config.PARTICLES_MANIFEST)
         if man_name:
             man_name = man_name.replace('<map name>', path.stem)
             LOGGER.info('Writing particle manifest "{}"...', man_name)
             packlist.write_particles_manifest(man_name)
 
-    dump_path = conf.get(str, 'pack_dump')
+    dump_path = conf.get(config.PACK_DUMP)
     if dump_path:
         packlist.pack_into_zip(
             bsp_file,
