@@ -3,9 +3,11 @@
 A list of options are passed in, which parse each option to a basic type.
 """
 import inspect
-from enum import Enum
 from pathlib import Path
-from typing import TypeVar, Union, Any, List, Type, Optional, Dict, IO, overload
+from typing import Generic, Iterable, TypeVar, Union, List, Type, Optional, Dict, IO, overload
+from typing_extensions import TypeAlias
+
+import attrs
 
 from srctools import Vec, Property, parse_vec_str, conv_bool
 from srctools.logger import get_logger
@@ -13,58 +15,122 @@ from srctools.logger import get_logger
 LOGGER = get_logger(__name__)
 
 
-class TYPE(Enum):
-    """The types arguments can have."""
-    STR = str
-    INT = int
-    FLOAT = float
-    BOOL = bool
-    VEC = Vec
-    RAW = Property  # This bypasses parsing, giving you the raw block.
+Option: TypeAlias = Union[str, int, float, bool, Vec, Property]
+OptionT = TypeVar('OptionT', Property, str, int, float, bool, Vec)
 
-    def convert(self, value: str) -> Any:
-        """Convert a string to the desired argument type."""
-        return self.value(value)
-
-
-TYPE_NAMES = {
-    TYPE.STR: 'Text',
-    TYPE.INT: 'Whole Number',
-    TYPE.FLOAT: 'Decimal Number',
-    TYPE.BOOL: 'True/False',
-    TYPE.VEC: 'Vector',
-    TYPE.RAW: 'Property Block',
+TYPE_NAMES: Dict[Type[Option], str] = {
+    str: 'Text',
+    int: 'Whole Number',
+    float: 'Decimal Number',
+    bool: 'True/False',
+    Vec: 'Vector',
+    Property: 'Property Block',
 }
 
-OptionT = TypeVar('OptionT', str, int, float, bool, Vec)
-EnumT = TypeVar('EnumT', bound=Enum)
 
-
-class Opt:
-    """A type of option that can be chosen."""
-    default: Union[None, str, int, float, bool, Vec, Property]
+@attrs.define
+class Opt(Generic[OptionT]):
+    """A type of option that can be chosen.
+    """
+    id: str
+    name: str
+    kind: Type[OptionT]
+    fallback: Optional[str]
+    doc: List[str]
 
     def __init__(
         self,
         opt_id: str,
-        default: Union[TYPE, OptionT, Property],
+        kind: Type[OptionT],
         doc: str,
-        fallback: str=None,
+        fallback: Optional[str],
     ) -> None:
-        if isinstance(default, TYPE):
-            self.type = default
-            if default is TYPE.RAW:
-                self.default = Property(opt_id, [])
-            else:
-                self.default = None
-        else:
-            self.type = TYPE(type(default))
-            self.default = default
+        self.kind = kind
         self.id = opt_id.casefold()
         self.name = opt_id
         self.fallback = fallback
         # Remove indentation, and trailing carriage return
         self.doc = inspect.cleandoc(doc).rstrip().splitlines()
+
+    @classmethod
+    def block(
+        cls,
+        opt_id: str,
+        default: Property,
+        doc: str, *,
+        fallback: str = None,
+    ) -> 'OptWithDefault[Property]':
+        """Return an option giving the raw property.
+
+        These always use an empty block as the default.
+        """
+        return OptWithDefault(opt_id, Property, default.copy(), doc, fallback)
+
+    @classmethod
+    def string_or_none(cls, opt_id: str, doc: str, *, fallback: str = None) -> 'Opt[str]':
+        """Return a string-type option, with no default."""
+        return Opt(opt_id, str, doc, fallback)
+
+    @classmethod
+    def boolean_or_none(cls, opt_id: str, doc: str, *, fallback: str = None) -> 'Opt[bool]':
+        """Return a boolean-type option, with no default."""
+        return Opt(opt_id, bool, doc, fallback)
+
+    @classmethod
+    def integer_or_none(cls, opt_id: str, doc: str, *, fallback: str = None) -> 'Opt[int]':
+        """Return an integer-type option, with no default."""
+        return Opt(opt_id, int, doc, fallback)
+
+    @classmethod
+    def floating_or_none(cls, opt_id: str, doc: str, *, fallback: str = None) -> 'Opt[float]':
+        """Return a float-type option, with no default."""
+        return Opt(opt_id, float, doc, fallback)
+
+    @classmethod
+    def vector_or_none(cls, opt_id: str, doc: str, *, fallback: str = None) -> 'Opt[Vec]':
+        """Return a vector-type option, with no default."""
+        return Opt(opt_id, Vec, doc, fallback)
+
+    @classmethod
+    def string(cls, opt_id: str, default: str, doc: str, *, fallback: str = None) -> 'OptWithDefault[str]':
+        """Return a string-type option."""
+        return OptWithDefault(opt_id, str, default, doc, fallback)
+
+    @classmethod
+    def boolean(cls, opt_id: str, default: bool, doc: str, *, fallback: str = None) -> 'OptWithDefault[bool]':
+        """Return a boolean-type option."""
+        return OptWithDefault(opt_id, bool, default, doc, fallback)
+
+    @classmethod
+    def integer(cls, opt_id: str, default: int, doc: str, *, fallback: str = None) -> 'OptWithDefault[int]':
+        """Return an integer-type option."""
+        return OptWithDefault(opt_id, int, default, doc, fallback)
+
+    @classmethod
+    def floating(cls, opt_id: str,  default: float, doc: str, *, fallback: str = None) -> 'OptWithDefault[float]':
+        """Return a float-type option."""
+        return OptWithDefault(opt_id, float, default, doc, fallback)
+
+    @classmethod
+    def vector(cls, opt_id: str, default: Vec,  doc: str, *, fallback: str = None) -> 'OptWithDefault[Vec]':
+        """Return a vector-type option."""
+        return OptWithDefault(opt_id, Vec, default, doc, fallback)
+
+
+@attrs.define
+class OptWithDefault(Opt[OptionT], Generic[OptionT]):
+    """An option, with a default."""
+    default: OptionT
+    def __init__(
+        self,
+        opt_id: str,
+        kind: Type[OptionT],
+        default: OptionT,
+        doc: str,
+        fallback: Optional[str],
+    ) -> None:
+        super().__init__(opt_id, kind, doc, fallback)  # type: ignore
+        self.default = default
         if fallback is not None:
             self.doc.append(f'If unset, the default is read from `{default}`.')
 
@@ -75,11 +141,14 @@ class Config:
     settings: Dict[str, Union[None, str, int, float, bool, Vec, Property]]
     path: Optional[Path]
 
-    def __init__(self, defaults: Union[List[Opt], 'Config']) -> None:
-        if isinstance(defaults, Config):
-            self.defaults = defaults.defaults
+    def __init__(self, defaults: Union[Iterable[Opt], dict]) -> None:
+        if isinstance(defaults, dict):
+            self.defaults = [
+                opt for opt in defaults.values()
+                if isinstance(opt, Opt)
+            ]
         else:
-            self.defaults = defaults
+            self.defaults = list(defaults)
 
         self.settings = {}
         self.path = None
@@ -92,10 +161,10 @@ class Config:
             for prop in opt_block:
                 set_vals[prop.name] = prop
 
-        options = {opt.id: opt for opt in self.defaults}
+        options: Dict[str, Opt] = {opt.id: opt for opt in self.defaults}
         if len(options) != len(self.defaults):
             from collections import Counter
-            # Find ids used more than once..
+            # Find ids used more than once.
             raise Exception('Duplicate option(s)! ({})'.format(', '.join(
                 k for k, v in
                 Counter(opt.id for opt in self.defaults).items()
@@ -105,6 +174,11 @@ class Config:
         fallback_opts = []
 
         for opt in self.defaults:
+            if isinstance(opt, OptWithDefault):
+                default = opt.default
+            else:
+                default = None
+
             try:
                 prop = set_vals.pop(opt.id)
             except KeyError:
@@ -112,9 +186,9 @@ class Config:
                     fallback_opts.append(opt)
                     assert opt.fallback in options, 'Invalid fallback in ' + opt.id
                 else:
-                    self.settings[opt.id] = opt.default
+                    self.settings[opt.id] = default
                 continue
-            if opt.type is TYPE.RAW:
+            if opt.kind is Property:
                 self.settings[opt.id] = prop.copy()
                 continue
 
@@ -122,20 +196,20 @@ class Config:
             if prop.has_children():
                 raise ValueError(f'Cannot use property block for "{opt.name}"')
 
-            if opt.type is TYPE.VEC:
-                # Pass nones so we can check if it failed..
+            if opt.kind is Vec:
+                # Pass nones, so we can check if it failed.
                 parsed_vals = parse_vec_str(prop.value, x=None)
                 if parsed_vals[0] is None:
-                    self.settings[opt.id] = opt.default
+                    self.settings[opt.id] = default
                 else:
                     self.settings[opt.id] = Vec(*parsed_vals)
-            elif opt.type is TYPE.BOOL:
-                self.settings[opt.id] = conv_bool(prop.value, opt.default)
+            elif opt.kind is bool:
+                self.settings[opt.id] = conv_bool(prop.value, default)
             else:  # int, float, str - no special handling...
                 try:
-                    self.settings[opt.id] = opt.type.convert(prop.value)
+                    self.settings[opt.id] = opt.kind(prop.value)
                 except (ValueError, TypeError):
-                    self.settings[opt.id] = opt.default
+                    self.settings[opt.id] = default
 
         for opt in fallback_opts:
             assert opt.fallback is not None
@@ -144,7 +218,7 @@ class Config:
             except KeyError:
                 raise Exception(f'Bad fallback for "{opt.id}"!')
             # Check they have the same type.
-            if opt.type is not options[opt.fallback].type:
+            if opt.kind is not options[opt.fallback].kind:
                 raise ValueError(
                     f'"{opt.id}" cannot fall back to "{opt.fallback}" - different type!'
                 )
@@ -152,96 +226,45 @@ class Config:
         if set_vals:
             LOGGER.warning('Extra config options: {}', set_vals)
 
-    def set_opt(self, opt_name: str, value: str) -> None:
+    def set_opt(self, option: Opt[OptionT], value: OptionT) -> None:
         """Set an option to a specific value."""
-        folded_name = opt_name.casefold()
-        for opt in self.defaults:
-            if folded_name == opt.id:
-                break
-        else:
-            LOGGER.warning('Invalid option name "{}"!', opt_name)
+        if self.settings.get(option.id) is not option:
+            LOGGER.warning('Invalid option "{}"!', option.name)
             return
 
-        if opt.type is TYPE.RAW:
-            if not isinstance(value, Property):
-                raise ValueError(
-                    'The value must be a Property '
-                    'for property blocks!'
-                )
-            self.settings[opt.id] = value
-        elif opt.type is TYPE.VEC:
-            # Pass nones so we can check if it failed..
-            parsed_vals = parse_vec_str(value, x=None)
-            if parsed_vals[0] is None:
-                return
-            self.settings[opt.id] = Vec(*parsed_vals)
-        elif opt.type is TYPE.BOOL:
-            self.settings[opt.id] = conv_bool(value, self.settings[opt.id])
-        else:  # int, float, str - no special handling...
-            try:
-                self.settings[opt.id] = opt.type.convert(value)
-            except (ValueError, TypeError):
-                pass
+        if type(value) is not option.kind:
+            raise ValueError(f'Value "{value!r}" is not the same as option "{option.name}": {option.kind}')
+        else:
+            self.settings[option.id] = value
 
     @overload
-    def get(self, expected_type: Type[Property], name: str) -> Property: ...
-
+    def get(self, option: OptWithDefault[OptionT]) -> OptionT: ...
     @overload
-    def get(self, expected_type: Type[EnumT], name: str) -> EnumT: ...
+    def get(self, option: Opt[OptionT]) -> Optional[OptionT]: ...
 
-    @overload
-    def get(self, expected_type: Type[OptionT], name: str) -> Optional[OptionT]: ...
-
-    def get(self, expected_type: type, name: str) -> Any:
-        """Get the given option.
-        expected_type should be the class of the value that's expected.
-        The value can be None if unset, except for Property types (which
-        will always have an empty block).
-
-        If expected_type is an Enum, this will be used to convert the output.
-        If it fails, a warning is produced and the first value in the enum is
-        returned.
-        """
+    def get(self, option: Opt[OptionT]) -> Optional[OptionT]:
+        """Fetch the given option, or return None if not present and no default is defined."""
         try:
-            val = self.settings[name.casefold()]
+            val = self.settings[option.id]
         except KeyError:
-            raise TypeError(f'Option "{name}" does not exist!') from None
+            raise TypeError(f'Option "{option.name}" does not exist!') from None
 
         if val is None:
-            if expected_type is Property:
-                return Property(name, [])
+            if option.kind is Property:  # Type checker doesn't understand isinstance here.
+                return Property(option.name, [])  # type: ignore
             else:
                 return None
 
-        enum_type: Optional[Type[Enum]]
-        if issubclass(expected_type, Enum):
-            enum_type = expected_type
-            expected_type = str
-        else:
-            enum_type = None
-
         # Don't allow subclasses (bool/int)
-        if type(val) is not expected_type:
-            raise ValueError(f'Option "{name}" is {type(val)} (code expected {expected_type})')
-
-        if enum_type is not None:
-            try:
-                return enum_type(val)
-            except ValueError:
-                LOGGER.warning(
-                    'Option "{}" is not a valid value. '
-                    'Allowed values are:\n{}',
-                    name,
-                    '\n'.join([mem.value for mem in enum_type])
-                )
-                return next(iter(enum_type))  # type: ignore
+        if type(val) is not option.kind:
+            raise ValueError(f'Option "{option.name}" is {type(val)} (code expected {option.kind})')
 
         # Vec is mutable, don't allow modifying the original.
-        if expected_type is Vec or expected_type is Property:
+        if option.kind is Vec or option.kind is Property:
             assert isinstance(val, Vec) or isinstance(val, Property)
             return val.copy()
         else:
-            assert isinstance(val, expected_type)
+            assert isinstance(val, option.kind)
             return val
 
     def save(self, file: IO[str]) -> None:
@@ -256,10 +279,13 @@ class Config:
             for line in option.doc:
                 file.write('\t// {}\n'.format(line))
 
-            default = option.default
+            if isinstance(option, OptWithDefault):
+                default = option.default
+            else:
+                default = None
 
             # PROP types are "raw", so they don't have defaults.
-            if option.type is not TYPE.RAW and default is not None:
+            if option.kind is not Property and isinstance(option, OptWithDefault):
                 if isinstance(default, bool):
                     default = '1' if default else '0'
 
