@@ -1,6 +1,6 @@
 """Handles user configuration common to the different scripts."""
 from pathlib import Path
-from typing import Tuple, Set, Dict
+from typing import Optional, Tuple, Set, Dict
 import sys
 
 from atomicwrites import atomic_write
@@ -9,21 +9,15 @@ from srctools.game import Game
 from srctools import Property, logger
 from srctools.filesys import FileSystemChain, FileSystem, RawFileSystem, VPKFileSystem
 
-from .props_config import Opt, Config, TYPE
+from .props_config import Opt, Config
 from .plugin import Source as PluginSource, PluginFinder, BUILTIN as BUILTIN_PLUGIN
 
-
-__all__ = [
-    'LOGGER',
-    'parse',
-    'OPTIONS',
-]
 
 LOGGER = logger.get_logger(__name__)
 CONF_NAME = 'srctools.vdf'
 
 
-def parse(path: Path, game_folder: str='') -> Tuple[
+def parse(path: Path, game_folder: Optional[str]='') -> Tuple[
     Config,
     Game,
     FileSystemChain,
@@ -47,7 +41,7 @@ def parse(path: Path, game_folder: str='') -> Tuple[
         * A packing blacklist.
         * The plugin loader.
     """
-    conf = Config(OPTIONS)
+    conf = Config(globals())
 
     # If the path is a folder, add a dummy folder so parents yields it.
     # That way we check for a config in this folder.
@@ -83,7 +77,7 @@ def parse(path: Path, game_folder: str='') -> Tuple[
         conf.save(f)
 
     if not game_folder:
-        game_folder = conf.get(str, 'gameinfo')
+        game_folder = conf.get(GAMEINFO)
     if not game_folder:
         raise ValueError(
             'No game folder specified!\n'
@@ -97,14 +91,14 @@ def parse(path: Path, game_folder: str='') -> Tuple[
 
     blacklist: Set[FileSystem] = set()
 
-    if not conf.get(bool, 'pack_vpk'):
+    if not conf.get(PACK_VPK):
         for fsys, prefix in fsys_chain.systems:
             if isinstance(fsys, VPKFileSystem):
                 blacklist.add(fsys)
 
     game_root = game.root
 
-    for prop in conf.get(Property, 'searchpaths'):
+    for prop in conf.get(SEARCHPATHS):
         if prop.has_children():
             raise ValueError('Config "searchpaths" value cannot have children.')
         assert isinstance(prop.value, str)
@@ -136,7 +130,7 @@ def parse(path: Path, game_folder: str='') -> Tuple[
 
     # Find all the plugins and make plugin objects out of them
     unnamed_ind = 1
-    for prop in conf.get(Property, 'plugins'):
+    for prop in conf.get(PLUGINS):
         source = PluginSource.parse(game_root, prop)
         if not source.id:
             source.id = f'unnamed_{unnamed_ind}'
@@ -156,137 +150,150 @@ def parse(path: Path, game_folder: str='') -> Tuple[
 
     return conf, game, fsys_chain, blacklist, plugin_finder
 
+GAMEINFO = Opt.string_or_none(
+    'gameinfo',
+    """The main game folder. portal2/ for Portal 2, csgo/ for CSGO, etc.
+    This is relative to the config file.
+    """,
+)
 
-OPTIONS = [
-    Opt(
-        'gameinfo', TYPE.STR,
-        """The main game folder. portal2/ for Portal 2, csgo/ for CSGO, etc.
-        This is relative to the config file.
-    """),
-    Opt(
-        'auto_pack', True,
-        """Automatically find and pack files in the map. 
-        If this is disabled, specifically-indicated files will still be 
-        added as well as their dependencies.
-    """),
-    Opt(
-        'pack_vpk', False,
-        """Allow files in VPKs to be packed into the map. 
-        This is disabled by default since these are usually default files.
-    """),
-    Opt(
-        'pack_dump', TYPE.STR,
-        """If set, copy all the packed resoures to this additional location.
-        You can also prefix this with a # character to only copy to this 
-        destination, not the BSP pakfile.
-    """),
-    Opt(
-        'searchpaths', TYPE.RAW,
-        """\
-        Add additional search paths to the game. Each key-value pair
-        defines a path, with the value either a folder path or a VPK 
-        filename relative to the game root. The key defines the behaviour:
-        * "prefix" "folder/" adds the path to the start, so it overrides
-            all others.
-        * "path" "vpk_path.vpk" adds the path to the end, so it is checked last.
-        * "nopack" "folder/" prohibits files in this path from being packed, you'll need to use one of the others also to add the path.
-    """),
-    Opt(
-        'soundscript_manifest', False,
-        """Generate and pack game_sounds_manifest.txt, with all used soundscripts.     
-        This is needed to make packing soundscripts work for the Portal 2 
-        workshop.
-        """,
-    ),
-    Opt(
-        'particles_manifest', '',
-        """If set to a path, generate and pack a particles manifest under this name.     
-        This is needed to make packing particles work. "<map name>" is replaced with the map name.
-        Depending on your game, these are some of the correct paths:
-        * particles/particles_manifest.txt
-        * maps/<map name>_particles.txt (TF2)
-        * particles/<map name>_manifest.txt (L4D2, Portal 2)
-        """,
-    ),
-    Opt(
-        'studiomdl', 'bin/studiomdl.exe',
-        """Set the path to StudioMDL so the compiler can generate props.
-        If blank these features are disabled.
-        This is relative to the game root.
-        """,
-    ),
-    Opt(
-        'use_comma_sep', TYPE.BOOL,
-        """Before L4D, entity I/O used ',' to seperate the different parts.
+AUTO_PACK = Opt.boolean(
+    'auto_pack', True,
+    """Automatically find and pack files in the map. 
+    If this is disabled, specifically-indicated files will still be 
+    added as well as their dependencies.
+""")
+
+PACK_VPK = Opt.boolean(
+    'pack_vpk', False,
+    """Allow files in VPKs to be packed into the map. 
+    This is disabled by default since these are usually default files.
+""")
+
+PACK_DUMP = Opt.string_or_none(
+    'pack_dump',
+    """If set, copy all the packed resoures to this additional location.
+    You can also prefix this with a # character to only copy to this 
+    destination, not the BSP pakfile.
+""")
+
+SEARCHPATHS = Opt.block(
+    'searchpaths', Property('', []),
+    """\
+    Add additional search paths to the game. Each key-value pair
+    defines a path, with the value either a folder path or a VPK 
+    filename relative to the game root. The key defines the behaviour:
+    * "prefix" "folder/" adds the path to the start, so it overrides
+        all others.
+    * "path" "vpk_path.vpk" adds the path to the end, so it is checked last.
+    * "nopack" "folder/" prohibits files in this path from being packed, you'll need to use one of the others also to add the path.
+""")
+
+SOUNDSCRIPT_MANIFEST = Opt.boolean(
+    'soundscript_manifest', False,
+    """Generate and pack game_sounds_manifest.txt, with all used soundscripts.     
+    This is needed to make packing soundscripts work for the Portal 2 
+    workshop.
+    """,
+)
+
+PARTICLES_MANIFEST = Opt.string(
+    'particles_manifest', '',
+    """If set to a path, generate and pack a particles manifest under this name.     
+    This is needed to make packing particles work. "<map name>" is replaced with the map name.
+    Depending on your game, these are some of the correct paths:
+    * particles/particles_manifest.txt
+    * maps/<map name>_particles.txt (TF2)
+    * particles/<map name>_manifest.txt (L4D2, Portal 2)
+    """,
+)
+
+STUDIOMDL = Opt.string(
+    'studiomdl', 'bin/studiomdl.exe',
+    """Set the path to StudioMDL so the compiler can generate props.
+    If blank these features are disabled.
+    This is relative to the game root.
+    """,
+)
+
+USE_COMMA_SEP = Opt.boolean_or_none(
+    'use_comma_sep',
+    """Before L4D, entity I/O used ',' to seperate the different parts.
+
+   Later games used a special symbol to delimit the sections, allowing
+   commas to be used in outputs. The compiler will guess which to use
+   based on existing outputs in the map, but if this is incorrect 
+   (or if there aren't any in the map), use this to override.
+""")
+
+PROPCOMBINE_QC_FOLDER = Opt.block(
+    'propcombine_qc_folder', Property('', [Property('loc', '../content')]),
+    """Define where the QC files are for combinable static props.
+    This path is searched recursively. This defaults to 
+    the 'content/' folder, which is adjacent to the game root.
+    This is how Valve sets up their file structure.
+""")
+
+PROPCOMBINE_CROWBAR = Opt.boolean(
+    'propcombine_crowbar', True,
+    """If enabled, Crowbar will be used to decompile models which don't have
+    a QC in the provided QC folder.
+""")
+
+PROPCOMBINE_CACHE = Opt.string(
+    'propcombine_cache', "decomp_cache/",
+    """Cache location for models decompiled for combining."""
+)
+
+PROPCOMBINE_VOLUME_TOLERANCE = Opt.floating(
+    'propcombine_volume_tolerance', -1.0,
+    """When propcombining, an attempt will be made to merge collision meshes.
     
-       Later games used a special symbol to delimit the sections, allowing
-       commas to be used in outputs. The compiler will guess which to use
-       based on existing outputs in the map, but if this is incorrect 
-       (or if there aren't any in the map), use this to override.
-    """),
+    If shrink wrapping a pair of meshes changes the volume less than this,
+    the combined version will be used. If negative, this will not be done.
+    """
+)
 
-    Opt(
-        'propcombine_qc_folder', Property('', [Property('loc', '../content')]),
-        """Define where the QC files are for combinable static props.
-        This path is searched recursively. This defaults to 
-        the 'content/' folder, which is adjacent to the game root.
-        This is how Valve sets up their file structure.
-        """
-    ),
-    Opt(
-        'propcombine_crowbar', True,
-        """If enabled, Crowbar will be used to decompile models which don't have
-        a QC in the provided QC folder.
-        """
-    ),
-    Opt(
-        'propcombine_cache', "decomp_cache/",
-        """Cache location for models decompiled for combining."""
-    ),
-    Opt(
-        'propcombine_volume_tolerance', -1.0,
-        """When propcombining, an attempt will be made to merge collision meshes.
-        
-        If shrink wrapping a pair of meshes changes the volume less than this,
-        the combined version will be used. If negative, this will not be done.
-        """
-    ),
-    Opt(
-        'propcombine_auto_range', 0,
-        """If greater than zero, combine props at least this close together.""",
-    ),
-    Opt(
-        'propcombine_min_cluster', 2,
-        """The minimum number of props required before propcombine will
-        bother merging them. Should be greater than 1.
-        """,
-    ),
-    Opt(
-        'propcombine_blacklist', Property('', []),
-        """Models specified here will never be propcombined.
-        
-        You can specify a full path, or one with * wildcards. Alternatively,
-        set 'no_propcombine' in the model $keyvalues.
-        """,
-    ),
-    Opt(
-        'propcombine_pack', True,
-        """If set, force-pack the combined props."""
-    ),
-    Opt(
-        'plugins', TYPE.RAW,
-        """\
-        Add plugins to the post compiler. Each block is a package of plugins in some folder.
-        The name must be a Python identifier - the plugins are mounted at "srctools.bsp_transforms.plugin.blockname.filename".
-        * "path" must be set to either a single Python file, or a folder of files.
-        * If "recurse" is set, subfolders are recursively loaded as packages.
-        The transforms folder inside the postcompiler folder is also always
-        loaded, under the name "builtin".
-    """),
-    Opt(
-        'transform_opts', TYPE.RAW,
-        """Specify additional options specific to transforms. Each key here is the name of the 
-        transform, and the value is then decided by that transform.
-        """
-    ),
-]
+PROPCOMBINE_AUTO_RANGE = Opt.integer(
+    'propcombine_auto_range', 0,
+    """If greater than zero, combine props at least this close together.""",
+)
+
+PROPCOMBINE_MIN_CLLUSTER = Opt.integer(
+    'propcombine_min_cluster', 2,
+    """The minimum number of props required before propcombine will
+    bother merging them. Should be greater than 1.
+    """,
+)
+
+PROPCOMBINE_BLACKLIST = Opt.block(
+    'propcombine_blacklist', Property('', []),
+    """Models specified here will never be propcombined.
+    
+    You can specify a full path, or one with * wildcards. Alternatively,
+    set 'no_propcombine' in the model $keyvalues.
+    """,
+)
+
+PROPCOMBINE_PACK = Opt.boolean(
+    'propcombine_pack', True,
+    """If set, force-pack the combined props."""
+)
+
+PLUGINS = Opt.block(
+    'plugins', Property('', []),
+    """\
+    Add plugins to the post compiler. Each block is a package of plugins in some folder.
+    The name must be a Python identifier - the plugins are mounted at "srctools.bsp_transforms.plugin.blockname.filename".
+    * "path" must be set to either a single Python file, or a folder of files.
+    * If "recurse" is set, subfolders are recursively loaded as packages.
+    The transforms folder inside the postcompiler folder is also always
+    loaded, under the name "builtin".
+""")
+
+TRANSFORM_OPTS = Opt.block(
+    'transform_opts', Property('', []),
+    """Specify additional options specific to transforms. Each key here is the name of the 
+    transform, and the value is then decided by that transform.
+    """
+)
