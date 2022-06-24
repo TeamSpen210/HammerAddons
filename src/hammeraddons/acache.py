@@ -31,8 +31,10 @@ class ACache(Generic[KeyT, ValueT]):
         self._cache[key] = value
 
     def __iter__(self) -> Iterator[Tuple[KeyT, ValueT]]:
-        """Return the current items."""
-        return iter(self._cache.items())
+        """Iterate through the currently cached items."""
+        for key, value in self._cache.items():
+            if not isinstance(value, trio.Event):
+                yield key, value
 
     def __len__(self) -> int:
         return len(self._cache)

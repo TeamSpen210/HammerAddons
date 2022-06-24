@@ -79,7 +79,7 @@ MAX_VERTS = 65536//3
 # Cache of the SMD models we have already parsed, so we don't need
 # to parse them again. For the collision model, we store them pre-split.
 _mesh_cache: ACache[Tuple[QC, int], Mesh] = ACache()
-_coll_cache: ACache[str, List[Mesh]] = ACache()
+_coll_cache: ACache[Optional[str], List[Mesh]] = ACache()
 
 # Limit the amount of decompile/recompiles we do simultaneously.
 LIM_PROCESS = trio.CapacityLimiter(8)
@@ -384,7 +384,7 @@ async def compile_func(
     LOGGER.debug('Wrote {}/model.qc', temp_folder)
 
 
-async def build_reference(prop: StaticProp, qc: QC, mdl: Model) -> Mesh:
+async def build_reference(prop: PropPos, qc: QC, mdl: Model) -> Mesh:
     """Load and parse the reference SMD."""
     LOGGER.info('Parsing ref "{}#{}"', qc.ref_smd, prop.skin)
     async with LIM_PARSE:
