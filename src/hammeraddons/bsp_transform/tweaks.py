@@ -5,7 +5,7 @@
 from typing import Dict, Optional, Set
 
 from srctools import conv_int, Entity, Output, logger
-from srctools.packlist import ALT_NAMES
+from srctools.packlist import entclass_canonicalise
 
 from hammeraddons.bsp_transform import trans, Context
 
@@ -26,13 +26,15 @@ def trigger_brush_input_filters(ctx: Context) -> None:
 
 @trans('Fix alternate classnames')
 def fix_alt_classnames(ctx: Context) -> None:
-    """A bunch of entities have additional alternate names.
+    """A bunch of entities has additional alternate names.
 
     Fix that by coalescing them all to one name.
     """
-    for alt, replacement in ALT_NAMES.items():
-        for ent in ctx.vmf.by_class[alt]:
-            ent['classname'] = replacement
+    for clsname, entset in list(ctx.vmf.by_class.items()):
+        canonical = entclass_canonicalise(clsname)
+        if canonical != clsname.casefold():
+            for ent in entset:
+                ent['classname'] = canonical
 
 
 LISTENER_INPUTS = {
