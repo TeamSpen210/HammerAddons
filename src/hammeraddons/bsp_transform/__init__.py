@@ -174,7 +174,9 @@ async def run_transformations(
                             rep_out.input,
                             rep_out.params or out.params,
                             out.delay + rep_out.delay,
-                            only_once=rep_out.only_once and out.only_once,
+                            times=out.times if rep_out.times == -1
+                            else rep_out.times if out.times == -1
+                            else min(out.times, rep_out.times),
                         )
                         ent.outputs.append(new_out)
                         deferred.append(new_out)
