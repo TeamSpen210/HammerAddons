@@ -16,7 +16,7 @@ from enum import Enum
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import (
-    Optional, Tuple, Callable, NamedTuple,
+    Optional, Tuple, Callable,
     FrozenSet, Dict, List, Set,
     Iterator, Union, MutableMapping, Iterable,
 )
@@ -1114,6 +1114,7 @@ async def combine(
     # We'll then be left with props we didn't group and so should persist.
     rejected = set(itertools.chain.from_iterable(prop_groups.values()))
     group_count = 0
+    compiler: PropCombiner
     with PropCombiner(
         game,
         studiomdl_loc,
@@ -1161,9 +1162,13 @@ async def combine(
             dump_vmf.export(f)
 
     LOGGER.info(
-        'Combined {} props into {}:\n - {} grouped models\n - {} ineligible\n - {} failed to combine',
+        'Combined {} props into {} groups ({} this compile):\n'
+        ' - {} grouped models\n'
+        ' - {} ineligible\n'
+        ' - {} failed to combine',
         prop_count,
         len(final_props),
+        compiler.built_count,
         group_count,
         len(cannot_merge),
         len(rejected),

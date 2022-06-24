@@ -11,6 +11,7 @@ from typing import (
     Awaitable, Callable, Tuple, Set, TypeVar, Hashable, Generic, Any,
     List,
 )
+from typing_extensions import Self
 from pathlib import Path
 
 from srctools import logger
@@ -70,6 +71,8 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         self.studiomdl_loc = studiomdl_loc
         self.limiter = trio.CapacityLimiter(8)
         self.pack_models = pack_models
+        # For statistics, the number we built this compile
+        self.built_count = 0
 
     @classmethod
     def from_ctx(cls, ctx: Context, folder_name: str, version: object=0) -> 'ModelCompiler':
@@ -89,7 +92,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         """Return the number of used models."""
         return sum(1 for _, mdl in self._built_models if mdl.used)
 
-    def __enter__(self) -> 'ModelCompiler[ModelKey, InT, OutT]':
+    def __enter__(self) -> Self:
         """Load the previously compiled models and prepare for compiles."""
         # Ensure the folder exists.
         os.makedirs(self.model_folder_abs, exist_ok=True)
@@ -216,6 +219,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         args: InT,
     ) -> GenModel[OutT]:
         """Actually build the model."""
+        self.built_count += 1
         # Figure out a name to use.
         while True:
             mdl_name = 'mdl_{:04x}'.format(random.getrandbits(16))
