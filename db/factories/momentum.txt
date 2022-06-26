@@ -359,6 +359,8 @@ trigger_reversespeed
 trigger_serverragdoll
 trigger_setspeed
 trigger_soundscape
+trigger_stick_explosive
+trigger_stickybomb_limit
 trigger_teleport
 trigger_tonemap
 trigger_tractorbeam
