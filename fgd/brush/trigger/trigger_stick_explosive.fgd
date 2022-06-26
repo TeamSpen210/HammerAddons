@@ -1,5 +1,6 @@
-@SolidClass base(Trigger) 
+@SolidClass base(Trigger)
 	appliesto(MOMENTUM)
+	line(255 255 255, targetname, filtername)
 = trigger_stick_explosive : "Conc grenades, stickybombs, and other explosives will stick to or inside this area."
 	[
 	stick_type[engine](integer) : "Method of explosive stick." : 0
