@@ -1,0 +1,34 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(MOMENTUM) = mom_replay_playback: "Plays a replay and allows for various playback options"
+	[
+	GhostName(string) : "Ghost Name" : "" : "Name of the replay ghost to display to user"
+	ReplayFilename(string) : "Replay File" : "" : "The .mrf replay file to use"
+
+	StartTime(float) : "Start Time" : 0 : "The starting point, in seconds, of the replay"
+	EndTime(float) : "End Time" : -1 : "The ending point, in seconds, of the replay. If -1, end time will be set to the end of the replay"
+	PlaybackSpeed(float) : "Playback Speed" : 1 : "Timescale to use for playback of the replay"
+	SpectateType[engine](integer) : "Spectate Type" : 0 : "How the replay ghost should be spectated (first person, third person), if at all"
+	SpectateType(choices) : "Spectate Type" : 0 : "How the replay ghost should be spectated (first person, third person), if at all" =
+	[
+		0: "None"
+		1: "First-Person"
+		2: "Third-Person"
+	]
+
+	LoopCount(integer) : "Loop Count" : 0 : "How many times to loop the replay. If -1, will loop indefinitely"
+	StartDisabled(boolean) : "Start Disabled" : 0
+
+	// Inputs
+	input Enable(void) : "Enable this entity"
+	input Disable(void) : "Disable this entity"
+	input Start(void) : "Start the replay"
+	input Stop(void) : "Stop the replay (will result in OnPlaybackStopped output)"
+	input Speed(float) : "Set timescale to use for playback"
+
+	// Outputs
+	output OnPlaybackStart(void) : "Fired when the replay has started playing back"
+	output OnPlaybackFinished(void) : "Fired when the replay has finished playing to completion (user cancelling / Stop input / loop does not fire this)"
+	output OnPlaybackStopped(void) : "Fired when the replay has stopped playing, for any reason (finished, user cancelled, Stop input)"
+	output OnPlaybackLoop(void) : "Fired when the replay has completed a cycle, and is about to loop"
+	output OnPlaybackTime(float) : "Fired when the current playback time has changed"
+	]
