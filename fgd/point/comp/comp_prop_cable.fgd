@@ -3,7 +3,7 @@
 	animator() keyframe()
 	iconsprite("editor/comp_prop_cable")
 	line(128 128 128, targetname, bunting)
-	appliesto(srctools, -engine)
+	appliesto(srctools)
 = comp_prop_cable: "Generates cables using a static prop. comp_prop_rope is an alternate name, they can be interchanged."
 	[
 	group(target_source): "Group" : : "If set, all cables with the same group will be compiled to one model."

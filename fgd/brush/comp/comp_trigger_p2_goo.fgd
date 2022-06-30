@@ -1,5 +1,5 @@
 @SolidClass base(Trigger)
-	appliesto(P2, +srctools, -engine)
+	appliesto(P2, +srctools)
 = comp_trigger_p2_goo:
 	"Implements Toxic Goo and Bottomless Pits.\n" +
 	"This expands into a trigger_hurt and trigger_multiple with appropriate settings."

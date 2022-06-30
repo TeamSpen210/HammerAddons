@@ -1,6 +1,6 @@
 @PointClass base(Angles)
 	iconsprite("editor/comp_kv_setter")
-	appliesto(srctools, -engine)
+	appliesto(srctools)
 	autovis(Postcompiler, KV Setter)
 = comp_kv_setter : "Sets a keyvalue on an entity to a new value. " +
 	"This is useful to compute spawnflags, or to adjust keyvalues when the target entity's options can't be set to a fixup variable."

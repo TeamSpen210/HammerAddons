@@ -1,6 +1,6 @@
 @PointClass base(StaticTargetName)
 	iconsprite("editor/comp_relay")
-	appliesto(srctools, -engine)
+	appliesto(srctools)
 = comp_relay:
     "Simplified version of logic_relay which is able to be optimised away by the compiler."+
     "" +

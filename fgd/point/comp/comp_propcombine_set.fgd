@@ -1,5 +1,5 @@
 @PointClass base(Angles)
-	appliesto(srctools, -engine)
+	appliesto(srctools)
 	iconsprite("editor/comp_propcombine_set")
 	autovis(Postcompiler, Propcombine)
 	wirebox(mins, maxs)

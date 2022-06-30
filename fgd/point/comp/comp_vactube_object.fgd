@@ -1,5 +1,5 @@
 @PointClass
-	appliesto(+P2, +srctools, -engine)
+	appliesto(+P2, +srctools)
 	autovis(Vactubes, Vac Globals)
 	studioprop()
 = comp_vactube_object : "Registers objects that can appear in the tubing."
