@@ -40,13 +40,13 @@ def vscript_init_code(ctx: Context) -> None:
     vscript_init_code2, 3 etc will also be added in order if they exist.
     """
     for ent in ctx.vmf.entities:
-        code = ent.keys.pop('vscript_init_code', '')
+        code = ent.pop('vscript_init_code', '')
 
         if not code:
             continue
 
         for i in itertools.count(2):
-            extra = ent.keys.pop('vscript_init_code' + str(i), '')
+            extra = ent.pop('vscript_init_code' + str(i), '')
             if not extra:
                 break
             code += '\n' + extra
