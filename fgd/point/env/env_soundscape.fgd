@@ -11,7 +11,7 @@
 	line(255 255 255, targetname, position7) 
  = env_soundscape: "An entity to control sound in an area. The active soundscape at any time is the last one that had line-of-sight to the player, and was within the radius."
 	[
-	radius(integer) : "Radius" : 128 : "If set to -1, then the player can hear the soundscape as long as he can see it (regardless of distance to it)."
+	radius(integer) : "Radius" : 128 : "If set to -1, then the player can hear the soundscape as long as they can see it (regardless of distance to it)."
 
 	soundscape[engine](string) : "Soundscape" : "" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the scripts/ directory." 
 	soundscape(choices) : "Soundscape" : "Nothing" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the scripts/ directory." =

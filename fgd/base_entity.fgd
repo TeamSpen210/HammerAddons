@@ -9,7 +9,9 @@
 
 	targetname(target_source) : "Name"
 	hammerid(integer) : "Hammer ID"
-	target(target_destination) : "Target" 
+	// Defined here, but don't include - it's treated as 
+	// many different types.
+	// target(target_destination) : "Target" 
 	spawnflags(flags) = []
 
 

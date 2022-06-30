@@ -2,6 +2,7 @@
 	sphere(radius)
 	animator() keyframe()
 	iconsprite("editor/comp_prop_cable")
+	line(128 128 128, targetname, bunting)
 	appliesto(srctools, -engine)
 = comp_prop_cable: "Generates cables using a static prop. comp_prop_rope is an alternate name, they can be interchanged."
 	[

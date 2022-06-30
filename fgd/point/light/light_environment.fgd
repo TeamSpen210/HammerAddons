@@ -1,4 +1,4 @@
-@PointClass base(Angles)
+@PointClass base(BaseEntityPoint, Angles) 
 	iconsprite("editor/ficool2/light_environment.vmt") 
 	color(255 255 0)
 	lightprop("models/editor/spot.mdl")
@@ -12,4 +12,37 @@
 	_ambienthdr(color255) : "AmbientHDR" : "-1 -1 -1 1"
 	_ambientscalehdr(float) : "AmbientScaleHDR" : 1 : "Amount to scale the ambient light by when compiling for hdr."
 	sunspreadangle(float) : "SunSpreadAngle" : 5 : "The angular extent of the sun for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
+
+	style[engine](integer) : "Appearance" : 0
+	style(choices) : "Appearance" : 0 =
+	[
+		0 : "Normal"
+		10: "Fluorescent flicker"
+		2 : "Slow, strong pulse"
+		11: "Slow pulse, noblack"
+		5 : "Gentle pulse"
+		1 : "Flicker A"
+		6 : "Flicker B"
+		3 : "Candle A"
+		7 : "Candle B"
+		8 : "Candle C"
+		4 : "Fast strobe"
+		9 : "Slow strobe"
+		12 : "Underwater light mutation"
+	]
+	pattern(string) : "Custom Appearance" : "" : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
+
+	_castentityshadow[engine](boolean)
+	_castentityshadow[GMod](Choices) : "Cast entity shadows" : 0 : "Objects illuminated by this light will cast a directional shadow." =
+		[
+		0 : "Don't affect entity shadow angles"
+		1 : "Affect entity shadow angles"
+		]
+
+	// Inputs
+	input TurnOn(void) : "Turn the Sun on."
+	input TurnOff(void) : "The the Sun off."
+	input Toggle(void) : "Toggle the Sun's current state."
+	input SetPattern(string) : "Set a custom pattern of light brightness for the Sun. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
+	input FadeToPattern(string) : "Fades from first value in old pattern, to first value in the new given pattern. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 	]

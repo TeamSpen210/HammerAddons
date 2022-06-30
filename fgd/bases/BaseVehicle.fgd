@@ -7,8 +7,8 @@
 
 	// Inputs
 	input Action(float) : "Set the speed of the action animation"
-	input TurnOn(void) : "Turn on: Start engine & enable throttle"
-	input TurnOff(void) : "Turn off: Stop engine, disable throttle, engage brakes."
-	input Lock(void) : "Prevent the player from entering or exiting the vehicle."
-	input Unlock(void) : "Re-allow the player to enter or exit the vehicle."
+	input HandBrakeOn(void) : "Turns the handbrake on"
+	input HandBrakeOff(void) : "Releases the handbrake"
+	input Steer(float) : "Steer the vehicle +/-1"
+	input Throttle(float) : "Throttle +/-1"
 	]

@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	studioprop("models/editor/camera.mdl") 
 	color(200 0 0) 
-	frustum(fov, 16, 256, 255 255 255 10, -1) 
+	frustum(fov, _frustum_near, _frustum_far, _frustum_color, -1) 
 	line(255 255 0, targetname, target) 
 	line(255 255 0, targetname, moveto) 
 = point_viewcontrol: "A camera entity that controls the player's view. While it's active, the player will see out of the camera."
@@ -38,6 +38,8 @@
 
 	DontSetPlayerView(boolean) : "Don't set player view" : 0 : "Prevents this point_viewcontrol from actually controlling the player's view. " +
 		"FOV, player-affecting spawnflags, etc. may still happen."
+
+	_frustum_far[!engine](integer) readonly : "<Far Plane>" : 1024 : "Ignore, needed to display the view frustum preview."
 
 	// Inputs
 	input Enable(void) : "Enable the point_viewcontrol, and start controlling the player's view."

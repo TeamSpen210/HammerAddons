@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	decal() 
-	studio("models/editor/axis_helper_thick.mdl") 
+	studio("models/editor/decal_helper.mdl") 
 = infodecal: "An entity that places a decal on the world. If the decal has no target name, it will immediately apply itself when the level is loaded." +
 	"If it has a name specified, it won't apply until it receives the 'Activate' input."
 	[

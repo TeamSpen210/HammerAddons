@@ -1,0 +1,12 @@
+UnlitGeneric
+{
+$basetexture "tools/toolspropcombine"
+
+$translucent 1
+
+// Configure to prevent this generating as much as we can.
+%compilenonsolid 1 // No collisions
+%compileinvisible 1 // No lighting, not drawn = no faces
+%compiledetail 1 // If on world, doesn't cut...
+%compilenoshadows 1
+}

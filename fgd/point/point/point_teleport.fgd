@@ -7,7 +7,7 @@
 	"If object is physically simulated, simulation is turned off when teleported."
 	[
 	target(target_destination) : "Entity To Teleport" : : "Name of the entity that will be teleported."
-	model(studio) : "[H] Model" : "models/editor/angle_helper.mdl" : "The model shown in Hammer, to use for positioning."
+	model[!engine](studio) : "[H] Model" : "models/editor/angle_helper.mdl" : "The model shown in Hammer, to use for positioning."
 	spawnflags(flags)  =
 		[
 		1: "Teleport Home" : 0

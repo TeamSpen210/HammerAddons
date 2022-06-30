@@ -1,0 +1,31 @@
+@PointClass
+	appliesto(srctools, -engine)
+	base(logic_relay) 
+	line(255 255 255, targetname, target)
+	iconsprite("editor/comp_sequential_call")
+= comp_sequential_call : "Finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order. To use, define OnSeq outputs, firing inputs at '!seq'."
+	[
+	target(target_destination) : "Entities to Sequence" : : "The entities which will be ordered and inputs fired at. This should refer to multiple entities, probably with a *-wildcard."
+	order_mode(choices) : "Ordering Mode" : "dist": "Choose how entities are ordered. Numeric suffix finds numbers at the end of the entity name, and sorts by that order." =
+		[
+		"dist" : "Distance to this"
+		"dist_inv" : "Inverted distance to this"
+		"suffix" : "Numeric Suffix, Ascending"
+		"suffix_inv": "Numeric Suffix, Decending"
+		]
+	uniquify(boolean) : "Make Entities Unique?" : 0 : "Append a suffix to ensure all entities are unique. Should be enabled if not using a *-wildcard."
+
+	time_mode[engine](string) : "Time Mode" : "total"
+	time_mode(choices) : "Time Mode" : "total" : "How Time Value is interpreted. If this is set to Total Time and the ordering mode is Distance, " +
+		"delays are based on the distance. Otherwise, it will be equally spaced." = 
+		[
+		"total" : "Total Time"
+		"interval" : "Interval Between"
+		]
+	time_val(float) : "Time Value" : 5.0 : "Either the total time or the time between each entity."
+	time_variance(float) : "Time Variance" : 0.0 : "After computing the delay, randomly add/subtract this much from the delay to add noise."
+
+	output OnSeqStart(void) : "Fired at the start of the sequence."
+	output OnSeq(void) : "Fired once for each entity - use !seq to refer to the target."
+	output OnSeqEnd(void) : "Fired once all delayed outputs are complete."
+	]

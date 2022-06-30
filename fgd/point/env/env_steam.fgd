@@ -1,7 +1,9 @@
 @PointClass base(BaseEntityPoint, RenderFields) 
 	color(255 255 255) 
 	color(200 200 0) 
-	studio("models/editor/spot_cone.mdl")
+	studioprop("models/editor/spot_cone_fixed.mdl")
+	// Frustum is actually fairly accurate for this
+	frustum(spreadspeed, _frustum_near, jetlength, rendercolor, -1)
 = env_steam: "An entity used to create a jet of steam."
 	[
 	spawnflags(flags)  =
@@ -9,7 +11,7 @@
 		1: "Emissive" : 0
 		]
 
-	initialstate(boolean) : "Initial State" : 0
+	initialstate(boolean) : "Start Enabled" : 0
 
 	type[engine](integer) : "Particle Type"
 	type(choices) : "Particle Type" : 0 =
@@ -23,10 +25,11 @@
 	startsize(integer) : "Particle start size" : 10 : "The initial size of the particles after they spawn."
 	endsize(integer) : "Particle end size" : 25 : "The size of the particles at the point at which they are removed."
 	rate(integer) : "Emission rate" : 26 : "The rate of particle emission. i.e. particles per second."
-	rendercolor(color255) : "Color (R G B)" : "255 255 255"
+	rendercolor(color255) : "Color (R G B)" : "60 65 68" : "The color of the steam. Only has an effect if the Emissive flag is on, "+
+		"but can otherwise be used to set the color shown in Hammer."
 	jetlength(integer) : "Length of steam jet" : 80 : "The length of the jet determines the lifetime of each particle."
 	renderamt(integer) : "Translucency" : 255
-	rollspeed(float) : "How fast does the particles spin" : 8
+	rollspeed(float) : "Spin Speed" : 8 : "How fast do the particles spin"
 
 	// Inputs
 	input TurnOn(void) : "Turns the steam jet on."

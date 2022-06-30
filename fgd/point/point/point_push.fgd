@@ -4,7 +4,7 @@
 	sphere(inner_radius) 
 	studio("models/editor/cone_helper.mdl") 
 	iconsprite("editor/ficool2/point_push")
-	frustum(influence_cone, inner_radius, radius, 255 255 255 10, -1) 
+	frustum(influence_cone, inner_radius, radius, _frustum_color, -1) 
 = point_push: "Pulls objects to, or pushes them away from a point. " +
 		"In Portal 2, if a portal is placed nearby it will transfer the suction and " +
 		"produce a 'broken_tube_suck' effect for Diversity Vents."
@@ -21,7 +21,7 @@
 	enabled(boolean) : "Start Enabled" : 1
 	magnitude(float) : "Magnitude" : 100 : "How strongly to push away from the center."
 	radius(float) : "Radius" : 128 : "Radius to affect items in."
-	inner_radius(float) : "Radius" : 128 : "Inner radius where the push eminates from."
+	inner_radius(float) : "LOS Radius" : 128 : "If 'Test LOS' is enabled, collision checks will check this far from the center. This allows models to be placed in the middle."
 	influence_cone(float) : "Cone of Influence" : 0 : "If greater than zero, " +
 		"the cone (in degrees) within which the object must lie for it to be affected."
 

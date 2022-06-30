@@ -11,6 +11,7 @@ from srctools import Vec, VMF
 
 LOGGER = srctools.logger.get_logger(__name__)
 
+
 class VacObject:
     """An object that can appear in vactubes."""
     def __init__(
@@ -37,6 +38,17 @@ class VacObject:
 
     def __repr__(self) -> str:
         return '<Vac Object "{}">'.format(os.path.basename(self.model_vac))
+
+    def make_code(self) -> str:
+        """Generate the code to construct this object in VScript."""
+        if self.model_drop:
+            model_code = f'"{self.model_drop}"'
+        else:
+            model_code = 'null'
+        return (
+            f'{self.id} <- obj("{self.model_vac}", {self.skin_vac}, '
+            f'{model_code}, {self.weight}, "{self.offset}", {self.skin_tv});'
+        )
 
 
 def parse(vmf: VMF, pack: PackList) -> Tuple[
@@ -92,16 +104,9 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[
         if multiple > 1:
             LOGGER.info('Group "{}" has common factor of {}, simplifying.', group, multiple)
         code = []
-        for i, obj in enumerate(objects):
+        for obj in objects:
             obj.weight /= multiple
-            if obj.model_drop:
-                model_code = f'"{obj.model_drop}"'
-            else:
-                model_code = 'null'
-            code.append(
-                f'{obj.id} <- obj("{obj.model_vac}", {obj.skin_vac}, '
-                f'{model_code}, {obj.weight}, "{obj.offset}", {obj.skin_tv});'
-            )
+            code.append(obj.make_code())
         codes[group] = pack.inject_vscript('\n'.join(code))
 
-    return len(vac_objects), cube_objects, codes
+    return sum(map(len, vac_objects.values())), cube_objects, codes

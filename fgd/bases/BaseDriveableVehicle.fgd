@@ -2,11 +2,14 @@
 	appliesto(+USE_VEHICLES)
 = BaseDriveableVehicle
 	[
-	vehiclelocked(boolean) : "Start locked" : 0
+	vehiclelocked(boolean) : "Start locked" : 0 : "Whether to start the vehicle locked. A locked vehicle cannot be entered or exited."
 
 	// Inputs
-	input HandBrakeOn(void) : "Turns the handbrake on"
-	input HandBrakeOff(void) : "Releases the handbrake"
+	input TurnOn(void) : "Turn on: Start engine & enable throttle"
+	input TurnOff(void) : "Turn off: Stop engine, disable throttle, engage brakes."
+	input Lock(void) : "Prevent the player from entering or exiting the vehicle."
+	input Unlock(void) : "Re-allow the player to enter or exit the vehicle."
+	// EnableGun is part of CPropVehicleDrivable, but it only has an effect on specific vehicles so it's not included here.
 	
 	// Outputs
 	output PlayerOn(void) : "Player entered the vehicle"

@@ -1,0 +1,27 @@
+@MoveClass base(StaticTargetname)
+	iconsprite("editor/comp_prop_rope_bunting")
+	appliesto(srctools, -engine)
+= comp_prop_rope_bunting: "Specifies small props which will be placed at regular intervals across the compiled rope."
+	[
+	weight(integer) : "Weight" : 1 : "If multiple are defined with the same weighting, this specifies the relative probabilities." +
+		"This works like a lottery - each model has this many 'tickets', and then one is chosen randomly each time. If you have two choices with a weight of 9 and 1, the first will be chosen 90% of the time."
+	placement_interval(integer) : "Placement Interval" : 1 : "Place this prop every X segments, not including the start/end of the rope."
+	distance(float) : "Placement Distance" : 0 : "If greater than zero, override Placement Interval, and instead place every this many units."
+
+	model(studio) : "Model" : : "Specifies the model to place. This can either be an MDL which is placed as invidual prop_statics, " +
+		"or a SMD (relative to a game folder) which is merged into the rope model."
+	
+	angles(angle) : "Rotation" : "0 0 0" : "Rotate the model by this much, before applying the orientation of the rope. " +
+		"After this is applied, the X axis should be aligned with the rope direction."
+
+	orient[engine](string) : "Orientation Mode" : "follow"
+	orient(choices) : "Orientation Mode" : "follow" : "Controls how the rope orientation affects the model." = 
+		[
+		"follow" : "Follow Rope"
+		"yaw" : "Yaw Only"
+		"pitch_yaw" : "Pitch and Yaw"
+		"none" : "No Rotation"
+		"rand_yaw" : "Random Yaw"
+		"rand": "Random"
+		]
+	]

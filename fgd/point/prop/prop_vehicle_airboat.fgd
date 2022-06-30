@@ -1,9 +1,9 @@
 @PointClass base(BaseDriveableVehicle) 
 	appliesto(+HL2_ENTITIES, +USE_VEHICLES)
 	studioprop() 
-= prop_vehicle_airboat: "Driveable studiomodel airboat."
+= prop_vehicle_airboat: "Driveable airboat."
 	[
-	model(studio) : "World model" : "models/airboat.mdl"
+	model(studio) : "World Model" : "models/airboat.mdl" : "Set the model used by the airboat."
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/airboat.txt"
 	enablegun(boolean) : "Has Gun" : "0" : "Whether the airboat's gun is enabled or disabled."
 
@@ -11,4 +11,5 @@
 	input EnableGun(boolean) : "Enables or disables the airboat gun and associated crosshair."
 	input InputStartRotorWashForces(void) : "The airboat will start to be blown around by the helicopter rotor wash."
 	input InputStopRotorWashForces(void) : "The airboat will no longer be blown around by the helicopter rotor wash."
+	input ExitVehicle(void) : "Force the player to exit the airboat"
 	]

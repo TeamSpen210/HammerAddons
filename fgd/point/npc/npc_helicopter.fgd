@@ -14,8 +14,8 @@
 		]
 
 	initialspeed(float) : "Initial Speed" : 0
-	graceperiod(float) : "Grace Period" : 2.0 : "Time in seconds the helicopter has to see the player before he starts shooting"
-	patrolspeed(float) : "Patrol Speed" : 0 : "Speed at which the helicopter moves if he has no enemy."
+	graceperiod(float) : "Grace Period" : 2.0 : "Time in seconds the helicopter has to see the player before it starts shooting"
+	patrolspeed(float) : "Patrol Speed" : 0 : "Speed at which the helicopter moves if it has no enemy."
 	noncombat(boolean) : "Non-combat (Do not precache gibs)" : 0 :  "If enabled, this helicopter will not precache stuff that would only be seen in combat, " +
 		"like mines or gibs. Even damaging the helicopter in this state can crash the game, " +
 		"so you might want to use a damage filter too."
@@ -32,7 +32,7 @@
 	input DisableRotorSound(void) : "Turns off rotor sounds"
 	input StartBombingVehicle[+USE_VEHICLES](void) : "Starts the chopper leading enemy vehicles and dropping bombs on them."
 	input StartTrailingVehicle[+USE_VEHICLES](void) : "Starts the chopper trailing enemy vehicles and shooting at them."
-	input StartDefaultBehavior(void) : "Starts the chopper in the mode where he always stops at nav points instead of stopping anywhere in between nav points."
+	input StartDefaultBehavior(void) : "Starts the chopper in the mode where it always stops at nav points instead of stopping anywhere in between nav points."
 	input StartAlwaysLeadingVehicle[+USE_VEHICLES](void) : "Starts the chopper *always* leading enemy vehicles (regardless of how they are moving w/respect to the path) and dropping bombs on them. This mode is different from StartBombingVehicle in that it never uses the machine gun."
 	input StartSprinkleBehavior(void) : "Starts the chopper dropping bombs randomly + shooting at the player."
 	input StartBullrushBehavior(void) : "Starts the chopper bullrushing the player."
@@ -46,7 +46,7 @@
 	input StartContinuousShooting(void) : "The chopper fires continuously."
 	input StartFastShooting(void) : "The chopper fires normal bursts, but does not 'charge up' the gun. Fires immediately."
 
-	input ResetIdleTime(void) : "Allows the helicopter to fire immediately if he's not in the middle of charging or firing"
+	input ResetIdleTime(void) : "Allows the helicopter to fire immediately if it's not in the middle of charging or firing"
 	input SetAngles(string) : "Instantly snaps the orientation of the helicopter (Pitch Yaw Roll)"
 	input DropBomb(void) : "Immediately drops a bomb based on normal bomb dropping rules"
 	input DropBombStraightDown(void) : "Immediately drops a bomb directly downwards"
@@ -55,8 +55,8 @@
 	input DropBombDelay(float) : "Add a delay before the next bomb is dropped"
 	input BecomeIndestructible(void) : "Makes the helicopter take no more damage"
 
-	input DisablePathVisibilityTests(void) : "When the helicopter moves, he will not check for visibility from the path_track to the enemy to cull out path_tracks"
-	input EnablePathVisibilityTests(void) : "When the helicopter moves, he will only move to path_tracks that have line-of-sight to the enemy"
+	input DisablePathVisibilityTests(void) : "When the helicopter moves, it will not check for visibility from the path_track to the enemy to cull out path_tracks"
+	input EnablePathVisibilityTests(void) : "When the helicopter moves, it will only move to path_tracks that have line-of-sight to the enemy"
 
 	input StartCarpetBombing(void) : "Starts the helicopter constantly dropping megabombs until StopCarpetBombing input"
 	input StopCarpetBombing(void) : "Stop the carpet bombing behavior"

@@ -1,6 +1,4 @@
 @PointClass base(BaseNPC, SetModel)
-	studio() 
-	size(-4 -4 -4, 4 4 4)
 = generic_actor: "Generic Actor NPC"
 	[
 	hull_name[engine](string) : "Hull type" : "HUMAN_HULL"

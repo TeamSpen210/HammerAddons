@@ -1,6 +1,6 @@
 @PointClass base(CombineBallSpawners) 
 	appliesto(+HL2_ENTITIES) 
-	studio("models/effects/combineball.mdl") 
+	iconsprite("editor/energy_ball.vmt")
 	studio("models/editor/cone_helper.mdl") 
 = point_combine_ball_launcher: "Launches Combine balls."
 	[

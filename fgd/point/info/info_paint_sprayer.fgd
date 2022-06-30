@@ -8,7 +8,7 @@
 	light_position_name(target_destination) : "Light Position Name" : : "Name of the entity we want to use as blobs light position."
 	start_active(boolean) : "Start Active?" : 0
 	silent(boolean) : "Silent?" : 0 : "If this flag is true, blobs will only paint, appearing entirely invisible."
-	drawonly(boolean) : "DrawOnly?" : 0 : "If this flag is true, blobs will only render, vanishing on contact with surfaces."
+	drawonly(boolean) : "Draw Only?" : 0 : "If this flag is true, blobs will only render, vanishing on contact with surfaces."
 
 	rendermode[engine](integer) : "Render Mode" : 0
 	rendermode(choices) : "Render Mode" : 0 : "The mode to render blobs. Appears non-functional." =
@@ -26,11 +26,11 @@
 		3: "Heavy Flow"
 		]
 
-	blobs_per_second(float) : "Blobs per second" : 1 : "The number of paint blobs sprayed per second."
+	blobs_per_second(float) : "Blobs per second" : 20 : "The number of paint blobs sprayed per second."
 	min_speed(float) : "Min blob speed" : 100 : "The minimum speed of the sprayed blobs."
 	max_speed(float) : "Max blob speed" : 100 : "The maximum speed of the sprayed blobs."
 	blob_spread_radius(float) : "Blob spread radius" : 0 : "Blobs will spawn randomly within this radius."
-	blob_spread_angle(float) : "Blob spread angle" : 0 : "The spread of the blobs along its direction vector (in degrees)."
+	blob_spread_angle(float) : "Blob spread angle" : 8 : "The spread of the blobs along its direction vector (in degrees)."
 	blob_streak_percentage(float) : "Blob streak percentage" : 0 : "The percentage of blobs that will streak (0 - 100)."
 	min_streak_time(float) : "Blob min streak time" : 0.2 : "The minimum time that the blobs will streak for."
 	max_streak_time(float) : "Blob max streak time" : 0.5 : "The maximum time that the blobs will streak for."

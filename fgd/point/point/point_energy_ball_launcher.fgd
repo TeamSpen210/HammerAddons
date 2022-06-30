@@ -1,6 +1,6 @@
 @PointClass base(CombineBallSpawners) 
 	appliesto(P2CE) 
-	studio("models/effects/combineball.mdl") 
+	iconsprite("editor/energy_ball.vmt")
 	studio("models/editor/cone_helper.mdl")
 = point_energy_ball_launcher: "Launches Aperture Science High Energy Pellets. "
 	[

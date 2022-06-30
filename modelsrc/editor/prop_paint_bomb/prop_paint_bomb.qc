@@ -18,3 +18,8 @@ $texturegroup skinfamilies {
 	{ "blob_surface_erase" }
 	{ "blob_surface_stick" }
 }
+
+// Paint bombs use the futbol prop for their collision size.
+$collisionmodel "futbol_physics.smd" {
+	$mass 20
+}

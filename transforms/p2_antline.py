@@ -105,6 +105,9 @@ def comp_antlines(ctx: Context):
                 Output(out_on , ind_name, 'SetTextureIndex', '1'),
                 Output(out_off, ind_name, 'SetTextureIndex', '0'),
             )
+            # Add remap to pass through this to the texture toggle, for manually changing the index.
+            # Good for "off" skins.
+            ctx.add_io_remap(ent['targetname'], Output('SetTextureIndex', ind_name, 'SetTextureIndex'))
 
         for ind_name in ind_panel_check:
             ent.add_out(

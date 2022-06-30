@@ -50,7 +50,7 @@
 		[
 		"": "None"
 		"const2target": "Constant -> Target KV"
-		"const2known": "Constant -> Target KV"
+		"const2known": "Constant -> Known KV"
 		"known2target": "Known KV -> Target KV"
 		"target2known": "Target KV -> Known KV"
 		"replacetarget": "Replace Outputs"
@@ -66,7 +66,7 @@
 		[
 		"": "None"
 		"const2target": "Constant -> Target KV"
-		"const2known": "Constant -> Target KV"
+		"const2known": "Constant -> Known Ent KV"
 		"known2target": "Known KV -> Target KV"
 		"target2known": "Target KV -> Known KV"
 		"replacetarget": "Replace Outputs"
@@ -82,7 +82,7 @@
 		[
 		"": "None"
 		"const2target": "Constant -> Target KV"
-		"const2known": "Constant -> Target KV"
+		"const2known": "Constant -> Known Ent KV"
 		"known2target": "Known KV -> Target KV"
 		"target2known": "Target KV -> Known KV"
 		"replacetarget": "Replace Outputs"
@@ -98,7 +98,7 @@
 		[
 		"": "None"
 		"const2target": "Constant -> Target KV"
-		"const2known": "Constant -> Target KV"
+		"const2known": "Constant -> Known Ent KV"
 		"known2target": "Known KV -> Target KV"
 		"target2known": "Target KV -> Known KV"
 		"replacetarget": "Replace Outputs"

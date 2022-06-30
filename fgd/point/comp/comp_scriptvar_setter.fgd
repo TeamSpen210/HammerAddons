@@ -5,20 +5,21 @@
 	studio("models/editor/cone_helper.mdl")
 	line(255 255 255, targetname, target)
 	line(255 255 255, targetname, ref)
-= comp_scriptvar_setter: "Assigns data or a group of data to a variable in an entity's VScript scope on spawn.\n" +
+= comp_scriptvar_setter: "Assigns data or a group of data to a variable in an entity's VScript scope or the global scope on spawn.\n" +
 	"To set an array, provide an index in the variable name in the form 'varname[4]'. \n" +
 	"All the comp_scriptvars pointing to that variable will be collected into a single array literal, with holes filled by *null*. \n" +
 	"If the brackets are empty, these values will fill those holes and then append to the end in an arbitrary order."
 	[
-	target(target_destination) : "Script Entity" : : "The entity to set a variable on."
-	variable(string) : "Variable Name" : : "The name of the variable to set. A specific array index can be set with the form 'varname[4]'. Alternatively use 'varname[]' to assign them to the first index available. Holes in the array are set to null." 
+	target(target_destination) : "Script Entity" : : "The entity to set a variable on. Alternatively, leave this blank to assign the variable ::globally."
+	variable(string) : "Variable Name" : : "The name of the variable to set. A specific array index can be set with the form 'varname[4]'. Alternatively use 'varname[]' to assign them to the first index available. Holes in the array are set to null. If this is a :;global name, the script entity is ignored." 
 	ref(target_destination) : "Reference Entity" : : "If set, a reference entity to use to obtain data from instead of this one."
 
 	mode[engine](string) : "Mode" : "pos"
 	mode(choices) : "Mode" : "pos" : "The kind of data to read. " +
 		"For Constants, the position/reference is ignored completely. " +
 		"For Entity Handle to be useful, only one reference entity should exist. " +
-		"For Offset and Distance, it's the offset of the reference relative to this entity." =
+		"For Offset and Distance, it's the offset of the reference relative to this entity. " +
+		"For Entity KeyValue, the constant is the keyvalue name, then the value is converted to an appropriate Squirrel type. " =
 		[
 		"const" : "Constant"
 		"string" : "Stringified Constant"
@@ -26,6 +27,7 @@
 		"inv_bool" : "Inverted Boolean Constant"
 		"name" : "Entity Name"
 		"handle" : "Entity Handle"
+		"keyvalue": "Entity KeyValue"
 		"pos" : "Position"
 		"pos_x" : "Position - X only"
 		"pos_y" : "Position - Y only"

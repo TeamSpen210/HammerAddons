@@ -43,8 +43,8 @@ GAME_NAME = dict(GAMES)
 
 FEATURES: Dict[str, Set[str]] = {
     'P2CE': {'HL2_ENTITIES', 'USE_PORTALS', 'USE_PAUSE', 'USE_NAV_MESH', 'USE_AI', 'USE_NEXTBOT', 'USE_SAVE_RESTORE',
-             'USE_SLOWTIME','INSTANCING', 'INST_IO', 'VSCRIPT', 'PROPCOMBINE', 'USE_TEAM', 'USE_MULTIPLAYER'},
-    'MOMENTUM': {'USE_PORTALS', 'INSTANCING', 'INST_IO', 'PROPCOMBINE'},
+             'USE_SLOWTIME', 'INST_IO', 'VSCRIPT', 'PROPCOMBINE', 'USE_TEAM', 'USE_MULTIPLAYER'},
+    'MOMENTUM': {'USE_PORTALS', 'INST_IO', 'PROPCOMBINE'},
 }
 
 ALL_FEATURES = {
@@ -184,40 +184,40 @@ def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> Tup
     # Classname -> filename
     ent_source: Dict[str, str] = {}
 
-    with RawFileSystem(str(dbase)) as fsys:
-        for file in dbase.rglob("*.fgd"):
-            # Use a temp FGD class, to allow us to verify no overwrites.
-            file_fgd = FGD()
-            rel_loc = str(file.relative_to(dbase))
-            file_fgd.parse_file(
-                fsys,
-                fsys[rel_loc],
-                eval_bases=False,
-                encoding='utf8',
-            )
-            for clsname, ent in file_fgd.entities.items():
-                if clsname in fgd.entities:
-                    raise ValueError(
-                        f'Duplicate "{clsname}" class '
-                        f'in {rel_loc} and {ent_source[clsname]}!'
-                    )
-                fgd.entities[clsname] = ent
-                ent_source[clsname] = rel_loc
+    fsys = RawFileSystem(str(dbase))
+    for file in dbase.rglob("*.fgd"):
+        # Use a temp FGD class, to allow us to verify no overwrites.
+        file_fgd = FGD()
+        rel_loc = str(file.relative_to(dbase))
+        file_fgd.parse_file(
+            fsys,
+            fsys[rel_loc],
+            eval_bases=False,
+            encoding='utf8',
+        )
+        for clsname, ent in file_fgd.entities.items():
+            if clsname in fgd.entities:
+                raise ValueError(
+                    f'Duplicate "{clsname}" class '
+                    f'in {rel_loc} and {ent_source[clsname]}!'
+                )
+            fgd.entities[clsname] = ent
+            ent_source[clsname] = rel_loc
 
-            if fgd_vis:
-                for parent, visgroup in file_fgd.auto_visgroups.items():
-                    try:
-                        existing_group = fgd.auto_visgroups[parent]
-                    except KeyError:
-                        fgd.auto_visgroups[parent] = visgroup
-                    else:  # Need to merge
-                        existing_group.ents.update(visgroup.ents)
+        if fgd_vis:
+            for parent, visgroup in file_fgd.auto_visgroups.items():
+                try:
+                    existing_group = fgd.auto_visgroups[parent]
+                except KeyError:
+                    fgd.auto_visgroups[parent] = visgroup
+                else:  # Need to merge
+                    existing_group.ents.update(visgroup.ents)
 
-            fgd.mat_exclusions.update(file_fgd.mat_exclusions)
-            for tags, mat_list in file_fgd.tagged_mat_exclusions.items():
-                fgd.tagged_mat_exclusions[tags] |= mat_list
+        fgd.mat_exclusions.update(file_fgd.mat_exclusions)
+        for tags, mat_list in file_fgd.tagged_mat_exclusions.items():
+            fgd.tagged_mat_exclusions[tags] |= mat_list
 
-            print('.', end='', flush=True)
+        print('.', end='', flush=True)
 
     load_visgroup_conf(fgd, dbase)
 
@@ -225,22 +225,22 @@ def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> Tup
         print('\nLoading extra file:')
         if extra_loc.is_file():
             # One file.
-            with RawFileSystem(str(extra_loc.parent)) as fsys:
-                fgd.parse_file(
-                    fsys,
-                    fsys[extra_loc.name],
-                    eval_bases=False,
-                )
+            fsys = RawFileSystem(str(extra_loc.parent))
+            fgd.parse_file(
+                fsys,
+                fsys[extra_loc.name],
+                eval_bases=False,
+            )
         else:
             print('\nLoading extra files:')
-            with RawFileSystem(str(extra_loc)) as fsys:
-                for file in extra_loc.rglob("*.fgd"):
-                    fgd.parse_file(
-                        fsys,
-                        fsys[str(file.relative_to(extra_loc))],
-                        eval_bases=False,
-                    )
-                    print('.', end='', flush=True)
+            fsys = RawFileSystem(str(extra_loc))
+            for file in extra_loc.rglob("*.fgd"):
+                fgd.parse_file(
+                    fsys,
+                    fsys[str(file.relative_to(extra_loc))],
+                    eval_bases=False,
+                )
+                print('.', end='', flush=True)
     print()
 
     fgd.apply_bases()

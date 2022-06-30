@@ -7,9 +7,4 @@
 		[
 		1: "Always Think (Run physics every frame)" : 0
 		]
-
-
-	// Inputs
-	input Steer(float) : "Steer the vehicle +/-1"
-	input Throttle(float) : "Throttle +/-1"
 	]

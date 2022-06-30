@@ -1,6 +1,7 @@
 @PointClass base(BaseNPC) 
 	appliesto(+HL2_ENTITIES) 
-	studio("models/combine_turrets/floor_turret.mdl")
+	studioprop("models/combine_turrets/floor_turret.mdl") 
+	frustum(_frustum_fov, _frustum_near, _frustum_far, _frustum_color, -1)
 = npc_turret_floor: "Combine Floor Turret"
 	[
 	spawnflags(flags) : "spawnflags" =
@@ -13,6 +14,9 @@
 		]
 
 	skinnumber(integer) : "Skin Number" : 0 : "Which skin to use for this turret. Set to 0 to select randomly."
+
+	_frustum_far[!engine](integer) readonly : "<Maximum Range>" : 1200 : "How far the turret will be able to see targets. Always 1200, but this keyvalue is needed to display the preview."
+	_frustum_color[!engine](string) readonly : "<Frustum Color>" : "255 0 0" : "Ignore, needed to color the range preview."
 
 	// Inputs
 	input Toggle(void) : "Toggle - If open, close. If closed, open."

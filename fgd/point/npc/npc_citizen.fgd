@@ -120,5 +120,5 @@
 	output OnFollowOrder(void) : "Fires when ordered to follow player"
 	output OnStationOrder(void) : "Fires when ordered to a location by player"
 	output OnPlayerUse(void) : "Fires when a player +USEs the citizen"
-	output OnNavFailBlocked(void) : "Fires when this Citizen's movement fails because he/she is blocked."
+	output OnNavFailBlocked(void) : "Fires when this Citizen's movement fails because they are blocked."
 	]

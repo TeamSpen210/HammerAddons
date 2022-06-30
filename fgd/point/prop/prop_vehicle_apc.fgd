@@ -6,7 +6,7 @@
 	[
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/apc_npc.txt"
 
-	model(studio) : "Model" : "models/combine_apc.mdl" : "Set the model used by the APC."
+	model(studio) : "World Model" : "models/combine_apc.mdl" : "Set the model used by the APC."
 	missilehint(target_destination) : "Missile Hint Target" : : "Name of one or more info_apc_missile_hint entities to use to determine what to hit."
 
 	// Inputs

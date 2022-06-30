@@ -66,6 +66,7 @@ def comp_trigger_goo(ctx: Context):
     reloader_cache = {}  # type: Dict[Tuple[float, float, float, float], Entity]
 
     for trig in ctx.vmf.by_class['comp_trigger_p2_goo']:
+        brush_model = ctx.bsp.bmodels[trig]
         trig.remove()
         outputs = trig.outputs.copy()
         trig.outputs.clear()
@@ -78,6 +79,7 @@ def comp_trigger_goo(ctx: Context):
         diss = trig.copy()
         ctx.vmf.add_ents([hurt, diss])
         spawnflags = conv_int(trig['spawnflags'])
+        ctx.bsp.bmodels[hurt] = ctx.bsp.bmodels[diss] = brush_model
 
         for keyvalue in [
             'dissolve_filter',

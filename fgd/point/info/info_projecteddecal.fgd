@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint)
 	decal() 
-	studio("models/editor/axis_helper_thick.mdl") 
+	studio("models/editor/decal_helper.mdl") 
 	sphere(distance) 
 = info_projecteddecal: "An entity that projects a decal onto the world (or props). " +
 	"If the decal has no target name, it will immediately apply itself when the level is loaded. " +

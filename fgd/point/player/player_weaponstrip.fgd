@@ -5,5 +5,5 @@
 
 	// Inputs
 	input Strip(void) : "Removes all weapons."
-	input StripWeaponsAndSuit(void) : "Strip player's weapons and his suit"
+	input StripWeaponsAndSuit(void) : "Strip player's weapons and suit"
 	]

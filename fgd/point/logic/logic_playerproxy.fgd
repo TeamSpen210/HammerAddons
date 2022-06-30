@@ -41,8 +41,8 @@
 	input RemovePortalGun[P2CE](void) : "Removes the portal gun from the player, if they have it."
 	input RemovePaintGun[P2CE](void) : "Removes the paint gun from the player, if they have it."
 
-	output OnFlashlightOn(float) : "Fired when the player turns on his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
-	output OnFlashlightOff(float) : "Fired when the player turns off his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
+	output OnFlashlightOn(float) : "Fired when the player turns on their flashlight. This output has the value of how much energy the player had when this happened [0..1]."
+	output OnFlashlightOff(float) : "Fired when the player turns off their flashlight. This output has the value of how much energy the player had when this happened [0..1]."
 
 	output PlayerDied(void) : "Fires when the player dies."
 	output PlayerMissedAR2AltFire(void)	: "Player fired an AR2 combine ball that didn't kill any enemies."

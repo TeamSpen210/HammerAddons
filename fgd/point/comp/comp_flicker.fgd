@@ -1,0 +1,29 @@
+@PointClass
+	appliesto(srctools, -engine)
+	base(BaseEntityPoint)
+	iconsprite("editor/comp_flicker") 
+	line(255 255 255, targetname, target_mdl)
+= comp_flicker: "Fires on/off inputs repeatedly to simulate a flicker-on effect. " +
+	"This converts to an info_target, and uses all of the FireUserX inputs/outputs."
+	[
+	target_mdl(target_destination) : "Model to Control" : : "An entity which will have skins swapped to turn on/off."
+	mdl_skin_on(integer) : "On Skin" : 0 : "The 'on' skin for the model."
+	mdl_skin_off(integer) : "Off Skin" : 1 : "The 'on' skin for the model."
+
+	total_time(float) : "Total Time" : 1.5 : "The overall time taken to complete the on or off flicker."
+	flicker_min(float) : "Flicker Min" : 0.05 : "The delay used at the start of the on cycle, or at the end of the off cycle."
+	flicker_max(float) : "Flicker Max" : 0.2 : "The delay used at the end of the on cycle, or at the start of the off cycle."
+	variance(float) : "Variance" : 0.0 : "Random variance added/subtracted for each delay."
+	
+	input TurnOn(void): "Turn the target entities on."
+	input TurnOff(void): "Turn the target entities off."
+	input FlickerOn(void): "Flicker the target gradually on."
+	input FlickerOff(void): "Flicker the target gradually off."
+
+	output OnTurnedOn(void): "Fired when the target should turn on."
+	output OnTurnedOff(void): "Fired when the target should turn off."
+	output OnFlickerOnStart(void): "Fired after the flicker on effect has started."
+	output OnFlickerOffStart(void): "Fired after the flicker off effect has started."
+	output OnFlickerOnEnd(void): "Fired after the flicker on effect has finished."
+	output OnFlickerOffEnd(void): "Fired after the flicker off effect has finished."
+	]
