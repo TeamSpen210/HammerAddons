@@ -589,7 +589,10 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
             }
         game = dump_path.stem.upper()
         try:
-            defined_classes = all_ents[game]
+            defined_classes = {
+                cls for cls in all_ents[game]
+                if not cls.startswith('comp_')
+            }
         except KeyError:
             print(f'No dump for tag "{game}"!')
             continue
@@ -604,19 +607,20 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
             print(', '.join(sorted(missing)))
 
     print('\n\nMissing Class Resources:')
-    from srctools.packlist import CLASS_RESOURCES
+    from srctools.packlist import entclass_resources, CLASS_RESOURCES
 
     missing_count = 0
+    not_in_engine = {'-ENGINE', '!ENGINE', 'SRCTOOLS', '+SRCTOOLS'}
     for clsname in sorted(fgd.entities):
         ent = fgd.entities[clsname]
         if ent.type is EntityTypes.BASE:
             continue
 
-        applies_to = get_appliesto(ent)
-        if '-ENGINE' in applies_to or '!ENGINE' in applies_to:
+        if not not_in_engine.isdisjoint(get_appliesto(ent)):
             continue
-
-        if clsname not in CLASS_RESOURCES:
+        try:
+            entclass_resources(clsname)
+        except KeyError:
             print(clsname, end=', ')
             missing_count += 1
     print('\nMissing:', missing_count)
@@ -624,9 +628,7 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
     print('Extra ents: ')
     for clsname in CLASS_RESOURCES:
         if clsname not in fgd.entities:
-            print(clsname, end=', ')
-    print('\n')
-
+            print('-', clsname)
 
 def action_import(
     dbase: Path,
