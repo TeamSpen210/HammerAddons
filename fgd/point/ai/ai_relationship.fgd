@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint)
+	appliesto(+USE_AI)
 	iconsprite("editor/ai_relationship.vmt") 
 	line(255 255 255, targetname, subject)
 	line(255 255 255, targetname, subject, targetname, target)

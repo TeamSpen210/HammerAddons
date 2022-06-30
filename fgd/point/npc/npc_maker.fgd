@@ -1,4 +1,5 @@
 @PointClass base(Angles, BaseNPCMaker)
+	appliesto(+USE_AI)
 	iconsprite("editor/npc_maker.vmt") 
 = npc_maker: "NPC Maker"
 	[

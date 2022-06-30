@@ -1,4 +1,5 @@
 @PointClass base(LeadGoalBase)
+	appliesto(+USE_AI)
 	iconsprite("editor/ai_goal_lead.vmt") 
 = ai_goal_lead: "AI Goal Lead"
 	[

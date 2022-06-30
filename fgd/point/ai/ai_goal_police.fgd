@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(+HL2_ENTITIES)
+	appliesto(+HL2_ENTITIES, +USE_AI)
 	sphere(policeradius) 
 	iconsprite("editor/ai_goal_police.vmt") 
 = ai_goal_police: "Implement Metrocop policing behaviour. " +

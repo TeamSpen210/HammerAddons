@@ -1,4 +1,5 @@
-@PointClass base(BaseEntityPoint) 
+@PointClass base(BaseEntityPoint)
+	appliesto(+USE_AI)
 	color(0 0 255)
 	iconsprite("editor/choreo_scene.vmt") 
 	color(240 180 250) 

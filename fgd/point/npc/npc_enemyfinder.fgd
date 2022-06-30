@@ -1,4 +1,5 @@
 @NpcClass base(BaseLogicalNPC)
+	appliesto(+USE_AI)
 	color(255 150 0) 
 	iconsprite("editor/npc_enemyfinder.vmt") 
 	sphere(MinSearchDist) 

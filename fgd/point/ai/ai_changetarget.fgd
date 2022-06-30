@@ -1,6 +1,6 @@
-@PointClass base(BaseEntityPoint)
+@PointClass base(BaseEntityPoint) // Not in +USE_AI as it can change any entity's target
 	iconsprite("editor/ai_changetarget.vmt") 
-= ai_changetarget: "Change Target"
+= ai_changetarget: "Changes the target keyvalue of an entity."
 	[
 	target(target_destination) : "Target entity" : : "Name of entity whose target will be changed."
 	m_isznewtarget(string) : "New Target"

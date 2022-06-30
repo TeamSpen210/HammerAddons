@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint)
+	appliesto(+USE_AI)
 	sphere(volume) 
 	line(255 255 255, targetname, locationproxy)
 	line(255 255 255, targetname, target, targetname, locationproxy)

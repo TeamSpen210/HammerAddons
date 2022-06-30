@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint, SystemLevelChoice)
+	appliesto(+USE_AI)
 	studio("models/editor/scriptedsequence.mdl") 
 	color(255 0 255) 
 	sphere(m_flRadius) = scripted_sequence: "Grabs an NPC and makes them play a specified set of animations. " +

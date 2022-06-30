@@ -1,8 +1,5 @@
 _firesmoke
 _plasma
-ai_addon
-ai_addon_builder
-ai_addon_factory
 ai_ally_speech_manager
 ai_battle_line
 ai_changehintgroup
@@ -279,7 +276,6 @@ info_playtest_manager
 info_portal_score
 info_projecteddecal
 info_radial_link_controller
-info_remarkable
 info_target
 info_target_instructor_hint
 info_target_personality_sphere

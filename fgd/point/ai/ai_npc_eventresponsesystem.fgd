@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint)
+	appliesto(+USE_AI)
 	iconsprite("editor/ficool2/ai_npc_eventresponsesystem")
 = ai_npc_eventresponsesystem: "An entity that allows you to generate events for nearby friendly NPCs to respond to."
 	[

@@ -1,4 +1,5 @@
 @PointClass base(logic_choreographed_scene)
+	appliesto(+USE_AI)
 = scripted_scene: "Alternate name for logic_choreographed_scene."
 	[
 	]

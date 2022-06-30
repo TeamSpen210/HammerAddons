@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint, ResponseContext, EnableDisable)
+	appliesto(+USE_AI)
 	line(255 255 255, targetname, subject)
 	iconsprite("editor/ficool2/ai_speechfilter.vmt")
 = ai_speechfilter: "An entity that can be used to control the idle speech patterns of a set of NPCs."

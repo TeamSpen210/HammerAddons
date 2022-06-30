@@ -1,4 +1,5 @@
 @NpcClass base(BaseLogicalNPC) 
+	appliesto(+USE_AI)
 	iconsprite("editor/bullseye.vmt")
 	color(255 0 0) 
 = npc_bullseye: "Dummy NPC for targeting or other behavior."

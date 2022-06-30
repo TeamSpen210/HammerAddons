@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint)
+	appliesto(+USE_AI)
 	iconsprite("editor/ficool2/ai_battle_line")
  = ai_battle_line: "Battle line"
 	[

@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint)
+	appliesto(+USE_AI, +USE_NAV_MESH)
 	color(220 180 0) 
 	line(255 255 255, nodeid, StartNode, nodeid, EndNode) 
 	iconsprite("editor/info_node_link.vmt") 

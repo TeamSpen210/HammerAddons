@@ -1,4 +1,4 @@
-@PointClass base(BaseNPC, SetModel)
+@PointClass base(BaseNPC, SetModel) // Not in +USE_AI because can be used to detect gunshots to non-ai ents
 	studio() 
 = npc_heardanger: "A Generic NPC entity that hears and reports 'danger' and is not preserved on round restart. " +
 		"Danger sounds consist of gunshots, player sounds, bullet impacts, " +

@@ -8,10 +8,10 @@
 		// Restore the other spawnflags.
 		1: "Clients/Players" : 1
 		8192: "Allow ghosts to fire this trigger" : 0 [MOMENTUM]
-		2: "NPCs" : 0
+		2: "NPCs" : 0 [+USE_AI]
 		4: "func_pushable" : 0
 		8: "Physics Objects" : 0
-		16: "Only player ally NPCs" : 0
+		16: "Only player ally NPCs" : 0 [+USE_AI]
 		64: "Everything (not including physics debris)" : 0
 		512: "Only clients *not* in vehicles" : 0 [+USE_VEHICLES]
 		1024: "Physics debris" : 0

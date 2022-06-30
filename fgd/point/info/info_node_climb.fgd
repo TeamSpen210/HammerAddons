@@ -1,4 +1,5 @@
-@PointClass base(BaseEntityPoint, HintNode) 
+@PointClass base(BaseEntityPoint, HintNode)
+	appliesto(+USE_AI, +USE_NAV_MESH)
 	studio("models/editor/climb_node.mdl")
 	color(153 215 103)
 	sphere(radius)

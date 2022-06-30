@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	iconsprite("editor/comp_choreo_sceneset.vmt")
-	appliesto(srctools, -engine)
+	appliesto(srctools, -engine, +USE_AI)
 = comp_choreo_sceneset:
 "Chains a set of choreographed scenes together."
 	[

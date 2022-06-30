@@ -14,12 +14,12 @@
 		2: "Always Solid"
 		]
 
-	excludednpc(string) : "NPC class excluded from collisions" : : "If an NPC classname is specified here, NPCs of that type won't collide with these brushes. In Episodic, you may also specify an individual entity's name."
+	excludednpc[+USE_AI](string) : "NPC class excluded from collisions" : : "If an NPC classname is specified here, NPCs of that type won't collide with these brushes. In Episodic, you may also specify an individual entity's name."
 	
-	invert_exclusion(boolean) : "Invert NPC class exclusion" : "0" : "If set, then the excluded NPC class will consider this brush solid, and all other NPC classes will consider it non-solid."
+	invert_exclusion[+USE_AI](boolean) : "Invert NPC class exclusion" : "0" : "If set, then the excluded NPC class will consider this brush solid, and all other NPC classes will consider it non-solid."
 
 	solidbsp[engine](boolean) : "Solid Type" : 1
-	solidbsp(choices) : "Solid Type" : 1 : "How to calculate collisions. BSP is more rudimentarty but allows more stable collision with players." =
+	solidbsp(choices) : "Solid Type" : 1 : "How to calculate collisions. BSP is more rudimentary but allows more stable collision with players." =
 		[
 		0: "VPhysics"
 		1: "BSP"
@@ -27,8 +27,8 @@
 
 
 	// Inputs
-	input SetExcluded(string) : "Change the NPC class excluded from collisions."
-	input SetInvert(boolean) : "Set the state of inversion for NPC class exclusion (0 or 1)."
+	input SetExcluded[+USE_AI](string) : "Change the NPC class excluded from collisions."
+	input SetInvert[+USE_AI](boolean) : "Set the state of inversion for NPC class exclusion (0 or 1)."
 
 	input Toggle(void) : "Toggle visibility/solidity of this brush."
 	]

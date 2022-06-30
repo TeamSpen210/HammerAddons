@@ -48,7 +48,7 @@
 		8: "Passable" : 0
 		32: "Toggle" : 0
 		256: "Use Opens" : 0
-		512: "NPCs Can't" : 0
+		512: "NPCs Can't" : 0 [+USE_AI]
 		1024: "Touch Opens" : 1
 		2048: "Starts locked" : 0
 		4096: "Door Silent" : 0

@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint)
+	appliesto(+USE_AI)
 	sphere(m_flRadius) 
 	color(255 0 255) 
 	iconsprite("editor/aiscripted_schedule") 
