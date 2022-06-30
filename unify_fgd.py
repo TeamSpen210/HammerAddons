@@ -20,8 +20,7 @@ from srctools.fgd import (
     FGD, validate_tags, match_tags,
     EntityDef, EntityTypes, IODef,
     KeyValues, ValueTypes,
-    HelperExtAppliesTo,
-    HelperWorldText,
+    Helper, HelperExtAppliesTo, HelperWorldText,
     AutoVisgroup,
 )
 from srctools.filesys import RawFileSystem
@@ -512,6 +511,7 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
         has_ent = set()
 
         for base in ent.bases:
+            assert isinstance(base, EntityDef)
             base_uses[base.classname].add(ent.classname)
 
         for game, tags in expanded.items():
@@ -637,20 +637,17 @@ def action_import(
 ) -> None:
     """Import an FGD file, adding differences to the unified files."""
     new_fgd = FGD()
-    print('Using tag "{}"'.format(engine_tag))
+    print(f'Using tag "{engine_tag}"')
 
     expanded = expand_tags(frozenset({engine_tag}))
 
-    print('Reading FGDs:'.format(len(fgd_paths)))
+    print(f'Reading FGDs:')
     for path in fgd_paths:
         print(path)
         with RawFileSystem(str(path.parent)) as fsys:
             new_fgd.parse_file(fsys, fsys[path.name], eval_bases=False)
 
-    print('\nImporting {} entiti{}...'.format(
-        len(new_fgd),
-        "y" if len(new_fgd) == 1 else "ies",
-    ))
+    print(f'\nImporting {len(new_fgd)} entiti{"y" if len(new_fgd) == 1 else "ies"}...')
     for new_ent in new_fgd:
         path = dbase / ent_path(new_ent)
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -795,7 +792,7 @@ def action_export(
                     # Remake the map, excluding non-engine tags.
                     # If any are explicitly matching us, just use that
                     # directly.
-                    tag_map = {}
+                    tag_map: Dict[FrozenSet[str], Union[IODef, KeyValues]] = {}
                     for tags, value in orig_tag_map.items():
                         if 'ENGINE' in tags or '+ENGINE' in tags:
                             if value.type is ValueTypes.CHOICES:
@@ -804,7 +801,7 @@ def action_export(
                                     'CHOICES!'.format(ent.classname, key)
                                 )
                             # Use just this.
-                            tag_map = {'': value}
+                            tag_map = {tags_empty: value}
                             break
                         elif '-ENGINE' not in tags and '!ENGINE' not in tags:
                             tag_map[tags] = value
@@ -843,7 +840,7 @@ def action_export(
                         if isinstance(value, KeyValues):
                             assert value.val_list is not None
                             try:
-                                for choice_val, name, tag in value.val_list:
+                                for choice_val, name, tag in value.choices_list:
                                     int(choice_val)
                             except ValueError:
                                 # Not all are ints, it's a string.
@@ -923,7 +920,7 @@ def action_export(
     print('Applying helpers to child entities and optimising...')
     for ent in fgd.entities.values():
         # Merge them together.
-        helpers = []
+        helpers: List[Helper] = []
         for base in ent.bases:
             helpers.extend(base.helpers)
         helpers.extend(ent.helpers)
@@ -1009,7 +1006,7 @@ def action_export(
 
 def action_visgroup(
     dbase: Path,
-    extra_loc: Path,
+    extra_loc: Optional[Path],
     dest: Path,
 ) -> None:
     """Dump all auto-visgroups into the specified file, using a custom format."""
@@ -1017,7 +1014,7 @@ def action_visgroup(
 
     # TODO: This shouldn't be copied from fgd.export(), need to make the
     #  parenting invariant guaranteed by the classes.
-    vis_by_parent = defaultdict(set)  # type: Dict[str, Set[AutoVisgroup]]
+    vis_by_parent: dict[str, set[AutoVisgroup]] = defaultdict(set)
 
     for visgroup in list(fgd.auto_visgroups.values()):
         if not visgroup.parent:
