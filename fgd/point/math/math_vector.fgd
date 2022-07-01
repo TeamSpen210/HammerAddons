@@ -8,9 +8,9 @@
 	
 	spawnflags(flags) =
 		[
-		1 : "[1] Disable X" : 0
-		2 : "[2] Disable Y" : 0
-		4 : "[4] Disable Z" : 0
+		1 : "Disable X" : 0
+		2 : "Disable Y" : 0
+		4 : "Disable Z" : 0
 		]
 
 	// Inputs
