@@ -11,7 +11,8 @@
 		4: "func_pushable" : 0
 		8: "Physics Objects" : 0
 		16: "Only player ally NPCs" : 0 [+USE_AI]
-		32: "Only clients in vehicles" : 0 [+USE_VEHICLES]
+		32: "Only explosives" : 0 [+MOMENTUM]
+		32: "Only clients in vehicles" : 0 [-MOMENTUM, +USE_VEHICLES]
 		64: "Everything (not including physics debris)" : 0
 		512: "Only clients *not* in vehicles" : 0 [+USE_VEHICLES]
 		1024: "Physics debris" : 0
