@@ -2,4 +2,5 @@
 = trigger_gravity: "A trigger volume that changes the gravity on any entity that touches it."
 	[
 	gravity(float) : "Gravity (0-1)" : 1
+	persist(boolean) : "Persist" : 0 : "Whether the gravity change persists. A setting of 0 will reset gravity to default on exiting. 1 will persist and thus act like how it did in older games like TF2."
 	]
