@@ -21,7 +21,7 @@
 	spawnflags(flags)  =
 		[
 		2: "On fire" : 0
-		4: "strict remove after lifetime" : 0
+		4: "Strict remove after lifetime" : 0
 		]
 
 	nogibshadows(boolean) : "Disable Shadows on Gibs" : 0

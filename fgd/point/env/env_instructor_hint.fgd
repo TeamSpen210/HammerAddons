@@ -156,8 +156,8 @@
 		1: "Narrow Shake"
 		2: "Wide Shake"
 		]
-
-	hint_local_player_only(boolean) : "Only Local Player" : 0 : "The hint will only be shown to the local player."
+		
+	hint_local_player_only[+USE_MULTIPLAYER](boolean) : "Only Local Player" : 0 : "The hint will only be shown to the first person to join/create the server."
 	hint_timeout(integer) : "Timeout" : 0 : "The automatic timeout for the hint. 0 will persist until stopped with EndHint."
 	hint_range(float) : "Display Range" : 0 : "The visible range of the hint."
 	

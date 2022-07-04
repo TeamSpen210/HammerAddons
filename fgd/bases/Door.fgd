@@ -32,7 +32,7 @@
 	health(integer) : "Door Health" : : "The health of the door (allows someone to shoot it open). 0 means invincible."
 
 	locked_sound(sound) : "Locked Sound" : : "Sound played when the player tries to use the door, and fails because it's locked."
-	unlocked_sound(sound) : "Unlocked Sound" : : "Sound played when the button is door."
+	unlocked_sound(sound) : "Unlocked Sound" : : "Sound played when the door is unlocked."
 
 	spawnpos[engine](integer) : "Spawn Position" : 0
 	spawnpos(choices) : "Spawn Position" : 0 =

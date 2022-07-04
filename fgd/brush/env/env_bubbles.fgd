@@ -2,8 +2,8 @@
 	color(200 200 0)
 = env_bubbles: "An entity used to create a volume in which to spawn bubbles."
 	[
-	density(integer) : "Bubble density" : 2
-	frequency(integer) : "Bubble frequency" : 2
+	density(integer) : "Bubble density" : 2 : "The amount of bubbles per cycle. Final amount is inputted value plus one. -1 is max."
+	frequency(integer) : "Bubble frequency" : 2 : "How frequent cycles occur. Values include negative " + "numbers to 20, the final time between cycles is 2.5s minus X tenths of a second if positive, or 2.5s plus X tenths of a second if negative."
 	current(integer) : "Speed of Current" : 0 : "The speed of the water current in the volume, used to move the bubbles."
 	spawnflags(flags)  =
 		[

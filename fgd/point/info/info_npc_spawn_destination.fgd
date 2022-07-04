@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
+	appliesto(+USE_AI)
 	iconsprite("editor/ficool2/info_npc_spawn_destination.vmt")
 = info_npc_spawn_destination: "NPC Spawn Destination. (Consult npc_template_maker help for more info)"
 	[

@@ -1,4 +1,4 @@
 @SolidClass base(func_door) 
-= func_water: "Special variant of func_door with water collision physics."
+= func_water: "Legacy Goldsrc support. Non-moving water should be worldspawn, and moving water should be func_water_analog. This brush is a special variant of func_door with water collision physics."
 	[
 	]

@@ -5,7 +5,7 @@
 	[
 	spawnflags(flags)  =
 		[
-		1: "All Players" : 0
+		1: "All Players" : 0 [+USE_MULTIPLAYER]
 		]
 
 	message(string) : "Message Text" : : "Message to display onscreen."

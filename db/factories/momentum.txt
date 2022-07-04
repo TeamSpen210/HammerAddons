@@ -224,7 +224,6 @@ material_modify_control
 math_colorblend
 math_counter
 math_remap
-model_studio
 momentary_door
 momentary_rot_button
 momentum_generic_bomb

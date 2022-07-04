@@ -7,7 +7,7 @@
 		[
 		1: "Fade From" : 0
 		2: "Modulate" : 0
-		4: "Triggering player only" : 0
+		4: "Triggering player only" : 0 [+USE_MULTIPLAYER]
 		8: "Stay Out" : 0
 		]
 

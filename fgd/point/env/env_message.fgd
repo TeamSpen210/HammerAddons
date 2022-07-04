@@ -6,7 +6,7 @@
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Play Once" : 0
-		2: "All Clients" : 0
+		2: "All Clients" : 0 [+USE_MULTIPLAYER]
 		]
 
 	messagesound(sound) : "Sound Effect" : : "When the message is shown, this sound effect will be played, originating from this entity."

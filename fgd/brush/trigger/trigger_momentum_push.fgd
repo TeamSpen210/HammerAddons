@@ -5,7 +5,7 @@
 	spawnflags(flags) = 
 		[
 		524288: "Use the direction vector as final force instead of calculating it by force amount" : 0
-		1048576: "Only allow for one touch before reseting" : 1
+		1048576: "Only allow for one touch before resetting" : 1
 		2097152: "Modify player velocity on StartTouch" : 0
 		4194304: "Modify player velocity on EndTouch" : 1
 		]

@@ -20,7 +20,7 @@
 	subdiv(integer) : "Subdivision" : 2 : "Number of subdivisions between each rope segment. Maximum value is 8. Higher values make smoother ropes, but are slower to render."
 	barbed(boolean) : "Barbed" : 0 : "Test effect that makes the rope look sharper and more barbed."
 	width(float) : "Width (1-64)" : 2 : "Width of the rope."
-	texturescale(float) : "Texture Scale" : 1 : "This changes the texture resolution. The default resolution is 4 pixels per inch. Larger values stretch the texture and smaller values scrunch it up."
+	texturescale(float) : "Texture Scale" : 1 : "This changes the texture resolution. The default resolution is 4 pixels per unit. Larger values stretch the texture and smaller values scrunch it up."
 	collide(boolean) : "Collide with world" : 0
 
 	dangling[engine](boolean) : "Start Dangling" : 0

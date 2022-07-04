@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint)
+	appliesto(+USE_MULTIPLAYER)
 	color(200 0 0) 
 	studioprop("models/editor/camera.mdl") 
 	frustum(fov, _frustum_near, _frustum_far, _frustum_color, -1) 

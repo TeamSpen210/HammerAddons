@@ -14,13 +14,13 @@
 	message(sound) : "Sound Name" : : "Name of the GameSound entry for the sound to play. Also supports direct .wav filenames."
 	health(integer) : "Volume" : 10 : "Sound volume, expressed as a range from 0 to 10, where 10 is the loudest."
 	
-	radius(float) : "Sound Range" : 1250 : "Maximum distance at which this sound is audible. Overriden by soundscripts."
+	radius(float) : "Sound Range" : 1250 : "Maximum distance at which this sound is audible. Overridden by soundscripts."
 	
-	pitch(integer) : "Pitch" : 100 : "Sound pitch, expressed as a range from 1(low) to 255(high), where 100 is the sound's default pitch. Overriden by soundscripts."
+	pitch(integer) : "Pitch" : 100 : "Sound pitch, expressed as a range from 1(low) to 255(high), where 100 is the sound's default pitch. Overridden by soundscripts."
 
 	sourceentityname(target_destination) : "Source Entity" : : "If an entity is specified, sound will come from this named entity instead of the location of ambient_generic."
 
-	soundflags[engine](integer) : "Sound Flasg" : 0
+	soundflags[engine](integer) : "Sound Flags" : 0
 	soundflags(choices) : "Sound Flags" : 0 : "Additional options for your sound." =
 	[
 		0: "None"

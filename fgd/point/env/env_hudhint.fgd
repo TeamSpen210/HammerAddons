@@ -4,7 +4,7 @@
 	[
 	spawnflags(flags)  =
 		[
-		1: "All Players" : 0
+		1: "All Players" : 0 [+USE_MULTIPLAYER]
 		]
 
 	message(string) : "Hint Text (localized)" : : "This should be set to match the desired HUD hint entry in resource/valve_english.txt."

@@ -7,15 +7,15 @@
 		2: "Don't take physics damage" : 0
 		4: "Debris - Don't collide with the player or other debris" : 0
 		8: "Motion Disabled" : 0
-		64: "Enable motion on Physcannon grab" : 0
+		64: "Enable motion on Physcannon grab" : 0 [+HL2_ENTITIES]
 		128: "Not affected by rotor wash" : 0
 		256: "Generate output on +USE " : 1
 		512: "Prevent pickup" : 0
 		1024: "Prevent motion enable on player bump" : 0
 		4096: "Debris with trigger interaction" : 0
-		8192: "Force server-side (Multiplayer only)" : 0
+		8192: "Force server-side (Multiplayer only)" : 0 [+USE_MULTIPLAYER]
 		16384: "Radius pickup (easier to pickup)" : 0
-		1048576: "Physgun can ALWAYS pick up. No matter what." : 0
+		1048576: "Physgun can ALWAYS pick up. No matter what." : 0 [+HL2_ENTITIES]
 		2097152: "No collisions" : 0
 		]
 

@@ -5,18 +5,18 @@
 	studio("models/editor/cone_helper.mdl")
 = env_fog_controller: "An entity that controls the fog and view distance in the map."
 	[
-	fogenable(boolean) : "Fog Enable" : 1
-	fogblend(boolean) : "Fog Blend" : 0
+	fogenable(boolean) : "Fog Enable" : 1 : "Whether or not the fog should start enabled."
+	fogblend(boolean) : "Fog Blend" : 0 : "Enables color blending between the primary color and the secondary color. " + "When looking at the Primary Fog Direction, the primary fog color will appear. When looking away, the secondary color will. " +
+	"Looking between directly at the direction and directly away will cause color blending."
 	use_angles(boolean) : "Use Angles for Fog Dir" : 0
-
-	fogcolor(color255) : "Primary Fog Color" : "255 255 255"
-	fogcolor2(color255) : "Secondary Fog Color" : "255 255 255"
-	fogdir(string) : "Primary Fog Direction" : "1 0 0"
-	fogstart(string) : "Fog Start" : "500.0"
-	fogend(string) : "Fog End" : "2000.0"
-	fogmaxdensity(float) : "Fog Max Density [0..1]" : 1
-	foglerptime(float) : "Interpolate time" : 0
-	farz(string) : "Far Z Clip Plane" : "-1"
+	fogcolor(color255) : "Primary Fog Color" : "255 255 255" : "The color of the fog. If fog blend is enabled, this color blends with the secondary color when not looking at the primary fog direction."
+	fogcolor2(color255) : "Secondary Fog Color" : "255 255 255" : "The secondary fog color. If fog blend is disabled, this color will never appear."
+	fogdir(string) : "Primary Fog Direction" : "1 0 0" : "If fog blend is enabled, this is the direction that shows only the primary color. Directly away is the secondary color and in-between the colors are blended."
+	fogstart(string) : "Fog Start" : "500.0" : "The distance from the player the fog starts."
+	fogend(string) : "Fog End" : "2000.0" : "The distance from the player the fog reaches the Fog Max Density keyvalue."
+	fogmaxdensity(float) : "Fog Max Density [0..1]" : 1 : "The max density the fog can get to, 0-1."
+	foglerptime(float) : "Interpolate time" : 0 : "The fade time for the StartFogTransition input."
+	farz(string) : "Far Z Clip Plane" : "-1" : "The distance at which the world will not be rendered."
 	spawnflags(flags)  =
 		[
 		1: "Master (Has priority if multiple env_fog_controllers exist)" : 0
@@ -41,6 +41,5 @@
 	input StartFogTransition(void) : "Start fog transition."
 	input SetMaxDensityLerpTo(float) : "Set max density lerp to."
 	input SetZoomFogScale(void) : "Set the value the fog will scale the default value by when players are zoomed in (scoped)."
-
-	input ActivateAllPlayers(void) : "Activates this fog controller for all players"
+	input ActivateAllPlayers[+USE_MULTIPLAYER](void) : "Activates this fog controller for all players"
 	]

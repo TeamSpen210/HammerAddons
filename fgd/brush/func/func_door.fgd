@@ -1,5 +1,5 @@
 @SolidClass base(Door, Angles, Origin)
-= func_door: "A brush entity for use as a player-useable door."
+= func_door: "A brush entity for use as a player-useable door that linearly moves."
 	[
 	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction the door will move, when it opens."
 	]
