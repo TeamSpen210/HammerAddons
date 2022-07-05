@@ -19,5 +19,6 @@
 	// Outputs
 	output OnStart(void) : "Fired when the train starts moving in either direction."
 	output OnNextPoint(string) : "Fires continuously every frame when the train is moving to its next destination."
+	output OnArrivedAtNode(void) : "Fired when this train arrives at a node on its path."
 	output OnArrivedAtDestinationNode(void) : "Fired when this train arrives at a destination that was specified by the MoveToPathNode Input."
 	]
