@@ -86,14 +86,14 @@ def optimise_logic_auto(ctx: Context) -> None:
 
     for auto in ctx.vmf.by_class['logic_auto']:
         # If the auto uses any keys that we don't recognise, leave it alone.
-        # This catches stuff like it being named and in a template,
+        # These catch stuff like it being named and in a template,
         # VScript, or any other hijinks.
         if any(
             value and key.casefold() not in {
                 'origin', 'angles', 'spawnflags',
                 'globalstate',
             }
-            for key, value in auto.keys.items()
+            for key, value in auto.items()
         ):
             continue
         auto.remove()
@@ -127,12 +127,12 @@ def strip_ents(ctx: Context) -> None:
         for ent in ctx.vmf.by_class[clsname]:
             ent.remove()
 
-    # Strip extra keys added in the engine.
+    # Strip the divider keyvalues in the FGDs.
     to_remove: List[str] = []
     for ent in ctx.vmf.entities:
         to_remove.clear()
-        for key, value in ent.keys.items():
+        for key, value in ent.items():
             if 'divider' in key and value == "":
                 to_remove.append(key)
         for key in to_remove:
-            del ent.keys[key]
+            del ent[key]
