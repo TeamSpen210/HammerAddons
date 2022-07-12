@@ -2,7 +2,9 @@
 	appliesto(EP1, EP2, HL2, P1) 
 	autovis(Entities, NPCs, Vehicle Driver)
 	autovis(Vehicles, Driver)
-	studio("models/roller.mdl") = npc_vehicledriver: "NPC used to drive a target vehicle."
+	studio("models/roller_vehicledriver.mdl")
+	iconsprite("editor/ts2do/npc_vehicledriver") 
+= npc_vehicledriver: "NPC used to drive a target vehicle."
 	[
 	drivermaxspeed(float) : "Maxspeed (percentage of vehicle's maxspeed)." : 1
 	driverminspeed(float) : "MinSpeed (percentage of vehicle's maxspeed)." : 0

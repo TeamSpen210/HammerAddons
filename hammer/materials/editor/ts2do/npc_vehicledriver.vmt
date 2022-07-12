@@ -1,0 +1,7 @@
+Sprite
+	{
+	$basetexture "editor/ts2do/npc_vehicledriver"
+	$spriteorientation "vp_parallel"
+	$spriteorigin "[.5 1.75]"
+	$no_fullbright 1
+	}
