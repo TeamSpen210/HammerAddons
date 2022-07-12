@@ -19,7 +19,7 @@
 	* In any `RunScriptCode` input, backticks can be used for string literals, instead of the disallowed `"` character. 
 	* In addition to the normal `Entity Scripts` section, a new `Init Code` field can be used to write code that's packed and added to those scripts. Useful for setting configuration options etc. Backticks can be used here too.
 * New `comp_` entities. These are mainly intended for use in instances, allowing modifying entities outside of the instance to conform or doing normally impossible things like positioning things in the void.
-Below are short explanations, see the "Help" display on the entity properties in Hammer for detailed functionality.:
+Below are short explanations, see the "Help" display on the entity properties in Hammer for detailed functionality:
 
 | Entity                                             | Description |
 |----------------------------------------------------|-------------|
