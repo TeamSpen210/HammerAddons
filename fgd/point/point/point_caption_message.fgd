@@ -1,0 +1,17 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(P2EDU) 
+	studio("models/extras/info_speech.mdl") 
+= point_caption_message : "Displays text as a closed caption."
+	[
+	caption1(string) : "Caption1" : "" : "Text to display, part 1"
+	caption2(string) : "Caption2" : "" : "Text to display, part 2"
+	caption3(string) : "Caption3" : "" : "Text to display, part 3"
+	caption4(string) : "Caption4" : "" : "Text to display, part 4"
+	caption5(string) : "Caption5" : "" : "Text to display, part 5"
+	caption6(string) : "Caption6" : "" : "Text to display, part 6"
+	caption7(string) : "Caption7" : "" : "Text to display, part 7"
+	caption8(string) : "Caption8" : "" : "Text to display, part 8"
+	caption9(string) : "Caption9" : "" : "Text to display, part 9"
+
+	input Display(void) : "Display the caption."
+	]
