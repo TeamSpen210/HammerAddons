@@ -86,6 +86,7 @@
 
 	// Disabled by Valve in the code, emits console message.
 	//input SpotlightTexture(string) : "Set the spotlight texture"
+	input SetSpotlightTextureFrame(integer) : "Sets the spotlight texture frame"
 
 	input EnableShadows(boolean) : "Set if the shadows are enabled."
 	input LightColor(color255) : "Change the light color/brightness"
