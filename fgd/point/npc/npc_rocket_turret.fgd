@@ -25,6 +25,7 @@
 	input Disable(void) : "Deactivate and retract the Rocket Turret."
 	input SetTarget(target_destination) : "Sets the target for this turret to attack."
 	input Destroy(void) : "Sets this turret to it's destroyed state."
+	input ForceFire(void) : "Makes the turret immediately fire a rocket where it is pointing."
 
 	// Outputs
 	output OnFoundTarget(void) : "Fired when the rocket turret finds an unobstructed target."
