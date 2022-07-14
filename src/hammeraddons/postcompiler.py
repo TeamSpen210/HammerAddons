@@ -221,12 +221,13 @@ async def main(argv: List[str]) -> None:
             pack_models=conf.get(bool, 'propcombine_pack') or False,
         )
         LOGGER.info('Done!')
-    else:  # Strip these if they're present.
-        for ent in bsp_file.ents.by_class['comp_propcombine_set']:
-            ent.remove()
-        for ent in bsp_file.ents.by_class['comp_propcombine_volume']:
-            bsp_file.bmodels.pop(ent, None)  # Ignore if not present.
-            ent.remove()
+
+    # Always strip the propcombine entities, since we don't need them either way.
+    for ent in bsp_file.ents.by_class['comp_propcombine_set']:
+        ent.remove()
+    for ent in bsp_file.ents.by_class['comp_propcombine_volume']:
+        bsp_file.bmodels.pop(ent, None)  # Ignore if not present.
+        ent.remove()
 
     if conf.get(bool, 'auto_pack') and args.allow_pack:
         LOGGER.info('Analysing packable resources...')

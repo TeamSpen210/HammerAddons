@@ -932,13 +932,9 @@ async def combine(
         decomp_cache_loc, crowbar_loc, studiomdl_loc,
     )
 
-    # First parse out the bbox and volume ents, so they are always removed.
-    grouper_ents = list(bsp_ents.by_class['comp_propcombine_set'] | bsp_ents.by_class['comp_propcombine_volume'])
 
     if not studiomdl_loc.exists():
         LOGGER.warning('No studioMDL! Cannot propcombine!')
-        for ent in grouper_ents:
-            ent.remove()
         return
 
     # Convert the blacklist into a regex, for fast comparison.
@@ -1060,8 +1056,8 @@ async def combine(
 
     # This holds the list of all props we want in the map at the end.
     final_props: List[StaticProp] = []
-
     grouper: Iterator[List[StaticProp]]
+    grouper_ents = list(bsp_ents.by_class['comp_propcombine_set'] | bsp_ents.by_class['comp_propcombine_volume'])
     if grouper_ents and auto_range > 0:
         LOGGER.info('{} propcombine sets present and auto-grouping enabled, combining...', len(grouper_ents))
         # Do ents first, that removes values from the lists in prop_groups,
