@@ -1,6 +1,6 @@
 @PointClass base(Weapon)
 	appliesto(MOMENTUM)
-	studioprop("models/weapons/mom_rocketlauncher/w_mom_rocketlauncher.mdl")
+	studioprop("models/weapons/mom_rocketlauncher_clasic/w_mom_rl_classic.mdl")
 = weapon_momentum_rocketlauncher : "Rocket Launcher" 
 	[
 	]
