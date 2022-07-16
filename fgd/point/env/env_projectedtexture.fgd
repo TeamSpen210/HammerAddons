@@ -84,8 +84,7 @@
 	input AlwaysUpdateOn(void) : "Turn on per frame updating (for moving lights)"
 	input AlwaysUpdateOff(void) : "Turn off per frame updating (for moving lights)"
 
-	// Disabled by Valve in the code, emits console message.
-	//input SpotlightTexture(string) : "Set the spotlight texture"
+	input SpotlightTexture(string) : "Set the spotlight texture"
 	input SetSpotlightTextureFrame(integer) : "Sets the spotlight texture frame"
 
 	input EnableShadows(boolean) : "Set if the shadows are enabled."
