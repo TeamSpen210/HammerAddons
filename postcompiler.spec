@@ -43,7 +43,7 @@ a = Analysis(
         'decimal', 'difflib', 'enum', 'fractions', 'functools',
         'io', 'itertools', 'json', 'math', 'random', 're',
         'statistics', 'string', 'struct',
-        'srctools', 'attr',
+        'srctools', 'attr', 'attrs',
     ],
     excludes=[
         'IPython',  # Via trio
