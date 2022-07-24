@@ -1,14 +1,16 @@
 """Implement customisable vactubes for items."""
 import subprocess
 from collections import defaultdict
+import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Tuple, Dict, List, Iterable, Optional
 import math
 
+import trio
+
 from srctools.mdl import MDL_EXTS
 from srctools.smd import Mesh
-
 import srctools.logger
 from srctools import Vec, Output, conv_int
 
@@ -81,7 +83,7 @@ def find_closest(
 
 
 @trans('Portal 2 Vactubes')
-def vactube_transform(ctx: Context) -> None:
+async def vactube_transform(ctx: Context) -> None:
     """Implements the dynamic Vactube system."""
     name_to_node: Dict[str, nodes.Node] = {}
     all_nodes: List[nodes.Node] = []
@@ -243,8 +245,14 @@ def vactube_transform(ctx: Context) -> None:
             '-game', str(ctx.game.path),
             temp_dir + '/prop.qc',
         ]
-        LOGGER.info('Compiling vactube animations {}...', args)
-        subprocess.run(args)
+        LOGGER.info('Compiling vactube animations with args={}...', args)
+        try:
+            proc = await trio.run_process(args, capture_stdout=True, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as exc:
+            LOGGER.error('Failed to compile vactube animations:\n{}', exc.stdout)
+            sys.exit(1)
+        else:
+            LOGGER.debug('Compile log:\n{}', proc.stdout)
 
     # Ensure they're all packed.
     for ext in MDL_EXTS:
