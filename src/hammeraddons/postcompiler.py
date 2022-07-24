@@ -177,6 +177,7 @@ async def main(argv: List[str]) -> None:
         game_info,
         studiomdl_loc,
         transform_conf,
+        fgd,
     )
 
     if studiomdl_loc is not None and args.propcombine:

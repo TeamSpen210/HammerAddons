@@ -122,9 +122,10 @@ async def run_transformations(
     game: Game,
     studiomdl_loc: Path=None,
     config: Mapping[str, Property]=EmptyMapping,
+    fgd: FGD=None,
 ) -> None:
     """Run all transformations."""
-    context = Context(filesys, vmf, pack, bsp, game, studiomdl_loc=studiomdl_loc)
+    context = Context(filesys, vmf, pack, bsp, game, studiomdl_loc=studiomdl_loc, fgd=fgd)
 
     for func_name, func in sorted(
         TRANSFORMS.items(),
