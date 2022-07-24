@@ -23,6 +23,7 @@ ANG_THRESHOLD = math.cos(math.radians(30))
 QC_TEMPLATE = '''\
 $modelname "{path}"
 $surfaceprop "default"
+$cdmaterials "models/props_backstage"
 
 $body body "ref.smd"
 
@@ -216,8 +217,15 @@ def vactube_transform(ctx: Context) -> None:
 
     with TemporaryDirectory(prefix='vactubes_') as temp_dir:
         # Make the reference mesh.
+        mesh = Mesh.build_bbox('root', 'vacum_pipe', Vec(-8, -8, -8), Vec(8, 8, 8))
+        # Aesthetics...
+        U = {0.0: 740/1024.0, 1.0: 816/1024.0}
+        V = {0.0: 1.0-825/1024.0, 1.0: 1.0-904/1024.0}
+        for tri in mesh.triangles:
+            for point in tri:
+                point.tex_u, point.tex_v = U[point.tex_u], V[point.tex_v]
         with open(temp_dir + '/ref.smd', 'wb') as f:
-            Mesh.build_bbox('root', 'demo', Vec(-32, -32, -32), Vec(32, 32, 32)).export(f)
+            mesh.export(f)
 
         with open(temp_dir + '/prop.qc', 'w') as qc_file:
             qc_file.write(QC_TEMPLATE.format(path=anim_mdl_name))
