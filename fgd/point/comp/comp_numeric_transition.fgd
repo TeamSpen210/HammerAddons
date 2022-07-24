@@ -2,6 +2,7 @@
 	appliesto(srctools)
 	base(logic_relay) 
 	line(255 255 255, targetname, target)
+	iconsprite("editor/comp_numeric_transition")
 = comp_numeric_transition : "When triggered, animates a keyvalue/input over time with various options."
 	[
 	target(target_destination) : "Entity to Control" : : "The entity which the outputs will be directed to."
