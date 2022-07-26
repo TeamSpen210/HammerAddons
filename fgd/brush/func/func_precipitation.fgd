@@ -1,4 +1,4 @@
-@SolidClass base(BaseEntityBrush) 
+@SolidClass base(BaseEntity)  // Origin breaks things.
 = func_precipitation: "A brush entity that creates rain and snow inside its volume."
 	[
 	renderamt(integer) : "Density (0-100%)" : 5 : "This is the amount of particles that fall down from top side of brush. " +
