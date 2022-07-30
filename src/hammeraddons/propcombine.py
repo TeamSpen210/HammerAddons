@@ -212,9 +212,9 @@ async def combine_group(
         avg_yaw += prop.angles.yaw
         visleafs.update(prop.visleafs)
 
-    # Snap to nearest 15 degrees to keep the models themselves not
+    # Snap to nearest 45 degrees to keep the models themselves not
     # strangely rotated.
-    avg_yaw = round(avg_yaw / (15 * len(props))) * 15.0
+    avg_yaw = round(avg_yaw / (45 * len(props))) * 45.0
     avg_pos /= len(props)
     yaw_rot = Matrix.from_yaw(-avg_yaw)
 
