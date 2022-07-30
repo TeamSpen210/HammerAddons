@@ -607,7 +607,7 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
             print(', '.join(sorted(missing)))
 
     print('\n\nMissing Class Resources:')
-    from srctools.packlist import entclass_resources, CLASS_RESOURCES
+    from srctools.packlist import entclass_resources, entclass_iter
 
     missing_count = 0
     not_in_engine = {'-ENGINE', '!ENGINE', 'SRCTOOLS', '+SRCTOOLS'}
@@ -626,7 +626,7 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
     print('\nMissing:', missing_count)
 
     print('Extra ents: ')
-    for clsname in CLASS_RESOURCES:
+    for clsname in entclass_iter():
         if clsname not in fgd.entities:
             print('-', clsname)
 

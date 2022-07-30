@@ -64,7 +64,7 @@ def comp_precache_sound(ctx: Context):
     for ent in ctx.vmf.by_class['comp_precache_sound']:
         ent.remove()
 
-        for key, sound in ent.keys.items():
+        for key, sound in ent.items():
             if not key.startswith('sound'):
                 continue
             sound = sound.casefold().replace('\\', '/')
@@ -135,7 +135,7 @@ def comp_pack(ctx: Context):
     """Force packing resources."""
     for ent in ctx.vmf.by_class['comp_pack']:
         ent.remove()
-        for key, value in ent.keys.items():
+        for key, value in ent.items():
             # Not important.
             if key in {'classname', 'origin', 'angles', 'hammerid', 'skin'}:
                 continue

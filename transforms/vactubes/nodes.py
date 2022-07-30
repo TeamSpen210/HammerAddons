@@ -98,7 +98,7 @@ class Node(ABC):
             if ent['classname'].startswith('comp_'):
                 # Remove the extra keyvalues we use.
                 ent['classname'] = 'info_target'
-                for key in list(ent.keys()):
+                for key in list(ent):
                     if key not in ['classname', 'origin', 'targetname', 'angles']:
                         del ent[key]
             ent.make_unique('_vac_node')

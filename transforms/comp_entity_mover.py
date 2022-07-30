@@ -1,6 +1,6 @@
 """Various transformations that move other entities around."""
 
-from srctools import Vec, conv_float
+from srctools import Angle, Vec, conv_float
 from srctools.logger import get_logger
 
 from hammeraddons.bsp_transform import trans, Context
@@ -31,8 +31,7 @@ def comp_entity_mover(ctx: Context):
                 )
         else:
             # Use angles + movement.
-            offset = Vec(x=conv_float(mover['distance']))
-            offset = offset.rotate_by_str(mover['direction'])
+            offset = Vec(x=conv_float(mover['distance'])) @ Angle.from_str(mover['direction'])
 
         found_ent = None
         for found_ent in ctx.vmf.search(mover['target']):

@@ -3,7 +3,7 @@
 This is useful to compute spawnflags, or to adjust keyvalues when the target
 entity's options can't be set to a fixup variable.
 """
-from srctools import conv_int, conv_bool, Vec
+from srctools import Angle, conv_int, conv_bool, Vec
 from srctools.logger import get_logger
 
 from hammeraddons.bsp_transform import trans, Context
@@ -37,7 +37,7 @@ def kv_setter(ctx: Context) -> None:
         if conv_bool(setter['invert']):
             kv_value = '0' if conv_bool(kv_value) else '1'
         if conv_bool(setter['rotate']):
-            pos = Vec.from_str(kv_value).rotate_by_str(setter['angles'])
+            pos = Vec.from_str(kv_value) @ Angle.from_str(setter['angles'])
             if conv_bool(setter['conv_ang']):  # Save converting back and forth.
                 kv_value = str(pos.to_angle())
             else:

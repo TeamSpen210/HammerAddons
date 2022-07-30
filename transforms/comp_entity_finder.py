@@ -130,10 +130,7 @@ def entity_finder(ctx: Context):
                     cls_desc = single_class + ' '
                 else:
                     [*first_classes, last_class] = sorted(targ_classes)
-                    cls_desc = '{} or {}'.format(
-                        ', '.join(first_classes),
-                        last_class
-                    )
+                    cls_desc = f'{", ".join(first_classes)} or {last_class}'
 
                 LOGGER.warning(
                     'Cannot find valid {}entity within {} units '
@@ -159,7 +156,7 @@ def entity_finder(ctx: Context):
             found_ent['origin'] = targ_pos
 
         for ind in itertools.count(1):
-            kv_mode_str = finder['kv{}_mode'.format(ind)].casefold()
+            kv_mode_str = finder[f'kv{ind}_mode'].casefold()
             if kv_mode_str == '':
                 break
 
@@ -174,8 +171,8 @@ def entity_finder(ctx: Context):
                 )
                 continue
 
-            kv_src = finder['kv{}_src'.format(ind)]
-            kv_dest = finder['kv{}_dest'.format(ind)]
+            kv_src = finder[f'kv{ind}_src']
+            kv_dest = finder[f'kv{ind}_dest']
 
             # All modes need the destination keyvalue.
             if not kv_dest:
@@ -231,9 +228,9 @@ def entity_finder(ctx: Context):
             elif kv_mode is FinderModes.KNOWN_TO_TARG:
                 found_ent[kv_dest] = known_ent[kv_src]
             elif kv_mode is FinderModes.OUTPUT_MERGE:
-                name = '!' + kv_dest.lstrip('!').casefold()
+                output_name = '!' + kv_dest.lstrip('!').casefold()
                 for out in known_ent.outputs:
-                    if out.target.casefold() == name:
+                    if out.target.casefold() == output_name:
                         out.target = found_ent['targetname']
             else:
                 raise AssertionError('Unknown mode {}'.format(kv_mode))
