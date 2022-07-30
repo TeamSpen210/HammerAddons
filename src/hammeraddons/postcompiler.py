@@ -59,7 +59,7 @@ async def main(argv: List[str]) -> None:
     parser.add_argument(
         "--showgroups",
         action="store_true",
-        help="Show propcombined props, by setting their tint to random groups",
+        help="Legacy option, use r_colorstaticprops ingame.",
     )
     parser.add_argument(
         "--dumpgroups",
@@ -73,6 +73,9 @@ async def main(argv: List[str]) -> None:
     )
 
     args = parser.parse_args(argv)
+
+    if args.showgroups:
+        LOGGER.warning('--showgroups is not implemented. r_colorstaticprops does the same thing ingame.')
 
     # The path is the last argument to the compiler.
     # Hammer adds wrong slashes sometimes, so fix that.
@@ -217,7 +220,6 @@ async def main(argv: List[str]) -> None:
             min_cluster=conf.get(int, 'propcombine_min_cluster'),
             blacklist=conf.get(Property, 'propcombine_blacklist').as_array(),
             volume_tolerance=conf.get(float, 'propcombine_volume_tolerance'),
-            debug_tint=args.showgroups,
             debug_dump=args.dumpgroups,
             pack_models=conf.get(bool, 'propcombine_pack') or False,
         )
