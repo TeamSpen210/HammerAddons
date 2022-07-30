@@ -115,17 +115,11 @@ async def main(argv: List[str]) -> None:
 
     LOGGER.info('Loading soundscripts...')
     assert conf.path is not None
-    packlist.load_soundscript_manifest(
-        conf.path.with_name('srctools_sndscript_data.vdf')
-    )
+    packlist.load_soundscript_manifest(conf.path.with_name('srctools_sndscript_data.dmx'))
     LOGGER.info('Done! ({} sounds)', len(packlist.soundscript))
     LOGGER.info('Loading particles...')
-    packlist.load_particle_manifest()
+    packlist.load_particle_manifest(conf.path.with_name('srctools_particle_data.dmx'))
     LOGGER.info('Done! ({} particles)', len(packlist.particles))
-    LOGGER.debug('Known particles: \n{}', "\n".join([
-        f'{fname}: {mode.value}' for fname, mode in
-        packlist.particles._files.items()
-    ]))
 
     LOGGER.info('Reading BSP...')
     bsp_file = BSP(path)
