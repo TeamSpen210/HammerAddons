@@ -1,7 +1,7 @@
 """Implements an entity which transitions a value from one to another."""
 import math
 from string import ascii_lowercase
-from typing import Callable, Dict, List, Optional
+from typing import Callable, Dict, Optional
 
 from srctools import conv_float, Output
 from srctools.logger import get_logger

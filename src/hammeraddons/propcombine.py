@@ -314,7 +314,7 @@ async def compile_func(
         child_coll = await _coll_cache.fetch(qc.phy_smd, build_collision, qc, prop, child_ref)
 
         offset = Vec(prop.x, prop.y, prop.z)
-        matrix = Matrix.from_angle(Angle(prop.pit, prop.yaw, prop.rol))
+        matrix = Matrix.from_angle(prop.pit, prop.yaw, prop.rol)
 
         ref_mesh.append_model(child_ref, matrix, offset, prop.scale * qc.ref_scale)
 

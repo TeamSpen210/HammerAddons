@@ -80,7 +80,7 @@ class Node(ABC):
 
     def __init__(self, ent: Entity) -> None:
         self.origin = Vec.from_str(ent['origin'])
-        self.matrix = Matrix.from_angle(Angle.from_str(ent['angles']))
+        self.matrix = Matrix.from_angstr(ent['angles'])
         self.ent = ent
 
         self.has_input = False  # We verify every node has an input if used.

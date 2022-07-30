@@ -1,4 +1,4 @@
-""""Compile static prop cables, instead of sprites."""
+"""Compile static prop cables, instead of sprites."""
 import itertools
 import math
 import struct
@@ -998,11 +998,11 @@ def place_seg_props(nodes: Iterable[Node], fsys: FileSystem, mesh: Mesh) -> Iter
             conf = rand.choice(weights)
             if conf.orient is SegPropOrient.RAND_FULL:
                 # We cover all orientations, so pre-rotation value is irrelevant.
-                angles = Matrix.from_angle(Angle(
+                angles = Matrix.from_angle(
                     rand.uniform(0.0, 360.0),
                     rand.uniform(0.0, 360.0),
                     rand.uniform(0.0, 360.0),
-                ))
+                )
             elif conf.orient is SegPropOrient.NONE:
                 angles = conf.angles
             elif conf.orient is SegPropOrient.FULL_ROT:
@@ -1181,7 +1181,7 @@ async def comp_prop_rope(ctx: Context) -> None:
             0.0,
             ent['model'],
             SegPropOrient(ent['orient']),
-            Matrix.from_angle(Angle.from_str(ent['angles'])),
+            Matrix.from_angstr(ent['angles']),
         ))
 
     # Put into a set, so they're immutable and have no ordering.
