@@ -6,6 +6,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Tuple, Dict, List, Iterable, Optional
 import math
+import random
 
 import trio
 
@@ -206,7 +207,7 @@ async def vactube_transform(ctx: Context) -> None:
     # Sort the animations by their start and end, so they ideally are consistent.
     all_anims.sort(key=lambda a: (a.start_node.origin, a.end_node.origin))
 
-    anim_mdl_name = Path('maps', ctx.bsp_path.stem, 'vac_anim.mdl')
+    anim_mdl_name = Path('maps', ctx.bsp_path.stem, f'vac_anim_{random.randrange(0xffffff):06x}.mdl')
 
     # Now generate the animation model.
     # First wipe the model.
