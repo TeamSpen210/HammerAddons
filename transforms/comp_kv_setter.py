@@ -6,7 +6,7 @@ entity's options can't be set to a fixup variable.
 from srctools import Angle, conv_int, conv_bool, Vec
 from srctools.logger import get_logger
 
-from hammeraddons.bsp_transform import trans, Context
+from hammeraddons.bsp_transform import trans, Context, check_control_enabled
 
 LOGGER = get_logger(__name__)
 
@@ -16,6 +16,8 @@ def kv_setter(ctx: Context) -> None:
     """Sets a keyvalue on an entity to a new value."""
     for setter in ctx.vmf.by_class['comp_kv_setter']:
         setter.remove()
+        if not check_control_enabled(setter):
+            continue
 
         mode = setter['mode', 'kv']
         if mode.casefold() == 'flags':

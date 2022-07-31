@@ -1,4 +1,4 @@
-@PointClass base(Angles)
+@PointClass base(Angles, ControlEnables)
 	iconsprite("editor/comp_precache_model") 
 	studioprop() 
 	appliesto(srctools)

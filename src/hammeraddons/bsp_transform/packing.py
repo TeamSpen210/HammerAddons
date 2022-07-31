@@ -6,7 +6,7 @@ from srctools import Entity
 from srctools.logger import get_logger
 from srctools.packlist import FileType, unify_path
 
-from hammeraddons.bsp_transform import trans, Context
+from hammeraddons.bsp_transform import check_control_enabled, trans, Context
 
 
 LOGGER = get_logger(__name__, 'trans.packing')
@@ -17,6 +17,9 @@ def comp_precache_model(ctx: Context):
     """Force precaching a specific model."""
     already_done: Set[str] = set()
     for ent in ctx.vmf.by_class['comp_precache_model']:
+        if not check_control_enabled(ent):
+            ent.remove()
+            continue
         model = ent['model']
 
         # Precaching implies packing it.
@@ -63,6 +66,8 @@ def comp_precache_sound(ctx: Context):
     sounds = set()
     for ent in ctx.vmf.by_class['comp_precache_sound']:
         ent.remove()
+        if not check_control_enabled(ent):
+            continue
 
         for key, sound in ent.items():
             if not key.startswith('sound'):
@@ -101,6 +106,9 @@ def comp_pack_replace_soundscript(ctx: Context):
     new_scripts = set()
     for ent in ctx.vmf.by_class['comp_pack_replace_soundscript']:
         ent.remove()
+        if not check_control_enabled(ent):
+            continue
+
         old_scripts.add(ent['original', ''].casefold())
         new_scripts.add(ent['replacement', ''].casefold())
 
@@ -135,9 +143,11 @@ def comp_pack(ctx: Context):
     """Force packing resources."""
     for ent in ctx.vmf.by_class['comp_pack']:
         ent.remove()
+        if not check_control_enabled(ent):
+            continue
         for key, value in ent.items():
-            # Not important.
-            if key in {'classname', 'origin', 'angles', 'hammerid', 'skin'}:
+            # Non-resource keyvalues.
+            if key in {'classname', 'origin', 'angles', 'hammerid', 'skin', 'ctrl_type', 'ctrl_value'}:
                 continue
 
             # We allow numeric suffixes for multiple - generic45.
@@ -178,6 +188,9 @@ def comp_pack_rename(ctx: Context):
 
     for ent in ctx.vmf.by_class['comp_pack_rename']:
         ent.remove()
+        if not check_control_enabled(ent):
+            continue
+
         name_src = unify_path(ent['filesrc'])
         name_dest = ent['filedest']
         file_type_name = ent['filetype']

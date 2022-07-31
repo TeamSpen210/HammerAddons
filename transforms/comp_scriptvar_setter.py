@@ -9,7 +9,7 @@ from srctools.logger import get_logger
 from srctools.tokenizer import escape_text
 from srctools import Entity, Vec, conv_float, conv_bool, Angle
 
-from hammeraddons.bsp_transform import trans, Context
+from hammeraddons.bsp_transform import trans, Context, check_control_enabled
 
 
 LOGGER = get_logger(__name__)
@@ -84,6 +84,9 @@ def comp_scriptvar(ctx: Context):
         comp_ent.remove()
         var_name = comp_ent['variable']
         index: Union[int, Type[Ellipsis], None] = None
+
+        if not check_control_enabled(comp_ent):
+            continue
 
         # Specify ent = None for globals.
         ent_list: list[Entity | None]

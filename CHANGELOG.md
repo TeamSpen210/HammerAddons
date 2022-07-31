@@ -4,13 +4,13 @@
 * Tweak `comp_vactube_junction` "Override" description to make it clear they're optional.
 * Tweak `comp_propcombine_set`/`_volume` "Model Filter" description to make it more clear.
 * Add additional log messages for propcombine.
+* Add `comp_relay`'s "Control Type"/"Control Value" option to most comp_ entities, to allow disabling them via fixup values.
 * Make `point_viewcontrol` defaults to be more useful.
 * Change the editor model for `prop_testchamber_door` to use a dashed line.
 * The config format for additional plugins has changed - an ID is now required, allowing for a consistent import path to be used.
 * Fix issues where `comp_flicker` may run indefinitely.
 * Fix the `use_comma_sep` config option.
-* #154: Add scale keyvalue to hammer_notes.
-* Compilation of prop ropes propcombine models, and decompilation will now all be done concurrently, using all CPU cores.
+* Compilation of prop ropes, propcombine models, and decompilation will now all be done concurrently, using all CPU cores.
 * Added a config option (`propcombine_pack`) to control whether propcombined models will be packed.
 * Tweak the distance `comp_trigger_p2_goo` places the physics trigger below the surface.
 * Correctly handle "only once" when collapsing outputs in entities such as `comp_relay`.
@@ -18,9 +18,10 @@
 * Ensure propcombine entities are deleted from the BSP in all cases.
 * The generated vactube animation prop is now textured with a valid material.
 * New entity sprites: `npc_vehicledriver`, `comp_numeric_transition`, `point_broadcastclientcommand`.
-* #42: Add editor models for Black Mesa health and suit chargers.
-* #76: Make all weapon entities include `CBaseAnimating` I/O and keyvalues.
-* #120: Fix `env_bubbles`, `env_embers`, `func_precipitation` and `func_smokevolume` having an `origin` keyvalue. These entities break if their origin is not `0 0 0`.
+* (#154): Add scale keyvalue to hammer_notes.
+* (#42): Add editor models for Black Mesa health and suit chargers.
+* (#76): Make all weapon entities include `CBaseAnimating` I/O and keyvalues.
+* (#120): Fix `env_bubbles`, `env_embers`, `func_precipitation` and `func_smokevolume` having an `origin` keyvalue. These entities break if their origin is not `0 0 0`.
 * Indicate the allowed combine ball sizes - `1-12`.
 * Snap propcombine props to within 45 degrees, not 15.
 * Remove `--showgroups` command line option. Source provides the `r_staticpropinfo` convar which performs the same function.
@@ -40,7 +41,7 @@
 * Fix propcombine not working if blacklist is not set.
 * Handle VPKs with non-ASCII bytes in filenames.
 * BINK videos will now never be packed.
-* When generating a default config, running from a sourcemod will be properly handled
+* When generating a default config, running from a sourcemod will be properly handled.
 
 --------------------
 

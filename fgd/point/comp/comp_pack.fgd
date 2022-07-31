@@ -1,4 +1,5 @@
 @PointClass 
+	base(ControlEnables)
 	iconsprite("editor/comp_pack")
 	appliesto(srctools)
 	autovis(Postcompiler, Packing)
