@@ -277,7 +277,7 @@ OPTIONS = [
         'plugins', TYPE.RAW,
         """\
         Add plugins to the post compiler. Each block is a package of plugins in some folder.
-        The name must be a Python identifier - the plugins are mounted at "srctools.bsp_transforms.plugin.blockname.filename".
+        The name must be a Python identifier - the plugins are mounted at "hammeraddons.bsp_transforms.plugin.blockname.filename".
         * "path" must be set to either a single Python file, or a folder of files.
         * If "recurse" is set, subfolders are recursively loaded as packages.
         The transforms folder inside the postcompiler folder is also always
