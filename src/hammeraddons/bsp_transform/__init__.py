@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Optional, Callable, Awaitable, Dict, Mapping, Tuple, List
 import inspect
 
-from srctools import EmptyMapping, FileSystem, Property, VMF, Output, Entity, FGD
+from srctools import EmptyMapping, FileSystem, Property, VMF, Output, Entity, FGD, conv_bool
 from srctools.bsp import BSP
 from srctools.logger import get_logger
 from srctools.packlist import PackList
@@ -12,7 +12,24 @@ from srctools.game import Game
 
 LOGGER = get_logger(__name__, 'bsp_trans')
 
-__all__ = ['Context', 'trans', 'run_transformations']
+__all__ = [
+    'check_control_enabled',
+    'Context', 'trans', 'run_transformations',
+]
+
+
+def check_control_enabled(ent: Entity) -> bool:
+    """Implement the bahaviour of ControlEnables - control_type and control_value.
+
+    This allows providing a fixup value, and optionally inverting it.
+    """
+    # If ctrl_type is 0, ctrl_value needs to be 1 to be enabled.
+    # If ctrl_type is 1, ctrl_value needs to be 0 to be enabled.
+    if 'ctrl_type' in ent:
+        return conv_bool(ent['ctrl_type'], False) != conv_bool(ent['ctrl_value'], True)
+    else:
+        # Missing, assume true if ctrl_value also isn't present.
+        return conv_bool(ent['ctrl_value'], True)
 
 
 class Context:
