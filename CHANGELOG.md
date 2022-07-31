@@ -1,18 +1,41 @@
 
 # Version (dev)
-
+* Tweak `comp_prop_rope` and `comp_vactube_junction` "Group" descriptions to make it clear they're optional.
+* Tweak `comp_vactube_junction` "Override" description to make it clear they're optional.
+* Tweak `comp_propcombine_set`/`_volume` "Model Filter" description to make it more clear.
+* Add additional log messages for propcombine.
+* Make `point_viewcontrol` defaults to be more useful.
+* Change the editor model for `prop_testchamber_door` to use a dashed line.
+* The config format for additional plugins has changed - an ID is now required, allowing for a consistent import path to be used.
+* Fix issues where `comp_flicker` may run indefinitely.
+* Fix the `use_comma_sep` config option.
+* #154: Add scale keyvalue to hammer_notes.
+* Compilation of prop ropes propcombine models, and decompilation will now all be done concurrently, using all CPU cores.
+* Added a config option (`propcombine_pack`) to control whether propcombined models will be packed.
+* Tweak the distance `comp_trigger_p2_goo` places the physics trigger below the surface.
+* Correctly handle "only once" when collapsing outputs in entities such as `comp_relay`.
+* Improve matching behaviour for the Entity Handle mode in `comp_scriptvar_setter`, and add a `Qangle()` mode for L4D2/Mapbase.
+* Ensure propcombine entities are deleted from the BSP in all cases.
+* The generated vactube animation prop is now textured with a valid material.
+* New entity sprites: `npc_vehicledriver`, `comp_numeric_transition`, `point_broadcastclientcommand`.
+* #42: Add editor models for Black Mesa health and suit chargers.
+* #76: Make all weapon entities include `CBaseAnimating` I/O and keyvalues.
+* #120: Fix `env_bubbles`, `env_embers`, `func_precipitation` and `func_smokevolume` having an `origin` keyvalue. These entities break if their origin is not `0 0 0`.
+* Indicate the allowed combine ball sizes - `1-12`.
+* Snap propcombine props to within 45 degrees, not 15.
+* Remove `--showgroups` command line option. Source provides the `r_staticpropinfo` convar which performs the same function.
+* Use a cache file to avoid needing to reparse particle system files every run.
 
 --------------------
 
 # Version 2.5.0
-
 * Fix two issues causing produced BSPs to be potentially corrupt. If your maps are mysteriously crashing on load, this may fix the issue.
-* Particle systems will now be detected and packed along with their dependencies. This needs configuration in the config file.
-* Optionally, the postcompiler can collapse and remove func_instance_io_proxy from maps entirely to save ents.
+* Particle systems will now be detected and packed along with their dependencies. This needs configuration in the config file, since different games use different filenames.
+* Optionally, the postcompiler can collapse and remove `func_instance_io_proxy` from maps entirely to save ents.
 * Add comp_sequential_call: finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order.
-* Add comp_flicker: fires on/off and skin inputs repeatedly to simulate a flicker-on effect.
-* comp_scriptvar_setter can now set global variables also.
-* prop_paint_bomb will now show its collision mesh (futbols).
+* Add `comp_flicker`: fires on/off and skin inputs repeatedly to simulate a flicker-on effect.
+* `comp_scriptvar_setter` can now set global variables also.
+* `prop_paint_bomb` will now show its collision mesh (futbols).
 * Fix .ani files for models not being detected.
 * Fix propcombine not working if blacklist is not set.
 * Handle VPKs with non-ASCII bytes in filenames.
@@ -22,12 +45,12 @@
 --------------------
 
 # Version 2.4.0
-* Added comp_prop_rope_dynamic and comp_prop_cable_dynamic, for generating 3D ropes as dynamic props.
-* Added comp_prop_rope_bunting, for positioning other props along a rope (could be used for lights, supports, decoration, etc).
-* Prop ropes may optionally have a collision mesh.
-* Added comp_propcombine_volume & tools/toolspropcombine, which allows specifing propcombine regions with brushwork. 
+* Added `comp_prop_rope_dynamic` and `comp_prop_cable_dynamic`, for generating 3D ropes as dynamic props.
+* Added `comp_prop_rope_bunting`, for positioning other props along a rope (could be used for lights, supports, decoration, etc).
+* Prop ropes may be configured to generate a collision mesh.
+* Added `comp_propcombine_volume` & `tools/toolspropcombine`, which allows specifing propcombine regions with brushwork. 
   This does leave remmnants of the brush in the map, so the point entity may still need to be used if near brush limits.
-* Added comp_vactube_spline, which generates Portal 2 vactube models following a path.
+* Added `comp_vactube_spline`, which generates Portal 2 vactube models following a path.
 * Add an editor model for decals, like overlays have.
 * Added ability to specify rotation seed for vactubes.
 
