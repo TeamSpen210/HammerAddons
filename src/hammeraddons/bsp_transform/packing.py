@@ -50,7 +50,7 @@ def make_precache_prop(ent: Entity) -> None:
     ent['origin'] = '-15872 -15872 -15872'
 
 
-SND_CACHE_FUNC = b'''\
+SND_CACHE_FUNC = '''\
 function Precache() {
 %s
 }
@@ -80,8 +80,8 @@ def comp_precache_sound(ctx: Context):
         return
 
     # This VScript function forces a script to be precached.
-    lines = SND_CACHE_FUNC % b'\n'.join([
-        b'\tself.PrecacheSoundScript("%s")' % snd.encode('utf8')
+    lines = SND_CACHE_FUNC % '\n'.join([
+        f'\tself.PrecacheSoundScript("{snd}")'
         for snd in sorted(sounds)
     ])
 
@@ -90,7 +90,7 @@ def comp_precache_sound(ctx: Context):
         targetname='@precache',
         origin='-15872 -15872 -15872',  # Should be outside the map.
         # We don't include scripts/vscripts in the filename.
-        vscripts=ctx.pack.inject_file(lines, 'scripts/vscripts/inject', 'nut')[17:],
+        vscripts=ctx.pack.inject_vscript(lines),
     )
 
 
