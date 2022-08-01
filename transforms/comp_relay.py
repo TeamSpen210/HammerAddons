@@ -1,7 +1,8 @@
 """Implements simple logic."""
 from srctools import conv_bool, conv_float
-from srctools.bsp_transform import trans, Context
 from srctools.logger import get_logger
+
+from hammeraddons.bsp_transform import trans, Context, check_control_enabled
 
 
 LOGGER = get_logger(__name__)
@@ -31,13 +32,7 @@ def comp_relay(ctx: Context):
             ent['classname'].casefold() != 'comp_relay'
             for ent in ctx.vmf.by_target[relay_name]
         )
-        # If ctrl_type is 0, ctrl_value needs to be 1 to be enabled.
-        # If ctrl_type is 1, ctrl_value needs to be 0 to be enabled.
-        if 'ctrl_type' in relay:
-            enabled = conv_bool(relay['ctrl_type'], False) != conv_bool(relay['ctrl_value'], True)
-        else:
-            # Missing, assume true if ctrl_value also isn't present.
-            enabled = conv_bool(relay['ctrl_value'], True)
+        enabled = check_control_enabled(relay)
 
         extra_delay = conv_float(relay['delay'])
 

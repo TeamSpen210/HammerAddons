@@ -1,6 +1,7 @@
 @PointClass 
+	base(ControlEnables)
 	// This is implemented via a VScript method.
-	appliesto(+srctools, +VScript, -engine)
+	appliesto(+srctools, +VScript)
 	iconsprite("editor/comp_precache_sound")
 	autovis(Postcompiler, Precacher)
 = comp_precache_sound:

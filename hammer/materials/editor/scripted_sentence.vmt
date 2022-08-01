@@ -1,6 +1,6 @@
 Sprite
 {
-	$baseTexture "editor/ficool2/game_score"
+	$baseTexture "editor/scripted_sentence"
 	$spriteorientation "vp_parallel"
 	$spriteorigin "[.5 .5]"
 	$no_fullbright 1

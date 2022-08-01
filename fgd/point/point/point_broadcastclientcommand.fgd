@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	color(200 0 0) 
-	iconsprite("editor/point_clientcommand.vmt")
+	iconsprite("editor/point_broadcastclientcommand.vmt")
 = point_broadcastclientcommand: "An entity that issues commands to each valid client's console, as if it was typed in by that player locally."
 	[
 

@@ -2,7 +2,7 @@
 	iconsprite("editor/comp_choreo_sceneset.vmt")
 	autovis(Postcompiler, Sceneset)
 	autovis(Sounds, Choreo Scenes)
-	appliesto(srctools, -engine)
+	appliesto(srctools)
 = comp_choreo_sceneset:
 "Chains a set of choreographed scenes together."
 	[

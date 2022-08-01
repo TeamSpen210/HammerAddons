@@ -1,8 +1,9 @@
 """Implements various brush entities."""
 from typing import Tuple, Dict
 
-from srctools.bsp_transform import trans, Context
 from srctools import Output, conv_bool, conv_float, Vec, Entity, conv_int
+
+from hammeraddons.bsp_transform import trans, Context
 
 
 @trans('P2 Coop Trigger')

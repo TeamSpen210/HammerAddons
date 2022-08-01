@@ -1,6 +1,6 @@
 // Occulder brushes are removed during compile, and stored very specially.
 @SolidClass base(BaseEntity)
-	color(0 255 255) 
+	color(0 255 255) appliesto(!engine)
 = func_occluder: "A occluder brush used to manage dynamic visibility in maps. " +
 	"Occluders are used to dynamically determine what things are behind them, to prevent trying to draw them at all."
 	[
@@ -10,7 +10,6 @@
 		0: "Inactive"
 		1: "Active"
 		]
-
 
 	// Inputs
 	input Deactivate(void) : "Deactivate the occluder, When inactive, it can be seen through."

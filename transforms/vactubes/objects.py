@@ -3,11 +3,12 @@ from typing import Optional, Tuple, List, Dict
 import os.path
 import math
 
-import srctools.logger
-from srctools.bsp_transform.packing import make_precache_prop
 from srctools.packlist import PackList, FileType
-
 from srctools import Vec, VMF
+import srctools.logger
+
+from hammeraddons.bsp_transform.packing import make_precache_prop
+
 
 LOGGER = srctools.logger.get_logger(__name__)
 
@@ -81,7 +82,8 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[
         vac_objects[obj.group].append(obj)
         # Convert the ent into a precache ent, stripping the other keyvalues.
         mdl_name = ent['model']
-        ent.keys = {'model': mdl_name}
+        ent.clear()
+        ent['model'] = mdl_name
         make_precache_prop(ent)
         pack.pack_file(mdl_name, FileType.MODEL, skinset={obj.skin_vac})
 

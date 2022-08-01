@@ -1,17 +1,21 @@
 """Implement customisable vactubes for items."""
 import subprocess
 from collections import defaultdict
+import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Tuple, Dict, List, Iterable, Optional
 import math
+import random
+
+import trio
 
 from srctools.mdl import MDL_EXTS
 from srctools.smd import Mesh
-
 import srctools.logger
 from srctools import Vec, Output, conv_int
-from srctools.bsp_transform import trans, Context
+
+from hammeraddons.bsp_transform import trans, Context
 from . import nodes, animations, objects
 
 
@@ -22,6 +26,7 @@ ANG_THRESHOLD = math.cos(math.radians(30))
 QC_TEMPLATE = '''\
 $modelname "{path}"
 $surfaceprop "default"
+$cdmaterials "models/props_backstage"
 
 $body body "ref.smd"
 
@@ -79,7 +84,7 @@ def find_closest(
 
 
 @trans('Portal 2 Vactubes')
-def vactube_transform(ctx: Context) -> None:
+async def vactube_transform(ctx: Context) -> None:
     """Implements the dynamic Vactube system."""
     name_to_node: Dict[str, nodes.Node] = {}
     all_nodes: List[nodes.Node] = []
@@ -202,7 +207,7 @@ def vactube_transform(ctx: Context) -> None:
     # Sort the animations by their start and end, so they ideally are consistent.
     all_anims.sort(key=lambda a: (a.start_node.origin, a.end_node.origin))
 
-    anim_mdl_name = Path('maps', ctx.bsp_path.stem, 'vac_anim.mdl')
+    anim_mdl_name = Path('maps', ctx.bsp_path.stem, f'vac_anim_{random.randrange(0xffffff):06x}.mdl')
 
     # Now generate the animation model.
     # First wipe the model.
@@ -215,8 +220,15 @@ def vactube_transform(ctx: Context) -> None:
 
     with TemporaryDirectory(prefix='vactubes_') as temp_dir:
         # Make the reference mesh.
+        mesh = Mesh.build_bbox('root', 'vacum_pipe', Vec(-8, -8, -8), Vec(8, 8, 8))
+        # Aesthetics...
+        U = {0.0: 740/1024.0, 1.0: 816/1024.0}
+        V = {0.0: 1.0-825/1024.0, 1.0: 1.0-904/1024.0}
+        for tri in mesh.triangles:
+            for point in tri:
+                point.tex_u, point.tex_v = U[point.tex_u], V[point.tex_v]
         with open(temp_dir + '/ref.smd', 'wb') as f:
-            Mesh.build_bbox('root', 'demo', Vec(-32, -32, -32), Vec(32, 32, 32)).export(f)
+            mesh.export(f)
 
         with open(temp_dir + '/prop.qc', 'w') as qc_file:
             qc_file.write(QC_TEMPLATE.format(path=anim_mdl_name))
@@ -234,8 +246,14 @@ def vactube_transform(ctx: Context) -> None:
             '-game', str(ctx.game.path),
             temp_dir + '/prop.qc',
         ]
-        LOGGER.info('Compiling vactube animations {}...', args)
-        subprocess.run(args)
+        LOGGER.info('Compiling vactube animations with args={}...', args)
+        try:
+            proc = await trio.run_process(args, capture_stdout=True, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as exc:
+            LOGGER.error('Failed to compile vactube animations:\n{}', exc.stdout)
+            sys.exit(1)
+        else:
+            LOGGER.debug('Compile log:\n{}', proc.stdout)
 
     # Ensure they're all packed.
     for ext in MDL_EXTS:
