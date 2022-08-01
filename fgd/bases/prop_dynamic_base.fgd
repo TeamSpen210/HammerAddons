@@ -43,6 +43,9 @@
 	input SetAnimationNoReset[since_ASW](string) : "Force the prop to play an animation unless the prop is already playing the animation. The parameter should be the name of the animation."
 	input BecomeRagdoll[since_P2](void) : "Change into a ragdoll immediately."
 	input FadeAndKill[since_P2](void) : "Fade out then remove this prop."
+	input SetFrame[P2EDU](float) : "Set the frame of the animation 0 to 1."
+	input SetAnalogValue[P2EDU](float) : "Set animation frame between 0 and 1."
+	input SetAnalogValueString[P2EDU](string) : "Set animation frame between 0 and 1."
 
 	// Outputs
 	output OnAnimationBegun(void) : "Fired whenever a new animation has begun playing."
