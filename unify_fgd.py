@@ -176,6 +176,23 @@ def _polyfill_node_id(fgd: FGD):
                     kv.type = ValueTypes.INT
 
 
+@_polyfill('until_l4d2')
+def _polyfill_scripts(fgd: FGD):
+    """Before L4D2's Hammer, the vscript specific types were not available
+
+    Substitute with just a string.
+    """
+    for ent in fgd.entities.values():
+        for tag_map in ent.keyvalues.values():
+            for kv in tag_map.values():
+                if kv.type is ValueTypes.STR_VSCRIPT or kv.type is ValueTypes.STR_VSCRIPT_SINGLE:
+                    kv.type = ValueTypes.STRING
+        for tag_map in ent.inputs.values():
+            for inp in tag_map.values():
+                if inp.type is ValueTypes.STR_VSCRIPT_SINGLE:
+                    inp.type = ValueTypes.STRING
+
+
 @_polyfill('until_csgo')
 def _polyfill_worldtext(fgd: FGD):
     """Strip worldtext(), since this is not available."""
