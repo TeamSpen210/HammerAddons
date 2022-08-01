@@ -8,11 +8,8 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from lzma import LZMAFile
 from typing import (
-    Union, Optional,
-    TypeVar,
-    Callable,
-    Dict, List, Tuple,
-    Set, FrozenSet,
+    Union, Optional, TypeVar, Callable,
+    Dict, List, Tuple, Set, FrozenSet,
     MutableMapping,
 )
 
@@ -29,8 +26,7 @@ from srctools.filesys import RawFileSystem
 # Chronological order of games.
 # If 'since_hl2' etc is used in FGD, all future games also include it.
 # If 'until_l4d' etc is used in FGD, only games before include it.
-
-GAMES = [
+GAMES: List[Tuple[str, str]] = [
     ('HLS',  'Half-Life: Source'),
     ('DODS', 'Day of Defeat: Source'),
     ('CSS',  'Counter-Strike: Source'),
@@ -59,7 +55,7 @@ GAMES = [
     ('DOTA2', 'Dota 2'),
     ('PUNT',  'PUNT'),
     ('P2DES', 'Portal 2: Desolation'),
-]  # type: List[Tuple[str, str]]
+]
 
 GAME_ORDER = [game for game, desc in GAMES]
 GAME_NAME = dict(GAMES)
@@ -98,7 +94,7 @@ TAGS_SPECIAL = {
   'BEE2',  # BEEmod's templates.
 }
 
-ALL_TAGS = set()  # type: Set[str]
+ALL_TAGS: Set[str] = set()
 ALL_TAGS.update(GAME_ORDER)
 ALL_TAGS.update(ALL_FEATURES)
 ALL_TAGS.update(TAGS_SPECIAL)
@@ -107,9 +103,7 @@ ALL_TAGS.update('UNTIL_' + t.upper() for t in GAME_ORDER)
 
 
 # If the tag is present, run to backport newer FGD syntax to older engines.
-POLYFILLS = []  # type: List[Tuple[str, Callable[[FGD], None]]]
-
-
+POLYFILLS: List[Tuple[str, Callable[[FGD], None]]] = []
 PolyfillFuncT = TypeVar('PolyfillFuncT', bound=Callable[[FGD], None])
 
 # This ends up being the C1 Reverse Line Feed in CP1252,
@@ -695,7 +689,7 @@ def action_import(
                     ent.helpers.append(helper)
 
             for cat in ('keyvalues', 'inputs', 'outputs'):
-                cur_map = getattr(ent, cat)  # type: Dict[str, Dict[FrozenSet[str], Union[KeyValues, IODef]]]
+                cur_map: Dict[str, Dict[FrozenSet[str], Union[KeyValues, IODef]]] = getattr(ent, cat)
                 new_map = getattr(new_ent, cat)
                 new_names = set()
                 for name, tag_map in new_map.items():
@@ -963,7 +957,7 @@ def action_export(
             ent.helpers.append(helper)
 
     print('Culling unused bases...')
-    used_bases = set()  # type: Set[EntityDef]
+    used_bases: Set[EntityDef] = set()
     # We only want to keep bases that provide keyvalues. We've merged the
     # helpers in.
     for ent in fgd.entities.values():
@@ -1076,9 +1070,7 @@ def action_visgroup(
 def main(args: List[str]=None):
     """Entry point."""
     parser = argparse.ArgumentParser(
-        description="Manage a set of unified FGDs, sharing configs "
-                    "between engine versions.",
-
+        description="Manage a set of unified FGDs, sharing configs between engine versions.",
     )
     script_dir = Path(sys.argv[0]).parent
     parser.add_argument(
@@ -1178,8 +1170,9 @@ def main(args: List[str]=None):
     dbase = Path(result.database).resolve()
     dbase.mkdir(parents=True, exist_ok=True)
 
+    extra_db: Optional[Path]
     if result.extra_db is not None:
-        extra_db = Path(result.extra_db).resolve()  # type: Optional[Path]
+        extra_db = Path(result.extra_db).resolve()
     else:
         extra_db = None
 
