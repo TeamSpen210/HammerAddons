@@ -2,7 +2,7 @@
 	sphere(radius)
 	animator() keyframe()
 	iconsprite("editor/comp_prop_rope")
-	appliesto(srctools, -engine)
+	appliesto(srctools)
 = comp_vactube_spline: "Constructs a custom vactube model, using a set of path points."
 	[
 	nextkey(target_destination) : "Next Rope" : : "Name of the next spline node."

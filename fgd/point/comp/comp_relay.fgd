@@ -1,6 +1,6 @@
-@PointClass base(StaticTargetName)
+@PointClass base(StaticTargetName, ControlEnables)
 	iconsprite("editor/comp_relay")
-	appliesto(srctools, -engine)
+	appliesto(srctools)
 = comp_relay:
     "Simplified version of logic_relay which is able to be optimised away by the compiler."+
     "" +
@@ -8,15 +8,6 @@
     "Inputs only work if given directly from entities (or via instance redirection), not ingame or dynamically." + 
     "All inputs/outputs may pass through any parameter, if no override is specified."
     [
-    ctrl_type[engine](boolean) : "Invert Value?" : 0
-    ctrl_type(choices) : "Control Type" : 0 : "Controls how the value is interpreted for whether to break the connection from this." = 
-    	[
-    	0 : "Is Enabled?"
-    	1 : "Is Disabled?"
-    	]
-    ctrl_value(boolean) : "Control Value" : 1 : "Decides whether to skip using the outputs from this. " +
-    	"If the entity is disabled, all outputs are removed entirely."
-
     delay(float) : "Extra Delay" : 0.0 : "Add this delay to all outputs. This allows you to control this via $fixup values, for instance."
 
     input Trigger(string): "Trigger the relay and fire the output."

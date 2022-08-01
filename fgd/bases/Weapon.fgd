@@ -1,4 +1,4 @@
-@BaseClass base(BaseEntityPoint)
+@BaseClass base(BaseEntityAnimating)
 	color(0 0 200) 
 	sphere(fademindist) 
 	sphere(fademaxdist) 

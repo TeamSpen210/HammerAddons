@@ -6,8 +6,8 @@
 	[
 	spawnflags(flags) =
 		[
-		1: "[1] Update Steam" : 1
-		2: "[2] Update Discord" : 1
+		1: "Update Steam" : 1
+		2: "Update Discord" : 1
 		]
 
 	SetRPCState(string) : "RPC State" : "" : "Sets the 'state' that should be reported to rich presence clients like Discord. Shows the mod's name from gameinfo.txt by default."

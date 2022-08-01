@@ -80,7 +80,7 @@ class Node(ABC):
 
     def __init__(self, ent: Entity) -> None:
         self.origin = Vec.from_str(ent['origin'])
-        self.matrix = Matrix.from_angle(Angle.from_str(ent['angles']))
+        self.matrix = Matrix.from_angstr(ent['angles'])
         self.ent = ent
 
         self.has_input = False  # We verify every node has an input if used.
@@ -97,12 +97,10 @@ class Node(ABC):
                 out.output = 'On' + PASS_OUT
             if ent['classname'].startswith('comp_'):
                 # Remove the extra keyvalues we use.
-                ent.keys = {
-                    'classname': 'info_target',
-                    'targetname': ent['targetname'],
-                    'origin': ent['origin'],
-                    'angles': ent['angles'],
-                }
+                ent['classname'] = 'info_target'
+                for key in list(ent):
+                    if key not in ['classname', 'origin', 'targetname', 'angles']:
+                        del ent[key]
             ent.make_unique('_vac_node')
         elif not self.keep_ent:
             ent.remove()
@@ -488,7 +486,7 @@ class Straight(Node):
     def __init__(self, ent: Entity):
         """Convert the entity to have the right logic."""
         self.scanner = None
-        self.persist_tv = conv_bool(ent.keys.pop('persist_tv', False))
+        self.persist_tv = conv_bool(ent.pop('persist_tv', False))
 
         pos = Vec.from_str(ent['origin'])
         for prop in ent.map.by_class['prop_dynamic']:

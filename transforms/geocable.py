@@ -1,4 +1,4 @@
-""""Compile static prop cables, instead of sprites."""
+"""Compile static prop cables, instead of sprites."""
 import itertools
 import math
 import struct
@@ -12,16 +12,17 @@ from typing import (
 )
 
 import attr
+import trio
 
 from srctools import (
     logger, conv_int, conv_float, conv_bool,
     Vec, Entity, Matrix, Angle, lerp, FileSystem,
 )
-from srctools.compiler.mdl_compiler import ModelCompiler
-from srctools.bsp_transform import Context, trans
 from srctools.bsp import StaticProp, StaticPropFlags, VisLeaf, VisTree
 from srctools.smd import Mesh, Vertex, Triangle, Bone
 
+from hammeraddons.mdl_compiler import ModelCompiler
+from hammeraddons.bsp_transform import Context, trans
 
 LOGGER = logger.get_logger(__name__)
 NodeID = NewType('NodeID', str)
@@ -382,7 +383,7 @@ class Node:
         return f'<Node at {self.pos}>'
 
 
-def build_rope(
+async def build_rope(
     nodes_and_conn: Tuple[FrozenSet[NodeEnt], FrozenSet[Tuple[NodeID, NodeID]]],
     temp_folder: Path,
     mdl_name: str,
@@ -997,11 +998,11 @@ def place_seg_props(nodes: Iterable[Node], fsys: FileSystem, mesh: Mesh) -> Iter
             conf = rand.choice(weights)
             if conf.orient is SegPropOrient.RAND_FULL:
                 # We cover all orientations, so pre-rotation value is irrelevant.
-                angles = Matrix.from_angle(Angle(
+                angles = Matrix.from_angle(
                     rand.uniform(0.0, 360.0),
                     rand.uniform(0.0, 360.0),
                     rand.uniform(0.0, 360.0),
-                ))
+                )
             elif conf.orient is SegPropOrient.NONE:
                 angles = conf.angles
             elif conf.orient is SegPropOrient.FULL_ROT:
@@ -1065,8 +1066,99 @@ def compute_visleafs(
     return list(used_leafs)
 
 
+async def compile_rope(
+    ctx: Context,
+    compiler: ModelCompiler,
+    nodes: Set[NodeEnt],
+    dyn_ents: List[Entity],
+    connections: Set[Tuple[NodeID, NodeID]],
+) -> None:
+    """Compile a single rope group."""
+    for ent in dyn_ents:
+        origin = Vec.from_str(ent['origin'])
+        dyn_nodes = frozenset({
+            node.relative_to(origin)
+            for node in nodes
+        })
+        model_name, _ = await compiler.get_model(
+            (dyn_nodes, frozenset(connections)),
+            build_rope,
+            (origin, ctx.pack.fsys),
+        )
+        ent['model'] = model_name
+        ang = Angle.from_str(ent['angles'])
+        ang.yaw -= 90.0
+        ent['angles'] = ang
+
+    if not dyn_ents:  # Static prop.
+        bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes)
+        center = (bbox_min + bbox_max) / 2
+        node: Optional[NodeEnt] = None
+        has_coll = False
+        local_nodes: set[NodeEnt] = set()
+        for node in nodes:
+            local_nodes.add(attr.evolve(node, pos=node.pos - center))
+            if node.config.coll_side_count >= 3:
+                has_coll = True
+
+        model_name, (light_origin, coll_data, seg_props, vac_points) = await compiler.get_model(
+            (frozenset(local_nodes), frozenset(connections)),
+            build_rope,
+            (center, ctx.pack.fsys),
+        )
+
+        if vac_points and vac_node_mod is not None:
+            for track in vac_points:
+                vac_node_mod.SPLINES.append(vac_node_mod.Spline(center, track))
+
+        # Compute the flags. Just pick a random node, from above.
+        conf = node.config
+        flags = StaticPropFlags.NONE
+        if conf.prop_light_bounce:
+            flags |= StaticPropFlags.BOUNCED_LIGHTING
+        if conf.prop_no_shadows:
+            flags |= StaticPropFlags.NO_SHADOW
+        if conf.prop_no_vert_light:
+            flags |= StaticPropFlags.NO_PER_VERTEX_LIGHTING
+        if conf.prop_no_self_shadow:
+            flags |= StaticPropFlags.NO_SELF_SHADOWING
+
+        leafs = compute_visleafs(coll_data, ctx.bsp.vis_tree())
+        ctx.bsp.props.append(StaticProp(
+            model=model_name,
+            origin=center,
+            angles=Angle(0, 270, 0),
+            scaling=1.0,
+            visleafs=leafs,
+            solidity=6 if has_coll else 0,
+            flags=flags,
+            tint=Vec(conf.prop_rendercolor),
+            renderfx=conf.prop_renderalpha,
+            lighting=center + light_origin,
+            min_fade=conf.prop_fade_min_dist,
+            max_fade=conf.prop_fade_max_dist,
+            fade_scale=conf.prop_fade_scale,
+        ))
+        for seg_prop in seg_props:
+            ctx.bsp.props.append(StaticProp(
+                model=seg_prop.model,
+                origin=center + seg_prop.offset,
+                angles=(seg_prop.orient @ Matrix.from_yaw(270)).to_angle(),
+                scaling=1.0,
+                visleafs=leafs,  # TODO: compute individual leafs here?
+                solidity=6,
+                flags=flags,
+                tint=Vec(conf.prop_rendercolor),
+                renderfx=conf.prop_renderalpha,
+                lighting=center + seg_prop.offset,
+                min_fade=conf.prop_fade_min_dist,
+                max_fade=conf.prop_fade_max_dist,
+                fade_scale=conf.prop_fade_scale,
+            ))
+
+
 @trans('Model Ropes', priority=-10)  # Needs to be before vactubes.
-def comp_prop_rope(ctx: Context) -> None:
+async def comp_prop_rope(ctx: Context) -> None:
     """Build static props for ropes."""
     # id -> node.
     all_nodes: MutableMapping[NodeID, NodeEnt] = {}
@@ -1089,7 +1181,7 @@ def comp_prop_rope(ctx: Context) -> None:
             0.0,
             ent['model'],
             SegPropOrient(ent['orient']),
-            Matrix.from_angle(Angle.from_str(ent['angles'])),
+            Matrix.from_angstr(ent['angles']),
         ))
 
     # Put into a set, so they're immutable and have no ordering.
@@ -1161,118 +1253,40 @@ def comp_prop_rope(ctx: Context) -> None:
     # all connections from it to other nodes.
     todo = set(all_nodes.values())
     with ModelCompiler.from_ctx(ctx, 'ropes', version=2) as compiler:
-        while todo:
-            dyn_ents: List[Entity] = []
-            node = todo.pop()
-            connections: Set[Tuple[NodeID, NodeID]] = set()
-            # We need the set for fast is-in checks, and the list
-            # so we can loop through while modifying it.
-            nodes: Set[NodeEnt] = {node}
-            unchecked: List[NodeEnt] = [node]
-            while unchecked:
-                node = unchecked.pop()
-                # Three links to others - connections to/from, and groups.
-                # We'll only ever follow a path once, so pop from the dicts.
-                if node.group:
-                    dyn_ents.extend(group_dyn_ents[node.group])
-                    for subnode in group_to_node.pop(node.group, ()):
-                        if subnode not in nodes:
-                            nodes.add(subnode)
-                            unchecked.append(subnode)
-                for conn_node in connections_from.pop(node.id, ()):
-                    connections.add((node.id, conn_node.id))
-                    if conn_node not in nodes:
-                        nodes.add(conn_node)
-                        unchecked.append(conn_node)
-                for conn_node in connections_to.pop(node.id, ()):
-                    connections.add((conn_node.id, node.id))
-                    if conn_node not in nodes:
-                        nodes.add(conn_node)
-                        unchecked.append(conn_node)
-            todo -= nodes
-            if len(nodes) == 1:
-                LOGGER.warning('Node at {} has no connections to it! Skipping.', node.pos)
-                continue
+        async with trio.open_nursery() as nursery:
+            while todo:
+                dyn_ents: List[Entity] = []
+                node = todo.pop()
+                connections: Set[Tuple[NodeID, NodeID]] = set()
+                # We need the set for fast is-in checks, and the list
+                # so we can loop through while modifying it.
+                nodes: Set[NodeEnt] = {node}
+                unchecked: List[NodeEnt] = [node]
+                while unchecked:
+                    node = unchecked.pop()
+                    # Three links to others - connections to/from, and groups.
+                    # We'll only ever follow a path once, so pop from the dicts.
+                    if node.group:
+                        dyn_ents.extend(group_dyn_ents[node.group])
+                        for subnode in group_to_node.pop(node.group, ()):
+                            if subnode not in nodes:
+                                nodes.add(subnode)
+                                unchecked.append(subnode)
+                    for conn_node in connections_from.pop(node.id, ()):
+                        connections.add((node.id, conn_node.id))
+                        if conn_node not in nodes:
+                            nodes.add(conn_node)
+                            unchecked.append(conn_node)
+                    for conn_node in connections_to.pop(node.id, ()):
+                        connections.add((conn_node.id, node.id))
+                        if conn_node not in nodes:
+                            nodes.add(conn_node)
+                            unchecked.append(conn_node)
+                todo -= nodes
+                if len(nodes) == 1:
+                    LOGGER.warning('Node at {} has no connections to it! Skipping.', node.pos)
+                    continue
 
-            for ent in dyn_ents:
-                origin = Vec.from_str(ent['origin'])
-                dyn_nodes = frozenset({
-                    node.relative_to(origin)
-                    for node in nodes
-                })
-                model_name, _ = compiler.get_model(
-                    (dyn_nodes, frozenset(connections)),
-                    build_rope,
-                    (origin, ctx.pack.fsys),
-                )
-                ent['model'] = model_name
-                ang = Angle.from_str(ent['angles'])
-                ang.yaw -= 90.0
-                ent['angles'] = ang
+                nursery.start_soon(compile_rope, ctx, compiler, nodes, dyn_ents, connections)
 
-            if not dyn_ents:  # Static prop.
-                bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes)
-                center = (bbox_min + bbox_max) / 2
-                node = None
-                has_coll = False
-                local_nodes: set[NodeEnt] = set()
-                for node in nodes:
-                    local_nodes.add(attr.evolve(node, pos=node.pos - center))
-                    if node.config.coll_side_count >= 3:
-                        has_coll = True
-
-                model_name, (light_origin, coll_data, seg_props, vac_points) = compiler.get_model(
-                    (frozenset(local_nodes), frozenset(connections)),
-                    build_rope,
-                    (center, ctx.pack.fsys),
-                )
-
-                if vac_points and vac_node_mod is not None:
-                    for track in vac_points:
-                        vac_node_mod.SPLINES.append(vac_node_mod.Spline(center, track))
-
-                # Compute the flags. Just pick a random node, from above.
-                conf = node.config
-                flags = StaticPropFlags.NONE
-                if conf.prop_light_bounce:
-                    flags |= StaticPropFlags.BOUNCED_LIGHTING
-                if conf.prop_no_shadows:
-                    flags |= StaticPropFlags.NO_SHADOW
-                if conf.prop_no_vert_light:
-                    flags |= StaticPropFlags.NO_PER_VERTEX_LIGHTING
-                if conf.prop_no_self_shadow:
-                    flags |= StaticPropFlags.NO_SELF_SHADOWING
-
-                leafs = compute_visleafs(coll_data, ctx.bsp.vis_tree())
-                ctx.bsp.props.append(StaticProp(
-                    model=model_name,
-                    origin=center,
-                    angles=Angle(0, 270, 0),
-                    scaling=1.0,
-                    visleafs=leafs,
-                    solidity=6 if has_coll else 0,
-                    flags=flags,
-                    tint=Vec(conf.prop_rendercolor),
-                    renderfx=conf.prop_renderalpha,
-                    lighting=center + light_origin,
-                    min_fade=conf.prop_fade_min_dist,
-                    max_fade=conf.prop_fade_max_dist,
-                    fade_scale=conf.prop_fade_scale,
-                ))
-                for seg_prop in seg_props:
-                    ctx.bsp.props.append(StaticProp(
-                        model=seg_prop.model,
-                        origin=center + seg_prop.offset,
-                        angles=(seg_prop.orient @ Matrix.from_yaw(270)).to_angle(),
-                        scaling=1.0,
-                        visleafs=leafs,  # TODO: compute individual leafs here?
-                        solidity=6,
-                        flags=flags,
-                        tint=Vec(conf.prop_rendercolor),
-                        renderfx=conf.prop_renderalpha,
-                        lighting=center + seg_prop.offset,
-                        min_fade=conf.prop_fade_min_dist,
-                        max_fade=conf.prop_fade_max_dist,
-                        fade_scale=conf.prop_fade_scale,
-                    ))
     LOGGER.info('Built {} models.', len(all_nodes))

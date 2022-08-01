@@ -19,14 +19,14 @@
 
 	spawnflags(flags)  =
 		[
-		1: "Start At Player" : 1
-		2: "Follow Player" : 1
-		4: "Freeze Player" : 0
-		8: "Infinite Hold Time" : 0
+		1: "Start At Player" : 0
+		2: "Follow Player" : 0
+		4: "Freeze Player" : 1
+		8: "Infinite Hold Time" : 1
 		16: "Snap to goal angles" : 0
-		32: "Make Player non-solid" : 0
+		32: "Make Player non-solid" : 1
 		64: "Interruptable by Player" : 0
-		128: "Set Fov" : 0 [MBase, since_ASW]
+		128: "Set Fov" : 1 [MBase, since_ASW]
 		256:"Allow fixed behavior (can move without look target, removal stops softlock, etc.)" : 1 [MBase]
 		]
 

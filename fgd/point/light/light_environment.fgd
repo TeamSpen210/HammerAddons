@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint, Angles) 
 	autovis(Lights, Environment Light)
-	iconsprite("editor/ficool2/light_environment.vmt") 
+	iconsprite("editor/light_environment.vmt") 
 	color(255 255 0)
 	lightprop("models/editor/spot.mdl") 
  	autovis(Point Entities, Globals, Light Environment)

@@ -19,6 +19,11 @@
 		"1" : "Clean"
 		"2" : "Dirty"
 		]
+	skin[-engine, Mesa](choices) : "[H] Skin" : 0 : "Set the skin displayed in Hammer." =
+		[
+		"0" : "Clean"
+		"1" : "Dirty"
+		]
 
 	Charge[MBase](integer) : "Juice" : 0 : "Overrides the amount of suit power this charger contains. " +
 		"Use 0 for the default charge, which is usually the maximum juice. Use -1 if you want the charger to start empty."

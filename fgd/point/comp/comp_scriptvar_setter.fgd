@@ -1,6 +1,6 @@
 @PointClass
-	appliesto(+srctools, +VScript, -engine)
-	base(Origin, Angles) 
+	appliesto(+srctools, +VScript)
+	base(Origin, Angles, ControlEnables) 
 	iconsprite("editor/comp_scriptvar_setter")
 	studio("models/editor/cone_helper.mdl")
 	line(255 255 255, targetname, target)
@@ -33,6 +33,7 @@
 		"pos_y" : "Position - Y only"
 		"pos_z" : "Position - Z only"
 		"ang" : "Angle (as vector)"
+		"qangle": "Angle (as QAngle)" [L4D2, P2DES]
 		"off" : "Offset to Reference"
 		"dist" : "Distance to Reference"
 		"x": "Forward Direction"
@@ -40,5 +41,5 @@
 		"z": "Up Direction"
 		]
 		
-	const(string) : "Scale / Constant" : : "A scale factor for the data, or a constant to use directly in for those modes."
+	const(string) : "Scale / Constant" : : "A scale factor for the data, or a constant to use directly. The exact behaviour depends on the mode."
 	]

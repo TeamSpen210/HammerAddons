@@ -1,7 +1,7 @@
-@PointClass base(Angles)
+@PointClass base(Angles, ControlEnables)
 	iconsprite("editor/comp_precache_model") 
 	studioprop() 
-	appliesto(srctools, -engine)
+	appliesto(srctools)
 	autovis(Postcompiler, Precacher)
 = comp_precache_model:
 	"Force a specific model to load, for runtime switching. Duplicates will be removed."

@@ -1,6 +1,7 @@
 @PointClass 
+	base(ControlEnables)
 	iconsprite("editor/comp_pack")
-	appliesto(srctools, -engine)
+	appliesto(srctools)
 	autovis(Postcompiler, Packing)
 = comp_pack:
 	"Explicitly identify resources to pack into the map. If more are needed, add additional keyvalues with SmartEdit off."

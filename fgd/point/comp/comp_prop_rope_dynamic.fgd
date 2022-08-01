@@ -2,7 +2,7 @@
 	sphere(fademindist)
 	sphere(fademaxdist)
 	studio("models/editor/comp_prop_rope_dynamic.mdl")
-	appliesto(srctools, -engine)
+	appliesto(srctools)
 = comp_prop_rope_dynamic: "Allows using comp_prop_rope/comp_prop_cable as a dynamic prop."
 	[
 	spawnflags(flags)  =

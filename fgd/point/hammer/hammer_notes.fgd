@@ -13,6 +13,7 @@
 	message[since_CSGO](string) : "Display Message" : : "Text to display in the 3D view."
 	textsize[since_CSGO](float) : "Text Size" : 10 : "Text Size."
 	color[since_CSGO](color255) : "Color" : "255 255 255"
+	scale(float) : "Scale" : "0.25" : "Changes the icon size, to allow seeing this from further away."
 	
 	linename1(target_destination) : "White Related Entity" : : "Add entity names to have lines drawn to them."
 	linename2(target_destination) : "Red Related Entity" : : "Add entity names to have lines drawn to them."

@@ -1,6 +1,6 @@
 Sprite
 {
-	$baseTexture "editor/ficool2/light_environment"
+	$baseTexture "editor/light_environment"
 	$spriteorientation "vp_parallel"
 	// Put above the model.
 	$spriteorigin "[.5 1]"

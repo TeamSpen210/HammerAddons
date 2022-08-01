@@ -1,5 +1,5 @@
 @PointClass
-	appliesto(srctools, -engine)
+	appliesto(srctools)
 	base(BaseEntityPoint)
 	iconsprite("editor/comp_flicker") 
 	line(255 255 255, targetname, target_mdl)
