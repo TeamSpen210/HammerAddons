@@ -7,6 +7,7 @@
 		[
 		1: "Ignore out of range input values" : 1
 		2: "Clamp output to output range" : 0
+		4: "Output as string" : 0 [P2EDU]
 		]
 
 	in1(integer) : "Minimum Valid Input Value" : 0 : "Input values below this value will be ignored."
