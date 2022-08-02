@@ -5,7 +5,7 @@
 	= _npc_portal_turret_floor_p2_mdl []
 
 @PointClass base(BaseNPC, _npc_portal_turret_floor_p1_mdl, _npc_portal_turret_floor_p2_mdl) 
-	appliesto(P1, P2) 
+	appliesto(P1, P2, -STANLEY) 
 	autovis(Entities, NPCs, Portal Turret)
 	frustum(_frustum_fov, _frustum_near, TurretRange, _frustum_color, -1)
 = npc_portal_turret_floor: "Aperture Science Sentry Turret."

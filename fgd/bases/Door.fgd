@@ -86,6 +86,8 @@
 	input Unlock(void) : "Unlock the door."
 	input SetSpeed(float) : "Set the door speed."
 	input SetToggleState(bool) : "Force the door instantly to currently open or closed."
+	input SetAnalogValue[P2EDU](float) : "Set animation frame between 0 and 1."
+	input SetAnalogValueString[P2EDU](string) : "Set animation frame between 0 and 1."
 
 	// Outputs
 	output OnClose(void) : "Fired when the door starts closing."

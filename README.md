@@ -61,6 +61,7 @@ Below are short explanations, see the "Help" display on the entity properties in
   * [The TF2 Ultimate Mapping Resource Pack][tf2]
   * [ZPS: Supplemental Hammer Icons][zps]
   * [ts2do's HL FGDs][ts2do]
+* Parts of [Allison's Portal 1 FGD edits][p1fgd] have been integrated into the fgds.
 
 [releases]: https://github.com/TeamSpen210/HammerAddons/releases
 [installationwiki]: https://github.com/TeamSpen210/HammerAddons/wiki/Installation
@@ -69,3 +70,4 @@ Below are short explanations, see the "Help" display on the entity properties in
 [tf2]: http://forums.tf2maps.net/showthread.php?t=4674
 [ts2do]: http://halflife2.filefront.com/file/HalfLife_2_Upgraded_Base_FGDs;48139
 [zps]: http://www.necrotalesgames.com/tools/index.php
+[p1fgd]: https://cdn.discordapp.com/attachments/702167000574853242/917353063319212072/FGDs.zip

@@ -48,6 +48,8 @@ GAMES: List[Tuple[str, str]] = [
     ('ASW',   'Alien Swarm'),
     ('P2',    'Portal 2'),
     ('P2SIXENSE', 'Portal 2 Sixense MotionPack'),
+    ('P2EDU', 'Portal 2 Educational Version'),
+    ('STANLEY',    'The Stanley Parable'),
     ('INFRA', 'INFRA'),
     ('CSGO',  'Counter-Strike Global Offensive'),
 
@@ -75,7 +77,9 @@ FEATURES: Dict[str, Set[str]] = {
     'ASW': {'INST_IO', 'VSCRIPT'},
     'P2': {'INST_IO', 'VSCRIPT'},
     'P2SIXENSE': {'P2', 'INST_IO', 'VSCRIPT'},
+    'P2EDU': {'P2', 'INST_IO', 'VSCRIPT'},
     'CSGO': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
+    'STANLEY': {'P2', 'INST_IO', 'VSCRIPT'},
     'INFRA': {'P2', 'INST_IO', 'VSCRIPT'},
     'P2DES': {'P2', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 }

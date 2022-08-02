@@ -299,8 +299,8 @@
 		"ACHIEVEMENT_EVENT_PORTAL_TRANSMISSION_RECEIVED": 	"Transmission Received"
 		]
 
-	// INFRA includes P2 as well, so we need to exclude it.
-	achievementname[P2, -INFRA](choices) : "Achievement Name" : : "The name of the achievement to be awarded when this entity receives a 'FireEvent' input." =
+	// INFRA and TSP include P2 as well, so we need to exclude it.
+	achievementname[P2, -INFRA, -STANLEY](choices) : "Achievement Name" : : "The name of the achievement to be awarded when this entity receives a 'FireEvent' input." =
 		[
 		"ACH.SURVIVE_CONTAINER_RIDE": "Wake Up Call"
 		"ACH.WAKE_UP": "You Monster"
@@ -368,7 +368,8 @@
 		"ACH.STAYING_ALIVE": "Still Alive"
 		"ACH.TAUNT_CAMERA": "Asking for Trouble"
 		"ACH.ROCK_CRUSHES_ROBOT": "Rock Portal Scissors"
-		"ACH.SPREAD_THE_LOVE": "Friends List With Benefits"      
+		"ACH.SPREAD_THE_LOVE": "Friends List With Benefits" 
+		"ACH.SUMMER_SALE": "Talent Show"
 		]
 
 	achievementname[INFRA](choices) : "Achievement Name" : : "The name of the achievement to be awarded when this entity receives a 'FireEvent' input." =
@@ -464,6 +465,20 @@
 		
 		"CHAPTER_10_CARLA_AMIT" : "Ch10: Found Carla and Amit"
 		"CHAPTER_10_SNW_ROOM" : "Ch10 - Entered SNW Control Room"
+		]
+
+		achievementname[STANLEY](choices) : "Achievement Name" : : "The name of the achievement to be awarded when this entity receives a 'FireEvent' input." =
+		[
+		"TSP_888": "8888888888888888"
+		"TSP_430": "Click on door 430 five times."
+		"TSP_ACHIEVEMENT": "Achievement"
+		"TSP_COMMITMENT": "Commitment"
+		"TSP_WELCOMEBACK": "Welcome back!"
+		"TSP_SPEED": "Speed run"
+		"TSP_JUMPING": "You can't jump"
+		"TSP_GOOUTSIDE": "Go outside"
+		"TSP_BEATTHEGAME": "Beat the game"
+		"TSP_UNACHIEVABLE": "Unachievable"
 		]
 
 	// Inputs

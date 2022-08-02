@@ -1,5 +1,5 @@
 @PointClass base(Weapon) 
-	appliesto(P1, P2) 
+	appliesto(P1, P2, -STANLEY) 
 	// Don't add a subfolder to this, Portal maps won't contain any other weapons.
 	autovis(Weapons)
 	studioprop("models/weapons/w_portalgun.mdl") = weapon_portalgun: "Aperture Science Handheld Portal Device"

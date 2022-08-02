@@ -1,0 +1,10 @@
+@PointClass base(BasePortalCube) 
+	studioprop("models/props/reflection_cube.mdl")
+	appliesto(P2EDU)
+	autovis(Test Elements, Cubes, Normal)
+= prop_contraption_cube : "Contraption Cube"
+[
+        cube_mass(float) : "Mass" : 40 : "Mass of the cube (kg)"
+	ContraptionFrictionIndex(integer) : "Friction" : 0 : "Friction index of the cube [0,4]"
+	ContraptionElasticityIndex(integer) : "Elasticity" : 0 : "Elasticity index of the cube [0,4]"
+]

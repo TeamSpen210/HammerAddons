@@ -163,6 +163,34 @@
 		"Well.Outside" : "Well Outside"
 		]
 
+	// from Allison's Portal 1 FGD edits on TWP
+	soundscape[P1](choices) : "Soundscape" : "Nothing" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the hl2\scripts directory." =
+		[
+		"nothing" : "Nothing"
+		"portal_testchmb.fixed_portal" : "Testchamber | Fixed Portal"
+		"portal_testchmb.tight_space" : "Testchamber | Tight Space"
+		"portal_testchmb.elevator_shaft" : "Testchamber | Elevator Shaft"
+		"portal_testchmb.get_the_box" : "Testchamber | Get the Box"
+		"portal_testchmb.explore_space" : "Testchamber | Explore Space"
+		"portal_testchmb.cross_the_gap" : "Testchamber | Cross the Gap"
+		"portal_testchmb.energy_ball" : "Testchamber | Energy Ball"
+		"portal_testchmb.goo_pit" : "Testchamber | Goo Pit"
+		"portal_testchmb.cleanser" : "Testchamber | Cleanser"
+		"portal_testchmb.fling" : "Testchamber | Fling"
+		"portal_testchmb.turret_danger" : "Testchamber | Turret Danger"
+		"portal_testchmb.use_your_box" : "Testchamber | Use Your Box"
+		"portal_testchmb.track_train" : "Testchamber | Light Rails"
+		"portal_testchmb.fire_pit" : "Testchamber | Fire Pit"
+		"portal_escape.intro" : "Escape | Intro"
+		"portal_escape.tube" : "Escape | Tube"
+		"portal_escape.in_shaft_low" : "Escape | In Shaft (Low)"
+		"portal_escape.in_shaft_high" : "Escape | In Shaft (High)"
+		"portal_escape.hazard_liquid_tunnel" : "Escape | Goo Tunnel"
+		"portal_escape.nearing_boss" : "Escape | Nearing Boss Chamber"
+		"portal_escape.final_boss" : "Escape | Final Boss Chamber"
+		"portal_escape.final_boss2" : "Escape | Final Boss Chamber 2"
+		]
+
 	soundscape[P2](choices) : "Soundscape" : "Nothing" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the portal2/scripts/ directory." =
 		[
 		"TestChamber_Destruction.DestructionBase": "Dest - Destruction Base"
