@@ -1,0 +1,6 @@
+@SolidClass base(Trigger)
+	appliesto(STANLEY)
+= trigger_still: "A trigger volume which detects when the player is standing still inside it for some time."
+	[
+	standtime(integer) : "Waiting Time" : 60 : "The amount of time the player must be idle for before the trigger is activated."
+	]
