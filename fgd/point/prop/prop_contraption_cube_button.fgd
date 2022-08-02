@@ -1,8 +1,8 @@
 @PointClass base(BasePortButton) 
 	appliesto(P2EDU) 
 	autovis(Test Elements, P2 Buttons, Floor)
-	studioprop("models/props/box_socket.mdl") 
+	studioprop("models/props_ingame/button_socket_contraption..mdl") 
 = prop_contraption_cube_button: "A floor button which is activated by a prop_contraption_cube."
 	[
-	output OnPulse(void) : "Called when the button has been unpressed."
+	output OnPulse(string) : "Should be called when the button is being pressed."
 	]
