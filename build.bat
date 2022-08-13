@@ -38,7 +38,7 @@ IF /I %game%==ALL (
   SET tag=%1
   IF DEFINED filename.%tag% (SET fname=!filename.%tag%!) ELSE (SET fname=%tag%)
   echo Building FGD for %1 as "%fname%.fgd"...
-  py unify_fgd.py exp "%tag%" srctools -o "build/%fname%.fgd"
+  py src/hammeraddons/unify_fgd.py exp "%tag%" srctools -o "build/%fname%.fgd"
   IF %ERRORLEVEL% NEQ 0 (echo Building FGD for %tag% has failed. Exitting. & EXIT)
   EXIT /B
 
