@@ -481,7 +481,12 @@ def add_tag(tags: FrozenSet[str], new_tag: str) -> FrozenSet[str]:
     return frozenset(tag_set)
 
 
-def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> None:
+def action_count(
+    dbase: Path,
+    extra_db: Optional[Path],
+    factories_folder: Path,
+    plot: bool=False,
+) -> None:
     """Output a count of all entities in the database per game."""
     fgd, base_entity_def = load_database(dbase, extra_db)
 
@@ -595,7 +600,7 @@ def action_count(dbase: Path, extra_db: Optional[Path], plot: bool=False) -> Non
             print(base, len(count), count if len(count) == 1 else '...')
 
     print('\n\nEntity Dumps:')
-    for dump_path in Path('db', 'factories').glob('*.txt'):
+    for dump_path in factories_folder.glob('*.txt'):
         with dump_path.open() as f:
             dump_classes = {
                 cls.casefold().strip()
@@ -1076,10 +1081,12 @@ def main(args: List[str]=None):
     parser = argparse.ArgumentParser(
         description="Manage a set of unified FGDs, sharing configs between engine versions.",
     )
-    script_dir = Path(sys.argv[0]).parent
+    # Find the repository root.
+    repo_dir = Path(__file__).parents[2]
+
     parser.add_argument(
         "-d", "--database",
-        default=str(script_dir / "fgd/"),
+        default=str(repo_dir / "fgd"),
         help="The folder to write the FGD files to or from."
     )
     parser.add_argument(
@@ -1213,7 +1220,7 @@ def main(args: List[str]=None):
             result.engine,
         )
     elif result.mode in ("c", "count"):
-        action_count(dbase, extra_db)
+        action_count(dbase, extra_db, factories_folder=Path(repo_dir, 'db', 'factories'))
     elif result.mode in ("visgroup", "v", "vis"):
         action_visgroup(dbase, extra_db, result.output)
     else:
