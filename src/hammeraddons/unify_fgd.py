@@ -650,6 +650,7 @@ def action_count(
         if clsname not in fgd.entities:
             print('-', clsname)
 
+
 def action_import(
     dbase: Path,
     engine_tag: str,
@@ -987,11 +988,17 @@ def action_export(
                 ent.helpers.clear()
         # Cull all base classes we don't use.
         # Ents that inherit from each other always need to exist.
-        ent.bases = [
-            base
-            for base in ent.bases
-            if base.type is not EntityTypes.BASE or base in used_bases
-        ]
+        # We also need to replace bases with their parent, if culled.
+        todo = ent.bases.copy()
+        done = set(todo)
+        ent.bases.clear()
+        for base in todo:
+            if base.type is not EntityTypes.BASE or base in used_bases:
+                ent.bases.append(base)
+            else:
+                for subbase in base.bases:
+                    if subbase not in done:
+                        todo.append(subbase)
 
     print('Merging in material exclusions...')
     for mat_tags, materials in fgd.tagged_mat_exclusions.items():
