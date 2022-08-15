@@ -4,7 +4,7 @@
 	sphere(fademindist) 
 	sphere(fademaxdist) = Item
 	[
-	spawnflags[!TF2](flags) : "spawnflags" =
+	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Start Constrained" : 0
 		2 : "Deny player pickup (reserve for NPC)" : 0 [MBase]
