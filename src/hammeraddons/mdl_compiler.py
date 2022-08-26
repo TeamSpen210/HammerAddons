@@ -7,11 +7,7 @@ import os
 import pickle
 import tempfile
 import random
-from typing import (
-    Awaitable, Callable, Tuple, Set, TypeVar, Hashable, Generic, Any,
-    List,
-)
-from typing_extensions import Self
+from typing import Awaitable, Callable, Tuple, Set, TypeVar, Hashable, Generic, Any, List
 from pathlib import Path
 
 from srctools import logger
@@ -29,6 +25,7 @@ LOGGER = logger.get_logger(__name__)
 ModelKey = TypeVar('ModelKey', bound=Hashable)
 InT = TypeVar('InT')
 OutT = TypeVar('OutT')
+ModelCompilerT = TypeVar('ModelCompilerT', bound='ModelCompiler')  # TODO: Replace by Self
 
 
 class GenModel(Generic[OutT]):
@@ -92,7 +89,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         """Return the number of used models."""
         return sum(1 for _, mdl in self._built_models if mdl.used)
 
-    def __enter__(self) -> Self:
+    def __enter__(self: ModelCompilerT) -> ModelCompilerT:
         """Load the previously compiled models and prepare for compiles."""
         # Ensure the folder exists.
         os.makedirs(self.model_folder_abs, exist_ok=True)
