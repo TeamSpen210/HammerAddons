@@ -197,12 +197,12 @@ class Config:
                 raise ValueError(f'Cannot use property block for "{opt.name}"')
 
             if opt.kind is Vec:
-                # Pass nones, so we can check if it failed.
-                parsed_vals = parse_vec_str(prop.value, x=None)
-                if parsed_vals[0] is None:
-                    self.settings[opt.id] = default
+                # Pass nones to allow us to check if it failed.
+                x, y, z = parse_vec_str(prop.value, x=None)
+                if x is None:
+                    self.settings[opt.id] = opt.default
                 else:
-                    self.settings[opt.id] = Vec(*parsed_vals)
+                    self.settings[opt.id] = Vec(x, y, z)
             elif opt.kind is bool:
                 self.settings[opt.id] = conv_bool(prop.value, default)
             else:  # int, float, str - no special handling...
