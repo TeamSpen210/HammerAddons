@@ -1041,7 +1041,7 @@ def action_visgroup(
 
     # TODO: This shouldn't be copied from fgd.export(), need to make the
     #  parenting invariant guaranteed by the classes.
-    vis_by_parent: dict[str, set[AutoVisgroup]] = defaultdict(set)
+    vis_by_parent: Dict[str, Set[AutoVisgroup]] = defaultdict(set)
 
     for visgroup in list(fgd.auto_visgroups.values()):
         if not visgroup.parent:
