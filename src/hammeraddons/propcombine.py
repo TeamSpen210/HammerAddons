@@ -311,7 +311,7 @@ async def compile_func(
         assert mdl is not None, prop.model
 
         child_ref = await _mesh_cache.fetch((qc, prop.skin), build_reference, prop, qc, mdl)
-        child_coll = await _coll_cache.fetch(qc.phy_smd, build_collision, qc, prop, child_ref)
+        child_coll = await _coll_cache.fetch(qc.phy_smd, build_collision, qc, prop, child_ref, volume_tolerance > 0)
 
         offset = Vec(prop.x, prop.y, prop.z)
         matrix = Matrix.from_angle(prop.pit, prop.yaw, prop.rol)
@@ -408,7 +408,7 @@ async def build_reference(prop: PropPos, qc: QC, mdl: Model) -> Mesh:
     return mesh
 
 
-async def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> List[Mesh]:
+async def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh, needs_split: bool) -> List[Mesh]:
     """Get the correct collision mesh for this model."""
     if prop.solidity is CollType.NONE:  # Non-solid
         return []
@@ -427,7 +427,7 @@ async def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> List[Mesh]:
                 vert.pos @= rot
                 vert.norm @= rot
 
-        if qc.is_concave:
+        if qc.is_concave and needs_split:
             return await trio.to_thread.run_sync(coll.split_collision)
         else:
             return [coll]
