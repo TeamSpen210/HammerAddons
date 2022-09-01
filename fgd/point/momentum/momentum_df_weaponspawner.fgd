@@ -1,0 +1,15 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(MOMENTUM) 
+	= momentum_df_weaponspawner : "Defrag weapon spawner."
+	[
+	weapon_slot(choices) : "Weapon" : 2 : "The weapon to spawn." =
+		[
+		2: "Machinegun"
+		3: "Knife"
+		4: "Grenade launcher"
+		5: "Rocket launcher"
+		8: "Plasma gun"
+		9: "BFG"
+		]
+	reset_time(float) : "Delay before reset" : 10 : "How long until the weapon reappears after being picked up. 0 means it won't disappear and negative values mean it won't reappear."
+	]

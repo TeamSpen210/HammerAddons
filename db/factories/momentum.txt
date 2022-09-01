@@ -226,6 +226,7 @@ math_counter
 math_remap
 momentary_door
 momentary_rot_button
+momentum_df_weaponspawner
 momentum_generic_bomb
 mom_replay_playback
 mortarshell
