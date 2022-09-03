@@ -352,6 +352,7 @@ trigger_momentum_timer_stage
 trigger_momentum_timer_checkpoint
 trigger_multiple
 trigger_once
+trigger_overbounce
 trigger_playermovement
 trigger_proximity
 trigger_push

@@ -34,6 +34,7 @@
 		2 : "Keep negative Z (downwards) velocity only"
 		3 : "Redirect velocity to destination angles"
 		4 : "Landmark teleport"
+		5 : "Set speed"
 		]
 	
 	reorient_landmark(boolean) : "Reorient Landmark" : 0 : "(Landmark mode only) Reorient origin, angles and velocity from the landmark's" + 
@@ -45,7 +46,7 @@
 	fail[MOMENTUM](boolean) : "Teleport is for failing a level" : 0
 	
 	uselandmarkangles(boolean) : "Use Landmark Angles" : 0 : "(Landmark mode only) Forces the teleported object to snap to the angles of the destination landmark."
-	
+	SetSpeed(float) : "Set Custom Speed" : 400 : "(Set speed mode only) Forces the player to this speed on teleport."
 	checkdestifclearforplayer(boolean) : "Only Spawn-Valid Destinations" : 0 : "Only teleport if there is a clear teleport destination."
 
 	input SetRemoteDestination(string) : "Set a new remote teleport destination."

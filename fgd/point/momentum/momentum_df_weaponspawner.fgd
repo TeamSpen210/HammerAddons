@@ -1,10 +1,11 @@
 @PointClass base(BaseEntityPoint)
 	appliesto(MOMENTUM) 
-	= momentum_df_weaponspawner : "Defrag weapon spawner."
+= momentum_df_weaponspawner : "Defrag weapon spawner."
 	[
+	weapon_slot[engine](integer) : "Weapon" : 2
 	weapon_slot(choices) : "Weapon" : 2 : "The weapon to spawn." =
 		[
-		2: "Machinegun"
+		2: "Machine gun"
 		3: "Knife"
 		4: "Grenade launcher"
 		5: "Rocket launcher"
