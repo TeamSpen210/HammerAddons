@@ -356,7 +356,6 @@ trigger_proximity
 trigger_push
 trigger_remove
 trigger_reversespeed
-trigger_serverragdoll
 trigger_setspeed
 trigger_soundscape
 trigger_stick_explosive
