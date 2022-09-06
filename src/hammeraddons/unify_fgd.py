@@ -26,20 +26,10 @@ from srctools.filesys import RawFileSystem
 # Chronological order of games.
 # If 'since_hl2' etc is used in FGD, all future games also include it.
 # If 'until_l4d' etc is used in FGD, only games before include it.
-GAMES: List[Tuple[str, str]] = [
-    ('HLS',  'Half-Life: Source'),
-    ('DODS', 'Day of Defeat: Source'),
-    ('CSS',  'Counter-Strike: Source'),
-
+GAMES_CHRONO: List[Tuple[str, str]] = [
     ('HL2', 'Half-Life 2'),
     ('EP1', 'Half-Life 2 Episode 1'),
     ('EP2', 'Half-Life 2 Episode 2'),
-
-    # Not chronologically here, but it uses 2013 as the base.
-    ('MBASE', 'Mapbase'),
-    # Mesa also appears to be about here...
-    ('MESA', 'Black Mesa'),
-    ('GMOD', "Gary's Mod"),
 
     ('TF2',   'Team Fortress 2'),
     ('P1',    'Portal'),
@@ -47,20 +37,44 @@ GAMES: List[Tuple[str, str]] = [
     ('L4D2',  'Left 4 Dead 2'),
     ('ASW',   'Alien Swarm'),
     ('P2',    'Portal 2'),
-    ('P2SIXENSE', 'Portal 2 Sixense MotionPack'),
-    ('P2EDU', 'Portal 2 Educational Version'),
-    ('STANLEY',    'The Stanley Parable'),
-    ('INFRA', 'INFRA'),
     ('CSGO',  'Counter-Strike Global Offensive'),
 
     ('SFM',   'Source Filmmaker'),
     ('DOTA2', 'Dota 2'),
-    ('PUNT',  'PUNT'),
-    ('P2DES', 'Portal 2: Desolation'),
 ]
 
-GAME_ORDER = [game for game, desc in GAMES]
-GAME_NAME = dict(GAMES)
+# Additional mods/games, which branched off of mainline ones.
+MODS_BRANCHED: Dict[str, List[Tuple[str, str]]] = {
+    'HL2': [
+        ('HLS', 'Half-Life: Source'),
+        ('DODS', 'Day of Defeat: Source'),
+        ('CSS',  'Counter-Strike: Source'),
+    ],
+    'EP2': [
+        ('MESA', 'Black Mesa'),
+        ('GMOD', "Gary's Mod"),
+    ],
+    'P2': [
+        ('P2SIXENSE', 'Portal 2 Sixense MotionPack'),
+        ('P2EDU', 'Portal 2 Educational Version'),
+        ('STANLEY', 'The Stanley Parable'),
+        ('INFRA', 'INFRA'),
+    ],
+    'CSGO': [
+        ('P2DES', 'Portal 2: Desolation'),
+    ],
+}
+MOD_TO_BRANCH = {
+    mod: branch
+    for branch, mods in MODS_BRANCHED.items()
+    for mod, desc in mods
+}
+ALL_MODS = {
+    *MOD_TO_BRANCH,
+    'MBASE',  # Mapbase can either be episodic or hl2 base, specify it with those.
+}
+GAME_ORDER = [game for game, desc in GAMES_CHRONO]
+ALL_GAMES = set(GAME_ORDER)
 
 # Specific features that are backported to various games.
 
@@ -76,12 +90,8 @@ FEATURES: Dict[str, Set[str]] = {
     'TF2': {'PROP_SCALING'},
     'ASW': {'INST_IO', 'VSCRIPT'},
     'P2': {'INST_IO', 'VSCRIPT'},
-    'P2SIXENSE': {'P2', 'INST_IO', 'VSCRIPT'},
-    'P2EDU': {'P2', 'INST_IO', 'VSCRIPT'},
     'CSGO': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
-    'STANLEY': {'P2', 'INST_IO', 'VSCRIPT'},
-    'INFRA': {'P2', 'INST_IO', 'VSCRIPT'},
-    'P2DES': {'P2', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
+    'P2DES': {'P2'},
 }
 
 ALL_FEATURES = {
@@ -98,13 +108,14 @@ TAGS_SPECIAL = {
   'BEE2',  # BEEmod's templates.
 }
 
-ALL_TAGS: Set[str] = set()
-ALL_TAGS.update(GAME_ORDER)
-ALL_TAGS.update(ALL_FEATURES)
-ALL_TAGS.update(TAGS_SPECIAL)
-ALL_TAGS.update('SINCE_' + t.upper() for t in GAME_ORDER)
-ALL_TAGS.update('UNTIL_' + t.upper() for t in GAME_ORDER)
-
+ALL_TAGS = {
+    *ALL_GAMES, *ALL_MODS, *ALL_FEATURES, *TAGS_SPECIAL,
+    *{
+        prefix + t.upper()
+        for prefix in ['SINCE_', 'UNTIL_']
+        for t in GAME_ORDER
+    },
+}
 
 # If the tag is present, run to backport newer FGD syntax to older engines.
 POLYFILLS: List[Tuple[str, Callable[[FGD], None]]] = []
@@ -222,15 +233,12 @@ def format_all_tags() -> str:
     """Append a formatted description of all allowed tags to a message."""
 
     return (
-        '- Games: {}\n'
+        f'- Games: {", ".join(GAME_ORDER)}\n'
         '- SINCE_<game>\n'
         '- UNTIL_<game>\n'
-        '- Features: {}\n'
-        '- Special: {}\n'
-     ).format(
-         ', '.join(GAME_ORDER),
-         ', '.join(ALL_FEATURES),
-        ', '.join(TAGS_SPECIAL),
+        f' Mods: {", ".join(sorted(ALL_MODS))}\n'
+        f'- Features: {", ".join(ALL_FEATURES)}\n'
+        f'- Special: {", ".join(TAGS_SPECIAL)}\n'
      )
 
 
@@ -241,6 +249,12 @@ def expand_tags(tags: FrozenSet[str]) -> FrozenSet[str]:
     """
     exp_tags = set(tags)
     for tag in tags:
+        try:
+            exp_tags.add(MOD_TO_BRANCH[tag.upper()])
+        except KeyError:
+            pass
+
+    for tag in list(exp_tags):
         try:
             exp_tags.update(FEATURES[tag.upper()])
         except KeyError:
@@ -1214,10 +1228,7 @@ def main(args: List[str]=None):
 
         for tag in tags:
             if tag not in ALL_TAGS:
-                parser.error(
-                    'Invalid tag "{}"! Allowed tags: \n'.format(tag) +
-                    format_all_tags()
-                )
+                parser.error(f'Invalid tag "{tag}"! Allowed tags: \n{format_all_tags()}')
         action_export(
             dbase,
             extra_db,
