@@ -16,28 +16,37 @@
 		14: "World: Visually Interesting (Don't aim at)"
 		15: "World: Inhibit Combine Mines within 15 feet"
 		16: "World: Visually Interesting (Stealth mode)"
+
 		100: "Tactical: Crouch Cover Medium"
 		101: "Tactical: Crouch Cover Low"
 		102: "Waste Scanner Spawn" [HL2, EP1, EP2]
+
 		103: "Tactical: Entrance / Exit Pinch"
 		105: "Tactical: Enemy Disadvantage Point"
 		106: "Tactical: Health Kit" [HL2, EP1, EP2]
 		107: "Tactical: High Ground" [L4D2]
+
 		400: "Antlion: Burrow Point"
 		401: "Antlion: Thumper Flee Point"
+
 		450: "Headcrab: Burrow Point"
 		451: "Headcrab: Exit Pod Point"
+		452: "Headcrab: Temporal Teleport Point (E:Z2)" [EZ2]
+
 		500: "Roller: Patrol Point"
 		501: "Roller: Cleanup Spot"
 		700: "Crow: Fly to point"
 		701: "Crow: Perch point"
+
 		900: "Follower: Wait point"
 		901: "Override jump permission"
 		902: "Player squad transition point"
 		903: "NPC exit point"
 		904: "Strider node"
+
 		950: "Player Ally: Push away destination"
 		951: "PLayer Ally: Fear withdrawal destination"
+
 		1000: "HL1 World: Machinery"
 		1001: "HL1 World: Blinking Light"
 		1002: "HL1 World: Human Blood"
@@ -60,6 +69,12 @@
 		1204: "Ep3 Blob Spit Position" [ASW]
 		1205: "Ep3 Blob Spawn Regenerator Position" [ASW]
 		1300: "Aperture: Nest"
+
+		2000: "Beast: Home (E:Z2)" [EZ2]
+		2001: "Beast: Frustration Point (E:Z2)" [EZ2]
+		2002: "Surrender: Idle Point (E:Z2)" [EZ2]
+
+		10000: "Mapbase - Custom Cover (Use hint activity)" [MBase]
 		]
 
 	hintactivity(string) : "Hint Activity" : : "Activity associated with this hint node. " +
@@ -113,4 +128,6 @@
 	// Inputs
 	input EnableHint(void) : "Enable hint."
 	input DisableHint(void) : "Disable hint."
+	
+	input SetHintGroup[MBase](string) : "Sets this hint's group."
 	]

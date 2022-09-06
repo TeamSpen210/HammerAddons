@@ -1,0 +1,79 @@
+@PointClass base(BaseEntityPoint, EnableDisable)
+	appliesto(MBase)
+	line(255 255 255, targetname, target)
+ = ai_monitor : 
+	"Monitors NPCs for conditions and schedules. " +
+	"You can use this entity to either watch an entity for conditions/schedules or test whether they have them. "+
+	"TODO: Task support."
+[
+	Target(target_destination) : "Target NPC(s)" : : "The NPCs that should be monitored."
+	MaxEnts(integer) : "Maximum Targets" : 1 : "How many NPCs we're allowed to monitor. Each one will fire outputs. 0 = no limit."
+	SetMonitorInterval(float) : "Monitor Interval" : "0.25" : "The amount of time in between monitor checks. Use 0 to monitor each tick."
+	SetCooldownTime(float) : "Cooldown Time" : "1.0" : "Whenever a monitor check succeeds, how long should this entity wait before checking again? Use -1 to disable cooldown."
+
+	CooldownAt(boolean) : "Cooldown upon first success" : 0 : "While actively monitoring, engage cooldown as soon as a NPC fulfills any of the evaluators instead of checking the other NPCs and letting them fire outputs as well."
+
+	ConditionsSimple[engine](integer) : "Condition" : 0
+	ConditionsSimple(choices) : "Condition" : 0 : "Which condition to monitor. Use 'Conditions (advanced)' to use conditions outside of this list or use multiple conditions." =
+	[
+		0 : "None"
+		4 : "No ammo"
+		10 : "See enemy"
+		13 : "Enemy occluded"
+		15 : "Have enemy LOS"
+		20 : "Repeated damage"
+		28 : "Enemy facing me"
+		29 : "Behind enemy"
+		31 : "Enemy unreachable"
+		51 : "Hear thumper"
+	]
+	Conditions(string) : "Conditions (advanced)" : : "Allows you to specify exactly which conditions to monitor, either by their actual integer ID or their string name. Separate multiple conditions with colons: 'COND_BEHIND_ENEMY:COND_ENEMY_OCCLUDED:11'"
+	
+	Schedules(string) : "Schedules (advanced)" : : "Allows you to specify exactly which schedules to monitor, either by their actual integer ID or their string name. Separate multiple schedules with colons: 'SCHED_INVESTIGATE_SOUND:SCHED_COMBAT_FACE:14'"
+	TranslateSchedules(boolean) : "Translate shcedules" : 0 : "Translates schedules based on each NPC's behavior each time they're checked. This depends on how the NPC remaps that schedule, which may be either their own version of it or something completely different that may not be desirable. The performance impact of this setting is not known."
+	
+	HintsSimple[engine](integer) : "Hint Node" : 0
+	HintsSimple(choices) : "Hint Node" : 0 : "Which hint to monitor. Use 'Hints (advanced)' to use conditions outside of this list or use multiple hints." =
+	[
+		0 : "None"
+		100: "Crouch Cover Medium"
+		101: "Crouch Cover Low"
+		103: "Entrance / Exit Pinch"
+		104: "Guard Point"
+		105: "Enemy Disadvantage Point"
+		900: "Follower: Wait point"
+		950: "Player Ally: Push away destination"
+		951: "Player Ally: Fear withdrawal destination"
+	]
+	Hints(string) : "Hint Nodes (advanced)" : : "Allows you to specify exactly which hints to monitor by their integer ID. Separate multiple hints with colons: '100:101:104'"
+	
+	HintDistance(float) : "Hint Distance" : "32.0" : "The maximum distance a NPC must be from their current hint node before we are allowed to check."
+	
+	// Inputs
+	input SetTarget(target_destination) : "Sets the NPC(s) to be monitored."
+	input UpdateActors(void) : "Updates the NPCs."
+	input Test(void) : "Tests all of the current NPCs. This entity does not have to be enabled to do this."
+	input TestNPC(target_destination) : "Tests the specified NPC. This entity does not have to be enabled to do this."
+	
+	input GetConditionName(integer) : "Looks up the specified condition ID and outputs its name through OutConditionName."
+	input GetScheduleName(integer) : "Looks up the specified schedule ID and outputs its name through OutScheduleName."
+	
+	input SetCondition(integer) : "Adds a condition."
+	input ClearCondition(integer) : "Removes a condition."
+	input ClearAllConditions(void) : "Removes all conditions."
+	input SetSchedule(integer) : "Sets a schedule."
+	input ClearSchedule(integer) : "Removes a schedule."
+	input ClearAllSchedules(void) : "Removes all schedules."
+	input SetHint(integer) : "Sets a hint."
+	input ClearHint(integer) : "Removes a hint."
+	input ClearAllHints(void) : "Removes all hints."
+	
+	// Outputs
+	output OutConditionName(string) : "Fires each time a condition is evaluated or a condition name is requested, outputting its actual name from its ID." 
+	output OutScheduleName(string) : "Fires each time a schedule is evaluated or a schedule name is requested, outputting its actual name from its ID." 
+	output OnNPCHasCondition(integer) : "Fires when a NPC has one of the conditions. Outputs the condition ID and uses the NPC as the activator. This fires for each condition on each NPC." 
+	output OnNPCLacksCondition(integer) : "Fires when a NPC does not have one of the conditions. Outputs the condition ID and uses the NPC as the activator. This fires for each condition on each NPC." 
+	output OnNPCRunningSchedule(integer) : "Fires when a NPC is running any of the schedules. Outputs the schedule ID and uses the NPC as the activator. This fires for each schedule on each NPC." 
+	output OnNPCUsingHint(integer) : "Fires when a NPC is using any of the hints. Outputs the hint ID and uses the NPC as the activator. This fires for each hint on each NPC." 
+	output OnNPCNotUsingHint(integer) : "Fires when a NPC is not using any of the hints. Outputs the hint ID and uses the NPC as the activator. This fires for each hint on each NPC." 
+]

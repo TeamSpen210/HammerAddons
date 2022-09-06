@@ -35,6 +35,21 @@
 		57: "8 LOUDSPEAKER, ECHO"
 		58: "9 SPEAKER SMALL"
 		59: "10 SPEAKER TINY"
+		
+		// A few unmarked DSP presets added with Mapbase
+		32 : "32 EXPLOSION MUFFLE 1"
+		33 : "33 EXPLOSION MUFFLE 2"
+		34 : "34 EXPLOSION MUFFLE 3"
+		35 : "35 EXPLOSION RING 1"
+		36 : "36 EXPLOSION RING 2"
+		37 : "37 EXPLOSION RING 3"
+		38 : "38 ''EXPLOSION RING'' 4"
+		44 : "44 Test 1 (High Pitch)"
+		45 : "45 Test 2 (Low Pitch)"
+		46 : "46 Test 3 (Silence?)"
+		47 : "47 Test 4 (Distort)"
+		48 : "48 Test 5 (Long Wobble)"
+		49 : "49 Test 6 (Silence?)"
 		]
 
 	spawnflags(flags) =

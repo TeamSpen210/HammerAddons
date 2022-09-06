@@ -1,0 +1,4 @@
+@PointClass base(point_hurt) appliesto(EZ2) 
+= zombie_goo_puddle: "Special version of point_hurt for radioactive zombies. Produces particles, then self destructs after a specified time."
+	[
+	]

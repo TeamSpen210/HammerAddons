@@ -53,6 +53,8 @@ MODS_BRANCHED: Dict[str, List[Tuple[str, str]]] = {
     'EP2': [
         ('MESA', 'Black Mesa'),
         ('GMOD', "Gary's Mod"),
+        ('EZ1', 'Entropy Zero'),
+        ('EZ2', 'Entropy Zero 2'),
     ],
     'P2': [
         ('P2SIXENSE', 'Portal 2 Sixense MotionPack'),
@@ -85,6 +87,8 @@ FEATURES: Dict[str, Set[str]] = {
     'MBASE': {'VSCRIPT'},
     'MESA': {'INST_IO'},
     'GMOD': {'HL2', 'EP1', 'EP2'},
+    'EZ1': {'MBASE', 'VSCRIPT'},
+    'EZ2': {'MBASE', 'VSCRIPT'},
 
     'L4D2': {'INST_IO', 'VSCRIPT'},
     'TF2': {'PROP_SCALING'},

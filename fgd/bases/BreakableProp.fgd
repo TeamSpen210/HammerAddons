@@ -1,4 +1,4 @@
-@BaseClass base(_Breakable, DamageFilter) = BreakableProp
+@BaseClass base(_Breakable, EZ2Displacement, DamageFilter) = BreakableProp
 	[
 	spawnflags(flags)  =
 		[
@@ -22,6 +22,8 @@
 		2: "Only Tanks"
 		]
 
+	BreakOnPlayerKick[EZ2](boolean) : "Break on kicked by player" : 0 : "If hit by the player's kick attack, break instantly."
+
 	output OnTakeDamage(void) : "Fired each time this breakable takes any damage."
 		
 	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
@@ -29,4 +31,7 @@
 
 	input SetInteraction[MBase](integer) : "Adds an interaction to this entity."
 	input RemoveInteraction[MBase](integer) : "Removes an interaction from this entity."
+
+	input EnableBreakOnPlayerKick[EZ2](void) : "Set this breakable prop to break instantly on player kick."
+	input DisableBreakOnPlayerKick[EZ2](void) : "Set this breakable prop to not break instantly on player kick."
 	]

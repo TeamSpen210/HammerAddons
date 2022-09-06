@@ -1,0 +1,5 @@
+@SolidClass appliesto(MBase) base(BaseEntityBrush, EnableDisable)
+= func_clip_client: "A brush entity that's considered solid to clientside ragdolls and other clientside objects." 
+	[
+	input Toggle(void) : "Toggles this entity."
+	]

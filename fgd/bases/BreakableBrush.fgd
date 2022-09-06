@@ -1,4 +1,4 @@
-@BaseClass base(BaseEntityVisBrush, _Breakable, DamageFilter) = BreakableBrush
+@BaseClass base(BaseEntityVisBrush, _Breakable, EZ2Displacement, DamageFilter) = BreakableBrush
 	[
 	spawnflags(flags)  =
 		[

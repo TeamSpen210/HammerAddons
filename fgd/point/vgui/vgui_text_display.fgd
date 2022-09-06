@@ -2,6 +2,7 @@
 	appliesto(MBase) 
 	studioprop("models/editor/vgui_arrows.mdl") 
 	sphere(textsize) 
+	worldtext() // If there's actually a game branch with mapbase + csgo...
 = vgui_text_display: "Displays a VGUI text label oriented in the world. Can be considered Mapbase's equivalent of point_worldtext. The panel itself can be displayed with the 'r_vguitext_bg' cvar."
 	[
 	spawnflags(flags) =
