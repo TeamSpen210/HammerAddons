@@ -18,7 +18,14 @@
 	ignorebugbait(boolean) : "Ignore Bugbait" : 0
 	unburroweffects(boolean) : "Suppress unburrow effects" : 0
 	startburrowed(boolean) : "Start Burrowed" : 0
-
+	
+	model(studio) : "Override Model"
+	noglow(boolean) : "Disable Glowing Butt" : 0
+	noglow(choices) : "Glowing Butt" : 0 =
+		[
+		0 : "Glow"
+		1 : "Don't glow"
+		]
 
 	// Inputs
 	input Unburrow(void) : "Unburrow from the ground"

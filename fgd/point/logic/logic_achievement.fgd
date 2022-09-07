@@ -9,7 +9,7 @@
 
 	achievementevent(string) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input."
 	
-	achievementevent[Mesa](choices) : "Achievement Event" : 0 : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+	achievementevent[Mesa](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
 		"ACHIEVEMENT_EVENT_BMS_FLAVOR_TRANSFORMATION"			: "Flavor Transormation - Ruin the microwave casserole"
 		"ACHIEVEMENT_EVENT_BMS_PRESS_THEIR_BUTTONS"				: "Press Their Buttons - Interfere with the alarm and laptop in Anomalous Materials"
@@ -142,7 +142,7 @@
 		"ACHIEVEMENT_EVENT_BMS_STEALTH_TECH"		: "ACHIEVEMENT_EVENT_BMS_STEALTH_TECH"
 		]
 
-	achievementevent[HL2](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+	achievementevent[HL2, -EZ2](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
 		"ACHIEVEMENT_EVENT_HL2_HIT_CANCOP_WITHCAN": "Hit the trashcan cop with the can."
 		"ACHIEVEMENT_EVENT_HL2_PUT_CANINTRASH": "Put the can in the trash."
@@ -231,7 +231,7 @@
 		"ACHIEVEMENT_EVENT_HL2_LAMDACACHE_WHITEVAN": "Lambda: c17_13 white van in underground garage"
 		]
 	
-	achievementevent[EP1](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+	achievementevent[EP1, -EZ2](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
 		"ACHIEVEMENT_EVENT_EP1_BEAT_MAINELEVATOR": "Reach the bottom of the main elevator shaft."
 		"ACHIEVEMENT_EVENT_EP1_BEAT_CITADELCORE_START": "Contain the citadel core. (start)"
@@ -248,7 +248,7 @@
 		"ACHIEVEMENT_EVENT_EP1_BEAT_GAME": "Beat EP1 (for tracking One Free Bullet)"
 		]
 	
-	achievementevent[EP2](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+	achievementevent[EP2, -EZ2](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
 		"ACHIEVEMENT_EVENT_EP2_BEAT_ANTLIONINVASION": "Hold off the antlion invasion inside the mine shaft"
 		"ACHIEVEMENT_EVENT_EP2_BEAT_ANTLIONGUARDS": "Defeat both antlion guards outside the White Forest"
@@ -297,6 +297,77 @@
 		"ACHIEVEMENT_EVENT_PORTAL_DETACH_ALL_CAMERAS": "Camera Shy"
 		"ACHIEVEMENT_EVENT_PORTAL_HIT_TURRET_WITH_TURRET": "Friendly Fire"
 		"ACHIEVEMENT_EVENT_PORTAL_TRANSMISSION_RECEIVED": 	"Transmission Received"
+		]
+
+	achievementevent[EZ2](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+		[
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_RG01"      : "[EZ2] Radio Guy Recording Box 1"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_RG02"      : "[EZ2] Radio Guy Recording Box 2"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_RG03"      : "[EZ2] Radio Guy Recording Box 3"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_RG04"      : "[EZ2] Radio Guy Recording Box 4"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_RG05"      : "[EZ2] Radio Guy Recording Box 5"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_RG06"      : "[EZ2] Radio Guy Recording Box 6"	
+
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_CC01"      : "[EZ2] Clone Cop Recording Box 1"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_CC02"      : "[EZ2] Clone Cop Recording Box 2"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_CC03"      : "[EZ2] Clone Cop Recording Box 3"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_CC04"      : "[EZ2] Clone Cop Recording Box 4"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_CC05"      : "[EZ2] Clone Cop Recording Box 5"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_CC06"      : "[EZ2] Clone Cop Recording Box 6"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_CC07"      : "[EZ2] Clone Cop Recording Box 7"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_CC08"      : "[EZ2] Clone Cop Recording Box 8"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_CC09"      : "[EZ2] Clone Cop Recording Box 9"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_CC10"      : "[EZ2] Clone Cop Recording Box 10"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_CC11"      : "[EZ2] Clone Cop Recording Box 11"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_CC12"      : "[EZ2] Clone Cop Recording Box 12"
+		"ACHIEVEMENT_EVENT_EZ2_RECORDING_CC13"      : "[EZ2] Clone Cop Recording Box 13"
+
+		"ACHIEVEMENT_EVENT_EZ2_WILSONCLOSET_01"     : "[EZ2] Wilson Closet 1"
+		"ACHIEVEMENT_EVENT_EZ2_WILSONCLOSET_02"     : "[EZ2] Wilson Closet 2"
+		"ACHIEVEMENT_EVENT_EZ2_WILSONCLOSET_03"     : "[EZ2] Wilson Closet 3"
+		"ACHIEVEMENT_EVENT_EZ2_WILSONCLOSET_04"     : "[EZ2] Wilson Closet 4"
+		"ACHIEVEMENT_EVENT_EZ2_WILSONCLOSET_05"     : "[EZ2] Wilson Closet 5"
+		"ACHIEVEMENT_EVENT_EZ2_WILSONCLOSET_06"     : "[EZ2] Wilson Closet 6"
+		"ACHIEVEMENT_EVENT_EZ2_WILSONCLOSET_07"     : "[EZ2] Wilson Closet 7"
+		"ACHIEVEMENT_EVENT_EZ2_WILSONCLOSET_08"     : "[EZ2] Wilson Closet 8"
+		"ACHIEVEMENT_EVENT_EZ2_WILSONCLOSET_09"     : "[EZ2] Wilson Closet 9"
+		"ACHIEVEMENT_EVENT_EZ2_WILSONCLOSET_10"     : "[EZ2] Wilson Closet 10"
+		"ACHIEVEMENT_EVENT_EZ2_WILSONCLOSET_11"     : "[EZ2] Wilson Closet 11"
+		"ACHIEVEMENT_EVENT_EZ2_WILSONCLOSET_12"     : "[EZ2] Wilson Closet 12"
+		"ACHIEVEMENT_EVENT_EZ2_WILSONCLOSET_13"     : "[EZ2] Wilson Closet 13"
+		
+		"ACHIEVEMENT_EVENT_EZ2_START_GAME"          : "[EZ2] Begin tracking difficulty achievements"
+		"ACHIEVEMENT_EVENT_EZ2_BEAT_GAME"           : "[EZ2] Complete difficulty achievements"
+
+		"ACHIEVEMENT_EVENT_EZ2_COMPLETE_C0"         : "[EZ2] Complete Chapter 0"
+		"ACHIEVEMENT_EVENT_EZ2_COMPLETE_C1"         : "[EZ2] Complete Chapter 1"
+		"ACHIEVEMENT_EVENT_EZ2_COMPLETE_C2"         : "[EZ2] Complete Chapter 2"
+		"ACHIEVEMENT_EVENT_EZ2_COMPLETE_C3"         : "[EZ2] Complete Chapter 3"
+		"ACHIEVEMENT_EVENT_EZ2_COMPLETE_C4"         : "[EZ2] Complete Chapter 4"
+		"ACHIEVEMENT_EVENT_EZ2_COMPLETE_C4a"        : "[EZ2] Complete Chapter 4a"
+		"ACHIEVEMENT_EVENT_EZ2_COMPLETE_C5"         : "[EZ2] Complete Chapter 5"
+		"ACHIEVEMENT_EVENT_EZ2_COMPLETE_C6"         : "[EZ2] Complete Chapter 6"
+		
+		"ACHIEVEMENT_EVENT_EZ2_MEET_WILSON"         : "[EZ2] Met Wilson"
+		"ACHIEVEMENT_EVENT_EZ2_DELIVER_WILSON"      : "[EZ2] Brought Wilson to the upload station at Arbeit 3"
+		"ACHIEVEMENT_EVENT_EZ2_STILL_ALIVE"         : "[EZ2] Still Alive"
+		"ACHIEVEMENT_EVENT_EZ2_START_XENT"          : "[EZ2] Player entered Xentarium (Used to track 'Now there are two of them!')"
+		"ACHIEVEMENT_EVENT_EZ2_SPARE_CC"            : "[EZ2] Player refused to kill Clone Cop"
+		"ACHIEVEMENT_EVENT_EZ2_MIND_WIPE"           : "[EZ2] Player did not resist the mind wipe"
+		"ACHIEVEMENT_EVENT_EZ2_SUPERFUTURE"         : "[EZ2] Player saw the future mirage"
+		"ACHIEVEMENT_EVENT_EZ2_XENGRENADE_HELICOPTER" : "[EZ2] Player neutralized Judith's helicopter"
+		
+		"ACHIEVEMENT_EVENT_EZ2_SQUAD_CH1"           : "[EZ2] Count player squadmates for Chapter 1 achievement"		
+		"ACHIEVEMENT_EVENT_EZ2_SQUAD_CH2"           : "[EZ2] Count player squadmates for Chapter 2 achievement"		
+
+		"ACHIEVEMENT_EVENT_EZ2_MEET_CC"       : "[EZ2] Met Clone Cop"
+		
+		"ACHIEVEMENT_EVENT_EZ2_DELIVER_LONEWOLF"    : "[EZ2] Reunite with Lone Wolf in Chapter 6"
+		
+		"ACHIEVEMENT_EVENT_EZ2_SEE_BOREALIS"    	: "[EZ2] Find the Borealis at Arbeit 3"
+		
+		"ACHIEVEMENT_EVENT_EZ2_START_KILL_BEAST"    : "[EZ2] Begin tracking the Chapter 3 boss fight"
+		"ACHIEVEMENT_EVENT_EZ2_START_KILL_ADVISOR"  : "[EZ2] Begin tracking the advisor boss fight"
 		]
 
 	// INFRA and TSP include P2 as well, so we need to exclude it.

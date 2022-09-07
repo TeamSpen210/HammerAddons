@@ -1,0 +1,8 @@
+@NpcClass base(BaseEntityAnimating) 
+	appliesto(EZ2) 
+	autovis(Entities, Weapons, Xen Grenade)
+	studio("models/Weapons/w_xengrenade.mdl") = npc_grenade_hopwire: "Xen Grenade"
+	[
+	// Inputs
+	input SetTimer(float) : "This input makes the grenade live, and specifies how many seconds before it explodes."
+	]

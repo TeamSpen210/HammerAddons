@@ -10,6 +10,7 @@
 		64: "Start Inactive" : 0
 		128: "Never Retire" : 0
 		256: "Out of Ammo" : 0
+		1024: "No Light Sprite": 0 [MBase]
 		]
 
 	minhealthdmg(integer) : "Min req'd damage for hurting turret" : 0

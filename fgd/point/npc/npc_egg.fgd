@@ -1,0 +1,17 @@
+@NpcClass base(EZ2XenFlora, EZ2Variant) appliesto(EZ2)
+	studio("models/eggs/bullsquid_egg.mdl")
+	autovis(Entities, NPCs, Xen, Bullsquid)
+= npc_egg : "Bullsquid Egg"
+	[
+	adultmodel(studio) : "Override Adult Model"
+	babymodel(studio) : "Override Baby Model"
+	model(studio) : "Override Egg Model"
+	childclassname(npcclass) : "Class name of spawned NPC" : "npc_bullsquid"
+	hatchparticle(string) : "Hatch particle override"
+	IncubationTime(float) : "Incubation time" : "-1.0" : "Time in seconds for the egg to hatch. -1 means only hatch on proximity."
+
+	AlertSound(sound) : "Override Alert Sound"
+	HatchSound(sound) : "Override Hatch Sound"
+	
+	output OnSpawnNPC( void ) : "Fired when the egg NPC creates offspring."	
+	]

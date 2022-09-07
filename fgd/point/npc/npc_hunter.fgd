@@ -6,6 +6,8 @@
 	[
 	followtarget(target_destination) : "Strider to Follow" : : "The name of the strider that this hunter should follow."
 
+	CompanionHunter[EZ2](boolean) : "Companion Hunter" : 0 : "Allows this hunter to regenerate health and do other long-term companion-related things." 
+	NoIdlePatrol[EZ2](boolean) : "Patrol while idle" : 0
 	// Inputs
 	input FollowStrider(target_destination) : "Sets the name of the strider that this hunter should follow."
 	input SetMinigunTime(float) : "Time to shoot at any set minigun target."

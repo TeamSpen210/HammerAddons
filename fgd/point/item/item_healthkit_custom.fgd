@@ -1,0 +1,12 @@
+@PointClass base(Item) 
+	appliesto(EZ2) 
+	studioprop()
+= item_healthkit_custom: "Customizable Health Kit"
+	[
+	model(studio): "Model" : "models/items/healthkit.mdl" : "The health kit's model."
+	HealthAmount(float) : "Health Amount" : "25" : "The amount of health this item gives."
+	TouchSound(sound) : "Touch Sound" : "HealthKit.Touch" : "The sound to make when this item is picked up and used."
+	
+	// Inputs
+	input SetHealthAmount(float) : "Sets the amount of health this item gives."
+	]

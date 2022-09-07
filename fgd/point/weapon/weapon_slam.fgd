@@ -1,0 +1,6 @@
+@PointClass base(Weapon) 
+	appliesto(MBase) 
+	autovis(Weapons, HL2 Weapons)
+	studioprop("models/weapons/w_slam.mdl") = weapon_slam: "A tripmine/satchel hybrid from HL2:MP.\n\nCome on and slam, and welcome to the jam!\nCome on and slam, if you wanna jam!"
+	[
+	]

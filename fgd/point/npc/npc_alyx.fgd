@@ -10,11 +10,14 @@
 		[
 		"weapon_alyxgun": "Alyx Gun"
 		"weapon_shotgun": "Shotgun"
+		"weapon_pistol" : "Pistol" [MBase]
+		"weapon_smg1" : "SMG1" [MBase]
+		"weapon_ar2" : "AR2" [MBase]
 		"0": "Nothing"
 		]
 
 	dontpickupweapons(boolean) : "Prevent picking up weapons?" : 1 : "If yes, this NPC will NOT be allowed to pick up weapons they find on the ground."
-	shouldhaveemp(boolean) : "Should alyx have her EMP?" : 1
+	shouldhaveemp(boolean) : "Should Alyx have her EMP?" : 1
 
 	// Inputs
 	input AllowInteraction(void) : "Allow Alyx's 'hacking' AI to run."

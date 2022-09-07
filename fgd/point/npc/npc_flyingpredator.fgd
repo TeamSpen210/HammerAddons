@@ -1,0 +1,7 @@
+@NpcClass base(EZ2PredatorNPC) appliesto(EZ2)
+	studio("models/stukabat.mdl") 
+	autovis(Entities, NPCs, Xen, Stukabat)
+= npc_flyingpredator: "Stukabat (Generic)"
+	[
+	model(studio) : "Override Model"
+	]

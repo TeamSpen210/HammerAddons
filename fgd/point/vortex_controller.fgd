@@ -1,0 +1,26 @@
+@NpcClass base(BaseEntityPoint, ResponseContext) 
+	appliesto(EZ2) 
+	autovis(Entities, Weapons, Xen Grenade)
+	studio("models/Weapons/w_xengrenade.mdl") = vortex_controller: "Xen Grenade vortex logic."
+	[
+	duration(float) : "Pull Duration" : "3.0" : "Duration of the vortex's pull phase"
+	radius(float) : "Pull Radius" : "300" : "Radius of the vortex's pull"
+	strength(float) : "Pull Strength" : "256" : "Strength of the vortex's pull"
+	node_radius(float) : "Node Radius" : "256" : "Radius to look for nodes to spawn at"
+	consume_radius(float) : "Consume Radius" : "48" : "Consume entities within this radius"
+	pull_fade_in(float) : "Pull Fade-In Time" : "0" : "If specified, the vortex's strength will start at zero and increase to full strength over this period of time."
+	
+	spawnflags(Flags) =
+	[
+		1 : "Don't remove when done spawning" : 0
+		2 : "Don't spawn life when done pulling" : 0
+	]
+	
+	input Detonate(void) : "Detonates the vortex controller."
+	input FakeSpawnEntity(target_destination) : "Pretend to spawn the specified entity (teleport to node, play effects, etc.)"
+	input FakeSpawnEntityEffectsOnly(target_destination) : "Pretend to spawn the specified entity using effects only."
+	input CreateXenLife(void) : "Creates new Xen life satisfying the vortex's criteria."
+	
+	output OnPullFinished(void) : "Fires when the pull phase is finished."
+	output OutEntity(ehandle) : "Fires for each entity spawned by this vortex (including entities from FakeSpawnEntity)."
+	]

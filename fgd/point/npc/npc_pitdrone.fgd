@@ -1,0 +1,10 @@
+@NpcClass base(EZ2PredatorNPC) appliesto(EZ2)
+	studio("models/pit_drone.mdl") 
+	autovis(Entities, NPCs, Xen, Pit Drone)
+= npc_pit_drone: "Pit Drone"
+	[
+	model(studio) : "Override Model"
+	clip(integer) : "Clip" : 6 : "Starting number of spines for the pit drone to have loaded"
+	ammo(integer) : "Ammo" : 0 : "Excess spines for this Pit Drone to reload with. Can gain more by eating."
+	IsBaby(boolean) : "Baby drone" : 0 : "Is this a baby drone? (If such abominations exist)"
+	]

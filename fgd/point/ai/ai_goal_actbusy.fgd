@@ -25,6 +25,7 @@
 		[
 		0: "Default (Standard)"
 		1: "Combat"
+		10 : "Beast Zombies (E:Z2)" [EZ2]
 		]
 
 	safezone(target_destination) : "Combat Safe Zone" : : "Only for combat actbusy. " +

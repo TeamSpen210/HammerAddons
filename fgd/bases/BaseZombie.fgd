@@ -1,7 +1,11 @@
-@BaseClass base(BaseNPC) = BaseZombie
+@BaseClass base(BaseNPC, EZ2Variant) = BaseZombie
 	[
 	Headless[Mbase](boolean) : "Headcrab-less" : 0 : "Toggles whether this zombie should have a headcrab on their head. They usually should."
 
+	model[MBase](studio): "Override Model"
+	torsomodel[MBase](studio) : "Override Torso Model"
+	legsmodel[MBase](studio) : "Override Legs Model"
+	
 	spawnflags(Flags) = 
 		[
 		65536 : "Never spawn headcrab" : 0 [Mesa]

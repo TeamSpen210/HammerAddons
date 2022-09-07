@@ -1,16 +1,6 @@
-@NpcClass base(BaseNPC) 
+@NpcClass base(Basebird) 
 	appliesto(EP1, EP2, HL2, P1, Mesa) 
 	autovis(Entities, NPCs, Animals, Birds) 
 	studio("models/crow.mdl") = npc_crow: "Crow"
 	[
-	deaf[engine](boolean) : "Deaf?"
-	deaf(choices) : "Deaf?" : "0" =
-		[
-		0: "No."
-		1: "Yes. Ignore sounds."
-		]
-
-
-	// Inputs
-	input FlyAway(string) : "Forces the crow to fly to the nearest crow flyto hint node."
 	]

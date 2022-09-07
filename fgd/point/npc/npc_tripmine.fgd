@@ -13,6 +13,16 @@
 		1  : "Start inactive" : 0
 	]
 
+	// New with EZ2
+	TripmineClass[EZ2](choices) : "Tripmine class" : "CLASS_NONE": "Classification used to determine what this tripmine views as friendly. Only three classes have been added to the FGD as they are the ones I think will be useful, but if you turn smart edit off any valid CLASS will work." =
+	[
+		"CLASS_NONE" : "CLASS_NONE - Rebel tripmines"
+		"CLASS_COMBINE" : "CLASS_COMBINE"
+		"CLASS_COMBINE_NEMESIS" : "CLASS_COMBINE_NEMESIS"
+	] 	
+	TripmineColor[EZ2](color255) : "Tripmine Color" : "255, 192, 0, 64" : "Color of the tripmine laser. Combine lasers are 255, 55, 52. Rebel lasers are 255, 192, 0. Nemesis lasers are 0, 255, 255."
+	
+
 	// Inputs
 	input Activate(void) : "Recharge to full"
 

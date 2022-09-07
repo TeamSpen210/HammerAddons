@@ -1,4 +1,4 @@
-@BaseClass base(BaseEntityPhysics, TeamNum, EnableDisable, Toggle, FadeDistance) 
+@BaseClass base(BaseEntityPhysics, TeamNum, EnableDisable, Toggle, FadeDistance, EZ2Variant) 
 	appliesto(!Mesa) // So these can swap to BaseMesaPickup
 	color(0 0 200) 
 	sphere(fademindist) 
@@ -20,4 +20,12 @@
 	// Outputs
 	output OnPlayerTouch(void) : "Fires when the player touches this object."
 	output OnCacheInteraction[!TF2](void) : "This output fires when the player proves they have 'found' this item. Fires on: Player Touch (whether or not player actually acquires the item), Picked up by +USE, Picked up by Physcannon, Punted by Physcannon."
+
+
+	// Inputs
+	input EnablePlayerPickup[MBase](void) : "Enables player pickup if it was previously disabled."
+	input DisablePlayerPickup[MBase](void) : "Disables player pickup if it was previously enabled."
+	input EnableNPCPickup[MBase](void) : "Enables NPC pickup if it was previously disabled."
+	input DisableNPCPickup[MBase](void) : "Disables NPC pickup if it was previously enabled."
+	input BreakConstraint[MBase](void) : "Breaks the constraint on this item if it started constrained."
 	]

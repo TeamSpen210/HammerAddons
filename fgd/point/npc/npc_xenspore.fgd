@@ -1,0 +1,6 @@
+@NPCClass base(EZ2XenFlora) appliesto(EZ2) 
+	studio("models/fungus.mdl")
+	autovis(Entities, NPCs, Xen, Xen Deco)
+= npc_xenspore : "Xen Spore"
+	[
+	]

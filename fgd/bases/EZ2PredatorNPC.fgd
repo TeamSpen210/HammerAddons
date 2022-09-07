@@ -1,0 +1,33 @@
+@BaseClass base(BaseNPC, EZ2Variant) = EZ2PredatorNPC
+	[
+	SpawningEnabled(boolean) : "Spawning Enabled" : 1 : "Can this predator NPC produce offspring in the appropriate condtions?"
+	IsBoss(boolean) : "Boss Enemy" : 0 : "This predator NPC is a boss monster rather than a normal monster." 
+
+	WanderStrategy[engine](integer) : "Wander Strategy" : 0
+	WanderStrategy(choices) : "Should Wander" : 0 : "Should this enemy wander outside of combat?" =
+		[
+		0 : "Never"
+		1 : "Always outside of combat"
+		2 : "Only while in ALERT state"
+		3 : "Only while in IDLE state"
+		]
+	
+	Dormant[engine](boolean) : "Dormant While On Ceiling" : 0
+	Dormant(choices) : "Dormant While On Ceiling" : 0 : "If set to 1, this predator will not react to enemies or smells while on the ceiling." =
+		[
+		0 : "Not dormant"
+		1 : "Dormant"
+		]
+
+	input EnterNormalMode( void ) : "Resume normal combat"
+	input EnterBerserkMode( void ) : "Make this boss enemy invincible until it enters a different mode."
+	input EnterRetreatMode( void ) : "Make this boss enemy retreat from the player until it enters a different mode."
+	input Spawn( void ) : "Force this predator NPC to create offspring."
+	input EnableSpawning( void ) : "Allow this predator NPC to create offspring."
+	input DisableSpawning( void ) : "Prevent this predator NPC from creating offspring."
+	input SetWanderAlways( void ) : "Set this enemy to wander when it is not in combat."
+	input SetWanderNever( void ) : "Set this enemy to never wander."
+	output OnBossHealthReset(void) : "Fired when the boss' health reaches 0."	
+	output OnFed( void ) : "Fired when the predator NPC eats."	
+	output OnSpawnNPC( void ) : "Fired when the predator NPC creates offspring."	
+	]

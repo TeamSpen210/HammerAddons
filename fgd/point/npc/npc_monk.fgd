@@ -8,13 +8,14 @@
 		[
 		"weapon_annabelle": "Annabelle"
 		"weapon_smg1": "SMG1"
+		"weapon_smg1": "SMG2" [EZ2]
 		"weapon_ar2": "AR2"
 		"weapon_stunstick": "Stun Stick"
 		"weapon_crowbar": "Crow Bar"
 		"weapon_shotgun": "Shotgun"
-		"weapon_beerbottle": "Beer Bottle"
-		"weapon_beerbottle2": "Beer Bottle2"
 		"weapon_rpg": "RPG"
+		"weapon_citizenpackage" : "Citizen Package"
+		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"0": "Nothing"
 		]
 

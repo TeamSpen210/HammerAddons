@@ -1,0 +1,6 @@
+@PointClass base(Weapon) 
+	appliesto(EZ2) 
+	autovis(Weapons, EZ Weapons)
+	studioprop("models/weapons/w_mp5k.mdl") = weapon_smg2: "MP5K"
+	[
+	]

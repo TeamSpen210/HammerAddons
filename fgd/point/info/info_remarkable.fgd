@@ -1,7 +1,12 @@
 @PointClass base(BaseEntityPoint, Origin) 
-	iconsprite(editor/info_remarkable)
-	appliesto(L4D, L4D2)
+	iconsprite("editor/info_remarkable")
+	appliesto(L4D, L4D2, MBase)
 = info_remarkable: "An object in the world such that characters seeing it will speak a TLK_REMARK concept"
 	[
 	contextsubject(string) : "Subject context" : : "Text to put in the SUBJECT context of the TLK_REMARK fired upon sighting this object."
+
+	StartDisabled[MBase](boolean) : "Start Disabled" : 0
+	
+	input Enable[MBase](void) : "Enable remarks"
+	input Disable[MBase](void) : "Disable remarks - can force override with ForceRemark(Entity)"
 	]

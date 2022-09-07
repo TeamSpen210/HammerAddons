@@ -8,6 +8,9 @@
 		65536: "Start LookOff" : 0
 		131072: "Don't drop grenades" : 0
 		262144: "Don't drop ar2 alt fire (elite only) " : 0
+		524288  : "Can Join Player Squad" : 1 [EZ2]
+		1048576 : "Regenerate Health" : 1 [EZ2]
+		2097152 : "Prevent manhack toss" : 0 [EZ2]
 		]
 
 	model[engine](studio) : "Model" : "models/combine_soldier.mdl"
@@ -24,10 +27,17 @@
 	additionalequipment[engine](string) : "Weapons" : "weapon_smg1"
 	additionalequipment(choices) : "Weapons" : "weapon_smg1" =
 		[
+		"weapon_ar2_proto" : "Prototype AR2" [EZ2]
 		"weapon_ar2": "AR2"
 		"weapon_shotgun": "Shotgun"
 		"weapon_smg1": "SMG1"
+		"weapon_smg2" : "MP5K" [EZ2]
+		"weapon_rpg" : "RPG" [MBase]
 		"weapon_stunstick": "Stun Stick"
+		"weapon_pistol" : "Pistol" [MBase]
+		"weapon_357" : "357" [MBase]
+		"weapon_citizenpackage" : "Citizen Package" [MBase]
+		"weapon_citizensuitcase" : "Citizen Suitcase" [MBase]
 		"0": "Nothing"
 		]
 
@@ -56,11 +66,29 @@
 		2: "Yes"
 		]
 
+	manhacks[engine](integer) : "Number of Manhacks" : 0
+	manhacks[MBase](choices) : "Number of Manhacks" : 0 =
+		[
+		0: "None"
+		1: "1"
+		2: "2"
+		]
+
 	UnderthrowGrenades[MBase](boolean) : "Underthrow Grenades" : "0" : "If enabled, this soldier will 'underthrow' their grenades with ACT_SPECIAL_ATTACK1, " +
 		"which looks a lot more like the HL1 grunt animation. " +
 		"This includes grenades thrown during regular behavior and grenades forced with ThrowGrenadeAtTarget."
 	SetAlternateCapable[MBase](boolean) : "Alternate Capable" : "0" : "Makes the soldier capable of using both grenades AND energy balls at the same time, " +
 		"regardless of their elite status."
+
+	DontPickupWeapons[EZ2](boolean) : "Prevent picking up weapons?" : "1" : "By default, Combine soldiers are not allowed to pick up weapons they find on the ground. Change this to 'No' to enable citizen-like weapon pickup behavior."	
+	DisablePlayerUse[EZ2](boolean) : "Ignore player use" : "0" : "Prevent this Combine soldier from responding to player +USE. Can be changed with inputs EnablePlayerUse and DisablePlayerUse."
+	CanOrderSurrender[engine](integer) : "Can order surrender" : 2
+	CanOrderSurrender[EZ2](choices) : "Can order surrender" : 2 : "Determines whether this soldier can order unarmed citizens to surrender. ''Follow player actions'' bases this on whether the player has ordered a surrender before in the current playthrough, meaning soldiers will try to follow suit." =
+	[
+		0 : "No"
+		1 : "Yes"
+		2 : "Follow player actions"
+	]
 
 
 	// Inputs
@@ -72,8 +100,31 @@
 
 	input ThrowGrenadeAtTarget(target_destination) : "Throw a grenade at the specified target."
 	input UnderthrowGrenades[MBase](bool) : "Sets whether we should underthrow our grenades."
+	
+	input SetCommandable[EZ1, EZ2](void) : "Make a previously uncommandable soldier commandable."
+	input SetNonCommandable[EZ1, EZ2](void) : "Make a previously commandable soldier uncommandable."
+	input AddToPlayerSquad[EZ1, EZ2](void) : "Add to the player's squad."
+	input RemoveFromPlayerSquad[EZ1, EZ2](void) : "Remove from player squad, instantly."
+
+	input EnableWeaponPickup[EZ1, EZ2](void) : "Enable Weapon Pickup"
+	input DisableWeaponPickup[EZ1, EZ2](void) : "Disable Weapon Pickup"
+	
+	input EnablePlayerUse[EZ1, EZ2](void) : "Enable this soldier to respond to player's +USE"
+	input DisablePlayerUse[EZ1, EZ2](void) : "Prevent this soldier from responding to player's +USE"
+	
+	input EnableOrderSurrender[EZ2](void) : "Allow this soldier to order unarmed citizens to surrender."
+	input DisableOrderSurrender[EZ2](void) : "Disallow this soldier to order unarmed citizens to surrender."
+
+	input DisableManhackToss[EZ1, EZ2](void) : "Disables manhack toss"
+	input EnableManhackToss[EZ1, EZ2](void) : "Enables manhack toss (which had been disabled by the spawnflag or input)"
+	input DeployManhack[EZ1, EZ2](void) : "Deploys a manhack immediately if one is available."
+	input AddManhacks[EZ1, EZ2](integer) : "Adds to the number of manhacks this NPC has available."
+	input SetManhacks[EZ1, EZ2](integer) : "Sets the number of manhacks this NPC has available."
 
 	input SetTacticalVariant[MBase](integer) : "Sets this soldier's tactical variant based on integer value."
 	input SetElite[MBase](bool) : "Sets whether we are an elite. Model will not change, but grenades will transform into energy balls or vice versa."
 	input SetAlternateCapable[MBase](bool) : "Sets whether the soldier is capable of using both grenades and energy balls at the same time."
+
+	output OutManhack[EZ1, EZ2](ehandle) : "Fired the moment when this NPC spawns a manhack. Passes the manhack."
+	output OnPlayerUse[EZ1, EZ2](void) : "Fired when the player +USEs us."
 	]

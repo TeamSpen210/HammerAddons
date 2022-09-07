@@ -1,6 +1,27 @@
-@NpcClass base(BaseNPCAssault) appliesto(Mesa) 
-	autovis(Entities, NPCs, Xen, Bullsquid)
+// Totally different in Mesa and EZ2.
+
+@BaseClass base(BaseNPCAssault) appliesto(Mesa)
 	studio("models/xenians/bullsquid.mdl") 
+= _npc_bullsquid_mesa []
+
+
+@BaseClass base(EZ2PredatorNPC) appliesto(EZ2)
+	studio("models/bullsquid.mdl") 
+	line(255 128 128, targtname, Mate)
+= _npc_bullsquid_ez2 [
+	adultmodel(studio) : "Override Adult Model"
+	babymodel(studio) : "Override Baby Model"
+	eggmodel(studio) : "Override Egg Model"
+
+	IsBaby(boolean) : "Babysquid" : 0 : "Is this a baby squid?" 
+	Mate(target_destination) : "Mate" : "" : "Name of the this squid's mate."
+]
+
+
+@NpcClass 
+	appliesto(Mesa, EZ2) 
+	base(_npc_bullsquid_mesa, _npc_bullsquid_ez2)
+	autovis(Entities, NPCs, Xen, Bullsquid)
 = npc_bullsquid: "Bullsquid"
 	[
 	]

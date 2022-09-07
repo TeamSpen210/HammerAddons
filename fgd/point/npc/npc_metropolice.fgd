@@ -11,8 +11,16 @@
 		[
 		"weapon_pistol": "Pistol"
 		"weapon_smg1": "SMG1"
+		"weapon_smg2" : "SMG2" [EZ2]
 		"weapon_stunstick": "Stun Stick"
+		"weapon_crowbar"  : "Crowbar" [MBase]
+		"weapon_ar2"  : "AR2" [MBase]
 		"weapon_shotgun": "Shotgun"
+		"weapon_357" : "357" [MBase]
+		"weapon_rpg"  : "RPG" [MBase]
+		"weapon_crossbow" : "Crossbow" [MBase]
+		"weapon_citizenpackage" : "Citizen Package" [MBase]
+		"weapon_citizensuitcase" : "Citizen Suitcase" [MBase]
 		"0": "Nothing"
 		]
 

@@ -31,4 +31,6 @@
 	// Outputs
 	output OnFoundPlayer(string) : "Fired when the player is spotted within the inner radius"
 	output OnFoundEnemy(void) : "Fired when a non-player enemy is spotted within the inner radius."
+	output OnLostPlayer(void) : "Fired when the tracked player spotted within the inner radius has been lost. Usually due to the player leaving the inner radius, or because the player was killed."
+	output OnLostEnemy(void) : "Fired when a non-player enemy spotted within the inner radius has been lost. Usually due to the enemy leaving the inner radius, or because the enemy was killed/removed."
 	]

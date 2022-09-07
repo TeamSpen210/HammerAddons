@@ -1,0 +1,36 @@
+@NpcClass base(npc_helicopter) 
+	appliesto(EZ2)
+	autovis(Entities, NPCs, Arbeit)
+	studioprop() 
+= npc_arbeit_helicopter : "Arbeit Helicopter"
+	[
+	model(studio) : "World Model" : "models/props_vehicles/arbeit_heli.mdl" : "This model should have the right attachments."
+	
+	NPCTemplate(target_destination) : "Name of Template NPC 1 (Right Gunner)"
+	NPCTemplate2(target_destination) : "Name of Template NPC 2 (Left Gunner)"
+	
+	GunnerSpawnState[engine](integer) : "Gunner Spawn Configuration" : 0
+	GunnerSpawnState(choices) : "Gunner Spawn Configuration" : 0 : "In what way should this helicopter spawn with gunners?" =
+	[
+		0 : "Start with no gunners"
+		1 : "Start with all gunners"
+		2 : "Start with right gunner only"
+		3 : "Start with left gunner only"
+	]
+	
+	AutoRespawnGunners(boolean) : "Automatically respawn gunners" : 0 : "Automatically respawn gunners when they die, jump, or are removed."
+	DoorsOpen(boolean) : "Doors start open" : 0 : ""
+
+	// Inputs
+	input RespawnAllGunners(void) : "Respawn all gunners."
+	input RespawnRightGunner(void) : "Respawn the right gunner only."
+	input RespawnLeftGunner(void) : "Respawn the left gunner only."
+	input OpenDoors(void) : "Open the doors if they're closed."
+	input CloseDoors(void) : "Open the doors if they're closed."
+	
+	input ForceGunnerJump(void) : "Force the gunners to jump."
+	input ForceGunnerRappel(void) : "Force the gunners to rappel."
+
+	// Outputs
+	output OnSpawnNPC(ehandle) : "Fires when this helicopter spawns a NPC."
+	]

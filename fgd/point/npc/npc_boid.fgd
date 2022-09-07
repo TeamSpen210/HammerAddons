@@ -1,0 +1,7 @@
+@NpcClass base(Basebird) 
+	appliesto(EZ1, EZ2)
+	autovis(Entities, NPCs, Animals, Birds) 
+	studio("models/aflock.mdl") = npc_boid: "Boid, alternate name for npc_aliencrow."
+	[
+	model(studio) : "Model" : "models/aflock.mdl"
+	]

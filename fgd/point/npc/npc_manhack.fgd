@@ -10,7 +10,9 @@
 		262144: "Use Air Nodes" : 0
 		1048576: "No Danger Sounds" : 0
 		]
-
+	
+	Nemesis[EZ2](boolean): "Nemesis Manhack" : "0" : "Makes this manhack use E:Z1 colors and become hostile to both the Combine and the Resistance."
+	
 	ignoreclipbrushes(boolean) : "Ignore NPC Clip brushes" : 0
 
 

@@ -1,0 +1,28 @@
+@PointClass base(BaseDriveableVehicle) 
+	appliesto(EZ2)
+	autovis(Vehicles, Combine APC)
+	studioprop() 
+= prop_vehicle_drivable_apc: "Driveable studiomodel APC."
+	[
+	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/drivable_apc.txt"
+
+	model(studio) : "World Model" : "models/vehicles/combine_apc.mdl" : "Set the model used by the APC."
+
+	cannotmove(boolean) : "Cannot Move" : 0 
+
+	// Inputs
+	input DisableMove(void) : "Disable APC movement, machine gun and rockets only."
+	input EnableMove(void) : "Enable APC movement."
+	input ForcePlayerOut(void) : "Force the player out of the vehicle."
+	
+	input ConstrainEntity(target_destination) : "Constrains an entity to the back of the vehicle."
+	input UnconstrainEntity(void) : "Unconstrains any entity constrained to the back of the vehicle."
+	input ConstraintBroken(void) : "Breaks the constraint of any entity constrained to the back of the APC."
+	
+	input HeadlightOn(void) : "Turns on the headlight."
+	input HeadlightOff(void) : "Turns off the headlight."
+	
+	// Outputs
+	output OnOverturned(void) : "Fired when the APC is overturned."
+	output OnObjectAttached(void) : "Fired when an object is attached to the APC."
+	]

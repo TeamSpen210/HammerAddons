@@ -9,9 +9,11 @@
 		[
 		"weapon_pistol": "Pistol"
 		"weapon_smg1": "SMG1"
+		"weapon_smg2" : "SMG2" [EZ2]
 		"weapon_stunstick": "Stun Stick"
 		"weapon_shotgun": "Shotgun"
 		"weapon_ar2": "AR2"
+		"weapon_crossbow" : "Crossbow" [MBase]
 		0: "Nothing"
 		]
 

@@ -1,0 +1,50 @@
+@NpcClass base(BaseNPC, ResponseContext) 
+	appliesto(EZ2) 
+	autovis(Entities, NPCs, Wilson)
+	studio("models/props/will_e.mdl") 
+= npc_wilson : "Wilson/Willie/Will-E"
+	[
+	spawnflags(Flags) = 
+		[
+		2 : "[2] Gag (No speech allowed)" : 0
+		]
+
+	static(boolean) : "Static" : 0 : "Makes Wilson immobile and saves resources. This is for background maps and dev commentary to keep Will-E from moving, but he's still fully functional."
+	
+	SetOmniscient(boolean) : "Omniscient" : 0 : "Makes Wilson ''omniscient'', which lets him answer Bad Cop concepts from anywhere on the map (e.g. the big monitor in ez2_c3_3)."
+	
+	SetCanBeEnemy(boolean) : "Can Be Enemy" : 0 : "Allows some NPCs to recognize Wilson as an enemy. Default relationship is equivalent to npc_arbeit_turret_floor."
+
+	AutoSetLocator(boolean) : "Auto Set Locator" : 0 : "Automatically sets the player's locator compass (normally set via logic_playerproxy) to follow this Wilson entity upon spawning. " +
+		"Overrides any existing locator entity, including other Wilsons."
+	
+	damaged(boolean) : "Is Damaged" : 0 : "Is Wilson hurt? (Use damaged model and spark)" 
+
+	dead(boolean) : "Is Dead" : 0 : "Is Wilson dead? (This is for scenes where Wilson appears lifeless, not to be confused with literal NPC death.)"
+	
+	// Inputs
+	input DispatchResponse(string) : "Causes Wilson to speak the specified response concept."
+	input SelfDestruct(void) : "Causes Wilson to explode."
+	input SetOmniscient(bool) : "Sets omniscience on Wilson."
+	input SetCanBeEnemy(bool) : "Sets whether Wilson can be an enemy of NPCs."
+	
+	input TurnOnEyeLight(void) : "Turns on Wilson's eye light if it was disabled before."
+	input TurnOffEyeLight(void) : "Turns off Wilson's eye light if it was enabled before."
+	
+	input EnableMotion(void) : "Enable physics motion/collision response."
+	input DisableMotion(void) : "Disable physics motion/collision response."
+
+	input TurnOnDamagedMode(void) : "Set Wilson into damaged mode (use models/will_e_damaged.mdl, spark, etc)"
+	input TurnOffDamagedMode(void) : "Turn off Wilsons' damaged mode (restore default model and behavior)"
+
+	input TurnOnDeadMode(void) : "Set Wilson into dead mode (turn off eye light and do not speak responses)"
+	input TurnOffDeadMode(void) : "Turn off Wilsons' dead mode (turn on eye light and use responses as normal)"
+
+	
+	// Outputs
+	output OnTipped(void) : "Wilson has been tipped over and is hurt."
+	output OnPlayerUse(void) : "Fires when a player +USEs Wilson."
+	output OnPhysGunPickup(void) : "Picked up with physgun."
+	output OnPhysGunDrop(void) : "Released by physgun."
+	output OnDestroyed(void) : "Fires when Wilson has been destroyed. WILSOOOOON!!!"
+	]

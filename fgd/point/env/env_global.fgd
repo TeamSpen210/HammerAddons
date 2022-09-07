@@ -21,6 +21,7 @@
 		"ep2_alyx_injured": "Episode 2: Alyx injured" [ep2]
 		"ep_alyx_darknessmode": "Episode 1: Alyx darkness mode" [ep1]
 		"hunters_to_run_over": "Ep2 Counter: Hunters to run over before they dodge" [ep2]
+		"citizens_no_auto_variant" : "EZ2: New citizen types don't automatically set variants to 'Arbeit'" [EZ2]
 		]
 
 	globalstate[P2, -INFRA](choices) : "Global State to Set" =

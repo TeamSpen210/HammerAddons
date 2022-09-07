@@ -1,0 +1,6 @@
+@PointClass base(Weapon) 
+	appliesto(EZ1, EZ2) 
+	autovis(Weapons, EZ Weapons)
+	studioprop("models/manhack.mdl") = weapon_manhacktoss: "Deployable Manhack"
+	[
+	]

@@ -11,6 +11,10 @@
 		1 : "Downtrodden"
 		2 : "Refugee"
 		3 : "Rebel"
+		5 : "Rebel Brute" [EZ2]
+		6 : "Longfall" [EZ2]
+		7 : "Arctic" [EZ2]
+		8 : "Arbeit Employee" [EZ2]
 		4 : "Unique"
 		]
 	

@@ -1,0 +1,28 @@
+@NpcClass base(BaseNPC, TalkNPC, PlayerCompanion, EZ2Variant) 
+	appliesto(EZ2) 
+	autovis(Entities, NPCs, Xen, Zombigaunt)
+	studio("models/zombie/zombigaunt.mdl")
+ = npc_zombigaunt: "Zombigaunt"
+	[
+	model(studio) : "World model" : ""
+	armorrechargeenabled(boolean) : "Allow Armor Recharging" : 1
+	healthregenerateenabled(boolean) : "Regenerate Health" : 0 : "Whether or not the vortigaunt will recover their own health over time like vital allies, while in combat."
+
+	// Inputs
+	input EnableArmorRecharge(void) : "Allow armor recharging on players"
+	input DisableArmorRecharge(void) : "Do not allow armor recharging on players"
+	input ExtractBugbait(string) : "Causes the vortigaunt to extract bugbait from the named target passed in."
+	input ChargeTarget(string) : "Force the vortigaunt to charge the named target."
+	input EnableHealthRegeneration(void) : "Allow the vortigaunt to start regenerating their health over time, like vital allies."
+	input DisableHealthRegeneration(void) : "Stop the vortigaunt from regenerating their health. (Default behavior)"
+	input TurnBlue(boolean) : "If true, turn blue. If false, turn green. (Episodic)."
+	input TurnBlack(boolean) : "If true, turn black. If false, be seen. (Episodic)."
+	input BeginCarryNPC(void) : "Begin to override our animations for 'carrying' an NPC. (Episodic)"
+	input EndCarryNPC(void) : "Stop overriding our animations for 'carrying' an NPC. (Episodic)"
+
+	// Outputs
+	output OnFinishedExtractingBugbait(void) : "Fires when the vortigaunt's finished extracting bugbait from a target."
+	output OnFinishedExtractingTauCannon(void) : "Fires when the vortigaunt's finished extracting the tau cannon from the jeep."
+	output OnFinishedChargingTarget(void) : "Fires when the vortigaunt has finished charging a target."
+	output OnPlayerUse(void) : "Fires when a player +USEs the vortigaunt."
+	]

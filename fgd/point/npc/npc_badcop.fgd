@@ -1,0 +1,7 @@
+@NpcClass base(npc_clonecop) 
+	appliesto(EZ2)
+	autovis(Entities, NPCs, Combine, Bad Cop)
+	studio() = npc_badcop: "Bad Cop"
+	[
+	model(studio) : "Model" : "models/bad_cop.mdl" : "Sets this clone's model."
+	]

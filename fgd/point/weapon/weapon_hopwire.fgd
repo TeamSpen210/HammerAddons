@@ -1,0 +1,6 @@
+@PointClass base(Weapon) 
+	appliesto(EZ2) 
+	autovis(Weapons, EZ Weapons)
+	studioprop("models/weapons/w_xengrenade.mdl") = weapon_hopwire: "Xen Grenade"
+	[
+	]
