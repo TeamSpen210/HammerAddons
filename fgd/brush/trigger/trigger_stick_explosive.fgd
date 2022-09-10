@@ -10,6 +10,7 @@
 		1: "Stick on entering this area."
 		]
 
+	// Inputs
 	input Stick(void) : "Sticks all explosives in this area"
 	input Unstick(void) : "Unsticks all explosives in this area"
 	input Explode(void) : "Explodes all explosives in this area"

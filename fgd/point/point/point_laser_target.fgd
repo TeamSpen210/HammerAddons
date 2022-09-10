@@ -2,7 +2,7 @@
 	appliesto(P2CE) 
 	studio("models/editor/axis_helper.mdl") 
 	iconsprite("editor/point_laser_target.vmt")
-	= point_laser_target: "Invisible Discouragement Beam detector, for logic use. " +
+= point_laser_target: "Invisible Discouragement Beam detector, for logic use. " +
 		"The entity will fire outputs when struck and unstruck."
 	[
 	terminalpoint(boolean) : "Terminal Point" : 1 : "Whether to behave like a laser catcher or a relay. " +

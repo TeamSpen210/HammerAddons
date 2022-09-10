@@ -2,7 +2,8 @@
 	appliesto(+USE_AI)
 	iconsprite("editor/assault_point.vmt") 
 	sphere(allowdiversionradius)
-	line(255 255 255, targetname, nextassaultpoint) = assault_assaultpoint: "(Assault) assault point"
+	line(255 255 255, targetname, nextassaultpoint)
+= assault_assaultpoint: "(Assault) assault point"
 	[
 	assaultgroup(string) : "Assault Hint Group" : : "NPC's movements are constrained to this hint group once assault has begun"
 	nextassaultpoint(target_destination) : "Next assault point (optional)"

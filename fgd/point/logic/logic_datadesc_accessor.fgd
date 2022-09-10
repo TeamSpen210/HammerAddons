@@ -1,5 +1,4 @@
-@PointClass
-	base(BaseEntityPoint)
+@PointClass base(BaseEntityPoint)
 	iconsprite("editor/logic_datadesc_accessor.vmt") 
 	line(255 255 255, targetname, target)
 = logic_datadesc_accessor : "A logic entity that could read or write any field in an entity's data description, " +

@@ -1,4 +1,7 @@
-@SolidClass color(0 180 0) appliesto(-engine) = func_detail: 
+@SolidClass 
+	color(0 180 0) 
+	appliesto(-engine) 
+= func_detail: 
 	"An entity that turns its brushes into detail brushes. " +
 	"Detail brushes do NOT contribute to visibility in the PVS. " +
 	"World geometry is not clipped to detail brushes, " +

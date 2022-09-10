@@ -1,5 +1,5 @@
-@PointClass appliesto(+HL2_ENTITIES)
-		base(Item) 
+@PointClass base(Item)
+	appliesto(+HL2_ENTITIES)
 	 studio("models/w_longjump.mdl") 
 = item_longjump: "Longjump Module"
 	[

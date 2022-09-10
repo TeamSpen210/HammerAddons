@@ -1,6 +1,7 @@
 @SolidClass base(BaseEntityBrush) 
 	appliesto(+HL2_ENTITIES, +USE_AI) 
-	color(255 255 0) = npc_heli_avoidbox: "Helicopter avoidance box"
+	color(255 255 0) 
+= npc_heli_avoidbox: "Helicopter avoidance box"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

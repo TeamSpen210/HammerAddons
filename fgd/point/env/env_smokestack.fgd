@@ -2,7 +2,8 @@
 	color(255 255 255) 
 	color(200 200 0) 
 	iconsprite("editor/env_smokestack.vmt") 
-	sphere(jetlength) = env_smokestack: "An entity that spits out a constant stream of smoke. See particlezoo.vmf for sample usage. You can place up to two env_particlelight entities near the smoke stack to add ambient light to its particles."
+	sphere(jetlength)
+= env_smokestack: "An entity that spits out a constant stream of smoke. See particlezoo.vmf for sample usage. You can place up to two env_particlelight entities near the smoke stack to add ambient light to its particles."
 	[
 	initialstate[engine](boolean) : "Start Acive" : 0
 	initialstate(choices) : "Initial State" : 0 =

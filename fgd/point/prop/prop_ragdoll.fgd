@@ -1,5 +1,4 @@
-@PointClass 
-	base(BaseEntityPhysics, EnableDisable, SystemLevelChoice, SetModel)
+@PointClass base(BaseEntityPhysics, EnableDisable, SystemLevelChoice, SetModel)
 	sphere(fademindist) 
 	sphere(fademaxdist) 
 	studioprop() 

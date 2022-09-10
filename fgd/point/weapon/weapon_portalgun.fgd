@@ -5,9 +5,9 @@
 	[
 
 	spawnflags(flags) =
-	[
+		[
 		8 : "Disable pickup sounds" : 0	
-	]
+		]
 
 	canfireportal1(boolean) : "Can Fire Blue Portals" : 1 : "Can this portalgun create blue portals?"
 	canfireportal2(boolean) : "Can Fire Orange Portals" : 1 : "Can this portalgun create orange portals?"

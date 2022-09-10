@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(P2CE)
 	iconsprite("editor/info_target.vmt")
-	= info_playtest_manager: "Manages playtest sessions."
+= info_playtest_manager: "Manages playtest sessions."
 	[
 	// Inputs
 	input BeginPlaytest(void) : "Starts the playtest session"

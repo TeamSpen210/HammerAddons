@@ -1,5 +1,4 @@
-@PointClass
-	base(BaseEntityPoint, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	iconsprite("editor/math_clamp.vmt") 
 = math_clamp : "Clamps a value between two values. Supports integers, floats, and vectors."
 	[

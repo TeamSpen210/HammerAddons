@@ -1,8 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	iconsprite("editor/comp_choreo_sceneset.vmt")
 	appliesto(srctools, -engine, +USE_AI)
-= comp_choreo_sceneset:
-"Chains a set of choreographed scenes together."
+= comp_choreo_sceneset: "Chains a set of choreographed scenes together."
 	[
 	delay(float): "Delay between each" : "0.1" : "Add a delay between each scene."
 	only_once(boolean): "Clean up after starting" : 1 : "If set, Kill choreo scenes after starting so they only play once." +
@@ -10,19 +9,19 @@
 	
 	busyactor[engine](integer) : "If an Actor is talking..." : 1 : "What to do if an actor this scene needs is already talking when this scene is told to start."
 	busyactor(choices) : "If an Actor is talking..." : 1 : "What to do if an actor this scene needs is already talking when this scene is told to start." =
-	[
+		[
 		0: "Start immediately"
 		1: "Wait for actor to finish"
 		2: "Interrupt at next interrupt event"
 		3: "Cancel at next interrupt event"
-	]
+		]
 	
 	onplayerdeath[engine](integer) : "On player death" : 0 : "What should this entity do if the player dies"
 	onplayerdeath(choices) : "On player death" : 0 : "What should this entity do if the player dies" =
-	[
+		[
 		0 : "Do Nothing"
 		1 : "Cancel Script and return to AI"
-	]
+		]
 	
 	scene01(scene): "Scene 1" : ""
 	scene02(scene): "Scene 2" : ""
@@ -45,8 +44,11 @@
 	scene19(scene): "Scene 19" : ""
 	scene20(scene): "Scene 20" : ""
 	
+	// Inputs
 	input Start(void): "Start the choreo sequence playing."
 	input Cancel(void): "Stop the choreo sequence at any point."
+	
+	// Outputs
 	output OnStart(void): "Fired when the sequence starts."
 	output OnFinish(void): "Fired when the sequence is complete."
 	]   

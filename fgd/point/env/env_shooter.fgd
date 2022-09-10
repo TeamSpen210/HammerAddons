@@ -28,5 +28,4 @@
 	gibgravityscale(float) : "Gib gravity scale" : 1 : "ONLY WORKS FOR POINT GIBS. This field allows you to scale gravity so that gibs fall faster, slower, or not at all."
 
 	massoverride(float) : "Mass override" : 0 : "EPISODIC ONLY. Specify an arbitrary mass for the gibs emitted by me."
-
 	]

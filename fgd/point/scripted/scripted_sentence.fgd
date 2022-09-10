@@ -1,7 +1,8 @@
 @PointClass base(BaseEntityPoint)
 	appliesto(+USE_AI)
 	sphere() 
-	iconsprite("editor/scripted_sentence.vmt") = scripted_sentence: "Scripted Sentence"
+	iconsprite("editor/scripted_sentence.vmt")
+= scripted_sentence: "Scripted Sentence"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

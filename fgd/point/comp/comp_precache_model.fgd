@@ -2,8 +2,7 @@
 	iconsprite("editor/comp_precache_model") 
 	studioprop() 
 	appliesto(srctools, -engine)
-= comp_precache_model:
-	"Force a specific model to load, for runtime switching. Duplicates will be removed."
+= comp_precache_model: "Force a specific model to load, for runtime switching. Duplicates will be removed."
 	[
 	model(studio): "Model": : "The model to load."
 	skin(integer): "Skin": : "Skin to show."

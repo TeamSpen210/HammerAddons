@@ -1,5 +1,4 @@
-@PointClass
-	base(BaseentityPoint) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/logic_sequence.vmt") 
 = logic_sequence :
 	"Coordinates a sequence out of up to 16 preset values. If the input value matches " +

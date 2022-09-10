@@ -3,12 +3,9 @@
 	iconsprite("editor/logic_playerproxy.vmt")
 = logic_playerproxy: "An entity that is used to relay inputs/outputs to the player and back to the world."
 	[
+	// Inputs
 	input RequestPlayerHealth(void) : "Requests the current player's health from the proxy. This will fire the PlayerHealth output with the value."
-	output PlayerHealth(integer) : "The player's current health value, fired in response to RequestPlayerHealth."
-	
 	input RequestAmmoState(void) : "Request the ammo state of the player. It will fire PlayerHasAmmo or PlayerHasNoAmmo outputs."
-	output PlayerHasAmmo(void)   : "Fired by request if the player has any ammo."
-	output PlayerHasNoAmmo(void) : "Fired by request if the player doesn't have any ammo."
 	
 	input SetFlashlightSlowDrain(void) : "Puts the player's flashlight in slow-power-drain mode (for Episodic darkness)"
 	input SetFlashlightNormalDrain(void) : "Puts the player's flashlight to default power drain"
@@ -40,6 +37,12 @@
 	input GivePaintGunBasic[P2CE](void) : "Gives the player a non-upgraded paint gun."
 	input RemovePortalGun[P2CE](void) : "Removes the portal gun from the player, if they have it."
 	input RemovePaintGun[P2CE](void) : "Removes the paint gun from the player, if they have it."
+	
+	// Outputs
+	output PlayerHealth(integer) : "The player's current health value, fired in response to RequestPlayerHealth."
+	
+	output PlayerHasAmmo(void)   : "Fired by request if the player has any ammo."
+	output PlayerHasNoAmmo(void) : "Fired by request if the player doesn't have any ammo."
 
 	output OnFlashlightOn(float) : "Fired when the player turns on their flashlight. This output has the value of how much energy the player had when this happened [0..1]."
 	output OnFlashlightOff(float) : "Fired when the player turns off their flashlight. This output has the value of how much energy the player had when this happened [0..1]."

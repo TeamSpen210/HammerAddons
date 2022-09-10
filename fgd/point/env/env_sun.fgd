@@ -2,7 +2,8 @@
 	color(255 0 0) 
 	color(200 0 0) 
 	iconsprite("editor/env_sun.vmt")
-	line(255 255 0, targetname, target) = env_sun: "An entity to control & draw a sun effect in the sky."
+	line(255 255 0, targetname, target)
+= env_sun: "An entity to control & draw a sun effect in the sky."
 	[
 	target(target_destination) : "Viewer entity" : : "Name of an entity used to determine where the sun is in the skybox. The sun should be lined up on a line from this entity to the env_sun entity."
 	use_angles(boolean) : "UseAngles" : 0 : "The old way to orient env_sun is to point it at a target. The new way is to specify the angles. If you use the new way, set this property to YES."

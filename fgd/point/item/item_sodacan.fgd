@@ -1,5 +1,6 @@
-@PointClass appliesto(+HL2_ENTITIES)
-		base(BaseEntityAnimating)
-	studio("models/can.mdl") = item_sodacan : "HL1 soda can."
+@PointClass base(BaseEntityAnimating)
+	appliesto(+HL2_ENTITIES)
+	studio("models/can.mdl")
+= item_sodacan : "HL1 soda can."
 	[
 	]

@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityAnimating) 
 	appliesto(P2CE)
-	studioprop() = env_portal_laser: " A Thermal Discouragement Beam that will move through portals, redirect using Redirection Cubes and reflect off of Reflection Gel."
+	studioprop()
+= env_portal_laser: " A Thermal Discouragement Beam that will move through portals, redirect using Redirection Cubes and reflect off of Reflection Gel."
 	[
 	noplacementhelper(boolean) : "No placement helper" : 0 : "Don't automatically create a portal placement helper at the end of the laser."
 	
@@ -29,7 +30,7 @@
 		]
 
 	beamcolor(choices) : "Laser Beam Color" : "255 0 0 255" : "The color of the laser. You can also specify a custom RGBA color here." =
-	[
+		[
 		"255 255 255 255" : "White"
 		"255 0 0 255" : "Default Red"
 		"100 255 100 255" : "Lethal Green"
@@ -37,13 +38,13 @@
 		"255 212 91 255" : "Yellow"
 		"212 60 146 255" : "Pink"
 		"65 97 0 255" : "Dark Green"
-	]
+		]
 
 	DisablePlayerCollision(choices) : "Player Collision" : "Default Behavior" : "Override to disable player collision for this laser. If set to 0 (default), sv_player_collide_with_laser will determine whether or not to collide. If 1, laser collision will be disabled." =
-	[
+		[
 		0 : "Default Behavior"
 		1 : "Force Off"
-	]
+		]
 
 	// Inputs
 	input Toggle(void) : "Toggle the laser on and off."

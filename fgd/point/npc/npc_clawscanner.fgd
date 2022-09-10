@@ -3,6 +3,7 @@
 	studioprop("models/shield_scanner.mdl") 
 = npc_clawscanner: "Claw Scanner"
 	[
+	// Inputs
 	input DeployMine(void) : "Drop landmine (if carrying one)"
 	input EquipMine(void) : "Equip with landmine"
 	]

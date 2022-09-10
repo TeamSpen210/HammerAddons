@@ -9,10 +9,10 @@
 
 	DontUseSpeechSemaphore[engine](boolean) : "Don't Use Speech Semaphore?" : 0
 	DontUseSpeechSemaphore(choices) : "Don't Use Speech Semaphore?" : 0 : "Friendly NPCs are not allowed to speak if another friendly NPC is speaking. In some cases we don't want speaking NPCs to prevent other NPCs from speaking (for instance, if there is a friendly NPC speaking for a long time on a monitor). To make this NPC not prevent other NPCs from talking, make it not grab the semaphore when it speaks." =
-	[
+		[
 		0 : "No (Use speech semaphore)"
 		1 : "Yes (Don't use speech semaphore)"
-	]
+		]
 
 	linedivider_npc[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 

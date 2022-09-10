@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint)
 	appliesto(+USE_AI)
-	iconsprite("editor/ficool2/scripted_target.vmt") = scripted_target: "Scripted Target"
+	iconsprite("editor/ficool2/scripted_target.vmt")
+= scripted_target: "Scripted Target"
 	[
 	startdisabled(boolean) : "Start Disabled" : 1
 	m_iszentity(npcclass) : "Target NPC"

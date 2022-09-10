@@ -3,6 +3,7 @@
 	studio("models/Zombie/zombie_soldier.mdl") 
 = npc_zombine: "Combine Soldier Zombie"
 	[
+	// Inputs
 	input StartSprint(void) : "Forces the zombine to sprint."
 	input PullGrenade(void) : "Forces the zombine to pull a grenade."
 	]

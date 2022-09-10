@@ -11,8 +11,11 @@
 	time_min(float) : "Minimum Time" : 0.15 : "The minimum time between objects."
 	time_max(float) : "Maximum Time" : 0.5 : "The maximum time between objects."
 
+	// Inputs
 	input ForceSpawn(void) : "Force an object to spawn immediately."
 	input EnableTimer(void) : "Enable the automatic timer."
 	input DisableTimer(void) : "Disable the automatic timer."
+	
+	// Outputs
 	output OnSpawned(void) : "Fired when the cube spawns."
 ]

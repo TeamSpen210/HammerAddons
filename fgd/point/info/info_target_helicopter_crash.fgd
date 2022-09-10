@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(+HL2_ENTITIES) 
-	iconsprite("editor/info_target.vmt") = info_target_helicopter_crash: "Helicopter Crash Target"
+	iconsprite("editor/info_target.vmt")
+= info_target_helicopter_crash: "Helicopter Crash Target"
 	[
 	]

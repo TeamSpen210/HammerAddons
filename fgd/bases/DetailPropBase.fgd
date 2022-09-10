@@ -1,4 +1,3 @@
-
 @BaseClass = DetailPropBase
 	[
 	detailOrientation[engine](integer) : "Orientation" : 0

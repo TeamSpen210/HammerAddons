@@ -1,7 +1,8 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(P2CE) 
 	color(0 100 250) 
-	iconsprite("editor/logic_timescale.vmt") = logic_timescale: "Changes the server's timescale."
+	iconsprite("editor/logic_timescale.vmt")
+= logic_timescale: "Changes the server's timescale."
 	[
 	blendtime(float) : "Blend Time" : 0 : "The amount of time it takes to ramp to the desired timescale when triggered."
 

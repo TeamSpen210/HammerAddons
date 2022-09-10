@@ -5,7 +5,7 @@
 	[
 
 	spawnflags(flags) : "spawnflags" =
-	[
+		[
 		1: 		"Icon 0 active" : 0
 		2: 		"Icon 1 active" : 0
 		4: 		"Icon 2 active" : 0
@@ -16,27 +16,28 @@
 		128: 	"Icon 7 active" : 0
 		256: 	"Icon 8 active" : 0
 		512: 	"Icon 9 active" : 0
-	]
+		]
 
 	enabled(boolean) : "Enabled" : 1 : "Whether or not to start on"
 
 	sign_levelname(string) : "Level name" : : "Name of the puzzle to display above the main number"
-	sign_startup_sequence(choices) : "Default Startup Sequence" : "Normal Flicker" : "Name of the startup sequence to use" = [
+	sign_startup_sequence(choices) : "Default Startup Sequence" : "Normal Flicker" : "Name of the startup sequence to use" =
+		[
 		"normal_flicker"			: "Normal Flicker"
 		"dirty_flicker"				: "Dirty Flicker"
 		"broken_flicker"			: "Broken Flicker"
-	]
+		]
 	sign_current(integer) : "Current level number" : : "Number of the level you are currently in"
 	sign_total(integer) : "Total level number" : : "Number of levels in the testing track"
 	sign_dirt(choices) : "Dirt amount" : -1 : "How dirty the sign should be" =
-	[
+		[
 		-1 : "Clean"
 		0 : "Not very dirty"
 		1 : "A bit dirty"
 		2 : "Very dirty"
-	]
+		]
 	sign_icon0name(choices) : "Icon 0 Type" : : "" =
-	[
+		[
 		""							: "Empty"
 		"cube_drop" 				: "Cube Drop"
 		"cube_button" 				: "Cube Button"
@@ -61,9 +62,9 @@
 		"handoff" 					: "Coop Handoff"
 		"button_stand" 				: "Button Stand"
 		"danger_field" 				: "Danger Field"
-	]
+		]
 	sign_icon1name(choices) : "Icon 1 Type" : : "" =
-	[
+		[
 		""							: "Empty"
 		"cube_drop" 				: "Cube Drop"
 		"cube_button" 				: "Cube Button"
@@ -88,9 +89,9 @@
 		"handoff" 					: "Coop Handoff"
 		"button_stand" 				: "Button Stand"
 		"danger_field" 				: "Danger Field"
-	]
+		]
 	sign_icon2name(choices) : "Icon 2 Type" : : "" =
-	[
+		[
 		""							: "Empty"
 		"cube_drop" 				: "Cube Drop"
 		"cube_button" 				: "Cube Button"
@@ -115,9 +116,9 @@
 		"handoff" 					: "Coop Handoff"
 		"button_stand" 				: "Button Stand"
 		"danger_field" 				: "Danger Field"
-	]
+		]
 	sign_icon3name(choices) : "Icon 3 Type" : : "" =
-	[
+		[
 		""							: "Empty"
 		"cube_drop" 				: "Cube Drop"
 		"cube_button" 				: "Cube Button"
@@ -142,9 +143,9 @@
 		"handoff" 					: "Coop Handoff"
 		"button_stand" 				: "Button Stand"
 		"danger_field" 				: "Danger Field"
-	]
+		]
 	sign_icon4name(choices) : "Icon 4 Type" : : "" =
-	[
+		[
 		""							: "Empty"
 		"cube_drop" 				: "Cube Drop"
 		"cube_button" 				: "Cube Button"
@@ -169,9 +170,9 @@
 		"handoff" 					: "Coop Handoff"
 		"button_stand" 				: "Button Stand"
 		"danger_field" 				: "Danger Field"
-	]
+		]
 	sign_icon5name(choices) : "Icon 5 Type" : : "" =
-	[
+		[
 		""							: "Empty"
 		"cube_drop" 				: "Cube Drop"
 		"cube_button" 				: "Cube Button"
@@ -196,9 +197,9 @@
 		"handoff" 					: "Coop Handoff"
 		"button_stand" 				: "Button Stand"
 		"danger_field" 				: "Danger Field"
-	]
+		]
 	sign_icon6name(choices) : "Icon 6 Type" : : "" =
-	[
+		[
 		""							: "Empty"
 		"cube_drop" 				: "Cube Drop"
 		"cube_button" 				: "Cube Button"
@@ -223,9 +224,9 @@
 		"handoff" 					: "Coop Handoff"
 		"button_stand" 				: "Button Stand"
 		"danger_field" 				: "Danger Field"
-	]
+		]
 	sign_icon7name(choices) : "Icon 7 Type" : : "" =
-	[
+		[
 		""							: "Empty"
 		"cube_drop" 				: "Cube Drop"
 		"cube_button" 				: "Cube Button"
@@ -250,9 +251,9 @@
 		"handoff" 					: "Coop Handoff"
 		"button_stand" 				: "Button Stand"
 		"danger_field" 				: "Danger Field"
-	]
+		]
 	sign_icon8name(choices) : "Icon 8 Type" : : "" =
-	[
+		[
 		""							: "Empty"
 		"cube_drop" 				: "Cube Drop"
 		"cube_button" 				: "Cube Button"
@@ -277,9 +278,9 @@
 		"handoff" 					: "Coop Handoff"
 		"button_stand" 				: "Button Stand"
 		"danger_field" 				: "Danger Field"
-	]
+		]
 	sign_icon9name(choices) : "Icon 9 Type" : : "" =
-	[
+		[
 		""							: "Empty"
 		"cube_drop" 				: "Cube Drop"
 		"cube_button" 				: "Cube Button"
@@ -304,7 +305,7 @@
 		"handoff" 					: "Coop Handoff"
 		"button_stand" 				: "Button Stand"
 		"danger_field" 				: "Danger Field"
-	]
+		]
 
 
 	// Inputs

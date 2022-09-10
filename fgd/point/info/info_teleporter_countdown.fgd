@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(+HL2_ENTITIES) 
-	iconsprite("editor/info_target.vmt") = info_teleporter_countdown: "Countdown timer for the teleporter. The status of the teleporter will appear on vgui_screen entities whose panel is 'teleport_countdown_screen'."
+	iconsprite("editor/info_target.vmt")
+= info_teleporter_countdown: "Countdown timer for the teleporter. The status of the teleporter will appear on vgui_screen entities whose panel is 'teleport_countdown_screen'."
 	[
 
 	// Inputs

@@ -7,7 +7,6 @@
 	[
 	target(target_destination) : "Entity to point at" : : "The name of an entity in the map that the spotlight will point at. " +
 		"This will override the spotlight's angles."
-
 	_inner_cone(integer) : "Inner (bright) angle" : 30
 	_cone(integer) : "Outer (fading) angle" : 45
 	_exponent(integer) : "Focus" : 1

@@ -1,7 +1,8 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(P2CE)
 	sphere(radius) 
-	iconsprite("editor/paint_sphere.vmt") = paint_sphere: "Paint brushes inside the sphere."
+	iconsprite("editor/paint_sphere.vmt")
+= paint_sphere: "Paint brushes inside the sphere."
 	[
 	paint_type[engine](integer) : "Paint Type" : 0 
 	paint_type(choices) : "Paint Type" : 0 : "The type of Gel created." =

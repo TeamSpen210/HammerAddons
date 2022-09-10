@@ -1,4 +1,3 @@
-
 @BaseClass = BasePaintType: "Paint Type property."
 	[
 	painttype[engine](integer) : "Paint Type" : 0

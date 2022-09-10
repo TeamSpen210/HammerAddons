@@ -1,5 +1,5 @@
-@SolidClass appliesto(+HL2_ENTITIES)
-		base(BaseTank) 
+@SolidClass base(BaseTank)
+	appliesto(+HL2_ENTITIES)
 = func_tankairboatgun: "Airboat Gun Turret"
 	[
 	airboat_gun_model(target_destination) : "Name of a prop_dynamic which is the airboat gun model"

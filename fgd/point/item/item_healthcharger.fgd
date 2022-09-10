@@ -3,6 +3,7 @@
 	appliesto(+HL2_ENTITIES)
 = item_healthcharger: "Health Charger"
 	[
+	// Outputs
 	output OutRemainingHealth(float) : "Remaining Health."
 	output OnPlayerUse(void) : "Fired when the player +USEs the charger."
 	]

@@ -36,6 +36,7 @@
 	input SetSetupTime(integer) : "Set the setup time length to this value (in seconds)."
 
 	input RoundSpawn(void) : "Get remaining time AND Resume timer"
+	
 	// Outputs
 	output On5MinRemain(void) : "Sent when 5 minutes remain."
 	output On4MinRemain(void) : "Sent when 4 minutes remain."

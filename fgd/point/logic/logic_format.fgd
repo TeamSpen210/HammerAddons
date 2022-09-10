@@ -1,5 +1,4 @@
-@PointClass
-	base(BaseEntityPoint)
+@PointClass base(BaseEntityPoint)
 	iconsprite("editor/logic_format.vmt")
 = logic_format : "Formats a line of text akin to C# String.Format.\n" +
 	"As curly brackets cannot be used in the help window, please see Mapbase documentation for clear instructions."

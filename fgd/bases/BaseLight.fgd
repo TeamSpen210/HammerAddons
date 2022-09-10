@@ -11,7 +11,7 @@
 
 	style[engine](integer) : "Appearance" : 0
 	style(choices) : "Appearance" : 0 =
-	[
+		[
 		0 : "Normal"
 		10: "Fluorescent flicker"
 		2 : "Slow, strong pulse"
@@ -25,7 +25,7 @@
 		4 : "Fast strobe"
 		9 : "Slow strobe"
 		12 : "Underwater light mutation"
-	]
+		]
 	pattern(string) : "Custom Appearance" : "" : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 	fadetickinterval(float) : "Fade Tick Interval" : 0.1 : "The tick interval of the light's fade, in seconds. Lower values cause a faster fade."
 	_constant_attn(string)	: "Constant" : "0"

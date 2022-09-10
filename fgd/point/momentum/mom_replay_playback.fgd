@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint)
-	appliesto(MOMENTUM) = mom_replay_playback: "Plays a replay and allows for various playback options"
+	appliesto(MOMENTUM) 
+= mom_replay_playback: "Plays a replay and allows for various playback options"
 	[
 	GhostName(string) : "Ghost Name" : "" : "Name of the replay ghost to display to user"
 	ReplayFilename(string) : "Replay File" : "" : "The .mrf replay file to use"
@@ -9,11 +10,11 @@
 	PlaybackSpeed(float) : "Playback Speed" : 1 : "Timescale to use for playback of the replay"
 	SpectateType[engine](integer) : "Spectate Type" : 0 : "How the replay ghost should be spectated (first person, third person), if at all"
 	SpectateType(choices) : "Spectate Type" : 0 : "How the replay ghost should be spectated (first person, third person), if at all" =
-	[
+		[
 		0: "None"
 		1: "First-Person"
 		2: "Third-Person"
-	]
+		]
 
 	LoopCount(integer) : "Loop Count" : 0 : "How many times to loop the replay. If -1, will loop indefinitely"
 	StartDisabled(boolean) : "Start Disabled" : 0

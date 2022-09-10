@@ -1,4 +1,3 @@
-
 @BaseClass = Reflection
 	[
 	drawinfastreflection(boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."

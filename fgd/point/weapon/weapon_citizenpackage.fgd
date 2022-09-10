@@ -1,5 +1,6 @@
 @PointClass base(Weapon) 
 	appliesto(+HL2_ENTITIES) 
-	studioprop("models/weapons/w_package.mdl") = weapon_citizenpackage: "A Combine ration Citizens are seen retrieving at the start of HL2."
+	studioprop("models/weapons/w_package.mdl")
+= weapon_citizenpackage: "A Combine ration Citizens are seen retrieving at the start of HL2."
 	[
 	]

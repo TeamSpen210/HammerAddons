@@ -1,7 +1,8 @@
 @PointClass base(gibshooterbase) 
 	iconsprite("editor/ficool2/env_rotorshooter.vmt") 
 	line(255 255 255, targetname, lightingorigin) 
-	color(200 200 0) = env_rotorshooter: "An entity that creates gibs when it's within the influence of a helicopter's rotor wash."
+	color(200 200 0)
+= env_rotorshooter: "An entity that creates gibs when it's within the influence of a helicopter's rotor wash."
 	[
 	shootmodel(studio) : "Model" : : "Thing to shoot out.  Can be a .mdl or a .vmt."
 

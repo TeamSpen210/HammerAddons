@@ -5,7 +5,7 @@
 	sidelist(sides) 
 	sidelist(sides2) 
 	overlay_transition() 
-= info_overlay_transition: "This creates a scrolling texture at the instersect between two brushes, for things like wave effects at water edges."
+= info_overlay_transition: "This creates a scrolling texture at the intersect between two brushes, for things like wave effects at water edges."
 	[
 	material(material) : "Material"
 	sides(sidelist) : "Brush faces"

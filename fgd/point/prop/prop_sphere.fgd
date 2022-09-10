@@ -1,5 +1,4 @@
-@PointClass
-	base(BasePropPhysics, SetModel)
+@PointClass base(BasePropPhysics, SetModel)
 	studioprop()
 	sphere(radius) 
 = prop_sphere : "A variant of prop_physics which has a perfect sphere shape. It is normally restricted to a radius of 12 units."

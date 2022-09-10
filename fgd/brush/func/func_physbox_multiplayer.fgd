@@ -1,5 +1,5 @@
 @SolidClass base(func_physbox) 
-	= func_physbox_multiplayer: "This class is the same as func_physbox, " +
+= func_physbox_multiplayer: "This class is the same as func_physbox, " +
 		"except the runtime collisions use a more bouncy method that avoids " +
 		"the prediction errors normal physics objects get."
 	[

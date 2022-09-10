@@ -10,12 +10,14 @@
 	comparevalue(string) : "Compare value" : : "The value to compare against."
 	strlenallowed(boolean) : "Use string length" : 0 : "Use the length of the string in the compare value rather than its actual value."
 
+	// Inputs
 	input Compare(void) : "Force a compare of the input value with the compare value."
 	input SetValue(string) : "Set the value that will be compared against the compare value."
 	input SetValueCompare(string) : "Set the value that will be compared against the compare value and performs the comparison."
 	input SetCompareValue(string) : "Set the compare value."
 	input SetCompareValueCompare(string) : "Sets the compare value and performs the comparison."
 
+	// Outputs
 	output OnLessThan(string) : "Fired when the input value is less than the compare value. Sends the input value as data."
 	output OnEqualTo(string) : "Fired when the input value is equal to the compare value. Sends the input value as data."
 	output OnNotEqualTo(string) : "Fired when the input value is different from the compare value. Sends the input value as data."

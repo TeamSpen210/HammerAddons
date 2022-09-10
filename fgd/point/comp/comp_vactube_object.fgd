@@ -13,7 +13,7 @@
 
 	tv_skin[engine](integer) : "TV Skin" : 0
 	tv_skin(choices) : "TV Skin" : 0 : "The skin to display on scanner TVs." = 
-	[
+		[
 		0 : "Blank"
 		1 : "Chair"
 		2 : "Table"
@@ -21,7 +21,7 @@
 		4 : "Hover turret / Core / Sphere"
 		5 : "Turret"
 		6 : "Boxed Turret"
-	]
+		]
 	
 	cube_model(studio) : "Cube Model" : : "If set, this object can be spawned in droppers. " +
 		"This should be the model used on the real cube version so they can be matched to each other."

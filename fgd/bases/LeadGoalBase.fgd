@@ -1,5 +1,5 @@
-
-@BaseClass base(BaseEntityPoint) = LeadGoalBase
+@BaseClass base(BaseEntityPoint) 
+= LeadGoalBase
 	[
 	actor(target_name_or_class) : "Actor(s) to affect"
 	goal(string) : "Target Entity"

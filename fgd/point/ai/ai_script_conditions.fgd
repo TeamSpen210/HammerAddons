@@ -5,7 +5,8 @@
 	sphere(PlayerTargetProximity) 
 	line(255 255 0, targetname, actor) 
 	line(255 255 255, targetname, target) 
-	iconsprite("editor/ai_script_conditions.vmt") = ai_script_conditions: "AI Script Conditions"
+	iconsprite("editor/ai_script_conditions.vmt")
+= ai_script_conditions: "AI Script Conditions"
 	[
 	actor(target_destination) : "Actor (optional)" : : "NPC Target"
 

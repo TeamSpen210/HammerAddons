@@ -1,9 +1,9 @@
 @FilterClass base(filter_base)
 	iconsprite("editor/filter_keyfield.vmt") 
 = filter_activator_keyfield : "A filter that filters by the activator's keyfields."
-[
+	[
 	keyname(string) : "Key" : : "The key name to filter by. Please note that certain keyvalues, particularly " +
 		"targetnames and base values related to clientside rendering (e.g. render mode), cannot be found by this filter."
 		
 	value(string) : "Value (Optional)" : : "The key value to filter by. If empty, the filter will pass if the entity just has the keyfield."
-]
+	]

@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityAnimating, SetModel) 
 	appliesto(P2CE) 
-	studioprop() = prop_mirror: "A basic mirror model"
+	studioprop()
+= prop_mirror: "A basic mirror model"
 	[
 	width(float) : "Width" : 64.0 : "The width of the mirror when there's no model"
 	height(float) : "Height" : 108.0 : "The height of the mirror when there's no model"

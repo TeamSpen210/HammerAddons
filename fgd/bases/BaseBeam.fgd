@@ -2,9 +2,10 @@
 = BaseBeam: "This is the definition of the 'beam' class, but we don't want that in the entity list."
 	[
 	rendermode[engine](integer) readonly : "Render Mode" : 2 : "Render mode is forced to Texture."
-	rendermode(choices) readonly : "Render Mode" : 1 : "Render mode is forced to Texture, but set to Color in Hammer to ensure correct rendering." = [
+	rendermode(choices) readonly : "Render Mode" : 1 : "Render mode is forced to Texture, but set to Color in Hammer to ensure correct rendering." = 
+		[
 		1: "Color"
-	]
+		]
 	renderamt(integer) : "Brightness (1 - 255)" : 100
 	rendercolor(color255) : "Beam Color (R G B)" : "255 255 255"
 
@@ -38,7 +39,7 @@
 	input Width(float) : "Set the width of the beam, in pixels."
 	input ScrollSpeed(float) : "Set the scroll speed in units per second (0 - 100)."
 	input Alpha(integer) : "Sets the beam's alpha (0 - 255)."
-		
+	
 	input Color(color255) : "Sets the beam's render color (R G B)."
 	input ColorRedValue(float) : "Sets the red color channel's value (0 - 255)."
 	input ColorGreenValue(float) : "Sets the green color channel's value (0 - 255)."

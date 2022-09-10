@@ -1,6 +1,6 @@
-@PointClass
-	base(BaseEntityPoint, EnableDisable) 
-	iconsprite("editor/math_mod.vmt") = math_mod :
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/math_mod.vmt")
+= math_mod :
 	"A lightweight entity that performs simple calculations on the fly without needing a complicated I/O chain. "+
 	"This is useful for values that are outputted on a per-frame basis and might not work with a math_counter chain."
 [

@@ -1,20 +1,19 @@
-@PointClass
-	base(BaseEntityPoint, EnableDisable) 
-	iconsprite("editor/math_generate.vmt") = math_generate :
-	"Continuously generates numbers using various generation modes based on material proxies."
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/math_generate.vmt")
+= math_generate : "Continuously generates numbers using various generation modes based on material proxies."
 	[
 	// Keys
 	StartDisabled(boolean) : "Start Disabled" : 1
 
 	GenerateType[engine](integer) : "Generation Type" : 1
 	GenerateType(choices) : "Generation Type" : 1 =
-	[
+		[
 		0 : "Sine Wave (param 1 = time offset, param 2 = sine period)"
 		1 : "Linear Ramp (param 1 = rate)"
 		2 : "Uniform Noise"
 		3 : "Gaussian Noise (param 1 = mean, param 2 = half width)"
 		4 : "Exponential (param 1 = scale, param 2 = offset)"
-	]
+		]
 	
 	InitialValue(float) : "Initial Value" : 0 : "Starting value for the math_generate."
 	SetHitMin(float) : "Minimum Legal Value" : 0 : "Minimum legal value for generation."

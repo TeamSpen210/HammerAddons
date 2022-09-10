@@ -2,7 +2,8 @@
 	color(200 200 0) 
 	studioprop("models/editor/vgui_arrows.mdl") 
 	sphere(width) 
-	sphere(height) = vgui_movie_display: "Movie Display"
+	sphere(height)
+= vgui_movie_display: "Movie Display"
 	[
 	displaytext(string) : "Display Text"
 	MovieFilename(string) : "Movie To display" : "media/filename.webm" : "The movie to display."

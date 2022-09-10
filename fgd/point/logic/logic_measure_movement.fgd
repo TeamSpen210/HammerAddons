@@ -27,14 +27,14 @@
 		]
 
 	spawnflags(Flags) = 
-	[
+		[
 		1 : "Ignore X" : 0
 		2 : "Ignore Y" : 0
 		4 : "Ignore Z" : 0
 		8 : "Use 'Ignore' flags for origin instead of angles" : 0
 		16 : "Use new teleportation rules (smoother movement)" : 1
 		32 : "Don't change target's angles" : 0
-	]
+		]
 
 	MeasureAttachment(string) : "Measurement Attachment" : "" : "Only useful for the ''Attachment point'' measurement type. " +
 		"This attachment should be on the Entity to Measure and measurements will correspond to its position and angles."

@@ -1,4 +1,3 @@
-
 @BaseClass 
 	sphere(fademindist)
 	sphere(fademaxdist)

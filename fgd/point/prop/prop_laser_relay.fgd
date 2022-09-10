@@ -9,7 +9,7 @@
 	uselaserfilter(bool) : "Use Laser Filter" : 0 : "If enabled, this relay can only be activated by the specified laser color."
 	
 	filtercolor(choices) : "Laser Filter Color" : "255 255 255 255" : "Filter lasers by this color. You can also specify a custom RGBA color here." =
-	[
+		[
 		"255 255 255 255" : "White"
 		"255 0 0 255" : "Default Red"
 		"100 255 100 255" : "Lethal Green"
@@ -17,7 +17,7 @@
 		"255 212 91 255" : "Yellow"
 		"212 60 146 255" : "Pink"
 		"65 97 0 255" : "Dark Green"
-	]
+		]
 
 	// Inputs
 	input SetFilterColor(color255) : "Changes the laser filter colour."

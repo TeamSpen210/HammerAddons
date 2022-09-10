@@ -1,7 +1,8 @@
 @BaseClass base(BaseEntityPhysics, TeamNum, EnableDisable, Toggle, FadeDistance)
 	color(0 0 200) 
 	sphere(fademindist) 
-	sphere(fademaxdist) = Item
+	sphere(fademaxdist) 
+= Item
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

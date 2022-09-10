@@ -19,11 +19,12 @@
 	gustduration(integer) : "Gust Duration" : 5 : "How long will the wind gust for."
 	gustdirchange(integer) : "Max gust dir change (degrees)" : 20 : "Maximum amount that the wind's direction changes due to a gust."
 
-	// Outputs
-	output OnGustStart(void) : "Fired when a wind gust begins."
-	output OnGustEnd(void) : "Fired when a wind gust ends."
-
+	// Inputs
 	input Enable(void) : "Enables the wind."
 	input Disable(void) : "Disables the wind."
 	input Toggle(void) : "Toggles the wind."
+	
+	// Outputs
+	output OnGustStart(void) : "Fired when a wind gust begins."
+	output OnGustEnd(void) : "Fired when a wind gust ends."
 	]

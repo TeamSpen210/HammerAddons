@@ -3,7 +3,8 @@
 	line(255 255 0, targetname, proxy_name) 
 	line(255 255 0, targetname, attach_target_name) 
 	sphere(radius, 255 128 0) 
-	studioprop("models/editor/placement_helper.mdl") = info_placement_helper: "Portal Placement Helper, indicates where portals will snap to. The arrow points to the 'up' diection for the portal."
+	studioprop("models/editor/placement_helper.mdl")
+= info_placement_helper: "Portal Placement Helper, indicates where portals will snap to. The arrow points to the 'up' diection for the portal."
 	[
 	radius(float) : "Radius" : 16 : "Radius in which to influence placement."
 	proxy_name(target_destination) : "Proxy Entity Name" : : "Name of the entity we want to use for our real placement position."

@@ -1,5 +1,6 @@
 @PointClass base(BaseNPC, SetModel)
-	studio() = cycler_actor: "Actor Cycler"
+	studio()
+= cycler_actor: "Actor Cycler"
 	[
 	sentence(string) : "Sentence Group"
 	]

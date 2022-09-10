@@ -1,5 +1,4 @@
-@PointClass
-	base(BaseEntityPoint) 
+@PointClass base(BaseEntityPoint) 
 	size(-8 -8 -8, 8 8 8)
 	line(255 255 255, targetname, target)
 = logic_modelinfo : "Gets and outputs some model information from an entity."
@@ -14,6 +13,7 @@
 	input LookupActivity(string) : "Looks up the specified activity on the target entity. " +
 		"Uses the sequence outputs and outputs the first sequence with the given activity."
 	
+	// Inputs
 	input SetPoseParameterName(string) : "Sets the pose parameter to target."
 	input SetPoseParameterValue(float) : "Sets the target pose parameter's current value."
 	input GetPoseParameter(void) : "Gets the current value of the target pose parameter and fires OutPoseParameterValue with it."

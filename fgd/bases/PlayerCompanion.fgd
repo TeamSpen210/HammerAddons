@@ -1,4 +1,5 @@
-@BaseClass base(BaseNPC) = PlayerCompanion
+@BaseClass base(BaseNPC) 
+= PlayerCompanion
 	[
 	alwaystransition(boolean) : "Always transition" : 0 : "If yes, this NPC will always teleport to a Player Squad Transition Point if they're not within the trigger_transition volume."
 	dontpickupweapons(boolean) : "Prevent picking up weapons?" : 0 : "If yes, this NPC will NOT be allowed to pick up weapons they find on the ground."

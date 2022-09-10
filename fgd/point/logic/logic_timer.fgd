@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
 	iconsprite("editor/logic_timer.vmt") 
-	color(0 100 250) = logic_timer: "An entity that fires a timer event at regular, or random, intervals. It can also be set to oscillate between a high and low end, in which case it will fire alternating high/low outputs each time it fires."
+	color(0 100 250)
+= logic_timer: "An entity that fires a timer event at regular, or random, intervals. It can also be set to oscillate between a high and low end, in which case it will fire alternating high/low outputs each time it fires."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

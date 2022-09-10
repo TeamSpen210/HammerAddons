@@ -1,6 +1,6 @@
-@PointClass
-	base(BaseEntityPoint, EnableDisable) 
-	iconsprite("editor/math_vector.vmt") = math_vector :
+@PointClass base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/math_vector.vmt")
+= math_vector :
 	"A math_counter variant that specializes in vector operations."
 	[
 	// Keys

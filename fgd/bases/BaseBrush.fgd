@@ -1,6 +1,5 @@
 @BaseClass = BaseBrush
 	[
-
 	// Inputs
 	input SetTextureIndex(integer) : "Used by HL1Port. Sets the brush texture index. Use a material_modify_control entity instead."
 	input IncrementTextureIndex(void) : "Used by HL1Port. Increments the brush texture index. Use a material_modify_control entity instead."

@@ -3,7 +3,8 @@
 	size(-4 -4 -4, 4 4 4) 
 	line(255 255 255, targetname, enemyfilter)
 	line(255 255 255, targetname, friendfilter)
-	studio("models/props_combine/combine_mine01.mdl") = combine_mine: "Combine Land Mine"
+	studio("models/props_combine/combine_mine01.mdl")
+= combine_mine: "Combine Land Mine"
 	[
 	bounce(boolean) : "Bounce" : 1 : "Whether the mine should bounce up in the air before exploding." 
 	ExplosionDelay(float) : "Delay" : "0.5" : "The delay after being triggered before this mine bounces, or before it explodes if bouncing is disabled. Does not apply to the cavern type."

@@ -12,6 +12,7 @@
 		"models/shield_scanner.mdl" : "Claw Scanner"
 		]
 
+	// Inputs
 	input DeployMine(void) : "Drop landmine (if carrying one)"
 	input EquipMine(void) : "Equip with landmine"
 	]

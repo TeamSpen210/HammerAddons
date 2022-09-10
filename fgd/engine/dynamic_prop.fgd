@@ -1,4 +1,5 @@
-@PointClass appliesto(engine) base(prop_dynamic)
+@PointClass base(prop_dynamic)
+	appliesto(engine)
 = dynamic_prop : "Alternate name for prop_dynamic."
 	[
 	]

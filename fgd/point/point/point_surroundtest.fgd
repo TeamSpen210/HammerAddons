@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint)
-	size(-8 -8 -8, 8 8 8) = point_surroundtest: "Surround Sound Test"
+	size(-8 -8 -8, 8 8 8)
+= point_surroundtest: "Surround Sound Test"
 	[
 
 	// Inputs

@@ -1,5 +1,4 @@
-@PointClass 
-	base(BaseEntityPoint)
+@PointClass base(BaseEntityPoint)
 = test_sidelist: "Test entity for Ken!"
 	[
 	sides(sidelist) : "Sides"

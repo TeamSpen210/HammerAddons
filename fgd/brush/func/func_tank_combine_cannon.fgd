@@ -1,5 +1,5 @@
-@SolidClass appliesto(+HL2_ENTITIES)
-		base(BaseTank) 
+@SolidClass base(BaseTank) 
+	appliesto(+HL2_ENTITIES)
 = func_tank_combine_cannon: "Combine sentry cannon"
 	[
 	ammotype[engine](string): "Ammo Type"

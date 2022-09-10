@@ -7,12 +7,13 @@
 	sphere(radius)
 = point_paint_sensor: "An entity that detects when surfaces are painted."
 	[
-		radius(float) : "Search Radius" : 64 : "Radius to search inside, -1 to disable."
+	radius(float) : "Search Radius" : 64 : "Radius to search inside, -1 to disable."
 		
-		sides(sidelist) : "Target Brush Faces" : : "Faces on which to watch for paint."
-		target(target_destination) : "Target Entity" : : "Entity for which to watch for paint."
+	sides(sidelist) : "Target Brush Faces" : : "Faces on which to watch for paint."
+	target(target_destination) : "Target Entity" : : "Entity for which to watch for paint."
 
-		filtername(filterclass) : "Filter Name" : : "Filter to use to narrow set of findable entities. See filter_activator_name for more explanation."
+	filtername(filterclass) : "Filter Name" : : "Filter to use to narrow set of findable entities. See filter_activator_name for more explanation."
 
-		output OnPainted(integer) : "Gets called when paint is detected. Parameter is set to the paint type index."
+	// Outputs
+	output OnPainted(integer) : "Gets called when paint is detected. Parameter is set to the paint type index."
 	]

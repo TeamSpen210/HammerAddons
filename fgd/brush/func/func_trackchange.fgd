@@ -18,14 +18,15 @@
 	speed(integer) : "Move/Rotate Speed" : 0 : "Speed in which func_trackchange travel the whole way up/down (units per seconds)."			
 	
 	spawnflags(flags) =
-	[
+		[
 		1: "Auto Activate Train - see description" : 0
 		2: "Relink Track" : 0
 		8: "Start at Bottom - Platform starts at the bottom instead at the top path_track if this flag is ticked" : 0
 		16: "Rotate Only - see description" : 0
 		64: "X Axis - Train rotates around X axis instead of Z axis. Can be combined with Y Axis" : 0
 		128: "Y Axis - Train rotates around Y axis instead of Z axis. Can be combined with X Axis" : 0
-	]
+		]
 
+	// Inputs
 	input Trigger(void) : "Trigger the track change."
 	]

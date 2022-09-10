@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint)
 	iconsprite("editor/ficool2/path_corner_crash")
-	color(255 0 0) = path_corner_crash: "Helicopter Crash Path"
+	color(255 0 0)
+= path_corner_crash: "Helicopter Crash Path"
 	[
 	target(target_destination) : "Next stop target"
 	]

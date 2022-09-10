@@ -1,4 +1,5 @@
-@SolidClass base(Trigger) = trigger_teleport_relative: "A trigger volume that teleports entities that touch it. " +
+@SolidClass base(Trigger) 
+= trigger_teleport_relative: "A trigger volume that teleports entities that touch it. " +
 		"Entities are teleported by Offset from their current position. " +
 		"Useful to get objects out of situations where levels or entities suddenly appear intersecting with them."
 	[

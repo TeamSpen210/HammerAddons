@@ -1,4 +1,5 @@
-@SolidClass base(func_trackchange) = func_trackautochange : 
+@SolidClass base(func_trackchange) 
+= func_trackautochange : 
 	"An entity that works as a rotating/moving platform that will carry a train to a new track. "+
 	"It must be larger in X-Y planar area than the train, since it must contain the train within "+
 	"these dimensions in order to operate when the train is near it. The track will rotate around its own origin. "+

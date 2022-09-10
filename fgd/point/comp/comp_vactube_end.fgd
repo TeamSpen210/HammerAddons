@@ -10,8 +10,11 @@
 	filtername(target_destination) : "Filter + Reference" : : "The filter_activator_name to set to point at the cube. This is also used as the location to determine the distance to the cube."
 	template(target_destination) : "Template" : : "The point_template to set to spawn the cube."
 
+	// Inputs
 	input RequestSpawn(void) : "Request a cube to be spawned and routed here."
 	input FireCubeUser1(void) : "FireUser1 at the cube, for dissolving existing ones."
+	
+	// Outputs
 	output OnCubeArrived(void) : "Triggered when the cube has arrived to be dispensed."
 	output OnFizzled(void) : "Fired when the cube is fizzled, and autorespawn is enabled."
 ]

@@ -72,14 +72,7 @@
 	input RunScriptCode[+VSCRIPT, -srctools](script) : "Execute a string of script source code."
 	input RunScriptCode[+VSCRIPT, +srctools](script) : "Execute a string of script source code. Backtick ( ` ) characters will be converted to quotes in-game for strings."
 	input CallScriptFunction[VSCRIPT](string) : "Execute the given function name."
-
-	// Outputs
-	output OnUser1(void) : "Fired in response to FireUser1 input."
-	output OnUser2(void) : "Fired in response to FireUser2 input."
-	output OnUser3(void) : "Fired in response to FireUser3 input."
-	output OnUser4(void) : "Fired in response to FireUser4 input."
-
-	// Mapbase BaseEntity changes:
+	
 	input PassUser1(string) : "Causes this entity's OutUser1 output to be fired, passing along the parameter unchanged."
 	input PassUser2(string) : "Causes this entity's OutUser2 output to be fired, passing along the parameter unchanged."
 	input PassUser3(string) : "Causes this entity's OutUser3 output to be fired, passing along the parameter unchanged."
@@ -122,6 +115,12 @@
 	
 	input Use(void) : "More or less replicates the player interacting with an entity. (+USE)"
 	input Touch(target_destination) : "Simulates this entity touching the specified entity."
+
+	// Outputs
+	output OnUser1(void) : "Fired in response to FireUser1 input."
+	output OnUser2(void) : "Fired in response to FireUser2 input."
+	output OnUser3(void) : "Fired in response to FireUser3 input."
+	output OnUser4(void) : "Fired in response to FireUser4 input."
 
 	output OutUser1(string) : "Fires in response to PassUser1 input, with the parameter passed through unchanged."
 	output OutUser2(string) : "Fires in response to PassUser2 input, with the parameter passed through unchanged."

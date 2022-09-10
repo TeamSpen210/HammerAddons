@@ -3,7 +3,8 @@
 	iconsprite("editor/ai_relationship.vmt") 
 	line(255 255 255, targetname, subject)
 	line(255 255 255, targetname, subject, targetname, target)
-	sphere() = ai_relationship: "AI Relationship - Sets relationships between groups of NPCs in the AI."
+	sphere()
+= ai_relationship: "AI Relationship - Sets relationships between groups of NPCs in the AI."
 	[
 	subject(target_name_or_class) : "Subject(s)" : : "This is the NPC(s) whose disposition will change. May be a targetname or a classname."
 	target(target_name_or_class) : "Target(s)" : : "This is the NPC(s) about whom the Subject(s) will change their disposition. May be a targetname or a classname."

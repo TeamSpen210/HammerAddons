@@ -1,5 +1,4 @@
-@PointClass 
-	base(prop_dynamic_base, EnableDisable)
+@PointClass base(prop_dynamic_base, EnableDisable)
 = prop_dynamic_override: "A variant of prop_dynamic that permits the use of any model, including those designed to be used as prop_dynamic/prop_static."
 	[
 	health(integer) : "Health" : 0 : "Number of points of damage to take before breaking.  0 means don't break."

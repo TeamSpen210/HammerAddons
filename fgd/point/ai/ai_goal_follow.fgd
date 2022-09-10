@@ -1,5 +1,6 @@
 @PointClass base(FollowGoal)
 	appliesto(+USE_AI)
-	iconsprite("editor/ai_goal_follow.vmt") = ai_goal_follow: "AI Goal Follow"
+	iconsprite("editor/ai_goal_follow.vmt")
+= ai_goal_follow: "AI Goal Follow"
 	[
 	]

@@ -1,6 +1,6 @@
-
 @BaseClass base(BaseEntityPoint) // Animating?
-	studio("models/props/cs_assault/consolepanelloadingbay.mdl") = Territory
+	studio("models/props/cs_assault/consolepanelloadingbay.mdl") 
+= Territory
 	[
 	respawn_area(string) : "Respawn area name"
 	buyzone(string) : "Buy Zone name"

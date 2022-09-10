@@ -5,7 +5,7 @@
 
 	gamematerial[engine](integer) : "Game Material to Watch" : 0
 	gamematerial(choices) : "Game Material to Watch" : "0" : "The material to watch. When the player stands on this material, they will get teleported" =
-	[
+		[
 		0 : "None (player's in the air)"
 
 		65: "A - Antlion"
@@ -46,13 +46,13 @@
 		11: "11 - Mud"
 		12: "12 - Sand Barrel"
 		13: "13 - Dense Wood"
-	]
-	
-	// Outputs
-	output OnSurfaceChangedToTarget(void) : "Fired when the player moves onto the specified game material."
-	output OnSurfaceChangedFromTarget(void) : "Fired when the player moves off the specified game material."
+		]
 	
 	// Inputs
 	input Enable(void) : "Start watching the player's surface."
 	input Disable(void) : "Stop watching the player's surface."
+	
+	// Outputs
+	output OnSurfaceChangedToTarget(void) : "Fired when the player moves onto the specified game material."
+	output OnSurfaceChangedFromTarget(void) : "Fired when the player moves off the specified game material."
 	]

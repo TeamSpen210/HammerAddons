@@ -11,7 +11,8 @@
 		]
 
 	// Keyvalues
-	mode(choices) : "Compare mode" : "1" : "The current compare mode. This can be changed through the SetMode input." = [
+	mode(choices) : "Compare mode" : "1" : "The current compare mode. This can be changed through the SetMode input." = 
+		[
 		0 : "AND (Both)"
 		1 : "OR (Either)"
 		2 : "NOT (Negation)"
@@ -19,7 +20,7 @@
 		4 : "NOR (Neither Or)"
 		5 : "XOR (Odd)"
 		6 : "XNOR (Equals)"
-	]
+		]
 	
 	// Inputs
 	input GetValue(void) : "When triggered, the current state will be outputted as OutValue."

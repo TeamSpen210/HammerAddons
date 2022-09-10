@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint)
 	appliesto(+USE_AI)
-	iconsprite("editor/ai_goal_standoff.vmt") = ai_goal_standoff: "AI Goal Standoff"
+	iconsprite("editor/ai_goal_standoff.vmt")
+= ai_goal_standoff: "AI Goal Standoff"
 	[
 	actor(target_name_or_class) : "Actor(s) to affect"
 	

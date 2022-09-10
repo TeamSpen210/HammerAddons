@@ -2,7 +2,8 @@
 	appliesto(P2CE)
 	line(255 255 255, targetname, light_position_name) 
 	sphere(blob_spread_radius) 
-	studio("models/editor/info_paint_sprayer.mdl") = info_paint_sprayer: "An entity that sprays Gel."
+	studio("models/editor/info_paint_sprayer.mdl")
+= info_paint_sprayer: "An entity that sprays Gel."
 	[
 	maxblobcount(integer) : "Max number of blobs" : 250 : "Max number of blobs that sprayer can spawn in the world (1-250)."
 	light_position_name(target_destination) : "Light Position Name" : : "Name of the entity we want to use as blobs light position."

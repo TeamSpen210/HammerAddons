@@ -1,9 +1,9 @@
-@PointClass
-	base(prop_physics) 
+@PointClass base(prop_physics) 
 	appliesto(P2CE) 
 	sphere(fademindist) 
 	sphere(fademaxdist) 
-	studioprop() = prop_physics_paintable: "A version of prop_physics that can be painted by Gel. Does not appear to show up on the model."
+	studioprop()
+= prop_physics_paintable: "A version of prop_physics that can be painted by Gel. Does not appear to show up on the model."
 	[
 	paintpower[engine](integer) : "Paint Power" : 4
 	paintpower(choices) : "Paint Power" : 4 : "The starting gel type for the prop." =

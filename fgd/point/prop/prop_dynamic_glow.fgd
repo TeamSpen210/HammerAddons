@@ -1,5 +1,4 @@
-@PointClass 
-	base(prop_dynamic)
+@PointClass base(prop_dynamic)
 = prop_dynamic_glow: "A prop that can be placed in hierarchy and can play animations. It can also be configured to break when it takes enough damage.\nWorks exactly like a prop_dynamic, but it can optionally have a custom glow around it."
 	[
 	glowdist(integer) : "Glow Distance" : 1024

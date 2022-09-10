@@ -1,6 +1,5 @@
-@PointClass
+@PointClass base(Origin, Angles) 
 	appliesto(+srctools, +VScript, -engine)
-	base(Origin, Angles) 
 	iconsprite("editor/comp_scriptvar_setter")
 	studio("models/editor/cone_helper.mdl")
 	line(255 255 255, targetname, target)

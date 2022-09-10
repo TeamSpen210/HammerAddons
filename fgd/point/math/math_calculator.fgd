@@ -11,7 +11,8 @@ appliesto(P2CE)
 			]
 
 		// Keyvalues
-		mode(choices) : "Compare mode" : "1" : "The current compare mode. This can be changed through the SetMode input." = [
+		mode(choices) : "Compare mode" : "1" : "The current compare mode. This can be changed through the SetMode input." =
+			[
 			16 : "Add"
 			17 : "Subtract"
 			18 : "Multiply"
@@ -22,7 +23,7 @@ appliesto(P2CE)
 			24 : "Max"
 			32 : "Square Root"
 			33 : "Absolute"
-		]
+			]
 		
 		// Inputs
 		input GetValueInt(void) : "When triggered, the result will be outputted to OutValue as a whole number."

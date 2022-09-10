@@ -1,5 +1,4 @@
-@PointClass
-	base(logic_measure_movement) 
+@PointClass base(logic_measure_movement) 
 	sphere(TraceDistance)
 	line(255 255 255, targetname, damagefilter)
 = logic_measure_direction: "An entity that can measure the direction of an entity relative to another entity and apply that movement to a third entity."
@@ -23,7 +22,7 @@
 
 	Mask[engine](integer) : "Trace Mask" : 1174421507
 	Mask(choices) : "Trace Mask" : 1174421507 : "How the measurement tracing should act in regards to what it should collide with." =
-	[
+		[
 		33570827 : "MASK_SOLID (Anything solid)"
 		33636363 : "MASK_PLAYERSOLID (Anything solid + player clip)"
 		33701899 : "MASK_NPCSOLID (Anything solid + NPC clip)"
@@ -31,22 +30,22 @@
 		16513 : "MASK_OPAQUE (Anything opaque, e.g. windows)"
 		16449 : "MASK_BLOCKLOS (Anything that blocks line of sight)"
 		1174421507 : "MASK_SHOT (Anything that would be hit by a bullet)"
-	]
+		]
 	
 	CollisionGroup[engine](integer) : "Collision Group" : 0
 	CollisionGroup(choices) : "Collision Group" : 0 : "The collision group the measurement tracing should use." =
-	[
+		[
 		0 : "None"
-	]
+		]
 	
 	damagefilter(filterclass) : "Trace Filter" : "" : "A filter to use for tracing."
 
 	HitIfPassed[engine](boolean) : "Hit if Passed" : 0
 	HitIfPassed(choices) : "Trace Filter behavior" : 0 : "What the filter should actually be used for." =
-	[
+		[
 		0 : "If pass, don't hit"
 		1 : "If pass, hit"
-	]
+		]
 	
 	TraceTargetReference(boolean) : "Additional trace from movement reference" : 0 : "Initiates another trace from the Movement Reference " +
 		"using the existing properties and adjusts the position to its end point. " +

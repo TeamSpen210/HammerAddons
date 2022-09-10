@@ -1,5 +1,5 @@
-
-@BaseClass base(BaseNPC) = BaseHeadcrab
+@BaseClass base(BaseNPC)
+= BaseHeadcrab
 	[
 	startburrowed(boolean) : "Start burrowed" : 0
 

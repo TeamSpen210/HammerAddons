@@ -1,5 +1,6 @@
 @BaseClass base(BaseEntityPoint)
-line(255 255 255, targetname, actor) = BaseActBusy
+	line(255 255 255, targetname, actor)
+= BaseActBusy
 	[
 	actor(target_name_or_class) : "Actor(s) to affect" : : "NPC's that should act busy"
 	startactive(boolean) : "Start Active" : 0
@@ -9,7 +10,6 @@ line(255 255 255, targetname, actor) = BaseActBusy
 		0: "Entity Name"
 		1: "Classname"
 		]
-
 	busysearchrange(float) : "Search Range for Busy Hints" : 2048
 	visibleonly(boolean) : "Visible Busy Hints Only" : 0
 

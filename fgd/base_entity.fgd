@@ -1,7 +1,9 @@
 // For use in the engine dump, the keyvalues available on CBaseEntity and therefore on all entities.
 // This way they don't need to be re-declared on every ent.
 
-@PointClass appliesto(engine) = _CBaseEntity_
+@PointClass 
+	appliesto(engine) 
+= _CBaseEntity_
 	[
 	classname(string) : "Classname" : : "The class of the entity, and is changed."
 	origin(origin) : "Position" : "0 0 0"

@@ -8,5 +8,6 @@
 	enginesound(sound) : "Engine Loop Sound" : "vehicles/diesel_turbo_loop1.wav"
 	movementsound(sound) : "Vehicle Movement Sound" : "vehicles/tank_treads_loop1.wav"
 	
+	// Inputs
 	input TargetEntity(string) : "Change the tank to target the specified entity."
 	]

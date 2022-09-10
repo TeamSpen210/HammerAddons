@@ -1,4 +1,5 @@
-@BaseClass base(_Breakable, DamageFilter) = BreakableProp
+@BaseClass base(_Breakable, DamageFilter) 
+= BreakableProp
 	[
 	spawnflags(flags)  =
 		[
@@ -7,9 +8,11 @@
 		]
 		
 	exploitablebyplayer[engine](integer) : "Exploitable by Player" : 0
-
-	output OnTakeDamage(void) : "Fired each time this breakable takes any damage."
-		
+	
+	// Inputs
 	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
 	input DisableDamageForces(void) : "Damaging the entity does *not* apply physics forces to it."
+	
+	// Outputs
+	output OnTakeDamage(void) : "Fired each time this breakable takes any damage."
 	]

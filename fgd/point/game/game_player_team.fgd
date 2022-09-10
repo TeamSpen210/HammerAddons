@@ -13,5 +13,6 @@
 
 	target(target_destination) : "The game_team_master representing the required team."
 
+	// Inputs
 	input Use(void) : "Change the team of the !activator player."
 	]

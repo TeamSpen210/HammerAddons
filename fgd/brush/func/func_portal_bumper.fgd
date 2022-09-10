@@ -1,5 +1,6 @@
 @SolidClass base(BaseEntityBrush, Origin) 
-	appliesto(P2CE) = func_portal_bumper: "A region which 'bumps' portals outside of it, but will still allow portals to be placed on it."
+	appliesto(P2CE)
+= func_portal_bumper: "A region which 'bumps' portals outside of it, but will still allow portals to be placed on it."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

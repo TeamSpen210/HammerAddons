@@ -1,5 +1,4 @@
-@PointClass
-	base(Origin, Angles, DetailPropBase)
+@PointClass base(Origin, Angles, DetailPropBase)
 	iconsprite("editor/ficool2/prop_detail_sprite")
 	wirebox(position_ul, position_lr)
 	appliesto(!engine)

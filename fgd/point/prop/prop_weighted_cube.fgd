@@ -52,7 +52,7 @@
 	
 	uselasermodifier(boolean) : "Use Laser Modifier" : 0 : "If enabled, this cube will recolor incoming lasers to the modifier color."
 	reflectmodifycolor(choices) : "Laser Modifier Color" : "255 0 0 255" : "Set reflected lasers to this color. Only applicable to reflection and Schrodinger cubes. You can also specify a custom RGBA color here." =
-	[
+		[
 		"255 255 255 255" : "White"
 		"255 0 0 255" : "Default Red"
 		"100 255 100 255" : "Lethal Green"
@@ -60,10 +60,10 @@
 		"255 212 91 255" : "Yellow"
 		"212 60 146 255" : "Pink"
 		"65 97 0 255" : "Dark Green"
-	]
+		]
 	uselaserfilter(boolean) : "Use Laser Filter" : 0 : "If enabled, this cube can only redirect lasers that match the filter color. If disabled, any laser color can be redirected."
 	reflectfiltercolor(choices) : "Laser Filter Color" : "255 0 0 255" : "Filter reflected lasers by this color. Only applicable to reflection and Schrodinger cubes. You can also specify a custom RGBA color here." =
-	[
+		[
 		"255 255 255 255" : "White"
 		"255 0 0 255" : "Default Red"
 		"100 255 100 255" : "Lethal Green"
@@ -71,7 +71,7 @@
 		"255 212 91 255" : "Yellow"
 		"212 60 146 255" : "Pink"
 		"65 97 0 255" : "Dark Green"
-	]
+		]
 
 	// Inputs
 	input EnablePortalFunnel(void) : "Enable portal funneling behavior."

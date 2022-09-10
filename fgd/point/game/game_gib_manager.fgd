@@ -5,8 +5,7 @@
 	[
 	maxpieces(integer) : "Max Gib Count" : -1 : "Sets the max number of gib that can be spawned at a time. (-1=no limit)"
 	allownewgibs(boolean) : "Allow New Gibs To Spawn" : 0 : "If true, when the max gib count is reached, oldest gibs are removed as new gibs spawn. " +
-															"If false, new gibs will not be spawned once the gib limit is reached."
-
+	"If false, new gibs will not be spawned once the gib limit is reached."
 	// Inputs
 	input SetMaxPieces(integer) : "Set the max gib count."
 	]

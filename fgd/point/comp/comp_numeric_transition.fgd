@@ -1,6 +1,5 @@
-@PointClass
-	appliesto(srctools, -engine)
-	base(logic_relay) 
+@PointClass base(logic_relay)
+	appliesto(srctools, -engine) 
 	line(255 255 255, targetname, target)
 = comp_numeric_transition : "When triggered, animates a keyvalue/input over time with various options."
 	[

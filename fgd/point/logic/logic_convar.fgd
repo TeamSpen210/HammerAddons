@@ -1,5 +1,4 @@
-@PointClass
-	base(BaseEntityPoint)
+@PointClass base(BaseEntityPoint)
 	iconsprite("editor/logic_convar.vmt") 
 = logic_convar :
 	"A powerful entity that can read the specified ConVar's value. " +

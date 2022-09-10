@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(+HL2_ENTITIES) 
-	iconsprite("editor/info_target.vmt") = info_snipertarget: "Sniper Target"
+	iconsprite("editor/info_target.vmt")
+= info_snipertarget: "Sniper Target"
 	[
 	speed(integer) : "Sweep to speed" : 2
 	groupname(string) : "Group Name"

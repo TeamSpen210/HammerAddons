@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint) 
-	iconsprite("editor/logic_multicompare.vmt") = logic_multicompare: "Compares a set of inputs to each other. " +
+	iconsprite("editor/logic_multicompare.vmt")
+= logic_multicompare: "Compares a set of inputs to each other. " +
 		"If they are all the same, fires an OnEqual output. " +
 		"If any are different, fires the OnNotEqual output. " +
 		"It is not possible to clear the memory, so this only works once."

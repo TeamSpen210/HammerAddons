@@ -3,7 +3,8 @@
 	sphere(volume) 
 	line(255 255 255, targetname, locationproxy)
 	line(255 255 255, targetname, target, targetname, locationproxy)
-	iconsprite("editor/ai_sound.vmt") = ai_sound: "This entity makes sounds or smells that can be sensed by NPCs, but not by the player. This can be used to cause reactions in nearby NPCs.\n\n" +
+	iconsprite("editor/ai_sound.vmt")
+= ai_sound: "This entity makes sounds or smells that can be sensed by NPCs, but not by the player. This can be used to cause reactions in nearby NPCs.\n\n" +
 	
 	"Sound Types\n" +
 	"  Combat: Will cause most NPCs to become alert\n" +

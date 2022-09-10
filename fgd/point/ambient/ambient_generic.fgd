@@ -22,7 +22,7 @@
 
 	soundflags[engine](integer) : "Sound Flags" : 0
 	soundflags(choices) : "Sound Flags" : 0 : "Additional options for your sound." =
-	[
+		[
 		0: "None"
 		128: "[128] Pause when game is paused" [ +USE_PAUSE ]
 		256: "[256] Ignore phonemes (no lip-syncing)"
@@ -32,7 +32,7 @@
 		1280: "Ignore phonemes and don't overwrite"
 		1152: "Pause and don't overwrite" [ +USE_PAUSE ]
 		1408: "Pause, ignore phonemes and don't overwrite" [ +USE_PAUSE ]
-	]
+		]
 
 	preset[engine](integer) : "Dynamic Presets" : 0
 	preset(choices) : "Dynamic Presets" : 0 : "If used, overrides many of the below properties (+pitch) to preset values." =
@@ -104,5 +104,7 @@
 	input FadeOut(integer) : "Fades the sound to silence over a specified number of seconds, with a range from 0 to 100 seconds. " +
 		"Sound is forced to full volume first!"
 	input SetSound(string) : "Sets the sound this ambient_generic should play."
+	
+	// Outputs
 	output OnSoundFinished(void) : "Fires when the sound finishes playing. NOTE: This sound should be set to pause when the game is paused."
 	]

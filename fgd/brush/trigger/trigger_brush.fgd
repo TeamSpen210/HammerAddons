@@ -2,15 +2,17 @@
 = trigger_brush: "A trigger volume that can be used, and can relay touches to its parent."
 	[
 	// Move this here, so we can check/uncheck boxes.
-	spawnflags[+srctools](flags) = [
+	spawnflags[+srctools](flags) =
+		[
 		1: "Ignore Players"
 		2: "Ignore NPCs"
 		4: "Ignore func_pushable"
 		8: "Ignore touches"
 		16: "Ignore +USE"
-	]
+		]
 	InputFilter[engine](integer) : "Input Flags" : 0
-	InputFilter[-srctools](choices) : "Input Flags" : 0 : "Filters what kind of entities can interact with this. The values can be ORed together." = [
+	InputFilter[-srctools](choices) : "Input Flags" : 0 : "Filters what kind of entities can interact with this. The values can be ORed together." = 
+		[
 		0: "Allow anything"
 		1: "Ignore Players"
 		2: "Ignore NPCs"
@@ -28,6 +30,7 @@
 		0 : "Yes"
 		]
 
+	// Outputs
 	output OnStartTouch(void) : "Fired when something touches us."
 	output OnEndTouch(void) : "Fired when something stops touching us."
 	output OnUse(void) : "Fired when the player (or I/O) USEs us."

@@ -1,7 +1,6 @@
-@PointClass
-	base(BaseEntityPoint, EnableDisable, math_counter) 
+@PointClass base(BaseEntityPoint, EnableDisable, math_counter) 
 	iconsprite("editor/math_counter_advanced.vmt") 
-	= math_counter_advanced : "A special version of math_counter with the ability to perform advanced calculations. " +
+= math_counter_advanced : "A special version of math_counter with the ability to perform advanced calculations. " +
 	"Otherwise functions identically to math_counter."
 	[
 	PreserveValue(boolean) : "Preserve Value?" : 0 : "If set to 'Yes', calculations will fire OutValue with the resulting value, " +

@@ -10,10 +10,10 @@
 
 	skin[engine](integer) : "Act as Junction" : 0
 	skin(choices) : "Mode" : 0 : "Whether this will link to comp_vactube_junctions, or just be a static prop." = 
-	[
+		[
 		0: "Static Prop"
 		1: "Vactube Junction"
-	]
+		]
 	segments(integer) : "Segments" : 2 : "Number of nodes to generate for this. Higher values make smoother tubes, but produce more faces."
 	collisions(boolean) : "Enable Collisions" : 1 : "Sholuld a collision mesh should be generated?"
 

@@ -1,5 +1,6 @@
 @PointClass base(Item) 
 	appliesto(+HL2_ENTITIES) 
-	studio("models/healthvial.mdl") = item_healthvial: "Personal Health Kit"
+	studio("models/healthvial.mdl")
+= item_healthvial: "Personal Health Kit"
 	[
 	]

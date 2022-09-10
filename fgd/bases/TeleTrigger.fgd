@@ -1,4 +1,5 @@
-@BaseClass base(Trigger) = TeleTrigger
+@BaseClass base(Trigger) 
+= TeleTrigger
 	[
 	spawnflags(flags) =
 		[
@@ -48,6 +49,7 @@
 	uselandmarkangles(boolean) : "Use Landmark Angles" : 0 : "(Landmark mode only) Forces the teleported object to snap to the angles of the destination landmark."
 	SetSpeed(float) : "Set Custom Speed" : 400 : "(Set speed mode only) Forces the player to this speed on teleport."
 	checkdestifclearforplayer(boolean) : "Only Spawn-Valid Destinations" : 0 : "Only teleport if there is a clear teleport destination."
-
+	
+	// Inputs
 	input SetRemoteDestination(string) : "Set a new remote teleport destination."
 	]

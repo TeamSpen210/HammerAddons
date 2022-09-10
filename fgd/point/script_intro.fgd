@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(+HL2_ENTITIES, +USE_AI) 
-	iconsprite("editor/ts2do/script_intro.vmt") = script_intro: "Script: Custom entity used to handle the intro sequence."
+	iconsprite("editor/ts2do/script_intro.vmt")
+= script_intro: "Script: Custom entity used to handle the intro sequence."
 	[
 	alternatefovchange(boolean) : "Match env_zoom's FOV transition" : 0 : "Whether the script should match env_zoom's FOV transition."
 

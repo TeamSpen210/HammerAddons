@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPhysics) 
 	sphere(expradius) 
-	studioprop() = physics_cannister: "A physically simulated gas cannister that can have its cap shot off, " +
+	studioprop()
+= physics_cannister: "A physically simulated gas cannister that can have its cap shot off, " +
 		"at which point gas will start escaping and cause the cannister to fly around. " +
 		"If it takes enough damage, it will explode. " +
 		"The model should have a 'nozzle' attachment point, " +

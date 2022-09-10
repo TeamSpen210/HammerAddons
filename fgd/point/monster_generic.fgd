@@ -1,7 +1,7 @@
 @PointClass base(BaseNPC) 
 	studio() 
 	bbox(-4 -4 -4, 4 4 4)
-	= monster_generic: "Generic Script NPC"
+= monster_generic: "Generic Script NPC"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

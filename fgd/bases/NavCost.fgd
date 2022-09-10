@@ -1,4 +1,5 @@
-@BaseClass base(BaseEntityBrush, TeamNum) = NavCost
+@BaseClass base(BaseEntityBrush, TeamNum) 
+= NavCost
 	[
 	start_disabled(boolean) : "Start Disabled" : 0
 

@@ -1,3 +1,4 @@
-@BaseClass base(BaseNPC) = BaseZombie
+@BaseClass base(BaseNPC) 
+= BaseZombie
 	[
 	]

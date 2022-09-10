@@ -1,5 +1,6 @@
-@SolidClass appliesto(+HL2_ENTITIES)
-		base(CombineBallSpawners) = func_combine_ball_spawner: "Spawns Combine balls."
+@SolidClass base(CombineBallSpawners) 
+	appliesto(+HL2_ENTITIES)
+= func_combine_ball_spawner: "Spawns Combine balls."
 	[
 
 	// Outputs

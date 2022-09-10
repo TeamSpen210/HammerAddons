@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(+HL2_ENTITIES) 
-	iconsprite("editor/info_target.vmt") = info_target_gunshipcrash: "Gunship Crash Target"
+	iconsprite("editor/info_target.vmt")
+= info_target_gunshipcrash: "Gunship Crash Target"
 	[
 	// Inputs
 	input Enable(void) : "Enable the crash target."

@@ -1,6 +1,7 @@
 @PointClass base(prop_dynamic_glow, Origin, Angles)
 	appliesto(MOMENTUM)
-	studioprop() = momentum_generic_bomb : "Generic Bomb"
+	studioprop()
+= momentum_generic_bomb : "Generic Bomb"
 	[
 	// Params
 	damage(float) : "Explosion Damage" : 50 : "Amount of damage to do when exploding."

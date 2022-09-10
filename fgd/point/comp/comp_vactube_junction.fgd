@@ -6,7 +6,8 @@
 	targetname(target_source): "Junction Name" : : "Although junctions are linked automatically, this can be used to precisely link two junctions. You can use also this to help with identifying problems since the compiler will output it."
 	// Not studio, we don't want to pack these.
 	model[engine](string) : "Type" : "models/editor/vactubes/straight.mdl"
-	model(choices) : "Type" : "models/editor/vactubes/straight.mdl" : "The size and type of junction. Splitters split the tube into multiple paths. You can simply overlap two junctions to join paths, however." = [
+	model(choices) : "Type" : "models/editor/vactubes/straight.mdl" : "The size and type of junction. Splitters split the tube into multiple paths. You can simply overlap two junctions to join paths, however." = 
+		[
 		"models/editor/vactubes/straight.mdl" : "Straight / Scanner"
 		"models/editor/vactubes/curve_1.mdl" : "Curve: 1"
 		"models/editor/vactubes/curve_2.mdl" : "Curve: 2"
@@ -19,13 +20,14 @@
 		"models/editor/vactubes/splitter_straight.mdl" : "Splitter: Straight"
 		"models/editor/vactubes/splitter_sides.mdl" : "Splitter: Left/Right"
 		"models/editor/vactubes/splitter_triple.mdl" : "Splitter: Triple"
-	]
+		]
 
 	skin[engine](boolean) : "Reverse Curve?" : 0
-	skin(choices) : "Curve Direction" : 0 : "Reverse the direction, to make placing easier. Does not apply to splitters." = [
+	skin(choices) : "Curve Direction" : 0 : "Reverse the direction, to make placing easier. Does not apply to splitters." =
+		[
 		0 : "Forward"
 		1 : "Backward"
-	]
+		]
 
 	persist_tv[engine](boolean) : "Continually display items on TV" : 0
 	persist_tv(choices) : "TV Screen behaviour" : 0 : "Determine how items are shown on Scanner TVs." = [
@@ -37,5 +39,6 @@
 	target_sec(target_destination): "Secondary junction" : : "For splitters, this is the second output from the junction."
 	target_ter(target_destination): "Tertiary junction" : : "For the triple splitter, this is the rightmost output."
 
+	// Outputs
 	output OnPass(void) : "Fired when a cube passes by."
 ]

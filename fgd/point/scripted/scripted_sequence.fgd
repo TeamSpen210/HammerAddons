@@ -2,7 +2,8 @@
 	appliesto(+USE_AI)
 	studio("models/editor/scriptedsequence.mdl") 
 	color(255 0 255) 
-	sphere(m_flRadius) = scripted_sequence: "Grabs an NPC and makes them play a specified set of animations. " +
+	sphere(m_flRadius)
+= scripted_sequence: "Grabs an NPC and makes them play a specified set of animations. " +
 		"The NPC can be told to move to the scripted sequence position or can " + 
 		"be told to play the script wherever they currently are. " +
 		"Multiple scripted sequences of the same name will frame-synchronize in the action animation once all the actors have moved to position. " +

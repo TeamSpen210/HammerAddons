@@ -1,5 +1,5 @@
-@SolidClass appliesto(+HL2_ENTITIES)
-		base(func_brush)
+@SolidClass base(func_brush)
+	appliesto(+HL2_ENTITIES)
 	line(255 255 0, targetname, target)
 = func_monitor: "A monitor that renders the view from a given point_camera entity."
 	[

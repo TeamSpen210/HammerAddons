@@ -19,6 +19,7 @@
 
     delay(float) : "Extra Delay" : 0.0 : "Add this delay to all outputs. This allows you to control this via $fixup values, for instance."
 
+	// Inputs
     input Trigger(string): "Trigger the relay and fire the output."
     
     input TurnOn(string): "Fire the OnTurnedOn output."
@@ -33,6 +34,7 @@
 	input FireUser7(string) : "Causes this relay's OnUser7 output to be fired."
 	input FireUser8(string) : "Causes this relay's OnUser8 output to be fired."
 	
+	// Outputs
 	output OnTrigger(string): "Fired when the relay is triggered."
 	output OnTurnedOn(string): "Fired when the relay is turned on."
 	output OnTurnedOff(string): "Fired when the relay is turned off."

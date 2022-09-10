@@ -1,5 +1,4 @@
-@PointClass
-	base(BaseEntityPoint, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	iconsprite("editor/math_bits.vmt")
 = math_bits :
 	"A math_counter variant that specializes in bitwise operations."

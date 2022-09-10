@@ -1,5 +1,4 @@
-@PointClass
-	base(BaseEntityPoint, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	iconsprite("editor/math_lightpattern.vmt") 
 = math_lightpattern :
 	"A logic entity that attempts to replicate light patterns that can be used on named lights.\n\n" +

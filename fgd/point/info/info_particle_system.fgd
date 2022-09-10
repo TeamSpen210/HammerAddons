@@ -63,7 +63,8 @@
 	line(255 255 255, targetname, cpoint61) 
 	line(255 255 255, targetname, cpoint62) 
 	line(255 255 255, targetname, cpoint63) 
-	color(200 200 0) = info_particle_system: "An entity that spawns a particle system built using the particle editor."
+	color(200 200 0)
+= info_particle_system: "An entity that spawns a particle system built using the particle editor."
 	[
 	effect_name(particlesystem) : "Particle System Name"
 	start_active(boolean) : "Start Active?" : 0

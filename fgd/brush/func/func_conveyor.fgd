@@ -1,4 +1,5 @@
-@SolidClass base(BaseEntityVisBrush) = func_conveyor :
+@SolidClass base(BaseEntityVisBrush)
+= func_conveyor :
 		"A brush entity that functions as a conveyor belt, with a moving surface. " +
 		"The surface material should have a ConveyorScroll Material Proxy, " +
 		"to synchronize the material movement and push effect."

@@ -1,4 +1,5 @@
-@SolidClass appliesto(-engine) // Converted to info_ladder.
+@SolidClass 
+	appliesto(-engine) // Converted to info_ladder.
 = func_ladder: "Ladder. Players will be able to freely along one side of this brush, as if it was a ladder. " +
 	"If you are using a model prop for the visual representation of the ladder in the map, " +
 	"apply the toolsinvisibleladder material to the climbable side of the func_ladder brush."

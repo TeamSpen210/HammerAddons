@@ -1,4 +1,5 @@
-@SolidClass base(BaseTank) = func_tankmortar: "Brush Mortar Turret"
+@SolidClass base(BaseTank)
+= func_tankmortar: "Brush Mortar Turret"
 	[
 	imagnitude(integer) : "Explosion Magnitude" : 100
 	firedelay(string) : "Shell travel time" : "2" : "How long after the turret fires before the shell impacts"

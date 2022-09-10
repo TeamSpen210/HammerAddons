@@ -1,4 +1,3 @@
-
 @BaseClass = SystemLevelChoice
 	[
 	mincpulevel(choices) : "Minimum CPU Level" : 0 =

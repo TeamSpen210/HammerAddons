@@ -1,7 +1,8 @@
 @PointClass base(BaseEntityPoint)
 	appliesto(+USE_AI)
 	iconsprite("editor/assault_rally.vmt") 
-	line(255 255 255, targetname, assaultpoint) = assault_rallypoint: "(Assault) rally point"
+	line(255 255 255, targetname, assaultpoint)
+= assault_rallypoint: "(Assault) rally point"
 	[
 	assaultpoint(target_destination) : "Assault Point" : : "Location to move to as assault begins"
 	assaultdelay(float) : "Assault Delay" : 0 : "How long to wait after cue is given before assault begins."

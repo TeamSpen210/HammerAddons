@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(P2CE) = projected_wall_entity: "A Hard Light Bridge. Probably not spawnable in Hammer. Can be detected with triggers that have the 'Everything' flag set."
+	appliesto(P2CE)
+= projected_wall_entity: "A Hard Light Bridge. Probably not spawnable in Hammer. Can be detected with triggers that have the 'Everything' flag set."
 	[
 	]
