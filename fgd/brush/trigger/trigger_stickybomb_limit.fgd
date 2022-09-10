@@ -3,7 +3,7 @@
 	line(255 255 255, targetname, filtername)
 = trigger_stickybomb_limit: "Controls the maximum number of stickybombs the player is able to shoot or have present while inside this area."
 	[
-	stickybomb_limit(integer) : "Stickybomb Limit" : 3 : "The maximum number of stickybombs the player is allowed to shoot and have present while in this trigger. Absolute min/max is 2 and 20."
+	stickybomb_limit(integer) : "Stickybomb Limit" : 3 : "The maximum number of stickybombs the player is allowed to shoot and have present while in this trigger. Absolute min/max is 1 and 20. Defaults to 3 if set outside min/max bounds."
 	persist(boolean) : "Persist" : 0 : "Whether the set limit persists on exitting the trigger. Set to 0 to reset the players stickybomb count to default on exitting the trigger."
 
 	// Inputs
