@@ -21,7 +21,4 @@
 	input NewLine(void) : "Manually sends \n."
 	input DevNewLine(void) : "Manually sends \n in the specified developer level."
 	input ClearConsole(void) : "Clears the console of all output."
-	
-	// No way, you wacko!
-	//input SendError(string) : "Crashes the player's game and gives the parameter as an error message. Please handle with care."
 	]

@@ -44,6 +44,6 @@
 
 	coldworld(boolean) : "World is cold" : 0 : "Emit steam from NPC's mouths and similar effects."
 	
-	paintinmap(boolean) : "Enable Paint" : 0 : "Enable code for spreading paint on surfaces, and bouncing physics objects around."
-	maxblobcount(integer) : "Gel Blob Limit" : 250 : "Number of Gel blobs that can exist. Maximum is 250."
+	paintinmap[-MOMENTUM](boolean) : "Enable Paint" : 0 : "Enable code for spreading paint on surfaces, and bouncing physics objects around."
+	maxblobcount[-MOMENTUM](integer) : "Gel Blob Limit" : 250 : "Number of Gel blobs that can exist. Maximum is 250."
 	]
