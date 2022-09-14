@@ -518,13 +518,13 @@ def action_count(
         for tag in get_appliesto(ent):
             all_tags.add(tag.lstrip('+-!').upper())
 
-    games = set(GAME_ORDER).intersection(all_tags)
+    games = (ALL_GAMES | ALL_MODS) & all_tags
 
     print('Done.\nGames: ' + ', '.join(sorted(games)))
 
     expanded: Dict[str, FrozenSet[str]] = {
         game: expand_tags(frozenset({game}))
-        for game in GAME_ORDER
+        for game in ALL_GAMES | ALL_MODS
     }
     expanded['ALL'] = frozenset()
 
@@ -576,7 +576,16 @@ def action_count(
 
     all_games: Set[str] = {*count_base, *count_point, *count_brush}
 
-    game_order = ['ALL'] + sorted(all_games - {'ALL'}, key=GAME_ORDER.index)
+    def ordering(game: str) -> tuple:
+        """Put ALL at the start, mods at the end."""
+        if game == 'ALL':
+            return (0, 0)
+        try:
+            return (1, GAME_ORDER.index(game))
+        except ValueError:
+            return (2, game)  # Mods
+
+    game_order = sorted(all_games, key=ordering)
 
     row_temp = '{:^9} | {:^6} | {:^6} | {:^6}'
     header = row_temp.format('Game', 'Base', 'Point', 'Brush')
@@ -626,13 +635,16 @@ def action_count(
                 if not cls.isspace()
             }
         game = dump_path.stem.upper()
-        try:
-            defined_classes = {
-                cls for cls in all_ents[game]
-                if not cls.startswith('comp_')
-            }
-        except KeyError:
-            print(f'No dump for tag "{game}"!')
+        tags = frozenset(game.split('_'))
+
+        defined_classes = {
+            cls
+            for tag in tags
+            for cls in all_ents.get(tag, ())
+            if not cls.startswith('comp_')
+        }
+        if not defined_classes:
+            print(f'No dump for tags "{game}"!')
             continue
 
         extra = defined_classes - dump_classes
@@ -648,6 +660,7 @@ def action_count(
     from srctools.packlist import entclass_resources, entclass_iter
 
     missing_count = 0
+    defined_count = 0
     not_in_engine = {'-ENGINE', '!ENGINE', 'SRCTOOLS', '+SRCTOOLS'}
     for clsname in sorted(fgd.entities):
         ent = fgd.entities[clsname]
@@ -661,7 +674,10 @@ def action_count(
         except KeyError:
             print(clsname, end=', ')
             missing_count += 1
-    print('\nMissing:', missing_count)
+        else:
+            defined_count += 1
+
+    print(f'\nMissing: {missing_count}, Defined: {defined_count} = {defined_count/(missing_count + defined_count):.2%}')
 
     print('Extra ents: ')
     for clsname in entclass_iter():
