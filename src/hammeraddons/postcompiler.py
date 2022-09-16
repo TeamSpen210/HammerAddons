@@ -130,7 +130,7 @@ async def main(argv: List[str]) -> None:
     studiomdl_path = conf.opts.get(config.STUDIOMDL)
     studiomdl_loc: Optional[Path]
     if studiomdl_path:
-        studiomdl_loc = (conf.game.root / studiomdl_path).resolve()
+        studiomdl_loc = conf.expand_path(studiomdl_path)
         if not studiomdl_loc.exists():
             LOGGER.warning('No studiomdl found at "{}"!', studiomdl_loc)
             studiomdl_loc = None
@@ -175,7 +175,7 @@ async def main(argv: List[str]) -> None:
         decomp_cache_loc: Optional[Path]
         crowbar_loc: Optional[Path]
         if decomp_cache_path is not None:
-            decomp_cache_loc = (conf.game.root / decomp_cache_path).resolve()
+            decomp_cache_loc = conf.expand_path(decomp_cache_path)
             decomp_cache_loc.mkdir(parents=True, exist_ok=True)
         else:
             decomp_cache_loc = None
@@ -196,11 +196,7 @@ async def main(argv: List[str]) -> None:
             packlist,
             conf.game,
             studiomdl_loc,
-            qc_folders=[
-                conf.game.root / folder
-                for folder in
-                conf.opts.get(config.PROPCOMBINE_QC_FOLDER).as_array(conv=Path)
-            ],
+            qc_folders=conf.opts.get(config.PROPCOMBINE_QC_FOLDER).as_array(conv=conf.expand_path),
             decomp_cache_loc=decomp_cache_loc,
             crowbar_loc=crowbar_loc,
             auto_range=conf.opts.get(config.PROPCOMBINE_AUTO_RANGE),
@@ -240,7 +236,7 @@ async def main(argv: List[str]) -> None:
             bsp_file,
             blacklist=conf.pack_blacklist,
             ignore_vpk=False,
-            dump_loc=Path(conf.game.root, dump_path.lstrip('#')).absolute().resolve(),
+            dump_loc=conf.expand_path(dump_path.lstrip('#')).absolute().resolve(),
             only_dump=dump_path.startswith('#'),
         )
     else:

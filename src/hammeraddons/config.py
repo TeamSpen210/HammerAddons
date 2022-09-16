@@ -1,6 +1,7 @@
 """Handles user configuration common to the different scripts."""
 from pathlib import Path
-from typing import Optional, Tuple, Set, Dict
+from typing import Callable, Optional, Set, Dict, Union
+from typing_extensions import TypeAlias, Final
 import sys
 
 from atomicwrites import atomic_write
@@ -15,10 +16,47 @@ from .plugin import Source as PluginSource, PluginFinder, BUILTIN as BUILTIN_PLU
 
 
 LOGGER = logger.get_logger(__name__)
-CONF_NAME = 'srctools.vdf'
+CONF_NAME: Final = 'srctools.vdf'
+PATHS_NAME: Final = 'srctools_paths.vdf'
+GAME_KEY: Final = 'gameinfo_path'
+
+PATHS_CONF_STARTER: Final = '''\
+// This config contains a list of directories which can be referenced by the main config.
+// Keeping this a separate file allows the main config to be shared in a mod team, while this
+// config is customised for each user's installation locations.
+// The keys here are then referenced by specifying "|key|" at the start of a path.
+// If no root is specified, paths are relative to these configs.
+"Paths"
+    {
+    // For example this makes "|hl2|episodic/ep1_pak_dir.vpk" valid in searchpaths.
+    // "hl2" "C:/Program Files/Steam/SteamApps/common/Half Life 2/"
+    }
+'''
+# A function taking a configured path, and expanding |refs| to get the full location.
+Expander: TypeAlias = Callable[[str], Path]
 
 
-@attrs.frozen
+def make_expander(roots: Dict[str, Path], orig_root: Union[str, Path]) -> Expander:
+    """Produce a function that expands configs potentially containing || refs."""
+    def expander(path: str) -> Path:
+        """Expand a reference potentially containing || refs."""
+        root = orig_root
+        if path.startswith('|'):
+            _, ref, path = path.split('|', 2)
+            path = path.lstrip('\\/')  # Make |loc|/blah/ allowed, don't treat as a root.
+            try:
+                root = roots[ref.casefold()]
+            except KeyError:
+                LOGGER.warning(
+                    '|{}| is not defined in {}! Assuming {}\nKnown: {}',
+                    ref, PATHS_NAME, root,
+                    ', '.join(sorted(roots)),
+                )
+        return Path(root, path).resolve()
+    return expander
+
+
+@attrs.frozen(kw_only=True)
 class Config:
     """Result of parse()."""
     opts: Options
@@ -26,6 +64,7 @@ class Config:
     fsys: FileSystemChain
     pack_blacklist: Set[FileSystem]
     plugins: PluginFinder
+    expand_path: Expander
 
     @property
     def loc(self) -> Path:
@@ -86,6 +125,27 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
     with atomic_write(opts.path, overwrite=True) as f:
         opts.save(f)
 
+    # Fetch the additional path config.
+    path_roots: Dict[str, Path] = {}
+    paths_conf_loc = opts.path.with_name(PATHS_NAME)
+    LOGGER.info('Paths config: {}', paths_conf_loc)
+    try:
+        with open(paths_conf_loc) as f:
+            for prop in Property.parse(f).find_children('Paths'):
+                if prop.has_children():
+                    LOGGER.warning('Paths configs may not be blocks!')
+                else:
+                    path_roots[prop.name.strip('|')] = Path(prop.value)
+            if GAME_KEY in path_roots:
+                LOGGER.warning(
+                    '|{}| cannot be defined in the path config, this is always the '
+                    'location of the game.',
+                    GAME_KEY,
+                )
+    except FileNotFoundError:
+        with open(paths_conf_loc, 'w') as f:
+            f.write(PATHS_CONF_STARTER)
+
     if not game_folder:
         game_folder = opts.get(GAMEINFO)
     if not game_folder:
@@ -94,8 +154,12 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
             'Add -game $gamedir to the command line, or set it in '
             f'"{opts.path}".'
         )
-    game = Game((folder / game_folder).resolve())
+
+    expand_path = make_expander(path_roots, folder)
+    game = Game(expand_path(game_folder))
     LOGGER.info('Game folder: {}', game.path)
+    # Now we located it, other definitions can use this loc.
+    path_roots[GAME_KEY] = game.path
 
     fsys_chain = game.get_filesystem()
 
@@ -106,17 +170,15 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
             if isinstance(fsys, VPKFileSystem):
                 blacklist.add(fsys)
 
-    game_root = game.root
-
     for prop in opts.get(SEARCHPATHS):
         if prop.has_children():
             raise ValueError('Config "searchpaths" value cannot have children.')
         assert isinstance(prop.value, str)
 
         if prop.value.endswith('.vpk'):
-            fsys = VPKFileSystem(str((game_root / prop.value).resolve()))
+            fsys = VPKFileSystem(str(expand_path(prop.value)))
         else:
-            fsys = RawFileSystem(str((game_root / prop.value).resolve()))
+            fsys = RawFileSystem(str(expand_path(prop.value)))
 
         if prop.name in ('prefix', 'priority'):
             fsys_chain.add_sys(fsys, priority=True)
@@ -141,7 +203,7 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
     # Find all the plugins and make plugin objects out of them
     unnamed_ind = 1
     for prop in opts.get(PLUGINS):
-        source = PluginSource.parse(game_root, prop)
+        source = PluginSource.parse(prop, expand_path)
         if not source.id:
             source.id = f'unnamed_{unnamed_ind}'
             unnamed_ind += 1
@@ -163,7 +225,8 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
         game=game,
         fsys=fsys_chain,
         pack_blacklist=blacklist,
-        plugins=plugin_finder
+        plugins=plugin_finder,
+        expand_path=expand_path,
     )
 
 
@@ -244,7 +307,7 @@ USE_COMMA_SEP = Opt.boolean_or_none(
 """)
 
 PROPCOMBINE_QC_FOLDER = Opt.block(
-    'propcombine_qc_folder', Property('', [Property('loc', '../content')]),
+    'propcombine_qc_folder', Property('', [Property('Path', f'|{GAME_KEY}|../content')]),
     """Define where the QC files are for combinable static props.
     This path is searched recursively. This defaults to 
     the 'content/' folder, which is adjacent to the game root.
@@ -258,7 +321,7 @@ PROPCOMBINE_CROWBAR = Opt.boolean(
 """)
 
 PROPCOMBINE_CACHE = Opt.string(
-    'propcombine_cache', "decomp_cache/",
+    'propcombine_cache', f"|{GAME_KEY}|/decomp_cache/",
     """Cache location for models decompiled for combining."""
 )
 

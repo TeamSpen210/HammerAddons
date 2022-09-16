@@ -4,7 +4,7 @@ from collections import deque
 from importlib.util import spec_from_loader
 from importlib.abc import MetaPathFinder
 from importlib.machinery import ModuleSpec, SourceFileLoader
-from typing import Dict, Union, Optional, Set, Sequence, Tuple, Iterable, Iterator
+from typing import Callable, Dict, Union, Optional, Set, Sequence, Tuple, Iterable, Iterator
 from typing_extensions import Final
 import importlib
 import types
@@ -28,7 +28,7 @@ class Source:
     files: Set[Path] = attrs.Factory(set)
 
     @classmethod
-    def parse(cls, root: Path, prop: Property) -> 'Source':
+    def parse(cls, prop: Property, path_parse: Callable[[str], Path]) -> 'Source':
         """Parse from a property."""
         if prop.has_children():
             if not prop.real_name:
@@ -39,7 +39,7 @@ class Source:
                     f'(words, numbers, underscore), not "{prop.real_name}"!'
                 )
             try:
-                path = (root / Path(prop['path'])).resolve()
+                path = path_parse(prop['path'])
             except LookupError:
                 raise ValueError(f'Plugin "{prop.real_name}" must have a path!') from None
             if path.is_dir():
@@ -56,7 +56,7 @@ class Source:
                 )
         else:  # Legacy style.
             LOGGER.warning('Plugins should use block definition style!')
-            path = (root / Path(prop.value)).resolve()
+            path = path_parse(prop.value)
             if prop.name in ('path', "recursive", 'folder'):
                 if not path.is_dir():
                     raise ValueError(f"'{path}' is not a directory!")
