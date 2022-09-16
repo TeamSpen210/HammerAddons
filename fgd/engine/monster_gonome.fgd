@@ -1,0 +1,5 @@
+@PointClass base(npc_zassassin) 
+	appliesto(+engine, EZ2)
+= monster_gonome: "Alternate name for npc_zassassin, EZ2's Plan B enemy."
+	[
+	]

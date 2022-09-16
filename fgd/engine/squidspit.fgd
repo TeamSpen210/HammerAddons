@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(+engine, EZ2)
+= squidspit: "Projectile spit by EZ2's Plan B/Gonome."
+	[
+	]

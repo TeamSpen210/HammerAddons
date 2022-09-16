@@ -1,0 +1,5 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(+engine, HL2, EP1, EP2, P1, -MESA)
+= sparktrail: "Effect entity which continously spawns sparks as it flies off a Strider or Hunter."
+	[
+	]
