@@ -28,7 +28,7 @@ PATHS_CONF_STARTER: Final = '''\
 // If no root is specified, paths are relative to these configs.
 "Paths"
     {
-    // For example this makes "|hl2|episodic/ep1_pak_dir.vpk" valid in searchpaths.
+    // For example this makes "|hl2|/episodic/ep1_pak_dir.vpk" valid in searchpaths.
     // "hl2" "C:/Program Files/Steam/SteamApps/common/Half Life 2/"
     }
 '''
@@ -69,7 +69,9 @@ class Config:
     @property
     def loc(self) -> Path:
         """Location of the configs."""
-        return self.opts.path
+        path = self.opts.path
+        assert path is not None
+        return path
 
 
 def parse(path: Path, game_folder: Optional[str]='') -> Config:
@@ -82,13 +84,6 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
     If none can be found, it tries to find the first subfolder of 'common/' and
     writes a default copy there. FileNotFoundError is raised if none can be
     found.
-
-    This returns:
-        * The config.
-        * Parsed gameinfo.
-        * The chain of filesystems.
-        * A packing blacklist.
-        * The plugin loader.
     """
     opts = Options(globals())
 
