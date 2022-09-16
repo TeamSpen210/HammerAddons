@@ -4,6 +4,7 @@ from typing import Optional, Tuple, Set, Dict
 import sys
 
 from atomicwrites import atomic_write
+import attrs
 
 from srctools.game import Game
 from srctools import Property, logger
@@ -17,14 +18,23 @@ LOGGER = logger.get_logger(__name__)
 CONF_NAME = 'srctools.vdf'
 
 
-def parse(path: Path, game_folder: Optional[str]='') -> Tuple[
-    Options,
-    Game,
-    FileSystemChain,
-    Set[FileSystem],
-    PluginFinder,
-]:
-    """From some directory, locate and parse the config file.
+@attrs.frozen
+class Config:
+    """Result of parse()."""
+    opts: Options
+    game: Game
+    fsys: FileSystemChain
+    pack_blacklist: Set[FileSystem]
+    plugins: PluginFinder
+
+    @property
+    def loc(self) -> Path:
+        """Location of the configs."""
+        return self.opts.path
+
+
+def parse(path: Path, game_folder: Optional[str]='') -> Config:
+    """From some directory, locate and parse the config files.
 
     This then constructs and customises each object according to config
     options.
@@ -41,7 +51,7 @@ def parse(path: Path, game_folder: Optional[str]='') -> Tuple[
         * A packing blacklist.
         * The plugin loader.
     """
-    conf = Options(globals())
+    opts = Options(globals())
 
     # If the path is a folder, add a dummy folder so parents yields it.
     # That way we check for a config in this folder.
@@ -54,13 +64,13 @@ def parse(path: Path, game_folder: Optional[str]='') -> Tuple[
             LOGGER.info('Config path: "{}"', conf_path.absolute())
             with open(conf_path) as f:
                 props = Property.parse(f, conf_path)
-            conf.path = conf_path
-            conf.load(props)
+            opts.path = conf_path
+            opts.load(props)
             break
     else:
         LOGGER.warning('Cannot find a valid config file!')
         # Apply all the defaults.
-        conf.load(Property(None, []))
+        opts.load(Property(None, []))
 
         # Try to write out a default file in the game folder.
         for folder in path.parents:
@@ -69,20 +79,20 @@ def parse(path: Path, game_folder: Optional[str]='') -> Tuple[
         else:
             # Give up, put next to the input path.
             folder = path.parent
-        conf.path = folder / CONF_NAME
+        opts.path = folder / CONF_NAME
 
-        LOGGER.warning('Writing default to "{}"', conf.path)
+        LOGGER.warning('Writing default to "{}"', opts.path)
 
-    with atomic_write(conf.path, overwrite=True) as f:
-        conf.save(f)
+    with atomic_write(opts.path, overwrite=True) as f:
+        opts.save(f)
 
     if not game_folder:
-        game_folder = conf.get(GAMEINFO)
+        game_folder = opts.get(GAMEINFO)
     if not game_folder:
         raise ValueError(
             'No game folder specified!\n'
             'Add -game $gamedir to the command line, or set it in '
-            f'"{conf.path}".'
+            f'"{opts.path}".'
         )
     game = Game((folder / game_folder).resolve())
     LOGGER.info('Game folder: {}', game.path)
@@ -91,14 +101,14 @@ def parse(path: Path, game_folder: Optional[str]='') -> Tuple[
 
     blacklist: Set[FileSystem] = set()
 
-    if not conf.get(PACK_VPK):
+    if not opts.get(PACK_VPK):
         for fsys, prefix in fsys_chain.systems:
             if isinstance(fsys, VPKFileSystem):
                 blacklist.add(fsys)
 
     game_root = game.root
 
-    for prop in conf.get(SEARCHPATHS):
+    for prop in opts.get(SEARCHPATHS):
         if prop.has_children():
             raise ValueError('Config "searchpaths" value cannot have children.')
         assert isinstance(prop.value, str)
@@ -130,7 +140,7 @@ def parse(path: Path, game_folder: Optional[str]='') -> Tuple[
 
     # Find all the plugins and make plugin objects out of them
     unnamed_ind = 1
-    for prop in conf.get(PLUGINS):
+    for prop in opts.get(PLUGINS):
         source = PluginSource.parse(game_root, prop)
         if not source.id:
             source.id = f'unnamed_{unnamed_ind}'
@@ -148,7 +158,13 @@ def parse(path: Path, game_folder: Optional[str]='') -> Tuple[
     plugin_finder = PluginFinder('hammeraddons.plugins', sources)
     sys.meta_path.append(plugin_finder)
 
-    return conf, game, fsys_chain, blacklist, plugin_finder
+    return Config(
+        opts=opts,
+        game=game,
+        fsys=fsys_chain,
+        pack_blacklist=blacklist,
+        plugins=plugin_finder
+    )
 
 
 GAMEINFO = Opt.string_or_none(
