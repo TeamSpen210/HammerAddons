@@ -28,7 +28,7 @@ TYPE_NAMES: Dict[Type[Option], str] = {
 }
 
 
-@attrs.define
+@attrs.define(init=False)
 class Opt(Generic[OptionT]):
     """A type of option that can be chosen.
     """
@@ -117,7 +117,7 @@ class Opt(Generic[OptionT]):
         return OptWithDefault(opt_id, Vec, default, doc, fallback)
 
 
-@attrs.define
+@attrs.define(init=False)
 class OptWithDefault(Opt[OptionT], Generic[OptionT]):
     """An option, with a default."""
     default: OptionT
@@ -200,7 +200,7 @@ class Options:
                 # Pass nones to allow us to check if it failed.
                 x, y, z = parse_vec_str(prop.value, x=None)
                 if x is None:
-                    self.settings[opt.id] = opt.default
+                    self.settings[opt.id] = default.copy() if default is not None else None
                 else:
                     self.settings[opt.id] = Vec(x, y, z)
             elif opt.kind is bool:
