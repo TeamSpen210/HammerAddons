@@ -9,7 +9,7 @@ from srctools.game import Game
 from srctools import Property, logger
 from srctools.filesys import FileSystemChain, FileSystem, RawFileSystem, VPKFileSystem
 
-from .props_config import Opt, Config
+from .props_config import Opt, Options
 from .plugin import Source as PluginSource, PluginFinder, BUILTIN as BUILTIN_PLUGIN
 
 
@@ -18,7 +18,7 @@ CONF_NAME = 'srctools.vdf'
 
 
 def parse(path: Path, game_folder: Optional[str]='') -> Tuple[
-    Config,
+    Options,
     Game,
     FileSystemChain,
     Set[FileSystem],
@@ -41,7 +41,7 @@ def parse(path: Path, game_folder: Optional[str]='') -> Tuple[
         * A packing blacklist.
         * The plugin loader.
     """
-    conf = Config(globals())
+    conf = Options(globals())
 
     # If the path is a folder, add a dummy folder so parents yields it.
     # That way we check for a config in this folder.

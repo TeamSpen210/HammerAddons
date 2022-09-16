@@ -135,7 +135,7 @@ class OptWithDefault(Opt[OptionT], Generic[OptionT]):
             self.doc.append(f'If unset, the default is read from `{default}`.')
 
 
-class Config:
+class Options:
     """Allows parsing a set of Property option blocks."""
     defaults: List[Opt]
     settings: Dict[str, Union[None, str, int, float, bool, Vec, Property]]
