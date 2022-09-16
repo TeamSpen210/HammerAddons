@@ -1,4 +1,0 @@
-@PointClass base(logic_choreographed_scene)
-= scripted_scene: "Alternate name for logic_choreographed_scene."
-	[
-	]
