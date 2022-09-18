@@ -7,6 +7,7 @@
 * Clarify that Portal 2 uses `maps/map_name_particles.txt`.
 * Ensure culled bases are replaced by their own bases (fixes `Item`, for example).
 * Add Entropy Zero 2 entities.
+* Added icon for `npc_heli_avoidsphere`.
 
 --------------------
 
