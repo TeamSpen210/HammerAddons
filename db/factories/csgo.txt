@@ -45,11 +45,6 @@ color_correction
 color_correction_volume
 commentary_auto
 cs_bot
-cs_bot_patrol_area
-cs_bot_patrol_area_group
-cs_bot_patrol_area_respawn
-cs_bot_patrol_route_respawn
-cs_bot_patrol_route_waypoint
 cs_gamerules
 cs_player_manager
 cs_ragdoll
@@ -346,6 +341,7 @@ logic_relay
 logic_scene_list_manager
 logic_script
 logic_timer
+mapvetopick_controller
 material_modify_control
 math_colorblend
 math_counter
@@ -406,8 +402,6 @@ point_clientcommand
 point_commentary_node
 point_commentary_viewpoint
 point_devshot_camera
-point_dz_coop_itemspawn
-point_dz_coop_itemspawn_group
 point_dz_dronegun
 point_dz_itemspawn
 point_dz_itemspawn_group
@@ -602,6 +596,7 @@ weapon_tmp
 weapon_ump45
 weapon_usp
 weapon_xm1014
+weapon_zone_repulsor
 weaponworldmodel
 wearable_item
 window_pane
