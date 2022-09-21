@@ -1,0 +1,7 @@
+Sprite
+{
+$spriteorientation vp_parallel
+"$spriteorigin" "[ 0.50 0.50 ]"
+"$baseTexture" "editor/vizzys/npc_antlion_template_maker"
+$no_fullbright 1
+}

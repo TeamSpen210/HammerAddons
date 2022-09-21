@@ -1,7 +1,7 @@
 @NpcClass base(BaseLogicalNPC)
 	autovis(Entities, NPCs, EnemyFinder NPC)
 	color(255 150 0) 
-	iconsprite("editor/npc_enemyfinder.vmt") 
+	iconsprite("editor/vizzys/npc_enemyfinder.vmt") 
 	sphere(MinSearchDist) 
 	sphere(MaxSearchDist) 
 = npc_enemyfinder: "EnemyFinder"

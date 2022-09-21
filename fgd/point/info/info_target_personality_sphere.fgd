@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(P2, -STANLEY) 
-	sphere(radius) = info_target_personality_sphere: "Personality Sphere Info Target"
+	sphere(radius) 
+= info_target_personality_sphere: "Personality Sphere Info Target"
 	[
 	sphereline(string) : "Sphere Line" : : "Line sphere will speak when we are looking at this target."
 	radius(float) : "Radius" : 16 : "Radius of this object. "

@@ -1,4 +1,8 @@
-@PointClass appliesto(MBase) base(BaseEntityPoint) = env_closecaption : 
+@PointClass 
+	appliesto(MBase) 
+	base(BaseEntityPoint) 
+	iconsprite(editor/vizzys/env_closecaption)
+= env_closecaption : 
 	"Sends a CC token via the 'Send' input. Unfortunately, this does not allow you to make your own and you can only use existing ones."
 [
 	flags[engine](integer) : "Flags" : 0

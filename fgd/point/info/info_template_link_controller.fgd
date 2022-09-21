@@ -1,6 +1,7 @@
 @PointClass appliesto(MBase) base(info_node_link_controller)
 	wirebox(mins, maxs) 
 	line(255 255 255, targetname, ReferenceTemplate)
+	iconsprite(editor/vizzys/info_template_link_controller)
 = info_template_link_controller:
 	"An entity that controls all connections between nodes that intersect the controller's volume. "+
 	"This allows for mass enabling/disabling of all node connections through a volume.\n\n"+

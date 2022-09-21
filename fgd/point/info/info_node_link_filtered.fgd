@@ -1,7 +1,7 @@
 @PointClass base(info_node_link) appliesto(MBase)
 	autovis(Entities, Nodes, Node Controller)
 	color(220 180 0) 
-	iconsprite("editor/info_node_link.vmt") 
+	iconsprite("editor/vizzys/info_node_link_filtered.vmt") 
 	line(255 255 255, targetname, damagefilter) 
 = info_node_link_filtered :
 	"A variant of info_node_link that uses an entity filter. " +

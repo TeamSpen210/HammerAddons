@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(-TF2, -ASW, -L4D, -L4D2, -CSGO)
  	autovis(Point Entities, Globals, Achievements)
- 	iconsprite("editor/logic_achievement")
+ 	iconsprite("editor/vizzys/logic_achievement")
 = logic_achievement: "Sends an achievement system related event from the map to the achievement system."
 	[
 	achievementevent[engine](string) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input."

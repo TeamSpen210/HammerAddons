@@ -1,0 +1,7 @@
+Sprite
+{
+$spriteorientation vp_parallel
+"$spriteorigin" "[ 0.50 1.25 ]"
+"$baseTexture" "editor/vizzys/point_combine_ball_launcher"
+$no_fullbright 1
+}

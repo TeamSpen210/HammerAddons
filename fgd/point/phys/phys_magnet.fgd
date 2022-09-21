@@ -2,7 +2,7 @@
 	autovis(Entities, Constraints, Magnet)
 	studio() 
 	color(128 128 128) 
-	iconsprite("editor/phys_magnet") = phys_magnet: "An entity that acts like a magnet, attaching metallic physics objects to itself when they touch it."
+	iconsprite("editor/vizzys/phys_magnet") = phys_magnet: "An entity that acts like a magnet, attaching metallic physics objects to itself when they touch it."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

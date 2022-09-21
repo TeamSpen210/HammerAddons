@@ -1,6 +1,6 @@
 @PointClass appliesto(MBase) 
 	base(BaseEntityPoint, EnableDisable)
-	size(-8 -8 -8, 8 8 8)
+	iconsprite(editor/vizzys/game_globalvars)
 = game_globalvars : "Outputs a few global variables when requested."
 [
 	// Inputs

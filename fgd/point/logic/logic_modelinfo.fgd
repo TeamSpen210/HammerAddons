@@ -1,6 +1,6 @@
 @PointClass appliesto(MBase)
 	base(BaseEntityPoint) 
-	size(-8 -8 -8, 8 8 8)
+	iconsprite(editor/vizzys/logic_modelinfo)
 	line(255 255 255, targetname, target)
 = logic_modelinfo : "Gets and outputs some model information from an entity."
 	[

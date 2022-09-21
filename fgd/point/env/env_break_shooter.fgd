@@ -1,7 +1,7 @@
 @PointClass
 	base(BaseEntityPoint) 
 	appliesto(MBase) 
-	iconsprite("editor/env_shooter.vmt") 
+	iconsprite("editor/vizzys/env_break_shooter.vmt") 
 = env_break_shooter : 
 	"An entity that shoots func_breakable gibs."
 [

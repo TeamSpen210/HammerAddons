@@ -1,7 +1,7 @@
 @FilterClass base(filter_base) 
 	autovis(Logic, Filters)
 	appliesto(MBase)
-	iconsprite("editor/filter_generic2.vmt") 
+	iconsprite("editor/vizzys/filter_activator_squad.vmt") 
 = filter_activator_squad : "A filter that filters by the squad of the activator."
 [
 	filtername(string) : "Filter Squad" : : "The squad name to filter by. If the filter mode is Allow, only entities who are "+

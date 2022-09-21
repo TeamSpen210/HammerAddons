@@ -1,6 +1,7 @@
 // Valve entity, but Mapbase is required to enable it.
 @PointClass appliesto(MBase)
 	base(logic_measure_movement)
+	iconsprite(editor/vizzys/logic_mirror_movement)
 = logic_mirror_movement: "An entity that can measure the direction of an entity relative to another entity and apply that movement to a third entity."
 	[
 	MeasureTarget(target_destination) : "Entity to Measure" : "" : "Entity whose movement you want to measure. (Remote target)"

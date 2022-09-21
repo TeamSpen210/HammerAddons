@@ -1,6 +1,7 @@
 @PointClass appliesto(MBase)
 	base(logic_measure_movement) 
 	sphere(TraceDistance)
+	iconsprite(editor/vizzys/logic_measure_direction)
 	line(255 255 255, targetname, damagefilter)
 = logic_measure_direction: "An entity that can measure the direction of an entity relative to another entity and apply that movement to a third entity."
 	[

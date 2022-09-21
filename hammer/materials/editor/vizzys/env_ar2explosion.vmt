@@ -1,0 +1,7 @@
+Sprite
+{
+$spriteorientation vp_parallel
+$spriteorigin "[ 0.50 0.50 ]"
+$baseTexture "editor/vizzys/env_ar2explosion"
+$no_fullbright 1
+}

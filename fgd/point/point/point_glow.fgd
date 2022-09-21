@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
 	line(255 255 255, targetname, damagetarget) 
+	iconsprite(editor/vizzys/point_glow)
 	appliesto(MBase) 
 = point_glow: "Mapbase off-shoot of tf_glow."
 	[

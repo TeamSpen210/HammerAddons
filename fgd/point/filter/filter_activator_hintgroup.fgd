@@ -1,7 +1,7 @@
 @FilterClass base(filter_base) 
 	autovis(Logic, Filters)
 	appliesto(MBase)
-	iconsprite("editor/filter_generic2.vmt") 
+	iconsprite("editor/vizzys/filter_activator_hintgroup.vmt") 
 = filter_activator_hintgroup : "A filter that filters by the hintgroup of the activator."
 	[
 	filtername(string) : "Filter Hintgroup" : : "The hintgroup to filter by. If the filter mode is Allow, only entities who have "+

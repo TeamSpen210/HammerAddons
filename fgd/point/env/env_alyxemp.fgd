@@ -1,16 +1,16 @@
 @PointClass base(BaseEntityPoint, Angles) 
 	appliesto(EP1, EP2, HL2, P1) 
-	size(-4 -4 -4, 4 4 4) 
+	iconsprite(editor/vizzys/env_alyxemp)
 	color(0 0 255) 
 	line(0 0 255, targetname, EndTargetName) 
 = env_alyxemp: "Special effect for Alyx's EMP device."
 	[
+	type[engine](integer) : "EMP Type" : 0
 	type(choices) : "EMP Type" : "0" =
 		[
 		0: "Small"
 		1: "Large"
 		]
-	type(integer) : "EMP Type" : 0
 
 	endtargetname(target_destination) : "Target Entity" : : "Entity to use as a target endpoint."
 

@@ -1,7 +1,7 @@
 @PointClass base(info_node_link) appliesto(MBase)
 	autovis(Entities, Nodes, Node Controller)
 	color(220 180 0) 
-	iconsprite("editor/info_node_link.vmt")
+	iconsprite("editor/vizzys/info_node_link_oneway.vmt")
 = info_node_link_oneway:
 	"A variant of info_node_link that fires outputs when a NPC tries to use it. " +
 	"Otherwise functions identically to a regular info_node_link."
