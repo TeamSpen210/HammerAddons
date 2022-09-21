@@ -17,9 +17,10 @@ from srctools.fgd import (
     FGD, validate_tags, match_tags,
     EntityDef, EntityTypes, IODef,
     KeyValues, ValueTypes,
-    Helper, HelperExtAppliesTo, HelperWorldText,
+    Helper, HelperExtAppliesTo, HelperWorldText, HelperSprite, HelperModel,
     AutoVisgroup,
 )
+from srctools import fgd
 from srctools.filesys import RawFileSystem
 
 
@@ -132,6 +133,14 @@ VISGROUP_SUFFIX = '\x8D'
 
 # Special classname which has all the keyvalues and IO of CBaseEntity.
 BASE_ENTITY = '_CBaseEntity_'
+
+
+# Helpers which are only used by one or two entities each.
+UNIQUE_HELPERS = {
+    fgd.HelperBreakableSurf, fgd.HelperDecal,
+    fgd.HelperEnvSprite, fgd.HelperInstance, fgd.HelperLight, fgd.HelperLightSpot,
+    fgd.HelperModelLight, fgd.HelperOverlay, fgd.HelperOverlayTransition, fgd.HelperWorldText,
+}
 
 
 def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
@@ -499,6 +508,39 @@ def add_tag(tags: FrozenSet[str], new_tag: str) -> FrozenSet[str]:
     return frozenset(tag_set)
 
 
+def check_ent_sprites(ent: EntityDef, used: Dict[str, List[str]]) -> None:
+    """Check if the specified entity has a unique sprite."""
+    mdl: Optional[str] = None
+    sprite: Optional[str] = None
+    for helper in ent.helpers:
+        if type(helper) in UNIQUE_HELPERS:
+            return  # Specialised helper is sufficient.
+        if isinstance(helper, fgd.HelperModel):
+            if helper.model is None and 'model' in ent.kv:
+                return  # Model is customisable.
+            mdl = helper.model
+        if isinstance(helper, fgd.HelperSprite):
+            if helper.mat is None:
+                print(f'{ent.classname}: {helper}???')
+            sprite = helper.mat
+    # If both model and sprite, allow model to be duplicate.
+    if mdl and sprite:
+        display = sprite
+    elif mdl:
+        display = mdl
+    elif sprite:
+        display = sprite
+    else:
+        if '+ENGINE' not in get_appliesto(ent):
+            print(f'{ent.classname}: No sprite/model? {", ".join(map(repr, ent.helpers))}')
+        return
+
+    display = display.casefold()
+    if display in used:
+        print(f'{ent.classname}: Reuses {display}: {used[display]}')
+    used[display].append(ent.classname)
+
+
 def action_count(
     dbase: Path,
     extra_db: Optional[Path],
@@ -683,6 +725,11 @@ def action_count(
     for clsname in entclass_iter():
         if clsname not in fgd.entities:
             print('-', clsname)
+
+    mdl_or_sprite = defaultdict(list)
+    for ent in fgd:
+        if ent.type is not EntityTypes.BASE and ent.type is not EntityTypes.BRUSH:
+            check_ent_sprites(ent, mdl_or_sprite)
 
 
 def action_import(
