@@ -12,6 +12,7 @@
 = _npc_xentree_ez2 []
 
 @NPCClass base(_npc_xentree_mesa, _npc_xentree_ez2)
+	appliesto(Mesa, EZ2)
 	autovis(Entities, NPCs, Xen, Xen Deco)
 = npc_xentree : "Xen Tree"
 	[
