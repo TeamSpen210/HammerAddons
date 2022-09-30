@@ -40,8 +40,16 @@
 	
 	texframeindex[complete](integer) : "Texture Frame" : : "The frame number for any animated textures on this entity."
 	hitboxset[complete](string) : "Hitbox Set" : : "Sets the $hboxset to use for collision testing."
+
+	// Exists, but may not be useable.
+	skin[engine](integer) : "Skin" : 0
+	modelskin[engine](integer) : "Model Skin" : 0 : "Alternate keyvalue for setting the current skin."
 	
 	modelscale(float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
+	
+	playbackrate[complete](float) readonly: "Playback Rate" : 1.0 : "Exists, but is immediately set to 1.0 on spawn."
+	cycle[engine](float) : "Cycle" : 0.0 : "Internal variable storing the current progress through the animation, 0-1."
+	sequence[engine](integer) : "Sequence Number" : 0 : "Stores the index of the currently playing animation. Can be set manually via AddOutput, but care must be used."
 	
 	suppressanimsounds[since_P2](boolean) : "Suppress Anim Sounds" : 0 : "If set, the prop will not play any sounds that are embedded in animations it plays."
 

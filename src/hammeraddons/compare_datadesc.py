@@ -46,9 +46,9 @@ def get_val(
 
 def check_datadesc(filename: str, tags: FrozenSet[str]) -> None:
     """Check a specific datadesc."""
-    print(f'Checking {filename}datamap.txt ... ')
+    print(f'\nChecking {filename}datamap.txt ... ')
     tags = expand_tags(tags) | {'ENGINE', 'COMPLETE'}
-    print('Expanded tags: ', tags)
+    print('Expanded tags:', sorted(tags))
 
     bad_ents: set[str] = set()
     message_count = 0
@@ -93,7 +93,7 @@ def check_datadesc(filename: str, tags: FrozenSet[str]) -> None:
                         try:
                             tagsmap = get_val(cur_ent, 'outputs', name)
                         except KeyError:
-                            msg(f'[{classname}] Missing KV "{name}" -> ', real_name, flags)
+                            msg(f'[{classname}] Missing output "{name}" -> ', real_name, flags)
                             continue
                         if check_tagsmap(tagsmap, tags):
                             msg(f'[{classname}] Tag mismatch for output "{name}" - allowed = {list(tagsmap)}')

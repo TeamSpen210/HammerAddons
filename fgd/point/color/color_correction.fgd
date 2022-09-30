@@ -23,6 +23,8 @@
 	fadeinduration(float) : "Lookup Fade In Duration" : "0.0" : "Duration of fade in on when enabled."
 	fadeoutduration(float) : "Lookup Fade out Duration" : "0.0" : "Dration of fade out on when disabled."
 
+	enabled[engine](boolean) : "Is Enabled" : 1 : "The actual keyvalue controlling state, but is overwritten by Start Disabled."
+
 	spawnflags[since_L4D](flags)  =
 		[
 		1: "Master" : 0

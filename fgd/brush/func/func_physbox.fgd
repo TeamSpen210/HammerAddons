@@ -59,7 +59,8 @@
 	input ForceDrop(void) : "If this object is being carried by a player, with the physgun or +USE, force it to be dropped."
 	input Enable[since_P2](void) : "Show this object and allow it to collide, doesn't override notsolid."
 	input Disable[since_P2](void) : "Hide this object and stop collisions."
-	input BecomeDebris[P2](void) : "Change the collision to act like debris"
+	input DisableFloating(void) : "Disable fluid/floating simulation to reduce cost."
+	input BecomeDebris[P2](void) : "Change the collision to act like debris."
 	input SetDebris[MBase](bool) : "Sets whether this brush is debris."
 
 	// Outputs

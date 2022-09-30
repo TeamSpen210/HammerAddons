@@ -29,7 +29,15 @@
 	disableshadows(boolean) : "Disable Shadows?" : 0 : "Prevent the entity from creating cheap render-to-texture/dynamic shadows."
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents dynamic shadows (e.g. player and prop shadows) from appearing on this entity."
 	modelscale(float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
-	
+		
+	// These exist, but may not be usable.
+	skin[engine](integer) : "Skin" : 0
+	modelskin[engine](integer) : "Model Skin" : 0 : "Alternate keyvalue for setting the current skin."
+	playbackrate[complete](float) readonly: "Playback Rate" : 1.0 : "Exists, but is immediately set to 1.0 on spawn."
+	cycle[engine](float) : "Cycle" : 0.0 : "Internal variable storing the current progress through the animation, 0-1."
+	sequence[engine](integer) : "Sequence Number" : 0 : "Stores the index of the currently playing animation. Can be set manually via AddOutput, but care must be used."
+	suppressanimsounds[engine](boolean) : "Suppress Anim Sounds" : 0 : "If set, the prop will not play any sounds that are embedded in animations it plays."
+
 	linedivider_phys[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs
