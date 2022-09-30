@@ -8,5 +8,4 @@
 
 	// Outputs
 	output OnIgnite(void) : "On fire?"
-	output OnFizzled(void) : "The rocket has been fizzled."
 	]

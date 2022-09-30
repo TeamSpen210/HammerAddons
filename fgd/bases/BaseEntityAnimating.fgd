@@ -98,4 +98,5 @@
 	// Outputs
 	output OnIgnite(void) : "Fired when this object catches fire."
 	output OnServerRagdoll[MBase](ehandle) : "Fires when this object becomes/creates a serverside ragdoll. Passes the ragdoll."
+	output OnFizzled[P2](void) : "Fired when this object is fizzled."
 	]
