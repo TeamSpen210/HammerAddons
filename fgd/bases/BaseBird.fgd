@@ -2,7 +2,7 @@
 	[
 	input FlyAway( target_destination ) : "Forces the bird to fly to the nearest crow flyto hint node."
 
-	deaf(boolean) : "Deaf?" : 0
+	deaf[engine](boolean): "Deaf?" : 0
 	deaf(choices) : "Deaf?" : "0" =
 		[
 		0: "No."

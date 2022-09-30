@@ -2,6 +2,7 @@
 	[
 	cansurrender(boolean) : "Can Surrender" : 1 : "Whether or not this NPC should be allowed to use surrender behavior, such as when +USE'd by the player while unarmed. (note that this is different from when citizens throw their weapons and run)"
 	
+	surrenderstate[engine](integer) : "Surrender State" : 0
 	surrenderstate(choices) : "Surrender State" : 0 : "The surrender behavior state this NPC should spawn with. Allows citizens to spawn already surrendered." =
 		[
 		0 : "None"
@@ -9,6 +10,7 @@
 		2 : "Start surrendered (on ground)"
 		]
 	
+	surrenderflags[engine](integer) : "Surrender Flags" : 0
 	surrenderflags(choices) : "Surrender Flags" : 0 : "This NPC's surrender behavior flags. Any combination of bits is allowed." =
 		[
 		0 : "None"

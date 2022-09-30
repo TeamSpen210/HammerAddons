@@ -20,7 +20,7 @@
 	startburrowed(boolean) : "Start Burrowed" : 0
 	
 	model(studio) : "Override Model"
-	noglow(boolean) : "Disable Glowing Butt" : 0
+	noglow[engine](boolean) : "Disable Glowing Butt" : 0
 	noglow(choices) : "Glowing Butt" : 0 =
 		[
 		0 : "Glow"
