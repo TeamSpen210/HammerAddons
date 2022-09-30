@@ -47,7 +47,7 @@ def get_val(
 def check_datadesc(filename: str, tags: FrozenSet[str]) -> None:
     """Check a specific datadesc."""
     print(f'Checking {filename}datamap.txt ... ')
-    tags = expand_tags(tags)
+    tags = expand_tags(tags) | {'ENGINE'}
     print('Expanded tags: ', tags)
 
     def msg(*args: object) -> None:
