@@ -1,7 +1,7 @@
 @BaseClass = DXLevelChoice
 	[ 
 	mindxlevel[engine](integer) : "Minimum DX Level" : 0
-	mindxlevel(choices) : "Minimum DX Level" : 0 = 
+	mindxlevel[complete](choices) : "Minimum DX Level" : 0 = 
 		[
 		 0 : "Default (lowest)"
 		60 : "DirectX 6.0"	
@@ -13,7 +13,7 @@
 		100: "DirectX 10.0"
 		]
 	maxdxlevel[engine](integer) : "Maximum DX Level" : 0
-	maxdxlevel(choices) : "Maximum DX Level" : 0 = 
+	maxdxlevel[complete](choices) : "Maximum DX Level" : 0 = 
 		[
 		0: "Default (lowest)"
 		60: "DirectX 6.0"	
