@@ -47,16 +47,19 @@ def get_val(
 def check_datadesc(filename: str, tags: FrozenSet[str]) -> None:
     """Check a specific datadesc."""
     print(f'Checking {filename}datamap.txt ... ')
-    tags = expand_tags(tags) | {'ENGINE'}
+    tags = expand_tags(tags) | {'ENGINE', 'COMPLETE'}
     print('Expanded tags: ', tags)
+
+    bad_ents: set[str] = set()
+    message_count = 0
+    classname = '?????'
 
     def msg(*args: object) -> None:
         """Write a message to the report file and stdout."""
+        nonlocal message_count
+        message_count += 1
         print(*args, file=msgfile)
         bad_ents.add(classname)
-
-    bad_ents: set[str] = set()
-    classname = '?????'
 
     with open(Path(repo_root, 'db', 'datamaps', filename + 'datamap.txt')) as f, open(Path(repo_root, 'db', 'reports', filename + '.txt'), 'w') as msgfile:
         cur_ent: EntityDef | None | Literal[False] = False
@@ -123,7 +126,7 @@ def check_datadesc(filename: str, tags: FrozenSet[str]) -> None:
             else:
                 msg('Unrecognised line:', line)
         msgfile.write(f'\n\nTotal: {len(bad_ents)} ents')
-        print(f'Total: {len(bad_ents)} ents')
+        print(f'Total: {len(bad_ents)} ents, errors: {message_count}')
 
 
 database, base_ent = load_database(repo_root / 'fgd/')
