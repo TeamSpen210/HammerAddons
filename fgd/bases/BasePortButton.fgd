@@ -1,7 +1,6 @@
 @BaseClass base(BaseEntityAnimating, SRCIndicator)
 = BasePortButton: "The base for the various floor buttons - weighted, cube, sphere and Antique weighted."
 	[
-	suppressanimsounds(boolean) : "Suppress Animation Sounds" : 0 : "Prevent the model from playing any sounds."
 	solid(choices) : "Collisions" : 0 : "Determine if the button should be solid or not." =
 		[
 		0 : "Solid"
