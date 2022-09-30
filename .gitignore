@@ -48,6 +48,11 @@ Icon
 build/
 build_tmp/
 
+# Generated list of issues
+db/reports/
+# For now?
+db/datamaps/
+
 # Cache files
 .mypy_cache/
 __pycache__/
