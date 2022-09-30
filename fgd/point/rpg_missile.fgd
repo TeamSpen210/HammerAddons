@@ -1,0 +1,5 @@
+@PointClass base(BaseNPC) 
+	appliesto(HL2, EP1, EP2, P1, P2) 
+	studioprop("models/weapons/w_missile_launch.mdl") = rpg_missile: "The fired RPG rocket."
+	[
+	]
