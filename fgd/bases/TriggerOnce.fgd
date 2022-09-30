@@ -1,17 +1,18 @@
-// Exclude a bunch of outputs and options for trigger_once
+// Exclude a bunch of outputs and options for trigger_once, since they're not useful.
+// OnEndTouch for instance can never be fired since it'll die first.
 @BaseClass base(BaseEntityBrush)
 	line(255 255 255, targetname, filtername) 
 = TriggerOnce
 	[
 	spawnflags(flags)  =
 		[
-		1: "Clients/Players/Bots" : 1 [TF2, CSGO, CSS, MESA]
-		1: "Clients/Players" : 1 [!TF2, !CSGO, !CSS, !MESA]
+		1: "Clients (Players/Bots)" : 1 [TF2, CSGO, CSS, MESA]
+		1: "Clients (Players)" : 1 [!TF2, !CSGO, !CSS, !MESA]
 		2: "NPCs" : 0 [!ASW]
 		2: "Marines and Aliens" : 0 [ASW]
 		4: "func_pushable" : 0
 		8: "Physics Objects" : 0
-		8192: "Items  (weapons, items, projectiles)" : 0 [MBase]
+		8192: "Items (weapons, items, projectiles)" : 0 [MBase]
 		16: "Only player ally NPCs" : 0 [!ASW]
 		16: "Only marines" : 1 [ASW]
 		32: "Only clients in vehicles" : 0
@@ -41,4 +42,11 @@
 		"The touching entity must pass this trigger's filters to cause this output to fire."
 	output OnTouching(void) : "Fired when the TouchTest input is called, and an entity is touching this. Does not call activators."
     output OnNotTouching(void) : "Fired when the TouchTest input is called, and no entity is touching this. Does not call activators."
+
+    // This I/O does actually exist, but it couldn't ever be used usefully.
+    input EndTouch[engine](void)
+	input DisableAndEndTouch[TF2, engine](void)
+	output OnStartTouchAll[engine](void) // Always fires along with OnStartTouch, so useless.
+	output OnEndTouch[engine](void)
+	output OnEndTouchAll[engine](void)
 	]

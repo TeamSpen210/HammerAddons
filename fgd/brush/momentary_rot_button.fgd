@@ -109,6 +109,8 @@
 		"The parameter must be a value between 0 and 1, where 0 is the unrotated position and 1 is the rotated position + 'Distance'."
 	input SetPositionImmediately(string) : "Immediately teleport to a position. " +
 		"The parameter must be a value between 0 and 1, where 0 is the unrotated position and 1 is the rotated position + 'Distance'."
+	input Enable(void) : "Enable the button, allowing it to be USEed."
+	input Disable(void) : "Disable the button, making it silently ignore the player."
 
 	input _DisableUpdateTarget(void): "Prevent the Position output from firing. Used when lock jiggling is triggered."
 	input _EnableUpdateTarget(void): "Allow the Position output to fire again. Used when lock jiggling is triggered."
