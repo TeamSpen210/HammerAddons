@@ -1,4 +1,4 @@
-@PointClass base(BaseDriveableVehicle) 
+@PointClass base(BasePropPhysics, BaseDriveableVehicle) 
 	appliesto(EZ2)
 	autovis(Vehicles, Combine APC)
 	studioprop() 

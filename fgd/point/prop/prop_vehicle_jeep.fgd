@@ -1,8 +1,9 @@
-@PointClass base(BaseDriveableVehicle) 
+@PointClass base(BasePropPhysics, BaseDriveableVehicle) 
 	appliesto(HL2, EP1, EP2, P1)
 	studioprop() 
 	autovis(Vehicles, Jeep)
-= prop_vehicle_jeep: "Driveable jeep. In HL2 it's the Scout Car, in EP2 and Portal it's the Jalopy." // Portal also uses the Ep2 car
+	// Portal also uses the Ep2 car
+= prop_vehicle_jeep: "Driveable jeep. In HL2 it's the Scout Car, in EP2 and Portal it's the Jalopy." 
 	[
 	vehiclescript[EP1, EP2, P1](string) : "Vehicle Script File" : "scripts/vehicles/jalopy.txt"
 

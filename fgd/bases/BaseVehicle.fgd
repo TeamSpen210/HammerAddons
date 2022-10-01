@@ -1,5 +1,4 @@
-@BaseClass base(BasePropPhysics) 
-= BaseVehicle
+@BaseClass = BaseVehicle
 	[
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/jeep_test.txt"
 	actionscale(float) : "Scale of action input / framerate" : 1
