@@ -52,6 +52,8 @@
 		49 : "49 Test 6 (Silence?)"
 		]
 
+	SoundMask[complete](integer) : "Sound Mask" : 0 : "The raw mask used to determine which sounds to hear. The 'Hears' spawnflags are a more convenient method to set this, but additional SOUND_ flags could be added manually."
+
 	spawnflags(flags) =
 		[
 		1: "Hears combat sounds" : 1

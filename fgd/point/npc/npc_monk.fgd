@@ -23,6 +23,6 @@
 
 
 	// Inputs
-	input PerfectAccuracyOn(void) : "Make every shot at a zombie a headshot"
-	input PerfectAccuracyOff(void) : "Return to normal accuracy"
+	input PerfectAccuracyOn(void) : "Make every shot at a zombie a headshot."
+	input PerfectAccuracyOff(void) : "Return to normal accuracy."
 	]

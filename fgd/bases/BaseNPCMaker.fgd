@@ -1,5 +1,6 @@
 @BaseClass base(BaseEntityPoint, EnableDisable) 
 	iconsprite("editor/npc_maker.vmt") 
+	line(255 16 16, targetname, ignoreentity)
 	color(0 0 255) 
 = BaseNPCMaker
 	[
@@ -28,6 +29,7 @@
 		1: "No hull check"
 		]
 
+	ignoreentity(target_destination) : "Entity To Ignore" : : "If set, an entity to ignore when checking if there's room to spawn."
 
 	// Inputs
 	input Spawn(void) : "Spawns an NPC."

@@ -16,8 +16,9 @@
 		]
 
 	target(target_destination) : "Look Target" : : "The name of the entity to be looked at."
-	looktime(string) : "LookTime" : "0.5" : "The time, in seconds, that the player must look the target before firing the output. Resets if player leaves trigger, or looks o" + "utside the Field of View threshold."
-	fieldofview(string) : "FieldOfView" : "0.9" : "How close the player has to be looking at the target. " +
+	looktime(float) : "LookTime" : "0.5" : "The time, in seconds, that the player must look the target before firing the output. " + 
+		"Resets if player leaves trigger, or looks outside the Field of View threshold."
+	fieldofview(float) : "FieldOfView" : "0.9" : "How close the player has to be looking at the target. " +
 		"1.0 = straight ahead\n 0.0 = +/- 90 degrees\n -1.0 = all directions)."
 	timeout(float) : "Timeout" : 0 : "The time, in seconds, to wait after player enters the trigger before firing the OnTimeout output, 0 = never."
 	NotLookingFrequency(float) : "Not-Looking Frequency" : "0.5" : "time in second between 2 fires of OnNotLooking output."
@@ -26,6 +27,10 @@
 
 	LookEntityCaller[MBase](boolean) : "Use look entity as caller" : 0 : "When firing OnTrigger, use the triggered look entity as the output's caller. " +
 		"Useful for when multiple look targets exist."
+
+	// Inputs
+	input FieldOfView(float) : "Set the field of view."
+	input LookTime(float) : "Set the required look time."
 
 	// Outputs
 	output OnTrigger(void) : "Fired when the trigger is activated."
