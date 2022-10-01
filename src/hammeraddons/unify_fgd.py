@@ -428,7 +428,8 @@ def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
             if not line or line.startswith(('#', '//')):
                 continue
             cur_path = cur_path[:indent]  # Dedent
-            if line.startswith('-') or '(' in line or ')' in line:  # Visgroup.
+            bulleted = line[0] in '-*'
+            if (bulleted and '`' not in line) or '(' in line or ')' in line:  # Visgroup.
                 single_ent: Optional[str]
                 try:
                     vis_name, single_ent = line.lstrip('*-').split('(', 1)
@@ -454,7 +455,7 @@ def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
                 if single_ent is not None:
                     visgroup.ents.add(single_ent.casefold())
 
-            elif line.startswith('*'):  # Entity.
+            elif bulleted:  # Entity.
                 ent_name = line[1:].strip('\t `')
                 for vis_parent, vis_name in zip(cur_path, cur_path[1:]):
                     visgroup = fgd.auto_visgroups[vis_name.casefold()]
