@@ -1,9 +1,9 @@
 """Compare the FGD database to datadesc dumps."""
-from typing import AbstractSet, Dict, FrozenSet, Literal, Optional
+from typing import Dict, FrozenSet, Literal, Optional
 from pathlib import Path
 import re
 
-from srctools.fgd import FGD, EntityDef
+from srctools.fgd import EntityDef
 
 from unify_fgd import load_database, expand_tags, match_tags
 
@@ -62,7 +62,7 @@ def check_datadesc(filename: str, tags: FrozenSet[str]) -> None:
         bad_ents.add(classname)
 
     with open(Path(repo_root, 'db', 'datamaps', filename + 'datamap.txt')) as f, open(Path(repo_root, 'db', 'reports', filename + '.txt'), 'w') as msgfile:
-        cur_ent: EntityDef | None | Literal[False] = False
+        cur_ent: Optional[EntityDef]  # Deliberately uninitialised.
         for line in f:
             if line.startswith('//') or not line.strip():
                 continue
@@ -84,10 +84,11 @@ def check_datadesc(filename: str, tags: FrozenSet[str]) -> None:
                     if name is None:  # Internal only.
                         continue
                     name = name.replace(' ', '')
-                    if cur_ent is None:
-                        # msg(f'[{classname}] Missing member:', name)
-                        continue
-                    elif cur_ent is False:
+                    try:
+                        if cur_ent is None:
+                            # msg(f'[{classname}] Missing member:', name)
+                            continue
+                    except UnboundLocalError:
                         raise ValueError('KV coming before first ent??')
                     if 'Output' in flags:
                         try:

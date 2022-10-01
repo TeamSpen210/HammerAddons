@@ -100,6 +100,7 @@
 		]
 
 	coldworld(boolean) : "World is cold" : 0 : "Emit steam from NPC's mouths and similar effects."
+	WaveHeight[engine](float) : "Wave Height" : : "Unused keyvalue, likely to indicate the amount of HL1-style wavy water."
 	
 	paintinmap[P2](boolean) : "Enable Paint" : 0 : "Enable code for spreading paint on surfaces, and bouncing physics objects around."
 	maxblobcount[P2](integer) : "Gel Blob Limit" : 250 : "Number of Gel blobs that can exist. Maximum is 250."

@@ -4,5 +4,30 @@
 	autovis(Entities, NPCs, Combine, Combine Cannon)
 	studio("models/combine_soldier.mdl") = npc_combine_cannon: "Combine Cannon"
 	[
+	spawnflags(flags): "spawnflags" =
+		[
+		1: "Wait Till Seen" : 0
+		2: "Gag (No IDLE sounds until angry)" : 0
+		4: "Fall to ground (unchecked means *teleport* to ground)" : 1
+		8: "Drop Healthkit" : 0
+		16: "Efficient - Don't acquire enemies or avoid obstacles" : 0
+		128: "Wait For Script" : 0
+		512: "Fade Corpse" : 1
+		2048: "Template NPC (used by npc_maker, will not spawn; NOT used by point_template)" : 0
+		4096: "Do Alternate collision/player avoidance for this NPC (largely obsolete, use Start/StopScripting)" : 0
+		8192: "Don't drop weapons" : 0
+		16384: "Ignore player push (dont give way to player)" : 0
+
+		// These two are forcefully enabled.
+		// 256: "Long Visibility/Shoot" : 0
+		// 1024: "Think outside PVS" : 0
+
+		// New
+		524288: "Start Disabled" : 0
+		]
+
 	sightdist(float) : "Sight radius" : 1024 : "Radius distance at which the cannon is able to aquire enemies."
+
+	input InputEnableSniper(void) : "Enable the cannon."
+	input InputDisableSniper(void) : "Disable the cannon."
 	]

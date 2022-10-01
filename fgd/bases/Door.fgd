@@ -51,7 +51,7 @@
 		]
 
 	locked_sentence[engine](integer) : "Locked Sentence" : 0
-	locked_sentence[complete](choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the door, and fails because it's locked." =
+	locked_sentence[complete, HLS](choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the door, and fails because it's locked." =
 		[
 		0: "None"
 		1: "[EA] Gen. Access Granted"
@@ -65,7 +65,7 @@
 		]
 
 	unlocked_sentence[engine](integer) : "Unlocked Sentence" : 0
-	unlocked_sentence[complete](choices) : "Unlocked Sentence" : 0 : "A sentence played when the door is unlocked." =
+	unlocked_sentence[complete, HLS](choices) : "Unlocked Sentence" : 0 : "A sentence played when the door is unlocked." =
 		[
 		0: "None"
 		1: "[EA] Gen. Access Granted"
@@ -77,6 +77,8 @@
 		7: "[ECON] gen. Containment"
 		8: "[EH] Maintenance area"
 		]
+
+	WaveHeight[engine](float) : "Wave Height" : : "Unused keyvalue, likely to indicate the amount of HL1-style wavy water."
 
 	// Inputs
 	input Open(void) : "Open the door, if it is not fully open."

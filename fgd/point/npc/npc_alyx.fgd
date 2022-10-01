@@ -31,6 +31,9 @@
 	input ExitVehicle(void) : "Make Alyx exit the vehicle she's in."
 	input CancelEnterVehicle(void) : "Stops Alyx from trying to enter the vehicle if she's outside of it."
 
+	input VehiclePunted[EP2, +complete](void) : "If !caller is the vehicle Alyx is riding, she complains about being punted with the Gravity Gun. This is automatically fired by vehicles, but you could also do it manually."
+	input OutsideTransition[EP2](void) : "If the player is in the Scout Car and Always Transition is enabled, Alyx teleports into its passenger seat, instead of a nearby hint node."
+
 	// Outputs
 	output OnFinishInteractWithObject(void) : "Fires when Alyx finishes interacting with an object (usually hacking it)."
 	output OnPlayerUse(void) : "Fires when a player +USEs Alyx"

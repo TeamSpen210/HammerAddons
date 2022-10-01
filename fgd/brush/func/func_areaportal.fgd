@@ -22,4 +22,7 @@
 	input Open(void) : "Open the portal. When the portal is open is can be seen through."
 	input Close(void) : "Close the portal. When the portal is closed it cannot be seen through."
 	input Toggle(void) : "Toggle the open/closed state of the portal."
+
+	input TurnOn[complete](void) : "Deprecated alias for closing the portal."
+	input TurnOff[complete](void) : "Deprecated alias for opening the portal."
 	]

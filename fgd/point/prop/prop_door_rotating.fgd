@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityAnimating, SetModel, Glow) 
+@PointClass base(prop_dynamic_base, Glow) 
 	studioprop()
 	// Can't have this along with no default model.
 	// line(255, 255, 255, targetname, slavename)

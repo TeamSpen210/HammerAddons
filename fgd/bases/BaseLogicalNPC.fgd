@@ -170,9 +170,27 @@
 	output OnItemPickup[MBase](void) : "Fires when a NPC picks up an item, e.g. a citizen picking up a health kit or a scripted item picked up in response to PickupItem."
 	output OnStateChange[MBase](integer) : "Fires when a NPC's state changes, outputting the new state. (1 = Idle, 2 = Alert, 3 = Combat...)"
 
-	output OnWeaponEquip[MBase](void) : "Fires when this NPC/player acquires a weapon through any means, including spawn equipment. Passes the weapon as the activator."
+	output OnWeaponEquip[MBase](void) : "Fires when this NPC/player acquires a weapon through any means, including spawn equipment. Passes the weapon as the !activator."
 	output OnWeaponDrop[MBase](void) : "Fires when this NPC/player drops a weapon, including when they die."
 
 	output OnKilledNPC[MBase](ehandle) : "Fires when we kill a NPC. Passes the victim."
 	output OnKilledPlayer[MBase](ehandle) : "Fires when we kill a player. Passes the killed player." 
+
+	// Exists on all ents, but useless on most - add RappelNPC if it supports.
+	output OnRappelTouchdown[engine](void) : ""
+	input BeginRappel[engine](void) : "Does nothing by default."
+
+	// When transitioning level, either is fired on critical NPCs, so they can teleport to ensure they transition.
+	input InsideTransition[complete](void) : "If the NPC is currently speaking, it cancels those scenes, since they won't be present in the new level."
+	input OutsideTransition[complete](void) : "Does nothing by default."
+
+	input KilledNPC[complete, -MBase](void) : "Triggered when this NPC has killed another, with the victim as !activator. This then triggers the TLK_ENEMY_DEAD response concept."
+	input KilledNPC[complete, +MBase](void) : "Triggered when this NPC has killed another, with the victim as !activator. " +
+		"This then triggers the TLK_ENEMY_DEAD response concept, then fires OnKilledNPC and potentially OnKilledPlayer."
+
+	// Weird player speed modification feature, seems broken.
+	input ActivateSpeedModifier[engine](void) : "Enable player speed modification behavior."
+	input DisableSpeedModifier[engine](void) : "Disable player speed modification behavior."
+	input SetSpeedModRadius[engine](integer) : "Specify how close the player must be before their speed is modified."
+	input SetSpeedModSpeed[engine](integer) : "Set the speed the player's movement will use when moving toward this entity."
 	]

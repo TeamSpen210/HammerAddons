@@ -29,6 +29,10 @@
 	
 	input EnableSpeakWhileScripting(void) : "Allow this NPC to speak responses while in a scripted sequence or while StartScripting is active."
 	input DisableSpeakWhileScripting(void) : "Cancels this NPC's ability to speak responses while in a scripted sequence or while StartScripting is active if it was previously enabled by EnableSpeakWhileScripting."
+
+	input InputIdleRespond[engine](void) : "Respond to some idle dialogue from another NPC."
+	input AnswerQuestionHello[engine](int) : "Respond to a hello called out by the !activator NPC. The parameter is the same random number used to pick the hello."
+	input AnswerQuestion[engine](int) : "Respond to a question asked by the !activator NPC. The parameter is the same random number used to pick the hello."
 	
 	input MakeGameEndAlly(void) : "Make this NPC a game end ally."
 	input MakeRegularAlly(void) : "Make this NPC a regular ally."

@@ -14,6 +14,8 @@
 = logic_choreographed_scene: "Manages a choreographed scene of one or more actors."
 	[
 	scenefile(scene) : "Scene file" : : "The scene that will play when this entity is triggered."
+	resumescenefile(scene) : "Resume Scene / Response Concept" : : "If set, an additonal scene which will be played before resuming this scene, if it gets interruptted. This can either be a .vcd scene file, or a response concept."
+
 	target1(target_destination) : "Target 1"
 	target2(target_destination) : "Target 2"
 	target3(target_destination) : "Target 3"
@@ -48,6 +50,7 @@
 	input PitchShift(float) : "Multiplies the the pitch"
 	input InterjectResponse(string) : "Finds an actor who can respond to the specified concept string while the scene continues playing"
 	input StopWaitingForActor(void) : "Stop waiting on an actor to stop talking."
+	input ScriptPlayerDeath[complete](void) : "Cancel this scene, if On Player Death is set. This input is triggered by the player on all scenes if they die."
 	
 	input Trigger(integer) : "Fires the OnTrigger output of the specified number."
 	
