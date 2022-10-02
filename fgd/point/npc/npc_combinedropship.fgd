@@ -79,10 +79,8 @@
 	input SetLandTarget(string) : "Set my land target name."
 	input SetGunRange(float) : "Set my crate gun's range."
 
-	input EnableRotorSound(void) : "Turns on rotor sounds."
-	input DisableRotorSound(void) : "Turns off rotor sounds."
-
 	input StopWaitingForDropoff(void) : "Stop waiting for the dropoff. Dropoff as soon as possible."
+	input NPCFinishDustoff[engine](string) : "Notifies the dropship that a soldier has finished the scripted sequence for exiting the crate."
 
 	// Outputs
 	output OnFinishedDropoff(void) : "Fires when the dropship has finished a dropoff."

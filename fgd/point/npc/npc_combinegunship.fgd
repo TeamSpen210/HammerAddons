@@ -36,6 +36,8 @@
 
 	input EnableRotorSound(void) : "Turns on rotor sounds"
 	input DisableRotorSound(void) : "Turns off rotor sounds"
+	input GunOn[engine](void) : "Enable the gun."
+	input GunOff[engine](void) : "Disable the gun."
 
 	// Outputs
 	output OnFireCannon(void) : "Fires when the gunship fires a cannon round"
@@ -43,4 +45,5 @@
 	output OnSecondDamage(void) : "Fired when the second damage is done to the gunship."
 	output OnThirdDamage(void) : "Fired when the third damage is done to the gunship."
 	output OnFourthDamage(void) : "Fired when the fourth damage is done to the gunship."
+	output OnCrashed(void) : "Fired when the gunship has reached the crash target, and has just exploded."
 	]

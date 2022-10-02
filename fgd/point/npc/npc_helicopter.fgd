@@ -29,14 +29,10 @@
 
 
 	// Inputs
-	input GunOn(void) : "GunOn"
-	input GunOff(void) : "GunOff"
-	input MissileOn(void) : "MissileOn"
-	input MissileOff(void) : "MissileOff"
-	input EnableRotorWash(void) : "Turns on rotor wash effects"
-	input DisableRotorWash(void) : "Turns off rotor wash effects"
-	input EnableRotorSound(void) : "Turns on rotor sounds"
-	input DisableRotorSound(void) : "Turns off rotor sounds"
+	input GunOn[engine](void) : "Enable the gun."
+	input GunOff[engine](void) : "Disable the gun."
+	input EnableRotorSound(void) : "Turns on rotor sounds."
+	input DisableRotorSound(void) : "Turns off rotor sounds."
 	input StartBombingVehicle(void) : "Starts the chopper leading enemy vehicles and dropping bombs on them."
 	input StartTrailingVehicle(void) : "Starts the chopper trailing enemy vehicles and shooting at them."
 	input StartDefaultBehavior(void) : "Starts the chopper in the mode where it always stops at nav points instead of stopping anywhere in between nav points."
@@ -53,14 +49,18 @@
 	input StartContinuousShooting(void) : "The chopper fires continuously."
 	input StartFastShooting(void) : "The chopper fires normal bursts, but does not 'charge up' the gun. Fires immediately."
 
-	input ResetIdleTime(void) : "Allows the helicopter to fire immediately if it's not in the middle of charging or firing"
+	input ResetIdleTime(void) : "Allows the helicopter to fire immediately if it's not in the middle of charging or firing."
 	input SetAngles(string) : "Instantly snaps the orientation of the helicopter (Pitch Yaw Roll)"
+	input BecomeIndestructible(void) : "Makes the helicopter take no more damage"
+
+
 	input DropBomb(void) : "Immediately drops a bomb based on normal bomb dropping rules"
 	input DropBombStraightDown(void) : "Immediately drops a bomb directly downwards"
 	input DropBombAtTarget(target_destination) : "Immediately drops a bomb directly at the target destination, but only if the player isn't right there"
 	input DropBombAtTargetAlways(target_destination) : "Immediately drops a bomb directly at the target destination, no matter whether it's fair or not."
 	input DropBombDelay(float) : "Add a delay before the next bomb is dropped"
-	input BecomeIndestructible(void) : "Makes the helicopter take no more damage"
+	input StartBombExplodeOnContact(void) : "Make future bombs explode on impact."
+	input StopBombExplodeOnContact(void) : "Stop future bombs from exploding on impact."
 
 	input DisablePathVisibilityTests(void) : "When the helicopter moves, it will not check for visibility from the path_track to the enemy to cull out path_tracks"
 	input EnablePathVisibilityTests(void) : "When the helicopter moves, it will only move to path_tracks that have line-of-sight to the enemy"
