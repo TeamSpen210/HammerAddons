@@ -7,4 +7,9 @@
 
 	// Inputs
 	input Explode(void) : "Make the explosion effect."
+
+	@resources 
+		[
+		entity ar2explosion
+		]
 	]

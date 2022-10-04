@@ -7,4 +7,18 @@
 	// Inputs
 	input Explode(void) : "Explode the pellet, creating a shockwave and shaking the camera."
 	input BallCaught[P2](void) : "Trigger the OnBallCaught output for the point_energy_ball_launcher that created this ball, kill the pellet and disable the launcher."
+
+	@resources [
+	    mat "materials/effects/eball_finite_life.vmt"
+	    mat "materials/effects/eball_infinite_life.vmt"
+	    mat "decals/smscorch1model.vmt"
+	    mat "decals/smscorch1_subrect.vmt"
+	    sound "EnergyBall.Explosion"
+	    sound "EnergyBall.Launch"
+	    sound "EnergyBall.KillImpact"
+	    sound "EnergyBall.Impact"
+	    sound "EnergyBall.AmbientLoop"
+
+	    entity prop_combine_ball
+		]
 	]

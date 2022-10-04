@@ -19,4 +19,11 @@
 	input StartDischarge(void) : "Start discharging the effect over specified number of seconds."
 	input Stop(float) : "Stops the effect at any point."
 	input SetTargetEnt(string) : "Sets the target entity for the effect."
+
+	@resources [
+		mat "materials/effects/laser1.vmt"
+	    sound "AlyxEmp.Charge"
+	    sound "AlyxEmp.Discharge"
+	    sound "AlyxEmp.Stop"
+		]
 	]
