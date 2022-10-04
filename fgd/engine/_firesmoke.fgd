@@ -2,4 +2,16 @@
 	appliesto(engine)
 = _firesmoke: "Internal entity used for natural-type env_fires."
 	[
+	@resources
+		[
+		particle env_fire_tiny
+		particle env_fire_small
+		particle env_fire_medium
+		particle env_fire_large
+
+		particle env_fire_tiny_smoke
+		particle env_fire_small_smoke
+		particle env_fire_medium_smoke
+		particle env_fire_large_smoke
+		]
 	]

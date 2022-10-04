@@ -23,4 +23,17 @@
 	
 	output OnPullFinished(void) : "Fires when the pull phase is finished."
 	output OutEntity(ehandle) : "Fires for each entity spawned by this vortex (including entities from FakeSpawnEntity)."
+
+	@resources
+		[
+	    material "materials/sprites/rollermine_shock.vmt"
+		model "models/weapons/w_xengrenade.mdl"
+	    sound "WeaponXenGrenade.Schlorp_Huge"
+	    sound "WeaponXenGrenade.Schlorp_Large"
+	    sound "WeaponXenGrenade.Schlorp_Medium"
+	    sound "WeaponXenGrenade.Schlorp_Small"
+	    sound "WeaponXenGrenade.Schlorp_Tiny"
+
+	    particle "xenpc_spawn"
+		]
 	]
