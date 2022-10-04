@@ -19,7 +19,7 @@ from typing import (
     Iterator, Union, MutableMapping, Iterable,
 )
 
-from srctools import VMF, Entity, conv_int, FileSystemChain, Property, KeyValError, bool_as_int
+from srctools import VMF, Entity, conv_int, FileSystemChain, Keyvalues, KeyValError, bool_as_int
 from srctools.math import Vec, Angle, Matrix, quickhull
 from srctools.tokenizer import Tokenizer, Token
 from srctools.game import Game
@@ -647,28 +647,28 @@ async def decompile_model(
     if cache_folder.exists():
         try:
             with info_path.open() as f:
-                cache_props = Property.parse(f).find_block('qc', or_blank=True)
+                cache_kv = Keyvalues.parse(f).find_block('qc', or_blank=True)
             # Added later, remake if not present.
-            if 'concave' not in cache_props:
+            if 'concave' not in cache_kv:
                 raise FileNotFoundError
         except (FileNotFoundError, KeyValError):
             pass
         else:
             # Previous compilation.
-            if checksum == bytes.fromhex(cache_props['checksum', '']):
-                ref_smd_name = cache_props['ref', '']
+            if checksum == bytes.fromhex(cache_kv['checksum', '']):
+                ref_smd_name = cache_kv['ref', '']
                 if not ref_smd_name:
                     return None
-                phy_smd_name = cache_props['phy', None]
+                phy_smd_name = cache_kv['phy', None]
                 if phy_smd_name is not None:
                     phy_smd_name = str(cache_folder / phy_smd_name)
                 return QC(
                     str(info_path),
                     str(cache_folder / ref_smd_name),
                     phy_smd_name,
-                    cache_props.float('ref_scale', 1.0),
-                    cache_props.float('phy_scale', 1.0),
-                    cache_props.bool('concave'),
+                    cache_kv.float('ref_scale', 1.0),
+                    cache_kv.float('phy_scale', 1.0),
+                    cache_kv.bool('concave'),
                 )
             # Otherwise, re-decompile.
     LOGGER.info('Decompiling {}...', filename)
@@ -709,8 +709,8 @@ async def decompile_model(
         qc_result = None
         qc_path = Path()
 
-    cache_props = Property('qc', [])
-    cache_props['checksum'] = checksum.hex()
+    cache_kv = Keyvalues('qc', [])
+    cache_kv['checksum'] = checksum.hex()
 
     if qc_result is not None:
         (
@@ -727,18 +727,18 @@ async def decompile_model(
             is_concave,
         )
 
-        cache_props['ref'] = Path(ref_smd).name
-        cache_props['ref_scale'] = format(ref_scale, '.6g')
+        cache_kv['ref'] = Path(ref_smd).name
+        cache_kv['ref_scale'] = format(ref_scale, '.6g')
 
         if phy_smd is not None:
-            cache_props['phy'] = Path(phy_smd).name
-            cache_props['phy_scale'] = format(phy_scale, '.6g')
-        cache_props['concave'] = bool_as_int(is_concave)
+            cache_kv['phy'] = Path(phy_smd).name
+            cache_kv['phy_scale'] = format(phy_scale, '.6g')
+        cache_kv['concave'] = bool_as_int(is_concave)
     else:
-        cache_props['ref'] = ''  # Mark as not present.
+        cache_kv['ref'] = ''  # Mark as not present.
 
     with info_path.open('w') as f:
-        for line in cache_props.export():
+        for line in cache_kv.export():
             f.write(line)
     return qc
 

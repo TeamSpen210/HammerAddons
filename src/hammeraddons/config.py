@@ -8,7 +8,7 @@ from atomicwrites import atomic_write
 import attrs
 
 from srctools.game import Game
-from srctools import Property, logger
+from srctools import Keyvalues, logger
 from srctools.filesys import FileSystemChain, FileSystem, RawFileSystem, VPKFileSystem
 
 from .props_config import Opt, Options
@@ -97,14 +97,14 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
         if conf_path.exists():
             LOGGER.info('Config path: "{}"', conf_path.absolute())
             with open(conf_path) as f:
-                props = Property.parse(f, conf_path)
+                kv = Keyvalues.parse(f, conf_path)
             opts.path = conf_path
-            opts.load(props)
+            opts.load(kv)
             break
     else:
         LOGGER.warning('Cannot find a valid config file!')
         # Apply all the defaults.
-        opts.load(Property(None, []))
+        opts.load(Keyvalues(None, []))
 
         # Try to write out a default file in the game folder.
         for folder in path.parents:
@@ -126,11 +126,11 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
     LOGGER.info('Paths config: {}', paths_conf_loc)
     try:
         with open(paths_conf_loc) as f:
-            for prop in Property.parse(f).find_children('Paths'):
-                if prop.has_children():
+            for kv in Keyvalues.parse(f).find_children('Paths'):
+                if kv.has_children():
                     LOGGER.warning('Paths configs may not be blocks!')
                 else:
-                    path_roots[prop.name.strip('|')] = Path(prop.value)
+                    path_roots[kv.name.strip('|')] = Path(kv.value)
             if GAME_KEY in path_roots:
                 LOGGER.warning(
                     '|{}| cannot be defined in the path config, this is always the '
@@ -165,26 +165,26 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
             if isinstance(fsys, VPKFileSystem):
                 blacklist.add(fsys)
 
-    for prop in opts.get(SEARCHPATHS):
-        if prop.has_children():
+    for kv in opts.get(SEARCHPATHS):
+        if kv.has_children():
             raise ValueError('Config "searchpaths" value cannot have children.')
-        assert isinstance(prop.value, str)
+        assert isinstance(kv.value, str)
 
-        if prop.value.endswith('.vpk'):
-            fsys = VPKFileSystem(str(expand_path(prop.value)))
+        if kv.value.endswith('.vpk'):
+            fsys = VPKFileSystem(str(expand_path(kv.value)))
         else:
-            fsys = RawFileSystem(str(expand_path(prop.value)))
+            fsys = RawFileSystem(str(expand_path(kv.value)))
 
-        if prop.name in ('prefix', 'priority'):
+        if kv.name in ('prefix', 'priority'):
             fsys_chain.add_sys(fsys, priority=True)
-        elif prop.name == 'nopack':
+        elif kv.name == 'nopack':
             blacklist.add(fsys)
-        elif prop.name in ('path', 'pack'):
+        elif kv.name in ('path', 'pack'):
             fsys_chain.add_sys(fsys)
         else:
             raise ValueError(
                 'Unknown searchpath '
-                'key "{}"!'.format(prop.real_name)
+                'key "{}"!'.format(kv.real_name)
             )
 
     sources: Dict[str, PluginSource] = {}
@@ -197,8 +197,8 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
 
     # Find all the plugins and make plugin objects out of them
     unnamed_ind = 1
-    for prop in opts.get(PLUGINS):
-        source = PluginSource.parse(prop, expand_path)
+    for kv in opts.get(PLUGINS):
+        source = PluginSource.parse(kv, expand_path)
         if not source.id:
             source.id = f'unnamed_{unnamed_ind}'
             unnamed_ind += 1
@@ -253,7 +253,7 @@ PACK_DUMP = Opt.string_or_none(
 """)
 
 SEARCHPATHS = Opt.block(
-    'searchpaths', Property('', []),
+    'searchpaths', Keyvalues('', []),
     """\
     Add additional search paths to the game. Each key-value pair
     defines a path, with the value either a folder path or a VPK 
@@ -302,7 +302,7 @@ USE_COMMA_SEP = Opt.boolean_or_none(
 """)
 
 PROPCOMBINE_QC_FOLDER = Opt.block(
-    'propcombine_qc_folder', Property('', [Property('Path', f'|{GAME_KEY}|../content')]),
+    'propcombine_qc_folder', Keyvalues('', [Keyvalues('Path', f'|{GAME_KEY}|../content')]),
     """Define where the QC files are for combinable static props.
     This path is searched recursively. This defaults to 
     the 'content/' folder, which is adjacent to the game root.
@@ -341,7 +341,7 @@ PROPCOMBINE_MIN_CLLUSTER = Opt.integer(
 )
 
 PROPCOMBINE_BLACKLIST = Opt.block(
-    'propcombine_blacklist', Property('', []),
+    'propcombine_blacklist', Keyvalues('', []),
     """Models specified here will never be propcombined.
 
     You can specify a full path, or one with * wildcards. Alternatively,
@@ -355,7 +355,7 @@ PROPCOMBINE_PACK = Opt.boolean(
 )
 
 PLUGINS = Opt.block(
-    'plugins', Property('', []),
+    'plugins', Keyvalues('', []),
     """\
     Add plugins to the post compiler. Each block is a package of plugins in some folder.
     The name must be a Python identifier - the plugins are mounted at 
@@ -367,7 +367,7 @@ PLUGINS = Opt.block(
 """)
 
 TRANSFORM_OPTS = Opt.block(
-    'transform_opts', Property('', []),
+    'transform_opts', Keyvalues('', []),
     """Specify additional options specific to transforms. Each key here is the name of the 
     transform, and the value is then decided by that transform.
     """

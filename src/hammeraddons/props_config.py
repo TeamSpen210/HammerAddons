@@ -1,4 +1,4 @@
-"""Property-based configuration system.
+"""Keyvalues-based configuration system.
 
 A list of options are passed in, which parse each option to a basic type.
 """
@@ -9,14 +9,14 @@ from typing_extensions import TypeAlias
 
 import attrs
 
-from srctools import Vec, Property, parse_vec_str, conv_bool
+from srctools import Vec, Keyvalues, parse_vec_str, conv_bool
 from srctools.logger import get_logger
 
 LOGGER = get_logger(__name__)
 
 
-Option: TypeAlias = Union[str, int, float, bool, Vec, Property]
-OptionT = TypeVar('OptionT', Property, str, int, float, bool, Vec)
+Option: TypeAlias = Union[str, int, float, bool, Vec, Keyvalues]
+OptionT = TypeVar('OptionT', Keyvalues, str, int, float, bool, Vec)
 
 TYPE_NAMES: Dict[Type[Option], str] = {
     str: 'Text',
@@ -24,7 +24,7 @@ TYPE_NAMES: Dict[Type[Option], str] = {
     float: 'Decimal Number',
     bool: 'True/False',
     Vec: 'Vector',
-    Property: 'Property Block',
+    Keyvalues: 'Keyvalues Block',
 }
 
 
@@ -56,15 +56,15 @@ class Opt(Generic[OptionT]):
     def block(
         cls,
         opt_id: str,
-        default: Property,
+        default: Keyvalues,
         doc: str, *,
         fallback: str = None,
-    ) -> 'OptWithDefault[Property]':
-        """Return an option giving the raw property.
+    ) -> 'OptWithDefault[Keyvalues]':
+        """Return an option giving the raw keyvalues block.
 
         These always use an empty block as the default.
         """
-        return OptWithDefault(opt_id, Property, default.copy(), doc, fallback)
+        return OptWithDefault(opt_id, Keyvalues, default.copy(), doc, fallback)
 
     @classmethod
     def string_or_none(cls, opt_id: str, doc: str, *, fallback: str = None) -> 'Opt[str]':
@@ -136,9 +136,9 @@ class OptWithDefault(Opt[OptionT], Generic[OptionT]):
 
 
 class Options:
-    """Allows parsing a set of Property option blocks."""
+    """Allows parsing a set of Keyvalues option blocks."""
     defaults: List[Opt]
-    settings: Dict[str, Union[None, str, int, float, bool, Vec, Property]]
+    settings: Dict[str, Union[None, str, int, float, bool, Vec, Keyvalues]]
     path: Optional[Path]
 
     def __init__(self, defaults: Union[Iterable[Opt], dict]) -> None:
@@ -153,8 +153,8 @@ class Options:
         self.settings = {}
         self.path = None
 
-    def load(self, opt_blocks: Property) -> None:
-        """Read settings from the given property block."""
+    def load(self, opt_blocks: Keyvalues) -> None:
+        """Read settings from the given keyvalues block."""
         self.settings.clear()
         set_vals = {}
         for opt_block in opt_blocks:
@@ -188,13 +188,13 @@ class Options:
                 else:
                     self.settings[opt.id] = default
                 continue
-            if opt.kind is Property:
+            if opt.kind is Keyvalues:
                 self.settings[opt.id] = prop.copy()
                 continue
 
-            # Non-RAW types cannot have a property block, only a value.
+            # Non-RAW types cannot have a keyvalues block, only a value.
             if prop.has_children():
-                raise ValueError(f'Cannot use property block for "{opt.name}"')
+                raise ValueError(f'Cannot use keyvalues block for "{opt.name}"')
 
             if opt.kind is Vec:
                 # Pass nones to allow us to check if it failed.
@@ -250,8 +250,8 @@ class Options:
             raise TypeError(f'Option "{option.name}" does not exist!') from None
 
         if val is None:
-            if option.kind is Property:  # Type checker doesn't understand isinstance here.
-                return Property(option.name, [])  # type: ignore
+            if option.kind is Keyvalues:  # Type checker doesn't understand isinstance here.
+                return Keyvalues(option.name, [])  # type: ignore
             else:
                 return None
 
@@ -260,8 +260,8 @@ class Options:
             raise ValueError(f'Option "{option.name}" is {type(val)} (code expected {option.kind})')
 
         # Vec is mutable, don't allow modifying the original.
-        if option.kind is Vec or option.kind is Property:
-            assert isinstance(val, Vec) or isinstance(val, Property)
+        if option.kind is Vec or option.kind is Keyvalues:
+            assert isinstance(val, Vec) or isinstance(val, Keyvalues)
             return val.copy()
         else:
             assert isinstance(val, option.kind)
@@ -285,7 +285,7 @@ class Options:
                 default = None
 
             # PROP types are "raw", so they don't have defaults.
-            if option.kind is not Property and isinstance(option, OptWithDefault):
+            if option.kind is not Keyvalues and isinstance(option, OptWithDefault):
                 if isinstance(default, bool):
                     default = '1' if default else '0'
 
@@ -302,7 +302,7 @@ class Options:
             if value is None:
                 # Comment out the unset value.
                 file.write(f'\t// "{option.name}" ""\n')
-            elif isinstance(value, Property):
+            elif isinstance(value, Keyvalues):
                 value.name = option.name
                 for line in value.export():
                     file.write('\t' + line)

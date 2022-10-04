@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Optional, Callable, Awaitable, Dict, Mapping, Tuple, List
 import inspect
 
-from srctools import EmptyMapping, FileSystem, Property, VMF, Output, Entity, FGD, conv_bool
+from srctools import EmptyMapping, FileSystem, Keyvalues, VMF, Output, Entity, FGD, conv_bool
 from srctools.bsp import BSP
 from srctools.logger import get_logger
 from srctools.packlist import PackList
@@ -56,7 +56,7 @@ class Context:
         self.fgd = fgd or FGD.engine_dbase()
         self.game = game
         self.studiomdl = studiomdl_loc
-        self.config = Property.root()
+        self.config = Keyvalues.root()
 
         self._io_remaps: Dict[Tuple[str, str], Tuple[List[Output], bool]] = {}
         self._ent_code: Dict[Entity, str] = {}
@@ -138,7 +138,7 @@ async def run_transformations(
     bsp: BSP,
     game: Game,
     studiomdl_loc: Path=None,
-    config: Mapping[str, Property]=EmptyMapping,
+    config: Mapping[str, Keyvalues]=EmptyMapping,
     fgd: FGD=None,
 ) -> None:
     """Run all transformations."""
@@ -152,7 +152,7 @@ async def run_transformations(
         try:
             context.config = config[func_name.casefold()]
         except KeyError:
-            context.config = Property(func_name, [])
+            context.config = Keyvalues(func_name, [])
         LOGGER.debug('Config: {!r}', context.config)
         await func(context)
 
