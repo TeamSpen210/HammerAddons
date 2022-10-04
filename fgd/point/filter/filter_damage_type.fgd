@@ -55,4 +55,6 @@
 		268435456 : "Direct"
 		536870912 : "Buckshot"
 		]
+	
+	@resources []
 	]

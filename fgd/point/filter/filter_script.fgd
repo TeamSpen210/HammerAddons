@@ -4,4 +4,5 @@
 	iconsprite("editor/filter_script.vmt")
 = filter_script: "A filter which utilizes hooks in its entity scripts."
 	[
+	@resources []
 	]

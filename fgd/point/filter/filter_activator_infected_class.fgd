@@ -18,5 +18,6 @@
 		6: "Charger" [L4D2]
 		8: "Tank" [L4D2]
 		]
-
+	
+	@resources []
 	]

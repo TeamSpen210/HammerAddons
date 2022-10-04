@@ -10,4 +10,6 @@
 
 	// Inputs
 	input SetFilterClass[INFRA](string) : "The class name to filter by."
+	
+	@resources []
 	]

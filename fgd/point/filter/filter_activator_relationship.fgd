@@ -21,4 +21,6 @@
 	
 	inverttarget(boolean) : "Invert Subject" : 0 : "Should we use the activator's relationship to the subject instead?"
 	Reciprocal(boolean) : "Reciprocal" : 0 : "Should we only pass if both entities have the same relationship with each other? Makes 'Invert Subject' useless."
+	
+	@resources []
 ]

@@ -7,4 +7,6 @@
 	filtername(target_destination) : "Filter Name" : : "The name to filter by. If the filter mode is Allow, " +
 		"only entities whose name matches the given string will pass the filter. If the filter mode is Disallow, " +
 		"all entities EXCEPT those whose name matches the string will pass the filter."	
+	
+	@resources []
 	]

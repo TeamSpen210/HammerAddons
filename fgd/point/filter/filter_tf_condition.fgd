@@ -5,4 +5,5 @@
 = filter_tf_condition: 
 	"A filter that filters by conditions on a player."
 	[
+	@resources []
 	]

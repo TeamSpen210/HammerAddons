@@ -4,4 +4,6 @@
 	iconsprite("editor/filter_redirect.vmt")
 = filter_redirect_owner :
 	"A filter that passes the activator's owner entity to a separate filter."
-	[ ]
+	[
+	@resources []
+	]

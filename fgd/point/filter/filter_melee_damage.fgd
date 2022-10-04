@@ -4,4 +4,5 @@
 = filter_melee_damage: "A damage filter that filters by the damage, allowing only melee damage. " +
 	"The Damage Type specifies which types of melee damage are allowed."
 	[
+	@resources []
 	]

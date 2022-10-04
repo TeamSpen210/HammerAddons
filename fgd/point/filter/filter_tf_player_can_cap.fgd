@@ -6,4 +6,5 @@
 "If the filter mode is Allow, only entities whose team number matches the given team and are not disguised, stealthed or invuln will pass the filter. " +
 "If the filter mode is Disallow, all entities EXCEPT those players will be allowed."
 	[
+	@resources []
 	]

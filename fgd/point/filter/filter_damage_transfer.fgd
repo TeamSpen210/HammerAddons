@@ -26,4 +26,6 @@
 
 	input SetTarget(target_destination) : "Sets the transfer target."
 	input SetField(target_destination) : "Sets the secondary filter."
+	
+	@resources []
 	]
