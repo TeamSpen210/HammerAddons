@@ -52,4 +52,10 @@
 	// Outputs
 	output OnUsed(void) : "Fires when +used by the player."
 	output OnAmmoTaken[MBase](void) : "Fires the instant ammo is taken from this crate."
+
+	@resources
+		[
+		sound "AmmoCrate.Open"
+    	sound "AmmoCrate.Close"
+		]
 	]

@@ -7,4 +7,9 @@
 	input TurnOn(void) : "Turn on"
 	input TurnOff(void) : "Turn off"
 	input SetDensity(float) : "Set the density of the starfield. It's a multiplier, so 1 is the default."
+
+	@resources
+		[
+		material "materials/effects/spark_noz.vmt"
+		]
 	]

@@ -48,4 +48,9 @@
 	output OnCacheInteraction(void) : "This output fires when the player proves they have 'found' this crate. Fires on: Picked up by +USE, Picked up by Physcannon, Punted by Physcannon, Broken."
 
 	output OnItem[MBase](ehandle) : "Fires for each item spawned by this crate."
+
+	@resources
+		[
+		particle "creaturecrate_stasisbreak"
+		]
 	]
