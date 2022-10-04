@@ -2,4 +2,7 @@
 	appliesto(+engine, HL2, EP1, EP2, P1, P2)
 = ar2explosion: "Internal entity used to implement the explosion itself."
 	[
+	@resources [
+		material "materials/particle/particle_noisesphere.vmt"
+		]
 	]

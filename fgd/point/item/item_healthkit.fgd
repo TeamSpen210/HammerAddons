@@ -7,4 +7,10 @@
 = item_healthkit: "Small Health Kit"
 	[
 	model[Mesa](studio): "Model" : "models/weapons/w_medkit.mdl" : "Model to use for the medkit."
+
+	@resources
+		[
+		model "models/items/healthkit.mdl"
+    	sound "HealthVial.Touch"
+		]
 	]

@@ -13,4 +13,9 @@
 		1 : "Short Logon (now stops hands)" : 0 [ez2]
 	  	131072 : "Boot Sequence" : 0 [+Mesa]
 		]
+
+	@resources
+		[
+		model "models/items/hevsuit.mdl"
+		]
 	]

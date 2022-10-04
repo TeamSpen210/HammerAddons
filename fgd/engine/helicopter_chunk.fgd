@@ -4,4 +4,18 @@
 = helicopter_chunk:
 "The large gibs produced after npc_helicopter is killed."
 	[
+	@resources
+		[
+		mdl "models/gibs/helicopter_brokenpiece_01.mdl"
+		mdl "models/gibs/helicopter_brokenpiece_02.mdl"
+		mdl "models/gibs/helicopter_brokenpiece_03.mdl"
+		mdl "models/gibs/helicopter_brokenpiece_04_cockpit.mdl"
+		mdl "models/gibs/helicopter_brokenpiece_05_tailfan.mdl"
+		mdl "models/gibs/helicopter_brokenpiece_06_body.mdl"
+		sound "BaseExplosionEffect.Sound"
+		sound "NPC_AttackHelicopter.Crash"
+		entity env_smoketrail 
+		entity env_fire_trail
+		entity ar2explosion
+	    ]
 	]   

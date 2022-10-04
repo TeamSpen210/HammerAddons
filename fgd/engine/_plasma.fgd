@@ -2,4 +2,9 @@
 	appliesto(engine)
 = _plasma: "Internal entity used for plasma-type env_fires."
 	[
+	@resources 
+		[
+		mat "materials/sprites/plasma1.vmt"
+    	mat "materials/sprites/fire_floor.vmt"
+		]
 	]
