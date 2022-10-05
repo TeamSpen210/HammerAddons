@@ -33,6 +33,12 @@
 		23 : "CLASS_EARTH_FAUNA (crows, seagulls, etc.)"
 		24 : "CLASS_HACKED_ROLLERMINE"
 		25 : "CLASS_COMBINE_HUNTER"
+		26 : "CLASS_ALIEN_FAUNA (EZ2 only: Xen creatures)" [EZ2]
+		27 : "CLASS_ALIEN_PREDATOR (EZ2 only: Bullsquid, etc)" [EZ2]
+		28 : "CLASS_ALIEN_FLORA (EZ2 only: Xen plants)" [EZ2]
+		29 : "CLASS_RACE_X (EZ2 only: Pit Drones, Voltigore)" [EZ2]
+		30 : "CLASS_COMBINE_NEMESIS (EZ2 only: Clone Cop, his manhacks etc)" [EZ2]
+		31 : "CLASS_ARBEIT_TECH (EZ2 only: Wilson, Aperture turrets etc)" [EZ2]
 	]
 
 	target[engine](integer) : "Target(s)" : 0
@@ -64,6 +70,12 @@
 		23 : "CLASS_EARTH_FAUNA (crows, seagulls, etc.)"
 		24 : "CLASS_HACKED_ROLLERMINE"
 		25 : "CLASS_COMBINE_HUNTER"
+		26 : "CLASS_ALIEN_FAUNA (EZ2 only: Xen creatures)" [EZ2]
+		27 : "CLASS_ALIEN_PREDATOR (EZ2 only: Bullsquid, etc)" [EZ2]
+		28 : "CLASS_ALIEN_FLORA (EZ2 only: Xen plants)" [EZ2]
+		29 : "CLASS_RACE_X (EZ2 only: Pit Drones, Voltigore)" [EZ2]
+		30 : "CLASS_COMBINE_NEMESIS (EZ2 only: Clone Cop, his manhacks etc)" [EZ2]
+		31 : "CLASS_ARBEIT_TECH (EZ2 only: Wilson, Aperture turrets etc)" [EZ2]
 	]
 	disposition[engine](integer) : "Disposition" : 3
 	disposition(choices) : "Disposition" : 3 : "Choose the way the Subject(s) should feel about the Target(s)" =
