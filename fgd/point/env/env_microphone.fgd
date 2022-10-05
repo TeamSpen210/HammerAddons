@@ -99,4 +99,6 @@
 	output SoundLevel(float) : "Fired in Measuring mode whenever the sound level changes."
 	output OnRoutedSound(void) : "Fired whenever a sound is routed out through the specified speaker (if any)."
 	output OnHeardSound(void) : "Fired whenever this microphone hears any sound it cares about."
+
+	@resources []
 	]

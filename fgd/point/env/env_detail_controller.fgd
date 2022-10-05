@@ -8,4 +8,6 @@
 	[
 	fademindist(float) : "Start Fade Dist/Pixels" : 512 : "The distance at which the detail props will start fading away."
 	fademaxdist(float) : "End Fade Dist/Pixels" : 1024 : "The distance at which the detail props will stop fading and stop drawing entirely."
+
+	@resources []
 	]

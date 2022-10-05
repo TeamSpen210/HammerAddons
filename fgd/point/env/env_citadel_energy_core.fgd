@@ -17,4 +17,11 @@
 	input StartCharge(float) : "Start charging the core over specified number of seconds."
 	input StartDischarge(void) : "Switch to discharging the core."
 	input Stop(float) : "Stops the effect over the specified number of seconds."
+
+	@resources
+		[
+	    material "materials/effects/strider_muzzle.vmt"
+	    material "materials/effects/combinemuzzle2.vmt"
+	    material "materials/effects/combinemuzzle2_dark.vmt"
+		]
 	]

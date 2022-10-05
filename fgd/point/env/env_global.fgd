@@ -139,4 +139,6 @@
 	output Counter[!INFRA, !MBASE](integer) : "Fired in response to the GetCounter input, passing the current value of the counter."
 	output OutCounter[MBASE](integer) : "Fired in response to the GetCounter input, passing the current value of the counter."
 	output OnGetCounter[INFRA](integer) : "Fired in response to the GetCounter input, passing the current value of the counter."
+
+	@resources []
 	]

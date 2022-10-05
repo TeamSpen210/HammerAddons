@@ -30,4 +30,6 @@
 	output OnEntitySpawned(void) : "Fired when an instance of the entity template has been spawned."
 	output OnEntityFailedSpawn(void) : "Fired when a ForceSpawn input failed to spawn the template, either due to lack of space or being in player's view, depending on the spawnflags."
 	output OutSpawnedEntity[MBase](ehandle) : "Fired for each entity spawned by this template, passing said entity as the parameter and activator."
+
+	@resources []
 	]

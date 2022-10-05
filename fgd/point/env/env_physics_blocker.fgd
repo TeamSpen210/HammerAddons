@@ -27,4 +27,6 @@
 	// Inputs
 	input Enable(void) : "Enables the Blocker"
 	input Disable(void) : "Disables the Blocker"
+
+	@resources []
 	]

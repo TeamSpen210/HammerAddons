@@ -46,4 +46,6 @@
 	input SetRandomization(integer) : "Sets the gib direction randomization factor."
 	input SetLifetime(float) : "Sets the lifetime of each gib."
 	input SetGibFlags(integer) : "Sets the flags for each gib."
+
+	@resources []  // Needs to be done in code.
 ]

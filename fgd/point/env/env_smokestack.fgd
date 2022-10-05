@@ -38,5 +38,6 @@
 	@resources
 		[
 		material "materials/particle/SmokeStack.vmt"
+		// Additional packing for the material in code.
 		]
 	]

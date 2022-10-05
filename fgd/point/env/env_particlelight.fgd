@@ -7,4 +7,6 @@
 	intensity(integer) : "Intensity" : 5000
 	directional(boolean) : "Directional" : 0 : "If this is specified, then this light will use the bump map on the particles. Each particle system can have one ambient and one directional light."
 	psname(target_destination) : "Particle System Entity" : : "Set this to the name of the env_smokestack that you want this light to affect."
+
+	@resources []
 	]

@@ -8,4 +8,12 @@
 
 	// Inputs
 	input Fire(void) : "Fires the effect once."
+
+	@resources
+		[
+		material "materials/effects/muzzleflash1.vmt"
+		material "materials/effects/muzzleflash2.vmt"
+		material "materials/effects/muzzleflash3.vmt"
+		material "materials/effects/muzzleflash4.vmt"
+		]
 	]

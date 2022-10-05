@@ -23,4 +23,6 @@
 
 	// Inputs
 	input EmitBlood(void) : "Triggers the blood effect."
+
+	@resources []
 	]

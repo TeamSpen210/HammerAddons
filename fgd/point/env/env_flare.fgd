@@ -17,4 +17,11 @@
 	input Start(float) : "Starts the flare burning. The flare will burn for the specified number of seconds (0 = infinite)."
 	input Die(float) : "Causes the flare to fade out over the specified number of seconds, and then die (0 = die instantly)."
 	input Launch(float) : "Launch the flare forward with the specified speed."
+
+	@resources
+		[
+		model "models/weapons/flare.mdl"
+		sound "Weapon_FlareGun.Burn"
+		entity _firesmoke
+		]
 	]

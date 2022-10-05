@@ -48,4 +48,10 @@
 	// Outputs
 	output OnIgnited(void) : "Fires when the fire is first ignited."
 	output OnExtinguished(void) : "Fires when the fire is fully extinguished."
+
+	@resources
+		[
+		sound "Fire.Plasma"
+		// And special entity code.
+		]
 	]

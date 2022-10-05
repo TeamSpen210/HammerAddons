@@ -19,4 +19,10 @@
 	spawnradius(float) : "Spawn radius" : 15 : "Distance from env_smoketrail at which particles are emitted."
 	firesprite(sprite) : "Fire Sprite" : "sprites/firetrail.spr"
 	smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.spr"
+
+	@resources
+		[
+		material "materials/particle/particle_smokegrenade.vmt"
+		material "materials/particle/particle_noisesphere.vmt"
+		]
 	]

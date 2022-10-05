@@ -11,4 +11,10 @@
 
 	// Outputs
 	output OnCreditsDone(void) : "Fired when the credits having finished rolling."
+
+	@resources
+		[
+		// Credits are in this script file.
+		file "scripts/credits.txt"
+		]
 	]

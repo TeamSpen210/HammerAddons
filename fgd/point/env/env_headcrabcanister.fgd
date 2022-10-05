@@ -49,4 +49,17 @@
 	output OnImpacted(void) : "Fires when canister hits the ground"
 	output OnOpened(void) : "Fires when canister has finished opening"
 	output OnCrab[MBase](ehandle) : "Fires for each headcrab that comes out of this canister"
+
+	@resources
+		[
+		// The headcrab spawned and some sounds are done in code.
+
+	    // We can't easily check which version of the props are used, since it depends on whether the 
+	    // ent starts in the skybox, etc.
+	    model "models/props_combine/headcrabcannister01a.mdl"
+	    model "models/props_combine/headcrabcannister01b.mdl"
+	    model "models/props_combine/headcrabcannister01a_skybox.mdl"
+	    sound "HeadcrabCanister.AfterLanding"
+	    sound "HeadcrabCanister.Open"
+		]
 	]
