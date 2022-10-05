@@ -22,4 +22,8 @@
 		2: "Toggle" : 0
 		]
 
+	@resources
+		[
+		material "materials/particle/fire.vmt"
+		]
 	]
