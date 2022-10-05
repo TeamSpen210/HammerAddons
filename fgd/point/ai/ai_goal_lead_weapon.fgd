@@ -33,4 +33,5 @@
 		1: "Classname"
 		]
 
+	@resources []
 	]

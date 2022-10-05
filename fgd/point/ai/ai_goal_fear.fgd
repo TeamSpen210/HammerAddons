@@ -21,4 +21,6 @@
 
 	// Outputs
 	output OnArrivedAtNode(void) : "Fires when we arrive at a fear withdrawal node. The node is the activator and the NPC is the caller."
+
+	@resources []
 ]

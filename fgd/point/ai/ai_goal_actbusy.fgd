@@ -43,4 +43,6 @@
 	// Outputs
 	output OnNPCLostSeeEntity(void) : "Fired when the NPC loses sight of the see entity (if one is specified)."
 	output OnNPCSeeEnemy(void) : "Fired when this NPC leaves their actbusy because of sighting an enemy."
+
+	@resources []
 	]

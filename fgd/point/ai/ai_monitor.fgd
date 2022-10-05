@@ -27,10 +27,14 @@
 		31 : "Enemy unreachable"
 		51 : "Hear thumper"
 	]
-	Conditions(string) : "Conditions (advanced)" : : "Allows you to specify exactly which conditions to monitor, either by their actual integer ID or their string name. Separate multiple conditions with colons: 'COND_BEHIND_ENEMY:COND_ENEMY_OCCLUDED:11'"
+	Conditions(string) : "Conditions (advanced)" : : "Allows you to specify exactly which conditions to monitor, either by their actual integer ID or their string name. " +
+		"Separate multiple conditions with colons: 'COND_BEHIND_ENEMY:COND_ENEMY_OCCLUDED:11'"
 	
-	Schedules(string) : "Schedules (advanced)" : : "Allows you to specify exactly which schedules to monitor, either by their actual integer ID or their string name. Separate multiple schedules with colons: 'SCHED_INVESTIGATE_SOUND:SCHED_COMBAT_FACE:14'"
-	TranslateSchedules(boolean) : "Translate shcedules" : 0 : "Translates schedules based on each NPC's behavior each time they're checked. This depends on how the NPC remaps that schedule, which may be either their own version of it or something completely different that may not be desirable. The performance impact of this setting is not known."
+	Schedules(string) : "Schedules (advanced)" : : "Allows you to specify exactly which schedules to monitor, either by their actual integer ID or their string name. " +
+		"Separate multiple schedules with colons: 'SCHED_INVESTIGATE_SOUND:SCHED_COMBAT_FACE:14'"
+	TranslateSchedules(boolean) : "Translate schedules" : 0 : "Translates schedules based on each NPC's behavior each time they're checked. " +
+		"This depends on how the NPC remaps that schedule, which may be either their own version of it or something completely different that may not be desirable. " +
+		"The performance impact of this setting is not known."
 	
 	HintsSimple[engine](integer) : "Hint Node" : 0
 	HintsSimple(choices) : "Hint Node" : 0 : "Which hint to monitor. Use 'Hints (advanced)' to use conditions outside of this list or use multiple hints." =
@@ -76,4 +80,6 @@
 	output OnNPCRunningSchedule(integer) : "Fires when a NPC is running any of the schedules. Outputs the schedule ID and uses the NPC as the activator. This fires for each schedule on each NPC." 
 	output OnNPCUsingHint(integer) : "Fires when a NPC is using any of the hints. Outputs the hint ID and uses the NPC as the activator. This fires for each hint on each NPC." 
 	output OnNPCNotUsingHint(integer) : "Fires when a NPC is not using any of the hints. Outputs the hint ID and uses the NPC as the activator. This fires for each hint on each NPC." 
+
+	@resources []
 ]
