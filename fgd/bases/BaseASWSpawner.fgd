@@ -58,4 +58,10 @@ line(255 255 255, targetname, alienordertargetname) = BaseASWSpawner
 
 	// Outputs
 	output OnSpawned(string) : "Fires when an alien is spawned. The activator is the alien, and the string is the name of the alien."
+
+	@resources
+		[
+		sound "Spawner.Horde"
+		sound "Spawner.AreaClear"
+		]
 	]

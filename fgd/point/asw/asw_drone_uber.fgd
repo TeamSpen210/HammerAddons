@@ -1,18 +1,10 @@
-
-@NpcClass base(BaseNPC) 
+@NpcClass base(asw_drone) 
 	appliesto(ASW) 
 	studio("models/swarm/drone/uberdrone.mdl") 
 	sphere() = asw_drone_uber: "Larger, stronger version of the asw_drone"
 	[
-	spawnflags(flags) : "spawnflags" =
+	@resources
 		[
-		131072: "Use Ground Checks" : 0
+		model "models/swarm/drone/uberdrone.mdl"
 		]
-
-
-	// Inputs
-	input BreakWaitForScript(void) : "Wakes the alien up if his Wait For Script flag was set"
-
-	// Outputs
-	output OnReachedFightGoal(void) : "Fires when the drone reaches his specified fight-to location"
 	]

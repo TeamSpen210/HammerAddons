@@ -5,4 +5,11 @@
 	[
 	viewlimits(angle) : "Turn range (Pitch Yaw Roll)" : "20 40 0" : "How many degrees this turret can turn either side of its initial facing."
 	upsidedown(boolean) : "Ceiling Turret" : "1" : "If set, this turret will be oriented upside down, as if attached to the ceiling." 
+
+	@resources
+		[
+		model "models/swarm/SentryGun/remoteturret.mdl"
+		sound "ASW_Sentry.Fire"
+		sound "ASW_Sentry.Turn"
+		]
 	]

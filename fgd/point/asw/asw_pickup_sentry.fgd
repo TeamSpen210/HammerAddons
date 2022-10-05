@@ -1,9 +1,16 @@
 
 @PointClass base(ASWPickup) 
 	appliesto(ASW) 
-	studio("models/swarm/SentryGun/sentryguncase.mdl") = asw_pickup_sentry: "Sentry Gun Case"
+	studio("models/items/ItemBox/ItemBoxLarge.mdl") = asw_pickup_sentry: "Sentry Gun Case"
 	[
 	bulletsingun(integer) : "Bullets In Gun" : 1
 	clips(integer) : "Clips" : 0
 	secondarybullets(integer) : "Secondary Bullets" : 0
+
+	skin(integer) readonly : "Skin = 2" : 2 : "The correct skin for this is 2."
+
+	@resources
+		[
+		model "models/items/ItemBox/ItemBoxLarge.mdl"
+		]
 	]

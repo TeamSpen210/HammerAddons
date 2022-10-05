@@ -1,4 +1,3 @@
-
 @PointClass base(ASWPickup) 
 	appliesto(ASW) 
 	studio("models/weapons/autogun/autogun.mdl") = asw_pickup_autogun: "Autogun"
@@ -6,4 +5,9 @@
 	bulletsingun(integer) : "Bullets In Gun" : 250
 	clips(integer) : "Clips" : 1
 	secondarybullets(integer) : "Secondary Bullets" : 0
+
+	@resources
+		[
+		model "models/weapons/autogun/autogun.mdl"
+		]
 	]

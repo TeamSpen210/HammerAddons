@@ -1,6 +1,9 @@
-
 @PointClass base(ASWPickup) 
 	appliesto(ASW) 
-	studio("models/swarm/ammo/ammobag.mdl") = asw_pickup_ammo_bag: "Ammo Bag"
+	studio("models/items/itembox/itemboxlarge.mdl") = asw_pickup_ammo_bag: "Ammo Bag"
 	[
+	@resources
+		[
+		model "models/items/itembox/itemboxlarge.mdl"
+		]
 	]

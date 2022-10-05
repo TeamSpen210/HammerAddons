@@ -27,4 +27,6 @@
 
 	// Outputs
 	output OnObjectiveComplete(void) : "Fired when the objective is completed."
+
+	@resources []
 	]

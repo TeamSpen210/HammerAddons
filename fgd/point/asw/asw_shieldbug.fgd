@@ -32,4 +32,32 @@
 
 	// Outputs
 	output OnReachedFightGoal(void) : "Fires when the Shieldbug reaches his specified fight-to location"
+
+	@resources
+		[
+		model "models/aliens/Shieldbug/Shieldbug.mdl"
+		model "models/swarm/Shieldbug/Shieldbug.mdl"
+		model "models/aliens/shieldbug/gib_back_leg.mdl"
+		model "models/aliens/shieldbug/gib_leg_claw.mdl"
+		model "models/aliens/shieldbug/gib_leg_middle.mdl"
+		model "models/aliens/shieldbug/gib_leg_upper.mdl"
+		model "models/aliens/shieldbug/gib_leg_l.mdl"
+		model "models/aliens/shieldbug/gib_leg_r.mdl"
+		sound "ASW_Drone.Alert"
+		sound "ASW_Drone.Attack"
+		sound "ASW_Parasite.Death"
+		sound "ASW_Parasite.Idle"
+		sound "ASW_Parasite.Attack"
+		sound "ASW_ShieldBug.StepLight"
+		sound "ASW_ShieldBug.Pain"
+		sound "ASW_ShieldBug.Alert"
+		sound "ASW_ShieldBug.Death"
+		sound "ASW_ShieldBug.Attack"
+		sound "ASW_ShieldBug.Circle"
+		sound "ASW_ShieldBug.Idle"
+		particle shieldbug_brain_explode
+		particle shieldbug_fountain
+		particle shieldbug_body_explode
+		entity asw_alien
+		]
 	]

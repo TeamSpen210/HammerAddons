@@ -4,4 +4,5 @@
 	studioprop("models/editor/asw_spawner/asw_spawner.mdl") 
 	color(0 0 255) = asw_holdout_spawner
 	[
+	@resources []
 	]

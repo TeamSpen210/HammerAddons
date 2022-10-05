@@ -16,4 +16,9 @@
 
 	// Inputs
 	input Burst(void) : "Burst and spawn grubs."
+
+	@resources
+		[
+		entity asw_alien_goo
+		]
 	]

@@ -8,4 +8,6 @@
 		"then send this input after the hack is finished " +
 		"(as the tech marine is no longer needed to finish the mission)."
 	input EnableTechMarineReq(void) : "Re-enable the tech marine req. after disabling it."
+
+	@resources []
 	]

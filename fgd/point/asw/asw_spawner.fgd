@@ -59,4 +59,9 @@
 	// Outputs
 	output OnAllSpawned(void) : "Fires when all children have been spawned"
 	output OnAllSpawnedDead(void) : "Fires when all the children have been spawned and have died."
+
+	@resources
+		[
+		// The alienclass KV is handled by code.
+		]
 	]

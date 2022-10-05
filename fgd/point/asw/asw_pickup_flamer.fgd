@@ -6,4 +6,11 @@
 	bulletsingun(integer) : "Bullets In Gun" : 60
 	clips(integer) : "Clips" : 5
 	secondarybullets(integer) : "Secondary Bullets" : 0
+
+	skin(integer) readonly : "Skin = 4" : 4 : "The correct skin for this is 4."
+
+	@resources
+		[
+		model "models/weapons/flamethrower/flamethrower.mdl"
+		]
 	]

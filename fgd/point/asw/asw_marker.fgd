@@ -9,4 +9,6 @@
 
 	// Inputs
 	input SetComplete(void) : "Mark as complete."
+
+	@resources []
 	]

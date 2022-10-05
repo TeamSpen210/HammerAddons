@@ -14,4 +14,21 @@
 	// Outputs
 	output OnIgnite(void) : "Fired when the goo catches fire"
 	output OnGooDestroyed(void) : "Fired when the goo is destroyed"
+
+	@resources
+		[
+		mdl "models/aliens/biomass/biomasshelix.mdl"
+		mdl "models/aliens/biomass/biomassl.mdl"
+		mdl "models/aliens/biomass/biomasss.mdl"
+		mdl "models/aliens/biomass/biomassu.mdl"
+		sound "ASWGoo.GooLoop"
+		sound "ASWGoo.GooScream"
+		sound "ASWGoo.GooDissolve"
+		sound "ASWFire.AcidBurn"
+		particle "biomass_dissolve"
+		particle "acid_touch"
+		particle "grubsack_death"
+
+		entity asw_grub
+		]
 	]

@@ -1,7 +1,33 @@
-
 @NpcClass base(BaseNPC) 
 	appliesto(ASW) 
 	studio("models/swarm/drone/drone.mdl") 
 	sphere() = asw_simple_drone: "Simple version of alien drone"
 	[
+	@resources
+		[
+		model "models/swarm/drone/Drone.mdl"
+		model "models/aliens/drone/drone.mdl"
+		sound "ASW_Drone.Land"
+		sound "ASW_Drone.Pain"
+		sound "ASW_Drone.Alert"
+		sound "ASW_Drone.Death"
+		sound "ASW_Drone.Attack"
+		sound "ASW_Drone.Swipe"
+		model "models/swarm/DroneGibs/dronepart01.mdl"
+		model "models/swarm/DroneGibs/dronepart20.mdl"
+		model "models/swarm/DroneGibs/dronepart29.mdl"
+		model "models/swarm/DroneGibs/dronepart31.mdl"
+		model "models/swarm/DroneGibs/dronepart32.mdl"
+		model "models/swarm/DroneGibs/dronepart44.mdl"
+		model "models/swarm/DroneGibs/dronepart45.mdl"
+		model "models/swarm/DroneGibs/dronepart47.mdl"
+		model "models/swarm/DroneGibs/dronepart49.mdl"
+		model "models/swarm/DroneGibs/dronepart50.mdl"
+		model "models/swarm/DroneGibs/dronepart53.mdl"
+		model "models/swarm/DroneGibs/dronepart54.mdl"
+		model "models/swarm/DroneGibs/dronepart56.mdl"
+		model "models/swarm/DroneGibs/dronepart57.mdl"
+		model "models/swarm/DroneGibs/dronepart58.mdl"
+		model "models/swarm/DroneGibs/dronepart59.mdl"
+		]
 	]

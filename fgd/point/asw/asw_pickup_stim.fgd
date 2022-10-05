@@ -1,9 +1,16 @@
 
 @PointClass base(ASWPickup) 
 	appliesto(ASW) 
-	studio("models/swarm/Stim/stim.mdl") = asw_pickup_stim: "Stim Pack"
+	studio("models/items/itembox/itemboxsmall.mdl") = asw_pickup_stim: "Stim Pack"
 	[
 	bulletsingun(integer) : "Bullets In Gun" : 3
 	clips(integer) : "Clips" : 0
 	secondarybullets(integer) : "Secondary Bullets" : 0
+
+	skin(integer) readonly : "Skin = 6" : 6 : "The correct skin for this is 6."
+
+	@resources
+		[
+		model "models/items/itembox/itemboxsmall.mdl"
+		]
 	]

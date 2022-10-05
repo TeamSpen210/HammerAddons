@@ -16,4 +16,21 @@
 	output OnEggOpened(void) : "Fired when the egg starts to open."
 	output OnEggHatched(void) : "Fired when the parasite hatches out of the egg."
 	output OnEggDestroyed(void) : "Fired when the egg is destroyed."
+
+	@resources
+		[
+		model "models/aliens/egg/egg.mdl"
+		model "models/aliens/egg/egggib_1.mdl"
+		model "models/aliens/egg/egggib_2.mdl"
+		model "models/aliens/egg/egggib_3.mdl"
+
+		particle egg_open
+		particle egg_hatch
+		particle egg_death
+
+		sound "ASW_Egg.Open"
+		sound "ASW_Egg.Gib"
+		sound "ASW_Parasite.EggBurst"
+		entity asw_parasite
+		]
 	]

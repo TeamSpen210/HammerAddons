@@ -1,4 +1,3 @@
-
 @PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	iconsprite("editor/env_spark.vmt") = asw_env_spark: "An entity used to create particle sparks at its origin."
@@ -32,4 +31,10 @@
 	input SparkOnce(void) : "Spark once."
 	input SetMinDelay(float) : "Set the min delay that a spark will shoot."
 	input SetMaxDelay(float) : "Set the max delay that a spark will shoot."
+
+	@resources
+		[
+		particle "asw_env_sparks"
+		sound "DoSpark"
+		]
 	]

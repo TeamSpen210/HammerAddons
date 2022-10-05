@@ -3,7 +3,8 @@
 	appliesto(ASW) 
 	iconsprite("editor/info_target.vmt") = asw_info_heal: "Fires output when a marine is healed"
 	[
-
 	// Outputs
 	output MarineHealed(void) : "Fired when a marine is healed with the med satchel or medkit"
+
+	@resources []
 	]

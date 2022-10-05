@@ -10,4 +10,6 @@
 	spawnername05(target_destination) : "Spawner 06" : : "The name of one or more spawners."
 	spawnername06(target_destination) : "Spawner 07" : : "The name of one or more spawners."
 	spawnername07(target_destination) : "Spawner 08" : : "The name of one or more spawners."
+
+	@resources []
 	]

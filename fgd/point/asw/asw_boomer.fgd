@@ -1,5 +1,5 @@
 
-@NpcClass base(BaseNPC) 
+@NpcClass base(asw_alien) 
 	appliesto(ASW) 
 	studio("models/aliens/boomer/boomer.mdl") 
 	sphere() = asw_boomer: "Swarm Boomer"
@@ -23,6 +23,15 @@
 	radius(integer) : "Alert Radius" : 256
 	eludedist(integer) : "Distance until eluded" : 1024 : "Only available when Burrow When Eluded is flagged"
 
-	// Inputs
-	input BreakWaitForScript(void) : "Wakes the alien up if his Wait For Script flag was set"
+	@resources
+		[
+		particle "boomer_explode"
+		particle "joint_goo"
+		model "models/aliens/boomer/boomer.mdl"
+		model "models/aliens/boomer/boomerLegA.mdl"
+		model "models/aliens/boomer/boomerLegB.mdl"
+		model "models/aliens/boomer/boomerLegC.mdl"
+		sound "ASW_Boomer.Death_Explode"
+		sound "ASW_Boomer.Death_Gib"
+		]
 	]
