@@ -1,4 +1,4 @@
-@SolidClass base(BaseEntityVisBrush) 
+@SolidClass base(func_platrot) 
 	line(255 255 255, targetname, train)
 	line(0 255 0, targetname, toptrack)
 	line(0 0 255, targetname, bottomtrack)
@@ -29,4 +29,9 @@
 
 	input Trigger(void) : "Trigger the track change."
 	input ForceTrigger[MESA](void) : "Force the track change."
+
+	@resources
+		[
+		sound "FuncTrackChange.Blocking"
+		]
 	]

@@ -25,4 +25,6 @@
 	input SetInvert(boolean) : "Set the state of inversion for NPC class exclusion (0 or 1)."
 
 	input Toggle(void) : "Toggle visibility/solidity of this brush."
+	
+	@resources []
 	]

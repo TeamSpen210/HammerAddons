@@ -17,4 +17,9 @@
 	]
 	// Inputs
 	input FireAtWill(void) : "Allow tank to fire next shot as soon as ready."
+	
+	@resources
+		[
+		entity mortarshell
+		]
 	]

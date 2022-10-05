@@ -5,4 +5,12 @@
 	// Outputs
 	output OutRemainingHealth(float) : "Remaining Health."
 	output OnPlayerUse(void) : "Fired when the player +USEs the charger."
+
+	@resources
+		[
+		sound "WallHealth.Deny"
+		sound "WallHealth.Start"
+		sound "WallHealth.LoopingContinueCharge"
+		sound "WallHealth.Recharge"
+		]
 	]

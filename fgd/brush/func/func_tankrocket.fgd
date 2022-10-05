@@ -1,6 +1,10 @@
-
 @SolidClass base(BaseTank) 
 	appliesto(EP1, EP2, HL2, P1, ASW) = func_tankrocket: "Brush Rocket Turret"
 	[
 	rocketspeed(float) : "Projectile speed" : 800 : "Speed the rocket will travel at."
+
+	@resources	
+		[
+		entity rpg_missile
+		]
 	]

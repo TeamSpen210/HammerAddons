@@ -5,4 +5,6 @@
 	input SetInactive(void) : "Sets the respawn room as inactive."
 	input ToggleActive(void) : "Toggles the respawn room between active and inactive."
 	input RoundActivate(void) : "Forces this entity to activate. Fired automatically at the start of a round."
+
+	@resources []
 	]

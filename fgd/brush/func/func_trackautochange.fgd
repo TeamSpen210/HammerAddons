@@ -6,4 +6,5 @@
 	"If Auto Activate Train flag is ticked, train isn't paused at the top/bottom of the path after func_trackautochange has finished it's movement. Instead, it will continue moving forward and doesn't need to be reactivated by trigger. "+
 	"If selected, the platform only rotates in place of it's origin without travelling specified altitude. The top and the bottom path_tracks should have their origin positioned in the same coordinates."
 	[
+	@resources [] // In parent
 	]

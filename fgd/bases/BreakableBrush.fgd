@@ -94,17 +94,17 @@
 		12: "item_ml_grenade"
 		13: "item_smg1_grenade"
 		14: "item_box_sniper_rounds"
-		15: "unused1"
+		// 15: "unused1"
 		16: "weapon_stunstick"
-		17: "weapon_ar1"
+		// 17: "weapon_ar1"
 		18: "weapon_ar2"
-		19: "unused2"
+		// 19: "unused2"
 		20: "weapon_ml"
 		21: "weapon_smg1"
 		22: "weapon_smg2"
 		23: "weapon_slam"
 		24: "weapon_shotgun"
-		25: "weapon_molotov"
+		// 25: "weapon_molotov"
 		26: "item_dynamic_resupply"
 		]
 
@@ -158,4 +158,9 @@
 	// Inputs
 	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
 	input DisableDamageForces(void) : "Damaging the entity does *not* apply physics forces to it."
+
+	@resources	
+		[
+		func breakable_brush
+		]
 	]

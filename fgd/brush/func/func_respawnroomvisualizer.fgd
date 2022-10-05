@@ -12,4 +12,6 @@
 	// Inputs
 	input SetSolid(boolean) : "Set whether this area is solid to enemy players or not. 0 = No, 1 = Yes"
 	input RoundActivate(void) : "Forces this entity to activate. Fired automatically at the start of a round."
+
+	@resources []
 	]

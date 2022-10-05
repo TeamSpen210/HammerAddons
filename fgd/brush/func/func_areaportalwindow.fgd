@@ -23,4 +23,6 @@
 	// Inputs
 	input SetFadeStartDistance(integer) : "Set fade start distance."
 	input SetFadeEndDistance(integer) : "Set fade end distance. If set to zero, this will force the window closed."
+	
+	@resources []
 	]

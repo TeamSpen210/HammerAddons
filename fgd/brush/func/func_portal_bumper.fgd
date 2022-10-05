@@ -11,4 +11,6 @@
 	input Deactivate(void) : "Turn off bumping functionality"
 	input Activate(void) : "Turn on bumping functionality"
 	input Toggle(void) : "Toggle bumping functionality"
+
+	@resources []
 	]

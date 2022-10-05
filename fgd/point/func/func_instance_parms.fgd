@@ -34,4 +34,6 @@
 	parm28(instance_parm) : "Parm (28)" : : "This is a parameter.  It goes in the form of $variable type [default value]."
 	parm29(instance_parm) : "Parm (29)" : : "This is a parameter.  It goes in the form of $variable type [default value]."
 	parm30(instance_parm) : "Parm (30)" : : "This is a parameter.  It goes in the form of $variable type [default value]."
+
+	@resources []
 	]

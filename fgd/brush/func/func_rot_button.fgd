@@ -1,4 +1,3 @@
-
 @SolidClass base(BaseEntityVisBrush, MasterEnt, Button) 
  = func_rot_button: "A brush entity that's designed to be used for a rotating player-useable button. When used by the player, it rotates to a pressed position."
 	[
@@ -22,4 +21,6 @@
 		4096: "Sparks" : 0
 		16384: "Non-solid" : 0 [GMod]
 		]
+
+	@resources []
 	]

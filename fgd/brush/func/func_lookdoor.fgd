@@ -19,4 +19,9 @@
 	// Inputs
 	input InvertOn(void) : "InvertOn - when set behavior of door is inverted."
 	input InvertOff(void) : "InvertOff - when set behavior of door is normal."
+
+	@resources
+		[
+		entity lookdoorthinker
+		]
 	]

@@ -30,4 +30,6 @@
 	// Outputs
 	output OnFullyOpen(void) : "Fired when the brush reaches the end position (starting position + (move direction * move distance))."
 	output OnFullyClosed(void) : "Fired when the brush reaches the starting position."
+
+	@resources []
 	]

@@ -15,4 +15,6 @@
 	// Inputs
 	input ToggleDirection(void) : "Change direction of conveyor."
 	input SetSpeed(float) : "Sets Conveyor Speed."
+
+	@resources []
 	]

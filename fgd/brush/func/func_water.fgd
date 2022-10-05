@@ -1,4 +1,5 @@
 @SolidClass base(func_door) 
 = func_water: "Special variant of func_door with water collision physics."
 	[
+	@resources [] // Same as func_door
 	]

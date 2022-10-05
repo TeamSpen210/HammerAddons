@@ -28,4 +28,6 @@
 	output OnNextPoint(string) : "Fires continuously every frame when the train is moving to its next destination."
 	output OnArrivedAtDestinationNode[P2](void) : "Fired when this train arrives at a destination that was specified by the MoveToPathNode Input."
 	output OnNext[L4D2](string) : "Fires when this train picks a new point to move towards (and just after OnStart)."
+
+	@resources []
 	]

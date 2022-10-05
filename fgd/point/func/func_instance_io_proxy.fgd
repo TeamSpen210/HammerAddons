@@ -79,4 +79,6 @@
 	output OnProxyRelay28[engine, since_P2](string) : "This will be fired when the corresponding input is triggered."
 	output OnProxyRelay29[engine, since_P2](string) : "This will be fired when the corresponding input is triggered."
 	output OnProxyRelay30[engine, since_P2](string) : "This will be fired when the corresponding input is triggered."
+
+	@resources []
 	]
