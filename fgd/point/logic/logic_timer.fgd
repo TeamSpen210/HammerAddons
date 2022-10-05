@@ -30,4 +30,6 @@
 	output OnTimer(void) : "Fired when the timer expires."
 	output OnTimerHigh(void) : "Fired every other time for an oscillating timer."
 	output OnTimerLow(void) : "Fired every other time for an oscillating timer."
+
+	@resources []
 	]

@@ -23,4 +23,6 @@
 	// Outputs
 	output OutValue(float) : "Fired when the InValue input is received, with the remapped input value as the parameter."
 	output OutValueString[P2EDU](string) : "Fired when the InValue input is received, with the remapped input value as the parameter converted to string."
+
+	@resources []
 	]

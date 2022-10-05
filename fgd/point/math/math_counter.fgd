@@ -30,4 +30,6 @@
 	output OnGetValue(float) : "Fired in response to the GetValue input. Used for polling the counter when you don't want constant updates from the OutValue output."
 	output OnChangedFromMin[since_ASW, MBase](void) : "Fired when the counter value changes from the minimum value."
 	output OnChangedFromMax[since_ASW, MBase](void) : "Fired when the counter value changes from the max value."
+
+	@resources []
 	]

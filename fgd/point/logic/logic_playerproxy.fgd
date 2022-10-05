@@ -113,4 +113,6 @@
 	
 	input SetHUDVisibility[MBase](bool)   : "Sets whether the HUD should be disabled. Also disables most forms of weapon switching."
 	input SetSuppressAttacks[MBase](bool) : "Sets whether attacks should be suppressed."
+
+	@resources []
 	]

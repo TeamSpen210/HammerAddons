@@ -19,4 +19,6 @@
 	output OnEasy(void) : "Fired when the tested difficulty is on Easy." 
 	output OnNormal(void) : "Fired when the tested difficulty is on Normal." 
 	output OnHard(void) : "Fired when the tested difficulty is on Hard." 
+
+	@resources []
 	]

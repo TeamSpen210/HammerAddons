@@ -39,4 +39,6 @@
 	output OutLetter(string) : "Outputs with the current letter itself."
 	output OnLightOn(void) : "Fires when the current letter is equivalent to 'on' (greater than a)."
 	output OnLightOff(void) : "Fires when the current letter is equivalent to 'off' (equal to a)."
+
+	@resources []
 	]

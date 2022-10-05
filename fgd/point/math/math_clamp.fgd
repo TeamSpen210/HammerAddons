@@ -16,4 +16,6 @@
 	output OutValue(string) : "Outputs the clamped value."
 	output OnBeforeMin(string) : "Fires when a clamped value was before the minimum value. Outputs the clamped value."
 	output OnBeyondMax(string) : "Fires when a clamped value was beyond the maximum value. Outputs the clamped value."
+
+	@resources []
 	]

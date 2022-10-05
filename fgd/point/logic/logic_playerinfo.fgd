@@ -12,4 +12,6 @@
 	output OutUserID(string) : "Outputs a player's user ID."
 	output OutPlayerName(string) : "Outputs a player's Steam name."
 	output OutPlayerEntity(ehandle) : "Outputs a player's entity."
+
+	@resources []
 	]

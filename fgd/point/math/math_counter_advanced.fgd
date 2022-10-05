@@ -38,4 +38,6 @@
 	
 	input LerpTo(float) : "Lerps this counter's value to the specified value based on the lerp percent."
 	input SetLerpPercent(float) : "Sets the lerp percent."
+
+	@resources []
 	]

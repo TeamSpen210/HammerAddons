@@ -8,4 +8,6 @@
 	MeasureReference(target_destination) : "Measure Reference" : "" : "The movement of Entity to Measure will be mirrored relative to this entity. (Mirror relative)"
 	Target(target_destination) : "Entity to Move" : "" : "This entity will be mirrored across the motions of Entity to Measure. (Movement target)"
 	TargetReference(target_destination) : "Movement Reference" : "" : "The Entity to Move will be mirrored relative to this entity. (Mirror target)"
+
+	@resources []
 	]

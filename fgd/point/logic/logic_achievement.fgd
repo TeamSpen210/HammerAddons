@@ -559,4 +559,6 @@
 
 	// Outputs
 	output OnFired(void) : "When the event fires, this fires."
+
+	@resources []
 	]

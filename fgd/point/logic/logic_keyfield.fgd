@@ -24,4 +24,6 @@
 	// Outputs
 	output OutValue(string) : "Fires when a keyfield is found. Passes its value."
 	output OnFailed(void) : "Fires when this entity fails to find the specified keyfield."
+
+	@resources []
 	]

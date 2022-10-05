@@ -41,4 +41,6 @@
 	output OnGetValue(float) : "Fired in response to the GetValue input. Used for polling the value when you don't want constant updates from the OutValue output."
 	output OnChangedFromMin(void) : "Fired when the current generation value changes from the minimum value."
 	output OnChangedFromMax(void) : "Fired when the current generation value changes from the maximum value."
+
+	@resources []
 	]

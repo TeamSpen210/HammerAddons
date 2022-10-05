@@ -33,4 +33,6 @@
 	// Outputs
 	output OnTrigger(void) : "Fired when the relay is triggered."
 	output OnTriggerParameter(string) : "Fired when the relay is triggered with a parameter."
+
+	@resources []
 ]

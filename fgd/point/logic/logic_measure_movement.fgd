@@ -60,4 +60,6 @@
 	// Outputs
 	output OutPosition[MBase](vector)  : "Outputs the resulting position when allowed."
 	output OutAngles[MBase](vector)  : "Outputs the resulting angles when allowed."
+
+	@resources []
 	]

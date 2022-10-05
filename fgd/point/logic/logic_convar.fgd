@@ -22,4 +22,6 @@
 	output OnFalse(void) : "Fired when a comparison is false."
 	output OutValue(string) : "Fired with the GetValue input. Passes the ConVar's current value."
 	output OnDenied(void) : "Fires when the ConVar is requested and logic_convar is not allowed by the server."
+
+	@resources []
 	]

@@ -26,4 +26,6 @@
 	output OnTrigger(void) : "Fired when the relay is triggered. If the relay is set to only trigger once, it will delete itself after firing this output."
 	output OnTriggerParameter[MBase](string) : "Fired when the relay is triggered with a parameter. If the relay is set to only trigger once, it will "+
 		"delete itself after firing this output."
+
+	@resources []
 	]

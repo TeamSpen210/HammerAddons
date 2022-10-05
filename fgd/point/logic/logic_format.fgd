@@ -39,4 +39,6 @@
 	
 	// Outputs
 	output OutFormattedValue(string) : "Fired when the formatted value is requested. Outputs the formatted value."
+
+	@resources []
 	]

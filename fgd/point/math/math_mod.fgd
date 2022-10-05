@@ -27,4 +27,6 @@
 	output OutInt(integer) : "Outputs the modified integer."
 	output OutFloat(float) : "Outputs the modified float."
 	output OutVector(vector) : "Outputs the modified vector."
+
+	@resources []
 	]

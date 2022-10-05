@@ -24,4 +24,6 @@
 	output OnRandom14(void) : "Fired when the input value equals the Random14 value."
 	output OnRandom15(void) : "Fired when the input value equals the Random15 value."
 	output OnRandom16(void) : "Fired when the input value equals the Random16 value."
+
+	@resources []
 	]

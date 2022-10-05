@@ -20,4 +20,6 @@
 	output OnRegisteredActivate2(void) : "Fired to send a message using the registered entity as the activator."
 	output OnRegisteredActivate3(void) : "Fired to send a message using the registered entity as the activator."
 	output OnRegisteredActivate4(void) : "Fired to send a message using the registered entity as the activator."
+
+	@resources []
 	]

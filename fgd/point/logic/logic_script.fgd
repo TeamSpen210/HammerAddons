@@ -38,4 +38,6 @@
 	group15(target_destination) : "EntityGroup[15]"
 	
 	shouldtransition[INFRA](boolean) : "Transition Across Levels" : 0 : "Transition this script across levels."
+
+	@resources [] // Packing of vscript stuff is generic.
 	]
