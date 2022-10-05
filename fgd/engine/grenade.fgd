@@ -1,0 +1,20 @@
+@PointClass base(BaseEntityPoint)
+= grenade: "Base class for all grenade entities."
+	[
+	radius[MBase](float) : "Damage Radius" : : "Override the damage radius of this grenade."
+	damage[MBase](float) : "Damage" : : "Override the damage done by this grenade."
+
+	input SetDamage(float): "Set the damage done by this grenade."
+	input Detonate(void): "Detonate the grenade immediately."
+
+	output OnDetonate(void): "Fired when the grenade is detonated."
+	output OnDetonate_OutPosition(vector) : "Fired when the grenade is detonated, passing along its position."
+
+	@resources [
+		sound "BaseGrenade.Explode"
+
+		particle "ExplosionCore" [+entropyzero2]
+		particle "ExplosionEmbers" [+entropyzero2]
+		particle "ExplosionFlash" [+entropyzero2]
+		]
+	]
