@@ -3,4 +3,11 @@
 	autovis(Weapons, EZ Weapons)
 	studioprop("models/weapons/w_xengrenade.mdl") = weapon_hopwire: "Xen Grenade"
 	[
+	@resources
+		[
+		// This also precaches the recipe table, not easy to do here though.
+		sound "WeaponFrag.Throw"
+		sound "WeaponFrag.Roll"
+		entity npc_grenade_hopwire
+		]
 	]

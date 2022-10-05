@@ -3,4 +3,8 @@
 	autovis(Weapons, HL2 Weapons, SMG1)
 	studioprop("models/weapons/w_smg1.mdl") = weapon_smg1: "SMG1"
 	[
+	@resources
+		[
+		entity grenade_ar2
+		]
 	]

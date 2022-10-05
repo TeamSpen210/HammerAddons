@@ -24,4 +24,6 @@
 	// Inputs
 	input SetAngularVelocity(float) : "Set angular velocity around the hinge (motor) in deg/sec."
 	input SetHingeFriction(float) : "Change the friction in the hinge."
+	
+	@resources []
 	]

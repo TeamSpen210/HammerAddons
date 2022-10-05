@@ -17,4 +17,6 @@
 	input TurnOn(void) : "Enable the controller."
 	input TurnOff(void) : "Disable the controller."
 	input SetAngularLimit(float) : "Change the angular limit."
+	
+	@resources []
 	]

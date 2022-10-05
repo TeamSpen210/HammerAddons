@@ -1,7 +1,15 @@
-
 @PointClass base(Weapon) 
 	appliesto(EP1, EP2, HL2, P1, Mesa) 
 	autovis(Weapons, HL2 Weapons, Crossbow)
 	studioprop("models/weapons/w_crossbow.mdl") = weapon_crossbow: "Crossbow"
 	[
+	@resources
+		[
+		material "sprites/blueflare1.vmt"
+		material "sprites/light_glow02_noz.vmt"
+		sound "Weapon_Crossbow.BoltHitBody"
+		sound "Weapon_Crossbow.BoltHitWorld"
+		sound "Weapon_Crossbow.BoltSkewer"
+		entity crossbow_bolt
+		]
 	]

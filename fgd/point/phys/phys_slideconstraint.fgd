@@ -30,4 +30,6 @@
 
 	// Inputs
 	input SetVelocity(float) : "Set linear velocity along the constraint"
+	
+	@resources []
 	]

@@ -18,5 +18,30 @@
 	output OnAttachToStrider(void) : "Fired when the striderbuster successfully attaches to a strider."
 	output OnDetonate(void) : "Fired when the striderbuster detonates."
 	output OnShatter(void) : "Fired when the striderbuster shatters without detonating."
-	output OnShotDown(void) : "Fired when the striderbuster shatters after being shot down by Hunters"
+	output OnShotDown(void) : "Fired when the striderbuster shatters after being shot down by Hunters."
+
+	@resources
+		[
+		model "models/magnusson_device.mdl"
+		sound "Weapon_StriderBuster.StickToEntity"
+		sound "Weapon_StriderBuster.Detonate"
+		sound "Weapon_StriderBuster.Dud_Detonate"
+		sound "Weapon_StriderBuster.Ping"
+
+		material "materials/sprites/orangeflare1.vmt"
+		material "materials/sprites/lgtning.vmt"
+
+		particle "striderbuster_attach"
+		particle "striderbuster_attached_pulse"
+		particle "striderbuster_explode_core"
+		particle "striderbuster_explode_dummy_core"
+		particle "striderbuster_break_flechette"
+		particle "striderbuster_trail"
+		particle "striderbuster_shotdown_trail"
+		particle "striderbuster_break"
+		particle "striderbuster_flechette_attached"
+
+		entity env_citadel_energy_core
+		entity sparktrail
+		]
 	]

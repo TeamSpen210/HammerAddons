@@ -28,4 +28,6 @@
 	// Outputs
 	output OnAttach(void) : "Fired when an entity is grabbed by the magnet."
 	output OnDetach(void) : "Fired when an entity is released by the magnet."
+	
+	@resources [] // Model already defined in the keyvalues
 	]

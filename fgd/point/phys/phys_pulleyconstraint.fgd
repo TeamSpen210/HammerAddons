@@ -20,4 +20,6 @@
 		1: "No Collision until break" : 1
 		2: "Keep Rigid" : 0
 		]
+	
+	@resources []
 	]

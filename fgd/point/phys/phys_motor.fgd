@@ -23,4 +23,6 @@
 	input SetSpeed(float) : "Sets target speed"
 	input TurnOn(void) : "Turns motor on"
 	input TurnOff(void) : "Turns motor off"
+	
+	@resources []
 	]

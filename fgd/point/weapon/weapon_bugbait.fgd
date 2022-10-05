@@ -3,4 +3,9 @@
 	autovis(Weapons, HL2 Weapons, Bugbait)
 	studioprop("models/weapons/w_bugbait.mdl") = weapon_bugbait: "Bug bait"
 	[
+	@resources
+		[
+		sound "Weapon_Bugbait.Splat"
+		entity npc_grenade_bugbait
+		]
 	]
