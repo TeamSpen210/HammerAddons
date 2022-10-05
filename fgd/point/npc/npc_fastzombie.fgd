@@ -6,4 +6,38 @@
 
 	// Inputs
 	input AttachToVehicle(string) : "Attach to the jeep with the specified name."
+
+	@resources
+		[
+		model "models/zombie/fast.mdl"		
+		model "models/gibs/fast_zombie_torso.mdl"
+		model "models/gibs/fast_zombie_legs.mdl"
+
+		sound "NPC_FastZombie.LeapAttack"
+		sound "NPC_FastZombie.FootstepRight"
+		sound "NPC_FastZombie.FootstepLeft"
+		sound "NPC_FastZombie.AttackHit"
+		sound "NPC_FastZombie.AttackMiss"
+		sound "NPC_FastZombie.LeapAttack"
+		sound "NPC_FastZombie.Attack"
+		sound "NPC_FastZombie.Idle"
+		sound "NPC_FastZombie.AlertFar"
+		sound "NPC_FastZombie.AlertNear"
+		sound "NPC_FastZombie.GallopLeft"
+		sound "NPC_FastZombie.GallopRight"
+		sound "NPC_FastZombie.Scream"
+		sound "NPC_FastZombie.RangeAttack"
+		sound "NPC_FastZombie.Frenzy"
+		sound "NPC_FastZombie.NoSound"
+		sound "NPC_FastZombie.Die"
+		sound "NPC_FastZombie.Gurgle"
+		sound "NPC_FastZombie.Moan1"
+	
+		mdl "models/zombie/Fast_torso.mdl" [+episodic]
+		sound "NPC_FastZombie.CarEnter1" [+episodic]
+		sound "NPC_FastZombie.CarEnter2" [+episodic]
+		sound "NPC_FastZombie.CarEnter3" [+episodic]
+		sound "NPC_FastZombie.CarEnter4" [+episodic]
+		sound "NPC_FastZombie.CarScream" [+episodic]
+		]
 	]

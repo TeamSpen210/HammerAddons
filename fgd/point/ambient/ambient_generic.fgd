@@ -118,4 +118,6 @@
 		"Sound is forced to full volume first!"
 	input SetSound[MBase](string) : "Sets the sound this ambient_generic should play."
 	output OnSoundFinished[MBase](void) : "Fires when the sound finishes playing. NOTE: This sound should be set to pause when the game is paused."
+
+	@resources [] // Provided by FGD
 	]

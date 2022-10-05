@@ -35,4 +35,34 @@
 	// Outputs
 	output OnPhysGunPickup(void) : "Picked up with physgun"
 	output OnPhysGunDrop(void) : "Released by physgun"
+
+	@resources
+		[
+		model "models/roller.mdl"
+		model "models/roller_spikes.mdl"
+		material "materials/sprites/bluelight1.vmt"
+		material "materials/effects/rollerglow.vmt"
+		material "materials/sprites/lgtning.vmt" // Used but not precached...
+		material "materials/sprites/rollermine_shock.vmt"
+		material "materials/sprites/rollermine_shock_yellow.vmt" [+episodic]
+
+		sound "NPC_RollerMine.Taunt"
+		sound "NPC_RollerMine.OpenSpikes"
+		sound "NPC_RollerMine.Warn"
+		sound "NPC_RollerMine.Shock"
+		sound "NPC_RollerMine.ExplodeChirp"
+		sound "NPC_RollerMine.Chirp"
+		sound "NPC_RollerMine.ChirpRespond"
+		sound "NPC_RollerMine.ExplodeChirpRespond"
+		sound "NPC_RollerMine.JoltVehicle"
+		sound "NPC_RollerMine.Tossed"
+		sound "NPC_RollerMine.Hurt"
+		sound "NPC_RollerMine.Roll"
+		sound "NPC_RollerMine.RollWithSpikes"
+		sound "NPC_RollerMine.Ping"
+		sound "NPC_RollerMine.Held"
+		sound "NPC_RollerMine.Reprogram" [+episodic]
+
+		sound "RagdollBoogie.Zap" [+episodic]
+		]
 	]

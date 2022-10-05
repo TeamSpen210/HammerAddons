@@ -37,4 +37,20 @@
 	// Outputs
 	output OnFinishInteractWithObject(void) : "Fires when Alyx finishes interacting with an object (usually hacking it)."
 	output OnPlayerUse(void) : "Fires when a player +USEs Alyx"
+
+	@resources
+		[
+		model "models/alyx.mdl" // In case it's unset
+		model "models/alyx_emptool_prop.mdl"
+		sound "npc_alyx.die"
+
+		sound "DoSpark" [+episodic]
+		sound "npc_alyx.starthacking" [+episodic]
+		sound "npc_alyx.donehacking" [+episodic]
+		sound "npc_alyx.readytohack" [+episodic]
+		sound "npc_alyx.interruptedhacking" [+episodic]
+		sound "ep_01.al_dark_breathing01" [+episodic]
+		sound "Weapon_CombineGuard.Special1" [+episodic]
+		entity env_alyxemp
+		]
 	]

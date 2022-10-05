@@ -20,4 +20,13 @@
 	output OnDogThrow(void) : "Fires when dog throws an object."
 	output OnDogPickup(void) : "Fires when dog picks up an object."
 	output OnDogCatch(void) : "Fires when dog catches an object."
+
+	@resources
+		[
+		model "models/dog.mdl"
+		sound "Weapon_PhysCannon.Launch"
+		material "materials/sprites/orangelight1.vmt"
+		material "materials/sprites/physcannon_bluelight2.vmt"
+		material "materials/sprites/glow04_noz.vmt"
+		]
 	]

@@ -2,4 +2,5 @@
 	appliesto(+engine, HL2, EP1, EP2, P1)
 = bullseye_strider_focus: "Duplicate of npc_bullseye, used so that ai_relationships don't accidentally alter relationships to these."
 	[
+	@resources []
 	]

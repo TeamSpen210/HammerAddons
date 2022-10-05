@@ -24,4 +24,52 @@
 	input DisableCrouchWalk(void) : "UNUSED: Prevents the hunter from crouch walking."
 	input EnableCrouchWalk(void) : "UNUSED: Allows the hunter to crouch walk."
 	input UseSiegeTargets(string) : "Pass in the name of info_targets to shoot at when I can't shoot at the player."
+
+	@resources
+		[
+		model "models/hunter.mdl"
+
+		sound "NPC_Hunter.Idle"
+		sound "NPC_Hunter.Scan"
+		sound "NPC_Hunter.Alert"
+		sound "NPC_Hunter.Pain"
+		sound "NPC_Hunter.PreCharge"
+		sound "NPC_Hunter.Angry"
+		sound "NPC_Hunter.Death"
+		sound "NPC_Hunter.FireMinigun"
+		sound "NPC_Hunter.Footstep"
+		sound "NPC_Hunter.BackFootstep"
+		sound "NPC_Hunter.FlechetteVolleyWarn"
+		sound "NPC_Hunter.FlechetteShoot"
+		sound "NPC_Hunter.FlechetteShootLoop"
+		sound "NPC_Hunter.FlankAnnounce"
+		sound "NPC_Hunter.MeleeAnnounce"
+		sound "NPC_Hunter.MeleeHit"
+		sound "NPC_Hunter.TackleAnnounce"
+		sound "NPC_Hunter.TackleHit"
+		sound "NPC_Hunter.ChargeHitEnemy"
+		sound "NPC_Hunter.ChargeHitWorld"
+		sound "NPC_Hunter.FoundEnemy"
+		sound "NPC_Hunter.FoundEnemyAck"
+		sound "NPC_Hunter.DefendStrider"
+		sound "NPC_Hunter.HitByVehicle"
+
+		particle "hunter_muzzle_flash"
+		particle "blood_impact_synth_01"
+		particle "blood_impact_synth_01_arc_parent"
+		particle "blood_spurt_synth_01"
+		particle "blood_drip_synth_01"
+
+		choreo "scenes/npc/hunter/hunter_scan.vcd"
+		choreo "scenes/npc/hunter/hunter_eyeclose.vcd"
+		choreo "scenes/npc/hunter/hunter_roar.vcd"
+		choreo "scenes/npc/hunter/hunter_pain.vcd"
+		choreo "scenes/npc/hunter/hunter_eyedarts_top.vcd"
+		choreo "scenes/npc/hunter/hunter_eyedarts_bottom.vcd"
+
+		material "materials/effects/water_highlight.vmt"
+
+		entity hunter_flechette
+		entity sparktrail
+		]
 	]

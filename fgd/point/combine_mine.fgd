@@ -66,4 +66,17 @@
 	output OnPulledUp(void) : "Fires when this mine is uprooted with physgun."
 	output OnTriggered[MBase](void) : "Fires when this mine is triggered by an enemy."
 	output OnExplode[MBase](void) : "Fires when this mine actually explodes."
+
+	@resources
+		[
+		model "models/props_combine/combine_mine01.mdl"
+		sound "NPC_CombineMine.Hop"
+		sound "NPC_CombineMine.FlipOver"
+		sound "NPC_CombineMine.TurnOn"
+		sound "NPC_CombineMine.TurnOff"
+		sound "NPC_CombineMine.OpenHooks"
+		sound "NPC_CombineMine.CloseHooks"
+		sound "NPC_CombineMine.ActiveLoop"
+		material "materials/sprites/glow01.vmt"
+		]
 	]

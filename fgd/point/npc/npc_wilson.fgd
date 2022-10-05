@@ -47,4 +47,20 @@
 	output OnPhysGunPickup(void) : "Picked up with physgun."
 	output OnPhysGunDrop(void) : "Released by physgun."
 	output OnDestroyed(void) : "Fires when Wilson has been destroyed. WILSOOOOON!!!"
+
+	@resources
+		[
+		model "models/will_e.mdl"
+		model "models/will_e_damaged.mdl"
+		material "materials/sprites/glow1.vmt"
+		sound "NPC_Wilson.Destruct"
+		sound "NPC_Combine.WeaponBash"
+		sound "RagdollBoogie.Zap"
+		particle explosion_turret_break
+		choreo "scenes/npc/wilson/expression_idle.vcd"
+		choreo "scenes/npc/wilson/expression_alert.vcd"
+		choreo "scenes/npc/wilson/expression_combat.vcd"
+		choreo "scenes/npc/wilson/expression_dead.vcd"
+		choreo "scenes/npc/wilson/expression_scanning.vcd"
+		]
 	]

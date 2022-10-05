@@ -25,4 +25,11 @@
 	// Inputs
 	input PerfectAccuracyOn(void) : "Make every shot at a zombie a headshot."
 	input PerfectAccuracyOff(void) : "Return to normal accuracy."
+
+	@resources
+		[
+		model "models/monk.mdl"
+		sound "NPC_Citizen.FootstepLeft"
+		sound "NPC_Citizen.FootstepRight"
+		]
 	]

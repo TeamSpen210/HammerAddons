@@ -32,4 +32,6 @@
 	// Outputs
 	output OnTargeted(void) : "Fires when targeted."
 	output OnReleased(void) : "Fires when no longer targeted."
+
+	@resources []
 	]

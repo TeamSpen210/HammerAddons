@@ -2,4 +2,9 @@
 	appliesto(+engine, HL2, EP1, EP2, P1)
 = crossbow_bolt: "The projectile fired by the crossbow."
 	[
+	@resources
+		[
+		model "models/crossbow_bolt.mdl"
+		material "materials/sprites/light_glow02_noz.vmt"
+		]
 	]

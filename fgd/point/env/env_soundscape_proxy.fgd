@@ -24,4 +24,6 @@
 
 	// Outputs
 	output OnPlay(void) : "Fired when this soundscape becomes the active one."
+
+	@resources [] // The referenced soundscape is in charge of resources.
 	]

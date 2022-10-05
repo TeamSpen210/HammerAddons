@@ -14,4 +14,6 @@
 	output OnPickedUpObject(void) : "Fired when the ForcePickup specified object has been picked up."
 	output OnDroppedObject(void) : "Fired when the ForceDrop specified object has been dropped."
 	output OnPausingBeforeDrop(void) : "Fired at the start of the pause before dropping the ForceDrop specified object."
+
+	@resources []
 	]

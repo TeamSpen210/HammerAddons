@@ -20,4 +20,12 @@
 	// Inputs
 	input Explode(void) : "Triggers the explosion."
 	input ExplodeWithMagnitude(float) : "Triggers the explosion with the specified magnitude."
+
+	@resources
+		[
+		material "materials/sprites/lgtning.vmt"
+		material "materials/effects/blueflare1.vmt"
+		material "materials/particle/particle_smokegrenade.vmt"
+		material "materials/particle/particle_noisesphere.vmt"
+		]
 ]

@@ -18,4 +18,6 @@
 	// Outputs
 	output OnEntireTeamStartTouch[L4D, L4D2](void) : "Fired when an entire team starts touching the trigger."
 	output OnEntireTeamEndTouch[L4D, L4D2](void) : "Fired when an entire team stops touching the trigger."
+	
+	@resources []
 	]

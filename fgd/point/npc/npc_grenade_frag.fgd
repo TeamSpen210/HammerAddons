@@ -6,4 +6,13 @@
 	RebelColor(boolean) : "Rebel Color" : 0 : "Turns the grenade's glow and sprite trail yellow."
 	// Inputs
 	input SetTimer(float) : "This input makes the grenade live, and specifies how many seconds before it explodes."
+
+	@resources
+		[
+		model "models/Weapons/w_grenade.mdl"
+		material "materials/sprites/redglow1.vmt"
+		material "materials/sprites/bluelaser1.vmt"
+		sound "Grenade.Blip"
+		entity grenade // Actual base class.
+		]
 	]

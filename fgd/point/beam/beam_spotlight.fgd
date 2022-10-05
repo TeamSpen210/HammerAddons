@@ -38,4 +38,10 @@
 	// Outputs
 	output OnLightOn(void) : "Fires when light turns on."
 	output OnLightOff(void) : "Fires when light turns off."
+
+	@resources
+		[	
+		material "materials/sprites/light_glow03.vmt"
+		material "materials/sprites/glow_test02.vmt"
+		]
 	]

@@ -12,4 +12,9 @@
 		4 : "Remove Now" [MESA]
 		5 : "Core" [MESA]
 		]
+	
+	@resources 
+		[
+		entity env_entity_dissolver
+		]
 	]

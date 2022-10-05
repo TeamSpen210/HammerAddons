@@ -1,7 +1,7 @@
 @BaseClass base(BaseEntityAnimating, DamageFilter) 
 	color(0 200 200) 
 	line(255 0 0, targetname, enemyfilter) 
-= BaseLogicalNPC
+= BaseLogicalNPC: "NPC behaviours, split out so npc_bullseye doesn't have model-related stuff."
 	[
 	health(integer): "Health" : : "Overrides the NPC's default health. Cannot be higher than Max Health."
 	max_health(integer): "Max Health" : : "Overrides the NPC's max health. Health cannot exceed this amount."
@@ -193,4 +193,10 @@
 	input DisableSpeedModifier[engine](void) : "Disable player speed modification behavior."
 	input SetSpeedModRadius[engine](integer) : "Specify how close the player must be before their speed is modified."
 	input SetSpeedModSpeed[engine](integer) : "Set the speed the player's movement will use when moving toward this entity."
+
+	@resources
+		[
+		// additionalequipment, EZ2 temporal variant.
+		func base_npc
+		]
 	]

@@ -36,4 +36,6 @@
 	// Outputs
 	output OnHurt(void) : "Fired whenever this trigger hurts something other than a player."
 	output OnHurtPlayer(void) : "Fired whenever this trigger hurts a player."
+	
+	@resources []
 	]

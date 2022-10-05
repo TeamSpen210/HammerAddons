@@ -9,4 +9,6 @@
 	output OnCommentaryNewGame(void) : "Fired when a new game is started with commentary enabled."
 	output OnCommentaryMidGame(void) : "Fired when commentary is enabled in the middle of a map."
 	output OnCommentaryMultiplayerSpawn(void) : "Fired when a player spawns in multiplayer."
+
+	@resources []
 	]

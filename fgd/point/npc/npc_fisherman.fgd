@@ -4,4 +4,14 @@
 	studio("models/lostcoast/fisherman/fisherman.mdl") 
 = npc_fisherman: "Fisherman NPC from Lost Coast."
 	[
+	@resources
+		[
+		model "models/lostcoast/fisherman/fisherman.mdl"
+		sound "NPC_Fisherman.FootstepLeft"
+		sound "NPC_Fisherman.FootstepRight"
+		sound "NPC_Fisherman.Die"
+		choreo "scenes/Expressions/FishermanIdle.vcd"
+		choreo "scenes/Expressions/FishermanAlert.vcd"
+		choreo "scenes/Expressions/FishermanCombat.vcd"
+		]
 	]

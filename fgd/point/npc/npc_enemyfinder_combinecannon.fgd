@@ -11,4 +11,6 @@
 	// Inputs
 	input SetWideFOVForSeconds(float) : "Gives this enemyfinder a 270 degree viewcone for the number of seconds " +
 		"specified in the parameter override. While in this mode the gun will not shoot non-players."
+
+	@resources []
 	]

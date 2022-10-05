@@ -64,4 +64,10 @@
 	output OnLaunch(void) : "Fires when missile is launched"
 	output OutMissile[MBase](ehandle) : "Passes each missile launched"
 
+	@resources
+		[
+		model "models/player.mdl" // Dummy model
+		entity grenade_homer
+		entity grenade_pathfollower
+		]
 	]

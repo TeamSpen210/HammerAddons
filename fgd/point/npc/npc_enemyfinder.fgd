@@ -70,4 +70,9 @@
 	// Outputs
 	output OnLostEnemies(void) : "Fires when the enemy finder has no enemies."
 	output OnAcquireEnemies(void) : "Fires when the enemy finder acquires enemies."
+
+	@resources
+		[
+		model "models/player.mdl"
+		]
 	]

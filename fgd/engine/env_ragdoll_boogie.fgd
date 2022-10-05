@@ -3,4 +3,8 @@
 = env_ragdoll_boogie: "The entity that controls random flinching on radolls, when electrified or the like." +
 	"\n\nThis must be parented to a ragdoll, and needs variables to be set by code."
 	[
+	@resources
+		[
+		sound "RagdollBoogie.Zap"
+		]
 	]

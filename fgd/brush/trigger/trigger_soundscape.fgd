@@ -5,4 +5,6 @@
 	"It automatically will trigger the soundscape referred to by its 'Soundscape' property."
 	[
 	soundscape(target_source) : "Soundscape"
+	
+	@resources []
 	]
