@@ -5,4 +5,5 @@
 	sphere(radius)
 = info_node_climb: "A climb-node for AI navigation. Only usable by NPCs that can climb."
 	[
+	@resources []
 	]

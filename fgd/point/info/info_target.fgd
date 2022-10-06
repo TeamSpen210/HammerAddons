@@ -10,4 +10,5 @@
 		2: "Always transmit to client (ignore PVS)" : 0
 		]
 
+	@resources []
 	]

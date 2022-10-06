@@ -10,4 +10,6 @@
 		0: "Old (eye=64, FOV=75)"
 		1: "New (eye=53.5, FOV=90)"
 		]
+
+	@resources []
 	]

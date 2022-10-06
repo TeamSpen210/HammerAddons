@@ -22,4 +22,6 @@
 
 	// Outputs
 	output OnBaited(void) : "Fires when bugbait lands within a radius of the sensor"
+
+	@resources []
 	]

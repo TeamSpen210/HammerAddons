@@ -8,6 +8,7 @@
 		1: "Start Off" : 0
 		]
 
+	// Not a texture type, these are managed by code, not on disk!
 	rendertarget[engine](string) : "Render Target" : "_rt_Camera"
 	rendertarget[Mesa](choices) : "Render Target" : "_rt_Camera" =
 		[
@@ -54,4 +55,6 @@
 	input Activate[since_ASW](void) : "Turn the camera on, activate it and deactivate all other cameras."
 	input Deactivate[since_ASW](void) : "Turn the camera off, deactivate it."
 	input SetRenderTarget[MBase](string) : "Sets the render target."
+
+	@resources [] // existance of rendertargets is handled by code not files.
 	]

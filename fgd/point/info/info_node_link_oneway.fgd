@@ -17,4 +17,6 @@
 		0 : "Enabled is one-way, disabled turns off link"
 		1 : "Enabled is two-way, disabled is one-way"
 		]
+
+	@resources []
 	]

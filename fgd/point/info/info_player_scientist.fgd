@@ -7,4 +7,6 @@
 
 	input Enable(void) : "Enable this spawnpoint."
 	input Disable(void) : "Disable this spawnpoint."
+
+	@resources []
 	]

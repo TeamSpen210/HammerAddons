@@ -9,4 +9,6 @@
 	// Outputs
 	output OnUsageAccepted(void) : "Fires when a NPC uses this link after meeting all of the requirements."
 	output OnUsageAcceptedWhileDisabled(void) : "Fires when a NPC that meets all of the requirements tries to use this link, but it's disabled."
+
+	@resources []
 	]

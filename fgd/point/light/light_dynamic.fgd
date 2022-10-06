@@ -53,4 +53,6 @@
 	input TurnOn(void) : "Turn the light off."
 	input TurnOff(void) : "Turn the light on."
 	input Toggle(void) : "Toggle the light on/off."
+
+	@resources []
 	]

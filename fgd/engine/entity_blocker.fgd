@@ -2,4 +2,5 @@
 	appliesto(+engine)
 = entity_blocker: "This is spawned in temporarily to prevent NPCs from pathfinding into spaces like spawn points or movement targets."
 	[
+	@resources []
 	]   

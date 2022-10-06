@@ -5,4 +5,5 @@
 	halfgridsnap
 = info_target_helicoptercrash: "Helicopter Crash Target"
 	[
+	@resources []
 	]

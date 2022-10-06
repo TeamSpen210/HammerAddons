@@ -6,4 +6,6 @@
 = info_darknessmode_lightsource: "Specifies a lit location for Alyx's EP1 darkness mode."
 	[
 	lightradius(float) : "Light Radius" : 256.0 : "The radius around this lightsource in which Alyx will be able to see enemies."
+
+	@resources []
 	]

@@ -12,4 +12,6 @@
 	// Inputs
 	input SetMaxRagdollCount(integer) : "Set the Max Ragdoll Count."
 	input SetMaxRagdollCountDX8(integer) : "Set the Max Ragdoll Count on DX8 hardware."
+
+	@resources []
 	]

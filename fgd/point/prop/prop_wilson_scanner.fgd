@@ -42,4 +42,10 @@
 	output OnScanReject(void) : "Fires when this scanner rejects an entity."
 	output OnScanStart(void) : "Fires when this scanner starts scanning entity."
 	output OnScanInterrupt(void) : "Fires when a scan is interrupted by the target falling out of range, being destroyed, etc."
+
+	@resources
+		[
+		model "models/props_lab/monitor02.mdl"
+		sound "AI_BaseNPC.SentenceStop"
+		]
 	]

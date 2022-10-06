@@ -9,4 +9,6 @@
 	input Unlock(void) : "Unlocks the filename/map combination."
 	input Complete(void) : "Completes the filename/map combination."
 	input Save(void) : "Saves bonus map data."
+
+	@resources []
 	]

@@ -1,0 +1,6 @@
+@PointClass base(rpg_missile) 
+	appliesto(+engine, HL2, EP1, EP2, P1)
+= apc_missile: "Missile fired by Combine APCs."
+	[
+	@resources [] // Inherits from rpg_missile, and also shares model.
+	]

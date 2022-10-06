@@ -13,4 +13,14 @@
 
 	// Outputs
 	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up WITH THE PHYSGUN. +USE pickups do not fire this output."
+
+	@resources
+		[
+		model "models/combine_helicopter/helicopter_bomb01.mdl"
+		sound "ReallyLoudSpark"
+		sound "NPC_AttackHelicopterGrenade.Ping"
+		sound "NPC_AttackHelicopterGrenade.PingCaptured"
+		sound "NPC_AttackHelicopterGrenade.HardImpact"
+		entity grenade // Actual parent class.
+		]
 	]

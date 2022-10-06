@@ -2,4 +2,5 @@
 	appliesto(CSGO) 
 	studio("models/editor/playerstart.mdl") = info_player_logo: "This is for logo maps for demos. All players will spawn here, and there will be no class menu, team menu, or HUD."
 	[
+	@resources []
 	]

@@ -10,4 +10,6 @@
 
 	// Inputs
 	input Reload(void) : "Ends this game and reloads"
+
+	@resources []
 	]

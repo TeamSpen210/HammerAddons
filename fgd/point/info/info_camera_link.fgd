@@ -14,4 +14,6 @@
 
 	// Inputs
 	input SetCamera(string) : "Set the camera to use. The parameter should be the name of a point_camera entity in the map."
+
+	@resources []  // It doesn't do anything, the target ent is what does things.
 	]

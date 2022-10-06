@@ -135,8 +135,7 @@
 		entity npc_handgrenade 
 		// Entity precaches npc_handgrenade, but they actually spawn these.
 		entity  weapon_frag 
-		// TODO: Manhacks added by Mapbase.
-		entity npc_manhack 
+		entity npc_manhack [+mapbase]
 
 		// May drop these
 		entity item_healthvial

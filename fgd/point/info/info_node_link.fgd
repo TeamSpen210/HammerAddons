@@ -66,4 +66,6 @@
 	// Inputs
 	input TurnOn(void) : "Turn the link on."
 	input TurnOff(void) : "Turn the link off."
+
+	@resources []
 	]

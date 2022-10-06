@@ -20,4 +20,6 @@
 	width1(float) : "Width Land" : 25.0
 	width2(float) : "Width Water" : 25.0
 	debugdraw(boolean) : "Show Debug" : 0
+
+	@resources [] // Handled by generic logic.
 	]

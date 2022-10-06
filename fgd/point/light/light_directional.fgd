@@ -9,4 +9,6 @@
 	_lighthdr(color255) : "BrightnessHDR" : "-1 -1 -1 1"
 	_lightscalehdr(float) : "BrightnessScaleHDR" : 0.7 : "Amount to scale the light by when compiling for HDR."
 	sunspreadangle(float) : "SpreadAngle" : 0 : "The angular extent of the light for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
+
+	@resources []
 	]

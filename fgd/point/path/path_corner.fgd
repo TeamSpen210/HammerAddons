@@ -20,4 +20,6 @@
 
 	// Outputs
 	output OnPass(void) : "Fires when a path follower passes this point"
+
+	@resources []
 	]
