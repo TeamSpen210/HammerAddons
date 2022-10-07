@@ -11,8 +11,8 @@
 		16: "Only Direct" : 0
 		32: "Controllable" : 0
 		64: "Damage Kick" : 0
-		1024: "NPC Controllable" : 0
-		2048: "NPC Set Controller" : 0
+		1024: "NPC Controllable" : 0 [+USE_AI]
+		2048: "NPC Set Controller" : 0 [+USE_AI]
 		4096: "Allow friendlies to hit player" : 0
 		32768: "Non-solid." : 0
 		131072: "Perfect accuracy every 3rd shot at player" : 0
@@ -69,12 +69,12 @@
 
 	leadtarget(boolean) : "Lead Target" : 0
 
-	npc_man_point(target_destination) : "NPC Man Point" : : "Point where NPC must stand to man this func_tank."
-	playergraceperiod(float) : "Post-NPC Attack Grace Period" : 0 : "If specified, NPC's manning this func tank won't fire at the player, after firing at a non-player, for this amount of time."
-	ignoregraceupto(float) : "Ignore Grace Upto" : 768 : "The player grace period is ignored if the player's under this distance from the func_tank."
+	npc_man_point[+USE_AI](target_destination) : "NPC Man Point" : : "Point where NPC must stand to man this func_tank."
+	playergraceperiod[+USE_AI](float) : "Post-NPC Attack Grace Period" : 0 : "If specified, NPC's manning this func tank won't fire at the player, after firing at a non-player, for this amount of time."
+	ignoregraceupto[+USE_AI](float) : "Ignore Grace Upto" : 768 : "The player grace period is ignored if the player's under this distance from the func_tank."
 	playerlocktimebeforefire(float) : "Player Lock Time" : 0 : "The tank must have the player as a target for this amount of time before it's allowed to fire."
 
-	ShouldFindNPCs(boolean) : "Automatically search for NPCs" : 1 : "If controllable by NPCs, " +
+	ShouldFindNPCs[+USE_AI](boolean) : "Automatically search for NPCs" : 1 : "If controllable by NPCs, " +
 		"sets whether we should automatically search for NPCs to use this func_tank or just wait for the player to set it. " +
 		"Identical to StartFindingNPCs and StopFindingNPCs."
 
@@ -96,10 +96,10 @@
 	input SetTargetEntityName(target_destination) : "Name of entity I should follow/attack"
 	input SetTargetEntity(string) : "Set the entity I should follow/attack to the passed in entity."
 	input ClearTargetEntity(void) : "Clear the entity I should be attacking."
-	input FindNPCToManTank(string) : "Find a nearby NPC to man this func_tank."
-	input StartFindingNPCs(void) : "Start searching for NPCs to man this func_tank."
-	input StopFindingNPCs(void) : "Stop searching for NPCs to man this func_tank."
-	input ForceNPCOff(void) : "Force the NPC manning this func_tank (if any) to leave."
+	input FindNPCToManTank[+USE_AI](string) : "Find a nearby NPC to man this func_tank."
+	input StartFindingNPCs[+USE_AI](void) : "Start searching for NPCs to man this func_tank."
+	input StopFindingNPCs[+USE_AI](void) : "Stop searching for NPCs to man this func_tank."
+	input ForceNPCOff[+USE_AI](void) : "Force the NPC manning this func_tank (if any) to leave."
 	input SetMaxRange(float) : "Set the max range of the func_tank."
 
 	// Outputs
@@ -107,8 +107,8 @@
 	output OnAquireTarget(void) : "Fires when target is newly in range and can be shot"
 	output OnLoseTarget(void) : "Fires when when target goes out of range"
 	output OnAmmoDepleted(void) : "Fires when tank runs out of ammo"
-	output OnGotController(void) : "Fires when an NPC starts to control this tank. Players do NOT fire this input."
-	output OnLostController(void) : "Fires when the NPC controller of the tank stops controlling it. Players do NOT fire this input."
+	output OnGotController[+USE_AI](void) : "Fires when an NPC starts to control this tank. Players do NOT fire this input."
+	output OnLostController[+USE_AI](void) : "Fires when the NPC controller of the tank stops controlling it. Players do NOT fire this input."
 	output OnGotPlayerController(void) : "Fires when a Player starts to control this tank. NPCs do NOT fire this input."
 	output OnLostPlayerController(void) : "Fires when the Player controller of the tank stops controlling it. NPCs do NOT fire this input."
 	output OnReadyToFire(void) : "Fires once when the tank is done waiting to fire between rounds"

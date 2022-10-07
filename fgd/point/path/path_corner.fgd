@@ -3,7 +3,7 @@
 	iconsprite("editor/ficool2/path_corner")
 	studio("models/editor/angle_helper.mdl")
 	color(247 181 82)
-= path_corner: "Generic path point"
+= path_corner: "Path points for func_train or NPC entities to follow."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

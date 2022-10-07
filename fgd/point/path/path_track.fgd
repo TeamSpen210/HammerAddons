@@ -22,7 +22,7 @@
 	speed(float) : "New Train Speed" : 0 : "When the train reaches this path_track, it will set its speed to this speed. " +
 		"This speed must be a positive value that is less than the train's max speed. " +
 		"A value of 0 will cause no change in the train's speed."
-	radius(float) : "Path radius" : 0 : "Used by NPCs who follow track paths (attack chopper/gunship). " +
+	radius[+USE_AI](float) : "Path radius" : 0 : "Used by NPCs who follow track paths (attack chopper/gunship). " +
 		"This tells them the maximum distance they're allowed to be from the path at this node."
 
 	orientationtype[engine](integer) : "Orientation Type" : 1

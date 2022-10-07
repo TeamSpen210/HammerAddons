@@ -15,7 +15,7 @@
 		[
 		0: "Allow anything"
 		1: "Ignore Players"
-		2: "Ignore NPCs"
+		2: "Ignore NPCs" [+USE_AI]
 		4: "Ignore func_pushable"
 		8: "Ignore touches"
 		16: "Ignore +USE"

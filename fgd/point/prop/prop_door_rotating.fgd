@@ -54,7 +54,7 @@
 		2048: "Starts locked" : 0
 		4096: "Door silent (No sound, and does not alert NPCs)" : 0
 		8192: "Use closes" : 1
-		16384: "Door silent to NPCS (Does not alert NPCs)" : 0
+		16384: "Door silent to NPCS (Does not alert NPCs)" : 0 [+USE_AI]
 		32768: "Ignore player +USE" : 0
 		524288: "Start Breakable" : 0
 		]

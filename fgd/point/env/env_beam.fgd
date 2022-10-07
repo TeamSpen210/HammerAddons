@@ -39,8 +39,8 @@
 		[
 		0: "Not a tripwire"
 		1: "Player Only"
-		2: "NPC Only"
-		3: "Player or NPC"
+		2: "NPC Only" [+USE_AI]
+		3: "Player or NPC" [+USE_AI]
 		4: "Player or NPC or Physprop"
 		]
 
