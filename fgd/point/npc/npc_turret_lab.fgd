@@ -7,4 +7,19 @@
 	FieldOfView(float) : "FieldOfView" : "-0.5" : "The ceiling turret's viewcone. (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
 	ManualArmYaw(boolean) : "Static Arm" : 0 : "Prevents the arm from moving."
 	Mirrored(boolean) : "Mirrored" : "No" : "'Mirrors' the turret, which changes certain animations."
-]
+
+	@resources
+		[
+		model "models/props_lab/labturret_npc.mdl"
+		material "materials/sprites/glow1.vmt"
+		sound "NPC_LabTurret.Retire"
+		sound "NPC_LabTurret.Deploy"
+		sound "NPC_LabTurret.Move"
+		sound "NPC_LabTurret.Active"
+		sound "NPC_LabTurret.Alert"
+		sound "NPC_LabTurret.ShotSounds"
+		sound "NPC_LabTurret.Ping"
+		sound "NPC_LabTurret.Die"
+		sound "NPC_FloorTurret.DryFire"
+		]
+	]

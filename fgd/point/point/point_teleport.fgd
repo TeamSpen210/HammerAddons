@@ -21,4 +21,6 @@
 		"so this input was added to avoid breaking old content."
 	input TeleportEntity[MBase, since_ASW](target_destination) : "Teleport the entity specified by the parameter override. " +
 		"Use this to teleport an entity other than the one specified in the Entity To Teleport field."
+
+	@resources []
 	]

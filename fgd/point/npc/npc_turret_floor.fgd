@@ -45,4 +45,27 @@
 	output OnTipped(void) : "Turret has been tipped over and is inactive."
 	output OnPhysGunPickup(void) : "Picked up with physgun"
 	output OnPhysGunDrop(void) : "Released by physgun"
+
+	@resources
+		[
+		// Todo: Pick citizen vs regular?
+		model "models/combine_turrets/floor_turret.mdl"
+		model "models/combine_turrets/citizen_turret.mdl"
+		material "materials/effects/laser1.vmt"  // Citizen only, or always in EZ2.
+		sound "NPC_FloorTurret.AlarmPing"  // Allied to player only (citizen normally, in ez2 non-citizen)
+		sound "NPC_Combine.WeaponBash"
+		sound "NPC_FloorTurret.Activate"
+		sound "NPC_FloorTurret.Alarm"
+		sound "NPC_FloorTurret.Alert"
+		sound "NPC_FloorTurret.Deploy"
+		sound "NPC_FloorTurret.Destruct"
+		sound "NPC_FloorTurret.Die"
+		sound "NPC_FloorTurret.DryFire"
+		sound "NPC_FloorTurret.Move"
+		sound "NPC_FloorTurret.Ping"
+		sound "NPC_FloorTurret.Retire"
+		sound "NPC_FloorTurret.Retract"
+		sound "NPC_FloorTurret.ShotSounds"
+		particle "explosion_turret_break" [+episodic]
+		]
 	]

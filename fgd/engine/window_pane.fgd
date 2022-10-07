@@ -3,4 +3,9 @@
 	studio("models/brokenglass_piece.mdl")
 = window_pane: "The individual shattered window pane for func_breakable_surf"
 	[
+	@resources
+		[
+		model "models/brokenglass_piece.mdl"
+		// Also flecks, but that is just handled by func_breakable_surf
+		]
 	]   

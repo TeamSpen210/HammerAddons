@@ -41,4 +41,6 @@
 	input Disable(void) : "Disable the view proxy, and start modifying the player's view."
 	input TeleportPlayerToProxy(void) : "Move the player to the view proxy."
 	input OffsetToPlayerAndEnable(void) : "Enable the viewproxy, but alter the offset such that it doesn't move the camera."
+
+	@resources []
 	]

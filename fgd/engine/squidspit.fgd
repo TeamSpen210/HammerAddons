@@ -2,4 +2,12 @@
 	appliesto(+engine, EZ2)
 = squidspit: "Projectile spit by EZ2's Plan B/Gonome."
 	[
+	@resources
+		[
+		sound "NPC_BigMomma.SpitTouch1"
+		sound "NPC_BigMomma.SpitHit1"
+		sound "NPC_BigMomma.SpitHit2"
+		sound "Zombie.AttackHit"
+		sound "Zombie.AttackMiss"
+		]
 	]

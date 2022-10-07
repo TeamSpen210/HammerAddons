@@ -50,5 +50,6 @@
 		particle vortigaunt_beam_charge
 		particle vortigaunt_hand_glow
 		entity vort_charge_token
+		entity vort_effect_dispel
 		]
 	]

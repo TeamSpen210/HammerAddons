@@ -36,4 +36,32 @@
 	output OnSeeHiddenPlayer(void) : "Fires when the current enemy is seen while trying to hide"
 	output OnSmellHiddenPlayer(void) : "Fires when the current enemy is smelled while trying to hide"
 	output OnSummon(void) : "Antlion guard is attempting to summon antlions"
+
+	@resources
+		[
+		model "NPC_AntlionGuard.Shove"
+		model "NPC_AntlionGuard.HitHard"
+		sound "NPC_AntlionGuard.Anger"
+		sound "NPC_AntlionGuard.Roar"
+		sound "NPC_AntlionGuard.Die"
+		sound "NPC_AntlionGuard.GrowlHigh"
+		sound "NPC_AntlionGuard.GrowlIdle"
+		sound "NPC_AntlionGuard.BreathSound"
+		sound "NPC_AntlionGuard.Confused"
+		sound "NPC_AntlionGuard.Fallover"
+		sound "NPC_AntlionGuard.FrustratedRoar"
+		particle blood_antlionguard_injured_light
+		particle blood_antlionguard_injured_heavy
+		// TODO: Episodic only.
+		sound "NPC_AntlionGuard.NearStepLight" [+episodic]
+		sound "NPC_AntlionGuard.NearStepHeavy" [+episodic]
+		sound "NPC_AntlionGuard.FarStepLight" [+episodic]
+		sound "NPC_AntlionGuard.FarStepHeavy" [+episodic]
+		sound "NPC_AntlionGuard.BreatheLoop" [+episodic]
+		sound "NPC_AntlionGuard.ShellCrack" [+episodic]
+		sound "NPC_AntlionGuard.Pain_Roar" [+episodic]
+		material "materials/sprites/grubflare1.vmt" [+episodic]
+
+		// Ent-specific func handles entropy-zero variants
+		]
 	]

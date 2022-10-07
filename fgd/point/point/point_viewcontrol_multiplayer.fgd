@@ -41,4 +41,6 @@
 	input AddPlayer(ehandle) : "Force the !activator player to be controlled by this."
 	input RemovePlayer(ehandle) : "Remove !activator player from being controlled."
 	input StartMovement(void) : "Start the movement to the target entity."
+
+	@resources []
 	]

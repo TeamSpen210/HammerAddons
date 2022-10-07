@@ -16,4 +16,9 @@
 
 	// Inputs
 	input LaunchBall(void) : "Launch a ball from the spawner."
+
+	@resources
+		[
+		entity prop_combine_ball
+		]
 	]

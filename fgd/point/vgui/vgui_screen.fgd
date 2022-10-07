@@ -37,4 +37,9 @@
 	// Inputs
 	input SetActive(void) : "Make the vgui screen visible."
 	input SetInactive(void) : "Make the vgui screen invisible."
+
+	@resources
+		[
+		material "materials/engine/writez.vmt"
+		]
 	]

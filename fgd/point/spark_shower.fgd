@@ -4,4 +4,9 @@
 = spark_shower: "Temporary spark shower effect created by env_explosions." +
 	"When spawned, moves in the forward direction whilst producing sparks, until it fades out."
 	[
+	@resources
+		[
+		material "materials/sprites/glow01.vmt"
+		material "materials/effects/yellowflare.vmt"
+		]
 	]

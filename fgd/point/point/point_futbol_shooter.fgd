@@ -14,4 +14,10 @@
 	// Outputs
 	output OnShootSuccess(void) : "Called when a futbol is successfully fired."
 	output OnShootFail(void) : "Called when a futbol fails to fire."
+
+	@resources // Guesses
+		[
+		sound "World.Wheatley.Fire"
+		entity prop_exploding_futbol
+		]
 	]

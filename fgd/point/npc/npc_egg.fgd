@@ -13,5 +13,14 @@
 	AlertSound(sound) : "Override Alert Sound"
 	HatchSound(sound) : "Override Hatch Sound"
 	
-	output OnSpawnNPC( void ) : "Fired when the egg NPC creates offspring."	
+	output OnSpawnNPC( void ) : "Fired when the egg NPC creates offspring."
+
+	@resources
+		[
+		model "models/eggs/bullsquid_egg.mdl"
+		sound "npc_bullsquid.egg_alert"
+		sound "npc_bullsquid.egg_hatch"
+		particle "bullsquid_egg_hatch"
+		// Ent-specific function to pass EZ variant to the bullsquid.
+		]
 	]

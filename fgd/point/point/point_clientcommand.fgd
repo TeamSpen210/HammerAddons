@@ -6,4 +6,6 @@
 
 	// Inputs
 	input Command(string) : "Command to execute."
+
+	@resources []
 	]

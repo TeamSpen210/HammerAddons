@@ -5,6 +5,6 @@
 	[
 	@resources
 		[
-		sound "RagdollBoogie.Zap"
+		sound "RagdollBoogie.Zap" [+episodic]
 		]
 	]

@@ -16,4 +16,6 @@
 
 	// Outputs
 	output Distance(float) : "Distance of the target entity away from this entity."
+
+	@resources []
 	]

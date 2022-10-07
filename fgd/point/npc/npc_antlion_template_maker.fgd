@@ -45,4 +45,6 @@
 
 	// Outputs
 	output OnAllBlocked(void) : "Fires when all the hint nodes are blocked."
+
+	@resources [] // This is done in ent-specific code.
 	]

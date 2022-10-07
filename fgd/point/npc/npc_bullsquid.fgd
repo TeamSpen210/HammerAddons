@@ -24,4 +24,41 @@
 	autovis(Entities, NPCs, Xen, Bullsquid)
 = npc_bullsquid: "Bullsquid"
 	[
+	@resources
+		[
+		// EZ2/HLS variant, not sure about Black Mesa version.
+		material "materials/sprites/greenspit1.vmt"
+		particle "bullsquid_explode"
+		sound "NPC_Bullsquid.Idle"
+		sound "NPC_Bullsquid.Pain"
+		sound "NPC_Bullsquid.Alert"
+		sound "NPC_Bullsquid.Death"
+		sound "NPC_Bullsquid.Attack1"
+		sound "NPC_Bullsquid.FoundEnemy"
+		sound "NPC_Bullsquid.Growl"
+		sound "NPC_Bullsquid.TailWhi"
+		sound "NPC_Bullsquid.Bite"
+		sound "NPC_Bullsquid.Eat"
+		sound "NPC_Babysquid.Idle"
+		sound "NPC_Babysquid.Pain"
+		sound "NPC_Babysquid.Alert"
+		sound "NPC_Babysquid.Death"
+		sound "NPC_Babysquid.Attack1"
+		sound "NPC_Babysquid.FoundEnemy"
+		sound "NPC_Babysquid.Growl"
+		sound "NPC_Babysquid.TailWhip"
+		sound "NPC_Babysquid.Bite"
+		sound "NPC_Babysquid.Eat"
+		sound "NPC_Antlion.PoisonShoot"
+		sound "NPC_Antlion.PoisonBall"
+		sound "NPC_Bullsquid.Explode"
+		entity grenade_spit
+
+		// The bullsquid might spawn an npc_egg, which then spawns bullsquid...
+		// Manually include that, to avoid infinite recursion.
+		model "models/eggs/bullsquid_egg.mdl"
+		sound "npc_bullsquid.egg_alert"
+		sound "npc_bullsquid.egg_hatch"
+		particle "bullsquid_egg_hatch"
+		]
 	]

@@ -2,4 +2,5 @@
 	appliesto(+engine)
 = soundent: "Keeps track of all sounds playing in the level."
 	[
+	@resources []
 	]   
