@@ -14,4 +14,9 @@
 	// Outputs
 	output OnPressed(void) : "Called when the button has been pressed."
 	output OnUnPressed(void) : "Called when the button has been released."
+
+	@resources
+		[
+		entity trigger_portal_button
+		]
 	]

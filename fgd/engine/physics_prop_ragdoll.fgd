@@ -1,0 +1,4 @@
+@PointClass appliesto(engine) aliasof(prop_ragdoll)
+= physics_prop_ragdoll: "Alternate name for prop_ragdoll."
+	[
+	]

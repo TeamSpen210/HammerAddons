@@ -5,4 +5,9 @@
 	[
 	model(studio) : "[H]] Model" : "models/props/box_socket.mdl" : "Model to display in Hammer. Use Init Code and a comp_precache_model to change the model in-game."
 	acceptsball(boolean) : "Accepts Balls" : 0 : "Do Edgeless Safety Cubes activate this? Should almost always be No unless no balls are in the map."
+
+	@resources
+		[
+		model "models/props/cube_button.mdl"
+		]
 	]

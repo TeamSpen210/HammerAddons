@@ -28,4 +28,11 @@
 	output OnPlayerUse(void) : "Any player +USEd the cube."
 	output OnPlayerPickup(void) : "Any player picked up the cube."
 	output OnPhysGunDrop(void) : "Any player dropped the cube."
+
+	@resources // Assumed
+		[
+		mdl "models/npcs/monsters/monster_a.mdl"
+		mdl "models/npcs/monsters/monster_a_box.mdl"
+		sound "DoSparkSmaller"
+		]
 	]

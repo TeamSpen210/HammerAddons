@@ -9,4 +9,9 @@
 	// Outputs
 	output OnPressedBlue(void) : "Called in Coop when the button has been pressed by ATLAS."
 	output OnPressedOrange(void) : "Called in Coop when the button has been pressed by P-Body."
+
+	@resources
+		[
+		model "models/props_underground/underground_floor_button.mdl"
+		]
 	]
