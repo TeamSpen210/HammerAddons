@@ -3,4 +3,6 @@
 	studio() = cycler_actor: "Actor Cycler"
 	[
 	sentence(string) : "Sentence Group"
+
+	@resources []  // Just the generic model.
 	]

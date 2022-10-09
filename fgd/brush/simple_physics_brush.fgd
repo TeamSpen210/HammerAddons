@@ -8,4 +8,6 @@
 		4096  : "Start Asleep" : 0 [MBase]
 		16384 : "Debris - Don't collide with the player or other debris" : 0 [MBase]
 		]
+
+	@resources []
 	]

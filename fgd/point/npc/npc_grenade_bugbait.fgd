@@ -8,6 +8,6 @@
 		sound GrenadeBugBait.Splat
 		model "models/weapons/w_bugbait.mdl"
 		entity grenade // Actual base class
-		entity env_sporexplosion
+		entity env_sporeexplosion
 		]
 	]

@@ -25,4 +25,6 @@
 
 	// Outputs
 	output OnChangeLevel(void) : "Fired when the level changes."
+
+	@resources []
 	]

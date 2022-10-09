@@ -1,7 +1,20 @@
 @NpcClass base(Basebird) 
 	appliesto(EZ1, EZ2)
 	autovis(Entities, NPCs, Animals, Birds) 
-	studio("models/aflock.mdl") = npc_boid: "Boid, alternate name for npc_aliencrow."
+	studio("models/aflock.mdl") = npc_boid: "Xen Boid creature."
 	[
 	model(studio) : "Model" : "models/aflock.mdl"
+	@resources
+		[
+		mdl "models/aflock.mdl"
+
+		sound "NPC_Boid.Hop"
+		sound "NPC_Boid.Squawk"
+		sound "NPC_Boid.Gib"
+		sound "NPC_Boid.Idle"
+		sound "NPC_Boid.Alert"
+		sound "NPC_Boid.Die"
+		sound "NPC_Boid.Pain"
+		sound "NPC_Boid.Flat"
+		]
 	]

@@ -13,6 +13,6 @@
 	
 	@resources
 		[
-		entity func_usableladder
+		entity func_useableladder
 		]
 	]

@@ -1,4 +1,3 @@
-
 @SolidClass base(Trigger) 
 	appliesto(ASW) = trigger_asw_supplies_chatter: "A trigger volume that will occasionally make a marine comment about a supply stash."
 	[
@@ -9,4 +8,6 @@
 		0: "Mixed"
 		1: "No ammo pickups"
 		]
+
+	@resources []
 	]

@@ -10,4 +10,11 @@
 		4 : "Debris - Don't collide with the player or other debris" : 0 [MBase]
 		]
 	allowfunnel[P2](boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a portal."
+	
+	@resources 
+		[
+		sound "Metal.SawbladeStick" [+hl2]
+	    sound "PropaneTank.Burst"
+	    entity env_flare [+hl2, +episodic]
+		]
 	]

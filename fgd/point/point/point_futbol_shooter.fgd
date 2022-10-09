@@ -17,7 +17,7 @@
 
 	@resources // Guesses
 		[
-		sound "World.Wheatley.Fire"
+		sound "World.Wheatley.fire"
 		entity prop_exploding_futbol
 		]
 	]

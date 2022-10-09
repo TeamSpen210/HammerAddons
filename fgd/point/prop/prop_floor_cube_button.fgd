@@ -8,6 +8,6 @@
 
 	@resources
 		[
-		model "models/props/cube_button.mdl"
+		model "models/props/box_socket.mdl"
 		]
 	]
