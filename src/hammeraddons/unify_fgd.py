@@ -867,10 +867,10 @@ def action_export(
         tags_not_engine = frozenset({'-ENGINE', '!ENGINE'})
 
         print('Merging tags...')
-        for ent in fgd:
-            # If it's set as not in engine, skip.
+        for ent in list(fgd):
+            # If it's set as not in engine, strip.
             if not tags_not_engine.isdisjoint(get_appliesto(ent)):
-                continue
+                del fgd.entities[ent.classname.casefold()]
             # Strip applies-to helper and ordering helper.
             ent.helpers[:] = [
                 helper for helper in ent.helpers
@@ -1105,7 +1105,10 @@ def action_export(
 
     if as_binary:
         with open(output_path, 'wb') as bin_f, LZMAFile(bin_f, 'w') as comp:
-            fgd.serialise(comp)
+            # Private, reserved for us.
+            # noinspection PyProtectedMember
+            from srctools._engine_db import serialise
+            serialise(fgd, comp)
     else:
         with open(output_path, 'w', encoding='iso-8859-1') as txt_f:
             fgd.export(txt_f)
