@@ -83,8 +83,7 @@
 		mdl "models/gibs/antlion_gib_large_1.mdl"
 		mdl "models/gibs/antlion_gib_large_2.mdl"
 		mdl "models/gibs/antlion_gib_large_3.mdl"
-
-		// Ent-specific code determines whether to include worker or regular resources,
-		// plus EZ2 variants
+		// This determines whether to include worker or regular resources, plus handles EZ2 variants
+		func npc_antlion
 		]
 	]

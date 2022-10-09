@@ -38,6 +38,6 @@
 	@resources
 		[
 		material "materials/particle/SmokeStack.vmt"
-		// Additional packing for the material in code.
+		func env_smokestack // Successive suffixes of the "smokematerial" are also included.
 		]
 	]

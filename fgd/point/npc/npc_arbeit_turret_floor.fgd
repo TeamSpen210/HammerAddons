@@ -31,6 +31,6 @@
 	@resources
 		[
 		sound "NPC_ArbeitTurret.DryFire"
-		// Ent-specific func specifies different models depending on EZ variant.
+		func npc_arbeit_turret_floor // Different models are used depending on EZ variant.
 		]
 	]

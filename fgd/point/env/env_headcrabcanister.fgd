@@ -52,7 +52,7 @@
 
 	@resources
 		[
-		// The headcrab spawned and some sounds are done in code.
+		func env_headcrabcanister // Includes the headcrab spawned, and sounds that could be used.
 
 	    // We can't easily check which version of the props are used, since it depends on whether the 
 	    // ent starts in the skybox, etc.

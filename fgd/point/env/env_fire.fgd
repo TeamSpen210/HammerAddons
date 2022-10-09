@@ -52,6 +52,6 @@
 	@resources
 		[
 		sound "Fire.Plasma"
-		// And special entity code.
+		func env_fire // Depending on options, different particles might be included.
 		]
 	]

@@ -1,4 +1,3 @@
-
 @PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	iconsprite("editor/asw_emitter.vmt") 
@@ -11,4 +10,9 @@
 	input Toggle(void) : "Toggles the emitter on and off"
 	input TurnOn(void) : "Turns the emitter on"
 	input TurnOff(void) : "Turns the emitter off"
+
+	@resources
+		[
+		func asw_emitter // The template references other resources in a complex way.
+		]
 	]

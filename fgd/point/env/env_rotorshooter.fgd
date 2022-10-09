@@ -32,4 +32,9 @@
 
 	rotortime(float) : "Time Under Rotor" : 1 : "The average time it has to be under the rotor before it shoots a gib."
 	rotortimevariance(float) : "Time variance" : 0.3 : "The random amount to vary the time it has to be under the rotor before it shoots a gib."
+
+	@resources 
+		[
+		func env_shooter // "shootsounds" has a harcoded list of sounds.
+		]
 	]

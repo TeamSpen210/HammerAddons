@@ -5,7 +5,7 @@
 	color(0 100 250)
 	iconsprite("editor/point_entity_replace.vmt") 
 = point_entity_replace : "An entity that replaces one entity with another."
-[
+	[
 	Target(target_destination) : "Entity to be replaced" : : "The entity that should be replaced. " +
 		"This is optional if you're only using the 'ReplaceEntity' input."
 
@@ -53,5 +53,9 @@
 	output OnReplace(ehandle) : "Fires for each replacement we undergo, " +
 		"passing the replacement entity as the activator and parameter. " +
 		"The caller can be the replaced entity or this entity depending on this entity's settings."
-]
 
+	@resources
+		[
+		func point_entity_finder // If classname mode, we need to include that.
+		]
+	]

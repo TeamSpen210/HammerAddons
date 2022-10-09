@@ -62,6 +62,8 @@
 		sound "NPC_AntlionGuard.Pain_Roar" [+episodic]
 		material "materials/sprites/grubflare1.vmt" [+episodic]
 
-		// Ent-specific func handles entropy-zero variants
+		// In EZ2, the model has several variants.
+		// Additionally, the "inside footsteps" flag swaps some resources.
+		func npc_antlionguard
 		]
 	]

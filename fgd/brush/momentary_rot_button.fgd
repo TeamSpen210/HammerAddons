@@ -124,4 +124,9 @@
 	output OnFullyOpen(void) : "Fired when the button has reached position 0, the unrotated starting position."
 	output OnReachedPosition(void) : "Fired whenever the button reaches a goal position: i.e. when it becomes open, becomes closed, " +
 		"or reaches the point specified by a 'SetPosition' input."
+
+	@resources
+		[
+		func momentary_rot_button  // Handle the hardcoded list of sounds.
+		]
 	]

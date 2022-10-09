@@ -57,5 +57,6 @@
 		[
 		sound "AmmoCrate.Open"
     	sound "AmmoCrate.Close"
+    	func item_ammo_crate // Depending on ammo type, a different model is included plus the ammo itself.
 		]
 	]

@@ -185,6 +185,6 @@
 		sound "NPC_Citizen.FootstepLeft"
 		sound "NPC_Citizen.FootstepRight"
 		sound "NPC_Citizen.Die"
-		// Ent-specific func picks appropriate model.
+		func npc_citizen // Complex rules controls which model is used.
 		]
 	]

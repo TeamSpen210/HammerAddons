@@ -42,6 +42,6 @@
 	@resources
 		[
 		model "models/brokenglass_piece.mdl"
-		// Code specifies additional materials, depending on surface type.
+		func func_breakable_surf // Depending on surface type, different resources are included.
 		]
 	]

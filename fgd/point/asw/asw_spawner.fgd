@@ -62,6 +62,6 @@
 
 	@resources
 		[
-		// The alienclass KV is handled by code.
+		func asw_spawner // We need to handle the alienclass kv.
 		]
 	]

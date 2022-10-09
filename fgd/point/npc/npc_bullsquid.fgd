@@ -60,5 +60,7 @@
 		sound "npc_bullsquid.egg_alert"
 		sound "npc_bullsquid.egg_hatch"
 		particle "bullsquid_egg_hatch"
+
+		func npc_bullsquid // Depending on EZ variant, different models are used.
 		]
 	]
