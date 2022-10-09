@@ -5,7 +5,7 @@
 	[
 	@resources
 		[
-		sound "Weapon_Bugbait.Splat"
+		sound "Weapon_Bugbait.Splat" // Squeeze!
 		entity npc_grenade_bugbait
 		]
 	]
