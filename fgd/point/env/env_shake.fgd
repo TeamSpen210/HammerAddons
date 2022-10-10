@@ -25,4 +25,6 @@
 	input Frequency(string) : "Set the frequence. Should be a value between 0 and 255, where 0.1 = jerk, and 255.0 = rumble."
 	input StartShake(void) : "Start the shake."
 	input StopShake(void) : "Stop the shake."
+
+	@resources []
 	]

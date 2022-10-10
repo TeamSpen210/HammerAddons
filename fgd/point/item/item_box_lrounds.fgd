@@ -1,5 +1,5 @@
 @PointClass aliasof(item_ammo_ar2) 
-	appliesto(EP1, EP2, HL2, P1)
+	appliesto(EP1, EP2, HL2, P1, +complete)
 = item_box_lrounds: "Alternate classname for a magazine of AR2 ammo."
 	[
 	]

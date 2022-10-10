@@ -15,4 +15,13 @@
 
 	output OnSwattedProp[Mbase](ehandle) : "Fires when this NPC swats a prop, passing the prop as the activator and parameter."
 	output OnCrab[Mbase](ehandle) : "Fires when the zombie releases a headcrab, passing the headcrab as the activator and parameter."
+
+	@resources
+		[
+		sound "E3_Phystown.Slicer"
+		sound "NPC_BaseZombie.PoundDoor"
+		sound "NPC_BaseZombie.Swat"
+
+		particle "blood_impact_zombie_01"
+		]
 	]

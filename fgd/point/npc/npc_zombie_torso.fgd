@@ -3,4 +3,8 @@
 	autovis(Entities, NPCs, Zombies, Classic Zombie Torso)
 	studio("models/Zombie/Classic_torso.mdl") = npc_zombie_torso: "Zombie Torso"
 	[
+	@resources
+		[
+		entity npc_zombie  // Actually the same entity.
+		]
 	]

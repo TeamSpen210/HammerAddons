@@ -1,0 +1,9 @@
+@PointClass base(grenade)
+	appliesto(+engine, HL2, EP1, EP2, P1)
+= npc_handgrenade: "Grenade thrown by NPCs."
+	[
+	@resources
+		[
+		model "models/weapons/w_grenade.mdl"
+		]
+	]

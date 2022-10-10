@@ -1,4 +1,4 @@
-@NpcClass base(BaseNPC) 
+@NpcClass base(BaseZombie) 
 	appliesto(EP1, EP2, P1) 
 	autovis(Entities, NPCs, Zombies, Zombine)
 	studio("models/Zombie/zombie_soldier.mdl") = npc_zombine: "Combine Soldier Zombie"
@@ -21,4 +21,29 @@
 	input PullGrenade(void) : "Forces the zombine to pull a grenade."
 
 	output OnPullGrenade[MBase](ehandle) : "Fires when the zombine pulls a grenade. Passes the grenade."
+
+	@resources
+		[
+		model "models/zombie/zombie_soldier.mdl"
+		model "models/zombie/zombie_soldier_torso.mdl"
+		model "models/zombie/zombie_soldier_legs.mdl"
+
+		sound "Zombie.FootstepRight"
+		sound "Zombie.FootstepLeft"
+		sound "Zombine.ScuffRight"
+		sound "Zombine.ScuffLeft"
+		sound "Zombie.AttackHit"
+		sound "Zombie.AttackMiss"
+		sound "Zombine.Pain"
+		sound "Zombine.Die"
+		sound "Zombine.Alert"
+		sound "Zombine.Idle"
+		sound "Zombine.ReadyGrenade"
+		sound "ATV_engine_null"
+		sound "Zombine.Charge"
+		sound "Zombie.Attack"
+
+		entity npc_headcrab
+		entity npc_grenade_frag
+		]
 	]

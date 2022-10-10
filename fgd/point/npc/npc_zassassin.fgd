@@ -1,6 +1,5 @@
 @NpcClass base(BaseNPC, EZ2Variant) 
-	appliesto(EZ2) 
-	autovis(Entities, NPCs, Combine, Combine Soldier)
+	appliesto(EZ2)
 	studio() = npc_zassassin : "Beast"
 	[
 	SpawningEnabled(boolean) : "Spawning Enabled" : 0 : "Can this predator NPC produce offspring in the appropriate condtions?"
@@ -8,12 +7,12 @@
 	
 	WanderStrategy[engine](integer) : "Wander Strategy" : 0
 	WanderStrategy(choices) : "Should Wander" : 0 : "Should this enemy wander outside of combat?" =
-	[
+		[
 		0 : "Never"
 		1 : "Always outside of combat"
 		2 : "Only while in ALERT state"
 		3 : "Only while in IDLE state"
-	]
+		]
 
 	input EnterNormalMode(void) : "Resume normal combat"
 	input EnterBerserkMode(void) : "Make this boss enemy invincible until it enters a different mode."
@@ -35,4 +34,31 @@
 
 	output OnBeastHome(void) : "Fired when the beast reaches home during beast behavior."
 	output OnBeastLeaveHome(void) : "Fired when the beast leaves home during beast behavior."
+
+	@resources
+		[
+		func npc_zassassin // Multiple variants possible.
+
+		sound "Gonome.Idle"
+		sound "Gonome.Pain"
+		sound "Gonome.Alert"
+		sound "Gonome.Die"
+		sound "Gonome.Attack"
+		sound "Gonome.Bite"
+		sound "Gonome.Growl"
+		sound "Gonome.FoundEnem"
+		sound "Gonome.RetreatMod"
+		sound "Gonome.BerserkMod"
+		sound "Gonome.RunFootstepLeft"
+		sound "Gonome.RunFootstepRight"
+		sound "Gonome.FootstepLeft"
+		sound "Gonome.FootstepRight"
+		sound "Gonome.JumpLand"
+		sound "Gonome.Eat"
+		sound "Gonome.BeginSpawnCrab"
+		sound "Gonome.EndSpawnCrab"
+		particle "glownome_explode"
+		sound "npc_zassassin.kickburst"
+		entity squidspit
+		]
 	]
