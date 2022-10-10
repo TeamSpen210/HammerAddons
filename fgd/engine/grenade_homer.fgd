@@ -1,0 +1,11 @@
+@PointClass base(grenade)
+	appliesto(+engine, HL2, EP1, EP2, P1)
+= grenade_homer: "A grenade which follows a target. This is spawned by npc_launcher."
+	[
+	@resources
+		[
+		material "materials/sprites/lgtning.vmt"
+		sound "GrenadeHomer.StopSounds"
+		entity env_rockettrail
+		]
+	]

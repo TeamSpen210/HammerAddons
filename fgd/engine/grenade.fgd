@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint)
+	appliesto(+complete)
 = grenade: "Base class for all grenade entities."
 	[
 	radius[MBase](float) : "Damage Radius" : : "Override the damage radius of this grenade."
