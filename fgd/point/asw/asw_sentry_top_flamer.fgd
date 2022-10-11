@@ -1,0 +1,8 @@
+@PointClass base(asw_sentry_top) appliesto(ASW) 
+	studioprop("models/sentry_gun/flame_top.mdl") = asw_sentry_top_flamer
+	[
+	@resources 
+		[
+		entity asw_flamer_projectile
+		] 
+	]

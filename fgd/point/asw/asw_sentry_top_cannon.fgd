@@ -1,0 +1,8 @@
+@PointClass base(asw_sentry_top) appliesto(ASW) 
+	studioprop("models/sentry_gun/grenade_top.mdl") = asw_sentry_top_cannon
+	[
+	@resources 
+		[
+		entity asw_rifle_grenade
+		] 
+	]
