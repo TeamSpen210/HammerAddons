@@ -255,6 +255,7 @@ PACK_DUMP = Opt.string_or_none(
 PACK_TAGS = Opt.block(
     'pack_tags', Keyvalues('', [
         Keyvalues('hl2', '0'),
+        Keyvalues('hl1', '0'),
         Keyvalues('episodic', '0'),
         Keyvalues('mapbase', '0'),
         Keyvalues('entropyzero2', '0'),
