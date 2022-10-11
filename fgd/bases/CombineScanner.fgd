@@ -36,4 +36,12 @@
 	// Outputs
 	output OnPhotographPlayer(void) : "Fired any time the scanner takes a picture of the player."
 	output OnPhotographNPC(void) : "Fired any time the scanner takes a picture of an NPC."
+
+	@resources
+		[
+		// Determines which kind this is, specifies the resources. No need to repeat ourselves.
+		func combine_scanner
+		material "material/sprites/light_glow03.vmt"
+		entity combine_mine // All scanners *can* deploy mines, city scanners usually don't though.
+		]
 	]
