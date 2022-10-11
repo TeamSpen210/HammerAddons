@@ -1096,6 +1096,16 @@ def action_export(
         if not visgroup.ents:
             del fgd.auto_visgroups[key]
 
+    if engine_mode:
+        res_tags = defaultdict(set)
+        for ent in fgd.entities.values():
+            for res in ent.resources:
+                for tag in res.tags:
+                    res_tags[tag.lstrip('-+!').upper()].add(ent.classname)
+        print('Resource tags:')
+        for tag, classnames in res_tags.items():
+            print(f'- {tag}: {len(classnames)} ents')
+
     print('Exporting...')
 
     if as_binary:
