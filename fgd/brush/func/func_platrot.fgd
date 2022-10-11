@@ -1,17 +1,7 @@
-@SolidClass base(BaseEntityVisBrush)
+@SolidClass base(func_plat)
 = func_platrot: "A brush entity that moves vertically, and can rotate while doing so."
 	[
-	spawnflags(flags)  =
-		[
-		1: "Toggle" : 1
-		64: "X Axis" : 0
-		128: "Y Axis" : 0
-		]
-
-	noise1(sound) : "Movement Sound" : : "The sound to play when the brush moves."
-	noise2(sound) : "Stop Sound" : : "The sound to play when the brush stops moving."
-	speed(integer) : "Speed of Rotation" : 50 : "Speed at which the brush rotates, in degrees per second."
-	height(integer) : "Travel Altitude" : 0 : "The vertical distance from the starting position that this platform moves. If negative, the platform will lower."
+	speed(integer) : "Movement Speed" : 50 : "Speed at which the brush moves vertically, in units per second. It will complete the rotation in the same amount of time."
 	rotation(integer) : "Spin amount" : 0 : "The amount this platform should rotate as it moves, in degrees."
 
 	// Inputs
@@ -19,10 +9,5 @@
 	input GoUp(void) : "Tells the platform to go up."
 	input GoDown(void) : "Tells the platform to go down."
 
-	@resources
-		[
-		sound "Plat.DefaultMoving"
-		sound "Plat.DefaultArrive"
-		func base_plat_train
-		]
+	@resources [] // In parent.
 	]

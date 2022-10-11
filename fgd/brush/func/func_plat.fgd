@@ -1,0 +1,27 @@
+@SolidClass base(BaseEntityVisBrush)
+= func_plat: "A brush entity that moves vertically."
+	[
+	spawnflags(flags)  =
+		[
+		1: "Toggle" : 1
+		64: "X Axis" : 0
+		128: "Y Axis" : 0
+		]
+
+	noise1(sound) : "Movement Sound" : : "The sound to play when the brush moves."
+	noise2(sound) : "Stop Sound" : : "The sound to play when the brush stops moving."
+	speed(integer) : "Movement Speed" : 50 : "Speed at which the brush moves vertically, in units per second."
+	height(integer) : "Travel Altitude" : 0 : "The vertical distance from the starting position that this platform moves. If negative, the platform will lower."
+
+	// Inputs
+	input Toggle(void) : "Toggles the platform's state."
+	input GoUp(void) : "Tells the platform to go up."
+	input GoDown(void) : "Tells the platform to go down."
+
+	@resources
+		[
+		sound "Plat.DefaultMoving"
+		sound "Plat.DefaultArrive"
+		func base_plat_train
+		]
+	]
