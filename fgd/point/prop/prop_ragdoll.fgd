@@ -36,6 +36,6 @@
 
 	@resources
 		[
-		particle "hgib" [+ez2]
+		particle "hgib" [+entropyzero2]
 		]
 	]

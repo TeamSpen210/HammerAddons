@@ -10,8 +10,8 @@
 
 	@resources
 		[
-		model "models/items/healthkit.mdl" [-ez2]
-    	sound "HealthKit.Touch" [-ez2]
-    	func item_healthkit [+ez2] // EZ2 has multiple variants.
+		model "models/items/healthkit.mdl" [-entropyzero2]
+    	sound "HealthKit.Touch" [-entropyzero2]
+    	func item_healthkit [+entropyzero2] // EZ2 has multiple variants.
 		]
 	]

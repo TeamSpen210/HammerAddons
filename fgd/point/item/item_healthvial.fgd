@@ -4,8 +4,8 @@
 	[
 	@resources
 		[
-		model "models/healthvial.mdl" [-ez2]
-    	sound "HealthVial.Touch" [-ez2]
-    	func item_healthvial [+ez2] // EZ2 has multiple variants.
+		model "models/healthvial.mdl" [-entropyzero2]
+    	sound "HealthVial.Touch" [-entropyzero2]
+    	func item_healthvial [+entropyzero2] // EZ2 has multiple variants.
 		]
 	]
