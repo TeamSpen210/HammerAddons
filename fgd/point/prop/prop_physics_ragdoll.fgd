@@ -1,4 +1,0 @@
-@PointClass aliasof(prop_ragdoll) appliesto(+complete)
-= prop_physics_ragdoll: "Alternate classname for prop_ragdoll"
-	[
-	]
