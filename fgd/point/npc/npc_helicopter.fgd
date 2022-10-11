@@ -78,6 +78,7 @@
 		model "models/combine_helicopter.mdl"
 		model "models/combine_helicopter_broken.mdl"
 		material "materials/sprites/redglow1.vmt"
+		break_chunk "MetalChunks" // Additional generic gibs.
 		entity helicopter_chunk
 		entity grenade_helicopter
 		entity npc_helicoptersensor

@@ -69,6 +69,7 @@
 		sound "NPC_CombineGunship.ExhaustSound"
 		sound "NPC_CombineGunship.RotorBlastSound"
 
+		break_chunk "MetalChunks" // Additional generic gibs.
 		material "materials/sprites/physbeam.vmt" [+episodic]
 		entity env_citadel_energy_core  [+episodic]
 		]

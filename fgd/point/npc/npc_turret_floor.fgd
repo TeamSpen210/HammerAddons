@@ -66,6 +66,7 @@
 		sound "NPC_FloorTurret.Retire"
 		sound "NPC_FloorTurret.Retract"
 		sound "NPC_FloorTurret.ShotSounds"
+		break_chunk "MetalChunks" // Spawned when self destructed.
 		particle "explosion_turret_break" [+episodic]
 		]
 	]
