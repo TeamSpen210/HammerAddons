@@ -9,4 +9,6 @@
 		0: "Drop on ground"
 		1: "Kill Weapons"
 		]
+
+	@resources []
 	]
