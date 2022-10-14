@@ -56,6 +56,6 @@
 
 	@resources
 		[
-		func point_entity_finder // If classname mode, we need to include that.
+		func point_entity_replace // If classname mode, we need to include that.
 		]
 	]
