@@ -49,9 +49,10 @@
 
 	@resources
 		[
+		func npc_combinegunship // Can swap to a helicopter.
 		mat "materials/sprites/lgtning.vmt"
-		mat "materials/effects/ar2ground2"
-		mat "materials/effects/blueblackflash"
+		mat "materials/effects/ar2ground2.vmt"
+		mat "materials/effects/blueblackflash.vmt"
 
 		sound "NPC_CombineGunship.SearchPing"
 		sound "NPC_CombineGunship.PatrolPing"

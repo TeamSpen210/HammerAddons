@@ -93,6 +93,7 @@
 
 	@resources
 		[
+		func npc_combinedropship  // Various cargo types.
 		model "models/combine_dropship.mdl"
 		sound "NPC_CombineDropship.RotorLoop"
 		sound "NPC_CombineDropship.FireLoop"
