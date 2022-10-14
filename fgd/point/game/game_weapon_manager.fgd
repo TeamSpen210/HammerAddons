@@ -10,4 +10,5 @@
 
 	// Inputs
 	input SetAmmoModifier(float) : "Adjust the ammo modifier."
+	input SetMaxPieces(integer) : "Set the max amount of weapons of the specified type allowed to be in the world."
 	]

@@ -53,4 +53,5 @@
 
 	// Inputs
 	input StartSchedule(void) : "Starts the scripted schedule. This will first locate an NPC that matches the given target, then tell the NPC to run the specified schedule."
+	input StopSchedule(void) : "Tells the NPC to stop the scripted schedule"
 	]

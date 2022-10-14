@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint)
+	appliesto(P2CE)
 	color(0 100 250) 
 	line(0 100 250, targetname, target) 
 	line(10 10 10, targetname, filtername)

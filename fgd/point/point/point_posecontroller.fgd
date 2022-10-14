@@ -35,4 +35,5 @@
 	input SetFModRate(float) : "Set the modulation cycles per second from -10.0f to 10.0."
 	input SetFModAmplitude(float) : "Set the modulation extents from 0.0f to 10.0."
 	input RandomizeFMod(float) : "Randomize the frequency modulation by an extremeness of 0.0 to 1.0."
+	input GetFmod(void) : "Outputs the current modulation settings in console."
 	]

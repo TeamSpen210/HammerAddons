@@ -25,6 +25,7 @@
 	input UpperRandomBound(float) : "Set a new Maximum Random Interval."
 	input AddToTimer(float) : "Add time to the timer if it is currently enabled.  Does not change the Refire Interval."
 	input SubtractFromTimer(float) : "Subtract time from the timer if it is currently enabled.  Does not change the Refire Interval."
+	input UseRandomTime(integer) : "0 or 1, whether random time is enabled. If random time starts enabled and gets disabled here, the refire interval is set to the Maximum Random Interval."
 
 	// Outputs
 	output OnTimer(void) : "Fired when the timer expires."

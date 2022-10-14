@@ -16,13 +16,15 @@
 		]
 
 	target(target_destination) : "Look Target" : : "The name of the entity to be looked at."
-	looktime(string) : "LookTime" : "0.5" : "The time, in seconds, that the player must look the target before firing the output. Resets if player leaves trigger, or looks o" + "utside the Field of View threshold."
+	looktime(string) : "LookTime" : "0.5" : "The time, in seconds, that the player must look at the target before firing the output. Resets if player leaves trigger, or looks o" + "utside the Field of View threshold."
 	fieldofview(string) : "FieldOfView" : "0.9" : "How close the player has to be looking at the target. " +
 		"1.0 = straight ahead\n 0.0 = +/- 90 degrees\n -1.0 = all directions)."
 	timeout(float) : "Timeout" : 0 : "The time, in seconds, to wait after player enters the trigger before firing the OnTimeout output, 0 = never."
-	NotLookingFrequency(float) : "Not-Looking Frequency" : "0.5" : "time in second between 2 fires of OnNotLooking output."
 
+	// Inputs
+	input LookTime(float) : "Set the time, in seconds, that the player has to look at the target before firing."
+	input FieldOfView(float) : "Set how close the player has to be looking at the target."
+	
 	// Outputs
-	output OnTrigger(void) : "Fired when the trigger is activated."
 	output OnTimeout(void) : "Fired after the timeout interval expires if the player never looked at the target."
 	]

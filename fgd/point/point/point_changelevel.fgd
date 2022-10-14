@@ -6,6 +6,7 @@
 
 	// Inputs
 	input ChangeLevel(string) : "Changes the level to the map name supplied as a parameter."
+	input ChangeLevelPostFade(string) : "Immediately set screen to black rather than fade out, then change the level to the map name supplied."
 
 	// Outputs
 	output OnChangeLevel(void) : "Fired when the level is about to change."

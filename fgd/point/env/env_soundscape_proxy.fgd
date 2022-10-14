@@ -6,4 +6,12 @@
 	[
 	mainsoundscapename(target_destination) : "Soundscape Entity" : : "The soundscape to get all sound parameters from."
 	radius(integer) : "Radius" : 128
+	
+	// Inputs
+	input Enable(void) : "Enable the soundscape."
+	input Disabled(void) : "Disable the soundscape."
+	input ToggleEnabled(void) : "Toggle the soundscape enabled state."
+	
+	// Outputs
+	output OnPlay(void) : "Fired when this soundscape becomes the active one."
 	]

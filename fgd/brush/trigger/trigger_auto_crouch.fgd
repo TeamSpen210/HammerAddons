@@ -1,4 +1,0 @@
-@SolidClass base(Trigger)
-= trigger_auto_crouch: "Allows players touching the trigger to auto-crouch."
-	[
-	]

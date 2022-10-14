@@ -75,7 +75,7 @@
 
 	// Inputs
 	input PlayMovie(void) : "Play the movie."
-	input PlayMovieForAllPlayers(void) : "Play the movie for all connected players."
+	input PlayMovieForAllPlayers[+USE_MULTIPLAYER](void) : "Play the movie for all connected players."
 	input PlayLevelTransitionMovie(string) : "Plays a movie with specific settings used for level transitions.  Pass the name of the movie in the parameters.  To be fired at the end of a level."
 	input FadeAllMovies(void) : "Fade movies out for all players connected."
 

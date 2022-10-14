@@ -28,6 +28,7 @@
 	// Inputs
 	input SetStartDist(float) : "Set the fog start distance."
 	input SetEndDist(float) : "Set the fog end distance."
+	input SetMaxDensity(float) : "Set the max density, 0 to 1"
 	input TurnOn(void) : "Turn the fog on."
 	input TurnOff(void) : "Turn the fog off."
 	input SetColor(color255) : "Set the primary fog color."

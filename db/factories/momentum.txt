@@ -327,7 +327,6 @@ test_effect
 test_proxytoggle
 test_traceline
 trigger
-trigger_auto_crouch
 trigger_bounce_stickybombs
 trigger_brush
 trigger_catapult

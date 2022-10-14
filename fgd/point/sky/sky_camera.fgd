@@ -54,6 +54,7 @@
 	input SetFogColor(color255) : "Sets the primary fog color."
 	input SetFogColorSecondary(color255) : "Sets the secondary fog color."
 	input SetFarZ(integer): "Sets the far clip plane distance."
+	input SetFogMaxDensity(float) : "0 to 1, set the fog's max density" 
 	
 	input SetSkyColor(color255) : "Sets the sky color."
 	]

@@ -38,7 +38,7 @@
 	// Outputs
 	output OnMapSpawn(void) : "Fired when the map is loaded for any reason."
 	output OnNewGame(void) : "Fired when the map is loaded to start a new game."
-	output OnLoadGame(void) : "Fired when the map is loaded from a saved game."
+	output OnLoadGame[+USE_SAVE_RESTORE](void) : "Fired when the map is loaded from a saved game."
 	output OnMapTransition(void) : "Fired when the map is loaded due to a level transition."
 	output OnBackgroundMap(void) : "Fired when the map is loaded as a background to the main menu."
 	output OnMultiNewMap[+USE_MULTIPLAYER](void) : "Fired only in multiplayer, when a new map is loaded."
