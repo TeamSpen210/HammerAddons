@@ -29,4 +29,15 @@
 
 	// Outputs
 	output OnExplode(void) : "Fires when this tripmine explodes."
+
+	@resources
+		[
+		mdl "models/Weapons/w_slam.mdl"
+		snd "TripmineGrenade.Charge"
+		snd "TripmineGrenade.PowerUp"
+		snd "TripmineGrenade.StopSound"
+		snd "TripmineGrenade.Activate"
+		snd "TripmineGrenade.ShootRope"
+		snd "TripmineGrenade.Hook"
+		]
 	]
