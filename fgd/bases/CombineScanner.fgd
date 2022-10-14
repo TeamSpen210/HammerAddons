@@ -41,7 +41,8 @@
 		[
 		// Determines which kind this is, specifies the resources. No need to repeat ourselves.
 		func combine_scanner
-		material "material/sprites/light_glow03.vmt"
+		material "materials/sprites/light_glow03.vmt"
+		material "materials/sprites/glow_test02.vmt"
 		entity combine_mine // All scanners *can* deploy mines, city scanners usually don't though.
 		]
 	]
