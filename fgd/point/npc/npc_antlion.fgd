@@ -63,26 +63,9 @@
 		sound "NPC_Antlion.LoopingAgitated"
 		sound "NPC_Antlion.Distracted"
 
-		sound "NPC_Antlion.PoisonBurstScream" [+episodic]
-		sound "NPC_Antlion.PoisonBurstScreamSubmerged" [+episodic]
-		sound "NPC_Antlion.PoisonBurstExplode" [+episodic]
 		sound "NPC_Antlion.MeleeAttack_Muffled" [+episodic]
 		sound "NPC_Antlion.TrappedMetal" [+episodic]
 		sound "NPC_Antlion.ZappedFlip" [+episodic]
-		sound "NPC_Antlion.PoisonShoot" [+episodic]
-		sound "NPC_Antlion.PoisonBall" [+episodic]
-
-		mdl "models/gibs/antlion_gib_small_1.mdl"
-		mdl "models/gibs/antlion_gib_small_2.mdl"
-		mdl "models/gibs/antlion_gib_small_3.mdl"
-
-		mdl "models/gibs/antlion_gib_medium_1.mdl"
-		mdl "models/gibs/antlion_gib_medium_2.mdl"
-		mdl "models/gibs/antlion_gib_medium_3.mdl"
-
-		mdl "models/gibs/antlion_gib_large_1.mdl"
-		mdl "models/gibs/antlion_gib_large_2.mdl"
-		mdl "models/gibs/antlion_gib_large_3.mdl"
 		// This determines whether to include worker or regular resources, plus handles EZ2 variants
 		func npc_antlion
 		]
