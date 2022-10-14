@@ -77,12 +77,12 @@
 		sound "NPC_Strider.Hunt"
 		material "materials/effects/water_highlight.vmt"
 		material "materials/sprites/physbeam.vmt"
-		material "materials/sprites/bluelaser1"
-		material "materials/effects/blueblacklargebeam"
-		material "materials/effects/strider_pinch_dudv"
-		material "materials/effects/blueblackflash"
-		material "materials/effects/strider_bulge_dudv"
-		material "materials/effects/strider_muzzle"
+		material "materials/sprites/bluelaser1.vmt"
+		material "materials/effects/blueblacklargebeam.vmt"
+		material "materials/effects/strider_pinch_dudv.vmt"
+		material "materials/effects/blueblackflash.vmt"
+		material "materials/effects/strider_bulge_dudv.vmt"
+		material "materials/effects/strider_muzzle.vmt"
 		model "models/chefhat.mdl" // For some reason.
 		entity concussiveblast
 		entity sparktrail

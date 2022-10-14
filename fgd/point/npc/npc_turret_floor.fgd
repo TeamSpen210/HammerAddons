@@ -52,6 +52,7 @@
 		model "models/combine_turrets/floor_turret.mdl"
 		model "models/combine_turrets/citizen_turret.mdl"
 		material "materials/effects/laser1.vmt"  // Citizen only, or always in EZ2.
+		material "materials/sprites/glow1.vmt" [+entropyzero2]
 		sound "NPC_FloorTurret.AlarmPing"  // Allied to player only (citizen normally, in ez2 non-citizen)
 		sound "NPC_Combine.WeaponBash"
 		sound "NPC_FloorTurret.Activate"

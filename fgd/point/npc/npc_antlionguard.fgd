@@ -52,7 +52,6 @@
 		sound "NPC_AntlionGuard.FrustratedRoar"
 		particle blood_antlionguard_injured_light
 		particle blood_antlionguard_injured_heavy
-		// TODO: Episodic only.
 		sound "NPC_AntlionGuard.NearStepLight" [+episodic]
 		sound "NPC_AntlionGuard.NearStepHeavy" [+episodic]
 		sound "NPC_AntlionGuard.FarStepLight" [+episodic]

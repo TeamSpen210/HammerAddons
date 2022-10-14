@@ -4,6 +4,8 @@
 = helicopter_chunk:
 "The large gibs produced after npc_helicopter is killed."
 	[
+	input FallApart[MBase](void) : "Break the helicopter into multiple chunks."
+
 	@resources
 		[
 		mdl "models/gibs/helicopter_brokenpiece_01.mdl"
