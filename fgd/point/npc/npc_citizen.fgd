@@ -153,7 +153,7 @@
 	input SetMedicOff(void) : "Set the medic flag off. Will not change the model or skin of the citizen."
 	input SetAmmoResupplierOn(void) : "Set the ammo-resupplier flag on. Will not change the model or skin of the citizen."
 	input SetAmmoResupplierOff(void) : "Set the ammo-resupplier flag off. Will not change the model or skin of the citizen."
-	input ThrowHealthKit[episodic](void) : "Makes the citizen throw a medkit, similar to how Griggs in Half-Life 2: Episode Two heals you."
+	input ThrowHealthKit[EP1, EP2](void) : "Makes the citizen throw a medkit, similar to how Griggs in Half-Life 2: Episode Two heals you."
 	input SetTossMedkits[MBase](bool) : "Sets whether this NPC can toss medkits."	
 	input SpeakIdleResponse[complete](void) : "Makes the citizen speak an idle line, if any. Automatically fired by code, but can also be manually fired, to not much effect."
 
