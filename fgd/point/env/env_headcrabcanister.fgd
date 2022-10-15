@@ -52,14 +52,6 @@
 
 	@resources
 		[
-		func env_headcrabcanister // Includes the headcrab spawned, and sounds that could be used.
-
-	    // We can't easily check which version of the props are used, since it depends on whether the 
-	    // ent starts in the skybox, etc.
-	    model "models/props_combine/headcrabcannister01a.mdl"
-	    model "models/props_combine/headcrabcannister01b.mdl"
-	    model "models/props_combine/headcrabcannister01a_skybox.mdl"
-	    sound "HeadcrabCanister.AfterLanding"
-	    sound "HeadcrabCanister.Open"
+		func env_headcrabcanister // Includes the headcrab spawned, and picks the other resources based on spawnflags.
 		]
 	]
