@@ -22,4 +22,6 @@
 	output OnLessThan(void) : "Fired when the Target Entity goes from faster than the threshold angular velocity to slower than the threshold angular velocity."
 	output OnLessThanOrEqualTo(void) : "Fired when the Target Entity goes from faster than the threshold angular velocity to slower than the threshold angular velocity."
 	output OnEqualTo(void) : "Fired when the Target Entity reaches the threshold angular velocity from a different velocity."
+
+	@resources []
 	]

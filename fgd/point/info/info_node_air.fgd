@@ -6,4 +6,6 @@
 	"Air nodes do not fall to the ground when they spawn."
 	[
 	nodeheight(integer) : "NodeHeight" : 0
+
+	@resources []
 	]

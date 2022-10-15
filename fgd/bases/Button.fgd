@@ -244,4 +244,10 @@
 	output OnUseLocked(void) : "Fired when the button is used while locked."
 	output OnIn(void) : "Fired when the button reaches the in/pressed position."
 	output OnOut(void) : "Fired when the button reaches the out/released position."
+
+	@resources
+		[
+		// Pack the Buttons.* sounds.
+		func func_button_sounds
+		]
 	]

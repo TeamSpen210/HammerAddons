@@ -1,4 +1,4 @@
-@PointClass base(combine_mine)
+@PointClass aliasof(combine_mine)
 	appliesto(EP1, EP2, HL2, P1, +complete) 
 = bounce_bomb: "An alternate name for the Combine Land Mine (combine_mine)."
 	[

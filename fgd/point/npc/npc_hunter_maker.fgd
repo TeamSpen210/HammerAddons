@@ -4,4 +4,5 @@
 	iconsprite("editor/vizzys/npc_hunter_maker.vmt") 
 = npc_hunter_maker: "An entity that creates hunters. The NPCs it creates are clones of a template NPC."
 	[
+	@resources [] // Hunter is a template, so it has to be in the map.
 	]

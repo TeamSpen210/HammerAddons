@@ -9,4 +9,11 @@
 
 	// Inputs
 	input Ignite(void) : "Ignite the target entity."
+
+	@resources
+		[
+	    sound "General.StopBurning"
+	    sound "General.BurningFlesh"
+	    sound "General.BurningObject"
+		]
 	]

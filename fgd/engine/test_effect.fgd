@@ -3,4 +3,10 @@
 = test_effect: "An entity to test the engine's FX abilities, by randomly firing env_beams around this position."
 	[
 	input Use(void) : "Restart the effect."
+
+	@resources
+		[
+		material "materials/sprites/lgtning.vmt"
+		entity env_beam
+		]
 	]   

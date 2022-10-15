@@ -27,7 +27,7 @@
 		"Format: materials/vgui/[materialname]_red and materials/vgui/[materialname]_blue"
 	flag_paper(particlesystem) : "Paper Particle" : "player_intel_papertrail" : "Particle effect used for the falling paper trail."
 	flag_trail(string) : "Trail Effect" : "flagtrail" : "Materials used for the trail effect. " +
-		"Format: materials/effects/[materialname]_red and materials/effects/[materialname]_blu"
+		"Format: materials/effects/[materialname]_red and materials/effects/[materialname]_blue"
 
 	trail_effect[engine](integer) : "Use Trail Effect" : 1
 	trail_effect(choices) : "Use Trail Effect" : 1 : "Use trail effect when the player is carrying the flag." =
@@ -67,4 +67,9 @@
 	output OnCapTeam1(void) : "Sent when the flag is captured by RED."
 	output OnCapTeam2(void) : "Sent when the flag is captured by BLU."
 	output OnTouchSameTeam(void) : "Sent when the flag is touched by a player on the same team (BLU player touches BLU flag, RED player touches RED flag)."
+
+	@resources
+		[
+		func item_teamflag // The icon and trail effect automatically append blue/red to the materials.
+		]
 	]

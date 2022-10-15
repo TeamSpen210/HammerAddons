@@ -63,4 +63,6 @@
 
 	// Inputs
 	input EmitAISound(void) : "Make the sound."
+
+	@resources []
 	]

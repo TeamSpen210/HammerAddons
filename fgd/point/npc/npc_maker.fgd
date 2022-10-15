@@ -31,4 +31,8 @@
 		"0": "Nothing"
 		]
 
+	@resources
+		[
+		func npc_maker // We include the specified NPC type, and the equipment.
+		]
 	]

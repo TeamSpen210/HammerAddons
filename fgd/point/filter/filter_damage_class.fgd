@@ -13,4 +13,6 @@
 		1 : "check against attacker" : 1
 		2 : "checks against inflicter" : 0
 		]
+	
+	@resources []
 	]

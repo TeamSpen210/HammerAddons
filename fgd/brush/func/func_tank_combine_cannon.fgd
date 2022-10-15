@@ -21,4 +21,12 @@
 
 	// Outputs
 	output OnShotAtPlayer(void) : "Fired everytime the cannon shoots at the player"
+
+	@resources
+		[
+		material "materials/effects/blueblacklargebeam.vmt"
+		particle "Weapon_Combine_Ion_Cannon"
+		// Only if set to cannon, but that doesn't really matter too much.
+		sound "NPC_Combine_Cannon.FireBullet"
+		]
 	]

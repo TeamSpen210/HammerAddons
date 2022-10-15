@@ -8,4 +8,10 @@
 
 	// Inputs
 	input SpawnDust(void) : "Spawn a dust puff."
+
+	@resources
+		[
+		material "materials/particle/particle_smokegrenade.vmt"
+		material "materials/particle/particle_noisesphere.vmt"
+		]
 	]

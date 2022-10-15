@@ -4,4 +4,5 @@
 	iconsprite("editor/filter_held.vmt") 
 = filter_player_held: "A filter that only accepts objects held by the player."
 	[
+	@resources []
 	]

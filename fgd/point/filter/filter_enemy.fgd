@@ -19,4 +19,6 @@
 		[
 		1: "Do not lose target if already aquired but filter failed." : 0
 		]
+	
+	@resources []
 	]

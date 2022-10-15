@@ -11,4 +11,6 @@
 	// Inputs
 	input StartMusic(void) : "Start a random music track from the user's playlist."
 	input StopMusic(void) : "Stop the currently playing music."
+
+	@resources []
 	]

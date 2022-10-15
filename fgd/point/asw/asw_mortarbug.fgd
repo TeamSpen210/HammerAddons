@@ -14,4 +14,16 @@
 
 	// Inputs
 	input BreakWaitForScript(void) : "Wakes the alien up if his Wait For Script flag was set"
+
+	@resources
+		[
+		model "models/aliens/mortar/mortar.mdl"
+		sound "ASW_MortarBug.Idle"
+		sound "ASW_MortarBug.Pain"
+		sound "ASW_MortarBug.Spit"
+		sound "ASW_MortarBug.OnFire"
+		sound "ASW_MortarBug.Death"
+		particle mortar_launch
+		entity asw_mortarbug_shell
+		]
 	]

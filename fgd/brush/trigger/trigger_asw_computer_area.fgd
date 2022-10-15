@@ -35,4 +35,14 @@
 	output OnComputerViewMail2(void) : "Fired whenever a marine reads the 2nd mail in this computer."
 	output OnComputerViewMail3(void) : "Fired whenever a marine reads the 3rd mail in this computer."
 	output OnComputerViewMail4(void) : "Fired whenever a marine reads the 4th mail in this computer."
+
+	@resources
+		[
+		sound "ASWComputer.Downloading"
+		sound "ASWComputer.MenuButton"
+		sound "ASWComputer.NumberAligned"
+		sound "ASWComputer.Loop"
+		sound "ASWComputer.ColumnTick"
+		sound "ASWComputer.TimeOut"
+		]
 	]

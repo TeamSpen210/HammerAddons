@@ -18,4 +18,6 @@
 
 	// Outputs
 	output OutColor(color255) : "Fired when the InValue input is received, with the remapped RGB color as the parameter."
+
+	@resources []
 	]

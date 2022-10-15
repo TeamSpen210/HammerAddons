@@ -1,6 +1,6 @@
-@NpcClass base(Basebird) 
+@NpcClass aliasof(npc_boid)
 	appliesto(EZ1, EZ2)
 	autovis(Entities, NPCs, Animals, Birds) 
-	studio("models/aflock.mdl") = npc_aliencrow: "Boid"
+	studio("models/aflock.mdl") = npc_aliencrow: "Alternate name for npc_boid."
 	[
 	]

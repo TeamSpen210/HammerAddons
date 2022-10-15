@@ -24,4 +24,6 @@
 	output OnFacingLookat(void) : "Fired when the Target Entity points at the Look At Entity for more than the specified Duration, or in response to a Test input."
 	output OnNotFacingLookat(void) : "Fires in response to a Test input when the Target Entity is not pointing at the Look At Entity."
 	output FacingPercentage(float) : "Normalized value (0..1) where 1 is facing directly at target and 0 is at or beyond the angle of tolerance."
+
+	@resources []
 	]

@@ -46,4 +46,19 @@
 
 	// Outputs
 	output OnShotFired(void) : "Fires when sniper fires a shot"
+
+	@resources
+		[
+		model "models/combine_soldier.mdl"
+		material "materials/sprites/light_glow03.vmt"
+		material "materials/sprites/muzzleflash1.vmt"
+		material "materials/effects/bluelaser1.vmt"
+		sound "NPC_Sniper.Die"
+		sound "NPC_Sniper.TargetDestroyed"
+		sound "NPC_Sniper.HearDanger"
+		sound "NPC_Sniper.FireBullet"
+		sound "NPC_Sniper.Reload"
+		sound "NPC_Sniper.SonicBoom"
+		entity sniperbullet
+		]
 	]

@@ -3,4 +3,23 @@
 	autovis(Entities, NPCs, Headcrabs, Poison Headcrab)
 	studio("models/Headcrabblack.mdl") = npc_headcrab_black: "Black Poison Headcrab"
 	[
+	@resources
+		[
+		model "models/headcrabblack.mdl"
+
+		sound "NPC_BlackHeadcrab.Telegraph"
+		sound "NPC_BlackHeadcrab.Attack"
+		sound "NPC_BlackHeadcrab.Bite"
+		sound "NPC_BlackHeadcrab.Threat"
+		sound "NPC_BlackHeadcrab.Alert"
+		sound "NPC_BlackHeadcrab.Idle"
+		sound "NPC_BlackHeadcrab.Talk"
+		sound "NPC_BlackHeadcrab.AlertVoice"
+		sound "NPC_BlackHeadcrab.Pain"
+		sound "NPC_BlackHeadcrab.Die"
+		sound "NPC_BlackHeadcrab.Impact"
+		sound "NPC_BlackHeadcrab.ImpactAngry"
+		sound "NPC_BlackHeadcrab.FootstepWalk"
+		sound "NPC_BlackHeadcrab.Footstep"
+		]
 	]

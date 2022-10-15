@@ -1,29 +1,6 @@
-
-@NpcClass base(BaseNPC) 
+@NpcClass base(asw_drone) 
 	appliesto(ASW) 
 	studio("models/swarm/drone/drone.mdl") 
 	sphere() = asw_drone_jumper: "A vicious killing machine with bladed limbs and sharp teeth, easily able to tear a man to pieces, even an armoured IAF marine.  This jumping variation can leap over large distances."
 	[
-	sleepstate[engine](integer) : "Sleep State" : 1
-	sleepstate(choices) : "Sleep State" : 1 : "Holds the NPC in stasis until specified condition. See also 'Wake Radius' and 'Wake Squad'." =
-		[
-		0: "None"
-		1: "Waiting for threat"
-		2: "Waiting for PVS"
-		3: "Waiting for input"
-		]
-
-	visiblewhenasleep(boolean) : "Visible when asleep" : "0" : "If true, this alien will still get drawn even when asleep (useful for aliens you see far below you)."
-
-	spawnflags(flags) : "spawnflags" =
-		[
-		131072: "Use Ground Checks" : 0
-		]
-
-
-	// Inputs
-	input BreakWaitForScript(void) : "Wakes the alien up if his Wait For Script flag was set"
-
-	// Outputs
-	output OnReachedFightGoal(void) : "Fires when the drone reaches his specified fight-to location"
 	]

@@ -28,4 +28,6 @@
 
 	// Outputs
 	output OnEndFollow(void) : "Fired when the point_viewcontrol deactivates, due to the Disable input being received, the Entity to Look At being destroyed, or the Hold Time expiring."
+
+	@resources []
 	]

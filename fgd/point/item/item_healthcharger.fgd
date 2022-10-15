@@ -50,4 +50,13 @@
 	output OnFull[Mesa, MBase](void) : "Recharged to full."
 	output OnPlayerUse[-Mesa](void) : "Fired when the player +USEs the charger."
 	output OnUse[+Mesa](void) : "Fired when the player +USEs the charger."
+
+	@resources
+		[
+	    model "models/props_combine/health_charger001.mdl"
+	    sound "WallHealth.Deny"
+	    sound "WallHealth.Start"
+	    sound "WallHealth.LoopingContinueCharge"
+	    sound "WallHealth.Recharge"
+		]
 	]

@@ -1,0 +1,13 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(+engine, ASW)
+= asw_mortarbug_shell: "Shell shot by mortarbugs."
+	[
+	@resources
+		[
+		model "models/swarm/MortarBugProjectile/MortarBugProjectile.mdl"
+		sound "ASW_Boomer_Grenade.Explode"
+		sound "ASW_Boomer_Projectile.Spawned"
+		sound "ASW_Boomer_Projectile.ImpactHard"
+		particle mortar_shell_aura
+		]
+	]

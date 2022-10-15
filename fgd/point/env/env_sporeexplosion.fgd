@@ -4,4 +4,9 @@
 = env_sporeexplosion: "Bugbait Spore Effect"
 	[
 	spawnrate(float) : "Spawn Rate (as percentage)" : 25 : "How dense the spore effect is"
+
+	@resources
+		[
+		material "materials/particle/fire.vmt"
+		]
 	]

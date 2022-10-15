@@ -37,4 +37,9 @@
 	// Inputs
 	input SetFadeInDuration(float) : "Sets the 'fadeInDuration' variable, used to fade cc lookup usage when entity is enabled."
 	input SetFadeOutDuration(float) : "Sets the 'fadeOutDuration' variable, used to fade cc lookup usage when entity is disabled."
+
+	@resources
+		[
+		func color_correction // Include the lookup file.
+		]
 	]

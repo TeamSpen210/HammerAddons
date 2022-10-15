@@ -3,4 +3,5 @@
 	iconsprite("editor/vizzys/info_target_vehicle_transition.vmt") 
 = info_target_vehicle_transition: "Vehicle Transition Point"
 	[
+	@resources []
 	]

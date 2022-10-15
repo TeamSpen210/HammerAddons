@@ -1,8 +1,9 @@
-
 @PointClass base(BaseEntityPoint) 
 	appliesto(ASW) 
 	iconsprite("editor/info_target.vmt") = asw_gamerules: "Alien Swarm: Infested game rules"
 	[
 	speedruntime(integer) : "Speedrun time" : 180 : "Speed run time in seconds.  Players must complete the mission within this time to unlock Uber mode."
 	speedruntimesp(integer) : "Speedrun time singleplayer" : 0 : "Speed run time in seconds specifically for singleplayer.  If this is set to 0, then the normal Speedrun Time setting is used."
+
+	@resources []
 	]

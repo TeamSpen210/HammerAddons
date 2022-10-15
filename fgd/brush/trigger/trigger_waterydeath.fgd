@@ -8,4 +8,11 @@
 	MaxPain[MBase](float) : "Max Pain" : "15.0" : "This is the maximum damage that could be attained after multiple pain steps."
 	
 	output OnDamage[MBase](integer) : "Fires each time an entity takes damage."
+
+	@resources
+		[
+		sound "coast.leech_bites_loop"
+		sound "coast.leech_water_churn_loop"
+		entity ent_watery_leech
+		]
 	]

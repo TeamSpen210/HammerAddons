@@ -49,4 +49,11 @@
 	// Outputs
 	output OnAnimationBegun(void) : "Fired whenever a new animation has begun playing."
 	output OnAnimationDone(void) : "Fired whenever an animation is complete."
+
+	@resources 
+		[
+		sound "Metal.SawbladeStick" [+hl2]
+	    sound "PropaneTank.Burst"
+	    entity env_flare [+hl2, +episodic]
+		]
 	]

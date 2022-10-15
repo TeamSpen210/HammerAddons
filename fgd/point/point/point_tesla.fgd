@@ -25,4 +25,9 @@
 	input TurnOn(void) : "Turn emitter on."
 	input TurnOff(void) : "Turn emitter off."
 	input DoSpark(void) : "Force a single arc."
+
+	@resources
+		[
+		material "materials/sprites/physbeam.vmt"  // Default material.
+		]
 	]

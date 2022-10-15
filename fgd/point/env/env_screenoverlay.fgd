@@ -1,9 +1,10 @@
-
 @PointClass base(BaseEntityPoint) 
 	color(200 0 0) 
 	iconsprite("editor/ficool2/env_screenoverlay")
 = env_screenoverlay: "An entity that can display and control a set of screen overlays, to be displayed over the player's view. Useful for view effects like drunkenness, or teleporter afterimages, etc."
 	[
+	overlayindex[MBase](integer) : "Overlay Index" : -1 : "Mapbase allows multiple screen overlays to be visible at once. This specifies the 'slot' which will be used, with -1 the regular slot, and 0-9 the new slots."
+
 	overlayname1(material) : "Overlay Name 1" : : "Name of the first overlay material to display."
 	overlaytime1(float) : "Overlay Duration 1" : 1.0 : "Amount of time that the first overlay should be displayed for, after which it will begin showing the second overlay. " +
 		"Set to -1 to show the first overlay indefinitely."
@@ -57,4 +58,6 @@
 	input StartOverlays(void) : "Start displaying the first overlay."
 	input StopOverlays(void) : "Stop displaying any overlays."
 	input SwitchOverlay(int) : "Switch to displaying a specific overlay. Pass in the desired overlay number in the parameter."
+
+	@resources []
 	]

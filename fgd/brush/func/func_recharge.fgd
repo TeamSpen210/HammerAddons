@@ -18,4 +18,11 @@
 	output OnEmpty(void) : "Empty"
 	output OnFull(void) : "Recharged to full."
 	output OnPlayerUse(void) : "Fired when the player +USEs the charger."
+
+	@resources
+		[
+		sound "SuitRecharge.Deny"
+		sound "SuitRecharge.Start"
+		sound "SuitRecharge.ChargingLoop"
+		]
 	]

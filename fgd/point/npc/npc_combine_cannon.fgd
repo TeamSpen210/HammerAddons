@@ -30,4 +30,12 @@
 
 	input InputEnableSniper(void) : "Enable the cannon."
 	input InputDisableSniper(void) : "Disable the cannon."
+
+	@resources
+		[
+		model "models/combine_soldier.mdl" // Ragdoll
+		mat "materials/effects/bluelaser1.vmt"
+		mat "materials/sprites/light_glow03.vmt"
+		sound "NPC_Combine_Cannon.FireBullet"
+		]
 	]

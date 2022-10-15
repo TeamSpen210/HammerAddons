@@ -10,4 +10,6 @@
 	// Inputs
 	input PlaySound(void) : "Starts the sound."
 	input StopSound(void) : "Stops the sound if it is playing."
+
+	@resources []
 	]

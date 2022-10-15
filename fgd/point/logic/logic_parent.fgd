@@ -10,4 +10,6 @@
 
 	input ParentEntities(string) : "ParentName ChildName"
 	output OnFired(void) : ""
+
+	@resources []
 	]

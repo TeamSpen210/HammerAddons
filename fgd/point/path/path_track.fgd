@@ -47,4 +47,6 @@
 	// Outputs
 	output OnPass(void) : "Fired when any entity following this path passes this path_track node."
 	output OnTeleport(void) : "Fired when any entity following this path teleports directly to this path_track node."
+
+	@resources []
 	]

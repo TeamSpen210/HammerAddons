@@ -33,4 +33,9 @@
 	input EnableScent[EZ2](void) : "Start emitting scents that will attract predators to this ragdoll."
 	input DisableScent[EZ2](void) : "Start emitting scents that will attract predators to this ragdoll."
 	input Gib[EZ2](void) : "Apply 1000 damage to instantly gib this ragdoll."
+
+	@resources
+		[
+		particle "hgib" [+entropyzero2]
+		]
 	]

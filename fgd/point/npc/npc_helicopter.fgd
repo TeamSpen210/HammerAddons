@@ -72,4 +72,15 @@
 	output OnHealthChanged(integer) : "Fires when the helicopter health changes. The integer is the percentage of health the chopper has from 0-100."
 	output OnShotDown(void) : "Fires the instant the helicopter is killed"
 	output OutBomb[MBase](ehandle) : "Fires for each bomb dropped."
+
+	@resources
+		[
+		model "models/combine_helicopter.mdl"
+		model "models/combine_helicopter_broken.mdl"
+		material "materials/sprites/redglow1.vmt"
+		break_chunk "MetalChunks" // Additional generic gibs.
+		entity helicopter_chunk
+		entity grenade_helicopter
+		entity npc_helicoptersensor
+		]
 	]

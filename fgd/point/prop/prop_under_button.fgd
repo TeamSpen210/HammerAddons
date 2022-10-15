@@ -6,4 +6,12 @@
 	"Uses different press/release sounds compared to the modern one. " +
 	"The same tick-tock noise is used to indicate limited time."
 	[
+	@resources
+		[
+		model "models/props_underground/underground_testchamber_button.mdl"
+		sound "Portal.button_down" // It plays both!
+		sound "Portal.button_up"
+		sound "Portal.button_locked"
+		sound "Portal.room1_TickTock"
+		]
 	]

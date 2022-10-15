@@ -11,4 +11,12 @@
 		]	
 
 	input Explode( void ) : "This input detonates the SLAM."
+
+	@resources
+		[
+		mdl "models/Weapons/w_slam.mdl"
+		snd "SatchelCharge.Pickup"
+		snd "SatchelCharge.Bounce"
+		snd "SatchelCharge.Slide"
+		]
 	]

@@ -2,4 +2,8 @@
 	appliesto(+engine, HL2, EP1, EP2, P1)
 = sniperbullet: "The bullet fired by npc_sniper."
 	[
+	@resources
+		[
+		sound "NPC_Sniper.SonicBoom"
+		]
 	]

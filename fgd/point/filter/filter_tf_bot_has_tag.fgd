@@ -6,5 +6,6 @@
 	[
 	tags(string) : "Tags" : : "Tags required to pass this filter"
 	require_all_tags(boolean) : "Require all tags?" : 1 : "Does this filter require all specified tags?" 
-
+	
+	@resources []
 	]

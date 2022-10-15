@@ -23,4 +23,6 @@
 	// Outputs
 	output OnNPCStartedUsing(string) : "Fired when an NPC has reached this node and started using it. Passes along the NPC."
 	output OnNPCStoppedUsing(string) : "Fired when an NPC has stopped using this node. Passes along the NPC."
+
+	@resources []
 	]

@@ -1,0 +1,4 @@
+@SolidClass aliasof(func_movelinear) appliesto(complete)
+= momentary_door: "Deprecated alias for func_movelinear."
+	[
+	]

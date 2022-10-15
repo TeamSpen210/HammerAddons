@@ -4,4 +4,9 @@
 	studio("models/weapons/Chainsaw/Chainsaw.mdl") = asw_pickup_chainsaw: "Chainsaw"
 	[
 	bulletsingun(integer) : "Bullets In Gun" : 100
+
+	@resources
+		[
+		model "models/weapons/Chainsaw/Chainsaw.mdl"
+		]
 	]

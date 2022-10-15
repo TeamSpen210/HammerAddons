@@ -45,4 +45,9 @@
 
 	// Outputs
 	output OnAllBlocked(void) : "Fires when all the hint nodes are blocked."
+
+	@resources 
+		[
+		func npc_antlion_template_maker // If the worker spawn rate is set, we need to force-include worker resources.
+		]
 	]

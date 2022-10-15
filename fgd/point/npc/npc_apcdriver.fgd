@@ -19,4 +19,6 @@
 	input Stop(void) : "Tell the driver to stop driving."
 	input DisableFiring(float) : "Disables firing from happening"
 	input EnableFiring(float) : "Enables firing to start. Firing is enabled by default"
+	
+	@resources []
 	]

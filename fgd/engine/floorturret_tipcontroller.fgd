@@ -2,4 +2,5 @@
 	appliesto(+engine, HL2, EP1, EP2, P1, P2)
 = floorturret_tipcontroller: "Internal motion controller to stablize turrets."
 	[
+	@resources []
 	]

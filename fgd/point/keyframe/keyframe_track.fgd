@@ -5,4 +5,5 @@
 	keyframe()
 = keyframe_track: "Animation KeyFrame"
 	[
+	@resources []
 	]

@@ -7,4 +7,6 @@
 
 	// Inputs
 	input MarineInEscapeArea(void) : "MarineInEscapeArea"
+
+	@resources []
 	]

@@ -4,4 +4,18 @@
 = passtime_ball : "Jack"
 	[
 	modelscale(float) : "Model Scale" : "1.0" : "A multiplier for the size of the model."
+
+	@resources
+		[
+		model "models/passtime/ball/passtime_ball_halloween.mdl"
+		model "models/passtime/ball/passtime_ball.mdl"
+		material "materials/passtime/passtime_balltrail_red.vmt"
+		material "materials/passtime/passtime_balltrail_blu.vmt"
+		material "materials/passtime/passtime_balltrail_unassigned.vmt"
+		sound "Passtime.BallSmack"
+		sound "Passtime.BallGet"
+		sound "Passtime.BallIdle"
+		sound "Passtime.BallHoming"
+		entity _ballplayertoucher
+		]
 	]

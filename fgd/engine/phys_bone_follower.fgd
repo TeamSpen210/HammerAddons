@@ -2,4 +2,5 @@
 	appliesto(+engine)
 = phys_bone_follower: "Internal entity, used for models with $collisionjoints. This allowes each physics component to move independently."
 	[
+	@resources [] // Owner entity is responsible for resources.
 	]   

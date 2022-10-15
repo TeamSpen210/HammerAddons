@@ -87,4 +87,6 @@
 	
 	// Outputs
 	output OnFire[MBase](void) : "Fires for each bullet fired by this entity."
+
+	@resources []
 	]

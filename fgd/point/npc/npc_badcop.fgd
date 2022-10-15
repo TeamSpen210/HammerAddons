@@ -4,4 +4,9 @@
 	studio() = npc_badcop: "Bad Cop"
 	[
 	model(studio) : "Model" : "models/bad_cop.mdl" : "Sets this clone's model."
+
+	@resources
+		[
+		model "models/bad_cop.mdl"
+		]
 	]

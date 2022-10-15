@@ -1,4 +1,3 @@
-
 @SolidClass base(Trigger) 
 	appliesto(ASW) = trigger_asw_random_target: "A trigger volume that can be triggered multiple times and will randomly fire one of its outputs."
 	[
@@ -12,4 +11,6 @@
 	output OnTrigger4(void) : "One of the OnTrigger outputs is randomly chosen and fired whenever the trigger is activated."
 	output OnTrigger5(void) : "One of the OnTrigger outputs is randomly chosen and fired whenever the trigger is activated."
 	output OnTrigger6(void) : "One of the OnTrigger outputs is randomly chosen and fired whenever the trigger is activated."
+
+	@resources []
 	]

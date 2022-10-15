@@ -18,4 +18,6 @@
 		"Pass a survivor name to control that survivor's view.(ie '!zoey')"
 	input Disable(void) : "Disable the point_viewcontrol, and stop controlling the player's view."
 	input StartMovement(void) : "Start the movement to first-person view."
+
+	@resources []
 	]

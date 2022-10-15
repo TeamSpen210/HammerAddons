@@ -3,4 +3,6 @@
 	color(255 0 0) = path_corner_crash: "Helicopter Crash Path"
 	[
 	target(target_destination) : "Next stop target"
+
+	@resources []
 	]

@@ -6,4 +6,6 @@
 
 	// Inputs
 	input HurtMarine(void) : "Hurts the nearest marine by a significant amount of damage, but doesn't kill him"
+
+	@resources []
 	]

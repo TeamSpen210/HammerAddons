@@ -8,4 +8,6 @@
 		"targetnames and base values related to clientside rendering (e.g. render mode), cannot be found by this filter."
 		
 	value(string) : "Value (Optional)" : : "The key value to filter by. If empty, the filter will pass if the entity just has the keyfield."
+	
+	@resources []
 ]

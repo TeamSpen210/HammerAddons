@@ -7,4 +7,10 @@
 
 	// Inputs
 	input Explode(void) : "Explodes the bomb."
+
+	@resources // Assumed
+		[
+		model "models/npcs/personality_sphere_angry.mdl"
+		particle "bomb_trail"
+		]
 	]

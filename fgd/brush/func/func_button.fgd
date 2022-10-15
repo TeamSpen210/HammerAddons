@@ -26,4 +26,6 @@
 		]
 
 	min_use_angle[since_CSGO](float) : "Use Look-At Limit" : 0.8 : "Limit the usable look-at-angle. -1 is looking directly away, 0 is looking perpendicular, 1 is looking directly at."
+
+	@resources [] // In Button.
 	]

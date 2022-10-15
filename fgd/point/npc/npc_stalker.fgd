@@ -12,4 +12,25 @@
 		]
 	Aggression[MBase](boolean) : "Start Aggressive" : 0 : "Controls whether this stalker starts aggressive to the player and their allies without having to be provoked first."
 	Bleed[MBase](boolean) : "Bleed" : 1 : "Allows this stalker to bleed upon taking bleedable damage. They bleed saline."
+
+	@resources
+		[
+	    model "models/stalker.mdl"
+		material "materials/sprites/laser.vmt"
+		material "materials/sprites/redglow1.vmt"
+		material "materials/sprites/orangeglow1.vmt"
+		material "materials/sprites/yellowglow1.vmt"
+		sound "NPC_Stalker.BurnFlesh"
+		sound "NPC_Stalker.BurnWall"
+		sound "NPC_Stalker.FootstepLeft"
+		sound "NPC_Stalker.FootstepRight"
+		sound "NPC_Stalker.Hit"
+		sound "NPC_Stalker.Ambient01"
+		sound "NPC_Stalker.Scream"
+		sound "NPC_Stalker.Pain"
+		sound "NPC_Stalker.Die"
+
+		// Also requires bleed=1, but that's not too important?
+		particle "blood_impact_synth_01" [+mapbase]
+		]
 	]

@@ -21,4 +21,6 @@
 	input TurnOn(void) : "Enable this entity. It will start damaging entities everytime it fires, and refire based upon the specified Delay."
 	input TurnOff(void) : "Disable this entity. It will stop damaging entities."
 	input Toggle(void) : "Toggle this entity between On/Off state."
+
+	@resources []
 	]

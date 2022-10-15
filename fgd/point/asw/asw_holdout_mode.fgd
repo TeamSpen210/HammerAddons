@@ -30,4 +30,6 @@
 	output OnWave09(void) : "Fired when Wave09 starts."
 	output OnWave10(void) : "Fired when Wave10 starts."
 	output OnWaveDefault(void) : "Fired at the start of all waves."
+
+	@resources []
 	]

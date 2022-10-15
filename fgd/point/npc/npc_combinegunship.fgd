@@ -46,4 +46,32 @@
 	output OnThirdDamage(void) : "Fired when the third damage is done to the gunship."
 	output OnFourthDamage(void) : "Fired when the fourth damage is done to the gunship."
 	output OnCrashed(void) : "Fired when the gunship has reached the crash target, and has just exploded."
+
+	@resources
+		[
+		func npc_combinegunship // Can swap to a helicopter.
+		mat "materials/sprites/lgtning.vmt"
+		mat "materials/effects/ar2ground2.vmt"
+		mat "materials/effects/blueblackflash.vmt"
+
+		sound "NPC_CombineGunship.SearchPing"
+		sound "NPC_CombineGunship.PatrolPing"
+		sound "NPC_Strider.Charge"
+		sound "NPC_Strider.Shoot"
+		sound "NPC_CombineGunship.SeeEnemy"
+		sound "NPC_CombineGunship.CannonStartSound"
+		sound "NPC_CombineGunship.Explode"
+		sound "NPC_CombineGunship.Pain"
+		sound "NPC_CombineGunship.CannonStopSound"
+
+		sound "NPC_CombineGunship.DyingSound"
+		sound "NPC_CombineGunship.CannonSound"
+		sound "NPC_CombineGunship.RotorSound"
+		sound "NPC_CombineGunship.ExhaustSound"
+		sound "NPC_CombineGunship.RotorBlastSound"
+
+		break_chunk "MetalChunks" // Additional generic gibs.
+		material "materials/sprites/physbeam.vmt" [+episodic]
+		entity env_citadel_energy_core  [+episodic]
+		]
 	]

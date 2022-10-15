@@ -48,4 +48,9 @@
 		]
 
 	touchkill[MESA](boolean) :"Explode on Impact" : 0
+
+	@resources 
+		[
+		func env_shooter // "shootsounds" has a harcoded list of sounds.
+		]
 	]

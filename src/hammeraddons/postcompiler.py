@@ -16,7 +16,7 @@ import os
 from logging import FileHandler
 from typing import List, Dict, Optional
 
-from srctools import __version__ as version_lib
+from srctools import __version__ as version_lib, conv_bool
 from srctools.filesys import ZipFileSystem
 from srctools.fgd import FGD
 from srctools.bsp import BSP
@@ -217,7 +217,16 @@ async def main(argv: List[str]) -> None:
 
     if conf.opts.get(config.AUTO_PACK) and args.allow_pack:
         LOGGER.info('Analysing packable resources...')
-        packlist.pack_fgd(bsp_file.ents, fgd)
+        packlist.pack_fgd(
+            bsp_file.ents, fgd,
+            mapname=Path(bsp_file.filename).stem,  # TODO: Include directories?
+            tags={
+                prop.name.upper()
+                for prop in
+                conf.opts.get(config.PACK_TAGS)
+                if conv_bool(prop.value)
+            },
+        )
 
         packlist.pack_from_bsp(bsp_file)
 

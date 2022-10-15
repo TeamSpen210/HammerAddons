@@ -20,4 +20,6 @@
 
 	// Inputs
 	input Impact(void) : "Trigger the impact"
+
+	@resources []
 	]

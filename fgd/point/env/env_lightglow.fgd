@@ -39,4 +39,9 @@
 	input Enable[MBase](void) : "Make the glow visible."
 	input Disable[MBase](void) : "Hide the glow."
 	input Color(color255) : "Change the render color of the glow. Format: <Red 0-255> <Green 0-255> <Blue 0-255>"
+
+	@resources
+		[
+		material "materials/sprites/light_glow02_add_noz.vmt"
+		]
 	]

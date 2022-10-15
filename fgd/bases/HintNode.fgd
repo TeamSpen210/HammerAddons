@@ -130,4 +130,9 @@
 	input DisableHint(void) : "Disable hint."
 	
 	input SetHintGroup[MBase](string) : "Sets this hint's group."
+
+	@resources
+		[
+		entity ai_hint
+		]
 	]

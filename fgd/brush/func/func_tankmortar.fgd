@@ -1,4 +1,4 @@
-@SolidClass base(BaseTank) = func_tankmortar: "Brush Mortar Turret"
+@SolidClass base(BaseTank) = func_tankmortar: "Brush turret, which fires a morta shot. This is used for the HL2 Combine Nexus 'suppression device'."
 	[
 	imagnitude(integer) : "Explosion Magnitude" : 100
 	firedelay(string) : "Shell travel time" : "2" : "How long after the turret fires before the shell impacts"
@@ -17,4 +17,9 @@
 	]
 	// Inputs
 	input FireAtWill(void) : "Allow tank to fire next shot as soon as ready."
+	
+	@resources
+		[
+		entity mortarshell
+		]
 	]

@@ -121,4 +121,6 @@
 	input LightOnlyTarget[INFRA](bool) : "Set if the projected texture lights the target only."
 	input LightWorld[INFRA](bool) : "Set if the projected texture lights the world and static geometry."
 	input Ambient[GMod, INFRA](float) : "Set ambient light amount"
+
+	@resources []
 	]

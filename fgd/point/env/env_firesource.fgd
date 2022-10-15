@@ -15,4 +15,6 @@
 	// Inputs
 	input Enable(void) : "Enable fire source."
 	input Disable(void) : "Disable fire source."
+
+	@resources []
 	]

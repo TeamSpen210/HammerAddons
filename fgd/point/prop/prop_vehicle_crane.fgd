@@ -11,4 +11,9 @@
 
 	// Inputs
 	input ForcePlayerIn(void) : "Force the player to get into the crane. Only works in singleplayer."
+
+	@resources
+		[
+		entity crane_tip
+		]
 	]

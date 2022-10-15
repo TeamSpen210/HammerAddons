@@ -29,4 +29,14 @@
 
 	// Outputs
 	output OnReachedFightGoal(void) : "Fires when the parasite reaches his specified fight-to location"
+
+	@resources
+		[
+		model "models/aliens/parasite/parasite.mdl"
+		sound "ASW_Parasite.Death"
+		sound "ASW_Parasite.Attack"
+		sound "ASW_Parasite.Idle"
+		sound "ASW_Parasite.Pain"
+		sound "ASW_Parasite.Attack"
+		]
 	]

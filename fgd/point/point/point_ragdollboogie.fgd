@@ -26,4 +26,9 @@
 	input SetTarget(target_destination) : "Sets the ragdoll(s) to target."
 	input BoogieTarget(target_destination) : "Boogies specific target(s) without using or modifying our target field."
 	input SetZapColor(color255) : "Sets the zap color."
+
+	@resources
+		[
+		entity env_ragdoll_boogie
+		]
 	]

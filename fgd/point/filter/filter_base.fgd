@@ -23,4 +23,6 @@
 	// Outputs
 	output OnPass(void) : "Fired in response to TestActivator input if the activator passes the filter."
 	output OnFail(void) : "Fired in response to TestActivator input if the activator fails to pass the filter."
+	
+	@resources []
 	]

@@ -44,4 +44,6 @@
 	// Inputs
 	input Shutdown(void) : "Remove the manager and all scenes referenced by it " +
 		"(and all scenes referenced by logic_scene_list_manager's embedded in this one)."
+
+	@resources [] // The referenced scenes handle their resources.
 	]

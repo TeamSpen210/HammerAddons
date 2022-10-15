@@ -55,4 +55,6 @@
 	output OnAllTrue(void) : "Fired when all the logic_branches in the list become true."
 	output OnAllFalse(void) : "Fired when all the logic_branches in the list become false."
 	output OnMixed(void) : "Fired when one of the logic branches in the list changes, but some are true and some are false."
+
+	@resources []
 	]

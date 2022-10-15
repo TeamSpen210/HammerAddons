@@ -34,4 +34,6 @@
 	output OnTrigger6(void) : "This output has a chance to fire when the entity is triggered."
 	output OnTrigger7(void) : "This output has a chance to fire when the entity is triggered."
 	output OnTrigger8(void) : "This output has a chance to fire when the entity is triggered."
+
+	@resources []
 	]

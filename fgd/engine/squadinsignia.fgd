@@ -3,4 +3,8 @@
 	studio("models/chefhat.mdl")
 = squadinsignia: "A chef hat that attaches itself to the citzen set as the Owner (so can't be manually placed). Used when npc_citizen_insignia is enabled."
 	[
+	@resources
+		[
+		model "models/chefhat.mdl"
+		]
 	]   

@@ -25,4 +25,6 @@
 
 	input TurnOn[complete](void) : "Deprecated alias for closing the portal."
 	input TurnOff[complete](void) : "Deprecated alias for opening the portal."
+	
+	@resources []
 	]

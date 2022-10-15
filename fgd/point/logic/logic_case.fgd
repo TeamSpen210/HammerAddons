@@ -70,4 +70,6 @@
 	output OnDefault[!MBase](void) : "Fired when the input value does not equal any of the Case values."
 	output OnDefault[MBase, engine](string) : "Fired when the input value does not equal any of the Case values. Passes the input value."
 	output OnUsed[MBase](string) : "Fired when an input value is received, regardless of whether it matches a case. Passes the input value."
+
+	@resources []
 	]

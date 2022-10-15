@@ -1,9 +1,18 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(EP1, EP2, HL2, P1) 
+	appliesto(EP1, EP2, HL2, P1, +complete) 
 	autovis(AI, AI Citizen Response System)
-= ai_citizen_response_system: "If placed in the level, will manage citizens responses to player's actions."
+= ai_citizen_response_system: "If placed in the level, will manage citizens responses to player's actions. " +
+	"This is a legacy entity, since replaced by the responses system."
 	[
 
 	// Inputs
 	input ResponseVitalNPC(void) : "Fire the VitalNPC Died response."
+
+	@resources 
+		[
+		// Todo: should we include response concepts?
+		// response_concept TLK_CITIZEN_RESPONSE_SHOT_GUNSHIP
+		// response_concept TLK_CITIZEN_RESPONSE_KILLED_GUNSHIP
+		// response_concept TLK_VITALNPC_DIED
+		]
 	]

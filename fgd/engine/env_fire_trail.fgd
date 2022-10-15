@@ -1,0 +1,15 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(+engine)
+= env_fire_trail: "Produces a trail of fire following an entity."
+	[
+	@resources
+		[
+		material "materials/sprites/flamelet1.vmt"
+		material "materials/sprites/flamelet2.vmt"
+		material "materials/sprites/flamelet3.vmt"
+		material "materials/sprites/flamelet4.vmt"
+		material "materials/sprites/flamelet5.vmt"
+		material "materials/particle/particle_smokegrenade.vmt"
+		material "materials/particle/particle_noisesphere.vmt"
+		]
+	]

@@ -8,4 +8,6 @@
 
 	// Inputs
 	input SetRadius(vector) : "Sets a new radius and time to interpolate to it(as a vector <Size> <Time in Seconds>)."
+
+	@resources []
 	]

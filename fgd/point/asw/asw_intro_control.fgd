@@ -12,4 +12,6 @@
 
 	// Outputs
 	output IntroStarted(void) : "Fired when the intro/outro map begins."
+
+	@resources []
 	]

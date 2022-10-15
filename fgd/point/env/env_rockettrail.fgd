@@ -2,4 +2,15 @@
 	iconsprite(editor/env_rockettrail)
 = env_rockettrail : "Continuous rocket flame for HL2 RPG missiles."
 	[
+	@resources
+		[
+		mat "materials/effects/muzzleflash1.vmt"
+		mat "materials/effects/muzzleflash2.vmt"
+		mat "materials/effects/muzzleflash3.vmt"
+		mat "materials/effects/muzzleflash4.vmt"
+		mat "materials/sprites/flamelet1.vmt"
+		mat "materials/sprites/flamelet2.vmt"
+		mat "materials/sprites/flamelet3.vmt"
+		mat "materials/sprites/flamelet4.vmt"
+		]
 	]

@@ -4,4 +4,9 @@
 	line(255 255 255, targetname, lightingorigin) 
 = gibshooter: "An entity that shoots out gibs. Style of body part depends on language type."
 	[
+	@resources 
+		[
+		model "models/gibs/hgibs.mdl"
+		model "models/germanygibs.mdl"
+		]
 	]

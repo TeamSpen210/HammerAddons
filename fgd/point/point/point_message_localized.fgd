@@ -3,4 +3,6 @@
 = point_message_localized : "A variant of point_message that allows localized text and newline to be used."
 	[
 	message(string) : "Localized Entity Message" : : "The message displayed by this entity. Use '/n' for newline."
+
+	@resources [] // See parent
 	]

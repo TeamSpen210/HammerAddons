@@ -23,4 +23,22 @@
 	// Outputs
 	output OnGrab(string) : "When I attach my tongue to something"
 	output OnRelease(string) : "When I let go of something"
+
+	@resources
+		[
+		mdl "models/barnacle.mdl"
+		mdl "models/gibs/hgibs.mdl"
+		mdl "models/gibs/hgibs_scapula.mdl"
+		mdl "models/gibs/hgibs_rib.mdl"
+		mdl "models/gibs/hgibs_spine.mdl"
+		sound "NPC_Barnacle.Digest"
+		sound "NPC_Barnacle.BreakNeck"
+		sound "NPC_Barnacle.Scream"
+		sound "NPC_Barnacle.PullPant"
+		sound "NPC_Barnacle.TongueStretch"
+		sound "NPC_Barnacle.FinalBite"
+		sound "NPC_Barnacle.Die"
+
+		entity npc_barnacle_tongue_tip
+		]
 	]

@@ -36,4 +36,6 @@
 
 	// Inputs
 	input SetRemoteDestination[P2](string) : "Set a new target to teleport to."
+	
+	@resources []
 	]

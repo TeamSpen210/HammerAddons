@@ -33,4 +33,23 @@
 	input Alpha(integer) : "Changes the density of the rain, " +
 	"and may add additional particle effects like fog or leaves. " +
 	"Accepts inputs from -1 to 255."
+
+	@resources
+		[
+		material "materials/effects/fleck_ash1.vmt"
+	    material "materials/effects/fleck_ash2.vmt"
+	    material "materials/effects/fleck_ash3.vmt"
+	    material "materials/effects/ember_swirling001.vmt"
+	    material "materials/particle/rain.vmt"
+	    material "materials/particle/snow.vmt"
+	    particle "rain_storm"
+	    particle "rain_storm_screen"
+	    particle "rain_storm_outer"
+	    particle "rain"
+	    particle "rain_outer"
+	    particle "ash"
+	    particle "ash_outer"
+	    particle "snow"
+	    particle "snow_outer"
+		]
 	]

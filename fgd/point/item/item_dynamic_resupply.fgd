@@ -57,4 +57,20 @@
 
 	// Outputs
 	output OnItem(ehandle) : "Fired with each item created by this box."
+
+	@resources
+		[
+		entity item_healthkit 
+		entity item_battery
+		entity item_ammo_pistol
+		entity item_ammo_smg1
+		entity item_ammo_smg1_grenade
+		entity item_ammo_ar2
+		entity item_box_buckshot
+		entity item_rpg_round
+		entity weapon_frag
+		entity item_ammo_357
+		entity item_ammo_crossbow
+		entity item_ammo_ar2_altfire
+		]
 	]

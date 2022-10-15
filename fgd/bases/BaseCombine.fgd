@@ -1,0 +1,13 @@
+@BaseClass base(BaseNPC, RappelNPC) = BaseCombine : "Metropolice and Overwatch Soldiers share a common baseclass."
+	[
+	@resources	
+		[
+		model "models/Weapons/w_grenade.mdl"
+		sound "NPC_Combine.GrenadeLaunch"
+		sound "NPC_Combine.WeaponBash"
+		sound "Weapon_CombineGuard.Special1"
+		
+		sound "NPC_Combine.Following" [+entropyzero2]
+		sound "NPC_Combine.StopFollowing" [+entropyzero2]
+		]
+	]

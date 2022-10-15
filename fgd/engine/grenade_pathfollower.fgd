@@ -1,0 +1,10 @@
+@PointClass base(grenade)
+	appliesto(+engine, HL2, EP1, EP2, P1)
+= grenade_pathfollower: "A grenade which follows a specific path. This is spawned by npc_launcher."
+	[
+	@resources
+		[
+		sound "GrenadePathfollower.StopSounds"
+		entity env_rockettrail
+		]
+	]

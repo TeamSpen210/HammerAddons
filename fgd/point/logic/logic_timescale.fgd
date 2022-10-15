@@ -8,4 +8,6 @@
 	// Inputs
 	input SetDesiredTimescale(float) : "Sets the desired timescale and starts slowing time (will blend to desired using the specified blend time)."
 	input SetTimescaleBlendTime(float) : "Set the amount of time that it takes to ramp to the desired timescale when triggered."
+
+	@resources []
 	]

@@ -13,4 +13,6 @@
 		8: "Resume if Interrupted" : 0
 		16: "Snap to me" : 0
 		]
+
+	@resources []
 	]

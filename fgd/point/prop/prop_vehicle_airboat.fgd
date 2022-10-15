@@ -12,4 +12,25 @@
 	input InputStartRotorWashForces(void) : "The airboat will start to be blown around by the helicopter rotor wash."
 	input InputStopRotorWashForces(void) : "The airboat will no longer be blown around by the helicopter rotor wash."
 	input ExitVehicle(void) : "Force the player to exit the airboat"
+
+	@resources
+		[
+		material "materials/effects/splashwake1.vmt"
+		material "materials/effects/splashwake4.vmt"
+		sound "Airboat_engine_stop"
+		sound "Airboat_engine_start"
+		sound "Airboat.FireGunHeavy"
+		sound "Airboat.FireGunRevDow"
+		sound "Airboat_engine_idle"
+		sound "Airboat_engine_fullthrottle"
+		sound "Airboat_fan_idle"
+		sound "Airboat_fan_fullthrottle"
+		sound "Airboat_water_stopped"
+		sound "Airboat_water_fast"
+		sound "Airboat_impact_splash"
+		sound "Airboat_impact_hard"
+		sound "Airboat_headlight_on"
+		sound "Airboat_headlight_off"
+		sound "Airboat.FireGunLoop"
+		]
 	]

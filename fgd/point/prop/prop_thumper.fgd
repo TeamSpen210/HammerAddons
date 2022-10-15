@@ -19,4 +19,15 @@
 
 	// Outputs
 	output OnThumped(void) : "Fires when thumper impacts the ground."
+
+	@resources
+		[
+		model "models/props_combine/CombineThumper002.mdl"
+		sound "coast.thumper_hit"
+		sound "coast.thumper_ambient"
+		sound "coast.thumper_dust"
+		sound "coast.thumper_startup"
+		sound "coast.thumper_shutdown"
+		sound "coast.thumper_large_hit"
+		]
 	]

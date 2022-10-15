@@ -3,4 +3,10 @@
 	studio("models/props_junk/rock001a.mdl") 
 = npc_barnacle_tongue_tip: "The endpoint of banacle tounges, used internally to attach physics to."
 	[
+	@resources
+		[
+		// Actually it expects npc_barnacle to precache this!
+		// This is a random small model it uses to get physics.
+		model "models/props_junk/rock001a.mdl"
+		]
 	]   

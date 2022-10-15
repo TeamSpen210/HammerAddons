@@ -9,4 +9,6 @@
 	
 	input Enable[MBase](void) : "Enable remarks"
 	input Disable[MBase](void) : "Disable remarks - can force override with ForceRemark(Entity)"
+
+	@resources []
 	]

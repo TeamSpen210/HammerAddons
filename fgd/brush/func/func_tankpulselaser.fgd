@@ -7,4 +7,9 @@
 	pulselife(float) : "Pulse Life" : 2 : "(Seconds)  How long the pulse lasts"
 	pulselag(float) : "Pulse Lag" : 0.05 : "(Seconds)  How far behind is pulse tail"
 	pulsefiresound(sound) : "Pulse Fire Sound" : : "Sound played when pulse fires"
+
+	@resources
+		[
+		entity grenade_beam
+		]
 	]

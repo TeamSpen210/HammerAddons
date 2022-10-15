@@ -179,4 +179,12 @@
 
 	output OnSurrender[EZ2](void) : "Fires when the citizen has surrendered to the Combine."
 	output OnStopSurrendering[EZ2](void) : "Fires when the citizen has stopped surrendering."
+
+	@resources
+		[
+		sound "NPC_Citizen.FootstepLeft"
+		sound "NPC_Citizen.FootstepRight"
+		sound "NPC_Citizen.Die"
+		func npc_citizen // Complex rules controls which model is used.
+		]
 	]

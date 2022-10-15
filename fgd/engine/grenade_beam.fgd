@@ -1,5 +1,12 @@
-@PointClass base(BaseEntityPoint)
+@PointClass base(grenade)
 	appliesto(+engine, HL2, EP1, EP2, P1)
 = grenade_beam: "The beam effect which follows grenades around."
 	[
-	]   
+	@resources
+		[
+		mdl "models/weapons/flare.mdl"  // Not visible, but loaded.
+		material "materials/sprites/laser.vmt"
+		sound "GrenadeBeam.HitSound"
+		entity grenade_beam_chaser // Spawned in.
+		]
+	]

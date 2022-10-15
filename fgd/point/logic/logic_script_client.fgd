@@ -7,4 +7,6 @@
 	RunOnServer(boolean) : "Run on Server" : 0 : "Runs the entity scripts on the server as well as the client. Use IsServer() or IsClient() to determine which side is running from within the scripts."
 	
 	input CallScriptFunctionClient(string) : "Call a named function on the entity's client-side script scope."
+
+	@resources [] // Packing VScript stuff applies to all ents.
 	]

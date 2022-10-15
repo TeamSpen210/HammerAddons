@@ -32,4 +32,11 @@
 
 	input EnableBreakOnPlayerKick[EZ2](void) : "Set this breakable prop to break instantly on player kick."
 	input DisableBreakOnPlayerKick[EZ2](void) : "Set this breakable prop to not break instantly on player kick."
+	
+	@resources 
+		[
+		sound "Metal.SawbladeStick" [+hl2]
+	    sound "PropaneTank.Burst"
+	    entity env_flare [+hl2, +episodic]
+		]
 	]

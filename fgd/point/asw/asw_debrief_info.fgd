@@ -6,4 +6,6 @@
 	debrieftext1(string) : "Debrief Text 1" : : "First paragraph of mission debrief text."
 	debrieftext2(string) : "Debrief Text 2" : : "Second paragraph of mission debrief text."
 	debrieftext3(string) : "Debrief Text 3" : : "Third paragraph of mission debrief text."
+
+	@resources []
 	]

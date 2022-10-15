@@ -6,4 +6,9 @@
 	bulletsingun(integer) : "Bullets In Gun" : 98
 	clips(integer) : "Clips" : 5
 	secondarybullets(integer) : "Secondary Bullets" : 4
+
+	@resources
+		[
+		model "models/weapons/Prototype/prototyperifle.mdl"
+		]
 	]

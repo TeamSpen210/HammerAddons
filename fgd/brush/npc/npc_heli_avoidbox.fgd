@@ -7,4 +7,5 @@
 		65536: "Avoid the box above and below" : 0
 		]
 
+	@resources []
 	]

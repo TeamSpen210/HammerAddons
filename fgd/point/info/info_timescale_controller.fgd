@@ -4,4 +4,6 @@
 	[
 	input SetTimescale(float) : "Sets the value of host_timescale."
 	input RestoreTimescale(void) : "Restores the value of host_timescale back to what it was previously."
+	
+	@resources []
 	]

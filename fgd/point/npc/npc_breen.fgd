@@ -10,4 +10,8 @@
 		65536: "Ignore speech semaphore" : 0
 		]
 
+	@resources	
+		[
+		model "models/breen.mdl"
+		]
 	]

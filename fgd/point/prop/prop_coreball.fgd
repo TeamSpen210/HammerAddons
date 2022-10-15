@@ -9,4 +9,9 @@
 	input SetScaleX(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
 	input SetScaleY(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
 	input SetScaleZ(vector) : "Scales the coreball in one Axis. Params: <New Size> <Time>"
+
+	@resources
+		[
+		model "models/props_combine/coreball.mdl"
+		]
 	]

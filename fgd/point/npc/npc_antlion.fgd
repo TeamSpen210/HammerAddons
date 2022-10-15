@@ -43,4 +43,30 @@
 	// Outputs
 	output OnReachedFightGoal(void) : "Fires when the antlion reaches their specified fight-to location"
 	output OnUnBurrowed(void) : "Fires when the antlion unburrows"
+
+	@resources
+		[
+		sound "NPC_Antlion.RunOverByVehicle"
+		sound "NPC_Antlion.MeleeAttack"
+		sound "NPC_Antlion.Footstep"
+		sound "NPC_Antlion.BurrowIn"
+		sound "NPC_Antlion.BurrowOut"
+		sound "NPC_Antlion.FootstepSoft"
+		sound "NPC_Antlion.FootstepHeavy"
+		sound "NPC_Antlion.MeleeAttackSingle"
+		sound "NPC_Antlion.MeleeAttackDouble"
+		sound "NPC_Antlion.Distracted"
+		sound "NPC_Antlion.Idle"
+		sound "NPC_Antlion.Pain"
+		sound "NPC_Antlion.Land"
+		sound "NPC_Antlion.WingsOpen"
+		sound "NPC_Antlion.LoopingAgitated"
+		sound "NPC_Antlion.Distracted"
+
+		sound "NPC_Antlion.MeleeAttack_Muffled" [+episodic]
+		sound "NPC_Antlion.TrappedMetal" [+episodic]
+		sound "NPC_Antlion.ZappedFlip" [+episodic]
+		// This determines whether to include worker or regular resources, plus handles EZ2 variants
+		func npc_antlion
+		]
 	]

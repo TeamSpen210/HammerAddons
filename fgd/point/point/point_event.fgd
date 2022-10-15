@@ -31,4 +31,6 @@
 	output OutValue06(string)  : "Passes the value found in its respective keyname when an event is fired."
 	output OutValue07(string)  : "Passes the value found in its respective keyname when an event is fired."
 	output OutValue08(string)  : "Passes the value found in its respective keyname when an event is fired."
+
+	@resources []
 	]

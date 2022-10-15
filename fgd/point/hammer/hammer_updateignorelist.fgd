@@ -37,4 +37,6 @@
 	ignoredname14(target_destination) : "Ignored Name 14" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities."
 	ignoredname15(target_destination) : "Ignored Name 15" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities."
 	ignoredname16(target_destination) : "Ignored Name 16" : : "Do not send this entity's information back to hammer during hammer_update_safe_entities."
+
+	@resources []
 	]

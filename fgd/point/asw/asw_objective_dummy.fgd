@@ -4,4 +4,6 @@
 	iconsprite("editor/asw_objective_dummy.vmt") = asw_objective_dummy: "Alien Swarm Mission Objective"
 	[
 	objectivetitle(string) : "Objective Title" : : "Title to use for this objective in the list on the briefing screen, or in-game for the current objective HUD display."
+
+	@resources []
 	]

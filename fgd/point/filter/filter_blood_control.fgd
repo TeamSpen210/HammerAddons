@@ -13,4 +13,6 @@
 	
 	input DisableBlood(void) : "Disables blood."
 	input EnableBlood(void) : "Enables blood if it was previously disabled."
+	
+	@resources []
 	]

@@ -4,4 +4,9 @@
 	studio() = npc_magnusson: "Magnusson"
 	[
 	model(studio) : "World model" : "models/magnusson.mdl"
+
+	@resources
+		[
+		model "models/magnusson.mdl"
+		]
 	]

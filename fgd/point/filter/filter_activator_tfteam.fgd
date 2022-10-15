@@ -17,4 +17,6 @@
 	// Inputs
 	input RoundActivate(void) : "Activate the Control Point Finder"
 	input RoundSpawn(void) : "Round Spawn"
+	
+	@resources []
 	]

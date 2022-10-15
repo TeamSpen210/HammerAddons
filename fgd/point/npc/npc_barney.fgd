@@ -19,4 +19,15 @@
 
 	// Outputs
 	output OnPlayerUse(void) : "Fires when a player +USEs Barney"
+
+	@resources
+		[
+		model "models/barney.mdl"
+		sound "NPC_Barney.FootstepLeft"
+		sound "NPC_Barney.FootstepRight"
+		sound "NPC_Barney.Die"
+		choreo "scenes/Expressions/BarneyIdle.vcd"
+		choreo "scenes/Expressions/BarneyAlert.vcd"
+		choreo "scenes/Expressions/BarneyCombat.vcd"
+		]
 	]

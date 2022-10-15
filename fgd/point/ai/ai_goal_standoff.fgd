@@ -52,4 +52,6 @@
 	input Deactivate(void) : "Cease contesting position."
 	input UpdateActors[MBase](void) : "Forces an update on this goal's actors."
 	input SetAggressiveness(integer) : "Set aggressiveness."
+
+	@resources []
 	]

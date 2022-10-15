@@ -1,4 +1,5 @@
 @SolidClass base(BaseEntityBrush)
 = func_wall: "Legacy support for Half-Life. Use func_brush instead. A general brush entity." 
 	[
+	@resources []
 	]

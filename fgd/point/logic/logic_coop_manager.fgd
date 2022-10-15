@@ -32,4 +32,6 @@
 	output OnChangeToAnyTrue(void) : "Fires when ANY of the values change to TRUE for the first time."
 	output OnChangeToAllFalse(void) : "Fires when ALL of the values change to FALSE for the first time."
 	output OnChangeToAnyFalse(void) : "Fires when ANY of the values change to FALSE for the first time."
+
+	@resources []
 	]

@@ -12,5 +12,7 @@
 		]
 
 	input DeployMine(void) : "Drop landmine (if carrying one)"
-	input EquipMine(void) : "Equip with landmine"
+	input EquipMine(void) : "Equip with landmine. This doesn't look very good, use a Shield/Claw Scanner."
+
+	@resources [] // Handled in CombineScanner.
 	]

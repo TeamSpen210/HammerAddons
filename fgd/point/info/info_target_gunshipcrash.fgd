@@ -11,4 +11,6 @@
 
 	// Outputs
 	output OnCrashed(void) : "Fired when the gunship crashed on target."
+
+	@resources []
 	]

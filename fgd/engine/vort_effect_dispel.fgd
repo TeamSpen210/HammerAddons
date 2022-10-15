@@ -2,4 +2,10 @@
 	appliesto(+engine, HL2, EP1, EP2, P1)
 = vort_effect_dispel: "The FX entity used for the glows in Vortigaunt hands."
 	[
+	@resources
+		[
+		particle "vortigaunt_hand_glow"
+		material "materials/effects/ar2_altfire1b.vmt"
+		material "materials/effects/rollerglow.vmt"
+		]
 	]   

@@ -1,4 +1,4 @@
-@NpcClass base(BaseNPC, RappelNPC, GrenadeUser, MBasePolicingNPC) 
+@NpcClass base(BaseCombine,  GrenadeUser, MBasePolicingNPC) 
 	appliesto(EP1, EP2, HL2, P1) 
 	autovis(Entities, NPCs, Combine, Combine Soldier)
 	studio() = npc_combine_s: "Combine Soldier"
@@ -127,4 +127,22 @@
 
 	output OutManhack[EZ1, EZ2](ehandle) : "Fired the moment when this NPC spawns a manhack. Passes the manhack."
 	output OnPlayerUse[EZ1, EZ2](void) : "Fired when the player +USEs us."
+
+	@resources
+		[
+		model "models/combine_soldier.mdl"
+		entity npc_handgrenade 
+		// Entity precaches npc_handgrenade, but they actually spawn these.
+		entity  weapon_frag 
+		entity npc_manhack [+mapbase]
+
+		// May drop these
+		entity item_healthvial
+		entity item_ammo_ar2_altfire
+		entity item_ammo_smg1_grenade [+mapbase]
+		// If you kill allies, bonus!
+		entity item_ammo_smg1 [+entropyzero2]
+		entity item_ammo_ar2 [+entropyzero2]
+		entity item_box_buckshot [+entropyzero2]
+		]
 	]

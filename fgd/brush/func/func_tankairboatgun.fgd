@@ -28,4 +28,10 @@
 	airboat_gun_model[MBase](target_destination) : "Airboat gun model (Obsolete)" : : "You can do everything and more with the parent now, so you'd be better off using regular func_tank parent behavior than this. It is still functional for legacy support."
 	airboat_gun_model[!MBase](target_destination) : "Name of a prop_dynamic which is the airboat gun model"
 	use_damage_kv[MBase](boolean) : "Use Damage KV" : 0 : "Allows this func_tankairboatgun to use the Bullet Damage keyvalues instead of the airboat gun's default damage."
+
+	@resources
+		[
+	    sound "Airboat.FireGunLoop"
+	    sound "Airboat.FireGunRevDown"
+		]
 	]

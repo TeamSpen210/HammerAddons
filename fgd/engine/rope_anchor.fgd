@@ -3,4 +3,8 @@
 = rope_anchor: "Entity used to spawn the rope used by rapelling Combine." +
 	"When placed in Hammer, this will drop a rope 384 units below it."
 	[
+	@resources
+		[
+		material "materials/cable/cable.vmt"
+		]
 	]

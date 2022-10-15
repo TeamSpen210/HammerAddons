@@ -1,0 +1,6 @@
+@PointClass base(BaseNPC, SetModel) 
+	appliesto(+engine, HL2, EP1, EP2, P1, P2)
+= cycler_wreckage: "Unused gib test entity. When spawned this is nonsolid, producing smoke particles."
+	[
+	@resources []
+	]

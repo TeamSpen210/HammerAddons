@@ -3,4 +3,8 @@
 = spraycan: "Ultra temporary SprayCan entity to apply decal frame at a time. For PreAlpha CD" + 
 	"\n - Valve"
 	[
+	@resources
+		[
+		sound "SprayCan.Paint"
+		]
 	]   

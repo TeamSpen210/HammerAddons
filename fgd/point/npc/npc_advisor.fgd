@@ -44,5 +44,21 @@
 	output OnPickingThrowable(void) : "Fires just before I pick something to hurl"
 	output OnThrowWarn(void) : "Fires when I trigger the warning green glow before tossing"
 	output OnThrow(void) : "Fires just after I throw something"
-	output OnHealthIsNow(integer) : "When I am damaged, my hitpoints thereafter"
+	output OnHealthIsNow(integer) : "When I am damaged, my hitpoints thereafter."
+
+	@resources
+		[
+		model "models/advisor.mdl"
+		material "materials/sprites/lgtning.vmt"
+		material "materials/sprites/greenglow1.vmt"
+		sound "NPC_Advisor.Blast"
+		sound "NPC_Advisor.Gib"
+		sound "NPC_Advisor.Idle"
+		sound "NPC_Advisor.Alert"
+		sound "NPC_Advisor.Die"
+		sound "NPC_Advisor.Pain"
+		sound "NPC_Advisor.ObjectChargeUp"
+		particle "Advisor_Psychic_Beam"
+		particle "advisor_object_charge"
+		]
 	]

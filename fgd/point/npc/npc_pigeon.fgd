@@ -3,4 +3,15 @@
 	autovis(Entities, NPCs, Animals, Birds) 
 	studio("models/pigeon.mdl") = npc_pigeon: "Pigeon"
 	[
+	@resources
+		[
+		model "models/pigeon.mdl"
+		sound "NPC_Pigeon.Idle"
+
+		sound "NPC_Crow.Hop"
+		sound "NPC_Crow.Squawk"
+		sound "NPC_Crow.Gib"
+		sound "NPC_Crow.Pain"
+		sound "NPC_Crow.Die"
+		]
 	]

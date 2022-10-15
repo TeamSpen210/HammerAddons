@@ -27,4 +27,13 @@
 		// "weapon_stunstick": "Stun Stick"
 		"0": "Nothing"
 		]
+
+	@resources
+		[
+		model "models/clone_cop.mdl"
+		particle "blood_spurt_synth_01"
+		particle "blood_drip_synth_01"
+		particle "blood_impact_blue_01"  // Radiation/temporal only, but not really important.
+		entity item_ammo_ar2_altfire
+		]
 	]

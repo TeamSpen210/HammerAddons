@@ -76,7 +76,8 @@
 		"Be sure to select Use Precise Gib Dir in the Gibs Direction field!"
 	nodamageforces(boolean) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move."
 
-	gibmodel[HLS](studio) : "Gib Model" : : "Used by HL1Port to specify a custom gib model to break into, overriding the 'Material Type'."
+	gibmodel[-HLS](string) : "Gib Group" : : "Specify a custom gib group to break into, overriding the 'Material Type'. These are names in propdata.txt like MetalChunks."
+	gibmodel[HLS, engine](studio) : "Gib Model" : : "Specify a custom gib to break into, overriding the 'Material Type'. This can either be a specific model, or a group in propdata.txt like MetalChunks."
 	spawnobject[ENGINE](pointentityclass) : "Spawn On Break" : 0 : "When broken, an entity of the selected type will be created."
 	spawnobject[EP1, EP2, P1, HL2](choices) : "Spawn On Break" : 0 : "When broken, an entity of the selected type will be created." =
 		[
@@ -94,17 +95,17 @@
 		12: "item_ml_grenade"
 		13: "item_smg1_grenade"
 		14: "item_box_sniper_rounds"
-		15: "unused1"
+		// 15: "unused1"
 		16: "weapon_stunstick"
-		17: "weapon_ar1"
+		// 17: "weapon_ar1"
 		18: "weapon_ar2"
-		19: "unused2"
+		// 19: "unused2"
 		20: "weapon_ml"
 		21: "weapon_smg1"
 		22: "weapon_smg2"
 		23: "weapon_slam"
 		24: "weapon_shotgun"
-		25: "weapon_molotov"
+		// 25: "weapon_molotov"
 		26: "item_dynamic_resupply"
 		]
 
@@ -158,4 +159,9 @@
 	// Inputs
 	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
 	input DisableDamageForces(void) : "Damaging the entity does *not* apply physics forces to it."
+
+	@resources	
+		[
+		func breakable_brush
+		]
 	]

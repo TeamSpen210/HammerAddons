@@ -11,4 +11,6 @@
 	// Inputs
 	input EnableCollisions(void) : "Enable collisions between the first and second entity."
 	input DisableCollisions(void) : "Disable collisions between the first and second entity."
+
+	@resources []
 	]

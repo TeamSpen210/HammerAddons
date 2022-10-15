@@ -53,4 +53,6 @@
 
 	// Inputs
 	input StartSchedule(void) : "Starts the scripted schedule. This will first locate an NPC that matches the given target, then tell the NPC to run the specified schedule."
+
+	@resources []
 	]

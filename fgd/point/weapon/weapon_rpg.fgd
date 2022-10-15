@@ -3,4 +3,12 @@
 	autovis(Weapons, HL2 Weapons, Rocket Launcher) 
 	studioprop("models/weapons/w_rocket_launcher.mdl") = weapon_rpg: "Missile Launcher"
 	[
+	@resources
+		[
+		sound "Missile.Ignite"
+		sound "Missile.Accelerate"
+		material "materials/effects/laser1_noz.vmt"
+		material "materials/sprites/redglow1.vmt"
+		entity rpg_missile
+		]
 	]

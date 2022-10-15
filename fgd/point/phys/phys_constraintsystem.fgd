@@ -9,4 +9,6 @@
 	additionaliterations(integer) : "Additional System Iterations" : 0 : "Adding iterations makes the interactions among constraints in a system tighter. " +
 		"It will not compensate for errors due to collision, " +
 		"but will help in cases where objects of disparate mass are constrained to each other."
+
+	@resources []
 	]

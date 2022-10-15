@@ -10,4 +10,9 @@
 	fadeduration(float) : "Lookup Fade Duration" : 10.0 : "This is the duration for the lookup to fade in/out on extry/exit"
 	maxweight(float) : "Maximum Weight" : 1.0 : "This is the maximum weight for this lookup"
 	filename(string) : "Lookup Table Filename" : : "This is the lookup table filename"
+
+	@resources
+		[
+		func color_correction // Include the lookup table
+		]
 	]

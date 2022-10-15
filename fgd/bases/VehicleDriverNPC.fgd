@@ -12,4 +12,9 @@
 	input StartFiring(void) : "Tell the driver to attack nearby enemies with the vehicle's weaponry (if any)"
 	input StopFiring(void) : "Tell the driver to stop attacking nearby enemies with the vehicle's weaponry."
 	input GotoPathCorner(string) : "Tell the driver to go to a specific path corner and continue from there."
+
+	@resources
+		[
+		model "models/roller_vehicledriver.mdl"
+		]
 	]

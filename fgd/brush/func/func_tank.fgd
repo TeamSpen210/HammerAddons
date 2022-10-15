@@ -28,4 +28,9 @@
 		256: "Aiming Assistance (Player Only)" : 0
 		]
 
+	@resources
+		[
+		// Only if set to cannon, but that doesn't really matter too much.
+		sound "NPC_Combine_Cannon.FireBullet"
+		]
 	]

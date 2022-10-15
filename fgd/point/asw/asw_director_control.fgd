@@ -17,5 +17,8 @@
 	input StartFinale(void) : "Enables wanderers, hordes and sends director into crazy spawning mode."
 
 	// Outputs
-	output OnEscapeRoomStart(void) : "Fired when marine enters the escape room with all objectives (except for escape) complete.  NOTE: If you rely on this output, you must ship the .layout file along with your map."
+	output OnEscapeRoomStart(void) : "Fired when marine enters the escape room with all objectives (except for escape) complete. " +
+		"NOTE: If you rely on this output, you must ship the .layout file along with your map."
+
+	@resources []
 	]

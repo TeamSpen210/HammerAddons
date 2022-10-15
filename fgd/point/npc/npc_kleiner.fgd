@@ -4,4 +4,9 @@
 	studio() = npc_kleiner: "Kleiner"
 	[
 	model(studio) : "World model" : "models/kleiner.mdl"
+
+	@resources
+		[
+		model "models/kleiner.mdl"
+		]
 	]

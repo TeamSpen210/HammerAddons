@@ -17,4 +17,6 @@
 	disappearmindist[L4D2](integer) : "Disappear Min Distance" : 2000 : "Distance at which these brushes should starting fade out."
 	disappearmaxdist[L4D2](integer) : "Disappear Max Distance" : 2200 : "Distance at which these brushes should be completely faded out."
 	disappearmaxdist[engine](integer) : "Disappear Max Distance" : 2200
+
+	@resources []
 	]

@@ -2,4 +2,14 @@
 	appliesto(CSGO) 
 	studio("models/props/coop_cementplant/exloding_barrel/exploding_barrel.mdl") = prop_exploding_barrel: "Exploding barrel.  BOOM!"
 	[
+	@resources
+		[
+		model "models/props/coop_cementplant/exloding_barrel/exploding_barrel.mdl"
+		model "models/props/coop_cementplant/exloding_barrel/exploding_barrel_top.mdl"
+		model "models/props/coop_cementplant/exloding_barrel/exploding_barrel_bottom.mdl"
+		sound "BaseGrenade.Explode"
+		sound "Inferno.Start_IncGrenade"
+		particle "explosion_hegrenade_interior"
+		particle "dust_burning_engine"
+		]
 	]

@@ -6,4 +6,6 @@
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "90 0 0" : "This entity's orientation in the world. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, roll is the rotation around the X axis."
 	model(studio) : "World Model" : "models/swarm/colonist/male/malecolonist.mdl"
 	ragdollsequence(string) : "Ragdoll Sequence" : : "Ragdoll's pose will come from the first frame of this sequence.  Note: NOT WORKING CURRENTLY"
+
+	@resources []
 	]

@@ -1,9 +1,16 @@
 
 @PointClass base(ASWPickup) 
 	appliesto(ASW) 
-	studio("models/swarm/Flare/flarebox.mdl") = asw_pickup_flares: "Flares"
+	studio("models/items/itembox/itemboxsmall.mdl") = asw_pickup_flares: "Flares"
 	[
 	bulletsingun(integer) : "Bullets In Gun" : 9
 	clips(integer) : "Clips" : 0
 	secondarybullets(integer) : "Secondary Bullets" : 0
+
+	skin(integer) readonly : "Skin = 1" : 1 : "The correct skin for this is 1."
+
+	@resources
+		[
+		model "models/items/itembox/itemboxsmall.mdl"
+		]
 	]

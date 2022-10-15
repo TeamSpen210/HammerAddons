@@ -28,4 +28,9 @@
 	// Inputs
 	input Enable(void) : "Enable the push."
 	input Disable(void) : "Disable the push."
+
+	@resources
+		[
+		particle "broken_tube_suck" [+P2]
+		]
 	]

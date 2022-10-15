@@ -3,4 +3,9 @@
 	autovis(Weapons, HL2 Weapons, AR2)
 	studioprop("models/weapons/w_irifle.mdl") = weapon_ar2: "Assault Rifle 2"
 	[
+	@resources
+		[
+		entity prop_combine_ball
+		entity env_entity_dissolver
+		]
 	]

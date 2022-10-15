@@ -5,4 +5,6 @@
 	anglestoface(angle) : "Angles to face" : "0 0 0" : "The angles to rotate portals to. " + 
 	"An easy way to figure out what to set this to is to place a prop_portal, rotate it to the desired orientation, then look at its angles."
 	matchlinkedangles(boolean) : "Match linked angles." : "0" : "If set, portals placed in this volume will have their angles match their linked portals. This only works for floor or ceiling portals with a linked partner that is on a surface with the same orientation."
+
+	@resources []
 	]

@@ -8,4 +8,6 @@
 	target(target_destination) : "Volume" : : "The volume to be tested with. This filter passes if the activator is within this volume. " +
 		"Intended to be a brush entity. (e.g. a trigger)"
 	tester(target_destination) : "Volume Tester" : "!activator" : "Who should be in the volume for the filter to pass?"
+	
+	@resources []
 ]

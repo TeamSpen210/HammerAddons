@@ -25,4 +25,6 @@
 	input DisableShooting(void) : "Disables shooting."
 	input FireNoEarlierThan(float) : "Causes the NPC to stop firing for this amount of time."
 	input Reset(bool) : "Causes the shot regulator to reset. If 1 is passed, the NPC will immediately start firing instead of waiting for the next burst interval."
+
+	@resources []
 ]

@@ -10,4 +10,6 @@
 	input SetEnabled(void) : "Sets this spawn point as enabled."
 	input SetDisabled(void) : "Sets this spawn point as disabled."
 	input ToggleEnabled(void) : "Toggle the enabled/disabled state of this spawn point."
+
+	@resources []
 	]

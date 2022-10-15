@@ -10,4 +10,13 @@
 	// Outputs
 	output OnPowered(void) : "Fired when a laser hits the target."
 	output OnUnpowered(void) : "Fired when a laser has stopped hitting the target."
+
+	@resources
+		[
+		model "models/props/laser_receptacle.mdl"
+		particle "laser_relay_powered"
+		sound "prop_laser_catcher.powerloop"
+		sound "prop_laser_catcher.poweroff"
+		sound "prop_laser_catcher.poweron"
+		]
 	]

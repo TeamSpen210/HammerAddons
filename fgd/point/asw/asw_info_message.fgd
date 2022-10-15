@@ -18,4 +18,6 @@
 
 	// Outputs
 	output OnMessageRead(void) : "Fired when any player closes this message window"
+
+	@resources []
 	]

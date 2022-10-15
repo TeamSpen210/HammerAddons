@@ -12,4 +12,6 @@
 		]
 
 	radius(float) : "Radius" : 128
+
+	@resources []
 	]

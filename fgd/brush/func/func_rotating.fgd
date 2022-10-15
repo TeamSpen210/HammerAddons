@@ -48,4 +48,9 @@
 
 	// Outputs
 	output OnGetSpeed[since_P2](integer) : "Fired when the GetSpeed input is called.  The current speed of the func_rotating is passed with this output."
+
+	@resources
+		[
+		sound "DoorSound.Null"
+		]
 	]

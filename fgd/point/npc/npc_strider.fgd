@@ -56,4 +56,35 @@
 	input ScaleGroundSpeed(float) : "Scale the movement speed of the strider."
 	input Explode(void) : "Immediately kill the strider."
 	input SetHeight(float) : "Set the height of the strider above the ground. Valid values range from 200-490 units."
+
+	@resources
+		[
+		model "models/combine_strider.mdl"
+		sound "NPC_Strider.StriderBusterExplode"
+		sound "explode_5"
+		sound "NPC_Strider.Charge"
+		sound "NPC_Strider.RagdollDetach"
+		sound "NPC_Strider.Whoosh"
+		sound "NPC_Strider.Creak"
+		sound "NPC_Strider.Alert"
+		sound "NPC_Strider.Pain"
+		sound "NPC_Strider.Death"
+		sound "NPC_Strider.FireMinigun"
+		sound "NPC_Strider.Shoot"
+		sound "NPC_Strider.OpenHatch"
+		sound "NPC_Strider.Footstep"
+		sound "NPC_Strider.Skewer"
+		sound "NPC_Strider.Hunt"
+		material "materials/effects/water_highlight.vmt"
+		material "materials/sprites/physbeam.vmt"
+		material "materials/sprites/bluelaser1.vmt"
+		material "materials/effects/blueblacklargebeam.vmt"
+		material "materials/effects/strider_pinch_dudv.vmt"
+		material "materials/effects/blueblackflash.vmt"
+		material "materials/effects/strider_bulge_dudv.vmt"
+		material "materials/effects/strider_muzzle.vmt"
+		model "models/chefhat.mdl" // For some reason.
+		entity concussiveblast
+		entity sparktrail
+		]
 	]

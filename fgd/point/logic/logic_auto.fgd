@@ -131,4 +131,6 @@
 	output OnMultiNewMap(void) : "Fired only in multiplayer, when a new map is loaded."
 	output OnMultiNewRound(void) : "Fired only in multiplayer, when a new round is started. Only fired in multiplayer games that use round-based gameplay."
 	output OnDemoMapSpawn[L4D2](void) : "Fired when the map is loaded in Demo Mode."
+
+	@resources []
 	]

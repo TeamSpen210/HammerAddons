@@ -82,4 +82,9 @@
 	output OnCapTeam1(void) : "Sent when RED capture this point."
 	output OnCapTeam2(void) : "Sent when BLUE capture this point."
 	output OnUnlocked(void) : "Sent when point is unlocked via the SetLocked(0) or SetUnlockTime inputs."
+
+	@resources
+		[
+		func team_control_point // team_icon_X also packs a _locked variant
+		]
 	]

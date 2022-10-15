@@ -6,4 +6,5 @@
 	"There should be a corresponding info_landmark entity in the next map. " +
 	"Entities will be transitioned to the next level relative to the info_landmark entities."
 	[
+	@resources []
 	]

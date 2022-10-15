@@ -3,4 +3,5 @@
 	"If you are using a model prop for the visual representation of the ladder in the map, " +
 	"apply the toolsinvisibleladder material to the climbable side of the func_ladder brush."
 	[
+	@resources []
 	]

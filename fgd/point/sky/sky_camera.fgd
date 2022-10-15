@@ -68,4 +68,6 @@
 	input CopyFogControllerWithScale[MBase](target_destination) : "Copies the target fog controller's exact fog parameters."
 	
 	input SetScale[MBase](integer) : "Sets the skybox scale."
+
+	@resources []  // Does nothing by itself.
 	]

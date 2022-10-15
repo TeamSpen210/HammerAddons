@@ -46,4 +46,6 @@
 	input Activate(void) : "Begin the assault behavior"
 	input Deactivate(void) : "Cease the assault behavior"
 	input BeginAssault(void) : "Begin assault phase"
+
+	@resources []
 	]

@@ -17,4 +17,6 @@
 	input Enable(void) : "Start displaying the message text, if the player is within the message radius."
 	input Disable(void) : "Stop displaying the message text."
 	input SetMessage[MBase](string) : "Sets the message's text."
+
+	@resources [] // Uses ent_text style debug display, embedded in engine.
 	]

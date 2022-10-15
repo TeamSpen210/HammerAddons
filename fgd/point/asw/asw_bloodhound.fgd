@@ -1,7 +1,10 @@
-
 @PointClass base(BaseEntityAnimating) 
 	appliesto(ASW) 
 	studio("models/swarmprops/Vehicles/BloodhoundMesh.mdl") 
 	sphere() = asw_bloodhound: "Dropship used to deploy marines in Landing Bay mission."
 	[
+	@resources
+		[
+		model "models/swarmprops/Vehicles/BloodhoundMesh.mdl"
+		]
 	]

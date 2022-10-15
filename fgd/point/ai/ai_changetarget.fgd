@@ -10,4 +10,6 @@
 	// Inputs
 	input Kill(void) : "Removes this entity from the world"
 	input Activate(void) : "Changes the entities target"
+
+	@resources []
 	]

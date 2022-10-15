@@ -4,7 +4,7 @@
 	iconsprite("editor/vizzys/env_break_shooter.vmt") 
 = env_break_shooter : 
 	"An entity that shoots func_breakable gibs."
-[
+	[
 	angles(angle) : "Gib Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction the gibs will fly."
 
 	model[engine](string) : "Model" : ""
@@ -46,4 +46,11 @@
 	input SetRandomization(integer) : "Sets the gib direction randomization factor."
 	input SetLifetime(float) : "Sets the lifetime of each gib."
 	input SetGibFlags(integer) : "Sets the flags for each gib."
-]
+
+	@resources 
+		[
+		// "model" may either be a model, template or enum name.
+		// We only need to include resources for the model.
+		func env_break_shooter 
+		]
+	]

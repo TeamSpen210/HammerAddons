@@ -9,4 +9,6 @@
 		"all entities EXCEPT those who are in the squad of the given string will pass the filter."
 	
 	allowsilentmembers(boolean) : "Allow Silent Members" : 1 : "Allows silent squad members to pass the filter. Silent squad members are enemy finders and vital allies in player_squad."
+	
+	@resources []
 ]

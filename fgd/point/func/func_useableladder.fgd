@@ -25,4 +25,10 @@
 	// Outputs
 	output OnPlayerGotOnLadder(void) : "Fired whenever a player gets on this ladder."
 	output OnPlayerGotOffLadder(void) : "Fired whenever a player gets off this ladder."
+
+	@resources	
+		[
+		sound "Ladder.StepRight"
+    	// TODO: need to load the surfaceprop here, "ladderSurfaceProperties" defaulting to "ladder".
+		]
 	]

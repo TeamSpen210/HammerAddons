@@ -25,4 +25,6 @@
 	
 	// No way, you wacko!
 	//input SendError(string) : "Crashes the player's game and gives the parameter as an error message. Please handle with care."
+
+	@resources []
 	]

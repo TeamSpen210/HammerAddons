@@ -2,4 +2,8 @@
 	appliesto(EP1, EP2, HL2, P1) 
 	studio("models/items/boxsrounds.mdl") = item_ammo_pistol_large: "Large Box of Pistol ammo"
 	[
+	@resources
+		[
+		model "models/items/boxsrounds.mdl"
+		]
 	]

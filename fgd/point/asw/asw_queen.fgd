@@ -1,5 +1,4 @@
-
-@NpcClass base(BaseNPC) 
+@NpcClass base(asw_alien) 
 	appliesto(ASW) 
 	studio("models/swarm/Queen/queen.mdl") 
 	sphere() = asw_queen: "Swarm Queen"
@@ -11,8 +10,6 @@
 		2: "Waiting for PVS"
 		3: "Waiting for input"
 		]
-
-	visiblewhenasleep(boolean) : "Visible when asleep" : "0" : "If true, this alien will still get drawn even when asleep (useful for aliens you see far below you)."
 
 	spawnflags(flags) =
 		[
@@ -28,4 +25,18 @@
 	output OnSummonWave3(void) : "Fired out when the queen is at 40% health, to call the third attack wave"
 	output OnSummonWave4(void) : "Fired out when the queen is at 20% health, to call the last attack wave"
 	output OnQueenKilled(void) : "Fired when the queen is killed."
+
+	@resources
+		[
+		model "models/swarm/Queen/queen.mdl"
+		sound "ASW_Queen.Death"
+		sound "ASW_Queen.Pain"
+		sound "ASW_Queen.PainBig"
+		sound "ASW_Queen.Slash"
+		sound "ASW_Queen.SlashShort"
+		sound "ASW_Queen.AttackWave"
+		sound "ASW_Queen.Spit"
+		sound "ASW_Queen.TentacleAttackStart"
+		entity asw_alien
+		]
 	]

@@ -17,4 +17,6 @@
 		1 : "Yes"
 		2 : "Don't Care"
 		]
+	
+	@resources []
 	]

@@ -59,4 +59,6 @@
 	// Outputs
 	output OnSurfaceChangedToTarget(void) : "Fired when the player moves onto the specified game material."
 	output OnSurfaceChangedFromTarget(void) : "Fired when the player moves off the specified game material."
+
+	@resources []
 	]

@@ -12,4 +12,6 @@
 		"If you want any skin to be allowed, be sure to leave this at -1! " +
 		"It might automatically change when you choose a model. " + 
 		"This keyvalue supports matchers (<, >, !=, etc.)."
+	
+	@resources []
 	]

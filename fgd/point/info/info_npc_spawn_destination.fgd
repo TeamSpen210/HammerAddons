@@ -7,4 +7,6 @@
 
 	// Outputs
 	output OnSpawnNPC(void) : "Fired when an NPC spawns at this destination."
+
+	@resources []
 	]

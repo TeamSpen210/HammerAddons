@@ -9,4 +9,6 @@
 	input Enable(void) : "Enable."
 	input Disable(void) : "Disable."
 	input SetCamera(target_destination) : "Sets the camera to use for this monitor. Takes the name of a point_camera entity in the map."
+
+	@resources []
 	]

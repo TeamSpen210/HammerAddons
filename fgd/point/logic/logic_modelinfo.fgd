@@ -23,4 +23,6 @@
 	output OnHasSequence(integer) : "Fires when the target has the sequence requested. Outputs the sequence's index."
 	output OnLacksSequence(void) : "Fires when the target does not have the sequence requested."
 	output OutPoseParameterValue(float) : "Fires when the pose parameter value is requested, outputting its current value."
+
+	@resources []
 	]

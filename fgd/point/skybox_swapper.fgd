@@ -6,4 +6,9 @@
 
 	// Inputs
 	input Trigger(void) : "Swap to this skybox."
+
+	@resources
+		[
+		func skybox_swapper // We want to pack the skybox
+		]
 	]

@@ -1,6 +1,9 @@
-@PointClass base(BaseEntityAnimating) 
+@PointClass base(grenade, BaseEntityAnimating) // Mismatch??
 	appliesto(+engine, HL2, EP1, EP2, P1)
 	studioprop("models/Weapons/ar2_grenade.mdl")
 = grenade_ar2: "The grenade fired by the SMG."
 	[
+	@resources [
+		model "models/Weapons/ar2_grenade.mdl"
+		]
 	]

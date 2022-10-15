@@ -34,4 +34,10 @@
 	input Rate(integer) : "Set the rate at which to emit smoke particles (particles per second)."
 	input Speed(integer) : "Set the speed at which the smoke particles move after they're spawned."
 	input SpreadSpeed(integer) : "Set the amount of random spread in the velocity of the smoke particles after they're spawned."
+
+	@resources
+		[
+		material "materials/particle/SmokeStack.vmt"
+		func env_smokestack // Successive suffixes of the "smokematerial" are also included.
+		]
 	]

@@ -15,4 +15,6 @@
 	
 	input Enable(void) : "Enable this entity."
 	input Disable(void) : "Disable this entity."
+
+	@resources []
 	]

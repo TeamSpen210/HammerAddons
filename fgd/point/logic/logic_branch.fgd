@@ -18,4 +18,6 @@
 	// Outputs
 	output OnTrue(boolean) : "Fired when the input value is true (nonzero)."
 	output OnFalse(boolean) : "Fired when the input value is false (zero)."
+
+	@resources []
 	]

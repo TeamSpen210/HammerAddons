@@ -6,4 +6,9 @@
 	bulletsingun(integer) : "Bullets In Gun" : 200
 	clips(integer) : "Clips" : 1
 	secondarybullets(integer) : "Secondary Bullets" : 0
+
+	@resources
+		[
+		model "models/swarm/FireExt/fireextpickup.mdl"
+		]
 	]

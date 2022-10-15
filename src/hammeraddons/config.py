@@ -252,6 +252,22 @@ PACK_DUMP = Opt.string_or_none(
     destination, not the BSP pakfile.
 """)
 
+PACK_TAGS = Opt.block(
+    'pack_tags', Keyvalues('', [
+        Keyvalues('hl2', '0'),
+        Keyvalues('hl1', '0'),
+        Keyvalues('episodic', '0'),
+        Keyvalues('mapbase', '0'),
+        Keyvalues('entropyzero2', '0'),
+        Keyvalues('mesa', '0'),
+        Keyvalues('p2', '0'),
+    ]),
+    """\
+    Specify various tags to indicate what features this game branch includes. This is used
+    to accurately include resources for entities that have changed over time.
+    """,
+)
+
 SEARCHPATHS = Opt.block(
     'searchpaths', Keyvalues('', []),
     """\

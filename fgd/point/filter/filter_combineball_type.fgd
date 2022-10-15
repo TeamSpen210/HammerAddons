@@ -12,4 +12,6 @@
 		3: "Launched by point_combine_ball_launcher"
 		]
 	balltype[engine](integer): "Ball Type": 0
+	
+	@resources []
 	]

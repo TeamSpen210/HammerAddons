@@ -34,4 +34,6 @@
 
 	// Outputs
 	output OnEventFired(void) : "Fired when the event has been detected."
+
+	@resources []
 	]

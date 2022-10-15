@@ -27,4 +27,10 @@
 	output OnPickupSlot2(void) : "Fires when a grenade in Slot 2 is picked up."
 	output OnPickupSlot3(void) : "Fires when a grenade in Slot 3 is picked up."
 	output OnEmpty(void) : "Fires when the holder becomes empty."
+
+	@resources
+		[
+    	mdl "models/items/xen_grenade_holder001a.mdl"
+    	entity weapon_hopwire
+		]
 	]

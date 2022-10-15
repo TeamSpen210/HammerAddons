@@ -16,4 +16,10 @@
 	// Outputs
 	output OnOpen(void) : "Fired when the pod is open enough to enter."
 	output OnClose(void) : "Fired when the pod too closed to enter."
+
+	@resources
+		[
+		sound "d3_citadel.pod_open"
+		sound "d3_citadel.pod_close"
+		]
 	]

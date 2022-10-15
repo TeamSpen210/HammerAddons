@@ -3,4 +3,14 @@
 	autovis(Entities, NPCs, Headcrabs, Fast Headcrab)
 	studio("models/Headcrab.mdl") = npc_headcrab_fast: "Fast Headcrab"
 	[
+	@resources
+		[		
+		model "models/headcrab.mdl"
+		sound "NPC_FastHeadCrab.Idle"
+		sound "NPC_FastHeadCrab.Alert"
+		sound "NPC_FastHeadCrab.Pain"
+		sound "NPC_FastHeadCrab.Die"
+		sound "NPC_FastHeadCrab.Attack"
+		sound "NPC_FastHeadCrab.Bite"
+		]
 	]

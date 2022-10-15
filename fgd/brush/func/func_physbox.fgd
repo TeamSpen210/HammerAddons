@@ -1,4 +1,4 @@
-@SolidClass base(BreakableBrush) = func_physbox: "A brush entity that's physically simulated."
+@SolidClass base(func_breakable) = func_physbox: "A brush entity that's physically simulated."
 	[
 	spawnflags(flags)  =
 		[

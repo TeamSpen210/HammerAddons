@@ -19,5 +19,6 @@
 		8: "Spy"
 		9: "Engineer"
 		]
-
+	
+	@resources []
 	]

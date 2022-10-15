@@ -19,4 +19,6 @@
 	
 	// Outputs
 	output OnCopy(void) : "Fires each time the size is successfully copied with the target as the activator." 
+
+	@resources []
 	]

@@ -11,4 +11,6 @@
 	"'Crow: Fly to point' in the hint choices list. The angles of a hint node indicate what direction the NPC should face to perform the hint behavior."
 	[
 	nodeheight(integer) : "NodeHeight" : 0
+
+	@resources []
 	]

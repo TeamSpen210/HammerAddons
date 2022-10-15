@@ -11,8 +11,14 @@
 		2: "Groggy Vision"
 		]
 
-
 	// Inputs
 	input StartEffect(float) : "Start the effect with the duration in seconds as the passed parameter."
 	input StopEffect(float) : "Stop the effect."
+
+	@resources
+		[
+		// Precaches these, but actually it seems the game generates the materials it renders at runtime.
+		material "materials/effects/stun.vmt"
+		material "materials/effects/introblur.vmt"
+		]
 	]

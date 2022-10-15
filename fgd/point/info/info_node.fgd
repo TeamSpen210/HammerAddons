@@ -22,4 +22,6 @@
 		2048: "Force tiny fluid permission" : 0 [ASW]
 		4096: "Force medium big (Swarm Drone) permission" : 0 [ASW]
 		]
+
+	@resources []
 	]

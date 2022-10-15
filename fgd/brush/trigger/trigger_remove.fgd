@@ -7,4 +7,6 @@
 
 	// Outputs
 	output OnRemove(void) : "Fired whenever an entity is removed."
+	
+	@resources []
 	]

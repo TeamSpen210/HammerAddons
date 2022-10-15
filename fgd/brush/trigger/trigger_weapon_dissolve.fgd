@@ -10,4 +10,13 @@
 	// Outputs
 	output OnDissolveWeapon(void) : "Fires when one weapon is starting to dissolve in the trigger volume."
 	output OnChargingPhyscannon(void) : "Fires when the trigger begins to charge the physcannon."
+
+	@resources
+		[
+		material "materials/sprites/lgtning.vmt"
+		sound "WeaponDissolve.Dissolve"
+		sound "WeaponDissolve.Charge"
+		sound "WeaponDissolve.Beam"
+		entity env_entity_dissolver
+		]
 	]

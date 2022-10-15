@@ -1,4 +1,4 @@
-@NpcClass base(BaseNPC, RappelNPC, MBaseGrenadeUser, MBasePolicingNPC)
+@NpcClass base(BaseCombine, MBaseGrenadeUser, MBasePolicingNPC)
 	appliesto(EP1, EP2, HL2, P1) 
 	autovis(Entities, NPCs, Combine, MetroPolice)
 	studio("models/Police.mdl") = npc_metropolice: "MetroPolice"
@@ -51,7 +51,7 @@
 	// Inputs
 	input DisableManhackToss[MBase](void) : "Disables manhack toss"
 	input EnableManhackToss(void) : "Enables manhack toss (which had been disabled by the spawnflag)"
-	input SetPoliceGoal[!MBase](target_destination) : "Causes the NPC to police the area defined by an ai_goal_police"
+	input SetPoliceGoal[!MBase](target_destination) : "Causes the NPC to police the area defined by an ai_goal_police."
 	input ActivateBaton(void) : "Set the baton to active"
 
 	input AdministerJustice[MBase](void) : "Orders this NPC to administer justice to the player as if they hit this NPC with a can or something. " +
@@ -67,4 +67,17 @@
 	output OnCupCopped(void) : "Fires if the player hits me with the cupcop can. ONLY use for x360 achievement."
 	output OnHitByPhysicsObject[Mbase](ehandle) : "Fired when the player hits this NPC with any prop. Passes the thrower as the activator and the prop as the parameter."
 	output OutManhack[Mbase](ehandle) : "Fired the moment when this NPC spawns a manhack. Passes the manhack."
+
+	@resources
+		[
+		sound "NPC_Metropolice.Shove"
+		sound "NPC_MetroPolice.WaterSpeech"
+		sound "NPC_MetroPolice.HidingSpeech"
+		// TODO: sentence_group "METROPOLICE"
+		// Entity precaches npc_handgrenade, but they actually spawn these.
+		entity npc_grenade_frag 
+		entity npc_manhack
+
+		func npc_metropolice // If simple cops is set, an alt model is used.
+		]
 	]

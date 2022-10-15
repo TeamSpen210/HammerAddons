@@ -11,4 +11,6 @@
 		]
 
 	savestage(integer) : "Save stage" : 0 : "Sets which stage save this start point is intended for."
+
+	@resources []
 	]

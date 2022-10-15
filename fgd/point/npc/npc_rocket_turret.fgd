@@ -36,4 +36,15 @@
 	output OnFoundTarget(void) : "Fired when the rocket turret finds an unobstructed target."
 	output OnLostTarget(void) : "Fired when turret's target is blocked."
 	output OnDeath(void) : "Fired after this turret finishes it's destroy think and begins it's death think."
+
+	@resources
+		[
+		model "models/props_bts/rocket_sentry.mdl"
+		material "materials/effects/bluelaser1.vmt"
+		material "materials/sprites/light_glow03.vmt"
+		sound "NPC_RocketTurret.LockingBeep"
+		sound "NPC_FloorTurret.LockedBeep"
+		sound "NPC_FloorTurret.RocketFire"
+		entity rocket_turret_projectile
+		]
 	]

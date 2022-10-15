@@ -1,0 +1,12 @@
+@PointClass base(BaseLogicalNPC) 
+	appliesto(+engine, ASW)
+= asw_rifle_grenade
+	[
+	@resources
+		[
+		model "models/swarm/grenades/RifleGrenadeProjectile.mdl"
+		sound "Weapon_Crossbow.BoltHitBody"
+		sound "ASWGrenade.Explode"
+		particle "rifle_grenade_fx"
+		]
+	]

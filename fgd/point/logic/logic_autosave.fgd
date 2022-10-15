@@ -11,4 +11,6 @@
 	input Save(void) : "Force an autosave."
 	input SaveDangerous(float) : "Force an autosave as autosavedangerous.sav. If the player is alive after the passed number of seconds it replaces the standard auto save."
 	input SetMinHitpointsThreshold(integer) : "Set MinimumHitPoints to this."
+
+	@resources []
 	]

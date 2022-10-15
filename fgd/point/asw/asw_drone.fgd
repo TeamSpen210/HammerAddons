@@ -1,21 +1,36 @@
-
-@NpcClass base(BaseNPC) 
+@NpcClass base(asw_alien) 
 	appliesto(ASW) 
 	studio("models/aliens/drone/drone.mdl") 
 	sphere() = asw_drone: "A vicious killing machine with bladed limbs and sharp teeth, easily able to tear a man to pieces, even an armoured IAF marine."
 	[
-	moveclone(target_destination) : "Move Clone" : : "If set to an entity name, this alien will match movement with that entity."
-
 	spawnflags(flags) : "spawnflags" =
 		[
 		131072: "Use Ground Checks" : 0
 		]
 
-
-	// Inputs
-	input BreakWaitForScript(void) : "Wakes the alien up if his Wait For Script flag was set"
-	input SetMoveClone(string) : "Alien will match position/angle of the specified entity."
-
 	// Outputs
 	output OnReachedFightGoal(void) : "Fires when the drone reaches his specified fight-to location"
+
+	@resources
+		[
+		sound "ASW_Drone.Land"
+		sound "ASW_Drone.Pain"
+		sound "ASW_Drone.Alert"
+		sound "ASW_Drone.Death"
+		sound "ASW_Drone.Attack"
+		sound "ASW_Drone.Swipe"
+
+		sound "ASW_Drone.GibSplatHeavy"
+		sound "ASW_Drone.GibSplat"
+		sound "ASW_Drone.GibSplatQuiet"
+		sound "ASW_Drone.DeathFireSizzle"
+
+		model "models/aliens/drone/ragdoll_tail.mdl"
+		model "models/aliens/drone/ragdoll_uparm.mdl"
+		model "models/aliens/drone/ragdoll_uparm_r.mdl"
+		model "models/aliens/drone/ragdoll_leg_r.mdl"
+		model "models/aliens/drone/ragdoll_leg.mdl"
+		model "models/aliens/drone/gib_torso.mdl"
+		model "models/aliens/drone/drone.mdl"
+		]
 	]

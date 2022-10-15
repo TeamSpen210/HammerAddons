@@ -19,4 +19,23 @@
 	// Inputs
 	input DisableSwarm(void) : "Disable the manhack swarm behavior."
 	input Unpack(void) : "Causes the manhack to stop being packed up."
+
+	@resources
+		[
+		model "models/manhack.mdl"
+		material "materials/sprites/glow1.vmt"
+
+		sound "NPC_Manhack.Die"
+		sound "NPC_Manhack.Bat"
+		sound "NPC_Manhack.Grind"
+		sound "NPC_Manhack.Slice"
+		sound "NPC_Manhack.EngineNoise"
+		sound "NPC_Manhack.Unpack"
+		sound "NPC_Manhack.ChargeAnnounce"
+		sound "NPC_Manhack.ChargeEnd"
+		sound "NPC_Manhack.Stunned"
+		sound "NPC_Manhack.EngineSound1"
+		sound "NPC_Manhack.EngineSound2"
+		sound "NPC_Manhack.BladeSound"
+		]
 	]

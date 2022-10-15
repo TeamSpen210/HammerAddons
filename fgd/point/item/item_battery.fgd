@@ -6,4 +6,9 @@
 	base(_item_battery_hl2, _item_battery_mesa)
 = item_battery: "HEV battery"
 	[
+	@resources
+		[
+		model "models/items/battery.mdl"
+		sound "ItemBattery.Touch"
+		]
 	]

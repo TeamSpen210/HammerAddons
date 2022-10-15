@@ -28,4 +28,9 @@
 
 	// Inputs
 	input Dissolve(string) : "Dissolve target, if no target is passed it'll use the target specified in the target field."
+
+	@resources
+		[
+		material "materials/sprites/blueglow1.vmt"
+		]
 	]

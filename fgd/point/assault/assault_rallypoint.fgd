@@ -18,4 +18,6 @@
 
 	// Outputs
 	output OnArrival(void) : "Fires when the NPC reaches this rally point."
+
+	@resources []
 	]

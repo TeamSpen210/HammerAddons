@@ -8,4 +8,9 @@
 
 	input TurnOn(void) : "Turn on."
 	input TurnOff(void) : "Turn off."
+
+	@resources
+		[
+		material "materials/particle/sparkles.vmt"
+		]
 	]

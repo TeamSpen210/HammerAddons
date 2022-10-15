@@ -28,4 +28,6 @@
 
 	// Outputs
 	output OnConvert(void) : "Fires after the conversion has taken place."
+	
+	@resources []
 	]

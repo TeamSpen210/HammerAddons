@@ -19,4 +19,14 @@
 	//	2: "Medium"
 	//	3: "Large"
 	//	]
+
+	@resources
+		[
+		mdl "models/grub_nugget_small.mdl"
+	    mdl "models/grub_nugget_medium.mdl"
+	    mdl "models/grub_nugget_large.mdl"
+	    sound "GrubNugget.Touch"
+	    sound "NPC_Antlion_Grub.Explode"
+	    particle antlion_spit_player
+		]
 	]

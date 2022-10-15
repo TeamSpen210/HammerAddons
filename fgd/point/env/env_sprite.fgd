@@ -42,4 +42,6 @@
 	input HideSprite(void) : "Hide the sprite. Won't be drawn until the 'ShowSprite' input is received."
 	input ShowSprite(void) : "Show the sprite."
 	input ToggleSprite(void) : "Toggle the sprite between hidden and shown."
+
+	@resources []
 	]

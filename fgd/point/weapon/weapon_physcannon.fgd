@@ -3,4 +3,27 @@
 	autovis(Weapons, HL2 Weapons, Gravity Gun)
 	studioprop("models/weapons/w_physics.mdl") = weapon_physcannon: "The Zero-Point Energy Field Manipulator, AKA Gravity Gun."
 	[
+	@resources
+		[
+		material "materials/sprites/orangelight1.vmt"
+		material "materials/sprites/glow04_noz.vmt"
+		material "materials/sprites/orangeflare1.vmt"
+		material "materials/sprites/orangecore1.vmt"
+		material "materials/sprites/orangecore2.vmt"
+
+		material "materials/sprites/lgtning_noz.vmt"
+		material "materials/sprites/blueflare1_noz.vmt"
+		material "materials/effects/fluttercore.vmt"
+
+		model "models/weapons/v_superphyscannon.mdl"
+
+		sound "Weapon_PhysCannon.HoldSound"
+		sound "Weapon_Physgun.Off"
+		sound "Weapon_MegaPhysCannon.DryFire"
+		sound "Weapon_MegaPhysCannon.Launch"
+		sound "Weapon_MegaPhysCannon.Pickup"
+		sound "Weapon_MegaPhysCannon.Drop"
+		sound "Weapon_MegaPhysCannon.HoldSound"
+		sound "Weapon_MegaPhysCannon.ChargeZap"
+		]
 	]

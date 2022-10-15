@@ -24,4 +24,32 @@
 	output OnFinishedExtractingTauCannon(void) : "Fires when the vortigaunt's finished extracting the tau cannon from the jeep."
 	output OnFinishedChargingTarget(void) : "Fires when the vortigaunt has finished charging a target."
 	output OnPlayerUse(void) : "Fires when a player +USEs the vortigaunt."
+
+	@resources
+		[
+		model "models/vortigaunt.mdl"
+		mat "materials/sprites/lgtning.vmt"
+		mat "materials/sprites/vortring1.vmt"
+		mat "materials/sprites/light_glow02_add"
+		
+		mat "materials/effects/rollerglow.vmt" [+episodic] // EP2 only...
+		sound "NPC_Vortigaunt.SuitOn"
+		sound "NPC_Vortigaunt.SuitCharge"
+		sound "NPC_Vortigaunt.ZapPowerup"
+		sound "NPC_Vortigaunt.ClawBeam"
+		sound "NPC_Vortigaunt.StartHealLoop"
+		sound "NPC_Vortigaunt.Swing"
+		sound "NPC_Vortigaunt.StartShootLoop"
+		sound "NPC_Vortigaunt.FootstepLeft"
+		sound "NPC_Vortigaunt.FootstepRight"
+		sound "NPC_Vortigaunt.DispelStart"
+		sound "NPC_Vortigaunt.DispelImpact"
+		sound "NPC_Vortigaunt.Explode"
+
+		particle vortigaunt_beam
+		particle vortigaunt_beam_charge
+		particle vortigaunt_hand_glow
+		entity vort_charge_token
+		entity vort_effect_dispel
+		]
 	]

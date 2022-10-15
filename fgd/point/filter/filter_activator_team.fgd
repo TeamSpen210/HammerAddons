@@ -40,4 +40,6 @@
 		2 : "Hgrunt"
 		3 : "Scientist"
 		]
+	
+	@resources []
 	]

@@ -21,4 +21,9 @@
 	input TurnOn(void) : "Enable sun rendering."
 	input TurnOff(void) : "Disable sun rendering."
 	input SetColor(color255) : "Change the sun's color. Format: <Red 0-255> <Green 0-255> <Blue 0-255>"
+
+	@resources
+		[
+		material "materials/sprites/light_glow02_add_noz.vmt"
+		]
 	]

@@ -14,7 +14,7 @@
 
 	spawnflags(flags) : "spawnflags" =
 		[
-		1: "HUD Locator Precache" : 0
+		1: "HUD Locator Precache" : 0 [EP1, EP2]
 		]
 
 	NoHazardLights[+MBase, EP1, EP2](boolean) : "No Hazard Lights" : 0 : "Stops the jalopy's hazard lights from turning on and flashing when the player exits the vehicle."
@@ -52,10 +52,37 @@
 	output OnCompanionExitedVehicle[EP1, EP2, P1](void) : "Companion has exited the vehicle."
 	output OnHostileEnteredVehicle[EP1, EP2, P1](void) : "Hostile has entered the vehicle."
 	output OnHostileExitedVehicle[EP1, EP2, P1](void) : "Hostile has exited the vehicle."
+
+	@resources
+		[
+		// Scout car:
+		entity npc_seagull [-episodic]
+		material "materials/sprites/laserbeam.vmt" [-episodic]
+		sound "PropJeep.AmmoClose" [-episodic]
+		sound "PropJeep.FireCannon" [-episodic]
+		sound "PropJeep.FireChargedCannon" [-episodic]
+		sound "PropJeep.AmmoOpen" [-episodic]
+		sound "Jeep.GaussCharge" [-episodic]
+
+		// Muscle Car:
+		material "materials/engine/writez.vmt" [+episodic]
+		material "materials/sprites/light_glow01.vmt" [+episodic]
+		material "JNK_Radar_Ping_Friendly" [+episodic]
+		sound "Physics.WaterSplash" [+episodic]
+		particle "WheelDust" [+episodic]
+		particle "WheelSplash" [+episodic]
+		// Radar:
+		material "materials/vgui/screens/radar.vmt" [+episodic]
+		material "materials/vgui/icons/icon_lambda.vmt" [+episodic]
+		material "materials/vgui/icons/icon_buster.vmt" [+episodic]
+		material "materials/vgui/icons/icon_strider.vmt" [+episodic]
+		material "materials/vgui/icons/icon_dog.vmt" [+episodic]
+		material "materials/vgui/icons/icon_base.vmt" [+episodic]
+		]
 	]
 
 @PointClass base(BaseDriveableVehicle) 
-	appliesto(+MBase, EP1, EP2)
+	appliesto(+MBase)
 	studioprop() 
 	autovis(Vehicles, Jeep)
 = prop_vehicle_jeep_old: "Copy of the original HL2 Jeep for use in Episodic."
@@ -69,4 +96,15 @@
 	input FinishRemoveTauCannon(void) : "Finish the tau removal sequence."
 	input DisablePhysGun(void) : "Disable physgun interactions with the jeep."
 	input EnablePhysGun(void) : "Enable physgun interactions with the jeep (default)."
+
+	@resources
+		[
+		entity npc_seagull
+		material "materials/sprites/laserbeam.vmt" 
+		sound "PropJeep.AmmoClose"
+		sound "PropJeep.FireCannon"
+		sound "PropJeep.FireChargedCannon"
+		sound "PropJeep.AmmoOpen"
+		sound "Jeep.GaussCharge"
+		]
 	]

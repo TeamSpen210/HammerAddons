@@ -3,4 +3,9 @@
 	alpha(integer) : "Alpha" : 30
 	sizemin(string) : "Minimum Particle Size" : 100
 	sizemax(string) : "Maximum Particle Size" : 200
+
+	@resources
+		[
+		material "materials/particle/sparkles.vmt"
+		]
 	]

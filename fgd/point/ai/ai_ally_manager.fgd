@@ -27,4 +27,6 @@
 	output SpawnAlly9(void) : "Spawn Ally 9"
 	output OnZeroAllies(void) : "Fires when there are no more allies"
 	output OnZeroMedicAllies(void) : "Fires when there are no more allies"
+
+	@resources []
 	]

@@ -19,4 +19,6 @@
 	
 	// Inputs
 	input SetLinkFilter(target_destination) : "Sets the link's filter."
+
+	@resources []
 	]

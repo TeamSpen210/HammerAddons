@@ -8,4 +8,6 @@
 	[
 	force(string) : "Angular Acceleration" : "0"
 	axis(vecline) : "Rotation Axis"
+	
+	@resources []
 	]

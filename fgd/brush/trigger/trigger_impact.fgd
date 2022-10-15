@@ -13,4 +13,6 @@
 
 	// Outputs
 	output ImpactForce(string) : "Fired after an impact. The parameter passed along is the force of the impact that was generated."
+
+	@resources []
 	]

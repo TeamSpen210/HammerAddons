@@ -15,4 +15,14 @@
 
 	// Inputs
 	input Splash(void) : "Create a splash effect."
+
+	@resources
+		[
+		material "materials/effects/splash2.vmt"
+	    material "materials/effects/splashwake1.vmt"
+	    sound "Physics.WaterSplash"
+	    particle "slime_splash_01"
+	    particle "slime_splash_02"
+	    particle "slime_splash_03"
+		]
 	]

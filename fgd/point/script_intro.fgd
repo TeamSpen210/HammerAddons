@@ -25,4 +25,10 @@
 	input SetFadeColor(string) : "Set the fade color. Parameters: <Red> <Green> <Blue>"
 	input SetDrawSky[MBase](bool) : "Sets whether the skybox should be drawn."
 	input SetDrawSky2[MBase](bool) : "Sets whether the skybox should be drawn in the second view."
+
+	@resources
+		[
+		// Postprocessing shader which does the effects.
+		material "materials/scripted/intro_screenspaceeffect.vmt"
+		]
 	]

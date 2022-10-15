@@ -14,4 +14,6 @@
 	input EnableOneWay(void) : "Enable the one-way behaviour of the portal."
 	input ToggleOneWay(void) : "Toggle the one-way behaviour of the portal."
 	input InvertOneWay(void) : "Flip the one-way direction."
+	
+	@resources []
 	]

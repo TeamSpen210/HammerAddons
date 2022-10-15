@@ -701,7 +701,6 @@ def action_count(
             print(', '.join(sorted(missing)))
 
     print('\n\nMissing Class Resources:')
-    from srctools.packlist import entclass_resources, entclass_iter
 
     missing_count = 0
     defined_count = 0
@@ -713,20 +712,16 @@ def action_count(
 
         if not not_in_engine.isdisjoint(get_appliesto(ent)):
             continue
-        try:
-            entclass_resources(clsname)
-        except KeyError:
+        if isinstance(ent.resources, tuple):
             print(clsname, end=', ')
             missing_count += 1
         else:
             defined_count += 1
 
-    print(f'\nMissing: {missing_count}, Defined: {defined_count} = {defined_count/(missing_count + defined_count):.2%}')
-
-    print('Extra ents: ')
-    for clsname in entclass_iter():
-        if clsname not in fgd.entities:
-            print('-', clsname)
+    print(
+        f'\nMissing: {missing_count}, '
+        f'Defined: {defined_count} = {defined_count/(missing_count + defined_count):.2%}\n\n'
+    )
 
     mdl_or_sprite = defaultdict(list)
     for ent in fgd:
@@ -867,10 +862,10 @@ def action_export(
         tags_not_engine = frozenset({'-ENGINE', '!ENGINE'})
 
         print('Merging tags...')
-        for ent in fgd:
-            # If it's set as not in engine, skip.
+        for ent in list(fgd):
+            # If it's set as not in engine, strip.
             if not tags_not_engine.isdisjoint(get_appliesto(ent)):
-                continue
+                del fgd.entities[ent.classname.casefold()]
             # Strip applies-to helper and ordering helper.
             ent.helpers[:] = [
                 helper for helper in ent.helpers
@@ -1101,11 +1096,24 @@ def action_export(
         if not visgroup.ents:
             del fgd.auto_visgroups[key]
 
+    if engine_mode:
+        res_tags = defaultdict(set)
+        for ent in fgd.entities.values():
+            for res in ent.resources:
+                for tag in res.tags:
+                    res_tags[tag.lstrip('-+!').upper()].add(ent.classname)
+        print('Resource tags:')
+        for tag, classnames in res_tags.items():
+            print(f'- {tag}: {len(classnames)} ents')
+
     print('Exporting...')
 
     if as_binary:
         with open(output_path, 'wb') as bin_f, LZMAFile(bin_f, 'w') as comp:
-            fgd.serialise(comp)
+            # Private, reserved for us.
+            # noinspection PyProtectedMember
+            from srctools._engine_db import serialise
+            serialise(fgd, comp)
     else:
         with open(output_path, 'w', encoding='iso-8859-1') as txt_f:
             fgd.export(txt_f)
