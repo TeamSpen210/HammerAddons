@@ -10,5 +10,6 @@
 	ammomod(float) : "Ammo modifier" : 1 : "Modifier for ammount of ammo dropped by a weapon."
 
 	// Inputs
+	input SetMaxPieces(float) : "Adjust the maximum amount of the weapon allowed."
 	input SetAmmoModifier(float) : "Adjust the ammo modifier."
 	]
