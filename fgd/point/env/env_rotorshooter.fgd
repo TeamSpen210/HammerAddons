@@ -1,34 +1,8 @@
-@PointClass base(gibshooterbase) 
+@PointClass base(env_shooter) 
 	iconsprite("editor/ficool2/env_rotorshooter.vmt") 
 	line(255 255 255, targetname, lightingorigin) 
 	color(200 200 0) = env_rotorshooter: "An entity that creates gibs when it's within the influence of a helicopter's rotor wash."
 	[
-	shootmodel(studio) : "Model" : : "Thing to shoot out.  Can be a .mdl or a .vmt."
-
-	shootsounds[engine](integer) : "Material Sound": -1
-	shootsounds(choices) : "Material Sound" : -1 =
-		[
-		-1: "None"
-		0: "Glass"
-		1: "Wood"
-		2: "Metal"
-		3: "Flesh"
-		4: "Concrete"
-		]
-
-	simulation[engine](integer) : "Simulation Type" : 0
-	simulation(choices) : "Simulation Type" : "0" =
-		[
-		0: "Point"
-		1: "Physics"
-		2: "Ragdoll"
-		]
-
-	skin(integer) : "Gib Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin on all gibs produced by this shooter."
-	spawnflags(flags) : "spawnflags" =
-		[
-		2: "On fire" : 0
-		]
 
 	rotortime(float) : "Time Under Rotor" : 1 : "The average time it has to be under the rotor before it shoots a gib."
 	rotortimevariance(float) : "Time variance" : 0.3 : "The random amount to vary the time it has to be under the rotor before it shoots a gib."
