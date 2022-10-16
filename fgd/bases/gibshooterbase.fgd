@@ -25,7 +25,6 @@
 	
 	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from " +
 		"for all gibs spawned by this shooter, instead of their own origins."
-	nogibshadows(boolean) : "Disable Shadows on Gibs" : 0
 	
 	spawnflags(flags)  =
 		[
