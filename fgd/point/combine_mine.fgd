@@ -50,6 +50,8 @@
 	]
 
 	SetUnavoidable[MBase](boolean) : "Unavoidable" : 0 : "If true, this mine will not be avoided by companion NPCs."
+	
+	PlantOrientation[MBase](angle) : "Plant Orientation (Pitch Yaw Roll)" : "-90 0 0" : "Sets a custom angle for the mine to consider ''upright'' for planting itself."
 
 	// Inputs
 	input Disarm(void) : "Disarm this mine (open hooks and shut off) if not placed by player."

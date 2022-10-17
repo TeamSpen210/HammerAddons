@@ -123,7 +123,8 @@
 		]
 
 	generictype[ASW](string) : "Generic Hint" : : "String identifying what the hint type is, if generic."
-	radius[ASW](integer) : "Radius" : 0 : "How close an NPC must be to consider this hint. 0 means infinite."
+	radius[ASW, MBase](integer) : "Radius" : 0 : "How close an NPC must be to consider this hint. 0 means infinite."
+	hintweight[MBase](float) : "Hint Weight" : "1.0" : "Multiplies the hint's importance, giving it a specific priority over closer hints or nodes."
 
 	// Inputs
 	input EnableHint(void) : "Enable hint."

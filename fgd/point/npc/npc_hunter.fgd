@@ -1,10 +1,19 @@
-@NpcClass base(BaseNPC) 
+@BaseClass appliesto(-MBase) studio("models/hunter.mdl") = _npc_hunter_fixed []
+@BaseClass appliesto(+MBase) studio() = _npc_hunter_settable []
+
+@NpcClass base(BaseNPC, _npc_hunter_fixed, _npc_hunter_settable) 
 	appliesto(EP2, P1) 
 	autovis(Entities, NPCs, Combine, Combine Hunter)
-	studio("models/hunter.mdl") 
 = npc_hunter: "A smaller, faster, strider that can pursue the player into buildings."
 	[
 	followtarget(target_destination) : "Strider to Follow" : : "The name of the strider that this hunter should follow."
+	
+	NoIdlePatrol[engine](boolean) : "Don't patrol while idle" : 0
+	NoIdlePatrol[MBase](choices) : "Patrol while idle" : 0 =
+		[
+		0: "Yes"
+		1: "No"
+		]
 
 	CompanionHunter[EZ2](boolean) : "Companion Hunter" : 0 : "Allows this hunter to regenerate health and do other long-term companion-related things." 
 	NoIdlePatrol[EZ2](boolean) : "Patrol while idle" : 0
@@ -27,7 +36,7 @@
 
 	@resources
 		[
-		model "models/hunter.mdl"
+		model "models/hunter.mdl" [-MBase]
 
 		sound "NPC_Hunter.Idle"
 		sound "NPC_Hunter.Scan"

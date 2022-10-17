@@ -14,7 +14,7 @@
 = logic_choreographed_scene: "Manages a choreographed scene of one or more actors."
 	[
 	scenefile(scene) : "Scene file" : : "The scene that will play when this entity is triggered."
-	resumescenefile(scene) : "Resume Scene / Response Concept" : : "If set, an additonal scene which will be played before resuming this scene, if it gets interruptted. This can either be a .vcd scene file, or a response concept."
+	resumescenefile(scene) : "Resume Scene / Response Concept" : : "If set, an additonal scene which will be played before resuming this scene, if it gets interruptted. This can either be a .vcd scene file, or a response concept. (Response concepts must select a scene file!)"
 
 	target1(target_destination) : "Target 1"
 	target2(target_destination) : "Target 2"

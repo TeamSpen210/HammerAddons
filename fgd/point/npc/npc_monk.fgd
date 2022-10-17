@@ -13,9 +13,12 @@
 		"weapon_stunstick": "Stun Stick"
 		"weapon_crowbar": "Crow Bar"
 		"weapon_shotgun": "Shotgun"
+		"weapon_pistol" : "Pistol" [MBase]
+		"weapon_357" : "357" [MBase]
+		"weapon_crossbow" : "Crossbow" [MBase]
 		"weapon_rpg": "RPG"
-		"weapon_citizenpackage" : "Citizen Package"
-		"weapon_citizensuitcase" : "Citizen Suitcase"
+		"weapon_citizenpackage" : "Citizen Package" [MBase]
+		"weapon_citizensuitcase" : "Citizen Suitcase" [MBase]
 		"0": "Nothing"
 		]
 

@@ -64,6 +64,7 @@
 		32: "Hears explosions" : 0
 		64: "Ignores non-attenuated sounds" : 0
 		128: "Ignores sound gain (stops reducing sound volume)" : 0 [INFRA]
+		128 : "Hears sentences (Combine dialogue, etc.)" : 1 [MBase]
 		]
 
 	sensitivity(float) : "Sensitivity (0 - 10)" : 1 : "Microphone sensitivity, 0=deaf, 1=default, 10=extremely sensitive). Only applicable in Measuring mode."
