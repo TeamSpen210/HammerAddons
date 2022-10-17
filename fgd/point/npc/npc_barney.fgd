@@ -1,7 +1,11 @@
+@BaseClass appliesto(-MBase) studio("models/Barney.mdl") = _npc_barney_fixed []
+@BaseClass appliesto(+MBase) studio() = _npc_barney_settable []
+
 @NpcClass base(TalkNPC, BaseNPC, PlayerCompanion) 
 	appliesto(EP1, EP2, HL2, P1) 
+	base(_npc_barney_settable, _npc_barney_fixed)
 	autovis(Entities, NPCs, Rebels, Barney)
-	studio("models/Barney.mdl") = npc_barney: "Barney"
+	= npc_barney: "Barney"
 	[
 	model[MBase](studio) : "Custom Model" : "models/Barney.mdl" : "Mapbase allows setting a custom model."
 
@@ -22,7 +26,7 @@
 
 	@resources
 		[
-		model "models/barney.mdl"
+		model "models/barney.mdl" [-MBase]
 		sound "NPC_Barney.FootstepLeft"
 		sound "NPC_Barney.FootstepRight"
 		sound "NPC_Barney.Die"

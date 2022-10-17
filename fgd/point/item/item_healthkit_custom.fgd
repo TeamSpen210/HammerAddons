@@ -1,5 +1,5 @@
 @PointClass base(Item) 
-	appliesto(EZ2) 
+	appliesto(MBase) 
 	studioprop()
 = item_healthkit_custom: "Customizable Health Kit"
 	[

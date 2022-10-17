@@ -1,0 +1,8 @@
+@BaseClass base(Item) 
+= ItemHealth : "Additional options added to health items in Mapbase."
+	[
+	HealthMultiplier[MBase](float) : "Health Multiplier" : "1.0" : "Multiplies the amount of health this item gives."
+	
+	// Inputs
+	input SetHealthMultiplier[MBase](float) : "Sets the multiplier for the amount of health this item gives."
+	]

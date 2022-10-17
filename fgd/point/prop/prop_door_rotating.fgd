@@ -36,6 +36,10 @@
 	soundcloseoverride(sound) : "Fully Closed Sound" : : "Sound played when the door has finished closing."
 	soundmoveoverride(sound) : "Moving Sound" : : "Sound played when the door starts to move."
 
+	opendistoverride[MBase](integer) : "NPC Open Distance" : -1 : "How far away NPCs should move in order to open the door. (default = 64)"
+	openfrontactivityoverride[MBase](string) : "NPC Front Open Activity" : "" : "The gesture activity NPCs should play when opening the door from the front."
+	openbackactivityoverride[MBase](string) : "NPC Back Open Activity" : "" : "The gesture activity NPCs should play when opening the door from the back."
+
 	returndelay(integer) : "Delay Before close (-1 stay open)" : -1 : "Amount of time, in seconds, after the door has opened before it closes. " +
 		"If the value is set to -1, the door never closes itself."
 

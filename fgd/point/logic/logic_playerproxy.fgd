@@ -17,6 +17,7 @@
 	
 	HandsVM[MBase](studio) : "Hands Viewmodel" : : "Custom hands viewmodel."
 	HandsVMSkin[MBase](string) : "Hands Viewmodel Skin" : : "Skin for the custom hands viewmodel."
+	HandsVMBody[MBase](string) : "Hands Viewmodel Bodygroup" : : "Bodygroup value for the custom hands viewmodel."
 
 	// Inputs and Outputs
 	input RequestPlayerHealth(void) : "Requests the current player's health from the proxy. This will fire the PlayerHealth output with the value."

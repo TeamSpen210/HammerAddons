@@ -37,6 +37,7 @@
 	input SetSkyMode(integer) : "Sets the sky mode. NOTE: 2 = draw sky texture, 1 = draw 3D skybox!"
 	input SetRenderTarget(string) : "Sets the render target."
 	input SetFogController(target_destination) : "Sets the fog controller."
+	input SetScale(float) : "Sets the view scale."
 
 	@resources []
 	]

@@ -75,6 +75,7 @@
 		]
 	groupname(string) : "Group Name"
 	looping(boolean) : "Loop Movie" : 0
+	muted[MBase](boolean) : "Mute Movie" : 1
 	
 	width(integer) : "Panel Width in World (Green)" : 256 : "Width of the panel in units."
 	height(integer) : "Panel Height in World (Blue)" : 128 : "Height of the panel in units."

@@ -84,6 +84,8 @@
 	output OnEndSequence(void) : "Fires when the action animation completes."
 	output OnCancelSequence(void) : "Fires when the sequence is cancelled."
 	output OnCancelFailedSequence(void) : "Fires when the sequence is cancelled without ever playing (OnCancelSequence will also fire)."
+	output OnEntrySequence[MBase](void) : "Fires when the entry animation begins."
+	output OnActionSequence[MBase](void) : "Fires when the action animation begins."
 	output OnFoundNPC[MBase](ehandle) : "Fires when a target NPC is found and begins moving to play the script. They are passed as a parameter."
 	output OnScriptEvent01(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 1 } in the QC."
 	output OnScriptEvent02(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 2 } in the QC."

@@ -1,4 +1,4 @@
-@PointClass base(Item) 
+@PointClass base(ItemHealth, BaseMesaPickup) 
 	appliesto(EP1, EP2, HL2, P1, Mesa) 
 	studio("models/healthvial.mdl") = item_healthvial: "Personal Health Kit"
 	[
