@@ -4,6 +4,7 @@
 	allowsentry(boolean) : "Allow Sentries" : 0 : "Sentries are allowed to be built in this volume."
 	allowdispenser(boolean) : "Allow Dispensers" : 0 : "Dispensers are allowed to be built in this volume."
 	allowteleporters(boolean) : "Allow Teleporters" : 0 : "Teleporters are allowed to be built in this volume."
+	destroybuildings(boolean) : "Destroy Buildings" : 0 : "Destroy buildings when this volume is activated."
 
 	input SetActive( void ) : "Set Active"
 	input SetInactive( void ) : "Set InActive"

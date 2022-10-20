@@ -44,7 +44,7 @@
 	// Inputs
 	input SetMeasureTarget(string) : "Set the Entity to Measure, whose movement should be measured."
 	input SetMeasureReference(string) : "Set the Measure Reference entity."
-	input Target(string) : "Set the Entity to Move, which will be moved to mimic the measured entity."
+	input SetTarget(string) : "Set the Entity to Move, which will be moved to mimic the measured entity."
 	input SetTargetReference(string) : "Set the Movement Reference entity."
 	input SetTargetScale(float) : "Set the scale to divide the measured movements by."
 	input SetMeasureType[MBase](integer) : "Sets the measurement type."
