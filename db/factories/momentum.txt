@@ -101,6 +101,7 @@ fish
 fog_volume
 func_areaportal
 func_areaportalwindow
+func_bhop
 func_breakable
 func_breakable_surf
 func_brush
@@ -134,6 +135,7 @@ func_reflective_glass
 func_rot_button
 func_rotating
 func_shootboost
+func_slide
 func_smokevolume
 func_tank
 func_tanklaser

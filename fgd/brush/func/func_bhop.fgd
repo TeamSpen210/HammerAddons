@@ -1,0 +1,28 @@
+@SolidClass base(func_brush)
+	appliesto(MOMENTUM)
+	line(255 255 0, targetname, target)
+= func_bhop: "A brush entity that teleports the player if they stand on it for too long or land too many times."
+	[
+	linedivider_bhop(string) readonly : "----------------------------------------------------------------------------------------------------------"
+
+	ProgressTeleport(boolean) : "Teleport to Progress Trigger" : 1 : "When activated, the player will be teleported to their last touched trigger_momentum_progress."
+	target(target_destination) : "Remote Destination" : : "The entity specifying the point to which the player should be teleported (overrides progress teleport setting)."
+	UseDestinationAngles(boolean) : "Use Destination Angles" : 1 : "Snap the player's angles and velocity direction to the angles of the destination entity."
+	ResetVelocityOnTeleport(boolean) : "Reset Velocity on Teleport" : 0 : "Reset the player's velocity when teleported."
+	LandingLimit(integer) : "Landing Limit" : 0 : "The maximum amount of times the player is allowed to land on this. A limit of zero allows unlimited landings/bhops. Only full groundings count toward this, not just touching from above."
+
+	spawnflags(flags) =
+		[
+		1: "Reset landing counter when this is activated" : 1
+		2: "Reset landing counter when the player lands on something that isn't a func_bhop" : 1
+		4: "Reset landing counter when the player lands on anything else" : 0
+		]
+
+	// Inputs
+	input ResetLandingCount(void) : "Reset the landing counter"
+
+	// Outputs
+	output OnLandingLimitReached(void) : "Fired when the player leaves the ground after the landing limit is reached. The player will be teleported when they next land."
+	output OnActivate(void) : "Fired when the player would be teleported. Can be used for custom behavior instead of teleporting the player."
+	]
+
