@@ -1,9 +1,0 @@
-@BaseClass base(TeleTrigger)
-	appliesto(MOMENTUM)
-= HopTrigger
-	[
-	hold(float) : "Hold time (seconds)" : "0.5" : "If the player is in this trigger for longer than this (in seconds), teleport them to the most recent progress trigger."
-	
-	//being worked
-	//holdteleport(float) : "Time before reset teleport delay" : 1 : "If the player had activated previously the teleport, deactivate it by this amount of time (seconds)."
-	]
