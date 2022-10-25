@@ -1,0 +1,30 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(P2CE)
+	iconsprite("editor/info_target.vmt")
+= info_portal_gamerules: "Determines game various rules for gameplay"
+	[
+	enableregen(boolean) : "Enable health regeneration" : 1
+	equipboots(boolean) : "Equip long-fall boots" : 1 : "Disabling this will essentially enable fall damage"
+	equipportalgun(choices) : "Equip Portal Gun" : 0 =
+		[
+		0: "None"
+		1: "Orange"
+		2: "Blue"
+		3: "Dual Portal Device"
+		4: "Potato Gun"
+		]
+	equippaintgun(choices) : "Equip paint gun" : 0 =
+		[
+		0: "None"
+		1: "Basic paint gun"
+		2: "Fully-upgraded paint gun"
+		]
+	maxhealth(integer) : "Max health for players" : 100
+	gametype(choices) : "Co-op Game type" : 0 : "Sets the co-op game type. This is ignored if the game isn't running in co-op mode." =
+		[
+		0: "Default"
+		1: "Co-op 2-guns"
+		2: "Co-op versus mode"
+		3: "Co-op versus mode and 2-guns"
+		]
+	]

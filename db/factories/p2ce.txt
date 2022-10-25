@@ -575,3 +575,4 @@ worldspawn
 logic_player_slowtime
 item_paint_power_pickup
 point_paint_sensor
+info_portal_gamerules
