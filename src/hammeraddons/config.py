@@ -4,11 +4,10 @@ from typing import Callable, Optional, Set, Dict, Union
 from typing_extensions import TypeAlias, Final
 import sys
 
-from atomicwrites import atomic_write
 import attrs
 
 from srctools.game import Game
-from srctools import Keyvalues, logger
+from srctools import Keyvalues, logger, AtomicWriter
 from srctools.filesys import FileSystemChain, FileSystem, RawFileSystem, VPKFileSystem
 
 from .props_config import Opt, Options
@@ -117,7 +116,7 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
 
         LOGGER.warning('Writing default to "{}"', opts.path)
 
-    with atomic_write(opts.path, overwrite=True) as f:
+    with AtomicWriter(opts.path) as f:
         opts.save(f)
 
     # Fetch the additional path config.
