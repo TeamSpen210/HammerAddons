@@ -10,13 +10,12 @@ import random
 from typing import Awaitable, Callable, Tuple, Set, TypeVar, Hashable, Generic, Any, List
 from pathlib import Path
 
-from srctools import logger
+from srctools import logger, AtomicWriter
 from srctools.game import Game
 from srctools.mdl import MDL_EXTS
 from srctools.packlist import PackList
 
 import trio
-from atomicwrites import atomic_write
 
 from hammeraddons.acache import ACache
 from hammeraddons.bsp_transform import Context
@@ -145,7 +144,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
                 data.append((key, mdl.name, mdl.result))
                 used_mdls.add(mdl.name.casefold())
 
-        with atomic_write(self.model_folder_abs / 'manifest.bin', mode='wb', overwrite=True) as f:
+        with AtomicWriter(self.model_folder_abs / 'manifest.bin', is_bytes=True) as f:
             # Compatibility isn't a concern, since it'll just mean we have to
             # rebuild the models.
             pickle.dump((data, self.version), f, pickle.HIGHEST_PROTOCOL)
