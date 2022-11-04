@@ -13,8 +13,10 @@
 	speed(float) : "Speed" : 100 : "The speed that the brush moves, in units per second."
 	movedistance(float) : "Move Distance" : 100 : "The distance from the starting point that the brush should move."
 	blockdamage(float) : "Block Damage" : 0 : "The amount of damage to do to any entity that blocks the brushes, per frame."
-	startsound(sound) : "Start Sound" : :"Sound played when the brush starts moving."
+	startsound(sound) : "Start Sound" : : "Sound played when the brush starts moving."
+	startsoundvolume[KZ](float) : "Start sound volume" : 1 : "How loud to play the start sound (0-1)"
 	stopsound(sound) : "Stop Sound" : : "Sound played when the brush stops moving."
+	stopsoundvolume[KZ](float) : "Stop sound volume" : 1 : "How loud to play the stop sound (0-1)"
 
 	// Inputs
 	input Open(void) : "Move the brush to the end position (starting position + (move direction * move distance))."

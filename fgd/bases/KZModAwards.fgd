@@ -1,0 +1,23 @@
+@BaseClass = KZModAwards
+	[
+	whattoaward[engine](integer) : "Powerup Name" : 0 : "The award/powerup name." =
+	whattoaward(choices) : "Powerup Name" : 0 : "The award/powerup name." =
+		[
+		0 : "Random (Arena Only)"
+		1 : "Limited Bungee Rope"
+		2 : "Free Bungee Rope"
+		3 : "Timebomb"
+		4 : "Painkillers"
+		5 : "Stats Readout"
+		6 : "Soccer Ball"
+		7 : "Moonboots"
+		8 : "Strange Mojo"
+		9 : "Psychic Slow Motion"
+		10 : "Burningfeet"
+		11 : "Cloak"
+		12 : "Boots of Speed"
+		13 : "Custom Message"
+		14 : "Boots of Height"
+		15 : "Psychic Antigravity"
+		]
+	]

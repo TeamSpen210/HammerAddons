@@ -17,6 +17,7 @@
 	maxnpccount(integer) : "Num. of NPCs" : 1 : "Number of NPCs that will spawn before this spawner is exhausted."
 	spawnfrequency(string) : "Frequency" : 5 : "How often (in seconds) a new NPC will be spawned. If set to -1, " +
 		"a new NPC will be made when the last NPC dies."
+	SpawnTime[KZ](integer) : "Secondary Frequency" : 1 : "If Frequency is -1, this is the delay after the npc dies before it will be respawned"	
 	maxlivechildren(integer) : "Max Live NPCs" : 5 : "Maximum number of live children allowed at any one time (new ones will not be made until one dies). " +
 		"If set to -1, no limit is applied."
 
