@@ -92,7 +92,7 @@ FEATURES: Dict[str, Set[str]] = {
     'EZ2': {'MBASE', 'VSCRIPT'},
 
     'L4D2': {'INST_IO', 'VSCRIPT'},
-    'TF2': {'PROP_SCALING'},
+    'TF2': {'PROP_SCALING', 'VSCRIPT'},
     'ASW': {'INST_IO', 'VSCRIPT'},
     'P2': {'INST_IO', 'VSCRIPT'},
     'CSGO': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
@@ -124,7 +124,7 @@ ALL_TAGS = {
 }
 
 # If the tag is present, run to backport newer FGD syntax to older engines.
-POLYFILLS: List[Tuple[str, Callable[[FGD], None]]] = []
+POLYFILLS: List[Tuple[FrozenSet[str], Callable[[FGD], None]]] = []
 PolyfillFuncT = TypeVar('PolyfillFuncT', bound=Callable[[FGD], None])
 
 # This ends up being the C1 Reverse Line Feed in CP1252,
@@ -148,10 +148,7 @@ def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
     """Register a polyfill, which backports newer FGD syntax to older engines."""
     def deco(func: PolyfillFuncT) -> PolyfillFuncT:
         """Registers the function."""
-        for tag in tags:
-            POLYFILLS.append((tag.upper(), func))
-        if not tags:
-            POLYFILLS.append(('', func))
+        POLYFILLS.append((frozenset(tag.upper() for tag in tags), func))
         return func
     return deco
 
@@ -199,9 +196,9 @@ def _polyfill_node_id(fgd: FGD):
                     kv.type = ValueTypes.INT
 
 
-@_polyfill('until_l4d2')
-def _polyfill_scripts(fgd: FGD):
-    """Before L4D2's Hammer, the vscript specific types were not available
+@_polyfill('until_l4d2', '!tf2')
+def _polyfill_scripts(fgd: FGD) -> None:
+    """Before L4D2's Hammer (except TF2), the vscript specific types were not available.
 
     Substitute with just a string.
     """
@@ -1013,7 +1010,7 @@ def action_export(
 
     if not engine_mode:
         for poly_tag, polyfill in POLYFILLS:
-            if not poly_tag or poly_tag in tags:
+            if match_tags(tags, poly_tag):
                 polyfill(fgd)
 
     print('Applying helpers to child entities and optimising...')
