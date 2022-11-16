@@ -8,6 +8,7 @@
 * Ensure culled bases are replaced by their own bases (fixes `Item`, for example).
 * Update to Mapbase 7.0, and add Entropy Zero 2 entities.
 * Added icon for `npc_heli_avoidsphere`.
+* Change propcombine/geocable to log just the number of culled models, not every single file.
 * TF2 now has VScript support.
 
 --------------------

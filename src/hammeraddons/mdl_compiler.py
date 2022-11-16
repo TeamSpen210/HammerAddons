@@ -149,6 +149,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
             # rebuild the models.
             pickle.dump((data, self.version), f, pickle.HIGHEST_PROTOCOL)
 
+        culled = 0
         for mdl_file in self.model_folder_abs.glob('*'):
             if mdl_file.suffix not in {'.mdl', '.phy', '.vtx', '.vvd'}:
                 continue
@@ -156,12 +157,13 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
             # Strip all suffixes.
             if mdl_file.name[:mdl_file.name.find('.')].casefold() in used_mdls:
                 continue
-
-            LOGGER.info('Culling {}...', mdl_file)
+            culled += 1
             try:
                 mdl_file.unlink()
             except FileNotFoundError:
                 pass
+
+        LOGGER.info('Culled {} models in models/{}*', culled, self.model_folder)
 
     async def get_model(
         self,
