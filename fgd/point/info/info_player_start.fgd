@@ -7,7 +7,7 @@
 	"set the 'Master' spawnflag on one of them to indicate which one should be used when running the entire map."
 	[
 		
-	enabled[engine](integer) : "Globally Enabled" : 1 =
+	enabled[engine](integer) : "Globally Enabled" : 1
 	enabled[KZ](choices) : "Globally Enabled" : 1 =
 	[
 		0 : "No, this spawn is inactive."
