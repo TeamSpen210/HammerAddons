@@ -1,8 +1,8 @@
 @SolidClass base(BaseEntityVisBrush, EnableDisable) appliesto(KZ)
-= func_brush: "An brush built entity with various features."
+= func_ropetarget: "A target for the limited rope"
 	[
-	singleuse[engine](integer) : "One player at a time?" : 0: "Can only one person use this ropetarget at a time?"
-	singleuse(choices) : "One player at a time?" : 0: "Can only one person use this ropetarget at a time?" = 
+	singleuse[engine](integer) : "One player at a time?" : 0 : "Can only one person use this ropetarget at a time?"
+	singleuse(choices) : "One player at a time?" : 0 : "Can only one person use this ropetarget at a time?" = 
 		[ 
 		0 : "No" 
 		1 : "Yes" 
