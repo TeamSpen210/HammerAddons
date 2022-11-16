@@ -1,6 +1,6 @@
 @BaseClass = KZModAwards
 	[
-	whattoaward[engine](integer) : "Powerup Name" : 0 : "The award/powerup name." =
+	whattoaward[engine](integer) : "Powerup Name" : 0 : "The award/powerup name."
 	whattoaward(choices) : "Powerup Name" : 0 : "The award/powerup name." =
 		[
 		0 : "Random (Arena Only)"
