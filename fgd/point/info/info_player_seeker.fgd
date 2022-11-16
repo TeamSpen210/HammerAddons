@@ -1,0 +1,39 @@
+@PointClass base(BaseEntityPoint, PlayerClass) 
+	appliesto(KZ) 
+	autovis(Point Entities, Globals, Player Spawn)
+	studio("models/editor/playerstart.mdl")
+= info_player_seeker: "A spawn point for seekers, only used in the Tag Arena gamemode."
+	[
+
+	enabled[engine](integer) : "Globally Enabled" : 1
+	enabled(choices) : "Globally Enabled" : 1 =
+		[
+		0 : "No, this spawn is inactive."
+		1 : "Yes, this spawn is active."
+		]
+	
+	newplayerstart(integer) readonly : "Is New Player Start" : 1 : "Allows the game to detect old player start types in legacy maps." +
+	"Normally, you can't unset this. If you edit the FGD and do, be absolutely sure of what you're doing!"
+	
+	// Inputs
+	input AddAllowedPlayer(void) : "Enable a player to spawn here."
+	input AddAllowedTeam(void) : "Enable a multiplayer timer set team to spawn here."
+	input RemoveAllowedPlayer(void) : "Make a player unable to spawn here."
+	input RemoveAllowedTeam(void) : "Make a multiplayer team unable to spawn here."
+	input ResetPlayer(void) : "Reset this playerstart to default for this player."
+	input ResetTeam(void) : "Reset this playerstart to default for this team."
+	input TogglePlayer(void) : "Toggle this playerstart's enabled state for this player."
+	input ToggleTeam(void) : "Toggle this playerstart's enabled state for this team."
+	
+	//Outputs
+	output OnSpawn(void) : "Fired when a player spawns at this entity. The activator is the player who spawned."
+	
+	spawnflags(flags) =
+	[
+		1: "Master (Has priority if multiple info_player_seekers exist)" : 0
+		4096 : "This info_player_seeker allows all players by default." : 1
+	]
+
+
+	@resources []
+	]

@@ -1,0 +1,35 @@
+@SolidClass base(Trigger) 
+	appliesto(KZ) 
+ = trigger_player_movement_attributes: "This trigger can enable/disable surf movement and bhop movement on a player when they touch it. If the 'remove the other type' spawnflag is used, the other attribute that this trigger does not give will be removed. Example: If this trigger gives SURF, then BHOP will be automatically removed."
+	[
+	spawnflags(flags) = 
+	[ 
+		1 : "Automatically disable attribute when player leaves trigger" : 0 
+		2 : "Automatically disable all attributes when player leaves trigger" : 0 
+		4 : "DEPRECATED, do not use: When giving a player an attribute, remove the other type" : 0
+		8 : "Bhop Mode (50 airacceleration, no slowdown on landing)" : 0
+		16 : "Auto Bhop (Hold jump key to keep jumping)" : 0
+		32 : "Surf Mode (100 airacceleration)" : 0
+		64 : "Counter-Strike: Global Offensive Movement (altered jump height, max speed, friction, no doubleduck, no edgefriction, etc...)" : 0
+	] 
+	
+	attributemode[engine](integer) : "OLD: USE FLAGS: This trigger..." : 0 : "This keyvalue is depreciated, please use the Flags window instead."
+	attributemode(choices) : "OLD: USE FLAGS: This trigger..." : 0 : "This keyvalue is depreciated, please use the Flags window instead." = 
+	[ 
+		0 : "Removes all attributes" 
+		1 : "Removes BHOP"
+		2 : "Removes SURF"
+		3 : "Enables BHOP"
+		4 : "Enables SURF"
+		5 : "Enables all attributes"
+	]
+	
+	csgoduck[engine](integer) : "Use CS:GO Ducking Hull" : 0 : "[CS:GO Mode Only] Use the CS:GO duck hull height of 54 units? Normal duck hull size is 36 units."
+	csgoduck(choices) : "Use CS:GO Ducking Hull" : 0 : "[CS:GO Mode Only] Use the CS:GO duck hull height of 54 units? Normal duck hull size is 36 units." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	@resources []
+	]

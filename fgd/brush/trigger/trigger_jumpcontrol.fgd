@@ -1,0 +1,23 @@
+@SolidClass base(Trigger) 
+	appliesto(KZ) 
+ = trigger_jumpcontrol: "A trigger that can prevent players from jumping when within it's volume, bunnyhopping or doubleducking. If the Don't reset when leaving trigger spawnflag is used, this will set the restriction and not undo it once leaving the trigger."
+	[
+	spawnflags(flags) = 
+	[ 
+		32 : "Don't reset when leaving trigger" : 0
+		128 : "No Jumping (Even in CS:GO mode)" : 0
+		2048 : "Double Duck Only (No Jumping - ignored in CS:GO mode)" : 0
+		256 : "No Bhop" : 0
+		1024 : "No Double Duck" : 0
+	] 
+	
+	mode[engine](integer) : "OLD: USE FLAGS: Jumping Capabilities" : 0 : "This keyvalue is depreciated, please use the Flags window instead."
+	mode(choices) : "OLD: USE FLAGS: Jumping Capabilities" : "Enable all" : "This keyvalue is depreciated, please use the Flags window instead." = 
+	[ 
+		0 : "Enable All" 
+		1 : "Disable Jump"
+		2 : "Disable Bunnyhop"
+	] 
+	
+	@resources []
+	]

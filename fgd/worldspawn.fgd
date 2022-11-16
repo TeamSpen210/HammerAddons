@@ -102,7 +102,7 @@
 	coldworld(boolean) : "World is cold" : 0 : "Emit steam from NPC's mouths and similar effects."
 	WaveHeight[engine](float) : "Wave Height" : : "Unused keyvalue, likely to indicate the amount of HL1-style wavy water."
 	
-	fixtriggerpushbug[engine](boolean) : "Fix contact trigger_push bug" : 1 : "This fixes a bug with very thin contact mode trigger_push pushing downwards. This should be set to Yes unless this is an old map which worked around the bug and needs it in order to work correctly."
+	fixtriggerpushbug[engine](integer) : "Fix contact trigger_push bug" : 1 : "This fixes a bug with very thin contact mode trigger_push pushing downwards. This should be set to Yes unless this is an old map which worked around the bug and needs it in order to work correctly."
 	fixtriggerpushbug[KZ](choices) : "Fix contact trigger_push bug" : 1 : "This fixes a bug with very thin contact mode trigger_push pushing downwards. This should be set to Yes unless this is an old map which worked around the bug and needs it in order to work correctly." =
 	[	
 		0 : "No"

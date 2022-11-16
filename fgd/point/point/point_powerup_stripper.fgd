@@ -1,0 +1,12 @@
+@PointClass base(BaseEntityPoint, KZModAwards) 
+	appliesto(KZ) 
+= point_powerup_stripper: "Strips powerups from players. These powerups are given to the player with an item_pickup entity. Selecting random does not cause anything to happen with this entity. The activator is automatically set by triggers and buttons."
+	[
+	// Inputs
+	input StripPowerup(void) : "Strip the chosen powerup from the player."
+	input StripActivePowerup(void) : "Strip the chosen powerup from the player."
+	input StripPowerupAndActivePowerup(void) : "Strip the chosen powerup from the player, and also the active powerup if it matches the chosen one."
+	input StripAnyPowerup(void) : "Strip any powerup the player has, regardless if it is the selected one."
+	input StripAnyActivePowerup(void) : "Strip the chosen powerup from the player."
+	input StripAnyPowerupAndActivePowerup(void) : "Strip any powerup the player has, regardless if it is the selected one, and also strip any active powerup."
+	]

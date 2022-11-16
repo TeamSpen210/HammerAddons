@@ -1,0 +1,16 @@
+@SolidClass base(Trigger) 
+	appliesto(KZ)
+	line(255 255 255, targetname, linkedfogcontroller) 
+ = func_volumetric_fog: "Any player who enters this entity will have their fog settings updated by the linked fog controller. The updating is continuous, so timers and other entities firing inputs to change the linked fog_controller's settings will be updated in real time. When a player leaves the volume, the fog will be set back to the master fog_controller, or no fog if none is present."
+	[
+	linkedfogcontroller(target_destination) : "Linked Fog Controller" : "" : "The fog controller that this entity will enable for the activating player."
+	
+	noautorm[engine](integer) : "Don't disable fog on leaving trigger" : 0 : "If set to yes, players leaving this entity after entering it will keep the enabled fog controller."
+	noautorm(choices) : "Don't disable fog on leaving trigger" : 0 : "If set to yes, players leaving this entity after entering it will keep the enabled fog controller." = 
+	[ 
+		0 : "No" 
+		1 : "Yes"
+	] 
+
+	@resources []
+	]

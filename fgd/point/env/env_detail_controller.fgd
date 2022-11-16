@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, Angles) 
-	appliesto(since_L4D2, Mesa)
+	appliesto(since_L4D2, Mesa, KZ)
 	sphere(fademindist)
 	sphere(fademaxdist)
 	iconsprite("editor/ficool2/env_detail_controller.vmt")

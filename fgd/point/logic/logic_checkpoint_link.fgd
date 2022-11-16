@@ -1,0 +1,17 @@
+@PointClass appliesto(KZ) 
+	base(BaseEntityPoint, EnableDisable)
+	iconsprite("editor/logic_relay.vmt") 
+	line(255 255 0, targetname, linkedcheckpoint)
+= logic_checkpoint_link : "An entity that will not fire its output if the activating player cannot activate the linked trigger_checkpoint. This link passes activators, so you can use it to stop timers etc"
+	[
+	linkedcheckpoint(target_destination) : "Linked Checkpoint" : "" : "The trigger_checkpoint that this entity will check it's activator against"
+
+	// Inputs
+	input Trigger(void) : "Trigger the link, and check activator against the linked checkpoint"
+	
+	// Outputs
+	output OnTrigger(void) : "Fired if the player passes the checkpoint test"
+	output OnTriggerFailed(void) : "Fired if the player does not pass the checkpoint test"
+
+	@resources []
+	]

@@ -16,7 +16,7 @@
 		1 : "No boost if player not contacting a surface"
 		2 : "No push at all if player not contacting a surface"
 		]
-	pushmode[engine](boolean) : "Pushing Mode" : 0 : "Should this push apply force to the player, or set their velocity instantly to Speed of Push?"
+	pushmode[engine](integer) : "Pushing Mode" : 0 : "Should this push apply force to the player, or set their velocity instantly to Speed of Push?"
 	pushmode[KZ](choices) : "Pushing Mode" : 0 : "Should this push apply force to the player, or set their velocity instantly to Speed of Push?" =
 		[
 		0 : "Apply Force"

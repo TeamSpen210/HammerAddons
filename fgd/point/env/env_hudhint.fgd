@@ -9,7 +9,7 @@
 
 	message(string) : "Hint Text (localized)" : : "This should be set to match the desired HUD hint entry in resource/valve_english.txt."
 
-	infiniteduration[engine](boolean) : "Infinite Duration" : 0
+	infiniteduration[engine](integer) : "Infinite Duration" : 0
 	infiniteduration[KZ](choices) : "Infinite Duration" : 0 =
 	[
 		0 : "No"

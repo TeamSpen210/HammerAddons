@@ -1,0 +1,33 @@
+@SolidClass base(BaseEntityBrush) 
+	appliesto(KZ) 
+= func_stoptimer: "Obsolete entity for stopping a timer. Please use point_climbtimer instead."
+	[
+	CourseID(integer): "CourseID" : 0 : "The ID of this Timer Set (start/stop), each Timer Set needs a seperate ID. This ID must match that of the func_starttimer in this Set."
+
+	Elite[engine](integer) : "Elite Status" : 0: "Can the player be given Elite Status upon successful completion of this Timer Set without teleporting (checkpoints)?"
+	Elite(choices) : "Elite Status" : 0: "Can the player be given Elite Status upon successful completion of this Timer Set without teleporting (checkpoints)?" = 
+		[ 
+		0 : "No" 
+		1 : "Yes" 
+		] 
+	Prize[engine](integer) : "Prize Winner" : 0 : "Does the player win the prize for successfully completing this Timer Set?"
+	Prize(choices) : "Prize Winner" : 0 : "Does the player win the prize for successfully completing this Timer Set?" = 
+		[ 
+		0 : "No" 
+		1 : "Yes" 
+		]
+	endurancecourse[engine](integer) : "Endurance Course" : 0 : "Is this an endurance course? An endurance course is one where a longer time is better."
+	endurancecourse(choices) : "Endurance Course" : 0 : "Is this an endurance course? An endurance course is one where a longer time is better." = 
+		[ 
+		0 : "No" 
+		1 : "Yes" 
+		]  
+
+	//Inputs
+	input StopTimer(void) : "Stops the timer."
+	
+	//Outputs
+	output OnTrigger(void) : "Fired when this entity is triggered."
+	output OnTimerStopSuccessful(void) : "Fired when a timer is stopped sucessfully"
+	output OnTimerStopFailed(void) : "Fired when a timer failed to stop (timer not running or wrong course)"
+	]
