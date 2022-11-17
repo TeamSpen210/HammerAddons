@@ -1,4 +1,5 @@
-@BaseClass = KZModAwards
+@BaseClass 
+	appliesto(KZ) = KZModAwards
 	[
 	whattoaward[engine](integer) : "Powerup Name" : 0 : "The award/powerup name."
 	whattoaward(choices) : "Powerup Name" : 0 : "The award/powerup name." =
