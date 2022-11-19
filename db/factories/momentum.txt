@@ -124,6 +124,7 @@ func_monitor
 func_movelinear
 func_nogrenades
 func_occluder
+func_overbounce
 func_physbox
 func_plat
 func_platrot
@@ -350,7 +351,6 @@ trigger_momentum_timer_stage
 trigger_momentum_timer_checkpoint
 trigger_multiple
 trigger_once
-trigger_overbounce
 trigger_playermovement
 trigger_proximity
 trigger_push

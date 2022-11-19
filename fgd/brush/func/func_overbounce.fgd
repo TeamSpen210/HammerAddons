@@ -1,6 +1,6 @@
-@SolidClass base(MomentumTrigger)
+@SolidClass base(func_brush)
 	appliesto(MOMENTUM)
-= trigger_overbounce: "A trigger volume that enables defrag overbounces, and optionally define minimum and maximum speeds."
+= func_overbounce: "A brush entity that enables defrag overbounces, and optionally define minimum and maximum speeds."
 	[
 	ForceOverbounce(boolean) : "Force Overbounces" : 1 : "Whether or not to force overbounces within the minimum and maximum speeds, else require correct heights like in Quake 3."
 	MinSpeed(float) : "Minimum Speed" : -1 : "If force overbounces is set to yes, the minimum speed on the Z axis the player can be at for an overbounce to occur. -1 means no minimum speed."
