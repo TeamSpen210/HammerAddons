@@ -1,4 +1,4 @@
-@SolidClass base(BaseEntityVisBrush)
+@SolidClass base(func_brush)
 	appliesto(KZ) 
 = func_brush_kzmod: "A func_brush entity designed for use in multiplayer."
 [
@@ -15,15 +15,6 @@
 		0 : "Solid"
 		]
 
-	excludednpc(string) : "NPC class excluded from collisions" : : "If an NPC classname is specified here, NPCs of that type won't collide with these brushes. In Episodic, you may also specify an individual entity's name."
-	
-	invert_exclusion[engine](integer) : "Invert NPC class exclusion" : "0" : "If set, then the excluded NPC class will consider this brush solid, and all other NPC classes will consider it non-solid."
-	invert_exclusion(choices) : "Invert NPC class exclusion" : "0" : "If set, then the excluded NPC class will consider this brush solid, and all other NPC classes will consider it non-solid." =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
-	
 	solidbsp[engine](integer) : "Solid BSP" : "0" : "Set this if this brush is in heirarchy with a moving object of some kind, and the player can stand on this brush."
 	solidbsp(choices) : "Solid BSP" : "0" : "Set this if this brush is in heirarchy with a moving object of some kind, and the player can stand on this brush." =
 	[
