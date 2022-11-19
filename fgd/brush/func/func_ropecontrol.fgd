@@ -1,0 +1,19 @@
+@SolidClass base(BaseEntityBrush) 
+	appliesto(KZ) 
+= func_ropecontrol: "Controller for Limited Bungees. Use in conjunction with either point_climbtimer or item_pickup."
+	[
+	ropelength(integer): "Rope Length" : 1750 : "Length of the Bungee, 1750 default, Max length is 8000. This is NOT measured in UNITS" 
+	ropebounce(integer): "Slack Speed" : 450 : "The speed at which the rope shrinks/grows, 450 is the default" 
+	Enforce[engine](integer) : "Enforce" : 1: "Enforce a specific maximum length of the Bungee."
+	Enforce(choices) : "Enforce" : 1: "Enforce a specific maximum length of the Bungee." = 
+		[ 
+		0 : "Don't Enforce (unlimited length)" 
+		1 : "Enforce (limited length)" 
+		] 
+
+	// Inputs
+	input RemoveRope(void) : "Removes all Bungee'S from the player" 
+	input GiveRope(void) : "Gives the player a Limited Bungee" 
+	input RemoveRopeTeam(void) : "Removes all Bungee'S from the activator's team." 
+	input GiveRopeTeam(void) : "Gives the activator's team the Limited Bungee." 
+	]

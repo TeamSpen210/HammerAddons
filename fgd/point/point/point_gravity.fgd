@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityPoint) appliesto(KZ) = point_gravity : "An entity that changes the gravity of the activating player. Will only affect the activating player. The activator is automatically set by triggers and buttons, so you only need to pass the gravity value (0-1 normally) to the SetGravity input."
+[
+	// Inputs
+	input SetGravity(float) : "Set the gravity of the activating player. Pass the gravity value in as the parameter, 0.5 for example."
+	input ResetGravity(void) : "Resets the activating player's gravity to default."
+]

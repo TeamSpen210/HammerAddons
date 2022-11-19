@@ -1,0 +1,31 @@
+@PointClass base(prop_dynamic_base)
+ 	appliesto(KZ)
+	studioprop()
+= prop_dynamic_kzmod: "A prop_dynamic designed for use in multiplayer - it's solidity and visibility can be enabled/disabled on a per-player basis."
+	[
+	allowedmode[engine](integer) : "Allowed Status will affect..." : 0 : "Should the allowed status for a player affect prop Visibility, Collisions, or both?"
+	allowedmode(choices) : "Allowed Status will affect..." : 0 : "Should the allowed status for a player affect prop Visibility, Collisions, or both?" =
+	[
+		0 : "Visibility and Collisions"
+		1 : "Visibility Only"
+		2 : "Collisions Only"
+	]
+
+	spawnflags(flags) =
+	[
+		4096: "All players see and can collide with this prop_dynamic_kzmod by default." : 0
+	]
+	
+	input AddAllowedPlayer(void) : "Enable a player to see and collide with this prop."
+	input AddAllowedTeam(void) : "Enable a multiplayer timer set team to see and collide with this prop."
+	input RemoveAllowedPlayer(void) : "Make a player unable to see or collide with this prop."
+	input RemoveAllowedTeam(void) : "Make a multiplayer team unable to see or collide with this prop."
+	input ResetPlayer(void) : "Reset this prop to default for this player."
+	input ResetTeam(void) : "Reset this prop to default for this team."
+	input TogglePlayer(void) : "Toggle this prop's visibility / collisions for this player."
+	input ToggleTeam(void) : "Toggle this prop's visibility / collisions for this team."
+	input AllowForSeekers(void) : "Allow any seeker to see/collide with this prop (Tag Arena)."
+	input AllowForRunners(void) : "Allow any runner to see/collide with this prop (Tag Arena)."
+	input RemoveAllowForSeekers(void) : "Disallow seekers from seeing/colliding with this prop if they were allowed through AllowForSeekers (Tag Arena)."
+	input RemoveAllowForRunners(void) : "Disallow runners from seeing/colliding with this prop if they were allowed through AllowForRunners (Tag Arena)."
+	]

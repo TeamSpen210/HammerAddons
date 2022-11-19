@@ -1,0 +1,25 @@
+@SolidClass base(BaseEntityBrush) 
+	appliesto(KZ) 
+= func_setcoursenames: "This entity stores the names of each Timer Set in the map. You can have up to 20 Timer Sets (courses)." 
+	[
+	Course1(string): "Course 1" : "" : "" 
+	Course2(string): "Course 2" : "" : "" 
+	Course3(string): "Course 3" : "" : "" 
+	Course4(string): "Course 4" : "" : "" 
+	Course5(string): "Course 5" : "" : "" 
+	Course6(string): "Course 6" : "" : "" 
+	Course7(string): "Course 7" : "" : "" 
+	Course8(string): "Course 8" : "" : "" 
+	Course9(string): "Course 9" : "" : "" 
+	Course10(string): "Course 10" : "" : "" 
+	Course11(string): "Course 11" : "" : "" 
+	Course12(string): "Course 12" : "" : "" 
+	Course13(string): "Course 13" : "" : "" 
+	Course14(string): "Course 14" : "" : "" 
+	Course15(string): "Course 15" : "" : "" 
+	Course16(string): "Course 16" : "" : "" 
+	Course17(string): "Course 17" : "" : "" 
+	Course18(string): "Course 18" : "" : "" 
+	Course19(string): "Course 19" : "" : "" 
+	Course20(string): "Course 20" : "" : "" 
+	]

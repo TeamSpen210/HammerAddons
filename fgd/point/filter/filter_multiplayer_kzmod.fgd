@@ -1,0 +1,25 @@
+@FilterClass base(filter_base) 
+	autovis(Logic, Filters)
+	appliesto(KZ)
+= filter_multiplayer_kzmod: "A filter that can be configured to only allow some players to pass it. This is the same ability as other kzmod entities such as func_brush_kzmod. Use the inputs to control the filter. A brush entity that has a Filter keyvalue should be able to accept this entity to control what player it functions on."
+	[
+		spawnflags(flags) =
+	[
+		4096: "This filter_multiplayer_kzmod allows all players by default." : 0
+	]
+	
+	input AddAllowedPlayer(void) : "Enable a player to trigger this relay."
+	input AddAllowedTeam(void) : "Enable a multiplayer timer set team to trigger this relay."
+	input RemoveAllowedPlayer(void) : "Make a player unable to trigger this relay."
+	input RemoveAllowedTeam(void) : "Make a multiplayer team unable to trigger this relay."
+	input ResetPlayer(void) : "Reset this relay to default for this player."
+	input ResetTeam(void) : "Reset this relay to default for this team."
+	input TogglePlayer(void) : "Toggle this relay's enabled state for this player."
+	input ToggleTeam(void) : "Toggle this relay's enabled state for this team."
+	input AllowForSeekers(void) : "Allow any seeker to trigger this relay (Tag Arena)."
+	input AllowForRunners(void) : "Allow any runner to trigger this relay (Tag Arena)."
+	input RemoveAllowForSeekers(void) : "Disallow seekers from triggering this relay if they were allowed through AllowForSeekers (Tag Arena)."
+	input RemoveAllowForRunners(void) : "Disallow runners from triggering this relay if they were allowed through AllowForRunners (Tag Arena)."
+	
+	@resources []
+	]

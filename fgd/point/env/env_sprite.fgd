@@ -28,6 +28,13 @@
 		10: "Don't Render"
 		]
 
+	UseClientsideAnimation[engine](integer) : "Use Clientside Animation?" : 1 : "Should this sprite animate on the client or the server? Sprites can become costly networking wise and can cause lag when used in large numbers in serverside animation mode, so only set a sprite to server if you need every player to see the exact same sprite frame at any time."
+	UseClientsideAnimation[KZ](choices) : "Use Clientside Animation?" : 1 : "Should this sprite animate on the client or the server? Sprites can become costly networking wise and can cause lag when used in large numbers in serverside animation mode, so only set a sprite to server if you need every player to see the exact same sprite frame at any time." =
+		[
+		1 : "Animate on the client."
+		2 : "Animate on the server."
+		]
+
 	glowproxysize(float) : "Size of Glow Proxy Geometry." : "2.0" : "Size of the glow to be rendered for visibility testing. " + 
 		"Must be larger than the distance from the sprite center to empty space. " + 
 		"So if this glow is inside geometry (like a light bulb), set this value to be bigger than the bulb's radius. " +

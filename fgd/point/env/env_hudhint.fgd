@@ -9,6 +9,12 @@
 
 	message(string) : "Hint Text (localized)" : : "This should be set to match the desired HUD hint entry in resource/valve_english.txt."
 
+	infiniteduration[engine](integer) : "Infinite Duration" : 0
+	infiniteduration[KZ](choices) : "Infinite Duration" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
 	// Inputs
 	input ShowHudHint(void) : "Shows the hint message."
 	input HideHudHint(void) : "Hides the hint message."

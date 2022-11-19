@@ -8,6 +8,7 @@
 		[
 		64: "Use Hitboxes for Renderbox" : 0
 		256: "Start with collision disabled" : 0
+		512 : "Force collision data for human models (expensive networking, use sparingly!)" : 0 [KZ]
 		]
 
 	defaultanim(string) : "Default Animation" : : "The name of the idle animation that this prop will revert to whenever it finishes a random or forced animation."

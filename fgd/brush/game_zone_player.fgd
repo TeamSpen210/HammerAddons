@@ -2,6 +2,13 @@
 = game_zone_player: "An entity used to count the number of players within a zone."
 	[
 
+	Option1[engine](integer) : "Alive players only?" : 0 : "Only count alive players? Spectators are also covered by the alive rule."
+	Option1[KZ](choices) : "Alive players only?" : 0 : "Only count alive players? Spectators are also covered by the alive rule." =
+		[
+		0 : "Don't Care"
+		1 : "Yes, only alive players"
+		]
+
 	// Inputs
 	input CountPlayersInZone(void) : "Count the number of players in the zone, and fire the corresponding outputs."
 

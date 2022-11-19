@@ -1,0 +1,47 @@
+@PointClass base(BaseEntityPoint, Origin) 
+	appliesto(KZ) 
+	line(255 255 255, targetname, linkedropecontrol) 
+= point_climbtimer: "The new version of the climbtimer control entity. Please use this entity, not the obsolete func_starttimer and func_stopttimer. The maximum number of courses in a map is 2047." 
+	[
+	coursename(string) : "Course Name" : "" : "The name of this course. The coursename must be unique - another climbtimer cannot have the same coursename as this one or the climbtimer won't work."
+	multiplayermode[engine](integer) : "Multiplayer Mode" : 0 : "Is this course designed for 2, 3, or 4 players? If you want all players to be solid, use the trigger_playersolidity entity."
+	multiplayermode(choices) : "Multiplayer Mode" : 0 : "Is this course designed for 2, 3, or 4 players? If you want all players to be solid, use the trigger_playersolidity entity." =
+		[
+		0 : "Regular Timer"
+		1 : "2 Player Timer"
+		2 : "3 Player Timer"
+		4 : "4 Player Timer"
+		]
+	Elite[engine](boolean) : "Elite Status" : 0 : "Can the player be given Elite Status upon successful completion of this Timer Set without teleporting (checkpoints)?"
+	Elite(choices) : "Elite Status" : 0 : "Can the player be given Elite Status upon successful completion of this Timer Set without teleporting (checkpoints)?" = 
+		[ 
+		0 : "No" 
+		1 : "Yes" 
+		] 
+	Prize[engine](boolean) : "Prize Winner" : 0 : "Does the player win the prize (the free bungee rope) for successfully completing this Timer Set?"
+	Prize(choices) : "Prize Winner" : 0 : "Does the player win the prize (the free bungee rope) for successfully completing this Timer Set?" = 
+		[ 
+		0 : "No" 
+		1 : "Yes" 
+		]
+	endurancecourse[engine](boolean) : "Endurance Course" : 0 : "Is this an endurance course? An endurance course is one where a longer time is better."
+	endurancecourse(choices) : "Endurance Course" : 0 : "Is this an endurance course? An endurance course is one where a longer time is better." = 
+		[ 
+		0 : "No" 
+		1 : "Yes" 
+		]   
+	
+	linkedropecontrol(target_destination) : "Linked Rope Control" : "" : "If set, this climbtimer will automatically give the limited bungee rope specified in this func_ropecontrol."
+	
+	// Inputs
+	input StartTimer(void) : "Start the climb timer for this player." 
+	input StopTimer(void) : "Stop the climb timer for this player."
+	input CancelTimer(void) : "If this is a multiplayer climber, force cancel the timer for the entire team this player is part of. Otherwise, just cancel the player's timer."
+
+	// Outputs
+	output OnTimerStart(void) : "Fired when the timer starts."
+	output OnTimerStopSuccessful(void) : "Fired when the player successfully stops  the timer, regardless of checkpoints."
+	output OnTimerStopFailed(void) : "Fired when the player fails to stop the timer (usually because this is the wrong timer entity for their course)."
+	output OnTimerStopCheckpointsUsed(void) : "Fired when the player stops the timer and has used teleports."
+	output OnTimerStopCheckpointsNotUsed(void) : "Fired when the player stops the timer and hasn't used any teleports(nochecked)."
+	]

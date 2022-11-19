@@ -6,9 +6,34 @@
 	"When multiple info_player_start entities are present in a map, " +
 	"set the 'Master' spawnflag on one of them to indicate which one should be used when running the entire map."
 	[
+		
+	enabled[engine](integer) : "Globally Enabled" : 1
+	enabled[KZ](choices) : "Globally Enabled" : 1 =
+	[
+		0 : "No, this spawn is inactive."
+		1 : "Yes, this spawn is active."
+		]
+	
+	newplayerstart[KZ](integer) readonly : "Is New Player Start" : 1 : "Allows the game to detect old player start types in legacy maps." +
+	"Normally, you can't unset this. If you edit the FGD and do, be absolutely sure of what you're doing!"
+			
+	input AddAllowedPlayer[KZ](void) : "Enable a player to spawn here."
+	input AddAllowedTeam[KZ](void) : "Enable a multiplayer timer set team to spawn here."
+	input RemoveAllowedPlayer[KZ](void) : "Make a player unable to spawn here."
+	input RemoveAllowedTeam[KZ](void) : "Make a multiplayer team unable to spawn here."
+	input ResetPlayer[KZ](void) : "Reset this playerstart to default for this player."
+	input ResetTeam[KZ](void) : "Reset this playerstart to default for this team."
+	input TogglePlayer[KZ](void) : "Toggle this playerstart's enabled state for this player."
+	input ToggleTeam[KZ](void) : "Toggle this playerstart's enabled state for this team."
+	input AllowForRunners[KZ](void) : "Allow any runner to trigger this relay (Tag Arena)."
+	input RemoveAllowForRunners[KZ](void) : "Disallow runners from triggering this relay if they were allowed through AllowForRunners (Tag Arena)."
+
+	output OnSpawn[KZ](void) : "Fired when a player spawns at this entity. The activator is the player who spawned."
+
 	spawnflags(flags)  =
 		[
 		1: "Master (Has priority if multiple info_player_starts exist)" : 0
+		4096 : "This info_player_start allows all players by default." : 1 [KZ]
 		]
 
 	@resources []

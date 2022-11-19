@@ -1,0 +1,4 @@
+@SolidClass base(Trigger) appliesto(KZ) = trigger_flare_interval: "If a player is within this trigger, they can fire flares at the rate defined by the trigger instead of the server setting. Flares fired from within this trigger die on impact with something."
+	[
+	interval(integer): "Next flare interval" : 1 : "The time the player must wait before firing another flare from within this trigger, in seconds"
+	]

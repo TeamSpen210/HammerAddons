@@ -1,0 +1,50 @@
+@SolidClass base(BaseEntityVisBrush)
+	appliesto(KZ) 
+= func_brush_kzmod: "A func_brush entity designed for use in multiplayer."
+[
+	spawnflags(flags) : "spawnflags" =
+		[
+		2: "Ignore player +USE" : 1
+		4096: "All players see and can collide with this func_brush_kzmod by default." : 0
+		]
+
+	solidity[engine](integer) : "Solidity" : 0
+	solidity(choices) : "Is this func_brush_kzmod solid?" =
+		[
+		-1 : "Not Solid"
+		0 : "Solid"
+		]
+
+	excludednpc(string) : "NPC class excluded from collisions" : : "If an NPC classname is specified here, NPCs of that type won't collide with these brushes. In Episodic, you may also specify an individual entity's name."
+	
+	invert_exclusion[engine](integer) : "Invert NPC class exclusion" : "0" : "If set, then the excluded NPC class will consider this brush solid, and all other NPC classes will consider it non-solid."
+	invert_exclusion(choices) : "Invert NPC class exclusion" : "0" : "If set, then the excluded NPC class will consider this brush solid, and all other NPC classes will consider it non-solid." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	solidbsp[engine](integer) : "Solid BSP" : "0" : "Set this if this brush is in heirarchy with a moving object of some kind, and the player can stand on this brush."
+	solidbsp(choices) : "Solid BSP" : "0" : "Set this if this brush is in heirarchy with a moving object of some kind, and the player can stand on this brush." =
+	[
+		0 : "No"
+		-1 : "Yes"
+	]
+
+	// Inputs
+	input AddAllowedPlayer(void) : "Enable a player to see and collide with this brush."
+	input AddAllowedTeam(void) : "Enable a multiplayer timer set team to see and collide with this brush."
+	input RemoveAllowedPlayer(void) : "Make a player unable to see or collide with this brush."
+	input RemoveAllowedTeam(void) : "Make a multiplayer team unable to see or collide with this brush."
+	input ResetPlayer(void) : "Reset this brush to default for this player."
+	input ResetTeam(void) : "Reset this brush to default for this team."
+	input TogglePlayer(void) : "Toggle this brush's visibility / collisions for this player."
+	input ToggleTeam(void) : "Toggle this brush's visibility / collisions for this team."
+	input AllowForSeekers(void) : "Allow any seeker to see/collide with this brush (Tag Arena)."
+	input AllowForRunners(void) : "Allow any runner to see/collide with this brush (Tag Arena)."
+	input RemoveAllowForSeekers(void) : "Disallow seekers from seeing/colliding with this brush if they were allowed through AllowForSeekers (Tag Arena)."
+	input RemoveAllowForRunners(void) : "Disallow runners from seeing/colliding with this brush if they were allowed through AllowForRunners (Tag Arena)."
+
+	
+	@resources []
+	]

@@ -19,23 +19,47 @@
 
 		// Restore the other spawnflags.
 		1: "Clients/Players/Bots" : 1 [TF2, CSS]
-		1: "Clients/Players" : 1 [!TF2, !CSS]
-		2: "NPCs" : 0
-		4: "func_pushable" : 0
-		8: "Physics Objects" : 0
+		1: "Clients/Players" : 1 [!TF2, !CSS, !KZ]
+		2: "NPCs" : 0 [!KZ] // Not sure if KZ changes these out, but better safe than sorry
+		4: "func_pushable" : 0 [!KZ]
+		8: "Physics Objects" : 0 [!KZ]
 		8192: "Items  (weapons, items, projectiles)" : 0 [MBase]
-		16: "Only player ally NPCs" : 0
-		64: "Everything (not including physics debris)" : 0
-		512: "Only clients *not* in vehicles" : 0
-		1024: "Physics debris" : 0
-		2048: "Only NPCs in vehicles (respects player ally flag)" : 0
-		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 1 [!TF2]
+		16: "Only player ally NPCs" : 0 [!KZ]
+		64: "Everything (not including physics debris)" : 0 [!KZ] // KZ changes these out
+		512: "Only clients *not* in vehicles" : 0 [!KZ]
+		1024: "Physics debris" : 0 [!KZ]
+		2048: "Only NPCs in vehicles (respects player ally flag)" : 0 [!KZ]
+		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 1 [!TF2, !KZ]
 		4096: "Disallow Bots" : 0 [TF2]
+
+		// KZ spawnflags
+		64: "Preserve Movement Velocity ( unchecked = HL1 style teleporter )" : 0 [KZ]
+		128: "Reset Timer On Teleport" : 0 [KZ]
+		256: "Prevent player movement until the player touches the ground (CS 1.6)" : 0 [KZ]
+		512: "Players may teleport only if properly activated by player or team inputs." : 0 [KZ]
+		1024: "Force all Team players to activate individually for a team-teleport." : 0 [KZ]
+		2048: "Force all Team players to activate using a different trigger entity." : 0 [KZ]
+		4096: "All players may teleport by default until removed from the active list." : 0 [KZ]
+		8192: "Redirect velocity to the direction of the destination (portal mode) (Requires Preserve Movement Velocity UNTICKED)." : 0 [KZ]
 		]
 	checkdestifclearforplayer[since_CSGO](boolean) : "Only Spawn-Valid Destinations" : 0 : "Only teleport if there is a clear teleport destination."
 
 	// Inputs
 	input SetRemoteDestination[P2](string) : "Set a new target to teleport to."
+	input AddAllowedPlayer[KZ](void) : "Enable a player to use this teleporter."
+	input AddAllowedTeam[KZ](void) : "Enable a multiplayer timer set team to use this teleporter."
+	input RemoveAllowedPlayer[KZ](void) : "Make a player unable to this this teleporter."
+	input RemoveAllowedTeam[KZ](void) : "Make a multiplayer team unable to use this teleporter."
+	input ResetPlayer[KZ](void) : "Reset this teleporter to default for this player."
+	input ResetTeam[KZ](void) : "Reset this teleport to default for this team."
+	input AllowForSeekers[KZ](void) : "Allow any seeker to use this teleporter (Tag Arena)."
+	input AllowForRunners[KZ](void) : "Allow any runner to use this teleporter (Tag Arena)."
+	input RemoveAllowForSeekers[KZ](void) : "Disallow seekers from using this teleporter if they were allowed through AllowForSeekers (Tag Arena)."
+	input RemoveAllowForRunners[KZ](void) : "Disallow runners from using this teleporter if they were allowed through AllowForRunners (Tag Arena)."
+
+	// Outputs
+	output OnTeleport(void) : "Outputted when a player teleports."
+	output OnTeleportNotAllowed(void) : "Outputted when a player tries to teleport, but can't because they are not allowed to use this teleporter."
 	
 	@resources []
 	]

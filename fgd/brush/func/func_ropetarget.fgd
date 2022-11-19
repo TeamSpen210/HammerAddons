@@ -1,0 +1,16 @@
+@SolidClass base(BaseEntityVisBrush, EnableDisable) appliesto(KZ)
+= func_ropetarget: "A target for the limited rope"
+	[
+	singleuse[engine](integer) : "One player at a time?" : 0 : "Can only one person use this ropetarget at a time?"
+	singleuse(choices) : "One player at a time?" : 0 : "Can only one person use this ropetarget at a time?" = 
+		[ 
+		0 : "No" 
+		1 : "Yes" 
+		]
+	
+	output OnRopeAttach(void) : "Fired when a Rope is attached to this ropetarget." 
+	output OnRopeAttachNotAllowed(void) : "Fired when someone tries to attach a rope to the target, but fails because its in use by someone else." 
+	output OnRopeUnattach(void): "Fired when a rope unnataches from this Ropetarget"
+	
+	@resources []
+	]

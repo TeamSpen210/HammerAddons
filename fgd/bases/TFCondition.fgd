@@ -94,6 +94,7 @@
 		86 : "Swim in Jarate"
 		87 : "Player is locked in place"
 		88 : "Cage surrounds player (crashes on non-bumper car maps)"
+		89 : "Holding a powerup in Mannpower"
 		90 : "Strength powerup"
 		91 : "Haste powerup"
 		92 : "Regeneration powerup"
@@ -132,5 +133,7 @@
 		125 : "Thermal Thruster flying"
 		126 : "Decreases the player's friction while moving"
 		127 : "Under the influence of air current"
+		128 : "Nullifies Hell teleport heal when removed"
+		129 : "Mannpower high kill count powerup nerf"
 		]
 	]

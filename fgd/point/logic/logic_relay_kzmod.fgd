@@ -1,0 +1,36 @@
+@PointClass base(BaseEntityPoint, EnableDisable)
+	iconsprite("editor/logic_relay.vmt") 
+	color(0 100 250) 
+	appliesto(KZ) 
+= logic_relay_kzmod: "A KZMOD modified version of the logic_relay that can be configured only to fire outputs based on the enabled status of individual players or teams."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		4096: "This logic_relay_kzmod is enabled for all players by default." : 0
+		]
+
+
+	// Inputs
+	input Trigger(void) : "Trigger the relay, causing it's OnTrigger output to fire if the activating player is enabled for the entity."
+	input TriggerTeam(void) : "Trigger the relay, causing it's OnTrigger output to fire if the activating team is enabled for this entity. Caution: Teams are considered enabled if every player on the team is enabled. This means that AddAllowedPlayer inputs may satisfy this team condition if all players on the team enable themselves that way."
+	input TriggerAllOnTeam(void) : "The same as TriggerTeam, except it fires the OnTrigger output for each player in the team, allowing for example messages to be displayed to the other team members too."
+
+	input AddAllowedPlayer(void) : "Enable a player to trigger this relay."
+	input AddAllowedTeam(void) : "Enable a multiplayer timer set team to trigger this relay."
+	input RemoveAllowedPlayer(void) : "Make a player unable to trigger this relay."
+	input RemoveAllowedTeam(void) : "Make a multiplayer team unable to trigger this relay."
+	input ResetPlayer(void) : "Reset this relay to default for this player."
+	input ResetTeam(void) : "Reset this relay to default for this team."
+	input TogglePlayer(void) : "Toggle this relay's enabled state for this player."
+	input ToggleTeam(void) : "Toggle this relay's enabled state for this team."
+	input AllowForSeekers(void) : "Allow any seeker to trigger this relay (Tag Arena)."
+	input AllowForRunners(void) : "Allow any runner to trigger this relay (Tag Arena)."
+	input RemoveAllowForSeekers(void) : "Disallow seekers from triggering this relay if they were allowed through AllowForSeekers (Tag Arena)."
+	input RemoveAllowForRunners(void) : "Disallow runners from triggering this relay if they were allowed through AllowForRunners (Tag Arena)."
+
+	// Outputs
+	output OnTrigger(void) : "Fired when the relay is triggered, assuming the activating player / team is enabled to do so."
+	output OnTriggerFailed(void) : "Fired when the relay is triggered but the activating player / team is not enabled."
+
+	@resources []
+	]

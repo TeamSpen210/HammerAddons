@@ -1,0 +1,40 @@
+@PointClass base(prop_dynamic_base, KZModAwards)
+ 	appliesto(KZ)
+	line(255 255 255, targetname, linkedropecontrol) 
+	studioprop()
+= item_pickup: "An entity that allows players to 'pick up' different unlocks (normally available in kz_shop), the Limited Bungee Rope and the Free Bungee Rope."
+	[
+		
+	model(studio) : "World Model" : "models/fragmodels/pickup.mdl" : "The texture on the pickup will change to match the chosen power-up automatically if you leave the model at default."
+	skin(integer) : "Skin" : 0 : "The skin on the model will be automatically selected if you are using the default pickup model."
+
+	awardlength(float) : "Length of Award" : 20 : "How long the award given from this item_pickup will last. 0 = infinite (can only be stripped by a point_powerup_stripper entity)."
+
+	addtoshop[engine](integer) : "Add To Shop" : 0 : "Should this award be added to the player's unlocked shop items (instead of being made a powerup)?"
+	addtoshop(choices) : "Add To Shop" : 0 : "Should this award be added to the player's unlocked shop items (instead of being made a powerup)?" =
+	[
+		0 : "No, this is a powerup."
+		1 : "Yes, add to the shop."
+	]
+
+	linkedropecontrol(target_destination) : "Linked Rope Control" : "" : "The name of the func_ropecontrol this pickup should get the limited bungee values from. This is required for this pickup to give the Limited Bungee."
+
+	respawntime(float) : "Respawn Time" : 20 : "This item_pickup will respawn after this many seconds after pickup. -1 = don't respawn."
+	
+	pickupmessage(string) : "Pickup Message" : "You have picked up %s" : "The message a player sees when they pick up the item. %s is automatically changed to the name of the unlock/power-up."
+
+	pickupsound(sound) : "Pickup Sound" : "items/ammo_pickup.wav" : "The sound played when this pickup is ... picked up."
+	
+	respawnsound(sound) : "Respawn Sound" : "weapons/stunstick/alyx_stunner2.wav" : "The sound played when this pickup respawns."
+
+	duplicatesmode[engine](integer) : "Allow Duplicate Powerups" : 0 : "Is giving a duplicate of the powerup allowed, if this current powerup type is also the active powerup?"
+	duplicatesmode(choices) : "Allow Duplicate Powerups" : 0 : "Is giving a duplicate of the powerup allowed, if this current powerup type is also the active powerup?" =
+	[
+		0 : "Yes"
+		1 : "Yes (But not if duplicating this entity)"
+		2 : "No"
+	]
+
+	// Outputs
+	output OnPickup(void) : "Fired when the pickup is acquired by a player."
+	]

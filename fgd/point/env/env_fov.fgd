@@ -1,0 +1,13 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(KZ)
+= env_fov: "A multiplayer-compatable entity that allows the changing of player's FOV."
+	[
+		rate(float) : "Seconds to reach target" : "1.0" : "Amount of time it should take to reach the specified FOV."
+		targetfov(integer) : "Target FOV" : 90 : "FOV that this entity should set the player's FOV to when active. Minimum is -125. Maximum is 125. Default is 90."
+		resetrate(float) : "Sec onds to reach normal FOV" : "1.0" : "Amount of time it should take to the default FOV."
+	
+	
+		// Inputs
+		input ChangeFOV(void) : "Change the player's FOV to the target FOV, in the number of seconds specified by Seconds to reach target."
+		input ResetFOV(void) : "Reset the player's FOV to default in the number of seconds specified by Seconds to reach normal FOV."
+	]
