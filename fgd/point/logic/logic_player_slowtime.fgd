@@ -4,6 +4,6 @@
 	iconsprite("editor/logic_player_slowtime.vmt")
 = logic_player_slowtime: "Start/stops player being in slow time"
 	[
-		input StartSlowingTime(float) : "Start slowing time for the player (with a set duration)."
-		input StopSlowingTime(void) : "Stop slowing time for the player."
+	input StartSlowingTime(float) : "Start slowing time for the player (with a set duration)."
+	input StopSlowingTime(void) : "Stop slowing time for the player."
 	]

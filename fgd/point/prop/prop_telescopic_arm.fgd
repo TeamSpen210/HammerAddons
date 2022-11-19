@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityAnimating) 
 	appliesto(P2CE) 
-	studioprop("models/props/telescopic_arm.mdl") = prop_telescopic_arm: "Telescopic Arm. Useless."
+	studioprop("models/props/telescopic_arm.mdl")
+= prop_telescopic_arm: "Telescopic Arm. Useless."
 	[
 
 	// Inputs

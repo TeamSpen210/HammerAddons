@@ -1,4 +1,5 @@
-@PointClass appliesto(-engine)
+@PointClass 
+	appliesto(-engine)
 	iconsprite("editor/info_no_dynamic_shadow.vmt") 
 	color(200 200 0) 
 = info_no_dynamic_shadow: "Use this entity to mark surfaces that shouldn't receive dynamic shadows. " +

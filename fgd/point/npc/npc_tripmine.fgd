@@ -1,5 +1,5 @@
-@PointClass appliesto(+HL2_ENTITIES)
-	base(BaseEntityAnimating, Angles, DamageFilter) 
+@PointClass base(BaseEntityAnimating, Angles, DamageFilter) 
+	appliesto(+HL2_ENTITIES)
 	studio( "models/weapons/w_slam.mdl" ) 
 	sphere(DmgRadius)
 = npc_tripmine : "S.L.A.M. Tripmine"

@@ -1,5 +1,5 @@
-@NpcClass appliesto(+HL2_ENTITIES)
-		base(BaseNPCAssault)
+@NpcClass base(BaseNPCAssault)
+	appliesto(+HL2_ENTITIES)
 	studioprop("models/houndeye.mdl") 
 = npc_houndeye : "Houndeye"
 	[

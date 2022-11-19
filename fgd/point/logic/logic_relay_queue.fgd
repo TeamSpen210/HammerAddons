@@ -1,5 +1,4 @@
-@PointClass
-	base(BaseentityPoint, EnableDisable) 
+@PointClass base(BaseentityPoint, EnableDisable) 
 	iconsprite("editor/logic_relay_queue.vmt") 
 = logic_relay_queue :
 	"A special variant of logic_relay designed to queue trigger inputs. " +

@@ -1,5 +1,4 @@
-@PointClass
-	base(BaseEntityPoint)
+@PointClass base(BaseEntityPoint)
 	iconsprite("editor/logic_keyfield.vmt") 
 	line(255 255 255, targetname, target)
 = logic_keyfield :

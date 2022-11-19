@@ -3,7 +3,7 @@
 = func_train: "An old entity leftover from Quake. It follows a series of path_corner entities. "+
 "While mostly made obsolete by func_tracktrain, this entity is not affected by the turning inaccuracy "+
 "issues that that entity has, and may be more suitable for fast-moving objects."
-[
+	[
 	spawnflags(flags) =
 		[
 		8 : "Non-solid" : 0
@@ -19,4 +19,4 @@
 	input Toggle(void) : "Toggle movement"
 	input Start(void) : "Start movement"
 	input Stop(void) : "Stop movement"
-]
+	]

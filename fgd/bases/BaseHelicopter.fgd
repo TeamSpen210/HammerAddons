@@ -1,6 +1,6 @@
-
 @BaseClass base(BaseNPC) 
-line(255 255 255, targetname, target) = BaseHelicopter
+	line(255 255 255, targetname, target) 
+= BaseHelicopter
 	[
 	initialspeed(float) : "Initial Speed" : 0 : "Sets the helicopter's desired speed that it should try to reach as soon as it's spawned."
 	target(target_destination) : "Target path_track" : : "(Optional) The name of a path_track entity that this NPC will fly to after spawning."

@@ -3,7 +3,6 @@
 	color(255 0 255) 
 = player_control
 	[
-
 	// Inputs
 	input Activate(void) : "Turns on"
 	input Deactivate(void) : "Turns off"

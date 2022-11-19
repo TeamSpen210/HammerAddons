@@ -2,7 +2,7 @@
 	appliesto(+P2CE, +srctools, -engine)
 	studioprop()
 = comp_vactube_junction : "Marks a junction in a vactube, where they're forced to change direction. Scanner models near straight nodes will be detected automatically."
-[
+	[
 	targetname(target_source): "Junction Name" : : "Although junctions are linked automatically, this can be used to precisely link two junctions. You can use also this to help with identifying problems since the compiler will output it."
 	// Not studio, we don't want to pack these.
 	model[engine](string) : "Type" : "models/editor/vactubes/straight.mdl"
@@ -41,4 +41,4 @@
 
 	// Outputs
 	output OnPass(void) : "Fired when a cube passes by."
-]
+	]

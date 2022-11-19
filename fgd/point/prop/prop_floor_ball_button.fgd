@@ -3,5 +3,5 @@
 	studioprop() 
 = prop_floor_ball_button: "A floor button which is only activated by a Sphere-type prop_weighted_cube."
 	[
-		model(studio) : "Model" : "models/props/ball_button.mdl" : "Model to be used in game"
+	model(studio) : "Model" : "models/props/ball_button.mdl" : "Model to be used in game"
 	]

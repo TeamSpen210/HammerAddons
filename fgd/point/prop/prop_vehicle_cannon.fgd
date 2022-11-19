@@ -3,5 +3,5 @@
 	studioprop()
 = prop_vehicle_cannon: "Driveable cannon, appears to be unfinished."
 	[
-		vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/cannon.txt"
+	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/cannon.txt"
 	]

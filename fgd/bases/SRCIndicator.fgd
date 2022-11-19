@@ -2,7 +2,7 @@
 	line(255 110 0, targetname, indicatorname)
 	appliesto(srctools) 
 = SRCIndicator: "Adds an Indicator Name option to toggle overlays."
-[
+	[
 	indicatorname(target_destination) : "Indicator Name" : : "Set to the name of a set of info_overlays to toggle when this is activated and deactivated. The name may also point to a prop_indicator_panel, which will also be toggled appropriately."
 	input SetTextureIndex(integer) : "Manually change the index of the overlays. prop_indicator_panels must not be used."
-]
+	]

@@ -8,7 +8,8 @@
 @MoveClass base(BaseEntityPoint, RopeKeyFrame) 
 	studio("models/editor/axis_helper_thick.mdl")
 	iconsprite("editor/move_rope")
-	animator() keyframe()
+	animator() 
+	keyframe()
 = move_rope: "A node entity that marks a point in a rope. " +
 	"Traditionally, one move_rope is used to start the chain and then is followed by one or more keyframe_rope entities. " +
 	"However they are freely interchangeable."

@@ -1,7 +1,6 @@
 @PointClass base(BaseEntityPhysics) 
 	appliesto(+engine, +HL2_ENTITIES)
 	studio("models/gibs/helicopter_brokenpiece_06_body.mdl")
-= helicopter_chunk:
-"The large gibs produced after npc_helicopter is killed."
+= helicopter_chunk: "The large gibs produced after npc_helicopter is killed."
 	[
 	]   

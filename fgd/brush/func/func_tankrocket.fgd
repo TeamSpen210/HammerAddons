@@ -1,5 +1,5 @@
-@SolidClass appliesto(+HL2_ENTITIES)
-		base(BaseTank) 
+@SolidClass base(BaseTank)
+	appliesto(+HL2_ENTITIES)
 = func_tankrocket: "Brush Rocket Turret"
 	[
 	rocketspeed(float) : "Projectile speed" : 800 : "Speed the rocket will travel at."

@@ -44,4 +44,4 @@
 	
 	// Outputs
 	output OnCatapulted(void) : "The object has been launched, or passes the Threshold Check and Entry Angle Tolerance."
-]
+	]

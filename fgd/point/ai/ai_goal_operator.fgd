@@ -1,5 +1,4 @@
-@PointClass
-	base(BaseEntityPoint, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(+HL2_ENTITIES, +USE_AI) 
 = ai_goal_operator: "Indicates items in the world that some NPCs may operate upon."
 	[

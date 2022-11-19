@@ -2,7 +2,7 @@
 	appliesto(+P2CE, +srctools, -engine)
 	studioprop()
 = comp_vactube_object : "Registers objects that can appear in the tubing."
-[
+	[
 	model(studio) : "Vac Model" : : "Specifies the model used while in the vactube."
 	skin(integer) : "Vac Skin" : : "Skin for the vactube model."
 	offset(vecline) : "Offset" : : "The centerpoint of the model for positioning. Position this at the center of the model to ensure it doesn't stick out of the tube."
@@ -26,4 +26,4 @@
 	cube_model(studio) : "Cube Model" : : "If set, this object can be spawned in droppers. " +
 		"This should be the model used on the real cube version so they can be matched to each other."
 	cube_skin(integer) : "Cube Skin" : 0 : "The specific skin to detect on the real cubes."
-]
+	]

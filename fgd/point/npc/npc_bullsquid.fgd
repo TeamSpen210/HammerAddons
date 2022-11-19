@@ -1,5 +1,5 @@
-@NpcClass appliesto(+HL2_ENTITIES) 
-		base(BaseNPCAssault)
+@NpcClass base(BaseNPCAssault)
+	appliesto(+HL2_ENTITIES) 
 	studio("models/bullsquid.mdl") 
 = npc_bullsquid: "Bullsquid"
 	[
