@@ -9,6 +9,7 @@
 	speed(float) : "Rotation Speed" : 0 : "Angular speed (units are degress/second)"
 	spinup(float) : "Spin up time" : 1 : "spin up time in seconds (also affects the rate at which speed changes happen)"
 	inertiafactor(float) : "System Interia Scale" : "1.0" : "Make this larger if the object being driven is constrained to a set of heavier objects."
+	addangaccel(float) : "Additional Acceleration" : "0.0" : "Increase this if you want the object to have more acceleration."
 	axis(vecline) : "Rotation Axis"
 	spawnflags(flags)  =
 		[
