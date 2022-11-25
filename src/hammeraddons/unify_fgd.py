@@ -1210,7 +1210,7 @@ def main(args: List[str]=None):
     parser_exp = subparsers.add_parser(
         "export",
         help=action_export.__doc__,
-        aliases=["exp", "i"],
+        aliases=["exp", "e"],
     )
 
     parser_exp.add_argument(
