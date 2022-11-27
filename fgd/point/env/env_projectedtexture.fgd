@@ -29,7 +29,8 @@
 		0: "Low"
 		1: "High"
 		]
-
+	shadowfilter[MBase](float) : "Shadow Filter Size" : "0.5" : "The amount to filter the shadows. This blurs shadows to make them appear less pixelated, but higher values may have more visible noise."
+	
 	lightonlytarget(boolean) : "Light Only Target" : 0 : "Limit flashlight effect to only effect target entity."
 	lightworld(boolean) : "Light World" : 1 : "Control whether flashlight effects static world geometry."
 	simpleprojection[since_ASW](boolean) : "Simple Projection" : 0 : "Indicates if this is a simple, non-light casting texture projection"
@@ -109,6 +110,7 @@
 	input SetConstant[MBase](float)    : "Sets the constant attenuation."
 	input SetLinear[MBase](float)      : "Sets the linear attenuation."
 	input SetQuadratic[MBase](float)   : "Sets the quadratic attenuation."
+	input SetFilter[MBase](float)      : "Sets the shadow filter."
 	input SetShadowAtten[MBase](float) : "Sets the shadow attenuation."
 	input SetSpotlightFrame[MBase](string) : "Sets the spotlight texture frame."
 	input AlwaysDrawOn[MBase](void) : "Turns off BBox culling (for skybox or monitor lights)"

@@ -10,7 +10,7 @@
 		1: "Start Disabled" : 0
 		]
 
-	message(string) : "Entity Message"
+	message(string) : "Entity Message" : : "The text to appear on the panel. Has a maximum of 256 characters. If you need more space, use a localization token."
 
 	alignment[engine](integer) : "Text Alignment" : 7
 	alignment(choices) : "Text Alignment" : 7 : "The text's alignment in relation to the panel size. " +
