@@ -41,6 +41,8 @@ GAMES = [
 GAME_ORDER = [game for game, desc in GAMES]
 GAME_NAME = dict(GAMES)
 
+MAX_MAP_COORD = 65536
+
 # Specific features that are backported to various games.
 
 FEATURES: Dict[str, Set[str]] = {
@@ -180,8 +182,8 @@ def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> Tup
     print(f'Loading database {dbase}:')
     fgd = FGD()
 
-    fgd.map_size_min = -16384
-    fgd.map_size_max = 16384
+    fgd.map_size_min = -MAX_MAP_COORD
+    fgd.map_size_max = MAX_MAP_COORD
 
     # Classname -> filename
     ent_source: Dict[str, str] = {}
