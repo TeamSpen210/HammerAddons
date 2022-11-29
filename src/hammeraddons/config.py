@@ -21,6 +21,9 @@ CONF_NAME: Final = 'srctools.vdf'
 PATHS_NAME: Final = 'srctools_paths.vdf'
 GAME_KEY: Final = 'gameinfo_path'
 
+# Matches cubemap files. Put here, so we can write it into the docstring.
+CUBEMAP_REGEX = r"materials/maps/.*/(c[0-9-]+_[0-9-]+_[0-9-]+|cubemapdefault)(\.hdr)?\.vtf"
+
 PATHS_CONF_STARTER: Final = '''\
 // This config contains a list of directories which can be referenced by the main config.
 // Keeping this a separate file allows the main config to be shared in a mod team, while this
@@ -268,6 +271,15 @@ PACK_DUMP = Opt.string_or_none(
     You can also prefix this with a # character to only copy to this 
     destination, not the BSP pakfile.
 """)
+
+PACK_STRIP_CUBEMAPS = Opt.boolean(
+    'pack_strip_cubemaps', False,
+    f"""If set, strip the generated cubemap files from the BSP. This is necessary for 2013-branch
+    games to allow cubemaps to be built properly.
+    
+    This is equivalent to adding {CUBEMAP_REGEX!r} as a regex "pack_blocklist".
+    """
+)
 
 PACK_TAGS = Opt.block(
     'pack_tags', Keyvalues('', [

@@ -10,7 +10,8 @@
 * Added icon for `npc_heli_avoidsphere`.
 * Change propcombine/geocable to log just the number of culled models, not every single file.
 * TF2 now has VScript support, updated FGDs to include the corresponding options.
-* Add new blocklist/allowlist options to permit fine-grained control of which files get packed.
+* Added new blocklist/allowlist options to permit fine-grained control of which files get packed.
+  * A specific option was added to strip existing cubemap files from the map, if this is necessary to fix crashes while building cubemaps.
 
 --------------------
 

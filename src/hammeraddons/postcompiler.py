@@ -243,6 +243,9 @@ async def main(argv: List[str]) -> None:
     pack_allowlist = list(config.packfile_filters(conf.opts.get(config.PACK_ALLOWLIST), 'allowlist'))
     pack_blocklist = list(config.packfile_filters(conf.opts.get(config.PACK_BLOCKLIST), 'blocklist'))
 
+    if conf.opts.get(config.PACK_STRIP_CUBEMAPS):
+        pack_blocklist.append(re.compile(config.CUBEMAP_REGEX))
+
     LOGGER.debug('Packing allowlist={}, blocklist={}', pack_allowlist, pack_blocklist)
 
     def pack_callback(path: str) -> Optional[bool]:
