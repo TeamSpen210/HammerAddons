@@ -12,6 +12,7 @@
 * TF2 now has VScript support, updated FGDs to include the corresponding options.
 * Added new blocklist/allowlist options to permit fine-grained control of which files get packed.
   * A specific option was added to strip existing cubemap files from the map, if this is necessary to fix crashes while building cubemaps.
+* Add transform to allow using `/n` in `game_text` messages to produce multiline ones.
 
 --------------------
 
