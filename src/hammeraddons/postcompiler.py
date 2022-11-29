@@ -1,4 +1,5 @@
 """Runs before VRAD, to run operations on the final BSP."""
+import re
 import sys
 import warnings
 from collections import defaultdict
@@ -239,12 +240,28 @@ async def main(argv: List[str]) -> None:
             LOGGER.info('Writing particle manifest "{}"...', man_name)
             packlist.write_particles_manifest(man_name)
 
+    pack_allowlist = list(config.packfile_filters(conf.opts.get(config.PACK_ALLOWLIST), 'allowlist'))
+    pack_blocklist = list(config.packfile_filters(conf.opts.get(config.PACK_BLOCKLIST), 'blocklist'))
+
+    LOGGER.debug('Packing allowlist={}, blocklist={}', pack_allowlist, pack_blocklist)
+
+    def pack_callback(path: str) -> Optional[bool]:
+        """Check the file against the two lists."""
+        for pattern in pack_allowlist:
+            if pattern.search(path) is not None:
+                return True
+        for pattern in pack_blocklist:
+            if pattern.search(path) is not None:
+                return False
+        return None
+
     dump_path = conf.opts.get(config.PACK_DUMP)
     if dump_path:
         packlist.pack_into_zip(
             bsp_file,
             blacklist=conf.pack_blacklist,
             ignore_vpk=False,
+            callback=pack_callback,
             dump_loc=conf.expand_path(dump_path.lstrip('#')).absolute().resolve(),
             only_dump=dump_path.startswith('#'),
         )
@@ -253,6 +270,7 @@ async def main(argv: List[str]) -> None:
             bsp_file,
             blacklist=conf.pack_blacklist,
             ignore_vpk=False,
+            callback=pack_callback,
         )
 
     # List out all the files, but group together files with the same extension.
