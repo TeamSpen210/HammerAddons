@@ -228,7 +228,7 @@ class Options:
 
     def set_opt(self, option: Opt[OptionT], value: OptionT) -> None:
         """Set an option to a specific value."""
-        if self.settings.get(option.id) is not option:
+        if option.id not in self.settings:
             LOGGER.warning('Invalid option "{}"!', option.name)
             return
 
