@@ -80,7 +80,7 @@ async def main(argv: List[str]) -> None:
 
     # The path is the last argument to the compiler.
     # Hammer adds wrong slashes sometimes, so fix that.
-    # Also if it's the VMF file, make it the BSP.
+    # Also, if it's the VMF file, make it the BSP.
     path = Path(args.map).with_suffix('.bsp')
 
     # Open and start writing to the map's log file.
@@ -160,6 +160,13 @@ async def main(argv: List[str]) -> None:
         bsp_file.out_comma_sep = use_comma_sep
     transform_conf = {prop.name: prop for prop in conf.opts.get(config.TRANSFORM_OPTS)}
 
+    pack_tags = frozenset({
+        prop.name.upper()
+        for prop in
+        conf.opts.get(config.PACK_TAGS)
+        if conv_bool(prop.value)
+    })
+
     LOGGER.info('Running transforms...')
     await run_transformations(
         bsp_file.ents,
@@ -169,6 +176,7 @@ async def main(argv: List[str]) -> None:
         studiomdl_loc,
         transform_conf,
         fgd,
+        pack_tags,
     )
 
     if studiomdl_loc is not None and args.propcombine:
@@ -221,12 +229,7 @@ async def main(argv: List[str]) -> None:
         packlist.pack_fgd(
             bsp_file.ents, fgd,
             mapname=Path(bsp_file.filename).stem,  # TODO: Include directories?
-            tags={
-                prop.name.upper()
-                for prop in
-                conf.opts.get(config.PACK_TAGS)
-                if conv_bool(prop.value)
-            },
+            tags=pack_tags,
         )
 
         packlist.pack_from_bsp(bsp_file)

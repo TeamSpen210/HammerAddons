@@ -1,6 +1,6 @@
 """Transformations that can be applied to the BSP file."""
 from pathlib import Path
-from typing import Optional, Callable, Awaitable, Dict, Mapping, Tuple, List
+from typing import FrozenSet, Optional, Callable, Awaitable, Dict, Mapping, Tuple, List
 import inspect
 
 from srctools import EmptyMapping, FileSystem, Keyvalues, VMF, Output, Entity, FGD, conv_bool
@@ -47,6 +47,7 @@ class Context:
         *,
         fgd: FGD = None,
         studiomdl_loc: Path=None,
+        tags: FrozenSet[str]=frozenset(),
     ) -> None:
         self.sys = filesys
         self.vmf = vmf
@@ -54,6 +55,7 @@ class Context:
         self.pack = pack
         self.bsp_path = Path(bsp.filename)
         self.fgd = fgd or FGD.engine_dbase()
+        self.tags = tags
         self.game = game
         self.studiomdl = studiomdl_loc
         self.config = Keyvalues.root()
@@ -140,9 +142,10 @@ async def run_transformations(
     studiomdl_loc: Path=None,
     config: Mapping[str, Keyvalues]=EmptyMapping,
     fgd: FGD=None,
+    tags: FrozenSet[str] = frozenset(),
 ) -> None:
     """Run all transformations."""
-    context = Context(filesys, vmf, pack, bsp, game, studiomdl_loc=studiomdl_loc, fgd=fgd)
+    context = Context(filesys, vmf, pack, bsp, game, studiomdl_loc=studiomdl_loc, fgd=fgd, tags=tags)
 
     for func_name, func in sorted(
         TRANSFORMS.items(),
