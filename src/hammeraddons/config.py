@@ -27,6 +27,7 @@ CUBEMAP_REGEX = r"materials/maps/.*/(c[0-9-]+_[0-9-]+_[0-9-]+|cubemapdefault)(\.
 # Tags we use in our engine dump.
 USED_PACK_TAGS: Set[str] = {
     'hl1', 'hl2', 'episodic',
+    'tf2',
     'mapbase', 'entropyzero2',
     'mesa', 'p2',
 }
