@@ -24,6 +24,13 @@ GAME_KEY: Final = 'gameinfo_path'
 # Matches cubemap files. Put here, so we can write it into the docstring.
 CUBEMAP_REGEX = r"materials/maps/.*/(c[0-9-]+_[0-9-]+_[0-9-]+|cubemapdefault)(\.hdr)?\.vtf"
 
+# Tags we use in our engine dump.
+USED_PACK_TAGS: Set[str] = {
+    'hl1', 'hl2', 'episodic',
+    'mapbase', 'entropyzero2',
+    'mesa', 'p2',
+}
+
 PATHS_CONF_STARTER: Final = '''\
 // This config contains a list of directories which can be referenced by the main config.
 // Keeping this a separate file allows the main config to be shared in a mod team, while this
@@ -120,6 +127,13 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
         opts.path = folder / CONF_NAME
 
         LOGGER.warning('Writing default to "{}"', opts.path)
+
+    # Add in new pack tags to the config.
+    pack_tags = opts.get(PACK_TAGS)
+    for tag in USED_PACK_TAGS:
+        if tag not in pack_tags:
+            pack_tags[tag] = '0'
+    opts.set_opt(PACK_TAGS, pack_tags)
 
     with AtomicWriter(opts.path) as f:
         opts.save(f)
@@ -282,15 +296,7 @@ PACK_STRIP_CUBEMAPS = Opt.boolean(
 )
 
 PACK_TAGS = Opt.block(
-    'pack_tags', Keyvalues('', [
-        Keyvalues('hl2', '0'),
-        Keyvalues('hl1', '0'),
-        Keyvalues('episodic', '0'),
-        Keyvalues('mapbase', '0'),
-        Keyvalues('entropyzero2', '0'),
-        Keyvalues('mesa', '0'),
-        Keyvalues('p2', '0'),
-    ]),
+    'pack_tags', Keyvalues('', [Keyvalues(tag, '0') for tag in sorted(USED_PACK_TAGS)]),
     """\
     Specify various tags to indicate what features this game branch includes. This is used
     to accurately include resources for entities that have changed over time.
