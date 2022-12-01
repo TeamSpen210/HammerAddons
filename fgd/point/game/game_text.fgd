@@ -47,7 +47,7 @@
 		5: "Channel 5 (warning: may be used by some HUD elements)"
 		]
 	customfont[KZ](string) : "Custom Font Name" : "" : "The name of the Game Font to use for this text. Game font lists are found in the KreedzClimbing/kz/resource/ClientScheme.res and SourceScheme.res (examples: ClientTitleFont, DefaultSmall). Custom .ttf files are currently not supported. Leave blank to use the default font."
-	autobreak(boolean) : "Automatically break lines" : 0 : "Allows text to automatically shift to the next line whenever it can't fit on a player's screen. " +
+	autobreak[MBase](boolean) : "Automatically break lines" : 0 : "Allows text to automatically shift to the next line whenever it can't fit on a player's screen. " +
 		"This accounts for a player's aspect ratio and adds hyphens when necessary." 
 	// Inputs
 	input Display(void) : "Display the message text."
