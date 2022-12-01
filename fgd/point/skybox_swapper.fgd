@@ -1,8 +1,9 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(MBase, since_ASW) 
+	appliesto(MBase, since_ASW, TF2) 
 	iconsprite("editor/skybox_swapper") = skybox_swapper: "An entity that precaches skybox materials and swaps them on trigger."
 	[
 	skyboxname(string) : "Skybox Material Name" : "sky_dust"
+	skyboxname[TF2](string) : "Skybox Material Name" : "sky_halloween_night_01"
 
 	// Inputs
 	input Trigger(void) : "Swap to this skybox."

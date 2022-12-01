@@ -110,6 +110,7 @@
 	input RunScriptCodeQuotable(string) : "Execute a string of script source code which converts double apostrophes ('') to quotation marks for strings."
 	input CallScriptFunction(string) : "Execute the given function name."
 	input ClearScriptScope(void) : "Clears this entity's script scope"
+	input TerminateScriptScope(void) : "Terminates the script scope of the entity."
 
 	input Alpha(integer) : "Set render alpha"
 	input Color(color255): "Set render color"

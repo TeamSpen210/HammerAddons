@@ -1,4 +1,5 @@
 """Runs before VRAD, to run operations on the final BSP."""
+import re
 import sys
 import warnings
 from collections import defaultdict
@@ -79,7 +80,7 @@ async def main(argv: List[str]) -> None:
 
     # The path is the last argument to the compiler.
     # Hammer adds wrong slashes sometimes, so fix that.
-    # Also if it's the VMF file, make it the BSP.
+    # Also, if it's the VMF file, make it the BSP.
     path = Path(args.map).with_suffix('.bsp')
 
     # Open and start writing to the map's log file.
@@ -159,6 +160,13 @@ async def main(argv: List[str]) -> None:
         bsp_file.out_comma_sep = use_comma_sep
     transform_conf = {prop.name: prop for prop in conf.opts.get(config.TRANSFORM_OPTS)}
 
+    pack_tags = frozenset({
+        prop.name.upper()
+        for prop in
+        conf.opts.get(config.PACK_TAGS)
+        if conv_bool(prop.value)
+    })
+
     LOGGER.info('Running transforms...')
     await run_transformations(
         bsp_file.ents,
@@ -168,6 +176,7 @@ async def main(argv: List[str]) -> None:
         studiomdl_loc,
         transform_conf,
         fgd,
+        pack_tags,
     )
 
     if studiomdl_loc is not None and args.propcombine:
@@ -220,12 +229,7 @@ async def main(argv: List[str]) -> None:
         packlist.pack_fgd(
             bsp_file.ents, fgd,
             mapname=Path(bsp_file.filename).stem,  # TODO: Include directories?
-            tags={
-                prop.name.upper()
-                for prop in
-                conf.opts.get(config.PACK_TAGS)
-                if conv_bool(prop.value)
-            },
+            tags=pack_tags,
         )
 
         packlist.pack_from_bsp(bsp_file)
@@ -239,12 +243,31 @@ async def main(argv: List[str]) -> None:
             LOGGER.info('Writing particle manifest "{}"...', man_name)
             packlist.write_particles_manifest(man_name)
 
+    pack_allowlist = list(config.packfile_filters(conf.opts.get(config.PACK_ALLOWLIST), 'allowlist'))
+    pack_blocklist = list(config.packfile_filters(conf.opts.get(config.PACK_BLOCKLIST), 'blocklist'))
+
+    if conf.opts.get(config.PACK_STRIP_CUBEMAPS):
+        pack_blocklist.append(re.compile(config.CUBEMAP_REGEX))
+
+    LOGGER.debug('Packing allowlist={}, blocklist={}', pack_allowlist, pack_blocklist)
+
+    def pack_callback(path: str) -> Optional[bool]:
+        """Check the file against the two lists."""
+        for pattern in pack_allowlist:
+            if pattern.search(path) is not None:
+                return True
+        for pattern in pack_blocklist:
+            if pattern.search(path) is not None:
+                return False
+        return None
+
     dump_path = conf.opts.get(config.PACK_DUMP)
     if dump_path:
         packlist.pack_into_zip(
             bsp_file,
             blacklist=conf.pack_blacklist,
             ignore_vpk=False,
+            callback=pack_callback,
             dump_loc=conf.expand_path(dump_path.lstrip('#')).absolute().resolve(),
             only_dump=dump_path.startswith('#'),
         )
@@ -253,6 +276,7 @@ async def main(argv: List[str]) -> None:
             bsp_file,
             blacklist=conf.pack_blacklist,
             ignore_vpk=False,
+            callback=pack_callback,
         )
 
     # List out all the files, but group together files with the same extension.

@@ -15,7 +15,7 @@
 		"Using inputs like AddContext on this player proxy will not carry it over to the player and should be done on the '!player' entity instead."
 	HideSquadHUD[MBase](boolean) : "Hide squad HUD" : 0 : "Hides the player's squad status HUD above the ammo display."
 	
-	HandsVM[MBase](studio) : "Hands Viewmodel" : : "Custom hands viewmodel."
+	HandsVM[MBase](studio) : "Hands Viewmodel" : : "Custom hands viewmodel. Requires weapon viewmodels that support them."
 	HandsVMSkin[MBase](string) : "Hands Viewmodel Skin" : : "Skin for the custom hands viewmodel."
 	HandsVMBody[MBase](string) : "Hands Viewmodel Bodygroup" : : "Bodygroup value for the custom hands viewmodel."
 

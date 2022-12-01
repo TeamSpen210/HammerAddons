@@ -100,6 +100,10 @@
 	input SetModelScale[EP1, EP2, MESA, !GMod](vector) : "Takes two values separated by a space. The first is the target model scale. " +
 		"The second value is the number of seconds the change in scale will be spread over."
 
+	input SetModel[TF2](string) : "Changes the model to the specified path.\nForm of 'models/ammo/ammo_us.mdl'.\nIMPORTANT:\nAbsolutely NO quotes!\nMake sure you use this slash '/'.\nMerasmus says to heed this advice thou shalt corrupt the VMF."
+	input SetCycle[TF2](float) : "Skip to a specific point in the current animation."
+	input SetPlaybackRate[TF2](float) : "Change the animation speed multiplier."
+
 	input SetModel[MBase](string) : "Sets this entity's model. Must include 'models/' as well as the extension."
 	input CreateSeparateRagdoll[MBase](void) : "Creates a separate serverside ragdoll at this entity's origin."
 	input CreateSeparateRagdollClient[MBase](void) : "Creates a separate clientside ragdoll at this entity's origin."
