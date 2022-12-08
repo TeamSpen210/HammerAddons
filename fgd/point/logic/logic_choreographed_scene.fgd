@@ -54,14 +54,14 @@
 	
 	input Trigger(integer) : "Fires the OnTrigger output of the specified number."
 	
-	input SetTarget1[MBase, P2](target_destination) : "Sets Target 1 to the specified entity."
-	input SetTarget2[MBase, P2](target_destination) : "Sets Target 2 to the specified entity."
-	input SetTarget3[MBase, P2](target_destination) : "Sets Target 3 to the specified entity."
-	input SetTarget4[MBase, P2](target_destination) : "Sets Target 4 to the specified entity."
-	input SetTarget5[MBase    ](target_destination) : "Sets Target 5 to the specified entity."
-	input SetTarget6[MBase    ](target_destination) : "Sets Target 6 to the specified entity."
-	input SetTarget7[MBase    ](target_destination) : "Sets Target 7 to the specified entity."
-	input SetTarget8[MBase    ](target_destination) : "Sets Target 8 to the specified entity."
+	input SetTarget1[MBase, P2, TF2](target_destination) : "Sets Target 1 to the specified entity."
+	input SetTarget2[MBase, P2, TF2](target_destination) : "Sets Target 2 to the specified entity."
+	input SetTarget3[MBase, P2, TF2](target_destination) : "Sets Target 3 to the specified entity."
+	input SetTarget4[MBase, P2, TF2](target_destination) : "Sets Target 4 to the specified entity."
+	input SetTarget5[MBase, TF2    ](target_destination) : "Sets Target 5 to the specified entity."
+	input SetTarget6[MBase, TF2    ](target_destination) : "Sets Target 6 to the specified entity."
+	input SetTarget7[MBase, TF2    ](target_destination) : "Sets Target 7 to the specified entity."
+	input SetTarget8[MBase, TF2    ](target_destination) : "Sets Target 8 to the specified entity."
 
 	// Outputs
 	output OnStart(void) : "The scene has started"

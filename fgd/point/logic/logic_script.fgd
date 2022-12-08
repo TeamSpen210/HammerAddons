@@ -35,7 +35,8 @@
 	group12(target_destination) : "EntityGroup[12]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
 	group13(target_destination) : "EntityGroup[13]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
 	group14(target_destination) : "EntityGroup[14]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group15(target_destination) : "EntityGroup[15]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
+	group15[until_ASW, -TF2](target_destination) : "EntityGroup[15]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
+	group16[since_ASW, TF2](target_destination) : "EntityGroup[16]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
 	
 	shouldtransition[INFRA](boolean) : "Transition Across Levels" : 0 : "Transition this script across levels."
 
