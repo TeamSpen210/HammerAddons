@@ -1,6 +1,6 @@
 """Handles user configuration common to the different scripts."""
 from pathlib import Path
-from typing import Callable, Iterator, List, Optional, Set, Dict, Union, Pattern as re_Pattern
+from typing import Callable, Iterator, Optional, Set, Dict, Union, Pattern as re_Pattern
 from typing_extensions import TypeAlias, Final
 import re
 import fnmatch
@@ -19,7 +19,11 @@ from .plugin import Source as PluginSource, PluginFinder, BUILTIN as BUILTIN_PLU
 LOGGER = logger.get_logger(__name__)
 CONF_NAME: Final = 'srctools.vdf'
 PATHS_NAME: Final = 'srctools_paths.vdf'
-GAME_KEY: Final = 'gameinfo_path'
+
+PATH_KEY_GAME: Final = 'gameinfo_path'
+PATH_KEY_MAP: Final = 'mapdir_path'
+
+PREDEFINED_PATHS = {PATH_KEY_GAME, PATH_KEY_MAP}
 
 # Matches cubemap files. Put here, so we can write it into the docstring.
 CUBEMAP_REGEX = r"materials/maps/.*/(c[0-9-]+_[0-9-]+_[0-9-]+|cubemapdefault)(\.hdr)?\.vtf"
@@ -32,17 +36,18 @@ USED_PACK_TAGS: Set[str] = {
     'mesa', 'p2',
 }
 
-PATHS_CONF_STARTER: Final = '''\
+PATHS_CONF_STARTER: Final = f'''\
 // This config contains a list of directories which can be referenced by the main config.
 // Keeping this a separate file allows the main config to be shared in a mod team, while this
 // config is customised for each user's installation locations.
 // The keys here are then referenced by specifying "|key|" at the start of a path.
 // If no root is specified, paths are relative to these configs.
+// Some names are predefined: |{PATH_KEY_GAME}| and |{PATH_KEY_MAP}|.
 "Paths"
-    {
+    {{
     // For example this makes "|hl2|/episodic/ep1_pak_dir.vpk" valid in searchpaths.
     // "hl2" "C:/Program Files/Steam/SteamApps/common/Half Life 2/"
-    }
+    }}
 '''
 # A function taking a configured path, and expanding |refs| to get the full location.
 Expander: TypeAlias = Callable[[str], Path]
@@ -86,7 +91,7 @@ class Config:
         return path
 
 
-def parse(path: Path, game_folder: Optional[str]='') -> Config:
+def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
     """From some directory, locate and parse the config files.
 
     This then constructs and customises each object according to config
@@ -101,10 +106,10 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
 
     # If the path is a folder, add a dummy folder so parents yields it.
     # That way we check for a config in this folder.
-    if not path.suffix:
-        path /= 'unused'
+    if not map_path.suffix:
+        map_path /= 'unused'
 
-    for folder in path.parents:
+    for folder in map_path.parents:
         conf_path = folder / CONF_NAME
         if conf_path.exists():
             LOGGER.info('Config path: "{}"', conf_path.absolute())
@@ -119,12 +124,12 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
         opts.load(Keyvalues(None, []))
 
         # Try to write out a default file in the game folder.
-        for folder in path.parents:
+        for folder in map_path.parents:
             if folder.parent.stem in ('common', 'sourcemods'):
                 break
         else:
             # Give up, put next to the input path.
-            folder = path.parent
+            folder = map_path.parent
         opts.path = folder / CONF_NAME
 
         LOGGER.warning('Writing default to "{}"', opts.path)
@@ -149,13 +154,14 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
                 if kv.has_children():
                     LOGGER.warning('Paths configs may not be blocks!')
                 else:
-                    path_roots[kv.name.strip('|')] = Path(kv.value)
-            if GAME_KEY in path_roots:
-                LOGGER.warning(
-                    '|{}| cannot be defined in the path config, this is always the '
-                    'location of the game.',
-                    GAME_KEY,
-                )
+                    name = kv.name.strip('|')
+                    if name in PREDEFINED_PATHS:
+                        LOGGER.warning(
+                            '|{}| cannot be defined in the path config - '
+                            'the following names are builtin: {}',
+                            kv.name, sorted(PREDEFINED_PATHS),
+                        )
+                    path_roots[name] = Path(kv.value)
     except FileNotFoundError:
         with open(paths_conf_loc, 'w') as f:
             f.write(PATHS_CONF_STARTER)
@@ -173,7 +179,8 @@ def parse(path: Path, game_folder: Optional[str]='') -> Config:
     game = Game(expand_path(game_folder))
     LOGGER.info('Game folder: {}', game.path)
     # Now we located it, other definitions can use this loc.
-    path_roots[GAME_KEY] = game.path
+    path_roots[PATH_KEY_GAME] = game.path
+    path_roots[PATH_KEY_MAP] = map_path.parent
 
     fsys_chain = game.get_filesystem()
 
@@ -377,7 +384,7 @@ USE_COMMA_SEP = Opt.boolean_or_none(
 """)
 
 PROPCOMBINE_QC_FOLDER = Opt.block(
-    'propcombine_qc_folder', Keyvalues('', [Keyvalues('Path', f'|{GAME_KEY}|../content')]),
+    'propcombine_qc_folder', Keyvalues('', [Keyvalues('Path', f'|{PATH_KEY_GAME}|../content')]),
     """Define where the QC files are for combinable static props.
     This path is searched recursively. This defaults to 
     the 'content/' folder, which is adjacent to the game root.
@@ -391,7 +398,7 @@ PROPCOMBINE_CROWBAR = Opt.boolean(
 """)
 
 PROPCOMBINE_CACHE = Opt.string(
-    'propcombine_cache', f"|{GAME_KEY}|/decomp_cache/",
+    'propcombine_cache', f"|{PATH_KEY_GAME}|/decomp_cache/",
     """Cache location for models decompiled for combining."""
 )
 
