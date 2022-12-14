@@ -19,7 +19,7 @@
 		1: "Color"
 		]
 		
-	fieldofview(string) : "FieldOfView" : "0.2" : "How far to look (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
+	fieldofview(float) : "FieldOfView" : "0.2" : "How far to look (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
 	minsearchdist(integer) : "Min Search Dist" : 0
 	maxsearchdist(integer) : "Max Search Dist" : 2048
 
@@ -66,6 +66,10 @@
 	// Inputs
 	input TurnOn(void) : "Turn on: Look for enemies"
 	input TurnOff(void) : "Turn off: Stop looking for enemies"
+
+	input FieldOfView(float) : "Sets the Field of View."
+	input MinSearchDist(integer) : "Sets the minimum search distance."
+	input MaxSearchDist(integer) : "Sets the maximum search distance."
 
 	// Outputs
 	output OnLostEnemies(void) : "Fires when the enemy finder has no enemies."
