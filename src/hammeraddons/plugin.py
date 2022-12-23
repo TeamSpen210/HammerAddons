@@ -1,18 +1,18 @@
 """Logic for loading all the code in arbitary locations for plugin purposes."""
-from pathlib import Path
+from typing import Callable, Dict, Iterable, Iterator, Optional, Sequence, Set, Tuple, Union
+from typing_extensions import Final
 from collections import deque
-from importlib.util import spec_from_loader
 from importlib.abc import MetaPathFinder
 from importlib.machinery import ModuleSpec, SourceFileLoader
-from typing import Callable, Dict, Union, Optional, Set, Sequence, Tuple, Iterable, Iterator
-from typing_extensions import Final
+from importlib.util import spec_from_loader
+from pathlib import Path
 import importlib
 import types
 
-import attrs
-
 from srctools import Keyvalues
 from srctools.logger import get_logger
+import attrs
+
 
 LOGGER = get_logger(__name__)
 BUILTIN: Final = 'builtin'

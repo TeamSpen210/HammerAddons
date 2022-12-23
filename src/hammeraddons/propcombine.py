@@ -3,37 +3,37 @@
 This merges static props together, so they can be drawn with a single
 draw call.
 """
-import fnmatch
-import operator
-import os
-import re
-import shutil
-import itertools
+from typing import (
+    Callable, Dict, FrozenSet, Iterable, Iterator, List, MutableMapping, Optional, Set, Tuple,
+    Union,
+)
 from collections import defaultdict
 from enum import Enum
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import (
-    Optional, Tuple, Callable,
-    FrozenSet, Dict, List, Set,
-    Iterator, Union, MutableMapping, Iterable,
-)
+import fnmatch
+import itertools
+import operator
+import os
+import re
+import shutil
 
-from srctools import VMF, Entity, conv_int, FileSystemChain, Keyvalues, KeyValError, bool_as_int
-from srctools.math import Vec, Angle, Matrix, quickhull
-from srctools.tokenizer import Tokenizer, Token
+from srctools import (
+    VMF, Entity, FileSystemChain, KeyValError, Keyvalues, bool_as_int, conv_int,
+)
+from srctools.bsp import BSP, BModel, StaticProp, StaticPropFlags, VisLeaf
 from srctools.game import Game
 from srctools.logger import get_logger
+from srctools.math import Angle, Matrix, Vec, quickhull
+from srctools.mdl import MDL_EXTS, Model
 from srctools.packlist import PackList
-from srctools.bsp import BSP, StaticProp, StaticPropFlags, BModel, VisLeaf
-from srctools.mdl import Model, MDL_EXTS
 from srctools.smd import Bone, Mesh, Triangle, Vertex
-
-import trio
+from srctools.tokenizer import Token, Tokenizer
 import attrs
+import trio
 
-from .mdl_compiler import ModelCompiler
 from .acache import ACache
+from .mdl_compiler import ModelCompiler
 
 
 LOGGER = get_logger(__name__)
