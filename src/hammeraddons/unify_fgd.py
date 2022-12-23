@@ -2,19 +2,20 @@
 
 This allows sharing definitions among different engine versions.
 """
-import sys
-import argparse
-from collections import Counter, defaultdict
-from pathlib import Path
-from lzma import LZMAFile
-from typing import Optional, TypeVar, Callable, Dict, List, Tuple, Set, FrozenSet, MutableMapping
-
-from srctools.fgd import (
-    FGD, validate_tags, match_tags,
-    EntityDef, EntityTypes, KVDef, EntAttribute, ValueTypes, AutoVisgroup,
-    Helper, HelperExtAppliesTo, HelperWorldText,
+from typing import (
+    Callable, Dict, FrozenSet, List, MutableMapping, Optional, Set, Tuple, TypeVar,
 )
+from collections import Counter, defaultdict
+from lzma import LZMAFile
+from pathlib import Path
+import argparse
+import sys
+
 from srctools import fgd
+from srctools.fgd import (
+    FGD, AutoVisgroup, EntAttribute, EntityDef, EntityTypes, Helper, HelperExtAppliesTo,
+    HelperWorldText, KVDef, ValueTypes, match_tags, validate_tags,
+)
 from srctools.filesys import RawFileSystem
 
 

@@ -1,13 +1,13 @@
 """Apply transformations that work on (almost) all entities."""
-import itertools
-from typing import List, Tuple, Dict
+from typing import Dict, List, Tuple
 from collections import defaultdict
+import itertools
 
-from srctools.logger import get_logger
 from srctools import Output
+from srctools.logger import get_logger
 from srctools.packlist import FileType
 
-from hammeraddons.bsp_transform import trans, Context
+from hammeraddons.bsp_transform import Context, trans
 
 
 LOGGER = get_logger(__name__)

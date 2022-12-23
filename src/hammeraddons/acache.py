@@ -3,9 +3,11 @@
 If another task tries retrieving while it's already being computed, the second waits for the existing
 task.
 """
-from typing import Generic, Iterator, TypeVar, Awaitable, Callable, Dict, Union, Tuple
+from typing import Awaitable, Callable, Dict, Generic, Iterator, Tuple, TypeVar, Union
 from typing_extensions import ParamSpec
+
 import trio
+
 
 KeyT = TypeVar('KeyT')
 ValueT = TypeVar('ValueT')

@@ -1,0 +1,15 @@
+[tool.isort]
+sections=["FUTURE", "TYPING", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+known_thirdparty = ["srctools"]
+extra_standard_library = ["importlib_resources"]
+known_typing = ["typing", "typing_extensions"]
+no_lines_before = ["TYPING", "FRAMEWORK", "STDLIB"]
+multi_line_output = 5 # hanging grid grouped
+line_length = 95
+lines_after_imports = 2
+use_parentheses = true
+order_by_type = true
+include_trailing_comma = true
+from_first = true
+combine_as_imports = true
+src_paths = ["src"]

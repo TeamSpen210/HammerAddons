@@ -1,13 +1,13 @@
 """Transformations that can be applied to the BSP file."""
+from typing import Awaitable, Callable, Dict, FrozenSet, List, Mapping, Optional, Tuple
 from pathlib import Path
-from typing import FrozenSet, Optional, Callable, Awaitable, Dict, Mapping, Tuple, List
 import inspect
 
-from srctools import EmptyMapping, FileSystem, Keyvalues, VMF, Output, Entity, FGD, conv_bool
+from srctools import FGD, VMF, EmptyMapping, Entity, FileSystem, Keyvalues, Output, conv_bool
 from srctools.bsp import BSP
+from srctools.game import Game
 from srctools.logger import get_logger
 from srctools.packlist import PackList
-from srctools.game import Game
 
 
 LOGGER = get_logger(__name__, 'bsp_trans')
@@ -217,11 +217,7 @@ def _load() -> None:
     This loads the transformations. We do it in a function to allow discarding
     the output.
     """
-    from . import (
-        globals,
-        instancing,
-        packing,
-    )
+    from . import globals, instancing, packing
 
 
 _load()

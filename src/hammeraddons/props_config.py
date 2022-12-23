@@ -2,15 +2,15 @@
 
 A list of options are passed in, which parse each option to a basic type.
 """
-import inspect
-from pathlib import Path
-from typing import Generic, Iterable, TypeVar, Union, List, Type, Optional, Dict, IO, overload
+from typing import IO, Dict, Generic, Iterable, List, Optional, Type, TypeVar, Union, overload
 from typing_extensions import TypeAlias
+from pathlib import Path
+import inspect
 
+from srctools import Keyvalues, Vec, conv_bool, parse_vec_str
+from srctools.logger import get_logger
 import attrs
 
-from srctools import Vec, Keyvalues, parse_vec_str, conv_bool
-from srctools.logger import get_logger
 
 LOGGER = get_logger(__name__)
 
@@ -164,6 +164,7 @@ class Options:
         options: Dict[str, Opt] = {opt.id: opt for opt in self.defaults}
         if len(options) != len(self.defaults):
             from collections import Counter
+
             # Find ids used more than once.
             raise Exception('Duplicate option(s)! ({})'.format(', '.join(
                 k for k, v in

@@ -1,19 +1,18 @@
 """Handles user configuration common to the different scripts."""
+from typing import Callable, Dict, Iterator, Optional, Pattern as re_Pattern, Set, Union
+from typing_extensions import Final, TypeAlias
 from pathlib import Path
-from typing import Callable, Iterator, Optional, Set, Dict, Union, Pattern as re_Pattern
-from typing_extensions import TypeAlias, Final
-import re
 import fnmatch
+import re
 import sys
 
+from srctools import AtomicWriter, Keyvalues, logger
+from srctools.filesys import FileSystem, FileSystemChain, RawFileSystem, VPKFileSystem
+from srctools.game import Game
 import attrs
 
-from srctools.game import Game
-from srctools import Keyvalues, logger, AtomicWriter
-from srctools.filesys import FileSystemChain, FileSystem, RawFileSystem, VPKFileSystem
-
+from .plugin import BUILTIN as BUILTIN_PLUGIN, PluginFinder, Source as PluginSource
 from .props_config import Opt, Options
-from .plugin import Source as PluginSource, PluginFinder, BUILTIN as BUILTIN_PLUGIN
 
 
 LOGGER = logger.get_logger(__name__)
