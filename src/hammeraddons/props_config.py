@@ -58,7 +58,7 @@ class Opt(Generic[OptionT]):
         opt_id: str,
         default: Keyvalues,
         doc: str, *,
-        fallback: str = None,
+        fallback: Optional[str] = None,
     ) -> 'OptWithDefault[Keyvalues]':
         """Return an option giving the raw keyvalues block.
 
@@ -67,52 +67,52 @@ class Opt(Generic[OptionT]):
         return OptWithDefault(opt_id, Keyvalues, default.copy(), doc, fallback)
 
     @classmethod
-    def string_or_none(cls, opt_id: str, doc: str, *, fallback: str = None) -> 'Opt[str]':
+    def string_or_none(cls, opt_id: str, doc: str, *, fallback: Optional[str] = None) -> 'Opt[str]':
         """Return a string-type option, with no default."""
         return Opt(opt_id, str, doc, fallback)
 
     @classmethod
-    def boolean_or_none(cls, opt_id: str, doc: str, *, fallback: str = None) -> 'Opt[bool]':
+    def boolean_or_none(cls, opt_id: str, doc: str, *, fallback: Optional[str] = None) -> 'Opt[bool]':
         """Return a boolean-type option, with no default."""
         return Opt(opt_id, bool, doc, fallback)
 
     @classmethod
-    def integer_or_none(cls, opt_id: str, doc: str, *, fallback: str = None) -> 'Opt[int]':
+    def integer_or_none(cls, opt_id: str, doc: str, *, fallback: Optional[str] = None) -> 'Opt[int]':
         """Return an integer-type option, with no default."""
         return Opt(opt_id, int, doc, fallback)
 
     @classmethod
-    def floating_or_none(cls, opt_id: str, doc: str, *, fallback: str = None) -> 'Opt[float]':
+    def floating_or_none(cls, opt_id: str, doc: str, *, fallback: Optional[str] = None) -> 'Opt[float]':
         """Return a float-type option, with no default."""
         return Opt(opt_id, float, doc, fallback)
 
     @classmethod
-    def vector_or_none(cls, opt_id: str, doc: str, *, fallback: str = None) -> 'Opt[Vec]':
+    def vector_or_none(cls, opt_id: str, doc: str, *, fallback: Optional[str] = None) -> 'Opt[Vec]':
         """Return a vector-type option, with no default."""
         return Opt(opt_id, Vec, doc, fallback)
 
     @classmethod
-    def string(cls, opt_id: str, default: str, doc: str, *, fallback: str = None) -> 'OptWithDefault[str]':
+    def string(cls, opt_id: str, default: str, doc: str, *, fallback: Optional[str] = None) -> 'OptWithDefault[str]':
         """Return a string-type option."""
         return OptWithDefault(opt_id, str, default, doc, fallback)
 
     @classmethod
-    def boolean(cls, opt_id: str, default: bool, doc: str, *, fallback: str = None) -> 'OptWithDefault[bool]':
+    def boolean(cls, opt_id: str, default: bool, doc: str, *, fallback: Optional[str] = None) -> 'OptWithDefault[bool]':
         """Return a boolean-type option."""
         return OptWithDefault(opt_id, bool, default, doc, fallback)
 
     @classmethod
-    def integer(cls, opt_id: str, default: int, doc: str, *, fallback: str = None) -> 'OptWithDefault[int]':
+    def integer(cls, opt_id: str, default: int, doc: str, *, fallback: Optional[str] = None) -> 'OptWithDefault[int]':
         """Return an integer-type option."""
         return OptWithDefault(opt_id, int, default, doc, fallback)
 
     @classmethod
-    def floating(cls, opt_id: str,  default: float, doc: str, *, fallback: str = None) -> 'OptWithDefault[float]':
+    def floating(cls, opt_id: str,  default: float, doc: str, *, fallback: Optional[str] = None) -> 'OptWithDefault[float]':
         """Return a float-type option."""
         return OptWithDefault(opt_id, float, default, doc, fallback)
 
     @classmethod
-    def vector(cls, opt_id: str, default: Vec,  doc: str, *, fallback: str = None) -> 'OptWithDefault[Vec]':
+    def vector(cls, opt_id: str, default: Vec,  doc: str, *, fallback: Optional[str] = None) -> 'OptWithDefault[Vec]':
         """Return a vector-type option."""
         return OptWithDefault(opt_id, Vec, default, doc, fallback)
 

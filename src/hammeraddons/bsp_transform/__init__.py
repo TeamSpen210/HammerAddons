@@ -139,9 +139,9 @@ async def run_transformations(
     pack: PackList,
     bsp: BSP,
     game: Game,
-    studiomdl_loc: Path=None,
+    studiomdl_loc: Optional[Path]=None,
     config: Mapping[str, Keyvalues]=EmptyMapping,
-    fgd: FGD=None,
+    fgd: Optional[FGD]=None,
     tags: FrozenSet[str] = frozenset(),
 ) -> None:
     """Run all transformations."""
