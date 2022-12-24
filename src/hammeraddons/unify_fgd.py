@@ -303,7 +303,7 @@ def ent_path(ent: EntityDef) -> str:
     return '{}/{}.fgd'.format(folder, ent.classname)
 
 
-def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> Tuple[FGD, EntityDef]:
+def load_database(dbase: Path, extra_loc: Optional[Path]=None, fgd_vis: bool=False) -> Tuple[FGD, EntityDef]:
     """Load the entire database from disk. This returns the FGD, plus the CBaseEntity definition."""
     print(f'Loading database {dbase}:')
     fgd = FGD()
@@ -717,7 +717,7 @@ def action_count(
         f'Defined: {defined_count} = {defined_count/(missing_count + defined_count):.2%}\n\n'
     )
 
-    mdl_or_sprite = defaultdict(list)
+    mdl_or_sprite: Dict[str, List[str]] = defaultdict(list)
     for ent in fgd:
         if ent.type is not EntityTypes.BASE and ent.type is not EntityTypes.BRUSH:
             check_ent_sprites(ent, mdl_or_sprite)
@@ -933,7 +933,7 @@ def action_export(
                         if isinstance(value, KVDef):
                             assert value.val_list is not None
                             try:
-                                for choice_val, name, tag in value.choices_list:
+                                for choice_val, name, tagset in value.choices_list:
                                     int(choice_val)
                             except ValueError:
                                 # Not all are ints, it's a string.
@@ -1002,6 +1002,7 @@ def action_export(
 
             # Remove bases that don't apply.
             for base in ent.bases[:]:
+                assert isinstance(base, EntityDef)
                 if not match_tags(tags, get_appliesto(base)):
                     ent.bases.remove(base)
 
@@ -1015,6 +1016,7 @@ def action_export(
         # Merge them together.
         helpers: List[Helper] = []
         for base in ent.bases:
+            assert isinstance(base, EntityDef)
             helpers.extend(base.helpers)
         helpers.extend(ent.helpers)
 
@@ -1065,6 +1067,7 @@ def action_export(
         done = set(todo)
         ent.bases.clear()
         for base in todo:
+            assert isinstance(base, EntityDef), base
             if base.type is not EntityTypes.BASE or base in used_bases:
                 ent.bases.append(base)
             else:
@@ -1091,7 +1094,7 @@ def action_export(
             del fgd.auto_visgroups[key]
 
     if engine_mode:
-        res_tags = defaultdict(set)
+        res_tags: Dict[str, Set[str]] = defaultdict(set)
         for ent in fgd.entities.values():
             for res in ent.resources:
                 for tag in res.tags:
@@ -1168,7 +1171,7 @@ def action_visgroup(
         write_vis(AutoVisgroup('Auto', ''), '')
 
 
-def main(args: List[str]=None):
+def main(args: Optional[List[str]]=None):
     """Entry point."""
     parser = argparse.ArgumentParser(
         description="Manage a set of unified FGDs, sharing configs between engine versions.",

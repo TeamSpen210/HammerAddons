@@ -913,7 +913,7 @@ async def combine(
     game: Game,
     studiomdl_loc: Path,
     *,
-    qc_folders: List[Path]=None,
+    qc_folders: Optional[List[Path]]=None,
     crowbar_loc: Optional[Path]=None,
     decomp_cache_loc: Path=None,
     blacklist: Iterable[str]=(),

@@ -1,5 +1,5 @@
 """Compare the FGD database to datadesc dumps."""
-from typing import Dict, FrozenSet, Literal, Optional
+from typing import Dict, FrozenSet, Literal, Optional, Set
 from pathlib import Path
 import re
 
@@ -50,7 +50,7 @@ def check_datadesc(filename: str, tags: FrozenSet[str]) -> None:
     tags = expand_tags(tags) | {'ENGINE', 'COMPLETE'}
     print('Expanded tags:', sorted(tags))
 
-    bad_ents: set[str] = set()
+    bad_ents: Set[str] = set()
     message_count = 0
     classname = '?????'
 
