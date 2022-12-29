@@ -9,3 +9,10 @@
 	[
 	@resources []
 	]
+
+// works identically to mbase's func_null when as a brush, so
+@SolidClass base(BaseEntity)
+= info_null: "A brush entity that's immediately removed upon spawning. Useful for invisible brush lights."
+	[
+	@resources []
+	]
