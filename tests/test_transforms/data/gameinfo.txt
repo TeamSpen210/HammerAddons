@@ -1,0 +1,14 @@
+"GameInfo"
+{
+	game 		"HALF-LIFE 2"
+	title 		"HALF-LIFE'"
+	type		singleplayer_only
+
+	FileSystem
+	{
+		SteamAppId				220
+		SearchPaths
+		{
+		}
+	}
+}
