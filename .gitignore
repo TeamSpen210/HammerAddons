@@ -40,8 +40,11 @@ Icon
 *.vmx
 *.log
 *.prt
-*.bsp
 *.cache
+
+# Ignore BSPs, but only in some folders.
+instances/**/*.bsp
+examples/**/*.bsp
 
 # Output of "compiled" FGDs
 build/

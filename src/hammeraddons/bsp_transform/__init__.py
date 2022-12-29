@@ -15,6 +15,7 @@ LOGGER = get_logger(__name__, 'bsp_trans')
 __all__ = [
     'check_control_enabled',
     'Context', 'trans', 'run_transformations',
+    'TransFunc', 'TRANSFORMS',
 ]
 
 
