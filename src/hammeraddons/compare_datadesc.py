@@ -1,11 +1,11 @@
 """Compare the FGD database to datadesc dumps."""
-from typing import Dict, FrozenSet, Literal, Optional
+from typing import Dict, FrozenSet, Literal, Optional, Set
 from pathlib import Path
 import re
 
 from srctools.fgd import EntityDef
 
-from unify_fgd import load_database, expand_tags, match_tags
+from unify_fgd import expand_tags, load_database, match_tags
 
 repo_root = Path(__file__).parents[2]
 
@@ -50,7 +50,7 @@ def check_datadesc(filename: str, tags: FrozenSet[str]) -> None:
     tags = expand_tags(tags) | {'ENGINE', 'COMPLETE'}
     print('Expanded tags:', sorted(tags))
 
-    bad_ents: set[str] = set()
+    bad_ents: Set[str] = set()
     message_count = 0
     classname = '?????'
 

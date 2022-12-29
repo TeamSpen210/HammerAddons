@@ -1,31 +1,33 @@
 """Runs before VRAD, to run operations on the final BSP."""
-import re
+from pathlib import Path
 import sys
 import warnings
-from collections import defaultdict
-from pathlib import Path
+
+from srctools.logger import Formatter, init_logging
 import trio  # Registers MultiError traceback hook
 
-from srctools.logger import init_logging, Formatter
 
 # Put the logs in the executable folders.
 LOGGER = init_logging(Path(sys.argv[0]).with_name('postcompiler.log'))
 warnings.filterwarnings(category=DeprecationWarning, module='srctools', action='once')
 
+from typing import Dict, List, Optional
+from collections import defaultdict
+from logging import FileHandler
 import argparse
 import os
-from logging import FileHandler
-from typing import List, Dict, Optional
+import re
 
 from srctools import __version__ as version_lib, conv_bool
-from srctools.filesys import ZipFileSystem
-from srctools.fgd import FGD
 from srctools.bsp import BSP
+from srctools.fgd import FGD
+from srctools.filesys import ZipFileSystem
 from srctools.packlist import PackList
 
+from hammeraddons import __version__ as version_haddons, config, propcombine
 from hammeraddons.bsp_transform import run_transformations
-from hammeraddons import propcombine, config, __version__ as version_haddons
 from hammeraddons.move_shim import install as install_depmodule_hook
+
 
 install_depmodule_hook()
 

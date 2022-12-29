@@ -2,25 +2,20 @@
 
 This allows sharing definitions among different engine versions.
 """
-import sys
-import argparse
-from collections import Counter, defaultdict
-from pathlib import Path
-from lzma import LZMAFile
 from typing import (
-    Union, Optional, TypeVar, Callable,
-    Dict, List, Tuple, Set, FrozenSet,
-    MutableMapping,
+    Callable, Dict, FrozenSet, List, MutableMapping, Optional, Set, Tuple, TypeVar,
 )
+from collections import Counter, defaultdict
+from lzma import LZMAFile
+from pathlib import Path
+import argparse
+import sys
 
-from srctools.fgd import (
-    FGD, validate_tags, match_tags,
-    EntityDef, EntityTypes, IODef,
-    KeyValues, ValueTypes,
-    Helper, HelperExtAppliesTo, HelperWorldText, HelperSprite, HelperModel,
-    AutoVisgroup,
-)
 from srctools import fgd
+from srctools.fgd import (
+    FGD, AutoVisgroup, EntAttribute, EntityDef, EntityTypes, Helper, HelperExtAppliesTo,
+    HelperWorldText, KVDef, ValueTypes, match_tags, validate_tags,
+)
 from srctools.filesys import RawFileSystem
 
 
@@ -308,7 +303,7 @@ def ent_path(ent: EntityDef) -> str:
     return '{}/{}.fgd'.format(folder, ent.classname)
 
 
-def load_database(dbase: Path, extra_loc: Path=None, fgd_vis: bool=False) -> Tuple[FGD, EntityDef]:
+def load_database(dbase: Path, extra_loc: Optional[Path]=None, fgd_vis: bool=False) -> Tuple[FGD, EntityDef]:
     """Load the entire database from disk. This returns the FGD, plus the CBaseEntity definition."""
     print(f'Loading database {dbase}:')
     fgd = FGD()
@@ -722,7 +717,7 @@ def action_count(
         f'Defined: {defined_count} = {defined_count/(missing_count + defined_count):.2%}\n\n'
     )
 
-    mdl_or_sprite = defaultdict(list)
+    mdl_or_sprite: Dict[str, List[str]] = defaultdict(list)
     for ent in fgd:
         if ent.type is not EntityTypes.BASE and ent.type is not EntityTypes.BRUSH:
             check_ent_sprites(ent, mdl_or_sprite)
@@ -776,7 +771,7 @@ def action_import(
                     ent.helpers.append(helper)
 
             for cat in ('keyvalues', 'inputs', 'outputs'):
-                cur_map: Dict[str, Dict[FrozenSet[str], Union[KeyValues, IODef]]] = getattr(ent, cat)
+                cur_map: Dict[str, Dict[FrozenSet[str], EntityDef]] = getattr(ent, cat)
                 new_map = getattr(new_ent, cat)
                 new_names = set()
                 for name, tag_map in new_map.items():
@@ -875,9 +870,9 @@ def action_export(
             if ent.classname != BASE_ENTITY:
                 ent.bases = [base_entity_def]
 
-            value: Union[IODef, KeyValues]
-            category: Dict[str, Dict[FrozenSet[str], Union[IODef, KeyValues]]]
-            base_cat: Dict[str, Dict[FrozenSet[str], Union[IODef, KeyValues]]]
+            value: EntAttribute
+            category: Dict[str, Dict[FrozenSet[str], EntAttribute]]
+            base_cat: Dict[str, Dict[FrozenSet[str], EntAttribute]]
             for attr_name in ['inputs', 'outputs', 'keyvalues']:
                 category = getattr(ent, attr_name)
                 base_cat = getattr(base_entity_def, attr_name)
@@ -890,7 +885,7 @@ def action_export(
                     # Remake the map, excluding non-engine tags.
                     # If any are explicitly matching us, just use that
                     # directly.
-                    tag_map: Dict[FrozenSet[str], Union[IODef, KeyValues]] = {}
+                    tag_map: Dict[FrozenSet[str], EntAttribute] = {}
                     for tags, value in orig_tag_map.items():
                         if 'ENGINE' in tags or '+ENGINE' in tags:
                             if value.type is ValueTypes.CHOICES:
@@ -935,10 +930,10 @@ def action_export(
                             'provide ENGINE '
                             'tag!'.format(ent.classname, key)
                         )
-                        if isinstance(value, KeyValues):
+                        if isinstance(value, KVDef):
                             assert value.val_list is not None
                             try:
-                                for choice_val, name, tag in value.choices_list:
+                                for choice_val, name, tagset in value.choices_list:
                                     int(choice_val)
                             except ValueError:
                                 # Not all are ints, it's a string.
@@ -950,7 +945,7 @@ def action_export(
                     # Check if this is a shared property among all ents,
                     # and if so skip exporting.
                     if ent.classname != BASE_ENTITY:
-                        base_value: Union[KeyValues, IODef]
+                        base_value: EntAttribute
                         try:
                             [base_value] = base_cat[key].values()
                         except KeyError:
@@ -987,10 +982,10 @@ def action_export(
         base_entity_def.desc = ''
         base_entity_def.helpers = []
         # Strip out all the tags.
-        for cat in [base_entity_def.inputs, base_entity_def.outputs, base_entity_def.keyvalues]:
-            for key, tag_map in cat.items():
+        for category in [base_entity_def.inputs, base_entity_def.outputs, base_entity_def.keyvalues]:
+            for key, tag_map in category.items():
                 [value] = tag_map.values()
-                cat[key] = {tags_empty: value}
+                category[key] = {tags_empty: value}
                 if value.type is ValueTypes.CHOICES:
                     raise ValueError('Choices key in CBaseEntity!')
     else:
@@ -1007,6 +1002,7 @@ def action_export(
 
             # Remove bases that don't apply.
             for base in ent.bases[:]:
+                assert isinstance(base, EntityDef)
                 if not match_tags(tags, get_appliesto(base)):
                     ent.bases.remove(base)
 
@@ -1020,6 +1016,7 @@ def action_export(
         # Merge them together.
         helpers: List[Helper] = []
         for base in ent.bases:
+            assert isinstance(base, EntityDef)
             helpers.extend(base.helpers)
         helpers.extend(ent.helpers)
 
@@ -1070,6 +1067,7 @@ def action_export(
         done = set(todo)
         ent.bases.clear()
         for base in todo:
+            assert isinstance(base, EntityDef), base
             if base.type is not EntityTypes.BASE or base in used_bases:
                 ent.bases.append(base)
             else:
@@ -1096,7 +1094,7 @@ def action_export(
             del fgd.auto_visgroups[key]
 
     if engine_mode:
-        res_tags = defaultdict(set)
+        res_tags: Dict[str, Set[str]] = defaultdict(set)
         for ent in fgd.entities.values():
             for res in ent.resources:
                 for tag in res.tags:
@@ -1173,7 +1171,7 @@ def action_visgroup(
         write_vis(AutoVisgroup('Auto', ''), '')
 
 
-def main(args: List[str]=None):
+def main(args: Optional[List[str]]=None):
     """Entry point."""
     parser = argparse.ArgumentParser(
         description="Manage a set of unified FGDs, sharing configs between engine versions.",

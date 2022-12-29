@@ -3,22 +3,22 @@
 Each comes with a key, used to identify a previously compiled version.
 We can then reuse already compiled versions.
 """
+from typing import Any, Awaitable, Callable, Generic, Hashable, List, Set, Tuple, TypeVar
+from pathlib import Path
 import os
 import pickle
-import tempfile
 import random
-from typing import Awaitable, Callable, Tuple, Set, TypeVar, Hashable, Generic, Any, List
-from pathlib import Path
+import tempfile
 
-from srctools import logger, AtomicWriter
+from srctools import AtomicWriter, logger
 from srctools.game import Game
 from srctools.mdl import MDL_EXTS
 from srctools.packlist import PackList
-
 import trio
 
 from hammeraddons.acache import ACache
 from hammeraddons.bsp_transform import Context
+
 
 LOGGER = logger.get_logger(__name__)
 ModelKey = TypeVar('ModelKey', bound=Hashable)
