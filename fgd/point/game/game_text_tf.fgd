@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(TF2) 
+	worldtext() // just in case TF2 ever gets worldtext functionality
 	iconsprite("editor/game_text.vmt") = game_text_tf: "An entity that displays text on player's screens, in pretty tf hud format"
 	[
 	message(string) : "Message Text" : : "Message to display onscreen."

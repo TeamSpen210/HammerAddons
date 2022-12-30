@@ -2,7 +2,9 @@
 	studio("models/editor/axis_helper.mdl") 
 	color(200 200 0) 
 	iconsprite("editor/ficool2/point_message.vmt") 
-	sphere(radius) = point_message: "An entity that displays a text message in the world, at its origin."
+	sphere(radius)
+	worldtext()  
+= point_message: "An entity that displays a text message in the world, at its origin."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
