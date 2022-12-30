@@ -1,7 +1,6 @@
 @PointClass base(BaseEntityPoint, MasterEnt)
 	iconsprite("editor/game_text.vmt") 
 	color(200 0 0) 
-	worldtext() 
 = game_text: "An entity that displays text on player's screens."
 	[
 	spawnflags(flags)  =
