@@ -41,12 +41,12 @@
 	input SweepGroupRandomly(string) : "Randomly Sweep a Group"
 	input StopSweeping(void) : "Stop any target sweeping operation started by entity I/O"
 	input ProtectTarget(target_destination) : "Protect the specified enemy. The sniper will attempt to shoot the enemy nearest the protect target at all times."
-	input SetPaintInterval(float) : "Set PaintInterval field."
-	input SetPaintIntervalVariance(float) : "Set PaintIntervalVariance field."
+	input SetPaintInterval[EP1, EP2](float) : "Set PaintInterval field."
+	input SetPaintIntervalVariance[EP1, EP2](float) : "Set PaintIntervalVariance field."
 
 	// Outputs
 	output OnShotFired(void) : "Fires when sniper fires a shot"
-
+	
 	@resources
 		[
 		model "models/combine_soldier.mdl"

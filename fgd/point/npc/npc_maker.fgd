@@ -12,6 +12,7 @@
 	npctargetname(string) : "Childrens' Name"
 	npcsquadname(string) : "Childrens' Squad Name"
 	npchintgroup(string) : "Childrens' Hint Group"
+	relationship(string) : "Relationship" : : "Sets whether the spawned NPC likes or dislikes certain others. Format is: <string|targetname or classname> <string|disposition> <integer|rank>. Values for disposition are: D_HT (Hate), D_FR (Fear), D_LI (Like), D_NU, (Neutral)."
 
 	additionalequipment[engine](string) : "Weapons" : "0"
 	additionalequipment(choices) : "Weapons" : "0" =

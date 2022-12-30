@@ -3,7 +3,7 @@
 	[
 	spawnflags(flags)  =
 		[
-		16: "(OBSOLETE, Uncheck me)" : 0
+		16: "(Obsolete alias for 'Disable auto player movement', Uncheck me)" : 0
 		128: "Disable auto player movement" : 1
 		2048: "Auto-duck while in trigger" : 0
 		4096: "Disable ducking" : 0 [MESA]

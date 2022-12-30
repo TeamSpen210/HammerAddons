@@ -3,4 +3,6 @@
 	studio("models/bots/skeleton_sniper/skeleton_sniper.mdl")
 = tf_zombie : "Skeleton"
 	[
+	// Outputs
+	output OnDeath(void) : "Fired when the skeleton is killed."
 	]

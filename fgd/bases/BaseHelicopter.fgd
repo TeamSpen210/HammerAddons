@@ -34,7 +34,7 @@ line(255 255 255, targetname, target) = BaseHelicopter
 	input SetAngles(angle) : "Teleport the helicopter into a different orientation."
 	input SetTrack(target_destination) : "Set a track for the helicopter to adhere to. The helicopter will do nothing if it's on the same path, and will move to the closest point on the specified track if it's on a different path."
 	input FlyToSpecificTrackViaPath(target_destination) : "The helicopter will first fly to the closest point on the path if it's on a different path. Then it'll fly along the path to the specified track point."
-	input FlyToPathTrack[engine](target_destination) : "Obsolete name for FlyToSpecificTrackViaPath."
+	input FlyToPathTrack[complete](target_destination) : "Obsolete name for FlyToSpecificTrackViaPath."
 	
 	input StartPatrol(void) : "Start patrolling back and forth along the current track."
 	input StopPatrol(void) : "Stop patrolling back and forth along the track. This will cause the helicopter to come to rest at the track which it's currently flying toward."
@@ -42,7 +42,11 @@ line(255 255 255, targetname, target) = BaseHelicopter
 	input StopBreakableMovement(void) : "The helicopter can not disobey direct commands. It will continue to fly along its patrol path or to its specified target even if it senses an enemy."
 	input StartPatrolBreakable(void) : "Start patrolling this track, with breakable movement enabled. A combination of StartPatrol and StartBreakableMovement."
 	
+	input InputStartLeading(integer) : "Starts leading enemy vehicles with the specified distance."
+	input InputStopLeading(void) : "Stops leading enemy vehicles."
+	
 	input ChooseFarthestPathPoint(void) : "When tracking an enemy, choose the point on the path furthest from the enemy, but still in firing range."
 	input ChooseNearestPathPoint(void) : "When tracking an enemy, choose the point on the path nearest from the enemy."
 	input SetMaxSpeed[ASW](float) : "Change the helicopter's max speed."
+
 	]
