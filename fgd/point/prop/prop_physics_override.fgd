@@ -3,7 +3,7 @@
 	sphere(fademindist) 
 	sphere(fademaxdist) 
 = prop_physics_override: "A variant of prop_physics which will permit using models that do not have physics data compiled into them, " +
-	"like static or dynamic models. Health and physics data can be overridden on this version, to subsitute for the missing info."
+	"like static or dynamic models. Health and physics data can be overridden on this version, to substitute for the missing info."
 	[
 	health(integer) : "Health" : 0 : "Number of points of damage to take before breaking.  0 means don't break."
 	]
