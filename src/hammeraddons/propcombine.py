@@ -915,7 +915,7 @@ async def combine(
     *,
     qc_folders: Optional[List[Path]]=None,
     crowbar_loc: Optional[Path]=None,
-    decomp_cache_loc: Path=None,
+    decomp_cache_loc: Optional[Path]=None,
     blacklist: Iterable[str]=(),
     auto_range: float=0,
     min_cluster: int=2,

@@ -111,6 +111,9 @@ TAGS_SPECIAL = {
   'BEE2',  # BEEmod's templates.
 }
 
+TAGS_EMPTY: FrozenSet[str] = frozenset()
+TAGS_NOT_ENGINE: FrozenSet[str] = frozenset({'-ENGINE', '!ENGINE'})
+
 ALL_TAGS = {
     *ALL_GAMES, *ALL_MODS, *ALL_FEATURES, *TAGS_SPECIAL,
     *{
@@ -162,8 +165,8 @@ def _polyfill_boolean(fgd: FGD):
                 if kv.type is ValueTypes.BOOL:
                     kv.type = ValueTypes.CHOICES
                     kv.val_list = [
-                        ('0', 'No', frozenset()),
-                        ('1', 'Yes', frozenset())
+                        ('0', 'No', TAGS_EMPTY),
+                        ('1', 'Yes', TAGS_EMPTY)
                     ]
 
 
@@ -200,12 +203,12 @@ def _polyfill_scripts(fgd: FGD) -> None:
     Substitute with just a string.
     """
     for ent in fgd.entities.values():
-        for tag_map in ent.keyvalues.values():
-            for kv in tag_map.values():
+        for tag_map_kv in ent.keyvalues.values():
+            for kv in tag_map_kv.values():
                 if kv.type is ValueTypes.STR_VSCRIPT or kv.type is ValueTypes.STR_VSCRIPT_SINGLE:
                     kv.type = ValueTypes.STRING
-        for tag_map in ent.inputs.values():
-            for inp in tag_map.values():
+        for tag_map_io in ent.inputs.values():
+            for inp in tag_map_io.values():
                 if inp.type is ValueTypes.STR_VSCRIPT_SINGLE:
                     inp.type = ValueTypes.STRING
 
@@ -851,14 +854,10 @@ def action_export(
         print('Collapsing bases...')
         fgd.collapse_bases()
 
-        # Cache these constant sets.
-        tags_empty = frozenset('')
-        tags_not_engine = frozenset({'-ENGINE', '!ENGINE'})
-
         print('Merging tags...')
         for ent in list(fgd):
             # If it's set as not in engine, strip.
-            if not tags_not_engine.isdisjoint(get_appliesto(ent)):
+            if not TAGS_NOT_ENGINE.isdisjoint(get_appliesto(ent)):
                 del fgd.entities[ent.classname.casefold()]
             # Strip applies-to helper and ordering helper.
             ent.helpers[:] = [
@@ -874,6 +873,7 @@ def action_export(
             category: Dict[str, Dict[FrozenSet[str], EntAttribute]]
             base_cat: Dict[str, Dict[FrozenSet[str], EntAttribute]]
             for attr_name in ['inputs', 'outputs', 'keyvalues']:
+                # Unsafe cast, we're not going to insert the wrong kind of attribute though.
                 category = getattr(ent, attr_name)
                 base_cat = getattr(base_entity_def, attr_name)
                 # For each category, check for what value we want to keep.
@@ -894,7 +894,7 @@ def action_export(
                                     'CHOICES!'.format(ent.classname, key)
                                 )
                             # Use just this.
-                            tag_map = {tags_empty: value}
+                            tag_map = {TAGS_EMPTY: value}
                             break
                         elif '-ENGINE' not in tags and '!ENGINE' not in tags:
                             tag_map[tags] = value
@@ -975,17 +975,19 @@ def action_export(
 
                     # Blank this, it's not that useful.
                     value.desc = ''
-                    category[key] = {tags_empty: value}
+                    category[key] = {TAGS_EMPTY: value}
 
         # Add in the base entity definition, and clear it out.
         fgd.entities[BASE_ENTITY.casefold()] = base_entity_def
         base_entity_def.desc = ''
         base_entity_def.helpers = []
         # Strip out all the tags.
-        for category in [base_entity_def.inputs, base_entity_def.outputs, base_entity_def.keyvalues]:
+        for attr_name in ['inputs', 'outputs', 'keyvalues']:
+            # Unsafe cast, we're not going to insert the wrong kind of attribute though.
+            category = getattr(base_entity_def, attr_name)
             for key, tag_map in category.items():
                 [value] = tag_map.values()
-                category[key] = {tags_empty: value}
+                category[key] = {TAGS_EMPTY: value}
                 if value.type is ValueTypes.CHOICES:
                     raise ValueError('Choices key in CBaseEntity!')
     else:

@@ -46,8 +46,8 @@ class Context:
         bsp: BSP,
         game: Game,
         *,
-        fgd: FGD = None,
-        studiomdl_loc: Path=None,
+        fgd: Optional[FGD] = None,
+        studiomdl_loc: Optional[Path]=None,
         tags: FrozenSet[str]=frozenset(),
     ) -> None:
         self.sys = filesys
@@ -122,8 +122,8 @@ def trans(name: str, *, priority: int=0) -> Callable[[TransFuncOrSync], TransFun
         """Stores the transformation."""
         TRANSFORM_PRIORITY[name] = priority
         if inspect.iscoroutinefunction(func):
-            TRANSFORMS[name] = func  # type: ignore # inspect needs typeguard
-            return func  # type: ignore # ^^^
+            TRANSFORMS[name] = func
+            return func
         else:
             async def async_wrapper(ctx: Context) -> None:
                 """Just freeze all other tasks to run this."""

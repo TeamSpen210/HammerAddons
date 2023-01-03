@@ -2,7 +2,10 @@
 
 A list of options are passed in, which parse each option to a basic type.
 """
-from typing import IO, Dict, Generic, Iterable, List, Optional, Type, TypeVar, Union, overload
+from typing import (
+    IO, Dict, Generic, Iterable, List, Optional, TYPE_CHECKING, Type, TypeVar, Union,
+    overload,
+)
 from typing_extensions import TypeAlias
 from pathlib import Path
 import inspect
@@ -16,7 +19,7 @@ LOGGER = get_logger(__name__)
 
 
 Option: TypeAlias = Union[str, int, float, bool, Vec, Keyvalues]
-OptionT = TypeVar('OptionT', Keyvalues, str, int, float, bool, Vec)
+OptionT = TypeVar('OptionT', bound=Option)
 
 TYPE_NAMES: Dict[Type[Option], str] = {
     str: 'Text',
@@ -129,7 +132,7 @@ class OptWithDefault(Opt[OptionT], Generic[OptionT]):
         doc: str,
         fallback: Optional[str],
     ) -> None:
-        super().__init__(opt_id, kind, doc, fallback)  # type: ignore
+        super().__init__(opt_id, kind, doc, fallback)
         self.default = default
         if fallback is not None:
             self.doc.append(f'If unset, the default is read from `{default}`.')
@@ -243,7 +246,7 @@ class Options:
     @overload
     def get(self, option: Opt[OptionT]) -> Optional[OptionT]: ...
 
-    def get(self, option: Opt[OptionT]) -> Optional[OptionT]:
+    def get(self, option: Opt[OptionT]) -> Optional[Option]:
         """Fetch the given option, or return None if not present and no default is defined."""
         try:
             val = self.settings[option.id]
@@ -256,8 +259,8 @@ class Options:
             else:
                 return None
 
-        # Don't allow subclasses (bool/int)
-        if type(val) is not option.kind:
+        # Don't allow subclasses (bool/int). This confuses MyPy.
+        if type(val) is not option.kind and not TYPE_CHECKING:
             raise ValueError(f'Option "{option.name}" is {type(val)} (code expected {option.kind})')
 
         # Vec is mutable, don't allow modifying the original.

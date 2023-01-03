@@ -5,7 +5,7 @@ import re
 
 from srctools.fgd import EntityDef
 
-from unify_fgd import expand_tags, load_database, match_tags
+from hammeraddons.unify_fgd import expand_tags, load_database, match_tags
 
 repo_root = Path(__file__).parents[2]
 
