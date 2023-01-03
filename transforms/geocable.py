@@ -114,10 +114,11 @@ class SegPropConf:
 
     def __hash__(self) -> int:
         """Handle hashing the matrix."""
-        return hash(
-            (self.weight, self.model, self.orient, self.place_interval) +
-            self.angles.to_angle().as_tuple()
-        )
+        ang = self.angles.to_angle()
+        return hash((
+            self.weight, self.model, self.orient, self.place_interval,
+            round(ang.pitch), round(ang.yaw), round(ang.roll)
+        ))
 
 
 VAC_SEG_CONF = SegPropConf(
