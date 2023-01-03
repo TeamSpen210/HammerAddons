@@ -1037,7 +1037,7 @@ def place_seg_props(nodes: Iterable[Node], fsys: FileSystem, mesh: Mesh) -> Iter
 def compute_visleafs(
     coll_data: List[Tuple[Vec, float, Vec, float]],
     vis_tree_top: VisTree,
-) -> List[VisLeaf]:
+) -> Set[VisLeaf]:
     """Compute the visleafs this rope is present in."""
     # Each tree node defines a plane. For each side we touch, we need to
     # continue looking down that side of the tree for visleafs.
@@ -1064,7 +1064,7 @@ def compute_visleafs(
                 else:
                     todo_trees.append(tree.child_pos)
 
-    return list(used_leafs)
+    return used_leafs
 
 
 async def compile_rope(
