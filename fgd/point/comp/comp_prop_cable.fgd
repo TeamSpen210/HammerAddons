@@ -21,7 +21,8 @@
 		2: "Catenary"
 		]
 
-	segments(integer) : "Segments" : 2 : "Number of nodes to generate between each cable. Higher values make smoother cables, but produce more faces."
+	segments(integer) : "Segments" : 8 : "Number of nodes to generate between each cable. Higher values make smoother cables, but produce more faces."
+	seg_threshold(float) : "Segment Threshold" : 0 : "Optimise the cable by removing segments that curve with a smaller angle than this."
 	sides(integer) : "Sides" : 8 : "Number of faces for each cylindrical section. Only the value at the start of the cable is used."
 	radius(float) : "Radius" : 1.0 : "Radius of this cable section."
 

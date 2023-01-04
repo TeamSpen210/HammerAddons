@@ -7,7 +7,7 @@ from collections import defaultdict
 from enum import Enum
 from pathlib import Path
 from typing import (
-    Optional, List, Tuple, FrozenSet,
+    Callable, Mapping, Optional, List, Tuple, FrozenSet,
     TypeVar, MutableMapping, NewType, Set, Iterable, Dict, Iterator,
 )
 
@@ -100,6 +100,7 @@ class RopePhys:
 ROPE_GRAVITY = -1500
 SIM_TIME = 5.00
 TIME_STEP = 1/50
+SIM_TICKS = round(SIM_TIME / TIME_STEP)
 
 
 @attrs.frozen(hash=False)
@@ -149,6 +150,7 @@ class Config:
     type: RopeType
     material: str
     segments: int
+    seg_threshold: float
     side_count: int
     radius: float
     interp: InterpType
@@ -268,10 +270,15 @@ class Config:
         # Rescale this, so that if it's 1, the pixels are square.
         v_scale *= (u_max - u_min) / (2*math.pi*radius)
 
+        # ent['seg_threshold'] = '1.0'
+        # segments = 64
+        seg_threshold = abs(math.sin(math.radians(conv_float(ent['seg_threshold'], 0.0))))
+
         return cls(
             rope_type,
             material,
             segments,
+            seg_threshold,
             side_count,
             radius,
             interp_type,
@@ -299,6 +306,7 @@ class Config:
             self,
             material='phy',
             segments=self.segments if self.coll_segments == -1 else self.coll_segments,
+            seg_threshold=0.0,
             side_count=self.coll_side_count,
             radius=VAC_COLL_RADIUS if self.type.is_vactube else self.radius,
         )
@@ -538,7 +546,11 @@ def interpolate_straight(node1: Node, node2: Node, seg_count: int) -> List[Node]
     """Simply interpolate in a straight line."""
     diff = (node2.pos - node1.pos) / (seg_count + 1)
     return [
-        Node(node1.pos + diff * i, node1.config, lerp(i, 0, seg_count+1, node1.radius, node2.radius))
+        Node(
+            node1.pos + diff * i,
+            node1.config,
+            lerp(i, 0, seg_count+1, node1.radius, node2.radius),
+        )
         for i in range(1, seg_count + 1)
     ]
 
@@ -603,9 +615,7 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
     ]
     springs = list(zip(points, points[1:]))
 
-    time = 0
-    step = TIME_STEP
-    gravity = Vec(z=ROPE_GRAVITY) * step**2
+    gravity = Vec(z=ROPE_GRAVITY) * TIME_STEP**2
     # Valve uses 3 iterations, but they only ever have 10 subdivisions.
     # More causes the springs to fail and start sagging, so increase the
     # iteration to compensate if you use more.
@@ -614,8 +624,7 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
 
     # Start/end doesn't move.
     anchor1, *moveable, anchor2 = points
-    while time < SIM_TIME:
-        time += step
+    for tick in range(SIM_TICKS):
         points[0].pos = node1.pos.copy()
         points[-1].pos = node2.pos.copy()
         # Gravity.
@@ -646,9 +655,16 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
     ]
 
 
+
+INTERPOLATORS: Mapping[InterpType, Callable[[Node, Node, int], List[Node]]] = {
+    InterpType.STRAIGHT: interpolate_rope,
+    InterpType.CATMULL_ROM: interpolate_catmull_rom,
+    InterpType.ROPE: interpolate_rope,
+}
+
 def interpolate_all(nodes: Set[Node]) -> None:
     """Produce nodes in-between each user-made node."""
-    # Create the nodes and put them in a seperate list, then add them
+    # Create the nodes and put them in a separate list, then add them
     # to the actual nodes list second. This way sections that have been interpolated
     # don't affect the interpolation of neighbouring sections.
 
@@ -657,16 +673,50 @@ def interpolate_all(nodes: Set[Node]) -> None:
         if node1.next is None or node1.config.segments <= 0:
             continue
         node2 = node1.next
-        interp_type = node1.config.interp
-        func = globals()['interpolate_' + interp_type.name.casefold()]
+        func = INTERPOLATORS[node1.config.interp]
         points = func(node1, node2, node1.config.segments)
 
-        for a, b in zip(points, points[1:]):
-            a.next = b
-            b.prev = a
-        points[0].prev = node1
-        points[-1].next = node2
-        segments.append(points)
+        if 0.0 < (threshold := node1.config.seg_threshold):
+            # Compare the previous and next normals, strip those which are sufficiently close to
+            # straight.
+            normals = [
+                Vec.dot(
+                    (point.pos - a.pos).norm(),
+                    (b.pos - point.pos).norm()
+                ) for a, point, b in zip(
+                    [node1, *points[:-1]],
+                    points,
+                    [*points[1:], node2],
+                )
+            ]
+            LOGGER.error('Culling point normals: {} <= {}', [f'{1.0-x:.6f}' for x in normals], threshold)
+            points = [
+                point
+                for point, norm in zip(points, normals)
+                if 1.0 - norm >= threshold
+            ]
+            #
+            # points = [
+            #     point for a, point, b in zip(
+            #         [node1, *points[:-1]],
+            #         points,
+            #         [*points[1:], node2],
+            #     )
+            #     if 1.0 - Vec.dot(
+            #         (point.pos - a.pos).norm(),
+            #         (b.pos - point.pos).norm()
+            #     ) <= threshold
+            # ]
+
+        # Link up all the previous/next fields.
+        if points:
+            for a, b in zip(points, points[1:]):
+                a.next = b
+                b.prev = a
+            points[0].prev = node1
+            points[-1].next = node2
+            segments.append(points)
+        # else: All of them got removed, we already linked the first/last.
 
     for points in segments:
         nodes.update(points)
@@ -677,8 +727,8 @@ def interpolate_all(nodes: Set[Node]) -> None:
     for node in list(nodes):
         if node.prev is None or node.next is None:
             continue
-        off1 = node.pos - node.prev.pos
-        off2 = node.next.pos - node.pos
+        off1 = (node.pos - node.prev.pos).norm()
+        off2 = (node.next.pos - node.pos).norm()
         if Vec.dot(off1, off2) < 0.7:
             new_node = Node(node.pos.copy(), node.config, node.radius)
             nodes.add(new_node)
@@ -1253,7 +1303,8 @@ async def comp_prop_rope(ctx: Context) -> None:
     # To group nodes, take each group out, then search recursively through
     # all connections from it to other nodes.
     todo = set(all_nodes.values())
-    with ModelCompiler.from_ctx(ctx, 'ropes', version=2) as compiler:
+    with ModelCompiler.from_ctx(ctx, 'ropes', version=3) as compiler:
+        compiler._built_models.clear()
         async with trio.open_nursery() as nursery:
             while todo:
                 dyn_ents: List[Entity] = []
