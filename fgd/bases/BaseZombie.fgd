@@ -1,4 +1,0 @@
-@BaseClass base(BaseNPC) 
-= BaseZombie
-	[
-	]

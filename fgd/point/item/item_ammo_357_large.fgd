@@ -1,4 +1,4 @@
-@PointClass base(ItemAmmo) 
+@PointClass base(Item) 
 	appliesto(+HL2_ENTITIES)
 	studio("models/items/357ammobox.mdl")
 = item_ammo_357_large: "Large Box of 357 ammo"

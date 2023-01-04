@@ -1,4 +1,4 @@
-@NpcClass base(BaseZombie) 
+@NpcClass base(BaseNPC) 
 	appliesto(+HL2_ENTITIES)
 	studio("models/Zombie/Fast_torso.mdl") 
 = npc_fastzombie_torso: "Fast Zombie Torso"

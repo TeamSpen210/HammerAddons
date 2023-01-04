@@ -1,3 +1,0 @@
-@BaseClass base(Item) = ItemAmmo
-	[
-	]

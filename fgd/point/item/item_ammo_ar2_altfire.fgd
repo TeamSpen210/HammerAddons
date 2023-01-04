@@ -1,4 +1,4 @@
-@PointClass base(ItemAmmo) 
+@PointClass base(Item) 
 	appliesto(+HL2_ENTITIES)
 	studio("models/items/combine_rifle_ammo01.mdl")
 = item_ammo_ar2_altfire: "AR2 Alt-fire Round"
