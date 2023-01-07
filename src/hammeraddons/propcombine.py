@@ -278,9 +278,9 @@ async def compile_func(
     lookup_model, volume_tolerance = args
 
     # Unify these properties.
-    surfprops = set()  # type: Set[str]
-    cdmats = set()  # type: Set[str]
-    contents = set()  # type: Set[int]
+    surfprops: Set[str] = set()
+    cdmats: Set[str] = set()
+    contents: Set[int] = set()
 
     for prop in prop_pos:
         qc, mdl = lookup_model(prop.model)
