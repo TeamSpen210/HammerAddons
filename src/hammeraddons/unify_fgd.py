@@ -838,9 +838,9 @@ def action_export(
 
         print('Merging tags...')
         for ent in list(fgd):
-            # If it's set as not in engine, strip.
-            if not TAGS_NOT_ENGINE.isdisjoint(get_appliesto(ent)):
-                del fgd.entities[ent.classname.casefold()]
+            # We want to include not-in-engine entities like func_detail still, for parsing
+            # VMFs and the like.
+
             # Strip applies-to helper and ordering helper.
             ent.helpers[:] = [
                 helper for helper in ent.helpers
