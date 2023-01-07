@@ -952,6 +952,9 @@ def action_export(
                             elif base_value.type is ValueTypes.FLOAT and value.type is ValueTypes.INT:
                                 # Just constraining it down to a whole number.
                                 pass
+                            elif attr_name != 'keyvalues' and base_value.type is ValueTypes.VOID:
+                                # Base ignores parameters, but child has some - that's fine.
+                                pass
                             else:
                                 print(f'{ent.classname}.{key}: {value.type} != base {base_value.type}')
 
