@@ -13,6 +13,7 @@
 * Added new blocklist/allowlist options to permit fine-grained control of which files get packed.
   * A specific option was added to strip existing cubemap files from the map, if this is necessary to fix crashes while building cubemaps.
 * Add transform to allow using `/n` in `game_text` messages to produce multiline ones.
+* #167: Add `comp_player_input_helper`, an entity to trick Hammer into autocompleting player inputs.
 
 --------------------
 
@@ -48,7 +49,8 @@
 
 # Version 2.5.0
 * Fix two issues causing produced BSPs to be potentially corrupt. If your maps are mysteriously crashing on load, this may fix the issue.
-* Particle systems will now be detected and packed along with their dependencies. This needs configuration in the config file, since different games use different filenames.
+* Particle systems will now be detected and packed along with their dependencies. 
+  This needs configuration in the config file, since different games use different filenames.
 * Optionally, the postcompiler can collapse and remove `func_instance_io_proxy` from maps entirely to save ents.
 * Add comp_sequential_call: finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order.
 * Add `comp_flicker`: fires on/off and skin inputs repeatedly to simulate a flicker-on effect.
@@ -75,10 +77,11 @@
 --------------------
 
 # Version 2.2.0 
-* Add `comp_prop_rope`/`comp_prop_cable`: These allow generating 3D static prop versions of cables, like in Source 2. Place them down, choose a material, then connect them together like regular `move_rope`/`keyframe_rope`.
+* Add `comp_prop_rope`/`comp_prop_cable`: These allow generating 3D static prop versions of cables, like in Source 2. 
+  Place them down, choose a material, then connect them together like regular `move_rope`/`keyframe_rope`.
 * The postcompiler is now able to properly handle pre-L4D entity outputs.
 * Added "plugin" support to the compiler - directories can be specified which contain scripts to be run on the map in addition to the existing ones.
-*  Vactubes now have a "next junction" option for manually specifying the next location, and have a 45 degree curve variant.
+* Vactubes now have a "next junction" option for manually specifying the next location, and have a 45 degree curve variant.
 * Add a pile of new entity sprites by @lazyRares.
 * Propcombine can now use a bundled copy of Crowbar to decompile models if the sources are not available.
 
