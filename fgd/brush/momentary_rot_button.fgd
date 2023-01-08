@@ -98,7 +98,7 @@
 		1: "Backward"
 		]
 
-	solidbsp[ASW](boolean) : "Solid BSP" : 0 : "If set, use the SOLID_BSP collision type."
+	solidbsp[ASW, P2](boolean) : "Solid BSP" : 0 : "If set, use the SOLID_BSP collision type."
 
 	glow[L4D](target_destination) : "Glow Entity" : : "The name of an entity that will get the +use glow for this button."
 
