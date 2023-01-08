@@ -1,9 +1,9 @@
 @SolidClass base(BaseEntityBrush)
 = func_clip_vphysics: "A brush entity that's considered solid to vphysics."
 	[
-	spawnflags(flags) =
+	spawnflags[MESA](flags) =
 		[
-		2: "Ignore player Grenades/Projectiles" : 1 [MESA]
+		2: "Ignore player Grenades/Projectiles" : 1
 		]
 
 	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator collides with me. " +

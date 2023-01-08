@@ -10,7 +10,7 @@
 		2: "Motion Disabled" : 0
 		4: "Suck On Touch" : 0
 		8: "Allow Attached Rotation" : 0
-		16: "Coast jeep pickup hack" : 0
+		16: "Coast jeep pickup hack" : 0 [HL2]
 		32: "Prevent player pickup" : 0 [MBase]
 		]
 

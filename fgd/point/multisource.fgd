@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	autovis(HL1) 
 	iconsprite("editor/multisource")
+	appliesto(complete)
 = multisource: "Goldsource-era entity for combining multiple inputs. Superceded by the I/O system, and logic_branch_listener." +
 	"Entities with their 'trigger' keyvalue set to the name of this will be detected, Then once they all have Use-ed this, it will fire the output."
 	[

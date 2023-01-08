@@ -2,7 +2,7 @@
 	iconsprite("editor/info_target.vmt") 
 	studio("models/editor/axis_helper.mdl") 
 	halfgridsnap
-= info_target: "An entity that does nothing. Very useful as a positioning entity for other entities to refer to (i.e. the endpoint of an env_beam)"
+= info_target: "An entity that does nothing. Very useful as a positioning entity for other entities to refer to (e.g. the endpoint of an env_beam)"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
