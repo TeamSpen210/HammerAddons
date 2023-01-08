@@ -1,4 +1,6 @@
-@PointClass base(BaseEntityPoint, DamageFilter) 
+@BaseClass base(PlayerInputs) appliesto(MBase) = _playerproxy_inputs: "Unknown inputs and KV are passed throught to the player." []
+
+@PointClass base(BaseEntityPoint, DamageFilter, _playerproxy_inputs) 
 	color(200 0 0) 
 	iconsprite("editor/logic_playerproxy.vmt")
  	autovis(Point Entities, Globals, Player Proxy)
@@ -79,41 +81,6 @@
 	output OnDuck[since_P2](void) : "Fired when a player starts to duck."
 	output OnUnDuck[since_P2](void) : "Fired when a player releases the duck button."
 	output OnJump[since_P2](void) : "Fired when a player jumps."
-
-	// These are I/O/KV on the player itself. They're exposed through logic_playerproxy in Mapbase as it now passes unknown inputs and KV to the player.
-	input SetBodyGroup[MBase](integer) : "HACK: Sets this player's body group (from 0 - n). You'd better know what you are doing!"
-	input Ignite[MBase](void) : "Ignite, burst into flames"
-	input IgniteLifetime[MBase](float) : "Ignite, with a parameter lifetime."
-	input IgniteNumHitboxFires[MBase](integer) : "Ignite, with a parameter number of hitbox fires."
-	input IgniteHitboxFireScalev[MBase](float) : "Ignite, with a parameter hitbox fire scale."
-	
-	input GiveWeapon[MBase](string) : "Gives the player a weapon of the specified class name."
-	input DropWeapon[MBase](string) : "Causes the player to drop its current weapon in front of it."
-	
-	input AddArmor[MBase](integer)    : "Adds to the player's current armor value. " +
-		"Total armor cannot exceed 100 unless a different value is set in logic_playerproxy."
-	input RemoveArmor[MBase](integer) : "Removes from the player's current armor value."
-	input SetArmor[MBase](integer)    : "Sets the player's current armor value. " +
-		"Cannot exceed 100 unless a different value is set in logic_playerproxy."
-	
-	input AddAuxPower[MBase](float)    : "Adds to the player's current aux power. Total power cannot exceed 100."
-	input RemoveAuxPower[MBase](float) : "Removes from the player's current aux power. Total power cannot exceed 100."
-	input SetAuxPower[MBase](float)    : "Sets the player's current aux power. Total power cannot exceed 100."
-	
-	input TurnFlashlightOn[MBase](void)  : "Turns the player's flashlight on."
-	input TurnFlashlightOff[MBase](void) : "Turns the player's flashlight off."
-	
-	input SquadForceSummon[MBase](void)             : "Forces the player's squad to be resummoned."
-	input SquadForceGoTo[MBase](target_destination) : "Forces the player's squad to go to a specific point or entity."
-	
-	input EnableGeigerCounter[MBase](void)  : "Allows the player's geiger counter to respond to radiation if it was prevented before."
-	input DisableGeigerCounter[MBase](void) : "Prevents the player's geiger counter from responding to radiation."
-	
-	input ShowSquadHUD[MBase](void) : "Shows the player's squad status HUD if it was hidden before."
-	input HideSquadHUD[MBase](void) : "Hides the player's squad status HUD."
-	
-	input SetHUDVisibility[MBase](bool)   : "Sets whether the HUD should be disabled. Also disables most forms of weapon switching."
-	input SetSuppressAttacks[MBase](bool) : "Sets whether attacks should be suppressed."
 
 	@resources []
 	]
