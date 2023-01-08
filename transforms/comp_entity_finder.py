@@ -2,7 +2,7 @@
 import itertools
 import math
 from enum import Enum
-from srctools import conv_bool, conv_float, Vec, Entity, Angle
+from srctools import FrozenVec, conv_bool, conv_float, Vec, Entity, Angle
 from srctools.logger import get_logger
 
 from hammeraddons.bsp_transform import trans, Context
@@ -53,10 +53,10 @@ def entity_finder(ctx: Context):
         targ_dot = math.cos(math.radians(targ_fov))
         normal = Vec(x=1) @ Angle.from_str(finder['angles'])
 
-        targ_pos = Vec.from_str(finder['origin'])
+        targ_pos = FrozenVec.from_str(finder['origin'])
         if targ_ref:
             for ent in ctx.vmf.search(targ_ref):
-                targ_pos = Vec.from_str(ent['origin'])
+                targ_pos = FrozenVec.from_str(ent['origin'])
                 break
             else:
                 LOGGER.warning(
@@ -73,7 +73,7 @@ def entity_finder(ctx: Context):
             )
             continue
 
-        key = (targ_classes, targ_radius, blacklist, targ_fov) + targ_pos.as_tuple()
+        key = (targ_classes, targ_radius, blacklist, targ_fov, targ_pos)
         try:
             found_ent = target_cache[key]
         except KeyError:
@@ -113,7 +113,7 @@ def entity_finder(ctx: Context):
 
                 # If at the same point, direction is meaningless.
                 # Treat that as always passing the FOV check.
-                if dist_to != 0.0 and Vec.dot(offset.norm(), normal) < targ_dot:
+                if abs(dist_to) > 1e-6 and Vec.dot(offset.norm(), normal) < targ_dot:
                     continue
 
                 if targ_radius == 0 or dist_to < targ_radius:
