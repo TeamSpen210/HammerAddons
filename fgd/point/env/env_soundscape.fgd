@@ -597,7 +597,7 @@
 
 	// Inputs
 	input Enable(void) : "Enable the soundscape."
-	input Disabled(void) : "Disable the soundscape."
+	input Disable(void) : "Disable the soundscape."
 	input ToggleEnabled(void) : "Toggle the soundscape enabled state."
 
 	// Outputs
