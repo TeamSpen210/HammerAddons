@@ -3,6 +3,7 @@
 * Added new `srctools_paths.vdf` config, allowing specifying the base location for all paths in the main config. 
   This separation allows mod projects to synchronise the main config, while customising the new path config for installation locations on each computer.
 * Fix `scriptlist` being used in pre-L4D2 branches.
+* Fix an issue causing a single brush face in the map to be "missing" a triangle.
 * Add some support for Portal 2 Educational Version and The Stanley Parable (via @Adrthegamedev).
 * Clarify that Portal 2 uses `maps/map_name_particles.txt`.
 * Ensure culled bases are replaced by their own bases (fixes `Item`, for example).
