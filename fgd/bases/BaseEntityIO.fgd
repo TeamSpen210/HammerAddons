@@ -1,0 +1,73 @@
+// IO available on all entities.
+@BaseClass = BaseEntityIO
+	[
+	// Inputs
+	input Kill(void) : "Removes this entity from the world."
+	input KillHierarchy(void) : "Removes this entity and all its children from the world."
+	
+	input AddOutput(string) : "Adds an entity I/O connection to this entity or changes keyvalues dynamically. Format:" +
+		"\n'<output name> <targetname>:<inputname>:" + 
+		"<parameter>:<delay>:<max times to fire (-1 == infinite, 1 = only once)>'\n" +
+		"or 'keyvalue newval'. Very dangerous, use with care."
+	input FireUser1(void) : "Causes this entity's OnUser1 output to be fired."
+	input FireUser2(void) : "Causes this entity's OnUser2 output to be fired."
+	input FireUser3(void) : "Causes this entity's OnUser3 output to be fired."
+	input FireUser4(void) : "Causes this entity's OnUser4 output to be fired."
+	input Use(void) : "Same as a player invoking +use; may not do anything. Can also be invoked by creating an output that does not specify an input."
+	input DispatchEffect[until_L4D](string) : "Dispatch an effect from the entity's origin. See https://developer.valvesoftware.com/wiki/List_of_Client_Effects"
+
+	input RunScriptFile[VSCRIPT](string) : "Execute a game script file from disk."
+	input RunScriptCode[+VSCRIPT, -srctools, -TF2](script) : "Execute a string of script source code."
+	input RunScriptCode[+VSCRIPT, +srctools, -TF2](script) : "Execute a string of script source code. Backtick ( ` ) characters will be converted to quotes in-game for strings."
+	// TF2 does this in game code.
+	input RunScriptCode[+TF2, +VSCRIPT](script) : "Execute a string of script source code. Backtick ( ` ) characters will be converted to quotes in-game for strings."
+	input RunScriptCodeQuotable[+MBase, +VSCRIPT](string) : "Execute a string of script source code which converts double apostrophes ('') to quotation marks for strings."
+	input CallScriptFunction[VSCRIPT](string) : "Execute the given function name."
+	input ClearScriptScope[+MBase, +VSCRIPT](void) : "Clears this entity's script scope"
+	input TerminateScriptScope[+TF2, +VSCRIPT](void) : "Terminates the script scope of the entity."
+
+	// Outputs
+	output OnUser1(void) : "Fired in response to FireUser1 input."
+	output OnUser2(void) : "Fired in response to FireUser2 input."
+	output OnUser3(void) : "Fired in response to FireUser3 input."
+	output OnUser4(void) : "Fired in response to FireUser4 input."
+	output OnKilled[MBase, L4D](void) : "Fired when the entity is killed and removed from the game."
+
+	// Mapbase BaseEntity changes:
+	input PassUser1[MBase](string) : "Causes this entity's OutUser1 output to be fired, passing along the parameter unchanged."
+	input PassUser2[MBase](string) : "Causes this entity's OutUser2 output to be fired, passing along the parameter unchanged."
+	input PassUser3[MBase](string) : "Causes this entity's OutUser3 output to be fired, passing along the parameter unchanged."
+	input PassUser4[MBase](string) : "Causes this entity's OutUser4 output to be fired, passing along the parameter unchanged."
+
+	input FireRandomUser[MBase](void) : "Fires OnUser1, OnUser2, OnUser3, or OnUser4 with a 25% chance of each."
+	input PassRandomUser[MBase](string) : "Fires OutUser1, OutUser2, OutUser3, or OutUser4 with a 25% chance of each. The parameter is passed along unchanged."
+	
+	input KillIfNotVisible[MBase](void) : "Removes this entity if it is not in the player's viewcone."
+	input KillWhenNotVisible[MBase](void) : "Removes this entity when it is not in the player's viewcone."
+	
+	input FireOutput[MBase](string) : "Fires the named output on this entity. Format: '<output name>:<activator>:<caller>:<parameter>:<delay>' (OnDeath:hl3cardgame:gaben). Everything beyond the output name is optional."
+	input RemoveOutput[MBase](string) : "Removes all instances of the named output on this entity. Wildcards are supported, meaning you could just pass '*' to wipe all outputs from this entity."
+	input AcceptInput[MBase](string) : "Fires the named input on this entity. Format: '<input name>:<parameter>:<activator>:<caller>:<output ID>' (SetTarget:cheese). Everything beyond the input name is optional. Mind the fact this is arranged differently from FireOutput, having the parameter right after the input name."
+	input CancelPending[MBase](void) : "Cancels any events fired by this entity that are currently pending in the I/O event queue."
+	
+	input AddSpawnFlags[MBase](integer) : "Adds spawnflag(s) to this entity. Many spawnflags have their respective numbers suffixed in this FGD."
+	input RemoveSpawnFlags[MBase](integer) : "Removes spawnflag(s) to this entity. Many spawnflags have their respective numbers suffixed in this FGD."
+
+	input AddSolidFlags[MBase](integer) : "Adds solid flags to this entity."
+	input RemoveSolidFlags[MBase](integer) : "Removes solid flags from this entity."
+
+	input ChangeVariable[MBase](string) : "Similar to AddOutput, except it changes an internal variable similar to logic_datadesc_accessor instead. Very dangerous, use with care."
+	
+	input SetEntityName[MBase](target_destination) : "Sets this entity's name that other entities should refer to it by."
+	input SetTarget[MBase](target_destination) : "Sets this entity's target. This is specific to certain entities, particularly logic entities that involve a target."
+	input SetOwnerEntity[MBase](target_destination) : "Sets this entity's owner entity. This has nothing to do with parenting and has more to do with collision and kill credits."
+	
+	input SetThinkNull[MBase](void) : "Sets this entity's general think function to null. Behavior varies from entity to entity.."
+	
+	input Use[MBase](void) : "More or less replicates the player interacting with an entity. (+USE)"
+
+	output OutUser1[MBase](string) : "Fires in response to PassUser1 input, with the parameter passed through unchanged."
+	output OutUser2[MBase](string) : "Fires in response to PassUser2 input, with the parameter passed through unchanged."
+	output OutUser3[MBase](string) : "Fires in response to PassUser3 input, with the parameter passed through unchanged."
+	output OutUser4[MBase](string) : "Fires in response to PassUser4 input, with the parameter passed through unchanged."
+	]
