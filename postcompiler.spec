@@ -38,8 +38,8 @@ a = Analysis(
     datas=DATAS,
     hiddenimports=[
         # Ensure these modules are available for plugins.
-        'abc', 'array', 'base64', 'binascii', 'binhex',
-        'bisect', 'colorsys', 'collections', 'csv', 'datetime',
+        'abc', 'array', 'base64', 'binascii', 'binhex', 'graphlib',
+        'bisect', 'colorsys', 'collections', 'csv', 'datetime', 'contextlib',
         'decimal', 'difflib', 'enum', 'fractions', 'functools',
         'io', 'itertools', 'json', 'math', 'random', 're',
         'statistics', 'string', 'struct',
