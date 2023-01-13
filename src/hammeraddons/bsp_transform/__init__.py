@@ -1,4 +1,5 @@
 """Transformations that can be applied to the BSP file."""
+import warnings
 from typing import Awaitable, Callable, Dict, FrozenSet, List, Mapping, Optional, Tuple
 from pathlib import Path
 import inspect
@@ -46,7 +47,6 @@ class Context:
         bsp: BSP,
         game: Game,
         *,
-        fgd: Optional[FGD] = None,
         studiomdl_loc: Optional[Path]=None,
         tags: FrozenSet[str]=frozenset(),
     ) -> None:
@@ -55,7 +55,7 @@ class Context:
         self.bsp = bsp
         self.pack = pack
         self.bsp_path = Path(bsp.filename)
-        self.fgd = fgd or FGD.engine_dbase()
+        self._fgd: Optional[FGD] = None
         self.tags = tags
         self.game = game
         self.studiomdl = studiomdl_loc
@@ -63,6 +63,13 @@ class Context:
 
         self._io_remaps: Dict[Tuple[str, str], Tuple[List[Output], bool]] = {}
         self._ent_code: Dict[Entity, str] = {}
+
+    @property
+    def fgd(self) -> FGD:
+        warnings.warn("Use EntityDef.engine_def() if possible.")
+        if self._fgd is None:
+            self._fgd = FGD.engine_dbase()
+        return self._fgd
 
     def add_io_remap(self, name: str, *outputs: Output, remove: bool=True) -> None:
         """Register an output to be replaced.
@@ -142,11 +149,10 @@ async def run_transformations(
     game: Game,
     studiomdl_loc: Optional[Path]=None,
     config: Mapping[str, Keyvalues]=EmptyMapping,
-    fgd: Optional[FGD]=None,
     tags: FrozenSet[str] = frozenset(),
 ) -> None:
     """Run all transformations."""
-    context = Context(filesys, vmf, pack, bsp, game, studiomdl_loc=studiomdl_loc, fgd=fgd, tags=tags)
+    context = Context(filesys, vmf, pack, bsp, game, studiomdl_loc=studiomdl_loc, tags=tags)
 
     for func_name, func in sorted(
         TRANSFORMS.items(),

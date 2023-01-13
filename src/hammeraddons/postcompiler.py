@@ -110,8 +110,6 @@ async def main(argv: List[str]) -> None:
         '\n'.join([system.path for system, prefix in conf.fsys.systems]),
     )
 
-    fgd = FGD.engine_dbase()
-
     LOGGER.info('Loading soundscripts...')
     assert conf.opts.path is not None
     packlist.load_soundscript_manifest(conf.loc.with_name('srctools_sndscript_data.dmx'))
@@ -177,7 +175,6 @@ async def main(argv: List[str]) -> None:
         conf.game,
         studiomdl_loc,
         transform_conf,
-        fgd,
         pack_tags,
     )
 

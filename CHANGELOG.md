@@ -15,6 +15,7 @@
   * A specific option was added to strip existing cubemap files from the map, if this is necessary to fix crashes while building cubemaps.
 * Add transform to allow using `/n` in `game_text` messages to produce multiline ones.
 * #167: Add `comp_player_input_helper`, an entity to trick Hammer into autocompleting player inputs.
+* Transforms should now use `EntityDef.engine_def()`, not `ctx.fgd` to allow partially parsing the database.
 
 --------------------
 
