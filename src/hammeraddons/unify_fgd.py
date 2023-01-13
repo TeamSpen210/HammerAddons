@@ -3,7 +3,7 @@
 This allows sharing definitions among different engine versions.
 """
 from typing import (
-    Callable, Dict, FrozenSet, List, MutableMapping, Optional, Set, Tuple, TypeVar,
+    Callable, Dict, FrozenSet, List, MutableMapping, Optional, Set, Tuple, TypeVar, Union,
 )
 from collections import Counter, defaultdict
 from lzma import LZMAFile
@@ -834,6 +834,14 @@ def action_export(
     if engine_mode:
         # In engine mode, we don't care about specific games.
         print('Collapsing bases...')
+        aliases: dict[EntityDef, EntityDef] = {}
+        for ent in fgd:
+            if ent.is_alias:
+                try:
+                    [base] = ent.bases
+                except ValueError as exc:
+                    raise ValueError('Bad alias base for: ' + ent.classname) from exc
+                aliases[ent] = base
         fgd.collapse_bases()
 
         print('Merging tags...')
@@ -848,7 +856,9 @@ def action_export(
             ]
             # Force everything to inherit from CBaseEntity, since
             # we're then removing any KVs that are present on that.
-            if ent.classname != BASE_ENTITY:
+            if ent.is_alias:
+                ent.bases = [aliases[ent]]
+            elif ent.classname != BASE_ENTITY:
                 ent.bases = [base_entity_def]
 
             value: EntAttribute
@@ -1041,7 +1051,7 @@ def action_export(
 
     for classname, ent in list(fgd.entities.items()):
         if ent.type is EntityTypes.BASE:
-            if ent not in used_bases:
+            if ent not in used_bases and ent is not base_entity_def:
                 del fgd.entities[classname]
                 continue
             else:
