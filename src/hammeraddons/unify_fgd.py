@@ -834,7 +834,7 @@ def action_export(
     if engine_mode:
         # In engine mode, we don't care about specific games.
         print('Collapsing bases...')
-        aliases: dict[EntityDef, EntityDef] = {}
+        aliases: Dict[EntityDef, Union[str, EntityDef]] = {}
         for ent in fgd:
             if ent.is_alias:
                 try:
@@ -1103,11 +1103,11 @@ def action_export(
     print('Exporting...')
 
     if as_binary:
-        with open(output_path, 'wb') as bin_f, LZMAFile(bin_f, 'w') as comp:
+        with open(output_path, 'wb') as bin_f:
             # Private, reserved for us.
             # noinspection PyProtectedMember
             from srctools._engine_db import serialise
-            serialise(fgd, comp)
+            serialise(fgd, bin_f)
     else:
         with open(output_path, 'w', encoding='iso-8859-1') as txt_f:
             fgd.export(txt_f)

@@ -225,8 +225,8 @@ async def main(argv: List[str]) -> None:
 
     if conf.opts.get(config.AUTO_PACK) and args.allow_pack:
         LOGGER.info('Analysing packable resources...')
-        packlist.pack_fgd(
-            bsp_file.ents, fgd,
+        packlist.pack_from_ents(
+            bsp_file.ents,
             mapname=Path(bsp_file.filename).stem,  # TODO: Include directories?
             tags=pack_tags,
         )
