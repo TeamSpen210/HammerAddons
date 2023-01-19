@@ -110,8 +110,6 @@ async def main(argv: List[str]) -> None:
         '\n'.join([system.path for system, prefix in conf.fsys.systems]),
     )
 
-    fgd = FGD.engine_dbase()
-
     LOGGER.info('Loading soundscripts...')
     assert conf.opts.path is not None
     packlist.load_soundscript_manifest(conf.loc.with_name('srctools_sndscript_data.dmx'))
@@ -177,7 +175,6 @@ async def main(argv: List[str]) -> None:
         conf.game,
         studiomdl_loc,
         transform_conf,
-        fgd,
         pack_tags,
     )
 
@@ -228,8 +225,8 @@ async def main(argv: List[str]) -> None:
 
     if conf.opts.get(config.AUTO_PACK) and args.allow_pack:
         LOGGER.info('Analysing packable resources...')
-        packlist.pack_fgd(
-            bsp_file.ents, fgd,
+        packlist.pack_from_ents(
+            bsp_file.ents,
             mapname=Path(bsp_file.filename).stem,  # TODO: Include directories?
             tags=pack_tags,
         )
@@ -304,6 +301,13 @@ async def main(argv: List[str]) -> None:
 
     LOGGER.info('Writing BSP...')
     bsp_file.save()
+
+    try:
+        from srctools.fgd import _engine_db_stats  # noqa
+    except AttributeError:
+        pass
+    else:
+        LOGGER.info('FGD database usage: {}', _engine_db_stats())
 
     LOGGER.info("HammerAddons postcompiler complete!")
 

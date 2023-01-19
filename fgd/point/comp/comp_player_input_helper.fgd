@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityPoint, PlayerInputs)
+@PointClass base(PlayerInputs)
 	iconsprite("editor/comp_player_input_helper.vmt")
  	appliesto(srctools)
 = comp_player_input_helper: "Place this entity to trick Hammer into autocompleting inputs fired at !player and similar names. This is deleted during compile."
