@@ -302,6 +302,13 @@ async def main(argv: List[str]) -> None:
     LOGGER.info('Writing BSP...')
     bsp_file.save()
 
+    try:
+        from srctools.fgd import _engine_db_stats  # noqa
+    except AttributeError:
+        pass
+    else:
+        LOGGER.info('FGD database usage: {}', _engine_db_stats())
+
     LOGGER.info("HammerAddons postcompiler complete!")
 
 if __name__ == '__main__':
