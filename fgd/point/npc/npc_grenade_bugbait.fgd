@@ -1,0 +1,13 @@
+@PointClass base(BaseEntityAnimating) 
+	appliesto(HL2, EP1, EP2, P1)
+	studioprop("models/weapons/w_bugbait.mdl") 
+= npc_grenade_bugbait: "The actual thrown bugbait. This can be manually spawned to replicate the player's throwing."
+	[
+	@resources
+		[
+		sound GrenadeBugBait.Splat
+		model "models/weapons/w_bugbait.mdl"
+		entity grenade // Actual base class
+		entity env_sporeexplosion
+		]
+	]

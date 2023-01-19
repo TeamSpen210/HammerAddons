@@ -9,6 +9,8 @@
 		[
 		524288 : "Stay lit indefinitely" : 0 [Mesa]
 		]
+	
+	FlareLifetime[MBase](float) : "Flare lifetime" : 30 : "The amount of time the flare should be ignited."
 
 	input StartFlare[MBase](void) : "Ignites the flare."
 	input StopFlare[MBase](void) : "Extinguishes the flare."

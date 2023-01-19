@@ -1,10 +1,10 @@
 // All visible Brush entities have these options.
-@BaseClass base(BaseEntityBrush, RenderFields, ToggleDraw) 
+@BaseClass base(BaseEntityBrush, RenderFields, Reflection, ToggleDraw) 
 	sphere(fademindist) sphere(fademaxdist)
 = BaseEntityVisBrush
 	[
 	effects[engine](integer) : "Effect Flags" : 0
-	effects(choices) : "Effect Flags" : 0 : "For configuring visual effects. If you want to combine effects, " +
+	effects[complete](choices) : "Effect Flags" : 0 : "For configuring visual effects. If you want to combine effects, " +
 		"turn SmartEdit off and add the effect numbers together, i.e. 64 + 8 = 72." =
 		[
 		0 : "None"
@@ -34,7 +34,7 @@
 
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents dynamic shadows (e.g. player and prop shadows) from appearing on this entity."
 	disableshadowdepth[since_L4D](boolean) : "Disable ShadowDepth" : 0 : "Used to disable rendering into shadow depth (for flashlight) for this entity."
-	shadowdepthnocache[since_L4D](choices) : "Projected Texture Cache" : "0" : "Used to hint projected texture system whether it is sufficient to cache shadow volume of this entity or to force render it every frame instead." =
+	shadowdepthnocache[since_L4D, +complete](choices) : "Projected Texture Cache" : "0" : "Used to hint projected texture system whether it is sufficient to cache shadow volume of this entity or to force render it every frame instead." =
 		[
 		0: "Default"
 		1: "No cache = render every frame"

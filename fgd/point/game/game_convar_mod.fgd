@@ -21,4 +21,6 @@
 	// Inputs
 	input Activate(void) : "Begins modding the cvars."
 	input Deactivate(void) : "Stops modding the cvars."
+
+	@resources []
 	]

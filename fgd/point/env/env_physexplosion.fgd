@@ -30,4 +30,6 @@
 
 	// Outputs
 	output OnPushedPlayer(void) : "Fires when the player is pushed by the explosion."
+
+	@resources []
 	]

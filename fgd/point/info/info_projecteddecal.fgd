@@ -12,4 +12,6 @@
 
 	// Inputs
 	input Activate(void) : "Force the decal to apply itself to the world."
+
+	@resources [] // Just the generic KV support
 	]

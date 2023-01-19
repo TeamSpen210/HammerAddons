@@ -4,7 +4,7 @@ import re
 from collections import defaultdict
 from typing import Type, Optional, Callable, Union
 
-from srctools.fgd import FGD, ValueTypes
+from srctools.fgd import EntityDef, ValueTypes
 from srctools.logger import get_logger
 from srctools.tokenizer import escape_text
 from srctools import Entity, Vec, conv_float, conv_bool, Angle
@@ -13,7 +13,7 @@ from hammeraddons.bsp_transform import trans, Context, check_control_enabled
 
 
 LOGGER = get_logger(__name__)
-MODES: dict[str, Callable[[Entity, Entity, FGD], str]] = {}
+MODES: dict[str, Callable[[Entity, Entity], str]] = {}
 
 
 def vs_vec(vec: Vec) -> str:
@@ -146,7 +146,7 @@ def comp_scriptvar(ctx: Context):
             )
             continue
         else:
-            code = mode_func(comp_ent, ref_ent, ctx.fgd)
+            code = mode_func(comp_ent, ref_ent)
 
         ent: Optional[Entity] = None
         for ent in ent_list:
@@ -215,32 +215,32 @@ def comp_scriptvar(ctx: Context):
 
 
 # Functions to call to compute the data to read.
-def mode_const(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+def mode_const(comp_ent: Entity, ent: Entity) -> str:
     """Set a simple constant."""
     return comp_ent['const'].replace('`', '"')
 
 
-def mode_string(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+def mode_string(comp_ent: Entity, ent: Entity) -> str:
     """Set a constant, as a string."""
     return '"{}"'.format(comp_ent['const'])
 
 
-def mode_bool(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+def mode_bool(comp_ent: Entity, ent: Entity) -> str:
     """Convert the value to a boolean."""
     return 'true' if conv_bool(comp_ent['const']) else 'false'
 
 
-def mode_inv_bool(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+def mode_inv_bool(comp_ent: Entity, ent: Entity) -> str:
     """Convert the value to a boolean, and invert it."""
     return 'false' if conv_bool(comp_ent['const']) else 'true'
 
 
-def mode_name(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+def mode_name(comp_ent: Entity, ent: Entity) -> str:
     """Set the value to the entity name."""
     return '"{}"'.format(ent['targetname'])
 
 
-def mode_handle(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+def mode_handle(comp_ent: Entity, ent: Entity) -> str:
     """Compute and return a handle to this entity."""
     pos = vs_vec(Vec.from_str(ent['origin']))
     if ent['targetname']:
@@ -249,7 +249,7 @@ def mode_handle(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
         return 'Entities.FindByClassnameWithin(null, "{}", {}, 1)'.format(ent['classname'], pos)
 
 
-def mode_keyvalue(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+def mode_keyvalue(comp_ent: Entity, ent: Entity) -> str:
     """Read a keyvalue from the entity, then match the type to a Squirrel type."""
     if ent is comp_ent:
         LOGGER.warning(
@@ -261,7 +261,7 @@ def mode_keyvalue(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
     keyvalue = comp_ent['const']
     key = ent[comp_ent['const']]
     try:
-        key_info = fgd[ent['classname']].kv[keyvalue]
+        key_info = EntityDef.engine_def(ent['classname']).kv[keyvalue]
     except KeyError:
         LOGGER.warning(
             'No definition for keyvalue "{}" for {} entities: '
@@ -275,40 +275,40 @@ def mode_keyvalue(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
     return KEYVALUES.get(key_info.type, squirrel_string)(key)
 
 
-def mode_pos(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+def mode_pos(comp_ent: Entity, ent: Entity) -> str:
     """Return the position of the entity."""
     pos = Vec.from_str(ent['origin'])
     scale = conv_float(comp_ent['const'], 1.0)
     return vs_vec(scale * pos)
 
 
-def mode_ang(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+def mode_ang(comp_ent: Entity, ent: Entity) -> str:
     """Return the angle of the entity, as a Vector."""
     return vs_vec(Vec.from_str(ent['angles']))
 
 
-def mode_qangle(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+def mode_qangle(comp_ent: Entity, ent: Entity) -> str:
     """Return the angle of the entity, as a Qangle for newer engines.."""
     return 'Qangle({})'.format(Vec.from_str(ent['angles']).join())
 
 
-def mode_off(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+def mode_off(comp_ent: Entity, ent: Entity) -> str:
     """Return the offset from the ent to the reference."""
     scale = conv_float(comp_ent['const'], 1.0)
     offset = Vec.from_str(ent['origin']) - Vec.from_str(comp_ent['origin'])
     return vs_vec(offset * scale)
 
 
-def mode_dist(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+def mode_dist(comp_ent: Entity, ent: Entity) -> str:
     """Return the distance from the ent to the reference."""
     scale = conv_float(comp_ent['const'], 1.0)
     offset = Vec.from_str(ent['origin']) - Vec.from_str(comp_ent['origin'])
     return str(offset.mag() * scale)
 
 
-def _mode_axes(norm: Vec) -> Callable[[Entity, Entity, FGD], str]:
+def _mode_axes(norm: Vec) -> Callable[[Entity, Entity], str]:
     """Return the given direction vector."""
-    def mode_func(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+    def mode_func(comp_ent: Entity, ent: Entity) -> str:
         """Rotate the axis by the given value."""
         out = round(norm @ Angle.from_str(ent['angles', '0 0 0']), 6)
         scale = conv_float(comp_ent['const'], 1.0)
@@ -316,9 +316,9 @@ def _mode_axes(norm: Vec) -> Callable[[Entity, Entity, FGD], str]:
     return mode_func
 
 
-def _mode_pos_axis(axis: str) -> Callable[[Entity, Entity, FGD], str]:
+def _mode_pos_axis(axis: str) -> Callable[[Entity, Entity], str]:
     """Return a single axis of the ent's position."""
-    def mode_func(comp_ent: Entity, ent: Entity, fgd: FGD) -> str:
+    def mode_func(comp_ent: Entity, ent: Entity) -> str:
         """Retrieve the specified axis."""
         pos = Vec.from_str(ent['origin'])
         scale = conv_float(comp_ent['const'], 1.0)

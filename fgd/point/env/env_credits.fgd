@@ -8,7 +8,14 @@
 	input RollCredits(void) : "Start the intro credits rolling."
 	input RollOutroCredits(void) : "Start the outro credits rolling."
 	input ShowLogo(void) : "Show the HL2 logo."
+	input SetLogoLength(float) : "Sets the amount of time the logo is displayed. Default is 5.0."
 
 	// Outputs
 	output OnCreditsDone(void) : "Fired when the credits having finished rolling."
+
+	@resources
+		[
+		// Credits are in this script file.
+		file "scripts/credits.txt"
+		]
 	]

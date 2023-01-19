@@ -1,13 +1,13 @@
 """Apply transformations that work on (almost) all entities."""
-import itertools
-from typing import List, Tuple, Dict
+from typing import Dict, List, Tuple
 from collections import defaultdict
+import itertools
 
-from srctools.logger import get_logger
 from srctools import Output
+from srctools.logger import get_logger
 from srctools.packlist import FileType
 
-from hammeraddons.bsp_transform import trans, Context
+from hammeraddons.bsp_transform import Context, trans
 
 
 LOGGER = get_logger(__name__)
@@ -58,23 +58,22 @@ def vscript_init_code(ctx: Context) -> None:
 def vscript_runscript_inputs(ctx: Context) -> None:
     """Handle RunScript* inputs.
 
-    For RunScriptCode, allow using quotes in the parameter.
+    For RunScriptCode, allow using quotes in the parameter.  TF2 implements this in game code,
+    so we don't need to do it there.
 
     This is done by using ` as a replacement for double-quotes,
     then synthesising a script file and using RunScriptFile to execute it.
     For RunScriptFile, ensure the file is packed.
     """
+    in_tf2 = 'TF2' in ctx.tags
     for ent in ctx.vmf.entities:
         for out in ent.outputs:
             inp_name = out.input.casefold()
             if inp_name == 'runscriptfile':
                 ctx.pack.pack_file('scripts/vscripts/' + out.params, FileType.VSCRIPT_SQUIRREL)
-            if inp_name != 'runscriptcode':
-                continue
-            if '`' not in out.params:
-                continue
-            out.params = ctx.pack.inject_vscript(out.params.replace('`', '"'))
-            out.input = 'RunScriptFile'
+            elif inp_name == 'runscriptcode' and not in_tf2 and '`' in out.params:
+                out.params = ctx.pack.inject_vscript(out.params.replace('`', '"'))
+                out.input = 'RunScriptFile'
 
 
 @trans('Optimise logic_auto', priority=50)
@@ -123,6 +122,7 @@ def strip_ents(ctx: Context) -> None:
         'hammer_notes',
         'func_instance_parms',
         'func_instance_origin',
+        'comp_player_input_helper',
     ]:
         for ent in ctx.vmf.by_class[clsname]:
             ent.remove()

@@ -145,5 +145,7 @@
 	// Outputs
 	output OnConditionsSatisfied(void) : "Fires when AI conditions satisfied"
 	output OnConditionsTimeout(void) : "Fires when AI conditions timed out"
-	output NoValidActor(void) : "Fires if/when there are no matching actors in the map."
+	output NoValidActors(void) : "Fires if/when there are no matching actors in the map."
+
+	@resources []
 	]

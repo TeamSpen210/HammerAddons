@@ -44,4 +44,6 @@
 	input SpawnMultiple(integer) : "Spawn multiple NPCs (uses destination group, else radius)."
 	input ChangeDestinationGroup(target_destination) : "Switch to a different set of Destination entities."
 	input SetMinimumSpawnDistance(integer) : "Set the minimum spawn distance from player to destination node."
+
+	@resources [] // The entity must exist in the map already.
 	]

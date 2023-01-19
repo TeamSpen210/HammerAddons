@@ -1,4 +1,4 @@
-@NpcClass base(BaseEntityPhysics) 
+@NpcClass base(BaseEntityPhysics) // Not actually an NPC!
 	appliesto(EP2) 
 	autovis(Entities, NPCs, Antlions, Antlion Grub)
 	studio("models/antlion_grub.mdl") 
@@ -18,4 +18,22 @@
 	output OnAgitated(void) : "Fired when the grub is stepped on or damaged."
 	output OnDeath(void) : "Fired when the grub is killed."
 	output OnDeathByPlayer(void) : "Fired when the grub is killed (only by the player)."
+
+	@resources
+		[
+		model "models/antlion_grub.mdl"
+		model "models/antlion_grub_squashed.mdl"
+
+		sound "NPC_Antlion_Grub.Idle"
+		sound "NPC_Antlion_Grub.Alert"
+		sound "NPC_Antlion_Grub.Stimulated"
+		sound "NPC_Antlion_Grub.Die"
+		sound "NPC_Antlion_Grub.Squish"
+
+		particle "GrubSquashBlood"
+		particle "GrubBlood"
+		
+		material "materials/sprites/grubflare1.vmt"
+		entity item_grubnugget
+		]
 	]

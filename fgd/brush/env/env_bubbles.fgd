@@ -18,4 +18,9 @@
 	input SetDensity(integer) : "Sets the bubble density."
 	input SetFrequency(integer) : "Sets bubble emission rate in bubbles per second."
 	input SetCurrent(integer) : "Sets current speed in units per second."
+
+	@resources
+		[
+		material "materials/sprites/bubble.vmt"
+		]
 	]

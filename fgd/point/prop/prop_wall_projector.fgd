@@ -11,4 +11,14 @@
 		0: "Clean"
 		1: "Rusted"
 		]
+
+	@resources
+		[
+		model "models/props/wall_emitter.mdl"
+		sound "VFX.BridgeGlow"
+		sound "music.ctc_lbout"
+		// TODO: sound music.map_name_here_lbout
+		sound "music.sp_all_maps_lbout"
+		particle projected_wall_impact
+		]
 	]

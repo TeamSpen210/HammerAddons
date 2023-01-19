@@ -6,4 +6,6 @@
 
 	// Inputs
 	input SetPushDirection(vector) : "Sets the angles indicating the direction to slow player velocity."
+	
+	@resources []
 	]

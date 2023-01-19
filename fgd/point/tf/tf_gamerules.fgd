@@ -14,6 +14,8 @@
 
 	ctf_overtime(boolean) : "CTF Overtime" : "1" : "Allow Overtime for CTF maps."
 
+	ropes_holiday_lights_allowed(boolean) : "Holiday Ropes" : 1 : "Allow ropes with holiday lights during the holiday event."
+	
 
 	// Inputs
 	input SetRedTeamRespawnWaveTime(float) : "Set the RED team's respawn wave time"

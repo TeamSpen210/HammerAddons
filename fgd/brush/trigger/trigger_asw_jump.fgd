@@ -1,4 +1,3 @@
-
 @SolidClass base(Trigger) 
 	appliesto(ASW) = trigger_asw_jump: "A trigger volume that causes Swarm Drones to jump when they come into contact with it"
 	[
@@ -11,4 +10,6 @@
 	forcejump(boolean) : "Force Jump" : "0" : "Forces alien to jump with the Force Angle and Speed, without using the jump target and without checking for a valid jump or enemy."
 	forceangle(angle) : "Force Jump Pitch Yaw Roll (Y Z X)" : "90 0 0" : "Direction the alien should do a forced jump."
 	forcespeed(float) : "Force Jump Speed" : 400 : "Speed of forced jump."
+
+	@resources []
 	]

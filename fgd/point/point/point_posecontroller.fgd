@@ -10,8 +10,8 @@
 	interpolationwrap(boolean) : "Interpolation Wrap" : 0 : "Should wrap from 0.0 to 1.0 when interpolating."
 	cyclefrequency(float) : "Cycle Frequency" : 0 : "Base cycles per second from -10.0 to 10.0."
 
-	fmodulationtype[engine](integer) : "Frequency Modulation Type" : 0
-	fmodulationtype(choices) : "Frequency Modulation Type" : 0 =
+	fmodtype[engine](integer) : "Frequency Modulation Type" : 0
+	fmodtype(choices) : "Frequency Modulation Type" : 0 =
 		[
 		0: "None"
 		1: "Sine"
@@ -36,4 +36,7 @@
 	input SetFModRate(float) : "Set the modulation cycles per second from -10.0f to 10.0."
 	input SetFModAmplitude(float) : "Set the modulation extents from 0.0f to 10.0."
 	input RandomizeFMod(float) : "Randomize the frequency modulation by an extremeness of 0.0 to 1.0."
+	input GetFMod[complete](void) : "Print the current frequency modulation parameters to the developer console."
+
+	@resources []
 	]

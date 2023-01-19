@@ -43,4 +43,6 @@
 	// Outputs
 	output OnArrival(void) : "Fires when the NPC reaches this assault point"
 	output OnAssaultClear(void) : "Fires when this assault point is cleared of enemies"
+
+	@resources []
 	]

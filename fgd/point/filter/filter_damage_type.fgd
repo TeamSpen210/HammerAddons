@@ -1,6 +1,6 @@
 @FilterClass base(filter_base)
 	autovis(Logic, Filters)
-	iconsprite("editor/filter_damage_type.vmt") 
+	iconsprite("editor/vizzys/filter_damage_type.vmt") 
 = filter_damage_type: "A damage filter that filters by the type of damage inflicted. This can only be used as a damage filter, not as an activator filter."
 	[
 	filtertype[engine](integer) : "Logic Type" : 1
@@ -55,4 +55,6 @@
 		268435456 : "Direct"
 		536870912 : "Buckshot"
 		]
+	
+	@resources []
 	]

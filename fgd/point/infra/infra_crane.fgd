@@ -1,4 +1,4 @@
-@PointClass base(BaseDriveableVehicle) 
+@PointClass base(BasePropPhysics, BaseDriveableVehicle) 
 	appliesto(INFRA)
 	studioprop()
 = infra_crane: "Crane"

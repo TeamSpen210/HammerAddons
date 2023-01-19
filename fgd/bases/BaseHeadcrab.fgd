@@ -1,5 +1,4 @@
-
-@BaseClass base(BaseNPC) = BaseHeadcrab
+@BaseClass base(BaseNPC, EZ2Variant) = BaseHeadcrab
 	[
 	startburrowed(boolean) : "Start burrowed" : 0
 
@@ -22,4 +21,11 @@
 
 	input Unburrow[Mesa](void) : "Unburrow"
 	output OnLeap[MBase](void) : "Fires when the headcrab leaps at an enemy. !activator is the target."
+
+	@resources
+		[
+		sound "NPC_HeadCrab.Gib"
+		sound "NPC_Headcrab.BurrowIn"
+		sound "NPC_Headcrab.BurrowOut"
+		]
 	]

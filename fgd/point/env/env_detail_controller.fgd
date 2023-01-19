@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, Angles) 
-	appliesto(since_L4D2, Mesa)
+	appliesto(since_L4D2, Mesa, KZ)
 	sphere(fademindist)
 	sphere(fademaxdist)
 	iconsprite("editor/ficool2/env_detail_controller.vmt")
@@ -8,4 +8,6 @@
 	[
 	fademindist(float) : "Start Fade Dist/Pixels" : 512 : "The distance at which the detail props will start fading away."
 	fademaxdist(float) : "End Fade Dist/Pixels" : 1024 : "The distance at which the detail props will stop fading and stop drawing entirely."
+
+	@resources []
 	]

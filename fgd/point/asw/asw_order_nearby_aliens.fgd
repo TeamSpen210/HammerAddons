@@ -37,4 +37,6 @@
 
 	// Inputs
 	input SendOrders(void) : "Gives the orders."
+
+	@resources []
 	]

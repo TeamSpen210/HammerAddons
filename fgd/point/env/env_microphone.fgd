@@ -35,7 +35,24 @@
 		57: "8 LOUDSPEAKER, ECHO"
 		58: "9 SPEAKER SMALL"
 		59: "10 SPEAKER TINY"
+		
+		// A few unmarked DSP presets added with Mapbase
+		32 : "32 EXPLOSION MUFFLE 1"
+		33 : "33 EXPLOSION MUFFLE 2"
+		34 : "34 EXPLOSION MUFFLE 3"
+		35 : "35 EXPLOSION RING 1"
+		36 : "36 EXPLOSION RING 2"
+		37 : "37 EXPLOSION RING 3"
+		38 : "38 ''EXPLOSION RING'' 4"
+		44 : "44 Test 1 (High Pitch)"
+		45 : "45 Test 2 (Low Pitch)"
+		46 : "46 Test 3 (Silence?)"
+		47 : "47 Test 4 (Distort)"
+		48 : "48 Test 5 (Long Wobble)"
+		49 : "49 Test 6 (Silence?)"
 		]
+
+	SoundMask[complete](integer) : "Sound Mask" : 0 : "The raw mask used to determine which sounds to hear. The 'Hears' spawnflags are a more convenient method to set this, but additional SOUND_ flags could be added manually."
 
 	spawnflags(flags) =
 		[
@@ -47,6 +64,7 @@
 		32: "Hears explosions" : 0
 		64: "Ignores non-attenuated sounds" : 0
 		128: "Ignores sound gain (stops reducing sound volume)" : 0 [INFRA]
+		128 : "Hears sentences (Combine dialogue, etc.)" : 1 [MBase]
 		]
 
 	sensitivity(float) : "Sensitivity (0 - 10)" : 1 : "Microphone sensitivity, 0=deaf, 1=default, 10=extremely sensitive). Only applicable in Measuring mode."
@@ -82,4 +100,6 @@
 	output SoundLevel(float) : "Fired in Measuring mode whenever the sound level changes."
 	output OnRoutedSound(void) : "Fired whenever a sound is routed out through the specified speaker (if any)."
 	output OnHeardSound(void) : "Fired whenever this microphone hears any sound it cares about."
+
+	@resources []
 	]

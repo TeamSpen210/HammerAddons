@@ -1,0 +1,6 @@
+@PointClass base(Weapon) 
+	appliesto(EZ2) 
+	autovis(Weapons, EZ Weapons)
+	studioprop("models/weapons/w_irifle.mdl") = weapon_ar2_proto: "Assault Rifle 2 Prototype"
+	[
+	]

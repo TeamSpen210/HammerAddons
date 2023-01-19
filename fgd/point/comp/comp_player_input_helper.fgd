@@ -1,0 +1,16 @@
+@PointClass base(PlayerInputs)
+	iconsprite("editor/comp_player_input_helper.vmt")
+ 	appliesto(srctools)
+= comp_player_input_helper: "Place this entity to trick Hammer into autocompleting inputs fired at !player and similar names. This is deleted during compile."
+	[
+	targetname(choices) : "Player Name" : "!player" : "The targetname to show for suggestions." = 
+		[
+		"!player" : "!player (SP / 1st Player)"
+		"player" : "player (All Players)"
+		"!player_blue" : "!player_blue (ATLAS)" [P2]
+		"!player_orange" : "!player_orange (P-Body)" [P2]
+		"!pvsplayer" : "!pvsplayer (Player in nearby visleafs)"
+		]
+
+	@resources []
+	]

@@ -8,4 +8,8 @@
 	// Inputs
 	input FormPathShape(string) : "Tells the group to go distribute themselves along a shape defined by path corner entities"
 	input SetRadius(float) : "Force the group to change the radius (density)"
+	input ChaseEntity(target_destination) : "Tells the group to chase this entity."
+	input IsolateElement(integer) : "Isolate an 'element' of the group."
+	input FormHemisphere(void) : "Makes the group attempt to form a hemisphere."
+	input FormTwoSpheres(void) : "Makes the group attempt to form two spheres."
 	]

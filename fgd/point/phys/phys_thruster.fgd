@@ -15,4 +15,6 @@
 		]
 
 	force(string) : "Force" : "0" : "Force (will be integrated, units are force kg*in/s^2)"
+	
+	@resources []
 	]

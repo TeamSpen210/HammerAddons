@@ -1,0 +1,12 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(KZ) 
+= point_powerjump: "An entity that enables or disables the Boots of the Seeker on players. Only valid outside of Tag Arena. The activator is automatically set by triggers and buttons."
+	[
+	// Inputs
+	input EnablePowerjump(void) : "Enable the Boots of the Seeker on the activating player."
+	input DisablePowerjump(void): "Disable the Boots of the Seeker on the activating player."
+
+	// Outputs
+	output OnPowerjumpEnabled(void) : "Fired when the EnablePowerjump input successfully enables powerjump on a player."
+	output OnPowerjumpDisabled(void) : "Fired when the DisablePowerjump input successfully disables powerjump on a player."
+	]

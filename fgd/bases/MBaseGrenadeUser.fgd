@@ -5,9 +5,22 @@
 	SetGrenadeCapabilities(choices) : "Grenade capabilities" : 0 : "Controls this NPC's capability to throw grenades or use their weapon's secondary ability (energy balls/SMG grenades)." =
 		[
 		0 : "None"
-		1 : "Grenades"
-		2 : "Alt-firing"
-		3 : "Grenades + Alt-firing"
+		1 : "[1] Grenades"
+		2 : "[2] Alt-firing"
+		3 : "[3] Grenades + Alt-firing"
 		]
+
+	SetGrenadeDropCapabilities[engine](integer) : "Grenade drop capabilities" : 7 : "Sets this NPC's grenade drop capabilities."
+	SetGrenadeDropCapabilities(choices) : "Grenade drop capabilities" : 7 : "Controls whether or not this NPC should drop grenades or weapon alt-fire items upon dying. " +
+		"Note that these only apply when the NPC is respectively capable of throwing grenades or using their weapon's secondary ability." =
+		[
+		0 : "None"
+		1 : "[1] Drop grenades (based on player inventory)"
+		2 : "[2] Drop alt-fire items"
+		4 : "[4] Drop grenades when throwing animation is interrupted"
+		7 : "[7] All of the above"
+		]
+	
 	input SetGrenadeCapabilities(integer) : "Sets this NPC's grenade capabilities."
+	input SetGrenadeDropCapabilities(integer) : "Sets this NPC's grenade-dropping capabilities."
 	]

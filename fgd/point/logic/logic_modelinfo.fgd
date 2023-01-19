@@ -1,6 +1,6 @@
 @PointClass appliesto(MBase)
 	base(BaseEntityPoint) 
-	size(-8 -8 -8, 8 8 8)
+	iconsprite(editor/vizzys/logic_modelinfo)
 	line(255 255 255, targetname, target)
 = logic_modelinfo : "Gets and outputs some model information from an entity."
 	[
@@ -23,4 +23,6 @@
 	output OnHasSequence(integer) : "Fires when the target has the sequence requested. Outputs the sequence's index."
 	output OnLacksSequence(void) : "Fires when the target does not have the sequence requested."
 	output OutPoseParameterValue(float) : "Fires when the pose parameter value is requested, outputting its current value."
+
+	@resources []
 	]

@@ -8,28 +8,28 @@
 		[
 		64: "Use Hitboxes for Renderbox" : 0
 		256: "Start with collision disabled" : 0
+		512 : "Force collision data for human models (expensive networking, use sparingly!)" : 0 [KZ]
 		]
 
 	defaultanim(string) : "Default Animation" : : "The name of the idle animation that this prop will revert to whenever it finishes a random or forced animation."
-	randomanimation[since_ASW](boolean) : "Randomly Animate" : 0 : "If set, this prop will randomly choose and play animations, based upon the times specified in 'Min/Max Random Anim Time'. Inbetween the random animations, it will revert to playing the 'Default Animation'."
+	randomanimation(boolean) : "Randomly Animate" : 0 : "If set, this prop will randomly choose and play animations, based upon the times specified in 'Min/Max Random Anim Time'. Inbetween the random animations, it will revert to playing the 'Default Animation'."
 	minanimtime(float) : "Min Random Anim Time" : 5 : "Minimum time between random animations."
 	maxanimtime(float) : "Max Random Anim Time" : 10 : "Maximum time between random animations."
 
-	disablebonefollowers[since_ASW](boolean) : "Disable Bone Followers" : 0 : "If set, the prop will not use bone followers, even if it has them defined."
+	disablebonefollowers(boolean) : "Disable Bone Followers" : 0 : "If set, the prop will not use bone followers, even if it has them defined."
 	
-	holdanimation[since_ASW](boolean) : "Hold Animation" : 0 : "If set, the prop will not loop its animation, but hold the last frame."
+	holdanimation[since_ASW, MBase](boolean) : "Hold Animation" : 0 : "If set, the prop will not loop its animation, but hold the last frame."
 	
-	suppressanimsounds[since_P2](boolean) : "Suppress Anim Sounds" : 0 : "If set, the prop will not play any sounds that are embedded in animations it plays."
-
 	is_autoaim_target[since_CSGO](boolean) : "Is Autoaim Target" : 0 : "If set, this prop will use the autoaim feature on consoles (slower look movement when this prop is directly under the crosshair)."
 	lagcompensate[L4D2](boolean) : "Lag Compensation" : 0 : "Set to Yes to lag compensate this prop, should be use very sparingly!"
 	glowbackfacemult[L4D2](float) : "Glow backface Multiplier" : "1.0" : "What to multiply glow by on backfaces,"
 
-	updatechildren[since_ASW](boolean) : "Update children" : 0 : "Update touches for any children that are attached to attachment points as this prop animates. " +
+	updatechildren[since_ASW, MBase](boolean) : "Update children" : 0 : "Update touches for any children that are attached to attachment points as this prop animates. " +
 		"This allows SetParentAttached triggers or func_brushes to touch properly."
 
-	animateeveryframe[GMod, since_P2](boolean) : "Animate Every Frame" : 0 : "Force this prop to animate every frame. This ensures it immediately transitions to the next animation, but means it's contantly checking this."
-
+	animateeveryframe[GMod, since_P2](boolean) : "Animate Every Frame" : 0 : "Force this prop to animate every frame. " +
+		"This ensures it immediately transitions to the next animation, but means it's contantly checking. " +
+		"If false, it checks every 0.1 seconds."
 
 	// Inputs
 	input SetAnimation(string) : "Force the prop to play an animation. The parameter should be the name of the animation."
@@ -43,8 +43,18 @@
 	input SetAnimationNoReset[since_ASW](string) : "Force the prop to play an animation unless the prop is already playing the animation. The parameter should be the name of the animation."
 	input BecomeRagdoll[since_P2](void) : "Change into a ragdoll immediately."
 	input FadeAndKill[since_P2](void) : "Fade out then remove this prop."
+	input SetFrame[P2EDU](float) : "Set the frame of the animation 0 to 1."
+	input SetAnalogValue[P2EDU](float) : "Set animation frame between 0 and 1."
+	input SetAnalogValueString[P2EDU](string) : "Set animation frame between 0 and 1."
 
 	// Outputs
 	output OnAnimationBegun(void) : "Fired whenever a new animation has begun playing."
 	output OnAnimationDone(void) : "Fired whenever an animation is complete."
+
+	@resources 
+		[
+		sound "Metal.SawbladeStick" [+hl2]
+	    sound "PropaneTank.Burst"
+	    entity env_flare [+hl2, +episodic]
+		]
 	]

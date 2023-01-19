@@ -2,4 +2,5 @@
 	appliesto(+engine, P1)
 = updateitem1: "Marks the location that the ARG radios (updateitem2) will recieve messages from."
 	[
+	@resources []
 	]   

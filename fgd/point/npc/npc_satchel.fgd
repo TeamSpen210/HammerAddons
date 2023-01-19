@@ -1,0 +1,22 @@
+@PointClass base(Weapon) 
+	appliesto(EZ2) 
+	autovis(Weapons, HL2 Weapons)
+	studioprop("models/weapons/w_slam.mdl") = npc_satchel: "Active Remote SLAM"
+	[
+	IsAttached[engine](boolean) : "Is Attached?" : 0
+	IsAttached(choices) : "Is Attached" : 0 =
+		[
+		0 : "No (Can be picked up, affected by physics)"
+		1 : "Yes (Will not move)"
+		]	
+
+	input Explode( void ) : "This input detonates the SLAM."
+
+	@resources
+		[
+		mdl "models/Weapons/w_slam.mdl"
+		snd "SatchelCharge.Pickup"
+		snd "SatchelCharge.Bounce"
+		snd "SatchelCharge.Slide"
+		]
+	]

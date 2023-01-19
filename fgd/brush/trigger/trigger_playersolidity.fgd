@@ -1,0 +1,13 @@
+@SolidClass base(Trigger) 
+	appliesto(KZ) 
+ = trigger_playersolidity: "A trigger that either makes a player solid or non-solid when they pass through it." 
+	[
+	solidmode[engine](integer) : "Mode" : 0 : "This trigger_playersolidity will make the player..."
+	solidmode(choices) : "Mode" : 0 : "This trigger_playersolidity will make the player..." = 
+	[ 
+		0 : "Solid" 
+		1 : "Nonsolid" 
+	] 
+	
+	@resources []
+	]

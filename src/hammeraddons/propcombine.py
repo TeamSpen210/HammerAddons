@@ -3,37 +3,37 @@
 This merges static props together, so they can be drawn with a single
 draw call.
 """
-import fnmatch
-import operator
-import os
-import re
-import shutil
-import itertools
+from typing import (
+    Callable, Dict, FrozenSet, Iterable, Iterator, List, MutableMapping, Optional, Set, Tuple,
+    Union,
+)
 from collections import defaultdict
 from enum import Enum
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import (
-    Optional, Tuple, Callable,
-    FrozenSet, Dict, List, Set,
-    Iterator, Union, MutableMapping, Iterable,
-)
+import fnmatch
+import itertools
+import operator
+import os
+import re
+import shutil
 
-from srctools import VMF, Entity, conv_int, FileSystemChain, Property, KeyValError, bool_as_int
-from srctools.math import Vec, Angle, Matrix, quickhull
-from srctools.tokenizer import Tokenizer, Token
+from srctools import (
+    VMF, Entity, FileSystemChain, KeyValError, Keyvalues, bool_as_int, conv_int,
+)
+from srctools.bsp import BSP, BModel, StaticProp, StaticPropFlags, VisLeaf
 from srctools.game import Game
 from srctools.logger import get_logger
+from srctools.math import Angle, Matrix, Vec, quickhull
+from srctools.mdl import MDL_EXTS, Model
 from srctools.packlist import PackList
-from srctools.bsp import BSP, StaticProp, StaticPropFlags, BModel, VisLeaf
-from srctools.mdl import Model, MDL_EXTS
 from srctools.smd import Bone, Mesh, Triangle, Vertex
-
-import trio
+from srctools.tokenizer import Token, Tokenizer
 import attrs
+import trio
 
-from .mdl_compiler import ModelCompiler
 from .acache import ACache
+from .mdl_compiler import ModelCompiler
 
 
 LOGGER = get_logger(__name__)
@@ -278,9 +278,9 @@ async def compile_func(
     lookup_model, volume_tolerance = args
 
     # Unify these properties.
-    surfprops = set()  # type: Set[str]
-    cdmats = set()  # type: Set[str]
-    contents = set()  # type: Set[int]
+    surfprops: Set[str] = set()
+    cdmats: Set[str] = set()
+    contents: Set[int] = set()
 
     for prop in prop_pos:
         qc, mdl = lookup_model(prop.model)
@@ -311,7 +311,7 @@ async def compile_func(
         assert mdl is not None, prop.model
 
         child_ref = await _mesh_cache.fetch((qc, prop.skin), build_reference, prop, qc, mdl)
-        child_coll = await _coll_cache.fetch(qc.phy_smd, build_collision, qc, prop, child_ref)
+        child_coll = await _coll_cache.fetch(qc.phy_smd, build_collision, qc, prop, child_ref, volume_tolerance > 0)
 
         offset = Vec(prop.x, prop.y, prop.z)
         matrix = Matrix.from_angle(prop.pit, prop.yaw, prop.rol)
@@ -408,7 +408,7 @@ async def build_reference(prop: PropPos, qc: QC, mdl: Model) -> Mesh:
     return mesh
 
 
-async def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> List[Mesh]:
+async def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh, needs_split: bool) -> List[Mesh]:
     """Get the correct collision mesh for this model."""
     if prop.solidity is CollType.NONE:  # Non-solid
         return []
@@ -427,7 +427,7 @@ async def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh) -> List[Mesh]:
                 vert.pos @= rot
                 vert.norm @= rot
 
-        if qc.is_concave:
+        if qc.is_concave and needs_split:
             return await trio.to_thread.run_sync(coll.split_collision)
         else:
             return [coll]
@@ -647,28 +647,28 @@ async def decompile_model(
     if cache_folder.exists():
         try:
             with info_path.open() as f:
-                cache_props = Property.parse(f).find_block('qc', or_blank=True)
+                cache_kv = Keyvalues.parse(f).find_block('qc', or_blank=True)
             # Added later, remake if not present.
-            if 'concave' not in cache_props:
+            if 'concave' not in cache_kv:
                 raise FileNotFoundError
         except (FileNotFoundError, KeyValError):
             pass
         else:
             # Previous compilation.
-            if checksum == bytes.fromhex(cache_props['checksum', '']):
-                ref_smd_name = cache_props['ref', '']
+            if checksum == bytes.fromhex(cache_kv['checksum', '']):
+                ref_smd_name = cache_kv['ref', '']
                 if not ref_smd_name:
                     return None
-                phy_smd_name = cache_props['phy', None]
+                phy_smd_name = cache_kv['phy', None]
                 if phy_smd_name is not None:
                     phy_smd_name = str(cache_folder / phy_smd_name)
                 return QC(
                     str(info_path),
                     str(cache_folder / ref_smd_name),
                     phy_smd_name,
-                    cache_props.float('ref_scale', 1.0),
-                    cache_props.float('phy_scale', 1.0),
-                    cache_props.bool('concave'),
+                    cache_kv.float('ref_scale', 1.0),
+                    cache_kv.float('phy_scale', 1.0),
+                    cache_kv.bool('concave'),
                 )
             # Otherwise, re-decompile.
     LOGGER.info('Decompiling {}...', filename)
@@ -709,8 +709,8 @@ async def decompile_model(
         qc_result = None
         qc_path = Path()
 
-    cache_props = Property('qc', [])
-    cache_props['checksum'] = checksum.hex()
+    cache_kv = Keyvalues('qc', [])
+    cache_kv['checksum'] = checksum.hex()
 
     if qc_result is not None:
         (
@@ -727,18 +727,18 @@ async def decompile_model(
             is_concave,
         )
 
-        cache_props['ref'] = Path(ref_smd).name
-        cache_props['ref_scale'] = format(ref_scale, '.6g')
+        cache_kv['ref'] = Path(ref_smd).name
+        cache_kv['ref_scale'] = format(ref_scale, '.6g')
 
         if phy_smd is not None:
-            cache_props['phy'] = Path(phy_smd).name
-            cache_props['phy_scale'] = format(phy_scale, '.6g')
-        cache_props['concave'] = bool_as_int(is_concave)
+            cache_kv['phy'] = Path(phy_smd).name
+            cache_kv['phy_scale'] = format(phy_scale, '.6g')
+        cache_kv['concave'] = bool_as_int(is_concave)
     else:
-        cache_props['ref'] = ''  # Mark as not present.
+        cache_kv['ref'] = ''  # Mark as not present.
 
     with info_path.open('w') as f:
-        for line in cache_props.export():
+        for line in cache_kv.export():
             f.write(line)
     return qc
 
@@ -913,9 +913,9 @@ async def combine(
     game: Game,
     studiomdl_loc: Path,
     *,
-    qc_folders: List[Path]=None,
+    qc_folders: Optional[List[Path]]=None,
     crowbar_loc: Optional[Path]=None,
-    decomp_cache_loc: Path=None,
+    decomp_cache_loc: Optional[Path]=None,
     blacklist: Iterable[str]=(),
     auto_range: float=0,
     min_cluster: int=2,

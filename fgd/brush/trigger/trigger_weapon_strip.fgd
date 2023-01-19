@@ -1,5 +1,5 @@
 @SolidClass base(Trigger) 
-	appliesto(EP1, EP2, HL2, P1, P2, Mesa) 
+	appliesto(EP1, EP2, HL2, P1, P2, Mesa, KZ) 
  = trigger_weapon_strip: "A volumetric trigger that strips combat characters of all weapons"
 	[
 	killweapons[engine](boolean) : "Kill Weapons?" : 0
@@ -9,4 +9,6 @@
 		0: "Drop on ground"
 		1: "Kill Weapons"
 		]
+
+	@resources []
 	]

@@ -1,0 +1,9 @@
+@PointClass base(env_sprite)
+	appliesto(+engine)
+= point_commentary_viewpoint: "An additional entity spawned to attach the player camera to."
+	[
+	@resources
+		[
+		material "materials/sprites/redglow1.vmt"
+		]
+	]   

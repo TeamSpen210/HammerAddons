@@ -3,4 +3,8 @@
 	appliesto(ASW) 
 	studio("models/swarm/Ammo/ammopdw.mdl") = asw_ammo_pdw: "PDW Clip"
 	[
+	@resources
+		[
+		model "models/swarm/Ammo/ammopdw.mdl"
+		]
 	]

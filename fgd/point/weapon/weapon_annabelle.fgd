@@ -3,4 +3,5 @@
 	autovis(Weapons, HL2 Weapons, Annabelle)
 	studioprop("models/weapons/W_annabelle.mdl") = weapon_annabelle: "Annabelle (Grigori)"
 	[
+	@resources []
 	]

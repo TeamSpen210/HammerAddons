@@ -2,4 +2,9 @@
 	appliesto(+engine, HL2, EP1, EP2, P1)
 = vort_charge_token: "Glowing particles Vorts push towards a target to heal/charge it."
 	[
+	@resources
+		[
+		particle "vortigaunt_charge_token"
+		sound "NPC_Vortigaunt.SuitOn"
+		]
 	]   

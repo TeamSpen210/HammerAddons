@@ -45,4 +45,6 @@
 	output OnCasePass(string) : "Fires when a case is matched, passing the input value."
 	output OnCaseFail(string) : "Fires when a case fails, passing the input value."
 	output OnSequenceComplete(string) : "Fires when the last case is matched and sequence is complete."
+
+	@resources []
 	]

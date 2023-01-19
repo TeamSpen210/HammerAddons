@@ -26,4 +26,6 @@
 
 	// Outputs
 	output OnFireAtTarget(void) : "Fires when a valid target is found and the APC should shoot rockets"
+
+	@resources [] // Handled by generic logic
 	]

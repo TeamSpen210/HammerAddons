@@ -1,0 +1,8 @@
+@NpcClass base(EZ2PredatorNPC) appliesto(EZ2)
+	studio("models/pit_drone.mdl") 
+	autovis(Entities, NPCs, Xen, Voltigore)
+= npc_voltigore : "Voltigore"
+	[
+	model(studio) : "Override Model"
+	IsBaby(boolean) : "Baby Voltigore" : 0 : "Is this a baby voltigure? (No code / assets available yet)"
+	]

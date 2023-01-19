@@ -42,8 +42,7 @@
 		16777216 : "Force Gibs" [L4D2]
 		33554432 : "Airboat"
 		67108864 : "Dissolve"
-		134217728 : "Underwater is Invincible" [TF2]
-		268435456 : "Being on fire" [TF2]
+		268435464 : "Being on fire"  // DMG_BURN | DMG_DIRECT (268435456)
 		536870912 : "Shotguns" [TF2]
 		]
 
@@ -56,29 +55,41 @@
 		134217792 : "[134217792] All Blast Types (BLAST + BLAST_SURFACE)"
 		]
 	
-	damageor1[engine](integer) : "Damage Gib Mode" : 0
-	damageor1[srctools](choices) : "Damage Gibbing" : 0 : "Optional flags that can accompany the damage type." =
+	damageor1[engine](integer) : "Damage Or" : 0
+	damageor2[engine](integer) : "Damage Or" : 0
+	damageor3[engine](integer) : "Damage Or" : 0
+	damageor4[engine](integer) : "Damage Or" : 0
+
+	damageor1[srctools](choices) : "Damage - Gibbing" : 0 : "Optional flags that can accompany the damage type." =
 		[
 		0 : "Normal Behaviour"
 		4096 : "Never use gibs"
 		8192 : "Always gib if possible"
 		]
-	damageor2[engine](integer) : "Prevent Physics Force" : 0
-	damageor2[srctools](choices) : "Prevent Physics Force" : 0 : "Prevent applying physics force to the target." =
+	damageor2[srctools](choices) : "Damage - Prevent Physics Force" : 0 : "Prevent applying physics force to the target." =
 		[
-		0 : "No"
-		2048 : "Yes"
+		0 : "Apply force"
+		2048 : "Prevent force"
+		]
+	damageor3[srctools](choices) : "Damage - No Ragdoll On Death" : 0 : "Prevent any ragdoll on death" =
+		[
+		0 : "Allow ragdolls"
+		4194304 : "Prevent ragdolls"
+		]
+	damageor4[srctools](choices) : "Damage - Blast Surface" : 0 : "This is ignored by players when fully underwater." =
+		[
+		0 : "Damage underwater"
+		134217728 : "Damage only above the surface"
 		]
 
 	damageor[engine](integer) : "Damage Or" : 0
-	damageor[MBase](choices) : "Damage Or" : 0 : "Optional flags that can accompany the damage type." = 
+	damageor[MBase, -srctools](choices) : "Damage Or" : 0 : "Optional flags that can accompany the damage type." = 
 		[
 		0 : "None"
 		2048 : "PREVENT_PHYSICS_FORCE (no physics force)"
-		4096 : "NEVERGIB (no gibs)" [!srctools]
-		8192 : "ALWAYSGIB (always gib if possible)" [!srctools]
+		4096 : "NEVERGIB (no gibs)"
+		8192 : "ALWAYSGIB (always gib if possible)"
 		4194304 : "REMOVENORAGDOLL (no ragdoll on death)"
 		134217728 : "BLAST_SURFACE (no damage underwater)"
-		268435456 : "DIRECT (With burn, NPCs treat as being on fire)"
 		]
 	]

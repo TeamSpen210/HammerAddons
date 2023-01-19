@@ -26,4 +26,6 @@
 
 	// Outputs
 	output OnShowMessage(void) : "Fired when the message is activated."
+
+	@resources []  // Just the sound which happens generic.
 	]

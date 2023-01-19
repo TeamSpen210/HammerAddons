@@ -3,4 +3,15 @@
 	[
 	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction the door will move, when it opens."
 	filtername[HLS](filterclass) : "Block Filter Name" : : "Filter to use to determine entities that block the door."
+
+	@resources
+		[
+	    // Defaults if unspecified.
+	    sound "DoorSound.DefaultMove"
+	    sound "DoorSound.DefaultArrive"
+	    sound "DoorSound.DefaultLocked"
+	    sound "DoorSound.Null"
+
+	    // Todo: also locked and unlocked sentences in HL1.
+		]
 	]

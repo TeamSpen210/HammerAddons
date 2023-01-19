@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityAnimating, SetModel, Glow) 
+@PointClass base(prop_dynamic_base, Glow) 
 	studioprop()
 	// Can't have this along with no default model.
 	// line(255, 255, 255, targetname, slavename)
@@ -36,6 +36,10 @@
 	soundcloseoverride(sound) : "Fully Closed Sound" : : "Sound played when the door has finished closing."
 	soundmoveoverride(sound) : "Moving Sound" : : "Sound played when the door starts to move."
 
+	opendistoverride[MBase](integer) : "NPC Open Distance" : -1 : "How far away NPCs should move in order to open the door. (default = 64)"
+	openfrontactivityoverride[MBase](string) : "NPC Front Open Activity" : "" : "The gesture activity NPCs should play when opening the door from the front."
+	openbackactivityoverride[MBase](string) : "NPC Back Open Activity" : "" : "The gesture activity NPCs should play when opening the door from the back."
+
 	returndelay(integer) : "Delay Before close (-1 stay open)" : -1 : "Amount of time, in seconds, after the door has opened before it closes. " +
 		"If the value is set to -1, the door never closes itself."
 
@@ -48,9 +52,26 @@
 	forceclosed(boolean) : "Force Closed" : "0" : "If set, this door will close no matter what. " +
 		"Useful for doors that have to close even if the player tries to block them with objects."
 
+	kickspeed[EZ2](integer) : "Kicked Speed" : 500 : "The speed at which the door moves when kicked by the player."
+	
+	openonkick[engine](boolean) : "Unlock On Kick" : 1
+	openonkick[EZ2](choices) : "Open On Kick" : 1 : "Should this door open when kicked by the player?" =
+	[
+		0 : "Don't open when kicked"
+		1 : "Open when kicked"
+	]
+	
+	unlockonkick[engine](boolean) : "Unlock On Kick" : 0
+	unlockonkick[EZ2](choices) : "Unlock On Kick" : 0 : "Should this door unlock when kicked by the player?" =
+	[
+		0 : "Don't unlock when kicked"
+		1 : "Unlock when kicked"
+	]
+
 	spawnflags(flags)  =
 		[
 		// 1: "Starts Open" : 0
+		256 : "Start with collision disabled" : 0 []
 		512: "NPCs Can't Use" : 0 [MBase]
 		2048: "Starts locked" : 0
 		4096: "Door silent (No sound, and does not alert NPCs)" : 0
@@ -108,4 +129,5 @@
 	output OnLockedUse(void) : "Fired when the player uses the door, but it is locked."
 	output OnRotationDone[GMod, since_P2](void) : "Fired when the door arrives at it's goal angle."
 	output OnBreak[L4D, L4D2](void) : "Fired when the door changes damage states."
+	output OnKicked[EZ2](void) : "(EZ2) Fired when the door is kicked open."
 	]

@@ -1,0 +1,64 @@
+@NpcClass base(BaseNPC, EZ2Variant) 
+	appliesto(EZ2)
+	studio() = npc_zassassin : "Beast"
+	[
+	SpawningEnabled(boolean) : "Spawning Enabled" : 0 : "Can this predator NPC produce offspring in the appropriate condtions?"
+	IsBoss(boolean) : "Boss Enemy" : 0 : "This predator NPC is a boss monster rather than a normal monster."
+	
+	WanderStrategy[engine](integer) : "Wander Strategy" : 0
+	WanderStrategy(choices) : "Should Wander" : 0 : "Should this enemy wander outside of combat?" =
+		[
+		0 : "Never"
+		1 : "Always outside of combat"
+		2 : "Only while in ALERT state"
+		3 : "Only while in IDLE state"
+		]
+
+	input EnterNormalMode(void) : "Resume normal combat"
+	input EnterBerserkMode(void) : "Make this boss enemy invincible until it enters a different mode."
+	input EnterRetreatMode(void) : "Make this boss enemy retreat from the player until it enters a different mode."
+	input Spawn(void) : "Force this predator NPC to create offspring."
+	input EnableSpawning(void) : "Allow this predator NPC to create offspring."
+	input DisableSpawning(void) : "Prevent this predator NPC from creating offspring."
+	input SetWanderNever(void) : "Set this enemy to never wander."
+	input SetWanderAlways(void) : "Set this enemy to wander when it is not in combat."
+	input SetWanderIdle(void) : "Set this enemy to wander when it is not in combat."
+	input SetWanderAlert(void) : "Set this enemy to wander when it is not in combat."
+
+	input GoHome(void) : "Forces the beast to go home. Only works when beast behavior is active."
+	input GoHomeInstant(void) : "Forces the beast to go home instantly. Only works when beast behavior is active."
+
+	output OnBossHealthReset(void) : "Fired when the boss' health reaches 0."	
+	output OnFed(void) : "Fired when the predator NPC eats."	
+	output OnSpawnNPC(void) : "Fired when the predator NPC creates offspring."
+
+	output OnBeastHome(void) : "Fired when the beast reaches home during beast behavior."
+	output OnBeastLeaveHome(void) : "Fired when the beast leaves home during beast behavior."
+
+	@resources
+		[
+		func npc_zassassin // Multiple variants possible.
+
+		sound "Gonome.Idle"
+		sound "Gonome.Pain"
+		sound "Gonome.Alert"
+		sound "Gonome.Die"
+		sound "Gonome.Attack"
+		sound "Gonome.Bite"
+		sound "Gonome.Growl"
+		sound "Gonome.FoundEnemy"
+		sound "Gonome.RetreatMode"
+		sound "Gonome.BerserkMode"
+		sound "Gonome.RunFootstepLeft"
+		sound "Gonome.RunFootstepRight"
+		sound "Gonome.FootstepLeft"
+		sound "Gonome.FootstepRight"
+		sound "Gonome.JumpLand"
+		sound "Gonome.Eat"
+		sound "Gonome.BeginSpawnCrab"
+		sound "Gonome.EndSpawnCrab"
+		particle "glownome_explode"
+		sound "npc_zassassin.kickburst"
+		entity squidspit
+		]
+	]

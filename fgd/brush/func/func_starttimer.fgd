@@ -1,0 +1,12 @@
+@SolidClass base(BaseEntityBrush) 
+	appliesto(KZ) 
+= func_starttimer: "Obsolete entity for starting a timer. Please use point_climbtimer instead."
+	[
+	CourseID(integer): "CourseID" : 0 : "The ID of this Timer Set (start/stop), each Timer Set needs a seperate ID. This ID must match that of the func_stoptimer in this Set."
+
+	//Inputs
+	input StartTimer(void) : "Starts the timer."
+	
+	//Outputs
+	output OnTrigger(void) : "Fired when this entity is triggered."
+	]

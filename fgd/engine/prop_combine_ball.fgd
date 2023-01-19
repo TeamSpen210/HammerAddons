@@ -10,4 +10,26 @@
 	input FadeAndRespawn(void) : "Force the ball to expire in 0.1 seconds."
 	input SetLifetime[MBase](float) : "Set the lifetime of the ball to the given duration."
 	input AddLifetime[MBase](float) : "Add the given amount of additional lifetime."
+
+	@resources [
+		mdl "models/effects/combineball.mdl"
+		mat "sprites/combineball_trail_black_1.vmt"
+		mat "sprites/lgtning.vmt"
+		mat "effects/ar2_altfire1.vmt"
+		mat "effects/ar2_altfire1b.vmt"
+		mat "effects/combinemuzzle1.vmt"
+		mat "effects/combinemuzzle1_nocull.vmt"
+		mat "effects/combinemuzzle2_nocull.vmt"
+		sound "NPC_CombineBall.Launch"
+		sound "NPC_CombineBall.KillImpact"
+		sound "NPC_CombineBall.HoldingInPhysCannon"
+
+		sound "NPC_CombineBall_Episodic.Explosion" [+episodic]
+		sound "NPC_CombineBall_Episodic.WhizFlyby" [+episodic]
+		sound "NPC_CombineBall_Episodic.Impact" [+episodic]
+
+		sound "NPC_CombineBall.Explosion" [-episodic]
+		sound "NPC_CombineBall.WhizFlyby" [-episodic]
+		sound "NPC_CombineBall.Impact" [-episodic]
+		]
 	]

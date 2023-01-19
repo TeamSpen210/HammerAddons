@@ -82,4 +82,6 @@
 
 	// Outputs
 	output OnPlaybackFinished(void) : "Fired when the movie has completed playing back, was skipped by the user, or was stopped with StopMovie."
+
+	@resources [] // Movies cannot be packed ever, don't bother.
 	]

@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(P2) 
+	appliesto(P2, -STANLEY) 
 	studio("models/editor/angle_helper.mdl") 
 	iconsprite("editor/point_futbol_shooter")
 = point_futbol_shooter: "Fires prop_exploding_futbols at a target entity. " +
@@ -14,4 +14,10 @@
 	// Outputs
 	output OnShootSuccess(void) : "Called when a futbol is successfully fired."
 	output OnShootFail(void) : "Called when a futbol fails to fire."
+
+	@resources // Guesses
+		[
+		sound "World.Wheatley.fire"
+		entity prop_exploding_futbol
+		]
 	]

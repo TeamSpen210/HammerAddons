@@ -16,8 +16,8 @@
 		1: "Portal 2 (Orange)"
 		]
 
-	halfwidth(float) : "Half-Width of the Portal." : 0
-	halfheight(float) : "Half-Height of the Portal." : 0
+	halfwidth[complete](float) : "Half-Width of the Portal." : 0
+	halfheight[complete](float) : "Half-Height of the Portal." : 0
 
 	// Outputs
 	output OnPlacedSuccessfully(void) : "When a portal is placed without failure, this output is fired."

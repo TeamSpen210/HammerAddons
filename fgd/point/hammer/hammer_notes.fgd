@@ -23,4 +23,6 @@
 	part(particlesystem) : "Particle Chooser" : : "Has the particle system chooser for easier editing."
 	model(studio) : "Model Chooser" : : "Has the model chooser for easier editing."
 	sound(sound) : "Sound Chooser" : : "Has the sound chooser for easier editing."
+
+	@resources [] // Doesn't exist.
 	]

@@ -18,4 +18,6 @@
 	// Inputs
 	input Activate(void)
 	input Deactivate(void)
+
+	@resources []
 	]

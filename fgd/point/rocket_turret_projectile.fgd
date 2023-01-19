@@ -1,12 +1,11 @@
-@PointClass base(BaseEntityPoint,  ResponseContext, ToggleDraw) 
+@PointClass base(rpg_missile) 
 	appliesto(P1, P2) 
 	studioprop("models/props_bts/rocket.mdl") = rocket_turret_projectile: "The rocket the Rocket Sentry fires."
 	[
-
-	// Inputs
-	input RemovePaint(void) : "Cleans the rocket?"
-
-	// Outputs
-	output OnIgnite(void) : "On fire?"
-	output OnFizzled(void) : "The rocket has been fizzled."
+	@resources
+		[
+		model  "models/props_bts/rocket.mdl"
+		material "materials/decals/scorchfade.vmt"
+		sound "NPC_FloorTurret.RocketFlyLoop"
+		]
 	]

@@ -7,6 +7,7 @@
 	[
 	displaytext(string) : "Display Text"
 	directory(string) : "Image Directory (materials/vgui/...)" : "slideshow"
+	
 	minslidetime(float) : "Min Slide Time" : "0.5" : "Minimum amount of random time that a slide is displayed."
 	maxslidetime(float) : "Max Slide Time" : "0.5" : "Maximum amount of random time that a slide is displayed."
 
@@ -31,11 +32,15 @@
 	// Inputs
 	input Enable(void) : "Make slideshow visible."
 	input Disable(void) : "Make slideshow invisible."
+
 	input SetDisplayText(string) : "Sets the display text."
+
 	input RemoveAllSlides(void) : "Removes all slides from slideshow."
 	input AddSlides(string) : "Adds slides by keyword."
+
 	input SetMinSlideTime(float) : "Sets min random time between slides."
 	input SetMaxSlideTime(float) : "Sets max random time between slides."
+
 	input SetCycleType(integer) : "0 - random, 1 - forward, 2 - backward"
 	input SetNoListRepeat(boolean) : "Sets if lists can be randomly picked twice in a row."
 	]

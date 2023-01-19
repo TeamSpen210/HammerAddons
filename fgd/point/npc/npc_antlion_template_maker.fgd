@@ -2,7 +2,7 @@
 	appliesto(EP1, EP2, HL2, P1) 
 	autovis(Templates, Antlion Generator)
 	line(192 192 192, targetname, templatename)
-	size(-8 -8 -8, 8 8 8) 
+	iconsprite(editor/vizzys/npc_antlion_template_maker)
 	color(0 0 255) 
 = npc_antlion_template_maker: "Antlion Template Maker"
 	[
@@ -17,9 +17,9 @@
 	templatename(target_destination) : "Name of template NPC"
 	spawngroup(string) : "Spawn on Hint Group" : : "If specified, children will spawn on a hint node from this group, nearest the target."
 	spawnradius(float) : "Spawn radius" : 512 : "Target must be within this distance of any node in the hint group specified above. If the target is outside the radius, no NPC will spawn."
-	spawntarget(string) : "Spawn target" : : "Targetname of the entity to try and spawn near."
-	fighttarget(string) : "Fight target" : : "Targetname of an entity used as a goal for the children to fight to."
-	followtarget(string) : "Follow target" : : "Targetname of an entity used as a goal for the children to follow."
+	spawntarget(target_destination) : "Spawn target" : : "Targetname of the entity to try and spawn near."
+	fighttarget(target_destination) : "Fight target" : : "Targetname of an entity used as a goal for the children to fight to."
+	followtarget(target_destination) : "Follow target" : : "Targetname of an entity used as a goal for the children to follow."
 	vehicledistance(float) : "Vehicle Spawn Distance" : 1 : "This is a modifier of the current spawn distance. Spawn distance on a vehicle is based on speed, so this is just a modifier for it."
 	workerspawnrate[since_EP1](float) : "Random Worker Spawn Rate" : 0 : "Percentage chance that a spawned antlion will be a worker. (0 = no chance, 1 = 100% chance)"
 	ignorebugbait(boolean) : "Ignore Bugbait" : 0
@@ -32,9 +32,9 @@
 
 
 	// Inputs
-	input SetFightTarget(string) : "Sets the target entity for children to fight to."
+	input SetFightTarget(target_destination) : "Sets the target entity for children to fight to."
 	input ClearFightTarget(void) : "Clears the fight target goal for this spawner."
-	input SetFollowTarget(string) : "Sets the target entity for children to follow."
+	input SetFollowTarget(target_destination) : "Sets the target entity for children to follow."
 	input ClearFollowTarget(void) : "Clears the follow target goal for this spawner."
 	input SetSpawnRadius(float) : "Sets the Spawn Radius."
 	input AddToPool(integer) : "Add the number of antlions specified in the parameter to the pool."
@@ -45,4 +45,9 @@
 
 	// Outputs
 	output OnAllBlocked(void) : "Fires when all the hint nodes are blocked."
+
+	@resources 
+		[
+		func npc_antlion_template_maker // If the worker spawn rate is set, we need to force-include worker resources.
+		]
 	]

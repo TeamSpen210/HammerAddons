@@ -1,4 +1,4 @@
-@PointClass base(BaseDriveableVehicle) 
+@PointClass base(BasePropPhysics, BaseDriveableVehicle) 
 	appliesto(EP1, EP2, HL2, P1)
 	line(192 0 0, targetname, missilehint)
 	autovis(Vehicles, Combine APC)
@@ -19,4 +19,28 @@
 	output OnDeath(void) : "Fired when the APC is killed."
 	output OnDamaged(void) : "Fired when the APC is damaged."
 	output OnDamagedByPlayer(void) : "Fired when the APC is damaged by the player."
+
+	@resources
+		[
+		model "models/gibs/helicopter_brokenpiece_01.mdl"
+		model "models/gibs/helicopter_brokenpiece_02.mdl"
+		model "models/gibs/helicopter_brokenpiece_03.mdl"
+		model "models/combine_apc_destroyed_gib01.mdl"
+		model "models/combine_apc_destroyed_gib02.mdl"
+		model "models/combine_apc_destroyed_gib03.mdl"
+		model "models/combine_apc_destroyed_gib04.mdl"
+		model "models/combine_apc_destroyed_gib05.mdl"
+		model "models/combine_apc_destroyed_gib06.mdl"
+		model "models/gibs/hgibs.mdl"
+		sound "Weapon_AR2.Single"
+		sound "PropAPC.FireRocket"
+		sound "combine.door_lock"
+
+		entity env_laserdot
+		entity env_smoketrail
+		entity env_explosion
+		entity env_entity_igniter
+		entity prop_physics // Main gibs
+		entity apc_missile
+		]
 	]

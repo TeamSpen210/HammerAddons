@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint)
+	appliesto(since_L4D, -ASW)
 	color(200 0 0) 
 	studioprop("models/editor/camera.mdl") 
 	frustum(fov, _frustum_near, _frustum_far, _frustum_color, -1) 
@@ -41,4 +42,6 @@
 	input AddPlayer(ehandle) : "Force the !activator player to be controlled by this."
 	input RemovePlayer(ehandle) : "Remove !activator player from being controlled."
 	input StartMovement(void) : "Start the movement to the target entity."
+
+	@resources []
 	]

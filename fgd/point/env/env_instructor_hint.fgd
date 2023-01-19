@@ -5,7 +5,8 @@
 	sphere(hint_range)
 = env_instructor_hint: "An entity that allows for creation and control of instructor lessons by map logic."
 	[
-	hint_replace_key(string) : "Replace Key" : : "Unique name so that messages with the same key will replace each other."
+	hint_replace_key(string) : "Replace Key" : : "Hints with the same Replace Key will replace each other when displayed at the same time. " +
+		"Use different values for each hint if you would like to have multiple hints displaying at once."
 	hint_target(target_destination) : "Target Entity" : : "The entity to show this hint on top of. The entity used must exist on the client, info_target_instructor_hint can be parented to server only entities for this purpose."
 
 

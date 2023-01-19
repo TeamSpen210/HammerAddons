@@ -1,50 +1,68 @@
-
 @PointClass base(BaseEntityPoint) 
 	color(200 0 0) 
 	iconsprite("editor/ficool2/env_screenoverlay")
 = env_screenoverlay: "An entity that can display and control a set of screen overlays, to be displayed over the player's view. Useful for view effects like drunkenness, or teleporter afterimages, etc."
 	[
+	OverlayIndex[MBase](integer) : "Overlay Index" : -1 : "If this value is set to a number between 0 and 9, this overlay will use one of Mapbase's indexed overlay slots. Overlays in different slots will display on the screen at the same time."
+
+	spawnflags[KZ](flags) =
+	[
+		1 : "Only affect the activator" : 0
+	]
+
 	overlayname1(material) : "Overlay Name 1" : : "Name of the first overlay material to display."
-	overlaytime1(float) : "Overlay Duration 1" : 1.0 : "Amount of time that the first overlay should be displayed for, after which it will begin showing the second overlay."
+	overlaytime1(float) : "Overlay Duration 1" : 1.0 : "Amount of time that the first overlay should be displayed for, after which it will begin showing the second overlay. " +
+		"Set to -1 to show the first overlay indefinitely."
 	
 	
 	overlayname2(material) : "Overlay Name 2" : : "Name of the second overlay material to display. If left blank, overlay displaying will finish, and this entity will consider itself done."
-	overlaytime2(float) : "Overlay Duration 2" : 1.0 : "Amount of time that the second overlay should be displayed for, after which it will begin showing the third overlay."
+	overlaytime2(float) : "Overlay Duration 2" : 1.0 : "Amount of time that the second overlay should be displayed for, after which it will begin showing the third overlay. " +
+		"Set to -1 to show the second overlay indefinitely."
 	
 	
 	overlayname3(material) : "Overlay Name 3" : : "Name of the third overlay material to display. If left blank, overlay displaying will finish, and this entity will consider itself done."
-	overlaytime3(float) : "Overlay Duration 3" : 1.0 : "Amount of time that the third overlay should be displayed for, after which it will begin showing the fourth overlay."
+	overlaytime3(float) : "Overlay Duration 3" : 1.0 : "Amount of time that the third overlay should be displayed for, after which it will begin showing the fourth overlay. " +
+		"Set to -1 to show the third overlay indefinitely."
 	
 	
 	overlayname4(material) : "Overlay Name 4" : : "Name of the fourth overlay material to display. If left blank, overlay displaying will finish, and this entity will consider itself done."
-	overlaytime4(float) : "Overlay Duration 4" : 1.0 : "Amount of time that the fourth overlay should be displayed for, after which it will begin showing the fifth overlay."
+	overlaytime4(float) : "Overlay Duration 4" : 1.0 : "Amount of time that the fourth overlay should be displayed for, after which it will begin showing the fifth overlay. " +
+		"Set to -1 to show the fourth overlay indefinitely."
 	
 	
 	overlayname5(material) : "Overlay Name 5" : : "Name of the fifth overlay material to display. If left blank, overlay displaying will finish, and this entity will consider itself done."
-	overlaytime5(float) : "Overlay Duration 5" : 1.0 : "Amount of time that the fifth overlay should be displayed for, after which it will begin showing the sixth overlay."
+	overlaytime5(float) : "Overlay Duration 5" : 1.0 : "Amount of time that the fifth overlay should be displayed for, after which it will begin showing the sixth overlay. " +
+		"Set to -1 to show the fifth overlay indefinitely."
 	
 	
 	overlayname6(material) : "Overlay Name 6" : : "Name of the sixth overlay material to display. If left blank, overlay displaying will finish, and this entity will consider itself done."
-	overlaytime6(float) : "Overlay Duration 6" : 1.0 : "Amount of time that the sixth overlay should be displayed for, after which it will begin showing the seventh overlay."
+	overlaytime6(float) : "Overlay Duration 6" : 1.0 : "Amount of time that the sixth overlay should be displayed for, after which it will begin showing the seventh overlay. " +
+		"Set to -1 to show the sixth overlay indefinitely."
 	
 	
 	overlayname7(material) : "Overlay Name 7" : : "Name of the seventh overlay material to display. If left blank, overlay displaying will finish, and this entity will consider itself done."
-	overlaytime7(float) : "Overlay Duration 7" : 1.0 : "Amount of time that the seventh overlay should be displayed for, after which it will begin showing the eighth overlay."
+	overlaytime7(float) : "Overlay Duration 7" : 1.0 : "Amount of time that the seventh overlay should be displayed for, after which it will begin showing the eighth overlay. " +
+		"Set to -1 to show the seventh overlay indefinitely."
 	
 	
 	overlayname8(material) : "Overlay Name 8" : : "Name of the eighth overlay material to display. If left blank, overlay displaying will finish, and this entity will consider itself done."
-	overlaytime8(float) : "Overlay Duration 8" : 1.0 : "Amount of time that the eighth overlay should be displayed for, after which it will begin showing the ninth overlay."
+	overlaytime8(float) : "Overlay Duration 8" : 1.0 : "Amount of time that the eighth overlay should be displayed for, after which it will begin showing the ninth overlay. " +
+		"Set to -1 to show the eighth overlay indefinitely."
 	
 	
 	overlayname9(material) : "Overlay Name 9" : : "Name of the ninth overlay material to display. If left blank, overlay displaying will finish, and this entity will consider itself done."
-	overlaytime9(float) : "Overlay Duration 9" : 1.0 : "Amount of time that the ninth overlay should be displayed for, after which it will begin showing the tenth overlay."
+	overlaytime9(float) : "Overlay Duration 9" : 1.0 : "Amount of time that the ninth overlay should be displayed for, after which it will begin showing the tenth overlay. " +
+		"Set to -1 to show the ninth overlay indefinitely."
 	
 	
 	overlayname10(material) : "Overlay Name 10" : : "Name of the tenth overlay material to display. If left blank, overlay displaying will finish, and this entity will consider itself done."
-	overlaytime10(float) : "Overlay Duration 10" : 1.0 : "Amount of time that the tenth overlay should be displayed for, after which this entity will stop displaying overlays."
+	overlaytime10(float) : "Overlay Duration 10" : 1.0 : "Amount of time that the tenth overlay should be displayed for, after which this entity will stop displaying overlays. " +
+		"Set to -1 to show the tenth overlay indefinitely."
 
 	// Inputs
 	input StartOverlays(void) : "Start displaying the first overlay."
 	input StopOverlays(void) : "Stop displaying any overlays."
-	input SwitchOverlay(float) : "Switch to displaying a specific overlay. Pass in the desired overlay number in the parameter."
+	input SwitchOverlay(int) : "Switch to displaying a specific overlay. Pass in the desired overlay number in the parameter."
+
+	@resources []
 	]

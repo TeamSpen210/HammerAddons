@@ -21,4 +21,12 @@
 	input SetBodyGroup(integer) : "HACK: Sets this NPC's body group (from 0 - n). You'd better know what you are doing!"
 
 	input SetExpressionOverride(string) : "Set a VCD file to override facial expressions on this NPC."
+
+	@resources
+		[
+	    sound "AI_BaseNPC.SwishSound"
+	    sound "AI_BaseNPC.BodyDrop_Heavy"
+	    sound "AI_BaseNPC.BodyDrop_Light"
+	    sound "AI_BaseNPC.SentenceStop"
+		]
 	]

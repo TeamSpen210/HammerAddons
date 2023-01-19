@@ -1,0 +1,9 @@
+@PointClass base(BaseEntityAnimating) 
+	appliesto(STANLEY) 
+= prop_tsp_button: "A button which does nothing"
+	[
+	disabletime(float) : "Disable time" : 1 : "Amount of time, in seconds, after the button has been pressed before it can be pressed again"
+	pressanimation(string) : "Animation to play on pressed" : "push" : "The sequence that will be played once the button is pressed"
+	soundpath(string) : "Sound to play on press" : "button/button10.wav" : "Optional sound to play on press"
+	model(studio) : "Model"
+	]

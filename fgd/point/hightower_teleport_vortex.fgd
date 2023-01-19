@@ -5,6 +5,6 @@
 	lifetime(float) : "Lifetime" : 0 : "How long the portal should stay open"
 
 	// Inputs
-	input SetAdvantageTeam(string) : "Set which team has the advantage."
-	input SetModelScale(string) : "Scale of teleport box."
+	input SetAdvantageTeam(integer) : "Set which team has the advantage."
+	input SetModelScale(float) : "Scale of teleport box."
 	]

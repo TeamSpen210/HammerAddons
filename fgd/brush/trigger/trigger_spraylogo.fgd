@@ -1,0 +1,9 @@
+@SolidClass base(Trigger) 
+	appliesto(KZ) 
+ = trigger_spraylogo: "A trigger that fires when a logo is sprayed within it."
+	[
+
+	// Outputs
+	output OnSprayLogoSprayed(void) : "Fired when a logo (sprayimage) is sprayed within this volume." 
+	
+	]

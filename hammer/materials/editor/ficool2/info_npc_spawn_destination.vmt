@@ -1,7 +1,0 @@
-Sprite
-{
-	$baseTexture "editor/ficool2/info_npc_spawn_destination"
-	$spriteorientation "vp_parallel"
-	$spriteorigin "[.5 .5]"
-	$no_fullbright 1
-}

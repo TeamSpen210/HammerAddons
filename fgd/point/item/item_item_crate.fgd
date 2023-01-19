@@ -1,7 +1,7 @@
 @BaseClass appliesto(-MBase) studioprop("models/items/item_item_crate.mdl") = _item_item_crate_fixedmodel []
 @BaseClass appliesto(+MBase) studioprop() = _item_item_crate_anymodel []
 
-@PointClass base(BasePropPhysics, Angles, DamageFilter, BaseFadeProp, _item_item_crate_anymodel, _item_item_crate_fixedmodel) 
+@PointClass base(BasePropPhysics, Angles, DamageFilter, BaseFadeProp, EZ2Variant, _item_item_crate_anymodel, _item_item_crate_fixedmodel) 
 	appliesto(EP1, EP2, HL2, P1)
 = item_item_crate: "Item Crate"
 	[
@@ -28,11 +28,10 @@
 	SpecificResupply[MBase](target_destination) : "Specific resupply/Target template" : "" : "If item type is item_dynamic_resupply, specify a specific one to use instead of the master. If the crate contains a point_template, this is required to specify which point_template to spawn."
 
 	// Inputs
-	input Kill(void) : "Remove the item crate"
 	input Break(void) : "Breaks the breakable."
-	input SetHealth(integer) : "Sets a new value for health. If the breakable's health reaches zero it will break."
-	input AddHealth(integer) : "Adds health to the breakable. If the breakable's health reaches zero it will break."
-	input RemoveHealth(integer) : "Removes health from the breakable. If the breakable's health reaches zero it will break."
+	input SetHealth(integer) : "Sets a new value for health. If the crate's health reaches zero it will break."
+	input AddHealth(integer) : "Adds health to the crate. If the crate's health reaches zero it will break."
+	input RemoveHealth(integer) : "Removes health from the crate. If the crate's health reaches zero it will break."
 
 	input SetContents[MBase](string) : "Sets the crate's contents. (e.g. its specified item)"
 	input SetItemCount[MBase](string) : "Sets the item count."
@@ -46,4 +45,10 @@
 	output OnCacheInteraction(void) : "This output fires when the player proves they have 'found' this crate. Fires on: Picked up by +USE, Picked up by Physcannon, Punted by Physcannon, Broken."
 
 	output OnItem[MBase](ehandle) : "Fires for each item spawned by this crate."
+
+	@resources
+		[
+		// The spawned entity needs to be included, and depending on the appearance keyvalue, different models are used.
+		func item_item_crate
+		]
 	]

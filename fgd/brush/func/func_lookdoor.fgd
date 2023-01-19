@@ -12,11 +12,16 @@
 		32768: "LookDoor From Open" : 0
 		]
 
-	proximitydistance(string) : "Proximity Distance" : "0.0" : "If non-zero, proximity range over which door will move"
-	proximityoffset(string) : "Proximity Offset" : "0.0" : "Offset from the target object"
-	fieldofview(string) : "FieldOfView" : "0.0" : "If non-zero, field of view over which door will move. The target must then be a NPC/player!"
+	proximitydistance(float) : "Proximity Distance" : "0.0" : "If non-zero, proximity range over which door will move"
+	proximityoffset(float) : "Proximity Offset" : "0.0" : "Offset from the target object"
+	fieldofview(float) : "FieldOfView" : "0.0" : "If non-zero, field of view over which door will move. The target must then be a NPC/player!"
 
 	// Inputs
 	input InvertOn(void) : "InvertOn - when set behavior of door is inverted."
 	input InvertOff(void) : "InvertOff - when set behavior of door is normal."
+
+	@resources
+		[
+		entity lookdoorthinker
+		]
 	]

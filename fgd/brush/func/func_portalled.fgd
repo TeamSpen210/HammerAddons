@@ -1,4 +1,3 @@
-
 @SolidClass base(func_portal_detector) 
 	appliesto(P2) = func_portalled: "Fires outputs when the player teleports through a portal in its volume."
 	[
@@ -10,4 +9,6 @@
 	// Outputs
 	output OnEntityPrePortalled(void) : "Fires when the entity is about to portal."
 	output OnEntityPostPortalled(void) : "Fires when the entity is done portalling."
+
+	@resources []
 	]

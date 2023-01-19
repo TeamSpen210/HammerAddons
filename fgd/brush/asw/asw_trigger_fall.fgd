@@ -1,7 +1,8 @@
 @SolidClass base(Trigger) 
 	appliesto(ASW) = asw_trigger_fall: "A trigger volume that kills any NPCs that touch it."
 	[
-
 	// Outputs
 	output OnFallingObject(void) : "Fired whenever something falls into this trigger."
+
+	@resources []
 	]

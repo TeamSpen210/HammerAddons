@@ -1,11 +1,22 @@
-@NpcClass base(BaseNPC) 
+@BaseClass appliesto(-MBase) studio("models/hunter.mdl") = _npc_hunter_fixed []
+@BaseClass appliesto(+MBase) studio() = _npc_hunter_settable []
+
+@NpcClass base(BaseNPC, _npc_hunter_fixed, _npc_hunter_settable) 
 	appliesto(EP2, P1) 
 	autovis(Entities, NPCs, Combine, Combine Hunter)
-	studio("models/hunter.mdl") 
 = npc_hunter: "A smaller, faster, strider that can pursue the player into buildings."
 	[
 	followtarget(target_destination) : "Strider to Follow" : : "The name of the strider that this hunter should follow."
+	
+	NoIdlePatrol[engine](boolean) : "Don't patrol while idle" : 0
+	NoIdlePatrol[MBase](choices) : "Patrol while idle" : 0 =
+		[
+		0: "Yes"
+		1: "No"
+		]
 
+	CompanionHunter[EZ2](boolean) : "Companion Hunter" : 0 : "Allows this hunter to regenerate health and do other long-term companion-related things." 
+	NoIdlePatrol[EZ2](boolean) : "Patrol while idle" : 0
 	// Inputs
 	input FollowStrider(target_destination) : "Sets the name of the strider that this hunter should follow."
 	input SetMinigunTime(float) : "Time to shoot at any set minigun target."
@@ -22,4 +33,52 @@
 	input DisableCrouchWalk(void) : "UNUSED: Prevents the hunter from crouch walking."
 	input EnableCrouchWalk(void) : "UNUSED: Allows the hunter to crouch walk."
 	input UseSiegeTargets(string) : "Pass in the name of info_targets to shoot at when I can't shoot at the player."
+
+	@resources
+		[
+		model "models/hunter.mdl" [-MBase]
+
+		sound "NPC_Hunter.Idle"
+		sound "NPC_Hunter.Scan"
+		sound "NPC_Hunter.Alert"
+		sound "NPC_Hunter.Pain"
+		sound "NPC_Hunter.PreCharge"
+		sound "NPC_Hunter.Angry"
+		sound "NPC_Hunter.Death"
+		sound "NPC_Hunter.FireMinigun"
+		sound "NPC_Hunter.Footstep"
+		sound "NPC_Hunter.BackFootstep"
+		sound "NPC_Hunter.FlechetteVolleyWarn"
+		sound "NPC_Hunter.FlechetteShoot"
+		sound "NPC_Hunter.FlechetteShootLoop"
+		sound "NPC_Hunter.FlankAnnounce"
+		sound "NPC_Hunter.MeleeAnnounce"
+		sound "NPC_Hunter.MeleeHit"
+		sound "NPC_Hunter.TackleAnnounce"
+		sound "NPC_Hunter.TackleHit"
+		sound "NPC_Hunter.ChargeHitEnemy"
+		sound "NPC_Hunter.ChargeHitWorld"
+		sound "NPC_Hunter.FoundEnemy"
+		sound "NPC_Hunter.FoundEnemyAck"
+		sound "NPC_Hunter.DefendStrider"
+		sound "NPC_Hunter.HitByVehicle"
+
+		particle "hunter_muzzle_flash"
+		particle "blood_impact_synth_01"
+		particle "blood_impact_synth_01_arc_parent"
+		particle "blood_spurt_synth_01"
+		particle "blood_drip_synth_01"
+
+		choreo "scenes/npc/hunter/hunter_scan.vcd"
+		choreo "scenes/npc/hunter/hunter_eyeclose.vcd"
+		choreo "scenes/npc/hunter/hunter_roar.vcd"
+		choreo "scenes/npc/hunter/hunter_pain.vcd"
+		choreo "scenes/npc/hunter/hunter_eyedarts_top.vcd"
+		choreo "scenes/npc/hunter/hunter_eyedarts_bottom.vcd"
+
+		material "materials/effects/water_highlight.vmt"
+
+		entity hunter_flechette
+		entity sparktrail
+		]
 	]

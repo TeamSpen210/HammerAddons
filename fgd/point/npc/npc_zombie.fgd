@@ -3,4 +3,28 @@
 	autovis(Entities, NPCs, Zombies, Classic Zombie)
 	studio("models/Zombie/Classic.mdl") = npc_zombie: "Zombie"
 	[
+	@resources
+		[
+		mdl "models/zombie/classic.mdl"
+		mdl "models/zombie/classic_torso.mdl"
+		mdl "models/zombie/classic_legs.mdl"
+		sound "Zombie.FootstepRight"
+		sound "Zombie.FootstepLeft"
+		sound "Zombie.FootstepLeft"
+		sound "Zombie.ScuffRight"
+		sound "Zombie.ScuffLeft"
+		sound "Zombie.AttackHit"
+		sound "Zombie.AttackMiss"
+		sound "Zombie.Pain"
+		sound "Zombie.Die"
+		sound "Zombie.Alert"
+		sound "Zombie.Idle"
+		sound "Zombie.Attack"
+		sound "NPC_BaseZombie.Moan1"
+		sound "NPC_BaseZombie.Moan2"
+		sound "NPC_BaseZombie.Moan3"
+		sound "NPC_BaseZombie.Moan4"
+		
+		entity npc_headcrab
+		]
 	]

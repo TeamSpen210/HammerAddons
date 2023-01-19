@@ -35,4 +35,6 @@
 	input TurnOff(void) : "Turn the link off."
 	input SetAllowed(string) : "Change the allowed pass when off"
 	input SetInvert(integer) : "Change the invert exclusion rule"
+
+	@resources []
 	]

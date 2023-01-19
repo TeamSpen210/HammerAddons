@@ -22,5 +22,8 @@
 	reversalsoundlarge(sound) : "Reversal sound (large)" : : "Play this sound when making a hard reverse over the large threshold"
 
 	// Inputs
-	input SetAngularVelocity(float) : "Set angular velocity around the hinge (motor) in deg/sec"
+	input SetAngularVelocity(float) : "Set angular velocity around the hinge (motor) in deg/sec."
+	input SetHingeFriction(float) : "Change the friction in the hinge."
+	
+	@resources []
 	]

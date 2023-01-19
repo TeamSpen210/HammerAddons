@@ -1,7 +1,18 @@
-@SolidClass base(BaseEntityBrush, EnableDisable)
+@SolidClass base(Trigger)
 = color_correction_volume: "An entity to control the color correction in the map."
 	[
+	// The regular spawnflags are ignored, only clients pass.
+	spawnflags(flags) = []
+	filtername(filterclass) readonly: "Filter Name (Ignored)" : : "As triggers volumes have a filter, but it is ignored."
+
+	enabled[engine](boolean) : "Is Enabled" : 1 : "The actual keyvalue controlling enable state, but is overwritten by Start Disabled."
+
 	fadeduration(float) : "Lookup Fade Duration" : 10.0 : "This is the duration for the lookup to fade in/out on extry/exit"
 	maxweight(float) : "Maximum Weight" : 1.0 : "This is the maximum weight for this lookup"
 	filename(string) : "Lookup Table Filename" : : "This is the lookup table filename"
+
+	@resources
+		[
+		func color_correction // Include the lookup table
+		]
 	]

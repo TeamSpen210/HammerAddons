@@ -1,0 +1,6 @@
+@NPCClass base(EZ2XenFlora) appliesto(EZ2) 
+	studio("models/hair.mdl")
+	autovis(Entities, NPCs, Xen, Xen Deco)
+= npc_xenhair : "Xen Hair"
+	[
+	]

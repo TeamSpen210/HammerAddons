@@ -8,16 +8,18 @@
 	solid(choices) : "Collisions" : 6 : "Method of collision for this entity. Can be changed at runtime with AddOutput." =
 		[
 		0: "None"
-		1: "BSP (QPhysics)"
+		1: "BSP (QPhysics)" [complete]
 		2: "Bounding Box"
 		3: "Oriented Bounding Box"
 		4: "Oriented Bounding Box, constrained to Yaw only"
-		5: "Custom (defined per-entity, if not defined the entity will have bizarre collision behavior)"
+		5: "Custom (defined per-entity, if not defined the entity will have bizarre collision behavior)" [complete]
 		6: "VPhysics"
 		]
 
 	body(integer) : "Bodygroup" : 0 : "Sets the body group index for the model, starting with 0, if available."
+	setbodygroup[complete](integer) : "(Set) Body Group" : 0 :  "Identical to Body Group (body), ask Valve why this is duplicated. Body Groups allow turning on and off parts of a model, so sections can be shown or hidden dynamically."
 	texframeindex(integer) : "Texture Frame" : : "The frame number for any animated textures on this entity."
+	hitboxset[complete](string) : "Hitbox Set" : : "Sets the $hboxset to use for collision testing."
 
 	LightingOrigin(target_destination) : "Lighting Origin" :  : "Select any entity (not info_lighting!) from which to sample lighting instead of the entity's origin."
 	LightingOriginHack(target_destination) : "Lighting Origin Offset" :  : "The info_lighting_relative from which to sample lighting instead of the entity's origin."
@@ -29,7 +31,15 @@
 	disableshadows(boolean) : "Disable Shadows?" : 0 : "Prevent the entity from creating cheap render-to-texture/dynamic shadows."
 	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents dynamic shadows (e.g. player and prop shadows) from appearing on this entity."
 	modelscale(float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
-	
+		
+	// These exist, but may not be usable.
+	skin[engine](integer) : "Skin" : 0
+	modelskin[engine](integer) : "Model Skin" : 0 : "Alternate keyvalue for setting the current skin."
+	playbackrate[complete](float) readonly: "Playback Rate" : 1.0 : "Exists, but is immediately set to 1.0 on spawn."
+	cycle[engine](float) : "Cycle" : 0.0 : "Internal variable storing the current progress through the animation, 0-1."
+	sequence[engine](integer) : "Sequence Number" : 0 : "Stores the index of the currently playing animation. Can be set manually via AddOutput, but care must be used."
+	suppressanimsounds[engine](boolean) : "Suppress Anim Sounds" : 0 : "If set, the prop will not play any sounds that are embedded in animations it plays."
+
 	linedivider_phys[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs

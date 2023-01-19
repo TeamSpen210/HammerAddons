@@ -1,0 +1,16 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(+engine)
+= ai_hint: "Hint nodes spawn this entity, which stores the actual hint."
+	[
+	hinttype[engine](integer) : "Hint" : 0
+
+	nodefov[engine](integer) : "Node FOV" : 180 : "Imagine this node requires that an NPC be in the node's field of view in order to use this hint. Other angles may be typed in." 
+
+	// Inputs
+	input EnableHint(void) : "Enable hint."
+	input DisableHint(void) : "Disable hint."
+	
+	input SetHintGroup[MBase](string) : "Sets this hint's group."
+
+	@resources []
+	]

@@ -23,16 +23,23 @@
 	fadeinduration(float) : "Lookup Fade In Duration" : "0.0" : "Duration of fade in on when enabled."
 	fadeoutduration(float) : "Lookup Fade out Duration" : "0.0" : "Dration of fade out on when disabled."
 
-	spawnflags[since_L4D](flags)  =
+	enabled[engine](boolean) : "Is Enabled" : 1 : "The actual keyvalue controlling state, but is overwritten by Start Disabled."
+
+	spawnflags[since_L4D, MBase](flags)  =
 		[
 		1: "Master" : 0
 		2: "Client-side simulation" : 0
 		]
 
-	exclusive[since_L4D, MESA](boolean) : "Exlusive" : "0" : "An exclusive color_correction entity disables and fades out all other color corrections when it is enabled. " +
+	exclusive[since_L4D, MESA, MBase](boolean) : "Exlusive" : "0" : "An exclusive color_correction entity disables and fades out all other color corrections when it is enabled. " +
 		"There should only be one active exclusive color_correction ent at any time."
 
 	// Inputs
 	input SetFadeInDuration(float) : "Sets the 'fadeInDuration' variable, used to fade cc lookup usage when entity is enabled."
 	input SetFadeOutDuration(float) : "Sets the 'fadeOutDuration' variable, used to fade cc lookup usage when entity is disabled."
+
+	@resources
+		[
+		func color_correction // Include the lookup file.
+		]
 	]

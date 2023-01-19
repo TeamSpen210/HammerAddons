@@ -1,0 +1,22 @@
+@SolidClass base(Trigger) appliesto(KZ) = trigger_flare: "A trigger that fires when a flare is within it."
+	[
+	flaremode[engine](integer) : "Flare Handle Mode" : 0: "What to do when a flare lands in this trigger."
+	flaremode(choices) : "Flare Handle Mode" : 0: "What to do when a flare lands in this trigger." = 
+		[ 
+		0 : "Do Nothing (Will spam outputs)" 
+		1 : "Ignore the flare after one output"
+		2 : "Delete the flare" 
+		] 
+	refiretime(float) : "Refire Time" : 0 : "How long to wait before a flare can affect this trigger"
+	mode[engine](integer) : "Restrictions" : 0: ""
+	mode(choices) : "Restrictions" : 0: "" =
+		[
+		0 : "No Restrictions"
+		1 : "Only players on foot"
+		2 : "Only players in vehicles"
+		]
+
+	// Outputs
+	output OnFlare(void) : "Fired when a flare lands in this trigger." 
+	output OnFlareBeforeRefire(void) : "Fired when a flare lands in this trigger, but the trigger has not reached it's refire time yet."
+	]

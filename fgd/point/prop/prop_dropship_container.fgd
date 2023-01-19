@@ -3,4 +3,12 @@
 	studio("models/combine_dropship_container.mdl") 
 = prop_dropship_container: "The soldier container carried by Combine Dropships."
 	[
+	@resources
+		[
+		mdl "models/combine_dropship_container.mdl"
+		mdl "models/gibs/helicopter_brokenpiece_01.mdl"
+		mdl "models/gibs/helicopter_brokenpiece_02.mdl"
+		mdl "models/gibs/helicopter_brokenpiece_03.mdl"
+		mdl "models/gibs/hgibs.mdl"
+		]
 	]

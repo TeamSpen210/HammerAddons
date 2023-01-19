@@ -1,3 +1,5 @@
-@PointClass base(env_sprite) = env_glow: "Obselete older name for env_sprite."
+@PointClass aliasof(env_sprite)
+	= env_glow: "Obsolete older name for env_sprite."
 	[
+	@resources []
 	]

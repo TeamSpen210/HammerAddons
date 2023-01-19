@@ -1,5 +1,4 @@
-
-@PointClass base(Weapon) 
+@PointClass base(asw_weapon_blink) 
 	appliesto(ASW) 
 	studio("models/items/itembox/itemboxsmall.mdl") = asw_weapon_jump_jet: "Jump Jets"
 	[

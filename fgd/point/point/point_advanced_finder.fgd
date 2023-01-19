@@ -1,6 +1,7 @@
 @PointClass appliesto(MBase)
 	base(BaseEntityPoint)
 	sphere(radius)
+	iconsprite(editor/vizzys/point_advanced_finder)
 = point_advanced_finder :
 	"An enhanced entity finder that finds entities that pass a filter and fires OnFoundEntity for each of them."
 	[
@@ -35,4 +36,6 @@
 	// Outputs
 	output OnFoundEntity(ehandle) : "Fires for each entity found, passing it as the parameter and the activator."
 	output OnSearchFailed(void) : "Fired when this finder couldn't find any entities."
+
+	@resources []
 	]

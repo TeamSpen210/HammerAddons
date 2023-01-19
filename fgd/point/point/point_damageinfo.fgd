@@ -72,4 +72,6 @@
 	// Outputs
 	output OnApplyDamage(void) : "Fires for every entity that takes our damage, using that as the activator."
 	output OnApplyDeath(void) : "Fires for every entity that dies from our damage, using that as the activator."
+
+	@resources []
 	]

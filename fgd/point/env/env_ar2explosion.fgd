@@ -1,10 +1,15 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(HL2, EP1, EP2, P1, ASW, P2)
-	iconsprite("editor/ts2do/env_ar2explosion.vmt")
+	iconsprite("editor/vizzys/env_ar2explosion.vmt")
 = env_ar2explosion: "AR2 explosion visual effect. Big, volume-filling brown cloud. Does not cause damage or emit sound."
 	[
 	material(material) : "Particle Material" : "particle/particle_noisesphere" : "The material to use for each particle in the explosion."
 
 	// Inputs
 	input Explode(void) : "Make the explosion effect."
+
+	@resources 
+		[
+		entity ar2explosion
+		]
 	]

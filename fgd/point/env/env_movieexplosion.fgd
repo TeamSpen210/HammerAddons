@@ -2,4 +2,8 @@
 	appliesto(TF2) 
 = env_movieexplosion : ""
 	[
+	@resources
+		[
+		material "materials/particle/particle_sphere.vmt"
+		]
 	]

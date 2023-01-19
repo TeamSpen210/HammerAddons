@@ -21,4 +21,10 @@
 
 	// Inputs
 	input Explode(void) : "Triggers the explosion."
+
+	@resources
+		[
+		particle "asw_env_explosion"
+		sound "ASW_Explosion.Explosion_Default"
+		]
 	]

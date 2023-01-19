@@ -10,11 +10,14 @@
 		[
 		"weapon_alyxgun": "Alyx Gun"
 		"weapon_shotgun": "Shotgun"
+		"weapon_pistol" : "Pistol" [MBase]
+		"weapon_smg1" : "SMG1" [MBase]
+		"weapon_ar2" : "AR2" [MBase]
 		"0": "Nothing"
 		]
 
 	dontpickupweapons(boolean) : "Prevent picking up weapons?" : 1 : "If yes, this NPC will NOT be allowed to pick up weapons they find on the ground."
-	shouldhaveemp(boolean) : "Should alyx have her EMP?" : 1
+	shouldhaveemp(boolean) : "Should Alyx have her EMP?" : 1
 
 	// Inputs
 	input AllowInteraction(void) : "Allow Alyx's 'hacking' AI to run."
@@ -28,7 +31,26 @@
 	input ExitVehicle(void) : "Make Alyx exit the vehicle she's in."
 	input CancelEnterVehicle(void) : "Stops Alyx from trying to enter the vehicle if she's outside of it."
 
+	input VehiclePunted[EP2, +complete](void) : "If !caller is the vehicle Alyx is riding, she complains about being punted with the Gravity Gun. This is automatically fired by vehicles, but you could also do it manually."
+	input OutsideTransition[EP2](void) : "If the player is in the Scout Car and Always Transition is enabled, Alyx teleports into its passenger seat, instead of a nearby hint node."
+
 	// Outputs
 	output OnFinishInteractWithObject(void) : "Fires when Alyx finishes interacting with an object (usually hacking it)."
 	output OnPlayerUse(void) : "Fires when a player +USEs Alyx"
+
+	@resources
+		[
+		model "models/alyx.mdl" // In case it's unset
+		model "models/alyx_emptool_prop.mdl"
+		sound "npc_alyx.die"
+
+		sound "DoSpark" [+episodic]
+		sound "npc_alyx.starthacking" [+episodic]
+		sound "npc_alyx.donehacking" [+episodic]
+		sound "npc_alyx.readytohack" [+episodic]
+		sound "npc_alyx.interruptedhacking" [+episodic]
+		sound "ep_01.al_dark_breathing01" [+episodic]
+		sound "Weapon_CombineGuard.Special1" [+episodic]
+		entity env_alyxemp
+		]
 	]

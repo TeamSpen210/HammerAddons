@@ -10,7 +10,8 @@
 		1: "Infinite Range" : 0
 		16: "Start Silent" : 1
 		32: "Is NOT Looped" : 1
-		64:"Do NOT Pause when game is Paused": 0 [MESA]
+		64: "Do NOT Pause when game is Paused": 0 [MESA]
+		64: "Only play to the activator" : 0 [KZ]
 		]
 
 	message(sound) : "Sound Name" : : "Name of the GameSound entry for the sound to play. Also supports direct .wav filenames."
@@ -110,7 +111,9 @@
 	// Inputs
 	input Pitch(integer) : "Sets the sound pitch, expressed as a range from 1 to 255, where 100 is the sound's default pitch."
 	input PlaySound(void) : "Starts the sound or restart from beginning (if looped)."
+	input PlaySoundTeam[KZ](void) : "Like the PlaySound input, but only for the activator's team."
 	input StopSound(void) : "Stops the sound if it is playing. Only works properly if the looped flag is checked."
+	input StopSoundTeam[KZ](void) : "Like the StopSound input, but only for the activator's team."
 	input ToggleSound(void) : "Toggles the sound between playing and stopping."
 	input Volume(integer) : "Sets the sound volume, expressed as a range from 0 to 10, where 10 is the loudest."
 	input FadeIn(integer) : "Fades the sound up to full volume over a specified number of seconds, with a range from 0 to 100 seconds."
@@ -118,4 +121,6 @@
 		"Sound is forced to full volume first!"
 	input SetSound[MBase](string) : "Sets the sound this ambient_generic should play."
 	output OnSoundFinished[MBase](void) : "Fires when the sound finishes playing. NOTE: This sound should be set to pause when the game is paused."
+
+	@resources [] // Provided by FGD
 	]

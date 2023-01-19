@@ -35,7 +35,8 @@
 		7: "Hunter"
 		8: "Vortigaunt"
 		]
-
+	NormalMemoryDiscard[MBase](boolean) : "Disable short memory discard" : 0 : "Actors currently following a target normally forget about enemies if they don't see them after 5 seconds. " +
+		"Use this to disable that behavior when memories are important."
 
 	// Inputs
 	input Activate(void) : "Begin the follow behavior"

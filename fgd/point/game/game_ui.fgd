@@ -60,4 +60,6 @@
 	output YAxis(string) : "An output that fires whenever the Y axis of the player's input changes. i.e. -1 when the player has backward key down, 1 when th" + "e player has forward key down, and 0 if neither."
 	output AttackAxis(string) : "An output that fires whenever the state of the player's attack key changes. i.e. 1 when the player has the attack key down, 0 ot" + "herwise."
 	output Attack2Axis(string) : "An output that fires whenever the state of the player's secondary attack key changes. i.e. 1 when the player has the secondary a" + "ttack key down, 0 otherwise."
+
+	@resources []
 	]

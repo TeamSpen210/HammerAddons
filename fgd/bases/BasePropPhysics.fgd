@@ -36,7 +36,7 @@
 	damagetype[engine](int): "Impact damage type": 0
 
 	nodamageforces(boolean) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move."
-	inertiascale(float) : "Scale Factor For Inertia" : 1.0 : "Scales the angular mass of an object. Used to hack angular damage and collision response."
+	inertiascale[complete](float) : "Scale Factor For Inertia" : 1.0 : "Scales the angular mass of an object. Used to hack angular damage and collision response."
 	massscale(float) : "Mass Scale" : 0 : "A scale multiplier for the object's mass."
 	overridescript(string) : "Override Parameters" : : "A list of physics key/value pairs that are usually in a physics prop .qc file. Format is 'key,value,key,value,etc'."
 	damagetoenablemotion(integer) : "Health Level to Override Motion" : 0 : "If specified, this object will start motion disabled. Once its health has dropped below this specified amount, it will enable motion."
@@ -44,7 +44,7 @@
 	puntsound(sound) : "Sound to make when punted."
 	
 	// Incomplete ASW feature.
-	addon[since_ASW](string) : "AI AddOn" : : "If specified this object will use this addon behavior when installed in a composite AI"
+	addon[since_ASW, +complete](string) : "AI AddOn" : : "If specified this object will use this addon behavior when installed in a composite AI"
 
 
 	// Inputs

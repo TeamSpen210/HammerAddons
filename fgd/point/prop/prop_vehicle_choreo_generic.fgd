@@ -1,4 +1,5 @@
-@PointClass base(BaseDriveableVehicle, SetModel)
+@PointClass 
+	base(prop_dynamic_base, SetModel) // Doesn't inherit from vehicle classes!
 	studioprop() 
 	autovis(Vehicles, Generic Vehicles, Choreo Vehicle)
 	color(240 180 250) = prop_vehicle_choreo_generic: "Generic Choreo vehicle used for scripted events."

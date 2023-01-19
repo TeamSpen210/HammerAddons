@@ -1,0 +1,8 @@
+@PointClass base(env_steam)
+	appliesto(complete)
+	color(200 200 0) 
+	studioprop("models/editor/angle_helper.mdl")
+= env_steamjet: "Legacy version of env_steam, which pointed left instead of forward."
+	[
+	@resources []
+	]

@@ -1,0 +1,49 @@
+@SolidClass base(Trigger) 
+	appliesto(KZ) 
+	line(255 255 255, targetname, respawnpoint) 
+ = trigger_legbreak: "A trigger that causes a player to sustain a serious injury and be forced to respawn." 
+	[
+	respawnpoint(target_destination) : "Respawn Target" : "" : "If specified, legbroke players from this legbreak will respawn at this entity."
+	playerspawntime(float) : "Player Respawn Time" : 5 : "How long it takes for a player to respawn from this legbreak. A value of 0 is not allowed, as it is used for backwards compatibility with legacy maps." 
+	allowforcerespawn[engine](integer) : "Allow Early Respawn" : 0 : "Should this trigger_legbreak allow players to respawn early by pressing a key?"
+	allowforcerespawn(choices) : "Allow Early Respawn" : 0 : "Should this trigger_legbreak allow players to respawn early by pressing a key?" =
+		[
+		0 : "No"
+		1 : "Yes"
+		]
+
+	custommessage(string) : "Custom Message" : "" : "If specified, this custom message will be shown to other players when someone gets legbroke. It overrides the built in messages. %s changes to the players name. For example: %s Fell and broke their leg"
+	msgmode[engine](integer) : "Message Mode" : 0
+	msgmode(choices) : "Message Mode" : 0 = 
+		[ 
+		0 : "Everyone" 
+		1 : "Everyone, except the player who got legbroke."
+		2 : "Just the player who got legbroke." 
+		]
+	
+	spawnragdoll[engine](integer) : "Spawn Ragdoll" : 0 : "Should this trigger_legbreak make a ragdoll upon death or not?"
+	spawnragdoll(choices) : "Spawn Ragdoll" : 0 = 
+		[ 
+		0 : "No, just fade instantly" 
+		1 : "Yes, spawn a ragdoll and fade slow" 
+		] 
+	playsounds[engine](integer) : "Effects" : 0 : "Should this trigger_legbreak have any special effects or not?"
+	playsounds(choices) : "Effects" : 0 = 
+		[ 
+		0 : "Yes, play sounds and messages" 
+		1 : "No, just fade" 
+		] 
+
+	resetpowerups[engine](integer) : "Reset Powerups" : 0 : "Should this trigger_legbreak disable and reset any powerups the legbroke player is carrying?"
+	resetpowerups(choices) : "Reset Powerups" : 0 : "Should this trigger_legbreak disable and reset any powerups the legbroke player is carrying?" =
+		[
+		0 : "No"
+		1 : "Yes"
+		]
+	resetchecks[engine](integer) : "Reset Checkpoints" : 0 : "Should this trigger_legbreak reset any checkpoints the legbroke player had?"
+	resetchecks(choices) : "Reset Checkpoints" : 0 : "Should this trigger_legbreak reset any checkpoints the legbroke player had?" = 
+		[ 
+		0 : "No, leave the checkpoints intact" 
+		1 : "Yes, reset the checkpoints" 
+		] 
+	]

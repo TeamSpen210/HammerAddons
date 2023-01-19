@@ -11,4 +11,21 @@
 		1: "All Infected"
 		2: "Only Tanks"
 		]
+
+	@resources
+		[
+	    sound "Breakable.MatGlass"
+	    sound "Breakable.MatWood"
+	    sound "Breakable.MatMetal"
+	    sound "Breakable.MatFlesh"
+	    sound "Breakable.MatConcrete"
+	    sound "Breakable.Computer"
+	    sound "Breakable.Crate"
+	    sound "Breakable.Glass"
+	    sound "Breakable.Metal"
+	    sound "Breakable.Flesh"
+	    sound "Breakable.Concrete"
+	    sound "Breakable.Ceiling"
+	    // And an item function in base class.
+		]
 	]

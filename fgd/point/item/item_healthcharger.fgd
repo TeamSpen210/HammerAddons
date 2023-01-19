@@ -5,7 +5,7 @@
 @BaseClass appliesto(+MBase) studio() = _item_healthcharger_settable []
 
 @PointClass base(BaseEntityAnimating) 
-	appliesto(EP1, EP2, HL2, P1, P2, Mesa) 
+	appliesto(EP1, EP2, HL2, P1, Mesa) 
 	base(_item_healthcharger_mesa, _item_healthcharger_hl2, _item_healthcharger_settable)
 = item_healthcharger: "Health Charger"
 	[
@@ -50,4 +50,13 @@
 	output OnFull[Mesa, MBase](void) : "Recharged to full."
 	output OnPlayerUse[-Mesa](void) : "Fired when the player +USEs the charger."
 	output OnUse[+Mesa](void) : "Fired when the player +USEs the charger."
+
+	@resources
+		[
+	    model "models/props_combine/health_charger001.mdl"
+	    sound "WallHealth.Deny"
+	    sound "WallHealth.Start"
+	    sound "WallHealth.LoopingContinueCharge"
+	    sound "WallHealth.Recharge"
+		]
 	]

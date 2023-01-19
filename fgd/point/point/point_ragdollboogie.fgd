@@ -1,6 +1,7 @@
 @PointClass appliesto(MBase)
 	base(BaseEntityPoint)
 	line(255 255 255, targetname, target)
+	iconsprite(editor/vizzys/point_ragdollboogie)
 = point_ragdollboogie : "An entity that makes ragdolls dance."
 	[
 	spawnflags(flags) =
@@ -25,4 +26,9 @@
 	input SetTarget(target_destination) : "Sets the ragdoll(s) to target."
 	input BoogieTarget(target_destination) : "Boogies specific target(s) without using or modifying our target field."
 	input SetZapColor(color255) : "Sets the zap color."
+
+	@resources
+		[
+		entity env_ragdoll_boogie
+		]
 	]

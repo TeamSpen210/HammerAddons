@@ -13,4 +13,6 @@
 
 	healthmin(integer) : "Min Health" : 0 : "The lower bound on player health that will pass this filter (inclusive)."
 	healthmax(integer) : "Max Health" : 100 : "The upper bound on player health that will pass this filter (inclusive)."
+	
+	@resources []
 	]

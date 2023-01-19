@@ -75,6 +75,7 @@
 	input BeginSequence(void) : "Summons an NPC to act out the scripted sequence."
 	input MoveToPosition(void) : "Summons an NPC to the script location. They will play their scripted idle (or ACT_IDLE if none is specified) until BeginSequence is triggered."
 	input CancelSequence(void) : "Stops the scripted sequence. If fired after a sequence starts, this input will not take effect until the NPC finishes playing the scripted action animation."
+	input ScriptPlayerDeath[complete](void) : "Cancel this scene, if On Player Death is set. This input is triggered by the player on all scenes if they die."
 	input SetTarget[MBase](target_destination) : "Set the target NPC to the specified entity."
 
 	// Outputs
@@ -83,6 +84,8 @@
 	output OnEndSequence(void) : "Fires when the action animation completes."
 	output OnCancelSequence(void) : "Fires when the sequence is cancelled."
 	output OnCancelFailedSequence(void) : "Fires when the sequence is cancelled without ever playing (OnCancelSequence will also fire)."
+	output OnEntrySequence[MBase](void) : "Fires when the entry animation begins."
+	output OnActionSequence[MBase](void) : "Fires when the action animation begins."
 	output OnFoundNPC[MBase](ehandle) : "Fires when a target NPC is found and begins moving to play the script. They are passed as a parameter."
 	output OnScriptEvent01(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 1 } in the QC."
 	output OnScriptEvent02(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 2 } in the QC."

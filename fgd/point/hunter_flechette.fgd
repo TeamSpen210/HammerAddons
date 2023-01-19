@@ -3,4 +3,17 @@
 	studioprop("models/weapons/hunter_flechette.mdl")
  = hunter_flechette: "Explosive darts shot by Combine Hunters."
 	[
+	@resources
+		[
+	    model "models/weapons/hunter_flechette.mdl"
+	    material "materials/sprites/light_glow02_noz.vmt"
+	    sound "NPC_Hunter.FlechetteNearmiss"
+	    sound "NPC_Hunter.FlechetteHitBody"
+	    sound "NPC_Hunter.FlechetteHitWorld"
+	    sound "NPC_Hunter.FlechettePreExplode"
+	    sound "NPC_Hunter.FlechetteExplode"
+	    particle "hunter_flechette_trail_striderbuster"
+	    particle "hunter_flechette_trail"
+	    particle "hunter_projectile_explosion_1"
+		]
 	]

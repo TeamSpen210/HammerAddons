@@ -9,8 +9,8 @@
 
 	userandomtime(boolean) : "Use Random Time" : 0
 	
-	lowerrandombound(string) : "Minimum Random Interval" : : "If 'Use Random Time' is set, this is the minimum time between timer fires. The time will be a random number between this and the 'Maximum Random Interval'."
-	upperrandombound(string) : "Maximum Random Interval" : : "If 'Use Random Time' is set, this is the maximum time between timer fires. The time will be a random number between the 'Minimum Random Interval' and this."
+	lowerrandombound(float) : "Minimum Random Interval" : : "If 'Use Random Time' is set, this is the minimum time between timer fires. The time will be a random number between this and the 'Maximum Random Interval'."
+	upperrandombound(float) : "Maximum Random Interval" : : "If 'Use Random Time' is set, this is the maximum time between timer fires. The time will be a random number between the 'Minimum Random Interval' and this."
 	refiretime(string) : "Refire Interval" : : "If 'Use Random Time' isn't set, this is the time between timer fires, in seconds."
 	UseBoundsForTimerInputs[MBase](boolean) : "Limit Timer Inputs" : 0 : "Allows the Minumum/Maximum Random Interval keyvalues to limit the total timer value when it receives AddToTimer or SubtractFromTimer inputs."
 	
@@ -21,6 +21,7 @@
 	input Enable(void) : "Enable the timer."
 	input Disable(void) : "Disable the timer."
 	input Toggle(void) : "Toggle the timer on/off."
+	input UseRandomTime(boolean) : "Sets if this entity should use a random interval."
 	input LowerRandomBound(float) : "Set a new Minimum Random Interval."
 	input UpperRandomBound(float) : "Set a new Maximum Random Interval."
 	input AddToTimer(float) : "Add time to the timer if it is currently enabled.  Does not change the Refire Interval."
@@ -30,4 +31,6 @@
 	output OnTimer(void) : "Fired when the timer expires."
 	output OnTimerHigh(void) : "Fired every other time for an oscillating timer."
 	output OnTimerLow(void) : "Fired every other time for an oscillating timer."
+
+	@resources []
 	]

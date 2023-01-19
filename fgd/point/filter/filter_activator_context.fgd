@@ -20,4 +20,6 @@
 	input AddContext[MBase](string) : "Adds a context to this fitler's list of response contexts. The format should be 'key:value'."
 	input RemoveContext[MBase](string) : "Remove a context from this filter's list of response contexts. The name should match the 'key' of a previously added context."
 	input ClearContext[MBase](void) : "Removes all contexts in this filter's list of response contexts."
+	
+	@resources []
 	]

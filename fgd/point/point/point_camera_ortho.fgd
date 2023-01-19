@@ -16,4 +16,6 @@
 	input SetOrthoBottom(string) : "Changes the bottom ortho over time"
 	input SetOrthoLeft(string) : "Changes the left ortho over time"
 	input SetOrthoRight(string) : "Changes the right ortho over time"
+	
+	@resources [] // existance of rendertargets is handled by code not files.
 	]

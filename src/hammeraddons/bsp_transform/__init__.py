@@ -1,13 +1,14 @@
 """Transformations that can be applied to the BSP file."""
+import warnings
+from typing import Awaitable, Callable, Dict, FrozenSet, List, Mapping, Optional, Tuple
 from pathlib import Path
-from typing import Optional, Callable, Awaitable, Dict, Mapping, Tuple, List
 import inspect
 
-from srctools import EmptyMapping, FileSystem, Property, VMF, Output, Entity, FGD, conv_bool
+from srctools import FGD, VMF, EmptyMapping, Entity, FileSystem, Keyvalues, Output, conv_bool
 from srctools.bsp import BSP
+from srctools.game import Game
 from srctools.logger import get_logger
 from srctools.packlist import PackList
-from srctools.game import Game
 
 
 LOGGER = get_logger(__name__, 'bsp_trans')
@@ -15,6 +16,7 @@ LOGGER = get_logger(__name__, 'bsp_trans')
 __all__ = [
     'check_control_enabled',
     'Context', 'trans', 'run_transformations',
+    'TransFunc', 'TRANSFORMS',
 ]
 
 
@@ -45,21 +47,29 @@ class Context:
         bsp: BSP,
         game: Game,
         *,
-        fgd: FGD = None,
-        studiomdl_loc: Path=None,
+        studiomdl_loc: Optional[Path]=None,
+        tags: FrozenSet[str]=frozenset(),
     ) -> None:
         self.sys = filesys
         self.vmf = vmf
         self.bsp = bsp
         self.pack = pack
         self.bsp_path = Path(bsp.filename)
-        self.fgd = fgd or FGD.engine_dbase()
+        self._fgd: Optional[FGD] = None
+        self.tags = tags
         self.game = game
         self.studiomdl = studiomdl_loc
-        self.config = Property.root()
+        self.config = Keyvalues.root()
 
         self._io_remaps: Dict[Tuple[str, str], Tuple[List[Output], bool]] = {}
         self._ent_code: Dict[Entity, str] = {}
+
+    @property
+    def fgd(self) -> FGD:
+        warnings.warn("Use EntityDef.engine_def() if possible.")
+        if self._fgd is None:
+            self._fgd = FGD.engine_dbase()
+        return self._fgd
 
     def add_io_remap(self, name: str, *outputs: Output, remove: bool=True) -> None:
         """Register an output to be replaced.
@@ -119,8 +129,8 @@ def trans(name: str, *, priority: int=0) -> Callable[[TransFuncOrSync], TransFun
         """Stores the transformation."""
         TRANSFORM_PRIORITY[name] = priority
         if inspect.iscoroutinefunction(func):
-            TRANSFORMS[name] = func  # type: ignore # inspect needs typeguard
-            return func  # type: ignore # ^^^
+            TRANSFORMS[name] = func
+            return func
         else:
             async def async_wrapper(ctx: Context) -> None:
                 """Just freeze all other tasks to run this."""
@@ -137,12 +147,12 @@ async def run_transformations(
     pack: PackList,
     bsp: BSP,
     game: Game,
-    studiomdl_loc: Path=None,
-    config: Mapping[str, Property]=EmptyMapping,
-    fgd: FGD=None,
+    studiomdl_loc: Optional[Path]=None,
+    config: Mapping[str, Keyvalues]=EmptyMapping,
+    tags: FrozenSet[str] = frozenset(),
 ) -> None:
     """Run all transformations."""
-    context = Context(filesys, vmf, pack, bsp, game, studiomdl_loc=studiomdl_loc, fgd=fgd)
+    context = Context(filesys, vmf, pack, bsp, game, studiomdl_loc=studiomdl_loc, tags=tags)
 
     for func_name, func in sorted(
         TRANSFORMS.items(),
@@ -152,7 +162,7 @@ async def run_transformations(
         try:
             context.config = config[func_name.casefold()]
         except KeyError:
-            context.config = Property(func_name, [])
+            context.config = Keyvalues(func_name, [])
         LOGGER.debug('Config: {!r}', context.config)
         await func(context)
 
@@ -214,10 +224,7 @@ def _load() -> None:
     This loads the transformations. We do it in a function to allow discarding
     the output.
     """
-    from . import (
-        globals,
-        instancing,
-        packing,
-        tweaks,
-    )
+    from . import globals, instancing, packing
+
+
 _load()

@@ -1,5 +1,5 @@
-@PointClass base(weapon_striderbuster) 
-	appliesto(EP2, P1)
+@PointClass aliasof(weapon_striderbuster) 
+	appliesto(EP2, P1, +complete)
 = prop_stickybomb: "Alternate class for the Stiderbuster/Magnusson Device"
 	[
 	]

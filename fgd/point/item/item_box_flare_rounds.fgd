@@ -1,0 +1,9 @@
+@PointClass base(ItemAmmo) 
+	appliesto(MBase) 
+	studio("models/items/boxflares.mdl") = item_box_flare_rounds: "Box of Flare Rounds"
+	[
+	@resources
+		[
+		model "models/items/boxflare.mdl"
+		]
+	]

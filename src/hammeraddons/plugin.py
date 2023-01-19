@@ -1,18 +1,18 @@
 """Logic for loading all the code in arbitary locations for plugin purposes."""
-from pathlib import Path
+from typing import Callable, Dict, Iterable, Iterator, Optional, Sequence, Set, Tuple, Union
+from typing_extensions import Final
 from collections import deque
-from importlib.util import spec_from_loader
 from importlib.abc import MetaPathFinder
 from importlib.machinery import ModuleSpec, SourceFileLoader
-from typing import Dict, Union, Optional, Set, Sequence, Tuple, Iterable, Iterator
-from typing_extensions import Final
+from importlib.util import spec_from_loader
+from pathlib import Path
 import importlib
 import types
 
+from srctools import Keyvalues
+from srctools.logger import get_logger
 import attrs
 
-from srctools import Property
-from srctools.logger import get_logger
 
 LOGGER = get_logger(__name__)
 BUILTIN: Final = 'builtin'
@@ -28,46 +28,46 @@ class Source:
     files: Set[Path] = attrs.Factory(set)
 
     @classmethod
-    def parse(cls, root: Path, prop: Property) -> 'Source':
-        """Parse from a property."""
-        if prop.has_children():
-            if not prop.real_name:
+    def parse(cls, kv: Keyvalues, path_parse: Callable[[str], Path]) -> 'Source':
+        """Parse from keyvalues data."""
+        if kv.has_children():
+            if not kv.real_name:
                 raise ValueError('Plugins must have a unique ID!')
-            if not prop.real_name.isidentifier() or '.' in prop.real_name:
+            if not kv.real_name.isidentifier() or '.' in kv.real_name:
                 raise ValueError(
                     f'Plugin names must be a valid identifier '
-                    f'(words, numbers, underscore), not "{prop.real_name}"!'
+                    f'(words, numbers, underscore), not "{kv.real_name}"!'
                 )
             try:
-                path = (root / Path(prop['path'])).resolve()
+                path = path_parse(kv['path'])
             except LookupError:
-                raise ValueError(f'Plugin "{prop.real_name}" must have a path!') from None
+                raise ValueError(f'Plugin "{kv.real_name}" must have a path!') from None
             if path.is_dir():
                 return Source(
-                    prop.real_name,
+                    kv.real_name,
                     path,
-                    recursive=prop.bool('recurse'),
+                    recursive=kv.bool('recurse'),
                 )
             else:
                 return Source(
-                    prop.real_name,
+                    kv.real_name,
                     path.parent,
                     files={path},
                 )
         else:  # Legacy style.
             LOGGER.warning('Plugins should use block definition style!')
-            path = (root / Path(prop.value)).resolve()
-            if prop.name in ('path', "recursive", 'folder'):
+            path = path_parse(kv.value)
+            if kv.name in ('path', "recursive", 'folder'):
                 if not path.is_dir():
                     raise ValueError(f"'{path}' is not a directory!")
 
-                return Source('', path, prop.name == "recursive")
-            elif prop.name in ('single', 'file'):
+                return Source('', path, kv.name == "recursive")
+            elif kv.name in ('single', 'file'):
                 return Source('', path.parent, files={path})
-            elif prop.name == '_builtin_':
+            elif kv.name == '_builtin_':
                 return Source(BUILTIN, path, recursive=True)
             else:
-                raise ValueError("Unknown plugins key {}".format(prop.real_name))
+                raise ValueError("Unknown plugins key {}".format(kv.real_name))
 
 
 def parse_name(prefix: str, name: str) -> Union[Tuple[str, Path], Tuple[None, None]]:

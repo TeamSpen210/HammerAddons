@@ -8,4 +8,6 @@
 
 	// Inputs
 	input Toggle(void) : "Toggle the brush on/off. When off, the brush will be non-solid and invisible."
+	
+	@resources []
 	]

@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(+engine, EP1, EP2, P1)
+= trigger_vehicle_cargo: "Trigger entity used for the Magnusson Device cargo on the Muscle Car."
+	[
+	@resources []
+	]

@@ -3,4 +3,5 @@
 	appliesto(until_L4D, ASW, P2, -MESA, -TF2)
 	studioprop("models/shadertest/envballs.mdl") = weapon_cubemap: "Debugging weapon used to show cubemaps in a region."
 	[
+	@resources []
 	]

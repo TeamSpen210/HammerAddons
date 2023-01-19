@@ -13,4 +13,9 @@
 	"Traditionally, one move_rope is used to start the chain and then is followed by one or more keyframe_rope entities. " +
 	"However they are freely interchangeable."
 	[
+	@resources	
+		[
+		material "materials/cable/rope_shadowdepth.vmt"
+		func sprite_rope
+		]
 	]

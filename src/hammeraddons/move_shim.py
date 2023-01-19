@@ -2,15 +2,15 @@
 
 Implement deprecation warnings while keeping that functional.
 """
-from typing import Optional, Union, Sequence, Dict
-from importlib.abc import MetaPathFinder, Loader
+from typing import Dict, Optional, Sequence, Union
+from importlib.abc import Loader, MetaPathFinder
 from importlib.machinery import ModuleSpec
-from importlib.util import spec_from_loader, module_from_spec
+from importlib.util import module_from_spec, spec_from_loader
 import sys
 import types
 import warnings
 
-from hammeraddons import bsp_transform, mdl_compiler, plugin, propcombine, config, props_config
+from hammeraddons import bsp_transform, config, mdl_compiler, plugin, propcombine, props_config
 
 
 moves: Dict[str, types.ModuleType] = {

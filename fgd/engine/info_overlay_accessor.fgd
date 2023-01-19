@@ -6,4 +6,6 @@
 = info_overlay_accessor: "The version of overlays that exists in the compiled map. This links targetnames to the overlay lump."
 	[
 	OverlayID(integer) : "Overlay ID" : : "The ID of the overlay in the lump."
+
+	@resources [] // Overlays themselves handled elsewhere.
 	]

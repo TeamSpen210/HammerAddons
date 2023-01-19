@@ -1,6 +1,6 @@
 """Postcompiler logic."""
 try:
-    from ._version import __version__  # type: ignore
+    from ._version import __version__
 except ImportError:
     __version__ = '(unknown)'
 else:

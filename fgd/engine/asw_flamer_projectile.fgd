@@ -1,0 +1,11 @@
+@PointClass base(BaseLogicalNPC) 
+	appliesto(+engine, ASW)
+= asw_flamer_projectile
+	[
+	@resources
+		[
+		model "models/swarm/Shotgun/ShotgunPellet.mdl"
+		material "materials/swarm/sprites/whiteglow1.vmt"
+		material "materials/swarm/sprites/greylaser1.vmt"
+		]
+	]

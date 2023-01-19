@@ -20,4 +20,6 @@
 
 	// Outputs
 	output OnStunPlayer(void) : "Fired whenever this trigger stuns a player."
+	
+	@resources []
 	]

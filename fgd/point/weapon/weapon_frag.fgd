@@ -3,4 +3,10 @@
 	autovis(Weapons, HL2 Weapons, Frag Grenade)
 	studioprop("models/weapons/w_grenade.mdl") = weapon_frag: "Frag Grenade"
 	[
+	@resources
+		[
+		sound "WeaponFrag.Throw"
+		sound "WeaponFrag.Roll"
+		entity npc_grenade_frag
+		]
 	]

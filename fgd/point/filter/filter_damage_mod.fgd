@@ -33,4 +33,6 @@
 	input SetNewWeapon(target_destination) : "Sets the new weapon."
 	
 	input SetField(target_destination) : "Sets the secondary filter."
+	
+	@resources []
 	]

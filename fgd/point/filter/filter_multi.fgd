@@ -57,4 +57,6 @@
 	filter18[INFRA](filterclass) : "Filter 18" : : "Activator filter to test."
 	filter19[INFRA](filterclass) : "Filter 19" : : "Activator filter to test."
 	filter20[INFRA](filterclass) : "Filter 20" : : "Activator filter to test."
+	
+	@resources []
 	]

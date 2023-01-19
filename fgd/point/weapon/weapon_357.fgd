@@ -3,4 +3,5 @@
 	autovis(Weapons, HL2 Weapons, Magnum Pistol)
 	studioprop("models/weapons/w_357.mdl") = weapon_357: "357"
 	[
+	@resources []
 	]

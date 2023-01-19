@@ -1,14 +1,21 @@
-@BaseClass appliesto(-mesa) studio("models/items/hevsuit.mdl") = _item_hev_suit_hl2 []
+@BaseClass appliesto(-mesa,  -ez2) studio("models/items/hevsuit.mdl") = _item_hev_suit_hl2 []
 @BaseClass appliesto(+mesa) studio("models/props_am/hev_suit.mdl") = _item_hev_suit_mesa []
+@BaseClass appliesto(+ez2) studio("models/items/hevsuit_ez.mdl") = _item_hev_suit_ez2 []
 
 @PointClass base(Item, BaseMesaPickup) 
 	appliesto(EP1, EP2, HL2, P1, Mesa) 
-	base(_item_hev_suit_hl2, _item_hev_suit_mesa)
+	base(_item_hev_suit_hl2, _item_hev_suit_mesa, _item_hev_suit_ez2)
 = item_suit: "HEV Suit"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
-		1: "Short Logon" : 0 [-Mesa]
+		1: "Short Logon" : 0 [-Mesa, -ez2]
+		1 : "Short Logon (now stops hands)" : 0 [ez2]
 	  	131072 : "Boot Sequence" : 0 [+Mesa]
+		]
+
+	@resources
+		[
+		model "models/items/hevsuit.mdl"
 		]
 	]

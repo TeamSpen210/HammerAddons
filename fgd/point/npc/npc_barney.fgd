@@ -1,7 +1,11 @@
+@BaseClass appliesto(-MBase) studio("models/Barney.mdl") = _npc_barney_fixed []
+@BaseClass appliesto(+MBase) studio() = _npc_barney_settable []
+
 @NpcClass base(TalkNPC, BaseNPC, PlayerCompanion) 
 	appliesto(EP1, EP2, HL2, P1) 
+	base(_npc_barney_settable, _npc_barney_fixed)
 	autovis(Entities, NPCs, Rebels, Barney)
-	studio("models/Barney.mdl") = npc_barney: "Barney"
+	= npc_barney: "Barney"
 	[
 	model[MBase](studio) : "Custom Model" : "models/Barney.mdl" : "Mapbase allows setting a custom model."
 
@@ -9,12 +13,25 @@
 		[
 		"weapon_pistol": "Pistol"
 		"weapon_smg1": "SMG1"
+		"weapon_smg2" : "SMG2" [EZ2]
 		"weapon_stunstick": "Stun Stick"
 		"weapon_shotgun": "Shotgun"
 		"weapon_ar2": "AR2"
+		"weapon_crossbow" : "Crossbow" [MBase]
 		0: "Nothing"
 		]
 
 	// Outputs
 	output OnPlayerUse(void) : "Fires when a player +USEs Barney"
+
+	@resources
+		[
+		model "models/barney.mdl" [-MBase]
+		sound "NPC_Barney.FootstepLeft"
+		sound "NPC_Barney.FootstepRight"
+		sound "NPC_Barney.Die"
+		choreo "scenes/Expressions/BarneyIdle.vcd"
+		choreo "scenes/Expressions/BarneyAlert.vcd"
+		choreo "scenes/Expressions/BarneyCombat.vcd"
+		]
 	]

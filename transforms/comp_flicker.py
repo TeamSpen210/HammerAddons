@@ -97,7 +97,11 @@ def comp_flicker(ctx: Context) -> None:
                 time += delay
                 limit += 1
                 if limit > 1000:
-                    LOGGER.warning('Aborting delay computation, computed:\n{}', [out.delay for out in ent.outputs])
+                    LOGGER.warning(
+                        'Aborting delay computation for "{}", computed:\n{}', 
+                        ent_name, 
+                        [out.delay for out in ent.outputs],
+                    )
                     break
 
             # Force on exactly at the end time.

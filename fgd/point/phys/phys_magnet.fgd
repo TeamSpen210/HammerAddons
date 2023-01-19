@@ -2,7 +2,7 @@
 	autovis(Entities, Constraints, Magnet)
 	studio() 
 	color(128 128 128) 
-	iconsprite("editor/phys_magnet") = phys_magnet: "An entity that acts like a magnet, attaching metallic physics objects to itself when they touch it."
+	iconsprite("editor/vizzys/phys_magnet") = phys_magnet: "An entity that acts like a magnet, attaching metallic physics objects to itself when they touch it."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
@@ -10,7 +10,7 @@
 		2: "Motion Disabled" : 0
 		4: "Suck On Touch" : 0
 		8: "Allow Attached Rotation" : 0
-		16: "Coast jeep pickup hack" : 0
+		16: "Coast jeep pickup hack" : 0 [HL2]
 		32: "Prevent player pickup" : 0 [MBase]
 		]
 
@@ -28,4 +28,6 @@
 	// Outputs
 	output OnAttach(void) : "Fired when an entity is grabbed by the magnet."
 	output OnDetach(void) : "Fired when an entity is released by the magnet."
+	
+	@resources [] // Model already defined in the keyvalues
 	]

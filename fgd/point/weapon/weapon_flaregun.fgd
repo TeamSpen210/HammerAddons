@@ -1,0 +1,6 @@
+@PointClass base(Weapon) 
+	appliesto(MBase) 
+	autovis(Weapons, HL2 Weapons)
+	studioprop("models/weapons/w_pistol.mdl") = weapon_flaregun : "Flaregun"
+	[
+	]

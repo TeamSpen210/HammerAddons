@@ -1,4 +1,5 @@
 @SolidClass base(BaseEntityVisBrush)
 = func_illusionary: "Legacy support. Use func_brush instead. A brush that is always non-solid."
 	[
+	@resources []
 	]

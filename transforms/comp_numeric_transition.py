@@ -4,6 +4,7 @@ from string import ascii_lowercase
 from typing import Callable, Dict, Optional
 
 from srctools import conv_float, Output
+from srctools.fgd import EntityDef
 from srctools.logger import get_logger
 
 from hammeraddons.bsp_transform import trans, Context
@@ -84,7 +85,7 @@ def numeric_transition(ctx: Context) -> None:
                 )
                 continue
             try:
-                targ_cls = ctx.fgd.entities[targ_ent['classname']]
+                targ_cls = EntityDef.engine_def(targ_ent['classname'])
             except KeyError:
                 LOGGER.warning(
                     'Unknown classname {} '

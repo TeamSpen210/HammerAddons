@@ -3,4 +3,8 @@
 	autovis(Entities, NPCs, Rebels, Mossman) 
 	studio("models/mossman.mdl") = npc_mossman: "Dr Mossman"
 	[
+	@resources
+		[
+		model "models/mossman.mdl"
+		]
 	]

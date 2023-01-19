@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	// This is pretty similar.
-	iconsprite("editor/ficool2/env_effectscript")
+	iconsprite("editor/vizzys/env_particlescript")
 	studioprop()
 = env_particlescript: "An entity that has special animation events that can be fired by a model with an animation inside its .qc designed for use by this entity."
 	[

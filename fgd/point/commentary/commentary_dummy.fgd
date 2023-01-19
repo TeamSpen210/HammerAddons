@@ -17,4 +17,6 @@
 
 	// Inputs
 	input SetAnimation(string) : "Force the dummy to play an animation. The parameter should be the name of the animation."
+
+	@resources []
 	]

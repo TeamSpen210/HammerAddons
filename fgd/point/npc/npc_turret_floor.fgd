@@ -1,7 +1,7 @@
 @PointClass base(BaseNPC) 
 	appliesto(EP1, EP2, HL2, P1) 
 	studioprop("models/combine_turrets/floor_turret.mdl") 
-	frustum(_frustum_fov, _frustum_near, _frustum_far, _frustum_color, -1)
+	frustum(_frustum_fov, _frustum_near, _frustum_far, 255 0 0, -1)
 	autovis(Entities, NPCs, Combine, Floor Turret)
 = npc_turret_floor: "Combine Floor Turret"
 	[
@@ -45,4 +45,29 @@
 	output OnTipped(void) : "Turret has been tipped over and is inactive."
 	output OnPhysGunPickup(void) : "Picked up with physgun"
 	output OnPhysGunDrop(void) : "Released by physgun"
+
+	@resources
+		[
+		// Todo: Pick citizen vs regular?
+		model "models/combine_turrets/floor_turret.mdl"
+		model "models/combine_turrets/citizen_turret.mdl"
+		material "materials/effects/laser1.vmt"  // Citizen only, or always in EZ2.
+		material "materials/sprites/glow1.vmt" [+entropyzero2]
+		sound "NPC_FloorTurret.AlarmPing"  // Allied to player only (citizen normally, in ez2 non-citizen)
+		sound "NPC_Combine.WeaponBash"
+		sound "NPC_FloorTurret.Activate"
+		sound "NPC_FloorTurret.Alarm"
+		sound "NPC_FloorTurret.Alert"
+		sound "NPC_FloorTurret.Deploy"
+		sound "NPC_FloorTurret.Destruct"
+		sound "NPC_FloorTurret.Die"
+		sound "NPC_FloorTurret.DryFire"
+		sound "NPC_FloorTurret.Move"
+		sound "NPC_FloorTurret.Ping"
+		sound "NPC_FloorTurret.Retire"
+		sound "NPC_FloorTurret.Retract"
+		sound "NPC_FloorTurret.ShotSounds"
+		break_chunk "MetalChunks" // Spawned when self destructed.
+		particle "explosion_turret_break" [+episodic]
+		]
 	]

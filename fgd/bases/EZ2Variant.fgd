@@ -1,0 +1,13 @@
+@BaseClass appliesto(EZ2) = EZ2Variant
+	[
+	EZVariant[engine](integer) : "Variant" : 0
+	EZvariant(choices) : "Variant" : 0 : "Sets this entity's 'variant', e.g. slimy zombies that create radioactive puddles." =
+		[
+		0 : "Default"
+		1 : "Xen"
+		2 : "Radioactive/Slimy"
+		3 : "Temporal"
+		4 : "Arbeit"
+		5 : "Bloodlion"
+		]
+	]

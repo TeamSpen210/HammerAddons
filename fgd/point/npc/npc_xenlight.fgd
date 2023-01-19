@@ -1,0 +1,7 @@
+@NPCClass base(EZ2XenFlora) appliesto(EZ2) 
+	studio("models/light.mdl")
+	autovis(Entities, NPCs, Xen, Xen Deco)
+= npc_xenlight : "Light Stalk"
+	[
+	lightcolor(color255) : "Light Color" : "255 255 255 100" : "Light Color RGB-Intensity"
+	]

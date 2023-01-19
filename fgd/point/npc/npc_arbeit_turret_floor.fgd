@@ -1,0 +1,36 @@
+@PointClass base(npc_turret_floor, EZ2Variant, ResponseContext) 
+	appliesto(EZ2) 
+	studioprop( "models/props/turret_01.mdl") 
+	frustum(FOV, _frustum_near, Range, _frustum_color, -1)
+	autovis(Entities, NPCs, Arbeit, Floor Turret)
+= npc_arbeit_turret_floor: "Arbeit Floor Turret"
+	[
+	TurretType[engine](boolean) : "Is Beast Turret" : 0
+	TurretType(choices) : "Turret Type" : 0 : "Type of turret to use" =
+	[
+		0 : "Normal"
+		1 : "Beast (Defective)"
+	]
+	
+	Range(float) : "Range" : "1200" : "The turret's range. Pretend the frustum is coming from the light/eye."
+	FOV(float) : "Field of View" : "60" : "The turret's FOV. Pretend the frustum is coming from the light/eye."
+	
+	EyeLightEnabled(boolean) : "Eye Light Enabled" : 0 : "Toggles the built-in projected texture light, based on the Range and FOV values."
+	Laser(boolean) : "Laser Enabled" : 1 : "Toggles the turret's laser. The laser goes as far as the Range value."	
+	static(boolean) : "Static" : 0 : "Makes the turret immobile."
+	
+	// Inputs
+	input TurnOnEyeLight(void) : "Turns on the eye light if it was disabled before."
+	input TurnOffEyeLight(void) : "Turns off the eye light if it was enabled before."
+	
+	input TurnOnLaser(void) : "Turns on the laser if it was disabled before."
+	input TurnOffLaser(void) : "Turns off the laser if it was enabled before."
+	
+	input EnableSilently(void) : "Enables the turret silently, not deploying immediately."
+
+	@resources
+		[
+		sound "NPC_ArbeitTurret.DryFire"
+		func npc_arbeit_turret_floor // Different models are used depending on EZ variant.
+		]
+	]

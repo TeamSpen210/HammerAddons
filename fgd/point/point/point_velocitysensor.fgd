@@ -16,4 +16,6 @@
 	// Outputs
 	output Velocity(float) : "Fired when the Target's Velocity changes, " +
 		"passing the new magnitude of the velocity."
+
+	@resources []
 	]

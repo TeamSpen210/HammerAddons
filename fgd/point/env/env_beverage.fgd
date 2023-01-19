@@ -19,4 +19,9 @@
 
 	// Inputs
 	input Activate(void) : "Enable this dispenser."
+
+	@resources
+		[
+		entity item_sodacan
+		]
 	]

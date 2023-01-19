@@ -1,7 +1,7 @@
 @NpcClass base(BaseLogicalNPC)
 	autovis(Entities, NPCs, EnemyFinder NPC)
 	color(255 150 0) 
-	iconsprite("editor/npc_enemyfinder.vmt") 
+	iconsprite("editor/vizzys/npc_enemyfinder.vmt") 
 	sphere(MinSearchDist) 
 	sphere(MaxSearchDist) 
 = npc_enemyfinder: "EnemyFinder"
@@ -19,9 +19,11 @@
 		1: "Color"
 		]
 		
-	fieldofview(string) : "FieldOfView" : "0.2" : "How far to look (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
+	fieldofview(float) : "FieldOfView" : "0.2" : "How far to look (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
 	minsearchdist(integer) : "Min Search Dist" : 0
 	maxsearchdist(integer) : "Max Search Dist" : 2048
+
+	// Also in npc_strider..
 	freepass_timetotrigger(float) : "Player pass issue time" : 0 : "Amount of time an enemy is hidden after which a 'free pass' on reaquire is granted"
 	freepass_duration(float) : "Player pass duration" : 0 : "After granted 'free pass', the amount of time a target is allowed before reaquire"
 	freepass_movetolerance(float) : "Player pass move tolerance" : 120 : "After granted 'free pass', the distance the target is allowed to move before reaquire"
@@ -65,7 +67,16 @@
 	input TurnOn(void) : "Turn on: Look for enemies"
 	input TurnOff(void) : "Turn off: Stop looking for enemies"
 
+	input FieldOfView(float) : "Sets the Field of View."
+	input MinSearchDist(integer) : "Sets the minimum search distance."
+	input MaxSearchDist(integer) : "Sets the maximum search distance."
+
 	// Outputs
 	output OnLostEnemies(void) : "Fires when the enemy finder has no enemies."
 	output OnAcquireEnemies(void) : "Fires when the enemy finder acquires enemies."
+
+	@resources
+		[
+		model "models/player.mdl"
+		]
 	]

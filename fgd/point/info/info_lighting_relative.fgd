@@ -1,7 +1,11 @@
-@PointClass base(BaseEntityPoint) 
+@PointClass
+	base(BaseEntityPoint) 
+	appliesto(until_L4D, +complete)
 	iconsprite("editor/ficool2/info_lighting_relative.vmt") 
 	halfgridsnap
 = info_lighting_relative
 	[
 	lightinglandmark(target_destination) : "Lighting Landmark" : : "Entity at which the reference origin is contained.  If empty, the info_lighting_relative's origin will be used."
+
+	@resources []
 	]

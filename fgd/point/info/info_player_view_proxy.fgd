@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) appliesto(MBase)
-	iconsprite("editor/info_target.vmt") 
+	iconsprite("editor/vizzys/info_player_view_proxy.vmt") 
 = info_player_view_proxy : "Copies a player's view as if they're at a different position. Intended to be used with script_intro."
 	[
 	Enabled(boolean) : "Start Activated" : 0 : "Starts with position offsetting enabled."

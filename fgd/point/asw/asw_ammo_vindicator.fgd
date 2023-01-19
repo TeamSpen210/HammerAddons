@@ -4,4 +4,8 @@
 	studio("models/swarm/Ammo/ammovindicator.mdl") 
 = asw_ammo_vindicator: "Box of Vindicator ammo"
 	[
+	@resources
+		[
+		model "models/swarm/Ammo/ammovindicator.mdl"
+		]
 	]

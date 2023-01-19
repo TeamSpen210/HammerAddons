@@ -1,0 +1,13 @@
+@PointClass base(grenade) 
+	appliesto(+engine, EP1, EP2, P1, HLS)
+= grenade_spit: "The poisonous spit thrown by Antlion Workers and Bullsquid."
+	[
+	@resources [
+		mdl "models/spitball_large.mdl"
+		mdl "models/spitball_medium.mdl"
+		mdl "models/spitball_small.mdl"
+		sound "GrenadeSpit.Hit"
+		particle "antlion_spit_player"
+		particle "antlion_spit"
+		]
+	]

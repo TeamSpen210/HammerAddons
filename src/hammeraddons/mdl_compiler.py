@@ -3,32 +3,28 @@
 Each comes with a key, used to identify a previously compiled version.
 We can then reuse already compiled versions.
 """
+from typing import Any, Awaitable, Callable, Generic, Hashable, List, Set, Tuple, TypeVar
+from pathlib import Path
 import os
 import pickle
-import tempfile
 import random
-from typing import (
-    Awaitable, Callable, Tuple, Set, TypeVar, Hashable, Generic, Any,
-    List,
-)
-from typing_extensions import Self
-from pathlib import Path
+import tempfile
 
-from srctools import logger
+from srctools import AtomicWriter, logger
 from srctools.game import Game
 from srctools.mdl import MDL_EXTS
 from srctools.packlist import PackList
-
 import trio
-from atomicwrites import atomic_write
 
 from hammeraddons.acache import ACache
 from hammeraddons.bsp_transform import Context
+
 
 LOGGER = logger.get_logger(__name__)
 ModelKey = TypeVar('ModelKey', bound=Hashable)
 InT = TypeVar('InT')
 OutT = TypeVar('OutT')
+ModelCompilerT = TypeVar('ModelCompilerT', bound='ModelCompiler')  # TODO: Replace by Self
 
 
 class GenModel(Generic[OutT]):
@@ -92,7 +88,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         """Return the number of used models."""
         return sum(1 for _, mdl in self._built_models if mdl.used)
 
-    def __enter__(self) -> Self:
+    def __enter__(self: ModelCompilerT) -> ModelCompilerT:
         """Load the previously compiled models and prepare for compiles."""
         # Ensure the folder exists.
         os.makedirs(self.model_folder_abs, exist_ok=True)
@@ -148,11 +144,12 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
                 data.append((key, mdl.name, mdl.result))
                 used_mdls.add(mdl.name.casefold())
 
-        with atomic_write(self.model_folder_abs / 'manifest.bin', mode='wb', overwrite=True) as f:
+        with AtomicWriter(self.model_folder_abs / 'manifest.bin', is_bytes=True) as f:
             # Compatibility isn't a concern, since it'll just mean we have to
             # rebuild the models.
             pickle.dump((data, self.version), f, pickle.HIGHEST_PROTOCOL)
 
+        culled = 0
         for mdl_file in self.model_folder_abs.glob('*'):
             if mdl_file.suffix not in {'.mdl', '.phy', '.vtx', '.vvd'}:
                 continue
@@ -160,12 +157,13 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
             # Strip all suffixes.
             if mdl_file.name[:mdl_file.name.find('.')].casefold() in used_mdls:
                 continue
-
-            LOGGER.info('Culling {}...', mdl_file)
+            culled += 1
             try:
                 mdl_file.unlink()
             except FileNotFoundError:
                 pass
+
+        LOGGER.info('Culled {} models in models/{}*', culled, self.model_folder)
 
     async def get_model(
         self,

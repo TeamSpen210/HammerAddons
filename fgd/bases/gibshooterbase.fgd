@@ -14,13 +14,24 @@
 	m_flvelocity(integer) : "Gib Velocity" : 200 : "Speed of the fired gibs."
 	m_flvariance(float) : "Course Variance" : "0.15" : "How much variance in the direction gibs are fired."
 	m_flgiblife(float) : "Gib Life" : 4 : "Time in seconds for gibs to live +/- 5%."
-
+	
+	Simulation[engine](integer) : "Simulation Type" : 0 : "The kind of physics simulation to use for the gibs fired out."
+	Simulation(choices) : "Simulation Type" : 0 : "The kind of physics simulation to use for the gibs fired out." =
+		[
+		0: "Point"
+		1: "Physics"
+		2: "Ragdoll"
+		]
+	
 	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from " +
 		"for all gibs spawned by this shooter, instead of their own origins."
+	
 	spawnflags(flags)  =
 		[
 		1: "Repeatable" : 0
+		4: "Strict remove after lifetime" : 0 [-HLS]
 		]
+		
 
 	// Inputs
 	input Shoot(void) : "Force the gibshooter to create and shoot a gib."

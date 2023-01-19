@@ -13,8 +13,8 @@
 	_cone(integer) : "Outer (fading) angle" : 45
 	pitch(integer) : "Pitch" : -90
 
-	distance(float) : "Maximum distance" : 120 : "This is the distance that light is allowed to cast, in inches."
-	spotlight_radius(float) : "Spotlight end radius" : 80 : "This is the radius of the light, in inches, at the object that it is hitting."
+	distance(float) : "Maximum distance" : 120 : "This is the distance that light is allowed to cast, in units."
+	spotlight_radius(float) : "Spotlight end radius" : 80 : "This is the radius of the light, in units, at the object that it is hitting."
 
 	style[engine](integer) : "Appearance" : 0
 	style(choices) : "Appearance" : "0" =
@@ -53,4 +53,6 @@
 	input TurnOn(void) : "Turn the light off."
 	input TurnOff(void) : "Turn the light on."
 	input Toggle(void) : "Toggle the light on/off."
+
+	@resources []
 	]

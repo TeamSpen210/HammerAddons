@@ -1,0 +1,9 @@
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(ASW, EP1, EP2, HL2, MBase, P1, CSGO, Mesa) = env_tracer: "An entity that fires a tracer between itself and a specified target, with a configurable delay."
+	[
+	target(target_destination) : "Target" : : "The target to shoot a tracer at."
+  delay(float) : "Delay" : 1 : "A delay to fire this tracer at, specified in seconds."
+
+	@resources []
+	]

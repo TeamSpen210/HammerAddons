@@ -21,7 +21,7 @@ copy_hammer_files() {
 
 build_game() {
   echo "Building FGD for $1..."
-  python3 unify_fgd.py exp $1 srctools -o "build/$1.fgd"
+  python3 src/hammeraddons/unify_fgd.py exp $1 srctools -o "build/$1.fgd"
   
   if [ $? -ne 0 ]; then
     echo "Building FGD for $1 has failed. Exitting." & exit 1

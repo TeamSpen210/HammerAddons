@@ -5,9 +5,10 @@
 	studioprop() 
 = prop_scalable: "Scalable Prop"
 	[
-
 	// Inputs
 	input SetScaleX(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
 	input SetScaleY(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
 	input SetScaleZ(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
+
+	@resources []
 	]

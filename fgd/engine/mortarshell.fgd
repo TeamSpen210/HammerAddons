@@ -1,0 +1,11 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(+engine, HL2, EP1, EP2, P1, P2)
+= mortarshell: "The in-flight shot used for the Combine 'suppression' device in the C17 Nexus exterior."
+	[
+	@resources 
+		[
+		material "materials/sprites/physbeam.vmt"
+		material "materials/effects/ar2ground2.vmt"
+		sound "Weapon_Mortar.Impact"
+		]
+	]

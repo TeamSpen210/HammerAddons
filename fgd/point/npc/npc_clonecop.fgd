@@ -1,0 +1,39 @@
+@NpcClass base(npc_combine_s) 
+	appliesto(EZ2)
+	autovis(Entities, NPCs, Combine, Clone Cop)
+	studio() = npc_clonecop: "Clone Cop"
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "Start LookOff" : 0
+		131072: "Don't drop grenades" : 0
+		262144: "Don't drop ar2 alt fire (elite only) " : 0
+		524288  : "Can Join Player Squad" : 1 [EZ2]
+		1048576 : "Regenerate Health" : 1 [EZ2]
+		2097152 : "Prevent manhack toss" : 0 [EZ2]
+		]
+
+	model(studio) : "Model" : "models/clone_cop.mdl" : "Sets this clone's model."
+
+	additionalequipment[engine](string) : "Weapons" : "weapon_ar2_proto"
+	additionalequipment(choices) : "Weapons" : "weapon_ar2_proto" =
+		[
+		"weapon_ar2_proto" : "Prototype AR2"
+		"weapon_ar2": "AR2"
+		"weapon_shotgun": "Shotgun"
+		"weapon_smg1": "SMG1"
+		"weapon_smg2" : "MP5K"
+		"weapon_rpg" : "RPG"
+		// "weapon_stunstick": "Stun Stick"
+		"0": "Nothing"
+		]
+
+	@resources
+		[
+		model "models/clone_cop.mdl"
+		particle "blood_spurt_synth_01"
+		particle "blood_drip_synth_01"
+		particle "blood_impact_blue_01"  // Radiation/temporal only, but not really important.
+		entity item_ammo_ar2_altfire
+		]
+	]

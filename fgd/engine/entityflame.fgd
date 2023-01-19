@@ -1,0 +1,5 @@
+@PointClass aliasof(env_entity_igniter)
+	appliesto(+engine) 
+= entityflame: "A deprecated name for env_entity_igniter."
+	[
+	]

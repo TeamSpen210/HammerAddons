@@ -33,4 +33,6 @@
 	// Outputs
 	output OnActivate(void) : "Fired when gas starts to escape from the cannister."
 	output OnAwakened(void) : "Fired when this entity becomes awake (collision/force is applied)."
+
+	@resources [] // All in keyvalues.
 	]

@@ -13,4 +13,6 @@
 		2097152 : "Grenade"
 		268435456 : "On fire"
 		]
+	
+	@resources []
 	]

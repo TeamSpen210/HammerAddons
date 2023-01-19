@@ -10,20 +10,55 @@
 	staging_ent_names(string) : "Staging Position Names" : : "All entities with this name will be considered staging positions for the throw behavior."
 	priority_grab_name(string) : "Priority Name For Grabbing" : : "If any entities named this are present, the advisor will preferentially pick them up for throwing at the player."
 
+	AdvisorFlyer[EZ2](boolean) : "Starts flying" : 0 : "Spawn this advisor with the capability to freely float around."
+	pin_failsafe_active[EZ2](boolean) : "Player Pin Failsafe" : 1 : "Drop the player after 10 seconds when pinning. Normally leave on unless you specifically need the player to never drop." 
+	
 	// Inputs
 	input SetThrowRate(float) : "Advisor will throw an object once per this many seconds (plus a little more)"
 	input WrenchImmediate(string) : "Advisor will immediately start levitating all objects with this name"
 	input SetStagingNum(integer) : "Advisor will stage this many objects at once, then barrage the player."
 	input PinPlayer(string) : "Advisor will wrench the player to this point in the air. Use a null param to let go."
+	input StopPinPlayer[EZ2](target_destination) : "Advisor will stop pinning the player."	
+	
 	input BeamOn(string) : "Start a psychic-TK effect beam from the advisor to the specified object. You must remember to turn it off later."
 	input BeamOff(string) : "Turn off a psychic-TK effect beam from the advisor to the specified object."
 	input ELightOn(void) : "Turn on an entity light at my location. Please remember to turn this off."
 	input ELightOff(void) : "Turn off my entity light."
 	input DoNothing(void)
 
+	input StartFlying[EZ2](void) : "Allow the advisor to freely fly around like a scanner."
+	input StopFlying[EZ2](void) : "Lock the advisor in place."
+	
+	input SetFollowTarget[EZ2](target_destination) : "Set a target to stick to in a similar fashion to advisor flyers."
+	
+	input StartPsychicShield[EZ2](void) : "Activate the advisor's psychic shield, which prevents all damage."
+	input StopPsychicShield[EZ2](void) : "Deactivate the advisor's psychic shield."
+	
+	input EnablePinFailsafe[EZ2](void) : "Drop the player after 10 seconds when pinning."
+	input DisablePinFailsafe[EZ2](void) : "Never drop the player when pinning."
+	
+	input DetachRightArm[EZ2](void) : "Detach the advisor's right arm."
+	input DetachLeftArm[EZ2](void) : "Detach the advisor's left arm."
+
 	// Outputs
 	output OnPickingThrowable(void) : "Fires just before I pick something to hurl"
 	output OnThrowWarn(void) : "Fires when I trigger the warning green glow before tossing"
 	output OnThrow(void) : "Fires just after I throw something"
-	output OnHealthIsNow(integer) : "When I am damaged, my hitpoints thereafter"
+	output OnHealthIsNow(integer) : "When I am damaged, my hitpoints thereafter."
+
+	@resources
+		[
+		model "models/advisor.mdl"
+		material "materials/sprites/lgtning.vmt"
+		material "materials/sprites/greenglow1.vmt"
+		sound "NPC_Advisor.Blast"
+		sound "NPC_Advisor.Gib"
+		sound "NPC_Advisor.Idle"
+		sound "NPC_Advisor.Alert"
+		sound "NPC_Advisor.Die"
+		sound "NPC_Advisor.Pain"
+		sound "NPC_Advisor.ObjectChargeUp"
+		particle "Advisor_Psychic_Beam"
+		particle "advisor_object_charge"
+		]
 	]

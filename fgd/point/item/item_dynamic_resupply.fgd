@@ -23,29 +23,31 @@
 		16: "Alternate master" : 0
 		]
 
-	desiredhealth(float) : "Desired Health Ratio" : 1 : "A ratio from 0 to 1." +
+	desiredHealth(float) : "Desired Health Ratio" : 1 : "A ratio from 0 to 1." +
 		"Attempt to fill the player up to this percentage of their max health."
-	desiredarmor(float) : "Desired Armor Ratio" : 0.3 : "A ratio from 0 to 1." +
+	desiredArmor(float) : "Desired Armor Ratio" : 0.3 : "A ratio from 0 to 1." +
 		"Attempt to fill the player up to this percentage of their max armor."
-	desiredammopistol(float) : "Desired Pistol Ammo Ratio" : 0.5 : "A ratio from 0 to 1. " +
+	desiredammoPistol(float) : "Desired Pistol Ammo Ratio" : 0.5 : "A ratio from 0 to 1. " +
 		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammosmg1(float) : "Desired SMG1 Ammo Ratio" : 0.5 : "A ratio from 0 to 1. " +
+	desiredammoSMG1(float) : "Desired SMG1 Ammo Ratio" : 0.5 : "A ratio from 0 to 1. " +
 		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammosmg1_grenade(float) : "Desired SMG1 Grenade Ammo Ratio" : 0.1 : "A ratio from 0 to 1. " +
+	desiredammoSMG1_Grenade(float) : "Desired SMG1 Grenade Ammo Ratio" : 0.1 : "A ratio from 0 to 1. " +
 		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammoar2(float) : "Desired AR2 Ammo Ratio" : 0.4 : "A ratio from 0 to 1. " +
+	desiredammoAR2(float) : "Desired AR2 Ammo Ratio" : 0.4 : "A ratio from 0 to 1. " +
 		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammobuckshot(float) : "Desired Shotgun Ammo Ratio" : 0.5 : "A ratio from 0 to 1. " +
+	desiredammoBuckshot(float) : "Desired Shotgun Ammo Ratio" : 0.5 : "A ratio from 0 to 1. " +
 		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammorpg_round(float) : "Desired RPG Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
+	desiredammoRPG_Round(float) : "Desired RPG Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
 		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammogrenade(float) : "Desired Grenade Ammo Ratio" : 0.1 : "A ratio from 0 to 1. " +
+	desiredammoGrenade(float) : "Desired Grenade Ammo Ratio" : 0.1 : "A ratio from 0 to 1. " +
 		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
 	desiredammo357(float) : "Desired 357 Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
 		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammocrossbow(float) : "Desired Crossbow Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
+	desiredammoCrossbow(float) : "Desired Crossbow Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
 		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammoar2_altfire(float) : "Desired AR2 Alt-fire Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
+	desiredammoAR2_Altfire(float) : "Desired AR2 Alt-fire Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
+		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	desiredammoAR2_XenGrenade[EZ2](float) : "Desired Xen Grenade Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
 		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
 
 	// Inputs
@@ -55,4 +57,20 @@
 
 	// Outputs
 	output OnItem(ehandle) : "Fired with each item created by this box."
+
+	@resources
+		[
+		entity item_healthkit 
+		entity item_battery
+		entity item_ammo_pistol
+		entity item_ammo_smg1
+		entity item_ammo_smg1_grenade
+		entity item_ammo_ar2
+		entity item_box_buckshot
+		entity item_rpg_round
+		entity weapon_frag
+		entity item_ammo_357
+		entity item_ammo_crossbow
+		entity item_ammo_ar2_altfire
+		]
 	]

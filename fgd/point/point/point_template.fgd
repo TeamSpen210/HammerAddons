@@ -58,4 +58,6 @@
 	// Outputs
 	output OnEntitySpawned(void) : "Fired after spawning an instance of this template."
 	output OutSpawnedEntity[MBase](ehandle) : "Fired for each entity spawned by this template, passing said entity as the parameter and activator."
+
+	@resources []
 	]

@@ -25,6 +25,7 @@
 	input Break(void) : "Force the constraint to break."
 	input TurnOn(void) : "Enable the constraint.  Do this when the objects don't exist when the constraint spawns - or when you have deactivated the constraint.  Broken constraints can NOT be turned on.  They have been deleted."
 	input TurnOff(void) : "Disable this constraint."
+	input ConstraintBroken[engine](void) : "Fired when the constraint is broken, so it can clean up and fire OnBreak."
 
 	// Outputs
 	output OnBreak(void) : "Fired when the constraint breaks."

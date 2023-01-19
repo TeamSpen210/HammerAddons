@@ -1,17 +1,18 @@
-// Exclude a bunch of outputs and options for trigger_once
+// Exclude a bunch of outputs and options for trigger_once, since they're not useful.
+// OnEndTouch for instance can never be fired since it'll die first.
 @BaseClass base(BaseEntityBrush)
 	line(255 255 255, targetname, filtername) 
 = TriggerOnce
 	[
 	spawnflags(flags)  =
 		[
-		1: "Clients/Players/Bots" : 1 [TF2, CSGO, CSS, MESA]
-		1: "Clients/Players" : 1 [!TF2, !CSGO, !CSS, !MESA]
+		1: "Clients (Players/Bots)" : 1 [TF2, CSGO, CSS, MESA]
+		1: "Clients (Players)" : 1 [!TF2, !CSGO, !CSS, !MESA]
 		2: "NPCs" : 0 [!ASW]
 		2: "Marines and Aliens" : 0 [ASW]
 		4: "func_pushable" : 0
 		8: "Physics Objects" : 0
-		8192: "Items  (weapons, items, projectiles)" : 0 [MBase]
+		8192: "Items (weapons, items, projectiles)" : 0 [MBase]
 		16: "Only player ally NPCs" : 0 [!ASW]
 		16: "Only marines" : 1 [ASW]
 		32: "Only clients in vehicles" : 0
@@ -35,10 +36,26 @@
     input StartTouch(void) : "Fires the OnStartTouch output. " +
     	"If called by an entity inside the trigger, the OnStartTouch will be fired for them as the activator. Note that this input is passed even if the player is being treated as 'not' touching the trigger while inside it."
 
+	input EnableRetouch[KZ](void) : "Enables the activating player to re-trigger this trigger if it's an only activate once trigger."
+	input PreventTouch[KZ](void) : "Prevents the activating player from triggering if it's an only activate once trigger." 
+
 	// Outputs
 	output OnTrigger(void) : "Fired whenever the trigger is activated."
+	output OnTriggerMale[KZ](void) : "Fired when the trigger is activated by a player with a male model."
+	output OnTriggerFemale[KZ](void) : "Fired when the trigger is activated by a player with a female model."
+	output OnTriggerCheckpointsUsed[KZ](void) : "Fired when the trigger is activated by a player who has used checkpoints on their current course. Does not fire if the player is not currently on a course."
+	output OnTriggerCheckpointsNotUsed[KZ](void) : "Fired when the trigger is activated by a player who has not used checkpoints on their current course so far. Does not fire if the player is not currently on a course."
+	output OnTriggerCheckpointsSet[KZ](void) : "Fired when the trigger is activated by a player who has set checkpoints. Will fire even if a player is not on a course."
+	output OnTriggerCheckpointsNotSet[KZ](void) : "Fired when the trigger is activated by a player who has not set checkpoints. Will fire even if a player is not on a course."
 	output OnStartTouch(void) : "Fired when an entity starts touching this trigger. " +
 		"The touching entity must pass this trigger's filters to cause this output to fire."
 	output OnTouching(void) : "Fired when the TouchTest input is called, and an entity is touching this. Does not call activators."
     output OnNotTouching(void) : "Fired when the TouchTest input is called, and no entity is touching this. Does not call activators."
+	
+    // This I/O does actually exist, but it couldn't ever be used usefully.
+    input EndTouch[engine](void)
+	input DisableAndEndTouch[TF2, engine](void)
+	output OnStartTouchAll[engine](void) // Always fires along with OnStartTouch, so useless.
+	output OnEndTouch[engine](void)
+	output OnEndTouchAll[engine](void)
 	]

@@ -23,4 +23,6 @@
 		]
 
 	input StripWeapon(void)  : "Strip weapon from combatant"
+
+	@resources []
 	]

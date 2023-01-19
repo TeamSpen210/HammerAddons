@@ -31,4 +31,6 @@
 	input SetSpringConstant(float) : "Set the Spring Constant."
 	input SetSpringLength(float) : "Set the Spring Length."
 	input SetSpringDamping(float) : "Set the Spring Damping."
+	
+	@resources []
 	]

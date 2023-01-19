@@ -34,4 +34,6 @@
 	input SetAsActiveSpawn(void) : "Enable the spawn point to be used, disabling all other spawn points that do not share the same name."
 	input Disable(void) : "Disable the spawn point from being used."
 	input SetTeam(integer) : "Set the player this spawn point is for - 0 and 1 are any player, 2 is P-Body, 3 is ATLAS."
+
+	@resources []
 	]

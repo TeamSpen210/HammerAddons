@@ -22,4 +22,15 @@
 	// Outputs
 	output OnCommentaryStarted(void) : "Triggered when the commentary starts."
 	output OnCommentaryStopped(void) : "Triggered when the commentary stops. If viewposition is set, this triggers after the player's returns to their regular view."
+
+	@resources	
+		[
+		// Mapbase has several additional variants. It's likely multiple will be used...
+		model "models/extras/info_text.mdl" [+mapbase]
+		model "models/extras/info_image.mdl" [+mapbase]
+		model "models/extras/info_scene.mdl" [+mapbase]
+		model "models/extras/info_speech.mdl"
+
+		entity point_commentary_viewpoint
+		]
 	]

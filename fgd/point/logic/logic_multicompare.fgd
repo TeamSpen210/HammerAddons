@@ -17,4 +17,6 @@
 	// Outputs
 	output OnEqual(void) : "Fires if all of the values are equal."
 	output OnNotEqual(void) : "Fires if any of the values are not equal."
+
+	@resources []
 	]

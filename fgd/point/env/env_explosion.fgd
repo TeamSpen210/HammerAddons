@@ -8,6 +8,7 @@
 	imagnitude(integer) : "Magnitude" : 100 : "The amount of damage done by the explosion."
 	iradiusoverride(integer) : "Radius Override" : 0 : "If specified, the radius in which the explosion damages entities. If unspecified, the radius will be based on the magnitude."
 	fireballsprite(sprite) : "Fireball Sprite" : "sprites/zerogxplode.spr"
+	DamageForce(float) : "Damage Force" : 0 : "The force to apply the damage with. If unspecified, the explosion won't push entities."
 
 	rendermode[engine](integer) : "Render Mode" : 5
 	rendermode(choices) : "Render Mode" : 5 =
@@ -74,4 +75,9 @@
 	// Inputs
 	input Explode(void) : "Triggers the explosion."
 	input SetIgnoredEntity[MBase](string) : "Sets the ignored entity."
+
+	@resources
+		[
+		material "materials/sprites/zerogxplode.vmt"
+		]
 	]

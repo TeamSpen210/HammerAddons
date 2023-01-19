@@ -1,0 +1,26 @@
+@SolidClass base(Trigger) 
+	appliesto(KZ) 
+ = trigger_nocheck: "A trigger that prevents a player from setting a checkpoint when within its volume. This also lets you control the ability to pause and return from spectating."
+	[
+	mode[engine](integer) : "Capabilities to disable" : 0 : "The checkpoint capabilities of the player to disable"
+	mode(choices) : "Capabilities to disable" : 0 : "The checkpoint capabilities of the player to disable" = 
+		[ 
+		0 : "Set and Load" 
+		1 : "Just Set"
+		2 : "Just Load" 
+		] 
+	disablepause[engine](integer) : "Disable Pausing" : 0 : "Disable the ability to pause while in this trigger_nocheck?"
+	disablepause(choices) : "Disable Pausing" : 0 : "Disable the ability to pause while in this trigger_nocheck?" =
+		[
+		0 : "No"
+		1 : "Yes"
+		]
+	disablespectatorreturn[engine](integer) : "Disable Spectator Return" : 0 : "Disable the ability for spectators to return to this area when in the trigger_nocheck?"
+	disablespectatorreturn(choices) : "Disable Spectator Return" : 0 : "Disable the ability for spectators to return to this area when in the trigger_nocheck?" =
+		[
+		0 : "No"
+		1 : "Yes"
+		]
+
+	@resources []
+	]

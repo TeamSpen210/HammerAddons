@@ -203,7 +203,7 @@
 		]
 
 	locked_sentence[engine](integer) : "Locked Sentence" : 0
-	locked_sentence(choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the button, and fails because it's locked." =
+	locked_sentence[complete](choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the button, and fails because it's locked." =
 		[
 		0: "None"
 		1: "[NA] Gen. Access Denied"
@@ -218,7 +218,7 @@
 		]		
 
 	unlocked_sentence[engine](integer) : "Unlocked Sentence" : 0
-	unlocked_sentence(choices) : "Unlocked Sentence" : 0 : "A sentence played when the button is unlocked." =
+	unlocked_sentence[complete](choices) : "Unlocked Sentence" : 0 : "A sentence played when the button is unlocked." =
 		[
 		0: "None"
 		1: "[EA] Gen. Access Granted"
@@ -244,4 +244,10 @@
 	output OnUseLocked(void) : "Fired when the button is used while locked."
 	output OnIn(void) : "Fired when the button reaches the in/pressed position."
 	output OnOut(void) : "Fired when the button reaches the out/released position."
+
+	@resources
+		[
+		// Pack the Buttons.* sounds.
+		func func_button_sounds
+		]
 	]

@@ -15,4 +15,6 @@
 	input TurnOn(void) : "Turn on. The Navigation Entity will have its navigation properties set."
 	input TurnOff(void) : "Turn off. The Navigation Entity will have its navigation properties returned to the default settings."
 	input Toggle(void) : "Toggle on/off."
+
+	@resources []
 	]

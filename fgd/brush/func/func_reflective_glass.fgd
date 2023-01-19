@@ -14,7 +14,7 @@
 		"_rt_WaterReflection" : "_rt_WaterReflection (default)"
 		"_rt_WaterRefraction" : "_rt_WaterRefraction (requires no nearby refract mirrors)"
 		"_rt_Camera" : "_rt_Camera (requires no active point_camera)"
-		"" : "None (disables reflection)"
+		"0" : "None (disables reflection)"
 	]
 	
 	RefractRenderTarget[engine](string) : "_rt_WaterRefraction"
@@ -24,7 +24,7 @@
 		"_rt_WaterRefraction" : "_rt_WaterRefraction (default)"
 		"_rt_WaterReflection" : "_rt_WaterReflection (requires no nearby reflect mirrors)"
 		"_rt_Camera" : "_rt_Camera (requires no active point_camera)"
-		"" : "None (disables refraction)"
+		"0" : "None (disables refraction)"
 	]
 	
 	// Inputs

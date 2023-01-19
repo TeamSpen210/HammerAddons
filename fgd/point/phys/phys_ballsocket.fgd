@@ -7,4 +7,5 @@
 	color(128 128 128) 
 = phys_ballsocket: "A constraint that keeps the position of two objects fixed, relative to the constraint's origin. It does not affect rotation."
 	[
+	@resources []
 	]

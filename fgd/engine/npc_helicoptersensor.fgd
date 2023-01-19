@@ -9,4 +9,6 @@
 	input DropBombAtTarget(target_destination) : "Immediately drops a bomb directly at the target destination, but only if the player isn't right there"
 	input DropBombAtTargetAlways(target_destination) : "Immediately drops a bomb directly at the target destination, no matter whether it's fair or not."
 	input DropBombDelay(float) : "Add a delay before the next bomb is dropped"
+
+	@resources [] // It's a bounding box.
 	]

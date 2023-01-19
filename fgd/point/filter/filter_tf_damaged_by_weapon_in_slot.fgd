@@ -16,4 +16,6 @@
 		6: "Item 1"
 		7: "Item 2"
 		]
+	
+	@resources []
 	]

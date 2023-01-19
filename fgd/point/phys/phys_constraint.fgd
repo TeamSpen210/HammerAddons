@@ -7,4 +7,5 @@
 	color(128 128 128)
 = phys_constraint: "A constraint that keeps the relative position and orientation of two objects fixed."
 	[
+	@resources []
 	]

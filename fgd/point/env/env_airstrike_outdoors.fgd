@@ -10,4 +10,6 @@
 
 	// Inputs
 	input DoEffect(void) : "Do the effect one time"
+
+	@resources []
 	]

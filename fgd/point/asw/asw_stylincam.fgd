@@ -8,4 +8,6 @@
 	input HideStylinCam(void) : "Turns off the Stylin Cam."
 	input ShowCommanderFace(void) : "Turns on the Commander face."
 	input HideCommanderFace(void) : "Turns off the Commander face."
+
+	@resources []
 	]

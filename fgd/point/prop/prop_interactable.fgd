@@ -19,8 +19,9 @@
 	SetCooldown(float) : "Cooldown" : "1.0" : "The amount of time after this prop_interactable is used before it can be interacted with again. " +
 		"This is always based on when the prop_interactable was pressed, disregarding any active In Sequence, " +
 		"but an optional Out Sequence will play after the cooldown is over. " +
-		"It is also used when the prop_interactable is locked."
-	
+		"It is also used when the prop_interactable is locked. " + 
+		"Set to -1 to have an infinite cooldown when pressed while unlocked."
+
 	PressedSound(sound) : "Pressed Sound" : "" : "The sound to play when the button is successfully pressed."
 	LockedSound(sound) : "Locked Sound" : "" : "The sound to play when the button is interacted with while locked."
 	InSequence(string) : "In Sequence" : "" : "Optional sequence to play when the button is pressed, representing a button going 'in'."

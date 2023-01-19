@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(since_CSGO) 
+	appliesto(since_CSGO, TF2) 
 	worldtext() 
 = point_worldtext: "An entity that displays a text message oriented in the world, at its origin."
 	[

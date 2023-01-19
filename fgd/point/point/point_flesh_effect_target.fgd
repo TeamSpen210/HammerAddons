@@ -1,10 +1,13 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(EP2, P1)
 	sphere(radius) 
+	iconsprite(editor/vizzys/point_flesh_effect_target)
 = point_flesh_effect_target: "Area of affect for the $flesh shader effect."
 	[
 	radius(float) : "Radius" : 8 : "Radius of the effect when active"
 
 	// Inputs
 	input SetRadius(vector) : "Sets a new radius and time to interpolate to it(as a vector <Size> <Time in Seconds>)."
+
+	@resources []
 	]

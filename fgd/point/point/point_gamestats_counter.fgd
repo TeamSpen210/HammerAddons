@@ -8,4 +8,6 @@
 	// Inputs
 	input SetName(string) : "Changes name of statistic counter"
 	input Increment(float) : "Increments named statistic counter by specified value"
+
+	@resources []
 	]

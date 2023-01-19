@@ -2,4 +2,5 @@
 	appliesto(+engine, +TF2)
 = _ballplayertoucher: "Proxy entity used to make the passtime_ball collide with players."
 	[
+	@resources []
 	]

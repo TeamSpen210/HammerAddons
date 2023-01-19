@@ -3,4 +3,8 @@
 	appliesto(ASW) 
 	studio("models/swarm/Ammo/ammopistol.mdl") = asw_ammo_pistol: "Box of Pistol ammo"
 	[
+	@resources
+		[
+		model "models/swarm/Ammo/ammopistol.mdl"
+		]
 	]

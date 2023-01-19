@@ -1,5 +1,6 @@
 @PointClass appliesto(MBase)
 	base(BaseEntityPoint, EnableDisable)
+	iconsprite(editor/vizzys/point_radiation_source)
 	sphere(SetRadius) 
 = point_radiation_source : "Radiation source that trips the player's geiger counter. Does no actual damage."
 	[
@@ -10,4 +11,6 @@
 	
 	input Enable(void) : "Enable"
 	input Disable(void) : "Disable"
+
+	@resources []
 	]

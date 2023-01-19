@@ -19,4 +19,14 @@
 		]
 
 	always_fire_blocked_outputs[L4D2](boolean) : "Always Fire Blocked Outputs" : 0
+	@resources
+		[
+	    // Defaults if unspecified.
+	    sound "RotDoorSound.DefaultMove"
+	    sound "RotDoorSound.DefaultArrive"
+	    sound "RotDoorSound.DefaultLocked"
+	    sound "DoorSound.Null"
+
+	    // Todo: also locked and unlocked sentences in HL1.
+		]
 	]

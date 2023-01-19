@@ -8,13 +8,17 @@
 		[
 		"weapon_annabelle": "Annabelle"
 		"weapon_smg1": "SMG1"
+		"weapon_smg1": "SMG2" [EZ2]
 		"weapon_ar2": "AR2"
 		"weapon_stunstick": "Stun Stick"
 		"weapon_crowbar": "Crow Bar"
 		"weapon_shotgun": "Shotgun"
-		"weapon_beerbottle": "Beer Bottle"
-		"weapon_beerbottle2": "Beer Bottle2"
+		"weapon_pistol" : "Pistol" [MBase]
+		"weapon_357" : "357" [MBase]
+		"weapon_crossbow" : "Crossbow" [MBase]
 		"weapon_rpg": "RPG"
+		"weapon_citizenpackage" : "Citizen Package" [MBase]
+		"weapon_citizensuitcase" : "Citizen Suitcase" [MBase]
 		"0": "Nothing"
 		]
 
@@ -22,6 +26,13 @@
 
 
 	// Inputs
-	input PerfectAccuracyOn(void) : "Make every shot at a zombie a headshot"
-	input PerfectAccuracyOff(void) : "Return to normal accuracy"
+	input PerfectAccuracyOn(void) : "Make every shot at a zombie a headshot."
+	input PerfectAccuracyOff(void) : "Return to normal accuracy."
+
+	@resources
+		[
+		model "models/monk.mdl"
+		sound "NPC_Citizen.FootstepLeft"
+		sound "NPC_Citizen.FootstepRight"
+		]
 	]

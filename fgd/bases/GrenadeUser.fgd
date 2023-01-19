@@ -15,6 +15,7 @@
 
 	// Inputs
 	input ThrowGrenadeAtTarget[MBase](target_destination) : "Throws a grenade at the specified target."
+	input ThrowGrenadeGestureAtTarget[MBase](target_destination) : "Throws a grenade at the specified target using a gesture animation."
 	
 	input SetGrenades[MBase](integer) : "Sets the number of grenades we have."
 	input AddGrenades[MBase](integer) : "Adds to the number of grenades we have. Use a negative number to remove grenades."

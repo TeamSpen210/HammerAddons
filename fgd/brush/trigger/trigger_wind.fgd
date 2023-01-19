@@ -11,4 +11,6 @@
 
 	// Inputs
 	input SetSpeed(integer) : "Set the baseline for how hard the wind blows."
+
+	@resources []
 	]

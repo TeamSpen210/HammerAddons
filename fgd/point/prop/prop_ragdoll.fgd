@@ -17,7 +17,8 @@
 		131072 : "Fixed constraints (make statue)" : 0 [MBase]
 		]
 	MimicName[MESA](string) : "Character Manifest Mimic Name" : "" : "Choose a name or a classname from the character manifest to dress the ragdoll."
-	health[MESA](integer) : "Health" : 100 : "The amount of damage the ragdoll takes before gibbing."
+	health[MESA, MBase](integer) : "Health" : 100 : "The amount of damage the ragdoll takes before gibbing."
+	EmitScent[EZ2](boolean) : "Should Emit Scent" : "Emit scents that will attract predators to this ragdoll."
 
 	angleoverride(string) : "Override Animation" : : "Filled in by the engine via hammer_update_entity, do not edit by hand except to clear."
 
@@ -28,4 +29,13 @@
 	input EnableMotion(void) : "Enable physics motion/collision response."
 	input DisableMotion(void) : "Disable physics motion/collision response."
 	input FadeAndRemove(float) : "Fade out then remove (kill) self. Parameter override = duration of fade"
+
+	input EnableScent[EZ2](void) : "Start emitting scents that will attract predators to this ragdoll."
+	input DisableScent[EZ2](void) : "Start emitting scents that will attract predators to this ragdoll."
+	input Gib[EZ2](void) : "Apply 1000 damage to instantly gib this ragdoll."
+
+	@resources
+		[
+		particle "hgib" [+entropyzero2]
+		]
 	]

@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(EP2, HL2, P1, ASW) 
-	iconsprite("editor/info_target.vmt") 
+	iconsprite("editor/vizzys/info_radar_target.vmt") 
 	sphere(radius) = info_radar_target: "Jalopy Radar Beacon"
 	[
 	radius(float) : "Effective Radius" : 6000 : "How close the Jalopy must be to detect this beacon. If this radius is -1, the range is infinite."
@@ -23,4 +23,5 @@
 		1: "Sticky - once detected, ignore effective radius."
 		]
 
+	@resources [] // The jalopy is the one using resources really.
 	]

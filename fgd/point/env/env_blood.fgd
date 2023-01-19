@@ -19,8 +19,13 @@
 		2: "Blood Stream" : 0
 		4: "On Player" : 0
 		8: "Spray decals" : 0
+		16: "Blood Cloud" : 0
+		32: "Blood Drops" : 0
+		64: "Gore" : 0
 		]
 
 	// Inputs
 	input EmitBlood(void) : "Triggers the blood effect."
+
+	@resources []
 	]

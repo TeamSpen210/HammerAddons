@@ -3,4 +3,8 @@
 	autovis(Entities, NPCs, G-Man)
 	studio("models/gman.mdl") = npc_gman: "The G-Man."
 	[
+	@resources
+		[
+		model "models/gman.mdl"
+		]
 	]

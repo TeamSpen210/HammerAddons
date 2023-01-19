@@ -1,0 +1,6 @@
+@NpcClass base(npc_manhack) 
+	appliesto(Mapbase)
+	studio("models/skeleton/skeleton_torso3.mdl")
+= npc_lost_soul : "Lost Soul"
+	[
+	]

@@ -23,4 +23,6 @@
 
 	// Outputs
 	output OnBeginFade(void) : "Fired when the fade has begun."
+
+	@resources []
 	]

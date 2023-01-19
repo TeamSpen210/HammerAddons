@@ -1,0 +1,5 @@
+@BaseClass base(BaseNPC) = EZ2XenFlora
+	[
+	output OnLower(void) : "Fired when lightstalk is lowered"
+	output OnRise(void) : "Fired when lightstalk is risen"
+	]

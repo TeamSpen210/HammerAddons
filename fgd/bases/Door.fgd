@@ -51,7 +51,7 @@
 		]
 
 	locked_sentence[engine](integer) : "Locked Sentence" : 0
-	locked_sentence(choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the door, and fails because it's locked." =
+	locked_sentence[complete, HLS](choices) : "Locked Sentence" : 0 : "A sentence played when the player tries to use the door, and fails because it's locked." =
 		[
 		0: "None"
 		1: "[EA] Gen. Access Granted"
@@ -65,7 +65,7 @@
 		]
 
 	unlocked_sentence[engine](integer) : "Unlocked Sentence" : 0
-	unlocked_sentence(choices) : "Unlocked Sentence" : 0 : "A sentence played when the door is unlocked." =
+	unlocked_sentence[complete, HLS](choices) : "Unlocked Sentence" : 0 : "A sentence played when the door is unlocked." =
 		[
 		0: "None"
 		1: "[EA] Gen. Access Granted"
@@ -78,6 +78,8 @@
 		8: "[EH] Maintenance area"
 		]
 
+	WaveHeight[engine](float) : "Wave Height" : : "Unused keyvalue, likely to indicate the amount of HL1-style wavy water."
+
 	// Inputs
 	input Open(void) : "Open the door, if it is not fully open."
 	input Close(void) : "Close the door, if it is not fully closed."
@@ -86,6 +88,8 @@
 	input Unlock(void) : "Unlock the door."
 	input SetSpeed(float) : "Set the door speed."
 	input SetToggleState(bool) : "Force the door instantly to currently open or closed."
+	input SetAnalogValue[P2EDU](float) : "Set animation frame between 0 and 1."
+	input SetAnalogValueString[P2EDU](string) : "Set animation frame between 0 and 1."
 
 	// Outputs
 	output OnClose(void) : "Fired when the door starts closing."

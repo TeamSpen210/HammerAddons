@@ -5,4 +5,6 @@
 
 	dangeroustimer(float) : "Dangerous Timer" : "0" : "The number of seconds the player must survive before this autosave takes effect."
 	minimumhitpoints(integer) : "Minumum Hit Points" : 0 : "Don't save dangerous when player has less than this many hitpoints."
+
+	@resources []
 	]

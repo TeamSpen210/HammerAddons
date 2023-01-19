@@ -17,25 +17,16 @@
 		4: "Concrete"
 		]
 
-	simulation[engine](integer) : "Simulate"
-	simulation(choices) : "Simulate" : "0" =
-		[
-		0: "Point"
-		1: "Physics"
-		2: "Ragdoll"
-		]
-
 	skin(integer) : "Gib Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin on all gi" + "bs produced by this shooter."
 	spawnflags(flags)  =
 		[
 		2: "On fire" : 0
-		4: "strict remove after lifetime" : 0
 		]
 
 	nogibshadows(boolean) : "Disable Shadows on Gibs" : 0
 	gibgravityscale(float) : "Gib gravity scale" : 1 : "ONLY WORKS FOR POINT GIBS. This field allows you to scale gravity so that gibs fall faster, slower, or not at all."
 
-	massoverride(float) : "Mass override" : 0 : "EPISODIC ONLY. Specify an arbitrary mass for the gibs emitted by me."
+	massoverride[EP1, EP2](float) : "Mass override" : 0 : "EPISODIC ONLY. Specify an arbitrary mass for the gibs emitted by me."
 
 	bloodcolor[engine](integer) : "Blood Color" : -1
 	bloodcolor[MESA](choices) : "Blood Color" : -1 =
@@ -48,4 +39,9 @@
 		]
 
 	touchkill[MESA](boolean) :"Explode on Impact" : 0
+
+	@resources 
+		[
+		func env_shooter // "shootsounds" has a harcoded list of sounds.
+		]
 	]

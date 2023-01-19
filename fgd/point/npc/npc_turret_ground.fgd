@@ -11,4 +11,15 @@
 
 	// Outputs
 	output OnAreaClear(void) : "Fires when the turret can't find any more enemies (7 second delay)"
+
+	@resources
+		[
+		model "models/combine_turrets/ground_turret.mdl"
+		mat "materials/effects/bluelaser2.vmt"
+		sound "NPC_CeilingTurret.Deploy"
+		sound "NPC_FloorTurret.ShotSounds"
+		sound "NPC_FloorTurret.Die"
+		sound "NPC_FloorTurret.Ping"
+		sound "DoSpark"
+		]
 	]

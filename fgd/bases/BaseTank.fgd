@@ -129,4 +129,9 @@
 	output OnGotPlayerController(void) : "Fires when a Player starts to control this tank. NPCs do NOT fire this input."
 	output OnLostPlayerController(void) : "Fires when the Player controller of the tank stops controlling it. NPCs do NOT fire this input."
 	output OnReadyToFire(void) : "Fires once when the tank is done waiting to fire between rounds"
+
+	@resources
+		[
+		sound "Func_Tank.BeginUse"
+		]
 	]

@@ -4,7 +4,8 @@ from typing import Dict, Optional, Tuple
 from srctools import Entity
 from srctools.logger import get_logger
 
-from hammeraddons.bsp_transform import trans, Context
+from hammeraddons.bsp_transform import Context, trans
+
 
 LOGGER = get_logger(__name__)
 

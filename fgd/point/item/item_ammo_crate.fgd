@@ -52,4 +52,11 @@
 	// Outputs
 	output OnUsed(void) : "Fires when +used by the player."
 	output OnAmmoTaken[MBase](void) : "Fires the instant ammo is taken from this crate."
+
+	@resources
+		[
+		sound "AmmoCrate.Open"
+    	sound "AmmoCrate.Close"
+    	func item_ammo_crate // Depending on ammo type, a different model is included plus the ammo itself.
+		]
 	]

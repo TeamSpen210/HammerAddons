@@ -1,0 +1,21 @@
+@NpcClass base(BaseEntityAnimating) 
+	appliesto(EZ2) 
+	autovis(Entities, Weapons, Xen Grenade)
+	studio("models/Weapons/w_xengrenade.mdl") = npc_grenade_hopwire: "Xen Grenade"
+	[
+	// Inputs
+	input SetTimer(float) : "This input makes the grenade live, and specifies how many seconds before it explodes."
+
+	@resources
+		[
+		model "models/props_junk/metal_paintcan001b.mdl" //  # "Dense Ball Model"
+		sound "NPC_Strider.Charge"
+		sound "NPC_Strider.Shoot"
+		sound "WeaponXenGrenade.Explode"
+		sound "WeaponXenGrenade.SpawnXenPC"
+		sound "WeaponXenGrenade.Blip"
+		sound "WeaponXenGrenade.Hop"
+		entity vortex_controller 
+		entity grenade // Actual base class
+		]
+	]

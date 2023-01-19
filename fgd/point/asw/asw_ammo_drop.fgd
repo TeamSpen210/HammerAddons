@@ -4,4 +4,16 @@
 	color(0 0 200) 
 	studio("models/items/Ammobag/AmmoBag.mdl") = asw_ammo_drop: "Generic ammo pile"
 	[
+	@resources
+		[
+		model "models/items/Ammobag/AmmoBag.mdl"
+		sound "ASW_Ammobag.DropImpact"
+		sound "ASW_Ammobag.Pickup_sml"
+		sound "ASW_Ammobag.Pickup_med"
+		sound "ASW_Ammobag.Pickup_lrg"
+		sound "ASW_Ammobag.Fail"
+		particle ammo_satchel_take_sml
+		particle ammo_satchel_take_med
+		particle ammo_satchel_take_lrg
+		]
 	]

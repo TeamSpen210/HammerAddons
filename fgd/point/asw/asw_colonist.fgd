@@ -4,4 +4,13 @@
 	studio("models/swarm/Colonist/Male/MaleColonist.mdl") = asw_colonist: "Colonist"
 	[
 	notifynavfailblocked(boolean) : "Fire output when Nav is blocked?" : 0
+
+	@resources
+		[
+		model "models/swarm/Colonist/Male/MaleColonist.mdl"
+		sound "NPC_Citizen.FootstepLeft"
+		sound "NPC_Citizen.FootstepRight"
+		sound "NPC_Citizen.Die"
+		sound "MaleMarine.Pain"
+		]
 	]

@@ -1,5 +1,7 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(EP1, EP2, HL2, P1, ASW) 
-	iconsprite("editor/info_target.vmt") = info_target_vehicle_transition: "Vehicle Transition Point"
+	iconsprite("editor/vizzys/info_target_vehicle_transition.vmt") 
+= info_target_vehicle_transition: "Vehicle Transition Point"
 	[
+	@resources []
 	]

@@ -24,4 +24,18 @@
 
 	// Inputs
 	input BreakWaitForScript(void) : "Wakes the alien up if his Wait For Script flag was set"
+
+	@resources
+		[
+		model "models/aliens/mortar3/mortar3.mdl"
+		model "models/aliens/rangerSpit/rangerspit.mdl"
+		sound "Ranger.projectileImpactPlayer"
+		sound "Ranger.projectileImpactWorld"
+		sound "Ranger.GibSplatHeavy"
+		sound "ASW_Drone.DeathFireSizzle"
+		sound "ASW_Ranger_Projectile.Spawned"
+		particle ranger_projectile_main_trail
+		particle ranger_projectile_hit
+		entity asw_alien
+		]
 	]

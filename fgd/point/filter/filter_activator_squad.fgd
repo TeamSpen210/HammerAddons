@@ -1,7 +1,7 @@
 @FilterClass base(filter_base) 
 	autovis(Logic, Filters)
 	appliesto(MBase)
-	iconsprite("editor/filter_generic2.vmt") 
+	iconsprite("editor/vizzys/filter_activator_squad.vmt") 
 = filter_activator_squad : "A filter that filters by the squad of the activator."
 [
 	filtername(string) : "Filter Squad" : : "The squad name to filter by. If the filter mode is Allow, only entities who are "+
@@ -9,4 +9,6 @@
 		"all entities EXCEPT those who are in the squad of the given string will pass the filter."
 	
 	allowsilentmembers(boolean) : "Allow Silent Members" : 1 : "Allows silent squad members to pass the filter. Silent squad members are enemy finders and vital allies in player_squad."
+	
+	@resources []
 ]

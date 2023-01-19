@@ -23,9 +23,8 @@
 	teamnum(choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
 		[
 		-1: "Don't care"
-		1: "Team 1"
-		2: "Team 2 (ORANGE)"
-		3: "Team 3 (BLUE)"
+		2: "Terrorists"
+		3: "Counter-Terrorists"
 		]
 
 	// Inputs
@@ -34,4 +33,6 @@
 
 	// Outputs
 	output OnEventFired(void) : "Fired when the event has been detected."
+
+	@resources []
 	]

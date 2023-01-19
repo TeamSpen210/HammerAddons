@@ -92,4 +92,15 @@
 	output OnFullySealed(void) : "Fired when a marine full seals a door."
 	output OnFullyCut(void) : "Fired when a marine full cuts open the seal on the door."
 	output OnDestroyed(void) : "Fired when the door is knocked down."
+
+	@resources
+		[
+		mdl "models/swarm/doors/swarm_singledoor.mdl"
+		mdl "models/swarm/doors/swarm_singledoor_flipped.mdl"
+		mdl "models/props/doors/heavy_doors/doorleft.mdl"
+		mdl "models/props/doors/heavy_doors/doorright.mdl"
+		sound "ASW_Door.Dented"
+		sound "ASW_Door.MeleeHit"
+		sound "ASW_Welder.WeldDeny"
+		]
 	]

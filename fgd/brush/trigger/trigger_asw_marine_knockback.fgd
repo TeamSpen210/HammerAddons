@@ -1,4 +1,3 @@
-
 @SolidClass base(Trigger) 
 	appliesto(ASW) = trigger_asw_marine_knockback: "A trigger volume that will knock away any marines touching it."
 	[
@@ -7,4 +6,6 @@
 
 	// Outputs
 	output OnKnockedBack(void) : "Fired whenever the trigger is activated."
+
+	@resources []
 	]

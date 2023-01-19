@@ -1,12 +1,12 @@
 """Transformations for packing and precaching resources."""
+from typing import Dict, Set
 import os
-from typing import Set, Dict
 
 from srctools import Entity
 from srctools.logger import get_logger
 from srctools.packlist import FileType, unify_path
 
-from hammeraddons.bsp_transform import check_control_enabled, trans, Context
+from hammeraddons.bsp_transform import Context, check_control_enabled, trans
 
 
 LOGGER = get_logger(__name__, 'trans.packing')

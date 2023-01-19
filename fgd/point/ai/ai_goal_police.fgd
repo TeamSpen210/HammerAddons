@@ -14,17 +14,19 @@
 		4: "Do not leave post" : 0
 		]
 
-	policeradius(float) : "Radius" : 512 : "Radius to police"
-	policetarget(string) : "Target" : : "Target to police"
+	policeradius(float) : "Radius" : 512 : "Radius to police."
+	policetarget(string) : "Target" : : "Target to police."
 
 	// Inputs
-	input EnableKnockOut(void) : "Tells the goal to make the active policing NPC knock out its target"
-	input DisableKnockOut(void) : "Stop the active policing NPC from trying to knock out its target"
+	input EnableKnockOut(void) : "Tells the goal to make the active policing NPC knock out its target."
+	input DisableKnockOut(void) : "Stop the active policing NPC from trying to knock out its target."
 
 	// Outputs
-	output OnFirstWarning(void) : "Fires the first time a policing cop warns a target"
-	output OnSecondWarning(void) : "Fires the second time a policing cop warns a target"
-	output OnLastWarning(void) : "Fires when a policing cop warns a target for the last time"
-	output OnSupressingTarget(void) : "Fires when a policing cop starts to suppress (ie. beat) a target"
-	output OnKnockOut(void) : "Fires when a target has been knocked out"
+	output OnFirstWarning(void) : "Fires the first time a policing cop warns a target."
+	output OnSecondWarning(void) : "Fires the second time a policing cop warns a target."
+	output OnLastWarning(void) : "Fires when a policing cop warns a target for the last time."
+	output OnSupressingTarget(void) : "Fires when a policing cop starts to suppress (ie. beat) a target."
+	output OnKnockOut(void) : "Fires when a target has been knocked out."
+
+	@resources []
 	]

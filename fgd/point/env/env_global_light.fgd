@@ -40,5 +40,7 @@
 	input SetYOffset[MBase](float) : "Sets the Y offset."
 	input SetOrthoSize[MBase](float) : "Sets the light's size."
 	input SetTexture(string) : "Set the texture cookie of the sunlight."
-	input EnableShadows(bool) : "Set whether shadow maps are enabled"
+	input EnableShadows(bool) : "Set whether shadow maps are enabled."
+
+	@resources []
 	]

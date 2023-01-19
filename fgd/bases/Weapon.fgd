@@ -30,6 +30,7 @@
 	input SetAmmo2[MBase](integer) : "Sets the amount of secondary ammo stored in this weapon."
 	input ForcePrimaryFire[MBase](void) : "Forces the weapon to fire its primary attack."
 	input ForceSecondaryFire[MBase](void) : "Forces the weapon to fire its secondary attack. Whether or not it actually fires a secondary attack depends on the weapon and who owns it."
+	input HideWeapon(void) : "If this is the active weapon, it is immediately hidden."
 
 	// Outputs
 	output OnPlayerUse(void) : "Fires when the player +uses this weapon."

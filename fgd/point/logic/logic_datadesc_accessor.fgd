@@ -23,4 +23,6 @@
 	// Outputs
 	output OutValue(string) : "Fires when a field is found. Passes its value."
 	output OnFailed(void) : "Fires when this entity fails to find the specified field."
+
+	@resources []
 	]

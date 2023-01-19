@@ -49,4 +49,9 @@
 	output OnImpacted(void) : "Fires when canister hits the ground"
 	output OnOpened(void) : "Fires when canister has finished opening"
 	output OnCrab[MBase](ehandle) : "Fires for each headcrab that comes out of this canister"
+
+	@resources
+		[
+		func env_headcrabcanister // Includes the headcrab spawned, and picks the other resources based on spawnflags.
+		]
 	]

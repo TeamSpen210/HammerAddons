@@ -2,4 +2,5 @@
 	appliesto(+engine)
 = raggib : "Temporary remmnants spawned when something is destroyed, but with ragdoll physics."
 	[
+	@resources []
 	]   

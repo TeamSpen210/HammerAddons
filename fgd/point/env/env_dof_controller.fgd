@@ -30,4 +30,6 @@
 	input SetFarBlurRadius(float) : "Set the blur radius (in pixels) to use at the far blur distance. Set to 0 to disable far blur."
 	input SetFocusTarget[since_ASW, MBase](string) : "Set the focal target for the effect."
 	input SetFocusTargetRange[since_ASW, MBase](float) : "Set the distance behind the focal point that will remain in focus."
+
+	@resources []
 	]

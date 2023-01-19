@@ -11,4 +11,6 @@
 		0: "Top-down"
 		1: "40 degree"
 		]
+
+	@resources []
 	]

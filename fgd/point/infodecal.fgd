@@ -1,14 +1,18 @@
 @PointClass base(BaseEntityPoint) 
-	decal() 
+	decal()
+	line(128 128 128, targetname, applyentity) 
 	studio("models/editor/decal_helper.mdl") 
 = infodecal: "An entity that places a decal on the world. If the decal has no target name, it will immediately apply itself when the level is loaded." +
 	"If it has a name specified, it won't apply until it receives the 'Activate' input."
 	[
 	// This is intentionally set to "material" instead of "decal", to suppress auto-filtering
 	texture(material) : "Texture" : : "The texture used for the decal."
-	lowpriority(boolean) : "Low Priority" : 1 : "Allow the decal to be overwritten by other decals when needed. " +
+	lowpriority(boolean) : "Low Priority" : 0 : "Allow the decal to be overwritten by other decals when needed. " +
 		"This also makes the decal not persist across savegames."
+	applyentity[since_L4D](target_destination) : "Entity to affect" : : "If specified, the decal will be applied to this entity only."
 
 	// Inputs
 	input Activate(void) : "Force the decal to apply itself to the world."
+
+	@resources [] // Just the generic KV.
 	]

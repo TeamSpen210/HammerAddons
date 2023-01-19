@@ -1,0 +1,27 @@
+@PointClass base(BaseEntityAnimating) 
+	appliesto(ASW) 
+	sphere(turretrange)
+	studioprop("models/sentry_gun/machinegun_top.mdl") = asw_sentry_top
+	[
+	turretrange(float) : "Turret Range" : 525 : "Maximum distance that it will pick targets."
+
+	@resources
+		[
+		model "models/sentry_gun/machinegun_top.mdl"
+		model "models/sentry_gun/freeze_top.mdl"
+		model "models/sentry_gun/grenade_top.mdl"
+		model "models/sentry_gun/flame_top.mdl"
+		sound "ASW_Sentry.Fire"
+		sound "ASW_Sentry.Turn"
+		sound "ASW_Sentry.AmmoWarning"
+		sound "ASW_Sentry.OutOfAmmo"
+		sound "ASW_Sentry.Deploy"
+		sound "ASW_Sentry.CannonFire"
+		sound "ASW_Sentry.FlameLoop"
+		sound "ASW_Sentry.FlameStop"
+		sound "ASW_Sentry.IceLoop"
+		sound "ASW_Sentry.IceStop"
+		particle "asw_flamethrower"
+		particle "asw_freezer_spray"
+		]
+	]

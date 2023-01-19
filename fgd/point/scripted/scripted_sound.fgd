@@ -15,4 +15,6 @@
 	input PlaySoundOnEntity(target_destination) : "Plays the sound on the specified entity."
 	input StopSound(void) : "Stops the sound if it is playing."
 	input SetSound(string) : "Sets the sound."
+
+	@resources [] // Generic KV support handles.
 ]

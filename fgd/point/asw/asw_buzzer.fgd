@@ -1,4 +1,3 @@
-
 @NpcClass base(BaseNPC) 
 	appliesto(ASW) 
 	studio("models/swarm/Buzzer/buzzer.mdl") = asw_buzzer: "Buzzer"
@@ -14,4 +13,19 @@
 
 	// Inputs
 	input DisableSwarm(void) : "Disable the buzzer swarm behavior."
+
+	@resources
+		[
+		model "models/aliens/buzzer/buzzer.mdl"
+		sound "ASW_Buzzer.Attack"
+		sound "ASW_Buzzer.Death"
+		sound "ASW_Buzzer.Pain"
+		sound "ASW_Buzzer.Idle"
+		sound "ASW_Buzzer.OnFire"
+
+		particle buzzer_trail
+		particle buzzer_death
+		sound "ASWFire.BurningFlesh"
+		sound "ASWFire.StopBurning"
+		]
 	]

@@ -1,7 +1,7 @@
-@PointClass base(BaseEntityAnimating, SetModel, SetSkin) 
+@PointClass base(BaseNPC, SetModel, SetSkin) 
 	appliesto(-L4D, -L4D2)
 	studio()
-= cycler: "An entity used to display a model for testing purposes. Shooting it with cycle through the model's animations."
+= cycler: "An entity used to display a model for testing purposes. Shooting it will cycle through the model's animations."
 	[
 	spawnflags(flags)  =
 		[
@@ -12,4 +12,6 @@
 
 	// Inputs
 	input SetSequence(string) : "Sets the cycler's sequence."
+
+	@resources []  // Just the generic model.
 	]

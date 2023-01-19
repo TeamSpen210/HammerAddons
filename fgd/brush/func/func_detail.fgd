@@ -7,4 +7,5 @@
 	"func_detail is great for high-frequency brush geometry that's visual detail only. " +
 	"It is also ideal for reducing map VIS time."
 	[
+	@resources []
 	]

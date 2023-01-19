@@ -1,7 +1,11 @@
-@BaseClass base(BaseNPC) = BaseZombie
+@BaseClass base(BaseNPC, EZ2Variant) = BaseZombie
 	[
 	Headless[Mbase](boolean) : "Headcrab-less" : 0 : "Toggles whether this zombie should have a headcrab on their head. They usually should."
 
+	model[MBase](studio): "Override Model"
+	torsomodel[MBase](studio) : "Override Torso Model"
+	legsmodel[MBase](studio) : "Override Legs Model"
+	
 	spawnflags(Flags) = 
 		[
 		65536 : "Never spawn headcrab" : 0 [Mesa]
@@ -11,4 +15,13 @@
 
 	output OnSwattedProp[Mbase](ehandle) : "Fires when this NPC swats a prop, passing the prop as the activator and parameter."
 	output OnCrab[Mbase](ehandle) : "Fires when the zombie releases a headcrab, passing the headcrab as the activator and parameter."
+
+	@resources
+		[
+		sound "E3_Phystown.Slicer"
+		sound "NPC_BaseZombie.PoundDoor"
+		sound "NPC_BaseZombie.Swat"
+
+		particle "blood_impact_zombie_01"
+		]
 	]

@@ -41,4 +41,10 @@
 	input Rate(integer) : "Sets the particle emission rate in particles per second."
 	input Speed(integer) : "Sets the default speed of the particles in units per second."
 	input SpreadSpeed(integer) : "Sets the spread speed in units per second."
+
+	@resources
+		[	
+	    material "materials/particle/particle_smokegrenade.vmt"
+	    material "materials/sprites/heatwave.vmt"
+		]
 	]

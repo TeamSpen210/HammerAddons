@@ -27,7 +27,6 @@
 	input ExitDisabledState(void) : "Exits the disabled state of a reflective cube."
 
 	// Outputs
-	output OnFizzled(void) : "Fired when a cube is fizzled."
 	output OnOrangePickUp(void) : "P-Body picked up the cube."
 	output OnBluePickUp(void) : "ATLAS picked up the cube."
 	output OnPlayerPickup(void) : "Any player picked up the cube."

@@ -1,5 +1,5 @@
-
 @SolidClass base(trigger_asw_use_area) 
 	appliesto(ASW) = trigger_asw_door_area: "A trigger volume that should be linked with asw_doors."
 	[
+	@resources []
 	]

@@ -1,6 +1,7 @@
 @PointClass 
 	autovis(AI, AI Goal)
 	base(BaseEntityPoint, EnableDisable) 
+	iconsprite(editor/vizzys/ai_goal_operator)
 	appliesto(EP1, EP2, HL2, P1, Mesa) 
 = ai_goal_operator: "Indicates items in the world that some NPCs may operate upon."
 	[
@@ -28,8 +29,10 @@
 	input SetStateFinished(void) : "Fire this input when the NPC has completed the interaction with this object."
 
 	// Outputs
-	output OnBeginApproach(void) : "Fired when the NPC begins to approach the position"
-	output OnMakeReady(void) : "Make the item ready to operate"
-	output OnBeginOperating(void) : "Fired when the NPC is ready to operate"
-	output OnFinished(void) : "The item is done"
+	output OnBeginApproach(void) : "Fired when the NPC begins to approach the position."
+	output OnMakeReady(void) : "Fired when the item is ready to operate."
+	output OnBeginOperating(void) : "Fired when the NPC is ready to operate."
+	output OnFinished(void) : "The item is done."
+
+	@resources []
 	]

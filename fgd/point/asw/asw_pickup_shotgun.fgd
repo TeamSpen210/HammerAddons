@@ -6,4 +6,9 @@
 	bulletsingun(integer) : "Bullets In Gun" : 3
 	clips(integer) : "Clips" : 8
 	secondarybullets(integer) : "Secondary Bullets" : 0
+
+	@resources
+		[
+		model "models/weapons/Shotgun/Shotgun.mdl"
+		]
 	]

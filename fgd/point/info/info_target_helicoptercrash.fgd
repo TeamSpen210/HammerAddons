@@ -1,5 +1,9 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(Mesa) 
-	iconsprite("editor/info_target.vmt") = info_target_helicoptercrash: "Helicopter Crash Target"
+	iconsprite("editor/vizzys/info_target_helicopter_crash.vmt")
+	studio("models/editor/axis_helper.mdl") 
+	halfgridsnap
+= info_target_helicoptercrash: "Helicopter Crash Target"
 	[
+	@resources []
 	]

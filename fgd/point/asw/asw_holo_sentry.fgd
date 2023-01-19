@@ -6,4 +6,9 @@
 
 	// Outputs
 	output OnSentryPlaced(void) : "When a sentry gun is placed and this entity is enabled this fires."
+
+	@resources
+		[
+		particle "sentry_build_display"
+		]
 	]

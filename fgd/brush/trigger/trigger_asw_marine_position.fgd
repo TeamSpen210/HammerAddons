@@ -1,4 +1,3 @@
-
 @SolidClass base(trigger_multiple) 
 	appliesto(ASW) = trigger_asw_marine_position: "A trigger that fires when a marine is standing inside it, facing the desired direction."
 	[
@@ -17,4 +16,6 @@
 	// Outputs
 	output MarineInPosition(void) : "Fires when marine is inside the volume and facing the right way."
 	output MarineOutOfPosition(void) : "Fires when marine is no longer inside the volume and facing the right way."
+
+	@resources []
 	]

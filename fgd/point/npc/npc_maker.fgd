@@ -12,6 +12,7 @@
 	npctargetname(string) : "Childrens' Name"
 	npcsquadname(string) : "Childrens' Squad Name"
 	npchintgroup(string) : "Childrens' Hint Group"
+	relationship(string) : "Relationship" : : "Sets whether the spawned NPC likes or dislikes certain others. Format is: <string|targetname or classname> <string|disposition> <integer|rank>. Values for disposition are: D_HT (Hate), D_FR (Fear), D_LI (Like), D_NU, (Neutral)."
 
 	additionalequipment[engine](string) : "Weapons" : "0"
 	additionalequipment(choices) : "Weapons" : "0" =
@@ -25,9 +26,14 @@
 		"weapon_ar2": "AR2" [ASW, EP1, EP2, HL2, P1]
 		"weapon_shotgun": "Shotgun" [ASW, EP1, EP2, HL2, P1]
 		"weapon_smg1": "SMG1" [ASW, EP1, EP2, HL2, P1]
+		"weapon_smg2" : "SMG2" [EZ2]
 		"weapon_stunstick": "Stun Stick" [ASW, EP1, EP2, HL2, P1]
 		"weapon_annabelle": "Grigori's Shotgun" [ASW, EP1, EP2, HL2, P1]
 		"0": "Nothing"
 		]
 
+	@resources
+		[
+		func npc_maker // We include the specified NPC type, and the equipment.
+		]
 	]

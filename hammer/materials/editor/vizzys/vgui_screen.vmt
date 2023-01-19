@@ -1,0 +1,7 @@
+Sprite
+{
+$spriteorientation vp_parallel
+"$spriteorigin" "[ 0 1.0 ]"
+"$baseTexture" "editor/vizzys/vgui_screen"
+$no_fullbright 1
+}

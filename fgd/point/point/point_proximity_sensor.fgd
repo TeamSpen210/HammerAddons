@@ -13,7 +13,10 @@
 
 	// Inputs
 	input Toggle(void) : "Toggle the sensor between enabled and disabled."
+	input SetTargetEntity[MBase](target_destination) : "Sets the entity whose angles will be sensed."
 
 	// Outputs
 	output Distance(float) : "Distance of the target entity away from this entity."
+
+	@resources []
 	]

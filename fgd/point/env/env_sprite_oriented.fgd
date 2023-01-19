@@ -1,3 +1,4 @@
 @PointClass base(env_sprite) = env_sprite_oriented: "A env_sprite that allows orientation."
 	[
+	@resources []
 	]

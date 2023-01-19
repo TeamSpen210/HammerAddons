@@ -40,4 +40,6 @@
 	input SetCompareValueCompare[MBase](string) : "Sets the compare value and performs the comparison."
 	output OnGreaterThanOrEqualTo[MBase](string) : "Fired when the input value is greater than or equal to the compare value. Sends the input value as data."
 	output OnLessThanOrEqualTo[MBase](string) : "Fired when the input value is greater than or equal to the compare value. Sends the input value as data."
+
+	@resources []
 	]

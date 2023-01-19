@@ -23,4 +23,6 @@
 	output OnGetValue(integer) : "Fired in response to the GetValue input. Used for polling the current bits when you don't want constant updates from the OutValue output."
 	output OnTrue(void) : "Fired by ContainsBits when the current value contains the specified bit." 
 	output OnFalse(void) : "Fired by ContainsBits when the current value does not contain the specified bit." 
+
+	@resources []
 	]

@@ -4,6 +4,7 @@
 	size(-1 -1 0, 1 1 1)
 	color(80 150 225)
 	studio("models/editor/overlay_helper_box.mdl")
+	iconsprite("editor/vizzys/info_overlay_transition")
 	sidelist(sides) 
 	sidelist(sides2) 
 	overlay_transition() 
@@ -19,4 +20,6 @@
 	width1(float) : "Width Land" : 25.0
 	width2(float) : "Width Water" : 25.0
 	debugdraw(boolean) : "Show Debug" : 0
+
+	@resources [] // Handled by generic logic.
 	]

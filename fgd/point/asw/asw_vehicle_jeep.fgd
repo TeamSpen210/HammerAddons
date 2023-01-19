@@ -1,5 +1,5 @@
 
-@PointClass base(BaseDriveableVehicle) 
+@PointClass base(BasePropPhysics, BaseDriveableVehicle) 
 	appliesto(ASW) 
 	studioprop() = asw_vehicle_jeep: "Driveable studiomodel jeep."
 	[

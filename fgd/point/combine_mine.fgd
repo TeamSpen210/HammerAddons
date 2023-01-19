@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityPoint)
+@PointClass base(BaseEntityAnimating)
 	appliesto(EP1, EP2, HL2, P1) 
 	size(-4 -4 -4, 4 4 4) 
 	line(255 255 255, targetname, enemyfilter)
@@ -32,6 +32,11 @@
 		0: "Normal"
 		1: "Cavern"
 		]
+	
+	spawnflags(Flags) =
+	[
+		1 : "Hacked (Citizen mine)" : 0 [EZ2]
+	]
 
 	Friendly[MBase](boolean): "Start Friendly" : 0 : "Makes this mine friendly, as if it was placed by the player." 
 	enemyfilter[MBase](filterclass) : "Enemy Filter" : : "Makes this mine target specific NPCs as enemies. It will also use its default targets unless ''Filter Exclusive'' is enabled."
@@ -45,17 +50,35 @@
 	]
 
 	SetUnavoidable[MBase](boolean) : "Unavoidable" : 0 : "If true, this mine will not be avoided by companion NPCs."
+	
+	PlantOrientation[MBase](angle) : "Plant Orientation (Pitch Yaw Roll)" : "-90 0 0" : "Sets a custom angle for the mine to consider ''upright'' for planting itself."
 
 	// Inputs
 	input Disarm(void) : "Disarm this mine (open hooks and shut off) if not placed by player."
+	
 	input Bounce[MBase](void) : "Causes this mine to instantly bounce straight up into the air."
 	input BounceAtTarget[MBase](target_destination) : "Causes this mine to bounce at the specified entity, regardless of distance."
 	input SetEnemyFilter[MBase](target_destination) : "Changes this mine's enemy filter to the named filter."
 	input SetFriendFilter[MBase](target_destination) : "Changes this mine's friend filter to the named filter."
 	input SetUnavoidable[MBase](bool) : "Sets whether this mine will not be avoided by companion NPCs."
+	input SetPlantOrientation[MBase](vector) : "Sets the mine's plant orientation as an angle."
+	input SetPlantOrientationRaw[MBase](vector) : "Sets the mine's plant orientation as a direction vector."
 
 	// Outputs
 	output OnPulledUp(void) : "Fires when this mine is uprooted with physgun."
 	output OnTriggered[MBase](void) : "Fires when this mine is triggered by an enemy."
 	output OnExplode[MBase](void) : "Fires when this mine actually explodes."
+
+	@resources
+		[
+		model "models/props_combine/combine_mine01.mdl"
+		sound "NPC_CombineMine.Hop"
+		sound "NPC_CombineMine.FlipOver"
+		sound "NPC_CombineMine.TurnOn"
+		sound "NPC_CombineMine.TurnOff"
+		sound "NPC_CombineMine.OpenHooks"
+		sound "NPC_CombineMine.CloseHooks"
+		sound "NPC_CombineMine.ActiveLoop"
+		material "materials/sprites/glow01.vmt"
+		]
 	]

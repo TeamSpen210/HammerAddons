@@ -1,0 +1,6 @@
+@PointClass base(ASWObjective) 
+	appliesto(+engine, ASW)
+= asw_mission_objective: "Base class for objective entities."
+	[
+	@resources []
+	]

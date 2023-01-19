@@ -1,7 +1,8 @@
 @PointClass base(BaseEntityPoint)
 	size(-4 -4 -4, 4 4 4) 
 	color(200 200 0) 
-	studioprop("models/editor/vgui_arrows.mdl") 
+	studioprop("models/editor/vgui_arrows.mdl")
+	iconsprite(editor/vizzys/vgui_screen) 
 	sphere(width) 
 	sphere(height) 
 = vgui_screen: "A VGUI screen. Useful for in-world monitors."
@@ -36,4 +37,9 @@
 	// Inputs
 	input SetActive(void) : "Make the vgui screen visible."
 	input SetInactive(void) : "Make the vgui screen invisible."
+
+	@resources
+		[
+		material "materials/engine/writez.vmt"
+		]
 	]

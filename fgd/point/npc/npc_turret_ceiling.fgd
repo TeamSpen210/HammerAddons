@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityAnimating) 
+@PointClass base(BaseNPC) 
 	appliesto(EP1, EP2, HL2, P1) 
 	studio("models/combine_turrets/ceiling_turret.mdl") 
 	autovis(Entities, NPCs, Combine, Ceiling Turret)
@@ -10,6 +10,7 @@
 		64: "Start Inactive" : 0
 		128: "Never Retire" : 0
 		256: "Out of Ammo" : 0
+		1024: "No Light Sprite": 0 [MBase]
 		]
 
 	minhealthdmg(integer) : "Min req'd damage for hurting turret" : 0
@@ -31,4 +32,19 @@
 	// Outputs
 	output OnDeploy(void) : "Turret is becoming active and dangerous."
 	output OnRetire(void) : "Turret is becoming inactive and harmless."
+
+	@resources
+		[
+		model "models/combine_turrets/ceiling_turret.mdl"
+		material "materials/sprites/glow1.vmt"
+		sound "NPC_CeilingTurret.Active"
+		sound "NPC_CeilingTurret.Alert"
+		sound "NPC_CeilingTurret.Deploy"
+		sound "NPC_CeilingTurret.Die"
+		sound "NPC_CeilingTurret.Move"
+		sound "NPC_CeilingTurret.Ping"
+		sound "NPC_CeilingTurret.Retire"
+		sound "NPC_CeilingTurret.ShotSounds"
+		sound "NPC_FloorTurret.DryFire"
+		]
 	]

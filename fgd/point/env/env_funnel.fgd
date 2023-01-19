@@ -10,4 +10,9 @@
 		]
 
 	input Activate[MBase](void) : "Activates the effect."
+
+	@resources
+		[
+		material "materials/sprites/flare6.vmt"
+		]
 	]

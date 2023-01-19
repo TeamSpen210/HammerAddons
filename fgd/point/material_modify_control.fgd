@@ -19,4 +19,6 @@
 	input StartFloatLerp(string) : "Force a material with the MaterialModify proxy to lerp a material var between two floating point values. " +
 		"Format is: <Start Value> <End Value> <Transition Time> <Loop>. " +
 		"<Loop> should be 1 or 0."
+
+	@resources [] // The material's on our parent entity.
 	]

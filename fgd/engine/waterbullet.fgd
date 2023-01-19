@@ -2,4 +2,8 @@
 	studio("models/weapons/w_bullet.mdl")
 = waterbullet: "Visible bullet seen when guns are fired into water."
 	[
-	]   
+	@resources
+		[
+		model "models/weapons/w_bullet.mdl"
+		]
+	]

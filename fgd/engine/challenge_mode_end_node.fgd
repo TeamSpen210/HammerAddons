@@ -3,4 +3,34 @@
 	studioprop("models/props/stopwatch_finish_line.mdl")
 = challenge_mode_end_node: "The ending flag for P2's timed Challenge Mode."
 	[
+	@resources
+		[
+		// Assumed based on console logs.
+    	model "models/props/stopwatch_finish_line.mdl"
+
+    	sound "glados.dlc1_leaderboard01"
+    	sound "glados.dlc1_leaderboard02"
+    	sound "glados.dlc1_leaderboard03"
+    	sound "glados.dlc1_leaderboard04"
+    	sound "glados.dlc1_leaderboard05"
+    	sound "glados.dlc1_leaderboard06"
+    	sound "glados.dlc1_leaderboard07"
+    	sound "glados.dlc1_leaderboard08"
+    	sound "glados.dlc1_leaderboard09"
+    	sound "glados.dlc1_leaderboard10"
+    	sound "glados.dlc1_leaderboard11"
+    	sound "glados.dlc1_leaderboard12"
+    	sound "glados.dlc1_leaderboard13"
+    	sound "glados.dlc1_leaderboard14"
+    	sound "glados.dlc1_leaderboard15"
+    	sound "glados.dlc1_leaderboard16"
+    	sound "glados.dlc1_leaderboard17"
+    	sound "glados.dlc1_leaderboard18"
+    	sound "glados.dlc1_leaderboard19"
+    	sound "glados.dlc1_leaderboard20"
+    	sound "glados.dlc1_leaderboard21"
+    	sound "glados.dlc1_leaderboard22"
+    	sound "glados.dlc1_leaderboard23"
+    	sound "glados.dlc1_leaderboard24"
+    	]
 	]   

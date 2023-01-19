@@ -1,4 +1,3 @@
-
 @SolidClass base(Trigger) 
 	appliesto(ASW) = trigger_asw_chance: "A trigger volume that can be triggered multiple times and has a random chance of firing each time."
 	[
@@ -7,4 +6,6 @@
 
 	// Outputs
 	output OnTrigger(void) : "Fired whenever the trigger is touched and the triger chance passes."
+
+	@resources []
 	]

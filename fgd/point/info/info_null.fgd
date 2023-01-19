@@ -7,4 +7,6 @@
 	iconsprite("editor/ficool2/info_null.vmt")
 = info_null: "An entity that's immediately removed on spawning. Useful as a spotlight target."
 	[
+	@resources []
 	]
+

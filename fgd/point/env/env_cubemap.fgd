@@ -26,4 +26,6 @@
 		"Optionally assigns this cubemap a bounding box for parallax correction " +
 		"(brush entity tied to parallax_obb). " +
 		"This means the cubemap reflection will move as the camera moves, similar to func_reflective_glass. "
+
+		@resources []
 	]

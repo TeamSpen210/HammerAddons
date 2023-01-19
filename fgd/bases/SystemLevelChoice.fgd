@@ -1,5 +1,5 @@
 
-@BaseClass = SystemLevelChoice
+@BaseClass appliesto(complete) = SystemLevelChoice
 	[
 	mincpulevel(choices) : "Minimum CPU Level" : 0 =
 		[

@@ -11,4 +11,6 @@
 
 	// Outputs
 	output MarinesPast(void) : "Fired when the desired number of marines are past here"
+
+	@resources []
 	]

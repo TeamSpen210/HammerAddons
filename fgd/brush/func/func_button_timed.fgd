@@ -76,4 +76,9 @@
 	output OnUnPressed(void) : "Fired when the button is unpressed."
 	output OnTimeUp(void) : "Fired when the button has been held more than the required amount of time."
 	output OnUseLocked(void) : "Fired when the button is used while locked."
+
+	@resources
+		[
+		func func_button_timed // The locked sound is handled specially.
+		]
 	]

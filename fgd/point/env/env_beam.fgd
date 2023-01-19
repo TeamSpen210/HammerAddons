@@ -68,4 +68,6 @@
 	output OnTouchedByEntity(void) : "Fired when an entity touches the beam. Only fired if the entity passes the 'Touch Type' choice."
 	output OnTouchedByNPC[MESA](void) : "Fired when an npc touches the beam. Only fired if the entity passes the 'Touch Type' choice."
 	output OnTouchedByPlayer[MESA](void) : "Fired when an player touches the beam. Only fired if the entity passes the 'Touch Type' choice."
+
+	@resources []  // Accounted for already.
 	]

@@ -6,6 +6,21 @@
 		[
 		128: "Once Only" : 0
 		256: "Affects Ladders (Half-Life 2)" : 0
+		512: "No gravity while in contact (Players only)" : 0 [KZ]
+		]
+
+	surfacecontactmode[engine](integer): "Require player contact with a surface?" : 0 : "Push triggers by default apply a boost to the player once they exit the bounds of the push. This boost is the effective force that launches the player. However, by doubleducking in a short push trigger, a player may be able to cause the boost to apply twice rapidly, causing unintended velocity to be applied. These settings allow you to require the player to be in contact with a surface to receive velocity (and not receive it if in the air, such as during a doubleduck)."
+	surfacecontactmode[KZ](choices): "Require player contact with a surface?" : 0 : "Push triggers by default apply a boost to the player once they exit the bounds of the push. This boost is the effective force that launches the player. However, by doubleducking in a short push trigger, a player may be able to cause the boost to apply twice rapidly, causing unintended velocity to be applied. These settings allow you to require the player to be in contact with a surface to receive velocity (and not receive it if in the air, such as during a doubleduck)." =
+		[
+		0 : "No restrictions"
+		1 : "No boost if player not contacting a surface"
+		2 : "No push at all if player not contacting a surface"
+		]
+	pushmode[engine](integer) : "Pushing Mode" : 0 : "Should this push apply force to the player, or set their velocity instantly to Speed of Push?"
+	pushmode[KZ](choices) : "Pushing Mode" : 0 : "Should this push apply force to the player, or set their velocity instantly to Speed of Push?" =
+		[
+		0 : "Apply Force"
+		1 : "Set Velocity"
 		]
 
 	speed(integer) : "Speed of Push" : 40 : "The speed at which to push entities away, in units / second."
@@ -17,4 +32,6 @@
 	input SetPushDir[MBase](vector) : "Set the angles indicating the direction to push touched entities."
 	input SetPushDirection[ASW](vector) : "Sets the angles indicating the direction to push touched entities."
 	input SetPushSpeed(integer) : "Set the push speed in units / second."
+	
+	@resources []
 	]

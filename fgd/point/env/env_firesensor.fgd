@@ -21,4 +21,6 @@
 	// Outputs
 	output OnHeatLevelStart(void) : "Fires when the heat level has been sustained for the specified length of time."
 	output OnHeatLevelEnd(void) : "Fires when the heat level drops below the target level."
+
+	@resources []
 	]

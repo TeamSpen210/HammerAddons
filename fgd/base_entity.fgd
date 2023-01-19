@@ -34,12 +34,16 @@
     maxcpulevel(integer) : "Max CPU Level" : 0
     mingpulevel(integer) : "Min GPU Level" : 0
     maxgpulevel(integer) : "Max GPU Level" : 0
+	fademindist(float) : "Fade Min Dist" : 0
+	fademaxdist(float) : "Fade Max Dist" : 0
+	fadescale(float) : "Fade Scale": 0
 
 	parentname(target_destination) : "Parent"
 	parent_attachment_point[srctools](string) : "Attachment Point" 
 
 	responseContext(string) : "Response Context" : ""
 	addon(string) : "AI Addon" : : "Broken ASW feature."
+	teamnumber(integer): "Team Number"
 	
 	health(integer) : "Health"
 	max_health(integer) : "Max Health"
@@ -106,11 +110,15 @@
 	input RunScriptCodeQuotable(string) : "Execute a string of script source code which converts double apostrophes ('') to quotation marks for strings."
 	input CallScriptFunction(string) : "Execute the given function name."
 	input ClearScriptScope(void) : "Clears this entity's script scope"
+	input TerminateScriptScope(void) : "Terminates the script scope of the entity."
 
 	input Alpha(integer) : "Set render alpha"
+	input Color(color255): "Set render color"
 	input AlternativeSorting(boolean) : "Set the translucency sorting algorithm."
 	input DispatchResponse(string) : "Dispatch an NPC response"
 	input SetTeam(integer): "Set the team."
+	input fademindist(float) : "Set Fade Min Dist"
+	input fademaxdist(float) : "Set Fade Max Dist"
 
 	input SetDamageFilter(target_destination) : "Set Damage Filter"
 	input EnableDamageForces(void)

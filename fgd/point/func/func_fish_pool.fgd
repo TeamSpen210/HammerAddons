@@ -21,4 +21,10 @@
 	
 	// Outputs
 	output OnSpawnFish[MBase](ehandle) : "Fires when a fish is spawned, passing the fish as the activator."
+
+	@resources
+		[
+		// Model already specified above.
+		entity fish
+		]
 	]

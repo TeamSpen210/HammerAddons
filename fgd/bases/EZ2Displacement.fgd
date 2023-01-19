@@ -1,0 +1,8 @@
+@BaseClass appliesto(EZ2) = EZ2Displacement
+	[
+	// Entropy Zero 2 - Xen Grenade and Displacer Pistol
+	DisplacementImpossible(boolean) : "Displacement Impossible" : 0 : "Prevent this entity from being consumed by the Xen grenades or Displacement Pistol"
+	
+	input SetDisplacementImpossible(bool) : "Sets whether this entity can be consumed by the Xen grenades or the Displacement Pistol."
+	output OnConsumed(void) : "Fired when this entity is consumed by a Xen grenade."
+	]

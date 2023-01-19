@@ -1,0 +1,24 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(MBase) 
+	iconsprite("editor/logic_substring.vmt") 
+= logic_substring : "Returns substring of a string parameter\n\n"+
+	"In memory of Holly Liberatore (moofemp)"
+	[
+	spawnflags(Flags) =
+		[
+		1 : "Start Disabled" : 0
+		]
+	
+	startPos(integer) : "Substring start position" : 0 : "Position of the first character to be copied as a substring."
+	length(integer) : "Substring length" : -1 : "Number of characters to include in the substring (-1 = until end of string)."
+	
+	input Disable(void) : "Disable entity functions."
+	input Enable(void) : "Enable entity functions."
+	input InValue(string) : "Input a string to substring and return through OutValue."
+	input SetLength(integer) : "Set length of substring."
+	input SetStartPos(integer) : "Set start position of substring."
+	
+	output OutValue(string) : "Output substring from InValue."
+
+	@resources []
+	]

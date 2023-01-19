@@ -1,0 +1,7 @@
+"Sprite"
+{
+	"$spriteorientation" "vp_parallel"
+	"$spriteorigin" "[ 0.50 0.50 ]"
+	"$baseTexture" "editor/comp_player_input_helper"
+	"$no_fullbright" 1
+}

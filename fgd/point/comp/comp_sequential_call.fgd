@@ -6,6 +6,8 @@
 = comp_sequential_call : "Finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order. To use, define OnSeq outputs, firing inputs at '!seq'."
 	[
 	target(target_destination) : "Entities to Sequence" : : "The entities which will be ordered and inputs fired at. This should refer to multiple entities, probably with a *-wildcard."
+
+	order_mode[engine](string) : "Ordering Mode" : "dist"
 	order_mode(choices) : "Ordering Mode" : "dist": "Choose how entities are ordered. Numeric suffix finds numbers at the end of the entity name, and sorts by that order." =
 		[
 		"dist" : "Distance to this"

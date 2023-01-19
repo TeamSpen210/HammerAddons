@@ -1,30 +1,33 @@
 """Runs before VRAD, to run operations on the final BSP."""
+from pathlib import Path
 import sys
 import warnings
-from collections import defaultdict
-from pathlib import Path
+
+from srctools.logger import Formatter, init_logging
 import trio  # Registers MultiError traceback hook
 
-from srctools.logger import init_logging, Formatter
 
 # Put the logs in the executable folders.
 LOGGER = init_logging(Path(sys.argv[0]).with_name('postcompiler.log'))
 warnings.filterwarnings(category=DeprecationWarning, module='srctools', action='once')
 
+from typing import Dict, List, Optional
+from collections import defaultdict
+from logging import FileHandler
 import argparse
 import os
-from logging import FileHandler
-from typing import List, Dict, Optional
+import re
 
-from srctools import Property, __version__ as version_lib
-from srctools.filesys import ZipFileSystem
-from srctools.fgd import FGD
+from srctools import __version__ as version_lib, conv_bool
 from srctools.bsp import BSP
+from srctools.fgd import FGD
+from srctools.filesys import ZipFileSystem
 from srctools.packlist import PackList
 
+from hammeraddons import __version__ as version_haddons, config, propcombine
 from hammeraddons.bsp_transform import run_transformations
-from hammeraddons import propcombine, config, __version__ as version_haddons
 from hammeraddons.move_shim import install as install_depmodule_hook
+
 
 install_depmodule_hook()
 
@@ -79,7 +82,7 @@ async def main(argv: List[str]) -> None:
 
     # The path is the last argument to the compiler.
     # Hammer adds wrong slashes sometimes, so fix that.
-    # Also if it's the VMF file, make it the BSP.
+    # Also, if it's the VMF file, make it the BSP.
     path = Path(args.map).with_suffix('.bsp')
 
     # Open and start writing to the map's log file.
@@ -94,31 +97,25 @@ async def main(argv: List[str]) -> None:
     LOGGER.info('HammerAddons postcompiler, srctools=v{}, addons=v{}', version_lib, version_haddons)
     LOGGER.info("Map path is {}", path)
 
-    (
-        conf, game_info,
-        fsys, pack_blacklist,
-        plugin,
-    ) = config.parse(path, args.game_folder)
+    conf = config.parse(path, args.game_folder)
 
     LOGGER.info('Loading plugins...')
-    plugin.load_all()
+    conf.plugins.load_all()
 
-    packlist = PackList(fsys)
+    packlist = PackList(conf.fsys)
 
-    LOGGER.info('Gameinfo: {}', game_info.path)
+    LOGGER.info('Gameinfo: {}', conf.game.path)
     LOGGER.info(
         'Search paths: \n{}',
-        '\n'.join([system.path for system, prefix in fsys.systems]),
+        '\n'.join([system.path for system, prefix in conf.fsys.systems]),
     )
 
-    fgd = FGD.engine_dbase()
-
     LOGGER.info('Loading soundscripts...')
-    assert conf.path is not None
-    packlist.load_soundscript_manifest(conf.path.with_name('srctools_sndscript_data.dmx'))
+    assert conf.opts.path is not None
+    packlist.load_soundscript_manifest(conf.loc.with_name('srctools_sndscript_data.dmx'))
     LOGGER.info('Done! ({} sounds)', len(packlist.soundscript))
     LOGGER.info('Loading particles...')
-    packlist.load_particle_manifest(conf.path.with_name('srctools_particle_data.dmx'))
+    packlist.load_particle_manifest(conf.loc.with_name('srctools_particle_data.dmx'))
     LOGGER.info('Done! ({} particles)', len(packlist.particles))
 
     LOGGER.info('Reading BSP...')
@@ -129,12 +126,12 @@ async def main(argv: List[str]) -> None:
 
     # Mount the existing packfile, so the cubemap files are recognised.
     LOGGER.info('Mounting BSP packfile...')
-    fsys.add_sys(ZipFileSystem('<BSP pakfile>', bsp_file.pakfile))
+    conf.fsys.add_sys(ZipFileSystem('<BSP pakfile>', bsp_file.pakfile))
 
-    studiomdl_path = conf.get(str, 'studiomdl')
+    studiomdl_path = conf.opts.get(config.STUDIOMDL)
     studiomdl_loc: Optional[Path]
     if studiomdl_path:
-        studiomdl_loc = (game_info.root / studiomdl_path).resolve()
+        studiomdl_loc = conf.expand_path(studiomdl_path)
         if not studiomdl_loc.exists():
             LOGGER.warning('No studiomdl found at "{}"!', studiomdl_loc)
             studiomdl_loc = None
@@ -142,7 +139,7 @@ async def main(argv: List[str]) -> None:
         LOGGER.warning('No studiomdl path provided.')
         studiomdl_loc = None
 
-    use_comma_sep = conf.get(bool, 'use_comma_sep')
+    use_comma_sep = conf.opts.get(config.USE_COMMA_SEP)
     if use_comma_sep is None:
         # Guess the format, by checking existing outputs.
         used_comma_sep = {
@@ -161,32 +158,36 @@ async def main(argv: List[str]) -> None:
             bsp_file.out_comma_sep = False  # Kinda arbitrary.
     else:
         bsp_file.out_comma_sep = use_comma_sep
-    transform_conf = {
-        prop.name: prop
-        for prop in conf.get(Property, 'transform_opts')
-    }
+    transform_conf = {prop.name: prop for prop in conf.opts.get(config.TRANSFORM_OPTS)}
+
+    pack_tags = frozenset({
+        prop.name.upper()
+        for prop in
+        conf.opts.get(config.PACK_TAGS)
+        if conv_bool(prop.value)
+    })
 
     LOGGER.info('Running transforms...')
     await run_transformations(
         bsp_file.ents,
-        fsys, packlist,
+        conf.fsys, packlist,
         bsp_file,
-        game_info,
+        conf.game,
         studiomdl_loc,
         transform_conf,
-        fgd,
+        pack_tags,
     )
 
     if studiomdl_loc is not None and args.propcombine:
-        decomp_cache_path = conf.get(str, 'propcombine_cache')
+        decomp_cache_path = conf.opts.get(config.PROPCOMBINE_CACHE)
         decomp_cache_loc: Optional[Path]
         crowbar_loc: Optional[Path]
         if decomp_cache_path is not None:
-            decomp_cache_loc = (game_info.root / decomp_cache_path).resolve()
+            decomp_cache_loc = conf.expand_path(decomp_cache_path)
             decomp_cache_loc.mkdir(parents=True, exist_ok=True)
         else:
             decomp_cache_loc = None
-        if conf.get(bool, 'propcombine_crowbar'):
+        if conf.opts.get(config.PROPCOMBINE_CROWBAR):
             # argv[0] is the location of our script/exe, which lets us locate
             # Crowbar from there. The environment var is for testing.
             if 'CROWBAR_LOC' in os.environ:
@@ -201,21 +202,17 @@ async def main(argv: List[str]) -> None:
             bsp_file,
             bsp_file.ents,
             packlist,
-            game_info,
+            conf.game,
             studiomdl_loc,
-            qc_folders=[
-                game_info.root / folder
-                for folder in
-                conf.get(Property, 'propcombine_qc_folder').as_array(conv=Path)
-            ],
+            qc_folders=conf.opts.get(config.PROPCOMBINE_QC_FOLDER).as_array(conv=conf.expand_path),
             decomp_cache_loc=decomp_cache_loc,
             crowbar_loc=crowbar_loc,
-            auto_range=conf.get(int, 'propcombine_auto_range'),
-            min_cluster=conf.get(int, 'propcombine_min_cluster'),
-            blacklist=conf.get(Property, 'propcombine_blacklist').as_array(),
-            volume_tolerance=conf.get(float, 'propcombine_volume_tolerance'),
+            auto_range=conf.opts.get(config.PROPCOMBINE_AUTO_RANGE),
+            min_cluster=conf.opts.get(config.PROPCOMBINE_MIN_CLLUSTER),
+            blacklist=conf.opts.get(config.PROPCOMBINE_BLACKLIST).as_array(),
+            volume_tolerance=conf.opts.get(config.PROPCOMBINE_VOLUME_TOLERANCE),
             debug_dump=args.dumpgroups,
-            pack_models=conf.get(bool, 'propcombine_pack') or False,
+            pack_models=conf.opts.get(config.PROPCOMBINE_PACK) or False,
         )
         LOGGER.info('Done!')
 
@@ -226,35 +223,59 @@ async def main(argv: List[str]) -> None:
         bsp_file.bmodels.pop(ent, None)  # Ignore if not present.
         ent.remove()
 
-    if conf.get(bool, 'auto_pack') and args.allow_pack:
+    if conf.opts.get(config.AUTO_PACK) and args.allow_pack:
         LOGGER.info('Analysing packable resources...')
-        packlist.pack_fgd(bsp_file.ents, fgd)
+        packlist.pack_from_ents(
+            bsp_file.ents,
+            mapname=Path(bsp_file.filename).stem,  # TODO: Include directories?
+            tags=pack_tags,
+        )
 
         packlist.pack_from_bsp(bsp_file)
 
         packlist.eval_dependencies()
-        if conf.get(bool, 'soundscript_manifest'):
+        if conf.opts.get(config.SOUNDSCRIPT_MANIFEST):
             packlist.write_soundscript_manifest()
-        man_name = conf.get(str, 'particles_manifest')
+        man_name = conf.opts.get(config.PARTICLES_MANIFEST)
         if man_name:
             man_name = man_name.replace('<map name>', path.stem)
             LOGGER.info('Writing particle manifest "{}"...', man_name)
             packlist.write_particles_manifest(man_name)
 
-    dump_path = conf.get(str, 'pack_dump')
+    pack_allowlist = list(config.packfile_filters(conf.opts.get(config.PACK_ALLOWLIST), 'allowlist'))
+    pack_blocklist = list(config.packfile_filters(conf.opts.get(config.PACK_BLOCKLIST), 'blocklist'))
+
+    if conf.opts.get(config.PACK_STRIP_CUBEMAPS):
+        pack_blocklist.append(re.compile(config.CUBEMAP_REGEX))
+
+    LOGGER.debug('Packing allowlist={}, blocklist={}', pack_allowlist, pack_blocklist)
+
+    def pack_callback(path: str) -> Optional[bool]:
+        """Check the file against the two lists."""
+        for pattern in pack_allowlist:
+            if pattern.search(path) is not None:
+                return True
+        for pattern in pack_blocklist:
+            if pattern.search(path) is not None:
+                return False
+        return None
+
+    dump_path = conf.opts.get(config.PACK_DUMP)
     if dump_path:
         packlist.pack_into_zip(
             bsp_file,
-            blacklist=pack_blacklist,
+            blacklist=conf.pack_blacklist,
             ignore_vpk=False,
-            dump_loc=Path(game_info.root, dump_path.lstrip('#')).absolute().resolve(),
+            callback=pack_callback,
+            dump_loc=conf.expand_path(dump_path.lstrip('#')).absolute().resolve(),
             only_dump=dump_path.startswith('#'),
         )
     else:
         packlist.pack_into_zip(
             bsp_file,
-            blacklist=pack_blacklist,
+            blacklist=conf.pack_blacklist,
             ignore_vpk=False,
+            callback=pack_callback,
         )
 
     # List out all the files, but group together files with the same extension.
@@ -280,6 +301,13 @@ async def main(argv: List[str]) -> None:
 
     LOGGER.info('Writing BSP...')
     bsp_file.save()
+
+    try:
+        from srctools.fgd import _engine_db_stats  # noqa
+    except AttributeError:
+        pass
+    else:
+        LOGGER.info('FGD database usage: {}', _engine_db_stats())
 
     LOGGER.info("HammerAddons postcompiler complete!")
 

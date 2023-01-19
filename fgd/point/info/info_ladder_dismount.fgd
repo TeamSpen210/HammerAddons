@@ -4,4 +4,6 @@
 = info_ladder_dismount: "An entity to handle endpoints for multiple ladders that are too close to each other."
 	[
 	target(target_destination) : "Ladder Name" : : "If multiple ladders are near multiple endpoints, use this to stop them from interfering with each other."
+
+	@resources []
 	]

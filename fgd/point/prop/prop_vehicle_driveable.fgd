@@ -1,4 +1,4 @@
-@PointClass base(BaseDriveableVehicle, SetModel)
+@PointClass base(BasePropPhysics, BaseDriveableVehicle, SetModel)
 	autovis(Vehicles, Generic Vehicles, Drivable)
 	studioprop() = prop_vehicle_driveable: "Generic driveable studiomodel vehicle."
 	[

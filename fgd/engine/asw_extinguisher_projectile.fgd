@@ -1,0 +1,6 @@
+@PointClass base(BaseLogicalNPC) 
+	appliesto(+engine, ASW)
+= asw_extinguisher_projectile
+	[
+	@resources [] // No precache??
+	]

@@ -21,4 +21,6 @@
 	// Inputs
 	input Kill(void) : "Removes this entity from the world"
 	input Activate(void) : "Change the Hint Group"
+
+	@resources []
 	]

@@ -12,4 +12,10 @@
 
 	// Outputs
 	output OnCountdownFailed(void) : "Fired when the countdown timer reaches 0."
+
+	@resources
+		[
+		sound "ASW.WarheadExplosion"
+		sound "ASW.WarheadExplosionLF"
+		]
 	]

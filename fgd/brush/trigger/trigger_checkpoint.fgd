@@ -1,0 +1,24 @@
+@SolidClass base(Trigger) 
+	appliesto(KZ) 
+	line(255 255 255, targetname, NextTarget) 
+ = trigger_checkpoint: "When triggered, enables the next entity specified in the NextTarget slot, disables itself, and fires its OnCheckpoint output."
+	[
+	NextTarget(target_destination) : "Next Target" : "" : "The name of the next entity in the chain to enable when this entity is triggered."
+	ontouchmessage(string) : "Message When Activated" : "" : "This message will be displayed to the player if the checkpoint is successfully activated" 
+	onfailtouchmessage(string) : "Message When Failed" : "" : "This message will be displayed to the player if they cannot trigger this checkpoint"
+	firstinchain[engine](integer): "First in chain?" : 0 : "Checkpoint triggers automatically discover the first trigger in a chain. If this trigger is a loop ( first connected to last ), automatic discovery is not possible and you must define the start with this keyvalue."
+	firstinchain(choices) : "First in chain?" : 0 : "Checkpoint triggers automatically discover the first trigger in a chain. If this trigger is a loop ( first connected to last ), automatic discovery is not possible and you must define the start with this keyvalue." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	// Inputs
+	input SetNextCheckPoint(string) : "Sets a new Next Target"
+	
+	// Outputs
+	output OnCheckpoint(void) : "Fired when this checkpoint entity is triggered"
+	output OnCheckPointFailed(void) : "Fired when the player touches this trigger, but cannot activate it"
+
+	@resources []
+	]

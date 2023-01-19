@@ -79,10 +79,8 @@
 	input SetLandTarget(string) : "Set my land target name."
 	input SetGunRange(float) : "Set my crate gun's range."
 
-	input EnableRotorSound(void) : "Turns on rotor sounds."
-	input DisableRotorSound(void) : "Turns off rotor sounds."
-
 	input StopWaitingForDropoff(void) : "Stop waiting for the dropoff. Dropoff as soon as possible."
+	input NPCFinishDustoff[engine](string) : "Notifies the dropship that a soldier has finished the scripted sequence for exiting the crate."
 
 	// Outputs
 	output OnFinishedDropoff(void) : "Fires when the dropship has finished a dropoff."
@@ -92,4 +90,16 @@
 		"The parameter contains the number of soldiers that weren't successfully dropped off."
 	output OnCrateShotDownAfterDropoff(void) : "Fires when the container was shot down after it dropped off soldiers."
 	output OnSpawnNPC[MBase](ehandle) : "Fires when this dropship spawns a NPC."
+
+	@resources
+		[
+		func npc_combinedropship  // Various cargo types.
+		model "models/combine_dropship.mdl"
+		sound "NPC_CombineDropship.RotorLoop"
+		sound "NPC_CombineDropship.FireLoop"
+		sound "NPC_CombineDropship.NearRotorLoop"
+		sound "NPC_CombineDropship.OnGroundRotorLoop"
+		sound "NPC_CombineDropship.DescendingWarningLoop"
+		sound "NPC_CombineDropship.NearRotorLoop"
+		]
 	]

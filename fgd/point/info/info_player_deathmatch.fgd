@@ -7,4 +7,6 @@
 
 	input Enable[Mesa](void) : "Enable this spawnpoint."
 	input Disable[Mesa](void) : "Disable this spawnpoint."
+
+	@resources []
 	]

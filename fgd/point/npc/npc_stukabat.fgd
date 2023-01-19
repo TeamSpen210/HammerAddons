@@ -1,0 +1,16 @@
+@NpcClass base(EZ2PredatorNPC) appliesto(EZ2)
+	studio("models/stukabat.mdl") 
+	autovis(Entities, NPCs, Xen, Stukabat)
+= npc_stukabat: "Stukabat"
+	[
+	model(studio) : "Override Model"
+
+	FlyState[engine](integer) : "Starting State" : 0
+	FlyState(choices) : "Starting State" : 0 : "Is this stukabat flying?" =
+		[
+		0 : "Walking"
+		2 : "Falling"
+		4 : "Flying"
+		5 : "On Ceiling"
+		]
+	]

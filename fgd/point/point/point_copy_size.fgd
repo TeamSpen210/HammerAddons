@@ -1,5 +1,6 @@
 @PointClass appliesto(MBase)
-	base(point_camera)
+	base(BaseEntityPoint)
+	iconsprite(editor/vizzys/point_copy_size)
 	line(255 255 255, targetname, source)
 	line(255 255 255, targetname, target)
 = point_copy_size : "Copies the size of one entity to another."
@@ -18,4 +19,6 @@
 	
 	// Outputs
 	output OnCopy(void) : "Fires each time the size is successfully copied with the target as the activator." 
+
+	@resources []
 	]

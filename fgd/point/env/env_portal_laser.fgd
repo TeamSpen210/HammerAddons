@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating) 
-	appliesto(P2) 
+	appliesto(P2, -STANLEY) 
 	autovis(Test Elements, Dis. Beam, Laser Emitter)
 	studioprop() = env_portal_laser: " A Thermal Discouragement Beam that will move through portals, redirect using Redirection Cubes and reflect off of Reflection Gel."
 	[
@@ -33,4 +33,14 @@
 	input Toggle(void) : "Toggle the laser on and off."
 	input TurnOn(void) : "Turn the laser on."
 	input TurnOff(void) : "Turn the laser off."
+
+	@resources // We know it needs at least these.
+		[
+	    model "models/props/laser_emitter.mdl"
+	    sound "Flesh.LaserBurn"
+	    sound "Laser.BeamLoop"
+	    sound "Player.PainSmall"
+	    particle "laser_start_glow"
+	    particle "reflector_start_glow"
+		]
 	]

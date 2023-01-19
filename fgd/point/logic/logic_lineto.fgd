@@ -9,4 +9,6 @@
 
 	// Outputs
 	output Line(vector) : "Fired when the vector, from the start entity to the end entity, changes. Passes along the vector as a parameter."
+
+	@resources []
 	]

@@ -1,0 +1,22 @@
+@BaseClass base(BaseNPC) 
+	appliesto(ASW) 
+= asw_alien: "Alien Base class."
+	[
+	moveclone(target_destination) : "Move Clone" : : "If set to an entity name, this alien will match movement with that entity."
+
+	visiblewhenasleep(boolean) : "Visible when asleep" : "0" : "If true, this alien will still get drawn even when asleep (useful for aliens you see far below you)."
+
+	startburrowed(boolean) : "Start Burrowed" : 0 : "Start burrowed and invisible."
+
+	// Inputs
+	input BreakWaitForScript(void) : "Wakes the alien up if his Wait For Script flag was set"
+	input SetMoveClone(string) : "Alien will match position/angle of the specified entity."
+
+	@resources
+		[
+		particle drone_death
+		particle drone_shot
+		particle freeze_statue_shatter
+		// TODO: Also, particle gib effects in model??
+		]
+	]

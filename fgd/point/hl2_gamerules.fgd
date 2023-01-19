@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(MBase) 
+	appliesto(MBase) // Exists in HL2 etc, but has no keyvalues.
 	 iconsprite("editor/hl2_gamerules.vmt") color(239 163 14) 
  	autovis(Point Entities, Globals, Gamerules)
 	= hl2_gamerules : "Proxy entity for HL2 Gamerules"
@@ -11,6 +11,10 @@
 		1 : "Downtrodden"
 		2 : "Refugee"
 		3 : "Rebel"
+		5 : "Rebel Brute" [EZ2]
+		6 : "Longfall" [EZ2]
+		7 : "Arctic" [EZ2]
+		8 : "Arbeit Employee" [EZ2]
 		4 : "Unique"
 		]
 	

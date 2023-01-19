@@ -11,4 +11,6 @@
 	// Outputs
 	output OnFutbolSpawned(void) : "Created a new futbol."
 	output OnFutbolGrabbed(void) : "Player has taken the futbol out of this spawner."
+	output OnFutbolCaught(void) : "Player has put the futbol back into this spawner."
+	output OnFutbolReleased(void) : "Player has grabbed a futbol from or put a futbol back into this spawner."
 	]

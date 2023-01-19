@@ -36,4 +36,6 @@
 		24 : "CLASS_HACKED_ROLLERMINE"
 		25 : "CLASS_COMBINE_HUNTER"
 		]
+	
+	@resources []
 	]

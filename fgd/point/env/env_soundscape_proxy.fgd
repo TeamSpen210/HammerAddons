@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityPoint) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	sphere() 
 	autovis(Sounds, Soundscapes)
 	line(255 255 255, targetname, MainSoundscapeName) 
@@ -6,5 +6,24 @@
 = env_soundscape_proxy: "An entity that acts like a soundscape but gets all of its sound parameters from another env_soundscape entity."
 	[
 	mainsoundscapename(target_destination) : "Soundscape Entity" : : "The soundscape to get all sound parameters from."
-	radius(integer) : "Radius" : 128
+
+	// Actually inherits from env_soundscape, but we want to ignore the soundscape name.
+	position0(target_destination) : "Sound Position 0" : : "A sound position that will be referenced inside the soundscape text file. Usually used to position a set of sounds within the world."
+	position1(target_destination) : "Sound Position 1" : : "A sound position that will be referenced inside the soundscape text file. Usually used to position a set of sounds within the world."
+	position2(target_destination) : "Sound Position 2" : : "A sound position that will be referenced inside the soundscape text file. Usually used to position a set of sounds within the world."
+	position3(target_destination) : "Sound Position 3" : : "A sound position that will be referenced inside the soundscape text file. Usually used to position a set of sounds within the world."
+	position4(target_destination) : "Sound Position 4" : : "A sound position that will be referenced inside the soundscape text file. Usually used to position a set of sounds within the world."
+	position5(target_destination) : "Sound Position 5" : : "A sound position that will be referenced inside the soundscape text file. Usually used to position a set of sounds within the world."
+	position6(target_destination) : "Sound Position 6" : : "A sound position that will be referenced inside the soundscape text file. Usually used to position a set of sounds within the world."
+	position7(target_destination) : "Sound Position 7" : : "A sound position that will be referenced inside the soundscape text file. Usually used to position a set of sounds within the world."
+
+	// Inputs
+	input Enable(void) : "Enable the soundscape."
+	input Disabled(void) : "Disable the soundscape."
+	input ToggleEnabled(void) : "Toggle the soundscape enabled state."
+
+	// Outputs
+	output OnPlay(void) : "Fired when this soundscape becomes the active one."
+
+	@resources [] // The referenced soundscape is in charge of resources.
 	]

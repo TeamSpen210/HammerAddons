@@ -3,5 +3,14 @@
 	iconsprite("editor/env_rotorwash_emitter")
 = env_rotorwash_emitter: "Creates rotorwash."
 	[
-	altitude(float) : "Altitude (Unused)" : 1024 : "Altitude the rotorwash will show up. This is defined in the entity, but isn't actually used for anything."
+	altitude[complete](float) : "Altitude (Unused)" : 1024 : "Altitude the rotorwash will show up. This is defined in the entity, but isn't actually used for anything."
+
+	@resources
+		[
+		material "materials/effects/splashwake3.vmt"  // Water ripples
+		material "materials/effects/splash1.vmt"  // Over water
+		material "materials/effects/splash2.vmt"
+		material "materials/particle/particle_smokegrenade.vmt"  // Over ground
+		material "materials/particle/particle_noisesphere.vmt"
+		]
 	]

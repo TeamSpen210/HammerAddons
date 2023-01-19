@@ -15,4 +15,12 @@
 	input StartSmallFX(void) : "Start discharging particles at the small effects state over specified number of seconds."
 	input StartLargeFX(void) : "Start discharging particles at the large effects state over specified number of seconds."
 	input Stop(float) : "Stops the effect at any point."
+
+	@resources
+		[
+		material "materials/effects/light_rail_endpoint.vmt"
+		material "materials/effects/strider_muzzle.vmt"
+		material "materials/effects/combinemuzzle2.vmt"
+		material "materials/effects/combinemuzzle2_dark.vmt"
+		]
 	]

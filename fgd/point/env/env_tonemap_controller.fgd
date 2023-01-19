@@ -4,10 +4,16 @@
 	color(200 0 0)
 = env_tonemap_controller: "An entity that controls the HDR tonemapping for the player. Think of it as a method of controlling the exposure of the player's eyes."
 	[
-	spawnflags[since_L4D](flags) : "spawnflags" =
+	spawnflags[since_L4D, MBase](flags) : "spawnflags" =
 		[
 		1: "Master (Has priority if multiple env_tonemap_controllers exist)" : 0
 		]
+
+	TonemapScale[MBase](float) : "Tonemap Scale" : "-1" : "The tonemap scale. This should be a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open. -1 = use default" // 1.0
+	TonemapRate[MBase](float) : "Tonemap Rate" : "-1" : "The rate for auto exposure adjustment. -1 = use default" // 1.0
+	AutoExposureMin[MBase](float) : "Auto Exposure Minimum" : "-1" : "Sets a custom tonemap auto exposure minimum. -1 = use default" // 0.5
+	AutoExposureMax[MBase](float) : "Auto Exposure Maximum" : "-1" : "Sets a custom tonemap auto exposure maximum. -1 = use default" // 2.0
+	BloomScale[MBase](float) : "Bloom Scale" : "-1" : "Sets a custom bloom scale. -1 = use default" // 1.0
 
 	bUseNextGenBloom[MESA](boolean) : "Use Next Gen Bloom" : 0	
 	bUseCustomBloomNextGen_Threshold[MESA](boolean) : "Use Custom Next Gen Bloom Threshold" : 0

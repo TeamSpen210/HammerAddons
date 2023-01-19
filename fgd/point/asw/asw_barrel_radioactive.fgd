@@ -17,4 +17,12 @@
 	output OnBreak(void) : "Fired when this breakable breaks."
 	output OnTakeDamage(void) : "Fired each time this breakable takes any damage."
 	output OnHealthChanged(float) : "Fired when the health of this breakable changes, passing the new value of health as a percentage of max health, from [0..1]."
+
+	@resources
+		[
+		model "models/swarm/Barrel/barrel.mdl"
+		particle barrel_rad_gas_cloud
+		particle barrel_rad_gas_jet
+		sound "Misc.Geiger"
+		]
 	]

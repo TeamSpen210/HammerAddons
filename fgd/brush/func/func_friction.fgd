@@ -2,4 +2,6 @@
 = func_friction: "A thing."
 	[
 	modifier(float) : "Friction Percent" : 100 : "Set the friction to this percent of the regular friction"
+
+	@resources []
 	]

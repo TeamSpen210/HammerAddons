@@ -4,4 +4,5 @@
 @SolidClass base(BaseEntity) appliesto(Mbase)
 = func_null: "A brush entity that's immediately removed upon spawning. Useful for invisible brush lights."
 	[
+	@resources []
 	]

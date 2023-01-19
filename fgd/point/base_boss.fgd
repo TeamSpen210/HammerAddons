@@ -28,4 +28,6 @@
 	output OnHealthBelow20Percent(void) : "Sent when the Boss' health drops below 20 percent."
 	output OnHealthBelow10Percent(void) : "Sent when the Boss' health drops below 10 percent."
 	output OnKilled(void) : "Sent when the Boss is killed."
+
+	@resources []
 	]

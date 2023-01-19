@@ -14,4 +14,17 @@
 
 	// Inputs
 	input BreakWaitForScript(void) : "Wakes the alien up if his Wait For Script flag was set"
+
+	@resources
+		[
+		mdl "models/swarm/harvester/Harvester.mdl"
+		mdl "models/aliens/harvester/harvester.mdl"
+		sound "ASW_Harvester.Death"
+		sound "ASW_Harvester.Pain"
+		sound "ASW_Harvester.Scared"
+		sound "ASW_Harvester.SpawnCritter"
+		sound "ASW_Harvester.Alert"
+		sound "ASW_Harvester.Sniffing"
+		entity asw_parasite_defanged
+		]
 	]

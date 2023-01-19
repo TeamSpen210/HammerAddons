@@ -23,4 +23,6 @@
 	xfriction(float) : "X axis friction" : 0
 	yfriction(float) : "Y axis friction" : 0
 	zfriction(float) : "Z axis friction" : 0
+	
+	@resources []
 	]

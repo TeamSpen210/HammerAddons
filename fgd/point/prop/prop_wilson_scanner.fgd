@@ -1,0 +1,51 @@
+@NpcClass base(BaseEntityAnimating, EnableDisable, ResponseContext) 
+	appliesto(EZ2) 
+	autovis(Entities, Props, Wilson Scanner)
+	sphere(InnerRadius) sphere(OuterRadius) 
+	studioprop()
+= prop_wilson_scanner : "The Arbeit door scanners seen throughout Chapter 3."
+	[
+	model(studio) : "World model" : "models/props_lab/arbeitscanner01.mdl"	
+	spawnflags(Flags) = 
+		[
+		1 : "[1] Stay scanning when target leaves radius" : 0
+		]
+
+	target(npcclass) : "Scannable Class" : "npc_wilson" : "Only NPCs that match this class can be detected by this scanner. Wildcards are supported. Use '*' to pass any NPC."
+	ScanFilter(filterclass) : "Scan Filter" : "" : "An optional filter that can be used in addition to the Scannable Class keyvalue. If specified, only entities that pass the Scannable Class keyvalue AND pass this filter will be detected by the scanner. If no filter is specified, any entity that matches the Scannable Class will pass."
+	damagefilter(filterclass) : "Authorization Filter" : "" : "If specified, only scannable entities that pass this filter will be detected as 'authorized' by the scanner. If no filter is specified, any scannable entity will pass."
+
+	Cooldown(float) : "Cooldown" : "-1" : "The amount of time after finishing a scan before this scanner becomes usable again. -1 means the scanner cannot be used again. (it can still be re-activated with the 'Enable' input)"
+	
+	InnerRadius(float) : "Inner radius" : "72" : "The radius in which the scanner can begin scanning."
+	OuterRadius(float) : "Outer radius" : "128" : "The radius in which scannable entities can be detected. (scanner deploys when target is in this radius)"
+	
+	ScanTime(float) : "Scan time" : "2.0" : "How long scanning should take. Use -1 to scan infinitely, or until the FinishScan input is received."
+
+	ScanDeploySound(sound) : "Scan Deploy/Spot Sound" : "WilsonScanner.Deploy" : "The sound to play when a scannable entity is detected by the scanner."
+	ScanSound(sound) : "Scanning Sound" : "WilsonScanner.StartScan" : "The sound to play when the scanner begins scanning."
+	ScanDoneSound(sound) : "Scan Done Sound" : "WilsonScanner.AccessGranted" : "The sound to play when the scanner successfully scans an entity."
+	ScanRejectSound(sound) : "Scan Reject Sound" : "" : "The sound to play when the scanner rejects a scannable entity."
+	
+	WaitForScene(boolean) : "Wait for scene" : 0 : "Don't stop scanning until the target has finished speaking."
+	
+	// Inputs
+	input FinishScan(void) : "Finishes an active scan immediately."
+	input ForceScanNPC(target_destination) : "Forces a scan to begin on a NPC."
+	input SetOuterRadius(float) : "Sets the outer radius."
+	input SetInnerRadius(float) : "Sets the inner radius."
+	input SetAuthorizationFilter(target_destination) : "Sets the authorization filter."
+	input SetScanFilter(target_destination) : "Sets the scan filter."
+
+	// Outputs
+	output OnScanDone(void) : "Fires when this scanner successfully scans an entity."
+	output OnScanReject(void) : "Fires when this scanner rejects an entity."
+	output OnScanStart(void) : "Fires when this scanner starts scanning entity."
+	output OnScanInterrupt(void) : "Fires when a scan is interrupted by the target falling out of range, being destroyed, etc."
+
+	@resources
+		[
+		model "models/props_lab/monitor02.mdl"
+		sound "AI_BaseNPC.SentenceStop"
+		]
+	]

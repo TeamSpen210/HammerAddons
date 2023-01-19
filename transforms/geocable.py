@@ -11,7 +11,7 @@ from typing import (
     TypeVar, MutableMapping, NewType, Set, Iterable, Dict, Iterator,
 )
 
-import attr
+import attrs
 import trio
 
 from srctools import (
@@ -86,13 +86,13 @@ class SegPropOrient(Enum):
     RAND_FULL = 'rand'
 
 
-@attr.define
+@attrs.define
 class RopePhys:
     """Holds the data for move_rope simulation."""
     pos: Vec
-    prev_pos: Vec = attr.ib(
+    prev_pos: Vec = attrs.field(
         init=False,
-        default=attr.Factory(lambda s: s.pos.copy(), takes_self=True)
+        default=attrs.Factory(lambda s: s.pos.copy(), takes_self=True)
     )
     radius: float  # Just to transfer to the node.
 
@@ -102,7 +102,7 @@ SIM_TIME = 5.00
 TIME_STEP = 1/50
 
 
-@attr.frozen
+@attrs.frozen(hash=False)
 class SegPropConf:
     """Defines configuration for a set of props placed across the rope."""
     weight: int
@@ -114,10 +114,11 @@ class SegPropConf:
 
     def __hash__(self) -> int:
         """Handle hashing the matrix."""
-        return hash(
-            (self.weight, self.model, self.orient, self.place_interval) +
-            self.angles.to_angle().as_tuple()
-        )
+        ang = self.angles.to_angle()
+        return hash((
+            self.weight, self.model, self.orient, self.place_interval,
+            round(ang.pitch), round(ang.yaw), round(ang.roll)
+        ))
 
 
 VAC_SEG_CONF = SegPropConf(
@@ -134,7 +135,7 @@ VAC_COLL_RADIUS = 52.0
 VAC_MAT = 'models/props_backstage/vacum_pipe'
 
 
-@attr.define
+@attrs.define
 class SegProp:
     """Definition for an actually placed segment prop."""
     model: str
@@ -142,7 +143,7 @@ class SegProp:
     orient: Matrix
 
 
-@attr.s(auto_attribs=True, frozen=True, hash=True, eq=True)
+@attrs.frozen
 class Config:
     """Configuration specified in rope entities. This can be shared to reduce duplication."""
     type: RopeType
@@ -294,7 +295,7 @@ class Config:
 
     def coll(self) -> Optional['Config']:
         """Extract the collision options from the ent."""
-        return attr.evolve(
+        return attrs.evolve(
             self,
             material='phy',
             segments=self.segments if self.coll_segments == -1 else self.coll_segments,
@@ -303,15 +304,15 @@ class Config:
         )
 
 
-@attr.frozen
+@attrs.frozen
 class NodeEnt:
     """A node entity, and its associated configuration. This is used to match with earlier compiles."""
     pos: Vec
-    config: Config = attr.ib(repr=False)
+    config: Config = attrs.field(repr=False)
     id: NodeID
     # Nodes with the same group compile together. But it doesn't matter for
     # comparisons.
-    group: str = attr.ib(eq=False, hash=False)
+    group: str = attrs.field(eq=False, hash=False)
 
     def relative_to(self, off: Vec) -> 'NodeEnt':
         """Return a copy relative to the specified origin."""
@@ -331,7 +332,7 @@ class NodeEnt:
         ))
 
 
-@attr.define(eq=False)
+@attrs.define(eq=False)
 class Node:
     """All the data for a node, used during construction of the geo.
 
@@ -339,14 +340,14 @@ class Node:
     """
     pos: Vec
     config: Config
-    radius: float = attr.Factory(lambda s: s.config.radius, takes_self=True)
+    radius: float = attrs.Factory(lambda s: s.config.radius, takes_self=True)
     prev: Optional['Node'] = None
     next: Optional['Node'] = None
     # Orientation of the segment up to the next.
-    orient: Matrix = attr.Factory(Matrix)
+    orient: Matrix = attrs.Factory(Matrix)
     # The points for the cylinder, on these sides.
-    points_prev: List[Vertex] = attr.Factory(list)
-    points_next: List[Vertex] = attr.Factory(list)
+    points_prev: List[Vertex] = attrs.Factory(list)
+    points_next: List[Vertex] = attrs.Factory(list)
 
     @classmethod
     def from_ent(cls, ent: NodeEnt) -> 'Node':
@@ -1036,7 +1037,7 @@ def place_seg_props(nodes: Iterable[Node], fsys: FileSystem, mesh: Mesh) -> Iter
 def compute_visleafs(
     coll_data: List[Tuple[Vec, float, Vec, float]],
     vis_tree_top: VisTree,
-) -> List[VisLeaf]:
+) -> Set[VisLeaf]:
     """Compute the visleafs this rope is present in."""
     # Each tree node defines a plane. For each side we touch, we need to
     # continue looking down that side of the tree for visleafs.
@@ -1063,7 +1064,7 @@ def compute_visleafs(
                 else:
                     todo_trees.append(tree.child_pos)
 
-    return list(used_leafs)
+    return used_leafs
 
 
 async def compile_rope(
@@ -1097,7 +1098,7 @@ async def compile_rope(
         has_coll = False
         local_nodes: set[NodeEnt] = set()
         for node in nodes:
-            local_nodes.add(attr.evolve(node, pos=node.pos - center))
+            local_nodes.add(attrs.evolve(node, pos=node.pos - center))
             if node.config.coll_side_count >= 3:
                 has_coll = True
 

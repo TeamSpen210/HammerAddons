@@ -2,4 +2,5 @@
 	appliesto(+engine, P2)
 = trigger_portal_button: "Internal trigger spawned by Portal buttons to detect cubes and players (depending on type)."
 	[
+	@resources []
 	]   

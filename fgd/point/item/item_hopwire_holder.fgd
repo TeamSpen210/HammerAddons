@@ -1,0 +1,36 @@
+@PointClass base(Item)
+	appliesto(EZ2) 
+	autovis(Weapons, EZ Weapons)
+	studioprop() 
+= item_hopwire_holder : "Xen Grenade Holder"
+	[
+	body[engine](integer) : "Bodygroup" : 7
+	body(choices) : "Grenades" : 7 =
+	[
+		0 : "None"
+		1 : "1/3"
+		3 : "2/3"
+		7 : "Full"
+		5 : "2/3 (Middle empty)"
+	]
+	
+	RemoveWhenEmpty(boolean) : "Remove when empty" : 1
+	
+	model(studio) : "Model" : "models/items/xen_grenade_holder001a.mdl"
+
+	// Inputs
+	input SetSlot1(bool) : "Sets whether Slot 1 is occupied."
+	input SetSlot2(bool) : "Sets whether Slot 2 is occupied."
+	input SetSlot3(bool) : "Sets whether Slot 3 is occupied."
+	
+	output OnPickupSlot1(void) : "Fires when a grenade in Slot 1 is picked up."
+	output OnPickupSlot2(void) : "Fires when a grenade in Slot 2 is picked up."
+	output OnPickupSlot3(void) : "Fires when a grenade in Slot 3 is picked up."
+	output OnEmpty(void) : "Fires when the holder becomes empty."
+
+	@resources
+		[
+    	mdl "models/items/xen_grenade_holder001a.mdl"
+    	entity weapon_hopwire
+		]
+	]

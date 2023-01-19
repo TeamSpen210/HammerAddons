@@ -44,4 +44,11 @@
 	output OnButtonHackAt75Percent(void) : "Fired whenever the hack gets over halfway through"
 	output OnButtonHackCompleted(void) : "Fired when a marine successfully finishes hacking this panel."
 	output OnButtonActivated(void) : "Fired whenever a marine uses this button panel."
+
+	@resources
+		[
+		sound "ASWComputer.HackComplete"
+		sound "ASWComputer.AccessDenied"
+		sound "ASWButtonPanel.TileLit"
+		]
 	]

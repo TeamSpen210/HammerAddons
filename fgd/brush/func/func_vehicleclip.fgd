@@ -7,4 +7,6 @@
 	input Kill(void) : "Removes this entity from the world"
 	input Enable(void) : "Enable collisions with vehicles"
 	input Disable(void) : "Disable collisions with vehicles"
+
+	@resources []
 	]

@@ -39,4 +39,6 @@
 	output OnQueueMoved(float) : "Fired when the queue moves. Outputs the number of NPCs left in the queue."
 	output OnNPCStartedLeavingQueue(string) : "Fired when the NPC at the head of the queue starts to leave. The activator is the NPC, and the string is the name of the NPC."
 	output OnNPCLeftQueue(string) : "Fired when the NPC at the head of the queue leaves. The activator is the NPC, and the string is the name of the NPC."
+
+	@resources []
 	]
