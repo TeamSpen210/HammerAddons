@@ -8,7 +8,7 @@ on:
     # Allow triggering manually whenever it's useful.
 
 jobs:
-  build-windows:
+  freeze:
     strategy:
       fail-fast: false
       matrix:
@@ -38,9 +38,11 @@ jobs:
           cache: 'pip'
           cache-dependency-path: 'requirements.txt'
       - name: Install srctools
-        run: python -m pip install -r requirements.txt
+        run: |
+          python -m pip install -U setuptools pip wheel
+          python -m pip install -r requirements.txt
       - name: Freeze application
-        run: python -m PyInstaller --distpath ..\build\ -y ..\postcompiler.spec
+        run: python -m PyInstaller --distpath ../build/ -y ../postcompiler.spec
         working-directory: ./src/
       - name: Artifact upload (tag)
         uses: actions/upload-artifact@v2
