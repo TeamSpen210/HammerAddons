@@ -21,30 +21,30 @@
 * New `comp_` entities. These are mainly intended for use in instances, allowing modifying entities outside of the instance to conform or doing normally impossible things like positioning things in the void.
 Below are short explanations, see the "Help" display on the entity properties in Hammer for detailed functionality:
 
-| Entity                                             | Description |
-|----------------------------------------------------|-------------|
-  `comp_flicker`                                     | Fires on/off and skin inputs repeatedly to simulate a flicker-on effect. |
-| `comp_choreo_sceneset`                             | Chains a set of choreographed scenes together. |
-| `comp_entity_finder`                               | Finds the closest entity of a given type, then applies various transformations. Outputs from this entity will be moved to the found entity. Further keyvalues can be set manually with SmartEdit off. |
-| `comp_entity_mover`                                | Shift an entity by a given amount. This is useful to place entities into the void, for example. |
+| Entity                                             | Description                                                                                                                                                                  |
+|----------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `comp_flicker`                                     | Fires on/off and skin inputs repeatedly to simulate a flicker-on effect.                                                                                                     |
+| `comp_choreo_sceneset`                             | Chains a set of choreographed scenes together.                                                                                                                               |
+| `comp_entity_finder`                               | Finds the closest entity of a given type, then applies various transformations. Outputs from this entity will be moved to the found entity.                                  |
+| `comp_entity_mover`                                | Shift an entity by a given amount. This is useful to place entities into the void, for example.                                                                              |
 | `comp_kv_setter`                                   | Sets a keyvalue on an entity to a new value. This is useful to compute spawnflags, or to adjust keyvalues when the target entity's options can't be set to a fixup variable. |
-| `comp_numeric_transition`                          | When triggered, animates a keyvalue/input over time with various options. |
-| `comp_pack`                                        | Explicitly identify resources to pack into the map, in addition to automatic detection. |
-| `comp_pack_rename`                                 | Pack a file into the BSP, under a different name than it starts with. |
-| `comp_pack_replace_soundscript`                    | Replace a soundscript with a different one. |
-| `comp_precache_model`                              | Force a specific model to load, for runtime switching. Duplicates will be removed. |
-| `comp_precache_sound`                              | Force a specific sound to load, for runtime switching. Duplicates will be removed. More keyvalues can be added. |
-| `comp_prop_cable`/`comp_prop_rope`                 | Generates 3D cables using a static prop. |
-| `comp_prop_cable_dynamic`/`comp_prop_rope_dynamic` | Modifies the above to generate a dynamic prop, instead. |
-| `comp_propcombine_set`/`comp_propcombine_volume`   | Specifies a group of props that will be combined together, so they more efficiently render. |
-| `comp_relay`                                       | Simplified version of `logic_relay` which is able to be optimised away by the compiler. The various inputs and outputs are useful for bundling commands together, or using more appopriate verbs. Inputs only work if given directly from entities (or via instance redirection), not in-game or dynamically. All inputs/outputs may pass through any parameter, if no override is specified. |
-| `comp_scriptvar_setter`                            | Assigns data or a group of data to a variable in an entity's VScript scope on spawn. To set an array, provide an index in the variable name in the form `varname[4]`.  All the comp_scriptvars pointing to that variable will be collected into a single array literal, with holes filled by *null*.  If the brackets are empty, these values will fill those holes and then append to the end in an arbitrary order. |
-| `comp_sequential_call`                             | Finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order. |
-| `comp_vactube_end`                                 | Marks the end point of a vactube. Objects reaching here will be cleaned up. |
-| `comp_vactube_junction`                            | Marks a junction in a vactube, where they're forced to change direction. Scanner models near straight nodes will be detected automatically. |
-| `comp_vactube_spline`                              | Generates a dynamic vactube model following a set of points. |
-| `comp_vactube_object`                              | Registers objects that can appear in the tubing. |
-| `comp_vactube_start`                               | Marks the start point of a vactube. This is where they spawn. |
+| `comp_numeric_transition`                          | When triggered, animates a keyvalue/input over time with various options.                                                                                                    |
+| `comp_pack`                                        | Explicitly identify resources to pack into the map, in addition to automatic detection.                                                                                      |
+| `comp_pack_rename`                                 | Pack a file into the BSP, under a different name than it starts with.                                                                                                        |
+| `comp_pack_replace_soundscript`                    | Replace a soundscript with a different one.                                                                                                                                  |
+| `comp_precache_model`                              | Force a specific model to load, for runtime switching. Duplicates will be removed.                                                                                           |
+| `comp_precache_sound`                              | Force a specific sound to load, for runtime switching. Duplicates will be removed. More keyvalues can be added.                                                              |
+| `comp_prop_cable`/`comp_prop_rope`                 | Generates 3D cables using a static prop.                                                                                                                                     |
+| `comp_prop_cable_dynamic`/`comp_prop_rope_dynamic` | Modifies the above to generate a dynamic prop, instead.                                                                                                                      |
+| `comp_propcombine_set`/`comp_propcombine_volume`   | Specifies a group of props that will be combined together, so they more efficiently render.                                                                                  |
+| `comp_relay`                                       | Simplified version of `logic_relay` which is able to be optimised away by the compiler.                                                                                      |
+| `comp_scriptvar_setter`                            | Assigns data or a group of data to a variable in an entity's VScript scope on spawn.                                                                                         |
+| `comp_sequential_call`                             | Finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order.                                                                            |
+| `comp_vactube_end`                                 | Marks the end point of a vactube. Objects reaching here will be cleaned up.                                                                                                  |
+| `comp_vactube_junction`                            | Marks a junction in a vactube, where they're forced to change direction. Scanner models near straight nodes will be detected automatically.                                  |
+| `comp_vactube_spline`                              | Generates a dynamic vactube model following a set of points.                                                                                                                 |
+| `comp_vactube_object`                              | Registers objects that can appear in the tubing.                                                                                                                             |
+| `comp_vactube_start`                               | Marks the start point of a vactube. This is where they spawn.                                                                                                                |
 
 
 ## Installation
