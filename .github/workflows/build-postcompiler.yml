@@ -29,9 +29,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}-${{ matrix.arch }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
           architecture: ${{ matrix.arch }}
@@ -45,14 +45,14 @@ jobs:
         run: python -m PyInstaller --distpath ../build/ -y ../postcompiler.spec
         working-directory: ./src/
       - name: Artifact upload (tag)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: github.event_name == 'create'
         with:
           name: hammeraddons_${{ github.event.ref }}_${{ matrix.artifact-name }}
           path: ./build/
           if-no-files-found: error
       - name: Artifact upload (hash)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: github.event_name != 'create'
         with:
           name: hammeraddons_${{ github.sha }}_${{ matrix.artifact-name }}
