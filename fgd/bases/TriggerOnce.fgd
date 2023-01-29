@@ -52,7 +52,8 @@
 	output OnTouching(void) : "Fired when the TouchTest input is called, and an entity is touching this. Does not call activators."
     output OnNotTouching(void) : "Fired when the TouchTest input is called, and no entity is touching this. Does not call activators."
 	
-    // This I/O does actually exist, but it couldn't ever be used usefully.
+    // This I/O does actually exist, but it couldn't ever be used usefully. 
+    // Entities that can use them should inherit Trigger instead.
     input EndTouch[engine](void)
 	input DisableAndEndTouch[TF2, engine](void)
 	output OnStartTouchAll[engine](void) // Always fires along with OnStartTouch, so useless.
