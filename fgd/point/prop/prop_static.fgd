@@ -33,7 +33,8 @@
 	renderamt(integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
 
-	uniformscale(float) : "Uniform Scale Override" : 1 : "Resize the static prop."
+	uniformscale(float) : "Uniform Scale Override" : 1 : "Resize the static prop uniformly."
+	scale(vector) : "Scale Override" : "1 1 1" : "Resize the static prop."
 
 
 	solid[engine](integer) : "Collisions" : 6
