@@ -4,6 +4,7 @@ Each comes with a key, used to identify a previously compiled version.
 We can then reuse already compiled versions.
 """
 from typing import Any, Awaitable, Callable, Generic, Hashable, List, Set, Tuple, TypeVar
+from typing_extensions import Self
 from pathlib import Path
 import os
 import pickle
@@ -24,7 +25,6 @@ LOGGER = logger.get_logger(__name__)
 ModelKey = TypeVar('ModelKey', bound=Hashable)
 InT = TypeVar('InT')
 OutT = TypeVar('OutT')
-ModelCompilerT = TypeVar('ModelCompilerT', bound='ModelCompiler')  # TODO: Replace by Self
 
 
 class GenModel(Generic[OutT]):
@@ -88,7 +88,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         """Return the number of used models."""
         return sum(1 for _, mdl in self._built_models if mdl.used)
 
-    def __enter__(self: ModelCompilerT) -> ModelCompilerT:
+    def __enter__(self) -> Self:
         """Load the previously compiled models and prepare for compiles."""
         # Ensure the folder exists.
         os.makedirs(self.model_folder_abs, exist_ok=True)
