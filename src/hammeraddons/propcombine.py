@@ -25,7 +25,7 @@ from srctools.bsp import BSP, BModel, StaticProp, StaticPropFlags, VisLeaf
 from srctools.game import Game
 from srctools.logger import get_logger
 from srctools.math import Angle, Matrix, Vec, quickhull
-from srctools.mdl import MDL_EXTS, Model
+from srctools.mdl import MDL_EXTS, Model, Flags as ModelFlags
 from srctools.packlist import PackList
 from srctools.smd import Bone, Mesh, Triangle, Vertex
 from srctools.tokenizer import Token, Tokenizer
@@ -281,7 +281,10 @@ async def compile_func(
     surfprops: Set[str] = set()
     cdmats: Set[str] = set()
     contents: Set[int] = set()
+    mostly_opaque = False
 
+    qc: QC
+    mdl: Model
     for prop in prop_pos:
         qc, mdl = lookup_model(prop.model)
         assert qc is not None, prop.model
@@ -289,6 +292,8 @@ async def compile_func(
         surfprops.add(mdl.surfaceprop.casefold())
         cdmats.update(mdl.cdmaterials)
         contents.add(mdl.contents)
+        if ModelFlags.translucent_twopass in mdl.flags:
+            mostly_opaque = True
 
     if len(surfprops) > 1:
         raise ValueError('Multiple surfaceprops? Should be filtered out.')
@@ -373,6 +378,8 @@ async def compile_func(
                 # 0 needs to produce this value.
             ]) or '"notsolid"',
         ))
+        if mostly_opaque:
+            f.write('$mostlyopaque\n')
 
         for mat in sorted(cdmats):
             f.write('$cdmaterials "{}"\n'.format(mat))
@@ -1034,7 +1041,6 @@ async def combine(
                 for tex in
                 model.iter_textures([prop.skin])
             }),
-            model.flags.value,
             (prop.flags & relevant_flags).value,
             model.contents,
             model.surfaceprop,
@@ -1114,7 +1120,7 @@ async def combine(
         map_name,
         folder_name='propcombine',
         version={
-            'ver': 1,
+            'ver': 2,
             'vol_tolerance': volume_tolerance,
         },
         pack_models=pack_models,
