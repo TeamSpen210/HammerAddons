@@ -1,8 +1,12 @@
 @PointClass base(BaseEntityPoint, PlayerClass) 
 	autovis(Point Entities, Globals, Player Spawn, Deathmatch Spawn)
 	appliesto(HL2DM, Mesa, HL2, EP1, EP2, P1) 
-	studio("models/editor/playerstart.mdl") = info_player_deathmatch: "Generic multiplayer spawn point, used in games which don't have their own."
+	studio("models/editor/playerstart.mdl")
+	sphere(_blocked_dist) = info_player_deathmatch: "Generic multiplayer spawn point, used in games which don't have their own."
 	[
+	_blocked_dist[!engine](integer) readonly : "Blocked Radius" : 128 : "If another player is within this radius, the spawn point is condsidered to be blocked"+
+																		" and players won't spawn here. This is a hardcoded value, listed here for visualization."
+
     itemstogive[Mesa](string) : "List of items to spawn the player with."
 
 	input Enable[Mesa](void) : "Enable this spawnpoint."
