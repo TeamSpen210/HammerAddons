@@ -318,7 +318,7 @@ async def vactube_transform(ctx: Context) -> None:
                 'logic_timer',
                 targetname=spawn_name + '_timer',
                 origin=start_node.origin,
-                startdisabled='0',
+                startdisabled=start_node.timer_start_disabled,
                 userandomtime='1',
                 lowerrandombound=start_node.time_min,
                 upperrandombound=start_node.time_max,
