@@ -5,6 +5,7 @@ import os
 from srctools import Entity
 from srctools.logger import get_logger
 from srctools.packlist import FileType, unify_path
+from srctools.sndscript import SND_CHARS
 
 from hammeraddons.bsp_transform import Context, check_control_enabled, trans
 
@@ -63,7 +64,8 @@ function Precache() {
 @trans('comp_precache_sound', priority=100)
 def comp_precache_sound(ctx: Context):
     """Force precaching a set of sounds."""
-    sounds = set()
+    # Match normalised sound to the original filename.
+    sounds: dict[str, str] = {}
     for ent in ctx.vmf.by_class['comp_precache_sound']:
         ent.remove()
         if not check_control_enabled(ent):
@@ -72,29 +74,28 @@ def comp_precache_sound(ctx: Context):
         for key, sound in ent.items():
             if not key.startswith('sound'):
                 continue
-            sound = sound.casefold().replace('\\', '/')
-            if sound.endswith(('.wav', '.mp3')) and not sound.startswith('sound/'):
-                sound = 'sound/' + sound
+            sound_key = sound.casefold().replace('\\', '/').lstrip(SND_CHARS)
+            if sound_key.endswith(('.wav', '.mp3')) and not sound_key.startswith('sound/'):
+                sound_key = 'sound/' + sound_key
 
             # Precaching implies packing it.
-            ctx.pack.pack_file(sound, FileType.GAME_SOUND)
+            ctx.pack.pack_file(sound_key, FileType.GAME_SOUND)
 
-            sounds.add(sound)
+            sounds.setdefault(sound_key, sound)
 
     if not sounds:
         return
 
     # This VScript function forces a script to be precached.
     lines = SND_CACHE_FUNC % '\n'.join([
-        f'\tself.PrecacheSoundScript("{snd}")'
-        for snd in sorted(sounds)
+        f'\tself.PrecacheSoundScript("{snd.lstrip(SND_CHARS)}")'
+        for snd in sorted(sounds.values())
     ])
 
     ctx.vmf.create_ent(
         'info_target',
         targetname='@precache',
         origin='-15872 -15872 -15872',  # Should be outside the map.
-        # We don't include scripts/vscripts in the filename.
         vscripts=ctx.pack.inject_vscript(lines),
     )
 
