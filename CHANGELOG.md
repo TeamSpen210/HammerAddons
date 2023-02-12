@@ -3,7 +3,7 @@
 * Improve description of `wait` and `OnTrigger` options in `trigger_multiple`.
 * Fix `comp_precache_sound` not handling sound characters at the start of raw filenames.
 * Allow `comp_vactube_start` to be set to have a timer which starts disabled.
-* If required, add `$mostlyopaque` to propcombined props.
+* If required, add various QC flags like `$mostlyopaque` to propcombined props.
 
 --------------------
 
