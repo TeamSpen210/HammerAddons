@@ -170,7 +170,11 @@ class PropPos:
     model: str
     checksum: bytes
     skin: int
-    scale: float
+    
+    scale_x: float
+    scale_y: float
+    scale_z: float
+
     solidity: CollType
 
 
@@ -240,7 +244,9 @@ async def combine_group(
             prop.model,
             mdl.checksum,
             prop.skin,
-            prop.scaling,
+            prop.scaling.x,
+            prop.scaling.y,
+            prop.scaling.z,
             coll,
         ))
     # We don't want to build collisions if it's not used.
@@ -317,22 +323,42 @@ async def compile_func(
         child_ref = await _mesh_cache.fetch((qc, prop.skin), build_reference, prop, qc, mdl)
         child_coll = await _coll_cache.fetch(qc.phy_smd, build_collision, qc, prop, child_ref, volume_tolerance > 0)
 
+        scale = Vec(prop.scale_x, prop.scale_y, prop.scale_z)
         offset = Vec(prop.x, prop.y, prop.z)
-        matrix = Matrix.from_angle(prop.pit, prop.yaw, prop.rol)
+        rot_matrix = Matrix.from_angle(prop.pit, prop.yaw, prop.rol)
 
-        ref_mesh.append_model(child_ref, matrix, offset, prop.scale * qc.ref_scale)
+
+        ref_mesh.append_model(child_ref, rot_matrix, offset, scale * qc.ref_scale)
 
         if has_coll and child_coll is not None:
-            scale = prop.scale * qc.phy_scale
+            phy_scale = scale * qc.phy_scale
+            
+            matrix = Matrix()
+            
+            # Set the scale
+            matrix[0,0] = phy_scale.x
+            matrix[1,1] = phy_scale.y
+            matrix[2,2] = phy_scale.z
+
+            # Rotate the matrix
+            matrix @= rot_matrix
+
+            # Secondary matrix for the normals
+            itm = matrix.inverse().transpose()
+
             group = Mesh(coll_mesh.bones, coll_mesh.animation, [])
             for part in child_coll:
                 for orig_tri in part.triangles:
                     new_tri = orig_tri.copy()
                     for vert in new_tri:
                         vert.links[:] = bone_link
-                        vert.norm @= matrix
-                        vert.pos *= scale
-                        vert.pos.localise(offset, matrix)
+
+                        # Transform the vertex
+                        vert.norm @= itm
+                        vert.norm = vert.norm.norm()
+                        vert.pos @= matrix
+                        vert.pos += offset
+
                     group.triangles.append(new_tri)
             if group.triangles:
                 coll_groups[group] = group.compute_volume()
