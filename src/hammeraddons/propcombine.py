@@ -281,7 +281,7 @@ async def compile_func(
     surfprops: Set[str] = set()
     cdmats: Set[str] = set()
     contents: Set[int] = set()
-    mostly_opaque = False
+    combined_flags = ModelFlags(0)
 
     qc: QC
     mdl: Model
@@ -292,8 +292,7 @@ async def compile_func(
         surfprops.add(mdl.surfaceprop.casefold())
         cdmats.update(mdl.cdmaterials)
         contents.add(mdl.contents)
-        if ModelFlags.translucent_twopass in mdl.flags:
-            mostly_opaque = True
+        combined_flags |= mdl.flags
 
     if len(surfprops) > 1:
         raise ValueError('Multiple surfaceprops? Should be filtered out.')
@@ -378,8 +377,22 @@ async def compile_func(
                 # 0 needs to produce this value.
             ]) or '"notsolid"',
         ))
-        if mostly_opaque:
+        # According to studiomdl, $opaque overrides $mostlyopaque.
+        if ModelFlags.force_opaque in combined_flags:
+            f.write('$opaque\n')
+            if ModelFlags.translucent_twopass in combined_flags:
+                LOGGER.warning(
+                    'Both $mostlyopaque and $opaque set with models: {}',
+                    {prop.model for prop in prop_pos}
+                )
+        elif ModelFlags.translucent_twopass in combined_flags:
             f.write('$mostlyopaque\n')
+
+        if ModelFlags.no_forced_fade in combined_flags:
+            f.write('$noforcedfade\n')
+
+        if ModelFlags.ambient_boost in combined_flags:
+            f.write('$ambientboost\n')
 
         for mat in sorted(cdmats):
             f.write('$cdmaterials "{}"\n'.format(mat))
