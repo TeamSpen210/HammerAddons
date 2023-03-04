@@ -9,11 +9,20 @@
 
 	globalstate[P2CE](choices) : "Global State to Set" =
 		[
-		"portalgun_nospawn": "Spawn without Portalgun"
 		"no_pinging_blue": "Prevent Pinging ATLAS"
 		"no_pinging_orange": "Prevent Pinging P-Body"
 		"no_taunting_blue": "Prevent Taunting ATLAS"
 		"no_taunting_orange": "Prevent Taunting P-Body"
+		"gordon_precriminal": "Gordon is pre-criminal"
+		"antlion_allied": "Antlions are player allies"
+		"suit_no_sprint": "HEV suit sprint disabled"
+		"super_phys_gun": "Super gravity gun enabled"
+		"citizens_passive": "Citizens are neutral to Gordon & combine"
+		"gordon_invulnerable": "Gordon is invulnerable"
+		"no_seagulls_on_jeep": "Don't spawn seagulls on jeep"
+		"ep2_alyx_injured": "Alyx injured behavior from EP2"
+		"ep_alyx_darknessmode": "Alyx darkness behavior from EP1"
+		"hunters_to_run_over": "Amount of hunters to run over before they dodge"
 		]
 
 	initialstate[engine](integer) : "Initial State" : 0
