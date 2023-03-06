@@ -37,5 +37,11 @@
 	output OnPlayerPickup(void) : "Fires when the player picks up this weapon."
 	output OnNPCPickup(void) : "Fires when an NPC picks up this weapon."
 	output OnCacheInteraction(void) : "Fires when the player 'proves' they've found this weapon. " +
-		"Fires on: Player Touch, +USE pickup, Physcannon pickup, Physcannon pun" + "t."
+		"Fires on: Player Touch, +USE pickup, Physcannon pickup, Physcannon punt."
+
+	@resources
+		[
+		// Weapons have a script file defining sounds and models used.
+		func weapon_script
+		]
 	]
