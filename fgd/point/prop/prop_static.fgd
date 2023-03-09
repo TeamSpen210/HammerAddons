@@ -50,7 +50,7 @@
 
 	preventpropcombine[PROPCOMBINE](boolean) : "Disable Prop Combine" : 0 : "Prevent this static prop from combining with any other static props in vbsp."
 
-	linedivider_levels[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_levels[!engine, +complete](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	mincpulevel[engine](integer): "Minimum CPU Level": 0
 	maxcpulevel[engine](integer): "Maximum CPU Level": 0
