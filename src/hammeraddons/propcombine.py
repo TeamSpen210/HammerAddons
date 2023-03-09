@@ -69,9 +69,9 @@ $collisionmodel "physics.smd" {
 '''
 
 MAX_GROUP = 24  # StudioMDL doesn't allow more than this...
-# Exceed this and StudioMDL cuts into multiple bodygroups.
-# So at that point we should produce multiple grouped props.
-MAX_VERTS = 65536//3
+# Exceed 65k triangles and StudioMDL cuts into multiple bodygroups. So at that point we should
+# produce multiple grouped props. Shrink a little just for breathing room.
+MAX_VERTS = 65536//3 - 64
 
 
 # Cache of the SMD models we have already parsed, so we don't need
@@ -910,7 +910,29 @@ def group_props_ent(
                     found.append(prop)
                     combine_set.used = True
 
-            actual = set(found).intersection(group)
+            if not found:  # No point checking an empty list.
+                continue
+
+            actual = []
+            total_verts = 0
+            for prop in found:
+                qc, mdl = get_model(prop.model)
+                assert mdl is not None
+                total_verts += mdl.total_verts
+                if total_verts > MAX_VERTS:
+                    # Warn for groups since these were intentionally built.
+                    LOGGER.warning(
+                        'Hit vert limit in group {} with models {}', combine_set,
+                        {prop.model for prop in found},
+                    )
+                    # Output this prop, then start a new group.
+                    if len(actual) >= min_cluster:
+                        yield list(actual)
+                        for sub_prop in actual:
+                            group.remove(sub_prop)
+                    actual.clear()
+                    total_verts = mdl.total_verts
+                actual.append(prop)
             if len(actual) >= min_cluster:
                 yield list(actual)
                 for prop in actual:
@@ -925,6 +947,7 @@ def group_props_ent(
 
 def group_props_auto(
     prop_groups: Dict[Optional[tuple], List[StaticProp]],
+    get_model: Callable[[str], Tuple[Optional[QC], Optional[Model]]],
     dist: float,
     min_cluster: int,
 ) -> Iterator[List[StaticProp]]:
@@ -957,22 +980,39 @@ def group_props_auto(
             bbox_min, bbox_max = Vec.bbox(prop.origin for prop in cluster)
             center_pos = (bbox_min + bbox_max) / 2
 
-            cluster_list: List[Tuple[StaticProp, float]] = []
+            cluster_list: List[Tuple[StaticProp, int, float]] = []
 
             for prop in cluster:
                 prop_off = (center_pos - prop.origin).mag_sq()
+                qc, mdl = get_model(prop.model)
+                assert mdl is not None
                 if prop_off <= dist_sq:
-                    cluster_list.append((prop, prop_off))
+                    cluster_list.append((prop, mdl.total_verts, prop_off))
 
-            cluster_list.sort(key=operator.itemgetter(1))
-            selected_props = [
-                prop for prop, off in
-                cluster_list[:MAX_GROUP]
-            ]
+            # Sort by the distance to the original, so we prefer closer models with more verts.
+            cluster_list.sort(key=lambda tup: tup[2] - 8.0 * tup[1])
+            total_verts = 0
+            selected_props: List[StaticProp] = []
+            for prop, vert_count, off in cluster_list:
+                total_verts += vert_count
+                if total_verts > MAX_VERTS:
+                    # Make this just info level, just might be props nearby.
+                    LOGGER.info(
+                        'Hit vert limit for auto group @ {} with models {}', center_pos,
+                        {prop.model for prop, vert, off in cluster_list},
+                    )
+                    break
+                elif len(selected_props) > MAX_GROUP:
+                    break
+                else:
+                    selected_props.append(prop)
             todo.difference_update(selected_props)
 
             if len(selected_props) >= min_cluster:
                 yield selected_props
+            # Else, we grouped a too-small number of props - deliberately forget about them, they're
+            # likely isolated, meaning checking them in future is pointless. The main combine()
+            # function will re-add them to the map.
 
 
 async def combine(
@@ -1135,6 +1175,7 @@ async def combine(
             ),
             group_props_auto(
                 prop_groups,
+                get_model,
                 auto_range,
                 min_cluster,
             )
@@ -1151,6 +1192,7 @@ async def combine(
         LOGGER.info('Automatically finding propcombine sets...')
         grouper = group_props_auto(
             prop_groups,
+            get_model,
             auto_range,
             min_cluster,
         )
