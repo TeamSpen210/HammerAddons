@@ -102,19 +102,25 @@ class CombineVolume:
         # For sorting.
         self.volume = 0.0
         self.used = False
-        self.mins = Vec()
-        self.maxes = Vec()
+        self.mins: Optional[Vec] = None
+        self.maxes: Optional[Vec] = None
         # Each volume in the group, specifying its collision behaviour.
         self.collision: List[Callable[[Vec], bool]] = []
 
         if group_name:
-            self.desc = f'group "{group_name}"'
+            self._desc_start = f'group "{group_name}"'
         else:
-            self.desc = f'at {origin}'
+            self._desc_start = f'at {origin}'
 
     def contains(self, point: Vec) -> bool:
         """Check if the volume contains this point."""
         return any(coll(point) for coll in self.collision)
+
+    def __str__(self) -> str:
+        if self.mins is None or self.maxes is None:
+            return self._desc_start
+        else:
+            return f'{self._desc_start}, ({self.mins} : {self.maxes})'
 
 
 def make_collision_bbox(origin: Vec, angles: Angle, mins: Vec, maxes: Vec) -> Callable[[Vec], bool]:
@@ -839,6 +845,15 @@ def group_props_ent(
                 Vec.from_str(ent['mins']),
                 Vec.from_str(ent['maxs']),
             )
+            if combine_set.mins is None:
+                combine_set.mins = origin + mins
+            else:
+                combine_set.mins.min(origin + mins)
+            if combine_set.maxes is None:
+                combine_set.maxes = origin + maxes
+            else:
+                combine_set.maxes.max(origin + maxes)
+
             size = maxes - mins
             # Enlarge slightly to ensure it never has a zero area.
             # This ensures items on the edge are included.
@@ -859,6 +874,14 @@ def group_props_ent(
             size = brush.maxes - brush.mins
             combine_set.volume += size.x * size.y * size.z
             combine_set.collision.append(make_collision_brush(origin, angles, brush))
+            if combine_set.mins is None:
+                combine_set.mins = brush.origin + brush.mins
+            else:
+                combine_set.mins.min(brush.origin + brush.mins)
+            if combine_set.maxes is None:
+                combine_set.maxes = brush.origin + brush.maxes
+            else:
+                combine_set.maxes.max(brush.origin + brush.maxes)
         else:
             raise AssertionError(ent['classname'])
 
@@ -897,7 +920,7 @@ def group_props_ent(
     for combine_set_list in sets_by_skin.values():
         for combine_set in combine_set_list:
             if not combine_set.used:
-                LOGGER.warning('Unused comp_propcombine_set {}', combine_set.desc)
+                LOGGER.warning('Unused comp_propcombine_volume/_set {}', combine_set)
 
 
 def group_props_auto(
@@ -1133,7 +1156,7 @@ async def combine(
         )
     else:
         # No way provided to choose props.
-        LOGGER.info('No propcombine groups provided.')
+        LOGGER.info('No propcombine groups or range provided.')
         return
 
     # These are models we cannot merge no matter what -
