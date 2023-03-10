@@ -58,8 +58,8 @@
 	input RemoveAllowForRunners[KZ](void) : "Disallow runners from using this teleporter if they were allowed through AllowForRunners (Tag Arena)."
 
 	// Outputs
-	output OnTeleport(void) : "Outputted when a player teleports."
-	output OnTeleportNotAllowed(void) : "Outputted when a player tries to teleport, but can't because they are not allowed to use this teleporter."
+	output OnTeleport[KZ](void) : "Outputted when a player teleports."
+	output OnTeleportNotAllowed[KZ](void) : "Outputted when a player tries to teleport, but can't because they are not allowed to use this teleporter."
 	
 	@resources []
 	]

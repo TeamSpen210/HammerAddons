@@ -25,7 +25,7 @@ from srctools.bsp import BSP, BModel, StaticProp, StaticPropFlags, VisLeaf
 from srctools.game import Game
 from srctools.logger import get_logger
 from srctools.math import Angle, Matrix, Vec, quickhull
-from srctools.mdl import MDL_EXTS, Model
+from srctools.mdl import MDL_EXTS, Model, Flags as ModelFlags
 from srctools.packlist import PackList
 from srctools.smd import Bone, Mesh, Triangle, Vertex
 from srctools.tokenizer import Token, Tokenizer
@@ -69,9 +69,9 @@ $collisionmodel "physics.smd" {
 '''
 
 MAX_GROUP = 24  # StudioMDL doesn't allow more than this...
-# Exceed this and StudioMDL cuts into multiple bodygroups.
-# So at that point we should produce multiple grouped props.
-MAX_VERTS = 65536//3
+# Exceed 65k triangles and StudioMDL cuts into multiple bodygroups. So at that point we should
+# produce multiple grouped props. Shrink a little just for breathing room.
+MAX_VERTS = 65536//3 - 64
 
 
 # Cache of the SMD models we have already parsed, so we don't need
@@ -102,19 +102,25 @@ class CombineVolume:
         # For sorting.
         self.volume = 0.0
         self.used = False
-        self.mins = Vec()
-        self.maxes = Vec()
+        self.mins: Optional[Vec] = None
+        self.maxes: Optional[Vec] = None
         # Each volume in the group, specifying its collision behaviour.
         self.collision: List[Callable[[Vec], bool]] = []
 
         if group_name:
-            self.desc = f'group "{group_name}"'
+            self._desc_start = f'group "{group_name}"'
         else:
-            self.desc = f'at {origin}'
+            self._desc_start = f'at {origin}'
 
     def contains(self, point: Vec) -> bool:
         """Check if the volume contains this point."""
         return any(coll(point) for coll in self.collision)
+
+    def __str__(self) -> str:
+        if self.mins is None or self.maxes is None:
+            return self._desc_start
+        else:
+            return f'{self._desc_start}, ({self.mins} : {self.maxes})'
 
 
 def make_collision_bbox(origin: Vec, angles: Angle, mins: Vec, maxes: Vec) -> Callable[[Vec], bool]:
@@ -170,7 +176,11 @@ class PropPos:
     model: str
     checksum: bytes
     skin: int
-    scale: float
+    
+    scale_x: float
+    scale_y: float
+    scale_z: float
+
     solidity: CollType
 
 
@@ -240,7 +250,9 @@ async def combine_group(
             prop.model,
             mdl.checksum,
             prop.skin,
-            prop.scaling,
+            prop.scaling.x,
+            prop.scaling.y,
+            prop.scaling.z,
             coll,
         ))
     # We don't want to build collisions if it's not used.
@@ -281,7 +293,10 @@ async def compile_func(
     surfprops: Set[str] = set()
     cdmats: Set[str] = set()
     contents: Set[int] = set()
+    combined_flags = ModelFlags(0)
 
+    qc: QC
+    mdl: Model
     for prop in prop_pos:
         qc, mdl = lookup_model(prop.model)
         assert qc is not None, prop.model
@@ -289,6 +304,7 @@ async def compile_func(
         surfprops.add(mdl.surfaceprop.casefold())
         cdmats.update(mdl.cdmaterials)
         contents.add(mdl.contents)
+        combined_flags |= mdl.flags
 
     if len(surfprops) > 1:
         raise ValueError('Multiple surfaceprops? Should be filtered out.')
@@ -313,22 +329,42 @@ async def compile_func(
         child_ref = await _mesh_cache.fetch((qc, prop.skin), build_reference, prop, qc, mdl)
         child_coll = await _coll_cache.fetch(qc.phy_smd, build_collision, qc, prop, child_ref, volume_tolerance > 0)
 
+        scale = Vec(prop.scale_x, prop.scale_y, prop.scale_z)
         offset = Vec(prop.x, prop.y, prop.z)
-        matrix = Matrix.from_angle(prop.pit, prop.yaw, prop.rol)
+        rot_matrix = Matrix.from_angle(prop.pit, prop.yaw, prop.rol)
 
-        ref_mesh.append_model(child_ref, matrix, offset, prop.scale * qc.ref_scale)
+
+        ref_mesh.append_model(child_ref, rot_matrix, offset, scale * qc.ref_scale)
 
         if has_coll and child_coll is not None:
-            scale = prop.scale * qc.phy_scale
+            phy_scale = scale * qc.phy_scale
+            
+            matrix = Matrix()
+            
+            # Set the scale
+            matrix[0,0] = phy_scale.x
+            matrix[1,1] = phy_scale.y
+            matrix[2,2] = phy_scale.z
+
+            # Rotate the matrix
+            matrix @= rot_matrix
+
+            # Secondary matrix for the normals
+            itm = matrix.inverse().transpose()
+
             group = Mesh(coll_mesh.bones, coll_mesh.animation, [])
             for part in child_coll:
                 for orig_tri in part.triangles:
                     new_tri = orig_tri.copy()
                     for vert in new_tri:
                         vert.links[:] = bone_link
-                        vert.norm @= matrix
-                        vert.pos *= scale
-                        vert.pos.localise(offset, matrix)
+
+                        # Transform the vertex
+                        vert.norm @= itm
+                        vert.norm = vert.norm.norm()
+                        vert.pos @= matrix
+                        vert.pos += offset
+
                     group.triangles.append(new_tri)
             if group.triangles:
                 coll_groups[group] = group.compute_volume()
@@ -373,6 +409,22 @@ async def compile_func(
                 # 0 needs to produce this value.
             ]) or '"notsolid"',
         ))
+        # According to studiomdl, $opaque overrides $mostlyopaque.
+        if ModelFlags.force_opaque in combined_flags:
+            f.write('$opaque\n')
+            if ModelFlags.translucent_twopass in combined_flags:
+                LOGGER.warning(
+                    'Both $mostlyopaque and $opaque set with models: {}',
+                    {prop.model for prop in prop_pos}
+                )
+        elif ModelFlags.translucent_twopass in combined_flags:
+            f.write('$mostlyopaque\n')
+
+        if ModelFlags.no_forced_fade in combined_flags:
+            f.write('$noforcedfade\n')
+
+        if ModelFlags.ambient_boost in combined_flags:
+            f.write('$ambientboost\n')
 
         for mat in sorted(cdmats):
             f.write('$cdmaterials "{}"\n'.format(mat))
@@ -793,6 +845,15 @@ def group_props_ent(
                 Vec.from_str(ent['mins']),
                 Vec.from_str(ent['maxs']),
             )
+            if combine_set.mins is None:
+                combine_set.mins = origin + mins
+            else:
+                combine_set.mins.min(origin + mins)
+            if combine_set.maxes is None:
+                combine_set.maxes = origin + maxes
+            else:
+                combine_set.maxes.max(origin + maxes)
+
             size = maxes - mins
             # Enlarge slightly to ensure it never has a zero area.
             # This ensures items on the edge are included.
@@ -813,6 +874,14 @@ def group_props_ent(
             size = brush.maxes - brush.mins
             combine_set.volume += size.x * size.y * size.z
             combine_set.collision.append(make_collision_brush(origin, angles, brush))
+            if combine_set.mins is None:
+                combine_set.mins = brush.origin + brush.mins
+            else:
+                combine_set.mins.min(brush.origin + brush.mins)
+            if combine_set.maxes is None:
+                combine_set.maxes = brush.origin + brush.maxes
+            else:
+                combine_set.maxes.max(brush.origin + brush.maxes)
         else:
             raise AssertionError(ent['classname'])
 
@@ -841,7 +910,29 @@ def group_props_ent(
                     found.append(prop)
                     combine_set.used = True
 
-            actual = set(found).intersection(group)
+            if not found:  # No point checking an empty list.
+                continue
+
+            actual = []
+            total_verts = 0
+            for prop in found:
+                qc, mdl = get_model(prop.model)
+                assert mdl is not None
+                total_verts += mdl.total_verts
+                if total_verts > MAX_VERTS:
+                    # Warn for groups since these were intentionally built.
+                    LOGGER.warning(
+                        'Hit vert limit in group {} with models {}', combine_set,
+                        {prop.model for prop in found},
+                    )
+                    # Output this prop, then start a new group.
+                    if len(actual) >= min_cluster:
+                        yield list(actual)
+                        for sub_prop in actual:
+                            group.remove(sub_prop)
+                    actual.clear()
+                    total_verts = mdl.total_verts
+                actual.append(prop)
             if len(actual) >= min_cluster:
                 yield list(actual)
                 for prop in actual:
@@ -851,11 +942,12 @@ def group_props_ent(
     for combine_set_list in sets_by_skin.values():
         for combine_set in combine_set_list:
             if not combine_set.used:
-                LOGGER.warning('Unused comp_propcombine_set {}', combine_set.desc)
+                LOGGER.warning('Unused comp_propcombine_volume/_set {}', combine_set)
 
 
 def group_props_auto(
     prop_groups: Dict[Optional[tuple], List[StaticProp]],
+    get_model: Callable[[str], Tuple[Optional[QC], Optional[Model]]],
     dist: float,
     min_cluster: int,
 ) -> Iterator[List[StaticProp]]:
@@ -888,22 +980,39 @@ def group_props_auto(
             bbox_min, bbox_max = Vec.bbox(prop.origin for prop in cluster)
             center_pos = (bbox_min + bbox_max) / 2
 
-            cluster_list: List[Tuple[StaticProp, float]] = []
+            cluster_list: List[Tuple[StaticProp, int, float]] = []
 
             for prop in cluster:
                 prop_off = (center_pos - prop.origin).mag_sq()
+                qc, mdl = get_model(prop.model)
+                assert mdl is not None
                 if prop_off <= dist_sq:
-                    cluster_list.append((prop, prop_off))
+                    cluster_list.append((prop, mdl.total_verts, prop_off))
 
-            cluster_list.sort(key=operator.itemgetter(1))
-            selected_props = [
-                prop for prop, off in
-                cluster_list[:MAX_GROUP]
-            ]
+            # Sort by the distance to the original, so we prefer closer models with more verts.
+            cluster_list.sort(key=lambda tup: tup[2] - 8.0 * tup[1])
+            total_verts = 0
+            selected_props: List[StaticProp] = []
+            for prop, vert_count, off in cluster_list:
+                total_verts += vert_count
+                if total_verts > MAX_VERTS:
+                    # Make this just info level, just might be props nearby.
+                    LOGGER.info(
+                        'Hit vert limit for auto group @ {} with models {}', center_pos,
+                        {prop.model for prop, vert, off in cluster_list},
+                    )
+                    break
+                elif len(selected_props) > MAX_GROUP:
+                    break
+                else:
+                    selected_props.append(prop)
             todo.difference_update(selected_props)
 
             if len(selected_props) >= min_cluster:
                 yield selected_props
+            # Else, we grouped a too-small number of props - deliberately forget about them, they're
+            # likely isolated, meaning checking them in future is pointless. The main combine()
+            # function will re-add them to the map.
 
 
 async def combine(
@@ -1034,7 +1143,6 @@ async def combine(
                 for tex in
                 model.iter_textures([prop.skin])
             }),
-            model.flags.value,
             (prop.flags & relevant_flags).value,
             model.contents,
             model.surfaceprop,
@@ -1067,6 +1175,7 @@ async def combine(
             ),
             group_props_auto(
                 prop_groups,
+                get_model,
                 auto_range,
                 min_cluster,
             )
@@ -1083,12 +1192,13 @@ async def combine(
         LOGGER.info('Automatically finding propcombine sets...')
         grouper = group_props_auto(
             prop_groups,
+            get_model,
             auto_range,
             min_cluster,
         )
     else:
         # No way provided to choose props.
-        LOGGER.info('No propcombine groups provided.')
+        LOGGER.info('No propcombine groups or range provided.')
         return
 
     # These are models we cannot merge no matter what -
@@ -1114,7 +1224,7 @@ async def combine(
         map_name,
         folder_name='propcombine',
         version={
-            'ver': 1,
+            'ver': 2,
             'vol_tolerance': volume_tolerance,
         },
         pack_models=pack_models,
