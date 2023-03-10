@@ -48,7 +48,8 @@
 		1 : "BLU"
 	]
 
-	model[!engine](choices) : "[H] Model" : "models/editor/playerstart_tf.mdl" : "Model to display in Hammer" =
+	model[engine](string) : "Model" : : "Doesn't exist in engine, this is a hack to prevent auto packing"
+	model(choices) : "[H] Model" : "models/editor/playerstart_tf.mdl" : "Model to display in Hammer" =
 	[
 		"models/editor/playerstart_tf.mdl" : "Player Start"
 		"models/player/scout.mdl" : "Scout"
