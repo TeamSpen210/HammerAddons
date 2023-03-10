@@ -1,5 +1,6 @@
 
 @PointClass base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/ficool2/team_control_point_master")
 	appliesto(TF2) = team_control_point_master: "Control Point Master"
 	[
 	team_base_icon_2(material) : "Material for the RED Base icon" : "sprites/obj_icons/icon_base_red"

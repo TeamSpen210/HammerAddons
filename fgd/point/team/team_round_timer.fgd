@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/ficool2/team_round_timer")
 	appliesto(TF2) 
 = team_round_timer: "Round Timer. Timer starts paused by default."
 	[

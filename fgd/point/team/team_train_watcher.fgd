@@ -2,6 +2,7 @@
 @PointClass base(BaseEntityPoint, TeamNum, EnableDisable) 
 	appliesto(TF2)
 	line(128 128 128, targetname, train)
+	iconsprite("editor/ficool2/team_train_watcher")
 = team_train_watcher: "Entity that tracks the train progress through train escort maps"
 	[
 	train_can_recede(boolean) : "Can the train recede?" : "1" : "Used to hide the HUD countdown."
