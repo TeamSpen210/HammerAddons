@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ficool2/tf_gamerules")
 	appliesto(TF2) = tf_gamerules: "Proxy entity for TF Gamerules"
 	[
 	gamemode(string) : "Gamemode Type" : "" : "Server Tags."

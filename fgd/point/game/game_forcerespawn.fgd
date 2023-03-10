@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ficool2/game_forcerespawn")
 	appliesto(TF2) = game_forcerespawn: "Removes buildings, grenades, etc., from the world and forces all players to respawn (without being killed)."
 	[
 

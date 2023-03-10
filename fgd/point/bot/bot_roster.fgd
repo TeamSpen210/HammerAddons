@@ -2,6 +2,7 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(TF2)
 	autovis(TF2, TFBots, Bot Roster)
+	iconsprite("editor/ficool2/bot_roster")
  = bot_roster: "Entity specifies what classes TFBots can choose"
 	[
 	team[engine](string) : "Team" : "auto"

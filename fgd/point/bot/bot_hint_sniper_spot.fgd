@@ -2,7 +2,7 @@
 @PointClass base(BaseEntityPoint, BaseObject) 
 	appliesto(TF2) 
 	autovis(TF2, TFBots, Bot Hint)
-	studio("models/player/sniper.mdl") 
+	studio("models/bots/sniper/bot_sniper.mdl") 
 	sphere(radius) 
 = bot_hint_sniper_spot: "TF2 Sniper Spot Hint for Bots"
 	[

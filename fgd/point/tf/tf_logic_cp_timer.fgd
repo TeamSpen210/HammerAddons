@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ficool2/tf_logic_cp_timer")
 	appliesto(TF2) = tf_logic_cp_timer: "Control Point Timer Entity."
 	[
 	controlpoint(target_destination) : "Control Point" : : "The team_control_point associated with this timer."

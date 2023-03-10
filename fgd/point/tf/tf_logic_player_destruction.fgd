@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ficool2/tf_logic_player_destruction")
 	appliesto(TF2) = tf_logic_player_destruction: "Player Destruction Entity. This is used to detect a Player Destruction map."
 	[
 	prop_model_name(studio) : "Prop Model Name" : "models/flag/flag.mdl" : "model of prop that drops from player on death"

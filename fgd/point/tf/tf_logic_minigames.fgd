@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ficool2/tf_logic_minigames")
 	appliesto(TF2) = tf_logic_minigames: "Minigame mode logic."
 	[
 	// Inputs

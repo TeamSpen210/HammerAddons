@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint, RobotDestruction) 
+	iconsprite("editor/ficool2/tf_logic_robot_destruction")
 	appliesto(TF2) = tf_logic_robot_destruction: "Robot Destruction Entity. This is used to detect a Robot Destruction map."
 	[
 	max_robots(float) : "Max Robots" : 0 : "How many Robot"

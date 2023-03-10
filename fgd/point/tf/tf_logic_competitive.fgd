@@ -1,5 +1,6 @@
 
 @PointClass base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/ficool2/tf_logic_competitive")
 	appliesto(TF2) = tf_logic_competitive: "Logic specifically for competitive mode."
 	[
 

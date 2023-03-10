@@ -3,6 +3,7 @@
 	appliesto(TF2) 
 	line(255 32 32, targetname, redspawn)
 	line(32 32 255, targetname, bluespawn)
+	iconsprite("editor/ficool2/tf_base_minigame")
 = tf_base_minigame: "Base minigame"
 	[
 	redspawn(target_source) : "Red Spawn Name" : : "The name of the spawnpoints for RED for this minigame"
