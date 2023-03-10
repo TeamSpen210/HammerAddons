@@ -3,5 +3,7 @@
 = info_survivor_rescue: "Survivor rescue point"
 	[
 	rescueeyepos(vecline) : "Eye position of survivors waiting for rescue"
+	
+	model[engine](string) : "Hammer Preview"
 	model(studio) : "World model" : "models/editor/playerstart.mdl"
 	]

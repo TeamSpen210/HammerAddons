@@ -3,6 +3,7 @@
 	autovis(Test Elements, P2 Buttons, Floor)
 	studioprop() = prop_floor_ball_button: "A floor button which is only activated by a Sphere-type prop_weighted_cube."
 	[
+	model[engine](string) : "Hammer Preview"
 	model(studio) : "[H] Model" : "models/props/ball_button.mdl" : "Model to display in Hammer. Use Init Code and a comp_precache_model to change the model in-game."
 	@resources
 		[

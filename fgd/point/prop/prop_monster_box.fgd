@@ -6,7 +6,7 @@
 	boxswitchspeed(float) : "Box Switch Speed" : 400 : "Speed to force switch to a box."
 	allowsilentdissolve(boolean) : "Allow SilentDissolve input" : 1 : "Allow the SilentDissolve input to dissolve this FrankenCube."
 
-	model[engine](studio) : "Model" : "models/npcs/monsters/monster_a.mdl"
+	model[engine](string) : "Hammer Preview" : "models/npcs/monsters/monster_a.mdl"
 	model(choices) : "[H] Pose" : "models/npcs/monsters/monster_a.mdl" : "What pose to show in Hammer." =
 		[
 		"models/npcs/monsters/monster_a.mdl": "Extended"

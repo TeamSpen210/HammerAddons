@@ -5,6 +5,7 @@
 * Allow `comp_vactube_start` to be set to have a timer which starts disabled.
 * If required, add various QC flags like `$mostlyopaque` to propcombined props.
 * Limit the size of propcombined groups to avoid hitting vertex limits.
+* Prevent automatically packing models specified only as previews in various entities.
 
 --------------------
 

@@ -21,6 +21,8 @@
 	rocketlifetime[P2](float) : "Rocket Lifetime" : 20 : "The rocket will automatically detonate after this number of seconds."
 	TripwireMode[P2](boolean) : "Tripwire Mode" : 0 : "Makes the turret aim in a specific direction instead of following the target. When the beam is crossed, a rocket instantly fires."
 	TripwireAimTarget[P2](target_destination) : "Tripwire Aim Target" : : "In tripwire mode, the entity to aim at."
+	
+	model[engine](string) : "Hammer Preview"
 	model[P2](studio) : "[H] Model" : "models/props_bts/rocket_sentry.mdl" : "Model to display in Hammer. Use Init Code and a comp_precache_model to change the model in-game."
 
 	_sphere_radius[!engine](integer) readonly : "<Maximum Range>" : 8192 : "How far the turret will be able to see targets. Always 8192, but this keyvalue is needed to display the preview."
