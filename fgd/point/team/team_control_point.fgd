@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityAnimating, EnableDisable) 
 	appliesto(TF2) 
-	studio("models/effects/cappoint_hologram.mdl") 
+	studioprop() 
 = team_control_point: "Control Point"
 	[
 	spawnflags(flags) : "spawnflags" =
@@ -39,48 +39,50 @@
 	random_owner_on_restart(boolean) : "Randomly set the owner on restart" : "0" : "Randomly set the owner of this point during a full restart of the map. The ratio of default owners among the points with this flag will be kept when selecting random owners."
 
 	team_timedpoints_2(integer) : "Time-based point value for RED." : 0
-	team_timedpoints_3(integer) : "Time-based point value for BLUE." : 0
+	team_timedpoints_3(integer) : "Time-based point value for BLU." : 0
 	team_capsound_0(sound) : "Reset Sound" : : "Sound made when point resets."
-	team_capsound_2(sound) : "Red Capture Sound" : : "Sound made when RED captures."
-	team_capsound_3(sound) : "Blue Capture Sound" : : "Sound made when BLUE captures."
-	team_model_0(studio) : "Reset Model" : "models/effects/cappoint_hologram.mdl" : "Model when point reset."
+	team_capsound_2(sound) : "RED Capture Sound" : : "Sound made when RED captures."
+	team_capsound_3(sound) : "BLU Capture Sound" : : "Sound made when BLU captures."
+	team_model_0(studio) : "Neutral Model" : "models/effects/cappoint_hologram.mdl" : "Model when neither team owns the point."
 	team_model_2(studio) : "RED Model" : "models/effects/cappoint_hologram.mdl" : "Model when RED owns the point."
-	team_model_3(studio) : "BLUE Model" : "models/effects/cappoint_hologram.mdl" : "Model when BLUE owns the point."
-	team_bodygroup_0(integer) : "Reset model bodygroup" : 3
-	team_bodygroup_2(integer) : "RED model bodygroup" : 1
-	team_bodygroup_3(integer) : "BLUE model bodygroup" : 1
+	team_model_3(studio) : "BLU Model" : "models/effects/cappoint_hologram.mdl" : "Model when BLU owns the point."
+	team_bodygroup_0(integer) : "Neutral model bodygroup" : 3 : "Model bodygroup when neither team owns the point"
+	team_bodygroup_2(integer) : "RED model bodygroup" : 1 : "Model bodygroup when RED owns the point"
+	team_bodygroup_3(integer) : "BLU model bodygroup" : 1 : "Model bodygroup when BLU owns the point"
 	team_icon_0(material) : "HUD icon neutral" : "sprites/obj_icons/icon_obj_neutral" : "HUD icon material when no one owns the point."
 	team_icon_2(material) : "HUD icon RED" : "sprites/obj_icons/icon_obj_red" : "HUD icon material when RED owns the point."
-	team_icon_3(material) : "HUD icon BLUE" : "sprites/obj_icons/icon_obj_blu" : "HUD icon material when BLUE owns the point."
+	team_icon_3(material) : "HUD icon BLU" : "sprites/obj_icons/icon_obj_blu" : "HUD icon material when BLU owns the point."
 	team_overlay_0(material) : "HUD overlay neutral" : : "HUD material that will overlay the icon when no one owns the point."
 	team_overlay_2(material) : "HUD overlay RED" : : "HUD material that will overlay the icon when RED owns the point."
-	team_overlay_3(material) : "HUD overlay BLUE" : : "HUD material that will overlay the icon when BLUE owns the point."
+	team_overlay_3(material) : "HUD overlay BLU" : : "HUD material that will overlay the icon when BLU owns the point."
 	team_previouspoint_2_0(target_source) : "RED Previous Required Point 1" : : "The name of a previous capture point that RED must own to be able to capture this point. If empty, the team must own all points preceding this one. Pointing to itself means no previous point required."
 	team_previouspoint_2_1(target_source) : "RED Previous Required Point 2" : : "The name of a second previous capture point that RED must own to be able to capture this point."
 	team_previouspoint_2_2(target_source) : "RED Previous Required Point 3" : : "The name of a third previous capture point that RED must own to be able to capture this point."
-	team_previouspoint_3_0(target_source) : "BLUE Previous Required Point 1" : : "The name of a previous capture point that BLUE must own to be able to capture this point. If empty, the team must own all points preceding this one. Pointing to itself means no previous point required."
-	team_previouspoint_3_1(target_source) : "BLUE Previous Required Point 2" : : "The name of a second previous capture point that BLUE must own to be able to capture this point."
-	team_previouspoint_3_2(target_source) : "BLUE Previous Required Point 3" : : "The name of a third previous capture point that BLUE must own to be able to capture this point."
+	team_previouspoint_3_0(target_source) : "BLU Previous Required Point 1" : : "The name of a previous capture point that BLU must own to be able to capture this point. If empty, the team must own all points preceding this one. Pointing to itself means no previous point required."
+	team_previouspoint_3_1(target_source) : "BLU Previous Required Point 2" : : "The name of a second previous capture point that BLU must own to be able to capture this point."
+	team_previouspoint_3_2(target_source) : "BLU Previous Required Point 3" : : "The name of a third previous capture point that BLU must own to be able to capture this point."
+
+	model(studio) : "[H] Model" : "models/effects/cappoint_hologram.mdl" : "Model to show in Hammer"
 
 	// Inputs
 	input SetOwner(integer) : "Set the owner of the point."
 	input HideModel(void) : "Hide the control point model."
 	input ShowModel(void) : "Show the control point model again."
 	input SetLocked(integer) : "Lock the control point. 0 = unlocked, 1 = locked"
-	input SetUnlockTime(integer) : "This will automatically unlock the control point in the specified amound of time (seconds)."
+	input SetUnlockTime(integer) : "Unlock the control point after the specified number of seconds have passed."
 
 	input RoundActivate(void) : "Return to its original team and locked."
 
 	// Outputs
 	output OnOwnerChangedToTeam1(void) : "Sent when owner is changed to RED."
-	output OnOwnerChangedToTeam2(void) : "Sent when owner is changed to BLUE."
+	output OnOwnerChangedToTeam2(void) : "Sent when owner is changed to BLU."
 	output OnCapReset(void) : "Sent when owner is changed to neutral."
 
 	output OnRoundStartOwnedByTeam1(void) : "Sent when a round is starting and the point is owned by RED."
-	output OnRoundStartOwnedByTeam2(void) : "Sent when a round is starting and the point is owned by BLUE."
+	output OnRoundStartOwnedByTeam2(void) : "Sent when a round is starting and the point is owned by BLU."
 	
 	output OnCapTeam1(void) : "Sent when RED capture this point."
-	output OnCapTeam2(void) : "Sent when BLUE capture this point."
+	output OnCapTeam2(void) : "Sent when BLU capture this point."
 	output OnUnlocked(void) : "Sent when point is unlocked via the SetLocked(0) or SetUnlockTime inputs."
 
 	@resources
