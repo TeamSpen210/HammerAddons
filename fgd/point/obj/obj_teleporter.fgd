@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityAnimating, BaseObject) 
 	appliesto(TF2) 
-	studio("models/buildables/teleporter_light.mdl") 
+	studioprop("models/buildables/teleporter_light.mdl") 
 	line(255 255 255, targetname, matchingteleporter)
 = obj_teleporter: "TF2 Teleporter"
 	[
