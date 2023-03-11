@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityPoint) 
+@PointClass base(BaseEntityPoint, TeamNum) 
 	iconsprite("editor/ficool2/tf_logic_cp_timer")
 	appliesto(TF2) = tf_logic_cp_timer: "Control Point Timer Entity."
 	[

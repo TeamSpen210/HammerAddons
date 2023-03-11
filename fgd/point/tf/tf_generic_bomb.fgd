@@ -15,7 +15,7 @@
 		0: "Damage attacker and enemies"
 		1: "Damage everyone"
 		]
-
+	passActivator(boolean) : "Pass Activator" : 0 : "Pass the activator in the OnDetonate output"
 
 	// Inputs
 	input Detonate(void) : "Force detonation."
