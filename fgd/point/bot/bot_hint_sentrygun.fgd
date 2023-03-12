@@ -1,5 +1,5 @@
 
-@PointClass base(BaseEntityPoint, BaseObject, EnableDisable) 
+@PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(TF2) 
 	autovis(TF2, TFBots, Bot Hint)
 	studio("models/buildables/sentry1_blueprint.mdl") = bot_hint_sentrygun: "TF2 Sentry Gun Placement Hint for Bots"

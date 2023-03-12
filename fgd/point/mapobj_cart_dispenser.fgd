@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint, BaseObject) 
 	appliesto(TF2) 
-	iconsprite("editor/bullseye.vmt") = mapobj_cart_dispenser: "TF2 Dispenser"
+	iconsprite("editor/ficool2/mapobj_cart_dispenser.vmt") = mapobj_cart_dispenser: "TF2 Dispenser"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
