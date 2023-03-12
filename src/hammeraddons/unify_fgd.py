@@ -24,8 +24,8 @@ from srctools.filesys import RawFileSystem
 # If 'until_l4d' etc is used in FGD, only games before include it.
 GAMES_CHRONO: List[Tuple[str, str]] = [
     ('HL2', 'Half-Life 2'),
-    ('EP1', 'Half-Life 2 Episode 1'),
-    ('EP2', 'Half-Life 2 Episode 2'),
+    ('EP1', 'Half-Life 2: Episode One'),
+    ('EP2', 'Half-Life 2: Episode Two'),
 
     ('TF2',   'Team Fortress 2'),
     ('P1',    'Portal'),
@@ -33,7 +33,7 @@ GAMES_CHRONO: List[Tuple[str, str]] = [
     ('L4D2',  'Left 4 Dead 2'),
     ('ASW',   'Alien Swarm'),
     ('P2',    'Portal 2'),
-    ('CSGO',  'Counter-Strike Global Offensive'),
+    ('CSGO',  'Counter-Strike: Global Offensive'),
 
     ('SFM',   'Source Filmmaker'),
     ('DOTA2', 'Dota 2'),
@@ -48,9 +48,9 @@ MODS_BRANCHED: Dict[str, List[Tuple[str, str]]] = {
     ],
     'EP2': [
         ('MESA', 'Black Mesa'),
-        ('GMOD', "Gary's Mod"),
-        ('EZ1', 'Entropy Zero'),
-        ('EZ2', 'Entropy Zero 2'),
+        ('GMOD', "Garry's Mod"),
+        ('EZ1', 'Entropy: Zero'),
+        ('EZ2', 'Entropy: Zero 2'),
         ('KZ', 'Kreedz Climbing'),
     ],
     'P2': [
