@@ -213,17 +213,6 @@ def _polyfill_scripts(fgd: FGD) -> None:
                     inp.type = ValueTypes.STRING
 
 
-@_polyfill('until_csgo')
-def _polyfill_worldtext(fgd: FGD):
-    """Strip worldtext(), since this is not available."""
-    for ent in fgd:
-        ent.helpers[:] = [
-            helper
-            for helper in ent.helpers
-            if not isinstance(helper, HelperWorldText)
-        ]
-
-
 @_polyfill()
 def _polyfill_ext_valuetypes(fgd: FGD) -> None:
     # Convert extension types to their real versions.
