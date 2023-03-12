@@ -1,0 +1,12 @@
+@BaseClass base(Item) 
+	appliesto(TF2)
+	sphere(fademindist) 
+	sphere(fademaxdist) = TFPickup: "Base class for TF2 item pickups"
+	[
+	pickup_sound(string) : "Sound Effect" : : "The sound script entry that is played when the item is picked up."
+	pickup_particle(string) : "Particle Effect" : : "The particle effect that is displayed when the item is picked up."
+
+	// Outputs
+	output OnRedPickup(void) : "Sent when RED picks-up the item."
+	output OnBluePickup(void) : "Sent when BLU picks-up the item."
+	]
