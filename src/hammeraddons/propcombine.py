@@ -4,8 +4,9 @@ This merges static props together, so they can be drawn with a single
 draw call.
 """
 from typing import (
-    Callable, Dict, FrozenSet, Iterable, Iterator, List, MutableMapping, Optional, Set, Tuple,
-    Union,
+    Callable, Dict, FrozenSet, Iterable, Iterator, List, Literal, MutableMapping, Optional, Set,
+    Tuple,
+    Union, Sequence,
 )
 from collections import defaultdict
 from enum import Enum
@@ -957,58 +958,89 @@ def group_props_auto(
     # Each of these groups cannot be merged with other ones.
 
     dist_sq = dist * dist
-    large_dist_sq = 4 * dist_sq
+    neighbours: Dict[StaticProp, Sequence[StaticProp]] = {}
+
+    def find_neighbours(start: StaticProp) -> Sequence[StaticProp]:
+        """Find props within dist from the specified one."""
+        try:
+            return neighbours[start]
+        except KeyError:
+            pass
+        neigh = [
+            prop for prop in group
+            if (prop.origin - start.origin).mag_sq() <= dist_sq
+        ]
+        neighbours[start] = neigh
+        return neigh
+
+    UNSET: Literal['unset'] = 'unset'
+    NOISE: Literal['noise'] = 'noise'
 
     for group in prop_groups.values():
         # No point merging single/empty groups.
         if len(group) < 2:
             continue
 
-        todo = set(group)
-        while todo:
-            center = todo.pop()
-            cluster = {center}
+        # DBSCAN algorithm.
+        labels: Dict[StaticProp, Union[int, Literal['noise', 'unset']]] = dict.fromkeys(group, UNSET)
+        neighbours.clear()
+        cluster_ind = 0
 
-            for prop in todo:
-                if (center.origin - prop.origin).mag_sq() <= large_dist_sq:
-                    cluster.add(prop)
-                    if len(cluster) > MAX_GROUP:
-                        # Limit the number of maximum props that can be used.
-                        break
+        LOGGER.debug('Grouping {} props', len(group))
 
-            if len(cluster) < min_cluster:
+        for prop in group:
+            if labels[prop] is not UNSET:
                 continue
+            neigh = find_neighbours(prop)
+            if len(neigh) < min_cluster:
+                labels[prop] = NOISE
+                continue
+            cluster_ind += 1
+            labels[prop] = cluster_ind
+            todo = set(neigh)
 
-            bbox_min, bbox_max = Vec.bbox(prop.origin for prop in cluster)
-            center_pos = (bbox_min + bbox_max) / 2
+            while todo:
+                sub_prop = todo.pop()
+                if labels[sub_prop] is NOISE:
+                    labels[sub_prop] = cluster_ind
+                elif labels[sub_prop] != UNSET:
+                    continue  # Already handled.
+                labels[sub_prop] = cluster_ind
+                neigh = find_neighbours(sub_prop)
+                if len(neigh) > min_cluster:
+                    todo.update(neigh)
 
-            cluster_list: List[Tuple[StaticProp, int, float]] = []
+        neighbours.clear()  # Discard, no longer useful.
 
-            for prop in cluster:
-                prop_off = (center_pos - prop.origin).mag_sq()
-                qc, mdl = get_model(prop.model)
-                assert mdl is not None
-                if prop_off <= dist_sq:
-                    cluster_list.append((prop, mdl.total_verts, prop_off))
+        clusters: Dict[int, List[StaticProp]] = defaultdict(list)
+        for prop, key in labels.items():
+            if type(key) is int:
+                clusters[key].append(prop)
 
-            # Sort by the distance to the original, so we prefer closer models with more verts.
-            cluster_list.sort(key=lambda tup: tup[2] - 8.0 * tup[1])
+        for cluster in clusters.values():
             total_verts = 0
             selected_props: List[StaticProp] = []
-            for prop, vert_count, off in cluster_list:
-                total_verts += vert_count
+            warned: bool = False
+            for prop in cluster:
+                qc, mdl = get_model(prop.model)
+                assert mdl is not None
+                total_verts += mdl.total_verts
                 if total_verts > MAX_VERTS:
                     # Make this just info level, just might be props nearby.
-                    LOGGER.info(
-                        'Hit vert limit for auto group @ {} with models {}', center_pos,
-                        {prop.model for prop, vert, off in cluster_list},
-                    )
-                    break
-                elif len(selected_props) > MAX_GROUP:
-                    break
-                else:
-                    selected_props.append(prop)
-            todo.difference_update(selected_props)
+                    if not warned:
+                        bb_min, bb_max = Vec.bbox(prop.origin for prop in cluster)
+                        LOGGER.info(
+                            'Hit vert limit for auto group @ ({} - {}) with models {}' ,
+                            bb_min, bb_max,
+                            {prop.model for prop in cluster},
+                        )
+                        warned = True
+                    # Split the group here, create a new prop.
+                    if len(selected_props) >= min_cluster:
+                        yield selected_props
+                    selected_props = []
+                    total_verts = mdl.total_verts
+                selected_props.append(prop)
 
             if len(selected_props) >= min_cluster:
                 yield selected_props
