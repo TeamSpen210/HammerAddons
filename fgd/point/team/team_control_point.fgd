@@ -14,7 +14,7 @@
 
 	point_start_locked(boolean) : "Start locked" : 0 : "Locked means the point will not be available for capture until it is unlocked via its input." 
 
-	point_printname(string) : "Print Name" : "TODO: Set Name" : "LOCALIZED name to print on the HUD."
+	point_printname(string) : "Print Name" : "TODO: Set Name" : "The name of this control point to print on the HUD. Can be a raw text string or a localization token."
 	point_group(integer) : "Group Index" : 0 : "Used for grouping points together under a team_control_point_master (not using control point rounds)."
 	
 	point_default_owner[engine](integer) : "Default Owner" : 0
@@ -63,6 +63,7 @@
 	team_previouspoint_3_2(target_source) : "BLU Previous Required Point 3" : : "The name of a third previous capture point that BLU must own to be able to capture this point."
 
 	model(studio) : "[H] Model" : "models/effects/cappoint_hologram.mdl" : "Model to show in Hammer"
+	src_propname[srctools](target_destination) : "Linked Prop" : : "Set to the name of a prop that should change its skin based on who owns the point (such as the control point base model)"
 
 	// Inputs
 	input SetOwner(integer) : "Set the owner of the point."
