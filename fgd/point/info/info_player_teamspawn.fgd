@@ -39,8 +39,8 @@
 		256: "Engineer" : 1
 		]
 
-	round_bluespawn(target_destination) : "Blue spawn for round" : : "Blue spawn point when the associated round is being played."
-	round_redspawn(target_destination) : "Red spawn for round" : : "Red spawn point when the associated round is being played."
+	round_bluespawn(target_destination) : "BLU spawn for round" : : "BLU spawn point when the associated round is being played."
+	round_redspawn(target_destination) : "RED spawn for round" : : "RED spawn point when the associated round is being played."
 
 	skin[!engine](choices) : "[H] Team" : 0 : "Team color to display in Hammer" =
 	[

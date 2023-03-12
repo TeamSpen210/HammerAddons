@@ -7,8 +7,8 @@
 	teamnum[engine](integer) : "Team" : 2
 	teamnum(choices) : "Team" : 2 : "Team" =
 		[
-		2: "Red"
-		3: "Blue"
+		2: "RED"
+		3: "BLU"
 		]
 
 	bot_class[engine](integer) : "Class" : 0

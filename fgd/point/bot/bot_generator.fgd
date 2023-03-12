@@ -8,8 +8,8 @@
 	team(choices) : "Team" : "auto" : "Team" =
 		[
 		"auto": "Any"
-		"red": "Red"
-		"blue": "Blue"
+		"red": "RED"
+		"blue": "BLU"
 		]
 
 	class[engine](string) : "Class" : "auto"

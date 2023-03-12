@@ -8,8 +8,8 @@
 	teamnum[TF2](choices) : "Team" : 0 : "Team" =
 		[
 		0: "None (Sudden Death)"
-		2: "Red"
-		3: "Blue"
+		2: "RED"
+		3: "BLU"
 		]
 
 	team[engine](integer) : "Team" : 0

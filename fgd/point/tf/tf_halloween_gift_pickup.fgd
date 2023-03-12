@@ -8,6 +8,6 @@
 	pickup_particle(string) : "Particle Effect" : : "The particle effect that is displayed when the item is picked up."
 
 	// Outputs
-	output OnRedPickup(void) : "Sent when Red picks-up the item."
-	output OnBluePickup(void) : "Sent when Blue picks-up the item."
+	output OnRedPickup(void) : "Sent when RED picks-up the item."
+	output OnBluePickup(void) : "Sent when BLU picks-up the item."
 	]

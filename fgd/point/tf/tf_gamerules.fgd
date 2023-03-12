@@ -44,11 +44,11 @@
 
 	// Outputs
 	output OnWonByTeam1(void) : "Sent when RED wins the round."
-	output OnWonByTeam2(void) : "Sent when BLUE wins the round."
+	output OnWonByTeam2(void) : "Sent when BLU wins the round."
 	output Team1PlayersChanged(integer) : "Sent when RED team player count changes, due to a player joining or leaving the team."
-	output Team2PlayersChanged(integer) : "Sent when BLUE team player count changes, due to a player joining or leaving the team."
-	output OnPowerupImbalanceTeam1(void) : "Sent when BLUE team has a powerup kill advantage over the RED team. Initiate RED team assist measures now."
-	output OnPowerupImbalanceTeam2(void) : "Sent when RED team has a powerup kill advantage over the BLUE team. Initiate BLUE team assist measures now."
+	output Team2PlayersChanged(integer) : "Sent when BLU team player count changes, due to a player joining or leaving the team."
+	output OnPowerupImbalanceTeam1(void) : "Sent when BLU team has a powerup kill advantage over the RED team. Initiate RED team assist measures now."
+	output OnPowerupImbalanceTeam2(void) : "Sent when RED team has a powerup kill advantage over the BLU team. Initiate BLU team assist measures now."
 	output OnPowerupImbalanceMeasuresOver(void) : "Sent when powerup imbalance measures should be stopped"
 	output OnStateEnterBetweenRounds(void) : "Fired when entering the between-rounds state (MvM and Competitive)."
 	output OnStateEnterPreRound(void) : "Fired when entering the pre-round state (just before round running)."

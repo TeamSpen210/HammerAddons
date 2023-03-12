@@ -9,8 +9,8 @@
 	team(choices) : "Team" : "auto" : "Team" =
 		[
 		"auto": "Any"
-		"red": "Red"
-		"blue": "Blue"
+		"red": "RED"
+		"blue": "BLU"
 		]
 
 	allowclasschanges(boolean) : "Allow Class Changes" : "1" : "Allow TFBots to choose a new class when they respawn."
