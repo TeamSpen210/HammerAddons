@@ -30,8 +30,17 @@
 		"weapon_rifle_ak47": "AK47"
 		"weapon_hunting_rifle": "Hunting Rifle"
 		"weapon_sniper_military": "Sniper Military"
+		"weapon_smg_mp5" : "MP5"
+		"weapon_rifle_sg552" : "SG552"
+		"weapon_sniper_awp" : "Sniper AWP"
+		"weapon_sniper_scout" : "Sniper Scout"
 		]
 
 	spawn_without_director(boolean) : "Spawn instantly without director" : 0 : "Bypass the proximity checks that make nearby weapons be the same tier / not the same weapon."
+	no_cs_weapons(boolean) : "No CS Weapons" : 0 : "When selecting 'any' weapon, set this to true if you do not want CS weapons."
 
+	spawnflags(flags) = 
+	[
+		16 : "Constrain to spawn position (don't drop to the ground)" : 0
+	]
 	]
