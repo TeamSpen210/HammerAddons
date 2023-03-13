@@ -1,7 +1,6 @@
-// IO available on all entities.
-@BaseClass = BaseEntityIO
-	[
-	// Inputs
+@BaseClass = BaseEntityInputs
+[
+    // Inputs
 	input Kill(void) : "Removes this entity from the world."
 	input KillHierarchy(void) : "Removes this entity and all its children from the world."
 	
@@ -26,14 +25,7 @@
 	input ClearScriptScope[+MBase, +VSCRIPT](void) : "Clears this entity's script scope"
 	input TerminateScriptScope[+TF2, +VSCRIPT](void) : "Terminates the script scope of the entity."
 
-	// Outputs
-	output OnUser1(void) : "Fired in response to FireUser1 input."
-	output OnUser2(void) : "Fired in response to FireUser2 input."
-	output OnUser3(void) : "Fired in response to FireUser3 input."
-	output OnUser4(void) : "Fired in response to FireUser4 input."
-	output OnKilled[MBase, L4D](void) : "Fired when the entity is killed and removed from the game."
-
-	// Mapbase BaseEntity changes:
+    // Mapbase Inputs:
 	input PassUser1[MBase](string) : "Causes this entity's OutUser1 output to be fired, passing along the parameter unchanged."
 	input PassUser2[MBase](string) : "Causes this entity's OutUser2 output to be fired, passing along the parameter unchanged."
 	input PassUser3[MBase](string) : "Causes this entity's OutUser3 output to be fired, passing along the parameter unchanged."
@@ -65,9 +57,4 @@
 	input SetThinkNull[MBase](void) : "Sets this entity's general think function to null. Behavior varies from entity to entity."
 	
 	input Use[MBase](void) : "More or less replicates the player interacting with an entity. (+USE)"
-
-	output OutUser1[MBase](string) : "Fires in response to PassUser1 input, with the parameter passed through unchanged."
-	output OutUser2[MBase](string) : "Fires in response to PassUser2 input, with the parameter passed through unchanged."
-	output OutUser3[MBase](string) : "Fires in response to PassUser3 input, with the parameter passed through unchanged."
-	output OutUser4[MBase](string) : "Fires in response to PassUser4 input, with the parameter passed through unchanged."
-	]
+]

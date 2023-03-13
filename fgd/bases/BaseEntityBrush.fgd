@@ -1,4 +1,4 @@
-@BaseClass base(BaseEntityIO) = BaseEntityBrush
+@BaseClass base(BaseEntityInputs, BaseEntityOutputs) = BaseEntityBrush
 	[
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	globalname(string) : "Global Entity Name" : : "Name by which this entity is linked to another entity in a different map. " +
