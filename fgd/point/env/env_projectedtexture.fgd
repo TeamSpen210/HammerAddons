@@ -12,7 +12,7 @@
 	spawnflags(flags)  =
 		[
 		1: "Enabled" : 1
-		2: "Always Update (moving light)" : 0 [since_ASW. MBase]
+		2: "Always Update (moving light)" : 0 [since_ASW, MBase]
 		]
 
 	target(target_destination) : "target" : : "target"
