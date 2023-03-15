@@ -1,5 +1,5 @@
 // Special case - entities that aren't quite brushes or point ents.
-@BaseClass base(BaseEntityIO) = BaseEntity
+@BaseClass base(BaseEntityInputs, BaseEntityOutputs) = BaseEntity
 	[
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	globalname(string) : "Global Entity Name" : : "Name by which this entity is linked to another entity in a different map. " +

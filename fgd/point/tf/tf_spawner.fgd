@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(TF2) 
 	line(255 255 255, targetname, template)
+	iconsprite("editor/ficool2/tf_spawner")
 = tf_spawner: "An entity that spawns templatized entities."
 	[
 	count(integer) : "Count" : 1 : "Total number of entities to spawn over the lifetime of this spawner."

@@ -20,4 +20,10 @@
 	precise(boolean) : "Precise" : 0
 	crouch(boolean) : "Crouch" : 0
 	stairs(boolean) : "Stairs" : 0
+	remove_attributes(integer) : "Remove Attributes" : 0 : "Should remove attributes from nav areas instead of applying them?"
+	tank_only(boolean) : "Tank Only" : 0
+	mob_only(boolean) : "Mob Only" : 0
+
+	// Inputs
+	input ApplyNavAttributes(void) : "Applies the nav attributes."
 	]

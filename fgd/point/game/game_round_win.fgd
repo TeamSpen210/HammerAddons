@@ -1,14 +1,15 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(TF2, Mesa) 
  	autovis(Point Entities, Globals, Game Round End)
+	iconsprite("editor/ficool2/game_round_win")
 = game_round_win: "Tells the game rules that the round has either been won (if a team is assigned) or (for TF2) enter Sudden Death mode (if no team is assigned)."
 	[
 	teamnum[engine](integer) : "Team" : 0
 	teamnum[TF2](choices) : "Team" : 0 : "Team" =
 		[
 		0: "None (Sudden Death)"
-		2: "Red"
-		3: "Blue"
+		2: "RED"
+		3: "BLU"
 		]
 
 	team[engine](integer) : "Team" : 0

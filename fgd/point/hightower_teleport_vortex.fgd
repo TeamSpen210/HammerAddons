@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ficool2/hightower_teleport_vortex")
 	appliesto(TF2) = hightower_teleport_vortex: "Halloween Vortex"
 	[
 	target_base_name(string) : "Destination base name" : : "The base name of the destination.  (ie. If using 'hell_winner' and 'hell_loser', then 'hell' is the base name.)"
