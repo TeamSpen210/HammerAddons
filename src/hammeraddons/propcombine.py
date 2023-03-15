@@ -671,9 +671,14 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
                     return None
             elif token_type is Token.BRACE_OPEN:
                 # Skip other "compound" sections we don't care about.
+                depth = 1
                 for body_type, body_value in tok:
                     if body_type is Token.BRACE_CLOSE:
-                        break
+                        depth -= 1
+                        if not depth:
+                            break
+                    elif body_type is Token.BRACE_OPEN:
+                        depth += 1
                 else:
                     raise tok.error("EOF reached without closing brace (})!")
 
