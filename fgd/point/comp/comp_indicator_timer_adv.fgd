@@ -1,0 +1,44 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(+srctools, P2)
+	autovis(Overlays,Indicator Panel)
+	studioprop("models/editor/prop_indicator_panel.mdl")
+= comp_indicator_timer_adv: "A custom version of prop_indicator_panel which allows more flexible counting." +
+	"This generates a pair of logic_relays with timed outputs."
+	[
+	timerduration(float) : "Timer Duration" : 0 : "Amount of time the timer will take to elapse"
+
+	skin[engine](integer) : "Starting Background" : 0
+	skin(choices) : "Starting Background" : 0 : "The starting background" =
+		[
+		0: "Blue"
+		1: "Orange"
+		]
+
+	body[engine](integer) : "Starting Slices" : 0
+	skin(choices) : "Starting Slices" : 0 : "The number of slices to start with" =
+		[
+		0: "Full" // slice_solid_ref
+		// 1: "slice1_ref"
+		// 2: "slice2_ref"
+		// 3: "slice3_ref"
+		// 4: "slice4_ref"
+		// 5: "slice5_ref"
+		// 6: "slice6_ref"
+		// 7: "slice7_ref"
+		// 8: "slice8_ref"
+		// 9: "slice_fade_ref"
+		10: "Blank" // blank
+		]
+
+	generateup(boolean) : "Generate Countup Relay" : 1 : "Generate the count-up animation logic. Disable if CountUp isn't used to save an entity."
+	generatedn(boolean) : "Generate Countdown Relay" : 1 : "Generate the count-down animation logic. Disable if CountDown isn't used to save an entity."
+
+	// Inputs
+	input SetOrange(void) : "Sets the background to orange."
+	input SetBlue(void) : "Sets the background to blue."
+
+	input CountUp(void) : "Start the timer counting up, filling in the slices."
+	input CoundDown(void): "Start the timer counting down, emptying the slices."
+	input CancelUp(void): "Cancel a count-up in progress."
+	input CancelDown(void): "Cancel a count-up in progress."
+	]
