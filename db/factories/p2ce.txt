@@ -52,7 +52,6 @@ entityflame
 env_ambient_light
 env_ar2explosion
 env_beam
-env_beverage
 env_blood
 env_bubbles
 env_citadel_energy_core
@@ -284,7 +283,6 @@ infodecal
 instanced_scripted_scene
 item_nugget
 item_boots
-item_sodacan
 item_suit
 item_suitcharger
 keyframe_rope
