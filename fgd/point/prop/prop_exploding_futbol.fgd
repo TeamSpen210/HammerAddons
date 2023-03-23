@@ -7,4 +7,6 @@
 
 	// Inputs
 	input Explode(void) : "Explodes the bomb."
+
+	output OnExplode(void) : "Called when the bomb explodes."
 	]
