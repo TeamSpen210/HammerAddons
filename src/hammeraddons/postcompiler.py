@@ -1,4 +1,5 @@
 """Runs before VRAD, to run operations on the final BSP."""
+import shutil
 from pathlib import Path
 import sys
 import warnings
@@ -20,7 +21,6 @@ import re
 
 from srctools import __version__ as version_lib, conv_bool
 from srctools.bsp import BSP
-from srctools.fgd import FGD
 from srctools.filesys import ZipFileSystem
 from srctools.packlist import PackList
 
@@ -139,6 +139,19 @@ async def main(argv: List[str]) -> None:
         LOGGER.warning('No studiomdl path provided.')
         studiomdl_loc = None
 
+    modelcompile_dump_str = conf.opts.get(config.MODEL_COMPILE_DUMP)
+    modelcompile_dump = conf.expand_path(modelcompile_dump_str) if modelcompile_dump_str else None
+    if modelcompile_dump is not None:
+        LOGGER.info('Clearing model compile dump folder {}', modelcompile_dump)
+        try:
+            for file in modelcompile_dump.iterdir():
+                if file.is_dir():
+                    shutil.rmtree(file)
+                else:
+                    file.unlink()
+        except FileNotFoundError:
+            pass  # Already empty.
+
     use_comma_sep = conf.opts.get(config.USE_COMMA_SEP)
     if use_comma_sep is None:
         # Guess the format, by checking existing outputs.
@@ -176,6 +189,7 @@ async def main(argv: List[str]) -> None:
         studiomdl_loc,
         transform_conf,
         pack_tags,
+        modelcompile_dump=modelcompile_dump,
     )
 
     if studiomdl_loc is not None and args.propcombine:
@@ -211,6 +225,7 @@ async def main(argv: List[str]) -> None:
             min_cluster=conf.opts.get(config.PROPCOMBINE_MIN_CLLUSTER),
             blacklist=conf.opts.get(config.PROPCOMBINE_BLACKLIST).as_array(),
             volume_tolerance=conf.opts.get(config.PROPCOMBINE_VOLUME_TOLERANCE),
+            compile_dump=modelcompile_dump,
             debug_dump=args.dumpgroups,
             pack_models=conf.opts.get(config.PROPCOMBINE_PACK) or False,
         )

@@ -372,6 +372,12 @@ STUDIOMDL = Opt.string(
     """,
 )
 
+MODEL_COMPILE_DUMP = Opt.string(
+    'modelcompile_dump', '',
+    """If set, models will be compiled as subfolders of this folder, instead of in a 
+    temporary directory.
+""")
+
 USE_COMMA_SEP = Opt.boolean_or_none(
     'use_comma_sep',
     """Before L4D, entity I/O used ',' to seperate the different parts.

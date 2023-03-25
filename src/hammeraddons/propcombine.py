@@ -1064,6 +1064,7 @@ async def combine(
     qc_folders: Optional[List[Path]]=None,
     crowbar_loc: Optional[Path]=None,
     decomp_cache_loc: Optional[Path]=None,
+    compile_dump: Optional[Path]=None,
     blacklist: Iterable[str]=(),
     auto_range: float=0,
     min_cluster: int=2,
@@ -1266,6 +1267,7 @@ async def combine(
             'ver': 2,
             'vol_tolerance': volume_tolerance,
         },
+        compile_dir=compile_dump,
         pack_models=pack_models,
     ) as compiler:
         async def do_combine(group: List[StaticProp]) -> None:
