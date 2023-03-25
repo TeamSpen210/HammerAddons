@@ -52,9 +52,10 @@ class CollType(Enum):
 
 @attrs.frozen
 class QC:
+    """The relevant we need from a QC."""
     path: str  # QC path.
-    ref_smd: str  # Location of main visible geometry.
-    phy_smd: Optional[str]  # Relative location of collision model, or None
+    ref_smd: str  # Absolute location of main visible geometry.
+    phy_smd: Optional[str]  # Absolute location of collision model, or None
     ref_scale: float  # Scale of main model.
     phy_scale: float  # Scale of collision model.
     is_concave: bool  # If the collision model is known to be concave.
@@ -150,10 +151,6 @@ def make_collision_brush(origin: Vec, angles: Angle, brush: BModel) -> Callable[
     """Produce a collision checker using a brush entity."""
     # Transpose the angles, giving us the inverse transform.
     inv_angles = Matrix.from_angle(angles).transpose()
-    # brushes = {
-    #     br for leaf in brush.node.iter_leafs()
-    #     for br in leaf.brushes
-    # }
 
     def check(point: Vec) -> bool:
         """Check if the given position is inside the volume."""
@@ -336,7 +333,6 @@ async def compile_func(
         offset = Vec(prop.x, prop.y, prop.z)
         rot_matrix = Matrix.from_angle(prop.pit, prop.yaw, prop.rol)
 
-
         ref_mesh.append_model(child_ref, rot_matrix, offset, scale * qc.ref_scale)
 
         if has_coll and child_coll is not None:
@@ -345,9 +341,9 @@ async def compile_func(
             matrix = Matrix()
             
             # Set the scale
-            matrix[0,0] = phy_scale.x
-            matrix[1,1] = phy_scale.y
-            matrix[2,2] = phy_scale.z
+            matrix[0, 0] = phy_scale.x
+            matrix[1, 1] = phy_scale.y
+            matrix[2, 2] = phy_scale.z
 
             # Rotate the matrix
             matrix @= rot_matrix
@@ -1271,15 +1267,15 @@ async def combine(
         pack_models=pack_models,
     ) as compiler:
         async def do_combine(group: List[StaticProp]) -> None:
-            nonlocal group_count
+            """Task run to combine one prop."""
             grouped_prop = await combine_group(compiler, group, get_model, volume_tolerance)
             rejected.difference_update(group)
             final_props.append(grouped_prop)
-            group_count += 1
 
         async with trio.open_nursery() as nursery:
             for group_ in grouper:
                 nursery.start_soon(do_combine, group_)
+                group_count += 1
 
     final_props.extend(rejected)
 
