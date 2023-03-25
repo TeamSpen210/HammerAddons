@@ -40,6 +40,16 @@ from .mdl_compiler import ModelCompiler
 LOGGER = get_logger(__name__)
 
 
+class CollType(Enum):
+    """Collision types that static props can have."""
+    NONE = 0  # No collision
+    BSP = 1  # Treat the same as MODEL.
+    BBOX = 2
+    OBB = 3
+    OBB_YAW = 4
+    VPHYS = 6  # Collision model
+
+
 @attrs.frozen
 class QC:
     path: str  # QC path.
@@ -78,7 +88,7 @@ MAX_VERTS = 65536//3 - 64
 # Cache of the SMD models we have already parsed, so we don't need
 # to parse them again. For the collision model, we store them pre-split.
 _mesh_cache: ACache[Tuple[QC, int], Mesh] = ACache()
-_coll_cache: ACache[Optional[str], List[Mesh]] = ACache()
+_coll_cache: ACache[Tuple[Optional[str], CollType], List[Mesh]] = ACache()
 
 # Limit the amount of decompile/recompiles we do simultaneously.
 LIM_PROCESS = trio.CapacityLimiter(8)
@@ -151,16 +161,6 @@ def make_collision_brush(origin: Vec, angles: Angle, brush: BModel) -> Callable[
         leaf = brush.node.test_point(local_point)
         return leaf is not None and len(leaf.brushes) > 0
     return check
-
-
-class CollType(Enum):
-    """Collision types that static props can have."""
-    NONE = 0  # No collision
-    BSP = 1  # Treat the same as MODEL.
-    BBOX = 2
-    OBB = 3
-    OBB_YAW = 4
-    VPHYS = 6  # Collision model
 
 
 @attrs.frozen
@@ -330,7 +330,7 @@ async def compile_func(
         assert mdl is not None, prop.model
 
         child_ref = await _mesh_cache.fetch((qc, prop.skin), build_reference, prop, qc, mdl)
-        child_coll = await _coll_cache.fetch(qc.phy_smd, build_collision, qc, prop, child_ref, volume_tolerance > 0)
+        child_coll = await _coll_cache.fetch((qc.phy_smd, prop.solidity), build_collision, qc, prop, child_ref, volume_tolerance > 0)
 
         scale = Vec(prop.scale_x, prop.scale_y, prop.scale_z)
         offset = Vec(prop.x, prop.y, prop.z)
