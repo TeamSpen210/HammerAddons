@@ -35,6 +35,7 @@
 		3: "Purple Eye / NA"
 		]
 
+	flashlightcolor(color255) : "Flashlight Color" : "255 255 255 500" : "Color of the flashlight"
 
 	// Inputs
 	input EnableMotion(void) : "Enable physics motion/collision response."
