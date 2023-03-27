@@ -1,13 +1,15 @@
 """Implements an entity which transitions a value from one to another."""
-import math
+from typing import Callable, Dict, Iterator, Optional, Union
 from string import ascii_lowercase
-from typing import Callable, Dict, Optional
+import math
 
-from srctools import conv_float, Output
+from srctools import Entity, conv_float, Output
 from srctools.fgd import EntityDef
 from srctools.logger import get_logger
+from srctools.vmf import conv_kv
 
 from hammeraddons.bsp_transform import trans, Context
+
 
 LOGGER = get_logger(__name__)
 
@@ -17,7 +19,7 @@ halfpi = math.pi / 2.0
 EPSILON = 1e-6
 
 BRIGHT_LETTERS = {
-    let : i/25
+    let: i/25
     for i, let in enumerate(ascii_lowercase)
 }
 
@@ -43,6 +45,7 @@ def lerp(x: float, in_min: float, in_max: float, out_min: float, out_max: float)
 @trans('comp_numeric_transition')
 def numeric_transition(ctx: Context) -> None:
     """When triggered, animates a keyvalue/input over time with various options."""
+    ent: Entity
     for ent in ctx.vmf.by_class['comp_numeric_transition']:
         ent['classname'] = 'logic_relay'
 
@@ -59,7 +62,8 @@ def numeric_transition(ctx: Context) -> None:
 
         # Special case - if the transform type is "light", allow parsing these
         # as A-Z values.
-        value_start = value_end = None  # type: Optional[float]
+        value_start: Optional[float] = None
+        value_end: Optional[float] = None
         if transform_type == 'light':
             value_start = BRIGHT_LETTERS.get(ent['startval'].lower(), None)
             value_end = BRIGHT_LETTERS.get(ent['endval'].lower(), None)
@@ -128,6 +132,7 @@ def numeric_transition(ctx: Context) -> None:
             ease_end_func = ease_func_linear
 
         def compute_point(x: float) -> float:
+            """Apply the easing equations to compute the value."""
             pos = x * ease_start_func(x) + (1.0 - x) * ease_end_func(x)
             if pos < 0.0:
                 pos = 0.0
@@ -141,6 +146,7 @@ def numeric_transition(ctx: Context) -> None:
             point_count = 1
         points = [i / point_count for i in range(int(point_count))]
 
+        result: Iterator[Union[str, float]]
         if transform_type == 'speed':
             # Compute the speed from x to x+1
             result = (
@@ -185,7 +191,7 @@ def numeric_transition(ctx: Context) -> None:
                 param = '{} {}'.format(input_name, point)
             else:  # input
                 io_input = input_name
-                param = format(point)
+                param = conv_kv(point)
 
             if param != last_inp:
                 ent.add_out(Output(
@@ -232,18 +238,18 @@ def ease_func_sine_end(x: float) -> float:
     return 1.0 - math.cos(x * halfpi)
 
 
-EASE_START_FUNC = {
+EASE_START_FUNC: Dict[str, Callable[[float], float]] = {
     'linear': ease_func_linear,
     'quad': ease_func_power_start(2),
     'cubic': ease_func_power_start(3),
     'quartic': ease_func_power_start(4),
     'sine': ease_func_sine_start,
-}  # type: Dict[str, Callable[[float], float]]
+}
 
-EASE_END_FUNC = {
+EASE_END_FUNC: Dict[str, Callable[[float], float]] = {
     'linear': ease_func_linear,
     'quad': ease_func_power_end(2),
     'cubic': ease_func_power_end(3),
     'quartic': ease_func_power_end(4),
     'sine': ease_func_sine_end,
-}  # type: Dict[str, Callable[[float], float]]
+}
