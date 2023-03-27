@@ -172,6 +172,12 @@ def numeric_transition(ctx: Context) -> None:
             # Directly sets the location at every point.
             result = map(compute_point, points)
 
+        # Add the duration so the output fires after the transition finishes.
+        for out in ent.outputs:
+            if out.output.casefold() == 'onfinished':
+                out.output = 'OnTrigger'
+                out.delay += duration
+
         last_inp = None
         for i, point in enumerate(result):
             if io_type == 'kv':

@@ -8,6 +8,7 @@
 * Prevent automatically packing models specified only as Hammer previews in various entities.
 * Fix propcombine sometimes removing collisions entirely from component props.
 * Add an option to allow the sources for compiled models to be preserved.
+* #210: Add `OnFinished` output to `comp_numeric_transition`.
 
 --------------------
 
