@@ -1,0 +1,6 @@
+@PointClass aliasof(npc_furniture) 
+	studio() 
+	autovis(NPCs, Furniture)
+= monster_furniture: "Alternate name for npc_furniture."
+	[
+	]
