@@ -36,6 +36,8 @@
 		]
 
 	flashlightcolor(color255) : "Flashlight Color" : "255 255 255 500" : "Color of the flashlight"
+	flashlightfov(float) : "Flashlight FOV" : "85.0f" : "Field of View of the flashlight"
+	flashlightfarz(float) : "Flashlight Far-Z" : "750.0f" : "Far-Z (Max Range) of the flashlight"
 
 	// Inputs
 	input EnableMotion(void) : "Enable physics motion/collision response."
