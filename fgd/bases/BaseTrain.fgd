@@ -53,11 +53,11 @@
 	movesoundmintime(float) : "Min move sound interval" : 0 : "Minimum interval at which to play the move ping sound."
 	movesoundmaxtime(float) : "Max move sound interval" : 0 : "Maximum interval at which to play the move ping sound."
 
-	// Added to 2007 post-release for TF2 Payload mode, didn't make it into later games
-	manualspeedchanges[until_L4D](boolean) : "Manual Train Speed" : 0 : "Train Speed is controlled through IO, handles accel, decel times."
+	// Not in the default FGD post-Left 4 Dead, but seems to exist in engine
+	manualspeedchanges(boolean) : "Manual Train Speed" : 0 : "Train Speed is controlled through IO, handles accel, decel times."
 
-	manualaccelspeed[until_L4D](float) : "Manual Accel Speed" : 0 : "Units per second to accelerate to target speed."
-	manualdecelspeed[until_L4D](float) : "Manual Decel Speed" : 0 : "Units per second to decelerate to target speed."
+	manualaccelspeed(float) : "Manual Accel Speed" : 0 : "Units per second to accelerate to target speed."
+	manualdecelspeed(float) : "Manual Decel Speed" : 0 : "Units per second to decelerate to target speed."
 
 	// Inputs
 	input SetSpeed(float) : "Set the speed of the train, as a ratio of max speed [0, 1]"
