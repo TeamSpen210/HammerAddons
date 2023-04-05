@@ -1,4 +1,5 @@
 """Runs before VRAD, to run operations on the final BSP."""
+import math
 import shutil
 from pathlib import Path
 import sys
@@ -221,8 +222,10 @@ async def main(argv: List[str]) -> None:
             qc_folders=conf.opts.get(config.PROPCOMBINE_QC_FOLDER).as_array(conv=conf.expand_path),
             decomp_cache_loc=decomp_cache_loc,
             crowbar_loc=crowbar_loc,
-            auto_range=conf.opts.get(config.PROPCOMBINE_AUTO_RANGE),
-            min_cluster=conf.opts.get(config.PROPCOMBINE_MIN_CLLUSTER),
+            min_auto_range=conf.opts.get(config.PROPCOMBINE_MIN_AUTO_RANGE),
+            max_auto_range=conf.opts.get(config.PROPCOMBINE_MAX_AUTO_RANGE) or math.inf,
+            min_cluster=conf.opts.get(config.PROPCOMBINE_MIN_CLUSTER),
+            min_cluster_auto=conf.opts.get(config.PROPCOMBINE_MIN_CLUSTER_AUTO),
             blacklist=conf.opts.get(config.PROPCOMBINE_BLACKLIST).as_array(),
             volume_tolerance=conf.opts.get(config.PROPCOMBINE_VOLUME_TOLERANCE),
             compile_dump=modelcompile_dump,
