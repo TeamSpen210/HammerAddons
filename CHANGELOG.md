@@ -10,6 +10,7 @@
 * Add an option to allow the sources for compiled models to be preserved.
 * #210: Add `OnFinished` output to `comp_numeric_transition`.
 * #10: The center of the axis helper used for sprites can now be clicked on.
+* Add an option to specify the maximum distance for automatic combined props.
 
 --------------------
 

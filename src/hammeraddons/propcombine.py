@@ -3,6 +3,7 @@
 This merges static props together, so they can be drawn with a single
 draw call.
 """
+import math
 from typing import (
     Callable, Dict, FrozenSet, Iterable, Iterator, List, Literal, MutableMapping, Optional, Set,
     Tuple,
@@ -952,13 +953,13 @@ def group_props_ent(
 def group_props_auto(
     prop_groups: Dict[Optional[tuple], List[StaticProp]],
     get_model: Callable[[str], Tuple[Optional[QC], Optional[Model]]],
-    dist: float,
+    min_dist: float,
+    max_dist: float,
     min_cluster: int,
 ) -> Iterator[List[StaticProp]]:
     """Given the groups of props, automatically find close props to merge."""
-    # Each of these groups cannot be merged with other ones.
-
-    dist_sq = dist * dist
+    min_dist_sq = min_dist * min_dist
+    max_dist_sq = max_dist * max_dist
     neighbours: Dict[StaticProp, Sequence[StaticProp]] = {}
 
     def find_neighbours(start: StaticProp) -> Sequence[StaticProp]:
@@ -969,7 +970,7 @@ def group_props_auto(
             pass
         neigh = [
             prop for prop in group
-            if (prop.origin - start.origin).mag_sq() <= dist_sq
+            if (prop.origin - start.origin).mag_sq() <= min_dist_sq
         ]
         neighbours[start] = neigh
         return neigh
@@ -977,6 +978,7 @@ def group_props_auto(
     UNSET: Literal['unset'] = 'unset'
     NOISE: Literal['noise'] = 'noise'
 
+    # Each of these groups cannot be merged with other ones.
     for group in prop_groups.values():
         # No point merging single/empty groups.
         if len(group) < 2:
@@ -1018,36 +1020,55 @@ def group_props_auto(
             if type(key) is int:
                 clusters[key].append(prop)
 
+        # We now have many potential groups, which may be extremely large.
+        # We want to split these up, so they don't extend too far.
         for cluster in clusters.values():
-            total_verts = 0
-            selected_props: List[StaticProp] = []
             warned: bool = False
-            for prop in cluster:
-                qc, mdl = get_model(prop.model)
-                assert mdl is not None
-                total_verts += mdl.total_verts
-                if total_verts > MAX_VERTS:
-                    # Make this just info level, just might be props nearby.
-                    if not warned:
-                        bb_min, bb_max = Vec.bbox(prop.origin for prop in cluster)
-                        LOGGER.info(
-                            'Hit vert limit for auto group @ ({} - {}) with models {}' ,
-                            bb_min, bb_max,
-                            {prop.model for prop in cluster},
-                        )
-                        warned = True
-                    # Split the group here, create a new prop.
-                    if len(selected_props) >= min_cluster:
-                        yield selected_props
-                    selected_props = []
-                    total_verts = mdl.total_verts
-                selected_props.append(prop)
+            todo = set(cluster)
+            while len(todo) > min_cluster:
+                # First find the prop the furthest from the center-point.
+                average_pos = sum((prop.origin for prop in todo), Vec()) / len(todo)
+                central_prop = max(todo, key=lambda prop: (prop.origin - average_pos).mag_sq())
 
-            if len(selected_props) >= min_cluster:
-                yield selected_props
-            # Else, we grouped a too-small number of props - deliberately forget about them, they're
-            # likely isolated, meaning checking them in future is pointless. The main combine()
-            # function will re-add them to the map.
+                total_verts = 0
+                selected_props: List[StaticProp] = []
+                found_matches = False
+                for prop in list(todo):
+                    # Exceeds the max radius?
+                    if (prop.origin - central_prop.origin).mag_sq() > max_dist_sq:
+                        continue
+                    qc, mdl = get_model(prop.model)
+                    assert mdl is not None
+                    total_verts += mdl.total_verts
+                    if total_verts > MAX_VERTS:
+                        # Make this just info level, just might be props nearby.
+                        if not warned:
+                            bb_min, bb_max = Vec.bbox(prop.origin for prop in cluster)
+                            LOGGER.info(
+                                'Hit vert limit for auto group @ ({} - {}) with models {}' ,
+                                bb_min, bb_max,
+                                {prop.model for prop in cluster},
+                            )
+                            warned = True
+                        # Split the group here, create a new prop.
+                        if len(selected_props) >= min_cluster:
+                            found_matches = True
+                            todo.difference_update(selected_props)
+                            yield selected_props
+                        selected_props = []
+                        total_verts = mdl.total_verts
+                    selected_props.append(prop)
+
+                if len(selected_props) >= min_cluster:
+                    yield selected_props
+                    todo.difference_update(selected_props)
+                    found_matches = True
+                if not found_matches:
+                    # The selected prop was too far away to cluster. Discard it, so we pick a
+                    # different one. It should be added by itself, it's on its own mostly.
+                    todo.discard(central_prop)
+            # Once the while loop terminates, our group is too small to actually cluster any more.
+            # The main combine() function will re-add them to the map automatically.
 
 
 async def combine(
@@ -1062,8 +1083,10 @@ async def combine(
     decomp_cache_loc: Optional[Path]=None,
     compile_dump: Optional[Path]=None,
     blacklist: Iterable[str]=(),
-    auto_range: float=0,
+    min_auto_range: float=0.0,
+    max_auto_range: float=math.inf,
     min_cluster: int=2,
+    min_cluster_auto: int=0,
     volume_tolerance: float=1.0,
     debug_dump: bool=False,
     pack_models: bool=True,
@@ -1198,7 +1221,9 @@ async def combine(
     final_props: List[StaticProp] = []
     grouper: Iterator[List[StaticProp]]
     grouper_ents = list(bsp_ents.by_class['comp_propcombine_set'] | bsp_ents.by_class['comp_propcombine_volume'])
-    if grouper_ents and auto_range > 0:
+    if min_cluster_auto <= 2:
+        min_cluster_auto = min_cluster
+    if grouper_ents and min_auto_range > 0:
         LOGGER.info('{} propcombine sets present and auto-grouping enabled, combining...', len(grouper_ents))
         # Do ents first, that removes values from the lists in prop_groups,
         # then the auto grouper handles that.
@@ -1212,8 +1237,8 @@ async def combine(
             group_props_auto(
                 prop_groups,
                 get_model,
-                auto_range,
-                min_cluster,
+                min_auto_range, max_auto_range,
+                min_cluster_auto or min_cluster,
             )
         )
     elif grouper_ents:
@@ -1224,13 +1249,13 @@ async def combine(
             bsp.bmodels, grouper_ents,
             min_cluster,
         )
-    elif auto_range > 0:
+    elif min_auto_range > 0:
         LOGGER.info('Automatically finding propcombine sets...')
         grouper = group_props_auto(
             prop_groups,
             get_model,
-            auto_range,
-            min_cluster,
+            min_auto_range, max_auto_range,
+            min_cluster_auto or min_cluster,
         )
     else:
         # No way provided to choose props.
