@@ -642,12 +642,12 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
                         elif body_type is not Token.NEWLINE:
                             raise tok.error(body_type)
 
-                elif token_value == '$collisionmodel':
+                elif token_value in ('$collisionmodel', '$collisionjoints'):
                     phy_smd = qc_loc / tok.expect(Token.STRING)
                     phy_scale = scale_factor
                     next_typ, next_val = next(tok.skipping_newlines())
                     if next_typ is Token.BRACE_OPEN:
-                        for body_value in tok.block('$collisionmodel', consume_brace=False):
+                        for body_value in tok.block(token_value, consume_brace=False):
                             if body_value.casefold() == '$concave':
                                 is_concave = True
                     else:
@@ -655,7 +655,6 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
 
                 # We can't support this.
                 elif token_value in (
-                    '$collisionjoints',
                     '$ikchain',
                     '$weightlist',
                     '$poseparameter',
