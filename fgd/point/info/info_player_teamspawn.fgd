@@ -4,6 +4,7 @@
 	studio()
 	line(255 0 0, targetname, round_redspawn)
 	line(0 255 0, targetname, round_bluespawn)
+	line(255 255 255, targetname, controlpoint)
 = info_player_teamspawn: "This entity marks the spawn point for Team Fortress players."
 	[
 	controlpoint(target_destination) : "Associated Control Point" : : "The team_control_point associated with this spawn. " +
