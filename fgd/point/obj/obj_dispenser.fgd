@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityAnimating, BaseObject) 
-	appliesto(TF2) 
+	appliesto(TF2)
+	line(255 255 255, targetname, touch_trigger)
 	studioprop() 
 = obj_dispenser: "TF2 Dispenser"
 	[
