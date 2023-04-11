@@ -33,7 +33,7 @@
 		]
 
 	// TODO: CSGO-only?
-	fetcheventdata[since_CSGO](boolean) : "Fetch Event Data" : "0" : "If set, will write the data from the event into the table 'event_data' on this entity."
+	fetcheventdata[since_CSGO, TF2](boolean) : "Fetch Event Data" : "0" : "If set, will write the data from the event into the table 'event_data' on this entity."
 
 	// Inputs
 	input Enable(void) : "Enable the logic_eventlistener."
