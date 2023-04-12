@@ -12,6 +12,7 @@
 * #10: The center of the axis helper used for sprites can now be clicked on.
 * Add an option to specify the maximum distance for automatic combined props.
 * Allow combining models containing `$collisionjoints`.
+* Add missing `bunting` keyvalue to `comp_prop_cable`.
 
 --------------------
 
