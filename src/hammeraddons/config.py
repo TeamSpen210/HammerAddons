@@ -375,7 +375,8 @@ STUDIOMDL = Opt.string(
 MODEL_COMPILE_DUMP = Opt.string(
     'modelcompile_dump', '',
     """If set, models will be compiled as subfolders of this folder, instead of in a 
-    temporary directory.
+    temporary directory. The specified folder will be emptied at the start of each compile, to 
+    prevent it filling up with old model sources. Move things out that you want to keep.
 """)
 
 USE_COMMA_SEP = Opt.boolean_or_none(
