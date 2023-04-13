@@ -5,6 +5,8 @@
 	sphere(height)
 = vgui_movie_display: "Movie Display"
 	[
+	startenabled(boolean) : "Start enabled" : 0 : "Whether or not the video should start enabled."
+	startpaused(boolean) : "Start paused" : 0 : "Whether or not the video should start paused."
 	displaytext(string) : "Display Text"
 	MovieFilename(string) : "Movie To display" : "media/filename.webm" : "The movie to display."
 	MovieFilename[engine](string) : "Movie To display" : "media/filename.webm" : "The movie to display."
@@ -92,6 +94,9 @@
 	// Inputs
 	input Enable(void) : "Make movie visible."
 	input Disable(void) : "Make movie invisible."
+	input Pause(void) : "Pauses the video playback."
+	input Resume(void) : "Resumes the video playback."
+	input SetPaused(boolean) : "Sets the playback state using the parameter."
 	input SetDisplayText(string) : "Sets the display text."
 	input SetMovie(string) : "Sets the movie to display."
 	input SetUseCustomUVs(boolean) : "Use custom UVs."
