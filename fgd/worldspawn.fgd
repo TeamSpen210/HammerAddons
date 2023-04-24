@@ -45,4 +45,6 @@
 	
 	paintinmap[-MOMENTUM](boolean) : "Enable Paint" : 0 : "Enable code for spreading paint on surfaces, and bouncing physics objects around."
 	maxblobcount[-MOMENTUM](integer) : "Gel Blob Limit" : 250 : "Number of Gel blobs that can exist. Maximum is 250."
+	
+	maxprojectedtextures(integer) : "Maximum Projected Textures" : 8 : "Maximum number of env_projectedtexture entities that can be enabled at once. Maximum is 8."
 	]
