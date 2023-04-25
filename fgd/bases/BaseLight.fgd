@@ -37,6 +37,8 @@
 
 	_distance(integer) : "Maximum Distance" : 0 : "The distance that light is allowed to cast."
 
+	_nocubemapsprite(boolean) : "No Sprite in Cubemap" : 1 : "If set, this light will not draw a sprite during cubemap building"
+
 	// Inputs
 	input TurnOn(void) : "Turn the light on."
 	input TurnOff(void) : "The the light off."
