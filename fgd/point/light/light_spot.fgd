@@ -1,7 +1,6 @@
-@PointClass base(BaseEntityPoint, BaseLight)
+@PointClass base(BaseEntityPoint, BaseLight, BaseLightFalloff)
 	lightprop("models/editor/spot.mdl") 
 	lightcone() 
-	sphere(_distance) 
 	line(255 255 255, targetname, target)
 = light_spot: "An invisible and directional spotlight."
 	[
@@ -12,9 +11,4 @@
 	_exponent(integer) : "Focus" : 1
 	_removeaftercompile(boolean) : "Remove After Compile" : 0 : "If set, removes this entity after processing the map with VRAD"
 	pitch(angle_negative_pitch) : "Pitch" : -90
-	spawnflags(flags)  =
-		[
-		1: "Initially dark" : 0
-		]
-
 	]

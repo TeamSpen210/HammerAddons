@@ -1,7 +1,4 @@
-@BaseClass 
-	sphere(_fifty_percent_distance)
-	sphere(_zero_percent_distance)
-	sphere(_distance)
+@BaseClass
 	color(255 255 0)
 = BaseLight
 	[
@@ -26,17 +23,16 @@
 		9 : "Slow strobe"
 		12 : "Underwater light mutation"
 		]
+		
+	spawnflags(flags)  =
+		[
+		1: "Initially dark" : 0
+		]
 	pattern(string) : "Custom Appearance" : "" : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 	fadetickinterval(float) : "Fade Tick Interval" : 0.1 : "The tick interval of the light's fade, in seconds. Lower values cause a faster fade."
-	_constant_attn(string)	: "Constant" : "0"
-	_linear_attn(string)	: "Linear" : "0"
-	_quadratic_attn(string)	: "Quadratic" : "1"
-	_fifty_percent_distance(string) : "50 percent falloff distance" : "0": "Distance at which brightness should fall off to 50%. If set, overrides linear constant and quadratic paramaters."
-	_zero_percent_distance(string) : "0 percent falloff distance" : "0": "Distance at which brightness should fall off to negligible (1/256)%. Must set _fifty_percent_distance to use."
-	_hardfalloff(integer) : "Hard Falloff" : 0 : "If set, causes lights to fall to exactly zero beyond the zero percent distance. May cause unrealistic lightijng if not used carefully."
 
-	_distance(integer) : "Maximum Distance" : 0 : "The distance that light is allowed to cast."
-
+	_castentityshadow(boolean) : "Cast Entity Shadows" : 1 : "Objects illuminated by this light will cast a directional shadow."
+	_shadoworiginoffset(vector) : "Entity shadow offset" : "0 0 0" : "A world-space offset applied to the shadow origin, in units. X Y Z."
 	_nocubemapsprite(boolean) : "No Sprite in Cubemap" : 1 : "If set, this light will not draw a sprite during cubemap building"
 
 	// Inputs

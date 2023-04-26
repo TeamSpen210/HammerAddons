@@ -1,13 +1,8 @@
-@PointClass base(BaseEntityPoint, BaseLight)
+@PointClass base(BaseEntityPoint, BaseLight, BaseLightFalloff)
 	light() 
 	iconsprite("editor/light.vmt") 
-	sphere(_distance) 
 	line(255 255 255, targetname, target)
-= light: "An invisible omnidirectional lightsource."
+= light: "An invisible omnidirectional light-source."
 	[
 	_removeaftercompile(boolean) : "Remove After Compile" : 0 : "If set, removes this entity after processing the map with VRAD"
-	spawnflags(flags)  =
-		[
-		1: "Initially dark" : 0
-		]
 	]
