@@ -1,4 +1,4 @@
-@BaseClass base(trigger_multiple) = trigger_asw_use_area: "A trigger volume that is used to define areas for using various things."
+@BaseClass base(trigger_multiple) line(255 255 0, targetname, usetargetname) = trigger_asw_use_area: "A trigger volume that is used to define areas for using various things."
 	[
 	spawnflags(flags) : "spawnflags" =
 		[

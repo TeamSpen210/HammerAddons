@@ -47,8 +47,9 @@ class Context:
         bsp: BSP,
         game: Game,
         *,
-        studiomdl_loc: Optional[Path]=None,
-        tags: FrozenSet[str]=frozenset(),
+        studiomdl_loc: Optional[Path] = None,
+        tags: FrozenSet[str] = frozenset(),
+        modelcompile_dump: Optional[Path] = None,
     ) -> None:
         self.sys = filesys
         self.vmf = vmf
@@ -57,6 +58,7 @@ class Context:
         self.bsp_path = Path(bsp.filename)
         self._fgd: Optional[FGD] = None
         self.tags = tags
+        self.modelcompile_dump = modelcompile_dump
         self.game = game
         self.studiomdl = studiomdl_loc
         self.config = Keyvalues.root()
@@ -147,12 +149,17 @@ async def run_transformations(
     pack: PackList,
     bsp: BSP,
     game: Game,
-    studiomdl_loc: Optional[Path]=None,
-    config: Mapping[str, Keyvalues]=EmptyMapping,
+    studiomdl_loc: Optional[Path] = None,
+    config: Mapping[str, Keyvalues] = EmptyMapping,
     tags: FrozenSet[str] = frozenset(),
+    modelcompile_dump: Optional[Path] = None,
 ) -> None:
     """Run all transformations."""
-    context = Context(filesys, vmf, pack, bsp, game, studiomdl_loc=studiomdl_loc, tags=tags)
+    context = Context(
+        filesys, vmf, pack, bsp, game,
+        studiomdl_loc=studiomdl_loc, tags=tags,
+        modelcompile_dump=modelcompile_dump,
+    )
 
     for func_name, func in sorted(
         TRANSFORMS.items(),

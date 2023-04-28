@@ -1,4 +1,5 @@
 @SolidClass base(BaseTank) 
+	line(255 0 0, targetname, airboat_gun_model)
 	appliesto(EP1, EP2, HL2, P1, ASW) = func_tankairboatgun: "Airboat Gun Turret"
 	[
 	shootsound[MBase](sound) : "Shoot Sound" : "" : "Plays a specific sound each time this tank fires."

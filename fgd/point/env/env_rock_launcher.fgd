@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(L4D, L4D2)
 	studio("models/editor/cone_helper.mdl")
+	line(255 255 255, targetname, rocktargetname)
 = env_rock_launcher: "Rock launcher"
 	[
 	rocktargetname(target_destination) : "Target Name" : : "The name of the entity to throw the rock at."

@@ -997,6 +997,9 @@ def place_seg_props(nodes: Iterable[Node], fsys: FileSystem, mesh: Mesh) -> Iter
             ))
 
             conf = rand.choice(weights)
+            if not conf.model:
+                # Deliberately skip placing a prop.
+                continue
             if conf.orient is SegPropOrient.RAND_FULL:
                 # We cover all orientations, so pre-rotation value is irrelevant.
                 angles = Matrix.from_angle(

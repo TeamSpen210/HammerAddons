@@ -1,0 +1,5 @@
+WriteZ
+	{
+	// Only writes to Z buffer, so it's invisible but can be selected.
+	"%noToolTexture" 1
+	}

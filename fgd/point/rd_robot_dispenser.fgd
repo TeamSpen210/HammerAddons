@@ -1,4 +1,5 @@
-@PointClass base(BaseEntityPoint, BaseObject) 
+@PointClass base(BaseEntityPoint, BaseObject)
+	line(255 255 255, targetname, touch_trigger)
 	appliesto(TF2) 
 = rd_robot_dispenser: "Robot Destruction Robot Dispenser Level 0.5"
 	[

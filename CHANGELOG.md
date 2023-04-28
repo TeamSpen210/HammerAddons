@@ -5,7 +5,16 @@
 * Allow `comp_vactube_start` to be set to have a timer which starts disabled.
 * If required, add various QC flags like `$mostlyopaque` to propcombined props.
 * Limit the size of propcombined groups to avoid hitting vertex limits.
-* Prevent automatically packing models specified only as previews in various entities.
+* Weapon scripts are now packed along with the models/sounds they use.
+* Prevent automatically packing models specified only as Hammer previews in various entities.
+* Fix propcombine sometimes removing collisions entirely from component props.
+* Add an option to allow the sources for compiled models to be preserved.
+* #210: Add `OnFinished` output to `comp_numeric_transition`.
+* #10: The center of the axis helper used for sprites can now be clicked on.
+* Add an option to specify the maximum distance for automatic combined props.
+* Allow combining models containing `$collisionjoints`.
+* Add missing `bunting` keyvalue to `comp_prop_cable`.
+* Areaportal windows will automatically force the brushes used to nonsolid, and clear some physics data. 
 
 --------------------
 

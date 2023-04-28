@@ -1,6 +1,7 @@
 @FilterClass base(BaseRedirectFilter) 
 	autovis(Logic, Filters)
 	appliesto(MBase)
+	line(255 255 255, targetname, target)
 	iconsprite("editor/filter_damage_transfer.vmt") 
 = filter_damage_transfer :
 	"Whenever an entity using this as a damage filter takes damage, that damage is transferred to another entity. " +
