@@ -426,6 +426,9 @@ async def compile_func(
         if ModelFlags.ambient_boost in combined_flags:
             f.write('$ambientboost\n')
 
+        if ModelFlags.do_not_cast_shadows in combined_flags:
+            f.write('$donotcastshadows\n')
+
         for mat in sorted(cdmats):
             f.write('$cdmaterials "{}"\n'.format(mat))
 
