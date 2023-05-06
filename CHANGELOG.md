@@ -15,6 +15,8 @@
 * Allow combining models containing `$collisionjoints`.
 * Add missing `bunting` keyvalue to `comp_prop_cable`.
 * Areaportal windows will automatically force the brushes used to nonsolid, and clear some physics data. 
+* Propcombine will no longer merge props found in different areaportal areas. This allows props on 
+  the outside of a building to be culled when inside, or vice versa.
 
 --------------------
 

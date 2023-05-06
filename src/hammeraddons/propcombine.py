@@ -1205,6 +1205,8 @@ async def combine(
                 model.iter_textures([prop.skin])
             }),
             (prop.flags & relevant_flags).value,
+            # Do not allow combining across an areaportal boundary.
+            frozenset({leaf.area for leaf in prop.visleafs}),
             model.contents,
             model.surfaceprop,
             prop.renderfx,
