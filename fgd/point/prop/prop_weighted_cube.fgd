@@ -14,7 +14,7 @@
 		2: "[2] Discouragement Redirection Cube"
 		3: "[3] Edgeless Safety Cube"
 		4: "[4] Antique Storage Cube"
-		5: "[5] Schoedinger's Cube"
+		5: "[5] Schrodinger's Cube"
 		6: "[6] Custom model"
 		]
 
@@ -32,7 +32,7 @@
 		"models/props/reflection_cube.mdl": "Discouragement Redirection"
 		"models/props_gameplay/mp_ball.mdl": "Edgeless Safety"
 		"models/props_underground/underground_weighted_cube.mdl": "Antique"
-		"models/props/schrodinger_cube.mdl": "Schroedinger"
+		"models/props/schrodinger_cube.mdl": "Schrodinger"
 		]
 
 	skin(integer) : "Skin" : 0 : "The old skin property, mainly to show in Hammer. "
