@@ -1,0 +1,10 @@
+@SolidClass base(Trigger)
+	line(255 255 0, targetname, launchTarget) 
+= trigger_jumppad: "Launch the player towards a specified target."
+	[
+	launchtarget(target_destination) : "Launch target" : : "Entity to try to 'hit' when we're launched."
+	launchsound(sound) : "Launch Sound" : : "Sound played when an entity is launched."
+
+	// Inputs
+	input SetLaunchTarget(string) : "Set the entity to try hit when launched."
+	]

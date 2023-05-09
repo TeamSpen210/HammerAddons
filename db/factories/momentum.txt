@@ -338,6 +338,7 @@ trigger_fog
 trigger_gravity
 trigger_hierarchy
 trigger_impact
+trigger_jumppad
 trigger_look
 trigger_momentum_campaign_changelevel
 trigger_momentum_limitmovement
