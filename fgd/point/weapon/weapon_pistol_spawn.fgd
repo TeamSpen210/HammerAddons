@@ -11,4 +11,8 @@
 	autovis(Weapons, L4D Weapons, Weapon Spawners)
 = weapon_pistol_spawn: "Pistols"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_pistol.txt"
+		]
 	]

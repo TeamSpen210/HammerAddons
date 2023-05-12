@@ -5,6 +5,7 @@
 	[
 	@resources
 		[
+		weapon_script "items/weapon_hopwire.txt"
 		// This also precaches the recipe table, not easy to do here though.
 		sound "WeaponFrag.Throw"
 		sound "WeaponFrag.Roll"

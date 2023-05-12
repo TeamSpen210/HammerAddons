@@ -4,4 +4,8 @@
 	autovis(Weapons, L4D Weapons, Weapon Spawners)
 = weapon_molotov_spawn: "Molotov"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_molotov.txt"
+		]
 	]

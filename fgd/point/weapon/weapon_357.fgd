@@ -3,5 +3,9 @@
 	autovis(Weapons, HL2 Weapons, Magnum Pistol)
 	studioprop("models/weapons/w_357.mdl") = weapon_357: "357"
 	[
-	@resources []
+	@resources 
+		[
+		weapon_script "scripts/gameplay/weapons/weapon_357.dmx" [+mesa]
+		weapon_script "scripts/weapon_357.txt" [-mesa]
+		]
 	]

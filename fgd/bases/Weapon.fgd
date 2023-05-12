@@ -41,7 +41,5 @@
 
 	@resources
 		[
-		// Weapons have a script file defining sounds and models used.
-		func weapon_script
 		]
 	]

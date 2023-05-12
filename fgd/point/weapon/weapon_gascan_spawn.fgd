@@ -3,4 +3,8 @@
 	autovis(Weapons, L4D, Weapon Spawners)
 = weapon_gascan_spawn: "Gas Can"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_gascan.txt"
+		]
 	]

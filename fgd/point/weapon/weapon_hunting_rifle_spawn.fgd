@@ -4,4 +4,8 @@
 	studioprop("models/w_models/Weapons/w_sniper_mini14.mdl")
 = weapon_hunting_rifle_spawn: "Hunting Rifle"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_hunting_rifle.txt"
+		]
 	]
