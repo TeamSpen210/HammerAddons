@@ -13,7 +13,7 @@ on:
 
 name: Release Deploy
 jobs:
-  manual_release:
+  release:
     runs-on: windows-latest
     
     env:
@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Required for finding the right tags
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -83,9 +85,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get next SemVer version
+      - name: Next Monotonic Release version
         id: next
-        uses: 'WyriHaximus/github-action-next-semvers@v1.0'
+        uses: WyriHaximus/github-action-next-release-version@08a7476c98e8095fad1cce0e2344c7892e17d111
         with:
           version: ${{ steps.previoustag.outputs.tag }}
 
@@ -93,7 +95,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: ${{ github.event.inputs.version == '' }}
         with:
-          tag_name: ${{ steps.next.outputs.patch }}
+          tag_name: ${{ steps.next.outputs.version }}
           files: |
             ${{ env.FGD_BUILD_DIR }}/momentum/fgd-momentum.zip
             ${{ env.FGD_BUILD_DIR }}/p2ce/fgd-p2ce.zip
