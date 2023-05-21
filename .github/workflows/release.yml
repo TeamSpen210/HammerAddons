@@ -1,11 +1,17 @@
 on:
+  push:
+    branches:
+      - 'master'
+    tags-ignore:
+      - '*'
+      - '**'
   workflow_dispatch:
     inputs:
       version:
         description: 'Release version'
-        required: true
+        required: false
 
-name: Manual Release
+name: Release Deploy
 jobs:
   manual_release:
     runs-on: windows-latest
@@ -16,10 +22,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-        
+        uses: actions/checkout@v3
+
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
@@ -28,31 +34,31 @@ jobs:
 
       - name: FGD build and folder copy
         run: .\build.bat fgd all
-          
+
       - name: Zip Momentum FGD
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
           directory: ./${{ env.FGD_BUILD_DIR }}/momentum/
           filename: 'fgd-momentum.zip'
-          
+
       - name: Zip P2CE FGD
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
           directory: ./${{ env.FGD_BUILD_DIR }}/p2ce/
           filename: 'fgd-p2ce.zip'
-          
+
       - name: MD build
         run: .\build.bat md all
-        
+
       - name: Zip Momentum MD
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
           directory: ./${{ env.MD_BUILD_DIR }}/momentum/
           filename: 'md-momentum.zip'
-        
+
       - name: Zip P2CE MD
         uses: thedoctor0/zip-release@master
         with:
@@ -61,7 +67,7 @@ jobs:
           filename: 'md-p2ce.zip'
 
       - name: Artifact Upload
-        uses: actions/upload-artifact@v2.3.1
+        uses: actions/upload-artifact@v3
         with:
           name: build_${{ github.event.inputs.version }}-${{ github.sha }}
           path: |
@@ -70,9 +76,34 @@ jobs:
             ./${{ env.MD_BUILD_DIR }}/momentum/md-momentum.zip
             ./${{ env.MD_BUILD_DIR }}/p2ce/md-p2ce.zip
           if-no-files-found: error
-          
-      - name: Create Release
+
+      - name: Get previous tag
+        id: previoustag
+        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get next SemVer version
+        id: next
+        uses: 'WyriHaximus/github-action-next-semvers@v1.0'
+        with:
+          version: ${{ steps.previoustag.outputs.tag }}
+
+      - name: Create Rolling Release
         uses: softprops/action-gh-release@v1
+        if: ${{ github.event.inputs.version == '' }}
+        with:
+          tag_name: ${{ steps.next.outputs.patch }}
+          files: |
+            ${{ env.FGD_BUILD_DIR }}/momentum/fgd-momentum.zip
+            ${{ env.FGD_BUILD_DIR }}/p2ce/fgd-p2ce.zip
+            ${{ env.MD_BUILD_DIR }}/momentum/md-momentum.zip
+            ${{ env.MD_BUILD_DIR }}/p2ce/md-p2ce.zip
+          fail_on_unmatched_files: true
+
+      - name: Create Manual Release
+        uses: softprops/action-gh-release@v1
+        if: ${{ github.event.inputs.version != '' }}
         with:
           tag_name: ${{ github.event.inputs.version }}
           files: |
