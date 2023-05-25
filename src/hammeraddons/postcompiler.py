@@ -56,6 +56,12 @@ async def main(argv: List[str]) -> None:
         help="Prevent packing of files found in the map."
     )
     parser.add_argument(
+        "--nosaving",
+        dest="allow_save",
+        action="store_false",
+        help="For testing purposes, allow skipping saving the BSP.",
+    )
+    parser.add_argument(
         "--propcombine",
         action="store_true",
         help="Allow merging static props together.",
@@ -317,8 +323,9 @@ async def main(argv: List[str]) -> None:
         for name, exts in sorted(ext_for_name.items())
     ])))
 
-    LOGGER.info('Writing BSP...')
-    bsp_file.save()
+    if args.allow_save:
+        LOGGER.info('Writing BSP...')
+        bsp_file.save()
 
     try:
         from srctools.fgd import _engine_db_stats  # noqa
