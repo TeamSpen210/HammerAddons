@@ -420,7 +420,7 @@ async def build_rope(
         coll_mesh.triangles.extend(generate_straights(coll_nodes))
         generate_caps(coll_nodes, coll_mesh, is_coll=True)
 
-    # Move the UVs around so they don't extend too far.
+    # Move the UVs around, so they don't extend too far.
     for tri in mesh.triangles:
         u = math.floor(min(point.tex_u for point in tri))
         v = math.floor(min(point.tex_v for point in tri))
@@ -434,11 +434,22 @@ async def build_rope(
     # the whole model.
     light_origin = min((node.pos for node in nodes), key=Vec.mag_sq)
 
+    # Studiomdl seems to rotate everything 90 degrees...
+    orient_fix = Matrix.from_yaw(270)
+
+    fixed_visual_mesh = Mesh.blank('root')
+    fixed_visual_mesh.append_model(mesh, rotation=orient_fix)
+
     with (temp_folder / 'cable.smd').open('wb') as fb:
-        mesh.export(fb)
+        fixed_visual_mesh.export(fb)
     if coll_nodes:
+        fixed_coll_mesh = Mesh.blank('root')
+        fixed_coll_mesh.append_model(coll_mesh, rotation=orient_fix)
         with (temp_folder / 'cable_phy.smd').open('wb') as fb:
-            coll_mesh.export(fb)
+            fixed_coll_mesh.export(fb)
+        del coll_mesh, fixed_coll_mesh
+
+    del mesh, fixed_visual_mesh
 
     with (temp_folder / 'model.qc').open('w') as f:
         # Desolation needs this hint.
@@ -459,7 +470,7 @@ async def build_rope(
                 f.write(f'    {{ "{mat}" }}\n')
             f.write('}\n')
         if coll_nodes:
-            f.write(QC_TEMPLATE_PHYS.format(count=sum(node.next is not None for node in coll_nodes)))
+            f.write(QC_TEMPLATE_PHYS.format(count=sum(node.next is not None for node in coll_nodes) + 8))
 
     # For visleaf computation, build a list of all the actual segments generated.
     coll_data = [
@@ -1106,9 +1117,6 @@ async def compile_rope(
             (origin, ctx.pack.fsys),
         )
         ent['model'] = model_name
-        ang = Angle.from_str(ent['angles'])
-        ang.yaw += 270.0
-        ent['angles'] = ang
 
     if not dyn_ents:  # Static prop.
         bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes)
@@ -1147,7 +1155,7 @@ async def compile_rope(
         ctx.bsp.props.append(StaticProp(
             model=model_name,
             origin=center,
-            angles=Angle(0, 270, 0),
+            angles=Angle(0, 0, 0),
             scaling=1.0,
             visleafs=leafs,
             solidity=6 if has_coll else 0,
@@ -1163,7 +1171,7 @@ async def compile_rope(
             ctx.bsp.props.append(StaticProp(
                 model=seg_prop.model,
                 origin=center + seg_prop.offset,
-                angles=(seg_prop.orient @ Matrix.from_yaw(270)).to_angle(),
+                angles=seg_prop.orient.to_angle(),
                 scaling=1.0,
                 visleafs=leafs,  # TODO: compute individual leafs here?
                 solidity=6,
@@ -1272,7 +1280,7 @@ async def comp_prop_rope(ctx: Context) -> None:
     # To group nodes, take each group out, then search recursively through
     # all connections from it to other nodes.
     todo = set(all_nodes.values())
-    with ModelCompiler.from_ctx(ctx, 'ropes', version=2) as compiler:
+    with ModelCompiler.from_ctx(ctx, 'ropes', version=3) as compiler:
         async with trio.open_nursery() as nursery:
             while todo:
                 dyn_ents: List[Entity] = []
