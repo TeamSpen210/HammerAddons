@@ -1,7 +1,7 @@
 @PointClass base(BaseNPC, ResponseContext)
 	studioprop() line(0 0 255, targetname, TripwireAimTarget) 
 	appliesto(P2CE)
-	sphere(_sphere_radius)
+	sphere(turretrange)
 = npc_rocket_turret: "Portal 1 rocket sentry, aims a rocket at a target. " +
 		"In Portal 2, the rocket spawns with a speed of 0 and sometimes gets " +
 		"stuck inside the model, so this will need to be worked around."
@@ -17,7 +17,7 @@
 	TripwireAimTarget(target_destination) : "Tripwire Aim Target" : : "In tripwire mode, the entity to aim at."
 	model(studio) : "Model" : "models/props_bts/rocket_sentry.mdl" : "Model to use in-game"
 
-	_sphere_radius[!engine](integer) readonly : "<Maximum Range>" : 8192 : "How far the turret will be able to see targets. Always 8192, but this keyvalue is needed to display the preview."
+	turretrange(float) : "Maximum Range" : 8192 : "How far the turret will be able to see targets."
 
 	// Inputs
 	input Toggle(void) : "Toggles between activated and deactivated states."
