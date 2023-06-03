@@ -1,0 +1,7 @@
+@PointClass base(MomentumPickup)
+	appliesto(MOMENTUM)
+	size(-43 -43 -36, 43 43 66)
+= momentum_powerup_haste : "Haste Powerup"
+	[
+	HasteTime(float) : "Haste Time" : "30" : "The amount of time in seconds the haste effect lasts. Any negative value is infinite duration."
+	]
