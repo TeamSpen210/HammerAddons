@@ -1,5 +1,6 @@
 
 # Version (dev)
+* #163: Added `comp_adv_output`, which allows adding a single output with complex behaviour.
 * Improve description of `wait` and `OnTrigger` options in `trigger_multiple`.
 * Added ability to specify alt skins when using `comp_prop_cable_dynamic`.
 * Fix `comp_precache_sound` not handling sound characters at the start of raw filenames.
