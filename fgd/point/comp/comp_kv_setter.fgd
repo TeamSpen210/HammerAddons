@@ -1,4 +1,4 @@
-@PointClass base(Angles)
+@PointClass base(Angles, ControlEnables)
 	iconsprite("editor/comp_kv_setter")
 	appliesto(srctools)
 	autovis(Postcompiler, KV Setter)
