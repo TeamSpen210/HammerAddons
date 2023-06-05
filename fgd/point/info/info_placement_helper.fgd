@@ -9,7 +9,7 @@
 	radius(float) : "Radius" : 16 : "Radius in which to influence placement."
 	proxy_name(target_destination) : "Proxy Entity Name" : : "Name of the entity we want to use for our real placement position."
 	attach_target_name(target_destination) : "Attach Entity Name" : : "Name of the entity we want to force our attachment to. Ensures this applies to the correct brush. Needs parent!"
-	snap_to_helper_angles(boolean) : "Use helper's angles" : 0 : "Portals will lock to the angles, instead of rotating in all directions.."
+	snap_to_helper_angles(boolean) : "Use helper's angles" : 0 : "Portals will lock to the angles, instead of rotating in all directions."
 	force_placement(boolean) : "Force Placement" : 0 : "Force portals to lock to this helper, no matter what. " +
 	"With this disabled the helper will automatically deactivate temporarily, so that you can place portals finely."
 
