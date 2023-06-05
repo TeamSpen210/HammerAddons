@@ -219,6 +219,9 @@ async def main(argv: List[str]) -> None:
             crowbar_loc = None
 
         LOGGER.info('Combining props...')
+        max_auto_range: Optional[float] = conf.opts.get(config.PROPCOMBINE_MAX_AUTO_RANGE)
+        if not max_auto_range:
+            max_auto_range = math.inf
         await propcombine.combine(
             bsp_file,
             bsp_file.ents,
@@ -229,7 +232,7 @@ async def main(argv: List[str]) -> None:
             decomp_cache_loc=decomp_cache_loc,
             crowbar_loc=crowbar_loc,
             min_auto_range=conf.opts.get(config.PROPCOMBINE_MIN_AUTO_RANGE),
-            max_auto_range=conf.opts.get(config.PROPCOMBINE_MAX_AUTO_RANGE) or math.inf,
+            max_auto_range=max_auto_range,
             min_cluster=conf.opts.get(config.PROPCOMBINE_MIN_CLUSTER),
             min_cluster_auto=conf.opts.get(config.PROPCOMBINE_MIN_CLUSTER_AUTO),
             blacklist=conf.opts.get(config.PROPCOMBINE_BLACKLIST).as_array(),
@@ -304,13 +307,13 @@ async def main(argv: List[str]) -> None:
 
     # List out all the files, but group together files with the same extension.
     ext_for_name: Dict[str, List[str]] = defaultdict(list)
-    for file in bsp_file.pakfile.infolist():
-        filename = Path(file.filename)
+    for zip_info in bsp_file.pakfile.infolist():
+        filename = Path(zip_info.filename)
         if '.' in filename.name:
             stem, ext = filename.name.split('.', 1)
             file_path = str(filename.parent / stem)
         else:
-            file_path = file.filename
+            file_path = zip_info.filename
             ext = ''
 
         ext_for_name[file_path].append(ext)

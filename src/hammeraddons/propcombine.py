@@ -230,8 +230,10 @@ async def combine_group(
     prop_pos = set()
     for prop in props:
         origin = round((prop.origin - avg_pos) @ yaw_rot, 7)
-        angles = round(Vec(prop.angles), 7)
-        angles.y -= avg_yaw
+        angles = prop.angles
+        angles.pitch = round(angles.pitch, 7)
+        angles.yaw = round(angles.yaw - avg_yaw, 7)
+        angles.roll = round(angles.roll, 7)
         try:
             coll = CollType(prop.solidity)
         except ValueError:
@@ -245,15 +247,21 @@ async def combine_group(
             )
         qc, mdl = lookup_model(prop.model)
         assert mdl is not None, prop.model
+
+        scale = prop.scaling
+        if isinstance(scale, float):
+            scale_x = scale_y = scale_z = scale
+        else:
+            scale_x, scale_y, scale_z = scale
         prop_pos.add(PropPos(
             origin.x, origin.y, origin.z,
-            angles.x, angles.y, angles.z,
+            angles.pitch, angles.yaw, angles.roll,
             prop.model,
             mdl.checksum,
             prop.skin,
-            prop.scaling.x,
-            prop.scaling.y,
-            prop.scaling.z,
+            scale_x,
+            scale_y,
+            scale_z,
             coll,
         ))
     # We don't want to build collisions if it's not used.
@@ -296,8 +304,6 @@ async def compile_func(
     contents: Set[int] = set()
     combined_flags = ModelFlags(0)
 
-    qc: QC
-    mdl: Model
     for prop in prop_pos:
         qc, mdl = lookup_model(prop.model)
         assert qc is not None, prop.model
@@ -920,7 +926,7 @@ def group_props_ent(
             if not found:  # No point checking an empty list.
                 continue
 
-            actual = []
+            actual: List[StaticProp] = []
             total_verts = 0
             for prop in found:
                 qc, mdl = get_model(prop.model)

@@ -65,7 +65,7 @@ function Precache() {
 def comp_precache_sound(ctx: Context):
     """Force precaching a set of sounds."""
     # Match normalised sound to the original filename.
-    sounds: dict[str, str] = {}
+    sounds: Dict[str, str] = {}
     for ent in ctx.vmf.by_class['comp_precache_sound']:
         ent.remove()
         if not check_control_enabled(ent):
