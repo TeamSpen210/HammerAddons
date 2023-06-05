@@ -1,6 +1,4 @@
 """Runs before VRAD, to run operations on the final BSP."""
-import math
-import shutil
 from pathlib import Path
 import sys
 import warnings
@@ -15,7 +13,9 @@ warnings.filterwarnings(category=DeprecationWarning, module='srctools', action='
 
 from typing import Dict, List, Optional
 from collections import defaultdict
-from logging import FileHandler
+from logging import FileHandler, StreamHandler
+import math
+import shutil
 import argparse
 import os
 import re
@@ -62,6 +62,11 @@ async def main(argv: List[str]) -> None:
         help="For testing purposes, allow skipping saving the BSP.",
     )
     parser.add_argument(
+        '-v', '--verbose',
+        action="store_true",
+        help="Show DEBUG level messages.",
+    )
+    parser.add_argument(
         "--propcombine",
         action="store_true",
         help="Allow merging static props together.",
@@ -86,6 +91,14 @@ async def main(argv: List[str]) -> None:
 
     if args.showgroups:
         LOGGER.warning('--showgroups is not implemented. r_colorstaticprops does the same thing ingame.')
+    if args.verbose:
+        # Find the stdout handler, make it DEBUG mode.
+        for handler in LOGGER.handlers:
+            if isinstance(handler, StreamHandler) and handler.stream is sys.stdout:
+                handler.setLevel('DEBUG')
+                break
+        else:
+            LOGGER.warning('Could not set stdout handler to DEBUG mode.')
 
     # The path is the last argument to the compiler.
     # Hammer adds wrong slashes sometimes, so fix that.
