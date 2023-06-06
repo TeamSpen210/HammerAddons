@@ -1,0 +1,23 @@
+@MoveClass base(BaseEntityPoint)
+	appliesto(P2CE)
+	cylinder(255 255 255, targetname, target, radius, targetname, targetname, radius)
+	color(255 192 0)
+	studio("models/editor/angle_helper.mdl")
+	sphere(radius)
+	animator() keyframe("target")
+= path_vphysics: "An entity that spawns invisible tractor beams in the path specified"
+	[
+	spawnflags(flags)  =
+		[
+		]
+
+	target(target_destination) : "Next Target" : : "The next path_vphysics in the path."
+	speed(float) : "Speed" : 100 : "Speed at which to move the objects."
+	radius(float) : "Radius" : 32 : "Radius of the triggers."
+	damping(float) : "Damping" : 5 : "How much to dampen the movement."
+	filtername(filterclass) : "Filter" :  : "Filter to apply to the spawned triggers."
+
+	input Enable(void) : "Enables the trigger." 
+	input Disable(void) : "Disables the trigger." 
+	input Toggle(void) : "Toggles the trigger." 
+	]
