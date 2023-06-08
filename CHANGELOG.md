@@ -20,6 +20,7 @@
 * Areaportal windows will automatically force the brushes used to nonsolid, and clear some physics data. 
 * Propcombine will no longer merge props found in different areaportal areas. This allows props on 
   the outside of a building to be culled when inside, or vice versa.
+* Restore missing projected texture shadow keyvalues.
 * Change `sky_camera` model to be more visible with `tools/toolsskybox` behind it.
 
 --------------------
