@@ -1,4 +1,4 @@
-@PointClass appliesto(L4D2) base(BaseEntityPoint)
+@PointClass appliesto(L4D2) base(WeaponSpawnSingle)
 	iconsprite(editor/weapon_item_spawn) 
 	autovis(Weapons, L4D Weapons, L4D Items)
 = weapon_item_spawn
@@ -18,11 +18,4 @@
 	item17(integer) : "Grenade Launcher" : 0
 	item18(integer) : "M60 Machinegun" : 0
 	melee_weapon(string) : "Melee Weapon" : : "Options: 'Any' or a comma-delimited string of melee weapon script names. Leave blank for none."
-	spawnflags(flags)  =
-		[
-		1: "Enable Physics on spawned item" : 0
-		2: "Spawned Item Must Exist" : 0
-		8: "Infinite Items" : 0
-		]
-
 	]

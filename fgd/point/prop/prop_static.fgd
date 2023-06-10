@@ -36,7 +36,6 @@
 
 	uniformscale[PROP_SCALING](float) : "Uniform Scale Override" : 1 : "Resize the static prop."
 
-
 	solid[engine](integer) : "Collisions" : 6
 	solid(choices) : "Collisions" : 6 =
 		[
@@ -50,7 +49,7 @@
 
 	preventpropcombine[PROPCOMBINE](boolean) : "Disable Prop Combine" : 0 : "Prevent this static prop from combining with any other static props in vbsp."
 
-	linedivider_levels[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_levels[!engine, +complete](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	mincpulevel[engine](integer): "Minimum CPU Level": 0
 	maxcpulevel[engine](integer): "Maximum CPU Level": 0
@@ -119,7 +118,11 @@
 
 	linedivider_light[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
-	disableshadows(boolean) : "Disable Shadows" : 0
+	disableshadows(boolean) : "Disable Shadows" : 0 : "Prevent this prop from obstructing light to cast shadows."
+	// Doesn't appear to work?
+	disableshadowdepth[since_L4D, +complete](boolean) : "No Affecting Proj Texs" : 0 : "Prevent this entity from affecting projected texture shadows."
+	disableflashlight[since_L4D](boolean) : "No Recieving Proj Texs" : 0 : "Prevent this prop from recieving projected texture shadows."
+
 	disablevertexlighting(boolean) : "Disable Vertex lighting" : 0 : "Disable per-vertex lighting on this prop."
 	disableselfshadowing(boolean) : "Disable Self-Shadowing" : 0 : "When vertex lighting is enabled, prevent the geometry from self-shadowing -- casting shadows onto itself."
 	ignorenormals(boolean) : "Ignore Surface Normal" : 0 : "When vertex lighting is enabled, ignore the surface normal of faces when calculating the vertex lighting. Useful for thin, translucent objects such as leaves on foliage props."
@@ -129,7 +132,7 @@
 	
 	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's origin."
 
-	linedivider_lmap[TF2, MESA, !engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_lmap[TF2, MESA, KZ, !engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	generatelightmaps[TF2, MESA, KZ](boolean) : "Generate (and use) lightmaps for this static prop" : 0
 	lightmapresolutionx[TF2, MESA, KZ](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "

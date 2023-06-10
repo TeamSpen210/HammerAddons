@@ -3,4 +3,8 @@
 	autovis(Weapons, EZ Weapons)
 	studioprop("models/weapons/w_flaregun.mdl") = weapon_displacer_pistol: "Displacer Pistol"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_displacer_pistol.txt"
+		]
 	]

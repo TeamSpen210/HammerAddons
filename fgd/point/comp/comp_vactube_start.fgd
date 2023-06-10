@@ -9,7 +9,14 @@
 	speed(float) : "Object Speed" : 800.0 : "Set the speed of the objects produced from here, in units per second."
 	seed(string) : "Rotation Seed" : : "If set, consistently produce the same rotation pattern as the seed. " +
 		"If not set, a random seed will be selected (and printed to the compile log)."
-	timer(boolean) : "Trigger automatically" : 1 : "If true, generate a logic_timer to automatically trigger with a random time."
+
+	timer[engine](integer) : "Activation Mode" : 1
+	timer(choices) : "Activation Mode" : 1 : "Controls whether a logic_timer will be generated to automatically trigger with a random time." = 
+		[
+		0: "No Timer (ForceSpawn input required)"
+		1: "Auto Timer"
+		2: "Auto Timer, starts disabled"
+		]
 	time_min(float) : "Minimum Time" : 0.15 : "The minimum time between objects."
 	time_max(float) : "Maximum Time" : 0.5 : "The maximum time between objects."
 

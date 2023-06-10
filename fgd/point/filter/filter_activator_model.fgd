@@ -4,6 +4,9 @@
 	iconsprite("editor/filter_model.vmt")
 = filter_activator_model: "A filter that filters by the model of the activator."
 	[
+	// Though this is a model KV, the filter won't be loading the model itself.
+	// That's up to the target entities.
+	model[engine](string) : "Filter Model"
 	model(studio) : "Filter Model" : : "The model to filter by. " +
 		"If the filter mode is Allow, only entities whose model matches the given string will pass the filter. " +
 		"If the filter mode is Disallow, all entities EXCEPT those whose model matches the string will pass the filter."

@@ -1,0 +1,15 @@
+@BaseClass = BaseEntityOutputs
+[
+    // Outputs
+	output OnUser1(void) : "Fired in response to FireUser1 input."
+	output OnUser2(void) : "Fired in response to FireUser2 input."
+	output OnUser3(void) : "Fired in response to FireUser3 input."
+	output OnUser4(void) : "Fired in response to FireUser4 input."
+	output OnKilled[MBase, L4D](void) : "Fired when the entity is killed and removed from the game."
+
+    // Mapbase Outputs
+	output OutUser1[MBase](string) : "Fires in response to PassUser1 input, with the parameter passed through unchanged."
+	output OutUser2[MBase](string) : "Fires in response to PassUser2 input, with the parameter passed through unchanged."
+	output OutUser3[MBase](string) : "Fires in response to PassUser3 input, with the parameter passed through unchanged."
+	output OutUser4[MBase](string) : "Fires in response to PassUser4 input, with the parameter passed through unchanged."
+]

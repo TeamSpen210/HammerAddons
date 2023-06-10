@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/ficool2/tf_logic_arena")
 	appliesto(TF2) = tf_logic_arena: "This activates Arena Mode, and controls round specific stuff."
 	[
 	capenabledelay(float) : "Capture Point Enable Time" : 0

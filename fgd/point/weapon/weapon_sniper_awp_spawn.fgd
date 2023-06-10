@@ -1,0 +1,11 @@
+@PointClass base(WeaponSpawn) 
+    appliesto(L4D2)
+	autovis(Weapons, L4D Weapons, Weapon Spawners)
+    studioprop("models/w_models/Weapons/w_sniper_awp.mdl")
+= weapon_sniper_awp_spawn: "AWP Sniper"
+    [
+    @resources
+        [
+        weapon_script "scripts/weapon_sniper_awp.txt"
+        ]
+    ]

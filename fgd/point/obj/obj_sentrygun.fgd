@@ -1,15 +1,21 @@
 @PointClass base(BaseEntityAnimating, BaseObject) 
 	appliesto(TF2) 
-	studio("models/buildables/sentry3.mdl") 
+	studioprop() 
 = obj_sentrygun: "TF2 Sentrygun"
 	[
-	defaultupgrade[engine](integer) : "Starting Upgrade Level" : 0
-	defaultupgrade(choices) : "Starting Upgrade Level" : "0" =
-		[
-		0: "Level 1"
-		1: "Level 2"
-		2: "Level 3"
-		]
+	skin[!engine](choices) : "[H] Team" : 0 : "Team to show in Hammer" =
+	[
+		0 : "RED"
+		1 : "BLU"
+	]
+
+	model[engine](string) : "Model" : : "Doesn't exist in engine, this is a hack to prevent auto packing"
+	model(choices) : "[H] Upgrade Level" : "models/buildables/sentry1.mdl" : "Upgrade level to show in Hammer" =
+	[
+		"models/buildables/sentry1.mdl" : "Level 1"
+		"models/buildables/sentry2.mdl" : "Level 2"
+		"models/buildables/sentry3.mdl" : "Level 3"
+	]
 
 	spawnflags(flags) : "spawnflags" =
 		[

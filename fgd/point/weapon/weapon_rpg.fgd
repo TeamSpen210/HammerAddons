@@ -5,6 +5,7 @@
 	[
 	@resources
 		[
+		weapon_script "scripts/weapon_rpg.txt"
 		sound "Missile.Ignite"
 		sound "Missile.Accelerate"
 		material "materials/effects/laser1_noz.vmt"

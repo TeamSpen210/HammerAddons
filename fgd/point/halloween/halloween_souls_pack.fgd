@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityAnimating, TeamNum) 
+	iconsprite("editor/ficool2/halloween_souls_pack")
 	appliesto(TF2) 
 = halloween_souls_pack : "GARGOYLE SOUL"
 	[

@@ -39,12 +39,14 @@
 		"stored in channels. Select which channel this text should be placed in, " +
 		"which will overwrite any active message already in that channel." =
 		[
-		0: "Channel 0 (warning: may be used by some HUD elements)"
-		1: "Channel 1 (medium text size)"
-		2: "Channel 2 (small text size)"
-		3: "Channel 3 (large text size)"
-		4: "Channel 4 (medium text size)"
-		5: "Channel 5 (warning: may be used by some HUD elements)"
+		0: "Channel 0 (warning: may be used by HUD)"
+		1: "Channel 1"
+		2: "Channel 2" [!P2]
+		3: "Channel 3" [!P2]
+		2: "Channel 2 (small text size)" [P2]
+		3: "Channel 3 (large text size)" [P2]
+		4: "Channel 4"
+		5: "Channel 5 (warning: may be used by HUD)"
 		]
 	customfont[KZ](string) : "Custom Font Name" : "" : "The name of the Game Font to use for this text. Game font lists are found in the KreedzClimbing/kz/resource/ClientScheme.res and SourceScheme.res (examples: ClientTitleFont, DefaultSmall). Custom .ttf files are currently not supported. Leave blank to use the default font."
 	autobreak[MBase](boolean) : "Automatically break lines" : 0 : "Allows text to automatically shift to the next line whenever it can't fit on a player's screen. " +

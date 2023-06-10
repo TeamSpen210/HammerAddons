@@ -25,7 +25,7 @@
 		"models/props_ingame/tractor_beam_128.mdl": "128 Model (PeTI)"
 		]
 
-	model[engine](studio): "Funnel model" : "models/props/tractor_beam_emitter.mdl"
+	model[engine](string): "Hammer Preview" : "models/props/tractor_beam_emitter.mdl"
 
 	// Inputs
 	input SetLinearForce(float) : "Set the speed of the Funnel, and therefore the direction."

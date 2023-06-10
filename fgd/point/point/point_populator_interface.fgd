@@ -1,4 +1,5 @@
-@PointClass base(BaseEntityPoint) 
+@PointClass base(BaseEntityPoint)
+	iconsprite("editor/ficool2/point_populator_interface")
 	appliesto(TF2) = point_populator_interface: "Entity interface to the populator."
 	[
 

@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ficool2/tf_logic_holiday")
 	appliesto(TF2) = tf_logic_holiday: "Holiday Entity. This is used to detect a holiday map."
 	[
 	holiday_type[engine](integer) : "Holiday" : 1

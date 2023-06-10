@@ -6,22 +6,22 @@
 	area_time_to_cap(integer) : "Time to cap (sec)" : 5
 
 	team_cancap_2(boolean) : "Can RED Cap?" : 1
-	team_cancap_3(boolean) : "Can BLUE Cap?" : 1
+	team_cancap_3(boolean) : "Can BLU Cap?" : 1
 
 	team_startcap_2(integer) : "Number of RED players to start capping" : 1
-	team_startcap_3(integer) : "Number of BLUE players to start capping" : 1
+	team_startcap_3(integer) : "Number of BLU players to start capping" : 1
 
 	team_numcap_2(integer) : "Number of RED players to cap" : 1
-	team_numcap_3(integer) : "Number of BLUE players to cap" : 1
+	team_numcap_3(integer) : "Number of BLU players to cap" : 1
 
-	team_spawn_2(integer) : "Red Spawn Adjust" : 0 : "Adjust the minimum respawn time for the red team by this amount (in seconds) when red captures this point. " +
-		"If the red team owns this point when blue captures it, this adjustment is reversed."
-	team_spawn_3(integer) : "Blue Spawn Adjust" : 0 : "Adjust the minimum respawn time for the blue team by this amount (in seconds) when blue captures this point. " +
-		"If the blue team owns this point when red captures it, this adjustment is reversed."
+	team_spawn_2(integer) : "RED Spawn Adjust" : 0 : "Adjust the minimum respawn time for RED by this amount (in seconds) when RED captures this point. " +
+		"If the RED owns this point when BLU captures it, this adjustment is reversed."
+	team_spawn_3(integer) : "BLU Spawn Adjust" : 0 : "Adjust the minimum respawn time for BLU by this amount (in seconds) when BLU captures this point. " +
+		"If BLU owns this point when RED captures it, this adjustment is reversed."
 
 
 	// Inputs
-	input SetTeamCanCap(string) : "Set whether a specific team is allowed to capture this point. Format is: <team number> <(0/1)>. i.e. '2 0' would prevent RED from capturing this point, whereas '3 1' would allow BLUE to cap it."
+	input SetTeamCanCap(string) : "Set whether a specific team is allowed to capture this point. Format is: <team number> <(0/1)>. i.e. '2 0' would prevent RED from capturing this point, whereas '3 1' would allow BLU to cap it."
 	input SetControlPoint(string) : "Assign area capture to the passed control point."
 	input CaptureCurrentCP(string) : "If we're being capped, forces the current point to capture."
 	input RoundSpawn(void) : "Find our control point"
@@ -30,9 +30,9 @@
 	output OnStartTeam1(void) : "Sent when RED start capture."
 	output OnBreakTeam1(void) : "Sent when a RED capture is broken."
 	output OnCapTeam1(void) : "Sent when RED end capture."
-	output OnStartTeam2(void) : "Sent when BLUE start capture."
-	output OnBreakTeam2(void) : "Sent when a BLUE capture is broken."
-	output OnCapTeam2(void) : "Sent when BLUE end capture."
+	output OnStartTeam2(void) : "Sent when BLU start capture."
+	output OnBreakTeam2(void) : "Sent when a BLU capture is broken."
+	output OnCapTeam2(void) : "Sent when BLU end capture."
 	output OnStartCap(void) : "Sent when either team starts capture."
 	output OnBreakCap(void) : "Sent when either team break capture."
 	output OnEndCap(void) : "Sent when either team end capture."

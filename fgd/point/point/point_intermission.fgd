@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ficool2/point_intermission")
 	appliesto(TF2) = point_intermission: "Entity that ends the match and triggers an intermission."
 	[
 

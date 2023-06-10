@@ -2,8 +2,8 @@
 	appliesto(TF2) 
 	studio("models/bots/merasmus/merasmas_misfortune_teller.mdl") = halloween_fortune_teller: "Halloween Fortune Teller trigger"
 	[
-	red_teleport(string) : "Red Teleport Entity" : : "Where to teleport the red team"
-	blue_teleport(string) : "Blue Teleport Entity" : : "Where to teleport the blue team"
+	red_teleport(string) : "RED Teleport Entity" : : "Where to teleport the RED team"
+	blue_teleport(string) : "BLU Teleport Entity" : : "Where to teleport the BLU team"
 
 	// Inputs
 	input EnableFortuneTelling(void) : "Enable fortune telling"

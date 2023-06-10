@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPhysics, TeamNum, EnableDisable, TFGameType) 
 	appliesto(TF2) 
-	studio("models/flag/briefcase.mdl") = item_teamflag: "Team Fortress flag entity."
+	studioprop() = item_teamflag: "Team Fortress flag entity."
 	[
 	returntime(integer) : "Return time (in seconds)" : 60 : "Length of time (in seconds) before dropped flag/intelligence returns to base."
 
@@ -22,7 +22,7 @@
 		1: "Increment capture count"
 		]
 
-	flag_model(string) : "Model" : "models/flag/briefcase.mdl" : "The model to be used for this entity."
+	flag_model(studio) : "Model" : "models/flag/briefcase.mdl" : "The model to be used for this entity."
 	flag_icon(string) : "Icon" : "../hud/objectives_flagpanel_carried" : "The icons used for the HUD in some game modes. " +
 		"Format: materials/vgui/[materialname]_red and materials/vgui/[materialname]_blue"
 	flag_paper(particlesystem) : "Paper Particle" : "player_intel_papertrail" : "Particle effect used for the falling paper trail."
@@ -44,7 +44,15 @@
 
 	returnbetweenwaves(boolean) : "Return Between Waves" : "1" : "Used only for MvM mode. Determines if the flag should return home between waves."
 
-	tags(string) : "tags" : : "Tags used for the AI bomb carrier to avoid nav areas that have matching tags. Tags need to be separated by empty space."
+	tags(string) : "AI nav avoid tags" : : "Tags used for the AI bomb carrier to avoid nav areas that have matching tags. Tags need to be separated by empty space."
+
+	model(studio) : "[H] Model" : "models/flag/briefcase.mdl" : "The model to show in Hammer"
+	skin(choices) : "[H] Team" : 0 : "The team to show in Hammer" =
+	[
+		0 : "RED"
+		1 : "BLU"
+		2 : "Neutral"
+	]
 
 	// Inputs
 	input ForceDrop(void) : "Force the flag to be dropped if it's being carried by a player."

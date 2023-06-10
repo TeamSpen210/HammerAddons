@@ -1,5 +1,7 @@
 @SolidClass base(func_brush) 
 	appliesto(MBase)
+	line(255 255 0, targetname, target)
+	line(255 255 255, targetname, FogController)
 = func_fake_worldportal:
 	"Used to produce perfectly reflective glass that renders world + entities. " +
 	"Typically, you want your glass brush to have nodraw on all non-reflective surfaces " +

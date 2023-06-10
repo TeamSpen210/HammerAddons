@@ -3,4 +3,8 @@
 	autovis(Weapons, L4D Weapons, Weapon Spawners)
 = weapon_ammo_spawn: "Ammo"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_ammo_pack.txt"
+		]
 	]

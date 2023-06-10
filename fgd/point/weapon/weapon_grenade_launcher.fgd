@@ -3,4 +3,8 @@
 	autovis(Weapons, L4D Weapons, Scripted Weapons)
 = weapon_grenade_launcher: "Grenade Launcher - This entity is intended to be used in scripted events where a single item needs to spawned with physics active."
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_grenade_launcher.txt"
+		]
 	]

@@ -1,5 +1,27 @@
 
 # Version (dev)
+* #163: Added `comp_adv_output`, which allows adding a single output with complex behaviour.
+* Added `--verbose` parameter, for showing DEBUG messages.
+* Improve description of `wait` and `OnTrigger` options in `trigger_multiple`.
+* Added ability to specify alt skins when using `comp_prop_cable_dynamic`.
+* Fix `comp_precache_sound` not handling sound characters at the start of raw filenames.
+* Allow `comp_vactube_start` to be set to have a timer which starts disabled.
+* If required, add various QC flags like `$mostlyopaque` to propcombined props.
+* Limit the size of propcombined groups to avoid hitting vertex limits.
+* Weapon scripts are now packed along with the models/sounds they use.
+* Prevent automatically packing models specified only as Hammer previews in various entities.
+* Fix propcombine sometimes removing collisions entirely from component props.
+* Add an option to allow the sources for compiled models to be preserved.
+* #210: Add `OnFinished` output to `comp_numeric_transition`.
+* #10: The center of the axis helper used for sprites can now be clicked on.
+* Add an option to specify the maximum distance for automatic combined props.
+* Allow combining models containing `$collisionjoints`.
+* Add missing `bunting` keyvalue to `comp_prop_cable`.
+* Areaportal windows will automatically force the brushes used to nonsolid, and clear some physics data. 
+* Propcombine will no longer merge props found in different areaportal areas. This allows props on 
+  the outside of a building to be culled when inside, or vice versa.
+* Restore missing projected texture shadow keyvalues.
+* Change `sky_camera` model to be more visible with `tools/toolsskybox` behind it.
 
 --------------------
 

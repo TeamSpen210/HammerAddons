@@ -3,4 +3,8 @@
 	autovis(Weapons, L4D Weapons, Weapon Spawners)
 = weapon_pistol_magnum_spawn: "Magnum Pistol"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_pistol_magnum.txt"
+		]
 	]

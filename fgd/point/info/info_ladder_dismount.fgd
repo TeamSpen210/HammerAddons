@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	size(-16 -16 0, 16 16 4)
+	line(255 255 255, targetname, target)
 	color(255 128 255)
 = info_ladder_dismount: "An entity to handle endpoints for multiple ladders that are too close to each other."
 	[

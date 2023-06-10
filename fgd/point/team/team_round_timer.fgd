@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/ficool2/team_round_timer")
 	appliesto(TF2) 
 = team_round_timer: "Round Timer. Timer starts paused by default."
 	[
@@ -28,7 +29,7 @@
 	input Resume(void) : "Resume the timer."
 	input SetTime(integer) : "Set the timer to this value (in seconds)."
 	input AddTime(integer) : "Add time to the timer (in seconds). Added time cannot excede the max timer length."
-	input AddTeamTime(string) : "Input takes a string (space delimited) with the team number and the time to be added (in seconds) because of the team (2 for red, 3 for blue, and 0 for no team...but you could just use AddTime for that). Added time cannot excede the max timer length. Example: 2 600 (adds 10 minutes because of team red)"
+	input AddTeamTime(string) : "Input takes a string (space delimited) with the team number and the time to be added (in seconds) because of the team (2 for RED, 3 for BLU, and 0 for no team...but you could just use AddTime for that). Added time cannot excede the max timer length. Example: 2 600 (adds 10 minutes because of team red)"
 	input Restart(void) : "Restart the timer."
 	input ShowInHUD(integer) : "Show this timer in the HUD (0 no, 1 Yes)."
 	input SetMaxTime(integer) : "Set the max timer length to this value (in seconds). The timer's time will never excede this value."

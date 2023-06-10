@@ -1,5 +1,6 @@
 
 @PointClass base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/ficool2/team_control_point_round")
 	appliesto(TF2) = team_control_point_round: "Control Point Round (you may have as many of these in the map as you would like)."
 	[
 	cpr_printname(string) : "Print Name" : : "LOCALIZED name to print on the RoundInfo panel"

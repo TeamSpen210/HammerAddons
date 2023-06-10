@@ -2,5 +2,8 @@
 	appliesto(HL2, EP1, EP2, P1) 
 	studioprop("models/weapons/w_suitcase_passenger.mdl") = weapon_citizensuitcase: "A generic suitcase carried by Citizens."
 	[
-	@resources []
+	@resources
+		[
+		weapon_script "scripts/weapon_citizensuitcase.txt"
+		]
 	]

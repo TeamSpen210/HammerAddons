@@ -4,4 +4,8 @@
 	autovis(Weapons, L4D Weapons, Weapon Spawners)
 = weapon_first_aid_kit_spawn: "First Aid Kit"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_first_aid_kit.txt"
+		]
 	]
