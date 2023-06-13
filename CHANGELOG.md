@@ -21,6 +21,7 @@
 * Propcombine will no longer merge props found in different areaportal areas. This allows props on 
   the outside of a building to be culled when inside, or vice versa.
 * Restore missing projected texture shadow keyvalues.
+* Automatically set the "transmit to client" flag for `info_target`s used as particle system destinations.
 * Change `sky_camera` model to be more visible with `tools/toolsskybox` behind it.
 
 --------------------
