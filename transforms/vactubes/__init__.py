@@ -349,8 +349,8 @@ async def vactube_transform(ctx: Context) -> None:
                 cube_model = target.cube['model'].replace('\\', '/')
                 cube_skin = conv_int(target.cube['skin'])
                 try:
-                    cube_name = vac_objects[start_node.group, cube_model, cube_skin].id
-                except KeyError:
+                    cube_name = objects.find_for_cube(vac_objects, start_node.group, target.cube).id
+                except LookupError:
                     LOGGER.warning(
                         'Cube model "{}", skin {} is not a type of cube travelling '
                         'in this vactube!\n\n'

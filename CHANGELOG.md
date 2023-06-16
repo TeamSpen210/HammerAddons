@@ -23,6 +23,7 @@
 * Restore missing projected texture shadow keyvalues.
 * Automatically set the "transmit to client" flag for `info_target`s used as particle system destinations.
 * Change `sky_camera` model to be more visible with `tools/toolsskybox` behind it.
+* Fix #192: Use both specified model and cube type field to find matching cubes for vactubes.
 
 --------------------
 
