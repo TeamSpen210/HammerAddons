@@ -118,6 +118,58 @@ class Context:
         else:
             self._ent_code[ent] = '{}\n{}'.format(existing, code)
 
+    def _apply_remaps(self) -> None:
+        """Apply all the IO remaps."""
+        # Always disallow remaps now.
+        self._allow_remaps = False
+
+        if not self._io_remaps:
+            return
+
+        LOGGER.info('Remapping outputs...')
+        for (name, inp_name), outs in self._io_remaps.items():
+            LOGGER.debug('Remap {}.{} = {}', name, inp_name, outs)
+
+        for ent in self.vmf.entities:
+            todo = ent.outputs[:]
+            # Recursively convert only up to 500 times.
+            # Arbitrary limit, should be sufficient.
+            for _ in range(500):
+                if not todo:
+                    break
+                deferred = []
+                for out in todo:
+                    try:
+                        remaps, should_remove = self._io_remaps[
+                            out.target.casefold(),
+                            out.input.casefold(),
+                        ]
+                    except KeyError:
+                        continue
+                    if should_remove:
+                        ent.outputs.remove(out)
+                    for rep_out in remaps:
+                        new_out = Output(
+                            out.output,
+                            rep_out.target,
+                            rep_out.input,
+                            rep_out.params or out.params,
+                            out.delay + rep_out.delay,
+                            times=out.times if rep_out.times == -1
+                            else rep_out.times if out.times == -1
+                            else min(out.times, rep_out.times),
+                        )
+                        ent.outputs.append(new_out)
+                        deferred.append(new_out)
+                todo = deferred
+            else:
+                LOGGER.error(
+                    'Entity "{}" ({}) @ {} has infinite loop when expanding '
+                    ' compiler outputs to real ones! Final output list: \n{}',
+                    ent['targetname'], ent['classname'], ent['origin'],
+                    '\n'.join(['* {}\n'.format(out) for out in ent.outputs])
+                )
+
 
 TransFunc = Callable[[Context], Awaitable[None]]
 TransFuncOrSync = Callable[[Context], Optional[Awaitable[None]]]
@@ -180,49 +232,7 @@ async def run_transformations(
             init_scripts.append(pack.inject_vscript(code.replace('`', '"')))
             ent['vscripts'] = ' '.join(init_scripts)
 
-    if context._io_remaps:
-        LOGGER.info('Remapping outputs...')
-        for (name, inp_name), outs in context._io_remaps.items():
-            LOGGER.debug('Remap {}.{} = {}', name, inp_name, outs)
-        for ent in vmf.entities:
-            todo = ent.outputs[:]
-            # Recursively convert only up to 500 times.
-            # Arbitrary limit, should be sufficient.
-            for _ in range(500):
-                if not todo:
-                    break
-                deferred = []
-                for out in todo:
-                    try:
-                        remaps, should_remove = context._io_remaps[
-                            out.target.casefold(),
-                            out.input.casefold(),
-                        ]
-                    except KeyError:
-                        continue
-                    if should_remove:
-                        ent.outputs.remove(out)
-                    for rep_out in remaps:
-                        new_out = Output(
-                            out.output,
-                            rep_out.target,
-                            rep_out.input,
-                            rep_out.params or out.params,
-                            out.delay + rep_out.delay,
-                            times=out.times if rep_out.times == -1
-                            else rep_out.times if out.times == -1
-                            else min(out.times, rep_out.times),
-                        )
-                        ent.outputs.append(new_out)
-                        deferred.append(new_out)
-                todo = deferred
-            else:
-                LOGGER.error(
-                    'Entity "{}" ({}) @ {} has infinite loop when expanding '
-                    ' compiler outputs to real ones! Final output list: \n{}',
-                    ent['targetname'], ent['classname'], ent['origin'],
-                    '\n'.join(['* {}\n'.format(out) for out in ent.outputs])
-                )
+    context._apply_remaps()
 
 
 def _load() -> None:
