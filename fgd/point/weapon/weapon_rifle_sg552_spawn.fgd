@@ -3,5 +3,9 @@
 	autovis(Weapons, L4D Weapons, Weapon Spawners)
     studioprop("models/w_models/Weapons/w_rifle_sg552.mdl")
 = weapon_rifle_sg552_spawn: "SG552"
-[
-]
+    [
+    @resources
+        [
+        weapon_script "scripts/weapon_rifle_sg552.txt"
+        ]
+    ]

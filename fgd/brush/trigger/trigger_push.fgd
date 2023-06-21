@@ -4,9 +4,10 @@
 	pushdir(angle) : "Push Direction (Pitch Yaw Roll)" : "0 0 0" : "Angles indicating the direction to push touched entities."
 	spawnflags(flags)  =
 		[
-		128: "Once Only" : 0
+		128: "Fire once, then delete trigger" : 0
 		256: "Affects Ladders (Half-Life 2)" : 0
 		512: "No gravity while in contact (Players only)" : 0 [KZ]
+		4096: "Correctly account for object mass (trigger_push used to assume 100Kg) and multiple component physobjs (car, blob...)" : 1 [!CSGO, !TF2]
 		]
 
 	surfacecontactmode[engine](integer): "Require player contact with a surface?" : 0 : "Push triggers by default apply a boost to the player once they exit the bounds of the push. This boost is the effective force that launches the player. However, by doubleducking in a short push trigger, a player may be able to cause the boost to apply twice rapidly, causing unintended velocity to be applied. These settings allow you to require the player to be in contact with a surface to receive velocity (and not receive it if in the air, such as during a doubleduck)."

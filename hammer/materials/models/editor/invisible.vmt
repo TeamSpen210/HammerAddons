@@ -1,5 +1,6 @@
-WriteZ
+UnlitGeneric
 	{
-	// Only writes to Z buffer, so it's invisible but can be selected.
-	"%noToolTexture" 1
+	// Don't draw this at all, but it'll be traced for selection checks.
+	$no_draw 1
+	$model 1
 	}

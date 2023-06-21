@@ -316,12 +316,7 @@ class NodeEnt:
 
     def relative_to(self, off: Vec) -> 'NodeEnt':
         """Return a copy relative to the specified origin."""
-        return NodeEnt(
-            self.pos - off,
-            self.config,
-            self.id,
-            self.group,
-        )
+        return attrs.evolve(self, pos=self.pos - off)
 
     def __hash__(self) -> int:
         """Hash the vector with the rest of the values."""
@@ -385,14 +380,14 @@ class Node:
 
 
 async def build_rope(
-    nodes_and_conn: Tuple[FrozenSet[NodeEnt], FrozenSet[Tuple[NodeID, NodeID]]],
+    rope_key: Tuple[FrozenSet[NodeEnt], FrozenSet[Tuple[NodeID, NodeID]], Tuple[str, ...]],
     temp_folder: Path,
     mdl_name: str,
     args: Tuple[Vec, FileSystem],
 ) -> Tuple[Vec, List[Tuple[Vec, float, Vec, float]], List[SegProp], List[List[Vec]]]:
     """Construct the geometry for a rope."""
     LOGGER.info('Building rope {}', mdl_name)
-    ents, connections = nodes_and_conn
+    ents, connections, skins = rope_key
     offset, fsys = args
 
     mesh = Mesh.blank('root')
@@ -425,7 +420,7 @@ async def build_rope(
         coll_mesh.triangles.extend(generate_straights(coll_nodes))
         generate_caps(coll_nodes, coll_mesh, is_coll=True)
 
-    # Move the UVs around so they don't extend too far.
+    # Move the UVs around, so they don't extend too far.
     for tri in mesh.triangles:
         u = math.floor(min(point.tex_u for point in tri))
         v = math.floor(min(point.tex_v for point in tri))
@@ -439,19 +434,43 @@ async def build_rope(
     # the whole model.
     light_origin = min((node.pos for node in nodes), key=Vec.mag_sq)
 
+    # Studiomdl seems to rotate everything 90 degrees...
+    orient_fix = Matrix.from_yaw(270)
+
+    fixed_visual_mesh = Mesh.blank('root')
+    fixed_visual_mesh.append_model(mesh, rotation=orient_fix)
+
     with (temp_folder / 'cable.smd').open('wb') as fb:
-        mesh.export(fb)
+        fixed_visual_mesh.export(fb)
     if coll_nodes:
+        fixed_coll_mesh = Mesh.blank('root')
+        fixed_coll_mesh.append_model(coll_mesh, rotation=orient_fix)
         with (temp_folder / 'cable_phy.smd').open('wb') as fb:
-            coll_mesh.export(fb)
+            fixed_coll_mesh.export(fb)
+        del coll_mesh, fixed_coll_mesh
+
+    del mesh, fixed_visual_mesh
 
     with (temp_folder / 'model.qc').open('w') as f:
         # Desolation needs this hint.
         if is_vactube and hasattr(Mesh, 'NEED_TRANSLUCENT_MOSTLYOPAQUE'):
             f.write('$mostlyopaque\n')
         f.write(QC_TEMPLATE.format(path=mdl_name, light_origin=light_origin))
+        if skins:
+            f.write('$texturegroup "skinfamilies" {\n')
+            try:
+                [first_mat] = {node.config.material for node in nodes}
+            except ValueError:
+                raise NotImplementedError(
+                    'Using multiple skins for a rope using different materials '
+                    'for different segments is not supported.'
+                ) from None
+            f.write(f'    {{ "{first_mat}" }}\n')
+            for mat in skins:
+                f.write(f'    {{ "{mat}" }}\n')
+            f.write('}\n')
         if coll_nodes:
-            f.write(QC_TEMPLATE_PHYS.format(count=sum(node.next is not None for node in coll_nodes)))
+            f.write(QC_TEMPLATE_PHYS.format(count=sum(node.next is not None for node in coll_nodes) + 8))
 
     # For visleaf computation, build a list of all the actual segments generated.
     coll_data = [
@@ -648,7 +667,7 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
 
 def interpolate_all(nodes: Set[Node]) -> None:
     """Produce nodes in-between each user-made node."""
-    # Create the nodes and put them in a seperate list, then add them
+    # Create the nodes and put them in a separate list, then add them
     # to the actual nodes list second. This way sections that have been interpolated
     # don't affect the interpolation of neighbouring sections.
 
@@ -674,12 +693,13 @@ def interpolate_all(nodes: Set[Node]) -> None:
         points[-1].next.prev = points[-1]
 
     # Finally, split nodes with too much of an angle between them - we can't smooth.
+    # Don't bother if they're real small angles though, that's fine.
     for node in list(nodes):
         if node.prev is None or node.next is None:
             continue
         off1 = node.pos - node.prev.pos
         off2 = node.next.pos - node.pos
-        if Vec.dot(off1, off2) < 0.7:
+        if Vec.dot(off1, off2) < 0.7 and off1.mag_sq() > 8 and off2.mag_sq() > 8:
             new_node = Node(node.pos.copy(), node.config, node.radius)
             nodes.add(new_node)
             new_node.next = node.next
@@ -1084,15 +1104,19 @@ async def compile_rope(
             node.relative_to(origin)
             for node in nodes
         })
+        skins = []
+        for i in itertools.count(1):
+            skin_str = ent[f'skin{i}']
+            if not skin_str:
+                break
+            skins.append(skin_str)
+
         model_name, _ = await compiler.get_model(
-            (dyn_nodes, frozenset(connections)),
+            (dyn_nodes, frozenset(connections), tuple(skins)),
             build_rope,
             (origin, ctx.pack.fsys),
         )
         ent['model'] = model_name
-        ang = Angle.from_str(ent['angles'])
-        ang.yaw -= 90.0
-        ent['angles'] = ang
 
     if not dyn_ents:  # Static prop.
         bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes)
@@ -1106,7 +1130,7 @@ async def compile_rope(
                 has_coll = True
 
         model_name, (light_origin, coll_data, seg_props, vac_points) = await compiler.get_model(
-            (frozenset(local_nodes), frozenset(connections)),
+            (frozenset(local_nodes), frozenset(connections), ()),
             build_rope,
             (center, ctx.pack.fsys),
         )
@@ -1131,7 +1155,7 @@ async def compile_rope(
         ctx.bsp.props.append(StaticProp(
             model=model_name,
             origin=center,
-            angles=Angle(0, 270, 0),
+            angles=Angle(0, 0, 0),
             scaling=1.0,
             visleafs=leafs,
             solidity=6 if has_coll else 0,
@@ -1147,7 +1171,7 @@ async def compile_rope(
             ctx.bsp.props.append(StaticProp(
                 model=seg_prop.model,
                 origin=center + seg_prop.offset,
-                angles=(seg_prop.orient @ Matrix.from_yaw(270)).to_angle(),
+                angles=seg_prop.orient.to_angle(),
                 scaling=1.0,
                 visleafs=leafs,  # TODO: compute individual leafs here?
                 solidity=6,
@@ -1256,7 +1280,7 @@ async def comp_prop_rope(ctx: Context) -> None:
     # To group nodes, take each group out, then search recursively through
     # all connections from it to other nodes.
     todo = set(all_nodes.values())
-    with ModelCompiler.from_ctx(ctx, 'ropes', version=2) as compiler:
+    with ModelCompiler.from_ctx(ctx, 'ropes', version=3) as compiler:
         async with trio.open_nursery() as nursery:
             while todo:
                 dyn_ents: List[Entity] = []

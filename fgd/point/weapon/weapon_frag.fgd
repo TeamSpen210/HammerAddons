@@ -5,6 +5,9 @@
 	[
 	@resources
 		[
+		weapon_script "scripts/gameplay/weapons/weapon_frag.dmx" [+mesa]
+		weapon_script "scripts/weapon_frag.txt" [-mesa]
+
 		sound "WeaponFrag.Throw"
 		sound "WeaponFrag.Roll"
 		entity npc_grenade_frag

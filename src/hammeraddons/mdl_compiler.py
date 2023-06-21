@@ -234,7 +234,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
                 break
 
         # If compile dir is specified, create the folder/clear it, but don't delete once done.
-        ctx_man: ContextManager[Union[str, bytes, Path]]
+        ctx_man: ContextManager[Union[str, Path]]
         if self.compile_dir is not None:
             path = Path(self.compile_dir, mdl_name)
             ctx_man = contextlib.nullcontext(path)

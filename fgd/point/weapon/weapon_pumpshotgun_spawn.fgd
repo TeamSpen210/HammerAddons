@@ -4,4 +4,8 @@
 	autovis(Weapons, L4D Weapons, Weapon Spawners)
 = weapon_pumpshotgun_spawn: "Pump Shotgun"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_pumpshotgun.txt"
+		]
 	]

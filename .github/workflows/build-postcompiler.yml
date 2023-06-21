@@ -6,6 +6,12 @@ on:
     ref_type: 'tag'
   workflow_dispatch:
     # Allow triggering manually whenever it's useful.
+    inputs:
+      ref:
+        description: 'Branch/tag/commit to use'
+        required: true
+        type: string
+        default: 'dev'
 
 permissions:
   contents: read
@@ -32,8 +38,24 @@ jobs:
             os: 'ubuntu-latest'
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Checkout
+      # Build dev on schedule, since it's actually changing.
+      - name: Checkout Dev
         uses: actions/checkout@v3
+        if: github.event_name == 'schedule'
+        with:
+          ref: dev
+      # Always build the exact tag that's pushed.
+      - name: Checkout Tag
+        uses: actions/checkout@v3
+        if: github.event_name == 'create'
+        with:
+          ref: ${{ github.event.ref }}
+      - name: Checkout Ref
+        uses: actions/checkout@v3
+        if: github.event_name == 'workflow_dispatch'
+        with:
+          ref: ${{ inputs.ref }}
+
       - name: Set up Python ${{ matrix.python-version }}-${{ matrix.arch }}
         uses: actions/setup-python@v4
         with:

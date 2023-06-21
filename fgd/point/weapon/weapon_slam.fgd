@@ -5,6 +5,7 @@
 	[
 	@resources
 		[
+		weapon_script "scripts/weapon_slam.txt"
 		sound "Weapon_SLAM.ThrowMode"
 		sound "Weapon_SLAM.TripMineMode"
 		sound "Weapon_SLAM.SatchelDetonate"
