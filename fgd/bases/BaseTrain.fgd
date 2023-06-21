@@ -77,12 +77,12 @@
 	// This specific input did get ported in L4D2
 	input SetSpeedDirAccel[!L4D](float) : "Accel/Decel to the specified speed, as a ratio of max speed. Negative values reverse the direction [-1, 1]"
 
-	// Portal 2 inputs, also in CSGO
-	input TeleportToPathNode[since_P2](string) : "Teleport to a destination and stop there. This can be in a new path."
-	input MoveToPathNode[since_P2](string) : "Start moving to a destination and stop when you get there. This must be in the same path."
-	input LockOrientation[since_P2](void) : "Lock the current orientation of the train."
-	input UnlockOrientation[since_P2](void) : "Unlock the current orientation of the train."
-	input SetMaxSpeed[since_P2](float) : "Set a new max speed for the train."
+	// Added in Portal 2, Gmod backported
+	input TeleportToPathNode[since_P2, GMod](string) : "Teleport to a destination and stop there. This can be in a new path."
+	input MoveToPathNode[since_P2, GMod](string) : "Start moving to a destination and stop when you get there. This must be in the same path."
+	input LockOrientation[since_P2, GMod](void) : "Lock the current orientation of the train."
+	input UnlockOrientation[since_P2, GMod](void) : "Unlock the current orientation of the train."
+	input SetMaxSpeed[since_P2, GMod](float) : "Set a new max speed for the train."
 
 	input SetVelocityType[MESA](integer) : ""
 	input EnableControls[MESA](void) : ""
@@ -92,5 +92,5 @@
 	output OnStart(void) : "Fired when the train starts moving in either direction."
 	// The default FGD mislabels this as OnNext
 	output OnNextPoint(string) : "Fires continuously every frame when the train is moving to its next destination."
-	output OnArrivedAtDestinationNode[since_P2](void) : "Fired when this train arrives at a destination that was specified by the MoveToPathNode Input."
+	output OnArrivedAtDestinationNode[since_P2, GMod](void) : "Fired when this train arrives at a destination that was specified by the MoveToPathNode Input."
 	]

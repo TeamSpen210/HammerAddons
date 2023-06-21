@@ -4,5 +4,5 @@
 	sphere(radius) 
 = prop_sphere : "A variant of prop_physics which has a perfect sphere shape. It is normally restricted to a radius of 12 units."
 	[
-	radius[MBase](float) : "Radius" : 12 : "The size of the sphere collision."
+	radius[MBase, GMod](float) : "Radius" : 12 : "The size of the sphere collision."
 	]
