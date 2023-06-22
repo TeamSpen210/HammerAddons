@@ -42,7 +42,6 @@
 		"is_console": "Game is running on a console"
 		"is_pc": "Game is running on a PC"
 		
-		"portalgun_nospawn": "Spawn without Portalgun"
 		"no_pinging_blue": "Prevent Pinging ATLAS"
 		"no_pinging_orange": "Prevent Pinging P-Body"
 		"no_taunting_blue": "Prevent Taunting ATLAS"
