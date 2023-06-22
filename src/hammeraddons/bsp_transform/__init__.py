@@ -174,7 +174,7 @@ class Context:
                         continue
                     if should_remove:
                         ent.outputs.remove(out)
-                    collapsed_remaps: list[Output] = []
+                    collapsed_remaps: List[Output] = []
                     out_copy = out.copy()  # Don't allow remapping functions to modify this.
                     for remap in remaps:
                         if isinstance(remap, Output):
@@ -182,17 +182,8 @@ class Context:
                         else:
                             collapsed_remaps.extend(remap(ent, out_copy))
 
-                    for rep_out in remaps:
-                        new_out = Output(
-                            out.output,
-                            rep_out.target,
-                            rep_out.input,
-                            rep_out.params or out.params,
-                            out.delay + rep_out.delay,
-                            times=out.times if rep_out.times == -1
-                            else rep_out.times if out.times == -1
-                            else min(out.times, rep_out.times),
-                        )
+                    for rep_out in collapsed_remaps:
+                        new_out = Output.combine(out, rep_out)
                         ent.outputs.append(new_out)
                         deferred.append(new_out)
                 if not deferred:
