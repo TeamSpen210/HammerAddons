@@ -144,59 +144,6 @@ class Context:
         else:
             self._ent_code[ent] = '{}\n{}'.format(existing, code)
 
-    def _apply_remaps(self) -> None:
-        """Apply all the IO remaps."""
-        # Always disallow remaps now.
-        self._allow_remaps = False
-
-        if not self._io_remaps:
-            return
-
-        LOGGER.info('Remapping outputs...')
-        for (name, inp_name), outs in self._io_remaps.items():
-            LOGGER.debug('Remap {}.{} = {}', name, inp_name, outs)
-
-        for ent in self.vmf.entities:
-            if not ent.outputs:  # Early out.
-                continue
-            todo = ent.outputs[:]
-            # Recursively convert only up to 500 times.
-            # Arbitrary limit, should be sufficient.
-            for _ in range(500):
-                deferred = []
-                for out in todo:
-                    try:
-                        remaps, should_remove = self._io_remaps[
-                            out.target.casefold(),
-                            out.input.casefold(),
-                        ]
-                    except KeyError:
-                        continue
-                    if should_remove:
-                        ent.outputs.remove(out)
-                    collapsed_remaps: List[Output] = []
-                    out_copy = out.copy()  # Don't allow remapping functions to modify this.
-                    for remap in remaps:
-                        if isinstance(remap, Output):
-                            collapsed_remaps.append(remap)
-                        else:
-                            collapsed_remaps.extend(remap(ent, out_copy))
-
-                    for rep_out in collapsed_remaps:
-                        new_out = Output.combine(out, rep_out)
-                        ent.outputs.append(new_out)
-                        deferred.append(new_out)
-                if not deferred:
-                    break
-                todo = deferred
-            else:
-                LOGGER.error(
-                    'Entity "{}" ({}) @ {} has infinite loop when expanding '
-                    ' compiler outputs to real ones! Final output list: \n{}',
-                    ent['targetname'], ent['classname'], ent['origin'],
-                    '\n'.join(['* {}\n'.format(out) for out in ent.outputs])
-                )
-
 
 TransFunc = Callable[[Context], Awaitable[None]]
 TransFuncOrSync = Callable[[Context], Optional[Awaitable[None]]]
@@ -260,6 +207,61 @@ async def run_transformations(
             ent['vscripts'] = ' '.join(init_scripts)
 
     context._apply_remaps()
+
+
+# noinspection PyProtectedMember
+def apply_io_remaps(context: Context) -> None:
+    """Apply all the IO remaps."""
+    # Always disallow remaps now.
+    context._allow_remaps = False
+
+    if not context._io_remaps:
+        return
+
+    LOGGER.info('Remapping outputs...')
+    for (name, inp_name), outs in context._io_remaps.items():
+        LOGGER.debug('Remap {}.{} = {}', name, inp_name, outs)
+
+    for ent in context.vmf.entities:
+        if not ent.outputs:  # Early out.
+            continue
+        todo = ent.outputs[:]
+        # Recursively convert only up to 500 times.
+        # Arbitrary limit, should be sufficient.
+        for _ in range(500):
+            deferred = []
+            for out in todo:
+                try:
+                    remaps, should_remove = context._io_remaps[
+                        out.target.casefold(),
+                        out.input.casefold(),
+                    ]
+                except KeyError:
+                    continue
+                if should_remove:
+                    ent.outputs.remove(out)
+                collapsed_remaps: List[Output] = []
+                out_copy = out.copy()  # Don't allow remapping functions to modify this.
+                for remap in remaps:
+                    if isinstance(remap, Output):
+                        collapsed_remaps.append(remap)
+                    else:
+                        collapsed_remaps.extend(remap(ent, out_copy))
+
+                for rep_out in collapsed_remaps:
+                    new_out = Output.combine(out, rep_out)
+                    ent.outputs.append(new_out)
+                    deferred.append(new_out)
+            if not deferred:
+                break
+            todo = deferred
+        else:
+            LOGGER.error(
+                'Entity "{}" ({}) @ {} has infinite loop when expanding '
+                ' compiler outputs to real ones! Final output list: \n{}',
+                ent['targetname'], ent['classname'], ent['origin'],
+                '\n'.join(['* {}\n'.format(out) for out in ent.outputs])
+            )
 
 
 def _load() -> None:
