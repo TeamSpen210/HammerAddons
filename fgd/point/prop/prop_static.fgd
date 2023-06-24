@@ -36,15 +36,15 @@
 
 	uniformscale[PROP_SCALING](float) : "Uniform Scale Override" : 1 : "Resize the static prop."
 
-	solid[engine](integer) : "Collisions" : 6
-	solid(choices) : "Collisions" : 6 =
+	solid[engine](integer) : "Collisions": 6
+	solid(choices) : "Collisions" : 6 : "Method of collision for this prop." =
 		[
-		0: "Not Solid"
-		1: "Use BSP (QPhysics)" [complete]
-		2: "Use Bounding Box"
-		3: "Use Oriented Bounding Box" [complete]
-		4: "Use Oriented Bounding Box, constrained to Yaw only" [complete]
-		6: "Use VPhysics"
+		0: "None"
+		1: "BSP (QPhysics)" [complete]
+		2: "Bounding Box"
+		3: "Oriented Bounding Box"
+		4: "Oriented Bounding Box, constrained to Yaw only"
+		6: "VPhysics"
 		]
 
 	preventpropcombine[PROPCOMBINE](boolean) : "Disable Prop Combine" : 0 : "Prevent this static prop from combining with any other static props in vbsp."
