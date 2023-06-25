@@ -14,17 +14,10 @@ def custom_cube_models(ctx: Context) -> None:
             continue
         elif model_type == 1: # script override
             cube_model = ent['model']
-            # Make a prop_dynamic_override to precache the model
+            # Make a comp_precache_model
             ctx.vmf.create_ent(
-                classname = 'prop_dynamic_override',
+                classname = 'comp_precache_model',
                 model = cube_model,
-                rendermode = '10',
-                solid = '0',
-                shadowdepthnocache = '2',
-                spawnflags = '256', # disable collision
-                SuppressAnimSounds = '1',
-                DisableBoneFollowers = '1',
-                origin = '-15872 -15872 -15872' # stick it out of bounds
             )
             ctx.add_code(ent, 'function OnPostSpawn() { self.SetModel("' + cube_model + '") }')
         elif model_type == 2: # cube type 6
