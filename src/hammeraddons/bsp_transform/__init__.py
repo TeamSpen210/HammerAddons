@@ -12,14 +12,19 @@ from srctools.game import Game
 from srctools.logger import get_logger
 from srctools.packlist import PackList
 
+from hammeraddons.bsp_transform.common import (
+    parse_numeric_specifier, NumericSpecifier, NumericOp
+)
 
 LOGGER = get_logger(__name__, 'bsp_trans')
 RemapFunc: TypeAlias = Callable[[Entity, Output], List[Output]]
 
 __all__ = [
-    'check_control_enabled',
     'Context', 'trans', 'run_transformations',
     'TransFunc', 'TRANSFORMS',
+    # Utils:
+    'check_control_enabled',
+    'parse_numeric_specifier', 'NumericOp', 'NumericSpecifier',
 ]
 
 

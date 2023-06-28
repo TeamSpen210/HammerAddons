@@ -14,54 +14,15 @@ from srctools import Entity, Output, conv_bool
 from srctools.math import parse_vec_str
 from srctools.logger import get_logger
 
-from hammeraddons.bsp_transform import trans, Context, check_control_enabled
+from hammeraddons.bsp_transform import (
+    trans, Context,
+    check_control_enabled,
+    NumericSpecifier, parse_numeric_specifier,
+)
 
 
 LOGGER = get_logger(__name__)
-
-
 CASES = [f'case{x:02}' for x in range(1, 17)]
-NumericOp: TypeAlias = Callable[[Decimal, Decimal], bool]
-
-OPERATIONS: dict[str, NumericOp] = {
-    '<': operator.lt,
-    '>': operator.gt,
-    '>=': operator.ge,
-    '<=': operator.le,
-    '=': operator.eq,
-    '==': operator.eq,
-    '!=': operator.ne,
-    '=!=': operator.ne,
-    '~=': operator.ne,
-    '=/=': operator.ne,
-}
-# Matches characters present in OPERATIONS
-OPERATION_RE = re.compile('({0})+'.format('|'.join(map(re.escape, {
-    char for key in OPERATIONS for char in key
-}))))
-
-
-def parse_numeric_specifier(case_num: int, text: str, desc: str) -> Tuple[int, NumericOp, Decimal]:
-    """Parse case values like "> 5" into the operation and number."""
-    operation: NumericOp
-    if (match := OPERATION_RE.match(text)) is not None:
-        try:
-            operation = OPERATIONS[match.group()]
-        except KeyError:
-            LOGGER.warning('Invalid numeric operator "{}" for case #{} in {}', match.group(), case_num, desc)
-            operation = operator.eq
-        num_str = text[match.end():]
-    else:
-        operation = operator.eq
-        num_str = text
-    try:
-        num = Decimal(num_str)
-    except ValueError:
-        LOGGER.warning('Invalid number "{}" for case #{} in {}', num_str, case_num, desc)
-        # Force this to always fail.
-        return (case_num, lambda a, b: False, Decimal())
-    else:
-        return (case_num, operation, num)
 
 
 def collapse_case(ctx: Context, case: Entity) -> None:
@@ -122,8 +83,11 @@ def collapse_case(ctx: Context, case: Entity) -> None:
                     yield case_num
     elif mode == 'numeric':
         # Pre-parse "< 5" style values.
-        numeric_cases: List[Tuple[int, NumericOp, Decimal]] = [
-            parse_numeric_specifier(case_num, case_params[case_num], desc)
+        numeric_cases: List[Tuple[NumericSpecifier, int]] = [
+            (parse_numeric_specifier(
+                case_params[case_num],
+                f'for case #{case_num} in {desc}'
+            ), case_num)
             for case_num in key_params
         ]
 
@@ -133,7 +97,7 @@ def collapse_case(ctx: Context, case: Entity) -> None:
                 num_a = Decimal(param)
             except ValueError:
                 return  # Matches nothing.
-            for case_num, operation, num_b in numeric_cases:
+            for (operation, num_b), case_num in numeric_cases:
                 if operation(num_a, num_b):
                     yield case_num
     else:
