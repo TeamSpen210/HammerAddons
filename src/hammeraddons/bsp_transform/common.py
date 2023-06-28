@@ -4,7 +4,7 @@ import re
 from typing import Callable, Tuple
 from decimal import Decimal
 
-from typing_extensions import TypeAlias
+from typing_extensions import Literal, TypeAlias
 
 from srctools import Entity, conv_bool
 from srctools.logger import get_logger
@@ -32,6 +32,12 @@ OPERATION_RE = re.compile('({0})+'.format('|'.join(map(re.escape, {
 }))))
 
 
+# noinspection PyUnusedLocal
+def op_always_fail(a: Decimal, b: Decimal, /) -> Literal[False]:
+    """NumericOp implementation which always fails."""
+    return False
+
+
 def parse_numeric_specifier(text: str, desc: str='') -> NumericSpecifier:
     """Parse case values like "> 5" into the operation and number."""
     operation: NumericOp
@@ -50,7 +56,7 @@ def parse_numeric_specifier(text: str, desc: str='') -> NumericSpecifier:
     except ValueError:
         LOGGER.warning('Invalid number "{}"{}', num_str, desc)
         # Force this to always fail.
-        return (lambda a, b: False, Decimal())
+        return (op_always_fail, Decimal())
     else:
         return (operation, num)
 
