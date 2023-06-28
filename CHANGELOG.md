@@ -1,6 +1,7 @@
 
 # Version (dev)
 * #163: Added `comp_adv_output`, which allows adding a single output with complex behaviour.
+* Added `comp_case`, a version of `logic_case` that is collapsed into callers like `comp_relay`.
 * Added `--verbose` parameter, for showing DEBUG messages.
 * Improve description of `wait` and `OnTrigger` options in `trigger_multiple`.
 * Added ability to specify alt skins when using `comp_prop_cable_dynamic`.
