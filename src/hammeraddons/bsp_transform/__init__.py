@@ -6,13 +6,14 @@ from pathlib import Path
 import inspect
 
 
-from srctools import FGD, VMF, EmptyMapping, Entity, FileSystem, Keyvalues, Output, conv_bool
+from srctools import FGD, VMF, EmptyMapping, Entity, FileSystem, Keyvalues, Output
 from srctools.bsp import BSP
 from srctools.game import Game
 from srctools.logger import get_logger
 from srctools.packlist import PackList
 
 from hammeraddons.bsp_transform.common import (
+    check_control_enabled,
     parse_numeric_specifier, NumericSpecifier, NumericOp
 )
 
@@ -26,20 +27,6 @@ __all__ = [
     'check_control_enabled',
     'parse_numeric_specifier', 'NumericOp', 'NumericSpecifier',
 ]
-
-
-def check_control_enabled(ent: Entity) -> bool:
-    """Implement the bahaviour of ControlEnables - control_type and control_value.
-
-    This allows providing a fixup value, and optionally inverting it.
-    """
-    # If ctrl_type is 0, ctrl_value needs to be 1 to be enabled.
-    # If ctrl_type is 1, ctrl_value needs to be 0 to be enabled.
-    if 'ctrl_type' in ent:
-        return conv_bool(ent['ctrl_type'], False) != conv_bool(ent['ctrl_value'], True)
-    else:
-        # Missing, assume true if ctrl_value also isn't present.
-        return conv_bool(ent['ctrl_value'], True)
 
 
 class Context:

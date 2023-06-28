@@ -6,6 +6,7 @@ from decimal import Decimal
 
 from typing_extensions import TypeAlias
 
+from srctools import Entity, conv_bool
 from srctools.logger import get_logger
 
 
@@ -52,3 +53,17 @@ def parse_numeric_specifier(text: str, desc: str) -> NumericSpecifier:
         return (lambda a, b: False, Decimal())
     else:
         return (operation, num)
+
+
+def check_control_enabled(ent: Entity) -> bool:
+    """Implement the bahaviour of ControlEnables - control_type and control_value.
+
+    This allows providing a fixup value, and optionally inverting it.
+    """
+    # If ctrl_type is 0, ctrl_value needs to be 1 to be enabled.
+    # If ctrl_type is 1, ctrl_value needs to be 0 to be enabled.
+    if 'ctrl_type' in ent:
+        return conv_bool(ent['ctrl_type'], False) != conv_bool(ent['ctrl_value'], True)
+    else:
+        # Missing, assume true if ctrl_value also isn't present.
+        return conv_bool(ent['ctrl_value'], True)
