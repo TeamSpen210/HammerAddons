@@ -82,10 +82,10 @@ FEATURES: Dict[str, Set[str]] = {
     'EP2': {'HL2', 'EP1'},
 
     'MBASE': {'VSCRIPT'},
-    'MESA': {'INST_IO'},
+    'MESA': {'HL2', 'INST_IO'},
     'GMOD': {'HL2', 'EP1', 'EP2'},
-    'EZ1': {'MBASE', 'VSCRIPT'},
-    'EZ2': {'MBASE', 'VSCRIPT'},
+    'EZ1': {'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
+    'EZ2': {'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
     'KZ': {'HL2'},
 
     'L4D2': {'INST_IO', 'VSCRIPT'},
@@ -248,30 +248,40 @@ def expand_tags(tags: FrozenSet[str]) -> FrozenSet[str]:
     This adds since_/until_ tags, and values in FEATURES.
     """
     exp_tags = set(tags)
+
+    # Figure out the game branch, for adding since/until tags.
+    # For games, pick the most recent one. For mods, pick the associated branch,
+    # but don't add the branch itself - they can do that via FEATURES.
+    pos = -1
     for tag in tags:
-        try:
-            exp_tags.add(MOD_TO_BRANCH[tag.upper()])
-        except KeyError:
-            pass
+        tag = tag.upper()
+        if tag in ALL_GAMES:
+            pos = max(pos, GAME_ORDER.index(tag))
+            break
+        else:
+            try:
+                pos = GAME_ORDER.index(MOD_TO_BRANCH[tag])
+            except (KeyError, ValueError):
+                pass
+            else:
+                break
+
+    if pos > 0:
+        exp_tags.update(
+            'SINCE_' + tag
+            for tag in GAME_ORDER[:pos + 1]
+        )
+        exp_tags.update(
+            'UNTIL_' + tag
+            for tag in GAME_ORDER[pos + 1:]
+        )
 
     for tag in list(exp_tags):
         try:
             exp_tags.update(FEATURES[tag.upper()])
         except KeyError:
             pass
-        try:
-            pos = GAME_ORDER.index(tag.upper())
-        except ValueError:
-            pass
-        else:
-            exp_tags.update(
-                'SINCE_' + tag
-                for tag in GAME_ORDER[:pos+1]
-            )
-            exp_tags.update(
-                'UNTIL_' + tag
-                for tag in GAME_ORDER[pos+1:]
-            )
+
     return frozenset(exp_tags)
 
 
