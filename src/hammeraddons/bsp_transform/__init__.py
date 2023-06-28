@@ -206,7 +206,7 @@ async def run_transformations(
             init_scripts.append(pack.inject_vscript(code.replace('`', '"')))
             ent['vscripts'] = ' '.join(init_scripts)
 
-    context._apply_remaps()
+    apply_io_remaps(context)
 
 
 # noinspection PyProtectedMember

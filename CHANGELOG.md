@@ -82,7 +82,7 @@
 * Particle systems will now be detected and packed along with their dependencies. 
   This needs configuration in the config file, since different games use different filenames.
 * Optionally, the postcompiler can collapse and remove `func_instance_io_proxy` from maps entirely to save ents.
-* Add comp_sequential_call: finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order.
+* Add `comp_sequential_call`: finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order.
 * Add `comp_flicker`: fires on/off and skin inputs repeatedly to simulate a flicker-on effect.
 * `comp_scriptvar_setter` can now set global variables also.
 * `prop_paint_bomb` will now show its collision mesh (futbols).
