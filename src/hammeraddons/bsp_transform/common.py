@@ -2,7 +2,7 @@
 import operator
 import re
 from typing import Callable, Tuple
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 
 from typing_extensions import Literal, TypeAlias
 
@@ -26,8 +26,9 @@ OPERATIONS: dict[str, NumericOp] = {
     '~=': operator.ne,
     '=/=': operator.ne,
 }
-# Matches characters present in OPERATIONS
-OPERATION_RE = re.compile('({0})+'.format('|'.join(map(re.escape, {
+# Matches multiple characters present in OPERATIONS.
+# \s skips whitespace beforehand, so we have a capturing group to just grap the actual operation.
+OPERATION_RE = re.compile(r'\s*((?:{0})+)'.format('|'.join(map(re.escape, {
     char for key in OPERATIONS for char in key
 }))))
 
@@ -43,9 +44,9 @@ def parse_numeric_specifier(text: str, desc: str='') -> NumericSpecifier:
     operation: NumericOp
     if (match := OPERATION_RE.match(text)) is not None:
         try:
-            operation = OPERATIONS[match.group()]
+            operation = OPERATIONS[match.group(1)]
         except KeyError:
-            LOGGER.warning('Invalid numeric operator "{}"{}', match.group(), desc)
+            LOGGER.warning('Invalid numeric operator "{}"{}', match.group(1), desc)
             operation = operator.eq
         num_str = text[match.end():]
     else:
@@ -53,7 +54,7 @@ def parse_numeric_specifier(text: str, desc: str='') -> NumericSpecifier:
         num_str = text
     try:
         num = Decimal(num_str)
-    except ValueError:
+    except InvalidOperation:
         LOGGER.warning('Invalid number "{}"{}', num_str, desc)
         # Force this to always fail.
         return (op_always_fail, Decimal())
