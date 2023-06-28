@@ -1,9 +1,7 @@
 """comp_case is a compile-time collapsible version of logic_case."""
-from typing import Callable, Iterator, List, Tuple
-from typing_extensions import TypeAlias
+from typing import Iterator, List, Tuple
 
 import hashlib
-import operator
 import re
 import struct
 import random
@@ -86,7 +84,7 @@ def collapse_case(ctx: Context, case: Entity) -> None:
         numeric_cases: List[Tuple[NumericSpecifier, int]] = [
             (parse_numeric_specifier(
                 case_params[case_num],
-                f'for case #{case_num} in {desc}'
+                f' for case #{case_num} in {desc}'
             ), case_num)
             for case_num in key_params
         ]

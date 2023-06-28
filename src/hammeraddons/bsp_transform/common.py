@@ -32,14 +32,14 @@ OPERATION_RE = re.compile('({0})+'.format('|'.join(map(re.escape, {
 }))))
 
 
-def parse_numeric_specifier(text: str, desc: str) -> NumericSpecifier:
+def parse_numeric_specifier(text: str, desc: str='') -> NumericSpecifier:
     """Parse case values like "> 5" into the operation and number."""
     operation: NumericOp
     if (match := OPERATION_RE.match(text)) is not None:
         try:
             operation = OPERATIONS[match.group()]
         except KeyError:
-            LOGGER.warning('Invalid numeric operator "{}" {}', match.group(), desc)
+            LOGGER.warning('Invalid numeric operator "{}"{}', match.group(), desc)
             operation = operator.eq
         num_str = text[match.end():]
     else:
@@ -48,7 +48,7 @@ def parse_numeric_specifier(text: str, desc: str) -> NumericSpecifier:
     try:
         num = Decimal(num_str)
     except ValueError:
-        LOGGER.warning('Invalid number "{}" {}', num_str, desc)
+        LOGGER.warning('Invalid number "{}"{}', num_str, desc)
         # Force this to always fail.
         return (lambda a, b: False, Decimal())
     else:
