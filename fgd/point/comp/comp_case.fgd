@@ -11,10 +11,10 @@
 		"are we allowed to test the rest of the cases or should we stop there? " +
 		"Don't worry about this if you're only using this entity for PickRandom." 
 
-	value(string) : "Input Value" : "If the InValue parameter is blank or Trigger is used, this value will be used instead."
+	value(string) : "Input Value" : : "If the InValue parameter is blank or Trigger is used, this value will be used instead."
 
-	mode[engine](string) : "Mode" : "text"
-	mode(choices) : "Mode" : "string_casefold" : "Specifies how comparisons are performed. Text mode simply checks for a case that matches the input text. " +
+	mode[engine](string) : "Mode" : "string"
+	mode(choices) : "Mode" : "casefold" : "Specifies how comparisons are performed. Text mode simply checks for a case that matches the input text. " +
 		"Numeric treats values as numbers, allowing cases to additionally specify a comparison like '< 3.14'. In all modes, each case is compared in order." =
 		[
 		"string" : "Text - Case Sensitive"
