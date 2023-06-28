@@ -142,7 +142,9 @@ def collapse_case(ctx: Context, case: Entity) -> None:
 @trans('comp_case', priority=10)
 def comp_case(ctx: Context) -> None:
     """A version of logic_case which is collapsed at compile time."""
+    ent: Entity
     for ent in ctx.vmf.by_class['comp_case']:
+        ent.remove()
         if check_control_enabled(ent):
             collapse_case(ctx, ent)
         else:
