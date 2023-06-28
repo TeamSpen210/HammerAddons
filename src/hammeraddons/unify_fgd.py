@@ -93,7 +93,7 @@ FEATURES: Dict[str, Set[str]] = {
     'ASW': {'INST_IO', 'VSCRIPT'},
     'P2': {'INST_IO', 'VSCRIPT'},
     'CSGO': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
-    'P2DES': {'P2'},
+    'P2DES': {'P2', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 }
 
 ALL_FEATURES = {
@@ -134,6 +134,8 @@ VISGROUP_SUFFIX = '\x8D'
 
 # Special classname which has all the keyvalues and IO of CBaseEntity.
 BASE_ENTITY = '_CBaseEntity_'
+
+MAP_SIZE_DEFAULT = 16384  # Default grid bounds.
 
 
 # Helpers which are only used by one or two entities each.
@@ -305,13 +307,18 @@ def ent_path(ent: EntityDef) -> str:
     return '{}/{}.fgd'.format(folder, ent.classname)
 
 
-def load_database(dbase: Path, extra_loc: Optional[Path]=None, fgd_vis: bool=False) -> Tuple[FGD, EntityDef]:
+def load_database(
+    dbase: Path,
+    extra_loc: Optional[Path]=None,
+    fgd_vis: bool=False,
+    map_size: int=MAP_SIZE_DEFAULT,
+) -> Tuple[FGD, EntityDef]:
     """Load the entire database from disk. This returns the FGD, plus the CBaseEntity definition."""
     print(f'Loading database {dbase}:')
     fgd = FGD()
 
-    fgd.map_size_min = -16384
-    fgd.map_size_max = 16384
+    fgd.map_size_min = -map_size
+    fgd.map_size_max = map_size
 
     # Classname -> filename
     ent_source: Dict[str, str] = {}
@@ -818,6 +825,7 @@ def action_export(
     output_path: Path,
     as_binary: bool,
     engine_mode: bool,
+    map_size: int=MAP_SIZE_DEFAULT,
 ) -> None:
     """Create an FGD file using the given tags."""
 
@@ -828,7 +836,9 @@ def action_export(
 
     print('Tags expanded to: {}'.format(', '.join(tags)))
 
-    fgd, base_entity_def = load_database(dbase, extra_db)
+    fgd, base_entity_def = load_database(dbase, extra_loc=extra_db, map_size=map_size)
+
+    print(f'Map size: ({fgd.map_size_min}, {fgd.map_size_max})')
 
     if engine_mode:
         # In engine mode, we don't care about specific games.
@@ -1225,6 +1235,12 @@ def main(args: Optional[List[str]]=None):
         help="Tags to include in the output.",
         default=None,
     )
+    parser_exp.add_argument(
+        "--map-size",
+        default=MAP_SIZE_DEFAULT,
+        dest="map_size",
+        type=int,
+    )
 
     parser_imp = subparsers.add_parser(
         "import",
@@ -1300,6 +1316,7 @@ def main(args: Optional[List[str]]=None):
             result.output,
             result.binary,
             result.engine,
+            result.map_size,
         )
     elif result.mode in ("c", "count"):
         action_count(dbase, extra_db, factories_folder=Path(repo_dir, 'db', 'factories'))
