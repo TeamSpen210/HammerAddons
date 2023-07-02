@@ -1,18 +1,19 @@
 @PointClass 
-	base(BasePedButton) 
+	base(BasePedButton, SRCModel) 
 	appliesto(P2)
 	autovis(Test Elements, P2 Buttons, Pedestal) 
 	studioprop() 
 = prop_button: "A button which is activated by player use or by game inputs. While pressed it can play a tick-tock sound to indicate limited time."
 	[
+	model[-srctools](studio) : "[H] Model" : "models/props/switch001.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
+	model[+srctools](studio) : "Custom Model" : "models/props/switch001.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	
 	skin[engine](integer) : "Skin" : 0 : "Should it appear dirty or clean?"
 	skin(choices) : "Skin" : "0" : "Should it appear dirty or clean?" =
 		[
 		0: "Clean"
 		1: "Dirty"
 		]
-	model[engine](string) : "Hammer Preview"
-	model(studio) : "[H] Model" : "models/props/switch001.mdl" : "Model to display in Hammer. Use Init Code and a comp_precache_model to change the model in-game."
 
 	@resources
 		[
