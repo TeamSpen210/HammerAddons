@@ -16,7 +16,7 @@
 	inp_name(string) : "Input Name" : : "The input to fire."
 
 	delay(float) : "Delay" : "0.0": "The delay to add to the output."
-	delay2(float) : "Extra Delay" : "0.0" : "A second delay to add to the first."
+	delay2(float) : "Extra Delay" : "0.0" : "A second delay to add to the first. Useful for instance parameters."
 
 	times(integer) : "Times to Fire" : -1 : "The number of times this output can fire, or -1 for infinite. Hammer normally only allows setting this to 1 or -1."
 
