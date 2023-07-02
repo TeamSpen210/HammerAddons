@@ -30,24 +30,23 @@ SUPPORTED_ENTS = [
 @trans('Portal 2 Custom Models')
 def p2_custom_models(ctx: Context) -> None:
     """Add keyvalues to Portal 2 test element entities to automatically handle custom models."""
-    for ent in ctx.vmf.entities:
-        if ent['classname'] not in SUPPORTED_ENTS:
-            continue        
-        model_type = conv_int(ent['comp_custom_model_type'])
+    for classname in SUPPORTED_ENTS:
+        for ent in ctx.vmf.by_class[classname]:
+            model_type = conv_int(ent['comp_custom_model_type'])
 
-        if model_type == 0: # none
-            continue
-        elif model_type == 1: # script override
-            cust_model = ent['model']
-            # Make a comp_precache_model
-            ctx.vmf.create_ent(
-                classname = 'comp_precache_model',
-                model = cust_model,
-            )
-            ctx.add_code(ent, 'function OnPostSpawn() { self.SetModel("' + cust_model + '") }')
-        elif model_type == 2 and ent['classname'] == 'prop_weighted_cube': # cube type 6, for prop_weighted_cube only
-            orig_cube_type = ent['CubeType']
-            ent['CubeType'] = '6'
-            # Revert to the original type on spawn
-            ctx.add_code(ent, 'function OnPostSpawn() { EntFireByHandle(self, "AddOutput", "CubeType ' + orig_cube_type + '", 0, self, self) }')
+            if model_type == 0: # none
+                continue
+            elif model_type == 1: # script override
+                cust_model = ent['model']
+                # Make a comp_precache_model
+                ctx.vmf.create_ent(
+                    classname = 'comp_precache_model',
+                    model = cust_model,
+                )
+                ctx.add_code(ent, 'function OnPostSpawn() { self.SetModel("' + cust_model + '") }')
+            elif model_type == 2 and ent['classname'] == 'prop_weighted_cube': # cube type 6, for prop_weighted_cube only
+                orig_cube_type = ent['CubeType']
+                ent['CubeType'] = '6'
+                # Revert to the original type on spawn
+                ctx.add_code(ent, 'function OnPostSpawn() { EntFireByHandle(self, "AddOutput", "CubeType ' + orig_cube_type + '", 0, self, self) }')
         
