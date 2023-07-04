@@ -4,11 +4,12 @@
 	iconsprite("editor/ficool2/material_modify_control.vmt")
  = material_modify_control: "An entity that can be used to directly control material vars. " +
  "To use it, you need to add the MaterialModify or MaterialModifyAnimated proxy to the material you intend to change. " +
- "Parent this entity the entity who's material you want to control. " +
- "If not parented, this applies to all materials in the map with the given name."
+ "Parent this entity the entity who's material you want to control."
 	[
-	materialname(string) : "Material to modify."
-	materialvar(string) : "Material variable to modify."
+	parentname(target_destination) : "Parent / Target" : : "Materials are modified only on the parent of the material_modify_control."
+	
+	materialname(material): "Material Name" : : "The single material to modify on the parent. 'materials/' and '.vmt' is not required. Maximum of 255 characters allowed."
+	materialvar(string): "Variable Name" : : "Material variable to modify, '$frame' for example. Maximum of 255 characters allowed."
 
 	// Inputs
 	input SetMaterialVar(string) : "Fire to modify a material variable. The argument is the value to set the variable to."
