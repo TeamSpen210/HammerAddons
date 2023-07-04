@@ -8,6 +8,9 @@
 	[
 	parentname(target_destination) : "Parent / Target" : : "Materials are modified only on the parent of the material_modify_control."
 
+	srctools_search_parent[+srctools](boolean) : "Search Parent" : : "If set, the postcompiler will duplicate this entity for each material on the parent that have the appropriate proxy. " +
+		"If Material Name is set, only materials containing that value will be considered."
+
 	materialname(material): "Material Name" : : "The single material to modify on the parent. 'materials/' and '.vmt' is not required. Maximum of 255 characters allowed."
 	materialvar[-srctools](string): "Variable Name" : : "Material variable to modify, '$frame' for example. Maximum of 255 characters allowed."
 	materialvar[+srctools](string): "Variable Name" : : "Material variable to modify, '$frame' for example. Maximum of 255 characters allowed. " +
