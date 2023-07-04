@@ -195,6 +195,13 @@ async def run_transformations(
         LOGGER.info('Injecting VScript code...')
         for ent, code in context._ent_code.items():
             init_scripts = ent['vscripts'].split()
+            if init_scripts:
+                # If both a regular entity script and injected script are present,
+                # the call chaining mechanism used for Precache & OnPostSpawn can malfunction.
+                # If the entity script defines either, running the second script will make the
+                # chainer pick it up again, calling the function twice. So edit the script to
+                # first blank out the functions.
+                code = 'OnPostSpawn<-Precache<-@()null\n' + code
             init_scripts.append(pack.inject_vscript(code.replace('`', '"')))
             ent['vscripts'] = ' '.join(init_scripts)
 
