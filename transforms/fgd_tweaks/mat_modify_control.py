@@ -1,6 +1,12 @@
 """Tweak material_modify_control to avoid the variable showing up in instances."""
+from collections.abc import Iterable
+from typing import Dict, Set
+
 import srctools.logger
 from hammeraddons.bsp_transform import trans, Context
+from srctools import Entity, conv_bool
+from srctools.bsp import BModel
+from srctools.mdl import Model
 from srctools.tokenizer import TokenSyntaxError
 from srctools.vmt import Material
 
@@ -15,12 +21,12 @@ def material_modify_control(ctx: Context) -> None:
     This allows Hammer to not detect this as a fixup variable.
     """
     # Material name -> does it have either materialmodify or materialmodifyanimated proxies.
-    mat_has_proxy: dict[str, bool] = {}
+    mat_has_proxy: Dict[str, bool] = {}
     # Model or "*xx" index -> list of relevant materials.
-    model_mats: dict[str, list[str]] = {}
-    filter_fsys = ctx.pack.fsys  # Close over just filesystem.
+    model_mats: Dict[str, Iterable[str]] = {}
+    fsys = ctx.pack.fsys  # Close over just filesystem.
 
-    def filter_materials(mat_name: str) -> bool:
+    def material_has_proxy(mat_name: str) -> bool:
         """Check if this material has the proxy."""
         lowered = mat_name.casefold()
         if not lowered.startswith(('materials/', 'materials\\')):
@@ -34,7 +40,7 @@ def material_modify_control(ctx: Context) -> None:
         except KeyError:
             pass
         try:
-            file = filter_fsys[mat_name]
+            file = fsys[mat_name]
         except FileNotFoundError:
             LOGGER.warning('Material "{}" does not exist!', mat_name)
             mat_has_proxy[lowered] = False
@@ -42,7 +48,7 @@ def material_modify_control(ctx: Context) -> None:
         with file.open_str() as f:
             try:
                 mat = Material.parse(f, mat_name)
-                mat.apply_patches(filter_fsys)
+                mat = mat.apply_patches(fsys)
             except (TokenSyntaxError, ValueError) as exc:
                 LOGGER.warning('Material "{}" is not valid: ', exc_info=exc)
         for proxy in mat.proxies:
@@ -52,7 +58,65 @@ def material_modify_control(ctx: Context) -> None:
         mat_has_proxy[lowered] = False
         return False
 
-    for ent in ctx.vmf.by_class['material_modify_control']:
-        var_name = ent['materialvar']
+    matmod: Entity
+    for matmod in ctx.vmf.by_class['material_modify_control']:
+        var_name = matmod['materialvar']
         if var_name and not var_name.startswith(('$', '%')):
-            ent['materialvar'] = '$' + var_name
+            matmod['materialvar'] = '$' + var_name
+
+        if not conv_bool(matmod.pop('srctools_search_parent')):
+            continue
+        filter_mat = matmod['materialname'].casefold()
+
+        materials: Set[str] = set()
+        ent_materials: Iterable[str]
+        for parent in ctx.vmf.search(matmod['parentname']):
+            try:
+                bsp_model: BModel = ctx.bsp.bmodels[parent]
+            except KeyError:  # It must be a prop?
+                prop_model = parent['model']
+                if not prop_model:
+                    LOGGER.warning(
+                        'Parent "{}" of mat-mod-control "{}" has no model?',
+                        parent['targetname'], matmod['targetname'],
+                        )
+                    continue
+                try:
+                    ent_materials = model_mats[prop_model]
+                except KeyError:
+                    # Get all the materials this model uses.
+                    try:
+                        mdl = Model(fsys, fsys[prop_model])
+                    except FileNotFoundError:
+                        LOGGER.warning(
+                            'Model "{}" does not exist for "{}"',
+                            prop_model, parent['targetname'],
+                        )
+                        model_mats[prop_model] = ()
+                        continue
+                    except ValueError:
+                        LOGGER.warning('Invalid model "{}"', prop_model)
+                        model_mats[prop_model] = ()
+                        continue
+                    ent_materials = model_mats[prop_model] = list(mdl.iter_textures())
+                    del mdl  # Complicated.
+            else:  # A BSP model.
+                ent_materials = {
+                    texinfo.mat
+                    for face in bsp_model.faces
+                    if (texinfo := face.texinfo) is not None
+                }
+            for mat in ent_materials:
+                if material_has_proxy(mat) and (not filter_mat or filter_mat in mat.casefold()):
+                    materials.add(mat)
+        LOGGER.debug('"{}": {} materials', matmod['targetname'], len(materials))
+        if not materials:
+            LOGGER.warning('"{}"\'s parent has no valid materials!', matmod['targetname'])
+            # Leave it unchanged, in case the material name happens to actually be correct.
+        else:
+            mat_iter = iter(materials)
+            matmod['materialname'] = next(mat_iter)
+            for extra_mat in mat_iter:
+                matmod_extra = matmod.copy()
+                ctx.vmf.add_ent(matmod_extra)
+                matmod_extra['materialname'] = extra_mat
