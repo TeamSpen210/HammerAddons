@@ -226,13 +226,17 @@ def entity_finder(ctx: Context):
                 found_ent[kv_dest] = kv_src
             elif kv_mode is FinderModes.CONST_KNOWN:
                 # Set constant value on known entity.
+                assert needs_known and known_ent is not None
                 known_ent[kv_dest] = kv_src
             elif kv_mode is FinderModes.TARG_TO_KNOWN:
+                assert needs_known and known_ent is not None
                 known_ent[kv_dest] = found_ent[kv_src]
             elif kv_mode is FinderModes.KNOWN_TO_TARG:
+                assert needs_known and known_ent is not None
                 found_ent[kv_dest] = known_ent[kv_src]
             elif kv_mode is FinderModes.OUTPUT_MERGE:
                 output_name = '!' + kv_dest.lstrip('!').casefold()
+                assert needs_known and known_ent is not None
                 for out in known_ent.outputs:
                     if out.target.casefold() == output_name:
                         out.target = found_ent['targetname']
