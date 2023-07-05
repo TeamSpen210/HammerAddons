@@ -11,7 +11,7 @@ def laser_catcher_skins(ctx: Context):
         if not conv_bool(ent['src_fix_skins'], True):
             continue
 
-        deact_skin, act_skin = '23' if ent['SkinType'] == '1' else '01'
+        deact_skin, act_skin = ('2', '3') if ent['SkinType'] == '1' else ('0', '1')
 
         # Look for outputs which do this already.
         name = ent['targetname']
@@ -57,6 +57,7 @@ def needs_paint(vmf: VMF) -> bool:
             # If the cube is bouncy, enable paint.
             if conv_int(ent['paintpower', '4'], 4) != 4:
                 return True
+    return False
 
 
 @trans('Force Paint in Map')
