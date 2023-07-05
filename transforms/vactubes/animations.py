@@ -74,9 +74,9 @@ class Animation:
         [self.move_bone] = self.mesh.bones.values()
         self.cur_frame = 0
         # For nodes with OnPass outputs, the time to fire each of those.
-        self.pass_points: list[tuple[float, nodes.Node]] = []
+        self.pass_points: List[tuple[float, nodes.Node]] = []
         # Set of nodes in this animation, to prevent loops.
-        self.history: list[nodes.Node] = [start_node]
+        self.history: List[nodes.Node] = [start_node]
         # The kind of curve used for the current node.
         self.curve_type = DestType.PRIMARY
 
@@ -183,6 +183,7 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
 
             # Now generate the straight part between this node and the next.
             next_node = node.outputs[anim.curve_type]
+            assert next_node is not None
             cur_end = node.vec_point(1.0, anim.curve_type)
             straight_off = next_node.vec_point(0.0) - cur_end
 

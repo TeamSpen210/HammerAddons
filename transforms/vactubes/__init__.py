@@ -227,8 +227,8 @@ async def vactube_transform(ctx: Context) -> None:
         for tri in mesh.triangles:
             for point in tri:
                 point.tex_u, point.tex_v = U[point.tex_u], V[point.tex_v]
-        with open(temp_dir + '/ref.smd', 'wb') as f:
-            mesh.export(f)
+        with open(temp_dir + '/ref.smd', 'wb') as mesh_file:
+            mesh.export(mesh_file)
 
         with open(temp_dir + '/prop.qc', 'w') as qc_file:
             qc_file.write(QC_TEMPLATE.format(path=anim_mdl_name))
@@ -237,8 +237,8 @@ async def vactube_transform(ctx: Context) -> None:
                 anim.name = anim_name = f'anim_{i:03x}'
                 qc_file.write(SEQ_TEMPLATE.format(name=anim_name, fps=animations.FPS))
 
-                with open(temp_dir + f'/{anim_name}.smd', 'wb') as f:
-                    anim.mesh.export(f)
+                with open(temp_dir + f'/{anim_name}.smd', 'wb') as mesh_file:
+                    anim.mesh.export(mesh_file)
 
         args = [
             str(ctx.studiomdl),
@@ -258,12 +258,15 @@ async def vactube_transform(ctx: Context) -> None:
     # Ensure they're all packed.
     for ext in MDL_EXTS:
         try:
-            f = full_loc.with_suffix(ext).open('rb')
+            mdl_file = full_loc.with_suffix(ext).open('rb')
         except FileNotFoundError:
             pass
         else:
-            with f:
-                ctx.pack.pack_file(Path('models', anim_mdl_name.with_suffix(ext)), data=f.read())
+            with mdl_file:
+                ctx.pack.pack_file(
+                    Path('models', anim_mdl_name.with_suffix(ext)),
+                    data=mdl_file.read(),
+                )
 
     LOGGER.info('Setting up vactube ents...')
     # Generate the shared template.
@@ -337,7 +340,7 @@ async def vactube_transform(ctx: Context) -> None:
         # Now, generate the code so the VScript knows about the animations.
         code = [f'// Node: {start_node.ent["targetname"]}, {start_node.origin}']
         for anim in anims:
-            target = anim.end_node
+            anim_dest = anim.end_node
             anim_speed = anim.start_node.speed
             pass_code = ','.join([
                 f'Output({time:.2f}, "{node.ent["targetname"]}", '
@@ -345,11 +348,11 @@ async def vactube_transform(ctx: Context) -> None:
                 for time, node in anim.pass_points
             ])
             cube_name = 'null'
-            if isinstance(target, nodes.Dropper):
-                cube_model = target.cube['model'].replace('\\', '/')
-                cube_skin = conv_int(target.cube['skin'])
+            if isinstance(anim_dest, nodes.Dropper):
+                cube_model = anim_dest.cube['model'].replace('\\', '/')
+                cube_skin = conv_int(anim_dest.cube['skin'])
                 try:
-                    cube_name = objects.find_for_cube(vac_objects, start_node.group, target.cube).id
+                    cube_name = objects.find_for_cube(vac_objects, start_node.group, anim_dest.cube).id
                 except LookupError:
                     LOGGER.warning(
                         'Cube model "{}", skin {} is not a type of cube travelling '
@@ -361,7 +364,7 @@ async def vactube_transform(ctx: Context) -> None:
                     )
                     continue  # Skip this animation so it's not broken.
                 else:
-                    dropper_to_anim[target] = anim
+                    dropper_to_anim[anim_dest] = anim
             code.append(
                 f'{anim.name} <- anim("{anim.name}", {anim.duration}, '
                 f'{cube_name}, [{pass_code}]);'

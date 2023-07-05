@@ -77,7 +77,7 @@ def comp_flicker(ctx: Context) -> None:
             (OUT_FLICK_ON, False, 0.0, total_time),
             (OUT_FLICK_OFF, True, total_time, 0.0),
         ]:
-            time = 0
+            time = 0.0
             state = start_state
             limit = 0
             while time < total_time:

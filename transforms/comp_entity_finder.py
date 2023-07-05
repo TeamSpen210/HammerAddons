@@ -2,6 +2,8 @@
 import itertools
 import math
 from enum import Enum
+from typing import Dict, Optional, Set
+
 from srctools import FrozenVec, conv_bool, conv_float, Vec, Entity, Angle
 from srctools.logger import get_logger
 
@@ -32,7 +34,7 @@ NEEDS = {
 @trans('comp_entity_finder')
 def entity_finder(ctx: Context):
     """Finds the closest entity of a given type."""
-    target_cache: dict[tuple, Entity] = {}
+    target_cache: Dict[tuple, Entity] = {}
 
     for finder in ctx.vmf.by_class['comp_entity_finder']:
         finder.remove()
@@ -74,6 +76,7 @@ def entity_finder(ctx: Context):
             continue
 
         key = (targ_classes, targ_radius, blacklist, targ_fov, targ_pos)
+        found_ent: Optional[Entity]
         try:
             found_ent = target_cache[key]
         except KeyError:
@@ -98,6 +101,7 @@ def entity_finder(ctx: Context):
 
             # If multiple, it's the union of the sets. If there's a single one
             # we don't need to copy by_class[].
+            ent_set: Set[Entity]
             if len(targ_classes) == 1:
                 [single_class] = targ_classes
                 ent_set = ctx.vmf.by_class[single_class]
@@ -186,7 +190,7 @@ def entity_finder(ctx: Context):
 
             needs_src, needs_known = NEEDS[kv_mode]
 
-            known_ent = None
+            known_ent: Optional[Entity] = None
             if needs_known:
                 known_ent_name = finder['kv{}_known'.format(ind)]
                 if not known_ent_name:

@@ -1,4 +1,6 @@
 """Implement comp_choreo_sceneset."""
+from typing import List
+
 from srctools import Entity, Output, conv_bool, conv_float
 from srctools.logger import get_logger
 
@@ -33,7 +35,7 @@ def sceneset(ctx: Context):
 
         ent.remove()
 
-        scene_ents: list[Entity] = []
+        scene_ents: List[Entity] = []
 
         name = ent.make_unique('_choreo')['targetname']
         for i, scene in enumerate(scenes):

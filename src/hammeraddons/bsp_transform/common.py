@@ -1,7 +1,7 @@
 """Operations that can be reused across different transforms."""
 import operator
 import re
-from typing import Callable, Tuple
+from typing import Callable, Dict, Tuple
 from decimal import Decimal, InvalidOperation
 
 from typing_extensions import Literal, TypeAlias
@@ -14,7 +14,7 @@ LOGGER = get_logger(__name__)
 NumericOp: TypeAlias = Callable[[Decimal, Decimal], bool]
 NumericSpecifier: TypeAlias = Tuple[NumericOp, Decimal]
 
-OPERATIONS: dict[str, NumericOp] = {
+OPERATIONS: Dict[str, NumericOp] = {
     '<': operator.lt,
     '>': operator.gt,
     '>=': operator.ge,

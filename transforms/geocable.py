@@ -8,7 +8,7 @@ from enum import Enum
 from pathlib import Path
 from typing import (
     Optional, List, Tuple, FrozenSet,
-    TypeVar, MutableMapping, NewType, Set, Iterable, Dict, Iterator,
+    TypeVar, MutableMapping, NewType, Set, Iterable, Dict, Iterator, Union,
 )
 
 import attrs
@@ -26,7 +26,7 @@ from hammeraddons.bsp_transform import Context, trans
 
 LOGGER = logger.get_logger(__name__)
 NodeID = NewType('NodeID', str)
-Number = TypeVar('Number', int, float)
+Number = TypeVar('Number', bound=Union[int, float])
 
 try:
     from .vactubes import nodes as vac_node_mod  # type: ignore
@@ -491,15 +491,15 @@ def build_node_tree(
     id_to_node: dict[str, tuple[Node, Optional[Node]]] = {}
     vis_nodes: set[Node] = set()
     coll_nodes: Set[Node] = set()
-    for node in ents:
-        vis_node = Node(node.pos.copy(), node.config)
+    for node_ent in ents:
+        vis_node = Node(node_ent.pos.copy(), node_ent.config)
         vis_nodes.add(vis_node)
-        if node.config.coll_side_count >= 3:
-            coll_node = Node(node.pos.copy(), node.config.coll())
+        if node_ent.config.coll_side_count >= 3:
+            coll_node = Node(node_ent.pos.copy(), node_ent.config.coll())
             coll_nodes.add(coll_node)
         else:
             coll_node = None
-        id_to_node[node.id] = (vis_node, coll_node)
+        id_to_node[node_ent.id] = (vis_node, coll_node)
 
     def maybe_split(nodes: Set[Node], node: Node, direction: str) -> Node:
         """Split nodes to ensure they only have 1 or 2 connections.
@@ -580,7 +580,7 @@ def interpolate_catmull_rom(node1: Node, node2: Node, seg_count: int) -> List[No
     t1 = t0 + (p1-p0).mag()
     t2 = t1 + (p2-p1).mag()
     t3 = t2 + (p3-p2).mag()
-    points: list[Node] = []
+    points: List[Node] = []
     for i in range(1, seg_count + 1):
         t = lerp(i, 0, seg_count + 1, t1, t2)
         A1 = (t1-t)/(t1-t0)*p0 + (t-t0)/(t1-t0)*p1
@@ -711,8 +711,8 @@ def compute_orients(nodes: Iterable[Node]) -> None:
     """Compute the appropriate orientation for each node."""
     # This is based on the info at:
     # https://janakiev.com/blog/framing-parametric-curves/
-    tangents: dict[Node, Vec] = {}
-    all_nodes: set[Node] = set()
+    tangents: Dict[Node, Vec] = {}
+    all_nodes: Set[Node] = set()
     for node in nodes:
         if node.prev is node.next is None:
             continue
@@ -874,7 +874,7 @@ def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: List[List[
     BEAM_WID = 2.17316
     node_pos: Vec
 
-    def vert_node1(y: float, z: float, norm: tuple[float, float, float], u: float) -> Vertex:
+    def vert_node1(y: float, z: float, norm: Tuple[float, float, float], u: float) -> Vertex:
         """Helper for generating at the first node."""
         return Vertex(
             pos1 + (0.0, y, z) @ orient1,
@@ -987,8 +987,8 @@ def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: List[List[
 
 def place_seg_props(nodes: Iterable[Node], fsys: FileSystem, mesh: Mesh) -> Iterator[SegProp]:
     """Place segment props, across the nodes."""
-    mesh_cache: dict[str, Mesh] = {}
-    prop_dists: dict[SegPropConf, float] = {}
+    mesh_cache: Dict[str, Mesh] = {}
+    prop_dists: Dict[SegPropConf, float] = {}
     for start_node in nodes:
         # Find start nodes, we then loop in order over the nodes.
         if start_node.prev is not None:
@@ -1123,7 +1123,7 @@ async def compile_rope(
         center = (bbox_min + bbox_max) / 2
         node: Optional[NodeEnt] = None
         has_coll = False
-        local_nodes: set[NodeEnt] = set()
+        local_nodes: Set[NodeEnt] = set()
         for node in nodes:
             local_nodes.add(attrs.evolve(node, pos=node.pos - center))
             if node.config.coll_side_count >= 3:
@@ -1199,7 +1199,7 @@ async def comp_prop_rope(ctx: Context) -> None:
     # Dynamic ents which will be given the static props.
     group_dyn_ents: Dict[str, List[Entity]] = defaultdict(list)
     # Name -> segprop configurations.
-    name_to_segprops_lst: dict[str, list[SegPropConf]] = defaultdict(list)
+    name_to_segprops_lst: Dict[str, List[SegPropConf]] = defaultdict(list)
 
     for ent in ctx.vmf.by_class['comp_prop_rope_bunting']:
         ent.remove()
@@ -1214,7 +1214,7 @@ async def comp_prop_rope(ctx: Context) -> None:
 
     # Put into a set, so they're immutable and have no ordering.
     # We use that to identify the same config in previous compiles.
-    name_to_segprops_set: dict[str, frozenset[SegPropConf]] = {
+    name_to_segprops_set: Dict[str, FrozenSet[SegPropConf]] = {
         name: frozenset(lst)
         for name, lst in name_to_segprops_lst.items()
     }
@@ -1268,9 +1268,9 @@ async def comp_prop_rope(ctx: Context) -> None:
         found: List[NodeEnt] = []
         if target.endswith('*'):
             search = target[:-1]
-            for name, nodes in name_to_nodes.items():
+            for name, node_list in name_to_nodes.items():
                 if name.startswith(search):
-                    found.extend(nodes)
+                    found.extend(node_list)
         else:
             found.extend(name_to_nodes.get(target, ()))
         for dest in found:

@@ -1,5 +1,5 @@
 """comp_case is a compile-time collapsible version of logic_case."""
-from typing import Iterator, List, Tuple
+from typing import Dict, Iterator, List, Tuple
 
 import hashlib
 import re
@@ -37,9 +37,9 @@ def collapse_case(ctx: Context, case: Entity) -> None:
     hasher_template.update(struct.pack('<x3f', *parse_vec_str(case['origin'])))
 
     # Find all defined outputs and parameters, so we can loop through them.
-    out_cases: dict[int, list[Output]] = defaultdict(list)
-    out_default: list[Output] = []
-    out_used: list[Output] = []
+    out_cases: Dict[int, List[Output]] = defaultdict(list)
+    out_default: List[Output] = []
+    out_used: List[Output] = []
     for out in case.outputs:
         if out.output.casefold().startswith('oncase'):
             try:
@@ -53,7 +53,7 @@ def collapse_case(ctx: Context, case: Entity) -> None:
         elif out.output.casefold() == 'onused':
             out_used.append(out)
 
-    case_params: dict[int, str] = {}
+    case_params: Dict[int, str] = {}
     for k, v in case.items():
         if k.casefold().startswith('case'):
             try:

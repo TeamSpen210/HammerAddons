@@ -3,7 +3,7 @@
 """
 import itertools
 import string
-from typing import Any, Mapping, Sequence, Union
+from typing import Any, List, Mapping, Sequence, Union
 
 from srctools import EmptyMapping, conv_float, conv_int
 from srctools.vmf import Output, Entity
@@ -57,7 +57,7 @@ def advanced_output(ctx: Context) -> None:
             )
             delay = 0.0
 
-        param_args: list[str] = []
+        param_args: List[str] = []
         for ind in itertools.count(1):
             val = adv_out[f'params_local{ind}'] or adv_out[f'params_global{ind}']
             if not val:
