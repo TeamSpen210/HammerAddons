@@ -357,10 +357,10 @@ async def vactube_transform(ctx: Context) -> None:
                     LOGGER.warning(
                         'Cube model "{}", skin {} is not a type of cube travelling '
                         'in this vactube!\n\n'
-                        'Add a comp_vactube_object entity with this cube model'
-                        # Mention groups if they're used, otherwise it's not important.
-                        + (f' with the group "{start_node.group}".' if start_node.group else '.'),
+                        'Add a comp_vactube_object entity with this cube model{}',
                         cube_model, cube_skin,
+                        # Mention groups if they're used, otherwise it's not important.
+                        f' with the group "{start_node.group}".' if start_node.group else '.',
                     )
                     continue  # Skip this animation so it's not broken.
                 else:
