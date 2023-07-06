@@ -1,6 +1,6 @@
 """Tweak material_modify_control to avoid the variable showing up in instances."""
 from collections.abc import Iterable
-from typing import Dict, Set
+from typing import Counter, Dict, Set
 
 import srctools.logger
 from hammeraddons.bsp_transform import trans, Context
@@ -70,7 +70,9 @@ def material_modify_control(ctx: Context) -> None:
 
         materials: Set[str] = set()
         ent_materials: Iterable[str]
+        found_count = Counter[str]()
         for parent in ctx.vmf.search(matmod['parentname']):
+            found_count[parent['targetname']] += 1
             try:
                 bsp_model: BModel = ctx.bsp.bmodels[parent]
             except KeyError:  # It must be a prop?
@@ -108,9 +110,17 @@ def material_modify_control(ctx: Context) -> None:
                 }
             for mat in ent_materials:
                 if material_has_proxy(mat) and (not filter_mat or filter_mat in mat.casefold()):
-                    materials.add(mat)
-        LOGGER.debug('"{}": {} materials', matmod['targetname'], len(materials))
-        if not materials:
+                    targets.add((parent['targetname'], mat))
+        duplicates = found_count.most_common(2)
+        if duplicates:
+            LOGGER.warning(
+                '"{}" has multiple entities with the same name in parents! '
+                'Only one with each name will be affected:\n{}',
+                matmod['targetname'],
+                '\n'.join([f'- {name}' for name, count in duplicates]),
+            )
+        LOGGER.debug('"{}": {} ents to generate', matmod['targetname'], len(targets))
+        if not targets:
             LOGGER.warning('"{}"\'s parent has no valid materials!', matmod['targetname'])
             # Leave it unchanged, in case the material name happens to actually be correct.
         else:
