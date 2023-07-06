@@ -26,6 +26,7 @@
 * Change `sky_camera` model to be more visible with `tools/toolsskybox` behind it.
 * Fix #192: Use both specified model and cube type field to find matching cubes for vactubes.
 * Set Precache/OnPostSpawn in generated VScript, to prevent double-firing functions already in Entity Scripts.
+* Allow physboxes to completely override their mass.
 
 --------------------
 
