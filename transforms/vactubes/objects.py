@@ -125,7 +125,7 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[int, VacObjectDict, Dict[str, str]]
             LOGGER.info('Group "{}" has common factor of {}, simplifying.', group, multiple)
         code = []
         for obj in objects:
-            obj.weight /= multiple
+            obj.weight //= multiple
             code.append(obj.make_code())
         codes[group] = pack.inject_vscript('\n'.join(code))
 

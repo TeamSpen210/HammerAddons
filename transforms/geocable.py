@@ -1,4 +1,9 @@
 """Compile static prop cables, instead of sprites."""
+from typing import (
+    Optional, List, Tuple, FrozenSet, Callable,
+    TypeVar, MutableMapping, NewType, Set, Iterable, Dict, Iterator, cast,
+)
+from typing_extensions import Final, Self
 import itertools
 import math
 import struct
@@ -6,16 +11,12 @@ from random import Random
 from collections import defaultdict
 from enum import Enum
 from pathlib import Path
-from typing import (
-    Optional, List, Tuple, FrozenSet,
-    TypeVar, MutableMapping, NewType, Set, Iterable, Dict, Iterator, Union,
-)
 
 import attrs
 import trio
 
 from srctools import (
-    logger, conv_int, conv_float, conv_bool,
+    FrozenVec, logger, conv_int, conv_float, conv_bool,
     Vec, Entity, Matrix, Angle, lerp, FileSystem,
 )
 from srctools.bsp import StaticProp, StaticPropFlags, VisLeaf, VisTree
@@ -26,7 +27,7 @@ from hammeraddons.bsp_transform import Context, trans
 
 LOGGER = logger.get_logger(__name__)
 NodeID = NewType('NodeID', str)
-Number = TypeVar('Number', bound=Union[int, float])
+Number = TypeVar('Number', int, float)
 
 try:
     from .vactubes import nodes as vac_node_mod  # type: ignore
@@ -97,9 +98,9 @@ class RopePhys:
     radius: float  # Just to transfer to the node.
 
 
-ROPE_GRAVITY = -1500
-SIM_TIME = 5.00
-TIME_STEP = 1/50
+ROPE_GRAVITY: Final = -1500
+SIM_TIME: Final = 5.00
+TIME_STEP: Final = 1/50
 
 
 @attrs.frozen(hash=False)
@@ -160,7 +161,7 @@ class Config:
     coll_segments: int
     coll_side_count: int
     seg_props: FrozenSet[SegPropConf]
-    prop_rendercolor: Tuple[float, float, float]
+    prop_rendercolor: FrozenVec
     prop_renderalpha: int
     prop_no_shadows: bool
     prop_no_vert_light: bool
@@ -173,7 +174,10 @@ class Config:
     @staticmethod
     def _parse_min(ent: Entity, keyvalue: str, minimum: Number, message: str) -> Number:
         """Helper for passing all the numeric keys."""
-        value = (conv_float if isinstance(minimum, float) else conv_int)(ent[keyvalue], minimum)
+        value: Number = cast(
+            'Callable[[str, Number], Number]',
+            (conv_float if isinstance(minimum, float) else conv_int),
+        )(ent[keyvalue], minimum)
         if value < minimum:
             LOGGER.warning(message, ent['origin'])
             return minimum
@@ -185,7 +189,7 @@ class Config:
         return self.type.is_vactube
 
     @classmethod
-    def parse(cls, ent: Entity, name_to_segprops: Dict[str, FrozenSet[SegPropConf]]) -> 'Config':
+    def parse(cls, ent: Entity, name_to_segprops: Dict[str, FrozenSet[SegPropConf]]) -> Self:
         """Parse from an entity."""
         segments = cls._parse_min(
             ent, 'segments', 0,
@@ -211,7 +215,7 @@ class Config:
                 coll_side_count = 0
                 coll_segments = -1
             radius = VAC_RADIUS
-            slack = 0  # Unused.
+            slack = 0.0  # Unused.
             interp_type = InterpType.CATMULL_ROM
             u_min = 0.0
             u_max = 1.0
@@ -282,7 +286,7 @@ class Config:
             coll_segments,
             coll_side_count,
             seg_props,
-            tuple(Vec.from_str(ent['rendercolor'], 255, 255, 255)),
+            FrozenVec.from_str(ent['rendercolor'], 255, 255, 255),
             alpha,
             conv_bool(ent['disableshadows']),
             conv_bool(ent['disablevertexlighting']),
@@ -293,7 +297,7 @@ class Config:
             conv_float(ent['fadescale'], 0.0),
         )
 
-    def coll(self) -> Optional['Config']:
+    def coll(self) -> Optional[Self]:
         """Extract the collision options from the ent."""
         return attrs.evolve(
             self,
@@ -327,7 +331,7 @@ class NodeEnt:
         ))
 
 
-@attrs.define(eq=False)
+@attrs.define(eq=False, repr=False)
 class Node:
     """All the data for a node, used during construction of the geo.
 
@@ -488,8 +492,8 @@ def build_node_tree(
 ) -> Tuple[Set[Node], Set[Node]]:
     """Convert the ents/connections definitions into a node tree."""
     # Convert them all into the real node objects.
-    id_to_node: dict[str, tuple[Node, Optional[Node]]] = {}
-    vis_nodes: set[Node] = set()
+    id_to_node: Dict[str, Tuple[Node, Optional[Node]]] = {}
+    vis_nodes: Set[Node] = set()
     coll_nodes: Set[Node] = set()
     for node_ent in ents:
         vis_node = Node(node_ent.pos.copy(), node_ent.config)
@@ -622,7 +626,7 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
     ]
     springs = list(zip(points, points[1:]))
 
-    time = 0
+    time = 0.0
     step = TIME_STEP
     gravity = Vec(z=ROPE_GRAVITY) * step**2
     # Valve uses 3 iterations, but they only ever have 10 subdivisions.
