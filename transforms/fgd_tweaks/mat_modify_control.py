@@ -68,7 +68,7 @@ def material_modify_control(ctx: Context) -> None:
             continue
         filter_mat = matmod['materialname'].casefold()
 
-        materials: Set[str] = set()
+        targets: Set[tuple[str, str]] = set()
         ent_materials: Iterable[str]
         found_count = Counter[str]()
         for parent in ctx.vmf.search(matmod['parentname']):
@@ -124,9 +124,10 @@ def material_modify_control(ctx: Context) -> None:
             LOGGER.warning('"{}"\'s parent has no valid materials!', matmod['targetname'])
             # Leave it unchanged, in case the material name happens to actually be correct.
         else:
-            mat_iter = iter(materials)
-            matmod['materialname'] = next(mat_iter)
-            for extra_mat in mat_iter:
+            targ_iter = iter(targets)
+            matmod['parentname'], matmod['materialname'] = next(targ_iter)
+            for parent_name, extra_mat in targ_iter:
                 matmod_extra = matmod.copy()
                 ctx.vmf.add_ent(matmod_extra)
+                matmod_extra['parentname'] = parent_name
                 matmod_extra['materialname'] = extra_mat
