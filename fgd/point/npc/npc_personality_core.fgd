@@ -1,4 +1,4 @@
-@PointClass base(TalkNPC) 
+@PointClass base(TalkNPC, SRCModel) 
 	appliesto(P2) 
 	autovis(Entities, NPCs, Aper. Personality Core)
 	studioprop() 
@@ -20,8 +20,12 @@
 		1: "Yes"
 		]
 
-	model[engine](string) : "Hammer Preview" : "models/npcs/personality_sphere/personality_sphere.mdl" 
-	model(choices) : "[H] Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "Choose the model to show in hammer. Set to the same as Use Alternate Skins." =
+	model[-srctools](choices) : "[H] Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "Choose the model to show in Hammer. Set to the same as Use Alternate Skins." =
+		[
+		"models/npcs/personality_sphere/personality_sphere.mdl": "Original (Wheatley)"
+		"models/npcs/personality_sphere/personality_sphere_skins.mdl": "Alternate (Corrupt Cores)"
+		]
+	model[+srctools](choices) : "Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "Choose the model to show in Hammer. Set to the same as Use Alternate Skins. Alternatively, if Override Model is enabled you can type/paste in a custom model path here." =
 		[
 		"models/npcs/personality_sphere/personality_sphere.mdl": "Original (Wheatley)"
 		"models/npcs/personality_sphere/personality_sphere_skins.mdl": "Alternate (Corrupt Cores)"

@@ -1,9 +1,14 @@
-@PointClass base(BasePropPhysics) 
+@PointClass base(BasePropPhysics, SRCModel) 
 	appliesto(P2) 
-	studioprop("models/props/futbol.mdl") 
+	studioprop() 
 	line(255 255 0, targetname, spawnername) = prop_glass_futbol: "A fragile glass ball that the player can pick up and toss. On contact with surfaces it will shatter, and it can be put into holders to power them. It is affected by gel, but the shattering means this has little effect."
 	[
+	model[-srctools](studio) : "[H] Model" : "models/props/futbol.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
+	model[+srctools](studio) : "Custom Model" : "models/props/futbol.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+
 	spawnername(target_destination) : "Spawner Name" : : "Name of prop_glass_futbol_spawner for this futbol to respawn in once broken."
+
+	
 
 	// Inputs
 	input Dissolve(void) : "Dissolve"

@@ -1,11 +1,15 @@
-@PointClass base(BasePedButton) 
+@PointClass base(BasePedButton, SRCModel) 
 	appliesto(P2) 
 	autovis(Test Elements, P2 Buttons, Pedestal)
-	studioprop("models/props_underground/underground_testchamber_button.mdl") 
+	studioprop() 
 = prop_under_button: "A button which is activated by player use or by game inputs, for use in underground test chambers. " +
 	"Uses different press/release sounds compared to the modern one. " +
 	"The same tick-tock noise is used to indicate limited time."
 	[
+
+	model[-srctools](studio) : "[H] Model" : "models/props_underground/underground_testchamber_button.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
+	model[+srctools](studio) : "Custom Model" : "models/props_underground/underground_testchamber_button.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+
 	@resources
 		[
 		model "models/props_underground/underground_testchamber_button.mdl"

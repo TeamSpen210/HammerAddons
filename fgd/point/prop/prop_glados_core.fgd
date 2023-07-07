@@ -1,21 +1,36 @@
 // Switch the model used depending on game.
 @BaseClass appliesto(P1) studioprop("models/props_bts/glados_ball_reference.mdl") 
 	= _prop_glados_core_p1_mdl []
-@BaseClass appliesto(P2) studioprop("models/npcs/personality_sphere/personality_sphere.mdl") 
+@BaseClass appliesto(P2) studioprop() 
 	= _prop_glados_core_p2_mdl []
 
-@PointClass base(BasePropPhysics, _prop_glados_core_p1_mdl, _prop_glados_core_p2_mdl) 
+@PointClass base(BasePropPhysics, _prop_glados_core_p1_mdl, _prop_glados_core_p2_mdl, SRCModel) 
 	appliesto(P1, P2)
 = prop_glados_core: "The P1 personality cores for GlaDOS. Resemble little eyeballs with handles. " +
-	"These play lines and look around when near the player. "
+	"These play lines and look around when near the player. " +
+	"Portal 2 uses the wrong core model, so this will need to be swapped back with VScript."
 	[
-	coretype[engine](integer) : "Core Personality" : 1
-	coretype(choices) : "Core Personality" : 1 : "Which personality VO set the core is set to." =
+	model[P2, -srctools](studio) : "[H] Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
+	model[P2, +srctools](studio) : "Custom Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+
+	coretype[engine](integer) : "Core Personality" : 3
+	coretype(choices) : "Core Personality" : 3 : "Which personality the core is set to, determines the voice lines and skin." =
 		[
-		0: "Curious"
-		1: "Aggressive"
-		2: "Crazy"
-		3: "None"
+		// Ordered to match P1 boss fight
+		3: "Morality Core"
+		0: "Curiosity Core"
+		2: "Intelligence/Cake Core"
+		1: "Anger Core"
+		]
+
+	skin[engine](integer) : "Skin" : 3
+	skin(choices) : "[H] Skin" : 3 : "Skin to show in Hammer." =
+		[
+		// Ordered to match P1 boss fight
+		0: "Morality Core"
+		1: "Curiosity Core"
+		3: "Intelligence/Cake Core"
+		2: "Anger Core"
 		]
 
 	delaybetweenlines(float) : "Pause (in secs) between VO Lines." : 0.4 : "When the core is talking, this is the number of seconds delay between it's spoken lines."

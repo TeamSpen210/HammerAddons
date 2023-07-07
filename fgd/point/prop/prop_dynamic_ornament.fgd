@@ -3,7 +3,7 @@
 	autovis(Props, Dynamic)
 = prop_dynamic_ornament: "A way to attach one studio model to another as an ornament. It will render in the way that player/NPC weapons render."
 	[
-	solid(choices) : "Collisions" : "0" =
+	solid(choices) readonly : "Collisions" : "0" : "Collisions don't follow the target entity properly, so this should always be non-solid." =
 		[
 		0: "Not Solid"
 		]

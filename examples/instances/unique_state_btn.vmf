@@ -326,7 +326,7 @@ entity
 	"mincpulevel" "0"
 	"mindxlevel" "0"
 	"mingpulevel" "0"
-	"model" "sprites/glow01.spr"
+	"model" "sprites/glow01.vmt"
 	"renderamt" "255"
 	"rendercolor" "255 50 50"
 	"renderfx" "0"

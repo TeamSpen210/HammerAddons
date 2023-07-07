@@ -48,8 +48,8 @@
 	// Inputs
 	input DisableShadow(void) : "Allows the entity to draw a render target (dynamic) shadow."
 	input EnableShadow(void) : "Prevents the entity from drawing a render target (dynamic) shadow."
-	input DisableReceivingFlashlight[since_L4D](void) : "This object will not recieve light or shadows from projected textures (flashlights)."
-	input EnableReceivingFlashlight[since_L4D](void) : "This object may recieve light or shadows from projected textures (flashlights)."
+	input DisableReceivingFlashlight[since_L4D, GMod](void) : "This object will not recieve light or shadows from projected textures (flashlights)."
+	input EnableReceivingFlashlight[since_L4D, GMod](void) : "This object may recieve light or shadows from projected textures (flashlights)."
 	
 	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
 	input DisableDamageForces(void) : "Damaging the entity does not apply physics forces to it."

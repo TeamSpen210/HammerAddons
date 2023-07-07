@@ -28,7 +28,6 @@
 
 	globalstate[P2, -INFRA](choices) : "Global State to Set" =
 		[
-		"portalgun_nospawn": "Spawn without Portalgun"
 		"no_pinging_blue": "Prevent Pinging ATLAS"
 		"no_pinging_orange": "Prevent Pinging P-Body"
 		"no_taunting_blue": "Prevent Taunting ATLAS"
