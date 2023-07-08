@@ -23,8 +23,8 @@
 		1: "Anger Core"
 		]
 
-	skin[engine](integer) : "Skin" : 3
-	skin(choices) : "[H] Skin" : 3 : "Skin to show in Hammer." =
+	skin[engine](integer) : "Skin" : 0
+	skin(choices) : "[H] Skin" : 0 : "Skin to show in Hammer." =
 		[
 		// Ordered to match P1 boss fight
 		0: "Morality Core"
