@@ -21,7 +21,7 @@ import os
 import re
 
 from srctools import __version__ as version_lib, conv_bool
-from srctools.bsp import BSP
+from srctools.bsp import BSP, BSP_LUMPS
 from srctools.filesys import ZipFileSystem
 from srctools.packlist import PackList
 
@@ -31,6 +31,18 @@ from hammeraddons.move_shim import install as install_depmodule_hook
 
 
 install_depmodule_hook()
+
+
+def format_bytesize(val: float) -> str:
+    """Add mb, gb etc suffixes to a size in bytes."""
+    if val < 1024:
+        return f'{val} bytes'  # No rounding.
+    val /= 1024.0
+    for size in ['kB', 'mB', 'gB']:
+        if val <= 1024.0:
+            return f'{val:.3f}{size}'
+        val /= 1024.0
+    return f'{val:.03f}tB'
 
 
 async def main(argv: List[str]) -> None:
@@ -342,6 +354,10 @@ async def main(argv: List[str]) -> None:
     if args.allow_save:
         LOGGER.info('Writing BSP...')
         bsp_file.save()
+
+    LOGGER.info('Packfile size: {}', format_bytesize(
+        len(bsp_file.lumps[BSP_LUMPS.PAKFILE].data)
+    ))
 
     try:
         from srctools.fgd import _engine_db_stats  # noqa
