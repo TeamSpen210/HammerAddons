@@ -1,4 +1,4 @@
-@BaseClass appliesto(srctools) 
+@BaseClass appliesto(+P2, +srctools) 
 = SRCModel: "Adds keyvalues to set a custom model."
 [
 	comp_custom_model_type[srctools, -engine](boolean) : "[COMP] Override Model" : 0 : "If enabled, automatically pack a VScript to override the entity's model on spawn."+
