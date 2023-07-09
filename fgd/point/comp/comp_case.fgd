@@ -15,35 +15,37 @@
 
 	mode[engine](string) : "Mode" : "string"
 	mode(choices) : "Mode" : "casefold" : "Specifies how comparisons are performed. Text mode simply checks for a case that matches the input text. " +
-		"Numeric treats values as numbers, allowing cases to additionally specify a comparison like '< 3.14'. In all modes, each case is compared in order." =
+		"Numeric treats values as numbers, allowing cases to additionally specify a comparison like '< 3.14'. Weighted Random instead changes the case values to specify the chance to produce any given case. In all modes, each case is compared in order." =
 		[
 		"string" : "Text - Case Sensitive"
 		"casefold" : "Text - Case Insensitive"
 		"numeric" : "Numeric"
+		"randweight" : "Weighted Random"
 		]
 
 	seed(string) : "Random Seed" : : "For the PickRandom input, the position and name of the input entity and the case are used to seed a random number generator. This can be set to further randomise the chosen case."
+	misschance(float) : "Miss Chance (%)" : 0 : "If nonzero, PickRandom will skip picking cases entirely this often. Only OnUsed and OnMissed will be fired."
 
-	case01(string) : "Case 01" : : "Fires OnCase01 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
-	case02(string) : "Case 02" : : "Fires OnCase02 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
-	case03(string) : "Case 03" : : "Fires OnCase03 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
-	case04(string) : "Case 04" : : "Fires OnCase04 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
-	case05(string) : "Case 05" : : "Fires OnCase05 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
-	case06(string) : "Case 06" : : "Fires OnCase06 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
-	case07(string) : "Case 07" : : "Fires OnCase07 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
-	case08(string) : "Case 08" : : "Fires OnCase08 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
-	case09(string) : "Case 09" : : "Fires OnCase09 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
-	case10(string) : "Case 10" : : "Fires OnCase10 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
-	case11(string) : "Case 11" : : "Fires OnCase11 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
-	case12(string) : "Case 12" : : "Fires OnCase12 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
-	case13(string) : "Case 13" : : "Fires OnCase13 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
-	case14(string) : "Case 14" : : "Fires OnCase14 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
-	case15(string) : "Case 15" : : "Fires OnCase15 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
-	case16(string) : "Case 16" : : "Fires OnCase16 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value."
+	case01(string) : "Case 01" : : "Fires OnCase01 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case02(string) : "Case 02" : : "Fires OnCase02 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case03(string) : "Case 03" : : "Fires OnCase03 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case04(string) : "Case 04" : : "Fires OnCase04 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case05(string) : "Case 05" : : "Fires OnCase05 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case06(string) : "Case 06" : : "Fires OnCase06 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case07(string) : "Case 07" : : "Fires OnCase07 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case08(string) : "Case 08" : : "Fires OnCase08 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case09(string) : "Case 09" : : "Fires OnCase09 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case10(string) : "Case 10" : : "Fires OnCase10 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case11(string) : "Case 11" : : "Fires OnCase11 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case12(string) : "Case 12" : : "Fires OnCase12 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case13(string) : "Case 13" : : "Fires OnCase13 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case14(string) : "Case 14" : : "Fires OnCase14 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case15(string) : "Case 15" : : "Fires OnCase15 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case16(string) : "Case 16" : : "Fires OnCase16 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
 
 	// Inputs
-	input InValue(string) : "Replaced by whichever case matches the parameter."
-	input Trigger(void) : "Replaced by whichever case matches the input keyvalue."
+	input InValue(string) : "Replaced by whichever case matches the parameter. Does nothing in Weighted Random mode."
+	input Trigger(void) : "Replaced by whichever case matches the input keyvalue. In Weighted Random mode, behaves like PickRandom."
 	input PickRandom(void) : "Replaced by a random case with outputs defined."
 
 	// Outputs
@@ -66,6 +68,7 @@
 	output OnDefault(void) : "Fired when the input value does not equal any of the Case values."
 	output OnUsed(string) : "Fired when an input value is received, regardless of whether it matches a case."
 	output OnMatched(string) : "Fired when an input value matches any of the cases."
+	output OnMissed(string) : "Fired when the miss chance succeeded."
 
 	@resources []
 	]

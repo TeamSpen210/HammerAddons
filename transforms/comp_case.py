@@ -1,4 +1,5 @@
 """comp_case is a compile-time collapsible version of logic_case."""
+import math
 from typing import Dict, Iterator, List, Tuple
 
 import hashlib
@@ -8,7 +9,7 @@ import random
 from decimal import Decimal
 from collections import defaultdict
 
-from srctools import Entity, Output, conv_bool
+from srctools import Entity, Output, conv_bool, conv_float
 from srctools.math import parse_vec_str
 from srctools.logger import get_logger
 
@@ -29,7 +30,7 @@ def collapse_case(ctx: Context, case: Entity) -> None:
     case_name = case['targetname']
     mode = case['mode'].casefold()
     default_value = case['value']
-
+    miss_chance = conv_float(case['misschance'], 0.0) / 100.0
     desc = f'for comp_case "{case_name}" @ ({case["origin"]})'
 
     hasher_template = hashlib.sha512()
@@ -41,6 +42,7 @@ def collapse_case(ctx: Context, case: Entity) -> None:
     out_default: List[Output] = []
     out_used: List[Output] = []
     out_matched: List[Output] = []
+    out_missed: List[Output] = []
     for out in case.outputs:
         if out.output.casefold().startswith('oncase'):
             try:
@@ -55,6 +57,8 @@ def collapse_case(ctx: Context, case: Entity) -> None:
             out_used.append(out)
         elif out.output.casefold() == 'onmatched':
             out_matched.append(out)
+        elif out.output.casefold() == 'onmissed':
+            out_missed.append(out)
 
     case_params: Dict[int, str] = {}
     for k, v in case.items():
@@ -65,6 +69,13 @@ def collapse_case(ctx: Context, case: Entity) -> None:
                 LOGGER.warning('Unknown case keyvalue "{}" {}', k, desc)
                 continue
             case_params[num] = v
+
+    def make_rng(source: Entity) -> random.Random:
+        """Create a seeded RNG, based on the input source."""
+        hasher = hasher_template.copy()
+        hasher.update((source['targetname'] or source['classname']).encode('utf8'))
+        hasher.update(struct.pack('<x3f', *parse_vec_str(source['origin'])))
+        return random.Random(hasher.digest())
 
     # Sort the keys, so we check in order.
     key_out = sorted(out_cases)
@@ -101,6 +112,47 @@ def collapse_case(ctx: Context, case: Entity) -> None:
             for (operation, num_b), case_num in numeric_cases:
                 if operation(num_a, num_b):
                     yield case_num
+    elif mode == 'randweight':  # Weighted Random, rather different.
+        warned_rand_weight = False
+        weight_outs: List[List[Output]] = [
+            # Pre-concatenate, so we don't have to do it each time.
+            [*out_cases[case_num], *out_used, *out_matched]
+            for case_num in key_out
+        ]
+        cur_val = 0.0
+        cum_weights: List[float] = [
+            cur_val := cur_val + conv_float(case_params.get(case_num, 0.0))
+            for case_num in key_out
+        ]
+        # If we missed, it was used too.
+        out_missed += out_used
+
+        def handle_rand_weight(source: Entity, out: Output) -> List[Output]:
+            """Pick a weighted-random case."""
+            rng = make_rng(source)
+            if 0.0 < miss_chance < rng.random():
+                return out_missed
+            [chosen] = make_rng(source).choices(weight_outs, cum_weights=cum_weights)
+            return chosen
+
+        def warn_rand_weight(source: Entity, out: Output) -> List[Output]:
+            """Warn about invalid use of InValue."""
+            nonlocal warned_rand_weight
+            if not warned_rand_weight:
+                warned_rand_weight = True
+                LOGGER.warning(
+                    '{} @ ({}) fired InValue input to comp_case "{}" @ ({}), which is in '
+                    'weighted random mode! Use PickRandom instead, parameters are ignored.',
+                    source['targetname'] or source['classname'],
+                    source['origin'],
+                    case_name, case['origin'],
+                )
+            return []
+
+        ctx.add_io_remap_func(case_name, 'InValue', warn_rand_weight)
+        ctx.add_io_remap_func(case_name, 'Trigger', handle_rand_weight)
+        ctx.add_io_remap_func(case_name, 'PickRandom', handle_rand_weight)
+        return
     else:
         LOGGER.error(
             'Invalid mode "{}" for comp_case "{}" @ ({})',
@@ -108,10 +160,15 @@ def collapse_case(ctx: Context, case: Entity) -> None:
         )
         return
 
-    def compute_outputs(param: str) -> Iterator[Output]:
+    def compute_outputs(source: Entity, param: str) -> Iterator[Output]:
         """Compute the matching cases, then yield the outputs."""
-        matching = find_matches(param)
         yield from out_used  # Always used.
+
+        if 0.0 < miss_chance < make_rng(source).random():
+            yield from out_missed
+            return
+
+        matching = find_matches(param)
         try:
             first_match = next(matching)
         except StopIteration:
@@ -126,19 +183,19 @@ def collapse_case(ctx: Context, case: Entity) -> None:
 
     def handle_pick_random(source: Entity, out: Output) -> List[Output]:
         """Handle the PickRandom input."""
-        hasher = hasher_template.copy()
-        hasher.update((source['targetname'] or source['classname']).encode('utf8'))
-        hasher.update(struct.pack('<x3f', *parse_vec_str(source['origin'])))
-        rng = random.Random(hasher.digest())
-        return out_cases[rng.choice(key_out)]
+        rng = make_rng(source)
+        if 0.0 < miss_chance < rng.random():
+            return out_missed + out_used
+        else:
+            return out_cases[rng.choice(key_out)] + out_used
 
     ctx.add_io_remap_func(
         case_name, 'InValue',
-        lambda source, out: list(compute_outputs(out.params or default_value)),
+        lambda source, out: list(compute_outputs(source, out.params or default_value)),
     )
     ctx.add_io_remap_func(
         case_name, 'Trigger',
-        lambda source, out: list(compute_outputs(default_value)),
+        lambda source, out: list(compute_outputs(source, default_value)),
     )
     ctx.add_io_remap_func(case_name, 'PickRandom', handle_pick_random)
 
