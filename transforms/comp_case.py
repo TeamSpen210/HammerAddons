@@ -40,6 +40,7 @@ def collapse_case(ctx: Context, case: Entity) -> None:
     out_cases: Dict[int, List[Output]] = defaultdict(list)
     out_default: List[Output] = []
     out_used: List[Output] = []
+    out_matched: List[Output] = []
     for out in case.outputs:
         if out.output.casefold().startswith('oncase'):
             try:
@@ -52,6 +53,8 @@ def collapse_case(ctx: Context, case: Entity) -> None:
             out_default.append(out)
         elif out.output.casefold() == 'onused':
             out_used.append(out)
+        elif out.output.casefold() == 'onmatched':
+            out_matched.append(out)
 
     case_params: Dict[int, str] = {}
     for k, v in case.items():
@@ -116,6 +119,7 @@ def collapse_case(ctx: Context, case: Entity) -> None:
             yield from out_default
             return
         yield from out_cases[first_match]
+        yield from out_matched
         if multi_cases:  # Include all matches.
             for match in matching:
                 yield from out_cases[match]
