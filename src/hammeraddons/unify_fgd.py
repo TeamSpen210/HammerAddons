@@ -268,7 +268,7 @@ def expand_tags(tags: FrozenSet[str]) -> FrozenSet[str]:
             else:
                 break
 
-    if pos > 0:
+    if pos != -1:
         exp_tags.update(
             'SINCE_' + tag
             for tag in GAME_ORDER[:pos + 1]
@@ -1013,9 +1013,13 @@ def action_export(
                     ent.bases.remove(base)
 
     if not engine_mode:
+        print('Applying polyfills:')
         for poly_tag, polyfill in POLYFILLS:
             if match_tags(tags, poly_tag):
+                print(f' - {polyfill.__name__[10:]}: Applying')
                 polyfill(fgd)
+            else:
+                print(f' - {polyfill.__name__[10:]}: Not required')
 
     print('Applying helpers to child entities and optimising...')
     for ent in fgd.entities.values():
