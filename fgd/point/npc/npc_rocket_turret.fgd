@@ -18,7 +18,7 @@
 		]
 
 	model[P2, -srctools](studio) : "[H] Model" : "models/props_bts/rocket_sentry.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
-	model[P2, +srctools](studio) : "Custom Model" : "models/props_bts/rocket_sentry.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	model[P2, +srctools](studio) : "[HA] Custom Model" : "models/props_bts/rocket_sentry.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
 
 	rocketspeed[P2](float) : "Rocket Speed" : 450 : "Speed the rocket will travel at."
 	rocketlifetime[P2](float) : "Rocket Lifetime" : 20 : "The rocket will automatically detonate after this number of seconds."

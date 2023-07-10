@@ -4,7 +4,7 @@
 = prop_exploding_futbol: "The bombs used by Wheatley."
 	[
 	model[-srctools](studio) : "[H] Model" : "models/npcs/personality_sphere_angry.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
-	model[+srctools](studio) : "Custom Model" : "models/npcs/personality_sphere_angry.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	model[+srctools](studio) : "[HA] Custom Model" : "models/npcs/personality_sphere_angry.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
 
 	explodeontouch(boolean) : "Explode on touch" : 1 : "If the bomb should explode when it touches something."
 

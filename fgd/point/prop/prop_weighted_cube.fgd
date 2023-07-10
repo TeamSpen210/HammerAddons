@@ -30,7 +30,7 @@
 		"models/props_underground/underground_weighted_cube.mdl": "Antique"
 		]
 
-	comp_custom_model_type[srctools, -engine](choices) : "[COMP] Custom Model Type" : 0 : "Automatically handles various methods of setting custom cube models. " + 
+	comp_custom_model_type[srctools, -engine](choices) : "[HA] Custom Model Type" : 0 : "Automatically handles various methods of setting custom cube models. " + 
 		"Cube Type sets the behavior and which skin numbers are used for gel, and the Model keyvalue sets the actual model. " +
 		"Script Override mode requires the collisions to be the same as the base cube type, but tends to produce more correct physics than Cube Type 6." =
 		[

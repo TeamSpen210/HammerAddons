@@ -5,7 +5,7 @@
 	[
 
 	model[-srctools](studio) : "[H] Model" : "models/props/box_socket.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
-	model[+srctools](studio) : "Custom Model" : "models/props/box_socket.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	model[+srctools](studio) : "[HA] Custom Model" : "models/props/box_socket.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
 	acceptsball(boolean) : "Accepts Balls" : 0 : "Do Edgeless Safety Cubes activate this? Should almost always be No."
 
 	@resources

@@ -1,7 +1,7 @@
 @BaseClass appliesto(+P2, +srctools) 
 = SRCModel: "Adds keyvalues to set a custom model."
 [
-	comp_custom_model_type[srctools, -engine](boolean) : "[COMP] Override Model" : 0 : "If enabled, automatically pack a VScript to override the entity's model on spawn."+
+	comp_custom_model_type[srctools, -engine](boolean) : "[HA] Override Model" : 0 : "If enabled, automatically pack a VScript to override the entity's model on spawn."+
 		" NOTE: If you run into problems with players getting stuck on the model, make sure it has the same collisions as the base model,"+
 		" as this is known to sometimes cause issues."
 ]

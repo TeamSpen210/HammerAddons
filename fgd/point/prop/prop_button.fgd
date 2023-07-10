@@ -6,7 +6,7 @@
 = prop_button: "A button which is activated by player use or by game inputs. While pressed it can play a tick-tock sound to indicate limited time."
 	[
 	model[-srctools](studio) : "[H] Model" : "models/props/switch001.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
-	model[+srctools](studio) : "Custom Model" : "models/props/switch001.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	model[+srctools](studio) : "[HA] Custom Model" : "models/props/switch001.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
 	
 	skin[engine](integer) : "Skin" : 0 : "Should it appear dirty or clean?"
 	skin(choices) : "Skin" : "0" : "Should it appear dirty or clean?" =

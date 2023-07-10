@@ -6,7 +6,7 @@
 	"Note: To avoid lag when it first turns on, place an info_particle_system to precache 'projected_wall_impact'."
 	[
 	model[-srctools](studio) : "[H] Model" : "models/props/wall_emitter.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
-	model[+srctools](studio) : "Custom Model" : "models/props/wall_emitter.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	model[+srctools](studio) : "[HA] Custom Model" : "models/props/wall_emitter.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
 	
 	skin[engine](integer) : "Skin" : 0
 	skin(choices) : "Skin" : 0 : "Which skin to use." =
