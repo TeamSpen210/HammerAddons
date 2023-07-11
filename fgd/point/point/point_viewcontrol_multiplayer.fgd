@@ -4,7 +4,7 @@
 	studioprop("models/editor/camera.mdl") 
 	frustum(fov, _frustum_near, _frustum_far, _frustum_color, -1) 
 	line(255 255 0, targetname, target_entity) 
-= point_viewcontrol_multiplayer: "A camera entity that controls players' views. which works in multiplayer. " +
+= point_viewcontrol_multiplayer: "Multiplayer version of point_viewcontrol which can affect multiple players at once. " +
 	"While it's active, the players will see out of the camera."
 	[
 	fov(float) : "Field of view" : 90 : "Player FOV"
@@ -16,14 +16,14 @@
 	target_team[engine](integer) : "Target Team" : -1
 	target_team[P2](choices) : "Target Team" : -1 : "Which team (or all) to take over the camera for." =
 		[
-		-1: "All Players"
-		0: "Chell/Bendy"
+		-1: "All players"
+		0: "Not on a team/singleplayer"
 		2: "P-Body"
 		3: "ATLAS"
 		]
 	target_team[CSGO](choices) : "Target Team" : -1 : "Which team (or all) to take over the camera for." =
 		[
-		-1: "All Teams"
+		-1: "All players"
 		2: "Terrorist"
 		3: "Counter-Terrorist"
 		]
