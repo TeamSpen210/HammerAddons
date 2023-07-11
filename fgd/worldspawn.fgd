@@ -1,7 +1,8 @@
 // Super-extra special, so don't use normal bases.
 @SolidClass base(BaseEntity, ResponseContext) = worldspawn: "This is the world entity. Each map can only contain one, and it's automatically created for you."
 	[
-	message(string) : "Map Description / Title"
+	// "Doesn't seem to be used anywhere anymore." - VDC
+	// message(string) : "Map Description / Title"
 
 	skyname(string)                : "SkyBox Texture Name" :                       : "Texture used for the 2D skybox."
 	skyname[HL2, EP1, EP2](string) : "SkyBox Texture Name" : "sky_day01_01"        : "Texture used for the 2D skybox."
@@ -23,11 +24,13 @@
 		"when the map loads or whether it should only be used for savegame comments and RPC. " +
 		"This would normally be set to ''Yes'' outside of Mapbase."
 
-	startdark(boolean) : "Level Fade In" : 0
-	gametitle[!P2](boolean) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts."
+	startdark(boolean) : "Level Fade In" : 0 : "Fade from black after starting the level or loading a save. If you need something more configurable, use a logic_auto and env_fade instead."
+	gametitle[+complete](boolean) : "Display Game Title" : 0 : "Display the game logo onscreen when this level starts. Crashes unless the HL1 logo sprite is ported."
 
 	newunit[engine](boolean) : "New Level Unit" : 0
-	newunit(choices) : "New Level Unit" : 0 : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. " +
+	// Portal 2 force enables this
+	// TODO: we can probably hide it in multiplayer games too
+	newunit[!P2, complete](choices) : "New Level Unit" : 0 : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. " +
 		"Only set it to Yes if the player cannot return to any previous levels." =
 		[
 		0: "No, keep current"
@@ -62,10 +65,11 @@
 
 	musicpostfix[L4D2](string) : "Music Post-Fix String" : "Waterfront"
 
-	maxoccludeearea(float) : "Max occludee area" : 0 : "[Used on PC] Prevents occlusion testing for entities that take up more than X% of the screen."
-	minoccluderarea(float) : "Min occluder area" : 0 : "[Used on PC] Prevents occluders from being used if they take up less than X% of the screen."
-	maxoccludeearea_x360(float) : "Max occludee area (Xbox)" : 0 : "[Used on 360] Prevents occlusion testing for entities that take up more than X% of the screen."
-	minoccluderarea_x360(float) : "Min occluder area (Xbox)" : 0 : "[Used on 360] Prevents occluders from being used if they take up less than X% of the screen."
+	maxoccludeearea(float) : "Max occludee area" : 0 : "Prevents occlusion testing for entities that take up more than X% of the screen."
+	minoccluderarea(float) : "Min occluder area" : 0 : "Prevents occluders from being used if they take up less than X% of the screen."
+	// Most users are not mapping for Xbox
+	maxoccludeearea_x360[+complete](float) : "Max occludee area (Xbox)" : 0 : "[Used on 360] Prevents occlusion testing for entities that take up more than X% of the screen."
+	minoccluderarea_x360[+complete](float) : "Min occluder area (Xbox)" : 0 : "[Used on 360] Prevents occluders from being used if they take up less than X% of the screen."
 	maxpropscreenwidth(float) : "Start Fade Pixels" : -1 : "Number of pixels wide at which all props in the level start to fade (<0 = use fademaxdist). " +
 		"This number is ignored if the prop has a specific fade distance specified."
 	minpropscreenwidth(float) : "End Fade Pixels" : 0 : "Minimum number of pixels wide at which the prop is visible (0 = don't fade out). " +
@@ -99,7 +103,7 @@
 		//4 : "Python (Unsupported)"
 		]
 
-	coldworld(boolean) : "World is cold" : 0 : "Emit steam from NPC's mouths and similar effects."
+	coldworld[DODS](boolean) : "World is cold" : 0 : "Emit steam from players' mouths and similar effects."
 	WaveHeight[engine](float) : "Wave Height" : : "Unused keyvalue, likely to indicate the amount of HL1-style wavy water."
 	
 	fixtriggerpushbug[engine](integer) : "Fix contact trigger_push bug" : 1 : "This fixes a bug with very thin contact mode trigger_push pushing downwards. This should be set to Yes unless this is an old map which worked around the bug and needs it in order to work correctly."
