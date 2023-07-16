@@ -5,6 +5,7 @@
 	team(choices) : "Team" : "-2" : "Which team will use this hint" =
 		[
 		-2: "Everyone"
+		0: "Unassigned" [+complete]
 		2: "RED"
 		3: "BLU"
 		5 : "Halloween Bosses"

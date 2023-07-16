@@ -3,6 +3,8 @@
 	teamnum[engine](integer) : "Team" : 2
 	teamnum(choices) : "Team" : 2 : "Team" =
 		[
+		0: "Unassigned" [+complete]
+		1: "Spectators" [+complete]
 		2: "RED"
 		3: "BLU"
 		]

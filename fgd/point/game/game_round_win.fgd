@@ -8,6 +8,7 @@
 	teamnum[TF2](choices) : "Team" : 0 : "Team" =
 		[
 		0: "None (Sudden Death)"
+		1: "Spectators (?)" [+complete]
 		2: "RED"
 		3: "BLU"
 		]
@@ -16,6 +17,7 @@
 	team[Mesa](choices) : "Team" : 0 : "Team" =
 		[
 		0 : "None"
+		1 : "Spectators (?)" [+complete]
 		2 : "Marines (Team-based game modes only)"
 		3 : "Scientists (Team-based game modes only)"
 		]

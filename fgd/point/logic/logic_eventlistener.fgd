@@ -13,13 +13,16 @@
 	teamnum[P2](choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
 		[
 		-1: "Don't care"
-		1: "Team 1"
-		2: "Team 2 (ORANGE)"
-		3: "Team 3 (BLUE)"
+		0: "Singleplayer/Unassigned"
+		1: "Spectators" [+complete]
+		2: "P-Body"
+		3: "ATLAS"
 		]
 	teamnum[CSGO](choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
 		[
 		-1: "Don't care"
+		0: "Unassigned" [+complete]
+		1: "Spectators" [+complete]
 		2: "Terrorists"
 		3: "Counter-Terrorists"
 		]

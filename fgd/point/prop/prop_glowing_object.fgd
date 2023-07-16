@@ -10,6 +10,8 @@
 	glowforteam(choices) : "Glow For Team" : -1 : "Team(s) this entity should glow for" =
 		[
 		-1: "Everyone"
+		0: "Unassigned" [+complete]
+		1: "Spectators" [+complete]
 		2: "Survivors"
 		3: "Infected"
 		]

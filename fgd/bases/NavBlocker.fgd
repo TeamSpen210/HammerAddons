@@ -5,6 +5,7 @@
 	teamtoblock[TF2](choices) : "Team(s) to block" : -1 : "Team(s) this entity should block." =
 		[
 		-1: "Everyone"
+		0: "Unassigned" [+complete]
 		2: "RED"
 		3: "BLU"
 		5: "Halloween Bosses"
@@ -13,6 +14,7 @@
 	teamtoblock[CSGO](choices) : "Team(s) to block" : -1 : "Team(s) this entity should block" =
 		[
 		-1: "Everyone"
+		0: "Unassigned" [+complete]
 		2: "Terrorists"
 		3: "Counter-Terrorists"
 		]
@@ -20,6 +22,7 @@
 	teamtoblock[L4D, L4D2](choices) : "Team(s) to block" : -1 : "Team(s) this entity should block" =
 		[
 		-1: "Everyone"
+		0: "Unassigned" [+complete]
 		2: "Survivors"
 		3: "Infected"
 		]

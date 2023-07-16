@@ -12,7 +12,7 @@
 	startingteamnum[engine](integer) : "Player" : 0 : "Which player this gun belongs to.  Will decide which portals it fires before being picked up, as well as the skin."
 	startingteamnum[P2](choices) : "Player" : 0 : "Which player this gun belongs to.  Will decide which portals it fires before being picked up, as well as the skin." =
 		[
-		0: "Chell/Bendy"
+		0: "Singleplayer/Unassigned"
 		2: "P-Body"
 		3: "ATLAS"
 		]
