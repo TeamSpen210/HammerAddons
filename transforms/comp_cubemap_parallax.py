@@ -28,12 +28,7 @@ def comp_cubemap_parallax(ctx: Context):
         diff = maxs - mins
 
         # ensure bounding box has volume
-        if diff[0] == 0.0:
-            diff[0] = 1.0
-        if diff[1] == 0.0:
-            diff[1] = 1.0
-        if diff[2] == 0.0:
-            diff[2] = 1.0
+        diff.max((1.0, 1.0, 1.0))
 
         # we need a 4-component matrix here because we need to translate
         def matmul(a, b):
@@ -55,23 +50,23 @@ def comp_cubemap_parallax(ctx: Context):
         )
 
         rotation_matrix = matmul(translate1_matrix, (
-            angles[(0, 0)], angles[(0, 1)], angles[(0, 2)], 0.0,
-            angles[(1, 0)], angles[(1, 1)], angles[(1, 2)], 0.0,
-            angles[(2, 0)], angles[(2, 1)], angles[(2, 2)], 0.0,
+            angles[0, 0], angles[0, 1], angles[0, 2], 0.0,
+            angles[1, 0], angles[1, 1], angles[1, 2], 0.0,
+            angles[2, 0], angles[2, 1], angles[2, 2], 0.0,
             0.0, 0.0, 0.0, 1.0,
         ))
 
         translate2_matrix = matmul(rotation_matrix, (
-            1.0, 0.0, 0.0, -mins[0],
-            0.0, 1.0, 0.0, -mins[1],
-            0.0, 0.0, 1.0, -mins[2],
+            1.0, 0.0, 0.0, -mins.x,
+            0.0, 1.0, 0.0, -mins.y,
+            0.0, 0.0, 1.0, -mins.z,
             0.0, 0.0, 0.0, 1.0,
         ))
 
         scale_matrix = matmul(translate2_matrix, (
-            1.0 / diff[0], 0.0, 0.0, 0.0,
-            0.0, 1.0 / diff[1], 0.0, 0.0,
-            0.0, 0.0, 1.0 / diff[2], 0.0,
+            1.0 / diff.x, 0.0, 0.0, 0.0,
+            0.0, 1.0 / diff.y, 0.0, 0.0,
+            0.0, 0.0, 1.0 / diff.z, 0.0,
             0.0, 0.0, 0.0, 1.0,
         ))
 
