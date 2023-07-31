@@ -80,9 +80,9 @@ def comp_cubemap_parallax(ctx: Context):
             'radius': radius,
             'radius_sqr': radius**2,
             'used': 0,
-            'obb1': "[%f %f %f %f]" % (scale_matrix[0], scale_matrix[1], scale_matrix[2], scale_matrix[3]),
-            'obb2': "[%f %f %f %f]" % (scale_matrix[4], scale_matrix[5], scale_matrix[6], scale_matrix[7]),
-            'obb3': "[%f %f %f %f]" % (scale_matrix[8], scale_matrix[9], scale_matrix[10], scale_matrix[11]),
+            'obb1': f"[{scale_matrix[0]:f} {scale_matrix[1]:f} {scale_matrix[2]:f} {scale_matrix[3]:f}]",
+            'obb2': f"[{scale_matrix[4]:f} {scale_matrix[5]:f} {scale_matrix[6]:f} {scale_matrix[7]:f}]",
+            'obb3': f"[{scale_matrix[8]:f} {scale_matrix[9]:f} {scale_matrix[10]:f} {scale_matrix[11]:f}]",
         })
 
     cubemap_material_name_pattern = re.compile(r"materials/maps/.*_(-?[0-9]+)_(-?[0-9]+)_(-?[0-9]+)\.vmt")
@@ -130,7 +130,7 @@ def comp_cubemap_parallax(ctx: Context):
             builder['$envmapparallaxobb1'](best_match['obb1'])
             builder['$envmapparallaxobb2'](best_match['obb2'])
             builder['$envmapparallaxobb3'](best_match['obb3'])
-            builder['$envmaporigin']('[%s]' % str(cubemap_origin))
+            builder['$envmaporigin'](f'[{cubemap_origin}]')
 
         encoded = io.StringIO()
         material.export(encoded)
