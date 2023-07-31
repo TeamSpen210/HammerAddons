@@ -106,7 +106,16 @@ def comp_cubemap_parallax(ctx: Context):
         if best_match is None:
             continue
 
-        material = Material.parse(ctx.bsp.pakfile.read(name).decode('utf-8'), filename = name)
+        try:
+            material = Material.parse(ctx.bsp.pakfile.read(name).decode('utf-8'), filename = name)
+        except Exception as exc:
+            LOGGER.exception(
+                "Could not parse packed cubemap patch material {}!", 
+                name, 
+                exc_info=exc,
+            )
+            continue
+
         if material.shader != 'patch':
             LOGGER.error(
                 'Expected cubemap material to have the "patch" shader, but shader is "{}" for {}',
