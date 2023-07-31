@@ -1,10 +1,12 @@
 """Adds keys to generated cubemap materials to map them to the bounds of a cubeoid."""
 
 from srctools import Matrix, Vec, conv_float
+from srctools.vmt import Material
 from srctools.logger import get_logger
 
 from hammeraddons.bsp_transform import trans, Context
 
+import io
 import re
 
 
@@ -14,15 +16,13 @@ LOGGER = get_logger(__name__)
 @trans('comp_cubemap_parallax')
 def comp_cubemap_parallax(ctx: Context):
     """Modify cubemap materials to contain parallax information."""
-    cubemap_material_name_pattern = re.compile(r"materials/maps/.*_(-?[0-9]+)_(-?[0-9]+)_(-?[0-9]+)\.vmt")
-    cubemap_material_extract_pattern = re.compile(br'"patch"\r\n\{\r\n\t"include"\t\t"([^"]*)"\r\n\t"(?:replace|insert)"\r\n\t\{\r\n\t\t"\$envmap"\t\t"([^"]*)"\r\n(.*)\t\}\r\n}\r\n')
+    parallax_cubemap_configs = []
     for parallax in ctx.vmf.by_class['comp_cubemap_parallax']:
         parallax.remove()
 
         origin = Vec.from_str(parallax['origin'])
         angles = Matrix.from_angstr(parallax['angles'])
         radius = conv_float(parallax['radius'])
-        radius_squared = radius**2
         mins = Vec.from_str(parallax['mins'])
         maxs = Vec.from_str(parallax['maxs'])
         diff = maxs - mins
@@ -75,44 +75,71 @@ def comp_cubemap_parallax(ctx: Context):
             0.0, 0.0, 0.0, 1.0,
         ))
 
-        parallax_material_keys = (b"\t\t\"$envmapparallax\"\t\t\"1\"\r\n" +
-            b"\t\t\"$envmapparallaxobb1\"\t\t\"[%f %f %f %f]\"\r\n" +
-            b"\t\t\"$envmapparallaxobb2\"\t\t\"[%f %f %f %f]\"\r\n" +
-            b"\t\t\"$envmapparallaxobb3\"\t\t\"[%f %f %f %f]\"\r\n") % (
-                scale_matrix[0], scale_matrix[1], scale_matrix[2], scale_matrix[3],
-                scale_matrix[4], scale_matrix[5], scale_matrix[6], scale_matrix[7],
-                scale_matrix[8], scale_matrix[9], scale_matrix[10], scale_matrix[11],
+        parallax_cubemap_configs.append({
+            'origin': origin,
+            'radius': radius,
+            'radius_sqr': radius**2,
+            'used': 0,
+            'obb1': "[%f %f %f %f]" % (scale_matrix[0], scale_matrix[1], scale_matrix[2], scale_matrix[3]),
+            'obb2': "[%f %f %f %f]" % (scale_matrix[4], scale_matrix[5], scale_matrix[6], scale_matrix[7]),
+            'obb3': "[%f %f %f %f]" % (scale_matrix[8], scale_matrix[9], scale_matrix[10], scale_matrix[11]),
+        })
+
+    cubemap_material_name_pattern = re.compile(r"materials/maps/.*_(-?[0-9]+)_(-?[0-9]+)_(-?[0-9]+)\.vmt")
+    for name in ctx.bsp.pakfile.namelist():
+        match = cubemap_material_name_pattern.fullmatch(name)
+        if match is None:
+            continue
+
+        cubemap_origin = Vec(int(match.group(1)), int(match.group(2)), int(match.group(3)))
+
+        best_match = None
+        best_match_distance_sqr = -1
+        for config in parallax_cubemap_configs:
+            distance_sqr = (cubemap_origin - config['origin']).len_sq()
+            if distance_sqr > config['radius_sqr']:
+                continue
+            if best_match is None or best_match_distance_sqr > distance_sqr:
+                best_match = config
+                best_match_distance_sqr = distance_sqr
+
+        if best_match is None:
+            continue
+
+        material = Material.parse(ctx.bsp.pakfile.read(name).decode('utf-8'), filename = name)
+        if material.shader != 'patch':
+            LOGGER.error(
+                'Expected cubemap material to have the "patch" shader, but shader is "{}" for {}',
+                material.shader,
+                name
             )
+            continue
 
-        any_found = False
-        for name in ctx.bsp.pakfile.namelist():
-            match = cubemap_material_name_pattern.fullmatch(name)
-            if match is None:
-                continue
+        if len(material.blocks) != 1 or (material.blocks[0].name != 'replace' and material.blocks[0].name != 'insert'):
+            LOGGER.error(
+                'Expected cubemap material to have exactly one block named either "replace" or "insert" for {}',
+                name
+            )
+            continue
 
-            cubemap_origin = Vec(int(match.group(1)), int(match.group(2)), int(match.group(3)))
-            if (cubemap_origin - origin).len_sq() > radius_squared:
-                continue
+        config['used'] += 1
 
-            any_found = True
-            material_bytes = ctx.bsp.pakfile.read(name)
-            match = cubemap_material_extract_pattern.fullmatch(material_bytes)
-            if match is None:
-                LOGGER.error(
-                    'Failed to parse cubemap material {}',
-                    name
-                )
-                continue
+        material.blocks[0].name = 'insert'
+        with material.blocks[0].build() as builder:
+            builder['$envmapparallax']('1')
+            builder['$envmapparallaxobb1'](config['obb1'])
+            builder['$envmapparallaxobb2'](config['obb2'])
+            builder['$envmapparallaxobb3'](config['obb3'])
+            builder['$envmaporigin']('[%s]' % str(cubemap_origin))
 
-            ctx.pack.pack_file(name, data = (b"\"patch\"\r\n{\r\n\t\"include\"\t\t\"" + match.group(1) +
-                b"\"\r\n\t\"insert\"\r\n\t{\r\n\t\t\"$envmap\"\t\t\"" + match.group(2) +
-                b"\"\r\n" + match.group(3) + parallax_material_keys +
-                b"\t\t\"$envmaporigin\"\t\t\"[" + bytes(str(cubemap_origin), 'ascii') +
-                b"]\"\r\n\t}\r\n}\r\n"))
+        encoded = io.StringIO()
+        material.export(encoded)
+        ctx.pack.pack_file(name, data = encoded.getvalue())
 
-        if not any_found:
+    for config in parallax_cubemap_configs:
+        if config['used'] == 0:
             LOGGER.warning(
-                'No cubemapped materials found within {} units for comp_cubemap_parallax at ({})!',
+                'No materials found affected by a cubemap within {} units for comp_cubemap_parallax at ({})!',
                 parallax['radius'],
                 parallax['origin'],
             )
