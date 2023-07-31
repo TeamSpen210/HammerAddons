@@ -122,14 +122,14 @@ def comp_cubemap_parallax(ctx: Context):
             )
             continue
 
-        config['used'] += 1
+        best_match['used'] += 1
 
         material.blocks[0].name = 'insert'
         with material.blocks[0].build() as builder:
             builder['$envmapparallax']('1')
-            builder['$envmapparallaxobb1'](config['obb1'])
-            builder['$envmapparallaxobb2'](config['obb2'])
-            builder['$envmapparallaxobb3'](config['obb3'])
+            builder['$envmapparallaxobb1'](best_match['obb1'])
+            builder['$envmapparallaxobb2'](best_match['obb2'])
+            builder['$envmapparallaxobb3'](best_match['obb3'])
             builder['$envmaporigin']('[%s]' % str(cubemap_origin))
 
         encoded = io.StringIO()
