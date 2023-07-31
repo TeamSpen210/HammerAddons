@@ -23,12 +23,14 @@ def comp_cubemap_parallax(ctx: Context):
         origin = Vec.from_str(parallax['origin'])
         angles = Matrix.from_angstr(parallax['angles'])
         radius = conv_float(parallax['radius'])
-        mins = Vec.from_str(parallax['mins'])
-        maxs = Vec.from_str(parallax['maxs'])
-        diff = maxs - mins
+        mins, maxs = Vec.bbox(
+            Vec.from_str(parallax['mins']),
+            Vec.from_str(parallax['maxs'])
+        )
+        size = maxs - mins
 
         # ensure bounding box has volume
-        diff.max((1.0, 1.0, 1.0))
+        size.max((1.0, 1.0, 1.0))
 
         # we need a 4-component matrix here because we need to translate
         def matmul(a, b):
@@ -64,9 +66,9 @@ def comp_cubemap_parallax(ctx: Context):
         ))
 
         scale_matrix = matmul(translate2_matrix, (
-            1.0 / diff.x, 0.0, 0.0, 0.0,
-            0.0, 1.0 / diff.y, 0.0, 0.0,
-            0.0, 0.0, 1.0 / diff.z, 0.0,
+            1.0 / size.x, 0.0, 0.0, 0.0,
+            0.0, 1.0 / size.y, 0.0, 0.0,
+            0.0, 0.0, 1.0 / size.z, 0.0,
             0.0, 0.0, 0.0, 1.0,
         ))
 
