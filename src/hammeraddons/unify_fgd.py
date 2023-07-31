@@ -53,6 +53,9 @@ MODS_BRANCHED: Dict[str, List[Tuple[str, str]]] = {
         ('EZ2', 'Entropy: Zero 2'),
         ('KZ', 'Kreedz Climbing'),
     ],
+    'ASW': [
+        ('ASRD', 'Alien Swarm: Reactive Drop'),
+    ],
     'P2': [
         ('P2SIXENSE', 'Portal 2 Sixense MotionPack'),
         ('P2EDU', 'Portal 2 Educational Version'),
