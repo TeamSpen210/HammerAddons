@@ -18,6 +18,10 @@
 	skin(integer) : "Skin" : 0 : "Skin to use in game"
 	model(studio) : "Model" : "models/props/portal_door_combined.mdl" : "Model to use in-game"
 
+	// Temporary workaround for doors looping the close animation
+	// Remove once https://github.com/StrataSource/Engine/issues/737 is implemented
+	defaultanim(string) readonly : "<Default Animation>" : "idleclose" : "Ignore, needed to prevent the close animation from looping in Hammer"
+
 	// Inputs
 	input Open(void) : "Open the door and cause the areaportal to return to fading."
 	input Close(void) : "Close the door and cause the areaportal to close."
