@@ -81,7 +81,7 @@
 	output OnPrimaryPortalPlaced[P2](void) : "Fired when a Portal player successfully places the primary portal."
 	output OnSecondaryPortalPlaced[P2](void) : "Fired when a Portal player successfully places the secondary portal."
 	// Only responds to the old unused +coop_ping command, not the normal pings
-	output OnCoopPing[P2, +complete](void) : "Fired in response to the unused +coop_ping command."
+	output OnCoopPing[+P2, +complete](void) : "Fired in response to the unused +coop_ping command."
 	output OnDuck[since_P2](void) : "Fired when a player starts to duck."
 	output OnUnDuck[since_P2](void) : "Fired when a player releases the duck button."
 	output OnJump[since_P2](void) : "Fired when a player jumps."

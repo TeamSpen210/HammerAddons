@@ -29,8 +29,8 @@
 
 	newunit[engine](boolean) : "New Level Unit" : 0
 	// Portal 2 force enables this
-	// TODO: we can probably hide it in multiplayer games too
-	newunit[!P2, complete](choices) : "New Level Unit" : 0 : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. " +
+	// TODO: we can probably hide it in multiplayer-only games too
+	newunit[!P2](choices) : "New Level Unit" : 0 : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. " +
 		"Only set it to Yes if the player cannot return to any previous levels." =
 		[
 		0: "No, keep current"
