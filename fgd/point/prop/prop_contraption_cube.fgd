@@ -4,7 +4,7 @@
 = prop_contraption_cube : "Contraption Cube"
 [
     cube_mass(float) : "Mass" : 40 : "Mass of the cube (kg)"
-	ContraptionFrictionIndex(integer) : "Friction" : 0
+	ContraptionFrictionIndex[engine](integer) : "Friction" : 0
 	ContraptionFrictionIndex(choices) : "Friction" : 0 : "Friction index of the cube" =
 	[
 		0 : "Frictionless"
@@ -13,7 +13,7 @@
 		3 : "Sticky"
 		4 : "Very sticky"
 	]
-	ContraptionElasticityIndex(integer) : "Elasticity" : 0
+	ContraptionElasticityIndex[engine](integer) : "Elasticity" : 0
 	ContraptionElasticityIndex(choices) : "Elasticity" : 0 : "Elasticity index of the cube" =
 	[
 		0 : "No rebound"
