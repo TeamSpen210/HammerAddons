@@ -34,7 +34,7 @@ def kv_setter(ctx: Context) -> None:
 
         kv_name = setter['kv_name']
         # Use fixup name if actually set.
-        kv_value = setter['kv_value_local'] or setter['kv_value_global']
+        kv_value = setter['kv_value_pos'] or setter['kv_value_local'] or setter['kv_value_global']
 
         if conv_bool(setter['invert']):
             kv_value = '0' if conv_bool(kv_value) else '1'

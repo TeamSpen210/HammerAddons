@@ -25,16 +25,21 @@
 
 	params_global1(target_destination) : "Parameter 1 - String" : : "A value which will replace {1} in the parameter."
 	params_local1(target_destination) : "Parameter 1 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {1}."
+	params_pos1(vector) : "Parameter 1 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {1}. This will be offset by instancing."
 
 	params_global2(target_destination) : "Parameter 2 - String" : : "A value which will replace {2} in the parameter."
 	params_local2(target_destination) : "Parameter 2 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {1}."
+	params_pos2(vector) : "Parameter 2 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {2}. This will be offset by instancing."
 
 	params_global3(target_destination) : "Parameter 3 - String" : : "A value which will replace {3} in the parameter."
 	params_local3(target_destination) : "Parameter 3 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {3}."
+	params_pos3(vector) : "Parameter 3 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {3}. This will be offset by instancing."
 
 	params_global4(target_destination) : "Parameter 4 - Ent Name" : : "A value which will replace {4} in the parameter."
 	params_local4(target_destination) : "Parameter 4 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {4}."
+	params_pos4(vector) : "Parameter 4 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {4}. This will be offset by instancing."
 
 	params_global5(target_destination) : "Parameter 5 - String" : : "A value which will replace {5} in the parameter."
 	params_local5(target_destination) : "Parameter 5 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {5}."
+	params_pos5(vector) : "Parameter 5 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {5}. This will be offset by instancing."
 	]

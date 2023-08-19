@@ -59,7 +59,11 @@ def advanced_output(ctx: Context) -> None:
 
         param_args: List[str] = []
         for ind in itertools.count(1):
-            val = adv_out[f'params_local{ind}'] or adv_out[f'params_global{ind}']
+            val = (
+                adv_out[f'params_pos{ind}']
+                or adv_out[f'params_local{ind}']
+                or adv_out[f'params_global{ind}']
+            )
             if not val:
                 break
             param_args.append(val)

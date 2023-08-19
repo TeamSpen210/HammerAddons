@@ -17,6 +17,7 @@
 
 	kv_value_global(string) : "Value - String" : : "The value to apply."
 	kv_value_local(target_destination) : "Value - Ent Name" : : "If set, use this fixed-up entity name."
+	kv_value_pos(vector) : "Value - Position" : : "If set, overrides the regular value. This will be offset by instancing."
 
 	invert(boolean) : "Invert Value" : 0 : "If enabled, invert the value so 0 and 1 are swapped."
 	rotate(boolean) : "Rotate Value" : 0 : "If enabled, treat the value as a vector and rotate it by the angles set on this entity first."
