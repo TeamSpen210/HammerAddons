@@ -94,6 +94,13 @@ class SegPropOrient(Enum):
     RAND_YAW = 'rand_yaw'
     RAND_FULL = 'rand'
 
+class ModelContainer:
+    def __init__(self,mn,lo,cd,sp,sh):
+        self.model_name = mn
+        self.light_origin = lo
+        self.coll_data = cd
+        self.seg_props = sp
+        self.noshadow = sh
 
 @attrs.define
 class RopePhys:
@@ -1213,44 +1220,27 @@ async def compile_rope(
             if node.config.coll_side_count >= 3:
                 has_coll = True
 
-        class ModelContainer:
-            def __init__(self,mn,lo,cd,sp):
-                self.model_name = mn
-                self.light_origin = lo
-                self.coll_data = cd
-                self.seg_props = sp
-
         modellist : List[ModelContainer] = []
         # Separate glass config
         # Call get_model twice to get models for frame and glass combined
 
-        # This code need refactorization
-        if node.config.vac_separate_glass == VactubeGenType.SEPARATE:
+        is_sep = node.config.vac_separate_glass == VactubeGenType.SEPARATE
+        # Generate the whole model, or frame only if separating. 
+        model_name, (light_origin, coll_data, seg_props, vac_points) = await compiler.get_model(
+            (frozenset(local_nodes), frozenset(connections), VactubeGenPartType.FRAME if is_sep else VactubeGenPartType.ALL),
+            build_rope,
+            (center, ctx.pack.fsys),
+        )
+        modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props, False))
 
-            # generate glass only
+        if is_sep:
+            # Generate the glass only
             model_name, (light_origin, coll_data, seg_props, _) = await compiler.get_model(
                 (frozenset(local_nodes), frozenset(connections), VactubeGenPartType.GLASS),
                 build_rope,
                 (center, ctx.pack.fsys),
             )
-            #hmmmmm
-            modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props))
-            
-            # generate frame only
-            # frame generation code also generates the vac_points
-            model_name, (light_origin, coll_data, seg_props, vac_points) = await compiler.get_model(
-                (frozenset(local_nodes), frozenset(connections), VactubeGenPartType.FRAME),
-                build_rope,
-                (center, ctx.pack.fsys),
-            )
-            modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props))
-        else: 
-            model_name, (light_origin, coll_data, seg_props, vac_points) = await compiler.get_model(
-                (frozenset(local_nodes), frozenset(connections), VactubeGenPartType.ALL),
-                build_rope,
-                (center, ctx.pack.fsys),
-            )
-            modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props))
+            modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props, True))
 
         if vac_points and vac_node_mod is not None:
             for track in vac_points:
@@ -1261,14 +1251,19 @@ async def compile_rope(
         flags = StaticPropFlags.NONE
         if conf.prop_light_bounce:
             flags |= StaticPropFlags.BOUNCED_LIGHTING
-        if conf.prop_no_shadows:
-            flags |= StaticPropFlags.NO_SHADOW
         if conf.prop_no_vert_light:
             flags |= StaticPropFlags.NO_PER_VERTEX_LIGHTING
         if conf.prop_no_self_shadow:
             flags |= StaticPropFlags.NO_SELF_SHADOWING
 
+        # separate model set needs both flags
+        if not is_sep and conf.prop_no_shadows:
+            flags |= StaticPropFlags.NO_SHADOW
+
+        # is_sep is only true for separate vactube models. 
+        # m.noshadow is only true for the glass model
         for m in modellist:
+            new_flags = flags | StaticPropFlags.NO_SHADOW if m.noshadow else flags
             leafs = compute_visleafs(m.coll_data, ctx.bsp.vis_tree())
             ctx.bsp.props.append(StaticProp(
                 model=m.model_name,
@@ -1277,7 +1272,7 @@ async def compile_rope(
                 scaling=1.0,
                 visleafs=leafs,
                 solidity=6 if has_coll else 0,
-                flags=flags,
+                flags=new_flags,
                 tint=Vec(conf.prop_rendercolor),
                 renderfx=conf.prop_renderalpha,
                 lighting=center + m.light_origin,
@@ -1294,7 +1289,7 @@ async def compile_rope(
                     scaling=1.0,
                     visleafs=leafs,  # TODO: compute individual leafs here?
                     solidity=6,
-                    flags=flags,
+                    flags=new_flags,
                     tint=Vec(conf.prop_rendercolor),
                     renderfx=conf.prop_renderalpha,
                     lighting=center + seg_prop.offset,
