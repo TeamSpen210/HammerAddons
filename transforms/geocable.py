@@ -683,18 +683,12 @@ def compute_binominal(n, k):
 
 
 def interpolate_bezier_quad(first_node:Node,last_node:Node,curve_segment_count:int) -> List[Node]:
-    """Interpolate a quadratic bezier curve, for better 90 degrees turn."""
+    """Interpolate a bezier curve, for better 90 degrees turn."""
     # reference:
-    # https://medium.com/geekculture/2d-and-3d-b%C3%A9zier-curves-in-c-499093ef45a9
-    #xX yY zZ are all arrays of x y z points
-
-
+    # https://en.wikipedia.org/wiki/De_Casteljau%27s_algorithm
     points: list[Node] = []
-    #int n = xX.size() - 1;
-    increment = 1/(first_node.config.segments)
+    increment = 1/(curve_segment_count)
     # Only the segment count set in the first spline object counts
-    size = curve_segment_count
-    # We do not calculate the first and last node of this curve
     curve_x = []
     curve_y = []
     curve_z = []
@@ -704,16 +698,15 @@ def interpolate_bezier_quad(first_node:Node,last_node:Node,curve_segment_count:i
         curve_y.append(curnode.pos.y)
         curve_z.append(curnode.pos.z)
         curnode = curnode.next
-
-    for l in range(1,first_node.config.segments-1):
+    # We do not calculate the first and last node of this curve
+    for l in range(1,curve_segment_count-1):
         t = l * increment
         x = de_casteljau(t,curve_x)
         y = de_casteljau(t,curve_y)
         z = de_casteljau(t,curve_z)
         n = Node(Vec(x,y,z), first_node.config, first_node.radius)
         points.append(n)
-
-    print("Bezier Curve Successfully made: ",points)
+    LOGGER.debug("Bezier Nodes Generated: ",points)
     return points
 
 def de_casteljau(t, coefs):
@@ -750,11 +743,6 @@ def interpolate_all(nodes: Set[Node]) -> None:
     # Create the nodes and put them in a seperate list, then add them
     # to the actual nodes list second. This way sections that have been interpolated
     # don't affect the interpolation of neighbouring sections.
- 
-    # Set is not subscribable. Set includes all nodes in the whole map
-    #if nodes[0].config.interp.name.casefold() == "bezier_quad":
-        #points = compute_Nvertex_bezier_curve(nodes)
-        #nodes.update(points)
     
     seen_bezier_nodes: Set[Node] = set()
     seen_bezier_nodes_ignore: Set[Node] = set()
@@ -770,7 +758,7 @@ def interpolate_all(nodes: Set[Node]) -> None:
             if node1 in seen_bezier_nodes or node1 in seen_bezier_nodes_ignore:
                 continue
             b_curve, first, last = find_all_connected_exclude_firstlast(node1)
-            print(first,"Curve Keyframes: ", b_curve,last)
+            LOGGER.debug("Curve Keyframes: ",first,b_curve,last)
             seen_bezier_nodes.update(b_curve)
             seen_bezier_nodes_ignore.update([first,last])
             node1 = first
@@ -788,7 +776,7 @@ def interpolate_all(nodes: Set[Node]) -> None:
         segments.append(points)
 
     for removenode in seen_bezier_nodes:
-        print("Removing Node ",removenode)
+        LOGGER.debug("Removing Bezier Keyframe Node ",removenode)
         nodes.remove(removenode)
 
     for points in segments:
