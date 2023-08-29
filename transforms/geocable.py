@@ -13,6 +13,7 @@ from typing import (
 
 import attrs
 import trio
+from dataclasses import dataclass
 
 from srctools import (
     logger, conv_int, conv_float, conv_bool,
@@ -56,14 +57,21 @@ $collisionmodel "cable_phy.smd" {{
 }}
 '''
 
-
 class InterpType(Enum):
     """Type of interpolation to use."""
     STRAIGHT = 0
     CATMULL_ROM = 1
     ROPE = 2
-    BEZIER_QUAD = 3
+    BEZIER = 3
 
+class VactubeGenType(Enum):
+    COMBINE = 0
+    SEPARATE = 1
+
+class VactubeGenPartType(Enum):
+    ALL = 0
+    GLASS = 1
+    FRAME = 2
 
 class RopeType(Enum):
     """Type of rope, for indicating special functionality."""
@@ -170,6 +178,7 @@ class Config:
     prop_fade_min_dist: float
     prop_fade_max_dist: float
     prop_fade_scale: float
+    vac_separate_glass: bool
 
     @staticmethod
     def _parse_min(ent: Entity, keyvalue: str, minimum: Number, message: str) -> Number:
@@ -203,30 +212,16 @@ class Config:
             else:
                 material = 'models/props_backstage/vacum_pipe_glass'
 
-            # Side counts are the same as the original models.
-            side_count = 24
-            if conv_bool(ent['collisions']):
-                coll_side_count = 12
-                coll_segments = math.ceil(segments / 2)
+            if conv_bool(ent['usebezier']):
+                interp_type = InterpType.BEZIER
             else:
-                coll_side_count = 0
-                coll_segments = -1
-            radius = VAC_RADIUS
-            slack = 0  # Unused.
-            interp_type = InterpType.CATMULL_ROM
-            u_min = 0.0
-            u_max = 1.0
-            v_scale = 1.0
-            flip_uv = False
-            seg_props = VAC_SEG_CONF_SET
-        elif ent['classname'].casefold() == 'comp_vactube_bezier':
-            # More restricted config, most are preset.
-            skin = conv_int(ent['skin'])
-            rope_type = RopeType.VAC_FUNCTIONAL if skin == 1 else RopeType.VAC_PROP
-            if conv_bool(ent['opaque']):
-                material = 'models/props_backstage/vacum_pipe_opaque'
+                interp_type = InterpType.CATMULL_ROM
+
+            
+            if conv_bool(ent['vac_separateglass']):
+                vac_separate_glass = VactubeGenType.SEPARATE
             else:
-                material = 'models/props_backstage/vacum_pipe_glass'
+                vac_separate_glass = VactubeGenType.COMBINE
 
             # Side counts are the same as the original models.
             side_count = 24
@@ -238,12 +233,12 @@ class Config:
                 coll_segments = -1
             radius = VAC_RADIUS
             slack = 0  # Unused.
-            interp_type = InterpType.BEZIER_QUAD
             u_min = 0.0
             u_max = 1.0
             v_scale = 1.0
             flip_uv = False
             seg_props = VAC_SEG_CONF_SET
+        
         else:
             rope_type = RopeType.ROPE
             # There's not really a vanilla material we can use for cables.
@@ -317,6 +312,7 @@ class Config:
             conv_float(ent['fademindist'], -1.0),
             conv_float(ent['fademaxdist'], 0.0),
             conv_float(ent['fadescale'], 0.0),
+            vac_separate_glass
         )
 
     def coll(self) -> Optional['Config']:
@@ -411,14 +407,14 @@ class Node:
 
 
 async def build_rope(
-    nodes_and_conn: Tuple[FrozenSet[NodeEnt], FrozenSet[Tuple[NodeID, NodeID]]],
+    nodes_and_conn: Tuple[FrozenSet[NodeEnt], FrozenSet[Tuple[NodeID, NodeID]], VactubeGenPartType],
     temp_folder: Path,
     mdl_name: str,
     args: Tuple[Vec, FileSystem],
 ) -> Tuple[Vec, List[Tuple[Vec, float, Vec, float]], List[SegProp], List[List[Vec]]]:
-    """Construct the geometry for a rope."""
+    """Construct the geometry for a rope. nodes_and_conn is saved into file system to check if the model needs to be recompiled. args is for information that can be lost after the compile"""
     LOGGER.info('Building rope {}', mdl_name)
-    ents, connections = nodes_and_conn
+    ents, connections, vacgentype = nodes_and_conn
     offset, fsys = args
 
     mesh = Mesh.blank('root')
@@ -431,18 +427,24 @@ async def build_rope(
     compute_orients(nodes)
     compute_verts(nodes, bone, is_coll=False)
 
-    mesh.triangles.extend(generate_straights(nodes))
+    # compile_rope uses VactubeGenPartType.ALL for all other rope generation
+    # skip this when only generating frame
+    if vacgentype != VactubeGenPartType.FRAME:
+        mesh.triangles.extend(generate_straights(nodes))
     generate_caps(nodes, mesh, is_coll=False)
 
     # All or nothing.
     is_vactube = next(iter(nodes)).config.is_vactube
     vac_points: List[List[Vec]] = []
-
-    # this needs to be separated to separate beams and glass
-    if is_vactube:
+    if is_vactube and (vacgentype == VactubeGenPartType.FRAME or vacgentype == VactubeGenPartType.ALL):
         mesh.triangles.extend(generate_vac_beams(nodes, bone, vac_points))
 
-    seg_props = list(place_seg_props(nodes, fsys, mesh))
+    # appends rings to the tube model
+    # skip this when only generating glass
+    if vacgentype != VactubeGenPartType.GLASS:
+        seg_props = list(place_seg_props(nodes, fsys, mesh))
+    else:
+        seg_props = []
 
     if coll_nodes:
         # Generate the collision mesh.
@@ -474,9 +476,13 @@ async def build_rope(
             coll_mesh.export(fb)
 
     with (temp_folder / 'model.qc').open('w') as f:
-        # Desolation needs this hint.
-        if is_vactube and hasattr(Mesh, 'NEED_TRANSLUCENT_MOSTLYOPAQUE'):
-            f.write('$mostlyopaque\n')
+        if is_vactube:
+            # Desolation needs this hint.
+            if hasattr(Mesh, 'NEED_TRANSLUCENT_MOSTLYOPAQUE') and vacgentype is VactubeGenPartType.ALL:
+                f.write('$mostlyopaque\n')
+            elif vacgentype is VactubeGenPartType.FRAME:
+                f.write('$opaque\n')
+
         f.write(QC_TEMPLATE.format(path=mdl_name, light_origin=light_origin))
         if coll_nodes:
             f.write(QC_TEMPLATE_PHYS.format(count=sum(node.next is not None for node in coll_nodes)))
@@ -672,17 +678,7 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
         for point in moveable
     ]
 
-def compute_binominal(n, k):
-    # n and k must be integers
-    value = 1.0
-    for i in range(1,k+1):
-        value = value * ((n + 1 - i) / i)
-    if n == k:
-        value = 1
-    return value
-
-
-def interpolate_bezier_quad(first_node:Node,last_node:Node,curve_segment_count:int) -> List[Node]:
+def interpolate_bezier(first_node:Node,last_node:Node,curve_segment_count:int) -> List[Node]:
     """Interpolate a bezier curve, for better 90 degrees turn."""
     # reference:
     # https://en.wikipedia.org/wiki/De_Casteljau%27s_algorithm
@@ -706,6 +702,9 @@ def interpolate_bezier_quad(first_node:Node,last_node:Node,curve_segment_count:i
         z = de_casteljau(t,curve_z)
         n = Node(Vec(x,y,z), first_node.config, first_node.radius)
         points.append(n)
+
+    last_node.config = first_node.config
+
     LOGGER.debug("Bezier Nodes Generated: ",points)
     return points
 
@@ -731,7 +730,8 @@ def find_all_connected_exclude_firstlast(node: Node):
         cur_forward = cur_forward.next
         node_list.append(cur_forward)
         assert cur_forward.next != node, 'Circular Node Detected'
-    
+
+
     if cur_back.prev == None:
         node_list.remove(cur_back)
     if cur_forward.next == None:
@@ -754,7 +754,7 @@ def interpolate_all(nodes: Set[Node]) -> None:
         
         interp_type = node1.config.interp
 
-        if interp_type.name.casefold() == "bezier_quad":
+        if interp_type is InterpType.BEZIER:
             if node1 in seen_bezier_nodes or node1 in seen_bezier_nodes_ignore:
                 continue
             b_curve, first, last = find_all_connected_exclude_firstlast(node1)
@@ -1213,11 +1213,44 @@ async def compile_rope(
             if node.config.coll_side_count >= 3:
                 has_coll = True
 
-        model_name, (light_origin, coll_data, seg_props, vac_points) = await compiler.get_model(
-            (frozenset(local_nodes), frozenset(connections)),
-            build_rope,
-            (center, ctx.pack.fsys),
-        )
+        class ModelContainer:
+            def __init__(self,mn,lo,cd,sp):
+                self.model_name = mn
+                self.light_origin = lo
+                self.coll_data = cd
+                self.seg_props = sp
+
+        modellist : List[ModelContainer] = []
+        # Separate glass config
+        # Call get_model twice to get models for frame and glass combined
+
+        # This code need refactorization
+        if node.config.vac_separate_glass == VactubeGenType.SEPARATE:
+
+            # generate glass only
+            model_name, (light_origin, coll_data, seg_props, _) = await compiler.get_model(
+                (frozenset(local_nodes), frozenset(connections), VactubeGenPartType.GLASS),
+                build_rope,
+                (center, ctx.pack.fsys),
+            )
+            #hmmmmm
+            modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props))
+            
+            # generate frame only
+            # frame generation code also generates the vac_points
+            model_name, (light_origin, coll_data, seg_props, vac_points) = await compiler.get_model(
+                (frozenset(local_nodes), frozenset(connections), VactubeGenPartType.FRAME),
+                build_rope,
+                (center, ctx.pack.fsys),
+            )
+            modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props))
+        else: 
+            model_name, (light_origin, coll_data, seg_props, vac_points) = await compiler.get_model(
+                (frozenset(local_nodes), frozenset(connections), VactubeGenPartType.ALL),
+                build_rope,
+                (center, ctx.pack.fsys),
+            )
+            modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props))
 
         if vac_points and vac_node_mod is not None:
             for track in vac_points:
@@ -1235,38 +1268,40 @@ async def compile_rope(
         if conf.prop_no_self_shadow:
             flags |= StaticPropFlags.NO_SELF_SHADOWING
 
-        leafs = compute_visleafs(coll_data, ctx.bsp.vis_tree())
-        ctx.bsp.props.append(StaticProp(
-            model=model_name,
-            origin=center,
-            angles=Angle(0, 270, 0),
-            scaling=1.0,
-            visleafs=leafs,
-            solidity=6 if has_coll else 0,
-            flags=flags,
-            tint=Vec(conf.prop_rendercolor),
-            renderfx=conf.prop_renderalpha,
-            lighting=center + light_origin,
-            min_fade=conf.prop_fade_min_dist,
-            max_fade=conf.prop_fade_max_dist,
-            fade_scale=conf.prop_fade_scale,
-        ))
-        for seg_prop in seg_props:
+        for m in modellist:
+            leafs = compute_visleafs(m.coll_data, ctx.bsp.vis_tree())
             ctx.bsp.props.append(StaticProp(
-                model=seg_prop.model,
-                origin=center + seg_prop.offset,
-                angles=(seg_prop.orient @ Matrix.from_yaw(270)).to_angle(),
+                model=m.model_name,
+                origin=center,
+                angles=Angle(0, 270, 0),
                 scaling=1.0,
-                visleafs=leafs,  # TODO: compute individual leafs here?
-                solidity=6,
+                visleafs=leafs,
+                solidity=6 if has_coll else 0,
                 flags=flags,
                 tint=Vec(conf.prop_rendercolor),
                 renderfx=conf.prop_renderalpha,
-                lighting=center + seg_prop.offset,
+                lighting=center + m.light_origin,
                 min_fade=conf.prop_fade_min_dist,
                 max_fade=conf.prop_fade_max_dist,
                 fade_scale=conf.prop_fade_scale,
             ))
+
+            for seg_prop in m.seg_props:
+                ctx.bsp.props.append(StaticProp(
+                    model=seg_prop.model,
+                    origin=center + seg_prop.offset,
+                    angles=(seg_prop.orient @ Matrix.from_yaw(270)).to_angle(),
+                    scaling=1.0,
+                    visleafs=leafs,  # TODO: compute individual leafs here?
+                    solidity=6,
+                    flags=flags,
+                    tint=Vec(conf.prop_rendercolor),
+                    renderfx=conf.prop_renderalpha,
+                    lighting=center + seg_prop.offset,
+                    min_fade=conf.prop_fade_min_dist,
+                    max_fade=conf.prop_fade_max_dist,
+                    fade_scale=conf.prop_fade_scale,
+                ))
 
 
 @trans('Model Ropes', priority=-10)  # Needs to be before vactubes.

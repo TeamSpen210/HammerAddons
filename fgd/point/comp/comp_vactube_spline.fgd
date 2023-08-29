@@ -15,7 +15,9 @@
 		1: "Vactube Junction"
 	]
 	segments(integer) : "Segments" : 2 : "Number of nodes to generate for this. Higher values make smoother tubes, but produce more faces."
-	collisions(boolean) : "Enable Collisions" : 1 : "Sholuld a collision mesh should be generated?"
+	collisions(boolean) : "Enable Collisions" : 1 : "Should a collision mesh should be generated?"
+	usebezier(boolean) : "Use Bezier Curve Generation" : 0 : "Should this tube be generated as a bezier curve?"
+	vac_separateglass(boolean) : "Separate Glass and Frame" : 0 : "Separating glass and frame can help with transparency sorting issue"
 
 	// A selection of prop_static's keyvalues, excluding some that are rather irrelevant.
 	linedivider_staticprop[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
