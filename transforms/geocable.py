@@ -62,6 +62,7 @@ class InterpType(Enum):
     STRAIGHT = 0
     CATMULL_ROM = 1
     ROPE = 2
+    BEZIER_QUAD = 3
 
 
 class RopeType(Enum):
@@ -213,6 +214,31 @@ class Config:
             radius = VAC_RADIUS
             slack = 0  # Unused.
             interp_type = InterpType.CATMULL_ROM
+            u_min = 0.0
+            u_max = 1.0
+            v_scale = 1.0
+            flip_uv = False
+            seg_props = VAC_SEG_CONF_SET
+        elif ent['classname'].casefold() == 'comp_vactube_bezier':
+            # More restricted config, most are preset.
+            skin = conv_int(ent['skin'])
+            rope_type = RopeType.VAC_FUNCTIONAL if skin == 1 else RopeType.VAC_PROP
+            if conv_bool(ent['opaque']):
+                material = 'models/props_backstage/vacum_pipe_opaque'
+            else:
+                material = 'models/props_backstage/vacum_pipe_glass'
+
+            # Side counts are the same as the original models.
+            side_count = 24
+            if conv_bool(ent['collisions']):
+                coll_side_count = 12
+                coll_segments = math.ceil(segments / 2)
+            else:
+                coll_side_count = 0
+                coll_segments = -1
+            radius = VAC_RADIUS
+            slack = 0  # Unused.
+            interp_type = InterpType.BEZIER_QUAD
             u_min = 0.0
             u_max = 1.0
             v_scale = 1.0
@@ -411,6 +437,8 @@ async def build_rope(
     # All or nothing.
     is_vactube = next(iter(nodes)).config.is_vactube
     vac_points: List[List[Vec]] = []
+
+    # this needs to be separated to separate beams and glass
     if is_vactube:
         mesh.triangles.extend(generate_vac_beams(nodes, bone, vac_points))
 
@@ -578,7 +606,6 @@ def interpolate_catmull_rom(node1: Node, node2: Node, seg_count: int) -> List[No
         ))
     return points
 
-
 def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
     """Compute the move_rope style hanging points.
 
@@ -645,19 +672,111 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
         for point in moveable
     ]
 
+def compute_binominal(n, k):
+    # n and k must be integers
+    value = 1.0
+    for i in range(1,k+1):
+        value = value * ((n + 1 - i) / i)
+    if n == k:
+        value = 1
+    return value
+
+
+def interpolate_bezier_quad(first_node:Node,last_node:Node,curve_segment_count:int) -> List[Node]:
+    """Interpolate a quadratic bezier curve, for better 90 degrees turn."""
+    # reference:
+    # https://medium.com/geekculture/2d-and-3d-b%C3%A9zier-curves-in-c-499093ef45a9
+    #xX yY zZ are all arrays of x y z points
+
+
+    points: list[Node] = []
+    #int n = xX.size() - 1;
+    increment = 1/(first_node.config.segments)
+    # Only the segment count set in the first spline object counts
+    size = curve_segment_count
+    # We do not calculate the first and last node of this curve
+    curve_x = []
+    curve_y = []
+    curve_z = []
+    curnode = first_node
+    while curnode != None:
+        curve_x.append(curnode.pos.x)
+        curve_y.append(curnode.pos.y)
+        curve_z.append(curnode.pos.z)
+        curnode = curnode.next
+
+    for l in range(1,first_node.config.segments-1):
+        t = l * increment
+        x = de_casteljau(t,curve_x)
+        y = de_casteljau(t,curve_y)
+        z = de_casteljau(t,curve_z)
+        n = Node(Vec(x,y,z), first_node.config, first_node.radius)
+        points.append(n)
+
+    print("Bezier Curve Successfully made: ",points)
+    return points
+
+def de_casteljau(t, coefs):
+    beta = [c for c in coefs] # values in this list are overridden
+    n = len(beta)
+    for j in range(1, n):
+        for k in range(n - j):
+            beta[k] = beta[k] * (1 - t) + beta[k + 1] * t
+    return beta[0]
+
+def find_all_connected_exclude_firstlast(node: Node):
+    node_list : List[Node] = [node]
+    cur_back = node
+    cur_forward = node
+
+    while cur_back.prev != None:
+        cur_back = cur_back.prev
+        node_list.append(cur_back)
+        assert cur_back.prev != node, 'Circular Node Detected'
+
+    while cur_forward.next != None:
+        cur_forward = cur_forward.next
+        node_list.append(cur_forward)
+        assert cur_forward.next != node, 'Circular Node Detected'
+    
+    if cur_back.prev == None:
+        node_list.remove(cur_back)
+    if cur_forward.next == None:
+        node_list.remove(cur_forward)
+    return node_list,cur_back,cur_forward
 
 def interpolate_all(nodes: Set[Node]) -> None:
     """Produce nodes in-between each user-made node."""
     # Create the nodes and put them in a seperate list, then add them
     # to the actual nodes list second. This way sections that have been interpolated
     # don't affect the interpolation of neighbouring sections.
+ 
+    # Set is not subscribable. Set includes all nodes in the whole map
+    #if nodes[0].config.interp.name.casefold() == "bezier_quad":
+        #points = compute_Nvertex_bezier_curve(nodes)
+        #nodes.update(points)
+    
+    seen_bezier_nodes: Set[Node] = set()
+    seen_bezier_nodes_ignore: Set[Node] = set()
 
     segments: List[List[Node]] = []
     for node1 in nodes:
         if node1.next is None or node1.config.segments <= 0:
             continue
-        node2 = node1.next
+        
         interp_type = node1.config.interp
+
+        if interp_type.name.casefold() == "bezier_quad":
+            if node1 in seen_bezier_nodes or node1 in seen_bezier_nodes_ignore:
+                continue
+            b_curve, first, last = find_all_connected_exclude_firstlast(node1)
+            print(first,"Curve Keyframes: ", b_curve,last)
+            seen_bezier_nodes.update(b_curve)
+            seen_bezier_nodes_ignore.update([first,last])
+            node1 = first
+            node2 = last
+        else:
+            node2 = node1.next
         func = globals()['interpolate_' + interp_type.name.casefold()]
         points = func(node1, node2, node1.config.segments)
 
@@ -667,6 +786,10 @@ def interpolate_all(nodes: Set[Node]) -> None:
         points[0].prev = node1
         points[-1].next = node2
         segments.append(points)
+
+    for removenode in seen_bezier_nodes:
+        print("Removing Node ",removenode)
+        nodes.remove(removenode)
 
     for points in segments:
         nodes.update(points)
@@ -1196,6 +1319,7 @@ async def comp_prop_rope(ctx: Context) -> None:
         ctx.vmf.by_class['comp_prop_rope'],
         ctx.vmf.by_class['comp_prop_cable'],
         ctx.vmf.by_class['comp_vactube_spline'],
+        ctx.vmf.by_class['comp_vactube_bezier'],
     ):
         ent.remove()
         conf = Config.parse(ent, name_to_segprops_set)
