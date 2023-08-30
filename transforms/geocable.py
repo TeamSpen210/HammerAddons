@@ -1257,9 +1257,7 @@ async def compile_rope(
             flags |= StaticPropFlags.NO_PER_VERTEX_LIGHTING
         if conf.prop_no_self_shadow:
             flags |= StaticPropFlags.NO_SELF_SHADOWING
-
-        # separate model set needs both flags
-        if not is_sep and conf.prop_no_shadows:
+        if conf.prop_no_shadows:
             flags |= StaticPropFlags.NO_SHADOW
 
         # is_sep is only true for separate vactube models.
