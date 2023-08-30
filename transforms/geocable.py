@@ -56,6 +56,7 @@ $collisionmodel "cable_phy.smd" {{
 }}
 '''
 
+
 class InterpType(Enum):
     """Type of interpolation to use."""
     STRAIGHT = 0
@@ -63,14 +64,22 @@ class InterpType(Enum):
     ROPE = 2
     BEZIER = 3
 
+
 class VactubeGenType(Enum):
+    """How vactube models should be generated.
+
+    Splitting the glass and frame parts produces better lighting.
+    """
     COMBINE = 0
     SEPARATE = 1
 
+
 class VactubeGenPartType(Enum):
-    ALL = 0
-    GLASS = 1
-    FRAME = 2
+    """What part of the vactube model to generate."""
+    ALL = 0  # Both glass + frame, or not a vactube.
+    GLASS = 1  # Glass only + collision.
+    FRAME = 2  # Frame only.
+
 
 class RopeType(Enum):
     """Type of rope, for indicating special functionality."""
@@ -620,6 +629,7 @@ def interpolate_catmull_rom(node1: Node, node2: Node, seg_count: int) -> List[No
         ))
     return points
 
+
 def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
     """Compute the move_rope style hanging points.
 
@@ -685,6 +695,7 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
         Node(point.pos, node1.config, point.radius)
         for point in moveable
     ]
+
 
 def interpolate_bezier(first_node:Node,last_node:Node,curve_segment_count:int) -> List[Node]:
     """Interpolate a bezier curve, for better 90 degrees turn."""
@@ -1227,18 +1238,19 @@ async def compile_rope(
             if node.config.coll_side_count >= 3:
                 has_coll = True
 
-        modellist : List[ModelContainer] = []
-        # Separate glass config
-        # Call get_model twice to get models for frame and glass combined
+        # All the configs should be the same, so just use the last node in the set.
+        conf = node.config
 
-        is_sep = node.config.vac_separate_glass == VactubeGenType.SEPARATE
-        # Generate the whole model, or frame only if separating. 
+        # If separate models are enabled, call get_model twice to get models for the frame and
+        # glass individually.
+        is_sep = conf.vac_separate_glass == VactubeGenType.SEPARATE
+        # First do the frame, or everything if we're not separating them.
         model_name, (light_origin, coll_data, seg_props, vac_points) = await compiler.get_model(
             (frozenset(local_nodes), frozenset(connections), VactubeGenPartType.FRAME if is_sep else VactubeGenPartType.ALL),
             build_rope,
             (center, ctx.pack.fsys),
         )
-        modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props, StaticPropFlags.NONE))
+        modellist = [ModelContainer(model_name, light_origin, coll_data, seg_props, StaticPropFlags.NONE)]
 
         if is_sep:
             # Generate the glass only
@@ -1254,7 +1266,6 @@ async def compile_rope(
                 vac_node_mod.SPLINES.append(vac_node_mod.Spline(center, track))
 
         # Compute the flags. Just pick a random node, from above.
-        conf = node.config
         flags = StaticPropFlags.NONE
         if conf.prop_light_bounce:
             flags |= StaticPropFlags.BOUNCED_LIGHTING
@@ -1265,7 +1276,6 @@ async def compile_rope(
         if conf.prop_no_shadows:
             flags |= StaticPropFlags.NO_SHADOW
 
-        # is_sep is only true for separate vactube models.
         for m in modellist:
             new_flags = flags | m.flags  # For the glass, we force shadows off.
             leafs = compute_visleafs(m.coll_data, ctx.bsp.vis_tree())
@@ -1274,7 +1284,7 @@ async def compile_rope(
                 origin=center,
                 angles=Angle(0, 270, 0),
                 scaling=1.0,
-                visleafs=leafs,
+                visleafs=leafs,  # TODO: compute individual leafs here?
                 solidity=6 if has_coll else 0,
                 flags=new_flags,
                 tint=Vec(conf.prop_rendercolor),
@@ -1291,7 +1301,7 @@ async def compile_rope(
                     origin=center + seg_prop.offset,
                     angles=(seg_prop.orient @ Matrix.from_yaw(270)).to_angle(),
                     scaling=1.0,
-                    visleafs=leafs,  # TODO: compute individual leafs here?
+                    visleafs=leafs,
                     solidity=6,
                     flags=new_flags,
                     tint=Vec(conf.prop_rendercolor),
