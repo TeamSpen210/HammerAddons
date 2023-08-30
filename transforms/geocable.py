@@ -230,9 +230,15 @@ class Config:
             else:
                 material = 'models/props_backstage/vacum_pipe_glass'
 
-            if conv_bool(ent['usebezier']):
-                interp_type = InterpType.BEZIER
-            else:
+            try:
+                interp_type = InterpType(int(ent['positioninterpolator', '1']))
+            except ValueError:
+                LOGGER.warning(
+                    'Unknown interpolation type "{}" '
+                    'for vactube at {}!',
+                    ent['interpolationtype'],
+                    ent['origin'],
+                )
                 interp_type = InterpType.CATMULL_ROM
 
             if conv_bool(ent['vac_separateglass']):

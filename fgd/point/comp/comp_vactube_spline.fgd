@@ -17,6 +17,15 @@
 	segments(integer) : "Segments" : 2 : "Number of nodes to generate for this. Higher values make smoother tubes, but produce more faces."
 	collisions(boolean) : "Enable Collisions" : 1 : "Should a collision mesh should be generated?"
 	usebezier(boolean) : "Use Bezier Curve Generation" : 0 : "Should this tube be generated as a bezier curve?"
+	positioninterpolator[engine](integer): "Type": 1
+	positioninterpolator(choices) : "Type" : 1 : "How to interpolate the tube. Spline uses a spline curve, which smoothly blends between points. Bezier is an alternate smooth curve, but the visual in Hammer will be incorrect." =
+		[
+		// These all function, but are kinda pointless.
+		// 0: "Straight"
+		1: "Spline Curve"
+		// 2: "Catenary"
+		3: "Bezier"
+		]
 	vac_separateglass(boolean) : "Separate Glass and Frame" : 0 : "Separating glass and frame can help with transparency sorting issue"
 
 	// A selection of prop_static's keyvalues, excluding some that are rather irrelevant.
@@ -46,5 +55,4 @@
 	enablelightbounce[since_CSGO](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
 	
 	movespeed(integer) readonly: "Speed (unused)" : 1 : "This needs to be greater than zero to show the preview lines."
-	positioninterpolator(integer) readonly : "Rope Mode" : 1 : "Needs to be set to '1' to produce the spline curve preview."
 	]
