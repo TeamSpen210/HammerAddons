@@ -93,14 +93,6 @@ class SegPropOrient(Enum):
     RAND_YAW = 'rand_yaw'
     RAND_FULL = 'rand'
 
-class ModelContainer:
-    def __init__(self,mn,lo,cd,sp,sh):
-        self.model_name = mn
-        self.light_origin = lo
-        self.coll_data = cd
-        self.seg_props = sp
-        self.noshadow = sh
-
 @attrs.define
 class RopePhys:
     """Holds the data for move_rope simulation."""
@@ -148,7 +140,8 @@ VAC_SEG_CONF_SET = frozenset({VAC_SEG_CONF})
 VAC_RADIUS = 45.0
 VAC_COLL_RADIUS = 52.0
 VAC_MAT = 'models/props_backstage/vacum_pipe'
-
+# Pos/radius pairs defining cylinders, for visleaf computation.
+CollData = List[Tuple[Vec, float, Vec, float]]
 
 @attrs.define
 class SegProp:
@@ -156,6 +149,16 @@ class SegProp:
     model: str
     offset: Vec
     orient: Matrix
+
+
+@attrs.define
+class ModelContainer:
+    """Temporary container for static props generated."""
+    model_name: str
+    light_origin: Vec
+    coll_data: CollData
+    seg_props: List[SegProp]
+    flags: StaticPropFlags
 
 
 @attrs.frozen
@@ -417,7 +420,7 @@ async def build_rope(
     temp_folder: Path,
     mdl_name: str,
     args: Tuple[Vec, FileSystem],
-) -> Tuple[Vec, List[Tuple[Vec, float, Vec, float]], List[SegProp], List[List[Vec]]]:
+) -> Tuple[Vec, CollData, List[SegProp], List[List[Vec]]]:
     """Construct the geometry for a rope. nodes_and_conn is saved into file system to check if the model needs to be recompiled. args is for information that can be lost after the compile"""
     LOGGER.info('Building rope {}', mdl_name)
     ents, connections, vacgentype = nodes_and_conn
@@ -1230,7 +1233,7 @@ async def compile_rope(
             build_rope,
             (center, ctx.pack.fsys),
         )
-        modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props, False))
+        modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props, StaticPropFlags.NONE))
 
         if is_sep:
             # Generate the glass only
@@ -1239,7 +1242,7 @@ async def compile_rope(
                 build_rope,
                 (center, ctx.pack.fsys),
             )
-            modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props, True))
+            modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props, StaticPropFlags.NO_SHADOW))
 
         if vac_points and vac_node_mod is not None:
             for track in vac_points:
@@ -1259,10 +1262,9 @@ async def compile_rope(
         if not is_sep and conf.prop_no_shadows:
             flags |= StaticPropFlags.NO_SHADOW
 
-        # is_sep is only true for separate vactube models. 
-        # m.noshadow is only true for the glass model
+        # is_sep is only true for separate vactube models.
         for m in modellist:
-            new_flags = flags | StaticPropFlags.NO_SHADOW if m.noshadow else flags
+            new_flags = flags | m.flags  # For the glass, we force shadows off.
             leafs = compute_visleafs(m.coll_data, ctx.bsp.vis_tree())
             ctx.bsp.props.append(StaticProp(
                 model=m.model_name,
