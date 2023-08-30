@@ -25,7 +25,7 @@ from srctools.bsp import BSP, BSP_LUMPS
 from srctools.filesys import ZipFileSystem
 from srctools.packlist import PackList
 
-from hammeraddons import __version__ as version_haddons, config, propcombine
+from hammeraddons import __version__ as version_haddons, config, propcombine, mdl_compiler
 from hammeraddons.bsp_transform import run_transformations
 from hammeraddons.move_shim import install as install_depmodule_hook
 
@@ -74,6 +74,11 @@ async def main(argv: List[str]) -> None:
         help="For testing purposes, allow skipping saving the BSP.",
     )
     parser.add_argument(
+        "--regenerate",
+        action="store_true",
+        help="Force models and similar resources to be regnerated.",
+    )
+    parser.add_argument(
         '-v', '--verbose',
         action="store_true",
         help="Show DEBUG level messages.",
@@ -111,6 +116,8 @@ async def main(argv: List[str]) -> None:
                 break
         else:
             LOGGER.warning('Could not set stdout handler to DEBUG mode.')
+
+    mdl_compiler.force_regen = args.regenerate
 
     # The path is the last argument to the compiler.
     # Hammer adds wrong slashes sometimes, so fix that.
