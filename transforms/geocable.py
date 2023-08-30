@@ -226,7 +226,6 @@ class Config:
             else:
                 interp_type = InterpType.CATMULL_ROM
 
-            
             if conv_bool(ent['vac_separateglass']):
                 vac_separate_glass = VactubeGenType.SEPARATE
             else:
@@ -1197,12 +1196,18 @@ async def compile_rope(
     """Compile a single rope group."""
     for ent in dyn_ents:
         origin = Vec.from_str(ent['origin'])
-        dyn_nodes = frozenset({
+        dyn_nodes: FrozenSet[NodeEnt] = frozenset({
             node.relative_to(origin)
             for node in nodes
         })
+        if any(node.config.vac_separate_glass for node in nodes):
+            LOGGER.warning(
+                "Vactube at {} is requesting separate models, which is not allowed for "
+                "prop_dynamic. Ignoring.",
+                origin,
+            )
         model_name, _ = await compiler.get_model(
-            (dyn_nodes, frozenset(connections)),
+            (dyn_nodes, frozenset(connections), VactubeGenPartType.ALL),
             build_rope,
             (origin, ctx.pack.fsys),
         )
