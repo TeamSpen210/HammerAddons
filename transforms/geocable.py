@@ -196,7 +196,7 @@ class Config:
     prop_fade_min_dist: float
     prop_fade_max_dist: float
     prop_fade_scale: float
-    vac_separate_glass: bool
+    vac_separate_glass: VactubeGenType
 
     @staticmethod
     def _parse_min(ent: Entity, keyvalue: str, minimum: Number, message: str) -> Number:
@@ -296,6 +296,7 @@ class Config:
             u_min = abs(conv_float(ent['u_min'], 0.0))
             u_max = abs(conv_float(ent['u_max'], 1.0))
             flip_uv = conv_bool(ent['mat_rotate'])
+            vac_separate_glass = VactubeGenType.COMBINE
 
             try:
                 seg_props = name_to_segprops[ent['bunting'].casefold()]
