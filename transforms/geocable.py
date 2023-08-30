@@ -13,7 +13,6 @@ from typing import (
 
 import attrs
 import trio
-from dataclasses import dataclass
 
 from srctools import (
     logger, conv_int, conv_float, conv_bool,
