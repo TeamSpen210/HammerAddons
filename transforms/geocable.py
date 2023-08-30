@@ -797,7 +797,7 @@ def interpolate_all(nodes: Set[Node]) -> None:
         for a, b in zip(points, points[1:]):
             a.next = b
             b.prev = a
-        points[0].prev = node1
+        points[0].prev = node1 # if segment count is low (like 2) for bezier curve, this will cause error. TODO: Fix this?
         points[-1].next = node2
         segments.append(points)
 
@@ -1284,7 +1284,7 @@ async def compile_rope(
             flags |= StaticPropFlags.NO_SHADOW
 
         for m in modellist:
-            new_flags = flags | m.flags  # For the glass, we force shadows off.
+            new_flags = flags | m.flags  # For the glass, we force shadows off 
             leafs = compute_visleafs(m.coll_data, ctx.bsp.vis_tree())
             ctx.bsp.props.append(StaticProp(
                 model=m.model_name,
