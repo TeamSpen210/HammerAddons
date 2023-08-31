@@ -14,7 +14,7 @@ import sys
 from srctools import fgd
 from srctools.fgd import (
     FGD, AutoVisgroup, EntAttribute, EntityDef, EntityTypes, Helper, HelperExtAppliesTo,
-    HelperWorldText, KVDef, ValueTypes, match_tags, validate_tags,
+    HelperTypes, HelperWorldText, KVDef, ValueTypes, match_tags, validate_tags,
 )
 from srctools.filesys import RawFileSystem
 
@@ -920,7 +920,7 @@ def action_export(
                                 key,
                                 ', '.join([typ.value for typ in types])
                             ))
-                        # Pick the one with shortest tags arbitrarily.
+                        # Pick the one with the shortest tags arbitrarily.
                         _, value = min(
                             tag_map.items(),
                             key=lambda t: len(t[0]),
@@ -1027,31 +1027,37 @@ def action_export(
     print('Applying helpers to child entities and optimising...')
     for ent in fgd.entities.values():
         # Merge them together.
-        helpers: List[Helper] = []
+        base_helpers: List[Helper] = []
         for base in ent.bases:
             assert isinstance(base, EntityDef)
-            helpers.extend(base.helpers)
-        helpers.extend(ent.helpers)
+            base_helpers.extend(base.helpers)
 
-        # Then optimise this list.
-        ent.helpers.clear()
-        for helper in helpers:
-            if helper in ent.helpers:  # No duplicates
+        # Then optimise this list, by re-assembling in reverse.
+        rev_helpers: List[Helper] = []
+        overrides: Set[HelperTypes] = set()
+
+        # Add the entity's own helpers to the end, but do not override within that.
+        for helper in reversed(ent.helpers):
+            if helper in rev_helpers:  # No duplicates here.
                 continue
-            # Strip applies-to helper.
-            if isinstance(helper, HelperExtAppliesTo):
+            if helper.IS_EXTENSION:
                 continue
 
-            # For each, check if it makes earlier ones obsolete.
-            overrides = helper.overrides()
-            if overrides:
-                ent.helpers[:] = [
-                    helper for helper in ent.helpers
-                    if helper.TYPE not in overrides
-                ]
+            # For each, it may make earlier definitions obsolete.
+            overrides.update(helper.overrides())
+            # But the last of any type is always included.
+            rev_helpers.append(helper)
 
-            # But it itself should be added to the end regardless.
-            ent.helpers.append(helper)
+        # Add in all the base entity helpers.
+        for helper in reversed(base_helpers):
+            # No duplicates or overridden helpers.
+            if helper in rev_helpers or helper.TYPE in overrides:
+                continue
+            if helper.IS_EXTENSION:
+                continue
+            overrides.update(helper.overrides())
+            rev_helpers.append(helper)
+        ent.helpers = rev_helpers[::-1]
 
     print('Culling unused bases...')
     used_bases: Set[EntityDef] = set()
@@ -1071,7 +1077,7 @@ def action_export(
                 del fgd.entities[classname]
                 continue
             else:
-                # Helpers aren't inherited, so this isn't useful anymore.
+                # Helpers aren't inherited, so this isn't useful any more.
                 ent.helpers.clear()
         # Cull all base classes we don't use.
         # Ents that inherit from each other always need to exist.
