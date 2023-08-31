@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityPhysics, SRCModel) 
+@PointClass base(BasePropPhysics, SRCModel) 
 	appliesto(P2) 
 	studioprop() 
 = prop_exploding_futbol: "The bombs used by Wheatley."
@@ -8,9 +8,11 @@
 	skin(integer) : "Skin" : 0 : "Skin on the model to use."
 
 	explodeontouch(boolean) : "Explode on touch" : 1 : "If the bomb should explode when it touches something."
+	// Keyvalues dump includes ShouldRespawn and SpawnerName keyvalues but they don't seem to work
 
 	// Inputs
 	input Explode(void) : "Explodes the bomb."
+	input Dissolve(void) : "Fizzles the bomb. Doesn't fire the OnFizzled output."
 
 	@resources // Assumed
 		[

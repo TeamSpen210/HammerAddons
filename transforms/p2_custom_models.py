@@ -19,12 +19,23 @@ SUPPORTED_ENTS = [
     "npc_personality_core",
     "prop_exploding_futbol",
     "prop_glass_futbol",
+    "hot_potato",
 
     # Not supported:
     # prop_testchamber_door - reverses animations
     # prop_tractor_beam - breaks animations
     # prop_linked_portal_door - breaks animations
     # prop_monster_box - swaps models dynamically
+
+    # Not tested:
+    # prop_glass_futbol_spawner
+    # hot_potato_spawner
+    # prop_portal_stats_display
+    # prop_rocket_tripwire
+    # prop_telescopic_arm
+    # prop_scaled_cube (Sixense)
+    # prop_contraption_cube (Edu)
+    # prop_contraption_cube_button (Edu)
 ]
 
 @trans('Portal 2 Custom Models')
