@@ -7,7 +7,7 @@
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Transmit to client (respect PVS)" : 0
-		2: "Always transmit to client (ignore PVS)" : 0
+		2: "Always transmit to client (ignore PVS)" : 0 [since_L4D2, gmod]
 		]
 
 	@resources []
