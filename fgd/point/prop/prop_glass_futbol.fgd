@@ -5,6 +5,7 @@
 	[
 	model[-srctools](studio) : "[H] Model" : "models/props/futbol.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
 	model[+srctools](studio) : "[HA] Custom Model" : "models/props/futbol.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	skin(integer) : "Skin" : 0 : "Skin on the model to use."
 
 	spawnername(target_destination) : "Spawner Name" : : "Name of prop_glass_futbol_spawner for this futbol to respawn in once broken."
 

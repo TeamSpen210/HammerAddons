@@ -26,6 +26,8 @@
 	TripwireAimTarget[P2](target_destination) : "Tripwire Aim Target" : : "In tripwire mode, the entity to aim at."
 
 	_sphere_radius[!engine](integer) readonly : "<Maximum Range>" : 8192 : "How far the turret will be able to see targets. Always 8192, but this keyvalue is needed to display the preview."
+	// Hammer automatically adds this when selecting a model, this prevents it from appearing as invalid
+	skin[P2](integer) readonly : "<Skin>" : 0 : "Skin on the model to use. The game overrides this based on the rocket turret's firing state, so changing it here has no effect."
 
 	// Inputs
 	input Toggle(void) : "Toggles between activated and deactivated states."

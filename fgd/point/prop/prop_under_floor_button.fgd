@@ -8,6 +8,8 @@
 
 	model[-srctools](studio) : "[H] Model" : "models/props_underground/underground_floor_button.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
 	model[+srctools](studio) : "[HA] Custom Model" : "models/props_underground/underground_floor_button.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	// Hammer automatically adds this when selecting a model, this prevents it from appearing as invalid
+	skin(integer) readonly : "<Skin>" : 0 : "Skin on the model to use. The game overrides this based on the button's pressed state, so changing it here has no effect."
 
 	// Outputs
 	output OnPressedBlue(void) : "Called in Coop when the button has been pressed by ATLAS."
