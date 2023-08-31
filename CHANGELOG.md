@@ -16,6 +16,7 @@
 * Add an option to allow the sources for compiled models to be preserved.
 * #210: Add `OnFinished` output to `comp_numeric_transition`.
 * #10: The center of the axis helper used for sprites can now be clicked on.
+* #232: Readd missing `OnFizzled` output on `prop_weighted_cube`.
 * Add an option to specify the maximum distance for automatic combined props.
 * Allow combining models containing `$collisionjoints`.
 * Add missing `bunting` keyvalue to `comp_prop_cable`.
