@@ -2,7 +2,7 @@
 import subprocess
 from collections import defaultdict
 import sys
-from pathlib import Path, PurePosixPath
+from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Tuple, Dict, List, Iterable, Optional
 import math
@@ -231,7 +231,7 @@ async def vactube_transform(ctx: Context) -> None:
             mesh.export(mesh_file)
 
         with open(temp_dir + '/prop.qc', 'w') as qc_file:
-            qc_file.write(QC_TEMPLATE.format(path=PurePosixPath(anim_mdl_name)))
+            qc_file.write(QC_TEMPLATE.format(path=anim_mdl_name.as_posix()))
 
             for i, anim in enumerate(all_anims):
                 anim.name = anim_name = f'anim_{i:03x}'
@@ -275,7 +275,7 @@ async def vactube_transform(ctx: Context) -> None:
         targetname='_vactube_temp_mover',
         angles='0 270 0',
         origin='-16384 0 1024',
-        model=str('models' / PurePosixPath(anim_mdl_name)),
+        model=Path('models', anim_mdl_name).as_posix(),
         rendermode=10,
         solid=0,
         spawnflags=64 | 256,  # Use Hitboxes for Renderbox, collision disabled.
