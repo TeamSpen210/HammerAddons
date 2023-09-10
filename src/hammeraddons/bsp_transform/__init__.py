@@ -201,7 +201,7 @@ async def run_transformations(
                 # If the entity script defines either, running the second script will make the
                 # chainer pick it up again, calling the function twice. So edit the script to
                 # first blank out the functions.
-                code = 'OnPostSpawn<-Precache<-@()null\n' + code
+                code = 'OnPostSpawn<-Precache<-function(){}\n' + code
             init_scripts.append(pack.inject_vscript(code.replace('`', '"')))
             ent['vscripts'] = ' '.join(init_scripts)
 
