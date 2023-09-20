@@ -2,6 +2,7 @@
 # Version (dev)
 * #163: Added `comp_adv_output`, which allows adding a single output with complex behaviour.
 * Added `comp_case`, a version of `logic_case` that is collapsed into callers like `comp_relay`.
+* Vactube props can now be generated with glass/frames seperately, and with bezier curves instead of catmul-romm. (Authored by [asd417](https://github.com/asd417)) 
 * Added `--verbose` parameter, for showing DEBUG messages.
 * Added `--regenerate` parameter, to force all models to be regenerated from scratch.
 * Improve description of `wait` and `OnTrigger` options in `trigger_multiple`.
