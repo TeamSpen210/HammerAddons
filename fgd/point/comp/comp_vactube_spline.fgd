@@ -16,7 +16,6 @@
 	]
 	segments(integer) : "Segments" : 2 : "Number of nodes to generate for this. Higher values make smoother tubes, but produce more faces."
 	collisions(boolean) : "Enable Collisions" : 1 : "Should a collision mesh should be generated?"
-	usebezier(boolean) : "Use Bezier Curve Generation" : 0 : "Should this tube be generated as a bezier curve?"
 	positioninterpolator[engine](integer): "Type": 1
 	positioninterpolator(choices) : "Type" : 1 : "How to interpolate the tube. Spline uses a spline curve, which smoothly blends between points. Bezier is an alternate smooth curve, but the visual in Hammer will be incorrect." =
 		[
