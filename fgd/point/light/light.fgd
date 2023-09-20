@@ -1,9 +1,7 @@
-@PointClass base(BaseEntityPoint, BaseLight)
+@PointClass base(BaseEntityPoint, BaseLight, LightPattern, LightShadows)
 	autovis(Lights, Omnidirectional Light)
-	light() 
-	iconsprite("editor/light.vmt") 
-	sphere(_distance) 
-	line(255 255 255, targetname, target)
+	light()
+	iconsprite("editor/light.vmt")
 = light: "An invisible omnidirectional lightsource."
 	[
 	spawnflags(flags)  =

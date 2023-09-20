@@ -53,6 +53,12 @@
 	movesoundmintime(float) : "Min move sound interval" : 0 : "Minimum interval at which to play the move ping sound."
 	movesoundmaxtime(float) : "Max move sound interval" : 0 : "Maximum interval at which to play the move ping sound."
 
+	// Not in the default FGD post-Left 4 Dead, but seems to exist in engine
+	manualspeedchanges(boolean) : "Manual Train Speed" : 0 : "Train Speed is controlled through IO, handles accel, decel times."
+
+	manualaccelspeed(float) : "Manual Accel Speed" : 0 : "Units per second to accelerate to target speed."
+	manualdecelspeed(float) : "Manual Decel Speed" : 0 : "Units per second to decelerate to target speed."
+
 	// Inputs
 	input SetSpeed(float) : "Set the speed of the train, as a ratio of max speed [0, 1]"
 	input SetSpeedDir(float) : "Set the speed of the train, as a ratio of max speed. Negative values reverse the direction [-1, 1]"
@@ -63,4 +69,28 @@
 	input Resume(void) : "Resume the train moving in the current direction after it was stopped via the 'Stop' or 'Toggle' input."
 	input Reverse(void) : "Reverse the direction of the train."
 	input Toggle(void) : "Toggle the train between start and stop."
+
+	// Added to 2007 post-release for TF2 Payload mode, didn't make it into later games
+	input TeleportToPathTrack[until_L4D](string) : "Teleport train to the designated path track. This can be in a new path."
+	input SetSpeedForwardModifier[until_L4D](float) : "Applies the given modifier to all forward speeds. [0, 1]"
+	
+	// This specific input did get ported in L4D2
+	input SetSpeedDirAccel[!L4D](float) : "Accel/Decel to the specified speed, as a ratio of max speed. Negative values reverse the direction [-1, 1]"
+
+	// Added in Portal 2, Gmod backported
+	input TeleportToPathNode[since_P2, GMod](string) : "Teleport to a destination and stop there. This can be in a new path."
+	input MoveToPathNode[since_P2, GMod](string) : "Start moving to a destination and stop when you get there. This must be in the same path."
+	input LockOrientation[since_P2, GMod](void) : "Lock the current orientation of the train."
+	input UnlockOrientation[since_P2, GMod](void) : "Unlock the current orientation of the train."
+	input SetMaxSpeed[since_P2, GMod](float) : "Set a new max speed for the train."
+
+	input SetVelocityType[MESA](integer) : ""
+	input EnableControls[MESA](void) : ""
+	input DisableControls[MESA](void) : ""
+
+	// Outputs
+	output OnStart(void) : "Fired when the train starts moving in either direction."
+	// The default FGD mislabels this as OnNext
+	output OnNextPoint(string) : "Fires continuously every frame when the train is moving to its next destination."
+	output OnArrivedAtDestinationNode[since_P2, GMod](void) : "Fired when this train arrives at a destination that was specified by the MoveToPathNode Input."
 	]

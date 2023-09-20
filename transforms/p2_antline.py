@@ -48,15 +48,15 @@ def comp_antlines(ctx: Context):
         # These are the names, not the ents themselves.
 
         # Or brush ents holding overlays.
-        ind_overlays = set()  # type: Set[str]
-        ind_toggles = set()  # type: Set[str]
+        ind_overlays: Set[str] = set()
+        ind_toggles: Set[str] = set()
         # These need the right inputs.
-        ind_panel_tim = set()  # type: Set[str]
-        ind_panel_check = set()  # type: Set[str]
+        ind_panel_tim: Set[str] = set()
+        ind_panel_check: Set[str] = set()
 
         # Panels without an indicator set - we can use
         # these instead of a texturetoggle.
-        unused_panels = []  # type: List[Entity]
+        unused_panels: List[Entity] = []
 
         for ind_ent in ctx.vmf.search(ind_name):
             cls = ind_ent['classname']

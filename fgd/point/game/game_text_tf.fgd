@@ -412,8 +412,9 @@
 	display_to_team(choices) : "Audience" : 0 =
 		[
 		0: "Everyone"
-		2: "Red Team Only"
-		3: "Blue Team Only"
+		1: "Spectators Only" [+complete]
+		2: "RED Team Only"
+		3: "BLU Team Only"
 		]
 
 	background[engine](integer) : "Background Panel Color" : 0

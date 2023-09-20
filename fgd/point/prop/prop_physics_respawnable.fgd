@@ -1,4 +1,4 @@
-@PointClass base(prop_physics) appliesto(Mesa)
+@PointClass base(prop_physics)
 	studioprop()
 = prop_physics_respawnable : "This class is the same as prop_physics, except it respawns after it breaks"
 	[

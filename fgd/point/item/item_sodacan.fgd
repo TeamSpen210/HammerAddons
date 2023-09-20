@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityAnimating)
+	appliesto(+complete)
 	studio("models/can.mdl") = item_sodacan : "HL1 soda can."
 	[
 	@resources

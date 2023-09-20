@@ -1,9 +1,10 @@
 @PointClass base(BaseEntityPoint, PlayerClass, TeamNum, EnableDisable) 
 	autovis(Point Entities, Globals, Player Spawn)
 	appliesto(TF2) 
-	studio("models/editor/playerstart.mdl") 
+	studio()
 	line(255 0 0, targetname, round_redspawn)
 	line(0 255 0, targetname, round_bluespawn)
+	line(255 255 255, targetname, controlpoint)
 = info_player_teamspawn: "This entity marks the spawn point for Team Fortress players."
 	[
 	controlpoint(target_destination) : "Associated Control Point" : : "The team_control_point associated with this spawn. " +
@@ -39,8 +40,38 @@
 		256: "Engineer" : 1
 		]
 
-	round_bluespawn(target_destination) : "Blue spawn for round" : : "Blue spawn point when the associated round is being played."
-	round_redspawn(target_destination) : "Red spawn for round" : : "Red spawn point when the associated round is being played."
+	round_bluespawn(target_destination) : "BLU spawn for round" : : "BLU spawn point when the associated round is being played."
+	round_redspawn(target_destination) : "RED spawn for round" : : "RED spawn point when the associated round is being played."
+
+	skin[!engine](choices) : "[H] Team" : 0 : "Team color to display in Hammer" =
+	[
+		0 : "RED"
+		1 : "BLU"
+	]
+
+	model[engine](string) : "Model" : : "Doesn't exist in engine, this is a hack to prevent auto packing"
+	model(choices) : "[H] Model" : "models/editor/playerstart_tf.mdl" : "Model to display in Hammer" =
+	[
+		"models/editor/playerstart_tf.mdl" : "Player Start"
+		"models/player/scout.mdl" : "Scout"
+		"models/player/soldier.mdl" : "Soldier"
+		"models/player/pyro.mdl" : "Pyro"
+		"models/player/demo.mdl" : "Demoman"
+		"models/player/heavy.mdl" : "Heavy"
+		"models/player/engineer.mdl" : "Engineer"
+		"models/player/medic.mdl" : "Medic"
+		"models/player/sniper.mdl" : "Sniper"
+		"models/player/spy.mdl" : "Spy"
+		"models/bots/scout/bot_scout.mdl" : "Robot Scout"
+		"models/bots/soldier/bot_soldier.mdl" : "Robot Soldier"
+		"models/bots/pyro/bot_pyro.mdl" : "Robot Pyro"
+		"models/bots/demo/bot_demo.mdl" : "Robot Demoman"
+		"models/bots/heavy/bot_heavy.mdl" : "Robot Heavy"
+		"models/bots/engineer/bot_engineer.mdl" : "Robot Engineer"
+		"models/bots/medic/bot_medic.mdl" : "Robot Medic"
+		"models/bots/sniper/bot_sniper.mdl" : "Robot Sniper"
+		"models/bots/spy/bot_spy.mdl" : "Robot Spy"
+	]
 	
 	input RoundSpawn(void) : "Re-find control points."
 

@@ -168,7 +168,7 @@ function make_cube() {
 		cargo = EntSet(cur_time + 3.0, mover, visual);
 		::vactube_objs.append(cargo);
 		// For tracking spawning, set this.
-		printl("Vactube ent count: " + (::vactube_objs.len() * 2).tostring());
+		// printl("Vactube ent count: " + (::vactube_objs.len() * 2).tostring());
 	} else {
 		// Teleport to the right position.
 		cargo.mover.SetAbsOrigin(self.GetOrigin());

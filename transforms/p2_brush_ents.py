@@ -54,7 +54,7 @@ def comp_trigger_coop(ctx: Context):
             )
             # Only keep OnChangeToAllTrue outputs, and remove
             # them once they've fired.
-            for out in list(manager):
+            for out in list(manager.outputs):
                 if out.output.casefold() == 'onchangetoalltrue':
                     out.only_once = True
                 else:

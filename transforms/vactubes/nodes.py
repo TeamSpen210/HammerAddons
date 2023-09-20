@@ -205,10 +205,11 @@ class Spawner(Node):
         super().__init__(ent)
         self.group = ent['group'].casefold().strip()
         self.speed = srctools.conv_float(ent['speed'], 800.0)
-        self.is_auto = srctools.conv_bool(ent['timer'])
+        timer_int = srctools.conv_int(ent['timer'], 1)
+        self.is_auto = timer_int != 0
         self.seed = ent['seed']
         if not self.seed:
-            # Generate a new seed, and notify the user so they can copy it down
+            # Generate a new seed, and notify the user, so they can copy it down
             # if they want to use it themselves.
             self.seed = format(random.getrandbits(64), '08X')
         LOGGER.info('Spawner "{}" using random seed "{}"', self.name, self.seed)
@@ -216,8 +217,10 @@ class Spawner(Node):
         if self.is_auto:
             self.time_min = srctools.conv_float(ent['time_min'], 0.5)
             self.time_max = srctools.conv_float(ent['time_max'], 1.0)
+            self.timer_start_disabled = timer_int == 2
         else:
             self.time_min = self.time_max = 0.0
+            self.timer_start_disabled = True
 
         # Strip these keyvalues.
         del ent['speed'], ent['timer'], ent['time_min'], ent['time_max']

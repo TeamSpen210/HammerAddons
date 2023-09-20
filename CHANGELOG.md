@@ -1,5 +1,35 @@
 
 # Version (dev)
+* #163: Added `comp_adv_output`, which allows adding a single output with complex behaviour.
+* Added `comp_case`, a version of `logic_case` that is collapsed into callers like `comp_relay`.
+* Added `--verbose` parameter, for showing DEBUG messages.
+* Added `--regenerate` parameter, to force all models to be regenerated from scratch.
+* Improve description of `wait` and `OnTrigger` options in `trigger_multiple`.
+* Added ability to specify alt skins when using `comp_prop_cable_dynamic`.
+* Fix `comp_precache_sound` not handling sound characters at the start of raw filenames.
+* Allow `comp_vactube_start` to be set to have a timer which starts disabled.
+* If required, add various QC flags like `$mostlyopaque` to propcombined props.
+* Limit the size of propcombined groups to avoid hitting vertex limits.
+* Weapon scripts are now packed along with the models/sounds they use.
+* Prevent automatically packing models specified only as Hammer previews in various entities.
+* Fix propcombine sometimes removing collisions entirely from component props.
+* Add an option to allow the sources for compiled models to be preserved.
+* #210: Add `OnFinished` output to `comp_numeric_transition`.
+* #10: The center of the axis helper used for sprites can now be clicked on.
+* #232: Readd missing `OnFizzled` output on `prop_weighted_cube`.
+* Add an option to specify the maximum distance for automatic combined props.
+* Allow combining models containing `$collisionjoints`.
+* Add missing `bunting` keyvalue to `comp_prop_cable`.
+* Areaportal windows will automatically force the brushes used to nonsolid, and clear some physics data. 
+* Propcombine will no longer merge props found in different areaportal areas. This allows props on 
+  the outside of a building to be culled when inside, or vice versa.
+* Restore missing projected texture shadow keyvalues.
+* Automatically set the "transmit to client" flag for `info_target`s used as particle system destinations.
+* Change `sky_camera` model to be more visible with `tools/toolsskybox` behind it.
+* Fix #192: Use both specified model and cube type field to find matching cubes for vactubes.
+* Set Precache/OnPostSpawn in generated VScript, to prevent double-firing functions already in Entity Scripts.
+* Allow physboxes to completely override their mass.
+* The postcompiler can now automatically handle custom models for various Portal 2 entities.
 
 --------------------
 
@@ -58,7 +88,7 @@
 * Particle systems will now be detected and packed along with their dependencies. 
   This needs configuration in the config file, since different games use different filenames.
 * Optionally, the postcompiler can collapse and remove `func_instance_io_proxy` from maps entirely to save ents.
-* Add comp_sequential_call: finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order.
+* Add `comp_sequential_call`: finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order.
 * Add `comp_flicker`: fires on/off and skin inputs repeatedly to simulate a flicker-on effect.
 * `comp_scriptvar_setter` can now set global variables also.
 * `prop_paint_bomb` will now show its collision mesh (futbols).

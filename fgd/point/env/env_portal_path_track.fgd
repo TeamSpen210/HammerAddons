@@ -4,14 +4,7 @@
 = env_portal_path_track: "An unused variant of path_track, presumably intended for Unstationary Scaffolds. " +
 	"It produces a beam between each node, as well as (somewhat buggy) endpoint effects which are based on the entity's angles."
 	[
-	track_beam_scale(float) : "Scale Track FX" : 0 : "The amount to scale the track FX size. Appears non-functional."
-	end_point_scale(float) : "Scale Endpoint FX" : 0 : "The amount to scale the endpoint FX size. Appears non-functional."
-	end_point_fadeout(float) : "Fade Out Endpoint" : 0 : "Amount of time to fade out the endpoint FX. Appears non-functional."
-	end_point_fadein(float) : "Fade In Endpoint" : 0 : "Amount of time to fade in the endpoint FX. Appears non-functional."
-
-	// Inputs
+	// Most of the keyvalues and inputs in the original FGD are disabled in code
 	input ActivateTrackFX(void) : "Enable the track beam FX."
-	input ActivateEndPointFX(void) : "Enable the endpoint FX. Appears non-functional."
 	input DeactivateTrackFX(void) : "Disable the track beam FX."
-	input DeactivateEndPointFX(void) : "Disable the endpoint FX. Appears non-functional."
 	]

@@ -18,6 +18,8 @@
 		"friendly_encounter": "Friendly encounter sequence (lower weapons, etc.)"
 		"gordon_invulnerable": "Player is invulnerable"
 		"no_seagulls_on_jeep": "Don't spawn seagulls on the jeep"
+		"citizens_passive": "Non-rebel citizens, doesn't work exactly like 'Gordon pre-criminal'"
+		"gordon_protect_driver": "Protect driver. Changes damage when in a vehicle and being crushed."
 		"ep2_alyx_injured": "Episode 2: Alyx injured" [ep2]
 		"ep_alyx_darknessmode": "Episode 1: Alyx darkness mode" [ep1]
 		"hunters_to_run_over": "Ep2 Counter: Hunters to run over before they dodge" [ep2]
@@ -26,7 +28,6 @@
 
 	globalstate[P2, -INFRA](choices) : "Global State to Set" =
 		[
-		"portalgun_nospawn": "Spawn without Portalgun"
 		"no_pinging_blue": "Prevent Pinging ATLAS"
 		"no_pinging_orange": "Prevent Pinging P-Body"
 		"no_taunting_blue": "Prevent Taunting ATLAS"

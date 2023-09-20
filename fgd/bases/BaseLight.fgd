@@ -1,32 +1,14 @@
-@BaseClass 
+@BaseClass
 	sphere(_fifty_percent_distance)
 	sphere(_zero_percent_distance)
 	sphere(_distance)
 	color(255 255 0)
-= BaseLight
+= BaseLight: "Parameters common to light and light_spot."
 	[
 	_light(color255) : "Brightness" : "255 255 255 200" : "Color and brightness of the light."
 	_lightHDR(color255) : "BrightnessHDR" : "-1 -1 -1 1"
 	_lightscaleHDR(float) : "BrightnessScaleHDR" : "1" : "Amount to scale the light by when compiling for HDR."
 
-	style[engine](integer) : "Appearance" : 0
-	style(choices) : "Appearance" : 0 =
-	[
-		0 : "Normal"
-		10: "Fluorescent flicker"
-		2 : "Slow, strong pulse"
-		11: "Slow pulse, noblack"
-		5 : "Gentle pulse"
-		1 : "Flicker A"
-		6 : "Flicker B"
-		3 : "Candle A"
-		7 : "Candle B"
-		8 : "Candle C"
-		4 : "Fast strobe"
-		9 : "Slow strobe"
-		12 : "Underwater light mutation"
-	]
-	pattern(string) : "Custom Appearance" : "" : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 	_constant_attn(string)	: "Constant" : "0"
 	_linear_attn(string)	: "Linear" : "0"
 	_quadratic_attn(string)	: "Quadratic" : "1"
@@ -35,19 +17,4 @@
 	_hardfalloff(integer) : "Hard Falloff" : 0 : "If set, causes lights to fall to exactly zero beyond the zero percent distance. May cause unrealistic lightijng if not used carefully."
 
 	_distance(integer) : "Maximum Distance" : 0 : "The distance that light is allowed to cast."
-
-	// GMOD: GOPORT
-	_castentityshadow[engine](boolean)
-	_castentityshadow[GMod](Choices) : "Cast entity shadows" : 0 : "Objects illuminated by this light will cast a directional shadow." =
-		[
-		0 : "Don't affect entity shadow angles"
-		1 : "Affect entity shadow angles"
-		]
-
-	// Inputs
-	input TurnOn(void) : "Turn the light on."
-	input TurnOff(void) : "The the light off."
-	input Toggle(void) : "Toggle the light's current state."
-	input SetPattern(string) : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
-	input FadeToPattern(string) : "Fades from first value in old pattern, to first value in the new given pattern. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 	]

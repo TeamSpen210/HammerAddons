@@ -4,4 +4,8 @@
 	autovis(Weapons, CSGO Weapons, CS Equipment)
 	studioprop("models/weapons/w_eq_flashbang_dropped.mdl") = weapon_flashbang: "Flashbang"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_flashbang.txt"
+		]
 	]

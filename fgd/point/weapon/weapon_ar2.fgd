@@ -5,6 +5,7 @@
 	[
 	@resources
 		[
+		weapon_script "scripts/weapon_ar2.txt"
 		entity prop_combine_ball
 		entity env_entity_dissolver
 		]

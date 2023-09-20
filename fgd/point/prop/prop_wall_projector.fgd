@@ -1,15 +1,18 @@
-@PointClass base(BaseProjector) 
+@PointClass base(BaseProjector, SRCModel) 
 	appliesto(P2) 
 	autovis(Test Elements, Light Bridge)
-	studioprop("models/props/wall_emitter.mdl") 
+	studioprop() 
 = prop_wall_projector: "Aperture Science Hard Light Bridge Projector. " +
 	"Note: To avoid lag when it first turns on, place an info_particle_system to precache 'projected_wall_impact'."
 	[
+	model[-srctools](studio) : "[H] Model" : "models/props/wall_emitter.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
+	model[+srctools](studio) : "[HA] Custom Model" : "models/props/wall_emitter.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	
 	skin[engine](integer) : "Skin" : 0
-	skin(choices) : "Skin" : 0 : "Which skin to use." =
+	skin(choices) : "Skin" : 0 : "Skin on the model to use. With the normal model, this sets if the emitter is clean or rusted. With a custom model, any skin number can be entered here." =
 		[
-		0: "Clean"
-		1: "Rusted"
+		0: "[0] Clean"
+		1: "[1] Rusted"
 		]
 
 	@resources

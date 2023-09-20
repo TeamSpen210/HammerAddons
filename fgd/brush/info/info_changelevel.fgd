@@ -1,4 +1,4 @@
-@SolidClass base(BaseEntityBrush) appliesto(L4D, L4D2)
+@SolidClass base(BaseEntityBrush) line(255 255 255, targetname, landmark) appliesto(L4D, L4D2)
 = info_changelevel: "An entity that marks a level change.\n" +
 "Place an info_landmark in both maps that marks the 'same' location in each map.\n" +
 "TIPS & TRICKS: To fire events in the next level, use the OnLevelChange output to turn on an env_global in the current level.  " +

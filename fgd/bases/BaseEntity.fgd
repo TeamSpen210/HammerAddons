@@ -1,5 +1,5 @@
 // Special case - entities that aren't quite brushes or point ents.
-@BaseClass base(BaseEntityIO) = BaseEntity
+@BaseClass base(BaseEntityInputs, BaseEntityOutputs) = BaseEntity
 	[
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	globalname(string) : "Global Entity Name" : : "Name by which this entity is linked to another entity in a different map. " +
@@ -9,8 +9,8 @@
 	vscripts[VSCRIPT](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
 	thinkfunction[VSCRIPT](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
 
-	vscript_init_code[+VSCRIPT, +srctools](string) : "Init Code" : : "This code will be executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings."
-	vscript_init_code2[+VSCRIPT, +srctools](string) : "Init Code 2" : : "This code will be the second line executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings. " +
+	vscript_init_code[+VSCRIPT, +srctools](string) : "[HA] Init Code" : : "This code will be executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings."
+	vscript_init_code2[+VSCRIPT, +srctools](string) : "[HA] Init Code 2" : : "This code will be the second line executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings. " +
 		"Additional Init Code keyvalues can be added with SmartEdit off."
 	// etc
 

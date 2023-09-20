@@ -3,4 +3,8 @@
 	autovis(Weapons, L4D Weapons, L4D Items)
 = weapon_upgradepack_explosive_spawn: "Upgrade Pack - Explosive"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_upgradepack_explosive.txt"
+		]
 	]

@@ -6,13 +6,14 @@
 	weaponskin[L4D2](integer) : "Weapon Skin" : -1 : "Some weapons have multiple versions of their textures, called skins. Set this to a number other than -1 to make the given weapon use that skin instead of the default."
 	glowrange[L4D2](float) : "Glow Range" : 0 : "Set a custom glow range for this spawner. 0 means use the default range."
 
-	solid[engine](integer) : "Collisions" : 6
-	solid(choices) : "Collisions" : 6 =
-		[
-		0: "Not Solid"
-		2: "Use Bounding Box"
-		6: "Use VPhysics"
-		]
+	// Should be inherited from base physics
+	// solid[engine](integer) : "Collisions" : 6
+	// solid(choices) : "Collisions" : 6 =
+	// 	[
+	// 	0: "Not Solid"
+	// 	2: "Use Bounding Box"
+	// 	6: "Use VPhysics"
+	// 	]
 
 	spawnflags(flags)  =
 		[

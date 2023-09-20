@@ -1,7 +1,7 @@
 @FilterClass base(filter_base, TeamNum)
 	appliesto(TF2) 
 	autovis(Logic, Filters)
-	iconsprite("editor/filter_team.vmt")
+	iconsprite("editor/ficool2/filter_activator_tfteam.vmt")
 	line(0 255 0, targetname, controlpoint)
 = filter_activator_tfteam: "A filter that filters by the team of the activator. "
 	[

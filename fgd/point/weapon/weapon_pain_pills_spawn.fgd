@@ -5,4 +5,8 @@
 	autovis(Weapons, L4D Weapons, Weapon Spawners)
 = weapon_pain_pills_spawn: "Painkillers"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_pain_pills.txt"
+		]
 	]

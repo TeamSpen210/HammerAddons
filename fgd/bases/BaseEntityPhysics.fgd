@@ -64,4 +64,5 @@
 
 	// Outputs
 	output OnIgnite(void) : "Fired when this object catches fire."
+	output OnFizzled[P2](void) : "Fired when this object is fizzled."
 	]

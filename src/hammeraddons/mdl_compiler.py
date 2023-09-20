@@ -3,12 +3,18 @@
 Each comes with a key, used to identify a previously compiled version.
 We can then reuse already compiled versions.
 """
-from typing import Any, Awaitable, Callable, Generic, Hashable, List, Set, Tuple, TypeVar
+import shutil
+from typing import (
+    Any, Awaitable, Callable, Generic, Hashable, List, Optional, Set, Tuple, TypeVar,
+    ContextManager, Union,
+)
+from typing_extensions import Self
 from pathlib import Path
 import os
 import pickle
 import random
 import tempfile
+import contextlib
 
 from srctools import AtomicWriter, logger
 from srctools.game import Game
@@ -24,7 +30,7 @@ LOGGER = logger.get_logger(__name__)
 ModelKey = TypeVar('ModelKey', bound=Hashable)
 InT = TypeVar('InT')
 OutT = TypeVar('OutT')
-ModelCompilerT = TypeVar('ModelCompilerT', bound='ModelCompiler')  # TODO: Replace by Self
+force_regen = False  # If set, force every model to be regenerated.
 
 
 class GenModel(Generic[OutT]):
@@ -52,6 +58,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         folder_name: str,
         version: object=0,
         pack_models: bool=True,
+        compile_dir: Optional[Path] =None,
     ) -> None:
         # The models already constructed.
         self._built_models: ACache[ModelKey, GenModel[OutT]] = ACache()
@@ -65,6 +72,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         self.pack: PackList = pack
         self.version = version
         self.studiomdl_loc = studiomdl_loc
+        self.compile_dir = (compile_dir / folder_name) if compile_dir is not None else None
         self.limiter = trio.CapacityLimiter(8)
         self.pack_models = pack_models
         # For statistics, the number we built this compile
@@ -82,16 +90,21 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
             ctx.bsp_path.stem,
             folder_name,
             version,
+            compile_dir=ctx.modelcompile_dump,
         )
 
     def use_count(self) -> int:
         """Return the number of used models."""
         return sum(1 for _, mdl in self._built_models if mdl.used)
 
-    def __enter__(self: ModelCompilerT) -> ModelCompilerT:
+    def __enter__(self) -> Self:
         """Load the previously compiled models and prepare for compiles."""
         # Ensure the folder exists.
         os.makedirs(self.model_folder_abs, exist_ok=True)
+
+        if force_regen:
+            return self  # Skip loading.
+
         data: List[Tuple[ModelKey, str, OutT]]
         version = 0
         try:
@@ -111,6 +124,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
                 exc_info=True,
             )
             return self
+
         if version != self.version:
             # Different version, ignore the data.
             return self
@@ -225,7 +239,20 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
                 self._mdl_names.add(mdl_name)
                 break
 
-        with tempfile.TemporaryDirectory(prefix='mdl_compile') as folder:
+        # If compile dir is specified, create the folder/clear it, but don't delete once done.
+        ctx_man: ContextManager[Union[str, Path]]
+        if self.compile_dir is not None:
+            path = Path(self.compile_dir, mdl_name)
+            ctx_man = contextlib.nullcontext(path)
+            try:
+                shutil.rmtree(path)
+            except FileNotFoundError:
+                pass
+            path.mkdir(parents=True, exist_ok=True)
+        else:  # If not specified, use a temporary directory.
+            ctx_man = tempfile.TemporaryDirectory(prefix='mdl_compile')
+
+        with ctx_man as folder:
             path = Path(folder)
             result = await compile_func(key, path, f'{self.model_folder}{mdl_name}.mdl', args)
             studio_args = [
@@ -237,6 +264,8 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
             LOGGER.debug("Execute {}", studio_args)
             async with self.limiter:
                 res = await trio.run_process(studio_args, capture_stdout=True, check=False)
+            if self.compile_dir is not None:
+                (path / 'compile.log').write_bytes(res.stdout)
             LOGGER.debug(
                 'Log for {}:\n{}',
                 str(path / 'model.qc'),

@@ -23,6 +23,7 @@
 	teamnum(choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
 		[
 		-1: "Don't care"
+		0: "Unassigned" [+complete]
 		2: "Terrorists"
 		3: "Counter-Terrorists"
 		]

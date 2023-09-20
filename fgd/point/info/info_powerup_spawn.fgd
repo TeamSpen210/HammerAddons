@@ -11,7 +11,8 @@
 	team(choices) : "Owner Team" : -2 : "Teams can own spawn points. When Powerups are dropped, they resposition themselves after timing out. They will try to pick a spawn point based on what team designation they had when they repositioned. Set to Everyone to have no team bias in spawn positioning" =
 		[
 		-2: "Everyone"
-		2: "Red"
-		3: "Blue"
+		0: "Unassigned" [+complete]
+		2: "RED"
+		3: "BLU"
 		]
 	]

@@ -13,9 +13,9 @@
 
 	// Inputs
 	input KartWinAnimationRed(void) : "Play win animation for all players in kart on team RED"
-	input KartWinAnimationBlue(void) : "Play win animation for all players in kart on team BLUE"
+	input KartWinAnimationBlue(void) : "Play win animation for all players in kart on team BLU"
 	input KartLoseAnimationRed(void) : "Play lose animation for all players in kart on team RED"
-	input KartLoseAnimationBlue(void) : "Play lose animation for all players in kart on team BLUE"
+	input KartLoseAnimationBlue(void) : "Play lose animation for all players in kart on team BLU"
 	input EnableSpawnBoss(string) : "Spawn Halloween boss HHH at specified target entity"
 	input DisableSpawnBoss(void) : "Stop spawning Halloween boss"
 	]

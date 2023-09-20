@@ -4,4 +4,9 @@
 	studioprop("models/weapons/w_xengrenade.mdl") = weapon_endgame: "Special ending Xen Grenade"
 	[
 	output OnEndGame(void) : "Fired when the endgame Xen Relay Grenade is thrown."
+
+	@resources
+		[
+		weapon_script "scripts/weapon_endgame.txt"
+		]
 	]

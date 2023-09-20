@@ -4,6 +4,7 @@
 	studio()
 = commentary_dummy: "Commentary Dummy"
 	[
+	model[engine](string) : "Hammer Preview"
 	model[L4D](studio) : "Dummy Model" : "models/survivors/survivor_biker.mdl"
 	model[L4D2](studio) : "Dummy Model" : "models/survivors/survivor_coach.mdl"
 

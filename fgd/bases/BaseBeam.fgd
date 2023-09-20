@@ -14,7 +14,7 @@
 	framerate(integer) : "Frames per 10 seconds" : 0 : "Framerate at which the beam texture should animate, if it has multiple frames."
 	framestart(integer) : "Starting Frame" : 0 : "The frame to start the beam texture on."
 	
-	texture(sprite) : "Sprite Name" : "sprites/laserbeam.spr" : "The material used to draw the beam."
+	texture(sprite) : "Sprite Name" : "sprites/laserbeam.vmt" : "The material used to draw the beam."
 	texturescroll(integer) : "Texture Scroll Rate (0-100)" : 35 : "Rate at which the beam texture should scroll along the beam."
 	
 	damage(string) : "Damage / second" : "0" : "How much damage this beam does per second to things while active. For continuous damage, the value should be greater than 10 or it may not work."

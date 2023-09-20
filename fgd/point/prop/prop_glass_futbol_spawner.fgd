@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityPoint) 
+@PointClass base(BaseEntityAnimating) 
 	appliesto(P2) 
 	studioprop("models/props/futbol_dispenser.mdl") = prop_glass_futbol_spawner: "Spawns futbols. Will re-create a futbol when its created futbol breaks."
 	[

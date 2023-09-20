@@ -13,7 +13,7 @@
 	spawnflags(flags)  =
 		[
 		2: "Disable Touch" : 0
-		4: "To Previous Chapter" : 0
+		4: "To Previous Chapter - disable if map was loaded from a new game" : 0
 		]
 
 

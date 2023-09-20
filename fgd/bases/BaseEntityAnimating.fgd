@@ -63,9 +63,13 @@
 	fadescale(float) : "Fade Scale" : : "If specified in the worldspawn, or if the engine is running below DirectX 8, entities will fade out even if the fade distances above aren't specified. This value gives more control over when this happens: numbers smaller than 1 cause the entity to fade out at further distances, and greater than 1 cause it to fade out at closer distances. Using 0 turns off the forced fade altogether."	
 	
 	shadowcastdist[complete](integer) : "Shadow Cast Distance" : 0 : "Sets how far the entity casts dynamic shadows, in units. 0 means default distance from the shadow_control entity."
-	disableshadows(boolean) : "Disable Shadows?" : 0 : "Prevent the entity from creating cheap render-to-texture/dynamic shadows."
-	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents dynamic shadows (e.g. player and prop shadows) from appearing on this entity."
-	disableshadowdepth[since_L4D, +complete](boolean) : "Disable ShadowDepth" : 0 : "Used to disable rendering into shadow depth (for flashlight) for this entity."
+
+	// Disambiguate from projected textures if present.
+	disableshadows[until_L4D](boolean) : "Disable Producing Shadows?" : 0 : "Prevent the entity from creating cheap render-to-texture/dynamic shadows."
+	disableshadows[since_L4D](boolean) : "Disable Producing Cheap Shadows?" : 0 : "Prevent the entity from creating cheap render-to-texture/dynamic shadows."
+
+	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents shadows (cheap & projected texture) from appearing on this entity."
+	disableshadowdepth[since_L4D](boolean) : "No Affecting Proj Texs"  : 0 : "Prevent this entity from affecting projected texture shadows."
 	shadowdepthnocache[since_L4D, +complete](choices) : "Projected Texture Cache" : "0" : "Used to hint projected texture system whether it is sufficient to cache shadow volume of this entity or to force render it every frame instead." =
 		[
 		0: "Default"
@@ -73,7 +77,7 @@
 		2: "Cache it = render only once"
 		]
 	shadowdepthnocache[engine](integer): "Projected Texture Cache": 0
-	disableflashlight[since_L4D, MBase](boolean) : "Disable flashlight" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
+	disableflashlight[since_L4D, MBase](boolean) : "No Recieving Proj Texs" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
 
 	linedivider_anim[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
@@ -93,8 +97,8 @@
 	
 	input DisableShadow(void) : "Allows the entity to draw a render target (dynamic) shadow."
 	input EnableShadow(void) : "Prevents the entity from drawing a render target (dynamic) shadow."
-	input DisableReceivingFlashlight[since_L4D, MBase](void) : "This object will not recieve light or shadows from projected textures (flashlights)."
-	input EnableReceivingFlashlight[since_L4D, MBase](void) : "This object may recieve light or shadows from projected textures (flashlights)."
+	input DisableReceivingFlashlight[since_L4D, MBase, GMod](void) : "This object will not recieve light or shadows from projected textures (flashlights)."
+	input EnableReceivingFlashlight[since_L4D, MBase, GMod](void) : "This object may recieve light or shadows from projected textures (flashlights)."
 	
 	input AlternativeSorting[SINCE_EP1](boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
 	input SetModelScale[EP1, EP2, MESA, !GMod](vector) : "Takes two values separated by a space. The first is the target model scale. " +

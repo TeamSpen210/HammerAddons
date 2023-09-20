@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityAnimating) 
 	appliesto(TF2) 
-	studio("models/extras/info_speech.mdl") 
+	iconsprite("editor/ficool2/training_annotation")
 = training_annotation: "Training Annotation"
 	[
 	display_text(string) : "Displayed Text" : "<Add Text Here>" : "The text to be displayed in the annotation popup."

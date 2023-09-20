@@ -6,9 +6,9 @@
 	spawnflags(flags)  =
 		[
 		1: "Fade From" : 0
-		2: "Modulate" : 0
-		4: "Triggering player only" : 0 [!L4D]
-		8: "Stay Out" : 0
+		2: "Multiply Colors" : 0
+		4: "Only Fade !activator Player" : 0 [!L4D]
+		8: "Stay Out (Indefinite Duration)" : 0
 		]
 
 	duration(float) : "Duration (seconds)" : 2 : "The time that it will take to fade the screen in or out."

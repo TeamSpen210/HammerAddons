@@ -3,5 +3,9 @@
 	autovis(Weapons, HL2 Weapons, Crowbar)
 	studioprop("models/weapons/w_crowbar.mdl") = weapon_crowbar: "Crowbar"
 	[
-	@resources []
+	@resources
+		[
+		weapon_script "scripts/gameplay/weapons/weapon_crowbar.dmx" [+mesa]
+		weapon_script "scripts/weapon_crowbar.txt" [-mesa]
+		]
 	]

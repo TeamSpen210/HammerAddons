@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(TF2) 
+	appliesto(TF2)
+	line(255 255 255, targetname, touch_trigger)
 	iconsprite("editor/bullseye.vmt") = halloween_zapper: "Halloween Hell Zapper"
 	[
 	touch_trigger(target_destination) : "Custom Touch Trigger"

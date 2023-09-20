@@ -13,7 +13,9 @@
 	allowsilentdissolve(boolean) : "Allow SilentDissolve input" : 0 : "Allow the SilentDissolve input to dissolve this bomb."
 	playspawnsound(boolean) : "Play Spawn Sound" : 1 : "Whether or not this bomb should play a sound on spawn (PaintBlob.Inception)."
 	
-	model(studio) readonly : "Model" : "models/error.mdl" : "Paint bombs need a model set to suppress a warning message. This model would be loaded already."
+
+	model[engine](string) : "" // Not actually a model it really loads.
+	model(studio) readonly : "Model" : "models/props/futbol.mdl" : "Paint bombs need a model set to suppress a warning message. This model gets loaded already."
 
 	// Inputs
 	input Dissolve(void) : "Dissolves the paint bomb."

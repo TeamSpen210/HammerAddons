@@ -13,6 +13,7 @@
 	spawnflags(flags)  =
 		[
 		1: "Start Active" : 0
+		2: "Bypass UberCharge" : 0 [TF2]
 		]
 
 

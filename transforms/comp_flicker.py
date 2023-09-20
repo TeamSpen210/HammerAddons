@@ -1,4 +1,5 @@
 """Fires on/off inputs repeatedly to simulate a flicker-on effect."""
+from typing_extensions import Final
 import random
 
 from srctools import Output, lerp, logger, conv_float
@@ -6,15 +7,15 @@ from srctools import Output, lerp, logger, conv_float
 from hammeraddons.bsp_transform import trans, Context
 
 LOGGER = logger.get_logger(__name__)
-INP_TURN_OFF = 'FireUser1'
-OUT_TURN_OFF = 'OnUser1'
-INP_TURN_ON = 'FireUser2'
-OUT_TURN_ON = 'OnUser2'
+INP_TURN_OFF: Final = 'FireUser1'
+OUT_TURN_OFF: Final = 'OnUser1'
+INP_TURN_ON: Final = 'FireUser2'
+OUT_TURN_ON: Final = 'OnUser2'
 
-INP_FLICK_OFF = 'FireUser3'
-OUT_FLICK_OFF = 'OnUser3'
-INP_FLICK_ON = 'FireUser4'
-OUT_FLICK_ON = 'OnUser4'
+INP_FLICK_OFF: Final = 'FireUser3'
+OUT_FLICK_OFF: Final = 'OnUser3'
+INP_FLICK_ON: Final = 'FireUser4'
+OUT_FLICK_ON: Final = 'OnUser4'
 
 
 @trans('comp_flicker')
@@ -60,7 +61,10 @@ def comp_flicker(ctx: Context) -> None:
                 out.output = OUT_FLICK_ON
                 out.delay += total_time
             else:
-                LOGGER.warning('Unknown comp_flicker output "{}" for "{}"', out.output, ent_name)
+                LOGGER.warning(
+                    'Unknown comp_flicker output "{}" for "{}"',
+                    out.output, ent_name,
+                )
 
         mdl_name = ent['target_mdl']
         if mdl_name:
@@ -73,12 +77,16 @@ def comp_flicker(ctx: Context) -> None:
             (OUT_FLICK_ON, False, 0.0, total_time),
             (OUT_FLICK_OFF, True, total_time, 0.0),
         ]:
-            time = 0
+            time = 0.0
             state = start_state
             limit = 0
             while time < total_time:
                 state = not state
-                ent.add_out(Output(out_name, '!self', INP_TURN_ON if state else INP_TURN_OFF, delay=time))
+                ent.add_out(Output(
+                    out_name, '!self',
+                    INP_TURN_ON if state else INP_TURN_OFF,
+                    delay=time,
+                ))
 
                 delay = lerp(time, min_point, max_point, flicker_min, flicker_max)
                 time += delay + random.uniform(-variance, variance)
@@ -105,4 +113,8 @@ def comp_flicker(ctx: Context) -> None:
                     break
 
             # Force on exactly at the end time.
-            ent.add_out(Output(out_name, '!self', INP_TURN_OFF if start_state else INP_TURN_ON, delay=time))
+            ent.add_out(Output(
+                out_name, '!self',
+                INP_TURN_OFF if start_state else INP_TURN_ON,
+                delay=time,
+            ))

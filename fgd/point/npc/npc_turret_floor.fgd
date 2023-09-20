@@ -1,5 +1,5 @@
 @PointClass base(BaseNPC) 
-	appliesto(EP1, EP2, HL2, P1) 
+	appliesto(EP1, EP2, HL2, P1, P2) 
 	studioprop("models/combine_turrets/floor_turret.mdl") 
 	frustum(_frustum_fov, _frustum_near, _frustum_far, 255 0 0, -1)
 	autovis(Entities, NPCs, Combine, Floor Turret)

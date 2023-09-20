@@ -1,5 +1,8 @@
 
 @SolidClass base(trigger_asw_use_area) 
+	line(255 255 255, targetname, panelpropname)
+	line(255 255 255, targetname, securitycam1name)
+	line(255 255 255, targetname, turret1name)
 	appliesto(ASW) = trigger_asw_computer_area: "A trigger volume in which marines can use a computer."
 	[
 	locked[engine](boolean) : "Locked" : 1

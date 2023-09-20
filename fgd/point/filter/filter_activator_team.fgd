@@ -13,15 +13,19 @@
 		"If the filter mode is Allow, only entities whose team number matches the given team will pass the filter. " +
 		"If the filter mode is Disallow, all entities EXCEPT those whose team number matches the given team will pass the filter." =
 		[
-		2: "Terrorist"
-		3: "Counter-Terrorist"
+		0: "Unassigned" [+complete]
+		1: "Spectators" [+complete]
+		2: "Terrorists"
+		3: "Counter-Terrorists"
 		]
 
 	filterteam[L4D, L4D2](choices) : "Filter Team Number" : 2 : "The team number to filter by.  " +
 		"If the filter mode is Allow, only entities whose team number matches the given team will pass the filter. " +
 		"If the filter mode is Disallow, all entities EXCEPT those whose team number matches the given team will pass the filter." =
 		[
-		2: "Survivor"
+		0: "Unassigned" [+complete]
+		1: "Spectators" [+complete]
+		2: "Survivors"
 		3: "Infected"
 		]
 
@@ -29,6 +33,8 @@
 		"If the filter mode is Allow, only entities whose team number matches the given team will pass the filter. " +
 		"If the filter mode is Disallow, all entities EXCEPT those whose team number matches the given team will pass the filter." =
 		[
+		0: "Singleplayer/Unassigned"
+		1: "Spectators" [+complete]
 		2: "P-Body"
 		3: "ATLAS"
 		]
@@ -37,8 +43,10 @@
 		"If the filter mode is Allow, only entities whose team number matches the given team will pass the filter. " +
 		"If the filter mode is Disallow, all entities EXCEPT those whose team number matches the given team will pass the filter." =
 		[
-		2 : "Hgrunt"
-		3 : "Scientist"
+		0: "Unassigned"
+		1: "Spectators" [+complete]
+		2 : "HECU"
+		3 : "Scientists"
 		]
 	
 	@resources []

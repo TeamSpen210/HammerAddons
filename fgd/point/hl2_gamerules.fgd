@@ -64,4 +64,10 @@
 	input SetLegacyFlashlight(bool) : "Sets legacy flashlight."
 	input SetStunstickPickupBehavior(bool) : "Sets stunstick pickup behavior."
 	input SetAllowSPRespawn(bool) : "Sets SP respawning."
+
+	@resources
+		[
+		// We want to include the resources for the specified citizen type.
+		func hl2_gamerules
+		]
 	]

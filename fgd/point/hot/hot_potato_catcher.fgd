@@ -1,6 +1,6 @@
 
-@PointClass base(prop_glass_futbol_socket) 
+@PointClass base(hot_potato_socket) 
 	appliesto(P2) 
-	studio("models/editor/axis_helper.mdl") = hot_potato_catcher: "Catches 'hot potatos' and fires an output."
+= hot_potato_catcher: "Invisible entity that holds 'hot potatos' and fires an output. Identical to hot_potato_socket, except it doesn't play any sounds when a hot potato is inserted."
 	[
 	]

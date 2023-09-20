@@ -2,6 +2,14 @@
 	sphere() 
 	autovis(Sounds, Soundscapes)
 	line(255 255 255, targetname, MainSoundscapeName) 
+	line(128 128 128, targetname, position0) 
+	line(128 128 128, targetname, position1) 
+	line(128 128 128, targetname, position2) 
+	line(128 128 128, targetname, position3) 
+	line(128 128 128, targetname, position4) 
+	line(128 128 128, targetname, position5) 
+	line(128 128 128, targetname, position6) 
+	line(128 128 128, targetname, position7) 
 	iconsprite("editor/env_soundscape_proxy.vmt") 
 = env_soundscape_proxy: "An entity that acts like a soundscape but gets all of its sound parameters from another env_soundscape entity."
 	[
