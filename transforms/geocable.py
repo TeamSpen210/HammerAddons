@@ -1390,7 +1390,6 @@ async def comp_prop_rope(ctx: Context) -> None:
         ctx.vmf.by_class['comp_prop_rope'],
         ctx.vmf.by_class['comp_prop_cable'],
         ctx.vmf.by_class['comp_vactube_spline'],
-        ctx.vmf.by_class['comp_vactube_bezier'],
     ):
         ent.remove()
         conf = Config.parse(ent, name_to_segprops_set)
