@@ -14,11 +14,12 @@
 
 	// Valve's interplator keyvalue just happens to provide the right visuals we want.
 	positioninterpolator[engine](integer): "Type": 2
-	positioninterpolator(choices) : "Type" : 2 : "How to interpolate the rope. Straight makes it straight. Spline uses a spline curve, which smoothly blends between points (no visuals). Catenary makes it hang down, like the original move_rope." =
+	positioninterpolator(choices) : "Type" : 2 : "How to interpolate the rope. Straight makes it straight. Spline uses a spline curve, which smoothly blends between points. Catenary makes it hang down, like the original move_rope. Bezier is an alternate smooth curve, but the visual in Hammer will be incorrect." =
 		[
 		0: "Straight"
 		1: "Spline Curve"
 		2: "Catenary"
+		3: "Bezier"
 		]
 
 	segments(integer) : "Segments" : 2 : "Number of nodes to generate between each rope. Higher values make smoother ropes, but produce more faces."
