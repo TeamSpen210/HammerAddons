@@ -4,7 +4,7 @@ import os
 
 from srctools import Entity
 from srctools.logger import get_logger
-from srctools.packlist import FileType, unify_path
+from srctools.packlist import FileType, strip_extension, unify_path, MDL_EXTS
 from srctools.sndscript import SND_CHARS
 
 from hammeraddons.bsp_transform import Context, check_control_enabled, trans
@@ -223,3 +223,30 @@ def comp_pack_rename(ctx: Context):
 
         LOGGER.info('Force packing "{}" as "{}"...', name_src, name_dest)
         ctx.pack.pack_file(name_dest, res_type, data)
+
+        if res_type is FileType.MODEL:
+            # Pack additional files.
+            name_src_stem = strip_extension(name_src)
+            name_dest_stem = strip_extension(name_dest)
+            for ext in MDL_EXTS:
+                if ext == '.mdl':  # TODO use MDL_EXTS_EXTRA
+                    continue
+
+                name_add = name_src_stem + ext
+
+                try:
+                    data = file_data[name_add]
+                except KeyError:
+                    try:
+                        file = ctx.sys.open_bin(name_add)
+                    except FileNotFoundError:
+                        # Optional.
+                        continue
+                    with file:
+                        data = file_data[name_add] = file.read()
+
+                LOGGER.info(
+                    'Force packing "{}" as "{}{}"...',
+                    name_add, name_dest_stem, ext,
+                )
+                ctx.pack.pack_file(name_dest_stem + ext, FileType.GENERIC, data)
