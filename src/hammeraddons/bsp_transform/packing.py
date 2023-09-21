@@ -197,16 +197,6 @@ def comp_pack_rename(ctx: Context):
         file_type_name = ent['filetype']
 
         try:
-            file = ctx.sys[name_src]
-        except FileNotFoundError:
-            LOGGER.warning(
-                'File cannot be loaded to pack! \n{} -> {}',
-                name_src,
-                name_dest,
-            )
-            continue
-
-        try:
             res_type = PACK_TYPES[file_type_name.casefold()]
         except KeyError:
             LOGGER.warning(
@@ -219,7 +209,17 @@ def comp_pack_rename(ctx: Context):
         try:
             data = file_data[name_src]
         except KeyError:
-            with ctx.sys, ctx.sys.open_bin(file) as f:
-                data = file_data[name_src] = f.read()
+            try:
+                file = ctx.sys.open_bin(name_src)
+            except FileNotFoundError:
+                LOGGER.warning(
+                    'File cannot be loaded to pack! \n{} -> {}',
+                    name_src,
+                    name_dest,
+                )
+                continue
+            with file:
+                data = file_data[name_src] = file.read()
 
+        LOGGER.info('Force packing "{}" as "{}"...', name_src, name_dest)
         ctx.pack.pack_file(name_dest, res_type, data)
