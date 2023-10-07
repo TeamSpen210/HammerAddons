@@ -60,7 +60,7 @@
 		"media/coop_bts_security_02.bik"	: "Coop Disc: Security 2"
 		"media/coop_bts_radar.bik"			: "Coop Disc: Unused Radar"
 		"media/coop_bts_security.bik"		: "Coop Disc: Unused Security"
-		"media/insert_disc.bik"				: "Insert Disc"
+		"media/insert_disk.bik"				: "Insert Disc"
 		"media/dlc1_endmovie.bik"			: "Art Therapy Outro"
 		
 		// Other
