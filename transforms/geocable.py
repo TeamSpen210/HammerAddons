@@ -1253,7 +1253,7 @@ async def compile_rope(
                 break
             skins.append(skin_str)
 
-        if any(node.config.vac_separate_glass for node in nodes):
+        if any(node.config.vac_separate_glass is VactubeGenType.SEPARATE for node in nodes):
             LOGGER.warning(
                 "Vactube at {} is requesting separate models, which is not allowed for "
                 "prop_dynamic. Ignoring.",
