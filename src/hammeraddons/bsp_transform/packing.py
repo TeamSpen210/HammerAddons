@@ -4,7 +4,8 @@ import os
 
 from srctools import Entity
 from srctools.logger import get_logger
-from srctools.packlist import FileType, strip_extension, unify_path, MDL_EXTS
+from srctools.mdl import MDL_EXTS
+from srctools.packlist import FileType, strip_extension, unify_path
 from srctools.sndscript import SND_CHARS
 
 from hammeraddons.bsp_transform import Context, check_control_enabled, trans
