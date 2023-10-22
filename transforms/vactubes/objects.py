@@ -1,7 +1,8 @@
 """Handles configuration for the objects appearing inside vactubes."""
-from typing import Optional, Tuple, List, Dict
+from typing import Optional, Tuple, List, Dict, Union
 from typing_extensions import TypeAlias
 from collections import defaultdict
+from fractions import Fraction
 import os.path
 import math
 
@@ -41,7 +42,7 @@ class VacObject:
         model_vac: str,
         model_drop: Optional[str],
         offset: Vec,
-        weight: int=1,
+        weight: Union[Fraction, int] = 1,
         skin_tv: int=0,
         skin_drop: int=0,
         skin_vac: int=0,
@@ -83,21 +84,33 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[int, VacObjectDict, Dict[str, str]]
     """
     cube_objects: Dict[Tuple[str, str, int], VacObject] = {}
     vac_objects: Dict[str, List[VacObject]] = defaultdict(list)
+    # To allow decimal weights, parse them as fractions, then multiply them all by every denominator.
+    # That'll cancel out the fraction, making them all integer. We then compute the common multiple
+    # and reduce down.
+    group_multipliers: dict[str, int] = defaultdict(lambda: 1)
 
     for i, ent in enumerate(vmf.by_class['comp_vactube_object']):
         offset = Vec.from_str(ent['origin']) - Vec.from_str(ent['offset'])
+        group = ent['group']
+        try:
+            weight = Fraction(ent['weight', '1'])
+        except ValueError:
+            weight = Fraction(1)
+        else:
+            group_multipliers[group] *= weight.denominator
+
         obj = VacObject(
             f'obj_{i:x}',
-            ent['group'],
+            group,
             ent['model'],
             ent['cube_model'],
             offset,
-            srctools.conv_int(ent['weight']),
+            weight,
             srctools.conv_int(ent['tv_skin']),
             srctools.conv_int(ent['cube_skin']),
             srctools.conv_int(ent['skin']),
         )
-        vac_objects[obj.group].append(obj)
+        vac_objects[group].append(obj)
         # Convert the ent into a precache ent, stripping the other keyvalues.
         mdl_name = ent['model']
         ent.clear()
@@ -107,7 +120,7 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[int, VacObjectDict, Dict[str, str]]
 
         if obj.model_drop:
             cube_objects[
-                obj.group,
+                group,
                 obj.model_drop.replace('\\', '/'),
                 obj.skin_drop,
             ] = obj
@@ -116,11 +129,15 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[int, VacObjectDict, Dict[str, str]]
     # Each group is the same, so it can be shared among them all.
     codes = {}
     for group, objects in sorted(vac_objects.items(), key=lambda t: t[0]):
-        # First, see if there's a common multiple among the weights, allowing
-        # us to simplify.
-        multiple = objects[0].weight
+        if (group_mult := group_multipliers[group]) != 1:
+            for obj in objects:
+                obj.weight *= group_mult
+        # The fractions should be integral now.
+
+        # Now see if there's a common multiple among the weights, allowing us to simplify.
+        multiple = int(objects[0].weight)
         for obj in objects[1:]:
-            multiple = math.gcd(multiple, obj.weight)
+            multiple = math.gcd(multiple, int(obj.weight))
         if multiple > 1:
             LOGGER.info('Group "{}" has common factor of {}, simplifying.', group, multiple)
         code = []
