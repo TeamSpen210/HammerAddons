@@ -1,5 +1,5 @@
-<div align="center">
-    <img src="logo/icon_256.png" alt="Hammer Addons" height="200" />
+<div style="text-align: center">
+    <img src="logo/icon_256.png" alt="Hammer Addons" width=256 height=256 />
 	<br>
 	<br>
 	<p> <b>Teamspen's Hammer Addons </b></p>
