@@ -24,6 +24,7 @@ from srctools.smd import Mesh, Vertex, Triangle, Bone
 
 from hammeraddons.mdl_compiler import ModelCompiler
 from hammeraddons.bsp_transform import Context, trans
+from hammeraddons.splines import parallel_transport
 
 LOGGER = logger.get_logger(__name__)
 NodeID = NewType('NodeID', str)
@@ -871,16 +872,7 @@ def compute_orients(nodes: Iterable[Node]) -> None:
         while node1.next is not None:
             node2 = node1.next
             all_nodes.discard(node2)
-            tanj1 = tangents[node1]
-            tanj2 = tangents[node2]
-            b = Vec.cross(tanj1, tanj2)
-            if b.mag_sq() < 0.001:
-                node2.orient = node1.orient.copy()
-            else:
-                b = b.norm()
-                phi = math.acos(Vec.dot(tanj1, tanj2))
-                up = node1.orient.up() @ Matrix.axis_angle(b, math.degrees(phi))
-                node2.orient = Matrix.from_basis(x=tanj2, z=up)
+            node2.orient = parallel_transport(node1.orient, tangents[node1], tangents[node2])
             node1 = node2
 
 
