@@ -1,6 +1,6 @@
 """Compile static prop cables, instead of sprites."""
 from typing import (
-    Optional, List, Tuple, FrozenSet,
+    Optional, List, Tuple, FrozenSet, Callable,
     TypeVar, MutableMapping, NewType, Set, Iterable, Dict, Iterator, cast,
 )
 from typing_extensions import Final, Self
@@ -266,7 +266,7 @@ class Config:
             v_scale = 1.0
             flip_uv = False
             seg_props = VAC_SEG_CONF_SET
-        
+
         else:
             rope_type = RopeType.ROPE
             # There's not really a vanilla material we can use for cables.
@@ -344,7 +344,7 @@ class Config:
             vac_separate_glass
         )
 
-    def coll(self) -> Optional[Self]:
+    def coll(self) -> Self:
         """Extract the collision options from the ent."""
         return attrs.evolve(
             self,
@@ -728,17 +728,17 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
     ]
 
 
-def interpolate_bezier(first_node:Node,last_node:Node,curve_segment_count:int) -> List[Node]:
+def interpolate_bezier(first_node: Node, last_node: Node, curve_segment_count: int) -> List[Node]:
     """Interpolate a bezier curve, for better 90 degrees turn."""
     # reference:
     # https://en.wikipedia.org/wiki/De_Casteljau%27s_algorithm
-    points: list[Node] = []
-    increment = 1/(curve_segment_count)
+    points: List[Node] = []
+    increment = 1 / curve_segment_count
     # Only the segment count set in the first spline object counts
     curve_x = []
     curve_y = []
     curve_z = []
-    curnode = first_node
+    curnode: Optional[Node] = first_node
     while curnode is not None:
         curve_x.append(curnode.pos.x)
         curve_y.append(curnode.pos.y)
@@ -766,51 +766,53 @@ def de_casteljau(t, coefs):
             beta[k] = beta[k] * (1 - t) + beta[k + 1] * t
     return beta[0]
 
-def find_all_connected_exclude_firstlast(node: Node):
-    node_list : List[Node] = [node]
-    cur_back = node
-    cur_forward = node
+def find_all_connected_exclude_firstlast(node: Node) -> Tuple[List[Node], Optional[Node], Optional[Node]]:
+    node_list: List[Node] = [node]
+    cur_back: Optional[Node] = node
+    cur_forward: Optional[Node] = node
 
-    while cur_back.prev != None:
+    while cur_back.prev is not None:
         cur_back = cur_back.prev
         node_list.append(cur_back)
         assert cur_back.prev != node, 'Circular Node Detected'
 
-    while cur_forward.next != None:
+    while cur_forward.next is not None:
         cur_forward = cur_forward.next
         node_list.append(cur_forward)
         assert cur_forward.next != node, 'Circular Node Detected'
 
-
-    if cur_back.prev == None:
+    if cur_back.prev is None:
         node_list.remove(cur_back)
-    if cur_forward.next == None:
+    if cur_forward.next is None:
         node_list.remove(cur_forward)
-    return node_list,cur_back,cur_forward
+    return node_list, cur_back, cur_forward
+
 
 def interpolate_all(nodes: Set[Node]) -> None:
     """Produce nodes in-between each user-made node."""
     # Create the nodes and put them in a separate list, then add them
     # to the actual nodes list second. This way sections that have been interpolated
     # don't affect the interpolation of neighbouring sections.
-    
+
     seen_bezier_nodes: Set[Node] = set()
-    seen_bezier_nodes_ignore: Set[Node] = set()
+    # Add None in here to make code simpler to handle - we always ignore missing endpoints.
+    seen_bezier_nodes_ignore: Set[Optional[Node]] = {None}
 
     segments: List[List[Node]] = []
     for node1 in nodes:
         if node1.next is None or node1.config.segments <= 0:
             continue
-        
+
         interp_type = node1.config.interp
 
         if interp_type is InterpType.BEZIER:
             if node1 in seen_bezier_nodes or node1 in seen_bezier_nodes_ignore:
                 continue
             b_curve, first, last = find_all_connected_exclude_firstlast(node1)
-            LOGGER.debug("Curve Keyframes: ",first,b_curve,last)
+            LOGGER.debug("Curve Keyframes: ",first, b_curve, last)
             seen_bezier_nodes.update(b_curve)
-            seen_bezier_nodes_ignore.update([first,last])
+            seen_bezier_nodes_ignore.add(first)
+            seen_bezier_nodes_ignore.add(last)
             node1 = first
             node2 = last
         else:

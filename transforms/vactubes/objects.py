@@ -87,7 +87,7 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[int, VacObjectDict, Dict[str, str]]
     # To allow decimal weights, parse them as fractions, then multiply them all by every denominator.
     # That'll cancel out the fraction, making them all integer. We then compute the common multiple
     # and reduce down.
-    group_multipliers: dict[str, int] = defaultdict(lambda: 1)
+    group_multipliers: Dict[str, int] = defaultdict(lambda: 1)
 
     for i, ent in enumerate(vmf.by_class['comp_vactube_object']):
         offset = Vec.from_str(ent['origin']) - Vec.from_str(ent['offset'])

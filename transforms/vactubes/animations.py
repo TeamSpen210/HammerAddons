@@ -83,13 +83,13 @@ class Animation:
         # The source of the cubes on this animation.
         self.start_node = start_node
         # Either the start point, or the splitter to move in the secondary direction.
-        self.cur_node: Union[nodes.Spawner, nodes.Splitter] = start_node
+        self.cur_node: nodes.Node = start_node
         # Once done, this is the ending node so that we can determine if it's a dropper or not.
         self.end_node: Optional[nodes.Destroyer] = None
         # When branching, the amount we overshot into this node from last time.
         self.start_overshoot = 0.0
 
-    def tee(self, split: nodes.Splitter, split_type: DestType, overshoot: float) -> 'Animation':
+    def tee(self, split: nodes.Node, split_type: DestType, overshoot: float) -> 'Animation':
         """Duplicate this animation so additional frames can be added.
 
         Note: Does not fully copy, the existing frame data is shared so

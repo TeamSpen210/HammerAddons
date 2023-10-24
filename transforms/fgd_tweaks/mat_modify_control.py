@@ -1,6 +1,6 @@
 """Tweak material_modify_control to avoid the variable showing up in instances."""
 from collections.abc import Iterable
-from typing import Counter, Dict, Set
+from typing import Counter, Dict, Set, Tuple
 
 import srctools.logger
 from hammeraddons.bsp_transform import trans, Context
@@ -68,7 +68,7 @@ def material_modify_control(ctx: Context) -> None:
             continue
         filter_mat = matmod['materialname'].casefold()
 
-        targets: Set[tuple[str, str]] = set()
+        targets: Set[Tuple[str, str]] = set()
         ent_materials: Iterable[str]
         found_count = Counter[str]()
         for parent in ctx.vmf.search(matmod['parentname']):

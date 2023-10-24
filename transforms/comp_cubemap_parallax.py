@@ -140,12 +140,12 @@ def comp_cubemap_parallax(ctx: Context):
 
         encoded = io.StringIO()
         material.export(encoded)
-        ctx.pack.pack_file(name, data = encoded.getvalue())
+        ctx.pack.pack_file(name, data=encoded.getvalue().encode('utf8'))
 
     for config in parallax_cubemap_configs:
         if config['used'] == 0:
             LOGGER.warning(
                 'No materials found affected by a cubemap within {} units for comp_cubemap_parallax at ({})!',
-                parallax['radius'],
-                parallax['origin'],
+                config['radius'],
+                config['origin'],
             )
