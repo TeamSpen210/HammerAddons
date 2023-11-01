@@ -42,7 +42,7 @@
 		32: "Toggle" : 0
 		256: "Use Opens" : 0
 		512: "NPCs Can't" : 0
-		1024: "Touch Opens" : 1
+		1024: "Touch Opens" : 0
 		2048: "Starts locked" : 0
 		4096: "Door Silent" : 0
 		131072: "Block Infected nav when closed" : 0 [L4D, L4D2]

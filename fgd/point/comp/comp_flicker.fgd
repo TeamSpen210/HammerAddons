@@ -6,9 +6,9 @@
 = comp_flicker: "Fires on/off inputs repeatedly to simulate a flicker-on effect. " +
 	"This converts to an info_target, and uses all of the FireUserX inputs/outputs."
 	[
-	target_mdl(target_destination) : "Model to Control" : : "An entity which will have skins swapped to turn on/off."
-	mdl_skin_on(integer) : "On Skin" : 0 : "The 'on' skin for the model."
-	mdl_skin_off(integer) : "Off Skin" : 1 : "The 'on' skin for the model."
+	target_mdl(target_destination) : "Model to Control" : : "An entity which will have skins swapped to turn on/off. This is simply a shortcut for adding OnTurnedOn/Off outputs."
+	mdl_skin_on(integer) : "On Skin" : 0 : "The 'on' skin for the model. This is a shortcut for adding OnTurnedOn -> Skin outputs."
+	mdl_skin_off(integer) : "Off Skin" : 1 : "The 'on' skin for the model. This is a shortcut for adding OnTurnedOff -> Skin outputs."
 
 	total_time(float) : "Total Time" : 1.5 : "The overall time taken to complete the on or off flicker."
 	flicker_min(float) : "Flicker Min" : 0.05 : "The delay used at the start of the on cycle, or at the end of the off cycle."

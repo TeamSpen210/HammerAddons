@@ -1,5 +1,5 @@
-<div align="center">
-    <img src="logo/icon_256.png" alt="Hammer Addons" height="200" />
+<div style="text-align: center">
+    <img src="logo/icon_256.png" alt="Hammer Addons" width=256 height=256 />
 	<br>
 	<br>
 	<p> <b>Teamspen's Hammer Addons </b></p>
@@ -23,7 +23,9 @@ Below are short explanations, see the "Help" display on the entity properties in
 
 | Entity                                             | Description                                                                                                                                                                  |
 |----------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `comp_adv_output`                                  | Adds a single output to another entity, while allowing instance renaming or `$fixups` to apply to only certain parts.                                                        |
 | `comp_flicker`                                     | Fires on/off and skin inputs repeatedly to simulate a flicker-on effect.                                                                                                     |
+| `comp_case`                                        | Version of `logic_case` which is optimised away by the compiler.                                                                                                             |
 | `comp_choreo_sceneset`                             | Chains a set of choreographed scenes together.                                                                                                                               |
 | `comp_entity_finder`                               | Finds the closest entity of a given type, then applies various transformations. Outputs from this entity will be moved to the found entity.                                  |
 | `comp_entity_mover`                                | Shift an entity by a given amount. This is useful to place entities into the void, for example.                                                                              |

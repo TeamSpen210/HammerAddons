@@ -3,4 +3,8 @@
 	autovis(Weapons, L4D Weapons, L4D Items)
 = weapon_upgradepack_incendiary_spawn: "Upgrade Pack - Incendiary"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_upgradepack_incendiary.txt"
+		]
 	]

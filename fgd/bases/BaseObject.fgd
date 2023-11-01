@@ -3,8 +3,18 @@
 	teamnum[engine](integer) : "Team" : 2
 	teamnum(choices) : "Team" : 2 : "Team" =
 		[
-		2: "Red"
-		3: "Blue"
+		0: "Unassigned" [+complete]
+		1: "Spectators" [+complete]
+		2: "RED"
+		3: "BLU"
+		]
+
+	defaultupgrade[engine](integer) : "Starting Upgrade Level" : 0
+	defaultupgrade(choices) : "Starting Upgrade Level" : "0" =
+		[
+		0: "Level 1"
+		1: "Level 2"
+		2: "Level 3"
 		]
 
 	spawnflags(flags) : "spawnflags" =
@@ -13,8 +23,8 @@
 		]
 
 	// Inputs
-	input SetBuilder(string) : "Sets the builder of this object to the player given (from an output)"
-	input SetSolidToPlayer(string) : "Sets the builder solid to the player given (from an output)"
+	input SetBuilder(string) : "Sets the builder of this object to the !activator"
+	input SetSolidToPlayer(integer) : "Sets if the building should be solid to players other than its builder"
 	input Show(void) : "Makes the building visible and tries to re-enable it."
 	input Hide(void) : "Makes the building invisible and disables it."
 	input SetHealth(integer) : "Sets a new value for the breakable's health. If the breakable's health reaches zero it will break."

@@ -1,0 +1,12 @@
+@BaseClass = LightShadows
+[
+	// GMod backports this feature.
+	_castentityshadow[engine](boolean)
+	_castentityshadow[since_L4D, GMod](Choices) : "Cast entity shadows" : 0 : "Objects illuminated by this light can be set to cast a fake directional shadow away from this light." =
+		[
+		0 : "Don't affect entity shadow angles"
+		1 : "Affect entity shadow angles"
+		]
+
+	_shadoworiginoffset[since_L4D, GMod](vec_dir) : "Shadow Cast Offset" : "0 0 0" : "A world-space offset that gets applied to the light origin when casting entity shadows. Useful for dealing with funny-looking shadows from very low lights: Just offset up the z axis. Default 0 0 0."
+]

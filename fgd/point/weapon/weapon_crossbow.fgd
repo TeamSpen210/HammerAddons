@@ -5,6 +5,7 @@
 	[
 	@resources
 		[
+		weapon_script "scripts/weapon_crossbow.txt"
 		material "sprites/blueflare1.vmt"
 		material "sprites/light_glow02_noz.vmt"
 		sound "Weapon_Crossbow.BoltHitBody"

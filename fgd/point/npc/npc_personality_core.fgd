@@ -1,17 +1,25 @@
-@PointClass base(TalkNPC) 
+@PointClass base(TalkNPC, SRCModel) 
 	appliesto(P2) 
 	autovis(Entities, NPCs, Aper. Personality Core)
 	studioprop() 
 = npc_personality_core: "Aperture Science Personality Construct. Animated balls with handles."
 	[
-	modelskin[engine](integer) : "Model Skin" : 0
-	modelskin(choices) : "Model Skin" : 0 : "If using the 'alt' skin, this sets the eye color -- If not using the alt skin, (0 = broken) (1=normal)" =
+	// The default core FGD uses the keyvalue ModelSkin to set the skin, which doesn't preview in Hammer
+	// Using the regular skin keyvalue instead allows it to preview and actually works fine, but only if ModelSkin isn't also set
+	// This will create some weirdness when opening existing maps where ModelSkin will need to be removed for this keyvalue to function,
+	// but existing untouched core entities should still keep working fine so I think it's worth the tradeoff
+	skin[engine](integer) : "Model Skin" : 0
+	skin(choices) : "Model Skin" : 0 : "Sets the skin of the core. If using the alternate model, this sets the eye color. If using the normal model, (0=broken) (1=intact). If using a custom model, any skin number can be entered here. " +
+	"NOTE: Older maps may have the keyvalue ModelSkin set instead, disable SmartEdit and remove it to ensure this value is used." =
 		[
-		0: "Blue Eye / Broken"
-		1: "Green Eye / Normal"
-		2: "Orange Eye / NA"
-		3: "Purple Eye / NA"
+		0: "[0] Blue Eye / Broken"
+		1: "[1] Green Eye / Intact"
+		2: "[2] Orange Eye / NA"
+		3: "[3] Purple Eye / NA"
 		]
+
+	// this is still supported by the engine, but shouldn't appear in hammer
+	ModelSkin[engine](integer) : "Model Skin" : 0
 
 	altmodel[engine](boolean) : "Use Alternate Skins" : 0
 	altmodel(choices) : "Use Alternate Skins" : 0 : "Use the model with corrupted skins, instead of the skins in the original model. " =
@@ -20,22 +28,16 @@
 		1: "Yes"
 		]
 
-	model[engine](studio) : "Model" : "models/npcs/personality_sphere/personality_sphere.mdl" 
-	model(choices) : "[H] Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "Choose the model to show in hammer. Set to the same as Use Alternate Skins." =
+	model[-srctools](choices) : "[H] Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "Choose the model to show in Hammer. Set to the same as Use Alternate Skins." =
 		[
 		"models/npcs/personality_sphere/personality_sphere.mdl": "Original (Wheatley)"
 		"models/npcs/personality_sphere/personality_sphere_skins.mdl": "Alternate (Corrupt Cores)"
 		]
-
-	skin[engine](integer) : "Skin" : 0
-	skin(choices) : "[H] Skin" : 0 : "If using the 'alt' skin, this sets the eye color (in hammer) -- If not using the alt skin, (0 = broken) (1=normal)" =
+	model[+srctools](choices) : "[HA] Custom/Hammer Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "Choose the model to show in Hammer. Set to the same as Use Alternate Skins. Alternatively, if Override Model is enabled you can type/paste in a custom model path here." =
 		[
-		0: "Blue Eye / Broken"
-		1: "Green Eye / Normal"
-		2: "Orange Eye / NA"
-		3: "Purple Eye / NA"
+		"models/npcs/personality_sphere/personality_sphere.mdl": "Original (Wheatley)"
+		"models/npcs/personality_sphere/personality_sphere_skins.mdl": "Alternate (Corrupt Cores)"
 		]
-
 
 	// Inputs
 	input EnableMotion(void) : "Enable physics motion/collision response."

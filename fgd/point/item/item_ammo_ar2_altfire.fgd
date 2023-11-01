@@ -4,7 +4,8 @@
 	[
 	@resources
 		[
-		model "models/items/combine_rifle_ammo01.mdl"
+		model "models/items/combine_rifle_ammo01.mdl" [-entropyzero2]
+		func item_ammo_ar2_altfire [+entropyzero2] // EZ2 has multiple variants.
 		particle "combineball"
 		]
 	]

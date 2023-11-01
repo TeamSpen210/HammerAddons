@@ -7,7 +7,7 @@
 	[
 	angles(angle) : "Gib Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction the gibs will fly."
 
-	model[engine](string) : "Model" : ""
+	model[engine](string) : "Model" : ""  // Suppress default behaviour, this isn't always a path. 
 	model(choices) : "Model" : "WoodChunks" : "Thing(s) to shoot out. The choices only matter when the model type is Breakable Chunks. If a specific model is needed, enter its file path. If a point_template is needed, enter the point_template's name." =
 	[
 		"WoodChunks" : "WoodChunks"

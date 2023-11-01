@@ -3,4 +3,8 @@
 	autovis(Weapons, EZ Weapons)
 	studioprop("models/weapons/w_pulsepistol.mdl") = weapon_pulsepistol: "Prototype Gauss Pistol"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_pulsepistol.txt"
+		]
 	]

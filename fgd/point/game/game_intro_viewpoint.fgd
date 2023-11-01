@@ -6,9 +6,10 @@
 	teamnum[engine](integer) : "Team" : 0
 	teamnum(choices) : "Team" : 0 : "Team" =
 		[
-		0: "None (Shared)"
-		2: "Red"
-		3: "Blue"
+		0: "Both"
+		1: "Spectators" [+complete]
+		2: "RED"
+		3: "BLU"
 		]
 
 	step_number(integer) : "Step Number. Intro starts at 1." : 1

@@ -120,8 +120,8 @@ class Opt(Generic[OptionT]):
         return OptWithDefault(opt_id, Vec, default, doc, fallback)
 
 
-@attrs.define(init=False)
-class OptWithDefault(Opt[OptionT], Generic[OptionT]):
+@attrs.define(init=False)  # __attrs_init__() is incompatible with the superclass.
+class OptWithDefault(Opt[OptionT], Generic[OptionT]):  # type: ignore[override]
     """An option, with a default."""
     default: OptionT
     def __init__(
@@ -254,8 +254,8 @@ class Options:
             raise TypeError(f'Option "{option.name}" does not exist!') from None
 
         if val is None:
-            if option.kind is Keyvalues:  # Type checker doesn't understand isinstance here.
-                return Keyvalues(option.name, [])  # type: ignore
+            if option.kind is Keyvalues:
+                return Keyvalues(option.name, [])
             else:
                 return None
 

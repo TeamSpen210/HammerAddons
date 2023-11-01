@@ -1,8 +1,7 @@
-@PointClass base(BaseEntityPoint, BaseLight)
+@PointClass base(BaseEntityPoint, BaseLight, LightPattern, LightShadows)
 	autovis(Lights, Spotlight)
-	lightprop("models/editor/spot.mdl") 
-	lightcone() 
-	sphere(_distance) 
+	lightprop("models/editor/spot.mdl")
+	lightcone()
 	line(255 255 255, targetname, target)
 = light_spot: "An invisible and directional spotlight."
 	[

@@ -1,0 +1,116 @@
+versioninfo
+{
+	"editorversion" "400"
+	"editorbuild" "5304"
+	"mapversion" "6"
+	"formatversion" "100"
+	"prefab" "0"
+}
+visgroups
+{
+}
+viewsettings
+{
+	"bSnapToGrid" "1"
+	"bShowGrid" "1"
+	"bShowLogicalGrid" "0"
+	"nGridSpacing" "64"
+	"bShow3DGrid" "0"
+}
+world
+{
+	"id" "1"
+	"classname" "worldspawn"
+	"detailmaterial" "detail/detailsprites"
+	"detailvbsp" "detail.vbsp"
+	"hammerid" "1"
+	"mapversion" "6"
+	"maxpropscreenwidth" "-1"
+	"skyname" "sky_day01_01"
+	"world_maxs" "128 128 128"
+	"world_mins" "0 0 0"
+	editor
+	{
+		"color" "255 255 255"
+	}
+}
+entity
+{
+	"id" "2"
+	"angles" "0 0 0"
+	"classname" "info_player_start"
+	"hammerid" "30"
+	"origin" "64 64 0"
+	editor
+	{
+		"color" "255 255 255"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 2]"
+	}
+}
+entity
+{
+	"id" "3"
+	"_cone" "80"
+	"_constant_attn" "0"
+	"_distance" "0"
+	"_exponent" "1"
+	"_fifty_percent_distance" "0"
+	"_hardfalloff" "0"
+	"_inner_cone" "40"
+	"_light" "187 240 255 200"
+	"_lighthdr" "-1 -1 -1 1"
+	"_lightscalehdr" "1"
+	"_linear_attn" "0"
+	"_quadratic_attn" "1"
+	"_zero_percent_distance" "0"
+	"angles" "-90 0 0"
+	"classname" "light_spot"
+	"hammerid" "36"
+	"origin" "64 64 120"
+	"pitch" "-90"
+	"style" "0"
+	editor
+	{
+		"color" "255 255 255"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 3]"
+	}
+}
+entity
+{
+	"id" "4"
+	"classname" "some_ent"
+	"targetname" "rl_source"
+	connections
+	{
+		"OnTrigger" "regular_outputSetAnimationdance0.125-1"
+		"OnSpawn" "basic_destNeedsParam10-1"
+		"OnMulti" "model_1Skin10.5-1"
+		"OnMulti" "model_1Skin01.53"
+		"OnMulti" "pfxStart0.5-1"
+		"OnMulti" "pfxStop1-1"
+		"OnSingle" "model_1Skin101"
+		"OnSingle" "model_1Skin011"
+		"OnSingle" "pfxStart01"
+		"OnSingle" "pfxStop0.51"
+		"OnSpawn" "another_modelBodygroup2560-1"
+	}
+	editor
+	{
+		"color" "255 255 255"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 4]"
+	}
+}
+cameras
+{
+	"activecamera" "-1"
+}
+cordons
+{
+	"active" "0"
+}

@@ -27,6 +27,7 @@
 		]
 
 	massscale(float) : "Mass Scale" : 0 : "A scale multiplier for the object's mass."
+	ha_override_mass[srctools](float) : "[HA] Mass Override" : : "If set, the postcompiler will modify the brush data to directly set it to this mass value."
 	overridescript(string) : "Override Parameters" : : "A list of physics key/value pairs that are usually in a physics prop .qc file. Format is 'key,value,key,value,etc'."
 	damagetoenablemotion(integer) : "Health Level to Override Motion" : 0 : "If specified, this object will start motion disabled. Once its health has dropped below this specified amount, it will enable motion."
 	forcetoenablemotion(float) : "Physics Impact Force to Override Motion" : 0 : "If specified, this object will start motion disabled. Any impact that imparts a force greater than this value on the physbox will enable motion."

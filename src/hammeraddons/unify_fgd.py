@@ -14,7 +14,7 @@ import sys
 from srctools import fgd
 from srctools.fgd import (
     FGD, AutoVisgroup, EntAttribute, EntityDef, EntityTypes, Helper, HelperExtAppliesTo,
-    HelperWorldText, KVDef, ValueTypes, match_tags, validate_tags,
+    HelperTypes, HelperWorldText, KVDef, ValueTypes, match_tags, validate_tags,
 )
 from srctools.filesys import RawFileSystem
 
@@ -24,8 +24,8 @@ from srctools.filesys import RawFileSystem
 # If 'until_l4d' etc is used in FGD, only games before include it.
 GAMES_CHRONO: List[Tuple[str, str]] = [
     ('HL2', 'Half-Life 2'),
-    ('EP1', 'Half-Life 2 Episode 1'),
-    ('EP2', 'Half-Life 2 Episode 2'),
+    ('EP1', 'Half-Life 2: Episode One'),
+    ('EP2', 'Half-Life 2: Episode Two'),
 
     ('TF2',   'Team Fortress 2'),
     ('P1',    'Portal'),
@@ -33,7 +33,7 @@ GAMES_CHRONO: List[Tuple[str, str]] = [
     ('L4D2',  'Left 4 Dead 2'),
     ('ASW',   'Alien Swarm'),
     ('P2',    'Portal 2'),
-    ('CSGO',  'Counter-Strike Global Offensive'),
+    ('CSGO',  'Counter-Strike: Global Offensive'),
 
     ('SFM',   'Source Filmmaker'),
     ('DOTA2', 'Dota 2'),
@@ -48,10 +48,13 @@ MODS_BRANCHED: Dict[str, List[Tuple[str, str]]] = {
     ],
     'EP2': [
         ('MESA', 'Black Mesa'),
-        ('GMOD', "Gary's Mod"),
-        ('EZ1', 'Entropy Zero'),
-        ('EZ2', 'Entropy Zero 2'),
+        ('GMOD', "Garry's Mod"),
+        ('EZ1', 'Entropy: Zero'),
+        ('EZ2', 'Entropy: Zero 2'),
         ('KZ', 'Kreedz Climbing'),
+    ],
+    'ASW': [
+        ('ASRD', 'Alien Swarm: Reactive Drop'),
     ],
     'P2': [
         ('P2SIXENSE', 'Portal 2 Sixense MotionPack'),
@@ -82,10 +85,10 @@ FEATURES: Dict[str, Set[str]] = {
     'EP2': {'HL2', 'EP1'},
 
     'MBASE': {'VSCRIPT'},
-    'MESA': {'INST_IO'},
+    'MESA': {'HL2', 'INST_IO'},
     'GMOD': {'HL2', 'EP1', 'EP2'},
-    'EZ1': {'MBASE', 'VSCRIPT'},
-    'EZ2': {'MBASE', 'VSCRIPT'},
+    'EZ1': {'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
+    'EZ2': {'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
     'KZ': {'HL2'},
 
     'L4D2': {'INST_IO', 'VSCRIPT'},
@@ -93,7 +96,7 @@ FEATURES: Dict[str, Set[str]] = {
     'ASW': {'INST_IO', 'VSCRIPT'},
     'P2': {'INST_IO', 'VSCRIPT'},
     'CSGO': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
-    'P2DES': {'P2'},
+    'P2DES': {'P2', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 }
 
 ALL_FEATURES = {
@@ -134,6 +137,8 @@ VISGROUP_SUFFIX = '\x8D'
 
 # Special classname which has all the keyvalues and IO of CBaseEntity.
 BASE_ENTITY = '_CBaseEntity_'
+
+MAP_SIZE_DEFAULT = 16384  # Default grid bounds.
 
 
 # Helpers which are only used by one or two entities each.
@@ -213,17 +218,6 @@ def _polyfill_scripts(fgd: FGD) -> None:
                     inp.type = ValueTypes.STRING
 
 
-@_polyfill('until_csgo')
-def _polyfill_worldtext(fgd: FGD):
-    """Strip worldtext(), since this is not available."""
-    for ent in fgd:
-        ent.helpers[:] = [
-            helper
-            for helper in ent.helpers
-            if not isinstance(helper, HelperWorldText)
-        ]
-
-
 @_polyfill()
 def _polyfill_ext_valuetypes(fgd: FGD) -> None:
     # Convert extension types to their real versions.
@@ -259,30 +253,40 @@ def expand_tags(tags: FrozenSet[str]) -> FrozenSet[str]:
     This adds since_/until_ tags, and values in FEATURES.
     """
     exp_tags = set(tags)
+
+    # Figure out the game branch, for adding since/until tags.
+    # For games, pick the most recent one. For mods, pick the associated branch,
+    # but don't add the branch itself - they can do that via FEATURES.
+    pos = -1
     for tag in tags:
-        try:
-            exp_tags.add(MOD_TO_BRANCH[tag.upper()])
-        except KeyError:
-            pass
+        tag = tag.upper()
+        if tag in ALL_GAMES:
+            pos = max(pos, GAME_ORDER.index(tag))
+            break
+        else:
+            try:
+                pos = GAME_ORDER.index(MOD_TO_BRANCH[tag])
+            except (KeyError, ValueError):
+                pass
+            else:
+                break
+
+    if pos != -1:
+        exp_tags.update(
+            'SINCE_' + tag
+            for tag in GAME_ORDER[:pos + 1]
+        )
+        exp_tags.update(
+            'UNTIL_' + tag
+            for tag in GAME_ORDER[pos + 1:]
+        )
 
     for tag in list(exp_tags):
         try:
             exp_tags.update(FEATURES[tag.upper()])
         except KeyError:
             pass
-        try:
-            pos = GAME_ORDER.index(tag.upper())
-        except ValueError:
-            pass
-        else:
-            exp_tags.update(
-                'SINCE_' + tag
-                for tag in GAME_ORDER[:pos+1]
-            )
-            exp_tags.update(
-                'UNTIL_' + tag
-                for tag in GAME_ORDER[pos+1:]
-            )
+
     return frozenset(exp_tags)
 
 
@@ -306,13 +310,18 @@ def ent_path(ent: EntityDef) -> str:
     return '{}/{}.fgd'.format(folder, ent.classname)
 
 
-def load_database(dbase: Path, extra_loc: Optional[Path]=None, fgd_vis: bool=False) -> Tuple[FGD, EntityDef]:
+def load_database(
+    dbase: Path,
+    extra_loc: Optional[Path]=None,
+    fgd_vis: bool=False,
+    map_size: int=MAP_SIZE_DEFAULT,
+) -> Tuple[FGD, EntityDef]:
     """Load the entire database from disk. This returns the FGD, plus the CBaseEntity definition."""
     print(f'Loading database {dbase}:')
     fgd = FGD()
 
-    fgd.map_size_min = -16384
-    fgd.map_size_max = 16384
+    fgd.map_size_min = -map_size
+    fgd.map_size_max = map_size
 
     # Classname -> filename
     ent_source: Dict[str, str] = {}
@@ -819,6 +828,7 @@ def action_export(
     output_path: Path,
     as_binary: bool,
     engine_mode: bool,
+    map_size: int=MAP_SIZE_DEFAULT,
 ) -> None:
     """Create an FGD file using the given tags."""
 
@@ -829,7 +839,9 @@ def action_export(
 
     print('Tags expanded to: {}'.format(', '.join(tags)))
 
-    fgd, base_entity_def = load_database(dbase, extra_db)
+    fgd, base_entity_def = load_database(dbase, extra_loc=extra_db, map_size=map_size)
+
+    print(f'Map size: ({fgd.map_size_min}, {fgd.map_size_max})')
 
     if engine_mode:
         # In engine mode, we don't care about specific games.
@@ -908,7 +920,7 @@ def action_export(
                                 key,
                                 ', '.join([typ.value for typ in types])
                             ))
-                        # Pick the one with shortest tags arbitrarily.
+                        # Pick the one with the shortest tags arbitrarily.
                         _, value = min(
                             tag_map.items(),
                             key=lambda t: len(t[0]),
@@ -1004,38 +1016,48 @@ def action_export(
                     ent.bases.remove(base)
 
     if not engine_mode:
+        print('Applying polyfills:')
         for poly_tag, polyfill in POLYFILLS:
             if match_tags(tags, poly_tag):
+                print(f' - {polyfill.__name__[10:]}: Applying')
                 polyfill(fgd)
+            else:
+                print(f' - {polyfill.__name__[10:]}: Not required')
 
     print('Applying helpers to child entities and optimising...')
     for ent in fgd.entities.values():
         # Merge them together.
-        helpers: List[Helper] = []
+        base_helpers: List[Helper] = []
         for base in ent.bases:
             assert isinstance(base, EntityDef)
-            helpers.extend(base.helpers)
-        helpers.extend(ent.helpers)
+            base_helpers.extend(base.helpers)
 
-        # Then optimise this list.
-        ent.helpers.clear()
-        for helper in helpers:
-            if helper in ent.helpers:  # No duplicates
+        # Then optimise this list, by re-assembling in reverse.
+        rev_helpers: List[Helper] = []
+        overrides: Set[HelperTypes] = set()
+
+        # Add the entity's own helpers to the end, but do not override within that.
+        for helper in reversed(ent.helpers):
+            if helper in rev_helpers:  # No duplicates here.
                 continue
-            # Strip applies-to helper.
-            if isinstance(helper, HelperExtAppliesTo):
+            if helper.IS_EXTENSION:
                 continue
 
-            # For each, check if it makes earlier ones obsolete.
-            overrides = helper.overrides()
-            if overrides:
-                ent.helpers[:] = [
-                    helper for helper in ent.helpers
-                    if helper.TYPE not in overrides
-                ]
+            # For each, it may make earlier definitions obsolete.
+            overrides.update(helper.overrides())
+            # But the last of any type is always included.
+            rev_helpers.append(helper)
 
-            # But it itself should be added to the end regardless.
-            ent.helpers.append(helper)
+        # Add in all the base entity helpers.
+        for helper in reversed(base_helpers):
+            # No duplicates or overridden helpers.
+            if helper in rev_helpers or helper.TYPE in overrides:
+                continue
+            if helper.IS_EXTENSION:
+                continue
+            overrides.update(helper.overrides())
+            rev_helpers.append(helper)
+        ent.helpers = rev_helpers[::-1]
 
     print('Culling unused bases...')
     used_bases: Set[EntityDef] = set()
@@ -1055,7 +1077,7 @@ def action_export(
                 del fgd.entities[classname]
                 continue
             else:
-                # Helpers aren't inherited, so this isn't useful anymore.
+                # Helpers aren't inherited, so this isn't useful any more.
                 ent.helpers.clear()
         # Cull all base classes we don't use.
         # Ents that inherit from each other always need to exist.
@@ -1226,6 +1248,12 @@ def main(args: Optional[List[str]]=None):
         help="Tags to include in the output.",
         default=None,
     )
+    parser_exp.add_argument(
+        "--map-size",
+        default=MAP_SIZE_DEFAULT,
+        dest="map_size",
+        type=int,
+    )
 
     parser_imp = subparsers.add_parser(
         "import",
@@ -1301,6 +1329,7 @@ def main(args: Optional[List[str]]=None):
             result.output,
             result.binary,
             result.engine,
+            result.map_size,
         )
     elif result.mode in ("c", "count"):
         action_count(dbase, extra_db, factories_folder=Path(repo_dir, 'db', 'factories'))

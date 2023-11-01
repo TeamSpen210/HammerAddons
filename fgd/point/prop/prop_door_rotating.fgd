@@ -130,4 +130,10 @@
 	output OnRotationDone[GMod, since_P2](void) : "Fired when the door arrives at it's goal angle."
 	output OnBreak[L4D, L4D2](void) : "Fired when the door changes damage states."
 	output OnKicked[EZ2](void) : "(EZ2) Fired when the door is kicked open."
+
+	@resources
+		[
+		sound "DoorSound.Null"
+		func prop_door_rotating
+		]
 	]

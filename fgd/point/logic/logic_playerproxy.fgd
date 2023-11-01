@@ -4,7 +4,7 @@
 	color(200 0 0) 
 	iconsprite("editor/logic_playerproxy.vmt")
  	autovis(Point Entities, Globals, Player Proxy)
- 	appliesto(!L4D, !L4D2, !TF2)
+ 	appliesto(HL2, P1, P2) // Also in Alien Swarm and CS:GO, but it doesn't work in those games
 = logic_playerproxy: "An entity that is used to relay inputs/outputs to the player and back to the world."
 	[
 	SetMaxInputArmor[MBase](integer) : "Max Input Armor" : 100 : "Sets the maximum armor a player can receive from the " +
@@ -22,8 +22,8 @@
 	HandsVMBody[MBase](string) : "Hands Viewmodel Bodygroup" : : "Bodygroup value for the custom hands viewmodel."
 
 	// Inputs and Outputs
-	input RequestPlayerHealth(void) : "Requests the current player's health from the proxy. This will fire the PlayerHealth output with the value."
-	output PlayerHealth(integer)    : "The player's current health value, fired in response to RequestPlayerHealth."
+	input RequestPlayerHealth[HL2, P1](void) : "Requests the current player's health from the proxy. This will fire the PlayerHealth output with the value."
+	output PlayerHealth[HL2, P1](integer)    : "The player's current health value, fired in response to RequestPlayerHealth."
 	
 	input RequestPlayerArmor[MBase](void) : "Requests the current player's armor from the proxy. This will fire the PlayerArmor output with the value."
 	output PlayerArmor[MBase](integer)    : "The player's current armor value, fired in response to RequestPlayerArmor."
@@ -34,25 +34,25 @@
 	input RequestPlayerFlashBattery[MBase](void) : "Requests the current player's current flashlight battery from the proxy. This will fire the PlayerFlashBattery output with the value.\n\nNOTE: If legacy flashlight is enabled (aux power flashlight), this will return the player's current auxiliary power."
 	output PlayerFlashBattery[MBase](float)      : "The player's current flashlight battery percentage, fired in response to RequestPlayerFlashBattery."
 
-	input RequestAmmoState(void) : "Request the ammo state of the player. It will fire PlayerHasAmmo or PlayerHasNoAmmo outputs."
-	output PlayerHasAmmo(void)   : "Fired by request if the player has any ammo."
-	output PlayerHasNoAmmo(void) : "Fired by request if the player doesn't have any ammo."
+	input RequestAmmoState[HL2, P1](void) : "Request the ammo state of the player. It will fire PlayerHasAmmo or PlayerHasNoAmmo outputs."
+	output PlayerHasAmmo[HL2, P1](void)   : "Fired by request if the player has any ammo."
+	output PlayerHasNoAmmo[HL2, P1](void) : "Fired by request if the player doesn't have any ammo."
 	
-	input SetFlashlightSlowDrain(void) : "Puts the player's flashlight in slow-power-drain mode (for Episodic darkness)"
-	input SetFlashlightNormalDrain(void) : "Puts the player's flashlight to default power drain"
+	input SetFlashlightSlowDrain[HL2, P1](void) : "Puts the player's flashlight in slow-power-drain mode (for Episodic darkness)"
+	input SetFlashlightNormalDrain[HL2, P1](void) : "Puts the player's flashlight to default power drain"
 
-	input SetPlayerHealth(integer)  : "Sets the player's health to this value."
+	input SetPlayerHealth[HL2, P1](integer)  : "Sets the player's health to this value."
 	input SetMaxInputArmor[MBase](integer) : "Sets the maximum armor value that could be set by armor inputs."
 	input SetSuitZoomFOV[MBase](integer) : "Sets the FOV used by suit zoom."
 	
-	input LowerWeapon(void) : "Lowers the players weapon."
+	input LowerWeapon[HL2, P1](void) : "Lowers the players weapon."
 	
 	input SuppressCrosshair[P1](void) : "Disable the player's crosshair."
 
-	input EnableCappedPhysicsDamage(void) : "Cause player to take less damage from physics objects, and never more than 30 points from any individual strike."
-	input DisableCappedPhysicsDamage(void) : "Undo effects of EnableCappedPhysicsDamage"
+	input EnableCappedPhysicsDamage[HL2, P1](void) : "Cause player to take less damage from physics objects, and never more than 30 points from any individual strike."
+	input DisableCappedPhysicsDamage[HL2, P1](void) : "Undo effects of EnableCappedPhysicsDamage"
 
-	input SetLocatorTargetEntity(string) : "Set the entity that the HUD locator should track. (Usually a vehicle)"
+	input SetLocatorTargetEntity[HL2, P1](string) : "Set the entity that the HUD locator should track. (Usually a vehicle)"
 	
 	input AddPotatosToPortalgun[P2](void) : "Change portalgun bodygroup to show potatos."
 	input RemovePotatosFromPortalgun[P2](void) : "Change portalgun bodygroup to not show potatos."
@@ -61,23 +61,27 @@
 	input ForcePhysicsGrabController[P2](void) : "Force the player to use the physics grab controller for all objects that are picked up."
 	input ResetGrabControllerBehavior[P2](void) : "Resets the grab controller used by the player to its default behavior."
 	input SetMotionBlurAmount[P2](float) : "Forces the motion blur effect on the player. Set to < 0 to disable this override."
+	input PaintPlayerWithPortalPaint[P2](void) : "Displays a Conversion Gel splashing effect on the player's screen."
 
 	// Outputs
-	output OnFlashlightOn(float) : "Fired when the player turns on their flashlight. This output has the value of how much energy the player had when this happened [0..1]."
-	output OnFlashlightOff(float) : "Fired when the player turns off their flashlight. This output has the value of how much energy the player had when this happened [0..1]."
+	output OnFlashlightOn[HL2, P1](float) : "Fired when the player turns on their flashlight. This output has the value of how much energy the player had when this happened [0..1]."
+	output OnFlashlightOff[HL2, P1](float) : "Fired when the player turns off their flashlight. This output has the value of how much energy the player had when this happened [0..1]."
 
 	output OnSquadMemberKilled[MBase](void) : "Fires when a member of the player's squad dies. Fires with this member as the activator."
 	
-	output PlayerDied(void)             : "Fires when the player dies."
+	output PlayerDied[EP1, P1](void)             : "Fires when the player dies."
 	output PlayerDamaged[MBase](void)   : "Fires when the player is damaged."
-	output PlayerMissedAR2AltFire(void)	: "Player fired an AR2 combine ball that didn't kill any enemies."
+	output PlayerMissedAR2AltFire[EP1, P1](void)	: "Player fired an AR2 combine ball that didn't kill any enemies."
 	output OnPlayerSpawn[MBase](void) : "Fires when the player respawns, if 'Allow SP respawn' is enabled in hl2_gamerules."
 
-	output OnStartSlowingTime[!TF2, ASW](void) : "Fired when a Portal player initiates slow time."
-	output OnStopSlowingTime[!TF2, ASW](void) : "Fired when a Portal player stops slowing time."
+	// Cut mechanic
+	// output OnStartSlowingTime[P2](void) : "Fired when a Portal player initiates slow time."
+	// output OnStopSlowingTime[P2](void) : "Fired when a Portal player stops slowing time."
 	
 	output OnPrimaryPortalPlaced[P2](void) : "Fired when a Portal player successfully places the primary portal."
 	output OnSecondaryPortalPlaced[P2](void) : "Fired when a Portal player successfully places the secondary portal."
+	// Only responds to the old unused +coop_ping command, not the normal pings
+	output OnCoopPing[+P2, +complete](void) : "Fired in response to the unused +coop_ping command."
 	output OnDuck[since_P2](void) : "Fired when a player starts to duck."
 	output OnUnDuck[since_P2](void) : "Fired when a player releases the duck button."
 	output OnJump[since_P2](void) : "Fired when a player jumps."

@@ -1,10 +1,10 @@
-@PointClass base(Angles) 
+@PointClass base(Angles)
 	autovis(Lights, Directional Light)
 	color(255 255 0)
-	appliesto(since_L4D) 
+	appliesto(since_L4D)
 	iconsprite("editor/light_directional.vmt") = light_directional: "A directional light with no falloff. Similar to sunlight in light_environment."
 	[
-	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
+	pitch(angle_negative_pitch) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
 	_light(color255) : "Brightness" : "255 255 255 200"
 	_lighthdr(color255) : "BrightnessHDR" : "-1 -1 -1 1"
 	_lightscalehdr(float) : "BrightnessScaleHDR" : 0.7 : "Amount to scale the light by when compiling for HDR."

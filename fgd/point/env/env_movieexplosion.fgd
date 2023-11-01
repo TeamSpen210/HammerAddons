@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(TF2) 
+	iconsprite("editor/ficool2/env_movieexplosion")
 = env_movieexplosion : ""
 	[
 	@resources

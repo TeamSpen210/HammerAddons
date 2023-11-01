@@ -3,10 +3,11 @@
 	appliesto(TF2) 
 	line(255 32 32, targetname, redspawn)
 	line(32 32 255, targetname, bluespawn)
+	iconsprite("editor/ficool2/tf_base_minigame")
 = tf_base_minigame: "Base minigame"
 	[
-	redspawn(target_source) : "Red Spawn Name" : : "The name of the spawnpoints for RED for this minigame"
-	bluespawn(target_source) : "Blue Spawn Name" : : "The name of the spawnpoints for BLU for this minigame"
+	redspawn(target_source) : "RED Spawn Name" : : "The name of the spawnpoints for RED for this minigame"
+	bluespawn(target_source) : "BLU Spawn Name" : : "The name of the spawnpoints for BLU for this minigame"
 	
 	inrandompool(boolean) : "Put in Random Pool" : 1 : "If Yes, allowed to be chosen when told to go to a random minigame"
 
@@ -26,16 +27,16 @@
 
 	// Inputs
 	input ScoreTeamRed(integer) : "Give points to team RED"
-	input ScoreTeamBlue(integer) : "Give points to team BLUE"
+	input ScoreTeamBlue(integer) : "Give points to team BLU"
 	input ReturnFromMinigame(void) : "Force players to return from the current minigame."
 	input ChangeHudResFile(string) : "Change the HUD resource file."
 
 	// Outputs
 	output OnReturnFromMinigame(void) : "Sent when players return from this minigame."
 	output OnTeleportToMinigame(void) : "Sent when players arrive in this minigame."
-	output OnRedHitMaxScore(void) : "Sent RED hits the max score for this minigame."
-	output OnBlueHitMaxScore(void) : "Sent BLUE hits the max score for this minigame."
+	output OnRedHitMaxScore(void) : "Sent when RED hits the max score for this minigame."
+	output OnBlueHitMaxScore(void) : "Sent when BLU hits the max score for this minigame."
 	output OnAllRedDead(void) : "Sent when the entire RED team is dead."
-	output OnAllBlueDead(void) : "Send when the entire BLUE team is dead."
+	output OnAllBlueDead(void) : "Send when the entire BLU team is dead."
 	output OnSuddenDeathStart(void) : "Sent when sudden death starts."
 	]

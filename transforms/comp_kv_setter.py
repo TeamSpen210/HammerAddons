@@ -34,7 +34,7 @@ def kv_setter(ctx: Context) -> None:
 
         kv_name = setter['kv_name']
         # Use fixup name if actually set.
-        kv_value = setter['kv_value_local'] or setter['kv_value_global']
+        kv_value = setter['kv_value_pos'] or setter['kv_value_local'] or setter['kv_value_global']
 
         if conv_bool(setter['invert']):
             kv_value = '0' if conv_bool(kv_value) else '1'
@@ -55,7 +55,7 @@ def kv_setter(ctx: Context) -> None:
             except (TypeError, ValueError):
                 LOGGER.warning(
                     'Invalid spawnflags mask for comp_kv_setter at ({})!\n'
-                    'Provide an integer, 0x45 hex or 0b01101 binary value.',
+                    'Provide an decimal integer, 0x45 hex or 0b01101 binary value.',
                     mode,
                     setter['origin'],
                 )
@@ -66,7 +66,6 @@ def kv_setter(ctx: Context) -> None:
             flag_enabled = False
             kv_name = kv_name.strip()
 
-        found_ent = None
 
         if not is_flags and not kv_name and not setter.outputs:
             # We have nothing to do?
@@ -76,6 +75,8 @@ def kv_setter(ctx: Context) -> None:
                 'outputs to append.',
                 setter['origin'],
             )
+
+        found_ent = None
 
         for found_ent in ctx.vmf.search(setter['target']):
             if is_flags:

@@ -3,7 +3,7 @@ import math
 from typing import Tuple, List, Optional, Union
 
 from . import nodes
-from .nodes import DestType
+from .nodes import Node, DestType
 from srctools import Vec, Angle
 from srctools.smd import BoneFrame, Mesh
 from random import Random
@@ -74,22 +74,22 @@ class Animation:
         [self.move_bone] = self.mesh.bones.values()
         self.cur_frame = 0
         # For nodes with OnPass outputs, the time to fire each of those.
-        self.pass_points: list[tuple[float, nodes.Node]] = []
+        self.pass_points: List[Tuple[float, nodes.Node]] = []
         # Set of nodes in this animation, to prevent loops.
-        self.history: list[nodes.Node] = [start_node]
+        self.history: List[nodes.Node] = [start_node]
         # The kind of curve used for the current node.
         self.curve_type = DestType.PRIMARY
 
         # The source of the cubes on this animation.
         self.start_node = start_node
         # Either the start point, or the splitter to move in the secondary direction.
-        self.cur_node: Union[nodes.Spawner, nodes.Splitter] = start_node
-        # Once done, the ending node so we can determine if it's a dropper or not.
+        self.cur_node: nodes.Node = start_node
+        # Once done, this is the ending node so that we can determine if it's a dropper or not.
         self.end_node: Optional[nodes.Destroyer] = None
         # When branching, the amount we overshot into this node from last time.
         self.start_overshoot = 0.0
 
-    def tee(self, split: nodes.Splitter, split_type: DestType, overshoot: float) -> 'Animation':
+    def tee(self, split: nodes.Node, split_type: DestType, overshoot: float) -> 'Animation':
         """Duplicate this animation so additional frames can be added.
 
         Note: Does not fully copy, the existing frame data is shared so
@@ -133,7 +133,7 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
     anims = [Animation(node) for node in sources]
 
     for anim in anims:
-        node = anim.cur_node
+        node: Node = anim.cur_node
         speed = anim.start_node.speed / FPS
         offset = anim.start_node.origin.copy()
 
@@ -160,12 +160,12 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
             seg_frames = math.ceil((seg_len - overshoot) / speed)
             for i in range(int(seg_frames)):
                 # Make each frame.
-                pos = (overshoot + speed * i) / seg_len
-                if needs_out and pos > 0.5:
+                fraction = (overshoot + speed * i) / seg_len
+                if needs_out and fraction > 0.5:
                     anim.pass_points.append((anim.duration, node))
                     needs_out = False
                 # Place the point.
-                last_loc = node.vec_point(pos, anim.curve_type)
+                last_loc = node.vec_point(fraction, anim.curve_type)
                 anim.add_point(last_loc - offset)
 
             # If short, we might not have placed the output.
@@ -183,6 +183,7 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
 
             # Now generate the straight part between this node and the next.
             next_node = node.outputs[anim.curve_type]
+            assert next_node is not None
             cur_end = node.vec_point(1.0, anim.curve_type)
             straight_off = next_node.vec_point(0.0) - cur_end
 
@@ -199,7 +200,7 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
 
                 for i in range(int(seg_frames)):
                     # Make each frame.
-                    pos = cur_end + ((overshoot + speed * i) / straight_dist) * straight_off
+                    pos = cur_end + straight_off * ((overshoot + speed * i) / straight_dist)
                     anim.add_point(pos - offset)
 
                 overshoot += (speed * seg_frames) - straight_dist
@@ -207,7 +208,8 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
                 overshoot += straight_off.mag()
 
             # And advance to the next node.
-            anim.cur_node = node = next_node
+            anim.cur_node = next_node
+            node = next_node
             anim.history.append(node)
 
             # We only do secondary for the first node, we always continue

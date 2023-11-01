@@ -39,7 +39,7 @@
 	fadescale(float) : "Fade Scale": 0
 
 	parentname(target_destination) : "Parent"
-	parent_attachment_point[srctools](string) : "Attachment Point" 
+	parent_attachment_point[srctools](string) : "[HA] Attachment Point" 
 
 	responseContext(string) : "Response Context" : ""
 	addon(string) : "AI Addon" : : "Broken ASW feature."

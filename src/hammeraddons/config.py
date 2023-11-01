@@ -372,6 +372,13 @@ STUDIOMDL = Opt.string(
     """,
 )
 
+MODEL_COMPILE_DUMP = Opt.string(
+    'modelcompile_dump', '',
+    """If set, models will be compiled as subfolders of this folder, instead of in a 
+    temporary directory. The specified folder will be emptied at the start of each compile, to 
+    prevent it filling up with old model sources. Move things out that you want to keep.
+""")
+
 USE_COMMA_SEP = Opt.boolean_or_none(
     'use_comma_sep',
     """Before L4D, entity I/O used ',' to seperate the different parts.
@@ -409,15 +416,26 @@ PROPCOMBINE_VOLUME_TOLERANCE = Opt.floating(
     the combined version will be used. If negative, this will not be done.
     """
 )
-PROPCOMBINE_AUTO_RANGE = Opt.integer(
+PROPCOMBINE_MIN_AUTO_RANGE = Opt.integer(
     'propcombine_auto_range', 0,
     """If greater than zero, combine props at least this close together.""",
 )
+PROPCOMBINE_MAX_AUTO_RANGE = Opt.integer_or_none(
+    'propcombine_max_auto_range',
+    """If set, do not automatically combine props further away than this from each other.""",
+)
 
-PROPCOMBINE_MIN_CLLUSTER = Opt.integer(
+PROPCOMBINE_MIN_CLUSTER = Opt.integer(
     'propcombine_min_cluster', 2,
     """The minimum number of props required before propcombine will
-    bother merging them. Should be greater than 1.
+    bother merging them, in propcombine volumes. Should be greater than 1.
+    """,
+)
+
+PROPCOMBINE_MIN_CLUSTER_AUTO = Opt.integer(
+    'propcombine_min_cluster_auto', 0,
+    """The minimum number of props required before the automatic propcombine clustering will
+    merge the props. If less than or equal to 1, `propcombine_min_cluster` is used.
     """,
 )
 

@@ -1,4 +1,5 @@
 @SolidClass base(Trigger) 
+	line(255 255 0, targetname, jumpdestname)
 	appliesto(ASW) = trigger_asw_jump: "A trigger volume that causes Swarm Drones to jump when they come into contact with it"
 	[
 	jumpdestname(target_destination) : "Jump Destination Name" : : "The name of the item Drones should jump to (use an info_target)."

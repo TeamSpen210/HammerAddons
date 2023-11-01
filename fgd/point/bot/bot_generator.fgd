@@ -1,14 +1,15 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(TF2)
 	autovis(TF2, TFBots, Bot Generator)
+	iconsprite("editor/ficool2/bot_generator")
 = bot_generator: "Entity spawns <count> TFBots every <interval> seconds, with at most <maxActive> active at once"
 	[
 	team[engine](string) : "Team" : "auto"
 	team(choices) : "Team" : "auto" : "Team" =
 		[
 		"auto": "Any"
-		"red": "Red"
-		"blue": "Blue"
+		"red": "RED"
+		"blue": "BLU"
 		]
 
 	class[engine](string) : "Class" : "auto"

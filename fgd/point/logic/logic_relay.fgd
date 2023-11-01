@@ -7,7 +7,7 @@
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
-		1: "Only trigger once" : 0
+		1: "Only trigger once (remove after OnSpawn or OnTrigger outputs fire)" : 0
 		2: "Allow fast retrigger" : 0
 		]
 

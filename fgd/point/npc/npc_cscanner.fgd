@@ -4,6 +4,7 @@
 	autovis(Entities, NPCs, Combine, City Scanner)
 = npc_cscanner: "City Scanner"
 	[
+	model[engine](string) : "Hammer Preview"
 	model[!engine](choices) : "[H] Model" : "models/combine_scanner.mdl" : "These become Claw Scanners if the map name starts with 'd3_c17'. "+
 	"Use this to change the model shown in Hammer." =
 		[

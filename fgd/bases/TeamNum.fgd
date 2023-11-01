@@ -5,7 +5,7 @@
 		[
 		0: "Any"
 		2: "RED"
-		3: "BLU/ROBOTS"
+		3: "BLU/Robots"
 		5 : "Halloween Bosses"
 		1 : "Spectator / Halloween Souls"
 		]
@@ -14,13 +14,15 @@
 		[
 		-1: "None"
 		0: "All Teams"
+		1: "Spectators" [+complete]
 		2: "Terrorist"
 		3: "Counter-Terrorist"
 		]
 		
 	teamnum[P2](choices) : "Team" : 0 = 
 		[
-		0: "Chell/Bendy"
+		0: "Singleplayer/Unassigned"
+		1: "Spectators" [+complete]
 		2: "P-Body"
 		3: "ATLAS"
 		]

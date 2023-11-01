@@ -5,6 +5,7 @@
 	[
 	@resources
 		[
+		weapon_script "scripts/weapon_smg1.txt"
 		entity grenade_ar2
 		]
 	]

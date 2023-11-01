@@ -11,7 +11,8 @@
 		4 : "Not puntable by Gravity Gun" : 0 [MBase]
 		8 : "Deny NPC pickup (reserve for player)" : 0 [MBase]
 		64 : "Always touchable (no obstruction checking)" : 0 [MBase]
-		1073741824: "Never Respawn" : 0 [TF2]
+		// Technically in every game, but most won't use it
+		1073741824: "Never respawn in multiplayer" : 0 [HL2DM, TF2, complete]
 		]
 
 	powerup_model[TF2](string) : "Model" : : "Change the model to something other than the default model."

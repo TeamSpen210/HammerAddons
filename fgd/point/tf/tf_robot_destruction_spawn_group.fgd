@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
+	iconsprite("editor/ficool2/tf_robot_destruction_spawn_group")
 	appliesto(TF2) = tf_robot_destruction_spawn_group: "Robot Destruction spawn group. This groups the Robot Destruction spawn points"
 	[
 	respawn_time(float) : "Respawn Time" : 0 : "Respawn time for this group"
@@ -7,6 +8,8 @@
 	team_number[engine](integer): "Team Number" : 2
 	team_number(choices) : "Team Number" : 2 =
 		[
+		0: "Unassigned" [+complete]
+		1: "Spectators" [+complete]
 		2: "RED"
 		3: "BLU"
 		]

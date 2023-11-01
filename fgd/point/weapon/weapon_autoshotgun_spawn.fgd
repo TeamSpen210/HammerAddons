@@ -4,4 +4,8 @@
 	studioprop("models/w_models/Weapons/w_autoshot_m4super.mdl")
 = weapon_autoshotgun_spawn: "Auto Shotgun"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_autoshotgun.txt"
+		]
 	]

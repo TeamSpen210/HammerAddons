@@ -10,7 +10,7 @@
 	filedest(string): "Destination Filename": : "Filename to pack under."
 	
 	filetype[engine](string): "File Type": "GENERIC" : "File type to record it as."
-	filetype(choices): "File Type": "GENERIC" : "File type to record it as." = 
+	filetype(choices): "File Type": "GENERIC" : "File type to record it as. For Model files, the .vtx/vtx/phy etc files are also packed automatically." = 
 		[
 		"GENERIC": "Generic"
 		"SOUNDSCRIPT": "SoundScript file (add to manifest)"

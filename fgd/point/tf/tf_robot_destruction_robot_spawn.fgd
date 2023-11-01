@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(TF2) 
-	studio("models/bots/bot_worker/bot_worker_a.mdl") 
+	iconsprite("editor/ficool2/tf_robot_destruction_robot_spawn")
 	line(255 255 255, targetname, startpath)
 	line(255 255 0, targetname, spawngroup)
 = tf_robot_destruction_robot_spawn: "Robot Destruction Robot spawn point."

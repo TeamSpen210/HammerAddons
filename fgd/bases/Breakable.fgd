@@ -7,7 +7,7 @@
 	explodemagnitude(integer) : "Explode Magnitude" : 0 : "If non-zero, when this entity breaks it will create an explosion that causes the specified amount of damage."
 
 	performancemode[engine](integer) : "Performance Mode" : 0
-	performancemode[complete](choices) : "Performance Mode" : 0 : "Used to limit the amount of gibs produced when this entity breaks, for performance reasons." =
+	performancemode(choices) : "Performance Mode" : 0 : "Used to limit the amount of gibs produced when this entity breaks, for performance reasons." =
 		[
 		0: "Normal"
 		1: "No Gibs"

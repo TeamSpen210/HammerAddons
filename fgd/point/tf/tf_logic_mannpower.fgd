@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
+	iconsprite("editor/ficool2/tf_logic_mannpower")
 	appliesto(TF2) = tf_logic_mannpower: "When present, this activates Mannpower Mode."
 	[
 	]

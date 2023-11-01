@@ -2,5 +2,8 @@
 	appliesto(HL2, EP1, EP2, P1) 
 	studioprop("models/weapons/w_package.mdl") = weapon_citizenpackage: "A Combine ration Citizens are seen retrieving at the start of HL2."
 	[
-	@resources []
+	@resources
+		[
+		weapon_script "scripts/weapon_citizenpackage.txt"
+		]
 	]

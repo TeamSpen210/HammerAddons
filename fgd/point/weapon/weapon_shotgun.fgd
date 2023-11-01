@@ -3,5 +3,8 @@
 	autovis(Weapons, HL2 Weapons, Shotgun)
 	studioprop("models/weapons/w_shotgun.mdl") = weapon_shotgun: "Shotgun"
 	[
-	@resources []
+	@resources
+		[
+		weapon_script "scripts/weapon_shotgun.txt"
+		]
 	]

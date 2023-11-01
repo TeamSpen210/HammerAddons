@@ -2,7 +2,9 @@
 from __future__ import annotations
 import re
 from collections import defaultdict
-from typing import Type, Optional, Callable, Union
+from typing import Dict, TYPE_CHECKING, Optional, Callable, Union
+
+from typing_extensions import TypeAlias
 
 from srctools.fgd import EntityDef, ValueTypes
 from srctools.logger import get_logger
@@ -14,6 +16,10 @@ from hammeraddons.bsp_transform import trans, Context, check_control_enabled
 
 LOGGER = get_logger(__name__)
 MODES: dict[str, Callable[[Entity, Entity], str]] = {}
+if TYPE_CHECKING:
+    EllipsisType: TypeAlias = ellipsis  # Fake name before 3.10
+else:
+    EllipsisType = type(...)
 
 
 def vs_vec(vec: Vec) -> str:
@@ -68,7 +74,7 @@ class VarData:
                 for x in array
             ]))
         else:
-            return self.scalar
+            return self.scalar if self.scalar is not None else 'null'
 
 
 @trans('comp_scriptvar_setter')
@@ -78,12 +84,12 @@ def comp_scriptvar(ctx: Context):
     set_vars: dict[Entity | None, dict[str, VarData]] = defaultdict(lambda: defaultdict(VarData))
     # If the index is None, there's no index.
     # If an int, that specific one.
-    # If ..., blank index and it's inserted anywhere that fits.
+    # If ..., blank index, and it's inserted anywhere that fits.
 
     for comp_ent in ctx.vmf.by_class['comp_scriptvar_setter']:
         comp_ent.remove()
         var_name = comp_ent['variable']
-        index: Union[int, Type[Ellipsis], None] = None
+        index: Union[int, EllipsisType, None] = None
 
         if not check_control_enabled(comp_ent):
             continue
@@ -339,7 +345,7 @@ MODES.update(
 )
 
 # Keyvalue types -> equivalent Squirrel code, if not just stringified.
-KEYVALUES = {
+KEYVALUES: Dict[ValueTypes, Callable[[str], str]] = {
     ValueTypes.VOID: lambda val: 'null',
     ValueTypes.SPAWNFLAGS: str,
 

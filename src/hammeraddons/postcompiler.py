@@ -13,23 +13,38 @@ warnings.filterwarnings(category=DeprecationWarning, module='srctools', action='
 
 from typing import Dict, List, Optional
 from collections import defaultdict
-from logging import FileHandler
+from logging import FileHandler, StreamHandler
 import argparse
+import math
 import os
 import re
+import shutil
 
 from srctools import __version__ as version_lib, conv_bool
-from srctools.bsp import BSP
-from srctools.fgd import FGD
+from srctools.bsp import BSP, BSP_LUMPS
 from srctools.filesys import ZipFileSystem
 from srctools.packlist import PackList
 
-from hammeraddons import __version__ as version_haddons, config, propcombine
+from hammeraddons import (
+    BINS_PATH, __version__ as version_haddons, config, mdl_compiler, propcombine,
+)
 from hammeraddons.bsp_transform import run_transformations
 from hammeraddons.move_shim import install as install_depmodule_hook
 
 
 install_depmodule_hook()
+
+
+def format_bytesize(val: float) -> str:
+    """Add mb, gb etc suffixes to a size in bytes."""
+    if val < 1024:
+        return f'{val} bytes'  # No rounding.
+    val /= 1024.0
+    for size in ['kB', 'mB', 'gB']:
+        if val <= 1024.0:
+            return f'{val:.3f}{size}'
+        val /= 1024.0
+    return f'{val:.03f}tB'
 
 
 async def main(argv: List[str]) -> None:
@@ -53,6 +68,22 @@ async def main(argv: List[str]) -> None:
         dest="allow_pack",
         action="store_false",
         help="Prevent packing of files found in the map."
+    )
+    parser.add_argument(
+        "--nosaving",
+        dest="allow_save",
+        action="store_false",
+        help="For testing purposes, allow skipping saving the BSP.",
+    )
+    parser.add_argument(
+        "--regenerate",
+        action="store_true",
+        help="Force models and similar resources to be regnerated.",
+    )
+    parser.add_argument(
+        '-v', '--verbose',
+        action="store_true",
+        help="Show DEBUG level messages.",
     )
     parser.add_argument(
         "--propcombine",
@@ -79,6 +110,16 @@ async def main(argv: List[str]) -> None:
 
     if args.showgroups:
         LOGGER.warning('--showgroups is not implemented. r_colorstaticprops does the same thing ingame.')
+    if args.verbose:
+        # Find the stdout handler, make it DEBUG mode.
+        for handler in LOGGER.handlers:
+            if isinstance(handler, StreamHandler) and handler.stream is sys.stdout:
+                handler.setLevel('DEBUG')
+                break
+        else:
+            LOGGER.warning('Could not set stdout handler to DEBUG mode.')
+
+    mdl_compiler.force_regen = args.regenerate
 
     # The path is the last argument to the compiler.
     # Hammer adds wrong slashes sometimes, so fix that.
@@ -139,6 +180,19 @@ async def main(argv: List[str]) -> None:
         LOGGER.warning('No studiomdl path provided.')
         studiomdl_loc = None
 
+    modelcompile_dump_str = conf.opts.get(config.MODEL_COMPILE_DUMP)
+    modelcompile_dump = conf.expand_path(modelcompile_dump_str) if modelcompile_dump_str else None
+    if modelcompile_dump is not None:
+        LOGGER.info('Clearing model compile dump folder {}', modelcompile_dump)
+        try:
+            for file in modelcompile_dump.iterdir():
+                if file.is_dir():
+                    shutil.rmtree(file)
+                else:
+                    file.unlink()
+        except FileNotFoundError:
+            pass  # Already empty.
+
     use_comma_sep = conf.opts.get(config.USE_COMMA_SEP)
     if use_comma_sep is None:
         # Guess the format, by checking existing outputs.
@@ -176,6 +230,7 @@ async def main(argv: List[str]) -> None:
         studiomdl_loc,
         transform_conf,
         pack_tags,
+        modelcompile_dump=modelcompile_dump,
     )
 
     if studiomdl_loc is not None and args.propcombine:
@@ -193,11 +248,14 @@ async def main(argv: List[str]) -> None:
             if 'CROWBAR_LOC' in os.environ:
                 crowbar_loc = Path(os.environ['CROWBAR_LOC']).resolve()
             else:
-                crowbar_loc = Path(sys.argv[0], '../Crowbar.exe').resolve()
+                crowbar_loc = Path(BINS_PATH, 'Crowbar.exe').resolve()
         else:
             crowbar_loc = None
 
         LOGGER.info('Combining props...')
+        max_auto_range: Optional[float] = conf.opts.get(config.PROPCOMBINE_MAX_AUTO_RANGE)
+        if not max_auto_range:
+            max_auto_range = math.inf
         await propcombine.combine(
             bsp_file,
             bsp_file.ents,
@@ -207,10 +265,13 @@ async def main(argv: List[str]) -> None:
             qc_folders=conf.opts.get(config.PROPCOMBINE_QC_FOLDER).as_array(conv=conf.expand_path),
             decomp_cache_loc=decomp_cache_loc,
             crowbar_loc=crowbar_loc,
-            auto_range=conf.opts.get(config.PROPCOMBINE_AUTO_RANGE),
-            min_cluster=conf.opts.get(config.PROPCOMBINE_MIN_CLLUSTER),
+            min_auto_range=conf.opts.get(config.PROPCOMBINE_MIN_AUTO_RANGE),
+            max_auto_range=max_auto_range,
+            min_cluster=conf.opts.get(config.PROPCOMBINE_MIN_CLUSTER),
+            min_cluster_auto=conf.opts.get(config.PROPCOMBINE_MIN_CLUSTER_AUTO),
             blacklist=conf.opts.get(config.PROPCOMBINE_BLACKLIST).as_array(),
             volume_tolerance=conf.opts.get(config.PROPCOMBINE_VOLUME_TOLERANCE),
+            compile_dump=modelcompile_dump,
             debug_dump=args.dumpgroups,
             pack_models=conf.opts.get(config.PROPCOMBINE_PACK) or False,
         )
@@ -280,13 +341,13 @@ async def main(argv: List[str]) -> None:
 
     # List out all the files, but group together files with the same extension.
     ext_for_name: Dict[str, List[str]] = defaultdict(list)
-    for file in bsp_file.pakfile.infolist():
-        filename = Path(file.filename)
+    for zip_info in bsp_file.pakfile.infolist():
+        filename = Path(zip_info.filename)
         if '.' in filename.name:
             stem, ext = filename.name.split('.', 1)
             file_path = str(filename.parent / stem)
         else:
-            file_path = file.filename
+            file_path = zip_info.filename
             ext = ''
 
         ext_for_name[file_path].append(ext)
@@ -299,8 +360,13 @@ async def main(argv: List[str]) -> None:
         for name, exts in sorted(ext_for_name.items())
     ])))
 
-    LOGGER.info('Writing BSP...')
-    bsp_file.save()
+    if args.allow_save:
+        LOGGER.info('Writing BSP...')
+        bsp_file.save()
+
+    LOGGER.info('Packfile size: {}', format_bytesize(
+        len(bsp_file.lumps[BSP_LUMPS.PAKFILE].data)
+    ))
 
     try:
         from srctools.fgd import _engine_db_stats  # noqa

@@ -3,4 +3,7 @@
 	appliesto(MBase)
 	studioprop() 
 	sphere(fademindist) sphere(fademaxdist) 
-= weapon_custom_scripted1: "Scripted Weapon 1" []
+= weapon_custom_scripted1: "Scripted Weapon 1" 
+	[
+
+	]
