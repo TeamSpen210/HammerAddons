@@ -1,4 +1,5 @@
 """Build the postcompiler script."""
+import shutil
 from pathlib import Path
 
 from PyInstaller.utils.hooks import collect_submodules
@@ -24,14 +25,9 @@ with open(Path(SPECPATH, 'src', 'hammeraddons', '_version.py'), 'w') as f:
     f.write(f'__version__ = {version!r}\n')
 
 DATAS = [
-    (str(file), str(file.relative_to(root).parent))
-    for file in (root / 'transforms').rglob('*.py')
-] + [
     (str(root / 'crowbar_command/Crowbar.exe'), '.'),
     (str(root / 'crowbar_command/FluentCommandLineParser.dll'), '.'),
 ]
-for src, dest in DATAS:
-    print(src, '->', dest)
 
 a = Analysis(
     ['src/hammeraddons/postcompiler.py'],
@@ -64,6 +60,8 @@ exe = EXE(
     name='postcompiler',
     debug=False,
     bootloader_ignore_signals=False,
+    # Don't use bin/, in case someone puts this right in a game dir.
+    contents_directory='binaries',
     strip=False,
     upx=True,
     console=True,
@@ -78,3 +76,11 @@ coll = COLLECT(
     upx=True,
     name='postcompiler'
 )
+
+# Copy transforms to the same place as the EXE, not into the binaries subfolder.
+app_folder = Path(coll.name)
+for file in (root / 'transforms').rglob('*.py'):
+    dest = app_folder / file.relative_to(root)
+    print(file, '->', dest)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy(file, dest)

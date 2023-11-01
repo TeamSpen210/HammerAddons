@@ -14,18 +14,20 @@ warnings.filterwarnings(category=DeprecationWarning, module='srctools', action='
 from typing import Dict, List, Optional
 from collections import defaultdict
 from logging import FileHandler, StreamHandler
-import math
-import shutil
 import argparse
+import math
 import os
 import re
+import shutil
 
 from srctools import __version__ as version_lib, conv_bool
 from srctools.bsp import BSP, BSP_LUMPS
 from srctools.filesys import ZipFileSystem
 from srctools.packlist import PackList
 
-from hammeraddons import __version__ as version_haddons, config, propcombine, mdl_compiler
+from hammeraddons import (
+    BINS_PATH, __version__ as version_haddons, config, mdl_compiler, propcombine,
+)
 from hammeraddons.bsp_transform import run_transformations
 from hammeraddons.move_shim import install as install_depmodule_hook
 
@@ -246,7 +248,7 @@ async def main(argv: List[str]) -> None:
             if 'CROWBAR_LOC' in os.environ:
                 crowbar_loc = Path(os.environ['CROWBAR_LOC']).resolve()
             else:
-                crowbar_loc = Path(sys.argv[0], '../Crowbar.exe').resolve()
+                crowbar_loc = Path(BINS_PATH, 'Crowbar.exe').resolve()
         else:
             crowbar_loc = None
 
