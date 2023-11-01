@@ -10,8 +10,8 @@
 	// If not in CSGO or Hammer++, this isn't going to do anything so change help.
 	// FIXME: We could maybe replace the hammerplusplus_fgd.fgd file to make these only appear when actually using hammer++
 	message[until_CSGO](string) : "Message" : : "A text field for entering any notes. If you are using Hammer++, this will also appear in the 3D view."
-	textsize[since_CSGO](float) : "Text Size" : 10 : "Size of the text in the 3D view (Hammer++)"
-	color[since_CSGO](color255) : "Color" : "255 255 255" : "Color of the text in the 3D view (Hammer++)"
+	textsize[until_CSGO](float) : "Text Size" : 10 : "Size of the text in the 3D view (Hammer++)"
+	color[until_CSGO](color255) : "Color" : "255 255 255" : "Color of the text in the 3D view (Hammer++)"
 	message[since_CSGO](string) : "Display Message" : : "Text to display in the 3D view"
 	textsize[since_CSGO](float) : "Text Size" : 10 : "Size of the text in the 3D view"
 	color[since_CSGO](color255) : "Color" : "255 255 255" : "Color of the text in the 3D view"
