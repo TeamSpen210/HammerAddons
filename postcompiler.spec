@@ -1,6 +1,7 @@
 """Build the postcompiler script."""
 from pathlib import Path
 
+from PyInstaller.utils.hooks import collect_submodules
 import versioningit
 
 # PyInstaller-injected.
@@ -38,12 +39,15 @@ a = Analysis(
     datas=DATAS,
     hiddenimports=[
         # Ensure these modules are available for plugins.
-        'abc', 'array', 'base64', 'binascii', 'binhex', 'graphlib',
+        'abc', 'array', 'base64', 'binascii', 'graphlib',
         'bisect', 'colorsys', 'collections', 'csv', 'datetime', 'contextlib',
         'decimal', 'difflib', 'enum', 'fractions', 'functools',
         'io', 'itertools', 'json', 'math', 'random', 're',
         'statistics', 'string', 'struct',
-        'srctools', 'attr', 'attrs',
+        *collect_submodules('srctools', filter=lambda name: 'scripts' not in name),
+        *collect_submodules('attr'),
+        *collect_submodules('attrs'),
+        *collect_submodules('hammeraddons'),
     ],
     excludes=[
         'IPython',  # Via trio
