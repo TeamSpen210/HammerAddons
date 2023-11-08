@@ -287,6 +287,7 @@ async def vactube_transform(ctx: Context) -> None:
         origin='-16384 0 1024',
         model=nodes.CUBE_MODEL,
         solid=0,
+        disableshadows=1,
         spawnflags=64 | 256,  # Use Hitboxes for Renderbox, collision disabled.
     )
     ctx.vmf.create_ent(
