@@ -17,6 +17,7 @@ from srctools import Vec, Output, conv_int
 
 from hammeraddons.bsp_transform import trans, Context
 from . import nodes, animations, objects
+from .sensors import Sensor
 
 
 LOGGER = srctools.logger.get_logger(__name__)
@@ -127,6 +128,9 @@ async def vactube_transform(ctx: Context) -> None:
         )
 
     LOGGER.info('{} vactube objects found.', obj_count)
+
+    all_sensors = list(Sensor.parse(ctx.vmf))
+    LOGGER.info('{} vactube sensors found.', len(all_sensors))
 
     # Now join all the nodes to each other.
     # Tubes only have 90 degree bends, so a system should mostly be formed
