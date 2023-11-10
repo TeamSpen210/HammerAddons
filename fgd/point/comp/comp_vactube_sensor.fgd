@@ -1,0 +1,14 @@
+@PointClass base(Angles)
+	appliesto(+P2, +srctools)
+	autovis(Vactubes, Vac Paths)
+	sphere(radius)
+= comp_vactube_sensor: "Detects vactube objects travelling through a path, and fires outputs."
+	[
+	radius(float) : "Radius" : 32 : "The vactube path must intersect this sphere to be detected."
+
+	obj_model(studio) : "Cube" : : "If set, only objects which match this cube model will be detected."
+
+	output OnEnter(void) : "Fired when an object enters the sphere."
+	output OnPass(void) : "Fired when an object is midway through passing through the sphere."
+	output OnExit(void) : "Fired when an object leaves the sphere."
+	]
