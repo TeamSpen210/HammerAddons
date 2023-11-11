@@ -208,7 +208,7 @@ def generate(sources: List[nodes.Spawner], sensors: List[Sensor]) -> List[Animat
                 if DestType.TERTIARY in node.out_types:
                     anims.append(anim.tee(node, DestType.TERTIARY, overshoot))
 
-            needs_out = node.has_pass
+            needs_out = node.pass_relay is not None
 
             seg_len = node.path_len(anim.curve_type)
             seg_frames = math.ceil((seg_len - overshoot) / speed)

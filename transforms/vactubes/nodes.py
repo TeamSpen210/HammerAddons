@@ -7,11 +7,12 @@ from enum import Enum
 from typing import Tuple, Iterator, Iterable, Dict, Optional, List, ClassVar
 
 import srctools.logger
-from srctools import Vec, Entity, VMF, Output, conv_bool, Angle, Matrix, lerp
+from srctools import Vec, Entity, VMF, Output, conv_bool, Matrix, lerp
+
+from hammeraddons.bsp_transform.common import RelayOut
 
 
 LOGGER = srctools.logger.get_logger(__name__)
-PASS_OUT = 'User4'  # User output to use to trigger onPass etc outputs.
 CUBE_MODEL = 'models/props/metal_box.mdl'
 # A bit smaller than the size of the model, so we can determine when to
 # start/stop showing ents on the screen.
@@ -77,8 +78,9 @@ class Node(ABC):
     keep_ent: ClassVar[bool] = False
     # The outputs the item can use.
     out_types: ClassVar[Iterable[DestType]] = ()
-
-    def __init__(self, ent: Entity) -> None:
+    # If OnPass is present, use this relay for the input.
+    pass_relay: Optional[RelayOut]
+    def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut]) -> None:
         self.origin = Vec.from_str(ent['origin'])
         self.matrix = Matrix.from_angstr(ent['angles'])
         self.ent = ent
@@ -87,22 +89,15 @@ class Node(ABC):
         # DestType -> output.
         self.outputs: Dict[DestType, Optional[Node]] = dict.fromkeys(self.out_types, None)
         # Outputs fired when cubes reach this point.
-        pass_outputs = [
-            out for out in ent.outputs
-            if out.output.casefold() == self.pass_out_name
-        ]
-        self.has_pass = bool(pass_outputs)
-        if self.has_pass:
-            for out in pass_outputs:
-                out.output = 'On' + PASS_OUT
-            if ent['classname'].startswith('comp_'):
-                # Remove the extra keyvalues we use.
-                ent['classname'] = 'info_target'
-                for key in list(ent):
-                    if key not in ['classname', 'origin', 'targetname', 'angles']:
-                        del ent[key]
-            ent.make_unique('_vac_node')
-        elif not self.keep_ent:
+        self.pass_relay = None
+        for out in ent.outputs:
+            if out.output.casefold() == self.pass_out_name:
+                if self.pass_relay is None:
+                    self.pass_relay = next(relay_maker)
+                out.output = self.pass_relay.output
+                self.pass_relay.ent.add_out(out)
+
+        if not self.keep_ent:
             ent.remove()
 
     @property
@@ -146,14 +141,14 @@ class Node(ABC):
 def parse(vmf: VMF, relay_maker: Iterator[RelayOut]) -> Iterator[Node]:
     """Parse out all the vactube nodes from the VMF."""
     for ent in vmf.by_class['comp_vactube_start']:
-        yield Spawner(ent)
+        yield Spawner(ent, relay_maker)
 
     for ent in vmf.by_class['comp_vactube_end']:
         cube_radius = srctools.conv_float(ent['radius'])
         if cube_radius > 0:
-            yield Dropper.parse(vmf, ent, cube_radius)
+            yield Dropper.parse(vmf, ent, relay_maker, cube_radius)
         else:
-            yield Destroyer(ent)
+            yield Destroyer(ent, relay_maker)
 
     for ent in vmf.by_class['comp_vactube_junction']:
         is_reversed = srctools.conv_int(ent['skin']) == 1
@@ -167,22 +162,22 @@ def parse(vmf: VMF, relay_maker: Iterator[RelayOut]) -> Iterator[Node]:
             )
         model = model[23:]
         if model == "straight.mdl":
-            yield Straight(ent)
+            yield Straight(ent, relay_maker)
         elif model == "diag_curve.mdl":
-            yield DiagCurve(ent, is_reversed, False)
+            yield DiagCurve(ent, relay_maker, is_reversed, False)
         elif model == "diag_curve_mirror.mdl":
-            yield DiagCurve(ent, is_reversed, True)
+            yield DiagCurve(ent, relay_maker, is_reversed, True)
         elif model[:6] == "curve_" and model[-4:] == ".mdl":
             # Each curve has a 64 units wider radius. Parse the model,
             # so users can add larger curves if they want.
             ind = int(model[6:-4])
-            yield Curve(ent, 64.0 * ind, is_reversed)
+            yield Curve(ent, relay_maker, 64.0 * ind, is_reversed)
         elif model == "splitter_straight.mdl":
-            yield Splitter(ent, True)
+            yield Splitter(ent, relay_maker, True)
         elif model == "splitter_sides.mdl":
-            yield Splitter(ent, False)
+            yield Splitter(ent, relay_maker, False)
         elif model == "splitter_triple.mdl":
-            yield CrossSplitter(ent)
+            yield CrossSplitter(ent, relay_maker)
         else:
             raise ValueError(
                 f'Model "{orig_mdl}" is not a valid vactube '
@@ -197,8 +192,8 @@ class Spawner(Node):
     keep_ent = True
     out_types = [DestType.PRIMARY]
 
-    def __init__(self, ent: Entity) -> None:
-        super().__init__(ent)
+    def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut]) -> None:
+        super().__init__(ent, relay_maker)
         self.group = ent['group'].casefold().strip()
         self.speed = srctools.conv_float(ent['speed'], 800.0)
         timer_int = srctools.conv_int(ent['timer'], 1)
@@ -263,9 +258,12 @@ class Spline(Node):
     out_types: ClassVar[Iterable[DestType]] = [DestType.PRIMARY]
     _vmf = VMF()
 
-    def __init__(self, origin: Vec, points: List[Vec]) -> None:
+    def __init__(self, relay_maker: Iterator[RelayOut], origin: Vec, points: List[Vec]) -> None:
         # Create a dummy entity, we don't really need it.
-        super().__init__(self._vmf.create_ent('comp_vactube_spline', origin=origin))
+        super().__init__(
+            self._vmf.create_ent('comp_vactube_spline', origin=origin),
+            relay_maker,
+        )
         assert len(points) >= 2, 'Not enough points!'
         self.start_norm = (points[1] - points[0]).norm()
         self.end_norm = (points[-1] - points[-2]).norm()
@@ -316,13 +314,13 @@ class Dropper(Destroyer):
     """The endpoint which is linked to/controls a dropper."""
     keep_ent = True
 
-    def __init__(self, ent: Entity, temp: Entity, cube: Entity) -> None:
-        super().__init__(ent)
+    def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut], temp: Entity, cube: Entity) -> None:
+        super().__init__(ent, relay_maker)
         self.template = temp
         self.cube = cube
 
     @classmethod
-    def parse(cls, vmf: VMF, ent: Entity, radius: float) -> 'Dropper':
+    def parse(cls, vmf: VMF, ent: Entity, relay_maker: Iterator[RelayOut], radius: float) -> 'Dropper':
         """Scan the map applying dropper tweaks, then create the Dropper object."""
         filter_name = ent['filtername']
         template_name = ent['template']
@@ -378,15 +376,15 @@ class Dropper(Destroyer):
                 if out.output.casefold() == 'onfizzled'
             ]
         ent.add_out(Output(Dropper.pass_out_name, template, 'ForceSpawn'))
-        return Dropper(ent, template, best_cube)
+        return Dropper(ent, relay_maker, template, best_cube)
 
 
 class Curve(Node):
     """A simple corner node."""
     out_types = [DestType.PRIMARY]
 
-    def __init__(self, ent: Entity, radius: float, reversed: bool) -> None:
-        super().__init__(ent)
+    def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut], radius: float, reversed: bool) -> None:
+        super().__init__(ent, relay_maker)
         self.radius = radius
         self.reversed = reversed
 
@@ -432,8 +430,8 @@ class DiagCurve(Node):
     TOTAL_LEN = CURVE_LEN + STRAIGHT_LEN
     STRAIGHT_PERC = STRAIGHT_LEN / TOTAL_LEN
 
-    def __init__(self, ent: Entity, reversed: bool, flipped: bool) -> None:
-        super().__init__(ent)
+    def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut], reversed: bool, flipped: bool) -> None:
+        super().__init__(ent, relay_maker)
         self.reversed = reversed
         # If flipped, we just want to flip the sign of the Y coord.
         self.y = -1.0 if flipped else 1.0
@@ -482,17 +480,17 @@ class Straight(Node):
     """
     out_types = [DestType.PRIMARY]
 
-    def __init__(self, ent: Entity):
+    def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut]) -> None:
         """Convert the entity to have the right logic."""
         self.persist_tv = conv_bool(ent.pop('persist_tv', False))
-        super(Straight, self).__init__(ent)
+        super(Straight, self).__init__(ent, relay_maker)
 
-    def path_len(self, dest: DestType=DestType.PRIMARY) -> float:
+    def path_len(self, dest: DestType = DestType.PRIMARY) -> float:
         """Return the length of this node, which is always 32 units (arbitrarily)."""
         assert dest is DestType.PRIMARY
         return 32.0
 
-    def vec_point(self, t: float, dest: DestType=DestType.PRIMARY) -> Vec:
+    def vec_point(self, t: float, dest: DestType = DestType.PRIMARY) -> Vec:
         """Return points along the path inside this node."""
         assert dest is DestType.PRIMARY
         return self.origin + Vec(x=32.0*t - 16.0) @ self.matrix
@@ -501,7 +499,7 @@ class Straight(Node):
         """Return the flow direction into the start of this node."""
         return Vec(x=1.0) @ self.matrix
 
-    def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
+    def output_norm(self, dest: DestType = DestType.PRIMARY) -> Vec:
         """Return the flow direction at the end of this curve type."""
         assert dest is DestType.PRIMARY
         return Vec(x=1.0) @ self.matrix
@@ -511,18 +509,18 @@ class Splitter(Node):
     """A T-intersection that either randomly routes cubes or directs them to a dropper."""
     out_types = [DestType.PRIMARY, DestType.SECONDARY]
 
-    def __init__(self, ent: Entity, straight: bool) -> None:
+    def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut], straight: bool) -> None:
         """If straight is true, the primary dir goes forward."""
-        super().__init__(ent)
+        super().__init__(ent, relay_maker)
         self.is_straight = straight
 
-    def path_len(self, dest: DestType=DestType.PRIMARY) -> float:
+    def path_len(self, dest: DestType = DestType.PRIMARY) -> float:
         if self.is_straight and dest is DestType.PRIMARY:
             return 128.0
         else:
             return 64.0 / 4.0 * math.pi
 
-    def vec_point(self, t: float, dest: DestType=DestType.PRIMARY) -> Vec:
+    def vec_point(self, t: float, dest: DestType = DestType.PRIMARY) -> Vec:
         assert dest is not DestType.TERTIARY
         x, y = curve_point(64.0, t)
         if dest is DestType.SECONDARY:
@@ -536,7 +534,7 @@ class Splitter(Node):
         """Return the flow direction at the input side."""
         return Vec(y=1) @ self.matrix
 
-    def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
+    def output_norm(self, dest: DestType = DestType.PRIMARY) -> Vec:
         """Return the flow direction at the end of this curve type."""
         if dest is DestType.SECONDARY:
             return Vec(x=1) @ self.matrix
@@ -555,9 +553,9 @@ class CrossSplitter(Node):
     """
     out_types = [DestType.PRIMARY, DestType.SECONDARY, DestType.TERTIARY]
 
-    def __init__(self, ent: Entity) -> None:
+    def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut]) -> None:
         """If straight is true, the primary dir goes forward."""
-        super().__init__(ent)
+        super().__init__(ent, relay_maker)
 
     def path_len(self, dest: DestType=DestType.PRIMARY) -> float:
         if dest is DestType.SECONDARY:  # Straight through
