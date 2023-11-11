@@ -80,6 +80,9 @@ class Animation:
         # The kind of curve used for the current node.
         self.curve_type = DestType.PRIMARY
 
+        # The animation starts at 0 0 0 in the file.
+        self.start_pos = start_node.origin.freeze()
+
         # The source of the cubes on this animation.
         self.start_node = start_node
         # Either the start point, or the splitter to move in the secondary direction.
@@ -101,6 +104,7 @@ class Animation:
             self.mesh.animation.copy(),
             [],
         )
+        duplicate.start_pos = self.start_pos
         duplicate.curve_type = split_type
         duplicate.rotator = self.rotator.tee()
         duplicate.move_bone = self.move_bone
@@ -120,22 +124,21 @@ class Animation:
         """Return the current duration of the animation."""
         return self.cur_frame / FPS
 
-    def add_point(self, pos: Vec) -> None:
+    def add_point(self, sensors: List[Sensor], pos: Vec) -> None:
         """Add the given point to the end of the animation."""
         self.mesh.animation[self.cur_frame] = [
-            BoneFrame(self.move_bone, pos, Angle(next(self.rotator)))
+            BoneFrame(self.move_bone, pos - self.start_pos, Angle(next(self.rotator)))
         ]
         self.cur_frame += 1
 
 
-def generate(sources: List[nodes.Spawner]) -> List[Animation]:
+def generate(sources: List[nodes.Spawner], sensors: List[Sensor]) -> List[Animation]:
     """Generate all the animations, one by one."""
     anims = [Animation(node) for node in sources]
 
     for anim in anims:
         node: Node = anim.cur_node
         speed = anim.start_node.speed / FPS
-        offset = anim.start_node.origin.copy()
 
         # To keep the speed constant, keep track of any extra we need to offset
         # into the next node.
@@ -166,7 +169,7 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
                     needs_out = False
                 # Place the point.
                 last_loc = node.vec_point(fraction, anim.curve_type)
-                anim.add_point(last_loc - offset)
+                anim.add_point(sensors, last_loc)
 
             # If short, we might not have placed the output.
             if needs_out:
@@ -178,7 +181,7 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
             if isinstance(node, nodes.Destroyer):
                 # We reached the end, finalise!
                 anim.end_node = node
-                anim.add_point(node.origin - offset)
+                anim.add_point(sensors, node.origin)
                 break
 
             # Now generate the straight part between this node and the next.
@@ -201,7 +204,7 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
                 for i in range(int(seg_frames)):
                     # Make each frame.
                     pos = cur_end + straight_off * ((overshoot + speed * i) / straight_dist)
-                    anim.add_point(pos - offset)
+                    anim.add_point(sensors, pos)
 
                 overshoot += (speed * seg_frames) - straight_dist
             else:

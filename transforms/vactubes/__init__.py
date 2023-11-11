@@ -213,7 +213,7 @@ async def vactube_transform(ctx: Context) -> None:
             )
 
     LOGGER.info('Generating animations...')
-    all_anims = animations.generate(sources)
+    all_anims = animations.generate(sources, all_sensors)
     # Sort the animations by their start and end, so they ideally are consistent.
     all_anims.sort(key=lambda a: (a.start_node.origin, a.end_node.origin if a.end_node is not None else Vec()))
 
