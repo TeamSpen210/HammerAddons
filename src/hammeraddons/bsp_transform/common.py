@@ -1,12 +1,13 @@
 """Operations that can be reused across different transforms."""
 import operator
 import re
-from typing import Callable, Dict, Tuple
+from typing import Callable, Dict, Iterator, Tuple, Union
 from decimal import Decimal, InvalidOperation
 
 from typing_extensions import Literal, TypeAlias
+import attrs
 
-from srctools import Entity, conv_bool
+from srctools import Entity, FrozenVec, VMF, Vec, conv_bool
 from srctools.logger import get_logger
 
 
@@ -74,3 +75,28 @@ def check_control_enabled(ent: Entity) -> bool:
     else:
         # Missing, assume true if ctrl_value also isn't present.
         return conv_bool(ent['ctrl_value'], True)
+
+
+@attrs.frozen
+class RelayOut:
+    """Entity name, plus the relay input/output to use."""
+    ent: Entity
+    input: str
+    output: str
+
+    @classmethod
+    def create(cls, vmf: VMF, pos: Union[Vec, FrozenVec], name: str) -> Iterator[Tuple[str, str, str]]:
+        """Generates a valid entity along with a free input/output pair."""
+        # Could also use func_instance_io_proxy, but only in L4D+, and it might be weird.
+        user_outs = [('Trigger', 'OnTrigger')] + [
+            (f'FireUser{x}', f'OnUser{x}')
+            for x in range(1, 5)
+        ]
+        while True:
+            ent = vmf.create_ent(
+                'logic_relay',
+                origin=pos,
+                spawnflags='2',  # Allow fast retrigger
+            ).make_unique(name)
+            for inp, out in user_outs:
+                yield cls(ent, inp, out)
