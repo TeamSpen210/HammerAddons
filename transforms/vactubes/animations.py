@@ -143,7 +143,6 @@ class Animation:
         ]
         self.cur_frame += 1
 
-
     def check_sensors(self, sensors: List[Sensor], pos1: Vec, pos2: Vec) -> None:
         """Check all our sensors, and update values depending on them."""
         if not sensors:  # No sensors, nothing to do.
@@ -154,7 +153,31 @@ class Animation:
         for sensor in sensors:
             intersect = sensor.intersect(pos1, direction, dist)
             if intersect is not None:
-                LOGGER.info('Sensor: {} - {} = {} @ {}', pos1, pos2, intersect, sensor)
+                # We hit the sensor. If we were already inside, check if we're leaving.
+                a, b = intersect
+                if sensor in self.sensor_enter:
+                    start_time = self.sensor_enter[sensor]
+                    if 0 <= b <= dist:
+                        # We're passing out of the sensor.
+                        end_time = (self.cur_frame - 1.0 + b / dist) / FPS
+                        self.sensors.append((start_time, end_time, sensor))
+                        del self.sensor_enter[sensor]
+                    # Else, we are still inside, so nothing to do.
+                elif 0 <= a <= dist:
+                    # Just entered the sensor.
+                    start_time = (self.cur_frame + a / dist) / FPS
+                    if 0 <= b <= dist:
+                        # Special case - entered and exited the same frame.
+                        end_time = (self.cur_frame + b / dist) / FPS
+                        self.sensors.append((start_time, end_time, sensor))
+                    else:
+                        self.sensor_enter[sensor] = start_time
+            elif sensor in self.sensor_enter:
+                # Not intersecting, but was last time. We must have left, assume at the start of
+                # last frame.
+                start_time = self.sensor_enter.pop(sensor)
+                end_time = (self.cur_frame - 1) / FPS
+                self.sensors.append((start_time, end_time, sensor))
 
 
 def generate(sources: List[nodes.Spawner], sensors: List[Sensor]) -> List[Animation]:
