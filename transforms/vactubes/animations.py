@@ -161,6 +161,7 @@ class Animation:
                         # We're passing out of the sensor.
                         end_time = (self.cur_frame - 1.0 + b / dist) / FPS
                         self.sensors.append((start_time, end_time, sensor))
+                        sensor.used = True
                         del self.sensor_enter[sensor]
                     # Else, we are still inside, so nothing to do.
                 elif 0 <= a <= dist:
@@ -170,6 +171,7 @@ class Animation:
                         # Special case - entered and exited the same frame.
                         end_time = (self.cur_frame + b / dist) / FPS
                         self.sensors.append((start_time, end_time, sensor))
+                        sensor.used = True
                     else:
                         self.sensor_enter[sensor] = start_time
             elif sensor in self.sensor_enter:
@@ -178,6 +180,7 @@ class Animation:
                 start_time = self.sensor_enter.pop(sensor)
                 end_time = (self.cur_frame - 1) / FPS
                 self.sensors.append((start_time, end_time, sensor))
+                sensor.used = True
 
 
 def generate(sources: List[nodes.Spawner], sensors: List[Sensor]) -> List[Animation]:

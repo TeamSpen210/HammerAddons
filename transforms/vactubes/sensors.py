@@ -7,8 +7,6 @@ import attrs
 from srctools import Vec, conv_float
 from srctools.vmf import Entity, Output, VMF
 
-SPIN_ANIM = "scan01"
-
 
 @final
 @attrs.define(eq=False, kw_only=True)
@@ -17,8 +15,12 @@ class Sensor:
     # If from a scanner prop, the relevant entities.
     scanner_tv: Optional[Entity]
     scanner_spinner: Optional[Entity]
+    # For each, if their name was initially blank. If we're not used,
+    # reset those.
+    unnamed_tv: bool = False
+    unnamed_spinner: bool = False
 
-    used: bool = False  # Set to indicate this was detected.
+    used: bool = False  # Set to indicate this was used.
     radius: float
     origin: Vec
 
@@ -61,15 +63,26 @@ class Sensor:
             model = ent['model'].casefold().replace('\\', '/')
             # Allow spelling this correctly, if you're not Valve.
             if 'vacum_scanner_tv' in model or 'vacuum_scanner_tv' in model:
+                name = ent['targetname']
+                was_unnamed = (name == '')
+                if was_unnamed:
+                    # Give it a unique name so we can target.
+                    # If it was named, assume the user took care of making it unique, not up
+                    # to us.
+                    ent.make_unique('_vac_scanner')
+                    name = ent['targetname']
                 scanners.append(Sensor(
                     scanner_tv=ent,
                     scanner_spinner=None,
+                    unnamed_tv=was_unnamed,
 
                     radius=48.0,
                     origin=Vec.from_str(ent['origin']),
-                    out_on_enter=(),
+                    out_on_enter=(),  # Assigning skin is special-cased.
                     out_on_mid=(),
-                    out_on_exit=(),
+                    out_on_exit=(
+                        Output('', name, 'Skin', '0'),
+                    ),
                 ))
             elif 'vacum_scanner_motion' in model or 'vacuum_scanner_motion' in model:
                 spinners.append(ent)
@@ -81,6 +94,14 @@ class Sensor:
                 if scan.scanner_spinner is None and (pos - scan.origin).mag_sq() <= 40 ** 2:
                     # Found.
                     scan.scanner_spinner = spin_ent
+                    name = spin_ent['targetname']
+                    scan.unnamed_spinner = (name == '')
+                    if scan.unnamed_spinner:  # Same reasoning as the scanner.
+                        spin_ent.make_unique('_vac_spinner')
+                        name = spin_ent['targetname']
+                    scan.out_on_enter = (
+                        Output('', name, 'SetAnimation', 'scan01'),
+                    )
                     break
             # else: isolated, not important.
         # Only yield now they're linked.
