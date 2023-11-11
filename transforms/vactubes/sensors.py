@@ -1,5 +1,6 @@
 """Entities to allow detecting the motion of vactubes."""
-from typing import Iterator, List, Optional, Sequence, final
+import math
+from typing import Iterator, List, Optional, Sequence, Tuple, final
 
 import attrs
 
@@ -7,6 +8,7 @@ from srctools import Vec, conv_float
 from srctools.vmf import Entity, Output, VMF
 
 SPIN_ANIM = "scan01"
+
 
 @final
 @attrs.define(eq=False, kw_only=True)
@@ -83,3 +85,28 @@ class Sensor:
             # else: isolated, not important.
         # Only yield now they're linked.
         yield from scanners
+
+    def intersect(self, start: Vec, direction: Vec, dist: float) -> Optional[Tuple[float, float]]:
+        """Check if a line segment intersects this sensor.
+
+        The line is defined by `start + direction * dist`. The return value is None if it doesn't
+        intersect, or a (start, end) fraction where both are between [0, dist] and start < end. If the
+        line segment actually touches at a single point, it's expanded into a 1 unit line.
+        """
+        off = start - self.origin
+        dot = Vec.dot(direction, off)
+        delta = dot**2 - (off.mag_sq() - self.radius**2)
+        if delta < -1e-9:
+            return None
+        elif delta > 1e-9:
+            # Two solutions.
+            root = math.sqrt(delta)
+            pos1 = -dot-root
+            pos2 = -dot+root
+            if pos2 < 0.0 or pos1 > dist:
+                # The infinite line intersects, but not the part we care about.
+                return None
+            return pos1, pos2
+        else:
+            # One solution, treat as two.
+            return -dot - 0.5, -dot + 0.5

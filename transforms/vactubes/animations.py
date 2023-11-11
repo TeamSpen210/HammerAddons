@@ -1,10 +1,12 @@
 """Handles generating the animation model for the vactubes."""
 import math
-from typing import Tuple, List, Optional, Union
+from typing import Dict, Tuple, List, Optional, Union
+
 
 from . import nodes
 from .nodes import Node, DestType
-from srctools import Vec, Angle
+from .sensors import Sensor
+from srctools import Vec, Angle, logger
 from srctools.smd import BoneFrame, Mesh
 from random import Random
 
@@ -13,6 +15,7 @@ def limit(x: float, num: float) -> float:
     """Clamp x to within ±num."""
     return min(num, max(-num, x))
 
+LOGGER = logger.get_logger(__name__)
 # Max angular acceleration per frame
 ROT_ACC = 4.0
 # Max angular speed per frame
@@ -75,6 +78,10 @@ class Animation:
         self.cur_frame = 0
         # For nodes with OnPass outputs, the time to fire each of those.
         self.pass_points: List[Tuple[float, nodes.Node]] = []
+        # For sensors that we're currently inside, the time at which we entered them.
+        self.sensor_enter: Dict[Sensor, float] = {}
+        # Sensors we have passed through, and the start/end time.
+        self.sensors: List[Tuple[float, float, Sensor]] = []
         # Set of nodes in this animation, to prevent loops.
         self.history: List[nodes.Node] = [start_node]
         # The kind of curve used for the current node.
@@ -111,6 +118,8 @@ class Animation:
         duplicate.cur_frame = self.cur_frame
         duplicate.history = self.history.copy()
         duplicate.pass_points = self.pass_points.copy()
+        duplicate.sensor_enter = self.sensor_enter.copy()
+        duplicate.sensors = self.sensors.copy()
 
         duplicate.start_node = self.start_node
         duplicate.cur_node = split
@@ -126,10 +135,26 @@ class Animation:
 
     def add_point(self, sensors: List[Sensor], pos: Vec) -> None:
         """Add the given point to the end of the animation."""
+        if self.cur_frame != 0:  # Handle sensors, if we're not the first frame.
+            previous = self.mesh.animation[self.cur_frame - 1][0].position
+            self.check_sensors(sensors, previous + self.start_pos, pos)
         self.mesh.animation[self.cur_frame] = [
             BoneFrame(self.move_bone, pos - self.start_pos, Angle(next(self.rotator)))
         ]
         self.cur_frame += 1
+
+
+    def check_sensors(self, sensors: List[Sensor], pos1: Vec, pos2: Vec) -> None:
+        """Check all our sensors, and update values depending on them."""
+        if not sensors:  # No sensors, nothing to do.
+            return
+        direction = pos2 - pos1
+        dist = direction.mag()
+        direction /= dist
+        for sensor in sensors:
+            intersect = sensor.intersect(pos1, direction, dist)
+            if intersect is not None:
+                LOGGER.info('Sensor: {} - {} = {} @ {}', pos1, pos2, intersect, sensor)
 
 
 def generate(sources: List[nodes.Spawner], sensors: List[Sensor]) -> List[Animation]:
