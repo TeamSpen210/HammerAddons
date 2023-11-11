@@ -142,12 +142,8 @@ class Node(ABC):
     def output_norm(self, dest: DestType=DestType.PRIMARY) -> Vec:
         """Return the flow direction at the output node."""
 
-    def tv_code(self, item_speed: float) -> str:
-        """If a scanner, return the VScript for the scanner prop name and shutoff delay."""
-        return 'null, 0.0'
 
-
-def parse(vmf: VMF) -> Iterator[Node]:
+def parse(vmf: VMF, relay_maker: Iterator[RelayOut]) -> Iterator[Node]:
     """Parse out all the vactube nodes from the VMF."""
     for ent in vmf.by_class['comp_vactube_start']:
         yield Spawner(ent)
@@ -488,40 +484,8 @@ class Straight(Node):
 
     def __init__(self, ent: Entity):
         """Convert the entity to have the right logic."""
-        self.scanner = None
         self.persist_tv = conv_bool(ent.pop('persist_tv', False))
-
-        pos = Vec.from_str(ent['origin'])
-        for prop in ent.map.by_class['prop_dynamic']:
-            if (Vec.from_str(prop['origin']) - pos).mag_sq() > 64**2:
-                continue
-
-            model = prop['model'].casefold().replace('\\', '/')
-            # Allow spelling this correctly, if you're not Valve.
-            if 'vacum_scanner_tv' in model or 'vacuum_scanner_tv' in model:
-                self.scanner = prop
-                prop.make_unique('_vac_scanner')
-            elif 'vacum_scanner_motion' in model or 'vacuum_scanner_motion' in model:
-                prop.make_unique('_vac_scanner')
-                ent.add_out(Output(self.pass_out_name, prop, "SetAnimation", "scan01"))
-
         super(Straight, self).__init__(ent)
-
-    def tv_code(self, item_speed: float) -> str:
-        """If we have a scanner, return the associated data."""
-        if self.scanner is None:
-            return 'null, 0.0'
-        # Compute the number of seconds it'll take to pass through the scanner.
-        # Then divide by 2, since we want an offset from the middle of the scanner.
-        # Limit to a minimum of 0.01, to ensure it doesn't round to zero.
-        scan_time = max(0.01, SCANNER_LENGTH / item_speed / 2.0)
-
-        # If we ask to persist the TV, it's only fired on entry.
-        # So set this negative to signal that.
-        if self.persist_tv:
-            scan_time = -scan_time
-
-        return f'"{self.scanner["targetname"]}", {scan_time:.3g}'
 
     def path_len(self, dest: DestType=DestType.PRIMARY) -> float:
         """Return the length of this node, which is always 32 units (arbitrarily)."""
