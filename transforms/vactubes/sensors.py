@@ -34,7 +34,7 @@ class Sensor:
             out_mid = []
             for out in ent.outputs:
                 name = out.output.casefold()
-                if name == 'onentry':
+                if name == 'onenter':
                     out_enter.append(out)
                 elif name == 'onpass':
                     out_mid.append(out)
@@ -82,4 +82,4 @@ class Sensor:
                     break
             # else: isolated, not important.
         # Only yield now they're linked.
-        yield from spinners
+        yield from scanners
