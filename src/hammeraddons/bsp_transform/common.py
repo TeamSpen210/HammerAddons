@@ -1,7 +1,7 @@
 """Operations that can be reused across different transforms."""
 import operator
 import re
-from typing import Callable, Dict, Iterator, Tuple, Union
+from typing import Callable, Dict, Iterator, Self, Tuple, Union, final
 from decimal import Decimal, InvalidOperation
 
 from typing_extensions import Literal, TypeAlias
@@ -77,6 +77,7 @@ def check_control_enabled(ent: Entity) -> bool:
         return conv_bool(ent['ctrl_value'], True)
 
 
+@final
 @attrs.frozen
 class RelayOut:
     """Entity name, plus the relay input/output to use."""
@@ -85,7 +86,7 @@ class RelayOut:
     output: str
 
     @classmethod
-    def create(cls, vmf: VMF, pos: Union[Vec, FrozenVec], name: str) -> Iterator[Tuple[str, str, str]]:
+    def create(cls, vmf: VMF, pos: Union[Vec, FrozenVec], name: str) -> Iterator[Self]:
         """Generates a valid entity along with a free input/output pair."""
         # Could also use func_instance_io_proxy, but only in L4D+, and it might be weird.
         user_outs = [('Trigger', 'OnTrigger')] + [
