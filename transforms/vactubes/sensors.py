@@ -1,11 +1,19 @@
 """Entities to allow detecting the motion of vactubes."""
+from enum import Enum
+
 import math
-from typing import Iterator, List, Optional, Sequence, Tuple, final
+from typing import Dict, Iterator, List, Optional, Sequence, Tuple, final
 
 import attrs
 
 from srctools import Vec, conv_float
 from srctools.vmf import Entity, Output, VMF
+
+
+class OutName(Enum):
+    ENTER = 'onenter'
+    MID = 'onpass'
+    EXIT = 'onexit'
 
 
 @final
@@ -24,26 +32,22 @@ class Sensor:
     radius: float
     origin: Vec
 
-    out_on_enter: Sequence[Output]
-    out_on_exit: Sequence[Output]
-    out_on_mid: Sequence[Output]
+    outputs: Dict[OutName, Sequence[Output]] = attrs.Factory(dict)
+    relays: Dict[OutName, RelayOut] = attrs.field(init=False, factory=dict)
 
     @classmethod
     def parse(cls, vmf: VMF) -> Iterator['Sensor']:
         """Find all sensor entities in the map."""
         ent: Entity
         for ent in vmf.by_class['comp_vactube_sensor']:
-            out_enter = []
-            out_exit = []
-            out_mid = []
+            outputs = {out_kind: [] for out_kind in OutName}
             for out in ent.outputs:
-                name = out.output.casefold()
-                if name == 'onenter':
-                    out_enter.append(out)
-                elif name == 'onpass':
-                    out_mid.append(out)
-                elif name == 'onexit':
-                    out_exit.append(out)
+                try:
+                    out_kind = OutName(out.output.casefold())
+                except ValueError:
+                    pass
+                else:
+                    outputs[out_kind].append(out)
 
             yield cls(
                 scanner_tv=None,
@@ -51,9 +55,7 @@ class Sensor:
 
                 radius=conv_float(ent['radius'], 16.0),
                 origin=Vec.from_str(ent['origin']),
-                out_on_enter=out_enter,
-                out_on_mid=out_mid,
-                out_on_exit=out_exit,
+                outputs=outputs,
             )
 
         spinners: List[Entity] = []
@@ -78,11 +80,13 @@ class Sensor:
 
                     radius=48.0,
                     origin=Vec.from_str(ent['origin']),
-                    out_on_enter=(),  # Assigning skin is special-cased.
-                    out_on_mid=(),
-                    out_on_exit=(
-                        Output('', name, 'Skin', '0'),
-                    ),
+                    outputs={
+                        OutName.ENTER: (),  # Assigning skin is special-cased.
+                        OutName.MID: (),
+                        OutName.EXIT: (
+                            Output('', name, 'Skin', '0'),
+                        ),
+                    },
                 ))
             elif 'vacum_scanner_motion' in model or 'vacuum_scanner_motion' in model:
                 spinners.append(ent)
