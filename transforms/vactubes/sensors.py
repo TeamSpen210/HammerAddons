@@ -2,15 +2,20 @@
 from enum import Enum
 
 import math
-from typing import Dict, Iterator, List, Optional, Sequence, Tuple, final
+from typing import Dict, Iterator, List, Mapping, Optional, Sequence, Tuple, final
 
 import attrs
-
-from srctools import Vec, conv_float
+from srctools import Vec, conv_float, logger
 from srctools.vmf import Entity, Output, VMF
+
+from hammeraddons.bsp_transform.common import RelayOut
+
+
+LOGGER = logger.get_logger(__name__)
 
 
 class OutName(Enum):
+    """Outputs available on sensors."""
     ENTER = 'onenter'
     MID = 'onpass'
     EXIT = 'onexit'
@@ -32,7 +37,7 @@ class Sensor:
     radius: float
     origin: Vec
 
-    outputs: Dict[OutName, Sequence[Output]] = attrs.Factory(dict)
+    outputs: Mapping[OutName, Sequence[Output]] = attrs.Factory(dict)
     relays: Dict[OutName, RelayOut] = attrs.field(init=False, factory=dict)
 
     @classmethod
@@ -40,7 +45,7 @@ class Sensor:
         """Find all sensor entities in the map."""
         ent: Entity
         for ent in vmf.by_class['comp_vactube_sensor']:
-            outputs = {out_kind: [] for out_kind in OutName}
+            outputs: Dict[OutName, List[Output]] = {out_kind: [] for out_kind in OutName}
             for out in ent.outputs:
                 try:
                     out_kind = OutName(out.output.casefold())
@@ -103,9 +108,13 @@ class Sensor:
                     if scan.unnamed_spinner:  # Same reasoning as the scanner.
                         spin_ent.make_unique('_vac_spinner')
                         name = spin_ent['targetname']
-                    scan.out_on_enter = (
-                        Output('', name, 'SetAnimation', 'scan01'),
-                    )
+                    scan.outputs = {
+                        **scan.outputs,
+                        OutName.ENTER: (
+                            *scan.outputs[OutName.ENTER],
+                            Output('', name, 'SetAnimation', 'scan01'),
+                        )
+                    }
                     break
             # else: isolated, not important.
         # Only yield now they're linked.
@@ -135,3 +144,24 @@ class Sensor:
         else:
             # One solution, treat as two.
             return -dot - 0.5, -dot + 0.5
+
+    def prepare_outputs(self, relay_maker: Iterator[RelayOut]) -> None:
+        """If we have been used, generate the relays."""
+        if self.used:
+            for out_kind, outs in self.outputs.items():
+                if not outs:
+                    continue
+                self.relays[out_kind] = relay = next(relay_maker)
+                name = relay.ent['targetname']
+                for out in outs:
+                    out.output = relay.output
+                relay.ent.outputs.extend(outs)
+        else:
+            if self.scanner_tv is None and self.scanner_spinner is None:
+                LOGGER.warning('Vactube sensor at {} did not detect any paths!', self.origin)
+
+            # Not used, reset entity names if required.
+            if self.unnamed_tv and self.scanner_tv is not None:
+                self.scanner_tv['targetname'] = ''
+            if self.unnamed_spinner and self.scanner_spinner is not None:
+                self.scanner_spinner['targetname'] = ''

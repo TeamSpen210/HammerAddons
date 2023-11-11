@@ -1,12 +1,12 @@
 """Handles generating the animation model for the vactubes."""
 import math
-from typing import Dict, Tuple, List, Optional, Union
+from typing import Dict, Iterator, Tuple, List, Optional
 
 
 from . import nodes
 from .nodes import Node, DestType
-from .sensors import Sensor
-from srctools import Vec, Angle, logger
+from .sensors import Sensor, OutName as SensorOutput
+from srctools import Entity, Vec, Angle, logger
 from srctools.smd import BoneFrame, Mesh
 from random import Random
 
@@ -16,12 +16,15 @@ def limit(x: float, num: float) -> float:
     return min(num, max(-num, x))
 
 LOGGER = logger.get_logger(__name__)
+SKIN_INPUT = '<SKIN>'  # Special input name which sets skin appropriately.
 # Max angular acceleration per frame
 ROT_ACC = 4.0
 # Max angular speed per frame
 ROT_LIM = 30.0
 
 FPS = 30
+
+pointfile = open(r'F:\SteamLibrary\SteamApps\common\Portal 2\sdk_content\maps\vactubes.lin', 'w')
 
 
 class RotGen:
@@ -142,6 +145,7 @@ class Animation:
             BoneFrame(self.move_bone, pos - self.start_pos, Angle(next(self.rotator)))
         ]
         self.cur_frame += 1
+        pointfile.write(f'{pos}\n')
 
     def check_sensors(self, sensors: List[Sensor], pos1: Vec, pos2: Vec) -> None:
         """Check all our sensors, and update values depending on them."""
@@ -181,6 +185,34 @@ class Animation:
                 end_time = (self.cur_frame - 1) / FPS
                 self.sensors.append((start_time, end_time, sensor))
                 sensor.used = True
+
+    def vscript_outputs(self) -> Iterator[Tuple[float, Entity, str]]:
+        """Generate the names the VScript should call."""
+        for time, node in self.pass_points:
+            if node.pass_relay is not None:
+                yield time, node.pass_relay.ent, node.pass_relay.input
+        for enter, exit, sensor in self.sensors:
+            try:
+                relay = sensor.relays[SensorOutput.ENTER]
+            except KeyError:
+                pass
+            else:
+                yield enter, relay.ent, relay.input
+            try:
+                relay = sensor.relays[SensorOutput.EXIT]
+            except KeyError:
+                pass
+            else:
+                yield exit, relay.ent, relay.input
+            try:
+                relay = sensor.relays[SensorOutput.MID]
+            except KeyError:
+                pass
+            else:
+                yield (enter + exit) / 2, relay.ent, relay.input
+
+            if sensor.used and sensor.scanner_tv is not None:
+                yield enter, sensor.scanner_tv, SKIN_INPUT
 
 
 def generate(sources: List[nodes.Spawner], sensors: List[Sensor]) -> List[Animation]:
@@ -233,6 +265,7 @@ def generate(sources: List[nodes.Spawner], sensors: List[Sensor]) -> List[Animat
                 # We reached the end, finalise!
                 anim.end_node = node
                 anim.add_point(sensors, node.origin)
+                pointfile.write('1e999 1e999 1e999\n')
                 break
 
             # Now generate the straight part between this node and the next.

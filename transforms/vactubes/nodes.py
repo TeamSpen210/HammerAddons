@@ -258,11 +258,12 @@ class Spline(Node):
     out_types: ClassVar[Iterable[DestType]] = [DestType.PRIMARY]
     _vmf = VMF()
 
-    def __init__(self, relay_maker: Iterator[RelayOut], origin: Vec, points: List[Vec]) -> None:
+    def __init__(self, origin: Vec, points: List[Vec]) -> None:
         # Create a dummy entity, we don't really need it.
         super().__init__(
+            # TODO: Make EntityNode superclass all other nodes use, with these params.
             self._vmf.create_ent('comp_vactube_spline', origin=origin),
-            relay_maker,
+            iter(()),  # Not used.
         )
         assert len(points) >= 2, 'Not enough points!'
         self.start_norm = (points[1] - points[0]).norm()

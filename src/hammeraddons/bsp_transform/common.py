@@ -1,10 +1,10 @@
 """Operations that can be reused across different transforms."""
 import operator
 import re
-from typing import Callable, Dict, Iterator, Self, Tuple, Union, final
+from typing import Callable, Dict, Iterator, Tuple, Union, final
 from decimal import Decimal, InvalidOperation
 
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal, Self, TypeAlias
 import attrs
 
 from srctools import Entity, FrozenVec, VMF, Vec, conv_bool

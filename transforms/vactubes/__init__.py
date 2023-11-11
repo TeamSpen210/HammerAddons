@@ -15,6 +15,7 @@ from srctools.smd import Mesh
 import srctools.logger
 from srctools import FrozenVec, Vec, Output, conv_int
 
+from hammeraddons.bsp_transform.common import RelayOut
 from hammeraddons.bsp_transform import trans, Context
 from . import nodes, animations, objects
 from .sensors import Sensor
@@ -23,6 +24,8 @@ from .sensors import Sensor
 LOGGER = srctools.logger.get_logger(__name__)
 # For culling, ignore points with normals offset more than this.
 ANG_THRESHOLD = math.cos(math.radians(30))
+# Arbitary location to place all the vactube ents.
+VAC_POS = FrozenVec(-16384, 0, 1024)
 
 QC_TEMPLATE = '''\
 $modelname "{path}"
@@ -51,7 +54,7 @@ $sequence {name} {{
 
 
 def find_closest(
-    all_nodes: Iterable[Tuple[Vec, List[Tuple[Vec, nodes.Node]]]],
+    all_nodes: Iterable[Tuple[Union[Vec, FrozenVec], List[Tuple[Vec, nodes.Node]]]],
     node: nodes.Node,
     src_type: nodes.DestType,
 ) -> nodes.Node:
@@ -96,7 +99,9 @@ async def vactube_transform(ctx: Context) -> None:
     name_to_node: Dict[str, nodes.Node] = {}
     all_nodes: List[nodes.Node] = []
 
-    for node in nodes.parse(ctx.vmf):
+    relay_maker = RelayOut.create(ctx.vmf, VAC_POS, '_vac_out')
+
+    for node in nodes.parse(ctx.vmf, relay_maker):
         all_nodes.append(node)
         name = node.name.casefold()
         if name:
@@ -205,6 +210,10 @@ async def vactube_transform(ctx: Context) -> None:
 
     LOGGER.info('Generating animations...')
     all_anims = animations.generate(sources, all_sensors)
+
+    for sensor in all_sensors:  # After animations are generated.
+        sensor.prepare_outputs(relay_maker)
+
     # Sort the animations by their start and end, so they ideally are consistent.
     all_anims.sort(key=lambda a: (a.start_node.origin, a.end_node.origin if a.end_node is not None else Vec()))
 
@@ -278,7 +287,7 @@ async def vactube_transform(ctx: Context) -> None:
         'prop_dynamic',
         targetname='_vactube_temp_mover',
         angles='0 270 0',
-        origin='-16384 0 1024',
+        origin=VAC_POS,
         model=Path('models', anim_mdl_name).as_posix(),
         rendermode=10,
         solid=0,
@@ -288,7 +297,7 @@ async def vactube_transform(ctx: Context) -> None:
         'prop_dynamic_override',  # In case you use the physics model.
         targetname='_vactube_temp_visual',
         parentname='_vactube_temp_mover,move',
-        origin='-16384 0 1024',
+        origin=VAC_POS,
         model=nodes.CUBE_MODEL,
         solid=0,
         disableshadows=1,
@@ -299,7 +308,7 @@ async def vactube_transform(ctx: Context) -> None:
         targetname='_vactube_template',
         template01='_vactube_temp_mover',
         template02='_vactube_temp_visual',
-        origin='-16384 0 1024',
+        origin=VAC_POS,
         spawnflags='2',  # Preserve names, remove originals.
     )
 
@@ -347,10 +356,9 @@ async def vactube_transform(ctx: Context) -> None:
         for anim in anims:
             anim_dest = anim.end_node
             anim_speed = anim.start_node.speed
-            pass_code = ','.join([
-                f'Output({time:.2f}, "{node.ent["targetname"]}", '
-                f'{node.tv_code(anim_speed)})'
-                for time, node in anim.pass_points
+            io_code = ','.join([
+                f'Output({time:.2f}, "{ent["targetname"]}", "{inp}")'
+                for time, ent, inp in anim.vscript_outputs()
             ])
             cube_name = 'null'
             if isinstance(anim_dest, nodes.Dropper):
@@ -372,7 +380,7 @@ async def vactube_transform(ctx: Context) -> None:
                     dropper_to_anim[anim_dest] = anim
             code.append(
                 f'{anim.name} <- anim("{anim.name}", {anim.duration}, '
-                f'{cube_name}, [{pass_code}]);'
+                f'{cube_name}, [{io_code}]);'
             )
         spawn_maker['vscripts'] = ' '.join([
             'srctools/vac_anim.nut', objects_code[start_node.group],
@@ -400,3 +408,4 @@ async def vactube_transform(ctx: Context) -> None:
             ),
             Output('CubeReleased', '!activator', cube_input),
         )
+    animations.pointfile.close()
