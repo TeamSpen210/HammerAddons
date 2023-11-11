@@ -4,7 +4,7 @@ from collections import defaultdict
 import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Tuple, Dict, List, Iterable, Optional
+from typing import Tuple, Dict, List, Iterable, Optional, Union
 import math
 import random
 
@@ -13,7 +13,7 @@ import trio
 from srctools.mdl import MDL_EXTS
 from srctools.smd import Mesh
 import srctools.logger
-from srctools import Vec, Output, conv_int
+from srctools import FrozenVec, Vec, Output, conv_int
 
 from hammeraddons.bsp_transform import trans, Context
 from . import nodes, animations, objects
@@ -135,17 +135,14 @@ async def vactube_transform(ctx: Context) -> None:
     # Now join all the nodes to each other.
     # Tubes only have 90 degree bends, so a system should mostly be formed
     # out of about 6 different normals. So group by that.
-    inputs_by_norm: Dict[
-        Tuple[float, float, float],
-        List[Tuple[Vec, nodes.Node]]
-    ] = defaultdict(list)
+    inputs_by_norm: Dict[FrozenVec, List[Tuple[Vec, nodes.Node]]] = defaultdict(list)
 
     for node in all_nodes:
         # Spawners have no inputs.
         if isinstance(node, nodes.Spawner):
             node.has_input = True
         else:
-            inputs_by_norm[node.input_norm().as_tuple()].append((node.vec_point(0.0), node))
+            inputs_by_norm[node.input_norm().freeze()].append((node.vec_point(0.0), node))
         #     ctx.vmf.create_ent('prop_dynamic', model='models/editor/cone_helper.mdl', rendercolor='32 32 255', origin=node.vec_point(0), angles=node.input_norm().to_angle())
         # for out_type in node.out_types:
         #     ctx.vmf.create_ent('prop_dynamic', model='models/editor/cone_helper.mdl', rendercolor='255 32 32', origin=node.vec_point(1.0, out_type), angles=node.output_norm(out_type).to_angle())
@@ -155,12 +152,6 @@ async def vactube_transform(ctx: Context) -> None:
 
     # with open(str(ctx.bsp.filename)[:-4] + '_vac.vmf', 'w') as f:
     #     ctx.vmf.export(f, inc_version=False)
-
-    norm_inputs = [
-        (Vec(norm), node_lst)
-        for norm, node_lst in
-        inputs_by_norm.items()
-    ]
 
     sources: List[nodes.Spawner] = []
 
@@ -179,7 +170,7 @@ async def vactube_transform(ctx: Context) -> None:
                 LOGGER.debug('Override: {} -> {}', node.name, target.name)
             else:
                 target = find_closest(
-                norm_inputs,
+                inputs_by_norm.items(),
                 node,
                 dest_type,
             )
