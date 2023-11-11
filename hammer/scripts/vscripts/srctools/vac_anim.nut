@@ -22,27 +22,27 @@ class Cargo {
 	}
 }
 
-// Nodes with outputs need to be delayed.
+// Nodes with outputs that need to be delayed.
 class Output {
 	time = 0.0; // Delay after anim start before it should fire.
-	target = null; // The node to fire inputs at.
-	scanner = null; // If set, the scanner to fire skin inputs to
-	// The magnitude is the time taken to travel HALF of a tv scanner prop. If negative, the user wants
-	// it to stay on until another cube arrives.
-	tv_offset = 0.0; 
-	constructor (_time, node_name, scanner_name, _tv_offset=0.1) {
+	target = null; // The entity to fire inputs at.
+	input = null; // The input to use.
+	is_tv = false;
+	constructor (_time, ent_name, input_name) {
 		time = _time;
-		tv_offset = _tv_offset;
-		target = Entities.FindByName(null, node_name);
-		if (scanner_name != null) {
-		scanner = Entities.FindByName(null, scanner_name);
+		target = Entities.FindByName(null, ent_name);
+		// Special input name - if used, fire a skin input instead.
+		if (input_name == "<SKIN>") {
+			is_tv = true;
+			input = "Skin"
 		} else {
-			scanner = null;
+			is_tv = false;
+			input = input_name;
 		}
 	}
 	function _tostring() { return tostring() }
 	function tostring() {
-	    return "<Output @" + time + ", targ: \""+target.GetName() + "\", scanner=" + scanner + ">";
+	    return "<Output @" + time + ", targ: \""+target.GetName() + "\", input=" + input + ", tv=" + is_tv + ">";
 	}
 }
 
@@ -187,19 +187,17 @@ function make_cube() {
     EntFireByHandle(cargo.visual, "DisableDraw", "", anim.duration, self, self);
     cargo.reuse_time = cur_time + anim.duration + 0.1; // Make sure enable/disable inputs don't get mixed up.
 
-    foreach (pass_out in anim.pass_io) {
+    foreach (output in anim.pass_io) {
+		// Skin inputs for TVs need the cargo skin.
+		local param;
+		if (output.is_tv) {
+			param = cargo_type.tv_skin.tostring();
+		} else {
+			param = "";
+		}
 		// Do not pass an !activator here. The cargo props are shared, so 
 		// users shouldn't be doing anything to them. In particular, 
 		// OnPass -> kill outputs may be present which are not useful.
-		EntFireByHandle(pass_out.target, "FireUser4", "", pass_out.time, null, null);
-		if (pass_out.scanner != null && cargo_type.tv_skin != 0) {
-			if (pass_out.tv_offset < 0) { // Just fire on entry.
-				EntFireByHandle(pass_out.scanner, "Skin", cargo_type.tv_skin.tostring(), pass_out.time + pass_out.tv_offset, self, self);
-			} else { 
-				// Fire on entry, then reset after.
-				EntFireByHandle(pass_out.scanner, "Skin", cargo_type.tv_skin.tostring(), pass_out.time - pass_out.tv_offset, self, self);
-				EntFireByHandle(pass_out.scanner, "Skin", "0", pass_out.time + pass_out.tv_offset, self, self);
-			}
-		}
+		EntFireByHandle(output.target, output.input, param, output.time, null, null);
     }
 }
