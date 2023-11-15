@@ -273,6 +273,7 @@ async def vactube_transform(ctx: Context) -> None:
     ctx.vmf.create_ent(
         'prop_dynamic',
         targetname='_vactube_temp_mover',
+        animateeveryframe=1, # So that the animation is smooth and animated every frame
         angles='0 270 0',
         origin='-16384 0 1024',
         model=Path('models', anim_mdl_name).as_posix(),
