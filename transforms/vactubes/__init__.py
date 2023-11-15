@@ -258,7 +258,8 @@ async def vactube_transform(ctx: Context) -> None:
     # Ensure they're all packed.
     for ext in MDL_EXTS:
         try:
-            mdl_file = full_loc.with_suffix(ext).open('rb')
+            mdl_filePath = full_loc.with_suffix(ext)
+            mdl_file = mdl_filePath.open('rb')
         except FileNotFoundError:
             pass
         else:
@@ -267,6 +268,8 @@ async def vactube_transform(ctx: Context) -> None:
                     Path('models', anim_mdl_name.with_suffix(ext)),
                     data=mdl_file.read(),
                 )
+            # Remove file after packing
+            mdl_filePath.unlink()
 
     LOGGER.info('Setting up vactube ents...')
     # Generate the shared template.
