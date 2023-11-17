@@ -35,12 +35,10 @@ $attachment "move" "root" 0.0 0.0 0.0
 '''
 
 SEQ_IDLE_TEMPLATE = '''\
-$sequence "idle" {{ 
-    "idle.smd"
-	activity "ACT_IDLE" 1
+$sequence "ref" {{ 
+    "ref.smd"
     fps {fps}
     snap
-	loop
 }}
 '''
 
@@ -242,14 +240,7 @@ async def vactube_transform(ctx: Context) -> None:
 
         with open(temp_dir + '/prop.qc', 'w') as qc_file:
             qc_file.write(QC_TEMPLATE.format(path=anim_mdl_name.as_posix()))
-
-            # Create an idle sequence, needed for animations not to lag.
-            with open(temp_dir + '/idle.smd', 'wb') as idle_seq_file:
-                mesh.export(idle_seq_file)
-
-            with open(temp_dir + '/idle.smd', 'w') as idle_seq_file:
-                idle_seq_file.write(animations.create_idle_seq())
-
+            # Use ref.smd as default sequence
             qc_file.write(SEQ_IDLE_TEMPLATE.format(fps=animations.FPS))
 
             for i, anim in enumerate(all_anims):
