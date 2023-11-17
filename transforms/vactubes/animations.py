@@ -217,3 +217,15 @@ def generate(sources: List[nodes.Spawner]) -> List[Animation]:
             anim.curve_type = DestType.PRIMARY
 
     return anims
+
+def create_idle_seq():
+    return '''\
+	version 1
+	nodes
+	  0 "root" -1
+	end
+	skeleton
+	  time 0
+		0 0.000000 0.000000 0.000000 0.000000 0.000005 0.000000
+	end
+    '''
