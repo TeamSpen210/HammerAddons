@@ -1,3 +1,11 @@
+# Version Dev
+
+# Enhancements
+* Added textures for 4 rendertargets (camera, water reflection/refraction, full framebuffer). These give a nice preview in Hammer.
+
+
+--------------------
+
 
 # Version 2.5.3
 
