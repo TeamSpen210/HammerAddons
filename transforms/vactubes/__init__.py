@@ -32,6 +32,12 @@ $body body "ref.smd"
 
 $definebone "root" "" 0.0 0.0 0.0  0.0 0.0 0.0  0.0 0.0 0.0  0.0 0.0 0.0
 $attachment "move" "root" 0.0 0.0 0.0
+
+$sequence "ref" {{ 
+    "ref.smd"
+    fps {fps}
+    snap
+}}
 '''
 
 SEQ_TEMPLATE = '''\
@@ -231,7 +237,10 @@ async def vactube_transform(ctx: Context) -> None:
             mesh.export(mesh_file)
 
         with open(temp_dir + '/prop.qc', 'w') as qc_file:
-            qc_file.write(QC_TEMPLATE.format(path=anim_mdl_name.as_posix()))
+            qc_file.write(QC_TEMPLATE.format(
+                path=anim_mdl_name.as_posix(), 
+                fps=animations.FPS,
+            ))
 
             for i, anim in enumerate(all_anims):
                 anim.name = anim_name = f'anim_{i:03x}'
