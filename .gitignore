@@ -58,6 +58,7 @@ db/datamaps/
 # Cache files
 .mypy_cache/
 __pycache__/
+.autosave/
 
 # Blender backup files
 *.blend1
