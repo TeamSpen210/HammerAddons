@@ -1,11 +1,14 @@
 """Adds a single output to an entity, with precise control over fixup behaviour.
 
 """
+import struct
+import random
+
 import itertools
 import string
 from typing import Any, List, Mapping, Sequence, Union
 
-from srctools import EmptyMapping, conv_float, conv_int
+from srctools import EmptyMapping, Vec, conv_float, conv_int
 from srctools.vmf import Output, Entity
 from srctools.logger import get_logger
 
@@ -49,6 +52,13 @@ def advanced_output(ctx: Context) -> None:
             target_name = f'{target_name}-{target_instname}'
 
         delay = conv_float(adv_out['delay'])
+
+        delay_max = adv_out['delay_max']
+        if delay_max:
+            pos = Vec.from_str(adv_out['origin'])
+            rng = random.Random(b'comp_relay' + struct.pack('<3f', *pos))
+            delay = rng.uniform(delay, conv_float(delay_max, delay))
+
         delay += conv_float(adv_out['delay2'])
         if delay < 0.0:
             LOGGER.warning(

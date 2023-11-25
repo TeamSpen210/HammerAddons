@@ -1,5 +1,8 @@
 """Implements simple logic."""
-from srctools import conv_bool, conv_float
+import random
+import struct
+
+from srctools import Vec, conv_bool, conv_float
 from srctools.logger import get_logger
 
 from hammeraddons.bsp_transform import trans, Context, check_control_enabled
@@ -35,6 +38,11 @@ def comp_relay(ctx: Context):
         enabled = check_control_enabled(relay)
 
         extra_delay = conv_float(relay['delay'])
+        delay_max = relay['delay_max']
+        if delay_max:
+            pos = Vec.from_str(relay['origin'])
+            rng = random.Random(b'comp_relay' + struct.pack('<3f', *pos))
+            extra_delay = rng.uniform(extra_delay, conv_float(delay_max, extra_delay))
 
         LOGGER.debug(
             'relay "{}", enabled={}, delay={}, remove={}, {} outputs',
