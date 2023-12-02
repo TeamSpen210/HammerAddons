@@ -194,11 +194,11 @@ class Spawner(Node):
 
     def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut]) -> None:
         super().__init__(ent, relay_maker)
-        self.group = ent['group'].casefold().strip()
-        self.speed = srctools.conv_float(ent['speed'], 800.0)
-        timer_int = srctools.conv_int(ent['timer'], 1)
+        self.group = ent.pop('group').casefold().strip()
+        self.speed = srctools.conv_float(ent.pop('speed'), 800.0)
+        timer_int = srctools.conv_int(ent.pop('timer'), 1)
         self.is_auto = timer_int != 0
-        self.seed = ent['seed']
+        self.seed = ent.pop('seed')
         if not self.seed:
             # Generate a new seed, and notify the user, so they can copy it down
             # if they want to use it themselves.
@@ -206,15 +206,14 @@ class Spawner(Node):
         LOGGER.info('Spawner "{}" using random seed "{}"', self.name, self.seed)
 
         if self.is_auto:
-            self.time_min = srctools.conv_float(ent['time_min'], 0.5)
-            self.time_max = srctools.conv_float(ent['time_max'], 1.0)
+            self.time_min = srctools.conv_float(ent.pop('time_min'), 0.5)
+            self.time_max = srctools.conv_float(ent.pop('time_max'), 1.0)
             self.timer_start_disabled = timer_int == 2
         else:
             self.time_min = self.time_max = 0.0
             self.timer_start_disabled = True
-
-        # Strip these keyvalues.
-        del ent['speed'], ent['timer'], ent['time_min'], ent['time_max']
+            # Strip the keyvalues.
+            del ent['time_min'], ent['time_max']
 
     def vec_point(self, t: float, dest: DestType=DestType.PRIMARY) -> Vec:
         assert dest is DestType.PRIMARY, self
