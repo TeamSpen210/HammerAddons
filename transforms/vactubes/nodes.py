@@ -215,6 +215,11 @@ class Spawner(Node):
             # Strip the keyvalues.
             del ent['time_min'], ent['time_max']
 
+        # Store these keyvalues, to be set on the visual prop.
+        self.prop_fast_reflection = srctools.conv_bool(ent.pop('prop_fast_reflection'))
+        self.prop_disable_shadows = srctools.conv_bool(ent.pop('prop_disable_shadows'), True)
+        self.prop_disable_projtex = srctools.conv_bool(ent.pop('prop_disable_projtex'))
+
     def vec_point(self, t: float, dest: DestType=DestType.PRIMARY) -> Vec:
         assert dest is DestType.PRIMARY, self
         return self.origin

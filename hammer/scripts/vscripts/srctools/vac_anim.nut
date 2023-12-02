@@ -54,12 +54,22 @@ class Anim {
 	pass_io = []; // Outputs to delay-fire.
 	duration = 0.0; // Length of animation.
 
-	constructor (anim_name, time, cube_type, pass_io_lst) {
+	opt_fast_reflection = false;
+	opt_no_rtt_shadow = false;
+	opt_no_rec_projtex = false;
+	constructor (
+		anim_name, time, cube_type, pass_io_lst, 
+		fast_ref, no_rtt_shadow, no_rec_projtex,
+	) {
 		name = anim_name;
 		duration = time;
 		cargo_type = cube_type;
 		req_spawn = false;
 		pass_io = pass_io_lst;
+
+		opt_fast_reflection = fast_ref;
+		opt_no_rtt_shadow = no_rtt_shadow;
+		opt_no_rec_projtex = no_rec_projtex;
 	}
 	function _tostring() { return tostring() }
 	function tostring() {
@@ -73,11 +83,17 @@ class EntSet {
 	mover = null;
 	visual = null;
 	opt_skin = 0;
+	opt_fast_reflection = false;
+	opt_no_rtt_shadow = true;
+	opt_no_rec_projtex = false;
 	constructor (time, mov, vis) {
 		reuse_time = time;
 		mover = mov;
 		visual = vis;
 		opt_skin = 0;
+		opt_fast_reflection = false;
+		opt_no_rtt_shadow = true;
+		opt_no_rec_projtex = false;
 	}
 	function _tostring() { return tostring() }
 	function tostring() {
@@ -96,6 +112,14 @@ if (!("vactube_objs" in getroottable())) {
 	::vactube_objs <- [];
 }
 
+// Cache the keyvalues we previously set, to reduce IO spam. For each bool option,
+// this has the attribute, and on/off input.
+PROP_INPUTS <- [
+	{attr="opt_fast_reflection", enable="EnableDrawInFastReflection", disable="DisableDrawInFastReflection"},
+	{attr="opt_no_rtt_shadow", enable="EnableShadow", disable="DisableShasow"},
+	{attr="opt_no_rec_projtex", enable="EnableReceivingFlashlight", disable="DisableReceivingFlashlight"},
+]
+
 function show() {
     foreach (anim in ANIM_DROP) {
         printl("Drop: " + anim.tostring());
@@ -113,8 +137,14 @@ function obj(vac_mdl, vac_skin, cube_mdl, weight, off, tv) {
     }
 	return cargo;
 }
-function anim(anim_name, time, type, pass_io_lst) {
-	local ani = Anim(anim_name, time, type, pass_io_lst);
+function anim(
+	anim_name, time, type, pass_io_lst,
+	fast_ref, no_rtt_shadow, no_rec_projtex,
+) {
+	local ani = Anim(
+		anim_name, time, type, pass_io_lst,
+		fast_ref, no_rtt_shadow, no_rec_projtex
+	);
 	if (type == null) {
 		ANIM_DECO.append(ani);
 	} else {
@@ -186,6 +216,15 @@ function make_cube() {
     EntFireByHandle(cargo.mover, "SetAnimation", anim.name, 0, self, self);
     EntFireByHandle(cargo.visual, "DisableDraw", "", anim.duration, self, self);
     cargo.reuse_time = cur_time + anim.duration + 0.1; // Make sure enable/disable inputs don't get mixed up.
+
+    // Apply these options, with a cache to avoid re-firing.
+    foreach (opt in PROP_INPUTS) {
+		local desired = anim[opt.attr]
+    	if (cargo[opt.attr] != desired) {
+			EntFireByHandle(cargo.visual, desired ? opt.enable : opt.disable, "", 0, self, self);
+			cargo[opt.attr] = desired;
+    	}
+    }
 
     foreach (output in anim.pass_io) {
 		// Skin inputs for TVs need the cargo skin.

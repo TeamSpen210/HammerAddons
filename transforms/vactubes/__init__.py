@@ -53,6 +53,11 @@ $sequence {name} {{
 '''
 
 
+def vscript_bool(value: bool) -> str:
+    """Produce 'false' or 'true' from a value."""
+    return 'true' if value else 'false'
+
+
 def find_closest(
     all_nodes: Iterable[Tuple[Union[Vec, FrozenVec], List[Tuple[Vec, nodes.Node]]]],
     node: nodes.Node,
@@ -300,8 +305,11 @@ async def vactube_transform(ctx: Context) -> None:
         origin=VAC_POS,
         model=nodes.CUBE_MODEL,
         solid=0,
-        disableshadows=1,
         spawnflags=64 | 256,  # Use Hitboxes for Renderbox, collision disabled.
+        # These can be overridden in comp_vactube_start.
+        drawinfastreflection=0,
+        disableshadows=1,
+        disableflashlight=0,
     )
     ctx.vmf.create_ent(
         'point_template',
@@ -380,7 +388,10 @@ async def vactube_transform(ctx: Context) -> None:
                     dropper_to_anim[anim_dest] = anim
             code.append(
                 f'{anim.name} <- anim("{anim.name}", {anim.duration}, '
-                f'{cube_name}, [{io_code}]);'
+                f'{cube_name}, [{io_code}], '
+                f'{vscript_bool(anim.start_node.prop_fast_reflection)}, '
+                f'{vscript_bool(anim.start_node.prop_disable_shadows)}, '
+                f'{vscript_bool(anim.start_node.prop_disable_projtex)});'
             )
         spawn_maker['vscripts'] = ' '.join([
             'srctools/vac_anim.nut', objects_code[start_node.group],

@@ -20,6 +20,15 @@
 	time_min(float) : "Minimum Time" : 0.15 : "The minimum time between objects."
 	time_max(float) : "Maximum Time" : 0.5 : "The maximum time between objects."
 
+	linedivider_vacvisual[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	prop_fast_reflection(boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes the vactube object props to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
+	prop_disable_shadows(boolean) : "Disable Producing Cheap Shadows?" : 1 : "If set, prevent the vactube object props from creating cheap render-to-texture/dynamic shadows."
+	prop_disable_projtex(boolean) : "No Recieving Proj Texs" : 0 : "Disable env_projectedtexture lighting and shadows on vactube object props."
+	// These two can't be changed after spawn.
+	// prop_disable_shadowdepth(boolean) : "No Affecting Proj Texs"  : 0 : "Prevent this entity from affecting projected texture shadows."
+	// prop_disable_receiveshadows(boolean) : "Disable Receiving Shadows?" : 1 : "Prevents shadows (cheap & projected texture) from appearing on this entity."
+
 	input ForceSpawn(void) : "Force an object to spawn immediately."
 	input EnableTimer(void) : "Enable the automatic timer."
 	input DisableTimer(void) : "Disable the automatic timer."
