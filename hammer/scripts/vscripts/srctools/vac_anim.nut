@@ -72,10 +72,12 @@ class EntSet {
 	reuse_time = 0.0;
 	mover = null;
 	visual = null;
+	opt_skin = 0;
 	constructor (time, mov, vis) {
 		reuse_time = time;
 		mover = mov;
 		visual = vis;
+		opt_skin = 0;
 	}
 	function _tostring() { return tostring() }
 	function tostring() {
@@ -175,7 +177,10 @@ function make_cube() {
 	}
 
 	cargo.visual.SetModel(cargo_type.model);
-    EntFireByHandle(cargo.visual, "Skin", cargo_type.skin.tostring(), 0, self, self);
+	if (cargo.opt_skin != cargo_type.skin) {
+		EntFireByHandle(cargo.visual, "Skin", cargo_type.skin.tostring(), 0, self, self);
+		cargo.opt_skin = cargo_type.skin;
+	}
     EntFireByHandle(cargo.visual, "EnableDraw", "", 0, self, self);
     EntFireByHandle(cargo.visual, "SetLocalOrigin", cargo_type.localpos, 0, self, self);
     EntFireByHandle(cargo.mover, "SetAnimation", anim.name, 0, self, self);
