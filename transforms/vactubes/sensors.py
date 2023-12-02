@@ -45,6 +45,7 @@ class Sensor:
         """Find all sensor entities in the map."""
         ent: Entity
         for ent in vmf.by_class['comp_vactube_sensor']:
+            ent.remove()
             outputs: Dict[OutName, List[Output]] = {out_kind: [] for out_kind in OutName}
             for out in ent.outputs:
                 try:

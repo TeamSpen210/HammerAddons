@@ -312,7 +312,6 @@ class Spline(Node):
 
 class Dropper(Destroyer):
     """The endpoint which is linked to/controls a dropper."""
-    keep_ent = True
 
     def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut], temp: Entity, cube: Entity) -> None:
         super().__init__(ent, relay_maker)
