@@ -5,6 +5,7 @@
 * Add ability to randomise output delay to `comp_relay` and `comp_adv_output`.
 * Added `comp_vactube_sensor`, which allows detecting the presence of vactube objects.
 * Allow configuring various shadow/fast reflection options for vactube object ents.
+* Boolean keyvalues (yes/no) can now be set to `!$var`, to invert the value of the variable. 
 
 
 --------------------
