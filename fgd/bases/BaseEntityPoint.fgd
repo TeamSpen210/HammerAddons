@@ -12,7 +12,7 @@
 
 	parentname[!srctools](target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent. Set an attachment point via 'parentname,attachment'."
 	parentname[srctools](target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	parent_attachment_point[srctools](string) : "[HA] Attachment Point" : : "If set, attach to this attachment point on the parent during spawn."
+	parent_attachment_point[srctools](string) : "[HA] Attachment Point" : : "If set, attach to this attachment point on the parent during spawn. The relative offset will be preserved."
 
 	linedivider_vscript[+VSCRIPT, !engine](string) readonly : "-------------------------------------------------------------------------------------------------------" : ""
 
