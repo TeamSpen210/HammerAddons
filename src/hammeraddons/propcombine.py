@@ -210,12 +210,14 @@ async def combine_group(
     # and subtract that out.
 
     avg_pos = Vec()
+    avg_lighting = Vec()
     avg_yaw = 0.0
 
     visleafs: Set[VisLeaf] = set()
 
     for prop in props:
         avg_pos += prop.origin
+        avg_lighting += prop.lighting
         yaw = prop.angles.yaw % 90
         if yaw > 45.0:
             avg_yaw -= 90.0 - yaw
@@ -225,6 +227,7 @@ async def combine_group(
 
     avg_yaw /= len(props)
     avg_pos /= len(props)
+    avg_lighting /= len(props)
     yaw_rot = Matrix.from_yaw(-avg_yaw)
 
     prop_pos = set()
@@ -281,7 +284,7 @@ async def combine_group(
         visleafs=visleafs,
         solidity=(CollType.VPHYS if has_coll else CollType.NONE).value,
         flags=props[0].flags,
-        lighting=avg_pos,
+        lighting=avg_lighting,
         tint=props[0].tint,
         renderfx=props[0].renderfx,
         min_fade=0.0,
