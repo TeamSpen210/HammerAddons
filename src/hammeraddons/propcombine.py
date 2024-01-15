@@ -271,9 +271,9 @@ async def combine_group(
         compile_func, (lookup_model, volume_tolerance),
     )
 
-    # Many of these we require to be the same, so we can read them
+    # Many of these values we require to be the same, so we can read them
     # from any of the component props.
-    return StaticProp(
+    combined = StaticProp(
         model=mdl_name,
         origin=avg_pos,
         angles=Angle(0, avg_yaw - 90, 0),
@@ -284,7 +284,18 @@ async def combine_group(
         lighting=avg_pos,
         tint=props[0].tint,
         renderfx=props[0].renderfx,
+        min_fade=0.0,
+        max_fade=0.0,
     )
+
+    # Calculate a new fade distance pair that encloses the original fade distances.
+    # Screen-space fade is an old method, which can't be done this way. Just don't bother.
+    if StaticPropFlags.DOES_FADE in combined.flags and StaticPropFlags.SCREEN_SPACE_FADE not in combined.flags:
+        for prop in props:
+            distance = (prop.origin - avg_pos).mag()
+            combined.min_fade = max(combined.min_fade, distance + prop.min_fade)
+            combined.max_fade = max(combined.max_fade, distance + prop.max_fade)
+    return combined
 
 
 async def compile_func(
@@ -1189,8 +1200,8 @@ async def combine(
         except KeyError:
             return None, None
 
-    # Ignore these two, they don't affect our new prop.
-    relevant_flags = ~(StaticPropFlags.HAS_LIGHTING_ORIGIN | StaticPropFlags.DOES_FADE)
+    # Ignore this, we handle lighting origin ourselves.
+    relevant_flags = ~StaticPropFlags.HAS_LIGHTING_ORIGIN
 
     def get_grouping_key(prop: StaticProp) -> Optional[tuple]:
         """Compute a grouping key for this prop.
