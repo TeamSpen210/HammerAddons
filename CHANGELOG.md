@@ -7,6 +7,7 @@
 * Allow configuring various shadow/fast reflection options for vactube object ents.
 * Boolean keyvalues (yes/no) can now be set to `!$var`, to invert the value of the variable. 
 * Propcombine will now preserve prop fade distances, by calculating a new distance which encloses the original fade spheres.
+* Allow comp_entity_finder to rotate the target in addition to teleporting.
 
 
 --------------------

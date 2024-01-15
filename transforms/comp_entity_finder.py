@@ -56,9 +56,11 @@ def entity_finder(ctx: Context):
         normal = Vec(x=1) @ Angle.from_str(finder['angles'])
 
         targ_pos = FrozenVec.from_str(finder['origin'])
+        targ_ang = finder['angles']
         if targ_ref:
             for ent in ctx.vmf.search(targ_ref):
                 targ_pos = FrozenVec.from_str(ent['origin'])
+                targ_ang = ent['angles']
                 break
             else:
                 LOGGER.warning(
@@ -158,6 +160,8 @@ def entity_finder(ctx: Context):
         # If specified, teleport to the item's location.
         if conv_bool(finder['teleporttarget']):
             found_ent['origin'] = targ_pos
+        if conv_bool(finder['rotatetarget']):
+            found_ent['angles'] = targ_ang
 
         for ind in itertools.count(1):
             kv_mode_str = finder[f'kv{ind}_mode'].casefold()
