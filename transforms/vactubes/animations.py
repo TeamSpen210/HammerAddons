@@ -24,8 +24,6 @@ ROT_LIM = 30.0
 
 FPS = 30
 
-pointfile = open(r'F:\SteamLibrary\SteamApps\common\Portal 2\sdk_content\maps\vactubes.lin', 'w')
-
 
 class RotGen:
     """Generate a stream of random rotations."""
@@ -145,7 +143,6 @@ class Animation:
             BoneFrame(self.move_bone, pos - self.start_pos, Angle(next(self.rotator)))
         ]
         self.cur_frame += 1
-        pointfile.write(f'{pos}\n')
 
     def check_sensors(self, sensors: List[Sensor], pos1: Vec, pos2: Vec) -> None:
         """Check all our sensors, and update values depending on them."""
@@ -265,7 +262,6 @@ def generate(sources: List[nodes.Spawner], sensors: List[Sensor]) -> List[Animat
                 # We reached the end, finalise!
                 anim.end_node = node
                 anim.add_point(sensors, node.origin)
-                pointfile.write('1e999 1e999 1e999\n')
                 break
 
             # Now generate the straight part between this node and the next.

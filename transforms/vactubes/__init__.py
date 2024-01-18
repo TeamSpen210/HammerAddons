@@ -419,4 +419,3 @@ async def vactube_transform(ctx: Context) -> None:
             ),
             Output('CubeReleased', '!activator', cube_input),
         )
-    animations.pointfile.close()
