@@ -99,7 +99,7 @@ LIM_PARSE = trio.CapacityLimiter(16)
 
 def unify_mdl(path: str):
     """Compute a 'canonical' path for a given model."""
-    path = path.casefold().replace('\\', '/')
+    path = path.casefold().replace('\\', '/').lstrip('/')
     if not path.startswith('models/'):
         path = 'models/' + path
     if not path.endswith('.mdl'):
@@ -1191,7 +1191,8 @@ async def combine(
     async with trio.open_nursery() as nursery:
         # Dict to deduplicate.
         for key_, filename_ in {
-            unify_mdl(prop.model): prop.model
+            # Hammer allows filenames like "/blah/", we don't want it to be looking at the root.
+            unify_mdl(prop.model): prop.model.lstrip('/\\')
             for prop in bsp.props
         }.items():
             nursery.start_soon(load_model, key_, filename_)
