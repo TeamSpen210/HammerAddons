@@ -3,7 +3,7 @@
 	sphere(MaxRange) 
 	color(0 0 255) 
 	line(64 64 64, targetname, target) 
-	line(255 255 0, targetname, target, targetname, SpeakerName) 
+	line(255 255 0, targetname, SpeakerName) 
 = env_microphone: "An entity that acts as a microphone. It works in one of two modes. " +
 	"If it has a 'Speaker' set, it picks up all sounds within the specified sound range, " +
 	"and rebroadcasts them through the Speaker entity. " +

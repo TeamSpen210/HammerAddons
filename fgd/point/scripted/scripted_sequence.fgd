@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityPoint, DXLevelChoice, SystemLevelChoice)
 	studio("models/editor/scriptedsequence.mdl") 
 	color(255 0 255) 
+	line(255 255 255, targetname, m_iszentity)
 	sphere(m_flRadius) = scripted_sequence: "Grabs an NPC and makes them play a specified set of animations. " +
 		"The NPC can be told to move to the scripted sequence position or can " + 
 		"be told to play the script wherever they currently are. " +
