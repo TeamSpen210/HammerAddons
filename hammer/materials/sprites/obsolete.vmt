@@ -2,6 +2,6 @@
 {
 	"$spriteorientation" "vp_parallel"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "editor/obsolete"
+	"$basetexture" "sprites/obsolete"
 	"$no_fullbright" 1
 }
