@@ -84,6 +84,8 @@
 	// Inputs
 	input Skin(integer) : "Changes the model skin to the specified number."
 	input SetBodyGroup(integer) : "Change the model's bodygroup to the specified index number."
+	// 2013 only
+	input SetModelScale[until_L4D](float) : "Set the scale of the entity's model."
 
 	input Ignite(void) : "Makes the entity catch on fire indefinitely."
 	input IgniteLifetime(float) : "Makes the entity catch on fire for a given amount of time."
