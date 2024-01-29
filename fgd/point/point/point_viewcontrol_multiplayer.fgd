@@ -2,7 +2,7 @@
 	appliesto(since_L4D, -ASW)
 	color(200 0 0) 
 	studioprop("models/editor/camera.mdl") 
-	frustum(fov, _frustum_near, _frustum_far, _frustum_color, -1) 
+	frustum(fov, 1, 1024, 255 255 255, -1) 
 	line(255 255 0, targetname, target_entity) 
 = point_viewcontrol_multiplayer: "Multiplayer version of point_viewcontrol which can affect multiple players at once. " +
 	"While it's active, the players will see out of the camera."
@@ -36,8 +36,6 @@
 		1: "Disable when move finished" : 1
 		2: "Set FOV" : 0
 		]
-
-	_frustum_far[!engine](integer) readonly : "<Far Plane>" : 1024 : "Ignore, needed to display the view frustum preview."
 
 	// Inputs
 	input Enable(void) : "Enable the point_viewcontrol_multiplayer, and start controlling the players' view."

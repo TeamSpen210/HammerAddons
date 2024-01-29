@@ -6,7 +6,6 @@ from typing import (
     Callable, Dict, FrozenSet, List, MutableMapping, Optional, Set, Tuple, TypeVar, Union,
 )
 from collections import Counter, defaultdict
-from lzma import LZMAFile
 from pathlib import Path
 import argparse
 import sys
@@ -14,9 +13,10 @@ import sys
 from srctools import fgd
 from srctools.fgd import (
     FGD, AutoVisgroup, EntAttribute, EntityDef, EntityTypes, Helper, HelperExtAppliesTo,
-    HelperTypes, HelperWorldText, KVDef, ValueTypes, match_tags, validate_tags,
+    HelperTypes, KVDef, ValueTypes, match_tags, validate_tags,
 )
 from srctools.filesys import RawFileSystem
+from srctools.math import Vec, format_float
 
 
 # Chronological order of games.
@@ -232,6 +232,41 @@ def _polyfill_ext_valuetypes(fgd: FGD) -> None:
         for tag_map in ent.keyvalues.values():
             for kv in tag_map.values():
                 kv.type = decay.get(kv.type, kv.type)
+
+
+@_polyfill('!P2DES')  # Fixed in VitaminSource.
+def _polyfill_frustum_literals(fgd: FGD) -> None:
+    """The frustum() helper does not support literal values, only keyvalues."""
+    keys = [
+        ('fov', '_frustum_fov', '<Frustum FOV>'),
+        ('near_z', '_frustum_near', '<Frustum Near>'),
+        ('far_z', '_frustum_far', '<Frustum Far>'),
+        ('color', '_frustum_color', '<Frustum Color>'),
+    ]
+    for ent in fgd.entities.values():
+        for helper in ent.helpers:
+            if helper.TYPE is not HelperTypes.FRUSTUM:
+                continue
+            for attr, name_base, disp_name in keys:
+                value: str | int | tuple[int, int, int] = getattr(helper, attr)
+                if isinstance(value, str):
+                    continue
+                # This is a literal, synthesize a keyvalue.
+                i = 0
+                name = name_base
+                while name in ent.keyvalues:
+                    i += 1
+                    name = f'{name_base}{i}'
+                # This should be !ENGINE, but we don't run polyfills in engine mode.
+                ent.keyvalues[name] = {frozenset(): KVDef(
+                    name,
+                    type=ValueTypes.COLOR_255 if attr == 'color' else ValueTypes.FLOAT,
+                    disp_name=disp_name,
+                    default=str(Vec(value)) if isinstance(value, tuple) else format_float(value),
+                    desc='Ignore, this is necessary to display the preview frustum.',
+                    readonly=True,
+                )}
+                setattr(helper, attr, name)
 
 
 def format_all_tags() -> str:
@@ -1122,7 +1157,7 @@ def action_export(
         for tag, classnames in res_tags.items():
             print(f'- {tag}: {len(classnames)} ents')
 
-    print('Exporting...')
+    print(f'Exporting {output_path}...')
 
     if as_binary:
         with open(output_path, 'wb') as bin_f:
@@ -1326,7 +1361,7 @@ def main(args: Optional[List[str]]=None):
             dbase,
             extra_db,
             tags,
-            result.output,
+            Path(result.output).resolve(),
             result.binary,
             result.engine,
             result.map_size,

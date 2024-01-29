@@ -1,7 +1,7 @@
 @PointClass base(npc_turret_floor, EZ2Variant, ResponseContext) 
 	appliesto(EZ2) 
 	studioprop( "models/props/turret_01.mdl") 
-	frustum(FOV, _frustum_near, Range, _frustum_color, -1)
+	frustum(FOV, 1, Range, 255 0 0, -1)
 	autovis(Entities, NPCs, Arbeit, Floor Turret)
 = npc_arbeit_turret_floor: "Arbeit Floor Turret"
 	[

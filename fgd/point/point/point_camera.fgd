@@ -1,7 +1,6 @@
 @PointClass base(BaseEntityPoint)
 	studioprop("models/editor/camera.mdl") 
-	// Frustum color must be a KV name, not a raw RGB value
-	frustum(FOV,fogstart,fogend,_frustum_color,-1)
+	frustum(fov, fogstart, fogend, 255 255 255, -1)
 = point_camera: "Camera"
 	[
 	spawnflags(flags) : "spawnflags" =
