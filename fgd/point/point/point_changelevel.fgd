@@ -5,7 +5,8 @@
 	[
 
 	// Inputs
-	input ChangeLevel(string) : "Changes the level to the map name supplied as a parameter."
+	input ChangeLevel(string) : "Fades to black and changes the level to the map name supplied as a parameter."
+	input ChangeLevelPostFade(string) : "Changes the level instantly, without fading out."
 
 	// Outputs
 	output OnChangeLevel(void) : "Fired when the level is about to change."
