@@ -61,6 +61,7 @@ MODS_BRANCHED: Dict[str, List[Tuple[str, str]]] = {
         ('P2EDU', 'Portal 2 Educational Version'),
         ('STANLEY', 'The Stanley Parable'),
         ('INFRA', 'INFRA'),
+        ('PEE2', 'Portal Epic Edition 2'),
     ],
     'CSGO': [
         ('P2DES', 'Portal 2: Desolation'),
@@ -97,6 +98,8 @@ FEATURES: Dict[str, Set[str]] = {
     'P2': {'INST_IO', 'VSCRIPT'},
     'CSGO': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
     'P2DES': {'P2', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
+
+    'PEE2': {'P2', 'HL2', 'EP1', 'EP2', 'INST_IO', 'VSCRIPT' },
 }
 
 ALL_FEATURES = {
