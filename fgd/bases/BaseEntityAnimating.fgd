@@ -85,7 +85,8 @@
 	input Skin(integer) : "Changes the model skin to the specified number."
 	input SetBodyGroup(integer) : "Change the model's bodygroup to the specified index number."
 	// 2013 only
-	input SetModelScale[until_L4D](float) : "Set the scale of the entity's model."
+	input SetModelScale[until_L4D, !GMod](vector) : "Set the scale of the entity's model. Takes two values separated by a space. The first is the target model scale. " +
+		"The second value is the number of seconds the change in scale will be spread over."
 
 	input Ignite(void) : "Makes the entity catch on fire indefinitely."
 	input IgniteLifetime(float) : "Makes the entity catch on fire for a given amount of time."
@@ -103,8 +104,6 @@
 	input EnableReceivingFlashlight[since_L4D, MBase, GMod](void) : "This object may recieve light or shadows from projected textures (flashlights)."
 	
 	input AlternativeSorting[SINCE_EP1](boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
-	input SetModelScale[EP1, EP2, MESA, !GMod](vector) : "Takes two values separated by a space. The first is the target model scale. " +
-		"The second value is the number of seconds the change in scale will be spread over."
 
 	input SetModel[TF2](string) : "Changes the model to the specified path.\nForm of 'models/ammo/ammo_us.mdl'.\nIMPORTANT:\nAbsolutely NO quotes!\nMake sure you use this slash '/'.\nMerasmus says to heed this advice thou shalt corrupt the VMF."
 	input SetCycle[TF2](float) : "Skip to a specific point in the current animation."
