@@ -2,7 +2,6 @@
 import itertools
 import math
 from enum import Enum
-from typing import Dict, Optional, Set
 
 from srctools import FrozenVec, conv_bool, conv_float, Vec, Entity, Angle
 from srctools.logger import get_logger
@@ -34,7 +33,7 @@ NEEDS = {
 @trans('comp_entity_finder')
 def entity_finder(ctx: Context):
     """Finds the closest entity of a given type."""
-    target_cache: Dict[tuple, Entity] = {}
+    target_cache: dict[tuple, Entity] = {}
 
     for finder in ctx.vmf.by_class['comp_entity_finder']:
         finder.remove()
@@ -78,7 +77,7 @@ def entity_finder(ctx: Context):
             continue
 
         key = (targ_classes, targ_radius, blacklist, targ_fov, targ_pos)
-        found_ent: Optional[Entity]
+        found_ent: Entity | None
         try:
             found_ent = target_cache[key]
         except KeyError:
@@ -103,7 +102,7 @@ def entity_finder(ctx: Context):
 
             # If multiple, it's the union of the sets. If there's a single one
             # we don't need to copy by_class[].
-            ent_set: Set[Entity]
+            ent_set: set[Entity]
             if len(targ_classes) == 1:
                 [single_class] = targ_classes
                 ent_set = ctx.vmf.by_class[single_class]
@@ -126,7 +125,7 @@ def entity_finder(ctx: Context):
                     if cur_dist > dist_to:
                         found_ent = targ_ent
                         cur_dist = dist_to
-            del targ_ent
+            del targ_ent  # Don't mix this up with the found entity below.
             if found_ent is None:
                 # Convert the set of classes to a nice string.
                 if len(targ_classes) == 0:
@@ -194,7 +193,8 @@ def entity_finder(ctx: Context):
 
             needs_src, needs_known = NEEDS[kv_mode]
 
-            known_ent: Optional[Entity] = None
+            known_ent: Entity | None = None
+            known_ent_name = ''
             if needs_known:
                 known_ent_name = finder['kv{}_known'.format(ind)]
                 if not known_ent_name:
@@ -225,24 +225,44 @@ def entity_finder(ctx: Context):
                 )
                 continue
 
+            found_ent_name = found_ent['targetname']
+
             if kv_mode is FinderModes.CONST_TARG:
                 # Set constant value on the found ent.
+                LOGGER.debug('{}.{} = "{}"', found_ent_name, kv_dest, kv_src)
                 found_ent[kv_dest] = kv_src
             elif kv_mode is FinderModes.CONST_KNOWN:
                 # Set constant value on known entity.
                 assert needs_known and known_ent is not None
+                LOGGER.debug('{}.{} = "{}"', known_ent_name, kv_dest, kv_src)
                 known_ent[kv_dest] = kv_src
             elif kv_mode is FinderModes.TARG_TO_KNOWN:
                 assert needs_known and known_ent is not None
-                known_ent[kv_dest] = found_ent[kv_src]
+                known_ent[kv_dest] = val = found_ent[kv_src]
+                LOGGER.debug(
+                    '{}.{} = {}.{} = "{}"',
+                    known_ent_name, kv_dest,
+                    found_ent_name, kv_src,
+                    val,
+                )
             elif kv_mode is FinderModes.KNOWN_TO_TARG:
                 assert needs_known and known_ent is not None
-                found_ent[kv_dest] = known_ent[kv_src]
+                found_ent[kv_dest] = val = known_ent[kv_src]
+                LOGGER.debug(
+                    '{}.{} = {}.{} = "{}"',
+                    found_ent_name, kv_dest,
+                    known_ent_name, kv_src,
+                    val,
+                )
             elif kv_mode is FinderModes.OUTPUT_MERGE:
-                output_name = '!' + kv_dest.lstrip('!').casefold()
                 assert needs_known and known_ent is not None
+                output_name = '!' + kv_dest.lstrip('!').casefold()
+                LOGGER.debug(
+                    'Changing "{}" to "{}" in outputs for "{}"',
+                    output_name, found_ent_name, known_ent_name,
+                )
                 for out in known_ent.outputs:
                     if out.target.casefold() == output_name:
-                        out.target = found_ent['targetname']
+                        out.target = found_ent_name
             else:
                 raise AssertionError('Unknown mode {}'.format(kv_mode))
