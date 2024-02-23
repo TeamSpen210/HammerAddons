@@ -28,6 +28,7 @@
 		1: "Yes"
 		]
 
+	model[engine](studio) : "Model"
 	model[-srctools](choices) : "[H] Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "Choose the model to show in Hammer. Set to the same as Use Alternate Skins." =
 		[
 		"models/npcs/personality_sphere/personality_sphere.mdl": "Original (Wheatley)"
