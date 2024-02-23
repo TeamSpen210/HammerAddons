@@ -20,9 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.11'
           cache: 'pip'
@@ -31,9 +31,13 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: FGD build and folder copy
         run: bash ./build.sh all
+      - name: FGD engine dump
+        run: python src/hammeraddons/unify_fgd.py exp --engine --binary -o build/fgd.lzma
       - name: Artifact upload
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: build-${{ github.sha }}
-          path: ./build/*.fgd
+          path: |
+            ./build/*.fgd
+            ./build/fgd.lzma
           if-no-files-found: error

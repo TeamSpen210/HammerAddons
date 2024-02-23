@@ -71,14 +71,14 @@ jobs:
         run: python -m PyInstaller --distpath ../build/ -y ../postcompiler.spec
         working-directory: ./src/
       - name: Artifact upload (tag)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: github.event_name == 'create'
         with:
           name: hammeraddons_${{ github.event.ref }}_${{ matrix.artifact-name }}
           path: ./build/
           if-no-files-found: error
       - name: Artifact upload (hash)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: github.event_name != 'create'
         with:
           name: hammeraddons_${{ github.sha }}_${{ matrix.artifact-name }}
