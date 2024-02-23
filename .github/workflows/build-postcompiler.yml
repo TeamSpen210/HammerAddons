@@ -37,7 +37,7 @@ jobs:
             arch: 'x64'
             os: 'ubuntu-latest'
     runs-on: ${{ matrix.os }}
-    name: Build postcompiler-${{ artifact-name }}
+    name: Build postcompiler-${{ matrix.artifact-name }}
     steps:
       # Build dev on schedule, since it's actually changing.
       - name: Checkout Dev
