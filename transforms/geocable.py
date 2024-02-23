@@ -745,31 +745,36 @@ def interpolate_bezier(first_node: Node, last_node: Node, curve_segment_count: i
         curve_z.append(curnode.pos.z)
         curnode = curnode.next
     # We do not calculate the first and last node of this curve
-    for l in range(1,curve_segment_count-1):
-        t = l * increment
-        x = de_casteljau(t,curve_x)
-        y = de_casteljau(t,curve_y)
-        z = de_casteljau(t,curve_z)
-        n = Node(Vec(x,y,z), first_node.config, first_node.radius)
+    for pos in range(1, curve_segment_count - 1):
+        t = pos * increment
+        x = de_casteljau(t, curve_x)
+        y = de_casteljau(t, curve_y)
+        z = de_casteljau(t, curve_z)
+        n = Node(Vec(x, y, z), first_node.config, first_node.radius)
         points.append(n)
 
     last_node.config = first_node.config
 
-    LOGGER.debug("Bezier Nodes Generated: ",points)
     return points
 
-def de_casteljau(t, coefs):
-    beta = [c for c in coefs] # values in this list are overridden
+
+def de_casteljau(t: float, coefs: List[float]) -> float:
+    """Evaluate the polynomial for one axis."""
+    beta = [c for c in coefs]  # values in this list are overridden
     n = len(beta)
     for j in range(1, n):
         for k in range(n - j):
             beta[k] = beta[k] * (1 - t) + beta[k + 1] * t
     return beta[0]
 
-def find_all_connected_exclude_firstlast(node: Node) -> Tuple[List[Node], Optional[Node], Optional[Node]]:
+
+def find_all_connected_exclude_firstlast(
+    node: Node,
+) -> Tuple[Node, List[Node], Node]:
+    """Trace backward and forward from a node to find a full chain, extracting the first/last."""
     node_list: List[Node] = [node]
-    cur_back: Optional[Node] = node
-    cur_forward: Optional[Node] = node
+    cur_back: Node = node
+    cur_forward: Node = node
 
     while cur_back.prev is not None:
         cur_back = cur_back.prev
@@ -785,7 +790,7 @@ def find_all_connected_exclude_firstlast(node: Node) -> Tuple[List[Node], Option
         node_list.remove(cur_back)
     if cur_forward.next is None:
         node_list.remove(cur_forward)
-    return node_list, cur_back, cur_forward
+    return cur_back, node_list, cur_forward
 
 
 def interpolate_all(nodes: Set[Node]) -> None:
@@ -808,14 +813,14 @@ def interpolate_all(nodes: Set[Node]) -> None:
         if interp_type is InterpType.BEZIER:
             if node1 in seen_bezier_nodes or node1 in seen_bezier_nodes_ignore:
                 continue
-            b_curve, first, last = find_all_connected_exclude_firstlast(node1)
-            LOGGER.debug("Curve Keyframes: ",first, b_curve, last)
+            first, b_curve, last = find_all_connected_exclude_firstlast(node1)
             seen_bezier_nodes.update(b_curve)
             seen_bezier_nodes_ignore.add(first)
             seen_bezier_nodes_ignore.add(last)
             node1 = first
             node2 = last
         else:
+            assert node1.next is not None  # Checked above
             node2 = node1.next
         func = globals()['interpolate_' + interp_type.name.casefold()]
         points = func(node1, node2, node1.config.segments)
@@ -1131,6 +1136,7 @@ def place_seg_props(nodes: Iterable[Node], fsys: FileSystem, mesh: Mesh) -> Iter
         prop_dists.clear()
         for i, node in enumerate(start_node.follow_no_endpoints()):
             weights: List[SegPropConf] = []
+            assert node.next is not None  # follow_no_endpoints() checks this.
             dist = (node.pos - node.next.pos).mag()
             for conf in node.config.seg_props:
                 if conf.distance:

@@ -185,7 +185,7 @@ def comp_scriptvar(ctx: Context):
                     comp_ent['origin'], var_name, comp_ent['target'],
                 )
                 continue
-            if index is Ellipsis:
+            if isinstance(index, EllipsisType):
                 var_data.extra_pos.add(code)
             else:
                 # Allow duplicates that write the exact same thing,

@@ -16,7 +16,7 @@ else:
 
 try:
     # PyInstaller sets this attribute.
-    BINS_PATH = Path(sys._MEIPASS)  # noqa
+    BINS_PATH = Path(sys._MEIPASS)  # type: ignore  # noqa
     FROZEN = True
 except AttributeError:
     # Root directory is up thrice from postcompiler.py.
