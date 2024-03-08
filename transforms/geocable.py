@@ -1478,7 +1478,7 @@ async def comp_prop_rope(ctx: Context) -> None:
                             nodes.add(conn_node)
                             unchecked.append(conn_node)
                 todo -= nodes
-                if len(nodes) == 1:
+                if len(nodes) <= 1 or not connections:
                     LOGGER.warning('Node at {} has no connections to it! Skipping.', node.pos)
                     continue
 

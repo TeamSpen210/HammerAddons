@@ -9,6 +9,7 @@
 * Propcombine will now preserve prop fade distances, by calculating a new distance which encloses the original fade spheres.
 * Allow comp_entity_finder to rotate the target in addition to teleporting.
 * Fix various incorrect usages of the FGD `frustum()` helper.
+* Fix a compile failure if prop ropes were placed in a group with no connections.
 
 
 --------------------
