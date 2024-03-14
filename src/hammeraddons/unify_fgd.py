@@ -15,7 +15,7 @@ from srctools.fgd import (
     FGD, AutoVisgroup, EntAttribute, EntityDef, EntityTypes, Helper, HelperExtAppliesTo,
     HelperTypes, KVDef, ValueTypes, match_tags, validate_tags,
 )
-from srctools.filesys import RawFileSystem
+from srctools.filesys import File, RawFileSystem
 from srctools.math import Vec, format_float
 
 
@@ -366,38 +366,14 @@ def load_database(
 
     fsys = RawFileSystem(str(dbase))
     for file in dbase.rglob("*.fgd"):
-        # Use a temp FGD class, to allow us to verify no overwrites.
-        file_fgd = FGD()
-        rel_loc = str(file.relative_to(dbase))
-        file_fgd.parse_file(
+        rel_loc = file.relative_to(dbase)
+        load_file(
+            fgd,
+            ent_source,
             fsys,
-            fsys[rel_loc],
-            eval_bases=False,
-            encoding='utf8',
+            fsys[str(rel_loc)],
+            is_base='bases' in rel_loc.parts,
         )
-        for clsname, ent in file_fgd.entities.items():
-            if clsname in fgd.entities:
-                raise ValueError(
-                    f'Duplicate "{clsname}" class '
-                    f'in {rel_loc} and {ent_source[clsname]}!'
-                )
-            fgd.entities[clsname] = ent
-            ent_source[clsname] = rel_loc
-
-        if fgd_vis:
-            for parent, visgroup in file_fgd.auto_visgroups.items():
-                try:
-                    existing_group = fgd.auto_visgroups[parent]
-                except KeyError:
-                    fgd.auto_visgroups[parent] = visgroup
-                else:  # Need to merge
-                    existing_group.ents.update(visgroup.ents)
-
-        fgd.mat_exclusions.update(file_fgd.mat_exclusions)
-        for tags, mat_list in file_fgd.tagged_mat_exclusions.items():
-            fgd.tagged_mat_exclusions[tags] |= mat_list
-
-        print('.', end='', flush=True)
 
     load_visgroup_conf(fgd, dbase)
 
@@ -505,6 +481,48 @@ def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
                     visgroup = fgd.auto_visgroups[vis_name.casefold()]
                     visgroup.ents.add(ent_name)
 
+
+def load_file(
+    base_fgd: FGD,
+    ent_source: Dict[str, str],
+    fsys: RawFileSystem,
+    file: File,
+    is_base: bool,
+) -> None:
+    """Load an addititional file into the database.
+
+    This is done in a separate FGD first, so we can check for overlapping definitions.
+    """
+    file_fgd = FGD()
+
+    file_fgd.parse_file(
+        fsys,
+        file,
+        eval_bases=False,
+        encoding='utf8',
+    )
+    for clsname, ent in file_fgd.entities.items():
+        if clsname in base_fgd.entities:
+            raise ValueError(
+                f'Duplicate "{clsname}" class '
+                f'in {file.path} and {ent_source[clsname]}!'
+            )
+        base_fgd.entities[clsname] = ent
+        ent_source[clsname] = file.path
+
+    for parent, visgroup in file_fgd.auto_visgroups.items():
+        try:
+            existing_group = base_fgd.auto_visgroups[parent]
+        except KeyError:
+            base_fgd.auto_visgroups[parent] = visgroup
+        else:  # Need to merge
+            existing_group.ents.update(visgroup.ents)
+
+    base_fgd.mat_exclusions.update(file_fgd.mat_exclusions)
+    for tags, mat_list in file_fgd.tagged_mat_exclusions.items():
+        base_fgd.tagged_mat_exclusions[tags] |= mat_list
+
+    print('.', end='', flush=True)
 
 def get_appliesto(ent: EntityDef) -> List[str]:
     """Ensure exactly one AppliesTo() helper is present, and return the args.
