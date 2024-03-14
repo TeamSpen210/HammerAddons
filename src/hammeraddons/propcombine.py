@@ -1310,7 +1310,7 @@ async def combine(
         map_name,
         folder_name='propcombine',
         version={
-            'ver': 2,
+            'ver': 3,  # This is bumped if all models need to be recompiled.
             'vol_tolerance': volume_tolerance,
         },
         compile_dir=compile_dump,

@@ -1,6 +1,7 @@
 # Version Dev
 
 # Enhancements
+* Normals are now correctly calculated when generating propcombined models. This requires all previous models to be rebuilt, unfortunately.
 * Added textures for 4 rendertargets (camera, water reflection/refraction, full framebuffer). These give a nice preview in Hammer.
 * Add ability to randomise output delay to `comp_relay` and `comp_adv_output`.
 * Added `comp_vactube_sensor`, which allows detecting the presence of vactube objects.
