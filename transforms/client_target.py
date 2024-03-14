@@ -23,6 +23,13 @@ def clientside_info_target(ctx: Context) -> None:
                 if not value:
                     continue
                 for target in ctx.vmf.search(value):
-                    if target['classname'].casefold() == 'info_target':
-                        spawnflags = conv_int(target['spawnflags'])
+                    if target['classname'].casefold() != 'info_target':
+                        continue
+                    spawnflags = conv_int(target['spawnflags'])
+                    if spawnflags & 1 == 0:
                         target['spawnflags'] = spawnflags | 1  # Transmit to client (respect PVS)
+                        LOGGER.warning(
+                            'Set transmit flag on info_target "{}" which was referenced by '
+                            '{} "{}" @ {}!',
+                            target['targetname'], clsname, ent['targetname'], ent['origin'],
+                        )
