@@ -1,3 +1,9 @@
+@snippet choices BoolDontCare = [
+	0: "No"
+	1: "Yes"
+	2: "Don't care"
+]
+
 @PointClass base(BaseEntityPoint) 
 	appliesto(ASW, EP1, EP2, HL2, P1, P2, Mesa) 
 	autovis(AI, AI Script Conditions)
@@ -31,12 +37,7 @@
 		]
 
 	scriptstatus[engine](integer) : "Actor is running a script?" : 2
-	scriptstatus(choices) : "Actor is running a script?" : 2 =
-		[
-		0: "No"
-		1: "Yes"
-		2: "Don't care"
-		]
+	scriptstatus(choices) : "Actor is running a script?" : 2 = #snippet BoolDontCare
 
 	requiredtime(float) : "Required Time" : 0 : "Duration of time that all the conditions must be true"
 	mintimeout(float) : "Minimum time out" : 0 : "Minimum time before OnConditionsTimeout is fired. 0 = never expire."
@@ -45,12 +46,7 @@
 		"If you DO specify a Maximum time out, timeout will occur randomly between Minimum and Maximum time out values.)"
 
 	actorseeplayer[engine](integer) : "Actor Sees Player" : 2
-	actorseeplayer(choices) : "Actor Sees Player" : 2 =
-		[
-		0: "No"
-		1: "Yes"
-		2: "Don't care"
-		]
+	actorseeplayer(choices) : "Actor Sees Player" : 2 = #snippet BoolDontCare
 
 	playeractorproximity(float) : "Player distance" : 0 : "The distance the player must/must not be to the actor. Negative values for NOT, 0 for ignore."
 	playeractorfov(float) : "Player FOV for Actor " : 360 : "Specify angle of view cone in degrees. Negative value = NOT"
@@ -63,22 +59,12 @@
 		]
 
 	playeractorlos[engine](integer) : "Player has LOS to Actor" : 2
-	playeractorlos(choices) : "Player has LOS to Actor" : 2 : "Checks that the player has clear Line of Sight to the Actor." =
-		[
-		0: "No"
-		1: "Yes"
-		2: "Don't care"
-		]
+	playeractorlos(choices) : "Player has LOS to Actor" : 2 : "Checks that the player has clear Line of Sight to the Actor." = #snippet BoolDontCare
 
 	target(target_destination) : "Target (Optional)" : : "Optional entity to include in conditions."
 
 	actorseetarget[engine](integer) : "Actor Sees Target" : 2
-	actorseetarget(choices) : "Actor Sees Target" : 2 =
-		[
-		0: "No"
-		1: "Yes"
-		2: "Don't care"
-		]
+	actorseetarget(choices) : "Actor Sees Target" : 2 = #snippet BoolDontCare
 
 	actortargetproximity(float) : "Target distance" : 0 : "The distance the actor must/must not be to the Target. Negative values for NOT, 0 for ignore."
 	playertargetproximity(float) : "Player distance from Target" : 0 : "The distance the player must/must not be to the Target. Negative values for NOT, 0 for ignore."
@@ -92,50 +78,24 @@
 		]
 
 	playertargetlos[engine](integer) : "Player has LOS to Target" : 2
-	playertargetlos(choices) : "Player has LOS to Target" : 2 : "Checks that the player has clear Line of Sight to the Target" =
-		[
-		0: "No"
-		1: "Yes"
-		2: "Don't care"
-		]
+	playertargetlos(choices) : "Player has LOS to Target" : 2 : "Checks that the player has clear Line of Sight to the Target" = #snippet BoolDontCare
 
 	playerblockingactor[engine](integer) : "Player blocking Actor" : 2
-	playerblockingactor(choices) : "Player blocking Actor" : 2 : "Checks that the player is blocking the Actor's path" =
-		[
-		0: "No"
-		1: "Yes"
-		2: "Don't care"
-		]
+	playerblockingactor(choices) : "Player blocking Actor" : 2 : "Checks that the player is blocking the Actor's path" = #snippet BoolDontCare
 
 	actorinpvs[engine](integer) : "Actor in Player's PVS" : 2
-	actorinpvs(choices) : "Actor in Player's PVS" : 2 : "Checks that the actor is in the player's PVS" =
-		[
-		0: "No"
-		1: "Yes"
-		2: "Don't care"
-		]
+	actorinpvs(choices) : "Actor in Player's PVS" : 2 : "Checks that the actor is in the player's PVS" = #snippet BoolDontCare
 
 	actorinvehicle[engine](integer) : "Actor in a vehicle" : 2
-	actorinvehicle(choices) : "Actor in a vehicle" : 2 : "Checks the actor's state in a vehicle" =
-		[
-		0: "No"
-		1: "Yes"
-		2: "Don't care"
-		]
+	actorinvehicle(choices) : "Actor in a vehicle" : 2 : "Checks the actor's state in a vehicle" = #snippet BoolDontCare
 
 	playerinvehicle[engine](integer) : "Player in a vehicle" : 2
-	playerinvehicle(choices) : "Player in a vehicle" : 2 : "Checks the player's state in a vehicle" =
-		[
-		0: "No"
-		1: "Yes"
-		2: "Don't care"
-		]
+	playerinvehicle(choices) : "Player in a vehicle" : 2 : "Checks the player's state in a vehicle" = #snippet BoolDontCare
 
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Fire outputs with the Actor as Activator" : 0
 		]
-
 
 	// Inputs
 	input Enable(void) : "Enable this entity"

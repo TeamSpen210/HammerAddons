@@ -11,6 +11,7 @@
 * Allow comp_entity_finder to rotate the target in addition to teleporting.
 * Fix various incorrect usages of the FGD `frustum()` helper.
 * Fix a compile failure if prop ropes were placed in a group with no connections.
+* A new "snippets" system allows FGD files to easily repeat descriptions and other small sections.
 
 
 --------------------
