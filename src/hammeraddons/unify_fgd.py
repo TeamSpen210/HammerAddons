@@ -377,6 +377,7 @@ def load_database(
             fsys,
             fsys[str(rel_loc)],
             is_base='bases' in rel_loc.parts,
+            fgd_vis=fgd_vis,
         )
 
     load_visgroup_conf(fgd, dbase)
@@ -491,7 +492,9 @@ def load_file(
     ent_source: Dict[str, str],
     fsys: RawFileSystem,
     file: File,
+    *,
     is_base: bool,
+    fgd_vis: bool,
 ) -> None:
     """Load an addititional file into the database.
 
@@ -514,13 +517,14 @@ def load_file(
         base_fgd.entities[clsname] = ent
         ent_source[clsname] = file.path
 
-    for parent, visgroup in file_fgd.auto_visgroups.items():
-        try:
-            existing_group = base_fgd.auto_visgroups[parent]
-        except KeyError:
-            base_fgd.auto_visgroups[parent] = visgroup
-        else:  # Need to merge
-            existing_group.ents.update(visgroup.ents)
+    if fgd_vis:
+        for parent, visgroup in file_fgd.auto_visgroups.items():
+            try:
+                existing_group = base_fgd.auto_visgroups[parent]
+            except KeyError:
+                base_fgd.auto_visgroups[parent] = visgroup
+            else:  # Need to merge
+                existing_group.ents.update(visgroup.ents)
 
     base_fgd.mat_exclusions.update(file_fgd.mat_exclusions)
     for tags, mat_list in file_fgd.tagged_mat_exclusions.items():
