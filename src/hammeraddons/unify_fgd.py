@@ -3,9 +3,9 @@
 This allows sharing definitions among different engine versions.
 """
 from typing import (
-    Callable, Dict, FrozenSet, List, MutableMapping, Optional, Set, Tuple, TypeVar, Union,
+    Any, Callable, Dict, FrozenSet, List, MutableMapping, Optional, Set, Tuple, TypeVar, Union,
 )
-from collections import Counter, defaultdict
+from collections import Counter, defaultdict, ChainMap
 from pathlib import Path
 import argparse
 import sys
@@ -13,7 +13,7 @@ import sys
 from srctools import fgd
 from srctools.fgd import (
     FGD, AutoVisgroup, EntAttribute, EntityDef, EntityTypes, Helper, HelperExtAppliesTo,
-    HelperTypes, KVDef, ValueTypes, match_tags, validate_tags,
+    HelperTypes, KVDef, Snippet, ValueTypes, match_tags, validate_tags,
 )
 from srctools.filesys import File, RawFileSystem
 from srctools.math import Vec, format_float
@@ -73,13 +73,13 @@ MODS_BRANCHED: Dict[str, List[Tuple[str, str]]] = {
 MOD_TO_BRANCH = {
     mod: branch
     for branch, mods in MODS_BRANCHED.items()
-    for mod, desc in mods
+    for mod, _ in mods
 }
 ALL_MODS = {
     *MOD_TO_BRANCH,
     'MBASE',  # Mapbase can either be episodic or hl2 base, specify it with those.
 }
-GAME_ORDER = [game for game, desc in GAMES_CHRONO]
+GAME_ORDER = [game for game, _ in GAMES_CHRONO]
 ALL_GAMES = set(GAME_ORDER)
 
 # Specific features that are backported to various games.
@@ -154,6 +154,16 @@ UNIQUE_HELPERS = {
     fgd.HelperEnvSprite, fgd.HelperInstance, fgd.HelperLight, fgd.HelperLightSpot,
     fgd.HelperModelLight, fgd.HelperOverlay, fgd.HelperOverlayTransition, fgd.HelperWorldText,
 }
+
+# Attribute, display name.
+SNIPPET_KINDS = [
+    ('snippet_choices', 'choices'),
+    ('snippet_desc', 'description'),
+    ('snippet_flags', 'spawnflags'),
+    ('snippet_input', 'input'),
+    ('snippet_keyvalue', 'keyvalue'),
+    ('snippet_output', 'output'),
+]
 
 
 def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
@@ -369,16 +379,29 @@ def load_database(
     ent_source: Dict[str, str] = {}
 
     fsys = RawFileSystem(str(dbase))
-    for file in dbase.rglob("*.fgd"):
+    # First, load bases.
+    for file in dbase.rglob("bases/*.fgd"):
         rel_loc = file.relative_to(dbase)
         load_file(
             fgd,
             ent_source,
             fsys,
             fsys[str(rel_loc)],
-            is_base='bases' in rel_loc.parts,
             fgd_vis=fgd_vis,
+            is_base=True,
         )
+    # Then, everything else.
+    for file in dbase.rglob("*.fgd"):
+        rel_loc = file.relative_to(dbase)
+        if 'bases' not in rel_loc.parts:
+            load_file(
+                fgd,
+                ent_source,
+                fsys,
+                fsys[str(rel_loc)],
+                fgd_vis=fgd_vis,
+                is_base=False,
+            )
 
     load_visgroup_conf(fgd, dbase)
 
@@ -501,6 +524,18 @@ def load_file(
     This is done in a separate FGD first, so we can check for overlapping definitions.
     """
     file_fgd = FGD()
+    path = file.path
+
+    # For bases, we enforce uniqueness and merge definitions.
+    # For everything else, they can refer to the bases but have their own scope.
+    # By not swapping to a chainmap for base definitions, we catch interdependent bases -
+    # those would cause problems if read in the wrong order.
+    snippet_dicts = {}
+    snip_map: Dict[str, Dict[str, Snippet[Any]]]
+    if not is_base:
+        for attr_name, disp_name in SNIPPET_KINDS:
+            snippet_dicts[attr_name] = snip_map = {}
+            setattr(file_fgd, attr_name, ChainMap(snip_map, getattr(base_fgd, attr_name)))
 
     file_fgd.parse_file(
         fsys,
@@ -515,7 +550,7 @@ def load_file(
                 f'in {file.path} and {ent_source[clsname]}!'
             )
         base_fgd.entities[clsname] = ent
-        ent_source[clsname] = file.path
+        ent_source[clsname] = path
 
     if fgd_vis:
         for parent, visgroup in file_fgd.auto_visgroups.items():
@@ -530,7 +565,16 @@ def load_file(
     for tags, mat_list in file_fgd.tagged_mat_exclusions.items():
         base_fgd.tagged_mat_exclusions[tags] |= mat_list
 
-    print('.', end='', flush=True)
+    if is_base:
+        for attr_name, disp_name in SNIPPET_KINDS:
+            dest = getattr(base_fgd, attr_name)
+            for name, value in getattr(file_fgd, attr_name).items():
+                if name in dest:
+                    raise ValueError(f'Duplicate "{name}" {disp_name} snippet in "{path}"!')
+                dest[name] = value
+
+    print('b' if is_base else '.', end='', flush=True)
+
 
 def get_appliesto(ent: EntityDef) -> List[str]:
     """Ensure exactly one AppliesTo() helper is present, and return the args.
