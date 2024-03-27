@@ -1,9 +1,9 @@
 """Compile static prop cables, instead of sprites."""
 from typing import (
-    Optional, List, Tuple, FrozenSet, Callable,
-    TypeVar, MutableMapping, NewType, Set, Iterable, Dict, Iterator, cast,
+    Optional, List, Tuple, FrozenSet, TypeVar, MutableMapping, NewType, Set, Iterable, Dict,
+    Iterator, Callable,
 )
-from typing_extensions import Final, Self
+from typing_extensions import Final, Self, TypeAlias
 import itertools
 import math
 import struct
@@ -104,6 +104,7 @@ class SegPropOrient(Enum):
     RAND_YAW = 'rand_yaw'
     RAND_FULL = 'rand'
 
+
 @attrs.define
 class RopePhys:
     """Holds the data for move_rope simulation."""
@@ -147,12 +148,12 @@ VAC_SEG_CONF = SegPropConf(
     orient=SegPropOrient.FULL_ROT,
     angles=Matrix(),
 )
-VAC_SEG_CONF_SET = frozenset({VAC_SEG_CONF})
-VAC_RADIUS = 45.0
-VAC_COLL_RADIUS = 52.0
-VAC_MAT = 'models/props_backstage/vacum_pipe'
+VAC_SEG_CONF_SET: Final = frozenset({VAC_SEG_CONF})
+VAC_RADIUS: Final = 45.0
+VAC_COLL_RADIUS: Final = 52.0
+VAC_MAT: Final = 'models/props_backstage/vacum_pipe'
 # Pos/radius pairs defining cylinders, for visleaf computation.
-CollData = List[Tuple[Vec, float, Vec, float]]
+CollData: TypeAlias = List[Tuple[Vec, float, Vec, float]]
 
 @attrs.define
 class SegProp:
@@ -203,10 +204,10 @@ class Config:
     @staticmethod
     def _parse_min(ent: Entity, keyvalue: str, minimum: Number, message: str) -> Number:
         """Helper for passing all the numeric keys."""
-        value: Number = cast(
-            'Callable[[str, Number], Number]',
-            (conv_float if isinstance(minimum, float) else conv_int),
-        )(ent[keyvalue], minimum)
+        converter: Callable[[str, Number], Number] = (
+            conv_float if isinstance(minimum, float) else conv_int  # type: ignore[assignment]
+        )
+        value = converter(ent[keyvalue], minimum)
         if value < minimum:
             LOGGER.warning(message, ent['origin'])
             return minimum
@@ -479,7 +480,7 @@ async def build_rope(
         coll_mesh.triangles.extend(generate_straights(coll_nodes))
         generate_caps(coll_nodes, coll_mesh, is_coll=True)
 
-    # Move the UVs around, so they don't extend too far.
+    # Wrap the UVs around to be inside 0-1, if possible.
     for tri in mesh.triangles:
         u = math.floor(min(point.tex_u for point in tri))
         v = math.floor(min(point.tex_v for point in tri))
@@ -875,7 +876,7 @@ def compute_orients(nodes: Iterable[Node]) -> None:
         node1 = node1.find_start()
         tanj1 = tangents[node1]
         # Start with an arbitrary roll for the first orientation.
-        node1.orient = Matrix.from_angle(tanj1.to_angle())
+        node1.orient = Matrix.from_basis(x=tanj1)
         while node1.next is not None:
             node2 = node1.next
             all_nodes.discard(node2)
@@ -1177,7 +1178,7 @@ def place_seg_props(nodes: Iterable[Node], fsys: FileSystem, mesh: Mesh) -> Iter
                     node.orient.forward().to_angle().yaw,
                 )
             elif conf.orient is SegPropOrient.PITCH_YAW:
-                forward_ang = node.orient.forward().to_angle()
+                forward_ang = node.orient.to_angle()
                 forward_ang.roll = 0
                 angles = conf.angles @ forward_ang
             elif conf.orient is SegPropOrient.RAND_YAW:
