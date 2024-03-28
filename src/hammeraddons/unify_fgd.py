@@ -165,6 +165,9 @@ SNIPPET_KINDS = [
     ('snippet_output', 'output'),
 ]
 
+# Set of entity classnames which have snippets in their file. If they do, assume all KVs were deduplicated.
+SNIPPET_USED = set()
+
 
 def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
     """Register a polyfill, which backports newer FGD syntax to older engines."""
@@ -565,6 +568,7 @@ def load_file(
     for tags, mat_list in file_fgd.tagged_mat_exclusions.items():
         base_fgd.tagged_mat_exclusions[tags] |= mat_list
 
+    dest: ChainMap[str, Snippet[Any]]
     if is_base:
         for attr_name, disp_name in SNIPPET_KINDS:
             dest = getattr(base_fgd, attr_name)
@@ -572,6 +576,8 @@ def load_file(
                 if name in dest:
                     raise ValueError(f'Duplicate "{name}" {disp_name} snippet in "{path}"!')
                 dest[name] = value
+    elif any(snippet_dicts.values()):
+        SNIPPET_USED.update(file_fgd.entities)
 
     print('b' if is_base else '.', end='', flush=True)
 
@@ -671,6 +677,7 @@ def action_count(
 
     all_tags = set()
 
+    ent: EntityDef
     for ent in fgd:
         for tag in get_appliesto(ent):
             all_tags.add(tag.lstrip('+-!').upper())
@@ -688,6 +695,12 @@ def action_count(
     game_classes: MutableMapping[Tuple[str, str], Set[str]] = defaultdict(set)
     base_uses: MutableMapping[str, Set[str]] = defaultdict(set)
     all_ents: MutableMapping[str, Set[str]] = defaultdict(set)
+
+    kv_counts: Dict[tuple, List[tuple]] = defaultdict(list)
+    inp_counts: Dict[tuple, List[tuple]] = defaultdict(list)
+    out_counts: Dict[tuple, List[tuple]] = defaultdict(list)
+    desc_counts: Dict[tuple, List[tuple]] = defaultdict(list)
+    val_list_counts: Dict[tuple, List[tuple]] = defaultdict(list)
 
     for ent in fgd:
         if ent.type is EntityTypes.BASE:
@@ -730,6 +743,32 @@ def action_count(
             for game in games:
                 counter[game] -= 1
                 game_classes[game, typ].discard(ent.classname)
+
+        if ent.classname in SNIPPET_USED:
+            # This entity does use snippets already, don't count it.
+            continue
+
+        for name, kv_map in ent.keyvalues.items():
+            for tags, kv in kv_map.items():
+                if 'ENGINE' in tags or kv.type is ValueTypes.SPAWNFLAGS:
+                    continue
+                if kv.desc: # Blank is not a duplicate!
+                    desc_counts[(kv.desc, )].append((ent.classname, name))
+                kv_counts[
+                    kv.name, kv.type, (tuple(kv.val_list) if kv.val_list is not None else ()), kv.desc, kv.default,
+                ].append((ent.classname, name, kv.desc))
+                if kv.val_list is not None:
+                    val_list_counts[tuple(kv.val_list)].append((ent.classname, name))
+        for name, io_map in ent.inputs.items():
+            for tags, io in io_map.items():
+                if 'ENGINE' in tags:
+                    continue
+                inp_counts[io.name, io.type, io.desc].append((ent.classname, name, io.desc))
+        for name, io_map in ent.outputs.items():
+            for tags, io in io_map.items():
+                if 'ENGINE' in tags:
+                    continue
+                out_counts[io.name, io.type, io.desc].append((ent.classname, name, io.desc))
 
     all_games: Set[str] = {*count_base, *count_point, *count_brush}
 
@@ -823,6 +862,19 @@ def action_count(
     for ent in fgd:
         if ent.type is not EntityTypes.BASE and ent.type is not EntityTypes.BRUSH:
             check_ent_sprites(ent, mdl_or_sprite)
+
+    for kind_name, count_map in (
+        ('keyvalues', kv_counts),
+        ('inputs', inp_counts),
+        ('outputs', out_counts),
+        ('val list', val_list_counts),
+        ('desc', desc_counts)
+    ):
+        print(f'Duplicate {kind_name}:')
+        for key, info in sorted(count_map.items(), key=lambda v: len(v[1]), reverse=True):
+            if len(info) <= 2:
+                continue
+            print(f'{len(info):02}: {key[:64]!r} -> {info}')
 
 
 def action_import(
