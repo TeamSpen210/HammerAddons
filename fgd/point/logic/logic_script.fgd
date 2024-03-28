@@ -1,43 +1,45 @@
+@Snippet desc EntityGroup = "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
+
 @PointClass base(BaseEntityPoint) 
 	appliesto(VSCRIPT) 
 	iconsprite("editor/logic_script.vmt") 
 	color(200 200 200) 
 	line(200 200 200, targetname, group00) 
-	line(200 200 200, targetname, group08) 
 	line(200 200 200, targetname, group01) 
-	line(200 200 200, targetname, group09) 
 	line(200 200 200, targetname, group02) 
-	line(200 200 200, targetname, group10) 
 	line(200 200 200, targetname, group03) 
-	line(200 200 200, targetname, group11) 
 	line(200 200 200, targetname, group04) 
-	line(200 200 200, targetname, group12) 
 	line(200 200 200, targetname, group05) 
-	line(200 200 200, targetname, group13) 
 	line(200 200 200, targetname, group06) 
-	line(200 200 200, targetname, group14) 
+	line(200 200 200, targetname, group08) 
 	line(200 200 200, targetname, group07) 
+	line(200 200 200, targetname, group09) 
+	line(200 200 200, targetname, group10) 
+	line(200 200 200, targetname, group11) 
+	line(200 200 200, targetname, group12) 
+	line(200 200 200, targetname, group13) 
+	line(200 200 200, targetname, group14) 
 	line(200 200 200, targetname, group15) 
 	line(200 200 200, targetname, group16) 
 = logic_script: "An entity that acts as a container for scripts."
 	[
-	group00(target_destination) : "EntityGroup[0]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group01(target_destination) : "EntityGroup[1]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group02(target_destination) : "EntityGroup[2]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group03(target_destination) : "EntityGroup[3]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group04(target_destination) : "EntityGroup[4]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group05(target_destination) : "EntityGroup[5]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group06(target_destination) : "EntityGroup[6]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group07(target_destination) : "EntityGroup[7]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group08(target_destination) : "EntityGroup[8]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group09(target_destination) : "EntityGroup[9]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group10(target_destination) : "EntityGroup[10]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group11(target_destination) : "EntityGroup[11]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group12(target_destination) : "EntityGroup[12]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group13(target_destination) : "EntityGroup[13]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group14(target_destination) : "EntityGroup[14]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group15[until_ASW, -TF2](target_destination) : "EntityGroup[15]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
-	group16[since_ASW, TF2](target_destination) : "EntityGroup[16]" : : "If set, the specified entity will be stored in the EntityGroup array. Unused slots before the last used slot will become null."
+	group00(target_destination) : "EntityGroup[0]" : : #Snippet EntityGroup
+	group01(target_destination) : "EntityGroup[1]" : : #Snippet EntityGroup
+	group02(target_destination) : "EntityGroup[2]" : : #Snippet EntityGroup
+	group03(target_destination) : "EntityGroup[3]" : : #Snippet EntityGroup
+	group04(target_destination) : "EntityGroup[4]" : : #Snippet EntityGroup
+	group05(target_destination) : "EntityGroup[5]" : : #Snippet EntityGroup
+	group06(target_destination) : "EntityGroup[6]" : : #Snippet EntityGroup
+	group07(target_destination) : "EntityGroup[7]" : : #Snippet EntityGroup
+	group08(target_destination) : "EntityGroup[8]" : : #Snippet EntityGroup
+	group09(target_destination) : "EntityGroup[9]" : : #Snippet EntityGroup
+	group10(target_destination) : "EntityGroup[10]" : : #Snippet EntityGroup
+	group11(target_destination) : "EntityGroup[11]" : : #Snippet EntityGroup
+	group12(target_destination) : "EntityGroup[12]" : : #Snippet EntityGroup
+	group13(target_destination) : "EntityGroup[13]" : : #Snippet EntityGroup
+	group14(target_destination) : "EntityGroup[14]" : : #Snippet EntityGroup
+	group15[until_ASW, -TF2](target_destination) : "EntityGroup[15]" : : #Snippet EntityGroup
+	group16[since_ASW, TF2](target_destination) : "EntityGroup[16]" : : #Snippet EntityGroup
 	
 	shouldtransition[INFRA](boolean) : "Transition Across Levels" : 0 : "Transition this script across levels."
 

@@ -30,8 +30,8 @@
 	input SetHealth(integer) : "Sets a new value for the breakable's health. If the breakable's health reaches zero it will break."
 	input AddHealth(integer) : "Adds health to the breakable. If the breakable's health reaches zero it will break."
 	input RemoveHealth(integer) : "Removes health from the breakable. If the breakable's health reaches zero it will break."
-	input Enable(void) : "Enable this entity."
-	input Disable(void) : "Disable this entity."
+	#snippet input Enable
+	#snippet input Disable
 
 	// Outputs
 	output OnDamaged(void) : "Fired when the building is damaged."

@@ -13,8 +13,8 @@
 	
 	input FireHalloweenBonus(integer) : "Trigger bonus effect on players near this dispenser"
 	input SetDispenserLevel(integer) : "Set the dispenser level: 1, 2, or 3"
-	input Enable(void) : "Enable this entity."
-	input Disable(void) : "Disable this entity."
+	#snippet input Enable
+	#snippet input Disable
 	input Show(void) : "Show the Dispenser."
 	input Hide(void) : "Hide the Dispenser."
 	]

@@ -17,21 +17,7 @@
 	spotlight_radius(float) : "Spotlight end radius" : 80 : "This is the radius of the light, in units, at the object that it is hitting."
 
 	style[engine](integer) : "Appearance" : 0
-	style(choices) : "Appearance" : "0" =
-		[
-		0: "Normal"
-		10: "Fluorescent flicker"
-		2: "Slow, strong pulse"
-		11: "Slow pulse, noblack"
-		5: "Gentle pulse"
-		1: "Flicker A"
-		6: "Flicker B"
-		3: "Candle A"
-		7: "Candle B"
-		8: "Candle C"
-		4: "Fast strobe"
-		9: "Slow strobe"
-		]
+	style(choices) : "Appearance" : "0" = #snippet LightStyle
 
 	spawnflags(flags)  =
 		[
