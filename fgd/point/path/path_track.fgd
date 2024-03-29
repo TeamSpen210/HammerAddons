@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	cylinder(255 255 255, targetname, target, radius, targetname, targetname, radius)
+	cylinder(0 0 255, targetname, altpath, radius, targetname, targetname, radius)
 	color(255 192 0)
 	studio("models/editor/angle_helper.mdl")
 	sphere(radius)
