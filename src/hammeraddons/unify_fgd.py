@@ -53,6 +53,9 @@ MODS_BRANCHED: Dict[str, List[Tuple[str, str]]] = {
         ('EZ2', 'Entropy: Zero 2'),
         ('KZ', 'Kreedz Climbing'),
     ],
+    'P1': [
+        ('PEE15', 'Portal Epic Edition 1.5'),
+    ],
     'ASW': [
         ('ASRD', 'Alien Swarm: Reactive Drop'),
     ],
@@ -99,6 +102,7 @@ FEATURES: Dict[str, Set[str]] = {
     'CSGO': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
     'P2DES': {'P2', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 
+    'PEE15': {'P1', 'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
     'PEE2': {'P2', 'HL2', 'EP1', 'EP2', 'INST_IO', 'VSCRIPT' },
 }
 
