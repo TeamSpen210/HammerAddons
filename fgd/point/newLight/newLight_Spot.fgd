@@ -16,7 +16,7 @@
 		]
 	
 	style[engine](integer) : "Appearance" : 0
-	style(Choices) : "Appearance" : 0= #snippet LightStyle
+	style(Choices) : "Appearance" : 0 = #snippet LightStyle
 	
 	LightColorAmbient(color255) : "Light Ambient Color" : "0 0 0 0" : "This is the ambient color of the sunlight."
 	LightColor(color255) : "Light Color" : "255 255 255 1" : "This is the color of the sunlight."
