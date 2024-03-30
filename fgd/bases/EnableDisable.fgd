@@ -1,6 +1,3 @@
-@snippet input Enable = Enable(void) : "Enable this entity."
-@snippet input Disable = Disable(void) : "Disable this entity."
-
 @BaseClass = EnableDisable
 	[
 	startdisabled(boolean) : "Start Disabled" : 0

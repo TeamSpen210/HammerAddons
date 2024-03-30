@@ -382,29 +382,15 @@ def load_database(
     ent_source: Dict[str, str] = {}
 
     fsys = RawFileSystem(str(dbase))
-    # First, load bases.
-    for file in dbase.rglob("bases/*.fgd"):
+    # First, load the snippets files.
+    for file in dbase.rglob("snippets/*.fgd"):
         rel_loc = file.relative_to(dbase)
-        load_file(
-            fgd,
-            ent_source,
-            fsys,
-            fsys[str(rel_loc)],
-            fgd_vis=fgd_vis,
-            is_base=True,
-        )
+        load_file(fgd, ent_source, fsys, fsys[str(rel_loc)], is_snippet=True, fgd_vis=fgd_vis)
     # Then, everything else.
     for file in dbase.rglob("*.fgd"):
         rel_loc = file.relative_to(dbase)
-        if 'bases' not in rel_loc.parts:
-            load_file(
-                fgd,
-                ent_source,
-                fsys,
-                fsys[str(rel_loc)],
-                fgd_vis=fgd_vis,
-                is_base=False,
-            )
+        if 'snippets' not in rel_loc.parts:
+            load_file(fgd, ent_source, fsys, fsys[str(rel_loc)], is_snippet=False, fgd_vis=fgd_vis)
 
     load_visgroup_conf(fgd, dbase)
 
@@ -519,7 +505,7 @@ def load_file(
     fsys: RawFileSystem,
     file: File,
     *,
-    is_base: bool,
+    is_snippet: bool,
     fgd_vis: bool,
 ) -> None:
     """Load an addititional file into the database.
@@ -529,13 +515,13 @@ def load_file(
     file_fgd = FGD()
     path = file.path
 
-    # For bases, we enforce uniqueness and merge definitions.
-    # For everything else, they can refer to the bases but have their own scope.
-    # By not swapping to a chainmap for base definitions, we catch interdependent bases -
+    # For snippet files, we enforce uniqueness and merge definitions.
+    # For everything else, they can refer to the base definitions but have their own scope.
+    # By not swapping to a chainmap for snippet definitions, we catch interdependent snippet files -
     # those would cause problems if read in the wrong order.
     snippet_dicts = {}
     snip_map: Dict[str, Dict[str, Snippet[Any]]]
-    if not is_base:
+    if not is_snippet:
         for attr_name, disp_name in SNIPPET_KINDS:
             snippet_dicts[attr_name] = snip_map = {}
             setattr(file_fgd, attr_name, ChainMap(snip_map, getattr(base_fgd, attr_name)))
@@ -569,7 +555,7 @@ def load_file(
         base_fgd.tagged_mat_exclusions[tags] |= mat_list
 
     dest: ChainMap[str, Snippet[Any]]
-    if is_base:
+    if is_snippet:
         for attr_name, disp_name in SNIPPET_KINDS:
             dest = getattr(base_fgd, attr_name)
             for name, value in getattr(file_fgd, attr_name).items():
@@ -579,7 +565,7 @@ def load_file(
     elif any(snippet_dicts.values()):
         SNIPPET_USED.update(file_fgd.entities)
 
-    print('b' if is_base else '.', end='', flush=True)
+    print('s' if is_snippet else '.', end='', flush=True)
 
 
 def get_appliesto(ent: EntityDef) -> List[str]:
