@@ -77,6 +77,17 @@ def check_control_enabled(ent: Entity) -> bool:
         return conv_bool(ent['ctrl_value'], True)
 
 
+def ent_description(ent: Entity) -> str:
+    """Return an identifiable description for an entity."""
+    name = ent['targetname']
+    classname = ent['classname']
+    pos = ent['origin']
+    if name:
+        return f'"{name}" {classname} @ ({pos})'
+    else:
+        return f'{classname} @ ({pos})'
+
+
 @final
 @attrs.frozen
 class RelayOut:

@@ -13,7 +13,7 @@ from srctools.logger import get_logger
 from srctools.packlist import PackList
 
 from hammeraddons.bsp_transform.common import (
-    check_control_enabled,
+    check_control_enabled, ent_description,
     parse_numeric_specifier, NumericSpecifier, NumericOp
 )
 
@@ -24,7 +24,7 @@ __all__ = [
     'Context', 'trans', 'run_transformations',
     'TransFunc', 'TRANSFORMS',
     # Utils:
-    'check_control_enabled',
+    'check_control_enabled', 'ent_description',
     'parse_numeric_specifier', 'NumericOp', 'NumericSpecifier',
 ]
 
