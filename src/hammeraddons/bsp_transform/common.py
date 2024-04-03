@@ -112,3 +112,24 @@ class RelayOut:
             ).make_unique(name)
             for inp, out in user_outs:
                 yield cls(ent, inp, out)
+
+
+def get_multimode_value(ent: Entity, *, prefix: str='', suffix: str='', desc: str) -> str:
+    """Read from differerent typed keyvalues, specified by a mode option.
+
+    The mode was originally not present, which is why local/global is doubled up.
+    """
+    mode = ent[f'{prefix}mode{suffix}', 'string'].casefold()
+    if mode == 'legacy':
+        return ent[f'{prefix}global{suffix}'] or ent[f'{prefix}_local']
+    elif mode == 'global':
+        return ent[f'{prefix}global{suffix}']
+    elif mode == 'local':
+        return ent[f'{prefix}local{suffix}']
+    elif mode == 'position':
+        return ent[f'{prefix}pos{suffix}']
+    else:
+        LOGGER.warning(
+            'Invalid {} mode "{}" for {}!',
+            desc, mode, ent_description(ent),
+        )

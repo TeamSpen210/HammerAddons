@@ -12,7 +12,8 @@ from srctools import EmptyMapping, Vec, conv_float, conv_int
 from srctools.vmf import Output, Entity
 from srctools.logger import get_logger
 
-from hammeraddons.bsp_transform import trans, Context, check_control_enabled
+from hammeraddons.bsp_transform import trans, Context
+from hammeraddons.bsp_transform.common import get_multimode_value, check_control_enabled
 
 
 class SimpleFormatter(string.Formatter):
@@ -69,11 +70,7 @@ def advanced_output(ctx: Context) -> None:
 
         param_args: List[str] = []
         for ind in itertools.count(1):
-            val = (
-                adv_out[f'params_pos{ind}']
-                or adv_out[f'params_local{ind}']
-                or adv_out[f'params_global{ind}']
-            )
+            val = get_multimode_value(adv_out, prefix='params_', suffix=str(ind), desc=f'Param {ind}')
             if not val:
                 break
             param_args.append(val)

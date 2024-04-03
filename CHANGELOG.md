@@ -12,6 +12,7 @@
 * Allow comp_entity_finder to rotate the target in addition to teleporting.
 * Fix various incorrect usages of the FGD `frustum()` helper.
 * Fix a compile failure if prop ropes were placed in a group with no connections.
+* Added a value mode option to `comp_kv_setter` and `comp_adv_output` to more clearly control which key is used.
 * A new "snippets" system allows FGD files to easily repeat descriptions and other small sections.
 
 

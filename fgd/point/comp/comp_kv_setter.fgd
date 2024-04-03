@@ -16,6 +16,10 @@
 
 	kv_name(string) : "Name / Mask" : : "The name of the keyvalue to set, or the bits to change for spawnflags."
 
+	kv_value_mode[engine](string) : "Value - Mode" : "legacy"
+	kv_value_mode(choices) : "Value - Mode" : "legacy" : "Which value to use. " +
+		"This allows using values altered in different ways by the instance." +
+		"In legacy mode Ent Name then String is checked." = #snippet "CompKVMode"
 	kv_value_global(string) : "Value - String" : : "The value to apply."
 	kv_value_local(target_destination) : "Value - Ent Name" : : "If set, use this fixed-up entity name."
 	// Has to be "origin" type to get transformed in 2013 engine games
