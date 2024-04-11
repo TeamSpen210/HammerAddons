@@ -102,7 +102,7 @@ def unify_mdl(path: str):
     path = path.casefold().replace('\\', '/').lstrip('/')
     if not path.startswith('models/'):
         path = 'models/' + path
-    if not path.endswith('.mdl'):
+    if not path.endswith(('.mdl', '.glb', '.gltf')):
         path = path + '.mdl'
     return path
 
@@ -1160,6 +1160,9 @@ async def combine(
         """Given a filename, load/parse the QC and MDL data."""
         if blacklist_re.fullmatch(key) is not None:
             LOGGER.debug('Model {} was blacklisted.', filename)
+            return
+        if filename.endswith(('.glb', '.gltf')):
+            # Can't support these yet.
             return
         try:
             mdl_file = pack.fsys[filename]
