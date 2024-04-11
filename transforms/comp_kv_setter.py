@@ -66,7 +66,6 @@ def kv_setter(ctx: Context) -> None:
             flag_enabled = False
             kv_name = kv_name.strip()
 
-
         if not is_flags and not kv_name and not setter.outputs:
             # We have nothing to do?
             LOGGER.warning(
