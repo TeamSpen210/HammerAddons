@@ -37,12 +37,13 @@
 	max_streak_time(float) : "Blob max streak time" : 0.5 : "The maximum time that the blobs will streak for."
 	min_streak_speed_dampen(float) : "Blob min streak speed dampen" : 500 : "The minimum speed dampening while streaking."
 	max_streak_speed_dampen(float) : "Blob max streak speed dampen" : 1000 : "The maximum speed dampening while streaking."
-	start_radius_min(float) : "Min blob start size" : 0.5 : "The minimum start size of the sprayed blobs."
-	start_radius_max(float) : "Max blob start size" : 0.7 : "The maximum start size of the sprayed blobs."
-	end_radius_min(float) : "Min blob end size" : 0.5 : "The minimum end size of the sprayed blobs."
-	end_radius_max(float) : "Max blob end size" : 0.7 : "The maximum end size of the sprayed blobs."
-	radius_grow_time_min(float) : "Min grow time" : 0.5 : "The minimum time to grow from start to end size."
-	radius_grow_time_max(float) : "Max grow time" : 1 : "The maximum time to grow from start to end size."
+	// Set in some Valve maps, but not actually implemented
+	// start_radius_min(float) : "Min blob start size" : 0.5 : "The minimum start size of the sprayed blobs."
+	// start_radius_max(float) : "Max blob start size" : 0.7 : "The maximum start size of the sprayed blobs."
+	// end_radius_min(float) : "Min blob end size" : 0.5 : "The minimum end size of the sprayed blobs."
+	// end_radius_max(float) : "Max blob end size" : 0.7 : "The maximum end size of the sprayed blobs."
+	// radius_grow_time_min(float) : "Min grow time" : 0.5 : "The minimum time to grow from start to end size."
+	// radius_grow_time_max(float) : "Max grow time" : 1 : "The maximum time to grow from start to end size."
 
 	// Inputs
 	input Start(void) : "Start shooting Gel."
