@@ -278,13 +278,21 @@ async def main(argv: List[str]) -> None:
         LOGGER.info('Done!')
 
     # Always strip the propcombine entities, since we don't need them either way.
+    could_propcombine = conf.opts.get(config.PROPCOMBINE_MIN_AUTO_RANGE) is not None
     for ent in bsp_file.ents.by_class['comp_propcombine_set']:
         ent.remove()
+        could_propcombine = True
     for ent in bsp_file.ents.by_class['comp_propcombine_volume']:
         bsp_file.bmodels.pop(ent, None)  # Ignore if not present.
         ent.remove()
+        could_propcombine = True
 
-    if conf.opts.get(config.AUTO_PACK) and args.allow_pack:
+    # Warn if propcombine was enabled by config but not by command line.
+    if could_propcombine and not args.propcombine:
+        LOGGER.warning('No propcombine allowed, --propcombine not passed on the command line!')
+
+    auto_pack = conf.opts.get(config.AUTO_PACK)
+    if auto_pack and args.allow_pack:
         LOGGER.info('Analysing packable resources...')
         packlist.pack_from_ents(
             bsp_file.ents,
@@ -302,6 +310,10 @@ async def main(argv: List[str]) -> None:
             man_name = man_name.replace('<map name>', path.stem)
             LOGGER.info('Writing particle manifest "{}"...', man_name)
             packlist.write_particles_manifest(man_name)
+    if auto_pack and not args.allow_pack:
+        # Warn if packing was enabled by config but not by command line.
+        # May be intentional, but can be confusing.
+        LOGGER.warning('--nopack passed, packing has been disabled!')
 
     pack_allowlist = list(config.packfile_filters(conf.opts.get(config.PACK_ALLOWLIST), 'allowlist'))
     pack_blocklist = list(config.packfile_filters(conf.opts.get(config.PACK_BLOCKLIST), 'blocklist'))
