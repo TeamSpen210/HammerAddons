@@ -7,7 +7,7 @@
 * Added a value mode option to `comp_kv_setter` and `comp_adv_output` to more clearly control which key is used.
 * Added textures for 4 rendertargets (camera, water reflection/refraction, full framebuffer). These give a nice preview in Hammer.
 * Added three keyvalues to `ambient_generic`, giving a more user friendly interface to the confusing spawnflags. This also allows them to be configured via fixup values easily.
-* Allow comp_entity_finder to rotate the target in addition to teleporting.
+* Allow `comp_entity_finder` to rotate the target in addition to teleporting.
 * Allow configuring various shadow/fast reflection options for vactube object ents.
 * Boolean keyvalues (yes/no) can now be set to `!$var`, to invert the value of the variable. 
 * Propcombine will now preserve prop fade distances, by calculating a new distance which encloses the original fade spheres.
@@ -17,6 +17,7 @@
 * Fix a compile failure if prop ropes were placed in a group with no connections.
 * Fix various incorrect usages of the FGD `frustum()` helper.
 * Normals are now correctly calculated when generating propcombined models. This requires all previous models to be rebuilt, unfortunately.
+* Fix overlays not functioning with `material_modify_control` parent searching.
 
 
 --------------------
