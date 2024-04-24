@@ -315,6 +315,7 @@ def load_database(
     extra_loc: Optional[Path]=None,
     fgd_vis: bool=False,
     map_size: int=MAP_SIZE_DEFAULT,
+    srctools_only: bool = False
 ) -> Tuple[FGD, EntityDef]:
     """Load the entire database from disk. This returns the FGD, plus the CBaseEntity definition."""
     print(f'Loading database {dbase}:')
@@ -386,6 +387,25 @@ def load_database(
     print()
 
     fgd.apply_bases()
+    
+    # If compiling only srctools entities for this specific game, iterate over entities...
+    if srctools_only or True:
+        print('Exporting only srctools entities!')
+        delete_entries = []
+        for classname_, ent_ in fgd.entities.items():
+
+            if ent_.type is EntityTypes.BASE: # Do not remove base entries!
+                continue
+
+            tags = get_appliesto(ent_)
+            if not 'SRCTOOLS' in tags and not '+SRCTOOLS' in tags: #Both of these variants declare an entity that is used only by the postcompiler, not in the engine
+                delete_entries.append(classname_)
+        
+        for entry_ in delete_entries:
+            del fgd.entities[entry_]
+            
+        
+
     print('\nDone!')
 
     print('Entities without visgroups:')
