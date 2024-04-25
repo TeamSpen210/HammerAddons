@@ -849,7 +849,8 @@ def action_export(
     as_binary: bool,
     engine_mode: bool,
     map_size: int=MAP_SIZE_DEFAULT,
-    srctools_only: bool = False
+    srctools_only: bool = False,
+    collapse_bases: bool = False
 ) -> None:
     """Create an FGD file using the given tags."""
 
@@ -864,7 +865,7 @@ def action_export(
 
     print(f'Map size: ({fgd.map_size_min}, {fgd.map_size_max})')
 
-    if engine_mode:
+    if engine_mode or collapse_bases:
         # In engine mode, we don't care about specific games.
         print('Collapsing bases...')
         aliases: Dict[EntityDef, Union[str, EntityDef]] = {}
@@ -877,6 +878,7 @@ def action_export(
                 aliases[ent] = base
         fgd.collapse_bases()
 
+    if engine_mode:
         print('Merging tags...')
         for ent in list(fgd):
             # We want to include not-in-engine entities like func_detail still, for parsing
@@ -1279,9 +1281,14 @@ def main(args: Optional[List[str]]=None):
     parser_exp.add_argument(
         "--srctools_only",
         default=False,
-        type=bool,
-        dest="srctools_only",
+        action="store_true",
         help="Export \"comp\" entities."
+    )
+    parser_exp.add_argument(
+        "--collapse_bases",
+        default=False,
+        action="store_true",
+        help="Collapse base classes and merge them into the entity definitions."
     )
 
     parser_imp = subparsers.add_parser(
@@ -1359,7 +1366,8 @@ def main(args: Optional[List[str]]=None):
             result.binary,
             result.engine,
             result.map_size,
-            result.srctools_only
+            result.srctools_only,
+            result.collapse_bases
         )
     elif result.mode in ("c", "count"):
         action_count(dbase, extra_db, factories_folder=Path(repo_dir, 'db', 'factories'), srctools_only=result.srctools_only)
