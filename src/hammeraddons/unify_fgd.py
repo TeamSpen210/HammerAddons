@@ -394,7 +394,7 @@ def load_database(
         delete_entries = []
         for classname_, ent_ in fgd.entities.items():
 
-            if ent_.type is EntityTypes.BASE:# This classname check handles special cases
+            if ent_.type is EntityTypes.BASE:# Don't delete the base entites, these get culled automatically, and they might be needed
                 continue
 
             tags = get_appliesto(ent_)
