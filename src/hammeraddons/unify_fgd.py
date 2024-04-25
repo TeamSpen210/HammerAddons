@@ -394,7 +394,7 @@ def load_database(
         delete_entries = []
         for classname_, ent_ in fgd.entities.items():
 
-            if ent_.type is EntityTypes.BASE: # Do not remove base entries!
+            if ent_.type is EntityTypes.BASE:# This classname check handles special cases
                 continue
 
             tags = get_appliesto(ent_)
@@ -403,8 +403,7 @@ def load_database(
         
         for entry_ in delete_entries:
             del fgd.entities[entry_]
-            
-        
+
 
     print('\nDone!')
 
@@ -573,9 +572,10 @@ def action_count(
     dbase: Path,
     extra_db: Optional[Path],
     factories_folder: Path,
+    srctools_only: bool = False
 ) -> None:
     """Output a count of all entities in the database per game."""
-    fgd, base_entity_def = load_database(dbase, extra_db)
+    fgd, base_entity_def = load_database(dbase, extra_db, srctools_only=srctools_only)
 
     count_base: Dict[str, int] = Counter()
     count_point: Dict[str, int] = Counter()
@@ -849,6 +849,7 @@ def action_export(
     as_binary: bool,
     engine_mode: bool,
     map_size: int=MAP_SIZE_DEFAULT,
+    srctools_only: bool = False
 ) -> None:
     """Create an FGD file using the given tags."""
 
@@ -859,7 +860,7 @@ def action_export(
 
     print('Tags expanded to: {}'.format(', '.join(tags)))
 
-    fgd, base_entity_def = load_database(dbase, extra_loc=extra_db, map_size=map_size)
+    fgd, base_entity_def = load_database(dbase, extra_loc=extra_db, map_size=map_size, srctools_only=srctools_only)
 
     print(f'Map size: ({fgd.map_size_min}, {fgd.map_size_max})')
 
@@ -1162,9 +1163,10 @@ def action_visgroup(
     dbase: Path,
     extra_loc: Optional[Path],
     dest: Path,
+    srctools_only:bool = False
 ) -> None:
     """Dump all auto-visgroups into the specified file, using a custom format."""
-    fgd, base_entity_def = load_database(dbase, extra_loc, fgd_vis=True)
+    fgd, base_entity_def = load_database(dbase, extra_loc, fgd_vis=True, srctools_only=srctools_only)
 
     # TODO: This shouldn't be copied from fgd.export(), need to make the
     #  parenting invariant guaranteed by the classes.
@@ -1274,6 +1276,13 @@ def main(args: Optional[List[str]]=None):
         dest="map_size",
         type=int,
     )
+    parser_exp.add_argument(
+        "--srctools_only",
+        default=False,
+        type=bool,
+        dest="srctools_only",
+        help="Export \"comp\" entities."
+    )
 
     parser_imp = subparsers.add_parser(
         "import",
@@ -1350,11 +1359,12 @@ def main(args: Optional[List[str]]=None):
             result.binary,
             result.engine,
             result.map_size,
+            result.srctools_only
         )
     elif result.mode in ("c", "count"):
-        action_count(dbase, extra_db, factories_folder=Path(repo_dir, 'db', 'factories'))
+        action_count(dbase, extra_db, factories_folder=Path(repo_dir, 'db', 'factories'), srctools_only=result.srctools_only)
     elif result.mode in ("visgroup", "v", "vis"):
-        action_visgroup(dbase, extra_db, result.output)
+        action_visgroup(dbase, extra_db, result.output, srctools_only=result.srctools_only)
     else:
         raise AssertionError("Unknown mode! (" + result.mode + ")")
 
