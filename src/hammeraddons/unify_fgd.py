@@ -394,7 +394,9 @@ def load_database(
         delete_entries = []
         for classname_, ent_ in fgd.entities.items():
 
-            if ent_.type is EntityTypes.BASE:# Don't delete the base entites, these get culled automatically, and they might be needed
+            if ent_.type is EntityTypes.BASE or classname_ in [ # We also have to declare some manually
+                "_cbaseentity_",
+                ]:# Don't delete the base entites, these get culled automatically, and they might be needed
                 continue
 
             tags = get_appliesto(ent_)
@@ -404,8 +406,6 @@ def load_database(
         for entry_ in delete_entries:
             del fgd.entities[entry_]
 
-        for entry in fgd.entities.items():
-            print(entry)
 
     print('\nDone!')
 
