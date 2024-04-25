@@ -389,7 +389,7 @@ def load_database(
     fgd.apply_bases()
     
     # If compiling only srctools entities for this specific game, iterate over entities...
-    if srctools_only or True:
+    if srctools_only:
         print('Exporting only srctools entities!')
         delete_entries = []
         for classname_, ent_ in fgd.entities.items():
@@ -404,6 +404,8 @@ def load_database(
         for entry_ in delete_entries:
             del fgd.entities[entry_]
 
+        for entry in fgd.entities.items():
+            print(entry)
 
     print('\nDone!')
 
