@@ -246,6 +246,17 @@ def format_all_tags() -> str:
         f'- Special: {", ".join(TAGS_SPECIAL)}\n'
      )
 
+def is_srctools_only(ent: EntityDef) -> bool:
+    """Determines if the entity defined is a srctools only entity (all comp_* entities)
+        When passing a base class or _cbaseentity_ it returns True!"""
+    applies_to = get_appliesto(ent)
+    
+    return (
+        "SRCTOOLS" in applies_to or # We cannot use match_tags here unfortunately, we want entities ONLY with srctools tag
+        "+SRCTOOLS" in applies_to or
+        ent.type == EntityTypes.BASE or # Also keep out from removing the bases, god forbid people who remove the base ent definitions lmao
+        ent.classname == "_cbaseentity_"
+    )
 
 def expand_tags(tags: FrozenSet[str]) -> FrozenSet[str]:
     """Expand the given tags, producing the full list of tags these will search.
@@ -315,7 +326,6 @@ def load_database(
     extra_loc: Optional[Path]=None,
     fgd_vis: bool=False,
     map_size: int=MAP_SIZE_DEFAULT,
-    srctools_only: bool = False
 ) -> Tuple[FGD, EntityDef]:
     """Load the entire database from disk. This returns the FGD, plus the CBaseEntity definition."""
     print(f'Loading database {dbase}:')
@@ -388,23 +398,6 @@ def load_database(
 
     fgd.apply_bases()
     
-    # If compiling only srctools entities for this specific game, iterate over entities...
-    if srctools_only:
-        print('Exporting only srctools entities!')
-        delete_entries = []
-        for classname_, ent_ in fgd.entities.items():
-
-            if ent_.type is EntityTypes.BASE or classname_ in [ # We also have to declare some manually
-                "_cbaseentity_",
-                ]:# Don't delete the base entites, these get culled automatically, and they might be needed
-                continue
-
-            tags = get_appliesto(ent_)
-            if not 'SRCTOOLS' in tags and not '+SRCTOOLS' in tags: #Both of these variants declare an entity that is used only by the postcompiler, not in the engine
-                delete_entries.append(classname_)
-        
-        for entry_ in delete_entries:
-            del fgd.entities[entry_]
 
 
     print('\nDone!')
@@ -574,10 +567,9 @@ def action_count(
     dbase: Path,
     extra_db: Optional[Path],
     factories_folder: Path,
-    srctools_only: bool = False
 ) -> None:
     """Output a count of all entities in the database per game."""
-    fgd, base_entity_def = load_database(dbase, extra_db, srctools_only=srctools_only)
+    fgd, base_entity_def = load_database(dbase, extra_db)
 
     count_base: Dict[str, int] = Counter()
     count_point: Dict[str, int] = Counter()
@@ -863,7 +855,7 @@ def action_export(
 
     print('Tags expanded to: {}'.format(', '.join(tags)))
 
-    fgd, base_entity_def = load_database(dbase, extra_loc=extra_db, map_size=map_size, srctools_only=srctools_only)
+    fgd, base_entity_def = load_database(dbase, extra_loc=extra_db, map_size=map_size)
 
     print(f'Map size: ({fgd.map_size_min}, {fgd.map_size_max})')
 
@@ -1031,8 +1023,12 @@ def action_export(
         for ent in ents:
             applies_to = get_appliesto(ent)
             if match_tags(tags, applies_to):
-                fgd.entities[ent.classname] = ent
-                ent.strip_tags(tags)
+                if srctools_only and not is_srctools_only(ent):
+                    #print(f"Non srctools entity {ent}, skipping")
+                    continue
+                else:
+                    fgd.entities[ent.classname] = ent
+                    ent.strip_tags(tags)
 
             # Remove bases that don't apply.
             for base in ent.bases[:]:
@@ -1166,11 +1162,10 @@ def action_export(
 def action_visgroup(
     dbase: Path,
     extra_loc: Optional[Path],
-    dest: Path,
-    srctools_only:bool = False
+    dest: Path
 ) -> None:
     """Dump all auto-visgroups into the specified file, using a custom format."""
-    fgd, base_entity_def = load_database(dbase, extra_loc, fgd_vis=True, srctools_only=srctools_only)
+    fgd, base_entity_def = load_database(dbase, extra_loc, fgd_vis=True)
 
     # TODO: This shouldn't be copied from fgd.export(), need to make the
     #  parenting invariant guaranteed by the classes.
@@ -1236,6 +1231,12 @@ def main(args: Optional[List[str]]=None):
         help="If specified, an additional folder to read FGD files from. "
              "These override the normal database.",
     )
+    parser.add_argument(
+        "--srctools_only",
+        default=False,
+        action="store_true",
+        help="Export \"comp\" entities."
+    )
     subparsers = parser.add_subparsers(dest="mode")
 
     parser_count = subparsers.add_parser(
@@ -1279,12 +1280,6 @@ def main(args: Optional[List[str]]=None):
         default=MAP_SIZE_DEFAULT,
         dest="map_size",
         type=int,
-    )
-    parser_exp.add_argument(
-        "--srctools_only",
-        default=False,
-        action="store_true",
-        help="Export \"comp\" entities."
     )
     parser_exp.add_argument(
         "--collapse_bases",
@@ -1372,9 +1367,9 @@ def main(args: Optional[List[str]]=None):
             result.collapse_bases
         )
     elif result.mode in ("c", "count"):
-        action_count(dbase, extra_db, factories_folder=Path(repo_dir, 'db', 'factories'), srctools_only=result.srctools_only)
+        action_count(dbase, extra_db, factories_folder=Path(repo_dir, 'db', 'factories'))
     elif result.mode in ("visgroup", "v", "vis"):
-        action_visgroup(dbase, extra_db, result.output, srctools_only=result.srctools_only)
+        action_visgroup(dbase, extra_db, result.output)
     else:
         raise AssertionError("Unknown mode! (" + result.mode + ")")
 
