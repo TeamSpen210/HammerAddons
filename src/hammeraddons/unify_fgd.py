@@ -2,9 +2,9 @@
 
 This allows sharing definitions among different engine versions.
 """
-from typing import (
-    Any, Callable, Dict, FrozenSet, List, MutableMapping, Optional, Set, Tuple, TypeVar, Union,
-)
+from __future__ import annotations
+from typing import Any, TypeVar
+from collections.abc import Callable, MutableMapping
 from collections import Counter, defaultdict, ChainMap
 from pathlib import Path
 import argparse
@@ -22,7 +22,7 @@ from srctools.math import Vec, format_float
 # Chronological order of games.
 # If 'since_hl2' etc is used in FGD, all future games also include it.
 # If 'until_l4d' etc is used in FGD, only games before include it.
-GAMES_CHRONO: List[Tuple[str, str]] = [
+GAMES_CHRONO: list[tuple[str, str]] = [
     ('HL2', 'Half-Life 2'),
     ('EP1', 'Half-Life 2: Episode One'),
     ('EP2', 'Half-Life 2: Episode Two'),
@@ -40,7 +40,7 @@ GAMES_CHRONO: List[Tuple[str, str]] = [
 ]
 
 # Additional mods/games, which branched off of mainline ones.
-MODS_BRANCHED: Dict[str, List[Tuple[str, str]]] = {
+MODS_BRANCHED: dict[str, list[tuple[str, str]]] = {
     'HL2': [
         ('HLS', 'Half-Life: Source'),
         ('DODS', 'Day of Defeat: Source'),
@@ -84,7 +84,7 @@ ALL_GAMES = set(GAME_ORDER)
 
 # Specific features that are backported to various games.
 
-FEATURES: Dict[str, Set[str]] = {
+FEATURES: dict[str, set[str]] = {
     'EP1': {'HL2'},
     'EP2': {'HL2', 'EP1'},
 
@@ -103,7 +103,7 @@ FEATURES: Dict[str, Set[str]] = {
     'P2DES': {'P2', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 
     'PEE15': {'P1', 'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
-    'PEE2': {'P2', 'HL2', 'EP1', 'EP2', 'INST_IO', 'VSCRIPT' },
+    'PEE2': {'P2', 'HL2', 'EP1', 'EP2', 'INST_IO', 'VSCRIPT'},
 }
 
 ALL_FEATURES = {
@@ -121,8 +121,8 @@ TAGS_SPECIAL = {
   'BEE2',  # BEEmod's templates.
 }
 
-TAGS_EMPTY: FrozenSet[str] = frozenset()
-TAGS_NOT_ENGINE: FrozenSet[str] = frozenset({'-ENGINE', '!ENGINE'})
+TAGS_EMPTY: frozenset[str] = frozenset()
+TAGS_NOT_ENGINE: frozenset[str] = frozenset({'-ENGINE', '!ENGINE'})
 
 ALL_TAGS = {
     *ALL_GAMES, *ALL_MODS, *ALL_FEATURES, *TAGS_SPECIAL,
@@ -134,7 +134,7 @@ ALL_TAGS = {
 }
 
 # If the tag is present, run to backport newer FGD syntax to older engines.
-POLYFILLS: List[Tuple[FrozenSet[str], Callable[[FGD], None]]] = []
+POLYFILLS: list[tuple[frozenset[str], Callable[[FGD], None]]] = []
 PolyfillFuncT = TypeVar('PolyfillFuncT', bound=Callable[[FGD], None])
 
 # This ends up being the C1 Reverse Line Feed in CP1252,
@@ -166,7 +166,7 @@ SNIPPET_KINDS = [
 ]
 
 # Set of entity classnames which have snippets in their file. If they do, assume all KVs were deduplicated.
-SNIPPET_USED = set()
+SNIPPET_USED: set[str] = set()
 
 
 def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
@@ -179,7 +179,7 @@ def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
 
 
 @_polyfill('until_asw', 'mesa')
-def _polyfill_boolean(fgd: FGD):
+def _polyfill_boolean(fgd: FGD) -> None:
     """Before Alien Swarm's Hammer, boolean was not available as a keyvalue type.
 
     Substitute with choices.
@@ -196,7 +196,7 @@ def _polyfill_boolean(fgd: FGD):
 
 
 @_polyfill('until_asw')
-def _polyfill_particlesystem(fgd: FGD):
+def _polyfill_particlesystem(fgd: FGD) -> None:
     """Before Alien Swarm's Hammer, the particle system viewer was not available.
 
     Substitute with just a string.
@@ -209,7 +209,7 @@ def _polyfill_particlesystem(fgd: FGD):
 
 
 @_polyfill('until_asw')
-def _polyfill_node_id(fgd: FGD):
+def _polyfill_node_id(fgd: FGD) -> None:
     """Before Alien Swarm's Hammer, node_id was not available as a keyvalue type.
 
     Substitute with integer.
@@ -302,7 +302,7 @@ def format_all_tags() -> str:
      )
 
 
-def expand_tags(tags: FrozenSet[str]) -> FrozenSet[str]:
+def expand_tags(tags: frozenset[str]) -> frozenset[str]:
     """Expand the given tags, producing the full list of tags these will search.
 
     This adds since_/until_ tags, and values in FEATURES.
@@ -367,10 +367,10 @@ def ent_path(ent: EntityDef) -> str:
 
 def load_database(
     dbase: Path,
-    extra_loc: Optional[Path]=None,
-    fgd_vis: bool=False,
-    map_size: int=MAP_SIZE_DEFAULT,
-) -> Tuple[FGD, EntityDef]:
+    extra_loc: Path | None = None,
+    fgd_vis: bool = False,
+    map_size: int = MAP_SIZE_DEFAULT,
+) -> tuple[FGD, EntityDef]:
     """Load the entire database from disk. This returns the FGD, plus the CBaseEntity definition."""
     print(f'Loading database {dbase}:')
     fgd = FGD()
@@ -379,7 +379,7 @@ def load_database(
     fgd.map_size_max = map_size
 
     # Classname -> filename
-    ent_source: Dict[str, str] = {}
+    ent_source: dict[str, str] = {}
 
     fsys = RawFileSystem(str(dbase))
     # First, load the snippets files.
@@ -451,10 +451,10 @@ def load_database(
 
 def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
     """Parse through the visgroup.cfg file, adding these visgroups."""
-    cur_path: List[str] = []
+    cur_path: list[str] = []
     # Visgroups don't allow duplicating names. Work around that by adding an
     # invisible suffix.
-    group_count: Dict[str, int] = Counter()
+    group_count: dict[str, int] = Counter()
     try:
         f = (dbase / 'visgroups.cfg').open()
     except FileNotFoundError:
@@ -468,7 +468,7 @@ def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
             cur_path = cur_path[:indent]  # Dedent
             bulleted = line[0] in '-*'
             if (bulleted and '`' not in line) or '(' in line or ')' in line:  # Visgroup.
-                single_ent: Optional[str]
+                single_ent: str | None
                 try:
                     vis_name, single_ent = line.lstrip('*-').split('(', 1)
                 except ValueError:
@@ -502,7 +502,7 @@ def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
 
 def load_file(
     base_fgd: FGD,
-    ent_source: Dict[str, str],
+    ent_source: dict[str, str],
     fsys: RawFileSystem,
     file: File,
     *,
@@ -520,11 +520,11 @@ def load_file(
     # For everything else, they can refer to the base definitions but have their own scope.
     # By not swapping to a chainmap for snippet definitions, we catch interdependent snippet files -
     # those would cause problems if read in the wrong order.
-    snippet_dicts = {}
-    snip_map: Dict[str, Dict[str, Snippet[Any]]]
+    snippet_dicts: list[dict[str, Snippet[Any]]] = []
     if not is_snippet:
         for attr_name, disp_name in SNIPPET_KINDS:
-            snippet_dicts[attr_name] = snip_map = {}
+            snip_map: dict[str, Snippet[Any]] = {}
+            snippet_dicts.append(snip_map)
             setattr(file_fgd, attr_name, ChainMap(snip_map, getattr(base_fgd, attr_name)))
 
     file_fgd.parse_file(
@@ -563,13 +563,13 @@ def load_file(
                 if name in dest:
                     raise ValueError(f'Duplicate "{name}" {disp_name} snippet in "{path}"!')
                 dest[name] = value
-    elif any(snippet_dicts.values()):
+    elif any(snippet_dicts):
         SNIPPET_USED.update(file_fgd.entities)
 
     print('s' if is_snippet else '.', end='', flush=True)
 
 
-def get_appliesto(ent: EntityDef) -> List[str]:
+def get_appliesto(ent: EntityDef) -> list[str]:
     """Ensure exactly one AppliesTo() helper is present, and return the args.
 
     If no helper exists, one will be prepended. Otherwise, only the first
@@ -578,7 +578,7 @@ def get_appliesto(ent: EntityDef) -> List[str]:
     """
     found: HelperExtAppliesTo | None = None
     count = 0
-    applies_to: Set[str] = set()
+    applies_to: set[str] = set()
     for i, helper in enumerate(ent.helpers):
         if isinstance(helper, HelperExtAppliesTo):
             if found is None:
@@ -602,7 +602,7 @@ def get_appliesto(ent: EntityDef) -> List[str]:
     return arg_list
 
 
-def add_tag(tags: FrozenSet[str], new_tag: str) -> FrozenSet[str]:
+def add_tag(tags: frozenset[str], new_tag: str) -> frozenset[str]:
     """Modify these tags such that they allow the new tag."""
     is_inverted = new_tag.startswith(('!', '-'))
 
@@ -623,10 +623,10 @@ def add_tag(tags: FrozenSet[str], new_tag: str) -> FrozenSet[str]:
     return frozenset(tag_set)
 
 
-def check_ent_sprites(ent: EntityDef, used: Dict[str, List[str]]) -> None:
+def check_ent_sprites(ent: EntityDef, used: dict[str, list[str]]) -> None:
     """Check if the specified entity has a unique sprite."""
-    mdl: Optional[str] = None
-    sprite: Optional[str] = None
+    mdl: str | None = None
+    sprite: str | None = None
     for helper in ent.helpers:
         if type(helper) in UNIQUE_HELPERS:
             return  # Specialised helper is sufficient.
@@ -658,15 +658,15 @@ def check_ent_sprites(ent: EntityDef, used: Dict[str, List[str]]) -> None:
 
 def action_count(
     dbase: Path,
-    extra_db: Optional[Path],
+    extra_db: Path | None,
     factories_folder: Path,
 ) -> None:
     """Output a count of all entities in the database per game."""
     fgd, base_entity_def = load_database(dbase, extra_db)
 
-    count_base: Dict[str, int] = Counter()
-    count_point: Dict[str, int] = Counter()
-    count_brush: Dict[str, int] = Counter()
+    count_base: dict[str, int] = Counter()
+    count_point: dict[str, int] = Counter()
+    count_brush: dict[str, int] = Counter()
 
     all_tags = set()
 
@@ -679,21 +679,21 @@ def action_count(
 
     print('Done.\nGames: ' + ', '.join(sorted(games)))
 
-    expanded: Dict[str, FrozenSet[str]] = {
+    expanded: dict[str, frozenset[str]] = {
         game: expand_tags(frozenset({game}))
         for game in ALL_GAMES | ALL_MODS
     }
     expanded['ALL'] = frozenset()
 
-    game_classes: MutableMapping[Tuple[str, str], Set[str]] = defaultdict(set)
-    base_uses: MutableMapping[str, Set[str]] = defaultdict(set)
-    all_ents: MutableMapping[str, Set[str]] = defaultdict(set)
+    game_classes: MutableMapping[tuple[str, str], set[str]] = defaultdict(set)
+    base_uses: MutableMapping[str, set[str]] = defaultdict(set)
+    all_ents: MutableMapping[str, set[str]] = defaultdict(set)
 
-    kv_counts: Dict[tuple, List[tuple]] = defaultdict(list)
-    inp_counts: Dict[tuple, List[tuple]] = defaultdict(list)
-    out_counts: Dict[tuple, List[tuple]] = defaultdict(list)
-    desc_counts: Dict[tuple, List[tuple]] = defaultdict(list)
-    val_list_counts: Dict[tuple, List[tuple]] = defaultdict(list)
+    kv_counts: dict[tuple, list[tuple]] = defaultdict(list)
+    inp_counts: dict[tuple, list[tuple]] = defaultdict(list)
+    out_counts: dict[tuple, list[tuple]] = defaultdict(list)
+    desc_counts: dict[tuple, list[tuple]] = defaultdict(list)
+    val_list_counts: dict[tuple, list[tuple]] = defaultdict(list)
 
     for ent in fgd:
         if ent.type is EntityTypes.BASE:
@@ -745,7 +745,7 @@ def action_count(
             for tags, kv in kv_map.items():
                 if 'ENGINE' in tags or kv.type is ValueTypes.SPAWNFLAGS:
                     continue
-                if kv.desc: # Blank is not a duplicate!
+                if kv.desc:  # Blank is not a duplicate!
                     desc_counts[(kv.desc, )].append((ent.classname, name))
                 kv_counts[
                     kv.name, kv.type, (tuple(kv.val_list) if kv.val_list is not None else ()), kv.desc, kv.default,
@@ -763,7 +763,7 @@ def action_count(
                     continue
                 out_counts[io.name, io.type, io.desc].append((ent.classname, name, io.desc))
 
-    all_games: Set[str] = {*count_base, *count_point, *count_brush}
+    all_games: set[str] = {*count_base, *count_point, *count_brush}
 
     def ordering(game: str) -> tuple:
         """Put ALL at the start, mods at the end."""
@@ -851,7 +851,7 @@ def action_count(
         f'Defined: {defined_count} = {defined_count/(missing_count + defined_count):.2%}\n\n'
     )
 
-    mdl_or_sprite: Dict[str, List[str]] = defaultdict(list)
+    mdl_or_sprite: dict[str, list[str]] = defaultdict(list)
     for ent in fgd:
         if ent.type is not EntityTypes.BASE and ent.type is not EntityTypes.BRUSH:
             check_ent_sprites(ent, mdl_or_sprite)
@@ -873,7 +873,7 @@ def action_count(
 def action_import(
     dbase: Path,
     engine_tag: str,
-    fgd_paths: List[Path],
+    fgd_paths: list[Path],
 ) -> None:
     """Import an FGD file, adding differences to the unified files."""
     new_fgd = FGD()
@@ -918,7 +918,7 @@ def action_import(
                     ent.helpers.append(helper)
 
             for cat in ('keyvalues', 'inputs', 'outputs'):
-                cur_map: Dict[str, Dict[FrozenSet[str], EntityDef]] = getattr(ent, cat)
+                cur_map: dict[str, dict[frozenset[str], EntityDef]] = getattr(ent, cat)
                 new_map = getattr(new_ent, cat)
                 new_names = set()
                 for name, tag_map in new_map.items():
@@ -976,12 +976,12 @@ def action_import(
 
 def action_export(
     dbase: Path,
-    extra_db: Optional[Path],
-    tags: FrozenSet[str],
+    extra_db: Path | None,
+    tags: frozenset[str],
     output_path: Path,
     as_binary: bool,
     engine_mode: bool,
-    map_size: int=MAP_SIZE_DEFAULT,
+    map_size: int = MAP_SIZE_DEFAULT,
     srctools_only: bool = False,
     collapse_bases: bool = False
 ) -> None:
@@ -1004,7 +1004,7 @@ def action_export(
 
     print(f'Map size: ({fgd.map_size_min}, {fgd.map_size_max})')
 
-    aliases: Dict[EntityDef, Union[str, EntityDef]] = {}
+    aliases: dict[EntityDef, str | EntityDef] = {}
     if engine_mode or collapse_bases:
         # In engine mode, we don't care about specific games.
         print('Collapsing bases...')
@@ -1036,8 +1036,8 @@ def action_export(
                 ent.bases = [base_entity_def]
 
             value: EntAttribute
-            category: Dict[str, Dict[FrozenSet[str], EntAttribute]]
-            base_cat: Dict[str, Dict[FrozenSet[str], EntAttribute]]
+            category: dict[str, dict[frozenset[str], EntAttribute]]
+            base_cat: dict[str, dict[frozenset[str], EntAttribute]]
             for attr_name in ['inputs', 'outputs', 'keyvalues']:
                 # Unsafe cast, we're not going to insert the wrong kind of attribute though.
                 category = getattr(ent, attr_name)
@@ -1051,7 +1051,7 @@ def action_export(
                     # Remake the map, excluding non-engine tags.
                     # If any are explicitly matching us, just use that
                     # directly.
-                    tag_map: Dict[FrozenSet[str], EntAttribute] = {}
+                    tag_map: dict[frozenset[str], EntAttribute] = {}
                     for tags, value in orig_tag_map.items():
                         if 'ENGINE' in tags or '+ENGINE' in tags:
                             if value.type is ValueTypes.CHOICES:
@@ -1197,14 +1197,14 @@ def action_export(
     print('Applying helpers to child entities and optimising...')
     for ent in fgd.entities.values():
         # Merge them together.
-        base_helpers: List[Helper] = []
+        base_helpers: list[Helper] = []
         for base in ent.bases:
             assert isinstance(base, EntityDef)
             base_helpers.extend(base.helpers)
 
         # Then optimise this list, by re-assembling in reverse.
-        rev_helpers: List[Helper] = []
-        overrides: Set[HelperTypes] = set()
+        rev_helpers: list[Helper] = []
+        overrides: set[HelperTypes] = set()
 
         # Add the entity's own helpers to the end, but do not override within that.
         for helper in reversed(ent.helpers):
@@ -1230,7 +1230,7 @@ def action_export(
         ent.helpers = rev_helpers[::-1]
 
     print('Culling unused bases...')
-    used_bases: Set[EntityDef] = set()
+    used_bases: set[EntityDef] = set()
     # We only want to keep bases that provide keyvalues. We've merged the
     # helpers in.
     for ent in fgd.entities.values():
@@ -1283,7 +1283,7 @@ def action_export(
             del fgd.auto_visgroups[key]
 
     if engine_mode:
-        res_tags: Dict[str, Set[str]] = defaultdict(set)
+        res_tags: dict[str, set[str]] = defaultdict(set)
         for ent in fgd.entities.values():
             for res in ent.resources:
                 for tag in res.tags:
@@ -1308,17 +1308,13 @@ def action_export(
                 txt_f.write('\n// BEE 2 EDIT FLAG = 0 \n')
 
 
-def action_visgroup(
-    dbase: Path,
-    extra_loc: Optional[Path],
-    dest: Path
-) -> None:
+def action_visgroup(dbase: Path, extra_loc: Path | None, dest: Path) -> None:
     """Dump all auto-visgroups into the specified file, using a custom format."""
     fgd, base_entity_def = load_database(dbase, extra_loc, fgd_vis=True)
 
     # TODO: This shouldn't be copied from fgd.export(), need to make the
     #  parenting invariant guaranteed by the classes.
-    vis_by_parent: Dict[str, Set[AutoVisgroup]] = defaultdict(set)
+    vis_by_parent: dict[str, set[AutoVisgroup]] = defaultdict(set)
 
     for visgroup in list(fgd.auto_visgroups.values()):
         if not visgroup.parent:
@@ -1336,12 +1332,12 @@ def action_visgroup(
         # Special case for singleton visgroups - no children, only 1 ent.
         if not children and len(group.ents) == 1:
             [single_ent] = group.ents
-            f.write('{}- {} (`{}`)\n'.format(indent, group.name, single_ent))
+            f.write(f'{indent}- {group.name} (`{single_ent}`)\n')
             return
 
         # First, write the child visgroups.
         child_indent = indent + '\t'
-        f.write('{}- {}\n'.format(indent, group.name))
+        f.write(f'{indent}- {group.name}\n')
         for child_group in children:
             write_vis(child_group, child_indent)
         # Then the actual children.
@@ -1350,17 +1346,17 @@ def action_visgroup(
             if child in fgd.auto_visgroups:
                 continue
             # For ents in subfolders, each parent group also lists
-            # them. So we want to add it to the group who's children
+            # them. So we want to add it to the group whose children
             # do not contain the ent.
             if all(child not in group.ents for group in children):
-                f.write('{}* `{}`\n'.format(child_indent, child))
+                f.write(f'{child_indent}* `{child}`\n')
 
     print('Writing...')
     with dest.open('w') as f:
         write_vis(AutoVisgroup('Auto', ''), '')
 
 
-def main(args: Optional[List[str]]=None):
+def main(args: list[str] | None = None) -> None:
     """Entry point."""
     parser = argparse.ArgumentParser(
         description="Manage a set of unified FGDs, sharing configs between engine versions.",
@@ -1397,15 +1393,15 @@ def main(args: Optional[List[str]]=None):
     parser_exp.add_argument(
         "-o", "--output",
         default="output.fgd",
-        help="Destination FGD filename."
+        help="Destination FGD filename.",
     )
     parser_exp.add_argument(
         "-e", "--engine",
         action="store_true",
-        help="If set, produce FGD for parsing by script. "
-             "This includes all keyvalues regardless of tags, "
-             "to allow parsing VMF/BSP files. Overrides tags if "
-             " provided.",
+        help='If set, produce FGD for parsing by script. '
+             'This includes all keyvalues regardless of tags, '
+             'to allow parsing VMF/BSP files. Overrides tags if '
+             ' provided.',
     )
     parser_exp.add_argument(
         "-b", "--binary",
@@ -1428,13 +1424,13 @@ def main(args: Optional[List[str]]=None):
         "--collapse_bases",
         default=False,
         action="store_true",
-        help="Collapse base classes and merge them into the entity definitions."
+        help='Collapse base classes and merge them into the entity definitions.',
     )
     parser_exp.add_argument(
         "--srctools_only",
         default=False,
         action="store_true",
-        help="Export \"comp\" entities."
+        help='Export "comp" entities.',
     )
 
     parser_imp = subparsers.add_parser(
@@ -1444,7 +1440,7 @@ def main(args: Optional[List[str]]=None):
     )
     parser_imp.add_argument(
         "engine",
-        type=str.upper,
+        type=lambda s: s.upper(),
         choices=GAME_ORDER,
         help="Engine to mark this FGD set as supported by.",
     )
@@ -1477,7 +1473,7 @@ def main(args: Optional[List[str]]=None):
     dbase = Path(result.database).resolve()
     dbase.mkdir(parents=True, exist_ok=True)
 
-    extra_db: Optional[Path]
+    extra_db: Path | None
     if result.extra_db is not None:
         extra_db = Path(result.extra_db).resolve()
     else:
@@ -1513,14 +1509,14 @@ def main(args: Optional[List[str]]=None):
             result.engine,
             result.map_size,
             result.srctools_only,
-            result.collapse_bases
+            result.collapse_bases,
         )
     elif result.mode in ("c", "count"):
         action_count(dbase, extra_db, factories_folder=Path(repo_dir, 'db', 'factories'))
     elif result.mode in ("visgroup", "v", "vis"):
         action_visgroup(dbase, extra_db, result.output)
     else:
-        raise AssertionError("Unknown mode! (" + result.mode + ")")
+        raise AssertionError(f'Unknown mode! ({result.mode})')
 
 
 if __name__ == '__main__':
