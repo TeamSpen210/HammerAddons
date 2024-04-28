@@ -572,27 +572,33 @@ def load_file(
 def get_appliesto(ent: EntityDef) -> List[str]:
     """Ensure exactly one AppliesTo() helper is present, and return the args.
 
-    If no helper exists, one will be prepended. Otherwise only the first
+    If no helper exists, one will be prepended. Otherwise, only the first
     will remain, with the arguments merged together. The same list is
     returned, so it can be viewed or edited.
     """
-    pos = None
+    found: HelperExtAppliesTo | None = None
+    count = 0
     applies_to: Set[str] = set()
     for i, helper in enumerate(ent.helpers):
         if isinstance(helper, HelperExtAppliesTo):
-            if pos is None:
-                pos = i
+            if found is None:
+                found = helper
+            count += 1
             applies_to.update(helper.tags)
 
-    if pos is None:
-        pos = 0
-    arg_list = list(map(str.upper, applies_to))
+    if count == 1 and found is not None:
+        # A single one found, use that one.
+        return found.tags
+
+    if found is None:
+        found = HelperExtAppliesTo([])
+        ent.helpers.insert(0, found)
+    found.tags = arg_list = [tag.upper() for tag in applies_to]
     arg_list.sort()
     ent.helpers[:] = [
         helper for helper in ent.helpers
-        if not isinstance(helper, HelperExtAppliesTo)
+        if helper is found or not isinstance(helper, HelperExtAppliesTo)
     ]
-    ent.helpers.insert(pos, HelperExtAppliesTo(arg_list))
     return arg_list
 
 
