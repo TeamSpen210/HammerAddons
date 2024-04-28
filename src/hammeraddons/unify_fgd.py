@@ -397,8 +397,6 @@ def load_database(
     print()
 
     fgd.apply_bases()
-    
-
 
     print('\nDone!')
 
@@ -1231,12 +1229,6 @@ def main(args: Optional[List[str]]=None):
         help="If specified, an additional folder to read FGD files from. "
              "These override the normal database.",
     )
-    parser.add_argument(
-        "--srctools_only",
-        default=False,
-        action="store_true",
-        help="Export \"comp\" entities."
-    )
     subparsers = parser.add_subparsers(dest="mode")
 
     parser_count = subparsers.add_parser(
@@ -1286,6 +1278,12 @@ def main(args: Optional[List[str]]=None):
         default=False,
         action="store_true",
         help="Collapse base classes and merge them into the entity definitions."
+    )
+    parser_exp.add_argument(
+        "--srctools_only",
+        default=False,
+        action="store_true",
+        help="Export \"comp\" entities."
     )
 
     parser_imp = subparsers.add_parser(
