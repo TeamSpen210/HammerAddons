@@ -246,17 +246,6 @@ def format_all_tags() -> str:
         f'- Special: {", ".join(TAGS_SPECIAL)}\n'
      )
 
-def is_srctools_only(ent: EntityDef) -> bool:
-    """Determines if the entity defined is a srctools only entity (all comp_* entities)
-        When passing a base class or _cbaseentity_ it returns True!"""
-    applies_to = get_appliesto(ent)
-    
-    return (
-        "SRCTOOLS" in applies_to or # We cannot use match_tags here unfortunately, we want entities ONLY with srctools tag
-        "+SRCTOOLS" in applies_to or
-        ent.type == EntityTypes.BASE or # Also keep out from removing the bases, god forbid people who remove the base ent definitions lmao
-        ent.classname == "_cbaseentity_"
-    )
 
 def expand_tags(tags: FrozenSet[str]) -> FrozenSet[str]:
     """Expand the given tags, producing the full list of tags these will search.
@@ -851,16 +840,22 @@ def action_export(
     else:
         tags = expand_tags(tags)
 
+    if srctools_only:
+        tags |= {'SRCTOOLS'}
+        srctools_tags = tags - {'SRCTOOLS'}
+    else:
+        srctools_tags = None
+
     print('Tags expanded to: {}'.format(', '.join(tags)))
 
     fgd, base_entity_def = load_database(dbase, extra_loc=extra_db, map_size=map_size)
 
     print(f'Map size: ({fgd.map_size_min}, {fgd.map_size_max})')
 
+    aliases: Dict[EntityDef, Union[str, EntityDef]] = {}
     if engine_mode or collapse_bases:
         # In engine mode, we don't care about specific games.
         print('Collapsing bases...')
-        aliases: Dict[EntityDef, Union[str, EntityDef]] = {}
         for ent in fgd:
             if ent.is_alias:
                 try:
@@ -1021,12 +1016,16 @@ def action_export(
         for ent in ents:
             applies_to = get_appliesto(ent)
             if match_tags(tags, applies_to):
-                if srctools_only and not is_srctools_only(ent):
-                    #print(f"Non srctools entity {ent}, skipping")
-                    continue
-                else:
-                    fgd.entities[ent.classname] = ent
-                    ent.strip_tags(tags)
+                # For the srctools_only flag, only allow ents which match the regular
+                # tags, but do not match those minus srctools.
+                if srctools_tags is not None and match_tags(srctools_tags, applies_to):
+                    # Always include base entities, those get culled later.
+                    # _CBaseEntity_ is required for engine definitions.
+                    if ent.type is not EntityTypes.BASE and ent is not base_entity_def:
+                        continue
+
+                fgd.entities[ent.classname] = ent
+                ent.strip_tags(tags)
 
             # Remove bases that don't apply.
             for base in ent.bases[:]:
