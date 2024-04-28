@@ -417,6 +417,7 @@ def load_database(
     print()
 
     fgd.apply_bases()
+
     print('\nDone!')
 
     print('Entities without visgroups:')
@@ -975,6 +976,8 @@ def action_export(
     as_binary: bool,
     engine_mode: bool,
     map_size: int=MAP_SIZE_DEFAULT,
+    srctools_only: bool = False,
+    collapse_bases: bool = False
 ) -> None:
     """Create an FGD file using the given tags."""
 
@@ -983,16 +986,22 @@ def action_export(
     else:
         tags = expand_tags(tags)
 
+    if srctools_only:
+        tags |= {'SRCTOOLS'}
+        srctools_tags = tags - {'SRCTOOLS'}
+    else:
+        srctools_tags = None
+
     print('Tags expanded to: {}'.format(', '.join(tags)))
 
     fgd, base_entity_def = load_database(dbase, extra_loc=extra_db, map_size=map_size)
 
     print(f'Map size: ({fgd.map_size_min}, {fgd.map_size_max})')
 
-    if engine_mode:
+    aliases: Dict[EntityDef, Union[str, EntityDef]] = {}
+    if engine_mode or collapse_bases:
         # In engine mode, we don't care about specific games.
         print('Collapsing bases...')
-        aliases: Dict[EntityDef, Union[str, EntityDef]] = {}
         for ent in fgd:
             if ent.is_alias:
                 try:
@@ -1002,6 +1011,7 @@ def action_export(
                 aliases[ent] = base
         fgd.collapse_bases()
 
+    if engine_mode:
         print('Merging tags...')
         for ent in list(fgd):
             # We want to include not-in-engine entities like func_detail still, for parsing
@@ -1152,6 +1162,14 @@ def action_export(
         for ent in ents:
             applies_to = get_appliesto(ent)
             if match_tags(tags, applies_to):
+                # For the srctools_only flag, only allow ents which match the regular
+                # tags, but do not match those minus srctools.
+                if srctools_tags is not None and match_tags(srctools_tags, applies_to):
+                    # Always include base entities, those get culled later.
+                    # _CBaseEntity_ is required for engine definitions.
+                    if ent.type is not EntityTypes.BASE and ent is not base_entity_def:
+                        continue
+
                 fgd.entities[ent.classname] = ent
                 ent.strip_tags(tags)
 
@@ -1287,7 +1305,7 @@ def action_export(
 def action_visgroup(
     dbase: Path,
     extra_loc: Optional[Path],
-    dest: Path,
+    dest: Path
 ) -> None:
     """Dump all auto-visgroups into the specified file, using a custom format."""
     fgd, base_entity_def = load_database(dbase, extra_loc, fgd_vis=True)
@@ -1400,6 +1418,18 @@ def main(args: Optional[List[str]]=None):
         dest="map_size",
         type=int,
     )
+    parser_exp.add_argument(
+        "--collapse_bases",
+        default=False,
+        action="store_true",
+        help="Collapse base classes and merge them into the entity definitions."
+    )
+    parser_exp.add_argument(
+        "--srctools_only",
+        default=False,
+        action="store_true",
+        help="Export \"comp\" entities."
+    )
 
     parser_imp = subparsers.add_parser(
         "import",
@@ -1476,6 +1506,8 @@ def main(args: Optional[List[str]]=None):
             result.binary,
             result.engine,
             result.map_size,
+            result.srctools_only,
+            result.collapse_bases
         )
     elif result.mode in ("c", "count"):
         action_count(dbase, extra_db, factories_folder=Path(repo_dir, 'db', 'factories'))
