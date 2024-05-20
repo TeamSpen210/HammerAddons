@@ -121,7 +121,7 @@ def get_multimode_value(ent: Entity, *, prefix: str='', suffix: str='', desc: st
     """
     mode = ent[f'{prefix}mode{suffix}', 'legacy'].casefold()
     if mode == 'legacy':
-        return ent[f'{prefix}global{suffix}'] or ent[f'{prefix}_local']
+        return ent[f'{prefix}global{suffix}'] or ent[f'{prefix}local{suffix}']
     elif mode == 'global':
         return ent[f'{prefix}global{suffix}']
     elif mode == 'local':
