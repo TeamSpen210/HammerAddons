@@ -3,6 +3,9 @@ from pathlib import Path
 import sys
 
 
+__all__ = ['BINS_PATH', 'FROZEN', '__version__']
+
+
 try:
     from ._version import __version__
 except ImportError:
