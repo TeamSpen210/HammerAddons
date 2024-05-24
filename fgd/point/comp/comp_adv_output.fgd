@@ -28,7 +28,7 @@
 	params_mode1(choices) : "Parameter 1 - Mode" : "legacy" : "Which value to use to replace {2} in the parameter. " +
 		"This allows using values altered in different ways by the instance. " +
 		"In legacy mode Ent Name then String is checked." = #snippet "CompKVMode"
-	params_global1(target_destination) : "Parameter 1 - String" : : "A value which will replace {1} in the parameter."
+	params_global1(string) : "Parameter 1 - String" : : "A value which will replace {1} in the parameter."
 	params_local1(target_destination) : "Parameter 1 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {1}."
 	// Has to be "origin" type to get transformed in 2013 engine games
 	params_pos1(origin) : "Parameter 1 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {1}. This will be offset by instancing."
@@ -37,7 +37,7 @@
 	params_mode2(choices) : "Parameter 2 - Mode" : "legacy" : "Which value to use to replace {2} in the parameter. " +
 		"This allows using values altered in different ways by the instance. " +
 		"In legacy mode Ent Name then String is checked." = #snippet "CompKVMode"
-	params_global2(target_destination) : "Parameter 2 - String" : : "A value which will replace {2} in the parameter."
+	params_global2(string) : "Parameter 2 - String" : : "A value which will replace {2} in the parameter."
 	params_local2(target_destination) : "Parameter 2 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {2}."
 	params_pos2(origin) : "Parameter 2 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {2}. This will be offset by instancing."
 
@@ -45,7 +45,7 @@
 	params_mode3(choices) : "Parameter 3 - Mode" : "legacy" : "Which value to use to replace {3} in the parameter. " +
 		"This allows using values altered in different ways by the instance. " +
 		"In legacy mode Ent Name then String is checked." = #snippet "CompKVMode"
-	params_global3(target_destination) : "Parameter 3 - String" : : "A value which will replace {3} in the parameter."
+	params_global3(string) : "Parameter 3 - String" : : "A value which will replace {3} in the parameter."
 	params_local3(target_destination) : "Parameter 3 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {3}."
 	params_pos3(origin) : "Parameter 3 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {3}. This will be offset by instancing."
 
@@ -53,7 +53,7 @@
 	params_mode4(choices) : "Parameter 4 - Mode" : "legacy" : "Which value to use to replace {4} in the parameter. " +
 		"This allows using values altered in different ways by the instance. " +
 		"In legacy mode Ent Name then String is checked." = #snippet "CompKVMode"
-	params_global4(target_destination) : "Parameter 4 - Ent Name" : : "A value which will replace {4} in the parameter."
+	params_global4(string) : "Parameter 4 - Ent Name" : : "A value which will replace {4} in the parameter."
 	params_local4(target_destination) : "Parameter 4 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {4}."
 	params_pos4(origin) : "Parameter 4 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {4}. This will be offset by instancing."
 
@@ -61,7 +61,7 @@
 	params_mode5(choices) : "Parameter 5 - Mode" : "legacy" : "Which value to use to replace {5} in the parameter. " +
 		"This allows using values altered in different ways by the instance. " +
 		"In legacy mode Ent Name then String is checked." = #snippet "CompKVMode"
-	params_global5(target_destination) : "Parameter 5 - String" : : "A value which will replace {5} in the parameter."
+	params_global5(string) : "Parameter 5 - String" : : "A value which will replace {5} in the parameter."
 	params_local5(target_destination) : "Parameter 5 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {5}."
 	params_pos5(origin) : "Parameter 5 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {5}. This will be offset by instancing."
 	]
