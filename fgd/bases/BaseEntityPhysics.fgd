@@ -18,7 +18,7 @@
 
 	body(integer) : "Bodygroup" : 0 : "Sets the body group index for the model, starting with 0, if available."
 	setbodygroup[complete](integer) : "(Set) Body Group" : 0 :  "Identical to Body Group (body), ask Valve why this is duplicated. Body Groups allow turning on and off parts of a model, so sections can be shown or hidden dynamically."
-	texframeindex(integer) : "Texture Frame" : : "The frame number for any animated textures on this entity."
+	#snippet keyvalue TextureFrameIndex
 	hitboxset[complete](string) : "Hitbox Set" : : "Sets the $hboxset to use for collision testing."
 
 	LightingOrigin(target_destination) : "Lighting Origin" :  : "Select any entity (not info_lighting!) from which to sample lighting instead of the entity's origin."

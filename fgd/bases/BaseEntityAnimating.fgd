@@ -38,7 +38,7 @@
 	body(integer) : "Bodygroup" : 0 : "Body Groups allow turning on and off parts of a model, so sections can be shown or hidden dynamically."
 	setbodygroup[complete](integer) : "(Set) Body Group" : 0 :  "Identical to Body Group (body), ask Valve why this is duplicated. Body Groups allow turning on and off parts of a model, so sections can be shown or hidden dynamically."
 	
-	texframeindex[complete](integer) : "Texture Frame" : : "The frame number for any animated textures on this entity."
+	texframeindex[complete](integer) : "ToggleTexture Frame" : 0 : "The initial texture frame used by the ToggleTexture proxy and controlled by env_texturetoggle."
 	hitboxset[complete](string) : "Hitbox Set" : : "Sets the $hboxset to use for collision testing."
 
 	// Exists, but may not be useable.
