@@ -3,8 +3,8 @@
 This allows sharing definitions among different engine versions.
 """
 from __future__ import annotations
-from typing import Any, TypeVar
-from collections.abc import Callable, MutableMapping
+from typing import Any, TypeVar, Callable
+from collections.abc import MutableMapping
 from collections import Counter, defaultdict, ChainMap
 from pathlib import Path
 import argparse
@@ -881,7 +881,7 @@ def action_import(
 
     expanded = expand_tags(frozenset({engine_tag}))
 
-    print(f'Reading FGDs:')
+    print('Reading FGDs:')
     for path in fgd_paths:
         print(path)
         with RawFileSystem(str(path.parent)) as fsys:
