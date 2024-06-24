@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "9520"
-	"mapversion" "78"
+	"mapversion" "81"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -20,12 +20,14 @@ viewsettings
 world
 {
 	"id" "1"
-	"mapversion" "78"
+	"mapversion" "81"
 	"classname" "worldspawn"
+	"chaptertitlenomessage" "1"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
 	"maxpropscreenwidth" "-1"
 	"skyname" "sky_day01_01"
+	"vscriptlanguage_client" "-2"
 	solid
 	{
 		"id" "2"
@@ -37,7 +39,7 @@ world
 			"uaxis" "[1 0 0 0] 0.25"
 			"vaxis" "[0 -1 0 0] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "4"
 			"smoothing_groups" "0"
 		}
 		side
@@ -831,6 +833,8 @@ entity
 	"fadescale" "1"
 	"maxdxlevel" "0"
 	"mindxlevel" "0"
+	"model" "models/items/battery.mdl"
+	"powermultiplier" "1.0"
 	"renderamt" "255"
 	"rendercolor" "255 255 255"
 	"renderfx" "0"
@@ -864,6 +868,8 @@ entity
 	"fadescale" "1"
 	"maxdxlevel" "0"
 	"mindxlevel" "0"
+	"model" "models/items/battery.mdl"
+	"powermultiplier" "1.0"
 	"renderamt" "255"
 	"rendercolor" "255 255 255"
 	"renderfx" "0"
@@ -897,6 +903,8 @@ entity
 	"fadescale" "1"
 	"maxdxlevel" "0"
 	"mindxlevel" "0"
+	"model" "models/items/battery.mdl"
+	"powermultiplier" "1.0"
 	"renderamt" "255"
 	"rendercolor" "255 255 255"
 	"renderfx" "0"
@@ -930,6 +938,8 @@ entity
 	"fadescale" "1"
 	"maxdxlevel" "0"
 	"mindxlevel" "0"
+	"model" "models/items/battery.mdl"
+	"powermultiplier" "1.0"
 	"renderamt" "255"
 	"rendercolor" "255 255 255"
 	"renderfx" "0"
@@ -963,6 +973,8 @@ entity
 	"fadescale" "1"
 	"maxdxlevel" "0"
 	"mindxlevel" "0"
+	"model" "models/items/battery.mdl"
+	"powermultiplier" "1.0"
 	"renderamt" "255"
 	"rendercolor" "255 255 255"
 	"renderfx" "0"
@@ -996,6 +1008,8 @@ entity
 	"fadescale" "1"
 	"maxdxlevel" "0"
 	"mindxlevel" "0"
+	"model" "models/items/battery.mdl"
+	"powermultiplier" "1.0"
 	"renderamt" "255"
 	"rendercolor" "255 255 255"
 	"renderfx" "0"
@@ -1029,6 +1043,8 @@ entity
 	"fadescale" "1"
 	"maxdxlevel" "0"
 	"mindxlevel" "0"
+	"model" "models/items/battery.mdl"
+	"powermultiplier" "1.0"
 	"renderamt" "255"
 	"rendercolor" "255 255 255"
 	"renderfx" "0"
@@ -1334,7 +1350,7 @@ entity
 			"uaxis" "[1 0 0 192] 0.25"
 			"vaxis" "[0 -1 0 448] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "8"
 			"smoothing_groups" "0"
 		}
 		side
@@ -1356,7 +1372,7 @@ entity
 			"uaxis" "[0 -1 0 448] 0.25"
 			"vaxis" "[0 0 -1 192] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "8"
 			"smoothing_groups" "0"
 		}
 		side
@@ -1367,7 +1383,7 @@ entity
 			"uaxis" "[0 1 0 -384] 0.25"
 			"vaxis" "[0 0 -1 192] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "8"
 			"smoothing_groups" "0"
 		}
 		side
@@ -1378,7 +1394,7 @@ entity
 			"uaxis" "[1 0 0 192] 0.25"
 			"vaxis" "[0 0 -1 192] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "8"
 			"smoothing_groups" "0"
 		}
 		side
@@ -1389,7 +1405,7 @@ entity
 			"uaxis" "[1 0 0 192] 0.25"
 			"vaxis" "[0 0 -1 192] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "8"
 			"smoothing_groups" "0"
 		}
 		editor
@@ -1622,7 +1638,7 @@ entity
 	connections
 	{
 		"OnFullyOpen" "!self,SetSpeed,300,0.25,-1"
-		"OnFullyOpen" "!self,SetPosition,0,0.25,-1"
+		"OnFullyOpen" "!self,SetPosition,0,0.3,-1"
 	}
 	solid
 	{
@@ -1891,7 +1907,7 @@ entity
 			"uaxis" "[1 0 0 -400] 0.25"
 			"vaxis" "[0 -1 0 448] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "8"
 			"smoothing_groups" "0"
 		}
 		side
@@ -1913,7 +1929,7 @@ entity
 			"uaxis" "[0 -1 0 448] 0.25"
 			"vaxis" "[0 0 -1 192] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "8"
 			"smoothing_groups" "0"
 		}
 		side
@@ -1924,7 +1940,7 @@ entity
 			"uaxis" "[0 1 0 -384] 0.25"
 			"vaxis" "[0 0 -1 192] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "8"
 			"smoothing_groups" "0"
 		}
 		side
@@ -1935,7 +1951,7 @@ entity
 			"uaxis" "[1 0 0 -400] 0.25"
 			"vaxis" "[0 0 -1 192] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "8"
 			"smoothing_groups" "0"
 		}
 		side
@@ -1946,7 +1962,7 @@ entity
 			"uaxis" "[1 0 0 -400] 0.25"
 			"vaxis" "[0 0 -1 192] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "8"
 			"smoothing_groups" "0"
 		}
 		editor
@@ -2005,7 +2021,7 @@ entity
 	connections
 	{
 		"OnFullyOpen" "!self,SetSpeed,300,0.25,-1"
-		"OnFullyOpen" "!self,SetPosition,0,0.25,-1"
+		"OnFullyOpen" "!self,SetPosition,0,0.3,-1"
 	}
 	solid
 	{
@@ -2218,7 +2234,7 @@ entity
 	connections
 	{
 		"OnFullyOpen" "!self,SetSpeed,300,0.25,-1"
-		"OnFullyOpen" "!self,SetPosition,0,0.25,-1"
+		"OnFullyOpen" "!self,SetPosition,0,0.3,-1"
 	}
 	solid
 	{
@@ -2346,7 +2362,7 @@ entity
 	connections
 	{
 		"OnFullyOpen" "!self,SetSpeed,300,0.25,-1"
-		"OnFullyOpen" "!self,SetPosition,0,0.25,-1"
+		"OnFullyOpen" "!self,SetPosition,0,0.3,-1"
 	}
 	solid
 	{
@@ -2480,7 +2496,7 @@ entity
 			"uaxis" "[1 0 0 0] 0.25"
 			"vaxis" "[0 -1 0 0] 0.25"
 			"rotation" "0"
-			"lightmapscale" "8"
+			"lightmapscale" "2"
 			"smoothing_groups" "0"
 		}
 		side
@@ -2562,6 +2578,7 @@ entity
 	"_fifty_percent_distance" "48"
 	"_hardfalloff" "1"
 	"_light" "231 3 3 800"
+	"_lighthdr" "-1 -1 -1 1"
 	"_lightscalehdr" "2"
 	"_linear_attn" "0"
 	"_quadratic_attn" "1"
@@ -2570,7 +2587,6 @@ entity
 	"spawnflags" "0"
 	"style" "0"
 	"targetname" "lamp"
-	"_lighthdr" "-1 -1 -1 1"
 	"origin" "416 384 40"
 	editor
 	{
@@ -2712,7 +2728,7 @@ entity
 			"uaxis" "[1 0 0 -288] 0.25"
 			"vaxis" "[0 -1 0 384] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "8"
 			"smoothing_groups" "0"
 		}
 		side
@@ -2734,7 +2750,7 @@ entity
 			"uaxis" "[0 -1 0 384] 0.25"
 			"vaxis" "[0 0 -1 192] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "8"
 			"smoothing_groups" "0"
 		}
 		side
@@ -2745,7 +2761,7 @@ entity
 			"uaxis" "[0 1 0 -320] 0.25"
 			"vaxis" "[0 0 -1 192] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "8"
 			"smoothing_groups" "0"
 		}
 		side
@@ -2756,7 +2772,7 @@ entity
 			"uaxis" "[1 0 0 -288] 0.25"
 			"vaxis" "[0 0 -1 192] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "8"
 			"smoothing_groups" "0"
 		}
 		side
@@ -2767,7 +2783,7 @@ entity
 			"uaxis" "[1 0 0 -288] 0.25"
 			"vaxis" "[0 0 -1 192] 0.25"
 			"rotation" "0"
-			"lightmapscale" "16"
+			"lightmapscale" "8"
 			"smoothing_groups" "0"
 		}
 		editor
