@@ -16,17 +16,17 @@
 
 	kv_name(string) : "Name / Mask" : : "The name of the keyvalue to set, or the bits to change for spawnflags."
 
-	kv_value_mode[engine](string) : "Value - Mode" : "legacy"
-	kv_value_mode(choices) : "Value - Mode" : "legacy" : "Which value to use. " +
+	kv_value_mode[engine](string) : "Value Mode" : "legacy"
+	kv_value_mode(choices) : "Value Mode" : "legacy" : "Which value to use. " +
 		"This allows using values altered in different ways by the instance." +
 		"In legacy mode Ent Name then String is checked." = #snippet "CompKVMode"
-	kv_value_global(string) : "Value - String" : : "The value to apply."
-	kv_value_local(target_destination) : "Value - Ent Name" : : "If set, use this fixed-up entity name."
+	kv_value_global(string) : "Value - Fixed String" : : "The value to apply. This is unaffected by instance fixup names and transformations (except rotation if Rotate Value is turned on)."
+	kv_value_local(target_destination) : "Value - Ent Name" : : "Used in Entity name mode. In an instance, this recieves prefix/postfix fixups."
 	// Has to be "origin" type to get transformed in 2013 engine games
-	kv_value_pos(origin) : "Value - Position" : : "If set, overrides the regular value. This will be offset by instancing."
+	kv_value_pos(origin) : "Value - Position" : : "Used in Position mode. In an instance, this will be offset by the instance position."
 
 	invert(boolean) : "Invert Value" : 0 : "If enabled, invert the value so 0 and 1 are swapped."
-	rotate(boolean) : "Rotate Value" : 0 : "If enabled, treat the value as a vector and rotate it by the angles set on this entity first."
+	rotate(boolean) : "Rotate Value" : 0 : "If enabled, treat the value as a vector and rotate it by the angles set on this entity first. Useful to rotate the value correctly in an instance."
 	conv_ang(boolean) : "Convert To Angle" : 0 : "If enabled, convert a +X axis normal back into the Euler angle."
 
 	// We need to provide "some" outputs to allow you to add some.
