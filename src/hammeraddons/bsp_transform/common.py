@@ -126,7 +126,7 @@ def get_multimode_value(ent: Entity, *, prefix: str='', suffix: str='', desc: st
         return ent[f'{prefix}global{suffix}']
     elif mode == 'local':
         return ent[f'{prefix}local{suffix}']
-    elif mode == 'position':
+    elif mode in ['pos', 'position']:
         return ent[f'{prefix}pos{suffix}']
     else:
         LOGGER.warning(
