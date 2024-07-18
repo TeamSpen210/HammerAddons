@@ -133,4 +133,4 @@ def get_multimode_value(ent: Entity, *, prefix: str='', suffix: str='', desc: st
             'Invalid {} mode "{}" for {}!',
             desc, mode, ent_description(ent),
         )
-        return ent[f'{prefix}global{suffix}'] or ent[f'{prefix}_local']
+        return ent[f'{prefix}global{suffix}'] or ent[f'{prefix}local{suffix}']

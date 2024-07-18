@@ -58,3 +58,48 @@ async def test_basic_flags(blank_ctx: Context, function: TransFunc) -> None:
         await function(blank_ctx)
         assert not vmf.by_class['comp_kv_setter']  # Is removed from the map.
         assert target['spawnflags'] == '32'
+
+
+async def test_modes(blank_ctx: Context, function: TransFunc) -> None:
+    """Test the various modes."""
+    vmf = blank_ctx.vmf
+    target = vmf.create_ent('info_target', targetname='an_ent')
+
+    vmf.create_ent(
+        'comp_kv_setter',
+        target='an_ent',
+        mode='kv',
+        kv_name='mode_local',
+        kv_value_mode='local',
+        kv_value_local='a_local',
+        kv_value_global='bad',
+        kv_value_pos='48 12 36',
+    )
+
+    vmf.create_ent(
+        'comp_kv_setter',
+        target='an_ent',
+        mode='kv',
+        kv_name='mode_global',
+        kv_value_mode='global',
+        kv_value_local='bad',
+        kv_value_global='a_global',
+        kv_value_pos='48 12 36',
+    )
+
+    vmf.create_ent(
+        'comp_kv_setter',
+        target='an_ent',
+        mode='kv',
+        kv_name='mode_pos',
+        kv_value_mode='position',
+        kv_value_local='bad_loc',
+        kv_value_global='bad_glob',
+        kv_value_pos='1 2 3',
+    )
+
+    await function(blank_ctx)
+    assert not vmf.by_class['comp_kv_setter']  # Is removed from the map.
+    assert target['mode_local'] == 'a_local'
+    assert target['mode_global'] == 'a_global'
+    assert target['mode_pos'] == '1 2 3'
