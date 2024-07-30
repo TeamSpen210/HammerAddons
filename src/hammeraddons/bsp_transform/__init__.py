@@ -141,6 +141,7 @@ TransFunc = Callable[[Context], Awaitable[None]]
 TransFuncOrSync = Callable[[Context], Optional[Awaitable[None]]]
 TRANSFORMS: Dict[str, TransFunc] = {}
 TRANSFORM_PRIORITY: Dict[str, int] = {}
+TRANSFORM_ID: Dict[str, str] = {}
 
 
 def trans(name: str, *, priority: int=0) -> Callable[[TransFuncOrSync], TransFunc]:
@@ -148,6 +149,7 @@ def trans(name: str, *, priority: int=0) -> Callable[[TransFuncOrSync], TransFun
     def deco(func: TransFuncOrSync) -> TransFunc:
         """Stores the transformation."""
         TRANSFORM_PRIORITY[name] = priority
+        TRANSFORM_ID[name] = func.__name__
         if inspect.iscoroutinefunction(func):
             TRANSFORMS[name] = func
             return func
@@ -181,14 +183,10 @@ async def run_transformations(
     )
 
     disabledSet = { it.strip() for it in disabled.split( ',' ) }
+    enabledTransforms = list( filter( lambda it: TRANSFORM_ID[it[0]] not in disabledSet, sorted( TRANSFORMS.items(), key=lambda tup: TRANSFORM_PRIORITY[tup[0]] ) ) )
+    LOGGER.info( 'Enabled transforms: {}', ', '.join( [ TRANSFORM_ID[it] for it, _ in enabledTransforms ] ) )
 
-    for func_name, func in sorted(
-        TRANSFORMS.items(),
-        key=lambda tup: TRANSFORM_PRIORITY[tup[0]],
-    ):
-        if func_name in disabledSet:
-            continue
-
+    for func_name, func in enabledTransforms:
         LOGGER.info('Running "{}"...', func_name)
         try:
             context.config = config[func_name.casefold()]
