@@ -170,6 +170,7 @@ async def run_transformations(
     studiomdl_loc: Optional[Path] = None,
     config: Mapping[str, Keyvalues] = EmptyMapping,
     tags: FrozenSet[str] = frozenset(),
+    disabled: str = '',
     modelcompile_dump: Optional[Path] = None,
 ) -> None:
     """Run all transformations."""
@@ -179,10 +180,15 @@ async def run_transformations(
         modelcompile_dump=modelcompile_dump,
     )
 
+    disabledSet = { it.strip() for it in disabled.split( ',' ) }
+
     for func_name, func in sorted(
         TRANSFORMS.items(),
         key=lambda tup: TRANSFORM_PRIORITY[tup[0]],
     ):
+        if func_name in disabledSet:
+            continue
+
         LOGGER.info('Running "{}"...', func_name)
         try:
             context.config = config[func_name.casefold()]

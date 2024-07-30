@@ -230,6 +230,7 @@ async def main(argv: List[str]) -> None:
         studiomdl_loc,
         transform_conf,
         pack_tags,
+        disabled=conf.otps.get(config.DISABLED_TRANSFORMS),
         modelcompile_dump=modelcompile_dump,
     )
 
