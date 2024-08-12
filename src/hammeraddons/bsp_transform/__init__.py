@@ -172,7 +172,7 @@ async def run_transformations(
     studiomdl_loc: Optional[Path] = None,
     config: Mapping[str, Keyvalues] = EmptyMapping,
     tags: FrozenSet[str] = frozenset(),
-    disabled: str = '',
+    disabled: Container[str] = (),
     modelcompile_dump: Optional[Path] = None,
 ) -> None:
     """Run all transformations."""
@@ -182,11 +182,10 @@ async def run_transformations(
         modelcompile_dump=modelcompile_dump,
     )
 
-    disabledSet = { it.strip() for it in disabled.split( ',' ) }
-    enabledTransforms = list( filter( lambda it: TRANSFORM_ID[it[0]] not in disabledSet, sorted( TRANSFORMS.items(), key=lambda tup: TRANSFORM_PRIORITY[tup[0]] ) ) )
-    LOGGER.info( 'Enabled transforms: {}', ', '.join( [ TRANSFORM_ID[it] for it, _ in enabledTransforms ] ) )
+    enabled_transforms = list(filter(lambda it: TRANSFORM_ID[it[0]] not in disabled, sorted(TRANSFORMS.items(), key=lambda tup: TRANSFORM_PRIORITY[tup[0]])))
+    LOGGER.info( 'Enabled transforms: {}', ', '.join([TRANSFORM_ID[it] for it, _ in enabled_transforms]))
 
-    for func_name, func in enabledTransforms:
+    for func_name, func in enabled_transforms:
         LOGGER.info('Running "{}"...', func_name)
         try:
             context.config = config[func_name.casefold()]

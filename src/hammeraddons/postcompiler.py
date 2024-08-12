@@ -230,7 +230,7 @@ async def main(argv: List[str]) -> None:
         studiomdl_loc,
         transform_conf,
         pack_tags,
-        disabled=conf.opts.get(config.DISABLED_TRANSFORMS),
+        disabled={name.strip() for name in conf.opts.get(config.DISABLED_TRANSFORMS).split(',')},
         modelcompile_dump=modelcompile_dump,
     )
 
