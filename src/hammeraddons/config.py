@@ -471,3 +471,8 @@ TRANSFORM_OPTS = Opt.block(
     transform, and the value is then decided by that transform.
     """
 )
+
+DISABLED_TRANSFORMS = Opt.string(
+    'transform_disable', '',
+    """Specify transforms to disable as a comma-separated string."""
+)
