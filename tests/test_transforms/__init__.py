@@ -7,7 +7,7 @@ import pytest
 
 from hammeraddons.bsp_transform import Context, TransFunc, TRANSFORMS
 from srctools.bsp import BSP
-from srctools.filesys import VirtualFileSystem
+from srctools.filesys import FileSystemChain
 from srctools.game import Game
 from srctools.packlist import PackList
 
@@ -17,7 +17,7 @@ def blank_ctx(shared_datadir: Path) -> Context:
     """Build a blank context."""
     bsp = BSP(shared_datadir / 'blank.bsp')
     game = Game(shared_datadir)
-    fsys = VirtualFileSystem({})
+    fsys = FileSystemChain()
     return Context(
         fsys,
         bsp.ents,
@@ -35,6 +35,6 @@ def get_transform_func(module_name: str, transform: str) -> Callable[[Context], 
     sys.path.append(folder)
     try:
         importlib.import_module(module_name)
-        return TRANSFORMS[transform]
+        return TRANSFORMS[transform].func
     finally:
         sys.path.remove(folder)
