@@ -13,7 +13,8 @@
 	_lightscalehdr(float) : "BrightnessScaleHDR" : 1 : "Amount to scale the light by when compiling for HDR."
 	_ambienthdr(color255) : "AmbientHDR" : "-1 -1 -1 1"
 	_ambientscalehdr(float) : "AmbientScaleHDR" : 1 : "Amount to scale the ambient light by when compiling for hdr."
-	sunspreadangle(float) : "SunSpreadAngle" : 5 : "The angular extent of the sun for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
+	// VRAD requires this casing for the key name.
+	SunSpreadAngle(float) : "SunSpreadAngle" : 5 : "The angular extent of the sun for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
 
 	@resources []
 	]

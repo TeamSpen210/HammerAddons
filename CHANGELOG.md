@@ -18,6 +18,7 @@
 * Fix various incorrect usages of the FGD `frustum()` helper.
 * Normals are now correctly calculated when generating propcombined models. This requires all previous models to be rebuilt, unfortunately.
 * Fix overlays not functioning with `material_modify_control` parent searching.
+* #274: Force `light_environment` to use the required `SunSpreadAngle` casing.
 
 
 --------------------
