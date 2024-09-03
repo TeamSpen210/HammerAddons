@@ -1,6 +1,7 @@
 """Build the postcompiler script."""
-import shutil
 from pathlib import Path
+import shutil
+import importlib.metadata
 
 from PyInstaller.utils.hooks import collect_submodules
 import versioningit
@@ -21,8 +22,10 @@ version = versioningit.get_version(SPECPATH, {
     },
 })
 
+src_version = importlib.metadata.version('srctools')
+
 with open(Path(SPECPATH, 'src', 'hammeraddons', '_version.py'), 'w') as f:
-    f.write(f'__version__ = {version!r}\n')
+    f.write(f'HADDONS_VER = {version!r}\nSRCTOOLS_VER = {src_version!r}\n')
 
 DATAS = [
     (str(root / 'crowbar_command/Crowbar.exe'), '.'),

@@ -3,13 +3,13 @@ from pathlib import Path
 import sys
 
 
-__all__ = ['BINS_PATH', 'FROZEN', '__version__']
+__all__ = ['BINS_PATH', 'FROZEN', 'HADDONS_VER', 'SRCTOOLS_VER']
 
 
 try:
-    from ._version import __version__
+    from ._version import HADDONS_VER, SRCTOOLS_VER
 except ImportError:
-    __version__ = '(unknown)'
+    HADDONS_VER = SRCTOOLS_VER = '(unknown)'
 else:
     # Cleanup and discard module.
     import sys as _sys

@@ -20,13 +20,13 @@ import os
 import re
 import shutil
 
-from srctools import __version__ as version_lib, conv_bool
+from srctools import conv_bool
 from srctools.bsp import BSP, BSP_LUMPS
 from srctools.filesys import ZipFileSystem
 from srctools.packlist import PackList
 
 from hammeraddons import (
-    BINS_PATH, __version__ as version_haddons, config, mdl_compiler, propcombine,
+    BINS_PATH, HADDONS_VER, SRCTOOLS_VER, config, mdl_compiler, propcombine,
 )
 from hammeraddons.bsp_transform import run_transformations
 from hammeraddons.move_shim import install as install_depmodule_hook
@@ -135,7 +135,7 @@ async def main(argv: List[str]) -> None:
     ))
     LOGGER.addHandler(handler)
 
-    LOGGER.info('HammerAddons postcompiler, srctools=v{}, addons=v{}', version_lib, version_haddons)
+    LOGGER.info('HammerAddons postcompiler, srctools=v{}, addons=v{}', SRCTOOLS_VER, HADDONS_VER)
     LOGGER.info("Map path is {}", path)
 
     conf = config.parse(path, args.game_folder)
