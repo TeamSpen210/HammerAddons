@@ -1,6 +1,5 @@
 """Math related to spline generation."""
 import math
-from typing import Generator
 
 from srctools import Matrix, Vec
 

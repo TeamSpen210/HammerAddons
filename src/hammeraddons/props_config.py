@@ -220,7 +220,7 @@ class Options:
             try:
                 self.settings[opt.id] = self.settings[opt.fallback]
             except KeyError:
-                raise Exception(f'Bad fallback for "{opt.id}"!')
+                raise Exception(f'Bad fallback for "{opt.id}"!') from None
             # Check they have the same type.
             if opt.kind is not options[opt.fallback].kind:
                 raise ValueError(
@@ -281,7 +281,7 @@ class Options:
             if ind != 0:
                 file.write('\n\n')
             for line in option.doc:
-                file.write('\t// {}\n'.format(line))
+                file.write(f'\t// {line}\n')
 
             if isinstance(option, OptWithDefault):
                 default = option.default
@@ -308,8 +308,7 @@ class Options:
                 file.write(f'\t// "{option.name}" ""\n')
             elif isinstance(value, Keyvalues):
                 value.name = option.name
-                for line in value.export():
-                    file.write('\t' + line)
+                value.serialise(file, start_indent='\t')
             else:
                 file.write(f'\t"{option.name}" "{value}"\n')
         file.write('\t}\n')

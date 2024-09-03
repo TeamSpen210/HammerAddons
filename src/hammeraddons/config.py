@@ -1,6 +1,6 @@
 """Handles user configuration common to the different scripts."""
-from typing import Callable, Dict, Iterator, Optional, Pattern as re_Pattern, Set, Union
-from typing_extensions import Final, TypeAlias
+from typing import Callable, Dict, Iterator, Optional, Pattern as re_Pattern, Set, Union, Final
+from typing_extensions import TypeAlias
 from pathlib import Path
 import fnmatch
 import re
@@ -207,10 +207,7 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
         elif kv.name in ('path', 'pack'):
             fsys_chain.add_sys(fsys)
         else:
-            raise ValueError(
-                'Unknown searchpath '
-                'key "{}"!'.format(kv.real_name)
-            )
+            raise ValueError(f'Unknown searchpath key "{kv.real_name}"!')
 
     sources: Dict[str, PluginSource] = {}
 

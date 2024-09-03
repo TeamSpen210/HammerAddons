@@ -5,16 +5,17 @@ We can then reuse already compiled versions.
 """
 import shutil
 from typing import (
-    Any, Awaitable, Callable, Generic, Hashable, List, Optional, Set, Tuple, TypeVar,
+    Any, Awaitable, Callable, Generic, Hashable, List, Optional, Set, Tuple, Type, TypeVar,
     ContextManager, Union,
 )
 from typing_extensions import Self
 from pathlib import Path
+import contextlib
 import os
 import pickle
 import random
 import tempfile
-import contextlib
+import types
 
 from srctools import AtomicWriter, logger
 from srctools.game import Game
@@ -147,7 +148,12 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         LOGGER.info('Found {} existing models/{}*', len(self._built_models), self.model_folder)
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_val: Optional[BaseException],
+        exc_tb: Optional[types.TracebackType],
+    ) -> None:
         """Write the constructed models to the cache file and remove unused models."""
         if exc_type is not None or exc_val is not None:
             return
@@ -203,7 +209,10 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         The model key and return value must be pickleable, so they can be saved
         for use in subsequent compiles.
         """
-        model = await self._built_models.fetch(key, ModelCompiler._compile, self, key, compile_func, args)
+        model = await self._built_models.fetch(
+            key, ModelCompiler._compile,
+            self, key, compile_func, args,
+        )
 
         if not model.used:
             # Pack it in.
@@ -234,7 +243,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         self.built_count += 1
         # Figure out a name to use.
         while True:
-            mdl_name = 'mdl_{:04x}'.format(random.getrandbits(16))
+            mdl_name = f'mdl_{random.getrandbits(16):04x}'
             if mdl_name not in self._mdl_names:
                 self._mdl_names.add(mdl_name)
                 break

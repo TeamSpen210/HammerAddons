@@ -110,7 +110,6 @@ def material_modify_control(ctx: Context) -> None:
         filter_mat = matmod['materialname'].casefold()
 
         targets: set[tuple[str, str]] = set()
-        ent_materials: Iterable[str]
         found_count: Counter[str] = Counter()
         for parent in ctx.vmf.search(matmod['parentname']):
             found_count[parent['targetname']] += 1

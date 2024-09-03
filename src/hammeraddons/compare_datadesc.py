@@ -89,7 +89,7 @@ def check_datadesc(filename: str, tags: FrozenSet[str]) -> None:
                             # msg(f'[{classname}] Missing member:', name)
                             continue
                     except UnboundLocalError:
-                        raise ValueError('KV coming before first ent??')
+                        raise ValueError('KV coming before first ent??') from None
                     if 'Output' in flags:
                         try:
                             tagsmap = get_val(cur_ent, 'outputs', name)

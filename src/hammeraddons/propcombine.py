@@ -97,7 +97,7 @@ LIM_PROCESS = trio.CapacityLimiter(8)
 LIM_PARSE = trio.CapacityLimiter(16)
 
 
-def unify_mdl(path: str):
+def unify_mdl(path: str) -> str:
     """Compute a 'canonical' path for a given model."""
     path = path.casefold().replace('\\', '/').lstrip('/')
     if not path.startswith('models/'):
@@ -241,13 +241,9 @@ async def combine_group(
             coll = CollType(prop.solidity)
         except ValueError:
             raise ValueError(
-                 'Unknown prop_static collision type '
-                 '{} for "{}" at {}!'.format(
-                    prop.solidity,
-                    prop.model,
-                    prop.origin,
-                 )
-            )
+                 f'Unknown prop_static collision type {prop.solidity} for '
+                 f'"{prop.model}" at {prop.origin}!'
+            ) from None
         qc, mdl = lookup_model(prop.model)
         assert mdl is not None, prop.model
 
@@ -450,7 +446,7 @@ async def compile_func(
             f.write('$donotcastshadows\n')
 
         for mat in sorted(cdmats):
-            f.write('$cdmaterials "{}"\n'.format(mat))
+            f.write(f'$cdmaterials "{mat}"\n')
 
         if coll_mesh.triangles:
             f.write(QC_COLL_TEMPLATE)
@@ -531,7 +527,7 @@ def optimise_collision(
     zero_norm = Vec()
     while todo:
         mesh1 = todo.pop()
-        for mesh2 in todo:
+        for mesh2 in todo:  # noqa: PLE4703  # Appending while iterating.
             if (mesh1, mesh2) in failures or (mesh2, mesh1) in failures:
                 continue
             combined = Mesh(coll_mesh.bones, coll_mesh.animation, [
@@ -614,7 +610,7 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
     scale_factor = ref_scale = phy_scale = 1.0
     is_concave = False
 
-    with open(str(qc_path)) as f:
+    with open(str(qc_path), encoding='utf8', errors='ignore') as f:
         tok = Tokenizer(
             f, qc_path,
             allow_escapes=False,
@@ -817,8 +813,7 @@ async def decompile_model(
         cache_kv['ref'] = ''  # Mark as not present.
 
     with info_path.open('w') as f:
-        for line in cache_kv.export():
-            f.write(line)
+        cache_kv.serialise(f)
     return qc
 
 
@@ -894,8 +889,8 @@ def group_props_ent(
                 brush = brush_models.pop(ent)
             except KeyError:
                 raise ValueError(
-                    f'No model for propcombine volume {repr(combine_set)} at '
-                    f'{str(origin)}')
+                    f'No model for propcombine volume {combine_set!r} at {origin!s}'
+                ) from None
             # Use the bounding box as a volume approximation,
             # it's only needed for sorting the volumes.
             size = brush.maxes - brush.mins

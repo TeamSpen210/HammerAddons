@@ -138,7 +138,7 @@ class Context:
         except KeyError:
             self._ent_code[ent] = code
         else:
-            self._ent_code[ent] = '{}\n{}'.format(existing, code)
+            self._ent_code[ent] = f'{existing}\n{code}'
 
 
 TransFunc: TypeAlias = Callable[[Context], Awaitable[None]]
@@ -280,7 +280,7 @@ def apply_io_remaps(context: Context) -> None:
                 'Entity "{}" ({}) @ {} has infinite loop when expanding '
                 ' compiler outputs to real ones! Final output list: \n{}',
                 ent['targetname'], ent['classname'], ent['origin'],
-                '\n'.join(['* {}\n'.format(out) for out in ent.outputs])
+                '\n'.join([f'* {out}\n' for out in ent.outputs])
             )
 
 
@@ -290,7 +290,7 @@ def _load() -> None:
     This loads the transformations. We do it in a function to allow discarding
     the output.
     """
-    from . import globals, instancing, packing
+    from . import globals, instancing, packing  # noqa
 
 
 _load()

@@ -15,7 +15,7 @@ LOGGER = get_logger(__name__, 'trans.packing')
 
 
 @trans('comp_precache_model', priority=100)
-def comp_precache_model(ctx: Context):
+def comp_precache_model(ctx: Context) -> None:
     """Force precaching a specific model."""
     already_done: Set[str] = set()
     for ent in ctx.vmf.by_class['comp_precache_model']:
@@ -63,7 +63,7 @@ function Precache() {
 
 
 @trans('comp_precache_sound', priority=100)
-def comp_precache_sound(ctx: Context):
+def comp_precache_sound(ctx: Context) -> None:
     """Force precaching a set of sounds."""
     # Match normalised sound to the original filename.
     sounds: Dict[str, str] = {}
@@ -102,7 +102,7 @@ def comp_precache_sound(ctx: Context):
 
 
 @trans('comp_pack_replace_soundscript', priority=100)
-def comp_pack_replace_soundscript(ctx: Context):
+def comp_pack_replace_soundscript(ctx: Context) -> None:
     """Replace a soundscript with a different one."""
     old_scripts = set()
     new_scripts = set()
@@ -141,7 +141,7 @@ PACK_TYPES = {
 
 
 @trans('comp_pack', priority=100)
-def comp_pack(ctx: Context):
+def comp_pack(ctx: Context) -> None:
     """Force packing resources."""
     for ent in ctx.vmf.by_class['comp_pack']:
         ent.remove()
@@ -181,7 +181,7 @@ def comp_pack(ctx: Context):
 
 
 @trans('comp_pack_rename', priority=100)
-def comp_pack_rename(ctx: Context):
+def comp_pack_rename(ctx: Context) -> None:
     """Pack a file, under a different name."""
 
     # Optimisation, don't re-read files multiple times.

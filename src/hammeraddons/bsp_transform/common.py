@@ -29,7 +29,7 @@ OPERATIONS: Dict[str, NumericOp] = {
 }
 # Matches multiple characters present in OPERATIONS.
 # \s skips whitespace beforehand, so we have a capturing group to just grap the actual operation.
-OPERATION_RE = re.compile(r'\s*([{0}]+)'.format(''.join(map(re.escape, {
+OPERATION_RE = re.compile(r'\s*([{}]+)'.format(''.join(map(re.escape, {
     char for key in OPERATIONS for char in key
 }))))
 

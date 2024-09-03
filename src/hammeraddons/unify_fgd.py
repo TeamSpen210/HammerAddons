@@ -362,7 +362,7 @@ def ent_path(ent: EntityDef) -> str:
         if '_' in ent.classname:
             folder += '/' + ent.classname.split('_', 1)[0]
 
-    return '{}/{}.fgd'.format(folder, ent.classname)
+    return f'{folder}/{ent.classname}.fgd'
 
 
 def load_database(
@@ -899,7 +899,7 @@ def action_import(
             try:
                 ent = old_fgd[new_ent.classname]
             except KeyError:
-                raise ValueError("Classname not present in FGD!")
+                raise ValueError(f'Classname not present in FGD: "{new_ent.classname}"!') from None
             # Now merge the two.
 
             if new_ent.desc not in ent.desc:
@@ -1056,8 +1056,7 @@ def action_export(
                         if 'ENGINE' in tags or '+ENGINE' in tags:
                             if value.type is ValueTypes.CHOICES:
                                 raise ValueError(
-                                    '{}.{}: Engine tags cannot be '
-                                    'CHOICES!'.format(ent.classname, key)
+                                    f'{ent.classname}.{key}: Engine tags cannot be CHOICES!'
                                 )
                             # Use just this.
                             tag_map = {TAGS_EMPTY: value}
@@ -1092,9 +1091,8 @@ def action_export(
                     # Guess either int or string, if we can convert.
                     if value.type is ValueTypes.CHOICES:
                         print(
-                            '{}.{} uses CHOICES type, '
-                            'provide ENGINE '
-                            'tag!'.format(ent.classname, key)
+                            f'{ent.classname}.{key} uses CHOICES type, '
+                            'provide ENGINE tag!'
                         )
                         if isinstance(value, KVDef):
                             assert value.val_list is not None
@@ -1120,7 +1118,7 @@ def action_export(
                             raise ValueError(
                                 f'Base Entity {attr_name[:-1]} "{key}" '
                                 f'has multiple tags: {list(base_cat[key].keys())}'
-                            )
+                            ) from None
                         else:
                             if base_value.type is ValueTypes.CHOICES:
                                 print(
@@ -1378,7 +1376,7 @@ def main(args: list[str] | None = None) -> None:
     )
     subparsers = parser.add_subparsers(dest="mode")
 
-    parser_count = subparsers.add_parser(
+    subparsers.add_parser(
         "count",
         help=action_count.__doc__,
         aliases=["c"],

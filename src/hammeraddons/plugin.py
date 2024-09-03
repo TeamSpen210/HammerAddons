@@ -1,6 +1,7 @@
 """Logic for loading all the code in arbitary locations for plugin purposes."""
-from typing import Callable, Dict, Iterable, Iterator, Optional, Sequence, Set, Tuple, Union
-from typing_extensions import Final
+from typing import (
+    Callable, Dict, Iterable, Iterator, Optional, Sequence, Set, Tuple, Union, Final, Self, final,
+)
 from collections import deque
 from importlib.abc import MetaPathFinder
 from importlib.machinery import ModuleSpec, SourceFileLoader
@@ -28,7 +29,7 @@ class Source:
     files: Set[Path] = attrs.Factory(set)
 
     @classmethod
-    def parse(cls, kv: Keyvalues, path_parse: Callable[[str], Path]) -> 'Source':
+    def parse(cls, kv: Keyvalues, path_parse: Callable[[str], Path]) -> Self:
         """Parse from keyvalues data."""
         if kv.has_children():
             if not kv.real_name:
@@ -43,13 +44,13 @@ class Source:
             except LookupError:
                 raise ValueError(f'Plugin "{kv.real_name}" must have a path!') from None
             if path.is_dir():
-                return Source(
+                return cls(
                     kv.real_name,
                     path,
                     recursive=kv.bool('recurse'),
                 )
             else:
-                return Source(
+                return cls(
                     kv.real_name,
                     path.parent,
                     files={path},
@@ -61,13 +62,13 @@ class Source:
                 if not path.is_dir():
                     raise ValueError(f"'{path}' is not a directory!")
 
-                return Source('', path, kv.name == "recursive")
+                return cls('', path, kv.name == "recursive")
             elif kv.name in ('single', 'file'):
-                return Source('', path.parent, files={path})
+                return cls('', path.parent, files={path})
             elif kv.name == '_builtin_':
-                return Source(BUILTIN, path, recursive=True)
+                return cls(BUILTIN, path, recursive=True)
             else:
-                raise ValueError("Unknown plugins key {}".format(kv.real_name))
+                raise ValueError(f"Unknown plugins key {kv.real_name}")
 
 
 def parse_name(prefix: str, name: str) -> Union[Tuple[str, Path], Tuple[None, None]]:
