@@ -6,9 +6,9 @@ draw call.
 import math
 from typing import (
     Callable, Dict, FrozenSet, Iterable, Iterator, List, Literal, MutableMapping, Optional, Set,
-    Tuple,
-    Union, Sequence,
+    Tuple, Union, Sequence,
 )
+from typing_extensions import TypeAlias, Unpack
 from collections import defaultdict
 from enum import Enum
 from pathlib import Path
@@ -101,15 +101,15 @@ def unify_mdl(path: str) -> str:
     """Compute a 'canonical' path for a given model."""
     path = path.casefold().replace('\\', '/').lstrip('/')
     if not path.startswith('models/'):
-        path = 'models/' + path
+        path = f'models/{path}'
     if not path.endswith(('.mdl', '.glb', '.gltf')):
-        path = path + '.mdl'
+        path = f'{path}.mdl'
     return path
 
 
 class CombineVolume:
     """Parsed comp_propcombine_* ents."""
-    def __init__(self, group_name: str, skinset: FrozenSet, origin: Vec) -> None:
+    def __init__(self, group_name: str, skinset: FrozenSet[str], origin: Vec) -> None:
         self.group = group_name
         self.skinset = skinset
         # For sorting.
@@ -183,11 +183,15 @@ class PropPos:
     solidity: CollType
 
 
-# The types used during compilation.
-PropCombiner = ModelCompiler[
+# Function called to get info about a model.
+LookupModel: TypeAlias = Callable[[str], Union[Tuple[QC, Model], Tuple[None, None]]]
+# Key used to group props. None is an un-combinable prop. The first item is the skinset, all others
+# are opaque values.
+PropGroup: TypeAlias = Optional[Tuple[FrozenSet[str], Unpack[Tuple[object, ...]]]]
+PropCombiner: TypeAlias = ModelCompiler[
     Tuple[FrozenSet[PropPos], bool],  # Key for deduplication.
     # Additional parameters used during compile
-    Tuple[Callable[[str], Union[Tuple[QC, Model], Tuple[None, None]]], float],
+    Tuple[LookupModel, float],
     # Result of the function
     None,
 ]
@@ -196,7 +200,7 @@ PropCombiner = ModelCompiler[
 async def combine_group(
     compiler: PropCombiner,
     props: List[StaticProp],
-    lookup_model: Callable[[str], Union[Tuple[QC, Model], Tuple[None, None]]],
+    lookup_model: LookupModel,
     volume_tolerance: float,
 ) -> StaticProp:
     """Merge the given props together, compiling a model if required."""
@@ -301,7 +305,7 @@ async def compile_func(
     mdl_key: Tuple[FrozenSet[PropPos], bool],
     temp_folder: Path,
     mdl_name: str,
-    args: Tuple[Callable[[str], Union[Tuple[QC, Model], Tuple[None, None]]], float],
+    args: Tuple[LookupModel, float],
 ) -> None:
     """Build this merged model."""
     LOGGER.info('Compiling {}...', mdl_name)
@@ -818,8 +822,8 @@ async def decompile_model(
 
 
 def group_props_ent(
-    prop_groups: Dict[Optional[tuple], List[StaticProp]],
-    get_model: Callable[[str], Tuple[Optional[QC], Optional[Model]]],
+    prop_groups: Dict[PropGroup, List[StaticProp]],
+    get_model: LookupModel,
     brush_models: MutableMapping[Entity, BModel],
     grouper_ents: List[Entity],
     min_cluster: int,
@@ -907,7 +911,7 @@ def group_props_ent(
         else:
             raise AssertionError(ent['classname'])
 
-    # We want to apply a ordering to groups, so smaller ones apply first, and
+    # We want to apply an ordering to groups, so smaller ones apply first, and
     # filtered ones override all others.
     for group_list in sets_by_skin.values():
         group_list.sort(key=operator.attrgetter('volume'))
@@ -968,8 +972,8 @@ def group_props_ent(
 
 
 def group_props_auto(
-    prop_groups: Dict[Optional[tuple], List[StaticProp]],
-    get_model: Callable[[str], Tuple[Optional[QC], Optional[Model]]],
+    prop_groups: Dict[PropGroup, List[StaticProp]],
+    get_model: LookupModel,
     min_dist: float,
     max_dist: float,
     min_cluster: int,
@@ -1034,7 +1038,7 @@ def group_props_auto(
 
         clusters: Dict[int, List[StaticProp]] = defaultdict(list)
         for prop, key in labels.items():
-            if type(key) is int:
+            if isinstance(key, int):
                 clusters[key].append(prop)
 
         # We now have many potential groups, which may be extremely large.
@@ -1095,18 +1099,18 @@ async def combine(
     game: Game,
     studiomdl_loc: Path,
     *,
-    qc_folders: Optional[List[Path]]=None,
-    crowbar_loc: Optional[Path]=None,
-    decomp_cache_loc: Optional[Path]=None,
-    compile_dump: Optional[Path]=None,
-    blacklist: Iterable[str]=(),
-    min_auto_range: float=0.0,
-    max_auto_range: float=math.inf,
-    min_cluster: int=2,
-    min_cluster_auto: int=0,
-    volume_tolerance: float=1.0,
-    debug_dump: bool=False,
-    pack_models: bool=True,
+    qc_folders: Optional[List[Path]] = None,
+    crowbar_loc: Optional[Path] = None,
+    decomp_cache_loc: Optional[Path] = None,
+    compile_dump: Optional[Path] = None,
+    blacklist: Iterable[str] = (),
+    min_auto_range: float = 0.0,
+    max_auto_range: float = math.inf,
+    min_cluster: int = 2,
+    min_cluster_auto: int = 0,
+    volume_tolerance: float = 1.0,
+    debug_dump: bool = False,
+    pack_models: bool = True,
 ) -> None:
     """Combine props in this map."""
     LOGGER.debug(
@@ -1205,7 +1209,7 @@ async def combine(
     # Ignore this, we handle lighting origin ourselves.
     relevant_flags = ~StaticPropFlags.HAS_LIGHTING_ORIGIN
 
-    def get_grouping_key(prop: StaticProp) -> Optional[tuple]:
+    def get_grouping_key(prop: StaticProp) -> PropGroup:
         """Compute a grouping key for this prop.
 
         Only props with matching key can be possibly combined.
@@ -1235,7 +1239,7 @@ async def combine(
     prop_count = 0
 
     # First, construct groups of props that can possibly be combined.
-    prop_groups: Dict[Optional[tuple], List[StaticProp]] = defaultdict(list)
+    prop_groups: Dict[PropGroup, List[StaticProp]] = defaultdict(list)
     for prop in bsp.props:
         prop_groups[get_grouping_key(prop)].append(prop)
         prop_count += 1

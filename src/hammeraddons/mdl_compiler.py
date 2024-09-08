@@ -36,6 +36,9 @@ force_regen = False  # If set, force every model to be regenerated.
 
 class GenModel(Generic[OutT]):
     """Tracks information about this model."""
+    name: str
+    used: bool
+    result: OutT
     def __init__(self, mdl_name: str, result: OutT) -> None:
         self.name = mdl_name  # This is just the filename.
         self.used = False

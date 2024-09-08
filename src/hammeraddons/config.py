@@ -112,7 +112,7 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
         conf_path = folder / CONF_NAME
         if conf_path.exists():
             LOGGER.info('Config path: "{}"', conf_path.absolute())
-            with open(conf_path) as f:
+            with open(conf_path, encoding='utf8') as f:
                 kv = Keyvalues.parse(f, conf_path)
             opts.path = conf_path
             opts.load(kv)
@@ -148,7 +148,7 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
     paths_conf_loc = opts.path.with_name(PATHS_NAME)
     LOGGER.info('Paths config: {}', paths_conf_loc)
     try:
-        with open(paths_conf_loc) as f:
+        with open(paths_conf_loc, encoding='utf8') as f:
             for kv in Keyvalues.parse(f).find_children('Paths'):
                 if kv.has_children():
                     LOGGER.warning('Paths configs may not be blocks!')
@@ -162,7 +162,7 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
                         )
                     path_roots[name] = Path(kv.value)
     except FileNotFoundError:
-        with open(paths_conf_loc, 'w') as f:
+        with open(paths_conf_loc, 'w', encoding='utf8') as f:
             f.write(PATHS_CONF_STARTER)
 
     if not game_folder:

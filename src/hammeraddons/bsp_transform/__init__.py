@@ -9,6 +9,7 @@ from pathlib import Path
 import inspect
 
 import attrs
+import trio.lowlevel
 
 from srctools import FGD, VMF, EmptyMapping, Entity, FileSystem, Keyvalues, Output
 from srctools.bsp import BSP
@@ -174,6 +175,7 @@ def trans(name: str, *, priority: int=0) -> TransProto:
         else:
             async def async_wrapper(ctx: Context) -> None:
                 """Just freeze all other tasks to run this."""
+                await trio.lowlevel.checkpoint()
                 func(ctx)
             TRANSFORMS[name.casefold()] = Transform(async_wrapper, name, priority)
         return func

@@ -746,7 +746,7 @@ def action_count(
                 if 'ENGINE' in tags or kv.type is ValueTypes.SPAWNFLAGS:
                     continue
                 if kv.desc:  # Blank is not a duplicate!
-                    desc_counts[(kv.desc, )].append((ent.classname, name))
+                    desc_counts[kv.desc, ].append((ent.classname, name))
                 kv_counts[
                     kv.name, kv.type, (tuple(kv.val_list) if kv.val_list is not None else ()), kv.desc, kv.default,
                 ].append((ent.classname, name, kv.desc))
@@ -967,7 +967,7 @@ def action_import(
             if not isinstance(helper, HelperExtAppliesTo)
         ]
 
-        with open(path, 'w') as f:
+        with open(path, 'w', encoding='utf8') as f:
             ent.export(f)
 
         print('.', end='', flush=True)
@@ -1295,8 +1295,7 @@ def action_export(
     if as_binary:
         with open(output_path, 'wb') as bin_f:
             # Private, reserved for us.
-            # noinspection PyProtectedMember
-            from srctools._engine_db import serialise
+            from srctools._engine_db import serialise  # noqa
             serialise(fgd, bin_f)
     else:
         with open(output_path, 'w', encoding='iso-8859-1') as txt_f:
