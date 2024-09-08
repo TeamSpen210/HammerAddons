@@ -45,7 +45,7 @@
 	skin[engine](integer) : "Skin" : 0
 	modelskin[engine](integer) : "Model Skin" : 0 : "Alternate keyvalue for setting the current skin."
 	
-	modelscale(float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
+	modelscale(float) : "Model Scale" : 1.0 : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
 	
 	playbackrate[complete](float) readonly: "Playback Rate" : 1.0 : "Exists, but is immediately set to 1.0 on spawn."
 	cycle[engine](float) : "Cycle" : 0.0 : "Internal variable storing the current progress through the animation, 0-1."
