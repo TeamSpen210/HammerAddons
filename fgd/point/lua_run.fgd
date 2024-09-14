@@ -3,6 +3,7 @@
 	iconsprite("editor/lua_run.vmt")
 = lua_run : "Runs Lua Code"
 	[
+	// This key is case-sensitive!
 	Code(string) : "Code" : "" : "Lua code to run when triggered"
 
 	spawnflags(flags) =
