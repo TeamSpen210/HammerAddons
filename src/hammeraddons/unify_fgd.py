@@ -1235,6 +1235,51 @@ def action_import(
     print()
 
 
+def cull_unused_bases(fgd: FGD):
+    """Removes all unused base classes from an FGD."""
+
+    print('Culling unused bases...')
+    used_bases: set[EntityDef] = set()
+    # We only want to keep bases that provide keyvalues. We've merged the
+    # helpers in.
+    for ent in fgd.entities.values():
+        if ent.type is not EntityTypes.BASE:
+            for base in ent.iter_bases():
+                if base.type is EntityTypes.BASE and (
+                    base.keyvalues or base.inputs or base.outputs
+                ):
+                    used_bases.add(base)
+
+    for classname, ent in list(fgd.entities.items()):
+        if ent.type is EntityTypes.BASE:
+            if ent not in used_bases and ent is not base_entity_def:
+                del fgd.entities[classname]
+                continue
+            else:
+                # Helpers aren't inherited, so this isn't useful any more.
+                ent.helpers.clear()
+        # Cull all base classes we don't use.
+        # Ents that inherit from each other always need to exist.
+        # We also need to replace bases with their parent, if culled.
+
+        # Reverse so we pop back into order.
+        todo = ent.bases[::-1]
+        done = set()  # Only add a base once.
+        ent.bases.clear()
+        while todo:
+            base = todo.pop()
+            done.add(base)
+            assert isinstance(base, EntityDef), base
+            if base.type is not EntityTypes.BASE or base in used_bases:
+                ent.bases.append(base)
+            else:
+                # This base is not used, collapse it. Do in reverse, so
+                # they appear in the correct order.
+                for subbase in base.bases[::-1]:
+                    if subbase not in done:
+                        todo.append(subbase)
+
+
 def action_export(
     dbase: Path,
     extra_db: Path | None,
@@ -1488,46 +1533,7 @@ def action_export(
             rev_helpers.append(helper)
         ent.helpers = rev_helpers[::-1]
 
-    print('Culling unused bases...')
-    used_bases: set[EntityDef] = set()
-    # We only want to keep bases that provide keyvalues. We've merged the
-    # helpers in.
-    for ent in fgd.entities.values():
-        if ent.type is not EntityTypes.BASE:
-            for base in ent.iter_bases():
-                if base.type is EntityTypes.BASE and (
-                    base.keyvalues or base.inputs or base.outputs
-                ):
-                    used_bases.add(base)
-
-    for classname, ent in list(fgd.entities.items()):
-        if ent.type is EntityTypes.BASE:
-            if ent not in used_bases and ent is not base_entity_def:
-                del fgd.entities[classname]
-                continue
-            else:
-                # Helpers aren't inherited, so this isn't useful any more.
-                ent.helpers.clear()
-        # Cull all base classes we don't use.
-        # Ents that inherit from each other always need to exist.
-        # We also need to replace bases with their parent, if culled.
-
-        # Reverse so we pop back into order.
-        todo = ent.bases[::-1]
-        done = set()  # Only add a base once.
-        ent.bases.clear()
-        while todo:
-            base = todo.pop()
-            done.add(base)
-            assert isinstance(base, EntityDef), base
-            if base.type is not EntityTypes.BASE or base in used_bases:
-                ent.bases.append(base)
-            else:
-                # This base is not used, collapse it. Do in reverse, so
-                # they appear in the correct order.
-                for subbase in base.bases[::-1]:
-                    if subbase not in done:
-                        todo.append(subbase)
+    cull_unused_bases(fgd)
 
     print('Merging in material exclusions...')
     for mat_tags, materials in fgd.tagged_mat_exclusions.items():
@@ -1570,6 +1576,168 @@ def action_export(
             # BEE2 compatibility, don't make it run.
             if 'P2' in tags:
                 txt_f.write('\n// BEE 2 EDIT FLAG = 0 \n')
+
+
+
+def action_export_postcompiler_patch(
+    dbase: Path,
+    extra_db: Path | None,
+    tags: frozenset[str],
+    output_path: Path,
+) -> None:
+    """Create an FGD file using the given tags."""
+
+    tags = expand_tags(tags)
+    tags |= {'SRCTOOLS'}
+    srctools_tags = tags - {'SRCTOOLS'}
+
+    print('Tags expanded to: {}'.format(', '.join(tags)))
+
+    fgd, base_entity_def = load_database(dbase, extra_loc=extra_db)
+
+    aliases: dict[EntityDef, str | EntityDef] = {}
+
+    print('Culling incompatible entities...')
+    ents = list(fgd.entities.values())
+    fgd.entities.clear()
+
+    for ent in ents:
+        applies_to = get_appliesto(ent)
+        if match_tags(tags, applies_to):
+            # For the srctools_only flag, only allow ents which match the regular
+            # tags, but do not match those minus srctools.
+            should_include = False
+            if not match_tags(srctools_tags, applies_to):
+                should_include = True
+            else:
+                for attr_name in ('keyvalues', 'inputs', 'outputs'):
+                    old_cat = getattr(ent, attr_name)
+                    for key, tag_map in old_cat.items():
+                        for tag, value in tag_map.items():
+                            if 'SRCTOOLS' not in tag and '+SRCTOOLS' not in tag:
+                                # Ignoring all non-SRCTOOLS tags!
+                                continue
+                            should_include = True
+                            break
+                        if should_include:
+                            break
+                    if should_include:
+                        break
+                
+                # Check for any bases that are exclusive to SRCTOOLS
+                if not should_include:
+                    for base in ent.bases:
+                        base_applies_to = get_appliesto(base)
+                        for tag in base_applies_to:
+                            if "SRCTOOLS" in tag.upper():
+                                should_include = True
+                                break
+                        if should_include:
+                            break
+            if not should_include:
+                continue
+
+            fgd.entities[ent.classname] = ent
+            
+        # Remove bases that don't apply.
+        for base in ent.bases[:]:
+            assert isinstance(base, EntityDef)
+            if not match_tags(tags, get_appliesto(base)):
+                ent.bases.remove(base)
+
+    print('Converting entities into extensions...')
+    for classname, ent in list(fgd.entities.items()):
+        # We want to tweak the entity, making a new copy that only contains SRCTOOLS tagged entries
+        extend_any = False
+        applies_to = get_appliesto(ent)
+        from_srctools = False
+        for tag in applies_to:
+            if "SRCTOOLS" in tag.upper():
+                from_srctools = True
+                break
+        if not from_srctools:
+            extend_ent = EntityDef(type=EntityTypes.EXTEND, classname=ent.classname)
+            extend_ent.helpers.insert(0, HelperExtAppliesTo(['SRCTOOLS']))
+            for attr_name in ('keyvalues', 'inputs', 'outputs'):
+                old_cat = getattr(ent, attr_name)
+                new_cat = getattr(extend_ent, attr_name)
+                for key, tag_map in old_cat.items():
+                    for tag, value in tag_map.items():
+                        if "ENGINE" in tags:
+                            continue
+                        if "!SRCTOOLS" in tags or "!srctools" in tags:
+                            continue
+                        if 'SRCTOOLS' not in tag and '+SRCTOOLS' not in tag:
+                            # Ignoring all non-SRCTOOLS tags!
+                            continue
+                        # Track it!
+                        if key not in new_cat.keys():
+                            new_cat[key] = {}
+                        new_cat[key][add_tag(tag, '+SRCTOOLS')] = value
+                        extend_any = True
+            
+            # Check for any bases that are exclusive to SRCTOOLS
+            for base in ent.bases:
+                base_applies_to = get_appliesto(base)
+                base_from_srctools = False
+                for tag in base_applies_to:
+                    if "SRCTOOLS" in tag.upper():
+                        base_from_srctools = True
+                        break
+                if base_from_srctools:
+                    extend_ent.bases.append(base)
+                    extend_any = True
+
+            # Replace it with our new one in the final output
+            if extend_any:
+                ent = extend_ent
+
+        print("\t", "E" if extend_any else ".", "\t", classname)
+
+        fgd.entities[classname] = ent
+
+
+    # Cull any bases we don't use
+    cull_unused_bases(fgd)
+
+
+    print('Merging in material exclusions...')
+    for mat_tags, materials in fgd.tagged_mat_exclusions.items():
+        if match_tags(tags, mat_tags):
+            fgd.mat_exclusions |= materials
+    fgd.tagged_mat_exclusions.clear()
+
+    print('Culling visgroups...')
+    # Cull visgroups that no longer exist for us.
+    valid_ents = {
+        ent.classname.casefold()
+        for ent in fgd.entities.values()
+        if ent.type is not EntityTypes.BASE
+    }
+    for key, visgroup in list(fgd.auto_visgroups.items()):
+        visgroup.ents.intersection_update(valid_ents)
+        if not visgroup.ents:
+            del fgd.auto_visgroups[key]
+
+    # Don't export the mapsize
+    fgd.map_size_max = 0
+    fgd.map_size_min = 0
+
+    # Clear out the autovisgroups for now?
+    # Not even sure what's populating these atm
+    fgd.auto_visgroups.clear()
+
+    # Final step, convert all our bases into strings, so that they don't sneak into the export
+    for classname in fgd.entities:
+        ent = fgd.entities[classname]
+        todo = ent.bases.copy()
+        ent.bases.clear()
+        for base in todo:
+            ent.bases.append(base.classname)
+
+    print(f'Exporting {output_path}...')
+    with open(output_path, 'w', encoding='iso-8859-1') as txt_f:
+        fgd.export(txt_f, label_spawnflags = False)
 
 
 def action_visgroup(dbase: Path, extra_loc: Path | None, dest: Path) -> None:
@@ -1697,6 +1865,24 @@ def main(args: list[str] | None = None) -> None:
         help='Export "comp" entities.',
     )
 
+
+    parser_exp_pcp = subparsers.add_parser(
+        "export_pcp",
+        help=action_export_postcompiler_patch.__doc__,
+        aliases=[],
+    )
+    parser_exp_pcp.add_argument(
+        "-o", "--output",
+        default="output.fgd",
+        help="Destination FGD filename.",
+    )
+    parser_exp_pcp.add_argument(
+        "tags",
+        nargs="*",
+        help="Tags to include in the output.",
+        default=None,
+    )
+
     parser_imp = subparsers.add_parser(
         "import",
         help=action_import.__doc__,
@@ -1774,6 +1960,21 @@ def main(args: list[str] | None = None) -> None:
             result.map_size,
             result.srctools_only,
             result.collapse_bases,
+        )
+    elif result.mode in ("export_pcp"):
+        # Tags must be specified!
+        if not result.tags:
+            parser.error("At least one tag must be specified!")
+        tags = validate_tags(result.tags)
+        for tag in tags:
+            if tag not in ALL_TAGS:
+                parser.error(f'Invalid tag "{tag}"! Allowed tags: \n{format_all_tags()}')
+
+        action_export_postcompiler_patch(
+            dbase,
+            extra_db,
+            tags,
+            Path(result.output).resolve(),
         )
     elif result.mode in ("c", "count"):
         action_count(dbase, extra_db, factories_folder=Path(repo_dir, 'db', 'factories'))
