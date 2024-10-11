@@ -586,10 +586,6 @@ def get_appliesto(ent: EntityDef) -> list[str]:
             count += 1
             applies_to.update(helper.tags)
 
-    if count == 1 and found is not None:
-        # A single one found, use that one.
-        return found.tags
-
     if found is None:
         found = HelperExtAppliesTo([])
         ent.helpers.insert(0, found)
