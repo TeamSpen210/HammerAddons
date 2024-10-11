@@ -680,7 +680,8 @@ def action_count(
     print('Done.\nGames: ' + ', '.join(sorted(games)))
 
     expanded: dict[str, frozenset[str]] = {
-        game: expand_tags(frozenset({game}))
+        # Opt into complete list, since we're checking against engine dumps.
+        game: expand_tags(frozenset({game, 'COMPLETE'}))
         for game in ALL_GAMES | ALL_MODS
     }
     expanded['ALL'] = frozenset()
