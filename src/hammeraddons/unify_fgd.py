@@ -642,7 +642,8 @@ def check_ent_sprites(ent: EntityDef, used: dict[str, list[str]]) -> None:
     elif sprite:
         display = sprite
     else:
-        if '+ENGINE' not in get_appliesto(ent):
+        tags = get_appliesto(ent)
+        if 'ENGINE' not in tags and '+ENGINE' not in tags:
             print(f'{ent.classname}: No sprite/model? {", ".join(map(repr, ent.helpers))}')
         return
 
@@ -740,7 +741,7 @@ def action_count(
 
         for name, kv_map in ent.keyvalues.items():
             for tags, kv in kv_map.items():
-                if 'ENGINE' in tags or kv.type is ValueTypes.SPAWNFLAGS:
+                if 'ENGINE' in tags or '+ENGINE' in tags or kv.type is ValueTypes.SPAWNFLAGS:
                     continue
                 if kv.desc:  # Blank is not a duplicate!
                     desc_counts[kv.desc, ].append((ent.classname, name))
@@ -751,12 +752,12 @@ def action_count(
                     val_list_counts[tuple(kv.val_list)].append((ent.classname, name))
         for name, io_map in ent.inputs.items():
             for tags, io in io_map.items():
-                if 'ENGINE' in tags:
+                if 'ENGINE' in tags or '+ENGINE' in tags:
                     continue
                 inp_counts[io.name, io.type, io.desc].append((ent.classname, name, io.desc))
         for name, io_map in ent.outputs.items():
             for tags, io in io_map.items():
-                if 'ENGINE' in tags:
+                if 'ENGINE' in tags or '+ENGINE' in tags:
                     continue
                 out_counts[io.name, io.type, io.desc].append((ent.classname, name, io.desc))
 
@@ -827,12 +828,11 @@ def action_count(
 
     print('\n\nMissing Class Resources:')
 
-    missing_count = 0
-    defined_count = 0
+    missing_count = defined_count = empty_count = 0
     not_in_engine = {'-ENGINE', '!ENGINE', 'SRCTOOLS', '+SRCTOOLS'}
     for clsname in sorted(fgd.entities):
         ent = fgd.entities[clsname]
-        if ent.type is EntityTypes.BASE:
+        if ent.type is EntityTypes.BASE or ent.is_alias:
             continue
 
         if not not_in_engine.isdisjoint(get_appliesto(ent)):
@@ -842,10 +842,12 @@ def action_count(
             missing_count += 1
         else:
             defined_count += 1
+            if not ent.resources:
+                empty_count += 1
 
     print(
         f'\nMissing: {missing_count}, '
-        f'Defined: {defined_count} = {defined_count/(missing_count + defined_count):.2%}\n\n'
+        f'Defined: {defined_count} = {defined_count/(missing_count + defined_count):.2%}, empty={empty_count}\n\n'
     )
 
     mdl_or_sprite: dict[str, list[str]] = defaultdict(list)
