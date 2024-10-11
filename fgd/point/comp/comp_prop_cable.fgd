@@ -77,6 +77,8 @@
 
 	drawinfastreflection[since_L4D](boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
 	enablelightbounce[since_CSGO](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
-	
+
 	movespeed(integer) readonly: "Speed (unused)" : 1 : "This key needs to be greater than zero to show the preview in Hammer, ignore it."
+
+    @resources [] // Converted to static prop and packed normally.
 	]

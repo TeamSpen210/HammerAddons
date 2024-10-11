@@ -30,4 +30,6 @@
 	output OnSeqStart(void) : "Fired at the start of the sequence."
 	output OnSeq(void) : "Fired once for each entity - use !seq to refer to the target."
 	output OnSeqEnd(void) : "Fired once all delayed outputs are complete."
+    
+    @resources []
 	]

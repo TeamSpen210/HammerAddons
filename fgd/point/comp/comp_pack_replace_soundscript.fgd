@@ -8,4 +8,6 @@
 	[
 	original(string): "Original SoundScript" : : "Prevent this soundscript from being included."
 	replacement(string): "New SoundScript" : : "Force this soundscript to be included."
+    
+    @resources [] // Done via transform.
 	]

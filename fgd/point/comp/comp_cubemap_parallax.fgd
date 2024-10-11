@@ -10,4 +10,6 @@
     mins(vector) : "BBox Mins" : "-32 -32 -32" : "Minimum offset from the entity, defining the shape."
     maxs(vector) : "BBox Maxes" : "32 32 32" : "Maximum offset from the entity, defining the shape."
     radius(float) : "Cubemap Radius" : "32" : "Bounding radius to find env_cubemap entities to modify."
+    
+    @resources []
 ]

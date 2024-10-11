@@ -33,4 +33,6 @@
 	input EnableTimer(void) : "Enable the automatic timer."
 	input DisableTimer(void) : "Disable the automatic timer."
 	output OnSpawned(void) : "Fired when an object spawns. The object entity is NOT passed as !activator."
+
+    @resources []
 ]

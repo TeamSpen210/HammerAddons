@@ -11,4 +11,6 @@
 	reference(target_destination) : "Reference Entity": : "If set, the target will be offset by the amount that this entity is from the reference. The Distance will then be a multiplier."
 	direction(angle) : "Direction" : "0 0 0" : "If no Reference is provided, the direction to move in."
 	distance(float) : "Distance": 1 : "The amount to move targets by."
+    
+    @resources []
 	]

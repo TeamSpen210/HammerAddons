@@ -23,4 +23,6 @@
 	input DisableCollision(void) : "Disable collision on the rope set."
 	input BecomeRagdoll[since_P2](void) : "Change into a ragdoll immediately."
 	input FadeAndKill[since_P2](void) : "Fade out then remove this rope set."
+
+    @resources [] // Converted to prop_dynamic and packed normally.
 	]

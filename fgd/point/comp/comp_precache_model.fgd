@@ -12,4 +12,6 @@
 	skinset(string) : "Used Skins" : : "Set this to a space seperated list of all the skin numbers which will be used. " +
 		"This allows auto-packing to skip unused ones. If blank all skins are assumed to be used."
 	lineent(target_destination) : "Line Entity" : : "Draws a line to the specified entity. Use this to indicate in Hammer if the model is meant for a specific entity."
+    
+    @resources [] // Done via transform.
 	]

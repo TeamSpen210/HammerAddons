@@ -26,4 +26,6 @@
 	output OnFlickerOffStart(void): "Fired after the flicker off effect has started."
 	output OnFlickerOnEnd(void): "Fired after the flicker on effect has finished."
 	output OnFlickerOffEnd(void): "Fired after the flicker off effect has finished."
+    
+    @resources []
 	]

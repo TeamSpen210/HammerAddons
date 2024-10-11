@@ -110,4 +110,6 @@
 	kv5_dest(string): "5 - Destination" : : "Keyvalue name to write to or !special name to replace."
 	
 	// Code supports infinite number, just continue naming pattern.
+    
+    @resources []
 	]

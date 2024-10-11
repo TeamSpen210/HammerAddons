@@ -54,4 +54,6 @@
 	enablelightbounce[since_CSGO](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
 	
 	movespeed(integer) readonly: "Speed (unused)" : 1 : "This needs to be greater than zero to show the preview lines."
+    
+    @resources []
 	]

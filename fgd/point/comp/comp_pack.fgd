@@ -41,4 +41,6 @@
 	soundscript3(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
 	soundscript4(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
 	soundscript5(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
+    
+    @resources [] // Done via transform.
 	]

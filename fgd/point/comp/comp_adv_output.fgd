@@ -64,4 +64,6 @@
 	params_global5(string) : "Parameter 5 - String" : : "A value which will replace {5} in the parameter."
 	params_local5(target_destination) : "Parameter 5 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {5}."
 	params_pos5(origin) : "Parameter 5 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {5}. This will be offset by instancing."
+
+	@resources []
 	]

@@ -20,4 +20,6 @@
 		"TEXTURE": "Texture"
 		"MODEL": "Model"
 		]
+    
+    @resources [] // Done via transform.
 	]

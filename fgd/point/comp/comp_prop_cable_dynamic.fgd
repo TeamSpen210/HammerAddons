@@ -30,4 +30,6 @@
 	input DisableCollision(void) : "Disable collision on the cable set."
 	input BecomeRagdoll[since_P2](void) : "Change into a ragdoll immediately."
 	input FadeAndKill[since_P2](void) : "Fade out then remove this cable set."
+
+    @resources [] // Converted to prop_dynamic, then packed normally.
 	]

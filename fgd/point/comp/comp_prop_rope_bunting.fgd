@@ -24,4 +24,6 @@
 		"rand_yaw" : "Random Yaw"
 		"rand": "Random"
 		]
+
+    @resources [] // Converted to static props and packed normally.
 	]

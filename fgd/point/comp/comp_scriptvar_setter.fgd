@@ -42,4 +42,6 @@
 		]
 		
 	const(string) : "Scale / Constant" : : "A scale factor for the data, or a constant to use directly. The exact behaviour depends on the mode."
+    
+    @resources [] // Generated file is automatically packed.
 	]

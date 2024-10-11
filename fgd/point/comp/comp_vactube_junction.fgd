@@ -39,4 +39,6 @@
 	target_ter(target_destination): "Tertiary junction override" : : "For the triple splitter, this overrides the rightmost output."
 
 	output OnPass(void) : "Fired when an object passes the midpoint of the junction. The entity is NOT passed as !activator."
+
+    @resources []
 ]
