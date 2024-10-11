@@ -1286,6 +1286,9 @@ def action_export(
         print('Resource tags:')
         for tag, classnames in res_tags.items():
             print(f'- {tag}: {len(classnames)} ents')
+    else:
+        for ent in fgd.entities.values():
+            ent.resources = ()
 
     print(f'Exporting {output_path}...')
 
