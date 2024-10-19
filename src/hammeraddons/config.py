@@ -14,6 +14,7 @@ import attrs
 from .plugin import BUILTIN as BUILTIN_PLUGIN, PluginFinder, Source as PluginSource
 from .props_config import Opt, Options
 
+from pysteampathprovider import GetApp
 
 LOGGER = logger.get_logger(__name__)
 CONF_NAME: Final = 'srctools.vdf'
@@ -195,6 +196,20 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
             raise ValueError('Config "searchpaths" value cannot have children.')
         assert isinstance(kv.value, str)
 
+        if kv.value.startswith("<") and (end := kv.value.find(">")): #Game mount, we just replace the <appid> with a path, this will ensure compatibility with .vpk
+            st = kv.value[1:end] # Omit the first character, <
+            try:
+                st = int(st)
+            except ValueError: #Cannot convert
+                st = None
+
+        if st:
+            LOGGER.info(f"Mounting appid {st}")
+            if (st := GetApp(st)): #Ensure we can locate the game
+                name, apath = st #unpack
+                LOGGER.info(f"Mounted game {st[0]} with path: {str(st[1])}")
+                kv.value = apath.as_posix() + "/" + kv.value[end + 1:]
+                
         if kv.value.endswith('.vpk'):
             fsys = VPKFileSystem(str(expand_path(kv.value)))
         else:
@@ -339,7 +354,9 @@ SEARCHPATHS = Opt.block(
     """\
     Specify additional locations to search for files, or configure whether existing locations pack
     or not. Each key-value pair defines a path, with the value either a folder path or a VPK 
-    filename relative to the game root. The key defines the behaviour:
+    filename relative to the game root. You can also specify specific app ids that will get mounted with the <appid> operator.
+    For example: <620>/portal2 will mount the portal2 folder from appid 620; that is Portal 2.
+    The key defines the behaviour:
     * "prefix" "folder/" adds the path to the start, so it overrides all others.
     * "path" "vpk_path.vpk" adds the path to the end, so it is checked last.
     * "nopack" "folder/" prohibits files in this path from being packed, you'll need to use one of the others also to add the path.
