@@ -1505,7 +1505,7 @@ def main(args: list[str] | None = None) -> None:
             tags,
             Path(result.output).resolve(),
             result.binary,
-            result.engine,
+            result.engine | result.binary, # Binary mode forces --engine
             result.map_size,
             result.srctools_only,
             result.collapse_bases,
