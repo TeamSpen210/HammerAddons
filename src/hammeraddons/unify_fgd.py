@@ -1358,7 +1358,7 @@ def main(args: Optional[List[str]]=None):
             tags,
             result.output,
             result.binary,
-            result.engine,
+            result.engine | result.binary, # Binary mode forces --engine
             result.map_size,
             result.srctools_only,
             result.collapse_bases
