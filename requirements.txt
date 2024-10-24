@@ -5,4 +5,3 @@ trio >= 0.20.0
 trio-typing >= 0.7.0
 pyinstaller >= 6.1.0
 versioningit >= 2.1.0
-pysteampathprovider >= 1.3

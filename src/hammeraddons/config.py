@@ -14,7 +14,7 @@ import attrs
 from .plugin import BUILTIN as BUILTIN_PLUGIN, PluginFinder, Source as PluginSource
 from .props_config import Opt, Options
 
-from pysteampathprovider import GetApp
+from srctools.game_mount import GetApp
 
 LOGGER = logger.get_logger(__name__)
 CONF_NAME: Final = 'srctools.vdf'
