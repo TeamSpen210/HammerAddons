@@ -646,10 +646,6 @@ def check_ent_sprites(ent: EntityDef, used: dict[str, list[str]]) -> None:
         if 'ENGINE' not in tags and '+ENGINE' not in tags:
             print(f'{ent.classname}: No sprite/model? {", ".join(map(repr, ent.helpers))}')
         return
-
-    display = display.casefold()
-    if display in used:
-        print(f'{ent.classname}: Reuses {display}: {used[display]}')
     used[display].append(ent.classname)
 
 
@@ -850,10 +846,14 @@ def action_count(
         f'Defined: {defined_count} = {defined_count/(missing_count + defined_count):.2%}, empty={empty_count}\n\n'
     )
 
-    mdl_or_sprite: dict[str, list[str]] = defaultdict(list)
+    mdl_or_sprites: dict[str, list[str]] = defaultdict(list)
     for ent in fgd:
         if ent.type is not EntityTypes.BASE and ent.type is not EntityTypes.BRUSH:
-            check_ent_sprites(ent, mdl_or_sprite)
+            check_ent_sprites(ent, mdl_or_sprites)
+    for resource, classes in mdl_or_sprites.items():
+        if len(classes) > 1:
+            classes.sort()
+            print(f'Reused {resource}: {classes}')
 
     for kind_name, count_map in (
         ('keyvalues', kv_counts),
