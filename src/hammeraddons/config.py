@@ -6,7 +6,7 @@ import fnmatch
 import re
 import sys
 
-from srctools import AtomicWriter, Keyvalues, logger
+from srctools import AtomicWriter, Keyvalues, conv_int, logger
 from srctools.filesys import FileSystem, FileSystemChain, RawFileSystem, VPKFileSystem
 from srctools.game import Game
 import attrs
@@ -14,7 +14,7 @@ import attrs
 from .plugin import BUILTIN as BUILTIN_PLUGIN, PluginFinder, Source as PluginSource
 from .props_config import Opt, Options
 
-from srctools.game_mount import GetApp
+from srctools.steam import find_app
 
 LOGGER = logger.get_logger(__name__)
 CONF_NAME: Final = 'srctools.vdf'
@@ -196,21 +196,21 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
             raise ValueError('Config "searchpaths" value cannot have children.')
         assert isinstance(kv.value, str)
 
-        st = None
-        if (end := kv.value.find(">")) and kv.value.startswith("<"): #Game mount, we just replace the <appid> with a path, this will ensure compatibility with .vpk
-            st = kv.value[1:end] # Omit the first character, <
-            try:
-                st = int(st)
-            except ValueError: #Cannot convert
-                st = None
+        appid = 0
+        # Game mount, we just replace the <appid> with a path, this will ensure compatibility with .vpk
+        if (end := kv.value.find(">")) and kv.value.startswith("<"):
+            appid = conv_int(kv.value[1:end])
 
-        if st:
-            LOGGER.info(f"Mounting appid {st}")
-            if (st := GetApp(st)): #Ensure we can locate the game
-                name, apath = st #unpack
-                LOGGER.info(f"Mounted game {st[0]} with path: {str(st[1])}")
-                kv.value = apath.as_posix() + "/" + kv.value[end + 1:]
-                
+        if appid != -1:
+            LOGGER.info("Mounting appid {}", appid)
+            try:
+                info = find_app(appid)
+            except KeyError:
+                LOGGER.warning("No game with appid {} found!", appid)
+            else:
+                LOGGER.info(f"Mounted game {info.name} with path: {info.path}")
+                kv.value = (info.path / kv.value[end + 1:]).as_posix()
+
         if kv.value.endswith('.vpk'):
             fsys = VPKFileSystem(str(expand_path(kv.value)))
         else:
