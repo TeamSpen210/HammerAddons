@@ -35,8 +35,17 @@ jobs:
         run: |
           python -m pip install -U setuptools pip wheel
           python -m pip install -r requirements.txt
+      - name: Build assets
+        run: |
+          mkdir build
+          mkdir build/bin
+          mkdir build/bin/win64
+          mkdir build/hammer
+          robocopy hammer/scripts build/hammer/scripts /S /PURGE
+          python src/hammeraddons/build_fgd_assets.py -i patch_postcompiler.fgd -o build/hammer -a hammer
+
       - name: Freeze application
-        run: python -m PyInstaller --distpath ../build/ -y ../postcompiler.spec
+        run: python -m PyInstaller --distpath ../build/bin/win64 -y ../postcompiler.spec
         working-directory: ./src/
       - name: Zip hammeraddons_${{ matrix.artifact-name }}
         uses: thedoctor0/zip-release@master
