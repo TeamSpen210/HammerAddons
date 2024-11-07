@@ -34,6 +34,7 @@ GAMES_CHRONO: list[tuple[str, str]] = [
     ('ASW',   'Alien Swarm'),
     ('P2',    'Portal 2'),
     ('CSGO',  'Counter-Strike: Global Offensive'),
+    ('STRATA',  'Strata Source'),
 
     ('SFM',   'Source Filmmaker'),
     ('DOTA2', 'Dota 2'),
@@ -68,6 +69,9 @@ MODS_BRANCHED: dict[str, list[tuple[str, str]]] = {
     ],
     'CSGO': [
         ('P2DES', 'Portal 2: Desolation'),
+    ],
+    'STRATA': [
+        ('P2CE', 'Portal 2: Community Edition'),
     ],
 }
 MOD_TO_BRANCH = {
@@ -104,6 +108,9 @@ FEATURES: dict[str, set[str]] = {
 
     'PEE15': {'P1', 'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
     'PEE2': {'P2', 'HL2', 'EP1', 'EP2', 'INST_IO', 'VSCRIPT'},
+
+    'STRATA': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
+    'P2CE': {'P2', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 }
 
 ALL_FEATURES = {
@@ -1726,6 +1733,16 @@ def action_export_postcompiler_patch(
     # Clear out the autovisgroups for now?
     # Not even sure what's populating these atm
     fgd.auto_visgroups.clear()
+
+    # Strata HACK: Strip any bases we want to omit
+    for classname in fgd.entities:
+        ent = fgd.entities[classname]
+        todo = ent.bases.copy()
+        ent.bases.clear()
+        for base in todo:
+            applies_to = get_appliesto(base)
+            if '-STRATA' not in applies_to:
+                ent.bases.append(base)
 
     # Final step, convert all our bases into strings, so that they don't sneak into the export
     for classname in fgd.entities:

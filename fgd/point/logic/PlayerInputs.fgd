@@ -1,4 +1,7 @@
-@BaseClass base(BaseEntityInputs) = PlayerInputs: "The inputs that can be fired on the player, for entities that pass through those."
+@BaseClass
+	base(BaseEntityInputs)
+	appliesto(-STRATA) // Strata HACK: Does not exist in mainline repo yet, so disabling this
+= PlayerInputs: "The inputs that can be fired on the player, for entities that pass through those."
 	[
 	input IgnoreFallDamage[HL2, P1](float) : "Prevent the player from taking fall damage for [n] seconds, but reset back to taking fall damage after the first impact (so players will be hurt if they bounce off what they hit)."
 	input IgnoreFallDamageWithoutReset[HL2, P1](float) : "Absolutely prevent the player from taking fall damage for [n] seconds. "

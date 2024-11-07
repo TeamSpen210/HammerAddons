@@ -58,20 +58,20 @@ def vscript_init_code(ctx: Context) -> None:
 def vscript_runscript_inputs(ctx: Context) -> None:
     """Handle RunScript* inputs.
 
-    For RunScriptCode, allow using quotes in the parameter.  TF2 implements this in game code,
+    For RunScriptCode, allow using quotes in the parameter. TF2 and Strata implement this in game code,
     so we don't need to do it there.
 
     This is done by using ` as a replacement for double-quotes,
     then synthesising a script file and using RunScriptFile to execute it.
     For RunScriptFile, ensure the file is packed.
     """
-    in_tf2 = 'TF2' in ctx.tags
+    needs_replacement = 'TF2' not in ctx.tags and 'STRATA' not in ctx.tags
     for ent in ctx.vmf.entities:
         for out in ent.outputs:
             inp_name = out.input.casefold()
             if inp_name == 'runscriptfile':
                 ctx.pack.pack_file('scripts/vscripts/' + out.params, FileType.VSCRIPT_SQUIRREL)
-            elif inp_name == 'runscriptcode' and not in_tf2 and '`' in out.params:
+            elif inp_name == 'runscriptcode' and needs_replacement and '`' in out.params:
                 out.params = ctx.pack.inject_vscript(out.params.replace('`', '"'))
                 out.input = 'RunScriptFile'
 
