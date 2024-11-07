@@ -1,6 +1,7 @@
 @MoveClass base(StaticTargetname)
 	iconsprite("editor/comp_prop_rope_bunting")
 	appliesto(srctools)
+	autovis(Auto, Postcompiler, Prop Ropes)
 = comp_prop_rope_bunting: "Specifies small props which will be placed at regular intervals across the compiled rope."
 	[
 	weight(integer) : "Weight" : 1 : "If multiple are defined with the same weighting, this specifies the relative probabilities." +
