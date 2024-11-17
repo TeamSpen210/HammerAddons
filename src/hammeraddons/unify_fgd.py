@@ -883,8 +883,8 @@ def action_import(
     print('Reading FGDs:')
     for path in fgd_paths:
         print(path)
-        with RawFileSystem(str(path.parent)) as fsys:
-            new_fgd.parse_file(fsys, fsys[path.name], eval_bases=False)
+        fsys = RawFileSystem(str(path.parent))
+        new_fgd.parse_file(fsys, fsys[path.name], eval_bases=False)
 
     print(f'\nImporting {len(new_fgd)} entiti{"y" if len(new_fgd) == 1 else "ies"}...')
     for new_ent in new_fgd:
@@ -893,8 +893,8 @@ def action_import(
 
         if path.exists():
             old_fgd = FGD()
-            with RawFileSystem(str(path.parent)) as fsys:
-                old_fgd.parse_file(fsys, fsys[path.name], eval_bases=False)
+            fsys = RawFileSystem(str(path.parent))
+            old_fgd.parse_file(fsys, fsys[path.name], eval_bases=False)
             try:
                 ent = old_fgd[new_ent.classname]
             except KeyError:
@@ -1288,9 +1288,6 @@ def action_export(
         print('Resource tags:')
         for tag, classnames in res_tags.items():
             print(f'- {tag}: {len(classnames)} ents')
-    else:
-        for ent in fgd.entities.values():
-            ent.resources = ()
 
     print(f'Exporting {output_path}...')
 
@@ -1301,7 +1298,7 @@ def action_export(
             serialise(fgd, bin_f)
     else:
         with open(output_path, 'w', encoding='iso-8859-1') as txt_f:
-            fgd.export(txt_f)
+            fgd.export(txt_f, custom_syntax=False)
             # BEE2 compatibility, don't make it run.
             if 'P2' in tags:
                 txt_f.write('\n// BEE 2 EDIT FLAG = 0 \n')
