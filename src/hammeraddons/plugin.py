@@ -1,6 +1,6 @@
 """Logic for loading all the code in arbitary locations for plugin purposes."""
 from typing import (
-    Callable, Dict, Iterable, Iterator, Optional, Sequence, Set, Tuple, Union, Final, Self, final,
+    Callable, Dict, Iterable, Iterator, Optional, Sequence, Set, Tuple, Union, Final, Self,
 )
 from collections import deque
 from importlib.abc import MetaPathFinder

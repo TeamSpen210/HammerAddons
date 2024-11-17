@@ -141,7 +141,7 @@ class OptWithDefault(Opt[OptionT], Generic[OptionT]):  # type: ignore[override]
 class Options:
     """Allows parsing a set of Keyvalues option blocks."""
     defaults: List[Opt]
-    settings: Dict[str, Union[None, str, int, float, bool, Vec, Keyvalues]]
+    settings: Dict[str, Union[str, int, float, bool, Vec, Keyvalues, None]]
     path: Optional[Path]
 
     def __init__(self, defaults: Union[Iterable[Opt], dict]) -> None:

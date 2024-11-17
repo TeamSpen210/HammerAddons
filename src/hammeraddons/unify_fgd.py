@@ -1252,7 +1252,8 @@ def action_export(
         todo = ent.bases.copy()
         done = set(todo)
         ent.bases.clear()
-        for base in todo:
+        while todo:
+            base = todo.pop()
             assert isinstance(base, EntityDef), base
             if base.type is not EntityTypes.BASE or base in used_bases:
                 ent.bases.append(base)
