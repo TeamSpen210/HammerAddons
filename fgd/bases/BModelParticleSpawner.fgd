@@ -8,7 +8,9 @@
 		[
 		0: "Non-solid"
 		]
-	origin(origin) readonly: "Origin": "" : "If offset, this breaks."
+	// Making this read only doesn't work, it just makes the issue worse because hammer will initialize
+	// the origin to the entity center and now you can't adjust it to move it back.
+	origin(origin): "Origin": "" : "Always set this to 0 0 0 on effect entities, other values will cause the effects to break. (Temporary until we figure out a better solution for this.)"
 
 	startdisabled(boolean) : "Start Disabled" : 0
 	color(color255) : "Particle Color (R G B)" : "255 255 255"
