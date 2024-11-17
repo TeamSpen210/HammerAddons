@@ -6,7 +6,7 @@ import fnmatch
 import re
 import sys
 
-from srctools import AtomicWriter, Keyvalues, logger
+from srctools import AtomicWriter, Keyvalues, conv_int, logger
 from srctools.filesys import FileSystem, FileSystemChain, RawFileSystem, VPKFileSystem
 from srctools.game import Game
 import attrs
@@ -14,6 +14,7 @@ import attrs
 from .plugin import BUILTIN as BUILTIN_PLUGIN, PluginFinder, Source as PluginSource
 from .props_config import Opt, Options
 
+from srctools.steam import find_app
 
 LOGGER = logger.get_logger(__name__)
 CONF_NAME: Final = 'srctools.vdf'
@@ -195,6 +196,21 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
             raise ValueError('Config "searchpaths" value cannot have children.')
         assert isinstance(kv.value, str)
 
+        appid = 0
+        # Game mount, we just replace the <appid> with a path, this will ensure compatibility with .vpk
+        if (end := kv.value.find(">")) and kv.value.startswith("<"):
+            appid = conv_int(kv.value[1:end])
+
+        if appid != -1:
+            LOGGER.info("Mounting appid {}", appid)
+            try:
+                info = find_app(appid)
+            except KeyError:
+                LOGGER.warning("No game with appid {} found!", appid)
+            else:
+                LOGGER.info(f"Mounted game {info.name} with path: {info.path}")
+                kv.value = (info.path / kv.value[end + 1:]).as_posix()
+
         if kv.value.endswith('.vpk'):
             fsys = VPKFileSystem(str(expand_path(kv.value)))
         else:
@@ -336,7 +352,9 @@ SEARCHPATHS = Opt.block(
     """\
     Specify additional locations to search for files, or configure whether existing locations pack
     or not. Each key-value pair defines a path, with the value either a folder path or a VPK 
-    filename relative to the game root. The key defines the behaviour:
+    filename relative to the game root. You can also specify specific app ids that will get mounted with the <appid> operator.
+    For example: <620>/portal2 will mount the portal2 folder from appid 620; that is Portal 2.
+    The key defines the behaviour:
     * "prefix" "folder/" adds the path to the start, so it overrides all others.
     * "path" "vpk_path.vpk" adds the path to the end, so it is checked last.
     * "nopack" "folder/" prohibits files in this path from being packed, you'll need to use one of the others also to add the path.

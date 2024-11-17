@@ -42,7 +42,7 @@ a = Analysis(
         'bisect', 'colorsys', 'collections', 'csv', 'datetime', 'contextlib',
         'decimal', 'difflib', 'enum', 'fractions', 'functools',
         'io', 'itertools', 'json', 'math', 'random', 're',
-        'statistics', 'string', 'struct',
+        'statistics', 'string', 'struct', 'pysteampathprovider',
         *collect_submodules('srctools', filter=lambda name: 'scripts' not in name),
         *collect_submodules('attr'),
         *collect_submodules('attrs'),
