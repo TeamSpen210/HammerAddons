@@ -24,5 +24,14 @@
 	output OnNPCStartedUsing(string) : "Fired when an NPC has reached this node and started using it. Passes along the NPC."
 	output OnNPCStoppedUsing(string) : "Fired when an NPC has stopped using this node. Passes along the NPC."
 
+	output OnScriptEvent01[MBase](void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 1 } in the QC."
+	output OnScriptEvent02[MBase](void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 2 } in the QC."
+	output OnScriptEvent03[MBase](void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 3 } in the QC."
+	output OnScriptEvent04[MBase](void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 4 } in the QC."
+	output OnScriptEvent05[MBase](void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 5 } in the QC."
+	output OnScriptEvent06[MBase](void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 6 } in the QC."
+	output OnScriptEvent07[MBase](void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 7 } in the QC."
+	output OnScriptEvent08[MBase](void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 8 } in the QC."
+
 	@resources []
 	]
