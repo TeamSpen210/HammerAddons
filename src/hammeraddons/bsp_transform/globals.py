@@ -54,7 +54,7 @@ def vscript_init_code(ctx: Context) -> None:
         ctx.add_code(ent, code)
 
 
-@trans('VScript RunScript Inputs')
+@trans('VScript RunScript Inputs', priority=500)
 def vscript_runscript_inputs(ctx: Context) -> None:
     """Handle RunScript* inputs.
 
