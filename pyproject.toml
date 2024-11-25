@@ -34,9 +34,6 @@ extend-ignore = [
 	"F405",
 	"F841",  # Unused local var, detects tuple unpacks.
 	# Flake8-annotations.
-	# Type annotations for self & cls are not important.
-	"ANN101",
-	"ANN102",
 	# Allow typing.Any
 	"ANN401",
 
