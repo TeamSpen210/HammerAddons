@@ -10,7 +10,7 @@
 	[
 	targetname(target_source) : "Fix Up Name" : : "The name that all entities will be fixed up with based upon the fix up style."
 	file(instance_file) : "VMF Filename" : : "This indicates a map file relative to the map's file name. " +
-		"This is also looked up relative to sdk_content/maps/, if one exists in the parent directories."
+		"This is also looked up relative to sdk_content/maps/, if the current map is located inside those."
 
 	fixup_style[engine](integer) : "Entity Name Fix Up" : 0
 	fixup_style(choices) : "Entity Name Fix Up" : 0 : "Fixup style for instanced entity names.  Uses the 'Fix Up Name' field." =
