@@ -1249,16 +1249,21 @@ def action_export(
         # Cull all base classes we don't use.
         # Ents that inherit from each other always need to exist.
         # We also need to replace bases with their parent, if culled.
-        todo = ent.bases.copy()
-        done = set(todo)
+
+        # Reverse so we pop back into order.
+        todo = ent.bases[::-1]
+        done = set()  # Only add a base once.
         ent.bases.clear()
         while todo:
             base = todo.pop()
+            done.add(base)
             assert isinstance(base, EntityDef), base
             if base.type is not EntityTypes.BASE or base in used_bases:
                 ent.bases.append(base)
             else:
-                for subbase in base.bases:
+                # This base is not used, collapse it. Do in reverse, so
+                # they appear in the correct order.
+                for subbase in base.bases[::-1]:
                     if subbase not in done:
                         todo.append(subbase)
 
