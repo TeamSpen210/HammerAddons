@@ -39,11 +39,9 @@ def comp_antlines(ctx: Context):
             out_on, out_off = IND_ENTS[ent['classname']]
         except KeyError:
             continue
-        ind_name = ent['indicatorname']
+        ind_name = ent.pop('indicatorname')
         if not ind_name:
             continue
-
-        ent['indicatorname'] = ''
 
         # These are the names, not the ents themselves.
 

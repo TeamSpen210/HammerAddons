@@ -1,14 +1,21 @@
 """Operations that can be reused across different transforms."""
 import operator
 import re
-from typing import Callable, Dict, Iterator, Tuple, Union, final
+from typing import Callable, Container, Dict, Iterator, Tuple, Union, final
 from decimal import Decimal, InvalidOperation
 
 from typing_extensions import Literal, Self, TypeAlias
 import attrs
 
 from srctools import Entity, FrozenVec, VMF, Vec, conv_bool
+from srctools.fgd import EntityDef
 from srctools.logger import get_logger
+
+
+__all__ = [
+    'parse_numeric_specifier', 'check_control_enabled',
+    'ent_description', 'RelayOut', 'get_multimode_value', 'strip_cust_keys'
+]
 
 
 LOGGER = get_logger(__name__)
@@ -32,6 +39,7 @@ OPERATIONS: Dict[str, NumericOp] = {
 OPERATION_RE = re.compile(r'\s*([{}]+)'.format(''.join(map(re.escape, {
     char for key in OPERATIONS for char in key
 }))))
+kv_name_cache: Dict[str, Container[str]] = {}
 
 
 # noinspection PyUnusedLocal
@@ -134,3 +142,25 @@ def get_multimode_value(ent: Entity, *, prefix: str='', suffix: str='', desc: st
             desc, mode, ent_description(ent),
         )
         return ent[f'{prefix}global{suffix}'] or ent[f'{prefix}local{suffix}']
+
+
+def strip_cust_keys(ent: Entity) -> None:
+    """Strip all keyvalues from this entity that are not valid.
+
+    This is useful for postcompiler ents that get converted to regular ones.
+    """
+    classname = ent['classname'].casefold()
+    try:
+        names = kv_name_cache[classname]
+    except KeyError:
+        try:
+            ent_def = EntityDef.engine_def(classname)
+        except KeyError:
+            LOGGER.warning('Unknown classname "{}"!', classname)
+            names = ()
+        else:
+            names = set(ent_def.kv)
+        kv_name_cache[classname] = names
+    for key in list(ent):
+        if key not in names:
+            del ent[key]

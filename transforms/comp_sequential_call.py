@@ -1,4 +1,4 @@
-from typing import Iterable, List, Dict, Iterator, Tuple
+from typing import Iterable, List, Dict, Tuple
 import itertools
 import random
 import re
@@ -7,6 +7,7 @@ from srctools import Vec, Entity, Output, conv_bool, conv_float, lerp
 import srctools.logger
 
 from hammeraddons.bsp_transform import trans, Context
+from hammeraddons.bsp_transform.common import strip_cust_keys
 
 LOGGER = srctools.logger.get_logger(__name__)
 DIGIT_PATTERN = re.compile('[0-9]+')
@@ -19,6 +20,11 @@ def num_suffix(ent: Entity) -> int:
         return int(numbers[-1])
     else:
         return 0
+
+KEYVALUES = [
+    'time_val', 'time_variance', 'time_mode',
+    'order_mode', 'uniquify', 'target'
+]
 
 
 @trans('comp_sequential_call')
@@ -62,7 +68,7 @@ def sequential_call(ctx: Context) -> None:
                 f'"{seq_call["targetname"]}" at ({seq_call["origin"]}).'
             )
 
-        ent_and_delay: Iterable[Tuple[Entity, float]] = []
+        ent_and_delay: Iterable[Tuple[Entity, float]]
         if max_dist < 1e-6 or time_val == 0.0:
             # No total delay, skip computation and any divide by zero.
             ent_and_delay = zip(target_ents, itertools.repeat(0.0))
@@ -129,3 +135,5 @@ def sequential_call(ctx: Context) -> None:
         for out in outputs_final:
             out.delay = round(out.delay + max_delay, 2)
             seq_call.outputs.append(out)
+
+        strip_cust_keys(seq_call)

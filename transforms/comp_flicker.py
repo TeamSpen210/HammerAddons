@@ -2,6 +2,7 @@
 from typing_extensions import Final
 import random
 
+from hammeraddons.bsp_transform.common import strip_cust_keys
 from srctools import Output, lerp, logger, conv_float
 
 from hammeraddons.bsp_transform import trans, Context
@@ -72,6 +73,7 @@ def comp_flicker(ctx: Context) -> None:
                 Output(OUT_TURN_ON, mdl_name, 'Skin', ent['mdl_skin_on']),
                 Output(OUT_TURN_OFF, mdl_name, 'Skin', ent['mdl_skin_off']),
             )
+        strip_cust_keys(ent)
 
         for out_name, start_state, min_point, max_point in [
             (OUT_FLICK_ON, False, 0.0, total_time),

@@ -1411,8 +1411,7 @@ async def comp_prop_rope(ctx: Context) -> None:
 
     for ent in ctx.vmf.by_class['comp_prop_rope_dynamic'] | ctx.vmf.by_class['comp_prop_cable_dynamic']:
         ent['classname'] = 'prop_dynamic'
-        group_name = ent['group']
-        del ent['group']
+        group_name = ent.pop('group')
         if group_name not in group_to_node:
             if ent['targetname']:
                 LOGGER.warning('Dynamic rope "{}" has no nodes in group {}!', ent['targetname'], group_name)

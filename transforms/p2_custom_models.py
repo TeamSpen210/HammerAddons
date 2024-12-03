@@ -43,7 +43,7 @@ def p2_custom_models(ctx: Context) -> None:
     """Add keyvalues to Portal 2 test element entities to automatically handle custom models."""
     for classname in SUPPORTED_ENTS:
         for ent in ctx.vmf.by_class[classname]:
-            model_type = conv_int(ent['comp_custom_model_type'])
+            model_type = conv_int(ent.pop('comp_custom_model_type'))
 
             if model_type == 0: # none
                 continue
@@ -60,4 +60,3 @@ def p2_custom_models(ctx: Context) -> None:
                 ent['CubeType'] = '6'
                 # Revert to the original type on spawn
                 ctx.add_code(ent, 'function OnPostSpawn() { EntFireByHandle(self, "AddOutput", "CubeType ' + orig_cube_type + '", 0, self, self) }')
-        

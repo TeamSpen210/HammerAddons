@@ -3,6 +3,7 @@ from typing import Callable, Dict, Iterator
 from string import ascii_lowercase
 import math
 
+from hammeraddons.bsp_transform.common import strip_cust_keys
 from srctools import Entity, Output, conv_float, lerp
 from srctools.fgd import EntityDef
 from srctools.logger import get_logger
@@ -22,16 +23,6 @@ BRIGHT_LETTERS = {
     let: i/25
     for i, let in enumerate(ascii_lowercase)
 }
-
-TRANSITION_KVS = [
-    "beat_interval", "delay", "duration",
-    "easing_end", "easing_start",
-    "endval",
-    "io_type",
-    "line_trans2", "line_trans3",
-    "opt_name", "startval",
-    "target", "transform",
-]
 
 
 @trans('comp_numeric_transition')
@@ -107,8 +98,7 @@ def numeric_transition(ctx: Context) -> None:
         ease_end_type = ent['easing_end', 'linear'].casefold()
 
         # We've parsed all the names, so strip those keyvalues.
-        for keyvalue in TRANSITION_KVS:
-            del ent[keyvalue]
+        strip_cust_keys(ent)
 
         # Now, lookup the function used for the easing types.
         try:
