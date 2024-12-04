@@ -19,12 +19,8 @@
 		16777216: "Radius pickup (easier to pickup)" : 0 [MBase]
 		]
 
-	damagetype[engine](integer) : "Impact Damage Type" : 0
-	damagetype(choices) : "Impact Damage Type" : 0 =
-		[
-		0: "Blunt"
-		1: "Sharp"
-		]
+	damagetype[engine](int): "Impact damage type": 0
+	#snippet keyvalue ImpactDamageType
 
 	massscale(float) : "Mass Scale" : 0 : "A scale multiplier for the object's mass."
 	ha_override_mass[srctools](float) : "[HA] Mass Override" : : "If set, the postcompiler will modify the brush data to directly set it to this mass value."
