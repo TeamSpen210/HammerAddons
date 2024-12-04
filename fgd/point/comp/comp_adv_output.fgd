@@ -12,6 +12,7 @@
 	target_local(target_destination) : "Target - Ent Name" : : "If set, the entity to fire inputs at."
 
 	target_instname(string) : "Target - Instance Name" : : "If set, this is appended to the target to form a full target-inst_name name."
+	target_expand(boolean) : "Expand Target" : : "If set, apply the list of target entities at compile time."
 
 	inp_name(string) : "Input Name" : : "The input to fire."
 
@@ -21,7 +22,7 @@
 
 	times(integer) : "Times to Fire" : -1 : "The number of times this output can fire, or -1 for infinite. Hammer normally only allows setting this to 1 or -1."
 
-	params_fmt(string) : "Parameter" : "{1}" : "Sets the parameter to use. This can contain placeholders like {1},{2} etc which will be filled by values in the" +
+	params_fmt(string) : "Parameter" : : "Sets the parameter to use. This can contain placeholders like {1},{2} etc which will be filled by values in the" +
 	" following parameters. Use two braces like {{ or }} if you need them in the parameter directly."
 
 	params_mode1[engine](integer) : "Parameter 1 - Mode" : "legacy"

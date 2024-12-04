@@ -6,9 +6,9 @@ import random
 
 import itertools
 import string
-from typing import Any, List, Mapping, Sequence, Union
+from typing import Any, Collection, List, Mapping, Sequence, Union
 
-from srctools import EmptyMapping, Vec, conv_float, conv_int
+from srctools import EmptyMapping, Vec, conv_bool, conv_float, conv_int
 from srctools.vmf import Output, Entity
 from srctools.logger import get_logger
 
@@ -42,6 +42,7 @@ def advanced_output(ctx: Context) -> None:
         input_name = adv_out['inp_name']
         target_name = adv_out['target_local'] or adv_out['target_global']
         times = conv_int(adv_out['times'], -1)
+        expand_target = conv_bool(adv_out['target_expand'])
         if not target_name:
             LOGGER.warning(
                 'No target entity for conv_adv_output at ({})!',
@@ -87,16 +88,35 @@ def advanced_output(ctx: Context) -> None:
                 continue
 
         found_ent = None
-
+        targets: Collection[str] = (target_name, )
         for found_ent in ctx.vmf.search(adv_out['out_ent']):
-            found_ent.add_out(Output(
-                output_name,
-                target_name,
-                input_name,
-                parameter,
-                delay,
-                times=times,
-            ))
+            if expand_target:
+                targets = {
+                    targ['targetname']
+                    for targ in ctx.vmf.search(target_name)
+                }
+                if not any(targets):
+                    LOGGER.warning(
+                        'No matching named entities for search "{}" for conv_adv_output at ({})!',
+                        target_name
+                    )
+                    # Fall back to letting the game do the search.
+                    targets = (target_name, )
+                else:
+                    LOGGER.info(
+                        'Expanding {} -> {} = {}',
+                        found_ent['targetname'], target_name,
+                        sorted(targets),
+                    )
+            for targ in targets:
+                found_ent.add_out(Output(
+                    output_name,
+                    targ,
+                    input_name,
+                    parameter,
+                    delay,
+                    times=times,
+                ))
 
         if found_ent is None:
             LOGGER.warning(
