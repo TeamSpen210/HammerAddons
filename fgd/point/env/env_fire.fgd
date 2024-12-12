@@ -7,10 +7,16 @@
 	"causing the fire to spread."
 	[
 	health(integer) : "Duration" : 30 : "Amount of time the fire will burn."
-	firesize(integer) : "Size" : 64 : "Height (in world units) of the flame."
-	fireattack(integer) : "Attack" : 4 : "Amount of time the fire takes to grow to full strength."
+
+	firesize(integer) : "Size" : 64 : "Height (in world units) of the flame. Unless this game supports classic sprite-based fire, only the following ranges produce visually distinct results: "+
+	"tiny (< 36), small (36-71), medium (72-107), large (anything else). The hitbox is still affected directly."
+
+	// Old default was 4, this better matches how the particle fire looks
+	fireattack(integer) : "Attack" : 1 : "Amount of time the fire takes to grow to full strength. Unless this game supports classic sprite-based fire, this will only affect the hitbox."
+
 	firetype[engine](integer) : "Type" : 0
-	firetype(choices) : "Type" : 0 =
+	// Plasma mode doesn't work, there is code for it though
+	firetype[complete](choices) : "Type" : 0 =
 		[
 		0: "Natural"
 		1: "Plasma"
@@ -25,7 +31,8 @@
 		16: "Don't drop" : 0
 		32: "No glow" : 0
 		128: "Delete when out" : 0
-		256: "Visible from above" : 0 [!ASW]
+		// Only affects classic fire, may as well limit to HL2 only
+		256: "Visible from above (classic fire only)" : 0 [HL2]
 		256: "No sound" : 0 [ASW]
 		512: "No ignite sound" : 0 [ASW]
 		1024: "No fuelling once lit" : 0 [ASW]
