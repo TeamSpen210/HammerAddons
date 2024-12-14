@@ -1,0 +1,10 @@
+@PointClass appliesto(-engine) 
+	// TODO: add an icon sprite?
+	studioprop()
+= hammer_model: "Fake model entity that only appears in Hammer. Useful for scale references or the like."
+	[
+	model(studio) : "World Model" : : "The model to display."
+	skin(integer) : "Skin" : 0
+
+	@resources [] // Doesn't exist.
+	]

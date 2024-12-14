@@ -123,6 +123,7 @@ def strip_ents(ctx: Context) -> None:
         'func_instance_parms',
         'func_instance_origin',
         'comp_player_input_helper',
+        'hammer_model',
     ]:
         for ent in ctx.vmf.by_class[clsname]:
             ent.remove()
