@@ -4,7 +4,7 @@ import sys
 import warnings
 
 from srctools.logger import Formatter, init_logging
-import trio  # Registers MultiError traceback hook
+import trio
 
 
 # Put the logs in the executable folders.
@@ -33,6 +33,8 @@ from hammeraddons.move_shim import install as install_depmodule_hook
 
 
 install_depmodule_hook()
+
+DEBUG_LUMPS = False
 
 
 def format_bytesize(val: float) -> str:
@@ -162,8 +164,18 @@ async def main(argv: List[str]) -> None:
     LOGGER.info('Reading BSP...')
     bsp_file = BSP(path)
 
-    LOGGER.info('Reading entities...')
-    LOGGER.info('Done!')
+    orig_lumps = {}
+    debug_lump_folder = path.parent / f'{path.stem}_lumps'
+    if DEBUG_LUMPS:
+        debug_lump_folder.mkdir(exist_ok=True)
+        lump_id: BSP_LUMPS | bytes
+        for lump_id in BSP_LUMPS:
+            orig_lumps[lump_id] = bsp_file.lumps[lump_id].data
+            (debug_lump_folder / f'{lump_id.name}_old.lmp').write_bytes(orig_lumps[lump_id])
+        for lump_id, game_lump in bsp_file.game_lumps.items():
+            LOGGER.info('Lump {} = v{}', lump_id, game_lump.version)
+            (debug_lump_folder / f'game_{lump_id.hex()}_old.lmp').write_bytes(game_lump.data)
+            orig_lumps[lump_id] = game_lump.data
 
     # Mount the existing packfile, so the cubemap files are recognised.
     LOGGER.info('Mounting BSP packfile...')
@@ -380,6 +392,25 @@ async def main(argv: List[str]) -> None:
     LOGGER.info('Packfile size: {}', format_bytesize(
         len(bsp_file.lumps[BSP_LUMPS.PAKFILE].data)
     ))
+
+    if DEBUG_LUMPS:
+        LOGGER.info('Changed lumps:')
+        for lump_id in BSP_LUMPS:
+            data = bsp_file.lumps[lump_id].data
+            (debug_lump_folder / f'{lump_id.name}_new.lmp').write_bytes(data)
+            if orig_lumps.pop(lump_id) != data:
+                LOGGER.info('{} changed', lump_id)
+        for lump_id, game_lump in bsp_file.game_lumps.items():
+            (debug_lump_folder / f'game_{lump_id.hex()}_old.lmp').write_bytes(game_lump.data)
+            try:
+                old = orig_lumps.pop(lump_id)
+            except KeyError:
+                LOGGER.info('{} added', lump_id)
+            else:
+                if old != game_lump.data:
+                    LOGGER.info('{} changed', lump_id)
+        if orig_lumps:
+            LOGGER.info('Removed game lumps: {}', list(orig_lumps))
 
     try:
         from srctools.fgd import _engine_db_stats  # noqa
