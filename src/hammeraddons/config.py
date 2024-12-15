@@ -196,7 +196,7 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
             raise ValueError('Config "searchpaths" value cannot have children.')
         assert isinstance(kv.value, str)
 
-        appid = 0
+        appid = -1
         # Game mount, we just replace the <appid> with a path, this will ensure compatibility with .vpk
         if (end := kv.value.find(">")) and kv.value.startswith("<"):
             appid = conv_int(kv.value[1:end])
