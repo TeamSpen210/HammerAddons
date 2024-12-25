@@ -43,6 +43,7 @@ jobs:
           mkdir build/hammer
           robocopy hammer/scripts build/hammer/scripts /S /PURGE
           robocopy hammer/materials/tools build/hammer/materials/tools /S /PURGE
+          robocopy hammer/models/editor/vactubes build/hammer/models/editor/vactubes /S /PURGE 
           python src/hammeraddons/build_fgd_assets.py -i patch_postcompiler.fgd -o build/hammer -a hammer
 
       - name: Freeze application
