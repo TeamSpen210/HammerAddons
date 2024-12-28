@@ -1,0 +1,48 @@
+@PointClass
+	iconsprite("editor/comp_kv_setter")
+	appliesto(srctools)
+	autovis(Postcompiler, Visual Preset)
+= comp_visual_preset : "Handles visual presets." +
+	"These can be fog settings, tonemapper presets and custom color correction. All handled by one entity."
+	[
+
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	
+	linedivider_tgname[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+
+	tonemapper(target_destination) : "env_tonemap_controller" : "@Tonemapper" : "Tonemapper entity used. Needs to be set to use tonemap presets."
+
+	tm_autoexposuremax(float) 	: "Auto Exposure Max" 	: 2.0 : "Set the auto exposure maximum."
+	tm_autoexposuremin(float) 	: "Auto Exposure Min" 	: 0.5 : "Set the auto exposure minimum."
+	tm_bloomscale(float)		: "Bloom Scale"			: 0.2 : "Set the bloom scale."
+	tm_bloomexponent(float) 	: "Bloom Exponent"		: 2.2 : "Set the bloom exponent."
+
+	linedivider_tm[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	fog_controller(target_destination) : "env_fog_controller" : "@FogController" : "Env_fog_controller entity used to set tonemap presets. Should have master flag checked."
+
+	fog_primary_color(color255) : "Primary Fog Color" : "255 255 255" : "Primary fog color to use."
+	fog_start(float) : "Fog Start" : -1.0
+	fog_end(float) : "Fog End" : 2000.0
+	fog_max_density(float) : "Fog Max Density" : 1.0
+	use_lerp(boolean) : "Use Lerp" : 1 : "Use lerping instead of instant changing of fog values. Requires lerp time on the fog controller entity to be set."
+
+	linedivider_fg[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+
+	cc_filename(string) : "CC Filename" : : "The filename used by color correction for this preset (if set), e.g. 'cc_RECYCLED_TEST'."
+	cc_fadein(float) : "CC FadeIn Time" : 1.0
+	cc_fadeout(float) : "CC FadeOut Time" : 1.0
+
+	
+	input Apply(void) : "Applies the preset, disables all other ones."
+
+	// We need to provide "some" outputs to allow you to add some.
+	// These exist on everything, at least.
+	output OnUser1(void) : "Fired in response to FireUser1 input."
+	output OnUser2(void) : "Fired in response to FireUser2 input."
+	output OnUser3(void) : "Fired in response to FireUser3 input."
+	output OnUser4(void) : "Fired in response to FireUser4 input."
+	output OnKilled[L4D](void) : "Fired when the entity is killed and removed from the game."
+	]
