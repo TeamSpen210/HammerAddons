@@ -556,8 +556,8 @@
 	easing_start(choices) : "Easing Start" : "linear" : "Controls how the animation begins." =
 		[
 		"linear": "None"
-		"quad": "Quadratic (x²)"
-		"cubic": "Cubic (x³)"
+		"quad": "Quadratic (xï¿½)"
+		"cubic": "Cubic (xï¿½)"
 		"quartic": "Quartic (x^4)"
 		"sine": "Sinusoidal"
 		]
@@ -565,8 +565,8 @@
 	easing_end(choices) : "Easing End" : "linear" : "Controls how the animation ends." =
 		[
 		"linear": "None"
-		"quad": "Quadratic (x²)"
-		"cubic": "Cubic (x³)"
+		"quad": "Quadratic (xï¿½)"
+		"cubic": "Cubic (xï¿½)"
 		"quartic": "Quartic (x^4)"
 		"sine": "Sinusoidal"
 		]
@@ -1477,4 +1477,37 @@
 		16: "Ignore +USE" : 1
 		]
 	InputFilter[+SRCTOOLS](integer) : "Input Flags" : 0 : "Filters what kind of entities can interact with this. Set this in spawnflags instead."
+	]
+
+@PointClass 
+	iconsprite("editor/comp_visual_preset")
+= comp_visual_preset: "Handles visual presets.These can be fog settings, tonemapper presets and custom color correction. All handled by one entity."
+	[
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	linedivider_tgname(string) readonly : "----------------------------------------------------------------------------------------------------------"
+	tonemapper(target_destination) : "env_tonemap_controller" : "@Tonemapper" : "Tonemapper entity used. Needs to be set to use tonemap presets."
+	tm_autoexposuremax(float) : "Auto Exposure Max" : "2.0" : "Set the auto exposure maximum."
+	tm_autoexposuremin(float) : "Auto Exposure Min" : "0.5" : "Set the auto exposure minimum."
+	tm_bloomscale(float) : "Bloom Scale" : "0.2" : "Set the bloom scale."
+	tm_bloomexponent(float) : "Bloom Exponent" : "2.2" : "Set the bloom exponent."
+	linedivider_tm(string) readonly : "----------------------------------------------------------------------------------------------------------"
+	fog_controller(target_destination) : "env_fog_controller" : "@FogController" : "Env_fog_controller entity used to set tonemap presets. Should have master flag checked."
+	fog_primary_color(color255) : "Primary Fog Color" : "255 255 255" : "Primary fog color to use."
+	fog_start(float) : "Fog Start" : "-1.0"
+	fog_end(float) : "Fog End" : "2000.0"
+	fog_max_density(float) : "Fog Max Density" : "1.0"
+	use_lerp(boolean) : "Use Lerp" : 1 : "Use lerping instead of instant changing of fog values. Requires lerp time on the fog controller entity to be set."
+	linedivider_fg(string) readonly : "----------------------------------------------------------------------------------------------------------"
+	cc_filename(string) : "CC Filename" : : "The filename used by color correction for this preset (if set), e.g. \'cc_RECYCLED_TEST\'."
+	cc_fadein(float) : "CC FadeIn Time" : "1.0"
+	cc_fadeout(float) : "CC FadeOut Time" : "1.0"
+
+	// Inputs
+	input Apply(void) : "Applies the preset, disables all other ones."
+
+	// Outputs
+	output OnUser1(void) : "Fired in response to FireUser1 input."
+	output OnUser2(void) : "Fired in response to FireUser2 input."
+	output OnUser3(void) : "Fired in response to FireUser3 input."
+	output OnUser4(void) : "Fired in response to FireUser4 input."
 	]
