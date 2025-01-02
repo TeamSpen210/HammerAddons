@@ -1,5 +1,5 @@
 @PointClass
-	iconsprite("editor/comp_kv_setter")
+	iconsprite("editor/comp_visual_preset")
 	appliesto(srctools)
 	autovis(Postcompiler, Visual Preset)
 = comp_visual_preset : "Handles visual presets." +
