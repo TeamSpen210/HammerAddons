@@ -66,7 +66,7 @@
 	team_previouspoint_3_2(target_source) : "BLU Previous Required Point 3" : : "The name of a third previous capture point that BLU must own to be able to capture this point."
 
 	model(studio) : "[H] Model" : "models/effects/cappoint_hologram.mdl" : "Model to show in Hammer"
-	src_propname[srctools](target_destination) : "Linked Prop" : : "Set to the name of a prop that should change its skin based on who owns the point (such as the control point base model)"
+	src_propname[srctools](target_destination) : "[HA] Linked Prop" : : "Set to the name of a prop that should change its skin based on who owns the point (such as the control point base model)"
 
 	// Inputs
 	input SetOwner(integer) : "Set the owner of the point."

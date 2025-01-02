@@ -1,5 +1,6 @@
 @SolidClass 
 	base(BaseEntityBrush, Origin, EnableDisable) 
+	line(255 255 255, targetname, target)
 	appliesto(MBase)
 = func_commandredirect :
 	"A brush entity that redirects the player's squad commands. Also functions as a limited trigger for the player AND their squad members."

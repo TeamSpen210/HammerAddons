@@ -1,5 +1,4 @@
 """Runs before VRAD, to run operations on the final BSP."""
-import shutil
 from pathlib import Path
 import sys
 import warnings
@@ -14,22 +13,38 @@ warnings.filterwarnings(category=DeprecationWarning, module='srctools', action='
 
 from typing import Dict, List, Optional
 from collections import defaultdict
-from logging import FileHandler
+from logging import FileHandler, StreamHandler
 import argparse
+import math
 import os
 import re
+import shutil
 
-from srctools import __version__ as version_lib, conv_bool
-from srctools.bsp import BSP
+from srctools import conv_bool
+from srctools.bsp import BSP, BSP_LUMPS
 from srctools.filesys import ZipFileSystem
 from srctools.packlist import PackList
 
-from hammeraddons import __version__ as version_haddons, config, propcombine
+from hammeraddons import (
+    BINS_PATH, HADDONS_VER, SRCTOOLS_VER, config, mdl_compiler, propcombine,
+)
 from hammeraddons.bsp_transform import run_transformations
 from hammeraddons.move_shim import install as install_depmodule_hook
 
 
 install_depmodule_hook()
+
+
+def format_bytesize(val: float) -> str:
+    """Add mb, gb etc suffixes to a size in bytes."""
+    if val < 1024:
+        return f'{val} bytes'  # No rounding.
+    val /= 1024.0
+    for size in ['kB', 'mB', 'gB']:
+        if val <= 1024.0:
+            return f'{val:.3f}{size}'
+        val /= 1024.0
+    return f'{val:.03f}tB'
 
 
 async def main(argv: List[str]) -> None:
@@ -53,6 +68,22 @@ async def main(argv: List[str]) -> None:
         dest="allow_pack",
         action="store_false",
         help="Prevent packing of files found in the map."
+    )
+    parser.add_argument(
+        "--nosaving",
+        dest="allow_save",
+        action="store_false",
+        help="For testing purposes, allow skipping saving the BSP.",
+    )
+    parser.add_argument(
+        "--regenerate",
+        action="store_true",
+        help="Force models and similar resources to be regnerated.",
+    )
+    parser.add_argument(
+        '-v', '--verbose',
+        action="store_true",
+        help="Show DEBUG level messages.",
     )
     parser.add_argument(
         "--propcombine",
@@ -79,6 +110,16 @@ async def main(argv: List[str]) -> None:
 
     if args.showgroups:
         LOGGER.warning('--showgroups is not implemented. r_colorstaticprops does the same thing ingame.')
+    if args.verbose:
+        # Find the stdout handler, make it DEBUG mode.
+        for handler in LOGGER.handlers:
+            if isinstance(handler, StreamHandler) and handler.stream is sys.stdout:
+                handler.setLevel('DEBUG')
+                break
+        else:
+            LOGGER.warning('Could not set stdout handler to DEBUG mode.')
+
+    mdl_compiler.force_regen = args.regenerate
 
     # The path is the last argument to the compiler.
     # Hammer adds wrong slashes sometimes, so fix that.
@@ -94,7 +135,7 @@ async def main(argv: List[str]) -> None:
     ))
     LOGGER.addHandler(handler)
 
-    LOGGER.info('HammerAddons postcompiler, srctools=v{}, addons=v{}', version_lib, version_haddons)
+    LOGGER.info('HammerAddons postcompiler, srctools=v{}, addons=v{}', SRCTOOLS_VER, HADDONS_VER)
     LOGGER.info("Map path is {}", path)
 
     conf = config.parse(path, args.game_folder)
@@ -189,6 +230,7 @@ async def main(argv: List[str]) -> None:
         studiomdl_loc,
         transform_conf,
         pack_tags,
+        disabled={name.strip().casefold() for name in conf.opts.get(config.DISABLED_TRANSFORMS).split(',')},
         modelcompile_dump=modelcompile_dump,
     )
 
@@ -207,11 +249,14 @@ async def main(argv: List[str]) -> None:
             if 'CROWBAR_LOC' in os.environ:
                 crowbar_loc = Path(os.environ['CROWBAR_LOC']).resolve()
             else:
-                crowbar_loc = Path(sys.argv[0], '../Crowbar.exe').resolve()
+                crowbar_loc = Path(BINS_PATH, 'Crowbar.exe').resolve()
         else:
             crowbar_loc = None
 
         LOGGER.info('Combining props...')
+        max_auto_range: Optional[float] = conf.opts.get(config.PROPCOMBINE_MAX_AUTO_RANGE)
+        if not max_auto_range:
+            max_auto_range = math.inf
         await propcombine.combine(
             bsp_file,
             bsp_file.ents,
@@ -221,8 +266,10 @@ async def main(argv: List[str]) -> None:
             qc_folders=conf.opts.get(config.PROPCOMBINE_QC_FOLDER).as_array(conv=conf.expand_path),
             decomp_cache_loc=decomp_cache_loc,
             crowbar_loc=crowbar_loc,
-            auto_range=conf.opts.get(config.PROPCOMBINE_AUTO_RANGE),
-            min_cluster=conf.opts.get(config.PROPCOMBINE_MIN_CLLUSTER),
+            min_auto_range=conf.opts.get(config.PROPCOMBINE_MIN_AUTO_RANGE),
+            max_auto_range=max_auto_range,
+            min_cluster=conf.opts.get(config.PROPCOMBINE_MIN_CLUSTER),
+            min_cluster_auto=conf.opts.get(config.PROPCOMBINE_MIN_CLUSTER_AUTO),
             blacklist=conf.opts.get(config.PROPCOMBINE_BLACKLIST).as_array(),
             volume_tolerance=conf.opts.get(config.PROPCOMBINE_VOLUME_TOLERANCE),
             compile_dump=modelcompile_dump,
@@ -232,13 +279,21 @@ async def main(argv: List[str]) -> None:
         LOGGER.info('Done!')
 
     # Always strip the propcombine entities, since we don't need them either way.
+    could_propcombine = conf.opts.get(config.PROPCOMBINE_MIN_AUTO_RANGE) is not None
     for ent in bsp_file.ents.by_class['comp_propcombine_set']:
         ent.remove()
+        could_propcombine = True
     for ent in bsp_file.ents.by_class['comp_propcombine_volume']:
         bsp_file.bmodels.pop(ent, None)  # Ignore if not present.
         ent.remove()
+        could_propcombine = True
 
-    if conf.opts.get(config.AUTO_PACK) and args.allow_pack:
+    # Warn if propcombine was enabled by config but not by command line.
+    if could_propcombine and not args.propcombine:
+        LOGGER.warning('No propcombine allowed, --propcombine not passed on the command line!')
+
+    auto_pack = conf.opts.get(config.AUTO_PACK)
+    if auto_pack and args.allow_pack:
         LOGGER.info('Analysing packable resources...')
         packlist.pack_from_ents(
             bsp_file.ents,
@@ -256,6 +311,10 @@ async def main(argv: List[str]) -> None:
             man_name = man_name.replace('<map name>', path.stem)
             LOGGER.info('Writing particle manifest "{}"...', man_name)
             packlist.write_particles_manifest(man_name)
+    if auto_pack and not args.allow_pack:
+        # Warn if packing was enabled by config but not by command line.
+        # May be intentional, but can be confusing.
+        LOGGER.warning('--nopack passed, packing has been disabled!')
 
     pack_allowlist = list(config.packfile_filters(conf.opts.get(config.PACK_ALLOWLIST), 'allowlist'))
     pack_blocklist = list(config.packfile_filters(conf.opts.get(config.PACK_BLOCKLIST), 'blocklist'))
@@ -295,13 +354,13 @@ async def main(argv: List[str]) -> None:
 
     # List out all the files, but group together files with the same extension.
     ext_for_name: Dict[str, List[str]] = defaultdict(list)
-    for file in bsp_file.pakfile.infolist():
-        filename = Path(file.filename)
+    for zip_info in bsp_file.pakfile.infolist():
+        filename = Path(zip_info.filename)
         if '.' in filename.name:
             stem, ext = filename.name.split('.', 1)
             file_path = str(filename.parent / stem)
         else:
-            file_path = file.filename
+            file_path = zip_info.filename
             ext = ''
 
         ext_for_name[file_path].append(ext)
@@ -314,8 +373,13 @@ async def main(argv: List[str]) -> None:
         for name, exts in sorted(ext_for_name.items())
     ])))
 
-    LOGGER.info('Writing BSP...')
-    bsp_file.save()
+    if args.allow_save:
+        LOGGER.info('Writing BSP...')
+        bsp_file.save()
+
+    LOGGER.info('Packfile size: {}', format_bytesize(
+        len(bsp_file.lumps[BSP_LUMPS.PAKFILE].data)
+    ))
 
     try:
         from srctools.fgd import _engine_db_stats  # noqa

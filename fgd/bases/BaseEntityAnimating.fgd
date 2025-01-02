@@ -38,14 +38,14 @@
 	body(integer) : "Bodygroup" : 0 : "Body Groups allow turning on and off parts of a model, so sections can be shown or hidden dynamically."
 	setbodygroup[complete](integer) : "(Set) Body Group" : 0 :  "Identical to Body Group (body), ask Valve why this is duplicated. Body Groups allow turning on and off parts of a model, so sections can be shown or hidden dynamically."
 	
-	texframeindex[complete](integer) : "Texture Frame" : : "The frame number for any animated textures on this entity."
+	texframeindex[complete](integer) : "ToggleTexture Frame" : 0 : "The initial texture frame used by the ToggleTexture proxy and controlled by env_texturetoggle."
 	hitboxset[complete](string) : "Hitbox Set" : : "Sets the $hboxset to use for collision testing."
 
 	// Exists, but may not be useable.
 	skin[engine](integer) : "Skin" : 0
 	modelskin[engine](integer) : "Model Skin" : 0 : "Alternate keyvalue for setting the current skin."
 	
-	modelscale(float) : "Model Scale" : : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
+	modelscale(float) : "Model Scale" : 1.0 : "A multiplier for the size of the model. Negative values are accepted. Does not alter the physics collisions in most cases, however. Negative values can crash the game!"
 	
 	playbackrate[complete](float) readonly: "Playback Rate" : 1.0 : "Exists, but is immediately set to 1.0 on spawn."
 	cycle[engine](float) : "Cycle" : 0.0 : "Internal variable storing the current progress through the animation, 0-1."
@@ -63,9 +63,13 @@
 	fadescale(float) : "Fade Scale" : : "If specified in the worldspawn, or if the engine is running below DirectX 8, entities will fade out even if the fade distances above aren't specified. This value gives more control over when this happens: numbers smaller than 1 cause the entity to fade out at further distances, and greater than 1 cause it to fade out at closer distances. Using 0 turns off the forced fade altogether."	
 	
 	shadowcastdist[complete](integer) : "Shadow Cast Distance" : 0 : "Sets how far the entity casts dynamic shadows, in units. 0 means default distance from the shadow_control entity."
-	disableshadows(boolean) : "Disable Shadows?" : 0 : "Prevent the entity from creating cheap render-to-texture/dynamic shadows."
-	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents dynamic shadows (e.g. player and prop shadows) from appearing on this entity."
-	disableshadowdepth[since_L4D, +complete](boolean) : "Disable ShadowDepth" : 0 : "Used to disable rendering into shadow depth (for flashlight) for this entity."
+
+	// Disambiguate from projected textures if present.
+	disableshadows[until_L4D](boolean) : "Disable Producing Shadows?" : 0 : "Prevent the entity from creating cheap render-to-texture/dynamic shadows."
+	disableshadows[since_L4D](boolean) : "Disable Producing Cheap Shadows?" : 0 : "Prevent the entity from creating cheap render-to-texture/dynamic shadows."
+
+	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents shadows (cheap & projected texture) from appearing on this entity."
+	disableshadowdepth[since_L4D](boolean) : "No Affecting Proj Texs"  : 0 : "Prevent this entity from affecting projected texture shadows."
 	shadowdepthnocache[since_L4D, +complete](choices) : "Projected Texture Cache" : "0" : "Used to hint projected texture system whether it is sufficient to cache shadow volume of this entity or to force render it every frame instead." =
 		[
 		0: "Default"
@@ -73,13 +77,16 @@
 		2: "Cache it = render only once"
 		]
 	shadowdepthnocache[engine](integer): "Projected Texture Cache": 0
-	disableflashlight[since_L4D, MBase](boolean) : "Disable flashlight" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
+	disableflashlight[since_L4D, MBase](boolean) : "No Recieving Proj Texs" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
 
 	linedivider_anim[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs
 	input Skin(integer) : "Changes the model skin to the specified number."
 	input SetBodyGroup(integer) : "Change the model's bodygroup to the specified index number."
+	// 2013 only
+	input SetModelScale[until_L4D, !GMod](vector) : "Set the scale of the entity's model. Takes two values separated by a space. The first is the target model scale. " +
+		"The second value is the number of seconds the change in scale will be spread over."
 
 	input Ignite(void) : "Makes the entity catch on fire indefinitely."
 	input IgniteLifetime(float) : "Makes the entity catch on fire for a given amount of time."
@@ -93,12 +100,10 @@
 	
 	input DisableShadow(void) : "Allows the entity to draw a render target (dynamic) shadow."
 	input EnableShadow(void) : "Prevents the entity from drawing a render target (dynamic) shadow."
-	input DisableReceivingFlashlight[since_L4D, MBase](void) : "This object will not recieve light or shadows from projected textures (flashlights)."
-	input EnableReceivingFlashlight[since_L4D, MBase](void) : "This object may recieve light or shadows from projected textures (flashlights)."
+	input DisableReceivingFlashlight[since_L4D, MBase, GMod](void) : "This object will not recieve light or shadows from projected textures (flashlights)."
+	input EnableReceivingFlashlight[since_L4D, MBase, GMod](void) : "This object may recieve light or shadows from projected textures (flashlights)."
 	
 	input AlternativeSorting[SINCE_EP1](boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
-	input SetModelScale[EP1, EP2, MESA, !GMod](vector) : "Takes two values separated by a space. The first is the target model scale. " +
-		"The second value is the number of seconds the change in scale will be spread over."
 
 	input SetModel[TF2](string) : "Changes the model to the specified path.\nForm of 'models/ammo/ammo_us.mdl'.\nIMPORTANT:\nAbsolutely NO quotes!\nMake sure you use this slash '/'.\nMerasmus says to heed this advice thou shalt corrupt the VMF."
 	input SetCycle[TF2](float) : "Skip to a specific point in the current animation."

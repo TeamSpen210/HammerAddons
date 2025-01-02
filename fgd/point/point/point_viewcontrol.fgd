@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityPoint) 
 	studioprop("models/editor/camera.mdl") 
 	color(200 0 0) 
-	frustum(fov, 4, _frustum_far, 250 250 250, -1) 
+	frustum(fov, 4, 1024, 255 255 255, -1) 
 	line(255 255 0, targetname, target) 
 	line(255 255 0, targetname, moveto) 
 = point_viewcontrol: "A camera entity that controls the player's view. While it's active, the player will see out of the camera."
@@ -51,8 +51,6 @@
 	holsterweapons[INFRA](boolean) : "Holster Weapons" : 0 : "Should the player holster their weapons while under control of the camera?"
 	teleportplayertoend[INFRA](boolean) : "Teleport Player to End" : 0 : "Should the player be teleported to the end once the camera reaches the end of its path?"
 	pathlengthinseconds[INFRA](float) : "Path Length in Seconds" : 5 : "How long does this path last? Smaller numbers means faster camera."
-
-	_frustum_far[!engine](integer) readonly : "<Far Plane>" : 1024 : "Ignore, needed to display the view frustum preview."
 
 	// Inputs
 	input Enable(void) : "Enable the point_viewcontrol, and start controlling the player's view."

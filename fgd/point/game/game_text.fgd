@@ -12,9 +12,9 @@
 	message[MBase](string) : "Message Text" : "" : "Message to display onscreen. Use '/n' for newlines."
 	message[KZ](string) : "Message Text" : "" : "Message to display onscreen. Maximum 200 characters."
 
-	x(float) : "X Position" : -1 : "Horizontal position on the player's screens to draw the text. " +
+	x(float) : "X Position" : -1 : "Horizontal position on the player's screen to draw the text. " +
 		"The value should be between 0 and 1, where 0 is the far left of the screen and 1 is the far right. -1 centers the text."
-	y(float) : "Y Position" : 0.6 : "Vertical position on the player's screens to draw the text. " +
+	y(float) : "Y Position" : 0.6 : "Vertical position on the player's screen to draw the text. " +
 		"The value should be between 0 and 1, where 0 is the top of the screen and 1 is the bottom. -1 centers the text."
 
 	effect[engine](integer) : "Text Effect" : 0
@@ -26,13 +26,14 @@
 		]
 
 	color(color255) : "Text Color" : "100 100 100" : "The main color of the text."
-	color2(color255) : "Transition Color" : "240 110 0" : "Secondary color used when revealing text."
+	color2(color255) : "Transition Color" : "240 110 0" : "Secondary color used when revealing text with the scan effect."
 
-	fadein(float) : "Fade in Time/Character Scan Time" : 1.5 : "The time it should take for the text to fully fade in."
+	fadein(float) : "Fade in Time/Character Scan Time" : 1.5 : "The time it should take for the text to fully fade in, or the time between each character appearing when using the scan effect."
 	fadeout(float) : "Fade Out Time" : 0.5 : "The time it should take for the text to fade out, after the hold time has expired."
 	holdtime(float) : "Hold Time" : 1.2 : "The time the text should stay onscreen, after fading in, before it begins to fade out."
-	fxtime(float) : "Scan time (scan effect only)" : 0.25 : "If the 'Text Effect' is set to Scan Out, this is the time " +
-		"it should take to scan out all the letters in the text."
+	fxtime(float) : "Highlight Time (scan effect only)" : 0.25 : "If the 'Text Effect' is set to Scan Out, this is the time " +
+		"it will take for each character to fade from the transition color to the main color. " +
+		"If you want all characters to be highlighted at once, set the fade in time to 0."
 
 	channel[engine](integer) : "Text Channel" : 1
 	channel(choices) : "Text Channel" : 1 : "You can have up to six individual game_text messages onscreen at once, " +
@@ -49,13 +50,16 @@
 		5: "Channel 5 (warning: may be used by HUD)"
 		]
 	customfont[KZ](string) : "Custom Font Name" : "" : "The name of the Game Font to use for this text. Game font lists are found in the KreedzClimbing/kz/resource/ClientScheme.res and SourceScheme.res (examples: ClientTitleFont, DefaultSmall). Custom .ttf files are currently not supported. Leave blank to use the default font."
-	autobreak[MBase](boolean) : "Automatically break lines" : 0 : "Allows text to automatically shift to the next line whenever it can't fit on a player's screen. " +
+
+	font[MBase](string) : "Custom Font Name" : "" : "Makes the message use a specific client scheme font. The font must be additive for the fade effects to function. Also supports custom fonts defined through clientside VScript functions. Game font lists are found in the resource/ClientScheme.res and SourceScheme.res (examples: ClientTitleFont, DefaultSmall). Leave blank to use the default font."
+	autobreak[MBase](boolean) : "Automatically Break Lines" : 0 : "Allows text to automatically shift to the next line whenever it can't fit on a player's screen. " +
 		"This accounts for a player's aspect ratio and adds hyphens when necessary." 
 	// Inputs
 	input Display(void) : "Display the message text."
 	input DisplayValue[KZ](void) : "This input is used in conjunction with a math_counter, it displays the text and the value supplied after it. Use a math_counter's GetValue input with this to display the value of the math_counter."
 	input DisplayTeam[KZ](void) : "Display the message text to the activator player and their team."
 	input SetText[since_ASW, MBase](string) : "Set the text to display."
+	input SetFont[MBase](string) : "Sets the message font."
 	input SetPosX[since_P2](float) : "Set the X position of the text. (0 - 1.0 = left to right) (-1 centers)"
 	input SetPosY[since_P2](float) : "Set the Y position of the text. (0 - 1.0 = top to bottom) (-1 centers)"
 	input SetTextColor[since_P2](color255) : "Set color of the front text."

@@ -1,0 +1,12 @@
+@PointClass appliesto(+engine, L4D, L4D2, Mesa)
+= info_ladder: "func_ladder entities are converted into this, so NPCs can be aware of the ladder location."
+	[
+	mins.x(float): "Mins - X" : : "-X size for the ladder."
+	mins.y(float): "Mins - Y" : : "-Y size for the ladder."
+	mins.z(float): "Mins - Z" : : "-Z size for the ladder."
+	maxs.x(float): "Maxes - X" : : "+X size for the ladder."
+	maxs.y(float): "Maxes - Y" : : "+Y size for the ladder."
+	maxs.z(float): "Maxes - Z" : : "+Z size for the ladder."
+
+	@resources []
+	]

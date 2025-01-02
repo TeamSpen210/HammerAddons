@@ -1,3 +1,6 @@
+@snippet description ProxyIn = "This input will cause the corresponding output to be fired."
+@snippet description ProxyOut = "This will be fired when the corresponding input is triggered."
+
 // This is a true entity, with all the normal operations.
 // But VBSP shuffles outputs around, it's unknown if other keyvalues
 // will be kept.
@@ -18,67 +21,67 @@
 
 	// Then the engine I/O that those are converted to. Yes, OnXXX should be for outputs...
 
-	input OnProxyRelay1[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay2[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay3[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay4[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay5[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay6[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay7[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay8[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay9[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay10[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay11[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay12[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay13[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay14[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay15[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay16[engine](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay17[engine, +since_P2](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay18[engine, +since_P2](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay19[engine, +since_P2](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay20[engine, +since_P2](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay21[engine, +since_P2](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay22[engine, +since_P2](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay23[engine, +since_P2](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay24[engine, +since_P2](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay25[engine, +since_P2](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay26[engine, +since_P2](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay27[engine, +since_P2](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay28[engine, +since_P2](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay29[engine, +since_P2](string) : "This input will cause the corresponding output to be fired."
-	input OnProxyRelay30[engine, +since_P2](string) : "This input will cause the corresponding output to be fired."
+	input OnProxyRelay1[engine](string) : #snippet ProxyIn
+	input OnProxyRelay2[engine](string) : #snippet ProxyIn
+	input OnProxyRelay3[engine](string) : #snippet ProxyIn
+	input OnProxyRelay4[engine](string) : #snippet ProxyIn
+	input OnProxyRelay5[engine](string) : #snippet ProxyIn
+	input OnProxyRelay6[engine](string) : #snippet ProxyIn
+	input OnProxyRelay7[engine](string) : #snippet ProxyIn
+	input OnProxyRelay8[engine](string) : #snippet ProxyIn
+	input OnProxyRelay9[engine](string) : #snippet ProxyIn
+	input OnProxyRelay10[engine](string) : #snippet ProxyIn
+	input OnProxyRelay11[engine](string) : #snippet ProxyIn
+	input OnProxyRelay12[engine](string) : #snippet ProxyIn
+	input OnProxyRelay13[engine](string) : #snippet ProxyIn
+	input OnProxyRelay14[engine](string) : #snippet ProxyIn
+	input OnProxyRelay15[engine](string) : #snippet ProxyIn
+	input OnProxyRelay16[engine](string) : #snippet ProxyIn
+	input OnProxyRelay17[engine, +since_P2](string) : #snippet ProxyIn
+	input OnProxyRelay18[engine, +since_P2](string) : #snippet ProxyIn
+	input OnProxyRelay19[engine, +since_P2](string) : #snippet ProxyIn
+	input OnProxyRelay20[engine, +since_P2](string) : #snippet ProxyIn
+	input OnProxyRelay21[engine, +since_P2](string) : #snippet ProxyIn
+	input OnProxyRelay22[engine, +since_P2](string) : #snippet ProxyIn
+	input OnProxyRelay23[engine, +since_P2](string) : #snippet ProxyIn
+	input OnProxyRelay24[engine, +since_P2](string) : #snippet ProxyIn
+	input OnProxyRelay25[engine, +since_P2](string) : #snippet ProxyIn
+	input OnProxyRelay26[engine, +since_P2](string) : #snippet ProxyIn
+	input OnProxyRelay27[engine, +since_P2](string) : #snippet ProxyIn
+	input OnProxyRelay28[engine, +since_P2](string) : #snippet ProxyIn
+	input OnProxyRelay29[engine, +since_P2](string) : #snippet ProxyIn
+	input OnProxyRelay30[engine, +since_P2](string) : #snippet ProxyIn
 
-	output OnProxyRelay1[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay2[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay3[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay4[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay5[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay6[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay7[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay8[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay9[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay10[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay11[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay12[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay13[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay14[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay15[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay16[engine](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay17[engine, +since_P2](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay18[engine, +since_P2](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay19[engine, +since_P2](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay20[engine, +since_P2](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay21[engine, +since_P2](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay22[engine, +since_P2](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay23[engine, +since_P2](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay24[engine, +since_P2](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay25[engine, +since_P2](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay26[engine, +since_P2](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay27[engine, +since_P2](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay28[engine, +since_P2](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay29[engine, +since_P2](string) : "This will be fired when the corresponding input is triggered."
-	output OnProxyRelay30[engine, +since_P2](string) : "This will be fired when the corresponding input is triggered."
+	output OnProxyRelay1[engine](string) : #snippet ProxyOut
+	output OnProxyRelay2[engine](string) : #snippet ProxyOut
+	output OnProxyRelay3[engine](string) : #snippet ProxyOut
+	output OnProxyRelay4[engine](string) : #snippet ProxyOut
+	output OnProxyRelay5[engine](string) : #snippet ProxyOut
+	output OnProxyRelay6[engine](string) : #snippet ProxyOut
+	output OnProxyRelay7[engine](string) : #snippet ProxyOut
+	output OnProxyRelay8[engine](string) : #snippet ProxyOut
+	output OnProxyRelay9[engine](string) : #snippet ProxyOut
+	output OnProxyRelay10[engine](string) : #snippet ProxyOut
+	output OnProxyRelay11[engine](string) : #snippet ProxyOut
+	output OnProxyRelay12[engine](string) : #snippet ProxyOut
+	output OnProxyRelay13[engine](string) : #snippet ProxyOut
+	output OnProxyRelay14[engine](string) : #snippet ProxyOut
+	output OnProxyRelay15[engine](string) : #snippet ProxyOut
+	output OnProxyRelay16[engine](string) : #snippet ProxyOut
+	output OnProxyRelay17[engine, +since_P2](string) : #snippet ProxyOut
+	output OnProxyRelay18[engine, +since_P2](string) : #snippet ProxyOut
+	output OnProxyRelay19[engine, +since_P2](string) : #snippet ProxyOut
+	output OnProxyRelay20[engine, +since_P2](string) : #snippet ProxyOut
+	output OnProxyRelay21[engine, +since_P2](string) : #snippet ProxyOut
+	output OnProxyRelay22[engine, +since_P2](string) : #snippet ProxyOut
+	output OnProxyRelay23[engine, +since_P2](string) : #snippet ProxyOut
+	output OnProxyRelay24[engine, +since_P2](string) : #snippet ProxyOut
+	output OnProxyRelay25[engine, +since_P2](string) : #snippet ProxyOut
+	output OnProxyRelay26[engine, +since_P2](string) : #snippet ProxyOut
+	output OnProxyRelay27[engine, +since_P2](string) : #snippet ProxyOut
+	output OnProxyRelay28[engine, +since_P2](string) : #snippet ProxyOut
+	output OnProxyRelay29[engine, +since_P2](string) : #snippet ProxyOut
+	output OnProxyRelay30[engine, +since_P2](string) : #snippet ProxyOut
 
 	@resources []
 	]

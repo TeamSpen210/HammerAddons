@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint, MasterEnt)
 	iconsprite("editor/ficool2/game_player_team")
+	line(255 255 0, targetname, target)
 	color(200 0 0) 
 = game_player_team: "An entity that changes the team of the player who activates it."
 	[

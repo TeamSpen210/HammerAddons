@@ -1,10 +1,13 @@
-@PointClass base(BasePortButton) 
+@PointClass base(BasePortButton, SRCModel) 
 	appliesto(P2) 
 	autovis(Test Elements, P2 Buttons, Floor)
 	studioprop() = prop_floor_ball_button: "A floor button which is only activated by a Sphere-type prop_weighted_cube."
 	[
-	model[engine](string) : "Hammer Preview"
-	model(studio) : "[H] Model" : "models/props/ball_button.mdl" : "Model to display in Hammer. Use Init Code and a comp_precache_model to change the model in-game."
+
+	model[-srctools](studio) : "[H] Model" : "models/props/ball_button.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
+	model[+srctools](studio) : "[HA] Custom Model" : "models/props/ball_button.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	// Hammer automatically adds this when selecting a model, this prevents it from appearing as invalid
+	skin(integer) readonly : "<Skin>" : 0 : "Skin on the model to use. The game overrides this based on the button's pressed state, so changing it here has no effect."
 	@resources
 		[
 		model "models/props/ball_button.mdl"

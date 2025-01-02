@@ -1,12 +1,12 @@
 """Handles user configuration common to the different scripts."""
-from typing import Callable, Dict, Iterator, Optional, Pattern as re_Pattern, Set, Union
-from typing_extensions import Final, TypeAlias
+from typing import Callable, Dict, Iterator, Optional, Pattern as re_Pattern, Set, Union, Final
+from typing_extensions import TypeAlias
 from pathlib import Path
 import fnmatch
 import re
 import sys
 
-from srctools import AtomicWriter, Keyvalues, logger
+from srctools import AtomicWriter, Keyvalues, conv_int, logger
 from srctools.filesys import FileSystem, FileSystemChain, RawFileSystem, VPKFileSystem
 from srctools.game import Game
 import attrs
@@ -14,6 +14,7 @@ import attrs
 from .plugin import BUILTIN as BUILTIN_PLUGIN, PluginFinder, Source as PluginSource
 from .props_config import Opt, Options
 
+from srctools.steam import find_app
 
 LOGGER = logger.get_logger(__name__)
 CONF_NAME: Final = 'srctools.vdf'
@@ -112,7 +113,7 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
         conf_path = folder / CONF_NAME
         if conf_path.exists():
             LOGGER.info('Config path: "{}"', conf_path.absolute())
-            with open(conf_path) as f:
+            with open(conf_path, encoding='utf8') as f:
                 kv = Keyvalues.parse(f, conf_path)
             opts.path = conf_path
             opts.load(kv)
@@ -148,7 +149,7 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
     paths_conf_loc = opts.path.with_name(PATHS_NAME)
     LOGGER.info('Paths config: {}', paths_conf_loc)
     try:
-        with open(paths_conf_loc) as f:
+        with open(paths_conf_loc, encoding='utf8') as f:
             for kv in Keyvalues.parse(f).find_children('Paths'):
                 if kv.has_children():
                     LOGGER.warning('Paths configs may not be blocks!')
@@ -162,7 +163,7 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
                         )
                     path_roots[name] = Path(kv.value)
     except FileNotFoundError:
-        with open(paths_conf_loc, 'w') as f:
+        with open(paths_conf_loc, 'w', encoding='utf8') as f:
             f.write(PATHS_CONF_STARTER)
 
     if not game_folder:
@@ -195,6 +196,21 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
             raise ValueError('Config "searchpaths" value cannot have children.')
         assert isinstance(kv.value, str)
 
+        appid = 0
+        # Game mount, we just replace the <appid> with a path, this will ensure compatibility with .vpk
+        if (end := kv.value.find(">")) and kv.value.startswith("<"):
+            appid = conv_int(kv.value[1:end])
+
+        if appid != -1:
+            LOGGER.info("Mounting appid {}", appid)
+            try:
+                info = find_app(appid)
+            except KeyError:
+                LOGGER.warning("No game with appid {} found!", appid)
+            else:
+                LOGGER.info(f"Mounted game {info.name} with path: {info.path}")
+                kv.value = (info.path / kv.value[end + 1:]).as_posix()
+
         if kv.value.endswith('.vpk'):
             fsys = VPKFileSystem(str(expand_path(kv.value)))
         else:
@@ -207,10 +223,7 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
         elif kv.name in ('path', 'pack'):
             fsys_chain.add_sys(fsys)
         else:
-            raise ValueError(
-                'Unknown searchpath '
-                'key "{}"!'.format(kv.real_name)
-            )
+            raise ValueError(f'Unknown searchpath key "{kv.real_name}"!')
 
     sources: Dict[str, PluginSource] = {}
 
@@ -339,7 +352,9 @@ SEARCHPATHS = Opt.block(
     """\
     Specify additional locations to search for files, or configure whether existing locations pack
     or not. Each key-value pair defines a path, with the value either a folder path or a VPK 
-    filename relative to the game root. The key defines the behaviour:
+    filename relative to the game root. You can also specify specific app ids that will get mounted with the <appid> operator.
+    For example: <620>/portal2 will mount the portal2 folder from appid 620; that is Portal 2.
+    The key defines the behaviour:
     * "prefix" "folder/" adds the path to the start, so it overrides all others.
     * "path" "vpk_path.vpk" adds the path to the end, so it is checked last.
     * "nopack" "folder/" prohibits files in this path from being packed, you'll need to use one of the others also to add the path.
@@ -375,7 +390,8 @@ STUDIOMDL = Opt.string(
 MODEL_COMPILE_DUMP = Opt.string(
     'modelcompile_dump', '',
     """If set, models will be compiled as subfolders of this folder, instead of in a 
-    temporary directory.
+    temporary directory. The specified folder will be emptied at the start of each compile, to 
+    prevent it filling up with old model sources. Move things out that you want to keep.
 """)
 
 USE_COMMA_SEP = Opt.boolean_or_none(
@@ -415,15 +431,26 @@ PROPCOMBINE_VOLUME_TOLERANCE = Opt.floating(
     the combined version will be used. If negative, this will not be done.
     """
 )
-PROPCOMBINE_AUTO_RANGE = Opt.integer(
+PROPCOMBINE_MIN_AUTO_RANGE = Opt.integer(
     'propcombine_auto_range', 0,
     """If greater than zero, combine props at least this close together.""",
 )
+PROPCOMBINE_MAX_AUTO_RANGE = Opt.integer_or_none(
+    'propcombine_max_auto_range',
+    """If set, do not automatically combine props further away than this from each other.""",
+)
 
-PROPCOMBINE_MIN_CLLUSTER = Opt.integer(
+PROPCOMBINE_MIN_CLUSTER = Opt.integer(
     'propcombine_min_cluster', 2,
     """The minimum number of props required before propcombine will
-    bother merging them. Should be greater than 1.
+    bother merging them, in propcombine volumes. Should be greater than 1.
+    """,
+)
+
+PROPCOMBINE_MIN_CLUSTER_AUTO = Opt.integer(
+    'propcombine_min_cluster_auto', 0,
+    """The minimum number of props required before the automatic propcombine clustering will
+    merge the props. If less than or equal to 1, `propcombine_min_cluster` is used.
     """,
 )
 
@@ -458,4 +485,9 @@ TRANSFORM_OPTS = Opt.block(
     """Specify additional options specific to transforms. Each key here is the name of the 
     transform, and the value is then decided by that transform.
     """
+)
+
+DISABLED_TRANSFORMS = Opt.string(
+    'transform_disable', '',
+    """Specify transforms to disable as a comma-separated string."""
 )

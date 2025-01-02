@@ -20,6 +20,7 @@
 	color[!TF2](color255) : "Color" : "255 255 255" : "Color of the text"
 	color[TF2](color255) : "Color" : "255 255 255 255" : "Color and opacity of the text"
 
+	font[engine](integer) : "Font" : 0
 	font[TF2](choices) : "Font" : 0 : "The font to use for the text" =
 	[
 		0 : "TF2 Build"
@@ -37,6 +38,7 @@
 		12 : "TF2 Build (soft edges)"
 	]
 
+	orientation[engine](integer) : "Orientation" : 0
 	orientation[TF2](choices) : "Orientation" : 0 : "Text orientation mode. Fixed orientation left aligns the text, the others center align it." =
 	[
 		0 : "Fixed orientation"

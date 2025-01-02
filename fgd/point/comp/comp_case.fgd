@@ -1,0 +1,74 @@
+@PointClass base(StaticTargetName, ControlEnables)
+	iconsprite("editor/comp_case")
+	appliesto(srctools)
+= comp_case:
+    "Simplified version of logic_case which is able to be optimised away by the compiler."+
+    "" +
+    "This is primarly intended to be used in instances - depending on a fixup value, it will produce different results." +
+    "It can be used alternatively to pick a random output, though this is fixed at compile time for each inputting entity."
+    [
+	MultipleCasesAllowed(boolean) : "Multiple case hits allowed" : 0 : "If an input value matches a given case, " +
+		"are we allowed to test the rest of the cases or should we stop there? " +
+		"Don't worry about this if you're only using this entity for PickRandom." 
+
+	value(string) : "Input Value" : : "If the InValue parameter is blank or Trigger is used, this value will be used instead."
+
+	mode[engine](string) : "Mode" : "string"
+	mode(choices) : "Mode" : "casefold" : "Specifies how comparisons are performed. Text mode simply checks for a case that matches the input text. " +
+		"Numeric treats values as numbers, allowing cases to additionally specify a comparison like '< 3.14'. Weighted Random instead changes the case values to specify the chance to produce any given case. In all modes, each case is compared in order." =
+		[
+		"string" : "Text - Case Sensitive"
+		"casefold" : "Text - Case Insensitive"
+		"numeric" : "Numeric"
+		"randweight" : "Weighted Random"
+		]
+
+	seed(string) : "Random Seed" : : "For the PickRandom input, the position and name of the input entity and the case are used to seed a random number generator. This can be set to further randomise the chosen case."
+	misschance(float) : "Miss Chance (%)" : 0 : "If nonzero, PickRandom will skip picking cases entirely this often. Only OnUsed and OnMissed will be fired."
+
+	case01(string) : "Case 01" : : "Fires OnCase01 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case02(string) : "Case 02" : : "Fires OnCase02 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case03(string) : "Case 03" : : "Fires OnCase03 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case04(string) : "Case 04" : : "Fires OnCase04 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case05(string) : "Case 05" : : "Fires OnCase05 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case06(string) : "Case 06" : : "Fires OnCase06 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case07(string) : "Case 07" : : "Fires OnCase07 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case08(string) : "Case 08" : : "Fires OnCase08 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case09(string) : "Case 09" : : "Fires OnCase09 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case10(string) : "Case 10" : : "Fires OnCase10 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case11(string) : "Case 11" : : "Fires OnCase11 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case12(string) : "Case 12" : : "Fires OnCase12 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case13(string) : "Case 13" : : "Fires OnCase13 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case14(string) : "Case 14" : : "Fires OnCase14 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case15(string) : "Case 15" : : "Fires OnCase15 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case16(string) : "Case 16" : : "Fires OnCase16 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+
+	// Inputs
+	input InValue(string) : "Replaced by whichever case matches the parameter. Does nothing in Weighted Random mode."
+	input Trigger(void) : "Replaced by whichever case matches the input keyvalue. In Weighted Random mode, behaves like PickRandom."
+	input PickRandom(void) : "Replaced by a random case with outputs defined."
+
+	// Outputs
+	output OnCase01(void) : "Fired when the input value equals the Case01 value."
+	output OnCase02(void) : "Fired when the input value equals the Case02 value."
+	output OnCase03(void) : "Fired when the input value equals the Case03 value."
+	output OnCase04(void) : "Fired when the input value equals the Case04 value."
+	output OnCase05(void) : "Fired when the input value equals the Case05 value."
+	output OnCase06(void) : "Fired when the input value equals the Case06 value."
+	output OnCase07(void) : "Fired when the input value equals the Case07 value."
+	output OnCase08(void) : "Fired when the input value equals the Case08 value."
+	output OnCase09(void) : "Fired when the input value equals the Case09 value."
+	output OnCase10(void) : "Fired when the input value equals the Case10 value."
+	output OnCase11(void) : "Fired when the input value equals the Case11 value."
+	output OnCase12(void) : "Fired when the input value equals the Case12 value."
+	output OnCase13(void) : "Fired when the input value equals the Case13 value."
+	output OnCase14(void) : "Fired when the input value equals the Case14 value."
+	output OnCase15(void) : "Fired when the input value equals the Case15 value."
+	output OnCase16(void) : "Fired when the input value equals the Case16 value."
+	output OnDefault(void) : "Fired when the input value does not equal any of the Case values."
+	output OnUsed(string) : "Fired when an input value is received, regardless of whether it matches a case."
+	output OnMatched(string) : "Fired when an input value matches any of the cases."
+	output OnMissed(string) : "Fired when the miss chance succeeded."
+
+	@resources []
+	]

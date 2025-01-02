@@ -6,8 +6,8 @@
 		"The range is a value between 0.0 and 1.0, where 0 is the starting position and 1 is the starting position + (move direction * move distance)."
 	speed(float) : "Speed" : 100 : "The speed that the water brush moves, in units per second."
 	movedistance(float) : "Move Distance" : 100 : "The distance from the starting point that the water brush should move, in units."
-	startsound(sound) : "Sound played when the water brush starts moving."
-	stopsound(sound) : "Sound played when the water brush stops moving."
+	startsound(sound) : "Start Sound" : : "Sound played when the water brush starts moving."
+	stopsound(sound) : "Stop Sound" : : "Sound played when the water brush stops moving."
 	WaterMaterial[MESA](material) : "Water Material" : "liquids/c4a1_water_green" : "The material to derive water information from"
 	waveheight[engine](string) : "Wave Height" : "3.0" : "This keyvalue is present, but has no function. It likely was intended for HL1-style water wave effects."
 

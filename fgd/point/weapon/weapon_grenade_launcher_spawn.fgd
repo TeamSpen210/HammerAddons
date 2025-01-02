@@ -3,4 +3,8 @@
 	autovis(Weapons, L4D Weapons, Weapon Spawners)
 = weapon_grenade_launcher_spawn: "Grenade Launcher"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_grenade_launcher.txt"
+		]
 	]

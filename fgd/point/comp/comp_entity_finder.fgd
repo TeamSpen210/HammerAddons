@@ -23,6 +23,7 @@
 	targetref(target_destination): "Reference position" : : "If set, look for entities close to this entity instead of the comp_entity_finder."
 	blacklist(target_destination): "Search Blacklist" : : "If set, ignore entities matching this name."
 	teleporttarget(boolean): "Teleport Target To Me" : 0 : "Move the found entity to the location of this entity or that of the reference."
+	rotatetarget(boolean): "Match Target Rotation" : 0 : "Rotate the found entity to match the rotation of this entity or that of the reference."
 	makeunique(boolean): "Make Target Unique" : 0 : "Append a numeric suffix to the target's name to make it unique."
 	
 	sep1(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
@@ -109,4 +110,6 @@
 	kv5_dest(string): "5 - Destination" : : "Keyvalue name to write to or !special name to replace."
 	
 	// Code supports infinite number, just continue naming pattern.
+    
+    @resources []
 	]

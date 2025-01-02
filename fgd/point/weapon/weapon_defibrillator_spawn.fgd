@@ -3,4 +3,8 @@
 	studioprop("models/w_models/weapons/w_eq_defibrillator.mdl")
 = weapon_defibrillator_spawn: "Defibrillator"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_defibrillator.txt"
+		]
 	]

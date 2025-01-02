@@ -1,5 +1,7 @@
 """Implement comp_choreo_sceneset."""
-from srctools import Output, conv_bool, conv_float
+from typing import List
+
+from srctools import Entity, Output, conv_bool, conv_float
 from srctools.logger import get_logger
 
 from hammeraddons.bsp_transform import trans, Context
@@ -10,6 +12,7 @@ LOGGER = get_logger(__name__)
 @trans('comp_choreo_sceneset')
 def sceneset(ctx: Context):
     """Chains a set of choreographed scenes together."""
+    ent: Entity
     for ent in ctx.vmf.by_class['comp_choreo_sceneset']:
         scenes = [
             ent['scene{:02}'.format(i)]
@@ -32,43 +35,45 @@ def sceneset(ctx: Context):
 
         ent.remove()
 
-        start_ent = None
+        scene_ents: List[Entity] = []
 
-        name = ent['targetname'] or '_choreo_{}'.format(ent.id)
+        name = ent.make_unique('_choreo')['targetname']
         for i, scene in enumerate(scenes):
             part = ctx.vmf.create_ent(
                 classname='logic_choreographed_scene',
                 targetname=(
-                    '{}_{}'.format(name, i)
+                    f'{name}_{i}'
                     if i > 0 else
                     name
                 ),
                 origin=ent['origin'],
                 scenefile=scene,
             )
+            scene_ents.append(part)
             if i + 1 < len(scenes):
                 part.add_out(Output(
                     'OnCompletion',
-                    '{}_{}'.format(name, i+1),
+                    f'{name}_{i + 1}',
                     'Start',
                     delay=delay,
                 ))
             if only_once:
-                # When started blank the name so it can't be triggered,
-                # then clean up after finished
+                # When started blank the name so that it can't be triggered, then clean up after
+                # it's finished
                 part.add_out(
                     Output('OnStart', '!self', 'AddOutput', 'targetname '),
                     Output('OnCompletion', '!self', 'Kill'),
                 )
-            if start_ent is None:
-                start_ent = part
-
-        assert start_ent is not None, "Has scenes but none made?"
 
         for out in ent.outputs:
             if out.output.casefold() == 'onstart':
-                start_ent.add_out(out)
+                scene_ents[0].add_out(out)
             elif out.output.casefold() == 'onfinish':
-                # Part is the last in the loop.
                 out.output = 'OnCompletion'
-                part.add_out(out)
+                scene_ents[-1].add_out(out)
+
+        # Make firing cancel at the first scene also cancel the others.
+        ctx.add_io_remap(name, *[
+            Output('Cancel', ent, 'Cancel')
+            for ent in scene_ents[1:]
+        ], remove=False)

@@ -4,7 +4,7 @@ from collections import defaultdict
 import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Tuple, Dict, List, Iterable, Optional
+from typing import Tuple, Dict, List, Iterable, Optional, Union
 import math
 import random
 
@@ -13,15 +13,19 @@ import trio
 from srctools.mdl import MDL_EXTS
 from srctools.smd import Mesh
 import srctools.logger
-from srctools import Vec, Output, conv_int
+from srctools import FrozenVec, Vec, Output, conv_int
 
+from hammeraddons.bsp_transform.common import RelayOut
 from hammeraddons.bsp_transform import trans, Context
 from . import nodes, animations, objects
+from .sensors import Sensor
 
 
 LOGGER = srctools.logger.get_logger(__name__)
 # For culling, ignore points with normals offset more than this.
 ANG_THRESHOLD = math.cos(math.radians(30))
+# Arbitary location to place all the vactube ents.
+VAC_POS = FrozenVec(-16384, 0, 1024)
 
 QC_TEMPLATE = '''\
 $modelname "{path}"
@@ -32,6 +36,12 @@ $body body "ref.smd"
 
 $definebone "root" "" 0.0 0.0 0.0  0.0 0.0 0.0  0.0 0.0 0.0  0.0 0.0 0.0
 $attachment "move" "root" 0.0 0.0 0.0
+
+$sequence "ref" {{ 
+    "ref.smd"
+    fps {fps}
+    snap
+}}
 '''
 
 SEQ_TEMPLATE = '''\
@@ -43,8 +53,13 @@ $sequence {name} {{
 '''
 
 
+def vscript_bool(value: bool) -> str:
+    """Produce 'false' or 'true' from a value."""
+    return 'true' if value else 'false'
+
+
 def find_closest(
-    all_nodes: Iterable[Tuple[Vec, List[Tuple[Vec, nodes.Node]]]],
+    all_nodes: Iterable[Tuple[Union[Vec, FrozenVec], List[Tuple[Vec, nodes.Node]]]],
     node: nodes.Node,
     src_type: nodes.DestType,
 ) -> nodes.Node:
@@ -89,7 +104,9 @@ async def vactube_transform(ctx: Context) -> None:
     name_to_node: Dict[str, nodes.Node] = {}
     all_nodes: List[nodes.Node] = []
 
-    for node in nodes.parse(ctx.vmf):
+    relay_maker = RelayOut.create(ctx.vmf, VAC_POS, '_vac_out')
+
+    for node in nodes.parse(ctx.vmf, relay_maker):
         all_nodes.append(node)
         name = node.name.casefold()
         if name:
@@ -122,20 +139,20 @@ async def vactube_transform(ctx: Context) -> None:
 
     LOGGER.info('{} vactube objects found.', obj_count)
 
+    all_sensors = list(Sensor.parse(ctx.vmf))
+    LOGGER.info('{} vactube sensors found.', len(all_sensors))
+
     # Now join all the nodes to each other.
     # Tubes only have 90 degree bends, so a system should mostly be formed
     # out of about 6 different normals. So group by that.
-    inputs_by_norm: Dict[
-        Tuple[float, float, float],
-        List[Tuple[Vec, nodes.Node]]
-    ] = defaultdict(list)
+    inputs_by_norm: Dict[FrozenVec, List[Tuple[Vec, nodes.Node]]] = defaultdict(list)
 
     for node in all_nodes:
         # Spawners have no inputs.
         if isinstance(node, nodes.Spawner):
             node.has_input = True
         else:
-            inputs_by_norm[node.input_norm().as_tuple()].append((node.vec_point(0.0), node))
+            inputs_by_norm[node.input_norm().freeze()].append((node.vec_point(0.0), node))
         #     ctx.vmf.create_ent('prop_dynamic', model='models/editor/cone_helper.mdl', rendercolor='32 32 255', origin=node.vec_point(0), angles=node.input_norm().to_angle())
         # for out_type in node.out_types:
         #     ctx.vmf.create_ent('prop_dynamic', model='models/editor/cone_helper.mdl', rendercolor='255 32 32', origin=node.vec_point(1.0, out_type), angles=node.output_norm(out_type).to_angle())
@@ -145,12 +162,6 @@ async def vactube_transform(ctx: Context) -> None:
 
     # with open(str(ctx.bsp.filename)[:-4] + '_vac.vmf', 'w') as f:
     #     ctx.vmf.export(f, inc_version=False)
-
-    norm_inputs = [
-        (Vec(norm), node_lst)
-        for norm, node_lst in
-        inputs_by_norm.items()
-    ]
 
     sources: List[nodes.Spawner] = []
 
@@ -169,7 +180,7 @@ async def vactube_transform(ctx: Context) -> None:
                 LOGGER.debug('Override: {} -> {}', node.name, target.name)
             else:
                 target = find_closest(
-                norm_inputs,
+                inputs_by_norm.items(),
                 node,
                 dest_type,
             )
@@ -203,9 +214,13 @@ async def vactube_transform(ctx: Context) -> None:
             )
 
     LOGGER.info('Generating animations...')
-    all_anims = animations.generate(sources)
+    all_anims = animations.generate(sources, all_sensors)
+
+    for sensor in all_sensors:  # After animations are generated.
+        sensor.prepare_outputs(relay_maker)
+
     # Sort the animations by their start and end, so they ideally are consistent.
-    all_anims.sort(key=lambda a: (a.start_node.origin, a.end_node.origin))
+    all_anims.sort(key=lambda a: (a.start_node.origin, a.end_node.origin if a.end_node is not None else Vec()))
 
     anim_mdl_name = Path('maps', ctx.bsp_path.stem, f'vac_anim_{random.randrange(0xffffff):06x}.mdl')
 
@@ -227,18 +242,21 @@ async def vactube_transform(ctx: Context) -> None:
         for tri in mesh.triangles:
             for point in tri:
                 point.tex_u, point.tex_v = U[point.tex_u], V[point.tex_v]
-        with open(temp_dir + '/ref.smd', 'wb') as f:
-            mesh.export(f)
+        with open(temp_dir + '/ref.smd', 'wb') as mesh_file:
+            mesh.export(mesh_file)
 
         with open(temp_dir + '/prop.qc', 'w') as qc_file:
-            qc_file.write(QC_TEMPLATE.format(path=anim_mdl_name))
+            qc_file.write(QC_TEMPLATE.format(
+                path=anim_mdl_name.as_posix(), 
+                fps=animations.FPS,
+            ))
 
             for i, anim in enumerate(all_anims):
                 anim.name = anim_name = f'anim_{i:03x}'
                 qc_file.write(SEQ_TEMPLATE.format(name=anim_name, fps=animations.FPS))
 
-                with open(temp_dir + f'/{anim_name}.smd', 'wb') as f:
-                    anim.mesh.export(f)
+                with open(temp_dir + f'/{anim_name}.smd', 'wb') as mesh_file:
+                    anim.mesh.export(mesh_file)
 
         args = [
             str(ctx.studiomdl),
@@ -258,12 +276,15 @@ async def vactube_transform(ctx: Context) -> None:
     # Ensure they're all packed.
     for ext in MDL_EXTS:
         try:
-            f = full_loc.with_suffix(ext).open('rb')
+            mdl_file = full_loc.with_suffix(ext).open('rb')
         except FileNotFoundError:
             pass
         else:
-            with f:
-                ctx.pack.pack_file(Path('models', anim_mdl_name.with_suffix(ext)), data=f.read())
+            with mdl_file:
+                ctx.pack.pack_file(
+                    Path('models', anim_mdl_name.with_suffix(ext)),
+                    data=mdl_file.read(),
+                )
 
     LOGGER.info('Setting up vactube ents...')
     # Generate the shared template.
@@ -271,8 +292,8 @@ async def vactube_transform(ctx: Context) -> None:
         'prop_dynamic',
         targetname='_vactube_temp_mover',
         angles='0 270 0',
-        origin='-16384 0 1024',
-        model=str(Path('models', anim_mdl_name)),
+        origin=VAC_POS,
+        model=Path('models', anim_mdl_name).as_posix(),
         rendermode=10,
         solid=0,
         spawnflags=64 | 256,  # Use Hitboxes for Renderbox, collision disabled.
@@ -281,17 +302,21 @@ async def vactube_transform(ctx: Context) -> None:
         'prop_dynamic_override',  # In case you use the physics model.
         targetname='_vactube_temp_visual',
         parentname='_vactube_temp_mover,move',
-        origin='-16384 0 1024',
+        origin=VAC_POS,
         model=nodes.CUBE_MODEL,
         solid=0,
         spawnflags=64 | 256,  # Use Hitboxes for Renderbox, collision disabled.
+        # These can be overridden in comp_vactube_start.
+        drawinfastreflection=0,
+        disableshadows=1,
+        disableflashlight=0,
     )
     ctx.vmf.create_ent(
         'point_template',
         targetname='_vactube_template',
         template01='_vactube_temp_mover',
         template02='_vactube_temp_visual',
-        origin='-16384 0 1024',
+        origin=VAC_POS,
         spawnflags='2',  # Preserve names, remove originals.
     )
 
@@ -337,34 +362,36 @@ async def vactube_transform(ctx: Context) -> None:
         # Now, generate the code so the VScript knows about the animations.
         code = [f'// Node: {start_node.ent["targetname"]}, {start_node.origin}']
         for anim in anims:
-            target = anim.end_node
+            anim_dest = anim.end_node
             anim_speed = anim.start_node.speed
-            pass_code = ','.join([
-                f'Output({time:.2f}, "{node.ent["targetname"]}", '
-                f'{node.tv_code(anim_speed)})'
-                for time, node in anim.pass_points
+            io_code = ','.join([
+                f'Output({time:.2f}, "{ent["targetname"]}", "{inp}")'
+                for time, ent, inp in anim.vscript_outputs()
             ])
             cube_name = 'null'
-            if isinstance(target, nodes.Dropper):
-                cube_model = target.cube['model'].replace('\\', '/')
-                cube_skin = conv_int(target.cube['skin'])
+            if isinstance(anim_dest, nodes.Dropper):
+                cube_model = anim_dest.cube['model'].replace('\\', '/')
+                cube_skin = conv_int(anim_dest.cube['skin'])
                 try:
-                    cube_name = vac_objects[start_node.group, cube_model, cube_skin].id
-                except KeyError:
+                    cube_name = objects.find_for_cube(vac_objects, start_node.group, anim_dest.cube).id
+                except LookupError:
                     LOGGER.warning(
                         'Cube model "{}", skin {} is not a type of cube travelling '
                         'in this vactube!\n\n'
-                        'Add a comp_vactube_object entity with this cube model'
-                        # Mention groups if they're used, otherwise it's not important.
-                        + (f' with the group "{start_node.group}".' if start_node.group else '.'),
+                        'Add a comp_vactube_object entity with this cube model{}',
                         cube_model, cube_skin,
+                        # Mention groups if they're used, otherwise it's not important.
+                        f' with the group "{start_node.group}".' if start_node.group else '.',
                     )
                     continue  # Skip this animation so it's not broken.
                 else:
-                    dropper_to_anim[target] = anim
+                    dropper_to_anim[anim_dest] = anim
             code.append(
                 f'{anim.name} <- anim("{anim.name}", {anim.duration}, '
-                f'{cube_name}, [{pass_code}]);'
+                f'{cube_name}, [{io_code}], '
+                f'{vscript_bool(anim.start_node.prop_fast_reflection)}, '
+                f'{vscript_bool(anim.start_node.prop_disable_shadows)}, '
+                f'{vscript_bool(anim.start_node.prop_disable_projtex)});'
             )
         spawn_maker['vscripts'] = ' '.join([
             'srctools/vac_anim.nut', objects_code[start_node.group],

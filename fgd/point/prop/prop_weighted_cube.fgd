@@ -11,7 +11,7 @@
 		2: "[2] Discouragement Redirection Cube"
 		3: "[3] Edgeless Safety Cube"
 		4: "[4] Antique Storage Cube"
-		6: "[6] Custom model"
+		6: "Custom model"
 		]
 
 	skintype[engine](boolean) : "Skin Type" : 0
@@ -22,12 +22,21 @@
 		]
 
 	model[engine](studio) : "Model" : ""
-	model(choices) : "Model" : "models/props/metal_box.mdl" : "The model to show in Hammer, or a custom model for cube type 6." =
+	model(choices) : "Model" : "models/props/metal_box.mdl" : "The model to show in Hammer. Custom model names can also be typed/pasted in here, and will be shown in-game if the entity is set to use a custom model." =
 		[
 		"models/props/metal_box.mdl": "Weighted Storage/Companion Cube"
 		"models/props/reflection_cube.mdl": "Discouragement Redirection"
 		"models/props_gameplay/mp_ball.mdl": "Edgeless Safety"
 		"models/props_underground/underground_weighted_cube.mdl": "Antique"
+		]
+
+	comp_custom_model_type[srctools, -engine](choices) : "[HA] Custom Model Type" : 0 : "Automatically handles various methods of setting custom cube models. " + 
+		"Cube Type sets the behavior and which skin numbers are used for gel, and the Model keyvalue sets the actual model. " +
+		"Script Override mode requires the collisions to be the same as the base cube type, but tends to produce more correct physics than Cube Type 6." =
+		[
+		0 : "None"
+		1 : "Script Override"
+		2 : "Cube Type 6"
 		]
 
 	skin(integer) : "Skin" : 0 : "The old skin property, mainly to show in Hammer. "

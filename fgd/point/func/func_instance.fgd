@@ -1,3 +1,5 @@
+@snippet description ReplaceParm = "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+
 @PointClass base(Angles) 
 	appliesto(!engine) // Not an actual entity.
 	instance()
@@ -8,7 +10,7 @@
 	[
 	targetname(target_source) : "Fix Up Name" : : "The name that all entities will be fixed up with based upon the fix up style."
 	file(instance_file) : "VMF Filename" : : "This indicates a map file relative to the map's file name. " +
-		"This is also looked up relative to sdk_content/maps/, if one exists in the parent directories."
+		"This is also looked up relative to sdk_content/maps/, if the current map is located inside those."
 
 	fixup_style[engine](integer) : "Entity Name Fix Up" : 0
 	fixup_style(choices) : "Entity Name Fix Up" : 0 : "Fixup style for instanced entity names.  Uses the 'Fix Up Name' field." =
@@ -23,36 +25,36 @@
 	spawnpositionname[L4D2](string) : "Spawn Position Name" : : "The name of the spawn position created when an instance is exported to the entity layer."
 	propagate_fixup[L4D2](boolean) : "Fixup Nested Instances" : 0 : "All nested instances will follow this instance's fixup rules. Any fixup rules in nested instances will be ignored."
 
-	replace01(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace02(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace03(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace04(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace05(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace06(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace07(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace08(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace09(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace10(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace11(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace12(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace13(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace14(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace15(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace16(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace17(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace18(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace19(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace20(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace21(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace22(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace23(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace24(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace25(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace26(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace27(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace28(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace29(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
-	replace30(instance_variable) : "Replace Variable" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
+	replace01(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace02(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace03(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace04(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace05(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace06(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace07(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace08(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace09(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace10(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace11(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace12(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace13(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace14(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace15(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace16(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace17(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace18(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace19(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace20(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace21(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace22(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace23(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace24(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace25(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace26(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace27(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace28(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace29(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
+	replace30(instance_variable) : "Replace Variable" : : #snippet ReplaceParm
 
 	@resources [] // Should be handled by collapsing...
 	]

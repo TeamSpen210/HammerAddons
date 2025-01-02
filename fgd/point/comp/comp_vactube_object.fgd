@@ -27,4 +27,6 @@
 	cube_model(studio) : "Cube Model" : : "If set, this object can be spawned in droppers. " +
 		"This should be the model used on the real cube version so they can be matched to each other."
 	cube_skin(integer) : "Cube Skin" : 0 : "The specific skin to detect on the real cubes."
+    
+    @resources []
 ]

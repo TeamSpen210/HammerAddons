@@ -1,7 +1,7 @@
 @BaseClass base(BaseEntityInputs) = PlayerInputs: "The inputs that can be fired on the player, for entities that pass through those."
 	[
-	input IgnoreFallDamage[HL2](float) : "Prevent the player from taking fall damage for [n] seconds, but reset back to taking fall damage after the first impact (so players will be hurt if they bounce off what they hit)."
-	input IgnoreFallDamageWithoutReset[HL2](float) : "Absolutely prevent the player from taking fall damage for [n] seconds. "
+	input IgnoreFallDamage[HL2, P1](float) : "Prevent the player from taking fall damage for [n] seconds, but reset back to taking fall damage after the first impact (so players will be hurt if they bounce off what they hit)."
+	input IgnoreFallDamageWithoutReset[HL2, P1](float) : "Absolutely prevent the player from taking fall damage for [n] seconds. "
 
 	input SetHUDVisibility(bool) : "Set if the player's HUD is visible or not."
 	input SetFogController(target_destination) : "Set the current env_fog_controller entity."
@@ -11,9 +11,9 @@
 	input HandleMapEvent(string) : "Generic hook for triggering game/mod-specific events like achievements for a player."
 	input SetSuppressAttacks(bool) : "Prevent or re-allow the player from being able to use weapons."
 
-	input DisableFlashlight[HL2](void) : "Disable the player's flashlight."
-	input EnableFlashlight[HL2](void) : "Disable the player's flashlight."
-	input ForceDropPhysObjects[HL2](void) : "Force the player to drop any physics objects they're carrying"
+	input DisableFlashlight[HL2, P1](void) : "Disable the player's flashlight."
+	input EnableFlashlight[HL2, P1](void) : "Disable the player's flashlight."
+	input ForceDropPhysObjects[HL2, P1](void) : "Force the player to drop any physics objects they're carrying"
 
 	input SetBodyGroup(integer) : "HACK: Sets this player's body group (from 0 - n). You'd better know what you are doing!"
 	input Ignite(void) : "Ignite, burst into flames"
@@ -21,8 +21,8 @@
 	input IgniteNumHitboxFires(integer) : "Ignite, with a parameter number of hitbox fires."
 	input IgniteHitboxFireScalev(float) : "Ignite, with a parameter hitbox fire scale."
 	
-	input GiveWeapon[HL2](string) : "Gives the player a weapon of the specified class name."
-	input DropWeapon[HL2](string) : "Causes the player to drop its current weapon in front of them."
+	input GiveWeapon[HL2, P1](string) : "Gives the player a weapon of the specified class name."
+	input DropWeapon[HL2, P1](string) : "Causes the player to drop its current weapon in front of them."
 	
 	input AddArmor[MBase](integer)    : "Adds to the player's current armor value. " +
 		"Total armor cannot exceed 100 unless a different value is set in logic_playerproxy."

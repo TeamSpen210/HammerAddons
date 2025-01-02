@@ -4,4 +4,8 @@
 	autovis(Weapons, L4D Weapons, Weapon Spawners)
 = weapon_pipe_bomb_spawn: "Pipe Bomb"
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_pipe_bomb.txt"
+		]
 	]

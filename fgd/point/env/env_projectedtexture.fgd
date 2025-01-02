@@ -18,8 +18,8 @@
 	target(target_destination) : "target" : : "target"
 	dontfollowtarget[MBase](boolean) : "Don't Follow Target" : 0 : "Prevents this entity from trying to point at its target, if it has one. Intended for when you want to use 'Light Only Target' without the entity trying to point to it."
 	lightfov(float) : "FOV" : 90.0 : "FOV"
-	nearz(float) : "NearZ" : 4.0 : "Near Z for projected texture"
-	farz(float) : "FarZ" : 750.0 : "Far Z for projected texture"
+	nearz(float) : "NearZ" : 4.0 : "Specifies the distance at which shadow casting begins. Ideally increase this until just before any objects." 
+	farz(float) : "FarZ" : 750.0 : "Specifies the distance at which shadow casting finishes. Increase this to cover the most distant surfaces."
 
 	enableshadows(boolean) : "Enable Shadows" : 1 : "Enables/disables shadows from this projected texture."
 
@@ -35,12 +35,13 @@
 	lightworld(boolean) : "Light World" : 1 : "Control whether flashlight effects static world geometry."
 	simpleprojection[since_ASW](boolean) : "Simple Projection" : 0 : "Indicates if this is a simple, non-light casting texture projection"
 
-	lightcolor(color255) : "Light Color" : "255 255 255 200" : "Light Color RGB-Intensity"
-	brightnessscale[since_ASW](float) : "Brightness Scale" : 1.0 : "Scale the light color by this brightness"
+	lightcolor[!since_ASW](color255) : "Light Color (RGBA)" : "255 255 255 200" : "Light Color. The fourth value is the alpha, and is limited to 0-255."
+	lightcolor[since_ASW](color255) : "Light Color (RGBA)" : "255 255 255 200" : "Light Color. The fourth value is the alpha, and is limited to 0-255. Use Brightness Scale to make it brighter."
+	brightnessscale[since_ASW](float) : "Brightness Scale" : 1.0 : "Scale the light color by this brightness."
 
-	cameraspace(boolean) : "Camera Space" : 0 : "Angles are interpreted as being relative to camera."
+	cameraspace(boolean) : "Camera Space" : 0 : "If set, the proected texture matches the player's orientation. A target entity must be set - the projected texture orbits around that entity based on its real distance from the target."
 
-	colortransitiontime[since_ASW](float) : "Color Transition Time" : 0.5 : "Amount of time it takes for a color change to occur."
+	colortransitiontime[since_ASW](float) : "Color Transition Speed" : 0.5 : "Controls the speed the transition takes. 1.0 means the color can change by a full 255 over 1 second."
 
 	constant_attn[MBase, TF2](float) : "Constant" : "0" : "The light's constant attenuation, giving the light no falloff. (This value is internally corrected with x*0.5)"
 	linear_attn[MBase, TF2](float) : "Linear" : "1" : "The light's linear attenuation, giving the light linear decline. This is the most common attenuation for projected textures. (This value is internally corrected with x*100)"
@@ -60,21 +61,7 @@
 	ProjectedTextureVersion[MBase](integer) readonly : "Projected Texture Version" : 1  : "(Don't change). Differentiates between projected textures built before/outside of Mapbase and projected textures using new features."
 
 	style[engine](integer) : "Appearance" : 0
-	style[since_P2](choices) : "Appearance" : "0" =
-		[
-		0: "Normal"
-		10: "Fluorescent flicker"
-		2: "Slow, strong pulse"
-		11: "Slow pulse, noblack"
-		5: "Gentle pulse"
-		1: "Flicker A"
-		6: "Flicker B"
-		3: "Candle A"
-		7: "Candle B"
-		8: "Candle C"
-		4: "Fast strobe"
-		9: "Slow strobe"
-		]
+	style[since_P2](choices) : "Appearance" : "0" = #snippet LightStyle
 
 	pattern[since_P2](string) : "Custom Appearance" : : "Set a custom pattern of light brightness for this light. " +
 		"Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. " +

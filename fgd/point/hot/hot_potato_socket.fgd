@@ -1,6 +1,10 @@
-
-@PointClass base(prop_glass_futbol_socket) 
+@PointClass base(BaseEntityPoint) 
 	appliesto(P2) 
-	studio("models/editor/axis_helper.mdl") = hot_potato_socket: "Catches (bombs?) and fires an output."
+	studio("models/editor/angle_helper.mdl")
+= hot_potato_socket: "Invisible entity that holds 'hot potatos' and fires an output. When a hot potato comes close it will snap into place."
 	[
+
+	// Outputs
+	output OnHotPotatoReleased(void) : "Player has taken the hot potato out of this socket."
+	output OnHotPotatoCaught(void) : "This socket has captured a hot potato."
 	]

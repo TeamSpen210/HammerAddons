@@ -3,6 +3,7 @@
 	appliesto(MBase)
 	iconsprite("editor/filter_involume.vmt") 
 	line(255 255 255, targetname, target)
+	line(0 255 255, targetname, tester)
 = filter_activator_involume : "A filter that tests whether the activator is within a volume."
 [
 	target(target_destination) : "Volume" : : "The volume to be tested with. This filter passes if the activator is within this volume. " +

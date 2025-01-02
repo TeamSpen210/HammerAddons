@@ -3,7 +3,7 @@
 	color(200 200 0) 
 	studioprop("models/editor/spot_cone_fixed.mdl")
 	// Frustum is actually fairly accurate for this
-	frustum(spreadspeed, _frustum_near, jetlength, rendercolor, -1)
+	frustum(spreadspeed, 1, jetlength, rendercolor, -1)
 = env_steam: "An entity used to create a jet of steam."
 	[
 	spawnflags(flags)  =

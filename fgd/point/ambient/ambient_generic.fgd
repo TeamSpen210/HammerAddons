@@ -23,13 +23,40 @@
 
 	sourceentityname(target_destination) : "Source Entity" : : "If an entity is specified, sound will come from this named entity instead of the location of ambient_generic."
 
+	haddons_enabled[engine](integer) : "Start Enabled" : -1
+	haddons_enabled[+srctools](choices) : "[HA] Start Enabled" : -1 : "If set, overrides the 'Start Silent' spawnflag. " +
+		"This allows this value to be easily controlled by $fixup values." = [
+		-1: "Use Spawnflag"
+		0: "[0] Start Silent"
+		1: "[1] Start Playing"
+	]
+
+	haddons_infrange[engine](integer) : "Infinite Range" : -1
+	haddons_infrange[+srctools](choices) : "[HA] Infinite Range" : -1 : "If set, overrides the 'Infinite Range' spawnflag. " +
+		"This allows this value to be easily controlled by $fixup values. " +
+		"Note that if a soundscript is used, that overrides this value." = [
+		-1: "Use Spawnflag"
+		0: "[0] Limited Range"
+		1: "[1] Infinite Range"
+	]
+
+	haddons_mode[engine](integer) : "Looping Mode" : -1
+	haddons_mode[+srctools](choices) : "[HA] Looping Mode" : -1 : "If set, overrides the 'Is NOT Looped' spawnflag. " +
+		"This option controls how the entity controls the output, not whether the sound actually loops. " +
+		"If oneshot, PlaySound starts the sound afresh and StopSound does nothing, " +
+		"while in looping mode PlaySound requires it to already be stopped." =  [
+		-1: "Use Spawnflag"
+		0: "[0] Oneshot Sound"
+		1: "[1] Looping Sound"
+	]
+
 	soundflags[engine](integer) : "Sound Flasg" : 0
 	soundflags[MBase](choices) : "Sound Flags" : 0 : "Additional options for your sound." =
 	[
 		0: "None"
-		128: "[128] Pause when game is paused"
-		256: "[256] Ignore phonemes (no lip-syncing)"
-		1024: "[1024] Don't overwrite existing sound on channel (untested)"
+		128: "Pause when game is paused"
+		256: "Ignore phonemes (no lip-syncing)"
+		1024: "Don't overwrite existing sound on channel (untested)"
 
 		384: "Pause and ignore phonemes"
 		1280: "Ignore phonemes and don't overwrite"

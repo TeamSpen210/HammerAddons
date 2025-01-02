@@ -3,4 +3,8 @@
 	autovis(Weapons, L4D Weapons, Scripted Weapons)
 = weapon_first_aid_kit: "Physics First Aid Kit - This entity is intended to be used in scripted events where a single item needs to spawned with physics active."
 	[
+	@resources
+		[
+		weapon_script "scripts/weapon_first_aid_kit.txt"
+		]
 	]

@@ -1,12 +1,14 @@
-@PointClass base(BasePortButton) 
+@PointClass base(BasePortButton, SRCModel) 
 	appliesto(P2) 
 	autovis(Test Elements, P2 Buttons, Floor)
 	studioprop() = prop_floor_cube_button: "A floor button which is activated by a prop_weighted_cube."
 	[
-	model[engine](string) : "Hammer Preview"
-	model(studio) : "[H]] Model" : "models/props/box_socket.mdl" : "Model to display in Hammer. Use Init Code and a comp_precache_model to change the model in-game."
-	acceptsball(boolean) : "Accepts Balls" : 0 : "Do Edgeless Safety Cubes activate this? Should almost always be No unless no balls are in the map."
 
+	model[-srctools](studio) : "[H] Model" : "models/props/box_socket.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
+	model[+srctools](studio) : "[HA] Custom Model" : "models/props/box_socket.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	acceptsball(boolean) : "Accepts Balls" : 0 : "Do Edgeless Safety Cubes activate this? Should almost always be No."
+	// Hammer automatically adds this when selecting a model, this prevents it from appearing as invalid
+	skin(integer) readonly : "<Skin>" : 0 : "Skin on the model to use. The game overrides this based on the button's pressed state, so changing it here has no effect."
 	@resources
 		[
 		model "models/props/box_socket.mdl"

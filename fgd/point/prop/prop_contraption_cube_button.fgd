@@ -1,7 +1,7 @@
 @PointClass base(BasePortButton) 
 	appliesto(P2EDU) 
-	studioprop("models/props_ingame/button_socket_contraption..mdl") 
-= prop_contraption_cube_button: "A floor button which is activated by a prop_contraption_cube."
+	studioprop("models/props_ingame/button_socket_contraption.mdl") 
+= prop_contraption_cube_button: "A floor button which is activated by a prop_contraption_cube. Doesn't seem to work."
 	[
-	output OnPulse(string) : "Should be called when the button is being pressed."
+	output OnPulse(string) : "Fired when the button is being pressed."
 	]

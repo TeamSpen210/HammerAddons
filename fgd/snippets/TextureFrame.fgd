@@ -1,0 +1,2 @@
+
+@snippet Keyvalue TextureFrameIndex = texframeindex(integer) : "ToggleTexture Frame" : 0 : "The initial texture frame used by the ToggleTexture proxy and controlled by env_texturetoggle."

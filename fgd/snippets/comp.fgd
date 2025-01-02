@@ -1,0 +1,8 @@
+// Shared values from postcompiler entities.
+
+@snippet choices "CompKVMode" = [
+	"legacy": "Legacy (Entity Name or String)"
+	"global": "String"
+	"local": "Entity Name"
+	"position": "Position"
+]

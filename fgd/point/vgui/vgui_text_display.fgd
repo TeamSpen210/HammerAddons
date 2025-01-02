@@ -2,7 +2,8 @@
 	appliesto(MBase) 
 	studioprop("models/editor/vgui_arrows.mdl") 
 	sphere(textsize) 
-	worldtext() // If there's actually a game branch with mapbase + csgo...
+	// Causes rotation doubling and doesn't match up with the ingame appearance
+	// worldtext()
 = vgui_text_display: "Displays a VGUI text label oriented in the world. Can be considered Mapbase's equivalent of point_worldtext. The panel itself can be displayed with the 'r_vguitext_bg' cvar."
 	[
 	spawnflags(flags) =
@@ -16,17 +17,17 @@
 	alignment(choices) : "Text Alignment" : 7 : "The text's alignment in relation to the panel size. " +
 		"With 'South', the text will be centered between the origin and the sphere's left bound relative to the angles the text is facing." =
 		[
-			0 : "[0] Northwest"
-			1 : "[1] North"
-			2 : "[2] Northeast"
-			3 : "[3] West"
-			4 : "[4] Center"
-			5 : "[5] East"
-			6 : "[6] Southwest"
-			7 : "[7] South"
-			8 : "[8] Southeast"
+			0 : "Northwest"
+			1 : "North"
+			2 : "Northeast"
+			3 : "West"
+			4 : "Center"
+			5 : "East"
+			6 : "Southwest"
+			7 : "South"
+			8 : "Southeast"
 		]
-	font(string) : "Font" : : "The font to use from resource/ClientScheme.res. A blank value is equivalent to the default font. Not all fonts may function. Commonly defined fonts include 'DefaultSmall' and 'Trebuchet18'/'Trebuchet24'."
+	font(string) : "Font" : : "Makes the text use a specific client scheme font. The font must not be additive or proportional. Commonly defined fonts include 'DefaultSmall' and 'Trebuchet18'/'Trebuchet24'. Also supports custom fonts defined through clientside VScript functions."
 	resolution(integer) : "Panel Resolution" : 200 : "The number of pixels available to the text. The higher the resolution is, the smaller the text will be. " +
 		"(NOTE: Changing the resolution with inputs later will scale the screen itself.)"
 	textsize(float) : "Panel Size" : 100 : "The size of the text panel in the world. This is previewed with a sphere, but it actually extends 'north-west' relative to the direction it's facing. " +

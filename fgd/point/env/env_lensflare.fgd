@@ -1,8 +1,14 @@
+@Snippet desc Texture = "Image of the lens - if empty the flare doesn't exist."
+@Snippet desc Params = "Parameters - example : DISK 1.0 10 10"
+@Snippet desc Intensity = "Intensity of the flare - example : 1.0 1.0 1.0"
+@Snippet desc Sizes = "Sizes of the flare - example : 1.0 1.0 1.0"
+@Snippet desc Color = "Color factor of the texture - example : 255 255 255"
+
 @PointClass base(BaseEntityPoint) appliesto(Mesa) 
 	sphere(GlowProxySize)
 = env_lensflare : "Controls LensFlare"
 	[
-	FlareFile(string) : "File" : "" : "Optionnal - file defining the lens flare. Note: Hammer's parameters overwrite the file's parameters."
+	FlareFile(string) : "File" :: "Optional - file defining the lens flare. Note: Hammer's parameters overwrite the file's parameters."
 
 	spawnflags(flags) =
 	[
@@ -13,7 +19,9 @@
 	FlareAttenuation(float) : "Distance attenuation" : "0.0" : "distance where lensflare will be invisible. 0.0 if not attenuation with distance"
 
 	FlareType[engine](integer) : "Flare Type" : 0
-	FlareType(Choices) : "Flare Type" : 0 : "Normal: normal lens flare (Pitch,Yaw,Roll not used)    ------     Sun Flare: set the same Pitch,Yaw,Roll that the one from the sun light_env. That will define the position of the sun. the actual position of this entity is not used." =
+	FlareType(Choices) : "Flare Type" : 0 : "Normal: normal lens flare (Pitch,Yaw,Roll not used)    ------     " +
+		"Sun Flare: set the same Pitch,Yaw,Roll that the one from the sun light_env. " +
+		"That will define the position of the sun. the actual position of this entity is not used." =
 		[
 		0 : "Normal"
 		1 : "Sun Flare"
@@ -36,129 +44,132 @@
 		9 : "Slow strobe"
 		]
 	
-	GlowProxySize(float) : "Size of Glow Proxy Geometry." : "2.0" : "Size of the glow to be rendered for visibility testing. Must be larger than the distance from the sprite center to empty space.  So if this glow is inside geometry (like a light bulb), set this value to be bigger than the bulb's radius. Any time a sphere of this radius would be visible (poking through any nearby geometry), the glow will be rendered. - Richard's note : I noticed that value more than ~100 wont work correctly"
+	GlowProxySize(float) : "Size of Glow Proxy Geometry." : "2.0" : "Size of the glow to be rendered for visibility testing. " +
+		"Must be larger than the distance from the sprite center to empty space.  " +
+		"So if this glow is inside geometry (like a light bulb), set this value to be bigger than the bulb's radius. " +
+		"Any time a sphere of this radius would be visible (poking through any nearby geometry), the glow will be rendered. " +
+		"- Richard's note : I noticed that value more than ~100 wont work correctly"
 	
-	Flare01_texture(string) : "Flare 01 texture" : "" : "image of the lens - if empty the flare doesn't exist"
-	Flare01_params(string) : "Flare 01 parameters" : "" : "parameters - example : DISK 1.0 10 10"
-	Flare01_intensity(vector) : "Flare 01 intensity" : "" : "intensity of the flare - example : 1.0 1.0 1.0"
-	Flare01_sizes(vector) : "Flare 01 sizes" : "" : "sizes of the flare - example : 1.0 1.0 1.0"
-	Flare01_color(color255) : "Flare 01 color" : "" : "color factor of the texture - example : 255 255 255"
+	Flare01_texture(string) : "Flare 01 texture" :: #Snippet Texture
+	Flare01_params(string) : "Flare 01 parameters" :: #Snippet Params
+	Flare01_intensity(vector) : "Flare 01 intensity" :: #Snippet Intensity
+	Flare01_sizes(vector) : "Flare 01 sizes" :: #Snippet Sizes
+	Flare01_color(color255) : "Flare 01 color" :: #Snippet Color
 	
-	Flare02_texture(string) : "Flare 02 texture" : "" : "cf. Flare 01 notes"
-	Flare02_params(string) : "Flare02 parameters" : "" : "cf. Flare 01 notes"
-	Flare02_intensity(vector) : "Flare 02 intensity" : "" : "cf. Flare 01 notes"
-	Flare02_sizes(vector) : "Flare 02 sizes" : "" : "cf. Flare 01 notes"
-	Flare02_color(color255) : "Flare 02 color" : "" : "cf. Flare 01 notes"
+	Flare02_texture(string) : "Flare 02 texture" :: #Snippet Texture
+	Flare02_params(string) : "Flare02 parameters" :: #Snippet Params
+	Flare02_intensity(vector) : "Flare 02 intensity" :: #Snippet Intensity
+	Flare02_sizes(vector) : "Flare 02 sizes" :: #Snippet Sizes
+	Flare02_color(color255) : "Flare 02 color" :: #Snippet Color
 	
-	Flare03_texture(string) : "Flare 03 texture" : "" : "cf. Flare 01 notes"
-	Flare03_params(string) : "Flare03 parameters" : "" : "cf. Flare 01 notes"
-	Flare03_intensity(vector) : "Flare 03 intensity" : "" : "cf. Flare 01 notes"
-	Flare03_sizes(vector) : "Flare 03 sizes" : "" : "cf. Flare 01 notes"
-	Flare03_color(color255) : "Flare 03 color" : "" : "cf. Flare 01 notes"
+	Flare03_texture(string) : "Flare 03 texture" :: #Snippet Texture
+	Flare03_params(string) : "Flare03 parameters" :: #Snippet Params
+	Flare03_intensity(vector) : "Flare 03 intensity" :: #Snippet Intensity
+	Flare03_sizes(vector) : "Flare 03 sizes" :: #Snippet Sizes
+	Flare03_color(color255) : "Flare 03 color" :: #Snippet Color
 	
-	Flare04_texture(string) : "Flare 04 texture" : "" : "cf. Flare 01 notes"
-	Flare04_params(string) : "Flare04 parameters" : "" : "cf. Flare 01 notes"
-	Flare04_intensity(vector) : "Flare 04 intensity" : "" : "cf. Flare 01 notes"
-	Flare04_sizes(vector) : "Flare 04 sizes" : "" : "cf. Flare 01 notes"
-	Flare04_color(color255) : "Flare 04 color" : "" : "cf. Flare 01 notes"
+	Flare04_texture(string) : "Flare 04 texture" :: #Snippet Texture
+	Flare04_params(string) : "Flare04 parameters" :: #Snippet Params
+	Flare04_intensity(vector) : "Flare 04 intensity" :: #Snippet Intensity
+	Flare04_sizes(vector) : "Flare 04 sizes" :: #Snippet Sizes
+	Flare04_color(color255) : "Flare 04 color" :: #Snippet Color
 	
-	Flare05_texture(string) : "Flare 05 texture" : "" : "cf. Flare 01 notes"
-	Flare05_params(string) : "Flare05 parameters" : "" : "cf. Flare 01 notes"
-	Flare05_intensity(vector) : "Flare 05 intensity" : "" : "cf. Flare 01 notes"
-	Flare05_sizes(vector) : "Flare 05 sizes" : "" : "cf. Flare 01 notes"
-	Flare05_color(color255) : "Flare 05 color" : "" : "cf. Flare 01 notes"
+	Flare05_texture(string) : "Flare 05 texture" :: #Snippet Texture
+	Flare05_params(string) : "Flare05 parameters" :: #Snippet Params
+	Flare05_intensity(vector) : "Flare 05 intensity" :: #Snippet Intensity
+	Flare05_sizes(vector) : "Flare 05 sizes" :: #Snippet Sizes
+	Flare05_color(color255) : "Flare 05 color" :: #Snippet Color
 	
-	Flare06_texture(string) : "Flare 06 texture" : "" : "cf. Flare 01 notes"
-	Flare06_params(string) : "Flare06 parameters" : "" : "cf. Flare 01 notes"
-	Flare06_intensity(vector) : "Flare 06 intensity" : "" : "cf. Flare 01 notes"
-	Flare06_sizes(vector) : "Flare 06 sizes" : "" : "cf. Flare 01 notes"
-	Flare06_color(color255) : "Flare 06 color" : "" : "cf. Flare 01 notes"
+	Flare06_texture(string) : "Flare 06 texture" :: #Snippet Texture
+	Flare06_params(string) : "Flare06 parameters" :: #Snippet Params
+	Flare06_intensity(vector) : "Flare 06 intensity" :: #Snippet Intensity
+	Flare06_sizes(vector) : "Flare 06 sizes" :: #Snippet Sizes
+	Flare06_color(color255) : "Flare 06 color" :: #Snippet Color
 
-	Flare07_texture(string) : "Flare 07 texture" : "" : "cf. Flare 01 notes"
-	Flare07_params(string) : "Flare07 parameters" : "" : "cf. Flare 01 notes"
-	Flare07_intensity(vector) : "Flare 07 intensity" : "" : "cf. Flare 01 notes"
-	Flare07_sizes(vector) : "Flare 07 sizes" : "" : "cf. Flare 01 notes"
-	Flare07_color(color255) : "Flare 07 color" : "" : "cf. Flare 01 notes"
+	Flare07_texture(string) : "Flare 07 texture" :: #Snippet Texture
+	Flare07_params(string) : "Flare07 parameters" :: #Snippet Params
+	Flare07_intensity(vector) : "Flare 07 intensity" :: #Snippet Intensity
+	Flare07_sizes(vector) : "Flare 07 sizes" :: #Snippet Sizes
+	Flare07_color(color255) : "Flare 07 color" :: #Snippet Color
 
-	Flare08_texture(string) : "Flare 08 texture" : "" : "cf. Flare 01 notes"
-	Flare08_params(string) : "Flare08 parameters" : "" : "cf. Flare 01 notes"
-	Flare08_intensity(vector) : "Flare 08 intensity" : "" : "cf. Flare 01 notes"
-	Flare08_sizes(vector) : "Flare 08 sizes" : "" : "cf. Flare 01 notes"
-	Flare08_color(color255) : "Flare 08 color" : "" : "cf. Flare 01 notes"
+	Flare08_texture(string) : "Flare 08 texture" :: #Snippet Texture
+	Flare08_params(string) : "Flare08 parameters" :: #Snippet Params
+	Flare08_intensity(vector) : "Flare 08 intensity" :: #Snippet Intensity
+	Flare08_sizes(vector) : "Flare 08 sizes" :: #Snippet Sizes
+	Flare08_color(color255) : "Flare 08 color" :: #Snippet Color
 	
-	Flare09_texture(string) : "Flare 09 texture" : "" : "cf. Flare 01 notes"
-	Flare09_params(string) : "Flare09 parameters" : "" : "cf. Flare 01 notes"
-	Flare09_intensity(vector) : "Flare 09 intensity" : "" : "cf. Flare 01 notes"
-	Flare09_sizes(vector) : "Flare 09 sizes" : "" : "cf. Flare 01 notes"
-	Flare09_color(color255) : "Flare 09 color" : "" : "cf. Flare 01 notes"
+	Flare09_texture(string) : "Flare 09 texture" :: #Snippet Texture
+	Flare09_params(string) : "Flare09 parameters" :: #Snippet Params
+	Flare09_intensity(vector) : "Flare 09 intensity" :: #Snippet Intensity
+	Flare09_sizes(vector) : "Flare 09 sizes" :: #Snippet Sizes
+	Flare09_color(color255) : "Flare 09 color" :: #Snippet Color
 	
-	Flare10_texture(string) : "Flare 10 texture" : "" : "cf. Flare 01 notes"
-	Flare10_params(string) : "Flare10 parameters" : "" : "cf. Flare 01 notes"
-	Flare10_intensity(vector) : "Flare 10 intensity" : "" : "cf. Flare 01 notes"
-	Flare10_sizes(vector) : "Flare 10 sizes" : "" : "cf. Flare 01 notes"
-	Flare10_color(color255) : "Flare 10 color" : "" : "cf. Flare 01 notes"
+	Flare10_texture(string) : "Flare 10 texture" :: #Snippet Texture
+	Flare10_params(string) : "Flare10 parameters" :: #Snippet Params
+	Flare10_intensity(vector) : "Flare 10 intensity" :: #Snippet Intensity
+	Flare10_sizes(vector) : "Flare 10 sizes" :: #Snippet Sizes
+	Flare10_color(color255) : "Flare 10 color" :: #Snippet Color
 
-	Flare11_texture(string) : "Flare 11 texture" : "" : "cf. Flare 01 notes"
-	Flare11_params(string) : "Flare11 parameters" : "" : "cf. Flare 01 notes"
-	Flare11_intensity(vector) : "Flare 11 intensity" : "" : "cf. Flare 01 notes"
-	Flare11_sizes(vector) : "Flare 11 sizes" : "" : "cf. Flare 01 notes"
-	Flare11_color(color255) : "Flare 11 color" : "" : "cf. Flare 01 notes"
+	Flare11_texture(string) : "Flare 11 texture" :: #Snippet Texture
+	Flare11_params(string) : "Flare11 parameters" :: #Snippet Params
+	Flare11_intensity(vector) : "Flare 11 intensity" :: #Snippet Intensity
+	Flare11_sizes(vector) : "Flare 11 sizes" :: #Snippet Sizes
+	Flare11_color(color255) : "Flare 11 color" :: #Snippet Color
 
-	Flare12_texture(string) : "Flare 12 texture" : "" : "cf. Flare 01 notes"
-	Flare12_params(string) : "Flare12 parameters" : "" : "cf. Flare 01 notes"
-	Flare12_intensity(vector) : "Flare 12 intensity" : "" : "cf. Flare 01 notes"
-	Flare12_sizes(vector) : "Flare 12 sizes" : "" : "cf. Flare 01 notes"
-	Flare12_color(color255) : "Flare 12 color" : "" : "cf. Flare 01 notes"
+	Flare12_texture(string) : "Flare 12 texture" :: #Snippet Texture
+	Flare12_params(string) : "Flare12 parameters" :: #Snippet Params
+	Flare12_intensity(vector) : "Flare 12 intensity" :: #Snippet Intensity
+	Flare12_sizes(vector) : "Flare 12 sizes" :: #Snippet Sizes
+	Flare12_color(color255) : "Flare 12 color" :: #Snippet Color
 
-	Flare13_texture(string) : "Flare 13 texture" : "" : "cf. Flare 01 notes"
-	Flare13_params(string) : "Flare13 parameters" : "" : "cf. Flare 01 notes"
-	Flare13_intensity(vector) : "Flare 13 intensity" : "" : "cf. Flare 01 notes"
-	Flare13_sizes(vector) : "Flare 13 sizes" : "" : "cf. Flare 01 notes"
-	Flare13_color(color255) : "Flare 13 color" : "" : "cf. Flare 01 notes"
+	Flare13_texture(string) : "Flare 13 texture" :: #Snippet Texture
+	Flare13_params(string) : "Flare13 parameters" :: #Snippet Params
+	Flare13_intensity(vector) : "Flare 13 intensity" :: #Snippet Intensity
+	Flare13_sizes(vector) : "Flare 13 sizes" :: #Snippet Sizes
+	Flare13_color(color255) : "Flare 13 color" :: #Snippet Color
 
-	Flare14_texture(string) : "Flare 14 texture" : "" : "cf. Flare 01 notes"
-	Flare14_params(string) : "Flare14 parameters" : "" : "cf. Flare 01 notes"
-	Flare14_intensity(vector) : "Flare 14 intensity" : "" : "cf. Flare 01 notes"
-	Flare14_sizes(vector) : "Flare 14 sizes" : "" : "cf. Flare 01 notes"
-	Flare14_color(color255) : "Flare 14 color" : "" : "cf. Flare 01 notes"
+	Flare14_texture(string) : "Flare 14 texture" :: #Snippet Texture
+	Flare14_params(string) : "Flare14 parameters" :: #Snippet Params
+	Flare14_intensity(vector) : "Flare 14 intensity" :: #Snippet Intensity
+	Flare14_sizes(vector) : "Flare 14 sizes" :: #Snippet Sizes
+	Flare14_color(color255) : "Flare 14 color" :: #Snippet Color
 
-	Flare15_texture(string) : "Flare 15 texture" : "" : "cf. Flare 01 notes"
-	Flare15_params(string) : "Flare15 parameters" : "" : "cf. Flare 01 notes"
-	Flare15_intensity(vector) : "Flare 15 intensity" : "" : "cf. Flare 01 notes"
-	Flare15_sizes(vector) : "Flare 15 sizes" : "" : "cf. Flare 01 notes"
-	Flare15_color(color255) : "Flare 15 color" : "" : "cf. Flare 01 notes"
+	Flare15_texture(string) : "Flare 15 texture" :: #Snippet Texture
+	Flare15_params(string) : "Flare15 parameters" :: #Snippet Params
+	Flare15_intensity(vector) : "Flare 15 intensity" :: #Snippet Intensity
+	Flare15_sizes(vector) : "Flare 15 sizes" :: #Snippet Sizes
+	Flare15_color(color255) : "Flare 15 color" :: #Snippet Color
 
-	Flare16_texture(string) : "Flare 16 texture" : "" : "cf. Flare 01 notes"
-	Flare16_params(string) : "Flare16 parameters" : "" : "cf. Flare 01 notes"
-	Flare16_intensity(vector) : "Flare 16 intensity" : "" : "cf. Flare 01 notes"
-	Flare16_sizes(vector) : "Flare 16 sizes" : "" : "cf. Flare 01 notes"
-	Flare16_color(color255) : "Flare 16 color" : "" : "cf. Flare 01 notes"
+	Flare16_texture(string) : "Flare 16 texture" :: #Snippet Texture
+	Flare16_params(string) : "Flare16 parameters" :: #Snippet Params
+	Flare16_intensity(vector) : "Flare 16 intensity" :: #Snippet Intensity
+	Flare16_sizes(vector) : "Flare 16 sizes" :: #Snippet Sizes
+	Flare16_color(color255) : "Flare 16 color" :: #Snippet Color
 
-	Flare17_texture(string) : "Flare 17 texture" : "" : "cf. Flare 01 notes"
-	Flare17_params(string) : "Flare17 parameters" : "" : "cf. Flare 01 notes"
-	Flare17_intensity(vector) : "Flare 17 intensity" : "" : "cf. Flare 01 notes"
-	Flare17_sizes(vector) : "Flare 17 sizes" : "" : "cf. Flare 01 notes"
-	Flare17_color(color255) : "Flare 17 color" : "" : "cf. Flare 01 notes"
+	Flare17_texture(string) : "Flare 17 texture" :: #Snippet Texture
+	Flare17_params(string) : "Flare17 parameters" :: #Snippet Params
+	Flare17_intensity(vector) : "Flare 17 intensity" :: #Snippet Intensity
+	Flare17_sizes(vector) : "Flare 17 sizes" :: #Snippet Sizes
+	Flare17_color(color255) : "Flare 17 color" :: #Snippet Color
 
-	Flare18_texture(string) : "Flare 18 texture" : "" : "cf. Flare 01 notes"
-	Flare18_params(string) : "Flare18 parameters" : "" : "cf. Flare 01 notes"
-	Flare18_intensity(vector) : "Flare 18 intensity" : "" : "cf. Flare 01 notes"
-	Flare18_sizes(vector) : "Flare 18 sizes" : "" : "cf. Flare 01 notes"
-	Flare18_color(color255) : "Flare 18 color" : "" : "cf. Flare 01 notes"
+	Flare18_texture(string) : "Flare 18 texture" :: #Snippet Texture
+	Flare18_params(string) : "Flare18 parameters" :: #Snippet Params
+	Flare18_intensity(vector) : "Flare 18 intensity" :: #Snippet Intensity
+	Flare18_sizes(vector) : "Flare 18 sizes" :: #Snippet Sizes
+	Flare18_color(color255) : "Flare 18 color" :: #Snippet Color
 
-	Flare19_texture(string) : "Flare 19 texture" : "" : "cf. Flare 01 notes"
-	Flare19_params(string) : "Flare19 parameters" : "" : "cf. Flare 01 notes"
-	Flare19_intensity(vector) : "Flare 19 intensity" : "" : "cf. Flare 01 notes"
-	Flare19_sizes(vector) : "Flare 19 sizes" : "" : "cf. Flare 01 notes"
-	Flare19_color(color255) : "Flare 19 color" : "" : "cf. Flare 01 notes"
+	Flare19_texture(string) : "Flare 19 texture" :: #Snippet Texture
+	Flare19_params(string) : "Flare19 parameters" :: #Snippet Params
+	Flare19_intensity(vector) : "Flare 19 intensity" :: #Snippet Intensity
+	Flare19_sizes(vector) : "Flare 19 sizes" :: #Snippet Sizes
+	Flare19_color(color255) : "Flare 19 color" :: #Snippet Color
 	
-	Flare20_texture(string) : "Flare 20 texture" : "" : "cf. Flare 01 notes"
-	Flare20_params(string) : "Flare20 parameters" : "" : "cf. Flare 01 notes"
-	Flare20_intensity(vector) : "Flare 20 intensity" : "" : "cf. Flare 01 notes"
-	Flare20_sizes(vector) : "Flare 20 sizes" : "" : "cf. Flare 01 notes"
-	Flare20_color(color255) : "Flare 20 color" : "" : "cf. Flare 01 notes"
-	
-	
+	Flare20_texture(string) : "Flare 20 texture" :: #Snippet Texture
+	Flare20_params(string) : "Flare20 parameters" :: #Snippet Params
+	Flare20_intensity(vector) : "Flare 20 intensity" :: #Snippet Intensity
+	Flare20_sizes(vector) : "Flare 20 sizes" :: #Snippet Sizes
+	Flare20_color(color255) : "Flare 20 color" :: #Snippet Color
+
 	
 	// Inputs
 	input ColorRedValue(float) : "Sets the red color channel's value (0 - 255)."

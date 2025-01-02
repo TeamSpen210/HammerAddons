@@ -13,3 +13,66 @@ include_trailing_comma = true
 from_first = true
 combine_as_imports = true
 src_paths = ["src"]
+
+[tool.ruff]
+line-length = 127
+
+[tool.ruff.lint]
+select = [
+	"UP", "F", "C4", "ANN", "B", "PIE", "RUF",
+	"PLC", "PLE", "PLW",  # Pylint.
+
+	"TCH005",  # Empty type-checking block.
+]
+allowed-confusables = [
+	"×",  # Multiplication sign
+]
+extend-ignore = [
+	# Allow *-imports.
+	"F403",
+	# name may be undefined, or defined from star imports: module
+	"F405",
+	"F841",  # Unused local var, detects tuple unpacks.
+	# Flake8-annotations.
+	# Allow typing.Any
+	"ANN401",
+
+	# PyLint:
+	"PLC0414",  # import x as x is used for type checking.
+	"PLC0415",  # We use non-toplevel imports to fetch our databases after initialising the classes.
+	"PLC1901",  # Allow compare to empty string, can be more clear.
+	"PLE1205",  # Too many arguments for logging, doesn't handle our format
+	"PLW0603",  # Allow use of global statement.
+	"PLW2901",  # Allow redefining loop var inside the loop.
+
+	# Ruff:
+	"RUF100", # Sometimes use # noqa for other linters
+	"RUF022", # All not sorted
+	"RUF023", # Slots not sorted
+
+	# Flake8-bugbear:
+	# Loop control var not used, triggers on unpackings.
+	"B007",
+	# Stacklevel parameter required for warnings.warn() - doesn't detect positional args.
+	"B028",
+
+	# Pycodestyle, when out of preview:
+	"E221",  # Allow multiple spaces before operators if we want to align
+	"E226",  # Allow no spaces like "1+1", sometimes useful to indicate precedence
+
+	# Pyupgrade:
+	# Keep using typing types even with __future__.annotations.
+	"UP006", "UP007",
+
+	# Flake8-pie:
+	# Prefer to use pass in empty functions, even if docstring is present
+	"PIE790",
+	# Allow aliases for enum values, used often.
+	"PIE796",
+	]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = [
+	"srctools.math.FrozenVec", "srctools.math.FrozenAngle", "srctools.math.FrozenMatrix",
+	"typing.cast", "srctools.logger.get_logger",
+]

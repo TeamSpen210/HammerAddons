@@ -4,7 +4,8 @@ import os
 
 from srctools import Entity
 from srctools.logger import get_logger
-from srctools.packlist import FileType, unify_path
+from srctools.mdl import MDL_EXTS
+from srctools.packlist import FileType, strip_extension, unify_path
 from srctools.sndscript import SND_CHARS
 
 from hammeraddons.bsp_transform import Context, check_control_enabled, trans
@@ -14,7 +15,7 @@ LOGGER = get_logger(__name__, 'trans.packing')
 
 
 @trans('comp_precache_model', priority=100)
-def comp_precache_model(ctx: Context):
+def comp_precache_model(ctx: Context) -> None:
     """Force precaching a specific model."""
     already_done: Set[str] = set()
     for ent in ctx.vmf.by_class['comp_precache_model']:
@@ -62,10 +63,10 @@ function Precache() {
 
 
 @trans('comp_precache_sound', priority=100)
-def comp_precache_sound(ctx: Context):
+def comp_precache_sound(ctx: Context) -> None:
     """Force precaching a set of sounds."""
     # Match normalised sound to the original filename.
-    sounds: dict[str, str] = {}
+    sounds: Dict[str, str] = {}
     for ent in ctx.vmf.by_class['comp_precache_sound']:
         ent.remove()
         if not check_control_enabled(ent):
@@ -101,7 +102,7 @@ def comp_precache_sound(ctx: Context):
 
 
 @trans('comp_pack_replace_soundscript', priority=100)
-def comp_pack_replace_soundscript(ctx: Context):
+def comp_pack_replace_soundscript(ctx: Context) -> None:
     """Replace a soundscript with a different one."""
     old_scripts = set()
     new_scripts = set()
@@ -140,7 +141,7 @@ PACK_TYPES = {
 
 
 @trans('comp_pack', priority=100)
-def comp_pack(ctx: Context):
+def comp_pack(ctx: Context) -> None:
     """Force packing resources."""
     for ent in ctx.vmf.by_class['comp_pack']:
         ent.remove()
@@ -180,7 +181,7 @@ def comp_pack(ctx: Context):
 
 
 @trans('comp_pack_rename', priority=100)
-def comp_pack_rename(ctx: Context):
+def comp_pack_rename(ctx: Context) -> None:
     """Pack a file, under a different name."""
 
     # Optimisation, don't re-read files multiple times.
@@ -197,16 +198,6 @@ def comp_pack_rename(ctx: Context):
         file_type_name = ent['filetype']
 
         try:
-            file = ctx.sys[name_src]
-        except FileNotFoundError:
-            LOGGER.warning(
-                'File cannot be loaded to pack! \n{} -> {}',
-                name_src,
-                name_dest,
-            )
-            continue
-
-        try:
             res_type = PACK_TYPES[file_type_name.casefold()]
         except KeyError:
             LOGGER.warning(
@@ -219,7 +210,44 @@ def comp_pack_rename(ctx: Context):
         try:
             data = file_data[name_src]
         except KeyError:
-            with ctx.sys, ctx.sys.open_bin(file) as f:
-                data = file_data[name_src] = f.read()
+            try:
+                file = ctx.sys.open_bin(name_src)
+            except FileNotFoundError:
+                LOGGER.warning(
+                    'File cannot be loaded to pack! \n{} -> {}',
+                    name_src,
+                    name_dest,
+                )
+                continue
+            with file:
+                data = file_data[name_src] = file.read()
 
+        LOGGER.info('Force packing "{}" as "{}"...', name_src, name_dest)
         ctx.pack.pack_file(name_dest, res_type, data)
+
+        if res_type is FileType.MODEL:
+            # Pack additional files.
+            name_src_stem = strip_extension(name_src)
+            name_dest_stem = strip_extension(name_dest)
+            for ext in MDL_EXTS:
+                if ext == '.mdl':  # TODO use MDL_EXTS_EXTRA
+                    continue
+
+                name_add = name_src_stem + ext
+
+                try:
+                    data = file_data[name_add]
+                except KeyError:
+                    try:
+                        file = ctx.sys.open_bin(name_add)
+                    except FileNotFoundError:
+                        # Optional.
+                        continue
+                    with file:
+                        data = file_data[name_add] = file.read()
+
+                LOGGER.info(
+                    'Force packing "{}" as "{}{}"...',
+                    name_add, name_dest_stem, ext,
+                )
+                ctx.pack.pack_file(name_dest_stem + ext, FileType.GENERIC, data)

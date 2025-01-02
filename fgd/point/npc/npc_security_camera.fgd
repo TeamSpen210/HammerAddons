@@ -45,8 +45,8 @@
 	input LookAllTeams[P2](void) : "Make the camera follow all players."
 
 	// Outputs
-	output OnDeploy(void) : "Camera is becoming active and dangerous."
-	output OnRetire(void) : "Camera is becoming inactive and harmless."
+	output OnDeploy(void) : "Fired in response to the Enable input"
+	output OnRetire(void) : "Fired in response to the Disable input"
 	
 	output OnTaunted[P2](void) : "A player STARTED taunting the camera."
 	output OnTauntedBlue[P2](void) : "ATLAS STARTED taunting the camera."

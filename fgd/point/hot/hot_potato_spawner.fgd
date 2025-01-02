@@ -1,6 +1,20 @@
-
-@PointClass base(prop_glass_futbol_spawner) 
+@PointClass base(BaseEntityAnimating) 
 	appliesto(P2) 
-	studioprop("models/props/futbol_dispenser.mdl") = hot_potato_spawner: "Catches 'hot potatos' and fires an output."
+	studioprop("models/props/futbol_dispenser.mdl")
+= hot_potato_spawner: "Spawns 'hot potatos'. Will re-create a hot potato when its created hot potato breaks."
 	[
+	startwithhotpotato(boolean) : "Start with Hot Potato" : 1 : "Set true if this spawner starts with a hot potato in it. " +
+		"Set to false if this spawner's hot potato will be manually placed in the map."
+	IsTimed(boolean) : "Is Timed" : 0 : "If enabled, the hot potatos created from this spawner will automatically explode after a set amount of time."
+	Timer(float) : "Timer" : "10" : "Length of the timer, in seconds."
+	TimerIndicatorName(target_destination) : "Timer Indicator Name" : : "Name of a prop_indicator_panel that should show the time remaining."
+
+	// Inputs
+	input ForceSpawn(void) : "Spawns a new hot potato. Usually isn't necessary, because hot potatos respawn automatically if broken."
+
+	// Outputs
+	output OnHotPotatoSpawned(void) : "Created a new hot potato."
+	output OnHotPotatoGrabbed(void) : "Player has taken the hot potato out of this spawner."
+	output OnHotPotatoCaught(void) : "Player has put the hot potato back into this spawner."
+	output OnHotPotatoReleased(void) : "Player has grabbed a hot potato from or put a hot potato back into this spawner."
 	]

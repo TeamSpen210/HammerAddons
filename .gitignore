@@ -58,6 +58,7 @@ db/datamaps/
 # Cache files
 .mypy_cache/
 __pycache__/
+.autosave/
 
 # Blender backup files
 *.blend1
@@ -74,3 +75,7 @@ _version.py
 
 # Ignore config in the examples folder.
 examples/srctools.vdf
+
+# Random extra things
+output.fgd
+build_for_testing.bat

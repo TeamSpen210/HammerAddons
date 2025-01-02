@@ -19,9 +19,10 @@
 	targetteam[engine](integer) : "Target Team" : 3
 	targetteam(choices) : "Target Team" : 3 =
 		[
-		3: "Zombies"
+		-1: "Any"
+		0: "Unassigned" [+complete]
 		2: "Survivors"
-		-1: "Either"
+		3: "Infected"
 		]
 
 	ignoreplayers[engine](boolean) : "Ignore Players" : 0

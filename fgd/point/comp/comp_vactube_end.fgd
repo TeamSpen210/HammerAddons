@@ -15,4 +15,6 @@
 	input FireCubeUser1(void) : "FireUser1 at the cube, for dissolving existing ones."
 	output OnCubeArrived(void) : "Triggered when the cube has arrived to be dispensed."
 	output OnFizzled(void) : "Fired when the cube is fizzled, and autorespawn is enabled."
+    
+    @resources []
 ]

@@ -1,0 +1,5 @@
+@BaseClass appliesto(P2EDU) = PuzzlemakerEduAnalog: "Some unused inputs added only in the Portal 2 Education Edition."
+	[
+	input SetAnalogValue(float) : "Set animation frame between 0 and 1."
+	input SetAnalogValueString(string) : "Set animation frame between 0 and 1."
+	]

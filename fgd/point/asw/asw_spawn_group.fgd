@@ -1,5 +1,13 @@
 
 @PointClass base(BaseEntityPoint) 
+	line(255 255 255, targetname, spawnername00) 
+	line(255 255 255, targetname, spawnername01) 
+	line(255 255 255, targetname, spawnername02) 
+	line(255 255 255, targetname, spawnername03) 
+	line(255 255 255, targetname, spawnername04) 
+	line(255 255 255, targetname, spawnername05) 
+	line(255 255 255, targetname, spawnername06) 
+	line(255 255 255, targetname, spawnername07) 
 	appliesto(ASW) = asw_spawn_group: "The named spawners will belong to this spawn group.  In holdout mode, spawning is done via spawn groups rather than individual spawners."
 	[
 	spawnername00(target_destination) : "Spawner 01" : : "The name of one or more spawners."

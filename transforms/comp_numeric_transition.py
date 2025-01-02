@@ -1,9 +1,10 @@
 """Implements an entity which transitions a value from one to another."""
-from typing import Callable, Dict, Iterator, Optional, Union
+from typing import Callable, Dict, Iterator
 from string import ascii_lowercase
 import math
 
-from srctools import Entity, conv_float, Output
+from hammeraddons.bsp_transform.common import strip_cust_keys
+from srctools import Entity, Output, conv_float, lerp
 from srctools.fgd import EntityDef
 from srctools.logger import get_logger
 from srctools.vmf import conv_kv
@@ -22,24 +23,6 @@ BRIGHT_LETTERS = {
     let: i/25
     for i, let in enumerate(ascii_lowercase)
 }
-
-TRANSITION_KVS = [
-    "beat_interval", "delay", "duration",
-    "easing_end", "easing_start",
-    "endval",
-    "io_type",
-    "line_trans2", "line_trans3",
-    "opt_name", "startval",
-    "target", "transform",
-]
-
-
-def lerp(x: float, in_min: float, in_max: float, out_min: float, out_max: float) -> float:
-    """Linearly interpolate from (in_min, in_max) -> (out_min, out_max)."""
-    return out_min + (
-        ((x - in_min) * (out_max - out_min)) /
-        (in_max - in_min)
-    )
 
 
 @trans('comp_numeric_transition')
@@ -62,8 +45,8 @@ def numeric_transition(ctx: Context) -> None:
 
         # Special case - if the transform type is "light", allow parsing these
         # as A-Z values.
-        value_start: Optional[float] = None
-        value_end: Optional[float] = None
+        value_start: float | None = None
+        value_end: float | None = None
         if transform_type == 'light':
             value_start = BRIGHT_LETTERS.get(ent['startval'].lower(), None)
             value_end = BRIGHT_LETTERS.get(ent['endval'].lower(), None)
@@ -115,8 +98,7 @@ def numeric_transition(ctx: Context) -> None:
         ease_end_type = ent['easing_end', 'linear'].casefold()
 
         # We've parsed all the names, so strip those keyvalues.
-        for keyvalue in TRANSITION_KVS:
-            del ent[keyvalue]
+        strip_cust_keys(ent)
 
         # Now, lookup the function used for the easing types.
         try:
@@ -146,7 +128,7 @@ def numeric_transition(ctx: Context) -> None:
             point_count = 1
         points = [i / point_count for i in range(int(point_count))]
 
-        result: Iterator[Union[str, float]]
+        result: Iterator[str | float]
         if transform_type == 'speed':
             # Compute the speed from x to x+1
             result = (
@@ -212,7 +194,7 @@ def ease_func_linear(x: float) -> float:
     return x
 
 
-def ease_func_power_start(power: int):
+def ease_func_power_start(power: int) -> Callable[[float], float]:
     """Generate the polynomial easing in functions."""
     def func_start(x: float) -> float:
         """Apply a polynomial easing in."""
@@ -220,7 +202,7 @@ def ease_func_power_start(power: int):
     return func_start
 
 
-def ease_func_power_end(power: int):
+def ease_func_power_end(power: int) -> Callable[[float], float]:
     """Generate the polynomial easing out functions."""
     def func_end(x: float) -> float:
         """The function for a specific power."""

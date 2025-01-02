@@ -1,7 +1,18 @@
+@PointClass base(BasePropPhysics, SRCModel) 
+	appliesto(P2)
+	studioprop()
+	line(255 255 0, targetname, spawnername)
+= hot_potato: "A glass futbol variant which explodes and can't be thrown. Spawning this from a hot_potato_spawner allows it to have a timer set."
+[
+	model[-srctools](studio) : "[H] Model" : "models/props/futbol.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
+	model[+srctools](studio) : "[HA] Custom Model" : "models/props/futbol.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	skin(integer) : "Skin" : 0 : "Skin on the model to use."
 
-@PointClass base(prop_glass_futbol, prop_exploding_futbol) 
-	appliesto(P2) 
-	studioprop("models/props/futbol.mdl") 
-	line(255 255 0, targetname, spawnername) = hot_potato: "This uses the futbol model. It can be carried around, but on impact it explodes, similar to prop_exploding_futbols."
-	[
-	]
+	explodeontouch(boolean) : "Explode on touch" : 1 : "If the hot potato should explode when it touches something."
+	ShouldRespawn(boolean) : "Should respawn" : 1 : "If the hot potato should respawn at the specified spawner when destroyed. Not specifying a spawner is functionally identical to turning this off, but causes extra console spam."
+	spawnername(target_destination) : "Spawner Name" : : "Name of a hot_potato_spawner for this hot potato to respawn in once broken."
+
+	// Inputs
+	input Explode(void) : "Explodes the hot potato."
+	input Dissolve(void) : "Fizzles the hot potato. Doesn't fire the OnFizzled output."
+]

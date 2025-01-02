@@ -104,7 +104,7 @@ def duplicate_proxy_relays(ctx: Context) -> None:
                 cur_proxy = newest_proxy
                 proxy_nums[index] = cur_proxy, new_index
 
-            out.output = 'OnProxyRelay{}'.format(new_index)
+            out.output = f'OnProxyRelay{new_index}'
             cur_proxy.add_out(out)
 
             new_names[proxy_name, index] = cur_proxy['targetname'], new_index
@@ -136,4 +136,4 @@ def duplicate_proxy_relays(ctx: Context) -> None:
                 LOGGER.warning('Unknown proxy "{}"?', out.target)
                 continue
 
-            out.input = 'OnProxyRelay{}'.format(new_index)
+            out.input = f'OnProxyRelay{new_index}'

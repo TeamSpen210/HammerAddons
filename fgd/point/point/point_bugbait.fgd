@@ -1,4 +1,6 @@
-@PointClass base(BaseEntityPoint) 
+@BaseClass appliesto(MBase) wirebox(bmins, bmaxs) = _point_bugbait_mbase []
+
+@PointClass base(BaseEntityPoint, _point_bugbait_mbase) 
 	appliesto(EP1, EP2, HL2, P1) 
 	iconsprite(editor/vizzys/point_bugbait)
 	sphere() 
@@ -12,13 +14,22 @@
 		2: "Don't activate on thrown bugbait splashes" : 0
 		4: "Don't activate on squeezed bugbait" : 0
 		]
+	useradius[MBase](boolean) : "Use Radius Keyvalue" : 1 : "If disabled, use mins and maxs."
 
 	radius(integer) : "Sensor Radius" : 512
+
+	bmins[MBase](vector) : "Mins" : "-0 -0 -0"
+	bmaxs[MBase](vector) : "Maxs" : "0 0 0"
 
 	// Inputs
 	input Enable(void) : "Enable the sensor."
 	input Disable(void) : "Disable the sensor."
 	input Toggle(void) : "Toggle the sensor."
+	input EnableRadius[MBase](void) : "Use the Radius keyvalue of the sensor."
+	input DisableRadius[MBase](void) : "Use the mins/maxs keyvalues of the sensor."
+	input SetRadius[MBase](integer) : "Sets the radius of the sensor."
+	input SetMins[MBase](vector) : "Sets the mins of the sensor."
+	input SetMaxs[MBase](vector) : "Sets the maxs of the sensor."
 
 	// Outputs
 	output OnBaited(void) : "Fires when bugbait lands within a radius of the sensor"

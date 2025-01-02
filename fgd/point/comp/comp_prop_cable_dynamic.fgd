@@ -13,14 +13,23 @@
 
 	group(target_source): "Cable Group" : : "Specify the name of the group that will be compiled into this entity."
 
+	skin1(material) : "Alt Skin 1" : "" : "If set, an alternate material to use for Skin 1. Must be a model material, and the rope must use the same material for the entire prop."
+	skin2(material) : "Alt Skin 2" : "" : "If set, an alternate material to use for Skin 2."
+	skin3(material) : "Alt Skin 3" : "" : "If set, an alternate material to use for Skin 3."
+	skin4(material) : "Alt Skin 4" : "" : "If set, an alternate material to use for Skin 4."
+	skin5(material) : "Alt Skin 5" : "" : "If set, an alternate material to use for Skin 5. If you need more, add the keyvalue with SmartEdit off."
+
 	// Not inheriting from prop_dynamic_base, since most of the animation KVs are pointless.
 	glowbackfacemult[L4D2](float) : "Glow backface Multiplier" : "1.0" : "What to multiply glow by on backfaces."
 
 	// Inputs
 	input TurnOn(void) : "Make the cable set visible."
 	input TurnOff(void) : "Make the cable set invisible."
+	input Skin(integer) : "Change to an alternate skin for the cable set."
 	input EnableCollision(void) : "Enable collision on the cable set."
 	input DisableCollision(void) : "Disable collision on the cable set."
 	input BecomeRagdoll[since_P2](void) : "Change into a ragdoll immediately."
 	input FadeAndKill[since_P2](void) : "Fade out then remove this cable set."
+
+    @resources [] // Converted to prop_dynamic, then packed normally.
 	]

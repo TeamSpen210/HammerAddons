@@ -1,0 +1,4 @@
+// Variations on boolean/on/off style options.
+
+@snippet input Enable = Enable(void) : "Enable this entity."
+@snippet input Disable = Disable(void) : "Disable this entity."

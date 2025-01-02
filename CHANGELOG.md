@@ -1,14 +1,66 @@
+# Version Dev
 
-# Version (dev)
-* Improve description of `wait` and `OnTrigger` options in `trigger_multiple`.
-* Fix `comp_precache_sound` not handling sound characters at the start of raw filenames.
-* Allow `comp_vactube_start` to be set to have a timer which starts disabled.
-* If required, add various QC flags like `$mostlyopaque` to propcombined props.
+# Enhancements
+* A new "snippets" system allows FGD files to easily repeat descriptions and other small sections.
+* Add ability to randomise output delay to `comp_relay` and `comp_adv_output`.
+* Added `comp_vactube_sensor`, which allows detecting the presence of vactube objects.
+* Added a value mode option to `comp_kv_setter` and `comp_adv_output` to more clearly control which key is used.
+* Added textures for 4 rendertargets (camera, water reflection/refraction, full framebuffer). These give a nice preview in Hammer.
+* Added three keyvalues to `ambient_generic`, giving a more user friendly interface to the confusing spawnflags. This also allows them to be configured via fixup values easily.
+* Allow `comp_entity_finder` to rotate the target in addition to teleporting.
+* Allow configuring various shadow/fast reflection options for vactube object ents.
+* Boolean keyvalues (yes/no) can now be set to `!$var`, to invert the value of the variable. 
+* Propcombine will now preserve prop fade distances, by calculating a new distance which encloses the original fade spheres.
+* Warn if propcombine or packing was disabled via command line.
+* Add option to `comp_adv_output` to have it expand target searches itself.
+
+## Bugfixes
+* Fix a compile failure if prop ropes were placed in a group with no connections.
+* Fix various incorrect usages of the FGD `frustum()` helper.
+* Normals are now correctly calculated when generating propcombined models. This requires all previous models to be rebuilt, unfortunately.
+* Fix overlays not functioning with `material_modify_control` parent searching.
+* Make RunScriptCode \` handling occur after everything else.
+* #274, #277: Force required keyvalue casing for `light_environment`'s `SunSpreadAngle` and `lua_run`'s `Code` keys.
+
+
+--------------------
+
+
+# Version 2.5.3
+
+## Enhancements
+* #163: Added `comp_adv_output`, which allows adding a single output with complex behaviour.
+* Added `comp_case`, a version of `logic_case` that is collapsed into callers like `comp_relay`.
+* Vactube props can now be generated with glass/frames seperately, and with bezier curves instead of catmul-romm. (Authored by [asd417](https://github.com/asd417)) 
+* Added `--verbose` parameter, for showing DEBUG messages.
+* Added `--regenerate` parameter, to force all models to be regenerated from scratch.
+* Added ability to specify alt skins when using `comp_prop_cable_dynamic`.
+* Weapon scripts are now packed along with the models/sounds they use.
+* #210: Add `OnFinished` output to `comp_numeric_transition`.
+ Add an option to specify the maximum distance for automatic combined props.
+* Allow combining models containing `$collisionjoints`.
+* Add missing `bunting` keyvalue to `comp_prop_cable`.
+* Areaportal windows will automatically force the brushes used to nonsolid, and clear some physics data. 
+* Propcombine will no longer merge props found in different areaportal areas. This allows props on the outside of a building to be culled when inside, or vice versa.
+* Automatically set the "transmit to client" flag for `info_target`s used as particle system destinations.
+* Change `sky_camera` model to be more visible with `tools/toolsskybox` behind it.
+* Allow physboxes to completely override their mass.
+* The postcompiler can now automatically handle custom models for various Portal 2 entities.
+## Bugfixes
+* `comp_pack_rename` will now automatically also include the auxiliary `.mdl` files.
+* #10: The center of the axis helper used for sprites can now be clicked on.
+* #232: Readd missing `OnFizzled` output on `prop_weighted_cube`.
 * Limit the size of propcombined groups to avoid hitting vertex limits.
 * Prevent automatically packing models specified only as Hammer previews in various entities.
 * Fix propcombine sometimes removing collisions entirely from component props.
 * Add an option to allow the sources for compiled models to be preserved.
-* #210: Add `OnFinished` output to `comp_numeric_transition`.
+* Improve description of `wait` and `OnTrigger` options in `trigger_multiple`.
+* Fix #192: Use both specified model and cube type field to find matching cubes for vactubes.
+* Restore missing projected texture shadow keyvalues.
+* Fix `comp_precache_sound` not handling sound characters at the start of raw filenames.
+* Allow `comp_vactube_start` to be set to have a timer which starts disabled.
+* If required, add various QC flags like `$mostlyopaque` to propcombined props.
+* Set Precache/OnPostSpawn in generated VScript, to prevent double-firing functions already in Entity Scripts.
 
 --------------------
 
@@ -67,7 +119,7 @@
 * Particle systems will now be detected and packed along with their dependencies. 
   This needs configuration in the config file, since different games use different filenames.
 * Optionally, the postcompiler can collapse and remove `func_instance_io_proxy` from maps entirely to save ents.
-* Add comp_sequential_call: finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order.
+* Add `comp_sequential_call`: finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order.
 * Add `comp_flicker`: fires on/off and skin inputs repeatedly to simulate a flicker-on effect.
 * `comp_scriptvar_setter` can now set global variables also.
 * `prop_paint_bomb` will now show its collision mesh (futbols).

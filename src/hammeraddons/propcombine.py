@@ -3,11 +3,12 @@
 This merges static props together, so they can be drawn with a single
 draw call.
 """
+import math
 from typing import (
     Callable, Dict, FrozenSet, Iterable, Iterator, List, Literal, MutableMapping, Optional, Set,
-    Tuple,
-    Union, Sequence,
+    Tuple, Union, Sequence,
 )
+from typing_extensions import TypeAlias, Unpack
 from collections import defaultdict
 from enum import Enum
 from pathlib import Path
@@ -96,19 +97,19 @@ LIM_PROCESS = trio.CapacityLimiter(8)
 LIM_PARSE = trio.CapacityLimiter(16)
 
 
-def unify_mdl(path: str):
+def unify_mdl(path: str) -> str:
     """Compute a 'canonical' path for a given model."""
-    path = path.casefold().replace('\\', '/')
+    path = path.casefold().replace('\\', '/').lstrip('/')
     if not path.startswith('models/'):
-        path = 'models/' + path
-    if not path.endswith('.mdl'):
-        path = path + '.mdl'
+        path = f'models/{path}'
+    if not path.endswith(('.mdl', '.glb', '.gltf')):
+        path = f'{path}.mdl'
     return path
 
 
 class CombineVolume:
     """Parsed comp_propcombine_* ents."""
-    def __init__(self, group_name: str, skinset: FrozenSet, origin: Vec) -> None:
+    def __init__(self, group_name: str, skinset: FrozenSet[str], origin: Vec) -> None:
         self.group = group_name
         self.skinset = skinset
         # For sorting.
@@ -182,11 +183,15 @@ class PropPos:
     solidity: CollType
 
 
-# The types used during compilation.
-PropCombiner = ModelCompiler[
+# Function called to get info about a model.
+LookupModel: TypeAlias = Callable[[str], Union[Tuple[QC, Model], Tuple[None, None]]]
+# Key used to group props. None is an un-combinable prop. The first item is the skinset, all others
+# are opaque values.
+PropGroup: TypeAlias = Optional[Tuple[FrozenSet[str], Unpack[Tuple[object, ...]]]]
+PropCombiner: TypeAlias = ModelCompiler[
     Tuple[FrozenSet[PropPos], bool],  # Key for deduplication.
     # Additional parameters used during compile
-    Tuple[Callable[[str], Union[Tuple[QC, Model], Tuple[None, None]]], float],
+    Tuple[LookupModel, float],
     # Result of the function
     None,
 ]
@@ -195,7 +200,7 @@ PropCombiner = ModelCompiler[
 async def combine_group(
     compiler: PropCombiner,
     props: List[StaticProp],
-    lookup_model: Callable[[str], Union[Tuple[QC, Model], Tuple[None, None]]],
+    lookup_model: LookupModel,
     volume_tolerance: float,
 ) -> StaticProp:
     """Merge the given props together, compiling a model if required."""
@@ -209,12 +214,14 @@ async def combine_group(
     # and subtract that out.
 
     avg_pos = Vec()
+    avg_lighting = Vec()
     avg_yaw = 0.0
 
     visleafs: Set[VisLeaf] = set()
 
     for prop in props:
         avg_pos += prop.origin
+        avg_lighting += prop.lighting
         yaw = prop.angles.yaw % 90
         if yaw > 45.0:
             avg_yaw -= 90.0 - yaw
@@ -224,35 +231,40 @@ async def combine_group(
 
     avg_yaw /= len(props)
     avg_pos /= len(props)
+    avg_lighting /= len(props)
     yaw_rot = Matrix.from_yaw(-avg_yaw)
 
     prop_pos = set()
     for prop in props:
         origin = round((prop.origin - avg_pos) @ yaw_rot, 7)
-        angles = round(Vec(prop.angles), 7)
-        angles.y -= avg_yaw
+        angles = prop.angles
+        angles.pitch = round(angles.pitch, 7)
+        angles.yaw = round(angles.yaw - avg_yaw, 7)
+        angles.roll = round(angles.roll, 7)
         try:
             coll = CollType(prop.solidity)
         except ValueError:
             raise ValueError(
-                 'Unknown prop_static collision type '
-                 '{} for "{}" at {}!'.format(
-                    prop.solidity,
-                    prop.model,
-                    prop.origin,
-                 )
-            )
+                 f'Unknown prop_static collision type {prop.solidity} for '
+                 f'"{prop.model}" at {prop.origin}!'
+            ) from None
         qc, mdl = lookup_model(prop.model)
         assert mdl is not None, prop.model
+
+        scale = prop.scaling
+        if isinstance(scale, float):
+            scale_x = scale_y = scale_z = scale
+        else:
+            scale_x, scale_y, scale_z = scale
         prop_pos.add(PropPos(
             origin.x, origin.y, origin.z,
-            angles.x, angles.y, angles.z,
+            angles.pitch, angles.yaw, angles.roll,
             prop.model,
             mdl.checksum,
             prop.skin,
-            prop.scaling.x,
-            prop.scaling.y,
-            prop.scaling.z,
+            scale_x,
+            scale_y,
+            scale_z,
             coll,
         ))
     # We don't want to build collisions if it's not used.
@@ -262,9 +274,9 @@ async def combine_group(
         compile_func, (lookup_model, volume_tolerance),
     )
 
-    # Many of these we require to be the same, so we can read them
+    # Many of these values we require to be the same, so we can read them
     # from any of the component props.
-    return StaticProp(
+    combined = StaticProp(
         model=mdl_name,
         origin=avg_pos,
         angles=Angle(0, avg_yaw - 90, 0),
@@ -272,17 +284,28 @@ async def combine_group(
         visleafs=visleafs,
         solidity=(CollType.VPHYS if has_coll else CollType.NONE).value,
         flags=props[0].flags,
-        lighting=avg_pos,
+        lighting=avg_lighting,
         tint=props[0].tint,
         renderfx=props[0].renderfx,
+        min_fade=0.0,
+        max_fade=0.0,
     )
+
+    # Calculate a new fade distance pair that encloses the original fade distances.
+    # Screen-space fade is an old method, which can't be done this way. Just don't bother.
+    if StaticPropFlags.DOES_FADE in combined.flags and StaticPropFlags.SCREEN_SPACE_FADE not in combined.flags:
+        for prop in props:
+            distance = (prop.origin - avg_pos).mag()
+            combined.min_fade = max(combined.min_fade, distance + prop.min_fade)
+            combined.max_fade = max(combined.max_fade, distance + prop.max_fade)
+    return combined
 
 
 async def compile_func(
     mdl_key: Tuple[FrozenSet[PropPos], bool],
     temp_folder: Path,
     mdl_name: str,
-    args: Tuple[Callable[[str], Union[Tuple[QC, Model], Tuple[None, None]]], float],
+    args: Tuple[LookupModel, float],
 ) -> None:
     """Build this merged model."""
     LOGGER.info('Compiling {}...', mdl_name)
@@ -295,8 +318,6 @@ async def compile_func(
     contents: Set[int] = set()
     combined_flags = ModelFlags(0)
 
-    qc: QC
-    mdl: Model
     for prop in prop_pos:
         qc, mdl = lookup_model(prop.model)
         assert qc is not None, prop.model
@@ -425,8 +446,11 @@ async def compile_func(
         if ModelFlags.ambient_boost in combined_flags:
             f.write('$ambientboost\n')
 
+        if ModelFlags.do_not_cast_shadows in combined_flags:
+            f.write('$donotcastshadows\n')
+
         for mat in sorted(cdmats):
-            f.write('$cdmaterials "{}"\n'.format(mat))
+            f.write(f'$cdmaterials "{mat}"\n')
 
         if coll_mesh.triangles:
             f.write(QC_COLL_TEMPLATE)
@@ -507,7 +531,7 @@ def optimise_collision(
     zero_norm = Vec()
     while todo:
         mesh1 = todo.pop()
-        for mesh2 in todo:
+        for mesh2 in todo:  # noqa: PLE4703  # Appending while iterating.
             if (mesh1, mesh2) in failures or (mesh2, mesh1) in failures:
                 continue
             combined = Mesh(coll_mesh.bones, coll_mesh.animation, [
@@ -590,7 +614,7 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
     scale_factor = ref_scale = phy_scale = 1.0
     is_concave = False
 
-    with open(str(qc_path)) as f:
+    with open(str(qc_path), encoding='utf8', errors='ignore') as f:
         tok = Tokenizer(
             f, qc_path,
             allow_escapes=False,
@@ -641,12 +665,12 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
                         elif body_type is not Token.NEWLINE:
                             raise tok.error(body_type)
 
-                elif token_value == '$collisionmodel':
+                elif token_value in ('$collisionmodel', '$collisionjoints'):
                     phy_smd = qc_loc / tok.expect(Token.STRING)
                     phy_scale = scale_factor
                     next_typ, next_val = next(tok.skipping_newlines())
                     if next_typ is Token.BRACE_OPEN:
-                        for body_value in tok.block('$collisionmodel', consume_brace=False):
+                        for body_value in tok.block(token_value, consume_brace=False):
                             if body_value.casefold() == '$concave':
                                 is_concave = True
                     else:
@@ -654,7 +678,6 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
 
                 # We can't support this.
                 elif token_value in (
-                    '$collisionjoints',
                     '$ikchain',
                     '$weightlist',
                     '$poseparameter',
@@ -794,14 +817,13 @@ async def decompile_model(
         cache_kv['ref'] = ''  # Mark as not present.
 
     with info_path.open('w') as f:
-        for line in cache_kv.export():
-            f.write(line)
+        cache_kv.serialise(f)
     return qc
 
 
 def group_props_ent(
-    prop_groups: Dict[Optional[tuple], List[StaticProp]],
-    get_model: Callable[[str], Tuple[Optional[QC], Optional[Model]]],
+    prop_groups: Dict[PropGroup, List[StaticProp]],
+    get_model: LookupModel,
     brush_models: MutableMapping[Entity, BModel],
     grouper_ents: List[Entity],
     min_cluster: int,
@@ -871,8 +893,8 @@ def group_props_ent(
                 brush = brush_models.pop(ent)
             except KeyError:
                 raise ValueError(
-                    f'No model for propcombine volume {repr(combine_set)} at '
-                    f'{str(origin)}')
+                    f'No model for propcombine volume {combine_set!r} at {origin!s}'
+                ) from None
             # Use the bounding box as a volume approximation,
             # it's only needed for sorting the volumes.
             size = brush.maxes - brush.mins
@@ -889,7 +911,7 @@ def group_props_ent(
         else:
             raise AssertionError(ent['classname'])
 
-    # We want to apply a ordering to groups, so smaller ones apply first, and
+    # We want to apply an ordering to groups, so smaller ones apply first, and
     # filtered ones override all others.
     for group_list in sets_by_skin.values():
         group_list.sort(key=operator.attrgetter('volume'))
@@ -917,7 +939,7 @@ def group_props_ent(
             if not found:  # No point checking an empty list.
                 continue
 
-            actual = []
+            actual: List[StaticProp] = []
             total_verts = 0
             for prop in found:
                 qc, mdl = get_model(prop.model)
@@ -950,15 +972,15 @@ def group_props_ent(
 
 
 def group_props_auto(
-    prop_groups: Dict[Optional[tuple], List[StaticProp]],
-    get_model: Callable[[str], Tuple[Optional[QC], Optional[Model]]],
-    dist: float,
+    prop_groups: Dict[PropGroup, List[StaticProp]],
+    get_model: LookupModel,
+    min_dist: float,
+    max_dist: float,
     min_cluster: int,
 ) -> Iterator[List[StaticProp]]:
     """Given the groups of props, automatically find close props to merge."""
-    # Each of these groups cannot be merged with other ones.
-
-    dist_sq = dist * dist
+    min_dist_sq = min_dist * min_dist
+    max_dist_sq = max_dist * max_dist
     neighbours: Dict[StaticProp, Sequence[StaticProp]] = {}
 
     def find_neighbours(start: StaticProp) -> Sequence[StaticProp]:
@@ -969,7 +991,7 @@ def group_props_auto(
             pass
         neigh = [
             prop for prop in group
-            if (prop.origin - start.origin).mag_sq() <= dist_sq
+            if (prop.origin - start.origin).mag_sq() <= min_dist_sq
         ]
         neighbours[start] = neigh
         return neigh
@@ -977,6 +999,7 @@ def group_props_auto(
     UNSET: Literal['unset'] = 'unset'
     NOISE: Literal['noise'] = 'noise'
 
+    # Each of these groups cannot be merged with other ones.
     for group in prop_groups.values():
         # No point merging single/empty groups.
         if len(group) < 2:
@@ -1015,39 +1038,58 @@ def group_props_auto(
 
         clusters: Dict[int, List[StaticProp]] = defaultdict(list)
         for prop, key in labels.items():
-            if type(key) is int:
+            if isinstance(key, int):
                 clusters[key].append(prop)
 
+        # We now have many potential groups, which may be extremely large.
+        # We want to split these up, so they don't extend too far.
         for cluster in clusters.values():
-            total_verts = 0
-            selected_props: List[StaticProp] = []
             warned: bool = False
-            for prop in cluster:
-                qc, mdl = get_model(prop.model)
-                assert mdl is not None
-                total_verts += mdl.total_verts
-                if total_verts > MAX_VERTS:
-                    # Make this just info level, just might be props nearby.
-                    if not warned:
-                        bb_min, bb_max = Vec.bbox(prop.origin for prop in cluster)
-                        LOGGER.info(
-                            'Hit vert limit for auto group @ ({} - {}) with models {}' ,
-                            bb_min, bb_max,
-                            {prop.model for prop in cluster},
-                        )
-                        warned = True
-                    # Split the group here, create a new prop.
-                    if len(selected_props) >= min_cluster:
-                        yield selected_props
-                    selected_props = []
-                    total_verts = mdl.total_verts
-                selected_props.append(prop)
+            todo = set(cluster)
+            while len(todo) > min_cluster:
+                # First find the prop the furthest from the center-point.
+                average_pos = sum((prop.origin for prop in todo), Vec()) / len(todo)
+                central_prop = max(todo, key=lambda prop: (prop.origin - average_pos).mag_sq())
 
-            if len(selected_props) >= min_cluster:
-                yield selected_props
-            # Else, we grouped a too-small number of props - deliberately forget about them, they're
-            # likely isolated, meaning checking them in future is pointless. The main combine()
-            # function will re-add them to the map.
+                total_verts = 0
+                selected_props: List[StaticProp] = []
+                found_matches = False
+                for prop in list(todo):
+                    # Exceeds the max radius?
+                    if (prop.origin - central_prop.origin).mag_sq() > max_dist_sq:
+                        continue
+                    qc, mdl = get_model(prop.model)
+                    assert mdl is not None
+                    total_verts += mdl.total_verts
+                    if total_verts > MAX_VERTS:
+                        # Make this just info level, just might be props nearby.
+                        if not warned:
+                            bb_min, bb_max = Vec.bbox(prop.origin for prop in cluster)
+                            LOGGER.info(
+                                'Hit vert limit for auto group @ ({} - {}) with models {}' ,
+                                bb_min, bb_max,
+                                {prop.model for prop in cluster},
+                            )
+                            warned = True
+                        # Split the group here, create a new prop.
+                        if len(selected_props) >= min_cluster:
+                            found_matches = True
+                            todo.difference_update(selected_props)
+                            yield selected_props
+                        selected_props = []
+                        total_verts = mdl.total_verts
+                    selected_props.append(prop)
+
+                if len(selected_props) >= min_cluster:
+                    yield selected_props
+                    todo.difference_update(selected_props)
+                    found_matches = True
+                if not found_matches:
+                    # The selected prop was too far away to cluster. Discard it, so we pick a
+                    # different one. It should be added by itself, it's on its own mostly.
+                    todo.discard(central_prop)
+            # Once the while loop terminates, our group is too small to actually cluster any more.
+            # The main combine() function will re-add them to the map automatically.
 
 
 async def combine(
@@ -1057,16 +1099,18 @@ async def combine(
     game: Game,
     studiomdl_loc: Path,
     *,
-    qc_folders: Optional[List[Path]]=None,
-    crowbar_loc: Optional[Path]=None,
-    decomp_cache_loc: Optional[Path]=None,
-    compile_dump: Optional[Path]=None,
-    blacklist: Iterable[str]=(),
-    auto_range: float=0,
-    min_cluster: int=2,
-    volume_tolerance: float=1.0,
-    debug_dump: bool=False,
-    pack_models: bool=True,
+    qc_folders: Optional[List[Path]] = None,
+    crowbar_loc: Optional[Path] = None,
+    decomp_cache_loc: Optional[Path] = None,
+    compile_dump: Optional[Path] = None,
+    blacklist: Iterable[str] = (),
+    min_auto_range: float = 0.0,
+    max_auto_range: float = math.inf,
+    min_cluster: int = 2,
+    min_cluster_auto: int = 0,
+    volume_tolerance: float = 1.0,
+    debug_dump: bool = False,
+    pack_models: bool = True,
 ) -> None:
     """Combine props in this map."""
     LOGGER.debug(
@@ -1116,6 +1160,9 @@ async def combine(
         if blacklist_re.fullmatch(key) is not None:
             LOGGER.debug('Model {} was blacklisted.', filename)
             return
+        if filename.endswith(('.glb', '.gltf')):
+            # Can't support these yet.
+            return
         try:
             mdl_file = pack.fsys[filename]
         except FileNotFoundError:
@@ -1146,7 +1193,8 @@ async def combine(
     async with trio.open_nursery() as nursery:
         # Dict to deduplicate.
         for key_, filename_ in {
-            unify_mdl(prop.model): prop.model
+            # Hammer allows filenames like "/blah/", we don't want it to be looking at the root.
+            unify_mdl(prop.model): prop.model.lstrip('/\\')
             for prop in bsp.props
         }.items():
             nursery.start_soon(load_model, key_, filename_)
@@ -1158,10 +1206,10 @@ async def combine(
         except KeyError:
             return None, None
 
-    # Ignore these two, they don't affect our new prop.
-    relevant_flags = ~(StaticPropFlags.HAS_LIGHTING_ORIGIN | StaticPropFlags.DOES_FADE)
+    # Ignore this, we handle lighting origin ourselves.
+    relevant_flags = ~StaticPropFlags.HAS_LIGHTING_ORIGIN
 
-    def get_grouping_key(prop: StaticProp) -> Optional[tuple]:
+    def get_grouping_key(prop: StaticProp) -> PropGroup:
         """Compute a grouping key for this prop.
 
         Only props with matching key can be possibly combined.
@@ -1180,6 +1228,8 @@ async def combine(
                 model.iter_textures([prop.skin])
             }),
             (prop.flags & relevant_flags).value,
+            # Do not allow combining across an areaportal boundary.
+            frozenset({leaf.area for leaf in prop.visleafs}),
             model.contents,
             model.surfaceprop,
             prop.renderfx,
@@ -1189,7 +1239,7 @@ async def combine(
     prop_count = 0
 
     # First, construct groups of props that can possibly be combined.
-    prop_groups: Dict[Optional[tuple], List[StaticProp]] = defaultdict(list)
+    prop_groups: Dict[PropGroup, List[StaticProp]] = defaultdict(list)
     for prop in bsp.props:
         prop_groups[get_grouping_key(prop)].append(prop)
         prop_count += 1
@@ -1198,7 +1248,9 @@ async def combine(
     final_props: List[StaticProp] = []
     grouper: Iterator[List[StaticProp]]
     grouper_ents = list(bsp_ents.by_class['comp_propcombine_set'] | bsp_ents.by_class['comp_propcombine_volume'])
-    if grouper_ents and auto_range > 0:
+    if min_cluster_auto <= 2:
+        min_cluster_auto = min_cluster
+    if grouper_ents and min_auto_range > 0:
         LOGGER.info('{} propcombine sets present and auto-grouping enabled, combining...', len(grouper_ents))
         # Do ents first, that removes values from the lists in prop_groups,
         # then the auto grouper handles that.
@@ -1212,8 +1264,8 @@ async def combine(
             group_props_auto(
                 prop_groups,
                 get_model,
-                auto_range,
-                min_cluster,
+                min_auto_range, max_auto_range,
+                min_cluster_auto or min_cluster,
             )
         )
     elif grouper_ents:
@@ -1224,13 +1276,13 @@ async def combine(
             bsp.bmodels, grouper_ents,
             min_cluster,
         )
-    elif auto_range > 0:
+    elif min_auto_range > 0:
         LOGGER.info('Automatically finding propcombine sets...')
         grouper = group_props_auto(
             prop_groups,
             get_model,
-            auto_range,
-            min_cluster,
+            min_auto_range, max_auto_range,
+            min_cluster_auto or min_cluster,
         )
     else:
         # No way provided to choose props.
@@ -1260,7 +1312,7 @@ async def combine(
         map_name,
         folder_name='propcombine',
         version={
-            'ver': 2,
+            'ver': 3,  # This is bumped if all models need to be recompiled.
             'vol_tolerance': volume_tolerance,
         },
         compile_dir=compile_dump,

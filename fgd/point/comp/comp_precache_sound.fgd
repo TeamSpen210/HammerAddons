@@ -17,4 +17,6 @@
 	sound8(sound): "Sound" : : "Pack and precache a raw sound file or a soundscript."
 	sound9(sound): "Sound" : : "Pack and precache a raw sound file or a soundscript."
 	sound10(sound): "Sound" : : "Pack and precache a raw sound file or a soundscript."
+    
+    @resources []
 	]

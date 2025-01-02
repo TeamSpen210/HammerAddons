@@ -61,4 +61,6 @@
 		]
 
 	output OnFinished(void) : "Fired once the transition has completed."
+    
+    @resources []
 	]

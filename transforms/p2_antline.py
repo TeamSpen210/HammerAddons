@@ -4,6 +4,8 @@ This generates env_texturetoggle entities which do the right thing.
 If the one of the target entities is a prop_indicator_panel, it also
 toggles that.
 """
+from typing import List, Set
+
 from srctools import Entity, Output
 from srctools.logger import get_logger
 
@@ -37,24 +39,22 @@ def comp_antlines(ctx: Context):
             out_on, out_off = IND_ENTS[ent['classname']]
         except KeyError:
             continue
-        ind_name = ent['indicatorname']
+        ind_name = ent.pop('indicatorname')
         if not ind_name:
             continue
-
-        ent['indicatorname'] = ''
 
         # These are the names, not the ents themselves.
 
         # Or brush ents holding overlays.
-        ind_overlays: set[str] = set()
-        ind_toggles: set[str] = set()
+        ind_overlays: Set[str] = set()
+        ind_toggles: Set[str] = set()
         # These need the right inputs.
-        ind_panel_tim: set[str] = set()
-        ind_panel_check: set[str] = set()
+        ind_panel_tim: Set[str] = set()
+        ind_panel_check: Set[str] = set()
 
         # Panels without an indicator set - we can use
         # these instead of a texturetoggle.
-        unused_panels: list[Entity] = []
+        unused_panels: List[Entity] = []
 
         for ind_ent in ctx.vmf.search(ind_name):
             cls = ind_ent['classname']

@@ -11,4 +11,6 @@
 
 	prop(studio) : "Model Filter" : : "If set, a combinable model used to filter which others will be combined. The propcombine set will only apply to models which could be combined with this one."
 	skin(integer) : "Skin Filter" : 0 : "The skin for the Model Filter."
+
+    @resources []
 	]

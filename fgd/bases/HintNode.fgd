@@ -75,6 +75,7 @@
 		2002: "Surrender: Idle Point (E:Z2)" [EZ2]
 
 		10000: "Mapbase - Custom Cover (Use hint activity)" [MBase]
+		10001: "Mapbase - Grenade Throw (Use hint radius)" [MBase]
 		]
 
 	hintactivity(string) : "Hint Activity" : : "Activity associated with this hint node. " +

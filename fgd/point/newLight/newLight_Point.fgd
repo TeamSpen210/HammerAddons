@@ -11,21 +11,7 @@
 	]
 	
 	style[engine](integer) : "Appearance" : 0
-	style(Choices) : "Appearance" : 0 =
-	[
-		0 : "Normal"
-		10: "Fluorescent flicker"
-		2 : "Slow, strong pulse"
-		11: "Slow pulse, noblack"
-		5 : "Gentle pulse"
-		1 : "Flicker A"
-		6 : "Flicker B"
-		3 : "Candle A"
-		7 : "Candle B"
-		8 : "Candle C"
-		4 : "Fast strobe"
-		9 : "Slow strobe"
-	]
+	style(Choices) : "Appearance" : 0 = #snippet LightStyle
 	
 	LightColorAmbient(color255) : "Light Ambient Color" : "0 0 0 0" : "This is the ambient color of the sunlight."
 	LightColor(color255) : "Light Color" : "255 255 255 1" : "This is the color of the sunlight."

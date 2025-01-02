@@ -51,6 +51,7 @@ class ACache(Generic[KeyT, ValueT]):
     ) -> ValueT:
         """Retreive from the cache, or compute the value."""
         while True:
+            await trio.lowlevel.checkpoint()
             try:
                 result = self._cache[key]
             except KeyError:

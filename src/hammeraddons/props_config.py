@@ -120,8 +120,8 @@ class Opt(Generic[OptionT]):
         return OptWithDefault(opt_id, Vec, default, doc, fallback)
 
 
-@attrs.define(init=False)
-class OptWithDefault(Opt[OptionT], Generic[OptionT]):
+@attrs.define(init=False)  # __attrs_init__() is incompatible with the superclass.
+class OptWithDefault(Opt[OptionT], Generic[OptionT]):  # type: ignore[override]
     """An option, with a default."""
     default: OptionT
     def __init__(
@@ -141,7 +141,7 @@ class OptWithDefault(Opt[OptionT], Generic[OptionT]):
 class Options:
     """Allows parsing a set of Keyvalues option blocks."""
     defaults: List[Opt]
-    settings: Dict[str, Union[None, str, int, float, bool, Vec, Keyvalues]]
+    settings: Dict[str, Union[str, int, float, bool, Vec, Keyvalues, None]]
     path: Optional[Path]
 
     def __init__(self, defaults: Union[Iterable[Opt], dict]) -> None:
@@ -220,7 +220,7 @@ class Options:
             try:
                 self.settings[opt.id] = self.settings[opt.fallback]
             except KeyError:
-                raise Exception(f'Bad fallback for "{opt.id}"!')
+                raise Exception(f'Bad fallback for "{opt.id}"!') from None
             # Check they have the same type.
             if opt.kind is not options[opt.fallback].kind:
                 raise ValueError(
@@ -254,8 +254,8 @@ class Options:
             raise TypeError(f'Option "{option.name}" does not exist!') from None
 
         if val is None:
-            if option.kind is Keyvalues:  # Type checker doesn't understand isinstance here.
-                return Keyvalues(option.name, [])  # type: ignore
+            if option.kind is Keyvalues:
+                return Keyvalues(option.name, [])
             else:
                 return None
 
@@ -281,7 +281,7 @@ class Options:
             if ind != 0:
                 file.write('\n\n')
             for line in option.doc:
-                file.write('\t// {}\n'.format(line))
+                file.write(f'\t// {line}\n')
 
             if isinstance(option, OptWithDefault):
                 default = option.default
@@ -308,8 +308,7 @@ class Options:
                 file.write(f'\t// "{option.name}" ""\n')
             elif isinstance(value, Keyvalues):
                 value.name = option.name
-                for line in value.export():
-                    file.write('\t' + line)
+                value.serialise(file, start_indent='\t')
             else:
                 file.write(f'\t"{option.name}" "{value}"\n')
         file.write('\t}\n')

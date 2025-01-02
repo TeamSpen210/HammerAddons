@@ -1,3 +1,5 @@
+@Snippet desc ChildDesc = "Activator subfilter to test."
+
 @FilterClass base(filter_base)
 	autovis(Logic, Filters)
 	iconsprite("editor/filter_multiple.vmt") 
@@ -37,26 +39,26 @@
 		"Negating the outcome using the AND logic type means that any subfilter must fail for this filter to pass.\n" +
 		"Negating the outcome using the OR logic type means that all subfilters must fail for this filter to pass."
 
-	filter01(filterclass) : "Filter 1" : : "Activator filter to test."
-	filter02(filterclass) : "Filter 2" : : "Activator filter to test."
-	filter03(filterclass) : "Filter 3" : : "Activator filter to test."
-	filter04(filterclass) : "Filter 4" : : "Activator filter to test."
-	filter05(filterclass) : "Filter 5" : : "Activator filter to test."
-	filter06[since_L4D](filterclass) : "Filter 6" : : "Activator filter to test."
-	filter07[since_L4D](filterclass) : "Filter 7" : : "Activator filter to test."
-	filter08[since_L4D](filterclass) : "Filter 8" : : "Activator filter to test."
-	filter09[since_L4D](filterclass) : "Filter 9" : : "Activator filter to test."
-	filter10[since_L4D](filterclass) : "Filter 10" : : "Activator filter to test."
-	filter11[INFRA](filterclass) : "Filter 11" : : "Activator filter to test."
-	filter12[INFRA](filterclass) : "Filter 12" : : "Activator filter to test."
-	filter13[INFRA](filterclass) : "Filter 13" : : "Activator filter to test."
-	filter14[INFRA](filterclass) : "Filter 14" : : "Activator filter to test."
-	filter15[INFRA](filterclass) : "Filter 15" : : "Activator filter to test."
-	filter16[INFRA](filterclass) : "Filter 16" : : "Activator filter to test."
-	filter17[INFRA](filterclass) : "Filter 17" : : "Activator filter to test."
-	filter18[INFRA](filterclass) : "Filter 18" : : "Activator filter to test."
-	filter19[INFRA](filterclass) : "Filter 19" : : "Activator filter to test."
-	filter20[INFRA](filterclass) : "Filter 20" : : "Activator filter to test."
+	filter01(filterclass) : "Filter 1" : : #Snippet ChildDesc
+	filter02(filterclass) : "Filter 2" : : #Snippet ChildDesc
+	filter03(filterclass) : "Filter 3" : : #Snippet ChildDesc
+	filter04(filterclass) : "Filter 4" : : #Snippet ChildDesc
+	filter05(filterclass) : "Filter 5" : : #Snippet ChildDesc
+	filter06[since_L4D](filterclass) : "Filter 6" : : #Snippet ChildDesc
+	filter07[since_L4D](filterclass) : "Filter 7" : : #Snippet ChildDesc
+	filter08[since_L4D](filterclass) : "Filter 8" : : #Snippet ChildDesc
+	filter09[since_L4D](filterclass) : "Filter 9" : : #Snippet ChildDesc
+	filter10[since_L4D](filterclass) : "Filter 10" : : #Snippet ChildDesc
+	filter11[INFRA](filterclass) : "Filter 11" : : #Snippet ChildDesc
+	filter12[INFRA](filterclass) : "Filter 12" : : #Snippet ChildDesc
+	filter13[INFRA](filterclass) : "Filter 13" : : #Snippet ChildDesc
+	filter14[INFRA](filterclass) : "Filter 14" : : #Snippet ChildDesc
+	filter15[INFRA](filterclass) : "Filter 15" : : #Snippet ChildDesc
+	filter16[INFRA](filterclass) : "Filter 16" : : #Snippet ChildDesc
+	filter17[INFRA](filterclass) : "Filter 17" : : #Snippet ChildDesc
+	filter18[INFRA](filterclass) : "Filter 18" : : #Snippet ChildDesc
+	filter19[INFRA](filterclass) : "Filter 19" : : #Snippet ChildDesc
+	filter20[INFRA](filterclass) : "Filter 20" : : #Snippet ChildDesc
 	
 	@resources []
 	]

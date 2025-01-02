@@ -1,6 +1,7 @@
 """Implements various brush entities."""
 from typing import Tuple, Dict
 
+from hammeraddons.bsp_transform.common import strip_cust_keys
 from srctools import Output, conv_bool, conv_float, Vec, Entity, conv_int
 
 from hammeraddons.bsp_transform import trans, Context
@@ -54,7 +55,7 @@ def comp_trigger_coop(ctx: Context):
             )
             # Only keep OnChangeToAllTrue outputs, and remove
             # them once they've fired.
-            for out in list(manager):
+            for out in list(manager.outputs):
                 if out.output.casefold() == 'onchangetoalltrue':
                     out.only_once = True
                 else:
@@ -123,7 +124,6 @@ def comp_trigger_goo(ctx: Context):
                 )
                 reloader.make_unique('reloader')
             hurt['classname'] = 'trigger_once'
-            del hurt['damagetype']
             hurt.add_out(Output('OnStartTouch', reloader, 'Reload', only_once=True))
 
             # Make sure the failsafe delay is longer than the total fade time.
@@ -133,6 +133,9 @@ def comp_trigger_goo(ctx: Context):
             hurt['damage'] = hurt['damagecap'] = 10000
             hurt['damagemodel'] = 0  # No doubling
             hurt['nodmgforce'] = 1  # Don't throw players around.
+
+        strip_cust_keys(hurt)
+        strip_cust_keys(diss)
 
         for out in outputs:
             if out.output.casefold() == 'onkillplayer':

@@ -12,13 +12,6 @@
 	maxspeed(float) : "Max ball speed" : 600.0 : "The maximum speed of balls that fly in the spawner"
 
 	ballradius(float) : "Ball radius" : 12.0 : "The size of the sprite and the collsion. This is restricted to within 1-12 units."
-	balltype(choices) : "Ball Type" : "Combine Energy Ball 1" =
-		[
-		0: "Combine Energy Ball 1"
-		1: "Combine Energy Ball 2"
-		2: "Combine Energy Ball 3"
-		]
-	balltype[engine](integer): "Ball Type": 0
 
 	ballrespawntime(float) : "Ball Respawn Time" : 4.0 : "The energy balls respawn time"
 

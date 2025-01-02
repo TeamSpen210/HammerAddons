@@ -12,15 +12,15 @@
 
 	parentname[!srctools](target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent. Set an attachment point via 'parentname,attachment'."
 	parentname[srctools](target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	parent_attachment_point[srctools](string) : "Attachment Point" : : "If set, attach to this attachment point on the parent during spawn."
+	parent_attachment_point[srctools](string) : "[HA] Attachment Point" : : "If set, attach to this attachment point on the parent during spawn. The relative offset will be preserved."
 
 	linedivider_vscript[+VSCRIPT, !engine](string) readonly : "-------------------------------------------------------------------------------------------------------" : ""
 
 	vscripts[VSCRIPT](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
 	thinkfunction[VSCRIPT](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
 
-	vscript_init_code[+VSCRIPT, +srctools](string) : "Init Code" : : "This code will be executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings."
-	vscript_init_code2[+VSCRIPT, +srctools](string) : "Init Code 2" : : "This code will be the second line executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings. " +
+	vscript_init_code[+VSCRIPT, +srctools](string) : "[HA] Init Code" : : "This code will be executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings."
+	vscript_init_code2[+VSCRIPT, +srctools](string) : "[HA] Init Code 2" : : "This code will be the second line executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings. " +
 		"Additional Init Code keyvalues can be added with SmartEdit off."
 	// etc
 
@@ -38,8 +38,8 @@
 	input SetParentAttachment(string) : "Change this entity to attach to a specific attachment point on its parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment."
 	input SetParentAttachmentMaintainOffset(string) : "Change this entity to attach to a specific attachment point on it's parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment. The entity will maintain it's position relative to the parent at the time it is attached."
 	input ClearParent(void) : "Removes this entity from the the movement hierarchy, leaving it free to move independently."
-	input SetLocalAngles[since_ASW, MBase](vector) : "Sets the rotation of the entity relative to the parent's rotation."
-	input SetLocalOrigin[since_ASW, MBase](vector) : "Sets the position of the entity relative to its parent if one exists. Otherwise relative to the world."
+	input SetLocalAngles[since_ASW, MBase, GMod](vector) : "Sets the rotation of the entity relative to the parent's rotation."
+	input SetLocalOrigin[since_ASW, MBase, GMod](vector) : "Sets the position of the entity relative to its parent if one exists. Otherwise relative to the world."
 	input SetAbsAngles[MBase](vector) : "Set this entity's angles, always relative to the world origin."
 
 	// Mapbase BaseEntity changes:

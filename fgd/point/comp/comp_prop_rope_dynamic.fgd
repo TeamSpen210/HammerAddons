@@ -3,7 +3,7 @@
 	sphere(fademaxdist)
 	studio("models/editor/comp_prop_rope_dynamic.mdl")
 	appliesto(srctools)
-= comp_prop_rope_dynamic: "Allows using comp_prop_rope/comp_prop_cable as a dynamic prop."
+= comp_prop_rope_dynamic: "Allows using comp_prop_rope/comp_prop_cable as a prop_dynamic."
 	[
 	spawnflags(flags)  =
 		[
@@ -11,7 +11,7 @@
 		]
 	angles(angle) readonly: "Orientation" : "0 0 0" : "The starting orientation can't be changed, simply move the nodes."
 
-	group(target_source): "Rope Group" : : "Specify the name of the group that will be compiled into this entity."
+	group(target_source): "Rope Group" : : "Specify the same group name as in a comp_prop_rope/comp_prop_cable. The ropes will be compiled with this entity as their origin."
 
 	// Not inheriting from prop_dynamic_base, since most of the animation KVs are pointless.
 	glowbackfacemult[L4D2](float) : "Glow backface Multiplier" : "1.0" : "What to multiply glow by on backfaces."
@@ -23,4 +23,6 @@
 	input DisableCollision(void) : "Disable collision on the rope set."
 	input BecomeRagdoll[since_P2](void) : "Change into a ragdoll immediately."
 	input FadeAndKill[since_P2](void) : "Fade out then remove this rope set."
+
+    @resources [] // Converted to prop_dynamic and packed normally.
 	]

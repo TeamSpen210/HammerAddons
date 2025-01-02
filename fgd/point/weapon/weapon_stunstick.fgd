@@ -5,6 +5,7 @@
 	[
 	@resources
 		[
+		weapon_script "scripts/weapon_stunstick.txt"
 		sound "Weapon_StunStick.Activate"
 		sound "Weapon_StunStick.Deactivate"
 		]

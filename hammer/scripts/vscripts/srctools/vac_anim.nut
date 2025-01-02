@@ -22,27 +22,27 @@ class Cargo {
 	}
 }
 
-// Nodes with outputs need to be delayed.
+// Nodes with outputs that need to be delayed.
 class Output {
 	time = 0.0; // Delay after anim start before it should fire.
-	target = null; // The node to fire inputs at.
-	scanner = null; // If set, the scanner to fire skin inputs to
-	// The magnitude is the time taken to travel HALF of a tv scanner prop. If negative, the user wants
-	// it to stay on until another cube arrives.
-	tv_offset = 0.0; 
-	constructor (_time, node_name, scanner_name, _tv_offset=0.1) {
+	target = null; // The entity to fire inputs at.
+	input = null; // The input to use.
+	is_tv = false;
+	constructor (_time, ent_name, input_name) {
 		time = _time;
-		tv_offset = _tv_offset;
-		target = Entities.FindByName(null, node_name);
-		if (scanner_name != null) {
-		scanner = Entities.FindByName(null, scanner_name);
+		target = Entities.FindByName(null, ent_name);
+		// Special input name - if used, fire a skin input instead.
+		if (input_name == "<SKIN>") {
+			is_tv = true;
+			input = "Skin"
 		} else {
-			scanner = null;
+			is_tv = false;
+			input = input_name;
 		}
 	}
 	function _tostring() { return tostring() }
 	function tostring() {
-	    return "<Output @" + time + ", targ: \""+target.GetName() + "\", scanner=" + scanner + ">";
+	    return "<Output @" + time + ", targ: \""+target.GetName() + "\", input=" + input + ", tv=" + is_tv + ">";
 	}
 }
 
@@ -54,12 +54,22 @@ class Anim {
 	pass_io = []; // Outputs to delay-fire.
 	duration = 0.0; // Length of animation.
 
-	constructor (anim_name, time, cube_type, pass_io_lst) {
+	opt_fast_reflection = false;
+	opt_no_rtt_shadow = false;
+	opt_no_rec_projtex = false;
+	constructor (
+		anim_name, time, cube_type, pass_io_lst, 
+		fast_ref, no_rtt_shadow, no_rec_projtex,
+	) {
 		name = anim_name;
 		duration = time;
 		cargo_type = cube_type;
 		req_spawn = false;
 		pass_io = pass_io_lst;
+
+		opt_fast_reflection = fast_ref;
+		opt_no_rtt_shadow = no_rtt_shadow;
+		opt_no_rec_projtex = no_rec_projtex;
 	}
 	function _tostring() { return tostring() }
 	function tostring() {
@@ -72,10 +82,20 @@ class EntSet {
 	reuse_time = 0.0;
 	mover = null;
 	visual = null;
+	opt_skin = 0;
+	opt_localpos = "0 0 0";
+	opt_fast_reflection = false;
+	opt_no_rtt_shadow = true;
+	opt_no_rec_projtex = false;
 	constructor (time, mov, vis) {
 		reuse_time = time;
 		mover = mov;
 		visual = vis;
+		opt_skin = 0;
+		opt_localpos = "0 0 0";
+		opt_fast_reflection = false;
+		opt_no_rtt_shadow = true;
+		opt_no_rec_projtex = false;
 	}
 	function _tostring() { return tostring() }
 	function tostring() {
@@ -94,6 +114,14 @@ if (!("vactube_objs" in getroottable())) {
 	::vactube_objs <- [];
 }
 
+// Cache the keyvalues we previously set, to reduce IO spam. For each bool option,
+// this has the attribute, and on/off input.
+PROP_INPUTS <- [
+	{attr="opt_fast_reflection", enable="EnableDrawInFastReflection", disable="DisableDrawInFastReflection"},
+	{attr="opt_no_rtt_shadow", enable="EnableShadow", disable="DisableShasow"},
+	{attr="opt_no_rec_projtex", enable="EnableReceivingFlashlight", disable="DisableReceivingFlashlight"},
+]
+
 function show() {
     foreach (anim in ANIM_DROP) {
         printl("Drop: " + anim.tostring());
@@ -111,8 +139,14 @@ function obj(vac_mdl, vac_skin, cube_mdl, weight, off, tv) {
     }
 	return cargo;
 }
-function anim(anim_name, time, type, pass_io_lst) {
-	local ani = Anim(anim_name, time, type, pass_io_lst);
+function anim(
+	anim_name, time, type, pass_io_lst,
+	fast_ref, no_rtt_shadow, no_rec_projtex,
+) {
+	local ani = Anim(
+		anim_name, time, type, pass_io_lst,
+		fast_ref, no_rtt_shadow, no_rec_projtex
+	);
 	if (type == null) {
 		ANIM_DECO.append(ani);
 	} else {
@@ -175,26 +209,39 @@ function make_cube() {
 	}
 
 	cargo.visual.SetModel(cargo_type.model);
-    EntFireByHandle(cargo.visual, "Skin", cargo_type.skin.tostring(), 0, self, self);
+	if (cargo.opt_skin != cargo_type.skin) {
+		EntFireByHandle(cargo.visual, "Skin", cargo_type.skin.tostring(), 0, self, self);
+		cargo.opt_skin = cargo_type.skin;
+	}
+	if (cargo.opt_localpos != cargo_type.localpos) {
+    	EntFireByHandle(cargo.visual, "SetLocalOrigin", cargo_type.localpos, 0, self, self);
+		cargo.opt_localpos = cargo_type.localpos;
+	}
     EntFireByHandle(cargo.visual, "EnableDraw", "", 0, self, self);
-    EntFireByHandle(cargo.visual, "SetLocalOrigin", cargo_type.localpos, 0, self, self);
     EntFireByHandle(cargo.mover, "SetAnimation", anim.name, 0, self, self);
     EntFireByHandle(cargo.visual, "DisableDraw", "", anim.duration, self, self);
     cargo.reuse_time = cur_time + anim.duration + 0.1; // Make sure enable/disable inputs don't get mixed up.
 
-    foreach (pass_out in anim.pass_io) {
+    // Apply these options, with a cache to avoid re-firing.
+    foreach (opt in PROP_INPUTS) {
+		local desired = anim[opt.attr]
+    	if (cargo[opt.attr] != desired) {
+			EntFireByHandle(cargo.visual, desired ? opt.enable : opt.disable, "", 0, self, self);
+			cargo[opt.attr] = desired;
+    	}
+    }
+
+    foreach (output in anim.pass_io) {
+		// Skin inputs for TVs need the cargo skin.
+		local param;
+		if (output.is_tv) {
+			param = cargo_type.tv_skin.tostring();
+		} else {
+			param = "";
+		}
 		// Do not pass an !activator here. The cargo props are shared, so 
 		// users shouldn't be doing anything to them. In particular, 
 		// OnPass -> kill outputs may be present which are not useful.
-		EntFireByHandle(pass_out.target, "FireUser4", "", pass_out.time, null, null);
-		if (pass_out.scanner != null && cargo_type.tv_skin != 0) {
-			if (pass_out.tv_offset < 0) { // Just fire on entry.
-				EntFireByHandle(pass_out.scanner, "Skin", cargo_type.tv_skin.tostring(), pass_out.time + pass_out.tv_offset, self, self);
-			} else { 
-				// Fire on entry, then reset after.
-				EntFireByHandle(pass_out.scanner, "Skin", cargo_type.tv_skin.tostring(), pass_out.time - pass_out.tv_offset, self, self);
-				EntFireByHandle(pass_out.scanner, "Skin", "0", pass_out.time + pass_out.tv_offset, self, self);
-			}
-		}
+		EntFireByHandle(output.target, output.input, param, output.time, null, null);
     }
 }

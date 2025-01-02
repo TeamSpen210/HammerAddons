@@ -9,15 +9,17 @@
 		1: "Only trigger once" : 0
 		2: "Allow fast retrigger" : 0
 		]
-
-	ontriggerchance1(float) : "OnTrigger1 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger1 output firing when this entity is triggered."
-	ontriggerchance2(float) : "OnTrigger2 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger2 output firing when this entity is triggered."
-	ontriggerchance3(float) : "OnTrigger3 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger3 output firing when this entity is triggered."
-	ontriggerchance4(float) : "OnTrigger4 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger4 output firing when this entity is triggered."
-	ontriggerchance5(float) : "OnTrigger5 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger5 output firing when this entity is triggered."
-	ontriggerchance6(float) : "OnTrigger6 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger6 output firing when this entity is triggered."
-	ontriggerchance7(float) : "OnTrigger7 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger7 output firing when this entity is triggered."
-	ontriggerchance8(float) : "OnTrigger8 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger8 output firing when this entity is triggered."
+	
+	// Bug workaround: the numbering for these is mismatched between the KVs and inputs
+	// (As far as I can tell, Mapbase has this bug too)
+	ontriggerchance0(float) : "OnTrigger1 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger1 output firing when this entity is triggered."
+	ontriggerchance1(float) : "OnTrigger2 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger2 output firing when this entity is triggered."
+	ontriggerchance2(float) : "OnTrigger3 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger3 output firing when this entity is triggered."
+	ontriggerchance3(float) : "OnTrigger4 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger4 output firing when this entity is triggered."
+	ontriggerchance4(float) : "OnTrigger5 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger5 output firing when this entity is triggered."
+	ontriggerchance5(float) : "OnTrigger6 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger6 output firing when this entity is triggered."
+	ontriggerchance6(float) : "OnTrigger7 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger7 output firing when this entity is triggered."
+	ontriggerchance7(float) : "OnTrigger8 Chance" : 1.0 : "Chance (from 0 to 1) of the OnTrigger8 output firing when this entity is triggered."
 
 	// Inputs
 	input Trigger(void) : "Trigger this entity, causing its OnTrigger outputs to fire if it is enabled."

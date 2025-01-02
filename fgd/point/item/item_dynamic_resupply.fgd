@@ -1,3 +1,6 @@
+@Snippet desc "AmmoDesc" = "A ratio from 0 to 1. " +
+	"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+
 @PointClass base(Item) 
 	appliesto(EP1, EP2, HL2, P1) 
 	iconsprite("editor/item_dynamic_resupply.vmt")
@@ -27,28 +30,17 @@
 		"Attempt to fill the player up to this percentage of their max health."
 	desiredArmor(float) : "Desired Armor Ratio" : 0.3 : "A ratio from 0 to 1." +
 		"Attempt to fill the player up to this percentage of their max armor."
-	desiredammoPistol(float) : "Desired Pistol Ammo Ratio" : 0.5 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammoSMG1(float) : "Desired SMG1 Ammo Ratio" : 0.5 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammoSMG1_Grenade(float) : "Desired SMG1 Grenade Ammo Ratio" : 0.1 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammoAR2(float) : "Desired AR2 Ammo Ratio" : 0.4 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammoBuckshot(float) : "Desired Shotgun Ammo Ratio" : 0.5 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammoRPG_Round(float) : "Desired RPG Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammoGrenade(float) : "Desired Grenade Ammo Ratio" : 0.1 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammo357(float) : "Desired 357 Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammoCrossbow(float) : "Desired Crossbow Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammoAR2_Altfire(float) : "Desired AR2 Alt-fire Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
-	desiredammoAR2_XenGrenade[EZ2](float) : "Desired Xen Grenade Ammo Ratio" : 0 : "A ratio from 0 to 1. " +
-		"Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	desiredammoPistol(float) : "Desired Pistol Ammo Ratio" : 0.5 : #snippet AmmoDesc
+	desiredammoSMG1(float) : "Desired SMG1 Ammo Ratio" : 0.5 : #snippet AmmoDesc		
+	desiredammoSMG1_Grenade(float) : "Desired SMG1 Grenade Ammo Ratio" : 0.1 : #snippet AmmoDesc
+	desiredammoAR2(float) : "Desired AR2 Ammo Ratio" : 0.4 : #snippet AmmoDesc
+	desiredammoBuckshot(float) : "Desired Shotgun Ammo Ratio" : 0.5 : #snippet AmmoDesc
+	desiredammoRPG_Round(float) : "Desired RPG Ammo Ratio" : 0 : #snippet AmmoDesc
+	desiredammoGrenade(float) : "Desired Grenade Ammo Ratio" : 0.1 : #snippet AmmoDesc
+	desiredammo357(float) : "Desired 357 Ammo Ratio" : 0 : #snippet AmmoDesc
+	desiredammoCrossbow(float) : "Desired Crossbow Ammo Ratio" : 0 : #snippet AmmoDesc
+	desiredammoAR2_Altfire(float) : "Desired AR2 Alt-fire Ammo Ratio" : 0 : #snippet AmmoDesc
+	desiredammoAR2_XenGrenade[EZ2](float) : "Desired Xen Grenade Ammo Ratio" : 0 : #snippet AmmoDesc
 
 	// Inputs
 	input CalculateType(void) : "Force the dynamic resupply to calculate which item it should spawn."

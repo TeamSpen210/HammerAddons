@@ -1,9 +1,9 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(MBase, since_ASW, TF2) 
+	appliesto(since_ASW, TF2, PEE15) // Mapbase also has it technically, but it doesn't work - should be +complete but we can't make that work right currently
 	iconsprite("editor/skybox_swapper") = skybox_swapper: "An entity that precaches skybox materials and swaps them on trigger."
 	[
-	skyboxname(string) : "Skybox Material Name" : "sky_dust"
-	skyboxname[TF2](string) : "Skybox Material Name" : "sky_halloween_night_01"
+	// TODO: perhaps have lists of games' built in skybox textures here and in worldspawn?
+	skyboxname(string) : "Skybox Material Name" : ""
 
 	// Inputs
 	input Trigger(void) : "Swap to this skybox."

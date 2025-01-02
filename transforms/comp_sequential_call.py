@@ -1,12 +1,13 @@
+from typing import Iterable, List, Dict, Tuple
 import itertools
 import random
 import re
-from collections.abc import Iterator
 
 from srctools import Vec, Entity, Output, conv_bool, conv_float, lerp
 import srctools.logger
 
 from hammeraddons.bsp_transform import trans, Context
+from hammeraddons.bsp_transform.common import strip_cust_keys
 
 LOGGER = srctools.logger.get_logger(__name__)
 DIGIT_PATTERN = re.compile('[0-9]+')
@@ -20,6 +21,11 @@ def num_suffix(ent: Entity) -> int:
     else:
         return 0
 
+KEYVALUES = [
+    'time_val', 'time_variance', 'time_mode',
+    'order_mode', 'uniquify', 'target'
+]
+
 
 @trans('comp_sequential_call')
 def sequential_call(ctx: Context) -> None:
@@ -27,7 +33,7 @@ def sequential_call(ctx: Context) -> None:
     for seq_call in ctx.vmf.by_class['comp_sequential_call']:
         seq_call['classname'] = 'logic_relay'
 
-        target_ents: list[Entity] = list(ctx.vmf.search(seq_call['target']))
+        target_ents: List[Entity] = list(ctx.vmf.search(seq_call['target']))
         if not target_ents:
             LOGGER.warning(
                 'Sequential call "{}" at {} could find no target entities named "{}"!',
@@ -43,7 +49,7 @@ def sequential_call(ctx: Context) -> None:
         origin = Vec.from_str(seq_call['origin'])
 
         if order_mode.startswith('dist'):
-            dist_to_ent: dict[Entity, float] = {
+            dist_to_ent: Dict[Entity, float] = {
                 ent: (Vec.from_str(ent['origin']) - origin).mag()
                 for ent in target_ents
             }
@@ -62,10 +68,10 @@ def sequential_call(ctx: Context) -> None:
                 f'"{seq_call["targetname"]}" at ({seq_call["origin"]}).'
             )
 
-        ent_and_delay: Iterator[tuple[Entity, float]] = []
+        ent_and_delay: Iterable[Tuple[Entity, float]]
         if max_dist < 1e-6 or time_val == 0.0:
             # No total delay, skip computation and any divide by zero.
-            ent_and_delay[:] = zip(target_ents, itertools.repeat(0.0))
+            ent_and_delay = zip(target_ents, itertools.repeat(0.0))
         elif time_mode == 'total':
             time_start, time_end = (time_val, 0.0) if order_mode.endswith('_inv') else (0.0, time_val)
             # Special case, if total and dist selected, lerp by distance, not evenly spaced.
@@ -88,9 +94,9 @@ def sequential_call(ctx: Context) -> None:
                 f'"{seq_call["targetname"]}" at ({seq_call["origin"]}).'
             )
 
-        outputs_rep: list[Output] = []
-        outputs_final: list[Output] = []
-        outputs_other: list[Output] = []
+        outputs_rep: List[Output] = []
+        outputs_final: List[Output] = []
+        outputs_other: List[Output] = []
         for out in seq_call.outputs:
             out_name = out.output.casefold()
             if out_name == 'onseq':
@@ -129,3 +135,5 @@ def sequential_call(ctx: Context) -> None:
         for out in outputs_final:
             out.delay = round(out.delay + max_delay, 2)
             seq_call.outputs.append(out)
+
+        strip_cust_keys(seq_call)

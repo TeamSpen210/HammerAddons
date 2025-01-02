@@ -61,7 +61,9 @@ def check_datadesc(filename: str, tags: FrozenSet[str]) -> None:
         print(*args, file=msgfile)
         bad_ents.add(classname)
 
-    with open(Path(repo_root, 'db', 'datamaps', filename + 'datamap.txt')) as f, open(Path(repo_root, 'db', 'reports', filename + '.txt'), 'w') as msgfile:
+    filename_datamap = Path(repo_root, 'db', 'datamaps', filename + 'datamap.txt')
+    filename_report = Path(repo_root, 'db', 'reports', filename + '.txt')
+    with open(filename_datamap, encoding='ascii') as f, open(filename_report, 'w', encoding='utf8') as msgfile:
         cur_ent: Optional[EntityDef]  # Deliberately uninitialised.
         for line in f:
             if line.startswith('//') or not line.strip():
@@ -89,7 +91,7 @@ def check_datadesc(filename: str, tags: FrozenSet[str]) -> None:
                             # msg(f'[{classname}] Missing member:', name)
                             continue
                     except UnboundLocalError:
-                        raise ValueError('KV coming before first ent??')
+                        raise ValueError('KV coming before first ent??') from None
                     if 'Output' in flags:
                         try:
                             tagsmap = get_val(cur_ent, 'outputs', name)

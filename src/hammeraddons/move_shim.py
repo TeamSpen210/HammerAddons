@@ -47,7 +47,7 @@ class ModuleProxy(types.ModuleType):
 
 class SwapLoader(Loader):
     """When loaded redirect to the original module."""
-    def __init__(self, orig: types.ModuleType):
+    def __init__(self, orig: types.ModuleType) -> None:
         self.orig = orig
 
     def create_module(self, spec: ModuleSpec) -> Optional[types.ModuleType]:

@@ -5,6 +5,8 @@
 	[
 	@resources
 		[
+		weapon_script "scripts/weapon_physcannon.txt"
+
 		material "materials/sprites/orangelight1.vmt"
 		material "materials/sprites/glow04_noz.vmt"
 		material "materials/sprites/orangeflare1.vmt"

@@ -15,7 +15,7 @@
 	
 
 	model[engine](string) : "" // Not actually a model it really loads.
-	model(studio) readonly : "Model" : "models/error.mdl" : "Paint bombs need a model set to suppress a warning message. This model would be loaded already."
+	model(studio) readonly : "Model" : "models/props/futbol.mdl" : "Paint bombs need a model set to suppress a warning message. This model gets loaded already."
 
 	// Inputs
 	input Dissolve(void) : "Dissolves the paint bomb."

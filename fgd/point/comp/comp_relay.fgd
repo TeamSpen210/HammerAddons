@@ -8,7 +8,8 @@
     "Inputs only work if given directly from entities (or via instance redirection), not ingame or dynamically." + 
     "All inputs/outputs may pass through any parameter, if no override is specified."
     [
-    delay(float) : "Extra Delay" : 0.0 : "Add this delay to all outputs. This allows you to control this via $fixup values, for instance."
+    delay(float) : "Delay Min" : 0.0 : "Add this delay to all outputs. This allows you to control this via $fixup values, for instance."
+    delay_max(float) : "Delay Max" : : "If this is also set, the delay will be randomised. This is seeded from the location of this relay."
 
     input Trigger(string): "Trigger the relay and fire the output."
     
@@ -36,4 +37,6 @@
 	output OnUser6(string) : "Fired in response to a FireUser6 input."
 	output OnUser7(string) : "Fired in response to a FireUser7 input."
 	output OnUser8(string) : "Fired in response to a FireUser8 input."
+    
+    @resources []
 ]

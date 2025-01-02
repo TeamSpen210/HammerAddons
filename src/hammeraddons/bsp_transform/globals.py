@@ -54,7 +54,7 @@ def vscript_init_code(ctx: Context) -> None:
         ctx.add_code(ent, code)
 
 
-@trans('VScript RunScript Inputs')
+@trans('VScript RunScript Inputs', priority=500)
 def vscript_runscript_inputs(ctx: Context) -> None:
     """Handle RunScript* inputs.
 
@@ -123,6 +123,7 @@ def strip_ents(ctx: Context) -> None:
         'func_instance_parms',
         'func_instance_origin',
         'comp_player_input_helper',
+        'hammer_model',
     ]:
         for ent in ctx.vmf.by_class[clsname]:
             ent.remove()

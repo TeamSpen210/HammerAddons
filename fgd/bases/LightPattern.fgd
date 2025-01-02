@@ -1,0 +1,13 @@
+@BaseClass = LightPattern
+[
+	style[engine](integer) : "Appearance" : 0
+	style(choices) : "Appearance" : 0 = #snippet LightStyle
+	pattern(string) : "Custom Appearance" : "" : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
+
+	// Inputs
+	input TurnOn(void) : "Turn the light on."
+	input TurnOff(void) : "The the light off."
+	input Toggle(void) : "Toggle the light's current state."
+	input SetPattern(string) : "Set a custom pattern of light brightness for this light. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
+	input FadeToPattern(string) : "Fades from first value in old pattern, to first value in the new given pattern. Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
+]

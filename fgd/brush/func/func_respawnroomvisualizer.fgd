@@ -1,4 +1,5 @@
 @SolidClass base(func_brush) 
+	line(255 255 0, targetname, respawnroomname)
 	appliesto(TF2) = func_respawnroomvisualizer: 
 	"Brushes that become visible to enemy players when they get close. " +
 	"Use them to mark areas that they're unable to enter (i.e. respawn rooms)."

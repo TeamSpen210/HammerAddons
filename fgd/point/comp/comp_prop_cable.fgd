@@ -14,11 +14,12 @@
 
 	// Valve's interplator keyvalue just happens to provide the right visuals we want.
 	positioninterpolator[engine](integer): "Type": 2
-	positioninterpolator(choices) : "Type" : 2 : "How to interpolate the cable. Straight makes it straight. Spline uses a spline curve, which smoothly blends between points (no visuals). Catenary makes it hang down, like the original move_rope." =
+	positioninterpolator(choices) : "Type" : 2 : "How to interpolate the cable. Straight makes it straight. Spline uses a spline curve, which smoothly blends between points. Catenary makes it hang down, like the original move_rope. Bezier is an alternate smooth curve, but the visual in Hammer will be incorrect." =
 		[
 		0: "Straight"
 		1: "Spline Curve"
 		2: "Catenary"
+		3: "Bezier"
 		]
 
 	segments(integer) : "Segments" : 2 : "Number of nodes to generate between each cable. Higher values make smoother cables, but produce more faces."
@@ -48,7 +49,9 @@
 	]
 	u_min(float): "Width Start" : 0.0 : "The distance along the texture to start. 0 is the left/bottom side, 1 is the right/top side. This allows using only part of the texture, if it contains multiple different cable styles."
 	u_max(float): "Width End"   : 1.0 : "The distance along the texture to end. 0 is the left/bottom side, 1 is the right/top side. This allows using only part of the texture, if it contains multiple different cable styles."
-	
+
+	bunting(target_destination) : "Bunting Definition" : : "Set to the name of a comp_prop_rope_bunting, to define models which will be placed at each segment across the rope."
+
 	// A selection of prop_static's keyvalues, excluding some that are rather irrelevant.
 	linedivider_staticprop[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
@@ -74,6 +77,8 @@
 
 	drawinfastreflection[since_L4D](boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
 	enablelightbounce[since_CSGO](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
-	
+
 	movespeed(integer) readonly: "Speed (unused)" : 1 : "This key needs to be greater than zero to show the preview in Hammer, ignore it."
+
+    @resources [] // Converted to static prop and packed normally.
 	]

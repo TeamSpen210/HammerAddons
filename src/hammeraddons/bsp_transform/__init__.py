@@ -1,37 +1,37 @@
 """Transformations that can be applied to the BSP file."""
+from typing import (
+    Awaitable, Callable, Container, Dict, FrozenSet, List, Mapping, Optional, Protocol, Tuple,
+    TypeVar, Union,
+)
+from typing_extensions import TypeAlias
 import warnings
-from typing import Awaitable, Callable, Dict, FrozenSet, List, Mapping, Optional, Tuple
 from pathlib import Path
 import inspect
 
-from srctools import FGD, VMF, EmptyMapping, Entity, FileSystem, Keyvalues, Output, conv_bool
+import attrs
+import trio.lowlevel
+
+from srctools import FGD, VMF, EmptyMapping, Entity, FileSystem, Keyvalues, Output
 from srctools.bsp import BSP
 from srctools.game import Game
 from srctools.logger import get_logger
 from srctools.packlist import PackList
 
+from hammeraddons.bsp_transform.common import (
+    check_control_enabled, ent_description,
+    parse_numeric_specifier, NumericSpecifier, NumericOp
+)
 
 LOGGER = get_logger(__name__, 'bsp_trans')
+RemapFunc: TypeAlias = Callable[[Entity, Output], List[Output]]
 
 __all__ = [
-    'check_control_enabled',
     'Context', 'trans', 'run_transformations',
     'TransFunc', 'TRANSFORMS',
+    # Utils:
+    'check_control_enabled', 'ent_description',
+    'parse_numeric_specifier', 'NumericOp', 'NumericSpecifier',
 ]
-
-
-def check_control_enabled(ent: Entity) -> bool:
-    """Implement the bahaviour of ControlEnables - control_type and control_value.
-
-    This allows providing a fixup value, and optionally inverting it.
-    """
-    # If ctrl_type is 0, ctrl_value needs to be 1 to be enabled.
-    # If ctrl_type is 1, ctrl_value needs to be 0 to be enabled.
-    if 'ctrl_type' in ent:
-        return conv_bool(ent['ctrl_type'], False) != conv_bool(ent['ctrl_value'], True)
-    else:
-        # Missing, assume true if ctrl_value also isn't present.
-        return conv_bool(ent['ctrl_value'], True)
 
 
 class Context:
@@ -63,7 +63,8 @@ class Context:
         self.studiomdl = studiomdl_loc
         self.config = Keyvalues.root()
 
-        self._io_remaps: Dict[Tuple[str, str], Tuple[List[Output], bool]] = {}
+        self._io_remaps: Dict[Tuple[str, str], Tuple[List[Union[Output, RemapFunc]], bool]] = {}
+        self._allow_remaps = True
         self._ent_code: Dict[Entity, str] = {}
 
     @property
@@ -72,6 +73,24 @@ class Context:
         if self._fgd is None:
             self._fgd = FGD.engine_dbase()
         return self._fgd
+
+    def _add_io_remap(
+        self, name: str, inp_name: str,
+        value: Union[Output, RemapFunc],
+        remove: bool,
+    ) -> None:
+        if not self._allow_remaps:
+            raise RecursionError('Cannot add more remaps from a remap callback!')
+        key = (name, inp_name)
+        try:
+            out_list, old_remove = self._io_remaps[key]
+        except KeyError:
+            self._io_remaps[key] = ([value], remove)
+        else:
+            out_list.append(value)
+            # Only allow removing if all remaps have requested it.
+            if old_remove and not remove:
+                self._io_remaps[key] = (out_list, False)
 
     def add_io_remap(self, name: str, *outputs: Output, remove: bool=True) -> None:
         """Register an output to be replaced.
@@ -89,19 +108,23 @@ class Context:
         for out in outputs:
             inp_name = out.output.casefold()
             out.output = ''
-            key = (name, inp_name)
-            try:
-                out_list, old_remove = self._io_remaps[key]
-            except KeyError:
-                self._io_remaps[key] = ([out], remove)
-            else:
-                out_list.append(out)
-                # Only allow removing if all remaps have requested it.
-                if old_remove and not remove:
-                    self._io_remaps[key] = (out_list, False)
+            self._add_io_remap(name, inp_name, out, remove)
+
+    def add_io_remap_func(self, name: str, inp_name: str, func: RemapFunc, remove: bool = True) -> None:
+        """Register an output to be dynamically replaced, using a function.
+
+        This allows varying the output for each input entity. The entity and the relevant output
+        are passed to the function for reference, but the output and entity should not be modified.
+        Instead, return new outputs from the function, which are merged with the original.
+        """
+        if name and inp_name:
+            self._add_io_remap(name.casefold(), inp_name.casefold(), func, remove)
 
     def add_io_remap_removal(self, name: str, inp_name: str) -> None:
         """Special case of add_io_remap, request that this output should be removed."""
+        if not self._allow_remaps:
+            raise RecursionError('Cannot add more remaps from a remap callback!')
+
         key = (name.casefold(), inp_name.casefold())
         if key not in self._io_remaps:
             self._io_remaps[key] = ([], True)
@@ -116,29 +139,46 @@ class Context:
         except KeyError:
             self._ent_code[ent] = code
         else:
-            self._ent_code[ent] = '{}\n{}'.format(existing, code)
+            self._ent_code[ent] = f'{existing}\n{code}'
 
 
-TransFunc = Callable[[Context], Awaitable[None]]
-TransFuncOrSync = Callable[[Context], Optional[Awaitable[None]]]
-TRANSFORMS: Dict[str, TransFunc] = {}
-TRANSFORM_PRIORITY: Dict[str, int] = {}
+TransFunc: TypeAlias = Callable[[Context], Awaitable[None]]
+TransFuncOrSync: TypeAlias = Callable[[Context], Optional[Awaitable[None]]]
+TransFuncT = TypeVar('TransFuncT', bound=Callable[[Context], Optional[Awaitable[None]]])
 
 
-def trans(name: str, *, priority: int=0) -> Callable[[TransFuncOrSync], TransFunc]:
+@attrs.frozen(eq=False)
+class Transform:
+    """A transform function."""
+    func: TransFunc
+    name: str
+    priority: int
+
+
+TRANSFORMS: Dict[str, Transform] = {}
+
+
+class TransProto(Protocol):
+    def __call__(self, func: TransFuncT) -> TransFuncT: ...
+
+
+def trans(name: str, *, priority: int=0) -> TransProto:
     """Add a transformation procedure to the list."""
-    def deco(func: TransFuncOrSync) -> TransFunc:
+    name = name.strip()
+    if ',' in name:
+        raise ValueError('Commas are not allowed in names!')
+
+    def deco(func: TransFuncT) -> TransFuncT:
         """Stores the transformation."""
-        TRANSFORM_PRIORITY[name] = priority
         if inspect.iscoroutinefunction(func):
-            TRANSFORMS[name] = func
-            return func
+            TRANSFORMS[name.casefold()] = Transform(func, name, priority)
         else:
             async def async_wrapper(ctx: Context) -> None:
                 """Just freeze all other tasks to run this."""
+                await trio.lowlevel.checkpoint()
                 func(ctx)
-            TRANSFORMS[name] = async_wrapper
-            return async_wrapper
+            TRANSFORMS[name.casefold()] = Transform(async_wrapper, name, priority)
+        return func
     return deco
 
 
@@ -152,6 +192,7 @@ async def run_transformations(
     studiomdl_loc: Optional[Path] = None,
     config: Mapping[str, Keyvalues] = EmptyMapping,
     tags: FrozenSet[str] = frozenset(),
+    disabled: Container[str] = (),
     modelcompile_dump: Optional[Path] = None,
 ) -> None:
     """Run all transformations."""
@@ -161,68 +202,88 @@ async def run_transformations(
         modelcompile_dump=modelcompile_dump,
     )
 
-    for func_name, func in sorted(
-        TRANSFORMS.items(),
-        key=lambda tup: TRANSFORM_PRIORITY[tup[0]],
-    ):
-        LOGGER.info('Running "{}"...', func_name)
+    for transform in sorted(TRANSFORMS.values(), key=lambda trans: trans.priority):
+        if transform.name.casefold() in disabled:
+            LOGGER.info('Skipping "{}"', transform.name)
+            continue
+        LOGGER.info('Running "{}"...', transform.name)
         try:
-            context.config = config[func_name.casefold()]
+            context.config = config[transform.name.casefold()]
         except KeyError:
-            context.config = Keyvalues(func_name, [])
+            context.config = Keyvalues(transform.name, [])
         LOGGER.debug('Config: {!r}', context.config)
-        await func(context)
+        await transform.func(context)
 
     if context._ent_code:
         LOGGER.info('Injecting VScript code...')
         for ent, code in context._ent_code.items():
             init_scripts = ent['vscripts'].split()
+            if init_scripts:
+                # If both a regular entity script and injected script are present,
+                # the call chaining mechanism used for Precache & OnPostSpawn can malfunction.
+                # If the entity script defines either, running the second script will make the
+                # chainer pick it up again, calling the function twice. So edit the script to
+                # first blank out the functions.
+                code = 'OnPostSpawn<-Precache<-function(){}\n' + code
             init_scripts.append(pack.inject_vscript(code.replace('`', '"')))
             ent['vscripts'] = ' '.join(init_scripts)
 
-    if context._io_remaps:
-        LOGGER.info('Remapping outputs...')
-        for (name, inp_name), outs in context._io_remaps.items():
-            LOGGER.debug('Remap {}.{} = {}', name, inp_name, outs)
-        for ent in vmf.entities:
-            todo = ent.outputs[:]
-            # Recursively convert only up to 500 times.
-            # Arbitrary limit, should be sufficient.
-            for _ in range(500):
-                if not todo:
-                    break
-                deferred = []
-                for out in todo:
-                    try:
-                        remaps, should_remove = context._io_remaps[
-                            out.target.casefold(),
-                            out.input.casefold(),
-                        ]
-                    except KeyError:
-                        continue
-                    if should_remove:
-                        ent.outputs.remove(out)
-                    for rep_out in remaps:
-                        new_out = Output(
-                            out.output,
-                            rep_out.target,
-                            rep_out.input,
-                            rep_out.params or out.params,
-                            out.delay + rep_out.delay,
-                            times=out.times if rep_out.times == -1
-                            else rep_out.times if out.times == -1
-                            else min(out.times, rep_out.times),
-                        )
-                        ent.outputs.append(new_out)
-                        deferred.append(new_out)
-                todo = deferred
-            else:
-                LOGGER.error(
-                    'Entity "{}" ({}) @ {} has infinite loop when expanding '
-                    ' compiler outputs to real ones! Final output list: \n{}',
-                    ent['targetname'], ent['classname'], ent['origin'],
-                    '\n'.join(['* {}\n'.format(out) for out in ent.outputs])
-                )
+    apply_io_remaps(context)
+
+
+# noinspection PyProtectedMember
+def apply_io_remaps(context: Context) -> None:
+    """Apply all the IO remaps."""
+    # Always disallow remaps now.
+    context._allow_remaps = False
+
+    if not context._io_remaps:
+        return
+
+    LOGGER.info('Remapping outputs...')
+    for (name, inp_name), outs in context._io_remaps.items():
+        LOGGER.debug('Remap {}.{} = {}', name, inp_name, outs)
+
+    for ent in context.vmf.entities:
+        if not ent.outputs:  # Early out.
+            continue
+        todo = ent.outputs[:]
+        # Recursively convert only up to 500 times.
+        # Arbitrary limit, should be sufficient.
+        for _ in range(500):
+            deferred = []
+            for out in todo:
+                try:
+                    remaps, should_remove = context._io_remaps[
+                        out.target.casefold(),
+                        out.input.casefold(),
+                    ]
+                except KeyError:
+                    continue
+                if should_remove:
+                    ent.outputs.remove(out)
+                collapsed_remaps: List[Output] = []
+                out_copy = out.copy()  # Don't allow remapping functions to modify this.
+                for remap in remaps:
+                    if isinstance(remap, Output):
+                        collapsed_remaps.append(remap)
+                    else:
+                        collapsed_remaps.extend(remap(ent, out_copy))
+
+                for rep_out in collapsed_remaps:
+                    new_out = Output.combine(out, rep_out)
+                    ent.outputs.append(new_out)
+                    deferred.append(new_out)
+            if not deferred:
+                break
+            todo = deferred
+        else:
+            LOGGER.error(
+                'Entity "{}" ({}) @ {} has infinite loop when expanding '
+                ' compiler outputs to real ones! Final output list: \n{}',
+                ent['targetname'], ent['classname'], ent['origin'],
+                '\n'.join([f'* {out}\n' for out in ent.outputs])
+            )
 
 
 def _load() -> None:
@@ -231,7 +292,7 @@ def _load() -> None:
     This loads the transformations. We do it in a function to allow discarding
     the output.
     """
-    from . import globals, instancing, packing
+    from . import globals, instancing, packing  # noqa
 
 
 _load()

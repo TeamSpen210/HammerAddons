@@ -1,0 +1,7 @@
+
+@snippet Keyvalue ImpactDamageType = damagetype(choices) : "Impact Damage Type" : 0 : "If sharp, this will damage other objects/players " + 
+	"with SLASH damage when rotating more than 360 degrees/second." =
+	[
+	0: "Blunt"
+	1: "Sharp"
+	]
