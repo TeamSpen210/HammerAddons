@@ -3,7 +3,7 @@
 
 from hammeraddons.bsp_transform import trans, Context
 from srctools.logger import get_logger
-from srctools import Entity, VMF, Output
+from srctools import Entity, VMF, Output, conv_bool
 
 LOGGER = get_logger(__name__)
 
@@ -14,18 +14,20 @@ def visual_preset(ctx: Context) -> None:
     """Sets a visual preset..."""
     vpreset: Entity
     vmf: VMF = ctx.vmf
+    vpreset_list = []
     for vpreset in vmf.by_class["comp_visual_preset"]:
         vpreset.remove()
-        LOGGER.log(0, f"Parsing visual preset: {vpreset['targetname']}")
+        LOGGER.debug("Parsing visual preset: {}", vpreset['targetname'])
 
         relay_ent = vmf.create_ent("logic_relay", 
-                       targetname = "visual_preset_" + vpreset["targetname"],
+                       targetname = vpreset["targetname"],
                        angles = "0 0 0",
                        spawnflags = 0,
                        startdisabled = 0,
                        origin = vpreset.get_origin()
                        )
         
+        vpreset_list.append(relay_ent) # Add to the list so we can reference it later
         
         ctx.add_io_remap( # Rebind the IO
                 vpreset["targetname"],
@@ -33,42 +35,34 @@ def visual_preset(ctx: Context) -> None:
             )
 
         # Tonemapping
-        tonemapper: Entity
-        to_tm_outputs = []
-        if (name := vpreset["tonemapper", None]) and (tonemappers := list(vmf.search(name))): # Check if we have set tonemapper, if it exists and set it as a variable for us to use
-            if tonemappers:
-                tonemapper = tonemappers[0]
+        if tm_name := vpreset["tonemapper", None]: # Check if we have set the tonemapper, it doesn't matter if exists in the map, the IO then will have no receiver
+            for _ in vmf.search(tm_name):
+                relay_ent.add_out(
+                    Output("OnTrigger", tm_name, "SetAutoExposureMax",  param=vpreset["tm_autoexposuremax", 2.0]),
+                    Output("OnTrigger", tm_name, "SetAutoExposureMin",  param=vpreset["tm_autoexposuremin", 0.5]),
+                    Output("OnTrigger", tm_name, "SetBloomScale",       param=vpreset["tm_bloomscale", 0.2]),
+                    Output("OnTrigger", tm_name, "SetBloomExponent",    param=vpreset["tm_bloomexponent", 2.2]),
+                )
+                break
 
-            to_tm_outputs = [
-                Output("OnTrigger", tonemapper, "SetAutoExposureMax", param=str(vpreset["tm_autoexposuremax", 2.0]) ),
-                Output("OnTrigger", tonemapper, "SetAutoExposureMin", param=str(vpreset["tm_autoexposuremin", 0.5]) ),
-                Output("OnTrigger", tonemapper, "SetBloomScale", param=str(vpreset["tm_bloomscale", 0.2]) ),
-                Output("OnTrigger", tonemapper, "SetBloomExponent", param=str(vpreset["tm_bloomexponent", 2.2]) ),
-            ]
-
-        relay_ent.add_out(*to_tm_outputs)
 
 
         # Fog Controller
 
-        LerpTo = "LerpTo" if vpreset["use_lerp", True] else ""
+        LerpTo = "LerpTo" if conv_bool(vpreset["use_lerp", True]) else ""
 
-        fog_ent: Entity
-        to_fog_outputs = []
-        if (name := vpreset["fog_controller", None]) and (fog_ents := list(vmf.search(name))):
-            if fog_ents:
-                fog_ent = fog_ents[0]
+        if fog_ent := vpreset["fog_controller", None]:
+            for _ in vmf.search(fog_ent): # Ensure one exists, else no need for us to create these outputs
+                relay_ent.add_out(
+                    Output("OnTrigger", fog_ent, "SetColor"         + LerpTo, param=vpreset["fog_primary_color", 2.0]),
+                    Output("OnTrigger", fog_ent, "SetStartDist"     + LerpTo, param=vpreset["fog_start", 0.5]),
+                    Output("OnTrigger", fog_ent, "SetEndDist"       + LerpTo, param=vpreset["fog_end", 0.2]),
+                    Output("OnTrigger", fog_ent, "SetMaxDensity"    + LerpTo, param=vpreset["fog_max_density", 2.2]),
+                    Output("OnTrigger", fog_ent, "StartFogTransition", delay=0.05),
+                    Output("OnTrigger", fog_ent, "TurnOn", delay=0.02) # Ensure it's actually on.
+                )
+                break
 
-            to_fog_outputs = [
-                Output("OnTrigger", fog_ent, "SetColor"         + LerpTo, param=str(vpreset["fog_primary_color", 2.0]) ),
-                Output("OnTrigger", fog_ent, "SetStartDist"     + LerpTo, param=str(vpreset["fog_start", 0.5]) ),
-                Output("OnTrigger", fog_ent, "SetEndDist"       + LerpTo, param=str(vpreset["fog_end", 0.2]) ),
-                Output("OnTrigger", fog_ent, "SetMaxDensity"    + LerpTo, param=str(vpreset["fog_max_density", 2.2]) ),
-                Output("OnTrigger", fog_ent, "StartFogTransition", delay=0.05),
-                Output("OnTrigger", fog_ent, "TurnOn", delay=0.02) # Ensure it's actually on.
-            ]
-
-        relay_ent.add_out(*to_fog_outputs)
 
 
         # Colorcorrection
@@ -92,20 +86,16 @@ def visual_preset(ctx: Context) -> None:
                                     )
 
             relay_ent.add_out(
-                Output("OnTrigger", cc_ent, "Enable")
-            )
-
-            relay_ent.add_out(
+                Output("OnTrigger", cc_ent, "Enable"),
                 Output("OnUser1", cc_ent, "Disable")
             )
 
     # End loop
 
-    presets = list(vmf.search("visual_preset_*")) # We strictly want a list, not a generator here
-    for vpreset_relay in presets:
+    for vpreset_relay in vpreset_list:
         us = vpreset_relay
 
-        for other in presets:
+        for other in vpreset_list:
             if us == other: # Ignore us
                 continue
 
