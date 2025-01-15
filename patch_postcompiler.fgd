@@ -1,0 +1,1513 @@
+
+@ExtendClass 
+	appliesto(SRCTOOLS)
+= BaseEntity
+	[
+	vscript_init_code[+SRCTOOLS, +VSCRIPT](string) : "[HA] Init Code" : : "This code will be executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings."
+	vscript_init_code2[+SRCTOOLS, +VSCRIPT](string) : "[HA] Init Code 2" : : "This code will be the second line executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings. Additional Init Code keyvalues can be added with SmartEdit off."
+	]
+
+@ExtendClass 
+	appliesto(SRCTOOLS)
+= BaseEntityBrush
+	[
+	parentname[SRCTOOLS](target_destination) : "Parent" : : "The name of this entity\'s parent in the movement hierarchy. Entities with parents move with their parent."
+	parent_attachment_point[SRCTOOLS](string) : "[HA] Attachment Point" : : "If set, attach to this attachment point on the parent during spawn. The relative offset will be preserved."
+	vscript_init_code[+SRCTOOLS, +VSCRIPT](string) : "[HA] Init Code" : : "This code will be executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings."
+	vscript_init_code2[+SRCTOOLS, +VSCRIPT](string) : "[HA] Init Code 2" : : "This code will be the second line executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings. Additional Init Code keyvalues can be added with SmartEdit off."
+	]
+
+@ExtendClass 
+	appliesto(SRCTOOLS)
+= BaseEntityInputs
+	[
+
+	// Inputs
+	input RunScriptCode[+SRCTOOLS, +VSCRIPT, -TF2](script) : "Execute a string of script source code. Using double quote characters will corrupt the VMF, use backticks ( ` ) instead if you need to pass in a string."
+	]
+
+@ExtendClass 
+	appliesto(SRCTOOLS)
+= BaseEntityPoint
+	[
+	parentname[SRCTOOLS](target_destination) : "Parent" : : "The name of this entity\'s parent in the movement hierarchy. Entities with parents move with their parent."
+	parent_attachment_point[SRCTOOLS](string) : "[HA] Attachment Point" : : "If set, attach to this attachment point on the parent during spawn. The relative offset will be preserved."
+	vscript_init_code[+SRCTOOLS, +VSCRIPT](string) : "[HA] Init Code" : : "This code will be executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings."
+	vscript_init_code2[+SRCTOOLS, +VSCRIPT](string) : "[HA] Init Code 2" : : "This code will be the second line executed after the Entity Scripts option. Backtick ( ` ) characters will be converted to quotes in-game for strings. Additional Init Code keyvalues can be added with SmartEdit off."
+	]
+
+@ExtendClass base(SRCIndicator) 
+	appliesto(SRCTOOLS)
+= BasePedButton
+	[
+	]
+
+@ExtendClass base(SRCIndicator) 
+	appliesto(SRCTOOLS)
+= BasePortButton
+	[
+	]
+
+@BaseClass 
+	appliesto()
+= ControlEnables: "A pair of keyvalues for specifying if a comp_ entity is enabled."
+	[
+	ctrl_type[ENGINE](boolean) : "Invert Value?" : 0
+	ctrl_type(choices) : "Control Type" : 0 : "Controls how the Control Value is interpreted" =
+		[
+		0: "Is Enabled\?"
+		1: "Is Disabled\?"
+		]
+	ctrl_value(boolean) : "Control Value" : 1 : "Decides whether this entity is enabled. If disabled, the entity has no effect."
+	]
+
+@ExtendClass 
+	appliesto(SRCTOOLS)
+= DamageType
+	[
+	damageor1[SRCTOOLS](choices) : "[HA] Damage - Gibbing" : 0 : "Optional flags that can accompany the damage type." =
+		[
+		0: "Normal Behaviour"
+		4096: "Never use gibs"
+		8192: "Always gib if possible"
+		]
+	damageor2[SRCTOOLS](choices) : "[HA] Damage - Prevent Physics Force" : 0 : "Prevent applying physics force to the target." =
+		[
+		0: "Apply force"
+		2048: "Prevent force"
+		]
+	damageor3[SRCTOOLS](choices) : "[HA] Damage - No Ragdoll On Death" : 0 : "Prevent any ragdoll on death" =
+		[
+		0: "Allow ragdolls"
+		4194304: "Prevent ragdolls"
+		]
+	damageor4[SRCTOOLS](choices) : "[HA] Damage - Blast Surface" : 0 : "This is ignored by players when fully underwater." =
+		[
+		0: "Damage underwater"
+		134217728: "Damage only above the surface"
+		]
+	]
+
+@BaseClass 
+	appliesto()
+= SRCIndicator: "Adds an Indicator Name option to toggle overlays."
+	[
+	indicatorname(target_destination) : "[HA] Indicator Name" : : "Set to the name of a set of info_overlays to toggle when this is activated and deactivated. The name may also point to a prop_indicator_panel, which will also be toggled appropriately."
+
+	// Inputs
+	input SetTextureIndex(integer) : "Manually change the index of the overlays. prop_indicator_panels must not be used."
+	]
+
+@BaseClass 
+	appliesto()
+= SRCModel: "Adds keyvalues to set a custom model."
+	[
+	comp_custom_model_type[-ENGINE, SRCTOOLS](boolean) : "[HA] Override Model" : 0 : "If enabled, automatically pack a VScript to override the entity\'s model on spawn. NOTE: If you run into problems with players getting stuck on the model, make sure it has the same collisions as the base model, as this is known to sometimes cause issues."
+	]
+
+@ExtendClass 
+	appliesto(SRCTOOLS)
+= SetSkin
+	[
+	skinset[SRCTOOLS](string) : "[HA] Used Skins" : : "Set this to a space seperated list of all the skin numbers which will be used by this ent (\'0 4 8\' for example). This allows auto-packing to skip unused ones. If blank all skins are assumed to be used."
+	]
+
+@ExtendClass 
+	appliesto(SRCTOOLS)
+= ambient_generic
+	[
+	haddons_enabled[+SRCTOOLS](choices) : "[HA] Start Enabled" : -1 : "If set, overrides the \'Start Silent\' spawnflag. This allows this value to be easily controlled by $fixup values." =
+		[
+		-1: "Use Spawnflag"
+		0: "[0] Start Silent"
+		1: "[1] Start Playing"
+		]
+	haddons_infrange[+SRCTOOLS](choices) : "[HA] Infinite Range" : -1 : "If set, overrides the \'Infinite Range\' spawnflag. This allows this value to be easily controlled by $fixup values. Note that if a soundscript is used, that overrides this value." =
+		[
+		-1: "Use Spawnflag"
+		0: "[0] Limited Range"
+		1: "[1] Infinite Range"
+		]
+	haddons_mode[+SRCTOOLS](choices) : "[HA] Looping Mode" : -1 : "If set, overrides the \'Is NOT Looped\' spawnflag. This option controls how the entity controls the output, not whether the sound actually loops. If oneshot, PlaySound starts the sound afresh and StopSound does nothing, while in looping mode PlaySound requires it to already be stopped." =
+		[
+		-1: "Use Spawnflag"
+		0: "[0] Oneshot Sound"
+		1: "[1] Looping Sound"
+		]
+	]
+
+@PointClass base(ControlEnables) 
+	iconsprite("editor/comp_adv_output")
+	appliesto(SRCTOOLS)
+= comp_adv_output: "Adds a single output to an entity, with precise control over fixup behaviour."
+	[
+	out_ent(target_destination) : "Outputting Entity" : : "The name of the entity or entities to add the output to."
+	out_name(string) : "Output Name" : : "The output name to use."
+	target_global(string) : "Target - String" : : "A fixed entity name, !special name or classname to fire inputs at."
+	target_local(target_destination) : "Target - Ent Name" : : "If set, the entity to fire inputs at."
+	target_instname(string) : "Target - Instance Name" : : "If set, this is appended to the target to form a full target-inst_name name."
+	inp_name(string) : "Input Name" : : "The input to fire."
+	delay(float) : "Delay Min" : "0.0" : "A delay to add to the output."
+	delay_max(float) : "Delay Max" : : "If set, the delay will be randomised between the min and max. This is seeded from the location of this entity."
+	delay2(float) : "Extra Delay" : "0.0" : "A second delay to add to the first delay. Useful for instance parameters."
+	times(integer) : "Times to Fire" : -1 : "The number of times this output can fire, or -1 for infinite. Hammer normally only allows setting this to 1 or -1."
+	params_fmt(string) : "Parameter" : "{1}" : "Sets the parameter to use. This can contain placeholders like {1},{2} etc which will be filled by values in the following parameters. Use two braces like {{ or }} if you need them in the parameter directly."
+	params_mode1[ENGINE](integer) : "Parameter 1 - Mode" : "legacy"
+	params_mode1(choices) : "Parameter 1 - Mode" : "legacy" : "Which value to use to replace {2} in the parameter. This allows using values altered in different ways by the instance. In legacy mode Ent Name then String is checked." =
+		[
+		"legacy": "Legacy (Entity Name or String)"
+		"global": "String"
+		"local": "Entity Name"
+		"position": "Position"
+		]
+	params_global1(string) : "Parameter 1 - String" : : "A value which will replace {1} in the parameter."
+	params_local1(target_destination) : "Parameter 1 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {1}."
+	params_pos1(origin) : "Parameter 1 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {1}. This will be offset by instancing."
+	params_mode2[ENGINE](integer) : "Parameter 2 - Mode" : "legacy"
+	params_mode2(choices) : "Parameter 2 - Mode" : "legacy" : "Which value to use to replace {2} in the parameter. This allows using values altered in different ways by the instance. In legacy mode Ent Name then String is checked." =
+		[
+		"legacy": "Legacy (Entity Name or String)"
+		"global": "String"
+		"local": "Entity Name"
+		"position": "Position"
+		]
+	params_global2(string) : "Parameter 2 - String" : : "A value which will replace {2} in the parameter."
+	params_local2(target_destination) : "Parameter 2 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {2}."
+	params_pos2(origin) : "Parameter 2 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {2}. This will be offset by instancing."
+	params_mode3[ENGINE](integer) : "Parameter 3 - Mode" : "legacy"
+	params_mode3(choices) : "Parameter 3 - Mode" : "legacy" : "Which value to use to replace {3} in the parameter. This allows using values altered in different ways by the instance. In legacy mode Ent Name then String is checked." =
+		[
+		"legacy": "Legacy (Entity Name or String)"
+		"global": "String"
+		"local": "Entity Name"
+		"position": "Position"
+		]
+	params_global3(string) : "Parameter 3 - String" : : "A value which will replace {3} in the parameter."
+	params_local3(target_destination) : "Parameter 3 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {3}."
+	params_pos3(origin) : "Parameter 3 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {3}. This will be offset by instancing."
+	params_mode4[ENGINE](integer) : "Parameter 4 - Mode" : "legacy"
+	params_mode4(choices) : "Parameter 4 - Mode" : "legacy" : "Which value to use to replace {4} in the parameter. This allows using values altered in different ways by the instance. In legacy mode Ent Name then String is checked." =
+		[
+		"legacy": "Legacy (Entity Name or String)"
+		"global": "String"
+		"local": "Entity Name"
+		"position": "Position"
+		]
+	params_global4(string) : "Parameter 4 - Ent Name" : : "A value which will replace {4} in the parameter."
+	params_local4(target_destination) : "Parameter 4 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {4}."
+	params_pos4(origin) : "Parameter 4 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {4}. This will be offset by instancing."
+	params_mode5[ENGINE](integer) : "Parameter 5 - Mode" : "legacy"
+	params_mode5(choices) : "Parameter 5 - Mode" : "legacy" : "Which value to use to replace {5} in the parameter. This allows using values altered in different ways by the instance. In legacy mode Ent Name then String is checked." =
+		[
+		"legacy": "Legacy (Entity Name or String)"
+		"global": "String"
+		"local": "Entity Name"
+		"position": "Position"
+		]
+	params_global5(string) : "Parameter 5 - String" : : "A value which will replace {5} in the parameter."
+	params_local5(target_destination) : "Parameter 5 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {5}."
+	params_pos5(origin) : "Parameter 5 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {5}. This will be offset by instancing."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(StaticTargetName, ControlEnables) 
+	iconsprite("editor/comp_case")
+	appliesto(SRCTOOLS)
+= comp_case: "Simplified version of logic_case which is able to be optimised away by the compiler.This is primarly intended to be used in instances - depending on a fixup value, it will produce different results.It can be used alternatively to pick a random output, though this is fixed at compile time for each inputting entity."
+	[
+	MultipleCasesAllowed(boolean) : "Multiple case hits allowed" : 0 : "If an input value matches a given case, are we allowed to test the rest of the cases or should we stop there\? Don\'t worry about this if you\'re only using this entity for PickRandom."
+	value(string) : "Input Value" : : "If the InValue parameter is blank or Trigger is used, this value will be used instead."
+	mode[ENGINE](string) : "Mode" : "string"
+	mode(choices) : "Mode" : "casefold" : "Specifies how comparisons are performed. Text mode simply checks for a case that matches the input text. Numeric treats values as numbers, allowing cases to additionally specify a comparison like \'< 3.14\'. Weighted Random instead changes the case values to specify the chance to produce any given case. In all modes, each case is compared in order." =
+		[
+		"string": "Text - Case Sensitive"
+		"casefold": "Text - Case Insensitive"
+		"numeric": "Numeric"
+		"randweight": "Weighted Random"
+		]
+	seed(string) : "Random Seed" : : "For the PickRandom input, the position and name of the input entity and the case are used to seed a random number generator. This can be set to further randomise the chosen case."
+	misschance(float) : "Miss Chance (%)" : 0 : "If nonzero, PickRandom will skip picking cases entirely this often. Only OnUsed and OnMissed will be fired."
+	case01(string) : "Case 01" : : "Fires OnCase01 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case02(string) : "Case 02" : : "Fires OnCase02 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case03(string) : "Case 03" : : "Fires OnCase03 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case04(string) : "Case 04" : : "Fires OnCase04 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case05(string) : "Case 05" : : "Fires OnCase05 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case06(string) : "Case 06" : : "Fires OnCase06 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case07(string) : "Case 07" : : "Fires OnCase07 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case08(string) : "Case 08" : : "Fires OnCase08 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case09(string) : "Case 09" : : "Fires OnCase09 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case10(string) : "Case 10" : : "Fires OnCase10 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case11(string) : "Case 11" : : "Fires OnCase11 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case12(string) : "Case 12" : : "Fires OnCase12 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case13(string) : "Case 13" : : "Fires OnCase13 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case14(string) : "Case 14" : : "Fires OnCase14 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case15(string) : "Case 15" : : "Fires OnCase15 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+	case16(string) : "Case 16" : : "Fires OnCase16 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+
+	// Inputs
+	input InValue(string) : "Replaced by whichever case matches the parameter. Does nothing in Weighted Random mode."
+	input Trigger(void) : "Replaced by whichever case matches the input keyvalue. In Weighted Random mode, behaves like PickRandom."
+	input PickRandom(void) : "Replaced by a random case with outputs defined."
+
+	// Outputs
+	output OnCase01(void) : "Fired when the input value equals the Case01 value."
+	output OnCase02(void) : "Fired when the input value equals the Case02 value."
+	output OnCase03(void) : "Fired when the input value equals the Case03 value."
+	output OnCase04(void) : "Fired when the input value equals the Case04 value."
+	output OnCase05(void) : "Fired when the input value equals the Case05 value."
+	output OnCase06(void) : "Fired when the input value equals the Case06 value."
+	output OnCase07(void) : "Fired when the input value equals the Case07 value."
+	output OnCase08(void) : "Fired when the input value equals the Case08 value."
+	output OnCase09(void) : "Fired when the input value equals the Case09 value."
+	output OnCase10(void) : "Fired when the input value equals the Case10 value."
+	output OnCase11(void) : "Fired when the input value equals the Case11 value."
+	output OnCase12(void) : "Fired when the input value equals the Case12 value."
+	output OnCase13(void) : "Fired when the input value equals the Case13 value."
+	output OnCase14(void) : "Fired when the input value equals the Case14 value."
+	output OnCase15(void) : "Fired when the input value equals the Case15 value."
+	output OnCase16(void) : "Fired when the input value equals the Case16 value."
+	output OnDefault(void) : "Fired when the input value does not equal any of the Case values."
+	output OnUsed(string) : "Fired when an input value is received, regardless of whether it matches a case."
+	output OnMatched(string) : "Fired when an input value matches any of the cases."
+	output OnMissed(string) : "Fired when the miss chance succeeded."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(BaseEntityPoint) 
+	iconsprite("editor/comp_choreo_sceneset.vmt")
+	appliesto(SRCTOOLS)
+= comp_choreo_sceneset: "Chains a set of choreographed scenes together."
+	[
+	play_dings[P2](boolean) : "Play Dings" : 1 : "Play the Aperture blip sounds at the start and end."
+	delay(float) : "Delay between each" : "0.1" : "Add a delay between each scene."
+	only_once(boolean) : "Clean up after starting" : 1 : "If set, Kill choreo scenes after starting so they only play once.If set, the Cancel input will not work properly."
+	busyactor[ENGINE](integer) : "If an Actor is talking..." : 1 : "What to do if an actor this scene needs is already talking when this scene is told to start."
+	busyactor(choices) : "If an Actor is talking..." : 1 : "What to do if an actor this scene needs is already talking when this scene is told to start." =
+		[
+		0: "Start immediately"
+		1: "Wait for actor to finish"
+		2: "Interrupt at next interrupt event"
+		3: "Cancel at next interrupt event"
+		]
+	onplayerdeath[ENGINE](integer) : "On player death" : 0 : "What should this entity do if the player dies"
+	onplayerdeath(choices) : "On player death" : 0 : "What should this entity do if the player dies" =
+		[
+		0: "Do Nothing"
+		1: "Cancel Script and return to AI"
+		]
+	scene01(scene) : "Scene 1"
+	scene02(scene) : "Scene 2"
+	scene03(scene) : "Scene 3"
+	scene04(scene) : "Scene 4"
+	scene05(scene) : "Scene 5"
+	scene06(scene) : "Scene 6"
+	scene07(scene) : "Scene 7"
+	scene08(scene) : "Scene 8"
+	scene09(scene) : "Scene 9"
+	scene10(scene) : "Scene 10"
+	scene11(scene) : "Scene 11"
+	scene12(scene) : "Scene 12"
+	scene13(scene) : "Scene 13"
+	scene14(scene) : "Scene 14"
+	scene15(scene) : "Scene 15"
+	scene16(scene) : "Scene 16"
+	scene17(scene) : "Scene 17"
+	scene18(scene) : "Scene 18"
+	scene19(scene) : "Scene 19"
+	scene20(scene) : "Scene 20"
+
+	// Inputs
+	input Start(void) : "Start the choreo sequence playing."
+	input Cancel(void) : "Stop the choreo sequence at any point."
+
+	// Outputs
+	output OnStart(void) : "Fired when the sequence starts."
+	output OnFinish(void) : "Fired when the sequence is complete."
+	]
+
+@PointClass 
+	appliesto(SRCTOOLS)
+	iconsprite("editor/comp_entity_finder")
+	sphere(radius)
+	cylinder(255 255 255, targetname, targetref, radius)
+	line(255 255 255, targetname, kv1_known)
+	line(255 255 255, targetname, kv2_known)
+	line(255 255 255, targetname, kv3_known)
+	line(255 255 255, targetname, kv4_known)
+	line(255 255 255, targetname, kv5_known)
+= comp_entity_finder: "Finds the closest entity of a given type, then applies various transformations.Outputs from this entity will be moved to the found entity.Further keyvalues can be set manually with SmartEdit off."
+	[
+	targetname(target_source) readonly : "Targetname" : "<pack_rename>" : "Fake targetname, used to determine how containing instances are configured."
+	targetcls(string) : "Target Classname" : : "Classnames of the entity to find. Multiple classnames can be specified seperated by spaces."
+	radius(float) : "Search Radius" : 64 : "Radius to search inside, or 0 for infinite."
+	searchfov(float) : "Search Field Of View" : 180 : "The found entity must be within this many degrees of the direction of the finder."
+	angles(angle) : "Search Direction" : "0 0 0" : "If Search FOV is used, the direction to compare to."
+	targetref(target_destination) : "Reference position" : : "If set, look for entities close to this entity instead of the comp_entity_finder."
+	blacklist(target_destination) : "Search Blacklist" : : "If set, ignore entities matching this name."
+	teleporttarget(boolean) : "Teleport Target To Me" : 0 : "Move the found entity to the location of this entity or that of the reference."
+	rotatetarget(boolean) : "Match Target Rotation" : 0 : "Rotate the found entity to match the rotation of this entity or that of the reference."
+	makeunique(boolean) : "Make Target Unique" : 0 : "Append a numeric suffix to the target\'s name to make it unique."
+	sep1(string) readonly : "----------------------------------------------------------------------------------------------------------"
+	kv1_mode[ENGINE](string) : "1 - Mode"
+	kv1_mode(choices) : "1 - Mode" : : "The first modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." =
+		[
+		"": "None"
+		"const2target": "Constant -> Target Ent KV"
+		"const2known": "Constant -> Known Ent KV"
+		"known2target": "Known Ent KV -> Target Ent KV"
+		"target2known": "Target Ent KV -> Known Ent KV"
+		"replacetarget": "Replace Outputs"
+		]
+	kv1_known(target_destination) : "1 - Known Entity" : : "The known entity to access."
+	kv1_src(string) : "1 - Source" : : "Constant value to use or keyvalue name to read from."
+	kv1_dest(string) : "1 - Destination" : : "Keyvalue name to write to or !special name to replace."
+	sep2(string) readonly : "----------------------------------------------------------------------------------------------------------"
+	kv2_mode[ENGINE](string) : "2 - Mode"
+	kv2_mode(choices) : "2 - Mode" : : "The second modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." =
+		[
+		"": "None"
+		"const2target": "Constant -> Target KV"
+		"const2known": "Constant -> Known KV"
+		"known2target": "Known KV -> Target KV"
+		"target2known": "Target KV -> Known KV"
+		"replacetarget": "Replace Outputs"
+		]
+	kv2_known(target_destination) : "2 - Known Entity" : : "The known entity to access."
+	kv2_src(string) : "2 - Source" : : "Constant value or keyvalue name to read from."
+	kv2_dest(string) : "2 - Destination" : : "Keyvalue name to write to or !special name to replace."
+	sep3(string) readonly : "----------------------------------------------------------------------------------------------------------"
+	kv3_mode[ENGINE](string) : "3 - Mode"
+	kv3_mode(choices) : "3 - Mode" : : "The third modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." =
+		[
+		"": "None"
+		"const2target": "Constant -> Target KV"
+		"const2known": "Constant -> Known Ent KV"
+		"known2target": "Known KV -> Target KV"
+		"target2known": "Target KV -> Known KV"
+		"replacetarget": "Replace Outputs"
+		]
+	kv3_known(target_destination) : "3 - Known Entity" : : "The known entity to access."
+	kv3_src(string) : "3 - Source" : : "Constant value or keyvalue name to read from."
+	kv3_dest(string) : "3 - Destination" : : "Keyvalue name to write to or !special name to replace."
+	sep4(string) readonly : "----------------------------------------------------------------------------------------------------------"
+	kv4_mode[ENGINE](string) : "4 - Mode"
+	kv4_mode(choices) : "4 - Mode" : : "The fourth modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." =
+		[
+		"": "None"
+		"const2target": "Constant -> Target KV"
+		"const2known": "Constant -> Known Ent KV"
+		"known2target": "Known KV -> Target KV"
+		"target2known": "Target KV -> Known KV"
+		"replacetarget": "Replace Outputs"
+		]
+	kv4_known(target_destination) : "4 - Known Entity" : : "The known entity to access."
+	kv4_src(string) : "4 - Source" : : "Constant value or keyvalue name to read from."
+	kv4_dest(string) : "4 - Destination" : : "Keyvalue name to write to or !special name to replace."
+	sep5(string) readonly : "----------------------------------------------------------------------------------------------------------"
+	kv5_mode[ENGINE](string) : "5 - Mode"
+	kv5_mode(choices) : "5 - Mode" : : "The fifth modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." =
+		[
+		"": "None"
+		"const2target": "Constant -> Target KV"
+		"const2known": "Constant -> Known Ent KV"
+		"known2target": "Known KV -> Target KV"
+		"target2known": "Target KV -> Known KV"
+		"replacetarget": "Replace Outputs"
+		]
+	kv5_known(target_destination) : "5 - Known Entity" : : "The known entity to access."
+	kv5_src(string) : "5 - Source" : : "Constant value or keyvalue name to read from."
+	kv5_dest(string) : "5 - Destination" : : "Keyvalue name to write to or !special name to replace."
+
+	// Outputs
+	output OutName(void) : "Needed to allow Hammer to add outputs to this."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass 
+	iconsprite("editor/comp_entity_mover")
+	appliesto(SRCTOOLS)
+	sphere(distance)
+	line(255 255 255, targetname, target)
+= comp_entity_mover: "Shift an entity by a given amount. This is useful to place entities into the void, for example."
+	[
+	target(target_destination) : "Target Entity" : : "The name of the entity or entities to move."
+	reference(target_destination) : "Reference Entity" : : "If set, the target will be offset by the amount that this entity is from the reference. The Distance will then be a multiplier."
+	direction(angle) : "Direction" : "0 0 0" : "If no Reference is provided, the direction to move in."
+	distance(float) : "Distance" : 1 : "The amount to move targets by."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(SRCTOOLS)
+	iconsprite("editor/comp_flicker")
+	line(255 255 255, targetname, target_mdl)
+= comp_flicker: "Fires on/off inputs repeatedly to simulate a flicker-on effect. This converts to an info_target, and uses all of the FireUserX inputs/outputs."
+	[
+	target_mdl(target_destination) : "Model to Control" : : "An entity which will have skins swapped to turn on/off. This is simply a shortcut for adding OnTurnedOn/Off outputs."
+	mdl_skin_on(integer) : "On Skin" : 0 : "The \'on\' skin for the model. This is a shortcut for adding OnTurnedOn -> Skin outputs."
+	mdl_skin_off(integer) : "Off Skin" : 1 : "The \'on\' skin for the model. This is a shortcut for adding OnTurnedOff -> Skin outputs."
+	total_time(float) : "Total Time" : "1.5" : "The overall time taken to complete the on or off flicker."
+	flicker_min(float) : "Flicker Min" : "0.05" : "The delay used at the start of the on cycle, or at the end of the off cycle."
+	flicker_max(float) : "Flicker Max" : "0.2" : "The delay used at the end of the on cycle, or at the start of the off cycle."
+	variance(float) : "Variance" : "0.0" : "Random variance added/subtracted for each delay."
+
+	// Inputs
+	input TurnOn(void) : "Turn the target entities on."
+	input TurnOff(void) : "Turn the target entities off."
+	input FlickerOn(void) : "Flicker the target gradually on."
+	input FlickerOff(void) : "Flicker the target gradually off."
+
+	// Outputs
+	output OnTurnedOn(void) : "Fired when the target should turn on."
+	output OnTurnedOff(void) : "Fired when the target should turn off."
+	output OnFlickerOnStart(void) : "Fired after the flicker on effect has started."
+	output OnFlickerOffStart(void) : "Fired after the flicker off effect has started."
+	output OnFlickerOnEnd(void) : "Fired after the flicker on effect has finished."
+	output OnFlickerOffEnd(void) : "Fired after the flicker off effect has finished."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(Angles, ControlEnables) 
+	iconsprite("editor/comp_kv_setter")
+	appliesto(SRCTOOLS)
+= comp_kv_setter: "Sets a keyvalue on an entity to a new value. This is useful to compute spawnflags, or to adjust keyvalues when the target entity\'s options can\'t be set to a fixup variable."
+	[
+	target(target_destination) : "Target Entity" : : "The name of the entity or entities to set values on. *-suffixed names work to target multiple entities."
+	mode[ENGINE](string) : "Mode" : "kv"
+	mode(choices) : "Mode" : "kv" : "The type of value to set." =
+		[
+		"kv": "KeyValues"
+		"flags": "SpawnFlags"
+		]
+	kv_name(string) : "Name / Mask" : : "The name of the keyvalue to set, or the bits to change for spawnflags."
+	kv_value_mode[ENGINE](string) : "Value Mode" : "legacy"
+	kv_value_mode(choices) : "Value Mode" : "legacy" : "Which value to use. This allows using values altered in different ways by the instance.In legacy mode Ent Name then String is checked." =
+		[
+		"legacy": "Legacy (Entity Name or String)"
+		"global": "String"
+		"local": "Entity Name"
+		"position": "Position"
+		]
+	kv_value_global(string) : "Value - Fixed String" : : "The value to apply. This is unaffected by instance fixup names and transformations (except rotation if Rotate Value is turned on)."
+	kv_value_local(target_destination) : "Value - Ent Name" : : "Used in Entity name mode. In an instance, this recieves prefix/postfix fixups."
+	kv_value_pos(origin) : "Value - Position" : : "Used in Position mode. In an instance, this will be offset by the instance position."
+	invert(boolean) : "Invert Value" : 0 : "If enabled, invert the value so 0 and 1 are swapped."
+	rotate(boolean) : "Rotate Value" : 0 : "If enabled, treat the value as a vector and rotate it by the angles set on this entity first. Useful to rotate the value correctly in an instance."
+	conv_ang(boolean) : "Convert To Angle" : 0 : "If enabled, convert a +X axis normal back into the Euler angle."
+
+	// Outputs
+	output OnUser1(void) : "Fired in response to FireUser1 input."
+	output OnUser2(void) : "Fired in response to FireUser2 input."
+	output OnUser3(void) : "Fired in response to FireUser3 input."
+	output OnUser4(void) : "Fired in response to FireUser4 input."
+	output OnKilled[L4D](void) : "Fired when the entity is killed and removed from the game."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(logic_relay) 
+	appliesto(SRCTOOLS)
+	line(255 255 255, targetname, target)
+	iconsprite("editor/comp_numeric_transition")
+= comp_numeric_transition: "When triggered, animates a keyvalue/input over time with various options."
+	[
+	target(target_destination) : "Entity to Control" : : "The entity which the outputs will be directed to."
+	opt_name(string) : "Keyvalue/Input Name" : "SetSpeed" : "The name of the keyvalue or input to change.If the target is not an entity findable by the postcompiler, IO Type must be set."
+	io_type[ENGINE](string) : "I/O Type" : "auto"
+	io_type(choices) : "I/O Type" : "auto" : "The method used to control an entity. If Input, use the input name provided.If KeyValue, use AddOutput to change the keyvalue.If Auto, examine the entity class that is being controlled to determine the appropriate mode." =
+		[
+		"auto": "Automatic"
+		"io": "Input"
+		"kv": "KeyValue (AddOutput)"
+		]
+	transform[ENGINE](string) : "Value Type" : "speed"
+	transform(choices) : "Value Type" : "speed" : "The behaviour of the input, used to control what actual values are sent. Regardless of this value, the other options are \'position\'-type values!" =
+		[
+		"set": "Instantly Set"
+		"moveto": "Move to value"
+		"speed": "Adjust Speed"
+		"light": "Light Pattern"
+		]
+	line_trans2(string) readonly : "-------------------------------------------"
+	beat_interval(float) : "Beat Interval" : "0.1" : "Time between each output. Smaller values are more accurate, but increase the outputs generated."
+	delay(float) : "Start Delay" : "0.0" : "Wait this amount of time after being triggered before animating."
+	duration(float) : "Duration" : 5 : "Time the change will take."
+	startval(float) : "Start Value" : 0 : "Starting value. If the Value Type is Light Pattern, these may be a-z letters."
+	endval(float) : "Ending Value" : 100 : "Ending value. If the Value Type is Light Pattern, these may be a-z letters."
+	line_trans3(string) readonly : "-------------------------------------------"
+	easing_start[ENGINE](string) : "Easing Start" : "linear"
+	easing_start(choices) : "Easing Start" : "linear" : "Controls how the animation begins." =
+		[
+		"linear": "None"
+		"quad": "Quadratic (x�)"
+		"cubic": "Cubic (x�)"
+		"quartic": "Quartic (x^4)"
+		"sine": "Sinusoidal"
+		]
+	easing_end[ENGINE](string) : "Easing End" : "linear"
+	easing_end(choices) : "Easing End" : "linear" : "Controls how the animation ends." =
+		[
+		"linear": "None"
+		"quad": "Quadratic (x�)"
+		"cubic": "Cubic (x�)"
+		"quartic": "Quartic (x^4)"
+		"sine": "Sinusoidal"
+		]
+
+	// Outputs
+	output OnFinished(void) : "Fired once the transition has completed."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(ControlEnables) 
+	iconsprite("editor/comp_pack")
+	appliesto(SRCTOOLS)
+= comp_pack: "Explicitly identify resources to pack into the map. If more are needed, add additional keyvalues with SmartEdit off."
+	[
+	generic1(string) : "Generic" : : "Pack a file, starting in any of the content folders."
+	generic2(string) : "Generic" : : "Pack a file, starting in any of the content folders."
+	generic3(string) : "Generic" : : "Pack a file, starting in any of the content folders."
+	generic4(string) : "Generic" : : "Pack a file, starting in any of the content folders."
+	generic5(string) : "Generic" : : "Pack a file, starting in any of the content folders."
+	sound1(sound) : "Sound" : : "Pack a raw sound file or a soundscript."
+	sound2(sound) : "Sound" : : "Pack a raw sound file or a soundscript."
+	sound3(sound) : "Sound" : : "Pack a raw sound file or a soundscript."
+	sound4(sound) : "Sound" : : "Pack a raw sound file or a soundscript."
+	sound5(sound) : "Sound" : : "Pack a raw sound file or a soundscript."
+	model1(studio) : "Model" : : "Pack a model."
+	model2(studio) : "Model" : : "Pack a model."
+	model3(studio) : "Model" : : "Pack a model."
+	model4(studio) : "Model" : : "Pack a model."
+	model5(studio) : "Model" : : "Pack a model."
+	material1(material) : "Material" : : "Pack a material."
+	material2(material) : "Material" : : "Pack a material."
+	material3(material) : "Material" : : "Pack a material."
+	material4(material) : "Material" : : "Pack a material."
+	material5(material) : "Material" : : "Pack a material."
+	particle1(particlesystem) : "Particle" : : "Pack a particle system, and include in the manifest."
+	particle2(particlesystem) : "Particle" : : "Pack a particle system, and include in the manifest."
+	particle3(particlesystem) : "Particle" : : "Pack a particle system, and include in the manifest."
+	particle4(particlesystem) : "Particle" : : "Pack a particle system, and include in the manifest."
+	particle5(particlesystem) : "Particle" : : "Pack a particle system, and include in the manifest."
+	soundscript1(string) : "SoundScript" : : "Pack a soundscript file, and include in the manifest."
+	soundscript2(string) : "SoundScript" : : "Pack a soundscript file, and include in the manifest."
+	soundscript3(string) : "SoundScript" : : "Pack a soundscript file, and include in the manifest."
+	soundscript4(string) : "SoundScript" : : "Pack a soundscript file, and include in the manifest."
+	soundscript5(string) : "SoundScript" : : "Pack a soundscript file, and include in the manifest."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(ControlEnables) 
+	iconsprite("editor/comp_pack_rename")
+	appliesto(SRCTOOLS)
+= comp_pack_rename: "Pack a file into the BSP, under a different name than it starts with."
+	[
+	filesrc(string) : "Source Filename" : : "Filename to read data from."
+	filedest(string) : "Destination Filename" : : "Filename to pack under."
+	filetype[ENGINE](string) : "File Type" : "GENERIC" : "File type to record it as."
+	filetype(choices) : "File Type" : "GENERIC" : "File type to record it as. For Model files, the .vtx/vtx/phy etc files are also packed automatically." =
+		[
+		"GENERIC": "Generic"
+		"SOUNDSCRIPT": "SoundScript file (add to manifest)"
+		"PARTICLE_FILE": "Particle System (add to manifest)"
+		"VSCRIPT_SQUIRREL": "VScript (Squirrel)"
+		"MATERIAL": "Material"
+		"TEXTURE": "Texture"
+		"MODEL": "Model"
+		]
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(ControlEnables) 
+	iconsprite("editor/comp_pack_replace_soundscript")
+	appliesto(SRCTOOLS)
+= comp_pack_replace_soundscript: "Replace a soundscript with a different one."
+	[
+	original(string) : "Original SoundScript" : : "Prevent this soundscript from being included."
+	replacement(string) : "New SoundScript" : : "Force this soundscript to be included."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass 
+	iconsprite("editor/comp_player_input_helper.vmt")
+	appliesto(SRCTOOLS)
+= comp_player_input_helper: "Place this entity to trick Hammer into autocompleting inputs fired at !player and similar names. This is deleted during compile."
+	[
+	targetname[ENGINE](string) : "Targetname"
+	targetname(choices) : "Player Name" : "!player" : "The targetname to show for suggestions." =
+		[
+		"!player": "!player (SP / 1st Player)"
+		"player": "player (All Players)"
+		"!player_blue": "!player_blue (ATLAS)" [P2]
+		"!player_orange": "!player_orange (P-Body)" [P2]
+		"!pvsplayer": "!pvsplayer (Player in nearby visleafs)"
+		]
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(Angles, ControlEnables) 
+	iconsprite("editor/comp_precache_model")
+	studioprop()
+	appliesto(SRCTOOLS)
+	line(255 255 255, targetname, lineent)
+= comp_precache_model: "Force a specific model to load, for runtime switching. Duplicates will be removed."
+	[
+	model(studio) : "Model" : : "The model to load."
+	skin(integer) : "Skin" : : "Skin to show."
+	skinset(string) : "Used Skins" : : "Set this to a space seperated list of all the skin numbers which will be used. This allows auto-packing to skip unused ones. If blank all skins are assumed to be used."
+	lineent(target_destination) : "Line Entity" : : "Draws a line to the specified entity. Use this to indicate in Hammer if the model is meant for a specific entity."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(ControlEnables) 
+	appliesto(+SRCTOOLS, +VSCRIPT)
+	iconsprite("editor/comp_precache_sound")
+= comp_precache_sound: "Force a specific sound to load, for runtime switching. Duplicates will be removed. More keyvalues can be added."
+	[
+	sound1(sound) : "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound2(sound) : "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound3(sound) : "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound4(sound) : "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound5(sound) : "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound6(sound) : "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound7(sound) : "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound8(sound) : "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound9(sound) : "Sound" : : "Pack and precache a raw sound file or a soundscript."
+	sound10(sound) : "Sound" : : "Pack and precache a raw sound file or a soundscript."
+
+	@resources
+		[
+		]
+	]
+
+@MoveClass base(StaticTargetName) 
+	sphere(radius)
+	animator()
+	keyframe()
+	iconsprite("editor/comp_prop_cable")
+	line(128 128 128, targetname, bunting)
+	appliesto(SRCTOOLS)
+= comp_prop_cable: "Generates cables using a static prop. comp_prop_rope is an alternate name, they can be interchanged."
+	[
+	group(target_source) : "Group" : : "If set, all cables with the same group will be compiled to one model."
+	nextkey(target_destination) : "Next Cable" : : "Name of the next cable along this path."
+	slack(integer) : "Slack" : 25 : "How much extra length the cable has, for \'catenary\' mode (by default it has the length between its two endpoints in the editor)."
+	positioninterpolator[ENGINE](integer) : "Type" : 2
+	positioninterpolator(choices) : "Type" : 2 : "How to interpolate the cable. Straight makes it straight. Spline uses a spline curve, which smoothly blends between points. Catenary makes it hang down, like the original move_rope. Bezier is an alternate smooth curve, but the visual in Hammer will be incorrect." =
+		[
+		0: "Straight"
+		1: "Spline Curve"
+		2: "Catenary"
+		3: "Bezier"
+		]
+	segments(integer) : "Segments" : 2 : "Number of nodes to generate between each cable. Higher values make smoother cables, but produce more faces."
+	sides(integer) : "Sides" : 8 : "Number of faces for each cylindrical section. Only the value at the start of the cable is used."
+	radius(float) : "Radius" : "1.0" : "Radius of this cable section."
+	coll_segments[ENGINE](integer) : "Collision Segments" : 0
+	coll_segments(choices) : "Collision Segments" : -1 : "Type in the number of convex segments to generate between each cable. Higher values make smoother collision, but produce more convex segments." =
+		[
+		-1: "[-1] Same as visual geometry"
+		]
+	coll_sides[ENGINE](integer) : "Collision Sides" : 0
+	coll_sides(choices) : "Collision Sides" : 0 : "Type in the number of faces for each cylindrical collision section. If set to less than 3 sides, collision will not be generated." =
+		[
+		0: "[0] No collisions"
+		1: "[1] No collisions"
+		2: "[2] No collisions"
+		]
+	material(material) : "Cable Material" : "models/cables/generic_black" : "The material to use for the cable. Must be a model material."
+	mat_scale(float) : "Lengthwise Material Scale" : 1 : "This changes the texture resolution along the cable, relative to the amount of width used. Larger values stretch the texture and smaller values scrunch it up."
+	mat_rotate[ENGINE](boolean) : "Rotate Material" : 0
+	mat_rotate(choices) : "Material Orientation" : 0 : "Controls which direction the cable runs in the material, if your texture is rotated." =
+		[
+		0: "Vertical"
+		1: "Horizontal"
+		]
+	u_min(float) : "Width Start" : "0.0" : "The distance along the texture to start. 0 is the left/bottom side, 1 is the right/top side. This allows using only part of the texture, if it contains multiple different cable styles."
+	u_max(float) : "Width End" : "1.0" : "The distance along the texture to end. 0 is the left/bottom side, 1 is the right/top side. This allows using only part of the texture, if it contains multiple different cable styles."
+	bunting(target_destination) : "Bunting Definition" : : "Set to the name of a comp_prop_rope_bunting, to define models which will be placed at each segment across the rope."
+	linedivider_staticprop[!ENGINE](string) readonly : "----------------------------------------------------------------------------------------------------------"
+	renderamt[SINCE_L4D](integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
+	rendercolor[SINCE_L4D](color255) : "Color (R G B)" : "255 255 255"
+	screenspacefade[UNTIL_ASW](boolean) : "Screen Space Fade" : 0 : "The method by which the fading distance should be determined. If \'No\', the fade distances is the distance from the player\'s view to the object, in inches. If \'Yes\', the fade distance is the size of the object onscreen, in pixels."
+	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If \'Screen Space Fade\' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
+	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don\'t fade out). If \'Screen Space Fade\' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
+	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7 [hl2/ep1/portal] or dx8 [ep2/tf], then the engine will forcibly fade out props even if fademindist/fademaxdist isn\'t specified. This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades. Numbers smaller than 1 cause the prop to fade out at further distances, and greater than 1 cause it to fade out at closer distances."
+	disableshadows(boolean) : "Disable Shadows" : 0
+	disableselfshadowing(boolean) : "Disable Self-Shadowing" : 0
+	disablevertexlighting(boolean) : "Disable Vertex lighting" : 0 : "Disable per-vertex lighting on this prop."
+	drawinfastreflection[SINCE_L4D](boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
+	enablelightbounce[SINCE_CSGO](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
+	movespeed(integer) readonly : "Speed (unused)" : 1 : "This key needs to be greater than zero to show the preview in Hammer, ignore it."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(BaseEntityAnimating, BreakableProp) 
+	sphere(fademindist)
+	sphere(fademaxdist)
+	studio("models/editor/comp_prop_cable_dynamic.mdl")
+	appliesto(SRCTOOLS)
+= comp_prop_cable_dynamic: "Allows using comp_prop_rope/comp_prop_cable as a dynamic prop."
+	[
+	spawnflags(flags)  =
+		[
+		256: "Start with collision disabled" : 0
+		]
+	angles(angle) readonly : "Orientation" : "0 0 0" : "The starting orientation can\'t be changed, simply move the nodes."
+	group(target_source) : "Cable Group" : : "Specify the name of the group that will be compiled into this entity."
+	skin1(material) : "Alt Skin 1" : : "If set, an alternate material to use for Skin 1. Must be a model material, and the rope must use the same material for the entire prop."
+	skin2(material) : "Alt Skin 2" : : "If set, an alternate material to use for Skin 2."
+	skin3(material) : "Alt Skin 3" : : "If set, an alternate material to use for Skin 3."
+	skin4(material) : "Alt Skin 4" : : "If set, an alternate material to use for Skin 4."
+	skin5(material) : "Alt Skin 5" : : "If set, an alternate material to use for Skin 5. If you need more, add the keyvalue with SmartEdit off."
+	glowbackfacemult[L4D2](float) : "Glow backface Multiplier" : "1.0" : "What to multiply glow by on backfaces."
+
+	// Inputs
+	input TurnOn(void) : "Make the cable set visible."
+	input TurnOff(void) : "Make the cable set invisible."
+	input Skin(integer) : "Change to an alternate skin for the cable set."
+	input EnableCollision(void) : "Enable collision on the cable set."
+	input DisableCollision(void) : "Disable collision on the cable set."
+	input BecomeRagdoll[SINCE_P2](void) : "Change into a ragdoll immediately."
+	input FadeAndKill[SINCE_P2](void) : "Fade out then remove this cable set."
+
+	@resources
+		[
+		]
+	]
+
+@MoveClass base(StaticTargetName) 
+	sphere(radius)
+	animator()
+	keyframe()
+	iconsprite("editor/comp_prop_rope")
+	line(128 128 128, targetname, bunting)
+	appliesto(SRCTOOLS)
+= comp_prop_rope: "Generates ropes using a static prop. comp_prop_cable is an alternate name, they can be interchanged."
+	[
+	group(target_source) : "Group" : : "If set, all ropes with the same group will be compiled to one model."
+	nextkey(target_destination) : "Next Rope" : : "Name of the next rope along this path."
+	slack(integer) : "Slack" : 25 : "How much extra length the rope has, for \'catenary\' mode (by default it has the length between its two endpoints in the editor)."
+	positioninterpolator[ENGINE](integer) : "Type" : 2
+	positioninterpolator(choices) : "Type" : 2 : "How to interpolate the rope. Straight makes it straight. Spline uses a spline curve, which smoothly blends between points. Catenary makes it hang down, like the original move_rope. Bezier is an alternate smooth curve, but the visual in Hammer will be incorrect." =
+		[
+		0: "Straight"
+		1: "Spline Curve"
+		2: "Catenary"
+		3: "Bezier"
+		]
+	segments(integer) : "Segments" : 2 : "Number of nodes to generate between each rope. Higher values make smoother ropes, but produce more faces."
+	sides(integer) : "Sides" : 8 : "Number of faces for each cylindrical section. Only the value at the start of the rope is used."
+	radius(float) : "Radius" : "1.0" : "Radius of this rope section."
+	coll_segments[ENGINE](integer) : "Collision Segments" : 0
+	coll_segments(choices) : "Collision Segments" : -1 : "Type in the number of convex segments to generate between each rope. Higher values make smoother collision, but produce more convex segments." =
+		[
+		-1: "[-1] Same as visual geometry"
+		]
+	coll_sides[ENGINE](integer) : "Collision Sides" : 0
+	coll_sides(choices) : "Collision Sides" : 0 : "Type in the number of faces for each cylindrical collision section. If set to less than 3 sides, collision will not be generated." =
+		[
+		0: "[0] No collisions"
+		1: "[1] No collisions"
+		2: "[2] No collisions"
+		]
+	material(material) : "Rope Material" : "models/cables/generic_black" : "The material to use for the rope. Must be a model material."
+	mat_scale(float) : "Lengthwise Material Scale" : 1 : "This changes the texture resolution along the rope, relative to the amount of width used. Larger values stretch the texture and smaller values scrunch it up."
+	mat_rotate[ENGINE](boolean) : "Rotate Material" : 0
+	mat_rotate(choices) : "Material Orientation" : 0 : "Controls which direction the rope runs in the material, if your texture is rotated." =
+		[
+		0: "Vertical"
+		1: "Horizontal"
+		]
+	u_min(float) : "Width Start" : "0.0" : "The distance along the texture to start. 0 is the left/bottom side, 1 is the right/top side. This allows using only part of the texture, if it contains multiple different rope styles."
+	u_max(float) : "Width End" : "1.0" : "The distance along the texture to end. 0 is the left/bottom side, 1 is the right/top side. This allows using only part of the texture, if it contains multiple different rope styles."
+	bunting(target_destination) : "Bunting Definition" : : "Set to the name of a comp_prop_rope_bunting, to define models which will be placed at each segment across the rope."
+	linedivider_staticprop[!ENGINE](string) readonly : "----------------------------------------------------------------------------------------------------------"
+	renderamt[SINCE_L4D](integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
+	rendercolor[SINCE_L4D](color255) : "Color (R G B)" : "255 255 255"
+	screenspacefade[UNTIL_ASW](boolean) : "Screen Space Fade" : 0 : "The method by which the fading distance should be determined. If \'No\', the fade distances is the distance from the player\'s view to the object, in inches. If \'Yes\', the fade distance is the size of the object onscreen, in pixels."
+	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If \'Screen Space Fade\' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
+	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don\'t fade out). If \'Screen Space Fade\' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
+	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7 [hl2/ep1/portal] or dx8 [ep2/tf], then the engine will forcibly fade out props even if fademindist/fademaxdist isn\'t specified. This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades. Numbers smaller than 1 cause the prop to fade out at further distances, and greater than 1 cause it to fade out at closer distances."
+	disableshadows(boolean) : "Disable Shadows" : 0
+	disableselfshadowing(boolean) : "Disable Self-Shadowing" : 0
+	disablevertexlighting(boolean) : "Disable Vertex lighting" : 0 : "Disable per-vertex lighting on this prop."
+	drawinfastreflection[SINCE_L4D](boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
+	enablelightbounce[SINCE_CSGO](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
+	movespeed(integer) readonly : "Speed (unused)" : 1 : "This key needs to be greater than zero to show the preview in Hammer, ignore it."
+
+	@resources
+		[
+		]
+	]
+
+@MoveClass base(StaticTargetName) 
+	iconsprite("editor/comp_prop_rope_bunting")
+	appliesto(SRCTOOLS)
+= comp_prop_rope_bunting: "Specifies small props which will be placed at regular intervals across the compiled rope."
+	[
+	weight(integer) : "Weight" : 1 : "If multiple are defined with the same weighting, this specifies the relative probabilities.This works like a lottery - each model has this many \'tickets\', and then one is chosen randomly each time. If you have two choices with a weight of 9 and 1, the first will be chosen 90% of the time."
+	placement_interval(integer) : "Placement Interval" : 1 : "Place this prop every X segments, not including the start/end of the rope."
+	distance(float) : "Placement Distance" : 0 : "If greater than zero, override Placement Interval, and instead place every this many units."
+	model(studio) : "Model" : : "Specifies the model to place. This can either be an MDL which is placed as invidual prop_statics, or a SMD (relative to a game folder) which is merged into the rope model. Alternatively make it entirely blank to have a chance to randomly skip placing ropes."
+	angles(angle) : "Rotation" : "0 0 0" : "Rotate the model by this much, before applying the orientation of the rope. After this is applied, the X axis should be aligned with the rope direction."
+	orient[ENGINE](string) : "Orientation Mode" : "follow"
+	orient(choices) : "Orientation Mode" : "follow" : "Controls how the rope orientation affects the model." =
+		[
+		"follow": "Follow Rope"
+		"yaw": "Yaw Only"
+		"pitch_yaw": "Pitch and Yaw"
+		"none": "No Rotation"
+		"rand_yaw": "Random Yaw"
+		"rand": "Random"
+		]
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(BaseEntityAnimating, BreakableProp) 
+	sphere(fademindist)
+	sphere(fademaxdist)
+	studio("models/editor/comp_prop_rope_dynamic.mdl")
+	appliesto(SRCTOOLS)
+= comp_prop_rope_dynamic: "Allows using comp_prop_rope/comp_prop_cable as a prop_dynamic."
+	[
+	spawnflags(flags)  =
+		[
+		256: "Start with collision disabled" : 0
+		]
+	angles(angle) readonly : "Orientation" : "0 0 0" : "The starting orientation can\'t be changed, simply move the nodes."
+	group(target_source) : "Rope Group" : : "Specify the same group name as in a comp_prop_rope/comp_prop_cable. The ropes will be compiled with this entity as their origin."
+	glowbackfacemult[L4D2](float) : "Glow backface Multiplier" : "1.0" : "What to multiply glow by on backfaces."
+
+	// Inputs
+	input TurnOn(void) : "Make the rope set visible."
+	input TurnOff(void) : "Make the rope set invisible."
+	input EnableCollision(void) : "Enable collision on the rope set."
+	input DisableCollision(void) : "Disable collision on the rope set."
+	input BecomeRagdoll[SINCE_P2](void) : "Change into a ragdoll immediately."
+	input FadeAndKill[SINCE_P2](void) : "Fade out then remove this rope set."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(Angles) 
+	appliesto(SRCTOOLS)
+	iconsprite("editor/comp_propcombine_set")
+	wirebox(mins, maxs)
+= comp_propcombine_set: "Specifies a group of props that will be combined together."
+	[
+	mins(vector) : "BBox Mins" : "-32 -32 -32" : "Minimum offset from the entity, defining the shape."
+	maxs(vector) : "BBox Maxes" : "32 32 32" : "Maximum offset from the entity, defining the shape."
+	name(string) : "Name" : : "Two sets with the same name will be treated as one."
+	prop(studio) : "Model Filter" : : "If set, a combinable model used to filter which others will be combined. The propcombine set will only apply to models which could be combined with this one."
+	skin(integer) : "Skin Filter" : 0 : "The skin for the Model Filter."
+
+	@resources
+		[
+		]
+	]
+
+@SolidClass 
+	appliesto(SRCTOOLS)
+= comp_propcombine_volume: "Specifies a group of props that will be combined together. Note that unlike the propcombine_set point-entity version, this does impact some brush limits, so it is suggested to use the point version in instances and prefabs."
+	[
+	name(string) : "Name" : : "Two sets with the same name will be treated as one."
+	prop(studio) : "Model Filter" : : "If set, a combinable model used to filter which others will be combined. The propcombine set will only apply to models which could be combined with this one."
+	skin(integer) : "Skin Filter" : 0 : "The skin for the Model Filter."
+	]
+
+@PointClass base(StaticTargetName, ControlEnables) 
+	iconsprite("editor/comp_relay")
+	appliesto(SRCTOOLS)
+= comp_relay: "Simplified version of logic_relay which is able to be optimised away by the compiler.The various inputs and outputs are useful for bundling commands together, or using more appopriate verbs.Inputs only work if given directly from entities (or via instance redirection), not ingame or dynamically.All inputs/outputs may pass through any parameter, if no override is specified."
+	[
+	delay(float) : "Delay Min" : "0.0" : "Add this delay to all outputs. This allows you to control this via $fixup values, for instance."
+	delay_max(float) : "Delay Max" : : "If this is also set, the delay will be randomised. This is seeded from the location of this relay."
+
+	// Inputs
+	input Trigger(string) : "Trigger the relay and fire the output."
+	input TurnOn(string) : "Fire the OnTurnedOn output."
+	input TurnOff(string) : "Fire the OnTurnedOff output."
+	input FireUser1(string) : "Causes this relay\'s OnUser1 output to be fired."
+	input FireUser2(string) : "Causes this relay\'s OnUser2 output to be fired."
+	input FireUser3(string) : "Causes this relay\'s OnUser3 output to be fired."
+	input FireUser4(string) : "Causes this relay\'s OnUser4 output to be fired."
+	input FireUser5(string) : "Causes this relay\'s OnUser5 output to be fired."
+	input FireUser6(string) : "Causes this relay\'s OnUser6 output to be fired."
+	input FireUser7(string) : "Causes this relay\'s OnUser7 output to be fired."
+	input FireUser8(string) : "Causes this relay\'s OnUser8 output to be fired."
+
+	// Outputs
+	output OnTrigger(string) : "Fired when the relay is triggered."
+	output OnTurnedOn(string) : "Fired when the relay is turned on."
+	output OnTurnedOff(string) : "Fired when the relay is turned off."
+	output OnUser1(string) : "Fired in response to a FireUser1 input."
+	output OnUser2(string) : "Fired in response to a FireUser2 input."
+	output OnUser3(string) : "Fired in response to a FireUser3 input."
+	output OnUser4(string) : "Fired in response to a FireUser4 input."
+	output OnUser5(string) : "Fired in response to a FireUser5 input."
+	output OnUser6(string) : "Fired in response to a FireUser6 input."
+	output OnUser7(string) : "Fired in response to a FireUser7 input."
+	output OnUser8(string) : "Fired in response to a FireUser8 input."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(Origin, Angles, ControlEnables) 
+	appliesto(+SRCTOOLS, +VSCRIPT)
+	iconsprite("editor/comp_scriptvar_setter")
+	studio("models/editor/cone_helper.mdl")
+	line(255 255 255, targetname, target)
+	line(255 255 255, targetname, ref)
+= comp_scriptvar_setter: "Assigns data or a group of data to a variable in an entity\'s VScript scope or the global scope on spawn.\nTo set an array, provide an index in the variable name in the form \'varname[4]\'. \nAll the comp_scriptvars pointing to that variable will be collected into a single array literal, with holes filled by *null*. \nIf the brackets are empty, these values will fill those holes and then append to the end in an arbitrary order."
+	[
+	target(target_destination) : "Script Entity" : : "The entity to set a variable on. Alternatively, leave this blank to assign the variable ::globally."
+	variable(string) : "Variable Name" : : "The name of the variable to set. A specific array index can be set with the form \'varname[4]\'. Alternatively use \'varname[]\' to assign them to the first index available. Holes in the array are set to null. If this is a :;global name, the script entity is ignored."
+	ref(target_destination) : "Reference Entity" : : "If set, a reference entity to use to obtain data from instead of this one."
+	mode[ENGINE](string) : "Mode" : "pos"
+	mode(choices) : "Mode" : "pos" : "The kind of data to read. For Constants, the position/reference is ignored completely. For Entity Handle to be useful, only one reference entity should exist. For Offset and Distance, it\'s the offset of the reference relative to this entity. For Entity KeyValue, the constant is the keyvalue name, then the value is converted to an appropriate Squirrel type. " =
+		[
+		"const": "Constant"
+		"string": "Stringified Constant"
+		"bool": "Boolean Constant"
+		"inv_bool": "Inverted Boolean Constant"
+		"name": "Entity Name"
+		"handle": "Entity Handle"
+		"keyvalue": "Entity KeyValue"
+		"pos": "Position"
+		"pos_x": "Position - X only"
+		"pos_y": "Position - Y only"
+		"pos_z": "Position - Z only"
+		"ang": "Angle (as vector)"
+		"qangle": "Angle (as QAngle)" [L4D2, P2DES]
+		"off": "Offset to Reference"
+		"dist": "Distance to Reference"
+		"x": "Forward Direction"
+		"y": "Left Direction"
+		"z": "Up Direction"
+		]
+	const(string) : "Scale / Constant" : : "A scale factor for the data, or a constant to use directly. The exact behaviour depends on the mode."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(logic_relay) 
+	appliesto(SRCTOOLS)
+	line(255 255 255, targetname, target)
+	iconsprite("editor/comp_sequential_call")
+= comp_sequential_call: "Finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order. To use, define OnSeq outputs, firing inputs at \'!seq\'."
+	[
+	target(target_destination) : "Entities to Sequence" : : "The entities which will be ordered and inputs fired at. This should refer to multiple entities, probably with a *-wildcard."
+	order_mode[ENGINE](string) : "Ordering Mode" : "dist"
+	order_mode(choices) : "Ordering Mode" : "dist" : "Choose how entities are ordered. Numeric suffix finds numbers at the end of the entity name, and sorts by that order." =
+		[
+		"dist": "Distance to this"
+		"dist_inv": "Inverted distance to this"
+		"suffix": "Numeric Suffix, Ascending"
+		"suffix_inv": "Numeric Suffix, Decending"
+		]
+	uniquify(boolean) : "Make Entities Unique?" : 0 : "Append a suffix to ensure all entities are unique. Should be enabled if not using a *-wildcard."
+	time_mode[ENGINE](string) : "Time Mode" : "total"
+	time_mode(choices) : "Time Mode" : "total" : "How Time Value is interpreted. If this is set to Total Time and the ordering mode is Distance, delays are based on the distance. Otherwise, it will be equally spaced." =
+		[
+		"total": "Total Time"
+		"interval": "Interval Between"
+		]
+	time_val(float) : "Time Value" : "5.0" : "Either the total time or the time between each entity."
+	time_variance(float) : "Time Variance" : "0.0" : "After computing the delay, randomly add/subtract this much from the delay to add noise."
+
+	// Outputs
+	output OnSeqStart(void) : "Fired at the start of the sequence."
+	output OnSeq(void) : "Fired once for each entity - use !seq to refer to the target."
+	output OnSeqEnd(void) : "Fired once all delayed outputs are complete."
+
+	@resources
+		[
+		]
+	]
+
+@SolidClass base(trigger_playerteam) 
+	appliesto(+SRCTOOLS, P2)
+= comp_trigger_coop: "Only activates once both Coop players have reached the trigger."
+	[
+
+	// Outputs
+	output OnStartTouchBoth(void) : "Both players have entered the trigger."
+	output OnEndTouchBoth(void) : "One player left the trigger."
+	]
+
+@SolidClass base(Trigger) 
+	appliesto(+SRCTOOLS, P2)
+= comp_trigger_p2_goo: "Implements Toxic Goo and Bottomless Pits.\nThis expands into a trigger_hurt and trigger_multiple with appropriate settings."
+	[
+	enablefade(boolean) : "Enable Fade" : 0 : "Use a player_loadsaved to fade out the view as the player falls/drowns.Otherwise, just kill the player with a trigger_hurt."
+	fadepreset[ENGINE](color255) : "Fade Color - Preset" : "0 0 0"
+	fadepreset(choices) : "Fade Color - Preset" : "0 0 0" : "Use a preset color for the fade." =
+		[
+		"-1 -1 -1": "Custom"
+		"58 35 20": "Goo"
+		"0 0 0": "Black"
+		"56 95 141": "BTS Fog"
+		"37 35 33": "Old Aperture"
+		"50 70 80": "Wheatley / Destroyed"
+		"70 85 100": "Bottomless Pit"
+		"40 45 50": "Pit Falling Fog"
+		"16 19 22": "Fan Fog"
+		"14 20 22": "Darkness Fog"
+		"40 53 64": "Testchamber Fog"
+		"218 76	26": "P1 Orange"
+		]
+	fadecolor(color255) : "Fade Color - Custom" : "0 0 0" : "Specify your own fade color instead."
+	fadetime(float) : "Fade Time" : "0.5" : "The number of seconds the fade takes to fully occur."
+	damagetype[ENGINE](integer) : "Damage Type" : 1327104
+	damagetype(choices) : "Damage Type" : 1327104 : "The type of damage to do to the player." =
+		[
+		32: "Bottomless Pit (FALL)"
+		16384: "Water (DROWN)"
+		1048576: "Toxic Goo (ACID)"
+		]
+	phys_offset(float) : "Physics Offset" : "70.0" : "The distance below the hurt trigger to place the dissolving trigger. This ensures objects are hidden by the goo / fog before being destroyed. The default of 70 units is slightly more than the height of a fully extended Turret."
+	failsafe_delay(float) : "Failsafe delay" : "1.0" : "Delay after which non-cube entities will be killed."
+	dissolve_filter(filterclass) : "Physics Filter" : : "Set to a filter entity to prevent certain entities from dissolving."
+
+	// Outputs
+	output OnKillPlayer(void) : "Fired when players touch the trigger."
+	output OnDissolvePhysics(void) : "Fired when physics objects touch the trigger (and will be dissolved/killed soon)."
+	]
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(+P2, +SRCTOOLS)
+	studioprop("models/editor/vactubes/end_point.mdl")
+	sphere(radius)
+= comp_vactube_end: "Marks the end point of a vactube. Objects reaching here will be cleaned up."
+	[
+	radius(float) : "Cube Radius" : 0 : "The radius to search for cubes in for droppers. If zero, this is a regular endpoint, and the rest of the options have no effect."
+	autorespawn(boolean) : "Auto Respawn" : 1 : "Automatically respawn cubes when destroyed."
+	filtername(target_destination) : "Filter + Reference" : : "The filter_activator_name to set to point at the cube. This is also used as the location to determine the distance to the cube."
+	template(target_destination) : "Template" : : "The point_template to set to spawn the cube."
+
+	// Inputs
+	input RequestSpawn(void) : "Request a cube to be spawned and routed here."
+	input FireCubeUser1(void) : "FireUser1 at the cube, for dissolving existing ones."
+
+	// Outputs
+	output OnCubeArrived(void) : "Triggered when the cube has arrived to be dispensed."
+	output OnFizzled(void) : "Fired when the cube is fizzled, and autorespawn is enabled."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(Angles) 
+	appliesto(+P2, +SRCTOOLS)
+	studioprop()
+= comp_vactube_junction: "Marks a junction in a vactube, where they\'re forced to change direction. Scanner models near straight nodes will be detected automatically."
+	[
+	targetname(target_source) : "Junction Name" : : "Although junctions are linked automatically, this can be used to precisely link two junctions. You can use also this to help with identifying problems since the compiler will output it."
+	model[ENGINE](string) : "Type" : "models/editor/vactubes/straight.mdl"
+	model(choices) : "Type" : "models/editor/vactubes/straight.mdl" : "The size and type of junction. Splitters split the tube into multiple paths. You can simply overlap two junctions to join paths, however." =
+		[
+		"models/editor/vactubes/straight.mdl": "Straight / Scanner"
+		"models/editor/vactubes/curve_1.mdl": "Curve: 1"
+		"models/editor/vactubes/curve_2.mdl": "Curve: 2"
+		"models/editor/vactubes/curve_3.mdl": "Curve: 3"
+		"models/editor/vactubes/curve_4.mdl": "Curve: 4"
+		"models/editor/vactubes/curve_5.mdl": "Curve: 5"
+		"models/editor/vactubes/curve_6.mdl": "Curve: 6"
+		"models/editor/vactubes/diag_curve.mdl": "Curve: 45 Deg"
+		"models/editor/vactubes/diag_curve_mirror.mdl": "Curve: 45 Deg (Mirror)"
+		"models/editor/vactubes/splitter_straight.mdl": "Splitter: Straight"
+		"models/editor/vactubes/splitter_sides.mdl": "Splitter: Left/Right"
+		"models/editor/vactubes/splitter_triple.mdl": "Splitter: Triple"
+		]
+	skin[ENGINE](boolean) : "Reverse Curve?" : 0
+	skin(choices) : "Curve Direction" : 0 : "Reverse the direction, to make placing easier. Does not apply to splitters." =
+		[
+		0: "Forward"
+		1: "Backward"
+		]
+	persist_tv[ENGINE](boolean) : "Continually display items on TV" : 0
+	persist_tv(choices) : "TV Screen behaviour" : 0 : "Determine how items are shown on Scanner TVs." =
+		[
+		0: "Return to blank when item leaves"
+		1: "Continue displaying until replaced"
+		]
+	target(target_destination) : "Next junction override" : : "Although junctions are linked automatically, you can specify the name of another to force it to connect to a further away or non-aligned node."
+	target_sec(target_destination) : "Secondary junction override" : : "For splitters, this overrides the second output from the junction."
+	target_ter(target_destination) : "Tertiary junction override" : : "For the triple splitter, this overrides the rightmost output."
+
+	// Outputs
+	output OnPass(void) : "Fired when an object passes the midpoint of the junction. The entity is NOT passed as !activator."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass 
+	appliesto(+P2, +SRCTOOLS)
+	studioprop()
+= comp_vactube_object: "Registers objects that can appear in the tubing."
+	[
+	model(studio) : "Vac Model" : : "Specifies the model used while in the vactube."
+	skin(integer) : "Vac Skin" : : "Skin for the vactube model."
+	offset(vecline) : "Offset" : : "The centerpoint of the model for positioning. Position this at the center of the model to ensure it doesn\'t stick out of the tube."
+	weight(integer) : "Weight" : 1 : "The number of extra \'chances\' for this to spawn. This works like a lottery - each cube has this many \'tickets\', and then one is chosen randomly each time. If you have two choices with a weight of 9 and 1, the first will be chosen 90% of the time."
+	group(string) : "Group" : : "A vactube start will only spawn objects with a specified group name, if set. This allows multiple vactubes to have a different mix of items. If you don\'t need this, you can leave the groups blank."
+	tv_skin[ENGINE](integer) : "TV Skin" : 0
+	tv_skin(choices) : "TV Skin" : 0 : "The skin to display on scanner TVs." =
+		[
+		0: "Blank"
+		1: "Chair"
+		2: "Table"
+		3: "Cube"
+		4: "Hover turret / Core / Sphere"
+		5: "Turret"
+		6: "Boxed Turret"
+		]
+	cube_model(studio) : "Cube Model" : : "If set, this object can be spawned in droppers. This should be the model used on the real cube version so they can be matched to each other."
+	cube_skin(integer) : "Cube Skin" : 0 : "The specific skin to detect on the real cubes."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(Angles) 
+	appliesto(+P2, +SRCTOOLS)
+	sphere(radius)
+= comp_vactube_sensor: "Detects vactube objects travelling through a path, and fires outputs."
+	[
+	radius(float) : "Radius" : 32 : "The vactube path must intersect this sphere to be detected."
+	obj_model(studio) : "Cube" : : "If set, only objects which match this cube model will be detected."
+
+	// Outputs
+	output OnEnter(void) : "Fired when an object enters the sphere."
+	output OnPass(void) : "Fired when an object is midway through passing through the sphere."
+	output OnExit(void) : "Fired when an object leaves the sphere."
+
+	@resources
+		[
+		]
+	]
+
+@MoveClass base(StaticTargetName, Angles) 
+	sphere(radius)
+	animator()
+	keyframe()
+	iconsprite("editor/comp_prop_rope")
+	appliesto(SRCTOOLS)
+= comp_vactube_spline: "Constructs a custom vactube model, using a set of path points."
+	[
+	nextkey(target_destination) : "Next Rope" : : "Name of the next spline node."
+	opaque(boolean) : "Opaque Tube" : 0 : "Whether the tube should be glass, or the black opaque version."
+	skin[ENGINE](integer) : "Act as Junction" : 0
+	skin(choices) : "Mode" : 0 : "Whether this will link to comp_vactube_junctions, or just be a static prop." =
+		[
+		0: "Static Prop"
+		1: "Vactube Junction"
+		]
+	segments(integer) : "Segments" : 2 : "Number of nodes to generate for this. Higher values make smoother tubes, but produce more faces."
+	collisions(boolean) : "Enable Collisions" : 1 : "Should a collision mesh should be generated\?"
+	positioninterpolator[ENGINE](integer) : "Type" : 1
+	positioninterpolator(choices) : "Type" : 1 : "How to interpolate the tube. Spline uses a spline curve, which smoothly blends between points. Bezier is an alternate smooth curve, but the visual in Hammer will be incorrect." =
+		[
+		1: "Spline Curve"
+		3: "Bezier"
+		]
+	vac_separateglass(boolean) : "Separate Glass and Frame" : 0 : "Separating glass and frame can help with transparency sorting issue"
+	linedivider_staticprop[!ENGINE](string) readonly : "----------------------------------------------------------------------------------------------------------"
+	renderamt[SINCE_L4D](integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
+	rendercolor[SINCE_L4D](color255) : "Color (R G B)" : "255 255 255"
+	screenspacefade[UNTIL_ASW](boolean) : "Screen Space Fade" : 0 : "The method by which the fading distance should be determined. If \'No\', the fade distances is the distance from the player\'s view to the object, in inches. If \'Yes\', the fade distance is the size of the object onscreen, in pixels."
+	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If \'Screen Space Fade\' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
+	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don\'t fade out). If \'Screen Space Fade\' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
+	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7 [hl2/ep1/portal] or dx8 [ep2/tf], then the engine will forcibly fade out props even if fademindist/fademaxdist isn\'t specified. This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades. Numbers smaller than 1 cause the prop to fade out at further distances, and greater than 1 cause it to fade out at closer distances."
+	disableshadows(boolean) : "Disable Shadows" : 0
+	disableselfshadowing(boolean) : "Disable Self-Shadowing" : 0
+	disablevertexlighting(boolean) : "Disable Vertex lighting" : 0 : "Disable per-vertex lighting on this prop."
+	drawinfastreflection[SINCE_L4D](boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
+	enablelightbounce[SINCE_CSGO](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
+	movespeed(integer) readonly : "Speed (unused)" : 1 : "This needs to be greater than zero to show the preview lines."
+
+	@resources
+		[
+		]
+	]
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(+P2, +SRCTOOLS)
+	studioprop("models/editor/vactubes/start_point.mdl")
+= comp_vactube_start: "Marks the start point of a vactube. This is where they spawn."
+	[
+	group(string) : "Object Group" : : "Only objects with the same group name will be spawned.This allows multiple vactubes to have a different mix of items. If you don\'t need this, you can leave the groups blank."
+	speed(float) : "Object Speed" : "800.0" : "Set the speed of the objects produced from here, in units per second."
+	seed(string) : "Rotation Seed" : : "If set, consistently produce the same rotation pattern as the seed. If not set, a random seed will be selected (and printed to the compile log)."
+	timer[ENGINE](integer) : "Activation Mode" : 1
+	timer(choices) : "Activation Mode" : 1 : "Controls whether a logic_timer will be generated to automatically trigger with a random time." =
+		[
+		0: "No Timer (ForceSpawn input required)"
+		1: "Auto Timer"
+		2: "Auto Timer, starts disabled"
+		]
+	time_min(float) : "Minimum Time" : "0.15" : "The minimum time between objects."
+	time_max(float) : "Maximum Time" : "0.5" : "The maximum time between objects."
+	linedivider_vacvisual[!ENGINE](string) readonly : "----------------------------------------------------------------------------------------------------------"
+	prop_fast_reflection(boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes the vactube object props to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
+	prop_disable_shadows(boolean) : "Disable Producing Cheap Shadows?" : 1 : "If set, prevent the vactube object props from creating cheap render-to-texture/dynamic shadows."
+	prop_disable_projtex(boolean) : "No Recieving Proj Texs" : 0 : "Disable env_projectedtexture lighting and shadows on vactube object props."
+
+	// Inputs
+	input ForceSpawn(void) : "Force an object to spawn immediately."
+	input EnableTimer(void) : "Enable the automatic timer."
+	input DisableTimer(void) : "Disable the automatic timer."
+
+	// Outputs
+	output OnSpawned(void) : "Fired when an object spawns. The object entity is NOT passed as !activator."
+
+	@resources
+		[
+		]
+	]
+
+@ExtendClass 
+	appliesto(SRCTOOLS)
+= func_physbox
+	[
+	ha_override_mass[SRCTOOLS](float) : "[HA] Mass Override" : : "If set, the postcompiler will modify the brush data to directly set it to this mass value."
+	]
+
+@ExtendClass base(SRCModel) 
+	appliesto(SRCTOOLS)
+= hot_potato
+	[
+	model[+SRCTOOLS](studio) : "[HA] Custom Model" : "models/props/futbol.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	]
+
+@ExtendClass 
+	appliesto(SRCTOOLS)
+= logic_branch_listener
+	[
+
+	// Inputs
+	input UniqueStateOn[SRCTOOLS](void) : "Set the state of a logic_branch unique to this input entity to 1. This will generate a branch added to the listener."
+	input UniqueStateOff[SRCTOOLS](void) : "Set the state of a logic_branch unique to this input entity to 0. This will generate a branch added to the listener."
+	input UniqueStateSet[SRCTOOLS](bool) : "Set the state of a logic_branch unique to this input entity to the provided value. This will generate a branch added to the listener."
+	input UniqueStateToggle[SRCTOOLS](void) : "Toggle the state of a logic_branch unique to this input entity. This will generate a branch added to the listener."
+	]
+
+@ExtendClass 
+	appliesto(SRCTOOLS)
+= material_modify_control
+	[
+	srctools_search_parent[+SRCTOOLS](boolean) : "[HA] Search Parent" : 0 : "If set, the postcompiler will duplicate this entity for each material on the parent that have the appropriate proxy. If Material Name is set, only materials containing that value will be considered."
+	materialvar[+SRCTOOLS](string) : "Variable Name" : : "Material variable to modify, \'$frame\' for example. Maximum of 255 characters allowed. If the $ is omitted, the postcompiler will add it. This prevents the variable from being detected for instances."
+	]
+
+@ExtendClass base(SRCModel) 
+	appliesto(SRCTOOLS)
+= npc_personality_core
+	[
+	model[+SRCTOOLS](choices) : "[HA] Custom/Hammer Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "Choose the model to show in Hammer. Set to the same as Use Alternate Skins. Alternatively, if Override Model is enabled you can type/paste in a custom model path here." =
+		[
+		"models/npcs/personality_sphere/personality_sphere.mdl": "Original (Wheatley)"
+		"models/npcs/personality_sphere/personality_sphere_skins.mdl": "Alternate (Corrupt Cores)"
+		]
+	]
+
+@ExtendClass base(SRCModel) 
+	appliesto(SRCTOOLS)
+= npc_rocket_turret
+	[
+	model[+SRCTOOLS, P2](studio) : "[HA] Custom Model" : "models/props_bts/rocket_sentry.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	]
+
+@ExtendClass base(SRCIndicator) 
+	appliesto(SRCTOOLS)
+= point_laser_target
+	[
+	]
+
+@ExtendClass base(SRCModel) 
+	appliesto(SRCTOOLS)
+= prop_button
+	[
+	model[+SRCTOOLS](studio) : "[HA] Custom Model" : "models/props/switch001.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	]
+
+@ExtendClass base(SRCModel) 
+	appliesto(SRCTOOLS)
+= prop_exploding_futbol
+	[
+	model[+SRCTOOLS](studio) : "[HA] Custom Model" : "models/npcs/personality_sphere_angry.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	]
+
+@ExtendClass base(SRCModel) 
+	appliesto(SRCTOOLS)
+= prop_floor_ball_button
+	[
+	model[+SRCTOOLS](studio) : "[HA] Custom Model" : "models/props/ball_button.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	]
+
+@ExtendClass base(SRCModel) 
+	appliesto(SRCTOOLS)
+= prop_floor_cube_button
+	[
+	model[+SRCTOOLS](studio) : "[HA] Custom Model" : "models/props/box_socket.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	]
+
+@ExtendClass base(SRCModel) 
+	appliesto(SRCTOOLS)
+= prop_glados_core
+	[
+	model[+SRCTOOLS, P2](studio) : "[HA] Custom Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	]
+
+@ExtendClass base(SRCModel) 
+	appliesto(SRCTOOLS)
+= prop_glass_futbol
+	[
+	model[+SRCTOOLS](studio) : "[HA] Custom Model" : "models/props/futbol.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	]
+
+@ExtendClass base(SRCIndicator) 
+	appliesto(SRCTOOLS)
+= prop_laser_catcher
+	[
+	src_fix_skins[SRCTOOLS](boolean) : "[HA] Fix Skins Logic" : 1 : "If set, add extra outputs to fix the bug with skins not changing after a reload from save."
+	]
+
+@ExtendClass base(SRCIndicator) 
+	appliesto(SRCTOOLS)
+= prop_laser_relay
+	[
+	]
+
+@ExtendClass base(SRCModel) 
+	appliesto(SRCTOOLS)
+= prop_under_button
+	[
+	model[+SRCTOOLS](studio) : "[HA] Custom Model" : "models/props_underground/underground_testchamber_button.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	]
+
+@ExtendClass base(SRCModel) 
+	appliesto(SRCTOOLS)
+= prop_under_floor_button
+	[
+	model[+SRCTOOLS](studio) : "[HA] Custom Model" : "models/props_underground/underground_floor_button.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	]
+
+@ExtendClass base(SRCModel) 
+	appliesto(SRCTOOLS)
+= prop_wall_projector
+	[
+	model[+SRCTOOLS](studio) : "[HA] Custom Model" : "models/props/wall_emitter.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	]
+
+@ExtendClass 
+	appliesto(SRCTOOLS)
+= prop_weighted_cube
+	[
+	comp_custom_model_type[-ENGINE, SRCTOOLS](choices) : "[HA] Custom Model Type" : 0 : "Automatically handles various methods of setting custom cube models. Cube Type sets the behavior and which skin numbers are used for gel, and the Model keyvalue sets the actual model. Script Override mode requires the collisions to be the same as the base cube type, but tends to produce more correct physics than Cube Type 6." =
+		[
+		0: "None"
+		1: "Script Override"
+		2: "Cube Type 6"
+		]
+	]
+
+@ExtendClass 
+	appliesto(SRCTOOLS)
+= trigger_brush
+	[
+	spawnflags[+SRCTOOLS](flags)  =
+		[
+		1: "Ignore Players" : 1
+		2: "Ignore NPCs" : 1
+		4: "Ignore func_pushable" : 1
+		8: "Ignore touches" : 1
+		16: "Ignore +USE" : 1
+		]
+	InputFilter[+SRCTOOLS](integer) : "Input Flags" : 0 : "Filters what kind of entities can interact with this. Set this in spawnflags instead."
+	]
+
+@PointClass 
+	iconsprite("editor/comp_visual_preset")
+= comp_visual_preset: "Handles visual presets.These can be fog settings, tonemapper presets and custom color correction. All handled by one entity."
+	[
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	linedivider_tgname(string) readonly : "----------------------------------------------------------------------------------------------------------"
+	tonemapper(target_destination) : "env_tonemap_controller" : "@Tonemapper" : "Tonemapper entity used. Needs to be set to use tonemap presets."
+	tm_autoexposuremax(float) : "Auto Exposure Max" : "2.0" : "Set the auto exposure maximum."
+	tm_autoexposuremin(float) : "Auto Exposure Min" : "0.5" : "Set the auto exposure minimum."
+	tm_bloomscale(float) : "Bloom Scale" : "0.2" : "Set the bloom scale."
+	tm_bloomexponent(float) : "Bloom Exponent" : "2.2" : "Set the bloom exponent."
+	linedivider_tm(string) readonly : "----------------------------------------------------------------------------------------------------------"
+	fog_controller(target_destination) : "env_fog_controller" : "@FogController" : "Env_fog_controller entity used to set tonemap presets. Should have master flag checked."
+	fog_primary_color(color255) : "Primary Fog Color" : "255 255 255" : "Primary fog color to use."
+	fog_start(float) : "Fog Start" : "-1.0"
+	fog_end(float) : "Fog End" : "2000.0"
+	fog_max_density(float) : "Fog Max Density" : "1.0"
+	use_lerp(boolean) : "Use Lerp" : 1 : "Use lerping instead of instant changing of fog values. Requires lerp time on the fog controller entity to be set."
+	linedivider_fg(string) readonly : "----------------------------------------------------------------------------------------------------------"
+	cc_filename(string) : "CC Filename" : : "The filename used by color correction for this preset (if set), e.g. \'cc_RECYCLED_TEST\'."
+	cc_fadein(float) : "CC FadeIn Time" : "1.0"
+	cc_fadeout(float) : "CC FadeOut Time" : "1.0"
+
+	// Inputs
+	input Apply(void) : "Applies the preset, disables all other ones."
+
+	// Outputs
+	output OnUser1(void) : "Fired in response to FireUser1 input."
+	output OnUser2(void) : "Fired in response to FireUser2 input."
+	output OnUser3(void) : "Fired in response to FireUser3 input."
+	output OnUser4(void) : "Fired in response to FireUser4 input."
+	]

@@ -3,6 +3,7 @@
 	sphere(fademaxdist)
 	studio("models/editor/comp_prop_cable_dynamic.mdl")
 	appliesto(srctools)
+	autovis(Auto, Postcompiler, Prop Ropes)
 = comp_prop_cable_dynamic: "Allows using comp_prop_rope/comp_prop_cable as a dynamic prop."
 	[
 	spawnflags(flags)  =

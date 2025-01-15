@@ -4,6 +4,7 @@
 	iconsprite("editor/comp_prop_rope")
 	line(128 128 128, targetname, bunting)
 	appliesto(srctools)
+	autovis(Auto, Postcompiler, Prop Ropes)
 = comp_prop_rope: "Generates ropes using a static prop. comp_prop_cable is an alternate name, they can be interchanged."
 	[
 	group(target_source): "Group" : : "If set, all ropes with the same group will be compiled to one model."

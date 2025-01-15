@@ -225,7 +225,10 @@ async def run_transformations(
                 # chainer pick it up again, calling the function twice. So edit the script to
                 # first blank out the functions.
                 code = 'OnPostSpawn<-Precache<-function(){}\n' + code
-            init_scripts.append(pack.inject_vscript(code.replace('`', '"')))
+            fixed_code = code
+            if 'STRATA' not in tags:
+                fixed_code = fixed_code.replace('`', '"')
+            init_scripts.append(pack.inject_vscript(fixed_code))
             ent['vscripts'] = ' '.join(init_scripts)
 
     apply_io_remaps(context)

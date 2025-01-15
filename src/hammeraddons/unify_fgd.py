@@ -34,6 +34,7 @@ GAMES_CHRONO: list[tuple[str, str]] = [
     ('ASW',   'Alien Swarm'),
     ('P2',    'Portal 2'),
     ('CSGO',  'Counter-Strike: Global Offensive'),
+    ('STRATA',  'Strata Source'),
 
     ('SFM',   'Source Filmmaker'),
     ('DOTA2', 'Dota 2'),
@@ -68,6 +69,9 @@ MODS_BRANCHED: dict[str, list[tuple[str, str]]] = {
     ],
     'CSGO': [
         ('P2DES', 'Portal 2: Desolation'),
+    ],
+    'STRATA': [
+        ('P2CE', 'Portal 2: Community Edition'),
     ],
 }
 MOD_TO_BRANCH = {
@@ -104,6 +108,9 @@ FEATURES: dict[str, set[str]] = {
 
     'PEE15': {'P1', 'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
     'PEE2': {'P2', 'HL2', 'EP1', 'EP2', 'INST_IO', 'VSCRIPT'},
+
+    'STRATA': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
+    'P2CE': {'P2', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 }
 
 ALL_FEATURES = {
@@ -537,10 +544,10 @@ def load_file(
         if clsname in base_fgd.entities:
             raise ValueError(
                 f'Duplicate "{clsname}" class '
-                f'in {file.path} and {ent_source[clsname]}!'
+                f'in {file.path} and {ent_source[clsname.upper()]}!'
             )
         base_fgd.entities[clsname] = ent
-        ent_source[clsname] = path
+        ent_source[clsname.upper()] = path
 
     if fgd_vis:
         for parent, visgroup in file_fgd.auto_visgroups.items():
@@ -602,8 +609,13 @@ def add_tag(tags: frozenset[str], new_tag: str) -> frozenset[str]:
     """Modify these tags such that they allow the new tag."""
     is_inverted = new_tag.startswith(('!', '-'))
 
+    required = new_tag.startswith(('+'))
+    if required:
+        # Strip the + off the tag
+        new_tag = new_tag[1:]
+
     # Already allowed/disallowed.
-    if match_tags(expand_tags(frozenset({new_tag})), tags) != is_inverted:
+    if not required and match_tags(expand_tags(frozenset({new_tag})), tags) != is_inverted:
         return tags
 
     tag_set = set(tags)
@@ -869,6 +881,45 @@ def action_count(
             print(f'{len(info):02}: {key[:64]!r} -> {info}')
 
 
+def action_import_find_matching_tag(tag_map, expanded):
+    found_tag = None
+    found_value = None
+    applies_to_current = False
+    applies_to_engine = False
+    for tag, value in tag_map.items():
+        if 'ENGINE' in tag or '+ENGINE' in tag:
+            # Ignoring all values with ENGINE tags!
+            applies_to_engine = True
+            continue
+        
+        # Take this value for now
+        # Only break if we found something that matches exactly our tag
+        # Otherwise keep searching, as we might find a better match later on
+        found_tag = tag
+        found_value = value
+        applies_to_current = match_tags(expanded, tag)
+        if applies_to_current:
+            break
+    return [found_tag, found_value, applies_to_current, applies_to_engine]
+
+def action_import_check_for_base(fgd, ent, new_base):
+    if new_base in ent.bases:
+        return True
+
+    # Not immediately present. Recursively check if it's in one of the base classes
+    for base in ent.bases:
+        print(base)
+        base_ent = None
+        try:
+            base_ent = fgd[base]
+        except KeyError:
+            print(f'Base {base} not found!')
+        if base_ent != None:
+            if action_import_check_for_base(fgd, base_ent, new_base):
+                return True
+    return False
+
+
 def action_import(
     dbase: Path,
     engine_tag: str,
@@ -880,42 +931,87 @@ def action_import(
 
     expanded = expand_tags(frozenset({engine_tag}))
 
-    print('Reading FGDs:')
+    print('Reading new FGDs:')
     for path in fgd_paths:
         print(path)
         fsys = RawFileSystem(str(path.parent))
         new_fgd.parse_file(fsys, fsys[path.name], eval_bases=False)
 
+
+    print('Reading original FGDs:')
+    old_fgd = FGD()
+    old_ent_source: dict[str, str] = {}
+
+    # First, load all snippets files
+    with RawFileSystem(str(dbase)) as fsys:
+        for file in dbase.rglob("snippets/*.fgd"):
+            rel_loc = file.relative_to(dbase)
+            load_file(old_fgd, old_ent_source, fsys, fsys[str(rel_loc)], is_snippet=True, fgd_vis=True)
+        # Then, everything else.
+        for file in dbase.rglob("*.fgd"):
+            rel_loc = file.relative_to(dbase)
+            if 'snippets' not in rel_loc.parts:
+                load_file(old_fgd, old_ent_source, fsys, fsys[str(rel_loc)], is_snippet=False, fgd_vis=True)
+
+
     print(f'\nImporting {len(new_fgd)} entiti{"y" if len(new_fgd) == 1 else "ies"}...')
     for new_ent in new_fgd:
-        path = dbase / ent_path(new_ent)
-        path.parent.mkdir(parents=True, exist_ok=True)
 
-        if path.exists():
-            old_fgd = FGD()
-            fsys = RawFileSystem(str(path.parent))
-            old_fgd.parse_file(fsys, fsys[path.name], eval_bases=False)
-            try:
-                ent = old_fgd[new_ent.classname]
-            except KeyError:
-                raise ValueError(f'Classname not present in FGD: "{new_ent.classname}"!') from None
-            # Now merge the two.
+        print('')
+        print('========================')
+        print(new_ent.classname)
+        print('========================')
+        
+        has_changes = False
+        is_new = False
+        ent = None
+        try:
+            ent = old_fgd[new_ent.classname]
+        except KeyError:
+            print(f'Classname not present in original FGD: "{new_ent.classname}"!')
 
+        # Now merge the two.
+        if ent != None:
             if new_ent.desc not in ent.desc:
                 # Temporary, append it.
                 ent.desc += '|||' + new_ent.desc
+                has_changes = True
+
+            # Merge bases. We just combine overall...
+            for new_base in new_ent.bases:
+                # HACK: Certain refactors to base classes in the HA FGD cause common base classes in non-HA derived FGDs to produce lots of nonsense diffs
+                #       We'll reroute this to their new merged up names
+                if new_base in ["Targetname", "Parentname"]:
+                    new_base = "BaseEntityPoint"
+                if new_base in ["RenderFxChoices"]:
+                    new_base = "RenderFields"
+                if new_base in ["Shadow", "Studiomodel"]:
+                    new_base = "BaseEntityAnimating" # Could alternatively map up to BaseEntityPhysics in some cases!
+                if new_base in ["Breakable"]:
+                    new_base = "_Breakable"
+                # With the fixup, sometimes we can set a base that is the same as our own name, causing recursion. Make sure we don't add it!
+                if new_base == ent.classname:
+                    continue
+
+                # HACK: Effectively merged into BaseEntityPoint, but still exists
+                if new_base in ["Angles"] and action_import_check_for_base(old_fgd, ent, "BaseEntityPoint"):
+                    continue
+
+                # Check if the new base is present in anywhere in the inheritance tree
+                if not action_import_check_for_base(old_fgd, ent, new_base):
+                    ent.bases.append(new_base)
+                    has_changes = True
 
             # Merge helpers. We just combine overall...
-            for new_base in new_ent.bases:
-                if new_base not in ent.bases:
-                    ent.bases.append(new_base)
-
             for helper in new_ent.helpers:
                 # Sorta ew, quadratic search. But helper sizes shouldn't
                 # get too big.
                 if helper not in ent.helpers:
                     ent.helpers.append(helper)
+                    has_changes = True
+                        
 
+            # Scan over all fields in the FGD entry
             for cat in ('keyvalues', 'inputs', 'outputs'):
                 cur_map: dict[str, dict[frozenset[str], EntityDef]] = getattr(ent, cat)
                 new_map = getattr(new_ent, cat)
@@ -925,52 +1021,270 @@ def action_import(
                     try:
                         orig_tag_map = cur_map[name]
                     except KeyError:
-                        # Not present in the old file.
+                        # Not present in the old FGD entry
+                        # Check if it's present in one of the base classes. If it is, we'll just have to skip it
+                        found_valid_base = False
+                        for base in ent.bases:
+                            base_ent = None
+                            try:
+                                base_ent = old_fgd[base]
+                            except KeyError:
+                                print(f'Base {base} not found!')
+                            if base_ent != None:
+                                base_map: dict[str, dict[frozenset[str], EntityDef]] = getattr(base_ent, cat)
+                                for base_name, base_tag_map in base_map.items():
+                                    if base_name.upper() != name.upper():
+                                        continue
+                                    # Find the tag that best matches what we have
+                                    [found_base_tag, found_base_value, applies_to_current, applies_to_engine] = action_import_find_matching_tag(base_tag_map, expanded)
+                                    if applies_to_current:
+                                        found_valid_base = True
+                                        break
+                            if found_valid_base:
+                                break
+
+                        if found_valid_base:
+                            # Skip without changes
+                            # No reasonable way to update the base class from where we are at the moment
+                            print(f"Found base! Skipping: {name}")
+                            continue
+
+                        print(f'[New] {name}')
                         cur_map[name] = {
-                            add_tag(tag, engine_tag): value
+                            add_tag(tag, '+' + engine_tag): value
                             for tag, value in tag_map.items()
                         }
+                        has_changes = True
                         continue
+
                     # Otherwise merge, if unequal add the new ones.
                     # TODO: Handle tags in "new" files.
                     for tag, new_value in tag_map.items():
-                        for old_tag, old_value in orig_tag_map.items():
-                            if old_value == new_value:
-                                if tag:
-                                    # Already present, modify this tag.
-                                    del orig_tag_map[old_tag]
-                                    orig_tag_map[add_tag(old_tag, engine_tag)] = new_value
-                                # else: Blank tag, keep blank.
-                                break
-                        else:
-                            # Otherwise, we need to add this.
-                            orig_tag_map[add_tag(tag, engine_tag)] = new_value
+                        
+                        # Find the tag that best matches what we have
+                        [old_tag, old_value, old_applies_to_current, old_applies_to_engine] = action_import_find_matching_tag(orig_tag_map, expanded)
 
-                # Make sure removed items don't apply to the new tag.
-                for name, tag_map in cur_map.items():
-                    if name not in new_names:
-                        cur_map[name] = {
-                            add_tag(tag, '!' + engine_tag): value
-                            for tag, value in tag_map.items()
-                        }
+                        if old_value == None:
+                            # It's new, just add it in unless it's an engine field
+                            if old_applies_to_engine:
+                                print(f'[Engine] {new_value.name}')
+                            else:
+                                print(f'[New] {new_value.name}')
+                                orig_tag_map[add_tag(tag, '+' + engine_tag)] = new_value
+                                has_changes = True
+                        else:
+                            # Diff check!
+                            
+                            # if the old has a better desc, take it as our own
+                            if len(new_value.desc) == 0 and len(old_value.desc) != 0:
+                                print(f'Taking old desc: "{old_value.desc}" -> "{new_value.desc}"')
+                                new_value.desc = old_value.desc
+                                if cat == 'keyvalues':
+                                    print(f'Taking old disp_name: "{old_value.disp_name}" -> "{new_value.disp_name}"')
+                                    new_value.disp_name = old_value.disp_name
+
+                            if old_value.name != new_value.name:
+                                print(f'Name fixup! "{old_value.name}" -> "{new_value.name}"')
+                            new_value.name = old_value.name
+
+                            # Same value?
+                            if old_value == new_value:
+                                print(f'[Same] {old_value.name}')
+                                continue
+                            
+                            # Don't whack booleans with choices!
+                            if old_value.type == ValueTypes.BOOL and (new_value.type == ValueTypes.CHOICES and len(new_value.val_list) <= 2):
+                                print(f'[Note] {new_value.name} : Ignore downgrade {old_value.type} -> {new_value.type}')
+                                continue
+
+                            # Ignore downgrades to int from choices
+                            if old_value.type == ValueTypes.CHOICES and new_value.type == ValueTypes.INT:
+                                print(f'[Note] {new_value.name} : Ignore downgrade {old_value.type} -> {new_value.type}')
+                                continue
+                            
+                            # Ignore downgrades to strings
+                            if old_value.type != ValueTypes.STRING and new_value.type == ValueTypes.STRING:
+                                print(f'[Note] {new_value.name} : Ignore downgrade {old_value.type} -> {new_value.type}')
+                                continue
+                                
+                            # Ignore downgrade from filter to generic
+                            if old_value.type == ValueTypes.TARG_FILTER_NAME and new_value.type == ValueTypes.TARG_DEST:
+                                print(f'[Note] {new_value.name} : Ignore downgrade {old_value.type} -> {new_value.type}')
+                                continue
+
+                            # Ignore downgrades to generic targetname 
+                            if new_value.type == ValueTypes.TARG_DEST:
+                                a = [ValueTypes.TARG_DEST_CLASS, ValueTypes.TARG_SOURCE, ValueTypes.TARG_NPC_CLASS, ValueTypes.TARG_POINT_CLASS, ValueTypes.TARG_FILTER_NAME, ValueTypes.TARG_NODE_DEST, ValueTypes.TARG_NODE_SOURCE]
+                                if old_value.type in a:
+                                    print(f'[Note] {new_value.name} : Ignore downgrade {old_value.type} -> {new_value.type}')
+                                    continue
+                            
+                            # Check if type, description, name, default, etc. is any different
+                            has_some_diff = False
+                            dont_replace = False
+                            if old_value.type != new_value.type or old_value.desc != new_value.desc:
+                                has_some_diff = True
+                            elif cat == 'keyvalues':
+                                if old_value.disp_name != new_value.disp_name or old_value.readonly != new_value.readonly or old_value.reportable != new_value.reportable:
+                                    has_some_diff = True
+
+                                # Check for if the default value is the same
+                                od = old_value.default
+                                nd = new_value.default
+                                if old_value.type == ValueTypes.INT or new_value.type == ValueTypes.INT or old_value.type == ValueTypes.FLOAT or new_value.type == ValueTypes.FLOAT:
+                                    # Strip leading or trailing 0's and trailing .'s
+                                    od = od.strip('0').rstrip('.')
+                                    nd = nd.strip('0').rstrip('.')
+                                if od == "":
+                                    od = None
+                                if nd == "":
+                                    nd = None
+                                if od != nd:
+                                    has_some_diff = True
+                                    dont_replace = True # For different default values, tack them on as a separate field with a requirement tag
+
+                            # WIP: Value List diff check
+                            if not has_some_diff and cat == 'keyvalues' and (old_value.val_list != None and new_value.val_list != None) and (len(old_value.val_list) > 0 or len(new_value.val_list) > 0):
+                                # Need to check the value lists and see if they're any different
+                                for new_tupple in new_value.val_list:
+                                    new_val = new_tupple[0]
+                                    new_name = new_tupple[1]
+                                    new_val_tags = new_tupple[-1]
+                                    for old_tupple in old_value.val_list:
+                                        old_val = old_tupple[0]
+                                        old_name = old_tupple[1]
+                                        old_val_tags = old_tupple[-1]
+                                        if new_val == old_val:
+                                            if old_val_tags < new_val_tags:
+                                                #print(f'DIFFERENT tags! "{old_val_tags}" -> "{new_val_tags}"')
+                                                has_some_diff = True
+                                            elif len(new_tupple) == 4 and len(old_tupple) == 4:
+                                                new_default = new_tupple[2]
+                                                old_default = old_tupple[2]
+                                                if new_default != old_default:
+                                                    print(f'DIFFERENT default! "{old_default}" -> "{new_default}"')
+                                                    has_some_diff = True
+                                            break
+                                    else:
+                                        print(f'not found? {new_name}')
+                                        has_some_diff = True
+                                        
+                            
+                            if not has_some_diff:
+                                # Despite initially thinking we had a difference here, the end result is close enough to be considered the same
+                                print(f'[CloseEnough] {old_value.name}')
+                                continue
+                            
+                            print('Difference:')
+                            print('\t', old_value)
+                            print('\t', new_value)
+                            
+                            if dont_replace:
+                                # We'll want to disable the original field for our entry and add a new separate field for it
+                                del orig_tag_map[old_tag]
+                                orig_tag_map[add_tag(old_tag, '!' + engine_tag)] = old_value
+                                orig_tag_map[add_tag(tag, '+' + engine_tag)] = new_value
+
+                            else:
+                                # Already present, modify this tag.
+                                del orig_tag_map[old_tag]
+                                if old_applies_to_current:
+                                    orig_tag_map[old_tag] = new_value
+                                else:
+                                    orig_tag_map[add_tag(old_tag, engine_tag)] = new_value
+                            has_changes = True
+
+
+                ## Make sure removed items don't apply to the new tag.
+                #for name, tag_map in cur_map.items():
+                #    if name not in new_names:
+                #        cur_map[name] = {
+                #            add_tag(tag, '!' + engine_tag): value
+                #            for tag, value in tag_map.items()
+                #        }
 
         else:
             # No existing one, just set appliesto.
             ent = new_ent
+            has_changes = True
+            is_new = True
+
 
         applies_to = get_appliesto(ent)
         if not match_tags(expanded, applies_to):
             applies_to.append(engine_tag)
+            has_changes = True
         ent.helpers[:] = [
             helper for helper in ent.helpers
             if not isinstance(helper, HelperExtAppliesTo)
         ]
 
+        # Print status and skip unchanged entries
+        if not has_changes:
+            print('Result: Unchanged')
+            continue
+        if is_new:
+            print('Result: New Entry')
+        else:
+            print('Result: Modified Entry')
+
+        # Write changes to disk
+        # Use the original path for existing entities or a new path for new entities
+        path = ""
+        if is_new:
+            path = dbase / ent_path(new_ent)
+        else:
+            path = dbase / old_ent_source[ent.classname.upper()]
+        path.parent.mkdir(parents=True, exist_ok=True)
         with open(path, 'w', encoding='utf8') as f:
             ent.export(f)
 
-        print('.', end='', flush=True)
     print()
+
+
+def cull_unused_bases(fgd: FGD):
+    """Removes all unused base classes from an FGD."""
+
+    print('Culling unused bases...')
+    used_bases: set[EntityDef] = set()
+    # We only want to keep bases that provide keyvalues. We've merged the
+    # helpers in.
+    for ent in fgd.entities.values():
+        if ent.type is not EntityTypes.BASE:
+            for base in ent.iter_bases():
+                if base.type is EntityTypes.BASE and (
+                    base.keyvalues or base.inputs or base.outputs
+                ):
+                    used_bases.add(base)
+
+    for classname, ent in list(fgd.entities.items()):
+        if ent.type is EntityTypes.BASE:
+            if ent not in used_bases and ent is not base_entity_def:
+                del fgd.entities[classname]
+                continue
+            else:
+                # Helpers aren't inherited, so this isn't useful any more.
+                ent.helpers.clear()
+        # Cull all base classes we don't use.
+        # Ents that inherit from each other always need to exist.
+        # We also need to replace bases with their parent, if culled.
+
+        # Reverse so we pop back into order.
+        todo = ent.bases[::-1]
+        done = set()  # Only add a base once.
+        ent.bases.clear()
+        while todo:
+            base = todo.pop()
+            done.add(base)
+            assert isinstance(base, EntityDef), base
+            if base.type is not EntityTypes.BASE or base in used_bases:
+                ent.bases.append(base)
+            else:
+                # This base is not used, collapse it. Do in reverse, so
+                # they appear in the correct order.
+                for subbase in base.bases[::-1]:
+                    if subbase not in done:
+                        todo.append(subbase)
 
 
 def action_export(
@@ -1226,46 +1540,7 @@ def action_export(
             rev_helpers.append(helper)
         ent.helpers = rev_helpers[::-1]
 
-    print('Culling unused bases...')
-    used_bases: set[EntityDef] = set()
-    # We only want to keep bases that provide keyvalues. We've merged the
-    # helpers in.
-    for ent in fgd.entities.values():
-        if ent.type is not EntityTypes.BASE:
-            for base in ent.iter_bases():
-                if base.type is EntityTypes.BASE and (
-                    base.keyvalues or base.inputs or base.outputs
-                ):
-                    used_bases.add(base)
-
-    for classname, ent in list(fgd.entities.items()):
-        if ent.type is EntityTypes.BASE:
-            if ent not in used_bases and ent is not base_entity_def:
-                del fgd.entities[classname]
-                continue
-            else:
-                # Helpers aren't inherited, so this isn't useful any more.
-                ent.helpers.clear()
-        # Cull all base classes we don't use.
-        # Ents that inherit from each other always need to exist.
-        # We also need to replace bases with their parent, if culled.
-
-        # Reverse so we pop back into order.
-        todo = ent.bases[::-1]
-        done = set()  # Only add a base once.
-        ent.bases.clear()
-        while todo:
-            base = todo.pop()
-            done.add(base)
-            assert isinstance(base, EntityDef), base
-            if base.type is not EntityTypes.BASE or base in used_bases:
-                ent.bases.append(base)
-            else:
-                # This base is not used, collapse it. Do in reverse, so
-                # they appear in the correct order.
-                for subbase in base.bases[::-1]:
-                    if subbase not in done:
-                        todo.append(subbase)
+    cull_unused_bases(fgd)
 
     print('Merging in material exclusions...')
     for mat_tags, materials in fgd.tagged_mat_exclusions.items():
@@ -1308,6 +1583,178 @@ def action_export(
             # BEE2 compatibility, don't make it run.
             if 'P2' in tags:
                 txt_f.write('\n// BEE 2 EDIT FLAG = 0 \n')
+
+
+
+def action_export_postcompiler_patch(
+    dbase: Path,
+    extra_db: Path | None,
+    tags: frozenset[str],
+    output_path: Path,
+) -> None:
+    """Create an FGD file using the given tags."""
+
+    tags = expand_tags(tags)
+    tags |= {'SRCTOOLS'}
+    srctools_tags = tags - {'SRCTOOLS'}
+
+    print('Tags expanded to: {}'.format(', '.join(tags)))
+
+    fgd, base_entity_def = load_database(dbase, extra_loc=extra_db)
+
+    aliases: dict[EntityDef, str | EntityDef] = {}
+
+    print('Culling incompatible entities...')
+    ents = list(fgd.entities.values())
+    fgd.entities.clear()
+
+    for ent in ents:
+        applies_to = get_appliesto(ent)
+        if match_tags(tags, applies_to):
+            # For the srctools_only flag, only allow ents which match the regular
+            # tags, but do not match those minus srctools.
+            should_include = False
+            if not match_tags(srctools_tags, applies_to):
+                should_include = True
+            else:
+                for attr_name in ('keyvalues', 'inputs', 'outputs'):
+                    old_cat = getattr(ent, attr_name)
+                    for key, tag_map in old_cat.items():
+                        for tag, value in tag_map.items():
+                            if 'SRCTOOLS' not in tag and '+SRCTOOLS' not in tag:
+                                # Ignoring all non-SRCTOOLS tags!
+                                continue
+                            should_include = True
+                            break
+                        if should_include:
+                            break
+                    if should_include:
+                        break
+                
+                # Check for any bases that are exclusive to SRCTOOLS
+                if not should_include:
+                    for base in ent.bases:
+                        base_applies_to = get_appliesto(base)
+                        for tag in base_applies_to:
+                            if "SRCTOOLS" in tag.upper():
+                                should_include = True
+                                break
+                        if should_include:
+                            break
+            if not should_include:
+                continue
+
+            fgd.entities[ent.classname] = ent
+            
+        # Remove bases that don't apply.
+        for base in ent.bases[:]:
+            assert isinstance(base, EntityDef)
+            if not match_tags(tags, get_appliesto(base)):
+                ent.bases.remove(base)
+
+    print('Converting entities into extensions...')
+    for classname, ent in list(fgd.entities.items()):
+        # We want to tweak the entity, making a new copy that only contains SRCTOOLS tagged entries
+        extend_any = False
+        applies_to = get_appliesto(ent)
+        from_srctools = False
+        for tag in applies_to:
+            if "SRCTOOLS" in tag.upper():
+                from_srctools = True
+                break
+        if not from_srctools:
+            extend_ent = EntityDef(type=EntityTypes.EXTEND, classname=ent.classname)
+            extend_ent.helpers.insert(0, HelperExtAppliesTo(['SRCTOOLS']))
+            for attr_name in ('keyvalues', 'inputs', 'outputs'):
+                old_cat = getattr(ent, attr_name)
+                new_cat = getattr(extend_ent, attr_name)
+                for key, tag_map in old_cat.items():
+                    for tag, value in tag_map.items():
+                        if "ENGINE" in tags:
+                            continue
+                        if "!SRCTOOLS" in tags or "!srctools" in tags:
+                            continue
+                        if 'SRCTOOLS' not in tag and '+SRCTOOLS' not in tag:
+                            # Ignoring all non-SRCTOOLS tags!
+                            continue
+                        # Track it!
+                        if key not in new_cat.keys():
+                            new_cat[key] = {}
+                        new_cat[key][add_tag(tag, '+SRCTOOLS')] = value
+                        extend_any = True
+            
+            # Check for any bases that are exclusive to SRCTOOLS
+            for base in ent.bases:
+                base_applies_to = get_appliesto(base)
+                base_from_srctools = False
+                for tag in base_applies_to:
+                    if "SRCTOOLS" in tag.upper():
+                        base_from_srctools = True
+                        break
+                if base_from_srctools:
+                    extend_ent.bases.append(base)
+                    extend_any = True
+
+            # Replace it with our new one in the final output
+            if extend_any:
+                ent = extend_ent
+
+        print("\t", "E" if extend_any else ".", "\t", classname)
+
+        fgd.entities[classname] = ent
+
+
+    # Cull any bases we don't use
+    cull_unused_bases(fgd)
+
+
+    print('Merging in material exclusions...')
+    for mat_tags, materials in fgd.tagged_mat_exclusions.items():
+        if match_tags(tags, mat_tags):
+            fgd.mat_exclusions |= materials
+    fgd.tagged_mat_exclusions.clear()
+
+    print('Culling visgroups...')
+    # Cull visgroups that no longer exist for us.
+    valid_ents = {
+        ent.classname.casefold()
+        for ent in fgd.entities.values()
+        if ent.type is not EntityTypes.BASE
+    }
+    for key, visgroup in list(fgd.auto_visgroups.items()):
+        visgroup.ents.intersection_update(valid_ents)
+        if not visgroup.ents:
+            del fgd.auto_visgroups[key]
+
+    # Don't export the mapsize
+    fgd.map_size_max = 0
+    fgd.map_size_min = 0
+
+    # Clear out the autovisgroups for now?
+    # Not even sure what's populating these atm
+    fgd.auto_visgroups.clear()
+
+    # Strata HACK: Strip any bases we want to omit
+    for classname in fgd.entities:
+        ent = fgd.entities[classname]
+        todo = ent.bases.copy()
+        ent.bases.clear()
+        for base in todo:
+            applies_to = get_appliesto(base)
+            if '-STRATA' not in applies_to:
+                ent.bases.append(base)
+
+    # Final step, convert all our bases into strings, so that they don't sneak into the export
+    for classname in fgd.entities:
+        ent = fgd.entities[classname]
+        todo = ent.bases.copy()
+        ent.bases.clear()
+        for base in todo:
+            ent.bases.append(base.classname)
+
+    print(f'Exporting {output_path}...')
+    with open(output_path, 'w', encoding='iso-8859-1') as txt_f:
+        fgd.export(txt_f, label_spawnflags = False)
 
 
 def action_visgroup(dbase: Path, extra_loc: Path | None, dest: Path) -> None:
@@ -1435,6 +1882,24 @@ def main(args: list[str] | None = None) -> None:
         help='Export "comp" entities.',
     )
 
+
+    parser_exp_pcp = subparsers.add_parser(
+        "export_pcp",
+        help=action_export_postcompiler_patch.__doc__,
+        aliases=[],
+    )
+    parser_exp_pcp.add_argument(
+        "-o", "--output",
+        default="output.fgd",
+        help="Destination FGD filename.",
+    )
+    parser_exp_pcp.add_argument(
+        "tags",
+        nargs="*",
+        help="Tags to include in the output.",
+        default=None,
+    )
+
     parser_imp = subparsers.add_parser(
         "import",
         help=action_import.__doc__,
@@ -1443,7 +1908,7 @@ def main(args: list[str] | None = None) -> None:
     parser_imp.add_argument(
         "engine",
         type=lambda s: s.upper(),
-        choices=GAME_ORDER,
+        choices=GAME_ORDER + list(ALL_MODS),
         help="Engine to mark this FGD set as supported by.",
     )
     parser_imp.add_argument(
@@ -1512,6 +1977,21 @@ def main(args: list[str] | None = None) -> None:
             result.map_size,
             result.srctools_only,
             result.collapse_bases,
+        )
+    elif result.mode in ("export_pcp"):
+        # Tags must be specified!
+        if not result.tags:
+            parser.error("At least one tag must be specified!")
+        tags = validate_tags(result.tags)
+        for tag in tags:
+            if tag not in ALL_TAGS:
+                parser.error(f'Invalid tag "{tag}"! Allowed tags: \n{format_all_tags()}')
+
+        action_export_postcompiler_patch(
+            dbase,
+            extra_db,
+            tags,
+            Path(result.output).resolve(),
         )
     elif result.mode in ("c", "count"):
         action_count(dbase, extra_db, factories_folder=Path(repo_dir, 'db', 'factories'))

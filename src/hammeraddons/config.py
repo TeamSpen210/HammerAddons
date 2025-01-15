@@ -316,7 +316,9 @@ PACK_STRIP_CUBEMAPS = Opt.boolean(
 )
 
 PACK_TAGS = Opt.block(
-    'pack_tags', Keyvalues('', [Keyvalues(tag, '0') for tag in sorted(USED_PACK_TAGS)]),
+    # STRATA HACK
+    #'pack_tags', Keyvalues('', [Keyvalues(tag, '0') for tag in sorted(USED_PACK_TAGS)]),
+    'pack_tags', Keyvalues('', [Keyvalues(tag, '1') for tag in sorted(['STRATA', 'P2', 'P2CE'])]),
     """\
     Specify various tags to indicate what features this game branch includes. This is used
     to accurately include resources for entities that have changed over time.
@@ -348,7 +350,7 @@ PACK_BLOCKLIST = Opt.block(
 )
 
 SEARCHPATHS = Opt.block(
-    'searchpaths', Keyvalues('', []),
+    'searchpaths', Keyvalues('', [Keyvalues('nopack', '<620>/portal2'), Keyvalues('nopack', '<620>/portal2_dlc1'), Keyvalues('nopack', '<620>/portal2_dlc2'), Keyvalues('nopack', '<620>/update')]),
     """\
     Specify additional locations to search for files, or configure whether existing locations pack
     or not. Each key-value pair defines a path, with the value either a folder path or a VPK 
@@ -380,7 +382,7 @@ PARTICLES_MANIFEST = Opt.string(
 )
 
 STUDIOMDL = Opt.string(
-    'studiomdl', 'bin/studiomdl.exe',
+    'studiomdl', 'bin/win64/studiomdl.exe',
     """Set the path to StudioMDL so the compiler can generate props.
     If blank these features are disabled.
     This is relative to the game root.
@@ -488,6 +490,6 @@ TRANSFORM_OPTS = Opt.block(
 )
 
 DISABLED_TRANSFORMS = Opt.string(
-    'transform_disable', '',
+    'transform_disable', 'TF2 Control Point Props,Portal 2 Custom Models,Fix Laser Catcher Skins,Precache P2 Light Bridge,FGD - Fix key casing',
     """Specify transforms to disable as a comma-separated string."""
 )

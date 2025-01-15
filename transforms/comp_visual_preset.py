@@ -5,6 +5,7 @@ from hammeraddons.bsp_transform import trans, Context
 from srctools.logger import get_logger
 from srctools import Entity, VMF, Output, conv_bool
 
+
 LOGGER = get_logger(__name__)
 
 
@@ -21,6 +22,7 @@ def visual_preset(ctx: Context) -> None:
 
         relay_ent = vmf.create_ent("logic_relay", 
                        targetname = vpreset["targetname"],
+
                        angles = "0 0 0",
                        spawnflags = 0,
                        startdisabled = 0,
@@ -35,6 +37,7 @@ def visual_preset(ctx: Context) -> None:
             )
 
         # Tonemapping
+
         if tm_name := vpreset["tonemapper", None]: # Check if we have set the tonemapper, it doesn't matter if exists in the map, the IO then will have no receiver
             for _ in vmf.search(tm_name):
                 relay_ent.add_out(
@@ -65,6 +68,7 @@ def visual_preset(ctx: Context) -> None:
 
 
 
+
         # Colorcorrection
 
         if (filename := vpreset["cc_filename", ""]): # We may not want to use CC
@@ -92,10 +96,12 @@ def visual_preset(ctx: Context) -> None:
 
     # End loop
 
+
     for vpreset_relay in vpreset_list:
         us = vpreset_relay
 
         for other in vpreset_list:
+
             if us == other: # Ignore us
                 continue
 

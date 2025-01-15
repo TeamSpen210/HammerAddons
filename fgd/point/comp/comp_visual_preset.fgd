@@ -31,7 +31,7 @@
 	linedivider_fg[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 
-	cc_filename(string) : "CC Filename" : : "The filename used by color correction for this preset (if set). Evaluates to materials/correction/<this_kv>.raw"
+	cc_filename(string) : "CC Filename" : : "The filename used by color correction for this preset (if set), e.g. 'cc_RECYCLED_TEST'."
 	cc_fadein(float) : "CC FadeIn Time" : 1.0
 	cc_fadeout(float) : "CC FadeOut Time" : 1.0
 
