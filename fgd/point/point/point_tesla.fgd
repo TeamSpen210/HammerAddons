@@ -29,5 +29,6 @@
 	@resources
 		[
 		material "materials/sprites/physbeam.vmt"  // Default material.
+		material "materials/effects/tesla_glow_noz.vmt" // Glow at the end.
 		]
 	]

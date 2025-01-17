@@ -26,4 +26,20 @@
 	// Outputs
 	output OnFizzled(void) : "Fired when a paint bomb is fizzled (by trigger_paint_cleanser?)."
 	output OnExploded(void) : "Fired when a paint bomb explodes."
+
+	@resources [
+		model "models/props/futbol.mdl" 
+		model "models/props/futbol_gib01.mdl"
+		model "models/props/futbol_gib02.mdl"
+		model "models/props/futbol_gib03.mdl"
+		model "models/props/futbol_gib04.mdl"
+        sound "Paintblob.Inception"
+        sound "Paintblob.Impact"
+
+        material "paintblobs/blob_surface_bounce"
+        material "paintblobs/blob_surface_stick" [P2CE, P2DES]
+        material "paintblobs/blob_surface_speed"
+        material "paintblobs/blob_surface_portal"
+        material "paintblobs/blob_surface_erase"
+		]
 	]

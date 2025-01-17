@@ -49,4 +49,18 @@
 	input Start(void) : "Start shooting Gel."
 	input Stop(void) : "Stop shooting Gel."
 	input ChangePaintType(integer) : "Change the type of Gel being sprayed. Values between 0-4, higher values are unstable."
+
+	@resources [
+		particle "paint_splat_bounce_01"
+		particle "paint_splat_stick_01"
+		particle "paint_splat_speed_01"
+		particle "paint_splat_portal_01"
+		particle "paint_splat_erase_01"
+		sound "Paintblob.Inception"
+		sound "Paintblob.Impact"
+		sound "Paintblob.ImpactDrip"
+		sound "Paint.Drip"
+		sound "Paint.MediumFlow"
+		sound "Paint.HeavyFlow"
+		]
 	]
