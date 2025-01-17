@@ -8,7 +8,7 @@
 	noise2(sound) : "Stop Sound" : : "Sound to play when the door stops moving."
 	startclosesound(sound) : "Start Close Sound" : : "(Optional) Sound to play when the door starts closing. If not set, the Start Sound will be used instead."
 	closesound(sound) : "Stop Close Sound" : : "(Optional) Sound to play when the door stops closing. If not set, the Stop Sound will be used instead."
-	loopmovesound(boolean) : "Loop Moving Sound?" : 0 : "If set to true, the door's 'Start Sound' will be continually looped until the door finishes moving."
+	loopmovesound(boolean) : "Replay Moving Sound?" : 0 : "If set to true, the door's 'Start Sound' will be re-triggered whenever finished until the door finishes moving. Not necessary if the sound loops normally."
 
 	wait(integer) : "Delay Before Reset (-1 stay)" : -1 : "Amount of time, in seconds, after the door has opened before it closes. " +
 		"Once it has closed, it can be used again. If the value is set to -1, the door never closes itself."
