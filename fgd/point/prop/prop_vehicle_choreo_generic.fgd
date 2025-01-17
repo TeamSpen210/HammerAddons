@@ -17,6 +17,9 @@
 	// Inputs
 	input Open(void) : "Plays the vehicle's open animation and unlocks the vehicle for entry or exit."
 	input Close(void) : "Plays the vehicle's close animation and locks the vehicle for entry or exit."
+	input Lock(void) : "Prevent the player from being able to enter/exit the vehicle themselves."
+	input Unlock(void) : "Allow the player to enter/exit the vehicle."
+	input Close(void) : "Plays the vehicle's close animation and locks the vehicle for entry or exit."
 	input EnterVehicle(void) : "Forces the activator (or player) into the vehicle."
 	input EnterVehicleImmediate(void) : "Forces the activator (or player) into the vehicle without enter/exit animations."
 	input ExitVehicle(void) : "Boots the player out of the vehicle."
