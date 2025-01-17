@@ -19,7 +19,7 @@
 		2 : "Captive (locked in physgun)"
 		3 : "Planted"
 		4 : "Triggered (bounce, explode on touch)"
-		5 : "Physgun Launch (no bounce, explode on touch)"
+		5 : "Gravity Gun Launch (no bounce, explode on touch)"
 		]
 
 	CheapWarnSound[MBase](boolean) : "Cheap Warn Sound" : 0 : "Makes the mine's warn sound use generic sound methods instead of a sound patch, " +
@@ -65,7 +65,7 @@
 	input SetPlantOrientationRaw[MBase](vector) : "Sets the mine's plant orientation as a direction vector."
 
 	// Outputs
-	output OnPulledUp(void) : "Fires when this mine is uprooted with physgun."
+	output OnPulledUp(void) : "Fires when this mine is uprooted with the Gravity Gun."
 	output OnTriggered[MBase](void) : "Fires when this mine is triggered by an enemy."
 	output OnExplode[MBase](void) : "Fires when this mine actually explodes."
 

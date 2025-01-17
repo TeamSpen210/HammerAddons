@@ -26,8 +26,8 @@
 	input FinishRemoveTauCannon(void) : "Finish the tau removal sequence."
 
 	// Mapbase re-adds these for the episodic jeep, so if any it's present.
-	input DisablePhysGun[MBase, EP1, EP2, P1](void) : "Disable physgun interactions with the jeep."
-	input EnablePhysGun[MBase, EP1, EP2, P1](void) : "Enable physgun interactions with the jeep (default)."
+	input DisablePhysGun[MBase, EP1, EP2, P1](void) : "Disable Gravity Gun interactions with the jeep."
+	input EnablePhysGun[MBase, EP1, EP2, P1](void) : "Enable Gravity Gun interactions with the jeep (default)."
 
 	// Episodic Jeep Inputs
 	input LockEntrance[EP1, EP2, P1](void) : "Stops NPC's from entering the vehicle until unlocked."
@@ -94,8 +94,8 @@
 	// HL2 Jeep inputs
 	input StartRemoveTauCannon(void) : "Start the tau removal sequence."
 	input FinishRemoveTauCannon(void) : "Finish the tau removal sequence."
-	input DisablePhysGun(void) : "Disable physgun interactions with the jeep."
-	input EnablePhysGun(void) : "Enable physgun interactions with the jeep (default)."
+	input DisablePhysGun(void) : "Disable Gravity Gun interactions with the jeep."
+	input EnablePhysGun(void) : "Enable Gravity Gun interactions with the jeep (default)."
 
 	@resources
 		[

@@ -29,7 +29,7 @@
 	]
 
 	preferredcarryangles[MBase](angle) : "Preferred Player-carry Angles" : "0" : "The angle which the object should orient to when the player picks it up " +
-		"with the physgun or +USE. Overrides the prop's own QC carry angles if it has any. " +
+		"with the Gravity Gun or +USE. Overrides the prop's own QC carry angles if it has any. " +
 		"'0' doesn't override the carry angles."
 
 	// Inputs

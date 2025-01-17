@@ -44,8 +44,8 @@
 	// Outputs
 	output OnTipped(void) : "Wilson has been tipped over and is hurt."
 	output OnPlayerUse(void) : "Fires when a player +USEs Wilson."
-	output OnPhysGunPickup(void) : "Picked up with physgun."
-	output OnPhysGunDrop(void) : "Released by physgun."
+	output OnPhysGunPickup(void) : "Picked up with Gravity Gun."
+	output OnPhysGunDrop(void) : "Released by Gravity Gun."
 	output OnDestroyed(void) : "Fires when Wilson has been destroyed. WILSOOOOON!!!"
 
 	@resources

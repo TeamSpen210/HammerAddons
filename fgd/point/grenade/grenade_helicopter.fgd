@@ -12,7 +12,7 @@
 	input ExplodeIn(float) : "Tells the bomb to explode in X seconds."
 
 	// Outputs
-	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up WITH THE PHYSGUN. +USE pickups do not fire this output."
+	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up WITH THE GRAVITY GUN. +USE pickups do not fire this output."
 
 	@resources
 		[

@@ -40,8 +40,8 @@
 	output OnDeploy(void) : "Turret is becoming active and dangerous."
 	output OnRetire(void) : "Turret is becoming inactive and harmless."
 	output OnTipped(void) : "Turret has been tipped over and is inactive."
-	output OnPhysGunPickup(void) : "Picked up with physgun"
-	output OnPhysGunDrop(void) : "Released by physgun"
+	output OnPhysGunPickup(void) : "Picked up with Gravity Gun."
+	output OnPhysGunDrop(void) : "Released by Gravity Gun."
 
 	@resources
 		[
