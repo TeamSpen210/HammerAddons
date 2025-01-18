@@ -15,6 +15,8 @@
 		32768: "Allow stretch" : 0
 		65536: "Start asleep" : 0
 		131072 : "Fixed constraints (make statue)" : 0 [MBase]
+		262144 : "Allow +USE" : 0 [MBase]
+		524288 : "Prevent pickup (if +USE is enabled)" : 0 [MBase]
 		]
 	MimicName[MESA](string) : "Character Manifest Mimic Name" : "" : "Choose a name or a classname from the character manifest to dress the ragdoll."
 	health[MESA, MBase](integer) : "Health" : 100 : "The amount of damage the ragdoll takes before gibbing."
@@ -33,6 +35,10 @@
 	input EnableScent[EZ2](void) : "Start emitting scents that will attract predators to this ragdoll."
 	input DisableScent[EZ2](void) : "Start emitting scents that will attract predators to this ragdoll."
 	input Gib[EZ2](void) : "Apply 1000 damage to instantly gib this ragdoll."
+	input AddToLRU[MBase](void) : "Adds the ragdoll to the cleanup list (ragdoll will fade out when it's the least recently used)"
+	input RemoveFromLRU[MBase](void) : "Removes the ragdoll from the cleanup list, allowing it to exist indefinitely"
+
+	output OnPlayerUse[MBase](void) : "Fires when the ragdoll is used, if +USE is enabled."
 
 	@resources
 		[

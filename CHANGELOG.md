@@ -1,6 +1,7 @@
 # Version Dev
 
 # Enhancements
+* Update to Mapbase 7.3.
 * A new "snippets" system allows FGD files to easily repeat descriptions and other small sections.
 * Add ability to randomise output delay to `comp_relay` and `comp_adv_output`.
 * Added `comp_vactube_sensor`, which allows detecting the presence of vactube objects.

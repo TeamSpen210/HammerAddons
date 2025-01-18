@@ -68,3 +68,5 @@
 	output OnPlayerPickup(void) : "Fired whenever the player picks up this prop (with the Gravity Gun or with +USE)."
 	output OnOutOfWorld(void) : "Fired whenever the prop is out of the allowed world bounds."
 	]
+
+	output OnPhysGunPull[MBase](void) : "Fired when a player pulls this object with the Gravity Gun."

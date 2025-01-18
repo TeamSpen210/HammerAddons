@@ -40,6 +40,7 @@
 	output OnDeploy(void) : "Turret is becoming active and dangerous."
 	output OnRetire(void) : "Turret is becoming inactive and harmless."
 	output OnTipped(void) : "Turret has been tipped over and is inactive."
+	output OnStartTipped[MBase](void) : "Turret has just been tipped over."
 	output OnPhysGunPickup(void) : "Picked up with Gravity Gun."
 	output OnPhysGunDrop(void) : "Released by Gravity Gun."
 
