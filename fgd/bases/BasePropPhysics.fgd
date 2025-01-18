@@ -64,9 +64,9 @@
 	output OnPhysGunPunt(void) : "Fired when a player punts this object with the Gravity Gun."
 	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up WITH THE GRAVITY GUN. +USE pickups do not fire this output."
 	output OnPhysGunDrop(void) : "Fired when the player drops the prop with the Gravity Gun or USE."
+	output OnPhysGunPull[MBase](void) : "Fired when a player pulls this object with the Gravity Gun."
 	output OnPlayerUse(void) : "Fired when the player tries to +USE the prop. This output will fire only if the Generate output on +USE spawnflag is set."
 	output OnPlayerPickup(void) : "Fired whenever the player picks up this prop (with the Gravity Gun or with +USE)."
 	output OnOutOfWorld(void) : "Fired whenever the prop is out of the allowed world bounds."
 	]
 
-	output OnPhysGunPull[MBase](void) : "Fired when a player pulls this object with the Gravity Gun."
