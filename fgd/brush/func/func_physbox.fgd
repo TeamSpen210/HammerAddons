@@ -13,7 +13,7 @@
 		524288: "Generate output on +USE " : 1
 		1048576: "Gravity Gun can ALWAYS pick up. No matter what." : 0 [!L4D2]
 		1048576: "Start Asleep" : 0	[L4D2]
-		2097152: "Player is NOT allowed to pick this up." : 0
+		2097152: "Gravity Gun is NOT allowed to pick this up." : 0
 		4194304: "Gravity Gun is NOT allowed to punt this object." : 0
 		8388608: "Prevent motion enable on player bump" : 0
 		16777216: "Radius pickup (easier to pickup)" : 0 [MBase]
