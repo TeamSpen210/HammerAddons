@@ -43,8 +43,7 @@ def visual_preset(ctx: Context) -> None:
                 relay_ent.add_out(
                     Output("OnTrigger", tm_name, "SetAutoExposureMax",  param=vpreset["tm_autoexposuremax", 2.0]),
                     Output("OnTrigger", tm_name, "SetAutoExposureMin",  param=vpreset["tm_autoexposuremin", 0.5]),
-                    Output("OnTrigger", tm_name, "SetBloomScale",       param=vpreset["tm_bloomscale", 0.2]),
-                    Output("OnTrigger", tm_name, "SetBloomExponent",    param=vpreset["tm_bloomexponent", 2.2]),
+                    Output("OnTrigger", tm_name, "SetBloomScale",       param=vpreset["tm_bloomscale", 1]),
                 )
                 break
 
