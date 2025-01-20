@@ -15,8 +15,7 @@
 
 	tm_autoexposuremax(float) 	: "Auto Exposure Max" 	: 2.0 : "Set the auto exposure maximum."
 	tm_autoexposuremin(float) 	: "Auto Exposure Min" 	: 0.5 : "Set the auto exposure minimum."
-	tm_bloomscale(float)		: "Bloom Scale"			: 0.2 : "Set the bloom scale."
-	tm_bloomexponent(float) 	: "Bloom Exponent"		: 2.2 : "Set the bloom exponent."
+	tm_bloomscale(float)		: "Bloom Scale"			: 1 : "Set the bloom scale."
 
 	linedivider_tm[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
