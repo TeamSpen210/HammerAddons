@@ -103,7 +103,7 @@ def advanced_output(ctx: Context) -> None:
                     # Fall back to letting the game do the search.
                     targets = (target_name, )
                 else:
-                    LOGGER.info(
+                    LOGGER.debug(
                         'Expanding {} -> {} = {}',
                         found_ent['targetname'], target_name,
                         sorted(targets),
