@@ -41,13 +41,13 @@
 		8: "Passable" : 0
 		32: "Toggle" : 0
 		256: "Use Opens" : 0
-		512: "NPCs Can't" : 0
+		512: "NPCs Can't Open" : 0
 		1024: "Touch Opens" : 0
 		2048: "Starts locked" : 0
 		4096: "Door Silent" : 0
 		131072: "Block Infected nav when closed" : 0 [L4D, L4D2]
 		262144: "Block Survivor nav when closed" : 0 [L4D, L4D2]
-		65536: "New +USE rules - Allow +USE only when when the door is closed/closing or is open/opening and can be manually closed" : 0
+		65536: "New +USE rules - Allow +USE only when when the door is closed/closing or is open/opening and can be manually closed" : 1
 		]
 
 	locked_sentence[engine](integer) : "Locked Sentence" : 0
