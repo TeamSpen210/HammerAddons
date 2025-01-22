@@ -2,18 +2,20 @@
 	studioprop()
 	// Can't have this along with no default model.
 	// line(255, 255, 255, targetname, slavename)
-= prop_door_rotating: "An entity used to place a door in the world."
+= prop_door_rotating: "An entity used to place a door in the world. Uses a special $keyvalues block to automatically define sounds and animations."
 	[
 	slavename(target_destination) : "Slave Name" : : "The name of any doors that should be slaved to this door " +
 		"(i.e. should open when this one opens, and close when this one closes)."
 
 	hardware[engine](integer) : "Hardware Type" : 1
-	hardware(choices) : "Hardware Type" : 1 =
+	hardware(choices) : "Hardware Type" : 1 : "Type of lock/handle to use. " +
+		"This just changes the second bodygroup, so any value can be used if the model supports it." =
 		[
 		0: "<None>"
 		1: "Lever"
 		2: "Push bar"
 		3: "Keypad"
+		4: "(Mapbase) Combine Lock" [MBase]
 		]
 
 	ajarangles(angle) : "Ajar Angles (Pitch Yaw Roll)" : "0 0 0" : "If the door 'Spawn Position' is set to Ajar, " +
@@ -71,7 +73,7 @@
 	spawnflags(flags)  =
 		[
 		// 1: "Starts Open" : 0
-		256 : "Start with collision disabled" : 0 []
+		256 : "Start with collision disabled" : 0 [EZ2]
 		512: "NPCs Can't Use" : 0 [MBase]
 		2048: "Starts locked" : 0
 		4096: "Door silent (No sound, and does not alert NPCs)" : 0
