@@ -402,7 +402,8 @@ def load_database(
         load_file(fgd, ent_source, fsys, fsys[str(rel_loc)], is_snippet=True, fgd_vis=fgd_vis)
 
     # Load snippets from extras if available. Not supported for singular files.
-    if extra_fsys is not None and not single_extra:
+    if extra_loc is not None and not single_extra:
+        assert extra_fsys is not None
         print('\n Loading extra snippets:')
         for file in extra_loc.rglob("snippet_*.fgd"):
             fgd.parse_file(
@@ -422,7 +423,8 @@ def load_database(
 
     load_visgroup_conf(fgd, dbase)
 
-    if extra_fsys is not None:
+    if extra_loc is not None:
+        assert extra_fsys is not None
         if single_extra:
             # One file.
             print('\nLoading extra file:')

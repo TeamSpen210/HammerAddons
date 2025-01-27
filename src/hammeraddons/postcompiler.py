@@ -164,7 +164,7 @@ async def main(argv: List[str]) -> None:
     LOGGER.info('Reading BSP...')
     bsp_file = BSP(path)
 
-    orig_lumps = {}
+    orig_lumps: dict[BSP_LUMPS | bytes, bytes] = {}
     debug_lump_folder = path.parent / f'{path.stem}_lumps'
     if DEBUG_LUMPS:
         debug_lump_folder.mkdir(exist_ok=True)

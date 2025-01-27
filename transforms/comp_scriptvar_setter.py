@@ -1,10 +1,9 @@
 """Implements comp_scriptvar_setter."""
 from __future__ import annotations
 import re
+from types import EllipsisType
 from collections import defaultdict
 from typing import Dict, TYPE_CHECKING, Optional, Callable, Union
-
-from typing_extensions import TypeAlias
 
 from srctools.fgd import EntityDef, ValueTypes
 from srctools.logger import get_logger
@@ -16,10 +15,6 @@ from hammeraddons.bsp_transform import trans, Context, check_control_enabled
 
 LOGGER = get_logger(__name__)
 MODES: dict[str, Callable[[Entity, Entity], str]] = {}
-if TYPE_CHECKING:
-    EllipsisType: TypeAlias = ellipsis  # Fake name before 3.10
-else:
-    EllipsisType = type(...)
 
 
 def vs_vec(vec: Vec) -> str:
