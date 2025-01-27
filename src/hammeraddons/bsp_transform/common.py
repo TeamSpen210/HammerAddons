@@ -159,8 +159,8 @@ def strip_cust_keys(ent: Entity) -> None:
             LOGGER.warning('Unknown classname "{}"!', classname)
             names = ()
         else:
-            names = set(ent_def.kv)
+            names = {name.casefold() for name in ent_def.kv}
         kv_name_cache[classname] = names
     for key in list(ent):
-        if key not in names:
+        if key.casefold() not in names:
             del ent[key]
