@@ -280,11 +280,12 @@
 		"ACHIEVEMENT_EVENT_EP2_WEBCACHE_09": "Web Cache: ep2_outland_04 gear cave poison crab wall cache"
 		]
 	
-	achievementevent[P1](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+	achievementevent[P1, !P1XBLA](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
-		"ACHIEVEMENT_EVENT_PORTAL_GET_PORTALGUNS": "Acquire the fully powered Aperture Science Handheld Portal Device."
-		"ACHIEVEMENT_EVENT_PORTAL_ESCAPE_TESTCHAMBERS": "Make the correct party escort submission position decision."
-		"ACHIEVEMENT_EVENT_PORTAL_BEAT_GAME": "Complete Portal."
+		"ACHIEVEMENT_EVENT_PORTAL_GET_PORTALGUNS": "Lab Rat"
+		"ACHIEVEMENT_EVENT_PORTAL_KILL_COMPANIONCUBE": "Fratricide"
+		"ACHIEVEMENT_EVENT_PORTAL_ESCAPE_TESTCHAMBERS": "Partygoer"
+		"ACHIEVEMENT_EVENT_PORTAL_BEAT_GAME": "Heartbreaker"
 		"ACHIEVEMENT_EVENT_PORTAL_INFINITEFALL": "Terminal Velocity"
 		"ACHIEVEMENT_EVENT_PORTALLONGJUMP": "Long Jump"
 		"ACHIEVEMENT_EVENT_PORTAL_BEAT_2ADVANCEDMAPS": "Cupcake"
@@ -293,10 +294,27 @@
 		"ACHIEVEMENT_EVENT_PORTAL_GET_ALLBRONZE": "Basic Science"
 		"ACHIEVEMENT_EVENT_PORTAL_GET_ALLSILVER": "Rocket Science"
 		"ACHIEVEMENT_EVENT_PORTAL_GET_ALLGOLD": "Aperture Science"
-		"ACHIEVEMENT_EVENT_PORTAL_KILL_COMPANIONCUBE": "Fratricide"
 		"ACHIEVEMENT_EVENT_PORTAL_DETACH_ALL_CAMERAS": "Camera Shy"
 		"ACHIEVEMENT_EVENT_PORTAL_HIT_TURRET_WITH_TURRET": "Friendly Fire"
 		"ACHIEVEMENT_EVENT_PORTAL_TRANSMISSION_RECEIVED": 	"Transmission Received"
+		]
+
+	achievementevent[P1XBLA](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+		[
+		"ACHIEVEMENT_EVENT_GO_FOR_THE_GOLD"       : "Go for the Gold"
+		"ACHIEVEMENT_EVENT_OUT_OF_THE_BLUE_START" : "Out of the Blue (Start)"
+		"ACHIEVEMENT_EVENT_OUT_OF_THE_BLUE_END"   : "Out of the Blue (End)"
+		"ACHIEVEMENT_EVENT_RATS_TALE"             : "Rat's Tale"
+		"ACHIEVEMENT_EVENT_IS_ANYONE_THERE_START" : "Is Anyone There? (Start)"
+		"ACHIEVEMENT_EVENT_IS_ANYONE_THERE_END"   : "Is Anyone There? (End)"
+		"ACHIEVEMENT_EVENT_SAW_THAT_ONE_COMING"   : "Saw that one coming"
+		"ACHIEVEMENT_EVENT_CAMERA_ADDS_TEN_LBS"   : "The Camera Adds 10 Pounds"
+		"ACHIEVEMENT_EVENT_LIKE_A_RAT"            : "Like a Rat"
+		"ACHIEVEMENT_EVENT_FEELING_LIKE_FLOATING" : "Feeling like Floating"
+		"ACHIEVEMENT_EVENT_TESTS_LIKE_CHICKEN"    : "Tests Like Chicken"
+		"ACHIEVEMENT_EVENT_CUPCAKE"               : "Cupcake"
+		"ACHIEVEMENT_EVENT_FRUITCAKE"             : "Fruitcake"
+		"ACHIEVEMENT_EVENT_VANILLA_CRAZY_CAKE"    : "Vanilla Crazy Cake"
 		]
 
 	achievementevent[EZ2](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =

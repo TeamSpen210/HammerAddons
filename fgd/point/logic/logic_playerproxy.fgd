@@ -63,6 +63,10 @@
 	input SetMotionBlurAmount[P2](float) : "Forces the motion blur effect on the player. Set to < 0 to disable this override."
 	input PaintPlayerWithPortalPaint[P2](void) : "Displays a Conversion Gel splashing effect on the player's screen."
 
+	// Still Alive leaderboard inputs
+	input OnPlayerStartedGame[P1XBLA](void) : "Indicates that the player started the game from the beginning and leaderboard stats should be tracked."
+	input OnPlayerBeatGame[P1XBLA](void) : "Saves the current time, portal, and step scores to the leaderboard if OnPlayerStartedGame was fired previously."
+
 	// Outputs
 	output OnFlashlightOn[HL2, P1](float) : "Fired when the player turns on their flashlight. This output has the value of how much energy the player had when this happened [0..1]."
 	output OnFlashlightOff[HL2, P1](float) : "Fired when the player turns off their flashlight. This output has the value of how much energy the player had when this happened [0..1]."

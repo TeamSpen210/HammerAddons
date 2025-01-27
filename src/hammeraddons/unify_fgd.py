@@ -54,6 +54,7 @@ MODS_BRANCHED: dict[str, list[tuple[str, str]]] = {
         ('KZ', 'Kreedz Climbing'),
     ],
     'P1': [
+        ('P1XBLA', 'Portal: Still Alive'),
         ('PEE15', 'Portal Epic Edition 1.5'),
     ],
     'ASW': [
@@ -102,6 +103,7 @@ FEATURES: dict[str, set[str]] = {
     'CSGO': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
     'P2DES': {'P2', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 
+    'P1XBLA': {'P1'},
     'PEE15': {'P1', 'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
     'PEE2': {'P2', 'HL2', 'EP1', 'EP2', 'INST_IO', 'VSCRIPT'},
 }

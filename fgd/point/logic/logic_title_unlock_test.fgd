@@ -1,0 +1,9 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(P1XBLA)
+	iconsprite("editor/logic_title_unlock_test")
+= logic_title_unlock_test: "Checks if the game is running in trial mode, and fires an output if it is."
+[
+	input TestTitleUnlocked(void) : "Tests the trial mode state."
+
+	output OnTitleLocked(void) : "Fired in response to TestTitleUnlocked if the game is running in trial mode."
+]
