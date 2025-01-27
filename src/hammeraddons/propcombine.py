@@ -30,7 +30,7 @@ from srctools.math import Angle, Matrix, Vec, quickhull
 from srctools.mdl import MDL_EXTS, Model, Flags as ModelFlags
 from srctools.packlist import PackList
 from srctools.smd import Bone, Mesh, Triangle, Vertex
-from srctools.tokenizer import Token, Tokenizer
+from srctools.tokenizer import Token, TokenSyntaxError, Tokenizer
 import attrs
 import trio
 
@@ -574,7 +574,11 @@ def load_qcs(qc_folder: Path) -> Iterator[Tuple[str, QC]]:
             qc_path = qc_loc / fname
 
             LOGGER.debug('Parsing provided QC "{}"...', qc_path)
-            qc_result = parse_qc(qc_loc, qc_path)
+            try:
+                qc_result = parse_qc(qc_loc, qc_path)
+            except TokenSyntaxError as exc:
+                LOGGER.warning('Could not parse QC file:', exc_info=exc)
+                continue
 
             if qc_result is None:
                 # It's a dynamic QC, we can't combine.
@@ -784,12 +788,19 @@ async def decompile_model(
                 LOGGER.debug('{}', result.stdout.replace(b'\r\n', b'\n').decode('ascii', 'replace'))
                 return None
     # There should now be a QC file here.
+    failed = False
     for qc_path in cache_folder.glob('*.qc'):
         LOGGER.debug('Parse decompiled QC "{}"...', qc_path)
-        qc_result = await trio.to_thread.run_sync(parse_qc, cache_folder, qc_path)
+        try:
+            qc_result = await trio.to_thread.run_sync(parse_qc, cache_folder, qc_path)
+        except TokenSyntaxError as exc:
+            LOGGER.warning('Could not parse QC file:', exc_info=exc)
+            failed = True
+            continue
         break
-    else:  # not found.
-        LOGGER.warning('No QC outputted into {}', cache_folder)
+    else:  # not found or couldn't be parsed.
+        if not failed:  # Don't produce both errors.
+            LOGGER.warning('No QC outputted into {}', cache_folder)
         qc_result = None
         qc_path = Path()
 
