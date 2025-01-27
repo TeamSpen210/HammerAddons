@@ -573,10 +573,12 @@ def load_qcs(qc_folder: Path) -> Iterator[Tuple[str, QC]]:
                 continue
             qc_path = qc_loc / fname
 
+            LOGGER.debug('Parsing provided QC "{}"...', qc_path)
             qc_result = parse_qc(qc_loc, qc_path)
 
             if qc_result is None:
                 # It's a dynamic QC, we can't combine.
+                LOGGER.debug('QC "{}" is not a static prop, ignoring.', qc_path)
                 continue
 
             (
@@ -595,9 +597,9 @@ def load_qcs(qc_folder: Path) -> Iterator[Tuple[str, QC]]:
                 continue
 
             yield unify_mdl(model_name), QC(
-                str(qc_path).replace('\\', '/'),
-                str(ref_smd).replace('\\', '/'),
-                str(phy_smd).replace('\\', '/') if phy_smd else None,
+                qc_path.as_posix(),
+                ref_smd.as_posix(),
+                phy_smd.as_posix() if phy_smd else None,
                 ref_scale,
                 phy_scale,
                 is_concave,
@@ -668,7 +670,10 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
                 elif token_value in ('$collisionmodel', '$collisionjoints'):
                     phy_smd = qc_loc / tok.expect(Token.STRING)
                     phy_scale = scale_factor
-                    next_typ, next_val = next(tok.skipping_newlines())
+                    try:
+                        next_typ, next_val = next(tok.skipping_newlines())
+                    except StopIteration:
+                        raise tok.error(Token.EOF) from None
                     if next_typ is Token.BRACE_OPEN:
                         for body_value in tok.block(token_value, consume_brace=False):
                             if body_value.casefold() == '$concave':
