@@ -4,23 +4,23 @@
 = BaseEntityAnimating
 	[
 	effects[engine](integer) : "Effect Flags" : 0
-	effects[complete](choices) : "Effect Flags" : 0 : "For configuring visual effects. If you want to combine effects, turn SmartEdit off and add the effect numbers together, i.e. 64 + 8 = 72." =
+	effects(choices) : "Effect Flags" : 0 : "For configuring visual effects. If you want to combine effects, turn SmartEdit off and add the effect numbers together, i.e. 64 + 8 = 72." =
 		[
 		0 : "None"
-		1 : "Bonemerge always, very expensive!!"
+		1 : "Bonemerge always, very expensive!!" [complete] // Probably not useful
 		2 : "Bright, dynamic light at entity origin"
 		4 : "Dim, dynamic light at entity origin"
 		8 : "No movement interpolation"
-		16 : "Don't cast shadows"
+		16 : "Don't cast shadows" [complete] // Covered by separate KV
 		32 : "Don't draw entity (entity is fully ignored by clients, NOT server)"
-		64 : "Don't receive dynamic shadows"
-		128 : "Bonemerge only in PVS, better performance but prone to disappearing. Use with Bonemerge."
-		256 : "Blinking glow"
-		512 : "Flag parent as always animating and realign each frame"	
+		64 : "Don't receive dynamic shadows" [complete] // Covered by separate KV
+		128 : "Bonemerge only in PVS, better performance but prone to disappearing. Use with Bonemerge." [complete] // Probably not useful
+		256 : "Blinking glow" [complete] // Doesn't seem to do anything?
+		512 : "Flag parent as always animating and realign each frame" [complete] // Probably not useful
 		// Via Pinsplash
-		1024 : "Mark for fast reflections" [since_P2]
-		2048 : "No shadow depth, for use with env_cascade_light" [since_P2]
-		4096 : "No projected textures" [since_P2]
+		1024 : "Mark for fast reflections" [since_P2, +complete] // Covered by separate KV
+		2048 : "No shadow depth, for use with env_cascade_light" [since_P2, +complete] // Covered by separate KV
+		4096 : "No projected textures" [since_P2, +complete] // Covered by separate KV
 		]
 	
 	solid[engine](integer) : "Collisions": 6
