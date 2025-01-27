@@ -383,11 +383,37 @@ def load_database(
     # Classname -> filename
     ent_source: dict[str, str] = {}
 
+    if extra_loc is not None:
+        if single_extra := extra_loc.is_file():
+            # One file.
+            extra_fsys = RawFileSystem(str(extra_loc.parent))
+        else:
+            extra_fsys = RawFileSystem(str(extra_loc))
+    else:
+        extra_fsys = None
+        single_extra = False
+
+    print('\n Loading snippets:')
+
     fsys = RawFileSystem(str(dbase))
     # First, load the snippets files.
     for file in dbase.rglob("snippets/*.fgd"):
         rel_loc = file.relative_to(dbase)
         load_file(fgd, ent_source, fsys, fsys[str(rel_loc)], is_snippet=True, fgd_vis=fgd_vis)
+
+    # Load snippets from extras if available. Not supported for singular files.
+    if extra_fsys is not None and not single_extra:
+        print('\n Loading extra snippets:')
+        for file in extra_loc.rglob("snippet_*.fgd"):
+            fgd.parse_file(
+                extra_fsys,
+                extra_fsys[str(file.relative_to(extra_loc))],
+                eval_bases=False,
+            )
+            print('s', end='', flush=True)
+
+    print('\n Loading main entities:')
+
     # Then, everything else.
     for file in dbase.rglob("*.fgd"):
         rel_loc = file.relative_to(dbase)
@@ -396,26 +422,25 @@ def load_database(
 
     load_visgroup_conf(fgd, dbase)
 
-    if extra_loc is not None:
-        print('\nLoading extra file:')
-        if extra_loc.is_file():
+    if extra_fsys is not None:
+        if single_extra:
             # One file.
-            fsys = RawFileSystem(str(extra_loc.parent))
+            print('\nLoading extra file:')
             fgd.parse_file(
-                fsys,
-                fsys[extra_loc.name],
+                extra_fsys,
+                extra_fsys[extra_loc.name],
                 eval_bases=False,
             )
         else:
             print('\nLoading extra files:')
-            fsys = RawFileSystem(str(extra_loc))
             for file in extra_loc.rglob("*.fgd"):
-                fgd.parse_file(
-                    fsys,
-                    fsys[str(file.relative_to(extra_loc))],
-                    eval_bases=False,
-                )
-                print('.', end='', flush=True)
+                if not Path(file).stem.startswith('snippet_'):
+                    fgd.parse_file(
+                        extra_fsys,
+                        extra_fsys[str(file.relative_to(extra_loc))],
+                        eval_bases=False,
+                    )
+                    print('.', end='', flush=True)
     print()
 
     fgd.apply_bases()
@@ -1377,8 +1402,10 @@ def main(args: list[str] | None = None) -> None:
         "--extra",
         dest="extra_db",
         default=None,
-        help="If specified, an additional folder to read FGD files from. "
-             "These override the normal database.",
+        help="If specified, an additional file or folder to read FGD files from. "
+             "These are parsed after the regular database, overriding it. "
+             "Files named 'snippet_X.fgd' will be parsed before all entities, to allow replacing "
+             "builtin snippets.",
     )
     subparsers = parser.add_subparsers(dest="mode")
 
