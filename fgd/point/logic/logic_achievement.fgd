@@ -280,7 +280,7 @@
 		"ACHIEVEMENT_EVENT_EP2_WEBCACHE_09": "Web Cache: ep2_outland_04 gear cave poison crab wall cache"
 		]
 	
-	achievementevent[P1, !P1XBLA](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+	achievementevent[P1, !PSA](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
 		"ACHIEVEMENT_EVENT_PORTAL_GET_PORTALGUNS": "Lab Rat"
 		"ACHIEVEMENT_EVENT_PORTAL_KILL_COMPANIONCUBE": "Fratricide"
@@ -299,7 +299,7 @@
 		"ACHIEVEMENT_EVENT_PORTAL_TRANSMISSION_RECEIVED": 	"Transmission Received"
 		]
 
-	achievementevent[P1XBLA](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+	achievementevent[PSA](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
 		"ACHIEVEMENT_EVENT_GO_FOR_THE_GOLD"       : "Go for the Gold"
 		"ACHIEVEMENT_EVENT_OUT_OF_THE_BLUE_START" : "Out of the Blue (Start)"
