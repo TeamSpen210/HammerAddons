@@ -4,3 +4,4 @@ srctools >= 2.4.1
 trio >= 0.24.0
 pyinstaller >= 6.1.0
 versioningit >= 2.1.0
+pyglet >= 2.1.2

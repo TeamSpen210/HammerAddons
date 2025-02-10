@@ -87,3 +87,40 @@ for file in (root / 'transforms').rglob('*.py'):
     print(file, '->', dest)
     dest.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy(file, dest)
+
+gen_choreo = Analysis(
+    ['src/hammeraddons/gen_choreo.py'],
+    binaries=[],
+    datas=[],
+    hiddenimports=[],
+    excludes=[
+        'IPython',  # Via trio
+    ],
+    noarchive=False,
+)
+
+gen_choreo_pyz = PYZ(gen_choreo.pure, gen_choreo.zipped_data)
+gen_choreo_exe = EXE(
+    gen_choreo_pyz,
+    gen_choreo.scripts,
+    [],
+    exclude_binaries=True,
+    name='gen_choreo',
+    debug=False,
+    bootloader_ignore_signals=False,
+    # Don't use bin/, in case someone puts this right in a game dir.
+    contents_directory='binaries',
+    strip=False,
+    upx=True,
+    console=True,
+    icon="postcompiler.ico",
+)
+gen_choreo_coll = COLLECT(
+    gen_choreo_exe,
+    gen_choreo.binaries,
+    gen_choreo.zipfiles,
+    gen_choreo.datas,
+    strip=False,
+    upx=True,
+    name='gen_choreo'
+)
