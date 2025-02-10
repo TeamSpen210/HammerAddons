@@ -1,16 +1,18 @@
 """Generate VCD choreo scripts for each character sound."""
-import io
-import re
-import pathlib
 from collections import defaultdict
-import traceback
 from collections.abc import Mapping
+import argparse
+import io
+import pathlib
+import re
+import sys
+import traceback
 
-import trio
-import pyglet.media
-import attrs
-from srctools import Keyvalues, sndscript, choreo
+from srctools import Keyvalues, choreo, sndscript
 from srctools.tokenizer import Tokenizer
+import attrs
+import pyglet.media
+import trio
 
 
 COMMENT = '// This choreo scene was auto-generated. Remove this comment if modifying this file.\n'
@@ -212,12 +214,13 @@ async def make_soundscript(settings: Settings, actor: str) -> None:
             await f.write('\n')
 
 
-async def read_settings() -> Settings:
+async def read_settings(path: str) -> Settings:
     """Read the settings."""
-    with open('../gen_choreo.vdf') as f:
+    with open(path) as f:
         conf = Keyvalues.parse(f)
     wpm = conf.float('wpm', 100.0)
-    game_dir = await trio.Path('../', conf['gamedir']).resolve()
+    game_dir = await trio.Path(path, '..', conf['gamedir']).resolve()
+
     return Settings(
         game_dir=game_dir,
         char_to_actor={
@@ -265,9 +268,20 @@ async def merge_scenes_image(image_path: trio.Path, scenes: list[str]) -> None:
         SCENES.append(entry)
 
 
-async def main() -> None:
+async def main(argv: list[str]) -> None:
     """Search for files."""
-    settings = await read_settings()
+    parser = argparse.ArgumentParser(
+        description="Generates choreo scenes and soundscripts from subtitle files."
+    )
+    parser.add_argument(
+        "config",
+        default="../gen_choreo.vdf",
+        help="The location of the config file.",
+    )
+
+    args = parser.parse_args(argv)
+
+    settings = await read_settings(args.config)
     print(f'Game folder: {settings.game_dir}')
 
     print('Removing existing auto scenes...')
@@ -310,4 +324,4 @@ async def main() -> None:
         await (settings.game_dir / 'scenes/scenes.image').write_bytes(image_buf.getvalue())
 
 if __name__ == '__main__':
-    trio.run(main)
+    trio.run(main, sys.argv[1:])
