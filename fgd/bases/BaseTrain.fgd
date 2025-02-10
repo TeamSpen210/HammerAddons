@@ -8,7 +8,7 @@
 		2: "No User Control" : 0
 		8: "Passable" : 0
 		16: "Fixed Orientation" : 0
-		128: "Ridable Train (HL1 Train)" : 0
+		128: "Use BSP instead of VPhysics collisions ('HL1 Train')" : 0
 		256: "Use max speed for pitch shifting move sound" : 0
 		512: "Is unblockable by player" : 0
 		1024: "Allow Roll (Z-rot)" : 0 [since_P2]
