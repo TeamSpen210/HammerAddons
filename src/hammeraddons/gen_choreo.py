@@ -45,8 +45,11 @@ class Settings:
     char_to_mixgroup: Mapping[str, str]
     # Lists of scenes.image files to merge into ours, with the filenames to add.
     scene_imports: Mapping[trio.Path, list[str]]
+    # Whether stacks are allowed.
+    use_operator_stacks: bool
 
     def get_actor(self, soundscript: str, character: str) -> str:
+        """Get the actor entity for this soundscript."""
         try:
             return self.actor_overrides[soundscript]
         except KeyError:
@@ -77,19 +80,22 @@ async def scene_from_sound(settings: Settings, root: trio.Path, filename: trio.P
     if settings.get_actor(soundscript_name, character) == "":
         return
 
+    mixgroup = settings.char_to_mixgroup.get(character, f'{character}VO')
+
     # print(filename, '->', soundscript_name, scene_name, duration)
-    CHOREO_SOUNDS[character][soundscript_name] = sndscript.Sound(
+    CHOREO_SOUNDS[character][soundscript_name] = snd = sndscript.Sound(
         name=soundscript_name,
         sounds=[str(trio.Path('npc', relative)).replace('\\', '/')],
         channel=sndscript.Channel.VOICE,
         level=sndscript.Level.SNDLVL_NONE,
-        stack_update=Keyvalues("update_stack", [
+    )
+    if settings.use_operator_stacks and mixgroup:
+        snd.stack_update = Keyvalues("update_stack", [
             Keyvalues("import_stack", "update_dialog"),
             Keyvalues("mixer", [
-                Keyvalues("mixgroup", settings.char_to_mixgroup.get(character, f'{character}VO')),
+                Keyvalues("mixgroup", mixgroup),
             ])
         ])
-    )
 
     await build_scene(settings, scene_name, character, duration, soundscript_name, cc_only=False)
 
@@ -107,15 +113,16 @@ async def scene_from_subtitle(settings: Settings, soundscript: str, caption: str
     if settings.get_actor(soundscript, character) == "":
         return
 
-    CHOREO_SOUNDS[character][soundscript] = sndscript.Sound(
+    CHOREO_SOUNDS[character][soundscript] = snd = sndscript.Sound(
         name=soundscript,
         sounds=["common/null.wav"],
         channel=sndscript.Channel.VOICE,
         level=sndscript.Level.SNDLVL_NONE,
-        stack_start=Keyvalues("start_stack", [
+    )
+    if settings.use_operator_stacks:
+        snd.stack_start = Keyvalues("start_stack", [
             Keyvalues("import_stack", "P2_null_start"),
         ])
-    )
 
     stripped = RE_CAPTION_CMD.sub('', caption)
 
@@ -214,8 +221,10 @@ async def make_soundscript(settings: Settings, actor: str) -> None:
             await f.write('\n')
 
 
-async def read_settings(path: str) -> Settings:
+async def read_settings(path: trio.Path) -> Settings:
     """Read the settings."""
+    path = await path.resolve()
+    print(f"Config file path: ", path)
     with open(path) as f:
         conf = Keyvalues.parse(f)
     wpm = conf.float('wpm', 100.0)
@@ -227,6 +236,7 @@ async def read_settings(path: str) -> Settings:
             kv.real_name: kv.value
             for kv in conf.find_children('actornames')
         },
+        use_operator_stacks=conf.bool('use_operator_stacks', True),
         actor_overrides={
             # Flip, so we can group similar overrides together and it'll look nice.
             kv.value: kv.real_name
@@ -281,7 +291,7 @@ async def main(argv: list[str]) -> None:
 
     args = parser.parse_args(argv)
 
-    settings = await read_settings(args.config)
+    settings = await read_settings(trio.Path(args.config))
     print(f'Game folder: {settings.game_dir}')
 
     print('Removing existing auto scenes...')
