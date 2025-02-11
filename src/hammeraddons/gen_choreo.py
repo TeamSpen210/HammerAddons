@@ -43,8 +43,8 @@ class Settings:
     seconds_per_word: float
     # Character to the mixgroup to use.
     char_to_mixgroup: Mapping[str, str]
-    # Lists of scenes.image files to merge into ours, with the filenames to add.
-    scene_imports: Mapping[trio.Path, list[str]]
+    # Lists of scenes.image files to merge into ours, with the filenames to add, or None for all
+    scene_imports: Mapping[trio.Path, list[str] | None]
     # Whether stacks are allowed.
     use_operator_stacks: bool
 
@@ -248,7 +248,9 @@ async def read_settings(path: trio.Path) -> Settings:
         },
         seconds_per_word=60.0 / wpm,
         scene_imports={
-            game_dir / image.real_name: image.as_array()
+            game_dir / image.real_name: None
+            if not image.has_children() and image.value == '*'
+            else image.as_array()
             for image in conf.find_children('image_imports')
         },
     )
@@ -265,10 +267,13 @@ async def check_captions(settings: Settings) -> None:
             nursery.start_soon(scene_from_subtitle, settings, tok.real_name, tok.value)
 
 
-async def merge_scenes_image(image_path: trio.Path, scenes: list[str]) -> None:
+async def merge_scenes_image(image_path: trio.Path, scenes: list[str] | None) -> None:
     """Merge a scenes.image file into our choreo scenes."""
     data = await image_path.read_bytes()
     image = await trio.to_thread.run_sync(choreo.parse_scenes_image, io.BytesIO(data))
+    if scenes is None:
+        SCENES.extend(image.values())
+        return
     for scene in scenes:
         try:
             entry = image[choreo.checksum_filename(scene)]
