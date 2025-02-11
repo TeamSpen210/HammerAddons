@@ -1,6 +1,6 @@
 """Generate VCD choreo scripts for each character sound."""
 from collections import defaultdict
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping, Sequence
 import argparse
 import io
 import pathlib
@@ -31,32 +31,77 @@ RE_WORDS = re.compile(r'\S+')
 MANUAL_SOUNDSCRIPTS: set[str] = set()
 
 
+@attrs.frozen
+class Overridable[T]:
+    """A value with a per-actor default that can be overridden per-line."""
+    # Character (or ent for soundlevels) -> value
+    defaults: Mapping[str, T]
+    # Soundscript -> value
+    overrides: Mapping[str, T]
+    # Soundscript prefixes -> value
+    prefixes: Sequence[tuple[str, T]]
+
+    @classmethod
+    def parse(
+        cls,
+        conf: Keyvalues,
+        parse: Callable[[str], T],
+        block_name: str, override_name: str,
+    ) -> 'Overridable[T]':
+        """Parse from the config."""
+        defaults = {
+            kv.real_name: parse(kv.value)
+            for kv in conf.find_children(block_name)
+        }
+        overrides = {}
+        prefixes = []
+        for kv in conf.find_children(override_name):
+            # Flip, so we can group similar overrides together and it'll look nice.
+            value = parse(kv.real_name)
+            if kv.value.endswith('*'):
+                prefixes.append((kv.value.removesuffix('*'), value))
+            else:
+                overrides[kv.value] = value
+        # Sort longer first, so they override less specific ones.
+        prefixes.sort(key=lambda tup: len(tup[0]), reverse=True)
+        return cls(defaults, overrides, prefixes)
+
+    def get(self, soundscript: str, character: str, default: T | None = None) -> T:
+        """Get the value for this soundscript."""
+        snd_fold = soundscript.casefold()
+        try:
+            return self.overrides[snd_fold]
+        except KeyError:
+            pass
+        for prefix, value in self.prefixes:
+            if snd_fold.startswith(prefix):
+                return value
+
+        try:
+            return self.defaults[character]
+        except KeyError:
+            if default is not None:
+                return default
+            raise ValueError(
+                f'Unknown character "{character}" '
+                f'for soundscript "{soundscript}"!'
+            ) from None
+
+
 @attrs.define(kw_only=True)
 class Settings:
     """General configuration."""
     game_dir: trio.Path
-    # folder=character -> actor entity name, or "" to skip.
-    char_to_actor: Mapping[str, str]
-    # Soundscript -> actor entity name, overrides folder.
-    actor_overrides: Mapping[str, str]
+    # Actor entity names, or "" to skip.
+    actor_names: Overridable[str]
+    # Mixgroup to use, or "" to disable.
+    mixgroups: Overridable[str]
     # For subtitle -> choreo, the WPM to use.
     seconds_per_word: float
-    # Character to the mixgroup to use.
-    char_to_mixgroup: Mapping[str, str]
     # Lists of scenes.image files to merge into ours, with the filenames to add, or None for all
     scene_imports: Mapping[trio.Path, list[str] | None]
     # Whether stacks are allowed.
     use_operator_stacks: bool
-
-    def get_actor(self, soundscript: str, character: str) -> str:
-        """Get the actor entity for this soundscript."""
-        try:
-            return self.actor_overrides[soundscript]
-        except KeyError:
-            try:
-                return self.char_to_actor[character]
-            except KeyError:
-                raise ValueError(f'Unknown character "{character}" for soundscript "{soundscript}"!')
 
 
 async def scene_from_sound(settings: Settings, root: trio.Path, filename: trio.Path) -> None:
@@ -64,6 +109,7 @@ async def scene_from_sound(settings: Settings, root: trio.Path, filename: trio.P
     try:
         duration = (await trio.to_thread.run_sync(pyglet.media.load, str(filename))).duration
     except pyglet.media.DecodeException as exc:
+        print(f'Could not determine duration for WAV {filename}:')
         traceback.print_exception(type(exc), exc, None)
         return
 
@@ -77,10 +123,7 @@ async def scene_from_sound(settings: Settings, root: trio.Path, filename: trio.P
 
     character = relative.parts[0]
 
-    if settings.get_actor(soundscript_name, character) == "":
-        return
-
-    mixgroup = settings.char_to_mixgroup.get(character, f'{character}VO')
+    mixgroup = settings.mixgroups.get(soundscript_name, character, f'{character}VO')
 
     # print(filename, '->', soundscript_name, scene_name, duration)
     CHOREO_SOUNDS[character][soundscript_name] = snd = sndscript.Sound(
@@ -110,7 +153,7 @@ async def scene_from_subtitle(settings: Settings, soundscript: str, caption: str
         # Already done.
         return
 
-    if settings.get_actor(soundscript, character) == "":
+    if settings.actor_names.get(soundscript, character) == "":
         return
 
     CHOREO_SOUNDS[character][soundscript] = snd = sndscript.Sound(
@@ -145,8 +188,9 @@ async def build_scene(
     cc_only: bool,
 ) -> None:
     """Write a scene to a specific path."""
-    actor_name = settings.get_actor(soundscript_name, character)
-    assert actor_name != "", character
+    actor_name = settings.actor_names.get(soundscript_name, character)
+    if not actor_name:
+        return
 
     await scene_name.parent.mkdir(parents=True, exist_ok=True)
 
@@ -232,20 +276,15 @@ async def read_settings(path: trio.Path) -> Settings:
 
     return Settings(
         game_dir=game_dir,
-        char_to_actor={
-            kv.real_name: kv.value
-            for kv in conf.find_children('actornames')
-        },
+        actor_names=Overridable.parse(
+            conf, str,
+            'actornames', 'actoroverrides',
+        ),
+        mixgroups=Overridable.parse(
+            conf, str,
+            'mixgroups', 'mixgroupoverrides',
+        ),
         use_operator_stacks=conf.bool('use_operator_stacks', True),
-        actor_overrides={
-            # Flip, so we can group similar overrides together and it'll look nice.
-            kv.value: kv.real_name
-            for kv in conf.find_children('actoroverrides')
-        },
-        char_to_mixgroup={
-            kv.real_name: kv.value
-            for kv in conf.find_children('mixgroups')
-        },
         seconds_per_word=60.0 / wpm,
         scene_imports={
             game_dir / image.real_name: None
@@ -298,6 +337,7 @@ async def main(argv: list[str]) -> None:
 
     settings = await read_settings(trio.Path(args.config))
     print(f'Game folder: {settings.game_dir}')
+    print('Settings:', settings)
 
     print('Removing existing auto scenes...')
     async with trio.open_nursery() as nursery:
