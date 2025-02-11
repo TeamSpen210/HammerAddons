@@ -49,15 +49,20 @@ class Overridable[T]:
         block_name: str, override_name: str,
     ) -> 'Overridable[T]':
         """Parse from the config."""
-        defaults = {
-            kv.real_name: parse(kv.value)
-            for kv in conf.find_children(block_name)
-        }
+        defaults = {}
+        for kv in conf.find_children(block_name):
+            try:
+                defaults[kv.real_name] = parse(kv.value)
+            except (LookupError, TypeError, ValueError) as exc:
+                raise ValueError(f'Could not parse {block_name} option for {kv.real_name!r}') from exc
         overrides = {}
         prefixes = []
         for kv in conf.find_children(override_name):
             # Flip, so we can group similar overrides together and it'll look nice.
-            value = parse(kv.real_name)
+            try:
+                value = parse(kv.real_name)
+            except (LookupError, TypeError, ValueError) as exc:
+                raise ValueError(f'Could not parse {override_name} option for {kv.value!r}') from exc
             if kv.value.endswith('*'):
                 prefixes.append((kv.value.removesuffix('*'), value))
             else:
@@ -88,6 +93,20 @@ class Overridable[T]:
             ) from None
 
 
+SOUND_LEVELS = {
+    level.name.upper(): level
+    for level in sndscript.Level
+}
+
+
+def parse_soundlevel(level: str) -> sndscript.Level | float:
+    """Parse a soundlevel definition. TODO: make sndscript.parse_float reusable?"""
+    try:
+        return SOUND_LEVELS[level.upper()]
+    except ValueError:
+        return float(level)
+
+
 @attrs.define(kw_only=True)
 class Settings:
     """General configuration."""
@@ -96,6 +115,8 @@ class Settings:
     actor_names: Overridable[str]
     # Mixgroup to use, or "" to disable.
     mixgroups: Overridable[str]
+    # Soundlevel to use. Looked up from actor ent, not name.
+    soundlevels: Overridable[sndscript.Level | float]
     # For subtitle -> choreo, the WPM to use.
     seconds_per_word: float
     # Lists of scenes.image files to merge into ours, with the filenames to add, or None for all
@@ -123,14 +144,18 @@ async def scene_from_sound(settings: Settings, root: trio.Path, filename: trio.P
 
     character = relative.parts[0]
 
+    if settings.actor_names.get(soundscript_name, character) == "":
+        return
+
     mixgroup = settings.mixgroups.get(soundscript_name, character, f'{character}VO')
+    soundlevel = settings.soundlevels.get(soundscript_name, character, sndscript.Level.SNDLVL_NONE)
 
     # print(filename, '->', soundscript_name, scene_name, duration)
     CHOREO_SOUNDS[character][soundscript_name] = snd = sndscript.Sound(
         name=soundscript_name,
         sounds=[str(trio.Path('npc', relative)).replace('\\', '/')],
         channel=sndscript.Channel.VOICE,
-        level=sndscript.Level.SNDLVL_NONE,
+        level=soundlevel,
     )
     if settings.use_operator_stacks and mixgroup:
         snd.stack_update = Keyvalues("update_stack", [
@@ -153,14 +178,17 @@ async def scene_from_subtitle(settings: Settings, soundscript: str, caption: str
         # Already done.
         return
 
-    if settings.actor_names.get(soundscript, character) == "":
+    actor_name = settings.actor_names.get(soundscript, character)
+    if actor_name == "":
         return
+
+    soundlevel = settings.soundlevels.get(soundscript, actor_name, sndscript.Level.SNDLVL_NONE)
 
     CHOREO_SOUNDS[character][soundscript] = snd = sndscript.Sound(
         name=soundscript,
         sounds=["common/null.wav"],
         channel=sndscript.Channel.VOICE,
-        level=sndscript.Level.SNDLVL_NONE,
+        level=soundlevel,
     )
     if settings.use_operator_stacks:
         snd.stack_start = Keyvalues("start_stack", [
@@ -283,6 +311,10 @@ async def read_settings(path: trio.Path) -> Settings:
         mixgroups=Overridable.parse(
             conf, str,
             'mixgroups', 'mixgroupoverrides',
+        ),
+        soundlevels=Overridable.parse(
+            conf, parse_soundlevel,
+            'soundlevels', 'soundleveloverrides',
         ),
         use_operator_stacks=conf.bool('use_operator_stacks', True),
         seconds_per_word=60.0 / wpm,
