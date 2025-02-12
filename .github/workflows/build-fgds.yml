@@ -18,11 +18,12 @@ permissions:
 jobs:
   build-fgds:
     runs-on: ubuntu-latest
+    name: Build FGDs
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
@@ -32,8 +33,30 @@ jobs:
       - name: FGD build and folder copy
         run: bash ./build.sh all
       - name: Artifact upload
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: build-${{ github.sha }}
           path: ./build/*.fgd
+          if-no-files-found: error
+  build-engine:
+    runs-on: ubuntu-latest
+    name: Build Engine Dump
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: 'requirements.txt'
+      - name: Install srctools
+        run: python -m pip install -r requirements.txt
+      - name: FGD engine dump
+        run: python src/hammeraddons/unify_fgd.py exp --engine --binary -o fgd.lzma
+      - name: Artifact upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-engine-${{ github.sha }}
+          path: fgd.lzma
           if-no-files-found: error
