@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	appliesto(P1XBLA)
+	appliesto(PSA)
 	iconsprite("editor/logic_title_unlock_test")
 = logic_title_unlock_test: "Checks if the game is running in trial mode, and fires an output if it is."
 [

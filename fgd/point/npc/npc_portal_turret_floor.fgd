@@ -7,7 +7,7 @@
 @PointClass base(BaseNPC, _npc_portal_turret_floor_p1_mdl, _npc_portal_turret_floor_p2_mdl) 
 	appliesto(P1, P2, -STANLEY) 
 	autovis(Entities, NPCs, Portal Turret)
-	frustum(90, 1, TurretRange, 255 0 0, -1)
+	frustum(120, 1, TurretRange, 255 0 0, -1)
 = npc_portal_turret_floor: "Aperture Science Sentry Turret."
 	[
 	damageforce(boolean) : "Damage Pushes Player" : 0 : "Being hit by this turret will push the player back."
