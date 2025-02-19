@@ -1,10 +1,14 @@
 @BaseClass base(BaseEntityAnimating, SRCIndicator)
 = BasePortButton: "The base for the various floor buttons - weighted, cube, sphere and Antique weighted."
 	[
-	solid(choices) : "Collisions" : 0 : "Determine if the button should be solid or not." =
+	solid(integer) : "Solid" : 0
+	solid(choices) : "Solid" : 0 : "Set the button to be solid or non-solid. " +
+	"On most props '6' is the default VPhysics collision, but buttons require 0. The postcompiler will correct this mistake, " +
+	"use 1 if you need a non-solid button." = 
 		[
-		0 : "Solid"
-		1 : "Non-Solid"
+		0 : "[0] Solid"
+		1 : "[1] Non-Solid"
+		6 : "[6] Incorrect (Solid)"
 		]
 
 	// Inputs

@@ -15,6 +15,7 @@
 * Warn if propcombine or packing was disabled via command line.
 * Add option to `comp_adv_output` to have it expand target searches itself.
 * Refer to the "Gravity Gun" in descriptions instead of physgun/physcannon.
+* Floor buttons with `solid=6` will automatically be fixed, since this unintentionally makes them non-solid.
 
 ## Bugfixes
 * Fix a compile failure if prop ropes were placed in a group with no connections.

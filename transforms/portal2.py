@@ -1,11 +1,14 @@
 """Portal-2 specific transformations."""
 from srctools import Output, conv_bool, conv_int, VMF
+import srctools.logger
 
-from hammeraddons.bsp_transform import trans, Context
+from hammeraddons.bsp_transform import trans, Context, ent_description
+
+LOGGER = srctools.logger.get_logger(__name__)
 
 
 @trans('Fix Laser Catcher Skins')
-def laser_catcher_skins(ctx: Context):
+def laser_catcher_skins(ctx: Context) -> None:
     """Fix Valve's bug where reloading saves causes lasers to get their skin wrong."""
     for ent in ctx.vmf.by_class['prop_laser_catcher']:
         if not conv_bool(ent.pop('src_fix_skins'), True):
@@ -61,7 +64,7 @@ def needs_paint(vmf: VMF) -> bool:
 
 
 @trans('Force Paint in Map')
-def force_paintinmap(ctx: Context):
+def force_paintinmap(ctx: Context) -> None:
     """If paint entities are present, set paint in map to true."""
     # Already set, don't bother confirming.
     if conv_bool(ctx.vmf.spawn['paintinmap']):
@@ -75,7 +78,7 @@ def force_paintinmap(ctx: Context):
 
 
 @trans('Precache P2 Light Bridge')
-def precache_light_bridge(ctx: Context):
+def precache_light_bridge(ctx: Context) -> None:
     """Ensure light bridges have the particle precached."""
 
     for bridge in ctx.vmf.by_class['prop_wall_projector']:
@@ -97,3 +100,27 @@ def precache_light_bridge(ctx: Context):
         effect_name='projected_wall_impact',
         start_active='0',
     )
+
+
+@trans('Fix Button Collision')
+def fix_button_collision(ctx: Context) -> None:
+    """Portal button entities have strange collision behaviour.
+
+    Unlike all other props solid is a bool, so the normal solid=6(vphysics) makes them nonsolid.
+    This fixes that mistake in maps, since 0 is the correct way to make it nonsolid.
+    """
+    for cls in [
+        'prop_contraption_cube_button',
+        'prop_floor_ball_button',
+        'prop_floor_button',
+        'prop_floor_cube_button',
+        'prop_under_floor_button',
+    ]:
+        for btn in ctx.vmf.by_class[cls]:
+            if conv_int(btn['solid']) == 6:
+                LOGGER.warning(
+                    '{} has solid=6, this will be non-solid. Fixing.',
+                    ent_description(btn),
+                )
+                # By default they're solid, just remove.
+                del btn['solid']
