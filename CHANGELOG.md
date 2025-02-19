@@ -16,6 +16,7 @@
 * Add option to `comp_adv_output` to have it expand target searches itself.
 * Refer to the "Gravity Gun" in descriptions instead of physgun/physcannon.
 * Floor buttons with `solid=6` will automatically be fixed, since this unintentionally makes them non-solid.
+* The postcompiler will now detect and error if a loop of parents/filters is detected. These will just crash the game in a non-obvious manner.
 
 ## Bugfixes
 * Fix a compile failure if prop ropes were placed in a group with no connections.
