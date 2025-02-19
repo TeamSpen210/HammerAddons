@@ -260,7 +260,7 @@ async def build_scene(
         ))
 
 
-async def check_existing(filename: trio.Path) -> None:
+async def check_existing(settings: Settings, filename: trio.Path) -> None:
     """Check existing choreo files to remove auto-generated ones."""
     async with await filename.open('r') as f:
         first_line = await f.readline()
@@ -272,6 +272,10 @@ async def check_existing(filename: trio.Path) -> None:
         scene = await trio.to_thread.run_sync(choreo.Scene.parse_text, Tokenizer(data, filename))
         for sound in scene.used_sounds():
             MANUAL_SOUNDSCRIPTS.add(sound.casefold())
+        SCENES.append(choreo.Entry.from_scene(
+            filename.relative_to(settings.game_dir).as_posix(),
+            scene,
+        ))
 
 
 async def make_soundscript(settings: Settings, actor: str) -> None:
@@ -361,6 +365,7 @@ async def main(argv: list[str]) -> None:
     )
     parser.add_argument(
         "config",
+        nargs='?',
         default="../gen_choreo.vdf",
         help="The location of the config file.",
     )
@@ -369,12 +374,11 @@ async def main(argv: list[str]) -> None:
 
     settings = await read_settings(trio.Path(args.config))
     print(f'Game folder: {settings.game_dir}')
-    print('Settings:', settings)
 
     print('Removing existing auto scenes...')
     async with trio.open_nursery() as nursery:
         for scene in await (settings.game_dir / 'scenes').rglob('*.vcd'):
-            nursery.start_soon(check_existing, scene)
+            nursery.start_soon(check_existing, settings, scene)
 
     if settings.scene_imports:
         print('Importing scenes.image scenes...')
@@ -397,6 +401,7 @@ async def main(argv: list[str]) -> None:
     scene_done = trio.Event()
 
     async def build_image() -> None:
+        print(f'Building scenes.image ({len(SCENES)} scenes)...', flush=True)
         await trio.to_thread.run_sync(choreo.save_scenes_image_sync, image_buf, SCENES)
         scene_done.set()
 
@@ -407,7 +412,7 @@ async def main(argv: list[str]) -> None:
             nursery.start_soon(make_soundscript, settings, actor)
 
         await scene_done.wait()
-        print('Writing scenes.image...')
+        print(f'Writing scenes.image...')
         await (settings.game_dir / 'scenes/scenes.image').write_bytes(image_buf.getvalue())
 
 if __name__ == '__main__':
