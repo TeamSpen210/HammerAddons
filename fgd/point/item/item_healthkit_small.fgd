@@ -1,7 +1,7 @@
 
 @PointClass base(Item) 
 	appliesto(TF2) 
-	studio("models/items/medkit_small.mdl") 
+	studioprop("models/items/medkit_small.mdl") 
 	sphere(fademindist) 
 	sphere(fademaxdist) = item_healthkit_small: "Health Kit Small"
 	[

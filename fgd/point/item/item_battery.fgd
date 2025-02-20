@@ -1,7 +1,7 @@
-@BaseClass appliesto(-mesa, -MBase, -EZ2) studio("models/items/battery.mdl") = _item_battery_hl2 []
-@BaseClass appliesto(-mesa, +MBase, -EZ2) studio() = _item_battery_mbase []
-@BaseClass appliesto(-mesa, -MBase, -EZ2) studio("models/items/battery.mdl") = _item_battery_ez2 []
-@BaseClass appliesto(+mesa) studio("models/weapons/w_battery.mdl") = _item_battery_mesa []
+@BaseClass appliesto(-mesa, -MBase, -EZ2) studioprop("models/items/battery.mdl") = _item_battery_hl2 []
+@BaseClass appliesto(-mesa, +MBase, -EZ2) studioprop() = _item_battery_mbase []
+@BaseClass appliesto(-mesa, -MBase, -EZ2) studioprop("models/items/battery.mdl") = _item_battery_ez2 []
+@BaseClass appliesto(+mesa) studioprop("models/weapons/w_battery.mdl") = _item_battery_mesa []
 
 @PointClass base(Item, BaseMesaPickup) 
 	appliesto(EP1, EP2, HL2, P1, Mesa) 

@@ -1,7 +1,7 @@
 @PointClass base(Item, TeamNum) 
 	appliesto(TF2) 
 	color(0 0 200) 
-	studio("models/bots/bot_worker/bot_worker_powercore.mdl")
+	studioprop("models/bots/bot_worker/bot_worker_powercore.mdl")
 	sphere(fademindist) 
 	sphere(fademaxdist) 
 = item_bonuspack : "Robot Destruction Core"

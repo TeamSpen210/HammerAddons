@@ -1,8 +1,8 @@
 // Modified models with no animations, so it doesn't loop
 // constantly.
-@BaseClass appliesto(-Mesa, -MBase) studio("models/editor/item_suit_charger_hl2.mdl") = _item_suitcharger_hl2 []
-@BaseClass appliesto(+Mesa) studio("models/editor/item_suit_charger_mesa.mdl") = _item_suitcharger_mesa []
-@BaseClass appliesto(+MBase) studio() = _item_suitcharger_settable []
+@BaseClass appliesto(-Mesa, -MBase) studioprop("models/editor/item_suit_charger_hl2.mdl") = _item_suitcharger_hl2 []
+@BaseClass appliesto(+Mesa) studioprop("models/editor/item_suit_charger_mesa.mdl") = _item_suitcharger_mesa []
+@BaseClass appliesto(+MBase) studioprop() = _item_suitcharger_settable []
 
 @PointClass base(BaseEntityAnimating, _item_suitcharger_hl2, _item_suitcharger_mesa, _item_suitcharger_settable)
 	appliesto(EP1, EP2, HL2, P1, Mesa)  

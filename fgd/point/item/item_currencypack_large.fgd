@@ -1,6 +1,6 @@
 @PointClass base(Item) 
 	appliesto(TF2) 
-	studio("models/items/currencypack_large.mdl") 
+	studioprop("models/items/currencypack_large.mdl") 
 = item_currencypack_large : "Large Credits Pickup"
 	[
 	]

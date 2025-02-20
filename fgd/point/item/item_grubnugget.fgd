@@ -1,5 +1,5 @@
-@BaseClass appliesto(-MBase) studio("models/grub_nugget_medium.mdl") = _item_grubnugget_fixed_model []
-@BaseClass appliesto(+MBase) studio()                                = _item_grubnugget_variable_model []
+@BaseClass appliesto(-MBase) studioprop("models/grub_nugget_medium.mdl") = _item_grubnugget_fixed_model []
+@BaseClass appliesto(+MBase) studioprop()                                = _item_grubnugget_variable_model []
 
 @PointClass base(Item, _item_grubnugget_fixed_model, _item_grubnugget_variable_model) 
 	appliesto(EP2) 

@@ -1,5 +1,5 @@
 @PointClass base(BasePropPhysics, DamageFilter) appliesto(Mesa)
-	studio("models/props_marines/tow_missile_projectile.mdl")
+	studioprop("models/props_marines/tow_missile_projectile.mdl")
 = item_tow_missile : "TOW Missile"
 	[
 	]

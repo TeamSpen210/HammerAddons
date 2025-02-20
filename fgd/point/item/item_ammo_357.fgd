@@ -1,5 +1,5 @@
-@BaseClass appliesto(-Mesa) studio("models/items/357ammo.mdl") = _item_ammo_357_hl2 []
-@BaseClass appliesto(+Mesa) studio("models/weapons/w_357ammobox.mdl") = _item_ammo_357_mesa []
+@BaseClass appliesto(-Mesa) studioprop("models/items/357ammo.mdl") = _item_ammo_357_hl2 []
+@BaseClass appliesto(+Mesa) studioprop("models/weapons/w_357ammobox.mdl") = _item_ammo_357_mesa []
 
 @PointClass base(ItemAmmo, BaseMesaPickup)
 	base(_item_ammo_357_mesa, _item_ammo_357_hl2)

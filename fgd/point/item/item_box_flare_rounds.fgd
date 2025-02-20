@@ -1,6 +1,6 @@
 @PointClass base(ItemAmmo) 
 	appliesto(MBase) 
-	studio("models/items/boxflares.mdl") = item_box_flare_rounds: "Box of Flare Rounds"
+	studioprop("models/items/boxflares.mdl") = item_box_flare_rounds: "Box of Flare Rounds"
 	[
 	@resources
 		[

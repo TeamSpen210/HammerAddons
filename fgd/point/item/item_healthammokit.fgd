@@ -1,6 +1,6 @@
 @PointClass base(Item) 
 	appliesto(TF2) 
-	studio("models/items/medkit_medium.mdl") 
+	studioprop("models/items/medkit_medium.mdl") 
 = item_healthammokit : "Small AmmoHealthPack Pickup"
 	[
 	]

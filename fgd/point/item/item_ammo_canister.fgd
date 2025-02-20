@@ -1,5 +1,5 @@
 @PointClass base(BaseMesaPickup) appliesto(Mesa)
-	studio("models/weapons/w_weaponbox.mdl") = item_ammo_canister: "Ammo canister"
+	studioprop("models/weapons/w_weaponbox.mdl") = item_ammo_canister: "Ammo canister"
 	[
 	AmmoGlock(integer) : "AmmoGlock" : 0 : "AmmoGlock"
 	AmmoMp5(integer) : "AmmoMp5" : 0 : "AmmoMp5"
