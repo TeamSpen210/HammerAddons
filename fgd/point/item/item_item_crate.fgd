@@ -3,6 +3,7 @@
 
 @PointClass base(BasePropPhysics, Angles, DamageFilter, BaseFadeProp, EZ2Variant, _item_item_crate_anymodel, _item_item_crate_fixedmodel) 
 	appliesto(EP1, EP2, HL2, P1)
+	line(255 255 0, targetname, specificresupply)
 = item_item_crate: "Item Crate"
 	[
 	model[MBase](studio) : "Model" : "models/items/item_item_crate.mdl" : "The model of this item_item_crate. Only works when this crate's appearance is set to use a custom model."

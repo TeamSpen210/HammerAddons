@@ -8,6 +8,11 @@
 * Added a value mode option to `comp_kv_setter` and `comp_adv_output` to more clearly control which key is used.
 * Added textures for 4 rendertargets (camera, water reflection/refraction, full framebuffer). These give a nice preview in Hammer.
 * Added three keyvalues to `ambient_generic`, giving a more user friendly interface to the confusing spawnflags. This also allows them to be configured via fixup values easily.
+* Added line helpers to `env_microphone`, `scripted_sequence`, `path_track`, and `item_item_crate`
+* Added Source 2013's `SetModelScale` input to all animating entities
+* Added undocumented `ChangeLevelPostFade` input to `point_changelevel`
+* Added `hammer_model` entity to allow placing reference models in Hammer that don't appear in-game
+* Added Portal: Still Alive features (not currently included in releases, but can be built by including the `PSA` tag)
 * Allow `comp_entity_finder` to rotate the target in addition to teleporting.
 * Allow configuring various shadow/fast reflection options for vactube object ents.
 * Boolean keyvalues (yes/no) can now be set to `!$var`, to invert the value of the variable. 
@@ -17,6 +22,13 @@
 * Refer to the "Gravity Gun" in descriptions instead of physgun/physcannon.
 * Floor buttons with `solid=6` will automatically be fixed, since this unintentionally makes them non-solid.
 * The postcompiler will now detect and error if a loop of parents/filters is detected. These will just crash the game in a non-obvious manner.
+* Included a copy of the "Obsolete" sprite used for missing entities, for games that don't include it by default such as Portal 2
+* Improved `game_text` keyvalue descriptions and added Mapbase's font keyvalue
+* Updated the icon for `skybox_swapper`
+* Removed `info_paint_sprayer` keyvalues which are set in some Valve maps, but don't actually exist
+* Removed Hammer preview from Mapbase's `vgui_text_display` as it did not actually match the in-game appearance
+* Removed `skybox_swapper` in Mapbase as it doesn't actually work
+* Removed `playtest_manager` entity as it doesn't actually exist in-game
 
 ## Bugfixes
 * Fix a compile failure if prop ropes were placed in a group with no connections.
@@ -25,6 +37,14 @@
 * Fix overlays not functioning with `material_modify_control` parent searching.
 * Make RunScriptCode \` handling occur after everything else.
 * #274, #277: Force required keyvalue casing for `light_environment`'s `SunSpreadAngle` and `lua_run`'s `Code` keys.
+* Fix hammer_notes text size/color parameters being missing for games before CS:GO
+* Fix mismatched numbering between `logic_random_outputs` KVs and inputs
+* Fix `comp_kv_setter`/`comp_adv_output` position keyvalues not getting transformed by instances in Source 2013
+* Fix `comp_adv_output` string keyvalues getting transformed as entity names
+* Fix not being able to scale props with ctrl+scrollwheel in Hammer++
+* Fix turret FOV preview being incorrect - it's 120 degrees, not 90
+* Fix item entities not rotating their hitboxes in Hammer
+* Fix typos in some movie filenames
 
 
 --------------------
