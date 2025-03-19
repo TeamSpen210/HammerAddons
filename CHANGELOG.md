@@ -1,5 +1,7 @@
 # Version Dev
 
+The postcompiler now requires Windows 8+.
+
 # Enhancements
 * Update to Mapbase 7.3.
 * A new "snippets" system allows FGD files to easily repeat descriptions and other small sections.
@@ -17,7 +19,7 @@
 * Allow configuring various shadow/fast reflection options for vactube object ents.
 * Boolean keyvalues (yes/no) can now be set to `!$var`, to invert the value of the variable. 
 * Propcombine will now preserve prop fade distances, by calculating a new distance which encloses the original fade spheres.
-* Warn if propcombine or packing was disabled via command line.
+* Warn in the log if propcombine or packing was disabled via command line, so this is detectable later.
 * Add option to `comp_adv_output` to have it expand target searches itself.
 * Refer to the "Gravity Gun" in descriptions instead of physgun/physcannon.
 * Floor buttons with `solid=6` will automatically be fixed, since this unintentionally makes them non-solid.

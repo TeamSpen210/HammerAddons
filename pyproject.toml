@@ -16,6 +16,7 @@ src_paths = ["src"]
 
 [tool.ruff]
 line-length = 127
+target-version = "py313"
 
 [tool.ruff.lint]
 select = [
