@@ -3,11 +3,13 @@
 This allows sharing definitions among different engine versions.
 """
 from __future__ import annotations
-from typing import Any, TypeVar, Callable
-from collections.abc import MutableMapping
+
+from typing import Any
+from collections.abc import Callable, MutableMapping
 from collections import Counter, defaultdict, ChainMap
 from pathlib import Path
 import argparse
+import itertools
 import sys
 
 from srctools import fgd
@@ -137,7 +139,6 @@ ALL_TAGS = {
 
 # If the tag is present, run to backport newer FGD syntax to older engines.
 POLYFILLS: list[tuple[frozenset[str], Callable[[FGD], None]]] = []
-PolyfillFuncT = TypeVar('PolyfillFuncT', bound=Callable[[FGD], None])
 
 # This ends up being the C1 Reverse Line Feed in CP1252,
 # which Hammer displays as nothing. We can suffix visgroups with this to
@@ -171,9 +172,9 @@ SNIPPET_KINDS = [
 SNIPPET_USED: set[str] = set()
 
 
-def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
+def _polyfill[Func: Callable[[FGD], None]](*tags: str) -> Callable[[Func], Func]:
     """Register a polyfill, which backports newer FGD syntax to older engines."""
-    def deco(func: PolyfillFuncT) -> PolyfillFuncT:
+    def deco(func: Func) -> Func:
         """Registers the function."""
         POLYFILLS.append((frozenset(tag.upper() for tag in tags), func))
         return func
@@ -524,7 +525,7 @@ def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
 
             elif bulleted:  # Entity.
                 ent_name = line[1:].strip('\t `')
-                for vis_parent, vis_name in zip(cur_path, cur_path[1:]):
+                for vis_parent, vis_name in itertools.pairwise(cur_path):
                     visgroup = fgd.auto_visgroups[vis_name.casefold()]
                     visgroup.ents.add(ent_name)
 
