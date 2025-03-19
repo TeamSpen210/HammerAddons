@@ -11,7 +11,7 @@
 
 * A "postcompiler" application which processes BSPs, allowing most of the new features.
 * Auto-packing - Automatically packs non-stock game files into the bsp. Filtered based on search paths in the included custom gameinfo and FGD database. Assets can also be packed manually with `comp_pack` entities.
-* Static prop combining - merges together adjacent props to allow them to be efficently drawn in batches. To use, specify studioMDL's path then place `comp_propcombnine_volume` or `comp_propcombine_set` entities.
+* Static prop combining - merges together adjacent props to allow them to be efficently drawn in batches. To use, specify studioMDL's path then place `comp_propcombine_volume` or `comp_propcombine_set` entities.
 * A [unified FGD database][unifiedfgd], allowing keyvalues to be shared among games, and accurately defining when features were added and removed.
 * Many more entity options, and an improved editor layout.
 * New sprites for almost all entities, both custom made and from a number of [other sources](#development).
