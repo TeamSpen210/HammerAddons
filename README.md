@@ -9,6 +9,7 @@
 
 ## Features
 
+* A "postcompiler" application which processes BSPs, allowing most of the new features.
 * Auto-packing - Automatically packs non-stock game files into the bsp. Filtered based on search paths in the included custom gameinfo and FGD database. Assets can also be packed manually with `comp_pack` entities.
 * Static prop combining - merges together adjacent props to allow them to be efficently drawn in batches. To use, specify studioMDL's path then place `comp_propcombnine_volume` or `comp_propcombine_set` entities.
 * A [unified FGD database][unifiedfgd], allowing keyvalues to be shared among games, and accurately defining when features were added and removed.
@@ -55,9 +56,7 @@ Below are short explanations, see the "Help" display on the entity properties in
 * Follow [this guide][installationwiki].
 * If using BEEMOD2.4, change Hammer -> Options -> Build Programs to use `vrad_original.exe`.
 
-
-
-## Development
+## Credits
 
 * Mapbase's FGDs have been imported as a submodule.
 * Some entity sprites are taken from: 
@@ -65,6 +64,43 @@ Below are short explanations, see the "Help" display on the entity properties in
   * [ZPS: Supplemental Hammer Icons][zps]
   * [ts2do's HL FGDs][ts2do]
 * Parts of [Allison's Portal 1 FGD edits][p1fgd] have been integrated into the fgds.
+
+## Development
+
+### Installing dependencies
+The code requires Python 3.13, and is mainly written on Windows (since that's where Hammer works).
+But it should work fine on Linux. To get dependencies:
+
+1. You'll likely want a virtual environment to keep the packages isolated - see Python's `venv` module.
+   Running `python -m venv some_folder/` will create one, then you can run the
+   `activate` script inside there to enable the environment.
+2. Run `python -m pip install -r requirements.txt` to install neceessary modules.
+3. Optionally `python -m pip install -r test-requirements.txt` to run some test code.
+
+### Building FGDs
+FGDs are stored as individual files, in a [unified][unifiedfgd] format tagged with games. This
+allows appropriate FGDs to be assembled for any Source game. To build an FGD for HL2 (for example):
+
+```shell
+cd src
+python hammeraddons/unify_fgd.py export hl2 srctools -o "build/hl2.fgd"
+```
+
+Consult the lists at the start of the script for available tags. The first is the game/mod, any
+additional ones are "features" like `srctools` for postcompiler features, or `propper` for those ents.
+
+### Building from source
+
+Many features require the postcompiler, which is a Python application. Releases have a compiled
+build, but for development purposes it may be useful to build locally or run from source. This also
+creates the `gen_choreo` utility.
+
+Run `python -m PyInstaller postcompiler.spec` to freeze the application.
+Optionally pass `--workpath XXX` and `--distpath XXX` to specify a temp folder and the destination
+respectively.
+
+The compiler can also be run from source by executing `hammeraddons/postcompiler.py`, 
+with `src/` in `PYTHONPATH`.
 
 [releases]: https://github.com/TeamSpen210/HammerAddons/releases
 [installationwiki]: https://github.com/TeamSpen210/HammerAddons/wiki/Installation
