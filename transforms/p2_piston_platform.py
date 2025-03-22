@@ -1,8 +1,9 @@
 """A custom logic entity to correctly sequence portal piston platforms."""
-import attrs
+import itertools
 import io
 
-from srctools import Angle, Matrix, Output, Vec, conv_bool, conv_float, conv_int, logger, Entity
+from srctools import Matrix, Output, Vec, conv_bool, conv_float, conv_int, logger, Entity
+import attrs
 
 from hammeraddons.bsp_transform import Context, ent_description, trans
 
@@ -96,7 +97,9 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
     if not pistons:
         raise ValueError(f'{desc} has no piston segments!')
     # Check indices are contiguous.
-    indices = range(min(pistons), max(pistons) + 1)
+    lowest = min(pistons)
+    highest = max(pistons)
+    indices = range(lowest, highest + 1)
     if missing := pistons.keys() - set(indices):
         raise ValueError(
             f'{desc} has missing piston segments. '
@@ -113,6 +116,19 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
         pist = pistons[indices[0]]
         pist.inverted = False
         pist.extended = pist.fraction > 0.5
+        extend_dir = (pist.end - pist.start).norm()
+    else:
+        base, tip = max(
+            itertools.product(
+                [pistons[lowest].start, pistons[lowest].end],
+                [pistons[highest].start, pistons[highest].end],
+            ),
+            key=lambda t: (t[1] - t[0]).mag_sqr()
+        )
+        extend_dir = (tip - base).norm()
+        for pist in pistons.values():
+            pist.inverted = Vec.dot(pist.end - pist.start, extend_dir) < 0
+            pist.extended = (pist.fraction > 0.5) ^ pist.inverted
 
     use_vscript = conv_bool(logic_ent['usevscript'])
 
