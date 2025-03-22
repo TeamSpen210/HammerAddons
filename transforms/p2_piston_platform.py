@@ -1,9 +1,49 @@
 """A custom logic entity to correctly sequence portal piston platforms."""
-from srctools import Output, conv_bool, conv_int, logger, Entity
+import attrs
+import io
+
+from srctools import Angle, Matrix, Output, Vec, conv_bool, conv_float, conv_int, logger, Entity
 
 from hammeraddons.bsp_transform import Context, ent_description, trans
 
 LOGGER = logger.get_logger(__name__)
+
+
+@attrs.define
+class Piston:
+    """Info about each piston segment."""
+    ent: Entity
+    pos: Vec  # origin = spawn position.
+    start: Vec  # SetPosition(0) or Close
+    end: Vec  # SetPosition(1) or Open
+    fraction: float
+    inverted: bool = False  # If true, this retracts in the end position.
+    extended: bool = False  # Whether it starts extended.
+
+    @classmethod
+    def calculate(cls, ctx: Context, ent: Entity) -> 'Piston':
+        """Calculate the two endpoints of this brush ent."""
+        origin = Vec.from_str(ent['origin'])
+        move_dir = Matrix.from_angstr(ent['movedir']).forward()
+        orient = Matrix.from_angstr(ent['angles'])
+
+        match ent['classname'].casefold():
+            case 'func_movelinear':
+                move_dist = conv_float(ent['movedistance'])
+            case 'func_door':
+                move_dist = 0.0
+            case unknown:
+                raise ValueError(f'Unknown segment classname {unknown}?')
+        if move_dist <= 0.0:
+            # func_movelinear only uses bbox if move distance is blank, doors always use it.
+            bmodel = ctx.bsp.bmodels[ent]
+            size = bmodel.maxes - bmodel.mins
+            move_dist = Vec.dot(move_dir, size) - conv_float(ent['lip'], 0.0)
+        fraction = conv_float(ent['startposition'])
+        move_dir @= orient
+        start_pos = origin - move_dir * fraction * move_dist
+        end_pos = start_pos + move_dir * move_dist
+        return cls(ent, origin, start_pos, end_pos, fraction)
 
 
 @trans('Portal Piston Platforms')
@@ -22,17 +62,30 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
     for key, ent_name in logic_ent.items():
         if not key.casefold().startswith('piston'):
             continue
-        ents = list(ctx.vmf.search(ent_name))
-        ind = int(key.removeprefix('piston'))
-        if len(ents) == 1:
-            pistons[ind] = ents[0]
-        elif len(ents) > 1:
-            # Can't continue, ambiguous as to the order.
-            raise ValueError(
-                f'{desc} located multiple entities '
-                f'for piston segment "{key}" = "{ent_name}"!'
-            )
-        else:
+        if '#' in key:  # TODO: Handle this in srctools.
+            key = key.split('#', 1)[0]
+        try:
+            ind = int(key.removeprefix('piston'))
+        except (TypeError, ValueError):
+            continue  # Not a piston key?
+
+        for ent in ctx.vmf.search(ent_name):
+            if ent['classname'].casefold() not in ('func_movelinear', 'func_door'):
+                # Warn and ignore, could be another ent with the same name or something.
+                LOGGER.warning(
+                    '{} has unknown segment #{} {}. '
+                    'Expected func_movelinear or func_door.',
+                    desc, ind, ent_description(ent),
+                )
+                continue
+            if ind in pistons:
+                # Can't continue, ambiguous as to the order.
+                raise ValueError(
+                    f'{desc} located multiple entities '
+                    f'for piston segment "{key}" = "{ent_name}"!'
+                )
+            pistons[ind] = Piston.calculate(ctx, ent)
+        if ind not in pistons:
             # Just a warning, so you can start with a prefab, remove unnecessary bits and it'll
             # still work.
             LOGGER.warning(
@@ -50,6 +103,16 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
             f'Segments span {indices.start} - {indices.stop-1}, but {sorted(missing)} are missing.'
         )
     LOGGER.debug('Piston {} spans range {} - {}', desc, indices.start, indices.stop-1)
+
+    # Calculate which are extended/retracted.
+    # Find the combo of top/bottom segments that have the biggest difference, which gives the fully
+    # extended position. Use that to determine extension direction, then determine inversion from
+    # there, plus whether it starts closest to start or end position.
+    if len(pistons) == 1:
+        # Nothing to determine, assume it's not inverted.
+        pist = pistons[indices[0]]
+        pist.inverted = False
+        pist.extended = pist.fraction > 0.5
 
     use_vscript = conv_bool(logic_ent['usevscript'])
 
@@ -117,11 +180,19 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
                 underside_hurt['damagetype'] = 1
 
     if use_vscript:
-        # Generate VScript.
-        logic_ent['classname'] = 'logic_script'
+        gen_logic_vscript(
+            ctx=ctx, logic_ent=logic_ent,
+            indices=indices, pistons=pistons,
+            underside_fizz=underside_fizz,
+            underside_hurt=underside_hurt,
+        )
     else:
-        # Use basic logic.
-        pass
+        gen_logic_branches(
+            ctx=ctx, logic_ent=logic_ent,
+            indices=indices, pistons=pistons,
+            underside_fizz=underside_fizz,
+            underside_hurt=underside_hurt,
+        )
 
 
 def configure_fizzler(fizz: Entity, desc: str) -> None:
@@ -152,3 +223,28 @@ def configure_fizzler(fizz: Entity, desc: str) -> None:
         Output('OnStartTouch', '!activator', 'Dissolve', 0.05),  # Cubes
         Output('OnStartTouch', '!activator', 'Break', 0.1),  # Any props (gibs)
     )
+
+
+def gen_logic_vscript(
+    *,
+    ctx: Context, logic_ent: Entity,
+    indices: range, pistons: dict[int, Entity],
+    underside_fizz: Entity | None,
+    underside_hurt: Entity | None,
+) -> None:
+    """Generate VScript logic for pistons."""
+    # Generate VScript.
+    logic_ent['classname'] = 'logic_script'
+    code = io.StringIO()
+    code.write(f'MAX_IND = {indices.stop - 1};\n')
+
+
+def gen_logic_branches(
+    *,
+    ctx: Context, logic_ent: Entity,
+    indices: range, pistons: dict[int, Entity],
+    underside_fizz: Entity | None,
+    underside_hurt: Entity | None,
+) -> None:
+    """Generate basic logic for pistons, using logic_branch."""
+    logic_ent.remove()
