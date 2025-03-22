@@ -1,0 +1,42 @@
+@PointClass
+	appliesto(+srctools)
+	iconsprite("editor/comp_piston_platform")
+	line(255 255 255, targetname, piston1)
+	line(255 255 255, targetname, piston2)
+	line(255 255 255, targetname, piston3)
+	line(255 255 255, targetname, piston4)
+	line(255 255 255, targetname, piston5)
+	line(255 0 0, targetname, underside_fizz)
+	line(255 0 0, targetname, underside_hurt)
+= comp_piston_platform: "Generates logic to correctly sequence Portal-style Piston Platforms."
+	[
+	piston1(target_destination) : "Piston 1" : : "The 1st func_movelinear or func_door from the bottom."
+	piston2(target_destination) : "Piston 2" : : "The 2nd func_movelinear or func_door from the bottom."
+	piston3(target_destination) : "Piston 3" : : "The 3rd func_movelinear or func_door from the bottom."
+	piston4(target_destination) : "Piston 4" : : "The 4th func_movelinear or func_door from the bottom."
+	piston5(target_destination) : "Piston 5" : : "The 5th func_movelinear or func_door from the bottom. " +
+		"More can be added with SmartEdit off."
+
+	use_vscript[+VScript](boolean) : "Use VScript" : 0 : "If enabled, control the platform via VScript. " +
+		"This reduces the number of logic entities needed, allows the platform to stop halfway, and enables 'lenient hurting'."
+
+	underside_fizz(target_destination) : "Underside Fizzler" : : "If specified, this should be the name of " +
+		"a trigger_multiple or trigger_portal_cleanser on the underside of the platform, to fizzle obstructions. " +
+		"If the option is unset, this can also be the name of a trigger_hurt to kill the player."
+	underside_hurt(target_destination) : "Underside Hurt" : : "This should be the name of a trigger_hurt " +
+		"placed on the underside of the platform, to kill the player if they obstruct it."
+	underside_auto(boolean) : "Autoconfigure underside fizzler/hurt" : 1 : "If enabled, automatically configure both triggers. " +
+		"If only one is present the other is automatically created. Outputs are added to fizzle cubes, " +
+		"explode turrets, crush players, and break anything else."
+
+	input Extend(void) : "Extend the platform fully."
+	input Retract(void) : "Retract the platform fully."
+	input MoveTo1[+VScript](void) : "Extend the platform to 1 segment. Requires VScript."
+	input MoveTo2[+VScript](void) : "Extend the platform to 2 segments. Requires VScript."
+	input MoveTo3[+VScript](void) : "Extend the platform to 3 segments. Requires VScript."
+	input MoveTo4[+VScript](void) : "Extend the platform to 4 segments. Requires VScript."
+	input MoveTo5[+VScript](void) : "Extend the platform to 5 segments. Requires VScript. " +
+		"MoveTo6+ work also if such pistons are added."
+
+    @resources [] // VScript is conditionally added.
+	]
