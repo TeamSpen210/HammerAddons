@@ -1,12 +1,9 @@
 """A custom logic entity to correctly sequence portal piston platforms."""
-import re
-
 from srctools import Output, conv_bool, conv_int, logger, Entity
 
 from hammeraddons.bsp_transform import Context, ent_description, trans
 
 LOGGER = logger.get_logger(__name__)
-RE_PISTON = re.compile(r'piston([0-9])(?:#([0-9]+))?')
 
 
 @trans('Portal Piston Platforms')
@@ -20,20 +17,15 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
     """Generate a piston platform."""
     desc = ent_description(logic_ent)
 
-    # First locate and validate all piston keyvalues.
-    # Kinda complicated, we want to handle a few situations.
-    # First iterate all KVs, parse the number.
-    # It's possible to have KVs like "blah#8" to add multiples, so order those within
-    # the normal index.
-    numbered_pistons = []
+    # Locate and validate the piston segments.
+    pistons = {}
     for key, ent_name in logic_ent.items():
-        if (match := RE_PISTON.match(key)) is None:
+        if not key.casefold().startswith('piston'):
             continue
         ents = list(ctx.vmf.search(ent_name))
-        ind = int(match.group(1))
-        sub_ind = int(match.group(2)) if match.group(2) is not None else 0
+        ind = int(key.removeprefix('piston'))
         if len(ents) == 1:
-            numbered_pistons.append((ind, sub_ind, ents[0]))
+            pistons[ind] = ents[0]
         elif len(ents) > 1:
             # Can't continue, ambiguous as to the order.
             raise ValueError(
@@ -48,10 +40,18 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
                 desc, key,
             )
 
-    numbered_pistons.sort(key=lambda t: (t[0], t[1]))
-    pistons = [pist for i, j, pist in numbered_pistons]
     if not pistons:
         raise ValueError(f'{desc} has no piston segments!')
+    # Check indices are contiguous.
+    indices = range(min(pistons), max(pistons) + 1)
+    if missing := pistons.keys() - set(indices):
+        raise ValueError(
+            f'{desc} has missing piston segments. '
+            f'Segments span {indices.start} - {indices.stop-1}, but {sorted(missing)} are missing.'
+        )
+    LOGGER.debug('Piston {} spans range {} - {}', desc, indices.start, indices.stop-1)
+
+    use_vscript = conv_bool(logic_ent['usevscript'])
 
     underside_fizz: Entity | None = None
     underside_hurt: Entity | None = None
@@ -115,6 +115,13 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
             if conv_int(underside_hurt['damagetype']) == 0:
                 # If generic, make it CRUSH. Otherwise, user picked for a reason?
                 underside_hurt['damagetype'] = 1
+
+    if use_vscript:
+        # Generate VScript.
+        logic_ent['classname'] = 'logic_script'
+    else:
+        # Use basic logic.
+        pass
 
 
 def configure_fizzler(fizz: Entity, desc: str) -> None:

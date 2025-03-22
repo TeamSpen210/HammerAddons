@@ -1,4 +1,4 @@
-@PointClass
+@PointClass base(StaticTargetName)
 	appliesto(+srctools)
 	iconsprite("editor/comp_piston_platform")
 	line(255 255 255, targetname, piston1)
@@ -8,13 +8,14 @@
 	line(255 255 255, targetname, piston5)
 	line(255 0 0, targetname, underside_fizz)
 	line(255 0 0, targetname, underside_hurt)
-= comp_piston_platform: "Generates logic to correctly sequence Portal-style Piston Platforms."
+= comp_piston_platform: "Generates logic to correctly sequence Portal-style Piston Platforms. " +
+	"func_movelinear or func_door segments have to be placed, parented appropriately, then linked to this."
 	[
-	piston1(target_destination) : "Piston 1" : : "The 1st func_movelinear or func_door from the bottom."
-	piston2(target_destination) : "Piston 2" : : "The 2nd func_movelinear or func_door from the bottom."
-	piston3(target_destination) : "Piston 3" : : "The 3rd func_movelinear or func_door from the bottom."
-	piston4(target_destination) : "Piston 4" : : "The 4th func_movelinear or func_door from the bottom."
-	piston5(target_destination) : "Piston 5" : : "The 5th func_movelinear or func_door from the bottom. " +
+	piston1(target_destination) : "Piston 1" : : "The func_movelinear or func_door for the 1st segment from the bottom. May be unset if it never moves."
+	piston2(target_destination) : "Piston 2" : : "The func_movelinear or func_door for the 2nd segment from the bottom. May be unset if it never moves."
+	piston3(target_destination) : "Piston 3" : : "The func_movelinear or func_door for the 3rd segment from the bottom. May be unset if it never moves."
+	piston4(target_destination) : "Piston 4" : : "The func_movelinear or func_door for the 4th segment from the bottom. May be unset if it never moves."
+	piston5(target_destination) : "Piston 5" : : "The func_movelinear or func_door for the 5th segment from the bottom. May be unset if it never moves. " +
 		"More can be added with SmartEdit off."
 
 	use_vscript[+VScript](boolean) : "Use VScript" : 0 : "If enabled, control the platform via VScript. " +
@@ -27,7 +28,10 @@
 		"placed on the underside of the platform, to kill the player if they obstruct it."
 	underside_auto(boolean) : "Autoconfigure underside fizzler/hurt" : 1 : "If enabled, automatically configure both triggers. " +
 		"If only one is present the other is automatically created. Outputs are added to fizzle cubes, " +
-		"explode turrets, crush players, and break anything else."
+		"explode turrets and break anything else, if no OnStartTouch/OnFizzled outputs are present."
+	underside_lenient(boolean) : "Lenient Hurting" : 1 : "If enabled (and VScript also is), " +
+		"require the platform to be jammed for a second or so before the fizzler/hurt is enabled to clear the obstruction. " +
+		"this ensures incidental contact doesn't fizzle objects."
 
 	input Extend(void) : "Extend the platform fully."
 	input Retract(void) : "Retract the platform fully."
