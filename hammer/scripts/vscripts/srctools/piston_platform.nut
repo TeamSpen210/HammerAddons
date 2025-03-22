@@ -1,13 +1,6 @@
 // Coordinates the different parts of the piston platform-style items.
 
-// Used with the PistonPlatform Result - places instances, and this script.
-// Entities we control:
-// -script: Us
-// -pist1 - 4: The func_movelinears, needs SetPosition, OnFullyOpen, OnFullyClosed
-
-inst_name <- self.GetName().slice(0, -7);
-
-pos <- 0;  // Position we want to be at.
+g_target_pos <- 0;  // Position we want to be at.
 // Layout:
 // pos, pist
 // 4    _ _
@@ -20,14 +13,15 @@ pos <- 0;  // Position we want to be at.
 //       1    |
 // 0 ____1____|_
 
-// 1-4 = ents, may be null.
+// 1+ = ents, may be null.
 pistons <- {};
 // positions - where the door is right now.
 POS_UP <- 1;
 POS_DN <- -1;
 POS_MOVING <- 0;
 positions <- {};
-cur_moving <- -1;
+g_cur_moving <- -1;
+g_max <- 4;
 
 START_SND <- "";
 STOP_SND <- "";
@@ -57,7 +51,7 @@ function OnPostSpawn() {
 	local found_pist = false;
 	local start_pos = (SPAWN_UP) ? POS_UP : POS_DN;
 	local highest_pos = 0;
-	for (local i=1; i<=4; i++) {
+	for (local i=1; i<=g_max; i++) {
 		pist = Entities.FindByName(null, inst_name + "-pist" + i);
 		pistons[i] <- pist;
 		// Hookup IO to notify us when they've reached the ends.
@@ -76,7 +70,7 @@ function OnPostSpawn() {
 		}
 	}
 	if (SPAWN_UP) {
-		pos = highest_pos;
+		g_target_pos = highest_pos;
 	}
 	
 	snd_top_ent <- self.GetMoveParent();
@@ -98,8 +92,8 @@ function OnPostSpawn() {
 }
 
 function moveto(new_pos) {
-	local old_pos = pos;
-	pos = new_pos;
+	local old_pos = g_target_pos;
+	g_target_pos = new_pos;
 	
 	// printl("Moving: " + old_pos + " -> " + new_pos);
 	
@@ -107,7 +101,7 @@ function moveto(new_pos) {
 		return; // No change.
 	}
 	
-	if (cur_moving == -1) {
+	if (g_cur_moving == -1) {
 		if(START_SND) {
 			self.EmitSound(START_SND);
 		}
@@ -144,16 +138,16 @@ function moveto(new_pos) {
 // and trigger it.
 // The pistons then trigger them again when they finish, so we loop until done.
 function _up() {
-	for(local i=1; i<=pos; i++) {
+	for(local i=1; i<=g_target_pos; i++) {
 		if (positions[i] != POS_UP) {
 			positions[i] = POS_MOVING;
 			EntFireByHandle(pistons[i], "Open", "", 0, self, self);
-			cur_moving = i;
+			g_cur_moving = i;
 			return;
 		}
 	}
 	// Finished.
-	cur_moving = -1;
+	g_cur_moving = -1;
 	if (STOP_SND) {
 		self.EmitSound(STOP_SND);
 	}
@@ -164,18 +158,18 @@ function _up() {
 
 function _dn() {
 	// Do not include piston[pos].
-	for(local i=4; i>pos; i--) {
+	for(local i=g_max; i>g_target_pos; i--) {
 		if (positions[i] != POS_DN) {
 			positions[i] = POS_MOVING;
 			EntFireByHandle(pistons[i], "Close", "", 0, self, self);
-			cur_moving = i;
+			g_cur_moving = i;
 			door_pos = pistons[i].GetOrigin();
 			crush_count = 0;
 			return;
 		}
 	}
 	// Finished.
-	cur_moving = -1;
+	g_cur_moving = -1;
 	if (STOP_SND) {
 		self.EmitSound(STOP_SND);
 	}
@@ -193,7 +187,7 @@ function _dn() {
 }
 
 function Think() {
-	if (cur_moving != -1 && snd_top_ent != null) {
+	if (g_cur_moving != -1 && snd_top_ent != null) {
 		// Update position.
 		local sum = snd_btm_pos + snd_top_ent.GetOrigin();
 		sum *= 0.5;
@@ -209,8 +203,8 @@ function Think() {
 	// * Currently moving
 	// * We have a valid previous position
 	// It has to trigger twice consecuatively.
-    if (dn_fizz_allowed && !dn_fizz_on && cur_moving != -1 && door_pos != null) {
-		local new_pos = pistons[cur_moving].GetOrigin();
+    if (dn_fizz_allowed && !dn_fizz_on && g_cur_moving != -1 && door_pos != null) {
+		local new_pos = pistons[g_cur_moving].GetOrigin();
 		if ((new_pos - door_pos).LengthSqr() < 1) {
 			crush_count++;
 			if (crush_count > 2) {
@@ -226,5 +220,5 @@ function Think() {
 		door_pos = new_pos;
    		return 0.05;
     }
-    return cur_moving != -1 ? 0.1 : 0.25;
+    return g_cur_moving != -1 ? 0.1 : 0.25;
 }
