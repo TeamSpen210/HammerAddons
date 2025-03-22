@@ -1,7 +1,7 @@
 """A custom logic entity to correctly sequence portal piston platforms."""
 import re
 
-from srctools import logger, Entity
+from srctools import Output, conv_bool, conv_int, logger, Entity
 
 from hammeraddons.bsp_transform import Context, ent_description, trans
 
@@ -18,6 +18,8 @@ def piston_platform(ctx: Context) -> None:
 
 def generate_platform(ctx: Context, logic_ent: Entity) -> None:
     """Generate a piston platform."""
+    desc = ent_description(logic_ent)
+
     # First locate and validate all piston keyvalues.
     # Kinda complicated, we want to handle a few situations.
     # First iterate all KVs, parse the number.
@@ -33,8 +35,9 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
         if len(ents) == 1:
             numbered_pistons.append((ind, sub_ind, ents[0]))
         elif len(ents) > 1:
+            # Can't continue, ambiguous as to the order.
             raise ValueError(
-                f'{ent_description(logic_ent)} located multiple entities '
+                f'{desc} located multiple entities '
                 f'for piston segment "{key}" = "{ent_name}"!'
             )
         else:
@@ -42,13 +45,13 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
             # still work.
             LOGGER.warning(
                 '{} could not find piston segment "{}"!',
-                ent_description(logic_ent), key,
+                desc, key,
             )
 
     numbered_pistons.sort(key=lambda t: (t[0], t[1]))
     pistons = [pist for i, j, pist in numbered_pistons]
     if not pistons:
-        raise ValueError(f'{ent_description(logic_ent)} has no piston segments!')
+        raise ValueError(f'{desc} has no piston segments!')
 
     underside_fizz: Entity | None = None
     underside_hurt: Entity | None = None
@@ -58,17 +61,18 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
         logic_ent['underside_hurt'].casefold(),
     }):
         for ent in ctx.vmf.search(ent_name):
+            cls = ent['classname'].casefold()
             # Use a multiple to fire Break/self-destruct inputs,
             # or just a fizzler to fizzle everything.
-            if ent['classname'] in ('trigger_multiple', 'trigger_portal_cleanser'):
+            if cls in ('trigger_multiple', 'trigger_portal_cleanser'):
                 if underside_fizz is not None:
                     raise ValueError(
                         '{} found duplicate underside hurt triggers {} and {}!',
-                        ent_description(logic_ent),
+                        desc,
                         ent_description(underside_hurt), ent_description(ent)
                     )
                 underside_fizz = ent
-            if ent['classname'] == 'trigger_hurt':
+            elif cls == 'trigger_hurt':
                 if underside_hurt is not None:
                     raise ValueError(
                         '{} found duplicate underside hurt triggers {} and {}!',
@@ -76,3 +80,68 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
                         ent_description(underside_hurt), ent_description(ent)
                     )
                 underside_hurt = ent
+            else:
+                LOGGER.warning(
+                    'Unexpected classname for undersize fizzler/hurt "{}" for piston {}?',
+                    ent['classname'], desc
+                )
+
+    if conv_bool(logic_ent['underside_auto', '1'], True):
+        # Configure/create both entities.
+        # We turn on/off both simultaneously so it doesn't matter whether they
+        # have the same name or not.
+        if underside_fizz is None and underside_hurt is not None:
+            underside_fizz = ctx.vmf.create_ent(
+                'trigger_multiple',
+                origin=underside_hurt['origin'],
+                targetname=underside_hurt['targetname'],
+            )
+            ctx.bsp.bmodels[underside_fizz] = ctx.bsp.bmodels[underside_hurt]
+        elif underside_hurt is None and underside_fizz is not None:
+            underside_hurt = ctx.vmf.create_ent(
+                'trigger_hurt',
+                origin=underside_fizz['origin'],
+                targetname=underside_fizz['targetname'],
+            )
+            ctx.bsp.bmodels[underside_hurt] = ctx.bsp.bmodels[underside_fizz]
+
+        # Configure each, if they're present. Could be missing if both are.
+        if underside_fizz is not None:
+            configure_fizzler(underside_fizz, desc)
+        if underside_hurt is not None:
+            underside_hurt['spawnflags'] = 1  # Only players make sense.
+            if conv_int(underside_hurt['damage']) < 100:
+                underside_hurt['damage'] = 100  # Instakill
+            if conv_int(underside_hurt['damagetype']) == 0:
+                # If generic, make it CRUSH. Otherwise, user picked for a reason?
+                underside_hurt['damagetype'] = 1
+
+
+def configure_fizzler(fizz: Entity, desc: str) -> None:
+    """Configure the fizzler."""
+    flags = conv_int(fizz['spawnflags'])
+    # Add physics objects, remove players.
+    flags |= 8
+    flags &= ~1
+    fizz['spawnflags'] = flags
+
+    cls = fizz['classname'].casefold()
+    if cls == 'trigger_portal_cleanser':
+        # It's a fizzler, just turn off visibility/scanlines.
+        fizz['visible'] = False
+        fizz['usescanline'] = False
+        return
+    # Otherwise, it's a trigger_multiple and we need to check outputs.
+    assert cls == 'trigger_multiple', cls
+    # If any OnStartTouch/OnTrigger outputs are present, assume the user has configured
+    # them.
+    for out in fizz.outputs:
+        if out.output.casefold() in ('ontrigger', 'onstarttouch'):
+            LOGGER.info('Outputs found on underside fizzler "{}", assuming these fizzle.')
+            return
+    # Order these inputs by priority, each kills the ent so the rest won't fire.
+    fizz.add_out(
+        Output('OnStartTouch', '!activator', 'SelfDestructImmediately'),  # Turrets
+        Output('OnStartTouch', '!activator', 'Dissolve', 0.05),  # Cubes
+        Output('OnStartTouch', '!activator', 'Break', 0.1),  # Any props (gibs)
+    )
