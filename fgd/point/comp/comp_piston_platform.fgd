@@ -29,7 +29,7 @@
 	underside_auto(boolean) : "Autoconfigure underside fizzler/hurt" : 1 : "If enabled, automatically configure both triggers. " +
 		"If only one is present the other is automatically created. Outputs are added to fizzle cubes, " +
 		"explode turrets and break anything else, if no OnStartTouch/OnFizzled outputs are present."
-	underside_lenient(boolean) : "Lenient Hurting" : 1 : "If enabled (and VScript also is), " +
+	underside_lenient(boolean) : "Lenient Hurting" : 0 : "If enabled (and VScript also is), " +
 		"require the platform to be jammed for a second or so before the fizzler/hurt is enabled to clear the obstruction. " +
 		"this ensures incidental contact doesn't fizzle objects."
 

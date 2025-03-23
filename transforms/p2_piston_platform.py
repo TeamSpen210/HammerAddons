@@ -1,4 +1,6 @@
 """A custom logic entity to correctly sequence portal piston platforms."""
+from typing import NoReturn
+
 import itertools
 import io
 
@@ -14,6 +16,7 @@ LOGGER = logger.get_logger(__name__)
 class Piston:
     """Info about each piston segment."""
     ent: Entity
+    index: int
     pos: Vec  # origin = spawn position.
     start: Vec  # SetPosition(0) or Close
     end: Vec  # SetPosition(1) or Open
@@ -22,7 +25,7 @@ class Piston:
     extended: bool = False  # Whether it starts extended.
 
     @classmethod
-    def calculate(cls, ctx: Context, ent: Entity) -> 'Piston':
+    def calculate(cls, ctx: Context, ind: int, ent: Entity) -> 'Piston':
         """Calculate the two endpoints of this brush ent."""
         origin = Vec.from_str(ent['origin'])
         move_dir = Matrix.from_angstr(ent['movedir']).forward()
@@ -44,7 +47,7 @@ class Piston:
         move_dir @= orient
         start_pos = origin - move_dir * fraction * move_dist
         end_pos = start_pos + move_dir * move_dist
-        return cls(ent, origin, start_pos, end_pos, fraction)
+        return cls(ent, ind, origin, start_pos, end_pos, fraction)
 
 
 @trans('Portal Piston Platforms')
@@ -85,7 +88,7 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
                     f'{desc} located multiple entities '
                     f'for piston segment "{key}" = "{ent_name}"!'
                 )
-            pistons[ind] = Piston.calculate(ctx, ent)
+            pistons[ind] = Piston.calculate(ctx, ind, ent)
         if ind not in pistons:
             # Just a warning, so you can start with a prefab, remove unnecessary bits and it'll
             # still work.
@@ -123,12 +126,14 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
                 [pistons[lowest].start, pistons[lowest].end],
                 [pistons[highest].start, pistons[highest].end],
             ),
-            key=lambda t: (t[1] - t[0]).mag_sqr()
+            key=lambda t: (t[1] - t[0]).mag_sq()
         )
         extend_dir = (tip - base).norm()
         for pist in pistons.values():
             pist.inverted = Vec.dot(pist.end - pist.start, extend_dir) < 0
             pist.extended = (pist.fraction > 0.5) ^ pist.inverted
+
+    LOGGER.debug('Piston configuration: {}', pistons)
 
     use_vscript = conv_bool(logic_ent['usevscript'])
 
@@ -196,6 +201,7 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
                 underside_hurt['damagetype'] = 1
 
     if use_vscript:
+        LOGGER.info('Generating VScript logic for piston {}', desc)
         gen_logic_vscript(
             ctx=ctx, logic_ent=logic_ent,
             indices=indices, pistons=pistons,
@@ -203,6 +209,7 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
             underside_hurt=underside_hurt,
         )
     else:
+        LOGGER.info('Generating logic_branch logic for piston {}', desc)
         gen_logic_branches(
             ctx=ctx, logic_ent=logic_ent,
             indices=indices, pistons=pistons,
@@ -231,20 +238,23 @@ def configure_fizzler(fizz: Entity, desc: str) -> None:
     # them.
     for out in fizz.outputs:
         if out.output.casefold() in ('ontrigger', 'onstarttouch'):
-            LOGGER.info('Outputs found on underside fizzler "{}", assuming these fizzle.')
+            LOGGER.info(
+                'Outputs found on underside fizzler "{}" for piston {}, assuming these fizzle.',
+                ent_description(fizz), desc,
+            )
             return
     # Order these inputs by priority, each kills the ent so the rest won't fire.
     fizz.add_out(
         Output('OnStartTouch', '!activator', 'SelfDestructImmediately'),  # Turrets
-        Output('OnStartTouch', '!activator', 'Dissolve', 0.05),  # Cubes
-        Output('OnStartTouch', '!activator', 'Break', 0.1),  # Any props (gibs)
+        Output('OnStartTouch', '!activator', 'Dissolve', delay=0.05),  # Cubes
+        Output('OnStartTouch', '!activator', 'Break', delay=0.1),  # Any props (gibs)
     )
 
 
 def gen_logic_vscript(
     *,
     ctx: Context, logic_ent: Entity,
-    indices: range, pistons: dict[int, Entity],
+    indices: range, pistons: dict[int, Piston],
     underside_fizz: Entity | None,
     underside_hurt: Entity | None,
 ) -> None:
@@ -258,9 +268,84 @@ def gen_logic_vscript(
 def gen_logic_branches(
     *,
     ctx: Context, logic_ent: Entity,
-    indices: range, pistons: dict[int, Entity],
+    indices: range, pistons: dict[int, Piston],
     underside_fizz: Entity | None,
     underside_hurt: Entity | None,
 ) -> None:
     """Generate basic logic for pistons, using logic_branch."""
     logic_ent.remove()
+
+    # For this logic, disallow pistons to start in an inconsistent state.
+    if {piston.extended for piston in pistons.values()} == {False, True}:
+        raise ValueError(
+            f'Piston platform {ent_description(logic_ent)} has some pistons starting extended '
+            'and others retracted. VScript is required to support this setup.'
+        )
+
+    up_branches = []
+    dn_branches = []
+
+    for pist1, pist2 in itertools.pairwise(pistons[i] for i in indices):
+        up_branches.append(make_branch(ctx, pist1, pist2, 'up'))
+        dn_branches.append(make_branch(ctx, pist2, pist1, 'dn'))
+    pist_first = pistons[indices[0]]
+    pist_last = pistons[indices[-1]]
+    logic_name = logic_ent['targetname']
+    ctx.add_io_remap(
+        logic_name,
+        Output('Extend', pist_first.ent, 'Close' if pist_first.inverted else 'Open'),
+        *[Output('Extend', branch, 'SetValue', '1') for branch in up_branches],
+        *[Output('Extend', branch, 'SetValue', '0') for branch in dn_branches],
+        Output('Retract', pist_last.ent, 'Open' if pist_last.inverted else 'Close'),
+        *[Output('Retract', branch, 'SetValue', '0') for branch in up_branches],
+        *[Output('Retract', branch, 'SetValue', '1') for branch in dn_branches],
+        # MoveTo is allowed to reach the last position only. It's just a synonym.
+        Output(f'MoveTo{indices[-1]}', logic_name, 'Extend'),
+    )
+    underside_ents = {
+        ent['targetname']
+        for ent in [underside_fizz, underside_hurt]
+        if ent is not None
+    }
+    for name in underside_ents:
+        ctx.add_io_remap(
+            logic_name,
+            Output('Extend', name, 'Disable'),
+            Output('Retract', name, 'Enable'),
+        )
+
+    if underside_ents and conv_bool(logic_ent['underside_lenient']):
+        LOGGER.warning(
+            'Piston platform {} is requesting lenient underside fizzlers/hurts, '
+            'but VScript must be enabled for this feature.',
+            ent_description(logic_ent)
+        )
+
+    def extension_error(source: Entity, out: Output) -> NoReturn:
+        """Error if inputs are used that require VScript."""
+        raise ValueError(
+            f'Output "{out.input}" cannot be used on piston platform {ent_description(logic_ent)}! '
+            f'VScript is required to stop midway. Output originates from {ent_description(source)}.'
+        )
+    for pos in indices[:-1]:
+        ctx.add_io_remap_func(logic_name, f'MoveTo{pos}', extension_error)
+
+
+def make_branch(ctx: Context, source: Piston, target: Piston, name: str) -> Entity:
+    """Create the logic_branch for a direction along with the connections."""
+    invert = target.index < source.index
+    branch = ctx.vmf.create_ent(
+        'logic_branch',
+        origin=source.ent['origin'],
+    ).make_unique(f'{source.ent["targetname"]}_{name}_branch')
+    branch.add_out(
+        Output('OnTrue', target.ent, 'Close' if target.inverted ^ invert else 'Open'),
+        # Fired if we get here when we're supposed to stop, reverse both.
+        Output('OnFalse', target.ent, 'Open' if target.inverted ^ invert else 'Close'),
+        Output('OnFalse', source.ent, 'Open' if source.inverted ^ invert else 'Close'),
+    )
+    source.ent.add_out(Output(
+        'OnFullyClosed' if source.inverted ^ invert else 'OnFullyOpen',
+        branch, 'Test'
+    ))
+    return branch
