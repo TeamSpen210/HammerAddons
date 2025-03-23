@@ -15,6 +15,8 @@ g_target_pos <- 0;  // Position we want to be at.
 
 // 1-max = ents, set by compiler.
 g_pistons <- {};
+// For each piston, if open/closed is swapped.
+g_inverted <- {};
 // positions - where the door is right now.
 POS_UP <- 1;
 POS_DN <- -1;
@@ -95,7 +97,7 @@ function _up(index=null) {
 	for(local i=1; i<=g_target_pos; i++) {
 		if (g_positions[i] != POS_UP) {
 			g_positions[i] = POS_MOVING;
-			EntFireByHandle(g_pistons[i], "Open", "", 0, self, self);
+			EntFireByHandle(g_pistons[i], g_inverted[i] ? "Close" : "Open", "", 0, self, self);
 			g_cur_moving = i;
 			return;
 		}
@@ -115,7 +117,7 @@ function _dn(index=null) {
 	for(local i=MAX_IND; i>g_target_pos; i--) {
 		if (g_positions[i] != POS_DN) {
 			g_positions[i] = POS_MOVING;
-			EntFireByHandle(g_pistons[i], "Close", "", 0, self, self);
+			EntFireByHandle(g_pistons[i], g_inverted[i] ? "Open" : "Close", "", 0, self, self);
 			g_cur_moving = i;
 			door_pos = g_pistons[i].GetOrigin();
 			crush_count = 0;

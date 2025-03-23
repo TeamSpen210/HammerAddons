@@ -235,6 +235,7 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
                     'OnStartTouch', '!activator', 'ExitDisabledState',
                 ))
 
+    # Extract names, deduplicating. Both logic types don't need to edit the triggers themselves.
     underside_ents = {
         ent['targetname']
         for ent in [underside_fizz, underside_hurt]
@@ -247,6 +248,7 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
             ctx=ctx, logic_ent=logic_ent,
             indices=indices, pistons=pistons,
             underside_ents=underside_ents,
+            # VScript needs to iterate twice if there's two with the same name.
             both_underside=underside_fizz is not None and underside_hurt is not None,
             enable_motion_trig=enable_motion_trig,
         )
@@ -302,7 +304,8 @@ def gen_logic_vscript(
     enable_motion_trig: Entity | None,
 ) -> None:
     """Generate VScript logic for pistons."""
-    # Generate VScript.
+    # Generate init code which configures the piston. We'll also create a function
+    # for all possible inputs, so they don't need to be pre-compiled.
     logic_ent['classname'] = 'logic_script'
     logic_name = logic_ent['targetname']
     code = io.StringIO()
@@ -312,6 +315,7 @@ def gen_logic_vscript(
     code.write(f'function Retract() {{ moveto({retract_pos}) }}\n')
     for pist in pistons.values():
         code.write(f'g_positions[{pist.index}] <- {'POS_UP' if pist.extended else 'POS_DN'};\n')
+        code.write(f'g_inverted[{pist.index}] <- {'true' if pist.inverted else 'false'};\n')
         code.write(f'function MoveTo{pist.index}() {{ moveto({pist.index}) }}\n')
         ctx.add_io_remap(logic_name, Output(
             f'MoveTo{pist.index}', logic_name,
@@ -342,7 +346,6 @@ def gen_logic_vscript(
     code.write('}\n')
 
     for pist1, pist2 in itertools.pairwise(pistons[i] for i in indices):
-        # Use CallScriptFunction so the code can be compiled only once.
         pist1.ent.add_out(Output(
             'OnFullyClosed' if pist1.inverted else 'OnFullyOpen',
             logic_name, 'CallScriptFunction', f'up{pist1.index}',
