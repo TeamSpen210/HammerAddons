@@ -310,6 +310,8 @@ def gen_logic_vscript(
     logic_name = logic_ent['targetname']
     code = io.StringIO()
     code.write(f'MAX_IND = {indices.stop - 1};\n')
+    # Starting height is the number of extended pistons.
+    code.write(f'g_target_pos = {sum(pist.extended for pist in pistons.values())};\n')
     # Retract = move lower than the first segment position.
     retract_pos = indices[0] - 1
     code.write(f'function Retract() {{ moveto({retract_pos}) }}\n')
@@ -317,9 +319,19 @@ def gen_logic_vscript(
         code.write(f'g_positions[{pist.index}] <- {'POS_UP' if pist.extended else 'POS_DN'};\n')
         code.write(f'g_inverted[{pist.index}] <- {'true' if pist.inverted else 'false'};\n')
         code.write(f'function MoveTo{pist.index}() {{ moveto({pist.index}) }}\n')
+        code.write(f'function up{pist.index}() {{ g_positions[{pist.index}]=POS_UP;_up()}}\n')
+        code.write(f'function dn{pist.index}() {{ g_positions[{pist.index}]=POS_DN;_dn()}}\n')
+
         ctx.add_io_remap(logic_name, Output(
             f'MoveTo{pist.index}', logic_name,
             'CallScriptFunction', f'MoveTo{pist.index}',
+        ))
+        pist.ent.add_out(Output(
+            'OnFullyClosed' if pist.inverted else 'OnFullyOpen',
+            logic_name, 'CallScriptFunction', f'up{pist.index}',
+        ), Output(
+            'OnFullyOpen' if pist.inverted else 'OnFullyClosed',
+            logic_name, 'CallScriptFunction', f'dn{pist.index}',
         ))
 
     ctx.add_io_remap(logic_name, Output(
@@ -344,18 +356,6 @@ def gen_logic_vscript(
                     f'\tdn_fizz_ents.push(Entities.FindByName(first, "{ent_name}"))\n'
                 )
     code.write('}\n')
-
-    for pist1, pist2 in itertools.pairwise(pistons[i] for i in indices):
-        pist1.ent.add_out(Output(
-            'OnFullyClosed' if pist1.inverted else 'OnFullyOpen',
-            logic_name, 'CallScriptFunction', f'up{pist1.index}',
-        ))
-        code.write(f'function up{pist1.index}() {{ g_positions[{pist1.index}]=POS_UP;_up()}}\n')
-        pist2.ent.add_out(Output(
-            'OnFullyOpen' if pist2.inverted else 'OnFullyClosed',
-            logic_name, 'CallScriptFunction', f'dn{pist2.index}',
-        ))
-        code.write(f'function dn{pist2.index}() {{ g_positions[{pist2.index}]=POS_DN;_dn()}}\n')
 
     strip_cust_keys(logic_ent)
     logic_ent['vscripts'] = 'srctools/piston_platform.nut'

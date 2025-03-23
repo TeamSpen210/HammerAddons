@@ -1,6 +1,5 @@
 // Coordinates the different parts of the piston platform-style items.
 
-g_target_pos <- 0;  // Position we want to be at.
 // Layout:
 // pos, pist
 // 4    _ _
@@ -28,6 +27,9 @@ g_cur_moving <- -1;
 MAX_IND <- 4;
 // Position we're trying to move to.
 g_target_pos <- 0;
+// In "fix mode", we're moving any misplaced pistons back into place.
+// In that case up()/dn() redirect to fix().
+g_fix <- false;
 
 START_SND <- "";
 STOP_SND <- "";
@@ -54,20 +56,13 @@ function moveto(new_pos) {
 	printl("Moving: " + old_pos + " -> " + new_pos);
 	
 	if (old_pos == new_pos) {
-		return; // No change.
+		// No change. run fix() anyway.
+		return fix();
 	}
-	
+	g_fix = false;
+
 	if (g_cur_moving == -1) {
-		if(START_SND) {
-			self.EmitSound(START_SND);
-		}
-		if (self.GetClassname() == "func_rotating") { // Looping sound
-			EntFireByHandle(self, "Start", "", 0.00, self, self);
-		}
-		if (enable_motion_trig != null) {
-			EntFireByHandle(enable_motion_trig, "Enable", "", 0, self, self);
-			EntFireByHandle(enable_motion_trig, "Disable", "", 0.1, self, self);
-		}
+		start();
 	}
 	
 	if (old_pos < new_pos) {
@@ -90,10 +85,24 @@ function moveto(new_pos) {
 	}
 }
 
+function start() {
+	if(START_SND) {
+		self.EmitSound(START_SND);
+	}
+	if (self.GetClassname() == "func_rotating") { // Looping sound
+		EntFireByHandle(self, "Start", "", 0.00, self, self);
+	}
+	if (enable_motion_trig != null) {
+		EntFireByHandle(enable_motion_trig, "Enable", "", 0, self, self);
+		EntFireByHandle(enable_motion_trig, "Disable", "", 0.1, self, self);
+	}
+}
+
 // These two funcs find the first platform in their direction that's wrong,
 // and trigger it.
 // The pistons then trigger them again when they finish, so we loop until done.
-function _up(index=null) {
+function _up() {
+	if (g_fix) {return fix(); }
 	for(local i=1; i<=g_target_pos; i++) {
 		if (g_positions[i] != POS_UP) {
 			g_positions[i] = POS_MOVING;
@@ -103,16 +112,11 @@ function _up(index=null) {
 		}
 	}
 	// Finished.
-	g_cur_moving = -1;
-	if (STOP_SND) {
-		self.EmitSound(STOP_SND);
-	}
-	if (self.GetClassname() == "func_rotating") { // Looping sound
-		EntFireByHandle(self, "Stop", "", 0.00, self, self);
-	}
+	fix();
 }
 
-function _dn(index=null) {
+function _dn() {
+	if (g_fix) { return fix(); }
 	// Do not include g_pistons[pos].
 	for(local i=MAX_IND; i>g_target_pos; i--) {
 		if (g_positions[i] != POS_DN) {
@@ -125,13 +129,6 @@ function _dn(index=null) {
 		}
 	}
 	// Finished.
-	g_cur_moving = -1;
-	if (STOP_SND) {
-		self.EmitSound(STOP_SND);
-	}
-	if (self.GetClassname() == "func_rotating") { // Looping sound.
-		EntFireByHandle(self, "Stop", "", 0.00, self, self);
-	}
 	if (dn_fizz_on) {
 		dn_fizz_on = false;
 		dn_fizz_allowed = false;
@@ -140,6 +137,45 @@ function _dn(index=null) {
 			EntFireByHandle(fizz, "Disable", "", 0, self, self);
 		}
 	}
+	fix();
+}
+
+// After we think we're in position, check all pistons to confirm,
+// and move any that aren't back. 
+function fix() {
+	foreach(i, ent in g_pistons) {
+		if (i <= g_target_pos) { // Should be up
+			if (g_positions[i] != POS_UP) {
+				EntFireByHandle(g_pistons[i], g_inverted[i] ? "Close" : "Open", "", 0, self, self);
+				if (g_cur_moving == -1) {
+					start();
+				}
+				g_cur_moving = i;
+				g_fix = true;
+				return;
+			}
+		} else {
+			if (g_positions[i] != POS_DN) {
+				EntFireByHandle(g_pistons[i], g_inverted[i] ? "Open" : "Close", "", 0, self, self);
+				if (g_cur_moving == -1) {
+					start();
+				}
+				g_cur_moving = i;
+				g_fix = true;
+				return;
+			}
+		}
+	}
+	if (g_cur_moving != -1) {
+		// We were moving, stop sounds.
+		if (STOP_SND) {
+			self.EmitSound(STOP_SND);
+		}
+		if (self.GetClassname() == "func_rotating") { // Looping sound
+			EntFireByHandle(self, "Stop", "", 0.00, self, self);
+		}
+	}
+	g_cur_moving = -1;
 }
 
 function Think() {
