@@ -13,24 +13,24 @@ g_target_pos <- 0;  // Position we want to be at.
 //       1    |
 // 0 ____1____|_
 
-// 1+ = ents, may be null.
-pistons <- {};
+// 1-max = ents, set by compiler.
+g_pistons <- {};
 // positions - where the door is right now.
 POS_UP <- 1;
 POS_DN <- -1;
 POS_MOVING <- 0;
-positions <- {};
+g_positions <- {}; // Initialised by compiler.
+// Currently moving piston, or -1 if stationary.
 g_cur_moving <- -1;
-g_max <- 4;
+// Maximum piston index.
+MAX_IND <- 4;
+// Position we're trying to move to.
+g_target_pos <- 0;
 
 START_SND <- "";
 STOP_SND <- "";
 
-// If true, we spawned extended.
-SPAWN_UP <- false;
-// Name of down fizzler. Starts set for backward compat.
-DN_FIZZ_NAME <- "dn_fizz";
-
+enable_motion_trig <- null;
 dn_fizz_ents <- [];
 dn_fizz_on <- false;
 dn_fizz_allowed <- false;
@@ -45,57 +45,11 @@ function Precache() {
 	if(STOP_SND)  self.PrecacheSoundScript(STOP_SND);
 }
 
-function OnPostSpawn() {
-	// Grab our pistons - may not be there if the ents won't exist.
-	local pist = null;
-	local found_pist = false;
-	local start_pos = (SPAWN_UP) ? POS_UP : POS_DN;
-	local highest_pos = 0;
-	for (local i=1; i<=g_max; i++) {
-		pist = Entities.FindByName(null, inst_name + "-pist" + i);
-		pistons[i] <- pist;
-		// Hookup IO to notify us when they've reached the ends.
-		// We set the position to the correct value, then call _up() or _dn().
-		if (pist != null) {
-			EntFireByHandle(pist, "AddOutput", "OnFullyOpen " + self.GetName() + ":RunScriptCode:positions[" + i + "]=" + POS_UP + ";_up():0:-1", 0, self, self);
-			EntFireByHandle(pist, "AddOutput", "OnFullyClosed " + self.GetName() + ":RunScriptCode:positions[" + i + "]=" + POS_DN + ";_dn():0:-1", 0, self, self);
-			positions[i] <- start_pos;
-			found_pist = true;
-			highest_pos = i;
-		} else {
-			// Piston not there, so we need to assume bottom ones are up,
-			// top ones are down.
-			// if found_pist = true, we're past the bottom ones...
-			positions[i] <- found_pist ? POS_DN : POS_UP;
-		}
-	}
-	if (SPAWN_UP) {
-		g_target_pos = highest_pos;
-	}
-	
-	snd_top_ent <- self.GetMoveParent();
-	if (snd_top_ent != null) {
-		// We now know what it is.
-		EntFireByHandle(self, "ClearParent", "", 0, self, self);
-	}
-	
-	// If present, trigger whenever we start moving to wake cubes.
-	enable_motion_trig <- Entities.FindByName(null, inst_name + "-wake_trig");
-	
-	// If we have these, turn them on while going down.
-	// Need to loop since there could be a hurt and fizzler.
-	local dn_fizz = null;
-	local dn_fizz_name = format("%s-%s", inst_name, DN_FIZZ_NAME);
-	while (dn_fizz = Entities.FindByName(dn_fizz, dn_fizz_name)) {
-		dn_fizz_ents.push(dn_fizz);
-	}
-}
-
 function moveto(new_pos) {
 	local old_pos = g_target_pos;
 	g_target_pos = new_pos;
 	
-	// printl("Moving: " + old_pos + " -> " + new_pos);
+	printl("Moving: " + old_pos + " -> " + new_pos);
 	
 	if (old_pos == new_pos) {
 		return; // No change.
@@ -137,11 +91,11 @@ function moveto(new_pos) {
 // These two funcs find the first platform in their direction that's wrong,
 // and trigger it.
 // The pistons then trigger them again when they finish, so we loop until done.
-function _up() {
+function _up(index=null) {
 	for(local i=1; i<=g_target_pos; i++) {
-		if (positions[i] != POS_UP) {
-			positions[i] = POS_MOVING;
-			EntFireByHandle(pistons[i], "Open", "", 0, self, self);
+		if (g_positions[i] != POS_UP) {
+			g_positions[i] = POS_MOVING;
+			EntFireByHandle(g_pistons[i], "Open", "", 0, self, self);
 			g_cur_moving = i;
 			return;
 		}
@@ -156,14 +110,14 @@ function _up() {
 	}
 }
 
-function _dn() {
-	// Do not include piston[pos].
-	for(local i=g_max; i>g_target_pos; i--) {
-		if (positions[i] != POS_DN) {
-			positions[i] = POS_MOVING;
-			EntFireByHandle(pistons[i], "Close", "", 0, self, self);
+function _dn(index=null) {
+	// Do not include g_pistons[pos].
+	for(local i=MAX_IND; i>g_target_pos; i--) {
+		if (g_positions[i] != POS_DN) {
+			g_positions[i] = POS_MOVING;
+			EntFireByHandle(g_pistons[i], "Close", "", 0, self, self);
 			g_cur_moving = i;
-			door_pos = pistons[i].GetOrigin();
+			door_pos = g_pistons[i].GetOrigin();
 			crush_count = 0;
 			return;
 		}
@@ -204,7 +158,7 @@ function Think() {
 	// * We have a valid previous position
 	// It has to trigger twice consecuatively.
     if (dn_fizz_allowed && !dn_fizz_on && g_cur_moving != -1 && door_pos != null) {
-		local new_pos = pistons[g_cur_moving].GetOrigin();
+		local new_pos = g_pistons[g_cur_moving].GetOrigin();
 		if ((new_pos - door_pos).LengthSqr() < 1) {
 			crush_count++;
 			if (crush_count > 2) {

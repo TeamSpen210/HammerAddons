@@ -18,6 +18,10 @@
 	piston5(target_destination) : "Piston 5" : : "The func_movelinear or func_door for the 5th segment from the bottom. May be unset if it never moves. " +
 		"More can be added with SmartEdit off."
 
+	enable_motion_trig[P2](target_destination) : "Enable Motion Trigger" : : "A trigger which is briefly activated whenever the piston moves, " +
+		"to force-wake any reflection cubes."
+	autoconfig_triggers(boolean) : "Autoconfigure triggers" : 1 : "If enabled, automatically configure the various triggers, adding outputs."
+
 	use_vscript[+VScript](boolean) : "Use VScript" : 0 : "If enabled, control the platform via VScript. " +
 		"This reduces the number of logic entities needed, allows the platform to stop halfway, and enables 'lenient hurting'."
 
@@ -26,9 +30,6 @@
 		"If the option is unset, this can also be the name of a trigger_hurt to kill the player."
 	underside_hurt(target_destination) : "Underside Hurt" : : "This should be the name of a trigger_hurt " +
 		"placed on the underside of the platform, to kill the player if they obstruct it."
-	underside_auto(boolean) : "Autoconfigure underside fizzler/hurt" : 1 : "If enabled, automatically configure both triggers. " +
-		"If only one is present the other is automatically created. Outputs are added to fizzle cubes, " +
-		"explode turrets and break anything else, if no OnStartTouch/OnFizzled outputs are present."
 	underside_lenient(boolean) : "Lenient Hurting" : 0 : "If enabled (and VScript also is), " +
 		"require the platform to be jammed for a second or so before the fizzler/hurt is enabled to clear the obstruction. " +
 		"this ensures incidental contact doesn't fizzle objects."

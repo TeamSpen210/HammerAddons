@@ -1,4 +1,6 @@
 """A custom logic entity to correctly sequence portal piston platforms."""
+from collections.abc import Collection
+
 from typing import NoReturn
 
 import itertools
@@ -7,7 +9,8 @@ import io
 from srctools import Matrix, Output, Vec, conv_bool, conv_float, conv_int, logger, Entity
 import attrs
 
-from hammeraddons.bsp_transform import Context, ent_description, trans
+from hammeraddons.bsp_transform.common import strip_cust_keys, ent_description
+from hammeraddons.bsp_transform import Context, trans
 
 LOGGER = logger.get_logger(__name__)
 
@@ -53,11 +56,12 @@ class Piston:
 @trans('Portal Piston Platforms')
 def piston_platform(ctx: Context) -> None:
     """A custom logic entity to correctly sequence portal piston platforms."""
+    motion_filter: Entity | None = None
     for ent in ctx.vmf.by_class['comp_piston_platform']:
-        generate_platform(ctx, ent)
+        motion_filter = generate_platform(ctx, motion_filter, ent)
 
 
-def generate_platform(ctx: Context, logic_ent: Entity) -> None:
+def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Entity) -> Entity | None:
     """Generate a piston platform."""
     desc = ent_description(logic_ent)
 
@@ -83,7 +87,8 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
                 )
                 continue
             if ind in pistons:
-                # Can't continue, ambiguous as to the order.
+                # Can't continue, ambiguous as to the order. Also means
+                # at runtime they can't be targeted individually.
                 raise ValueError(
                     f'{desc} located multiple entities '
                     f'for piston segment "{key}" = "{ent_name}"!'
@@ -135,8 +140,6 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
 
     LOGGER.debug('Piston configuration: {}', pistons)
 
-    use_vscript = conv_bool(logic_ent['usevscript'])
-
     underside_fizz: Entity | None = None
     underside_hurt: Entity | None = None
     # Remove duplicates, then remove blanks/unset.
@@ -170,7 +173,15 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
                     ent['classname'], desc
                 )
 
-    if conv_bool(logic_ent['underside_auto', '1'], True):
+    enable_motion_trig: Entity | None = None
+    if ent_name := logic_ent['enable_motion_trig']:
+        ents = list(ctx.vmf.search(ent_name))
+        if len(ents) > 1:
+            raise ValueError(f'{desc} found multiple enalbe-motion triggers!')
+        elif len(ents) == 1:
+            [enable_motion_trig] = ents
+
+    if conv_bool(logic_ent['autoconfig_triggers', '1'], True):
         # Configure/create both entities.
         # We turn on/off both simultaneously so it doesn't matter whether they
         # have the same name or not.
@@ -200,21 +211,52 @@ def generate_platform(ctx: Context, logic_ent: Entity) -> None:
                 # If generic, make it CRUSH. Otherwise, user picked for a reason?
                 underside_hurt['damagetype'] = 1
 
-    if use_vscript:
+        if enable_motion_trig is not None:
+            # This should detect only laser cubes, but any cube is close enough.
+            if not enable_motion_trig['filtername']:
+                if motion_filter is None:
+                    # Make the filter.
+                    motion_filter = ctx.vmf.create_ent(
+                        'filter_activator_class',
+                        negated=0,
+                        filterclass='prop_weighted_cube',
+                    ).make_unique('filter_weighted_cube')
+            enable_motion_trig['filtername'] = motion_filter['targetname']
+            enable_motion_trig['spawnflags'] = 8  # Physics
+            for out in enable_motion_trig.outputs:
+                if (
+                    out.output.casefold() in ('onstarttouch', 'ontrigger')
+                    and out.target.casefold() == '!activator'
+                    and out.input.casefold() == 'exitdisabledstate'
+                ):
+                    break  # Already present.
+            else:
+                enable_motion_trig.add_out(Output(
+                    'OnStartTouch', '!activator', 'ExitDisabledState',
+                ))
+
+    underside_ents = {
+        ent['targetname']
+        for ent in [underside_fizz, underside_hurt]
+        if ent is not None
+    }
+
+    if conv_bool(logic_ent['use_vscript']):
         LOGGER.info('Generating VScript logic for piston {}', desc)
         gen_logic_vscript(
             ctx=ctx, logic_ent=logic_ent,
             indices=indices, pistons=pistons,
-            underside_fizz=underside_fizz,
-            underside_hurt=underside_hurt,
+            underside_ents=underside_ents,
+            both_underside=underside_fizz is not None and underside_hurt is not None,
+            enable_motion_trig=enable_motion_trig,
         )
     else:
         LOGGER.info('Generating logic_branch logic for piston {}', desc)
         gen_logic_branches(
             ctx=ctx, logic_ent=logic_ent,
             indices=indices, pistons=pistons,
-            underside_fizz=underside_fizz,
-            underside_hurt=underside_hurt,
+            underside_ents=underside_ents,
+            enable_motion_trig=enable_motion_trig,
         )
 
 
@@ -255,22 +297,74 @@ def gen_logic_vscript(
     *,
     ctx: Context, logic_ent: Entity,
     indices: range, pistons: dict[int, Piston],
-    underside_fizz: Entity | None,
-    underside_hurt: Entity | None,
+    underside_ents: Collection[str],
+    both_underside: bool,
+    enable_motion_trig: Entity | None,
 ) -> None:
     """Generate VScript logic for pistons."""
     # Generate VScript.
     logic_ent['classname'] = 'logic_script'
+    logic_name = logic_ent['targetname']
     code = io.StringIO()
     code.write(f'MAX_IND = {indices.stop - 1};\n')
+    # Retract = move lower than the first segment position.
+    retract_pos = indices[0] - 1
+    code.write(f'function Retract() {{ moveto({retract_pos}) }}\n')
+    for pist in pistons.values():
+        code.write(f'g_positions[{pist.index}] <- {'POS_UP' if pist.extended else 'POS_DN'};\n')
+        code.write(f'function MoveTo{pist.index}() {{ moveto({pist.index}) }}\n')
+        ctx.add_io_remap(logic_name, Output(
+            f'MoveTo{pist.index}', logic_name,
+            'CallScriptFunction', f'MoveTo{pist.index}',
+        ))
+
+    ctx.add_io_remap(logic_name, Output(
+            'Extend', logic_name, 'CallScriptFunction', f'MoveTo{indices[-1]}'
+        ), Output('Retract', logic_name, 'CallScriptFunction', 'Retract'),
+    )
+
+    code.write('function OnPostSpawn() {\n')
+    for pist in pistons.values():
+        code.write(f'\tg_pistons[{pist.index}] <- Entities.FindByName(null, "{pist.ent['targetname']}");\n')
+    if enable_motion_trig is not None:
+        code.write(f'\tenable_motion_trig = Entities.FindByName(null, "{enable_motion_trig['targetname']}")')
+    if underside_ents:
+        if conv_bool(logic_ent['underside_lenient']):
+            logic_ent['thinkfunction'] = 'Think'
+            if both_underside and len(underside_ents) == 1:
+                [ent_name] = underside_ents
+                # Both have the same name, so we need to loop twice.
+                code.write(
+                    f'\tlocal first = Entities.FindByName(null, "{ent_name}")\n'
+                    '\tdn_fizz_ents.push(first);\n'
+                    f'\tdn_fizz_ents.push(Entities.FindByName(first, "{ent_name}"))\n'
+                )
+    code.write('}\n')
+
+    for pist1, pist2 in itertools.pairwise(pistons[i] for i in indices):
+        # Use CallScriptFunction so the code can be compiled only once.
+        pist1.ent.add_out(Output(
+            'OnFullyClosed' if pist1.inverted else 'OnFullyOpen',
+            logic_name, 'CallScriptFunction', f'up{pist1.index}',
+        ))
+        code.write(f'function up{pist1.index}() {{ g_positions[{pist1.index}]=POS_UP;_up()}}\n')
+        pist2.ent.add_out(Output(
+            'OnFullyOpen' if pist2.inverted else 'OnFullyClosed',
+            logic_name, 'CallScriptFunction', f'dn{pist2.index}',
+        ))
+        code.write(f'function dn{pist2.index}() {{ g_positions[{pist2.index}]=POS_DN;_dn()}}\n')
+
+    strip_cust_keys(logic_ent)
+    logic_ent['vscripts'] = 'srctools/piston_platform.nut'
+    ctx.add_code(logic_ent, code.getvalue())
 
 
 def gen_logic_branches(
     *,
     ctx: Context, logic_ent: Entity,
     indices: range, pistons: dict[int, Piston],
-    underside_fizz: Entity | None,
-    underside_hurt: Entity | None,
+    underside_ents: Collection[str],
+    enable_motion_trig: Entity | None,
 ) -> None:
     """Generate basic logic for pistons, using logic_branch."""
     logic_ent.remove()
@@ -302,11 +396,14 @@ def gen_logic_branches(
         # MoveTo is allowed to reach the last position only. It's just a synonym.
         Output(f'MoveTo{indices[-1]}', logic_name, 'Extend'),
     )
-    underside_ents = {
-        ent['targetname']
-        for ent in [underside_fizz, underside_hurt]
-        if ent is not None
-    }
+    if enable_motion_trig is not None:
+        ctx.add_io_remap(
+            logic_name,
+            Output('Extend', enable_motion_trig, 'Enable'),
+            Output('Extend', enable_motion_trig, 'Disable', delay=0.1),
+            Output('Retract', enable_motion_trig, 'Enable'),
+            Output('Retract', enable_motion_trig, 'Disable', delay=0.1),
+        )
     for name in underside_ents:
         ctx.add_io_remap(
             logic_name,
