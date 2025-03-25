@@ -56,6 +56,8 @@ class Piston:
 @trans('Portal Piston Platforms')
 def piston_platform(ctx: Context) -> None:
     """A custom logic entity to correctly sequence portal piston platforms."""
+    # If we need to generate a filter for motion entities, pass that to the rest of the
+    # platforms for reuse.
     motion_filter: Entity | None = None
     for ent in ctx.vmf.by_class['comp_piston_platform']:
         motion_filter = generate_platform(ctx, motion_filter, ent)
@@ -159,7 +161,7 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
     for ent_name in filter(None, {
         logic_ent['underside_fizz'].casefold(),
         logic_ent['underside_hurt'].casefold(),
-    }):
+}):
         for ent in ctx.vmf.search(ent_name):
             cls = ent['classname'].casefold()
             # Use a multiple to fire Break/self-destruct inputs,
@@ -273,6 +275,7 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
             underside_ents=underside_ents,
             enable_motion_trig=enable_motion_trig,
         )
+    return motion_filter
 
 
 def configure_fizzler(fizz: Entity, desc: str) -> None:
