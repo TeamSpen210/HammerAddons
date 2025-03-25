@@ -1,7 +1,7 @@
 """A custom logic entity to correctly sequence portal piston platforms."""
 from collections.abc import Collection
 
-from typing import NoReturn
+from typing import NoReturn, Self
 
 import itertools
 import io
@@ -28,7 +28,7 @@ class Piston:
     extended: bool = False  # Whether it starts extended.
 
     @classmethod
-    def calculate(cls, ctx: Context, ind: int, ent: Entity) -> 'Piston':
+    def calculate(cls, ctx: Context, ind: int, ent: Entity) -> Self:
         """Calculate the two endpoints of this brush ent."""
         origin = Vec.from_str(ent['origin'])
         move_dir = Matrix.from_angstr(ent['movedir']).forward()
@@ -119,12 +119,25 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
     # Find the combo of top/bottom segments that have the biggest difference, which gives the fully
     # extended position. Use that to determine extension direction, then determine inversion from
     # there, plus whether it starts closest to start or end position.
-    if len(pistons) == 1:
+    extend_override = conv_int(logic_ent['position_override'])
+    if extend_override != 0:
+        # User overrides.
+        if extend_override == 1:
+            for pist in pistons:
+                pist.inverted = pist.extended = False
+        elif extend_override == 2:
+            for pist in pistons:
+                pist.inverted = pist.extended = True
+        else:
+            raise ValueError(
+                f'{desc}: Position override {logic_ent['position_override']} '
+                'is invalid, expected 0, 1 or 2.'
+            )
+    elif len(pistons) == 1:
         # Nothing to determine, assume it's not inverted.
         pist = pistons[indices[0]]
         pist.inverted = False
         pist.extended = pist.fraction > 0.5
-        extend_dir = (pist.end - pist.start).norm()
     else:
         base, tip = max(
             itertools.product(
