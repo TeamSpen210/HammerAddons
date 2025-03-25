@@ -326,12 +326,25 @@ def gen_logic_vscript(
     """Generate VScript logic for pistons."""
     # Generate init code which configures the piston. We'll also create a function
     # for all possible inputs, so they don't need to be pre-compiled.
-    logic_ent['classname'] = 'logic_script'
     logic_name = logic_ent['targetname']
     code = io.StringIO()
     code.write(f'MAX_IND = {indices.stop - 1}\n')
     # Starting height is the number of extended pistons.
     code.write(f'g_target_pos = {sum(pist.extended for pist in pistons.values())}\n')
+
+    snd = logic_ent['snd_start']
+    if snd and snd.casefold() != 'default.null':
+        code.write(f'START_SND = "{snd}"\n')
+    snd = logic_ent['snd_stop']
+    if snd and snd.casefold() != 'default.null':
+        code.write(f'STOP_SND = "{snd}"\n')
+    snd = logic_ent['snd_move']
+    if snd and snd.casefold() != 'default.null':
+        logic_ent['classname'] = 'ambient_generic'
+        logic_ent['message'] = snd
+    else:
+        logic_ent['classname'] = 'info_target'
+
     # Retract = move lower than the first segment position.
     retract_pos = indices[0] - 1
     code.write(f'function Retract() {{ moveto({retract_pos}) }}\n')
@@ -457,6 +470,66 @@ def gen_logic_branches(
             'but VScript must be enabled for this feature.',
             ent_description(logic_ent)
         )
+
+    snd = logic_ent['snd_start']
+    if snd and snd.casefold() != 'default.null':
+        snd_ent = ctx.vmf.create_ent(
+            'ambient_generic',
+            origin=logic_ent['origin'],
+            message=snd,
+            sourceentityname=pist_last.ent['targetname'],
+            radius=1500,
+            spawnflags=16 | 32,  # Start Silent + Not looped.
+        ).make_unique(logic_name + '_snd_start')
+        ctx.add_io_remap(
+            logic_name,
+            Output('Extend', snd_ent, 'PlaySound'),
+            Output('Retract', snd_ent, 'PlaySound'),
+        )
+
+    snd = logic_ent['snd_stop']
+    if snd and snd.casefold() != 'default.null':
+        snd_ent = ctx.vmf.create_ent(
+            'ambient_generic',
+            origin=logic_ent['origin'],
+            message=snd,
+            sourceentityname=pist_last.ent['targetname'],
+            radius=1500,
+            spawnflags=16 | 32,  # Start Silent + Not looped.
+        ).make_unique(logic_name + '_snd_stop')
+        # Only need to care about reaching the ends.
+        pist_first.ent.add_out(Output(
+            'OnFullyOpen' if pist_first.inverted else 'OnFullyClosed',
+            snd_ent, 'PlaySound',
+        ))
+        pist_last.ent.add_out(Output(
+            'OnFullyClosed' if pist_first.inverted else 'OnFullyOpen',
+            snd_ent, 'PlaySound',
+        ))
+
+    snd = logic_ent['snd_move']
+    if snd and snd.casefold() != 'default.null':
+        snd_ent = ctx.vmf.create_ent(
+            'ambient_generic',
+            origin=Vec.from_str(logic_ent['origin']) + (0, 0, 16),
+            message=snd,
+            sourceentityname=pist_last.ent['targetname'],
+            radius=1500,
+            spawnflags=16,  # Start Silent.
+        ).make_unique(logic_name + '_snd_move')
+        ctx.add_io_remap(
+            logic_name,
+            Output('Extend', snd_ent, 'PlaySound'),
+            Output('Retract', snd_ent, 'PlaySound'),
+        )
+        pist_first.ent.add_out(Output(
+            'OnFullyOpen' if pist_first.inverted else 'OnFullyClosed',
+            snd_ent, 'StopSound',
+        ))
+        pist_last.ent.add_out(Output(
+            'OnFullyClosed' if pist_first.inverted else 'OnFullyOpen',
+            snd_ent, 'StopSound',
+        ))
 
     def extension_error(source: Entity, out: Output) -> NoReturn:
         """Error if inputs are used that require VScript."""

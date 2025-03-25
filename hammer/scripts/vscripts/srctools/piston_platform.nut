@@ -97,9 +97,11 @@ function start() {
 	if(START_SND) {
 		self.EmitSound(START_SND);
 	}
-	if (self.GetClassname() == "func_rotating") { // Looping sound
-		EntFireByHandle(self, "Start", "", 0.00, self, self);
-	}
+	if (self.GetClassname() == "ambient_generic") {
+		EntFireByHandle(self, "PlaySound", "" 0.0, self, self);
+	} else if (self.GetClassname() == "func_rotating") { // Alt technique
+		EntFireByHandle(self, "Start", "", 0.0, self, self);
+	} 
 	if (enable_motion_trig != null) {
 		EntFireByHandle(enable_motion_trig, "Enable", "", 0, self, self);
 		EntFireByHandle(enable_motion_trig, "Disable", "", 0.1, self, self);
@@ -179,9 +181,11 @@ function fix() {
 		if (STOP_SND) {
 			self.EmitSound(STOP_SND);
 		}
-		if (self.GetClassname() == "func_rotating") { // Looping sound
+		if (self.GetClassname() == "ambient_generic") {
+			EntFireByHandle(self, "StopSound", "" 0.0, self, self);
+		} else if (self.GetClassname() == "func_rotating") { // Looping sound
 			EntFireByHandle(self, "Stop", "", 0.00, self, self);
-		}
+		} 
 	}
 	g_cur_moving = -1;
 }

@@ -31,7 +31,11 @@
 
 	enable_motion_trig[P2](target_destination): "Enable Motion Trigger" : : "A trigger which is briefly activated whenever the piston moves, " +
 		"to force-wake any reflection cubes."
-	autoconfig_triggers(boolean): "Autoconfigure triggers" : 1 : "If enabled, automatically configure the various triggers, adding outputs."
+	autoconfig_triggers(boolean): "Autoconfigure triggers" : 1 : "If enabled, automatically configure the various triggers, adding outputs and setting keyvalues."
+
+	snd_start(sound): "Start Sound" : "Default.Null" : "Play this sound when the platform starts moving. Set to 'Default.Null' to disable."
+	snd_move(sound): "Move Sound" : "World.PlatformStart" : "Loop this sound while moving. Set to 'Default.Null' to disable."
+	snd_stop(sound): "Stop Sound" : "World.PlatformStop" : "Play this sound when the platform stops. Set to 'Default.Null' to disable."
 
 	use_vscript[+VScript](boolean): "Use VScript" : 0 : "If enabled, control the platform via VScript. " +
 		"This reduces the number of logic entities needed, allows the platform to stop halfway, and enables 'lenient hurting'."
