@@ -220,6 +220,9 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
             configure_fizzler(underside_fizz, desc)
         if underside_hurt is not None:
             underside_hurt['spawnflags'] = 1  # Only players make sense.
+            # We only enable if moving to the bottom, so if extended it should be off.
+            # If retracted, it'll be covered so it doesn't matter.
+            underside_hurt['startdisabled'] = True
             if conv_int(underside_hurt['damage']) < 100:
                 underside_hurt['damage'] = 100  # Instakill
             if conv_int(underside_hurt['damagetype']) == 0:
@@ -238,6 +241,7 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
                     ).make_unique('filter_weighted_cube')
             enable_motion_trig['filtername'] = motion_filter['targetname']
             enable_motion_trig['spawnflags'] = 8  # Physics
+            enable_motion_trig['startdisabled'] = 1  # Only turns on briefly.
             for out in enable_motion_trig.outputs:
                 if (
                     out.output.casefold() in ('onstarttouch', 'ontrigger')
@@ -251,11 +255,11 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
                 ))
 
     # Extract names, deduplicating. Both logic types don't need to edit the triggers themselves.
-    underside_ents = {
-        ent['targetname']
+    underside_ents = [
+        ent
         for ent in [underside_fizz, underside_hurt]
         if ent is not None
-    }
+    ]
 
     if conv_bool(logic_ent['use_vscript']):
         LOGGER.info('Generating VScript logic for piston {}', desc)
@@ -263,8 +267,6 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
             ctx=ctx, logic_ent=logic_ent,
             indices=indices, pistons=pistons,
             underside_ents=underside_ents,
-            # VScript needs to iterate twice if there's two with the same name.
-            both_underside=underside_fizz is not None and underside_hurt is not None,
             enable_motion_trig=enable_motion_trig,
         )
     else:
@@ -285,6 +287,9 @@ def configure_fizzler(fizz: Entity, desc: str) -> None:
     flags |= 8
     flags &= ~1
     fizz['spawnflags'] = flags
+    # We only enable if moving to the bottom, so if extended it should be off.
+    # If retracted, it'll be covered so it doesn't matter.
+    fizz['startdisabled'] = True
 
     cls = fizz['classname'].casefold()
     if cls == 'trigger_portal_cleanser':
@@ -315,8 +320,7 @@ def gen_logic_vscript(
     *,
     ctx: Context, logic_ent: Entity,
     indices: range, pistons: dict[int, Piston],
-    underside_ents: Collection[str],
-    both_underside: bool,
+    underside_ents: list[Entity],
     enable_motion_trig: Entity | None,
 ) -> None:
     """Generate VScript logic for pistons."""
@@ -325,15 +329,15 @@ def gen_logic_vscript(
     logic_ent['classname'] = 'logic_script'
     logic_name = logic_ent['targetname']
     code = io.StringIO()
-    code.write(f'MAX_IND = {indices.stop - 1};\n')
+    code.write(f'MAX_IND = {indices.stop - 1}\n')
     # Starting height is the number of extended pistons.
-    code.write(f'g_target_pos = {sum(pist.extended for pist in pistons.values())};\n')
+    code.write(f'g_target_pos = {sum(pist.extended for pist in pistons.values())}\n')
     # Retract = move lower than the first segment position.
     retract_pos = indices[0] - 1
     code.write(f'function Retract() {{ moveto({retract_pos}) }}\n')
     for pist in pistons.values():
-        code.write(f'g_positions[{pist.index}] <- {'POS_UP' if pist.extended else 'POS_DN'};\n')
-        code.write(f'g_inverted[{pist.index}] <- {'true' if pist.inverted else 'false'};\n')
+        code.write(f'g_positions[{pist.index}] <- {'POS_UP' if pist.extended else 'POS_DN'}\n')
+        code.write(f'g_inverted[{pist.index}] <- {'true' if pist.inverted else 'false'}\n')
         code.write(f'function MoveTo{pist.index}() {{ moveto({pist.index}) }}\n')
         code.write(f'function up{pist.index}() {{ g_positions[{pist.index}]=POS_UP;_up()}}\n')
         code.write(f'function dn{pist.index}() {{ g_positions[{pist.index}]=POS_DN;_dn()}}\n')
@@ -357,20 +361,32 @@ def gen_logic_vscript(
 
     code.write('function OnPostSpawn() {\n')
     for pist in pistons.values():
-        code.write(f'\tg_pistons[{pist.index}] <- Entities.FindByName(null, "{pist.ent['targetname']}");\n')
+        code.write(f'\tg_pistons[{pist.index}] <- Entities.FindByName(null, "{pist.ent['targetname']}")\n')
     if enable_motion_trig is not None:
-        code.write(f'\tenable_motion_trig = Entities.FindByName(null, "{enable_motion_trig['targetname']}")')
+        code.write(f'\tenable_motion_trig = Entities.FindByName(null, "{enable_motion_trig['targetname']}")\n')
     if underside_ents:
         if conv_bool(logic_ent['underside_lenient']):
             logic_ent['thinkfunction'] = 'Think'
-            if both_underside and len(underside_ents) == 1:
-                [ent_name] = underside_ents
-                # Both have the same name, so we need to loop twice.
-                code.write(
-                    f'\tlocal first = Entities.FindByName(null, "{ent_name}")\n'
-                    '\tdn_fizz_ents.push(first);\n'
-                    f'\tdn_fizz_ents.push(Entities.FindByName(first, "{ent_name}"))\n'
-                )
+            code.write('dn_fizz_eager = false\n')
+        else:
+            code.write('dn_fizz_eager = true\n')
+
+        underside_names = {ent['targetname'] for ent in underside_ents}
+        if len(underside_ents) == 2 and len(underside_names) == 1:
+            [ent_name] = underside_names
+            # Both have the same name, so we need to loop twice.
+            code.write(
+                f'local first = Entities.FindByName(null, "{ent_name}")\n'
+                'dn_fizz_ents.push(first);\n'
+                f'dn_fizz_ents.push(Entities.FindByName(first, "{ent_name}"))\n'
+            )
+        else:
+            for ent_name in underside_names:
+                code.write(f'dn_fizz_ents.push(Entities.FindByName(null, "{ent_name}"))\n')
+        # Leinient fizzlers must always start disabled, VScript turns them on briefly only.
+        for ent in underside_ents:
+            ent['startdisabled'] = True
+
     code.write('}\n')
 
     strip_cust_keys(logic_ent)
@@ -382,7 +398,7 @@ def gen_logic_branches(
     *,
     ctx: Context, logic_ent: Entity,
     indices: range, pistons: dict[int, Piston],
-    underside_ents: Collection[str],
+    underside_ents: list[Entity],
     enable_motion_trig: Entity | None,
 ) -> None:
     """Generate basic logic for pistons, using logic_branch."""
@@ -423,7 +439,8 @@ def gen_logic_branches(
             Output('Retract', enable_motion_trig, 'Enable'),
             Output('Retract', enable_motion_trig, 'Disable', delay=0.1),
         )
-    for name in underside_ents:
+    # Deduplicate names.
+    for name in {ent['targetname'] for ent in underside_ents}:
         ctx.add_io_remap(
             logic_name,
             Output('Extend', name, 'Disable'),

@@ -6,6 +6,7 @@
 	line(255 255 255, targetname, piston3)
 	line(255 255 255, targetname, piston4)
 	line(255 255 255, targetname, piston5)
+	line(255 0 0, targetname, enable_motion_trig)
 	line(255 0 0, targetname, underside_fizz)
 	line(255 0 0, targetname, underside_hurt)
 = comp_piston_platform: "Generates logic to correctly sequence Portal-style Piston Platforms. " +

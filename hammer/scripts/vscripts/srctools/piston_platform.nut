@@ -38,6 +38,7 @@ enable_motion_trig <- null;
 dn_fizz_ents <- [];
 dn_fizz_on <- false;
 dn_fizz_allowed <- false;
+dn_fizz_eager <- false;
 door_pos <- null;
 crush_count <- 0;
 snd_btm_pos <- self.GetOrigin();
@@ -78,10 +79,17 @@ function moveto(new_pos) {
 		}
 		_up();
 	} else if (old_pos > new_pos) {
-		_dn();
 		if (dn_fizz_ents.len() > 0) {
-			dn_fizz_allowed <- true;
+			if(dn_fizz_eager) {
+				dn_fizz_on = true;
+				foreach (fizz in dn_fizz_ents) {
+					EntFireByHandle(fizz, "Enable", "", 0, self, self);
+				}
+			} else {
+				dn_fizz_allowed <- true;
+			}
 		}
+		_dn();
 	}
 }
 
