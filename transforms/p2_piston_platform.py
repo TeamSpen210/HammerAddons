@@ -446,6 +446,10 @@ def gen_logic_branches(
             Output('Extend', name, 'Disable'),
             Output('Retract', name, 'Enable'),
         )
+        pist_first.ent.add_out(Output(
+            'OnFullyOpen' if pist_first.inverted else 'OnFullyClosed',
+            name, 'Disable',
+        ))
 
     if underside_ents and conv_bool(logic_ent['underside_lenient']):
         LOGGER.warning(
