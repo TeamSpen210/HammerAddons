@@ -28,7 +28,7 @@ def ambient_generic_kvs(ctx: Context) -> None:
             ('haddons_enabled', 'Enabled', FLAG_START_SILENT),
             ('haddons_mode', 'Mode', FLAG_NOT_LOOPED),
         ]:
-            value = conv_int(ent[name])
+            value = conv_int(ent[name], -1)
             if value == -1:
                 pass  # Keep spawnflag
             elif value == 0:
@@ -42,7 +42,7 @@ def ambient_generic_kvs(ctx: Context) -> None:
                 )
 
         # Non-inverted
-        value = conv_int(ent['haddons_infrange'])
+        value = conv_int(ent['haddons_infrange'], -1)
         if value == -1:
             pass  # Keep spawnflag
         elif value == 0:
