@@ -1,6 +1,4 @@
 """A custom logic entity to correctly sequence portal piston platforms."""
-from collections.abc import Collection
-
 from typing import NoReturn, Self
 
 import itertools
@@ -125,10 +123,10 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
     if extend_override != 0:
         # User overrides.
         if extend_override == 1:
-            for pist in pistons:
+            for pist in pistons.values():
                 pist.inverted = pist.extended = False
         elif extend_override == 2:
-            for pist in pistons:
+            for pist in pistons.values():
                 pist.inverted = pist.extended = True
         else:
             raise ValueError(
@@ -141,14 +139,12 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
         pist.inverted = False
         pist.extended = pist.fraction > 0.5
     else:
-        base, tip = max(
-            itertools.product(
-                [pistons[lowest].start, pistons[lowest].end],
-                [pistons[highest].start, pistons[highest].end],
-            ),
-            key=lambda t: (t[1] - t[0]).mag_sq()
-        )
-        extend_dir = (tip - base).norm()
+        # Pistons are parented to the base, so it doesn't matter where that is.
+        # We pick the furthest away position, which is going to be fully extended.
+        extend_dir = max([
+            pistons[highest].start - pistons[lowest].start,
+            pistons[highest].end - pistons[lowest].start,
+        ], key=Vec.mag_sq).norm()
         for pist in pistons.values():
             pist.inverted = Vec.dot(pist.end - pist.start, extend_dir) < 0
             pist.extended = (pist.fraction > 0.5) ^ pist.inverted
@@ -171,7 +167,7 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
                     raise ValueError(
                         '{} found duplicate underside hurt triggers {} and {}!',
                         desc,
-                        ent_description(underside_hurt), ent_description(ent)
+                        ent_description(underside_fizz), ent_description(ent)
                     )
                 underside_fizz = ent
             elif cls == 'trigger_hurt':
@@ -239,7 +235,7 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
                         negated=0,
                         filterclass='prop_weighted_cube',
                     ).make_unique('filter_weighted_cube')
-            enable_motion_trig['filtername'] = motion_filter['targetname']
+                enable_motion_trig['filtername'] = motion_filter['targetname']
             enable_motion_trig['spawnflags'] = 8  # Physics
             enable_motion_trig['startdisabled'] = 1  # Only turns on briefly.
             for out in enable_motion_trig.outputs:
