@@ -11,11 +11,11 @@
 	spawnflags(flags)  =
 		[
 		1: "Use Only" : 0
-		2: "Strip All Weapons First" : 0 [since_CSGO]
-		4: "Only Strip Same Weapon Type" : 0 [since_CSGO]
+		2: "Strip All Weapons First" : 0 [since_CSGO, GMOD]
+		4: "Only Strip Same Weapon Type" : 0 [since_CSGO] // In GMod FGD, but commented out
 		]
 
 	// Inputs
-	input TriggerForAllPlayers[since_CSGO](void) : "This will force all connected players to take the weapon(s) specified."
-	input TriggerForActivatedPlayer[since_CSGO](string) : "This will force the player who activated to equip the specified weapon."
+	input TriggerForAllPlayers[since_CSGO, GMOD](void) : "This will force all connected players to take the weapon(s) specified."
+	input TriggerForActivatedPlayer[since_CSGO, GMOD](string) : "This will force the player who activated to equip the specified weapon."
 	]

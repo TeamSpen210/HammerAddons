@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(since_P2, MBase, Mesa) 
+	appliesto(since_P2, MBase, Mesa, GMOD) 
 	color(0 100 250)
 	iconsprite("editor/logic_register_activator")
 = logic_register_activator: "Stores an entity and sends messages with it as the activator\n" +

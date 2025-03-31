@@ -1,8 +1,8 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(CSGO) = logic_eventlistener_itemequip: "An entity that can listen to the item_equip event fired from code and fire and output when it happens and the weapon class or type defined, match."
+	appliesto(CSGO, GMOD) = logic_eventlistener_itemequip: "An entity that can listen to the item_equip event fired from code and fire and output when it happens and the weapon class or type defined, match."
 	[
-	weapontype[engine](integer) : "Weapon Type" : -1
-	weapontype(choices) : "Weapon Type" : -1 =
+	weapontype[+CSGO, +engine](integer) : "Weapon Type" : -1
+	weapontype[CSGO](choices) : "Weapon Type" : -1 =
 		[
 		-1: "Don't care"
 		0: "Knife"
@@ -16,11 +16,15 @@
 		8: "Grenade"
 		]
 
-	weaponclassname(string) : "Weapon Classname" : : "The exact weapon class name you want to check for.  i.e. weapon_deagle, weapon_awp, weapon_knife, etc."
+	weaponclassname[CSGO](string) : "Weapon Classname" : : "The exact weapon class name you want to check for.  i.e. weapon_deagle, weapon_awp, weapon_knife, etc."
+	weaponclassname[!CSGO](string) : "Weapon Classname" : : "The class name of the weapon that you want to listen for. For example weapon_crowbar."
 	isenabled(boolean) : "Start Enabled" : 1
 
 	teamnum[engine](integer) : "Team Number" : -1
-	teamnum(choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
+	teamnum(integer) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team. -1 means don't care."
+
+	// Do we even need CSGO stuff anymore?
+	teamnum[CSGO](choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
 		[
 		-1: "Don't care"
 		0: "Unassigned" [+complete]

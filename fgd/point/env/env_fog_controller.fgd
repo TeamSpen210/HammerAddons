@@ -46,6 +46,6 @@
 	input SetStartDistLerpTo[since_EP1](float) : "Set the fog start distance."
 	input SetEndDistLerpTo[since_EP1](float) : "Set the fog end distance."
 	input StartFogTransition[since_EP1](void) : "Start fog transition."
-	input SetMaxDensityLerpTo[since_P2](float) : "Set max density lerp to."
+	input SetMaxDensityLerpTo[since_P2, GMOD](float) : "Set max density lerp to."
 	input SetZoomFogScale[since_CSGO](void) : "Set the value the fog will scale the default value by when players are zoomed in (scoped)."
 	]

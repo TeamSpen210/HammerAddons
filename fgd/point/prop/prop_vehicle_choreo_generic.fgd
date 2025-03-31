@@ -9,10 +9,10 @@
 	model[HL2, EP1, EP2](studio) : "World model" : "models/vehicles/prisoner_pod.mdl": "Model to use."
 
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/choreo_vehicle.txt"
-	ignoremoveparent[P2](boolean) : "Ignore Move Parent on Exit" : 0 : "Should the player ignore this vehicle's move parent when performing exit checks?"
+	ignoremoveparent[since_P2, GMOD](boolean) : "Ignore Move Parent on Exit" : 0 : "Should the player ignore this vehicle's move parent when performing exit checks?"
 	ignoreplayer(boolean) : "Ignore Player collision" : 0 : "The player won't collide against this vehicle when moving around."
-	playercanshoot[P2](boolean) : "Can the player shoot" : 0 : "Lets the player shoot their weapon while in the vehicle"
-	useattachmenteyes[P2](boolean) : "Use attachment eyes" : 0 : "Should the driver's view use the attachment's orientation and not blend in the player's look."
+	playercanshoot[since_P2, GMOD](boolean) : "Can the player shoot" : 0 : "Lets the player shoot their weapon while in the vehicle"
+	useattachmenteyes[since_P2, GMOD](boolean) : "Use attachment eyes" : 0 : "Should the driver's view use the attachment's orientation and not blend in the player's look."
 
 	// Inputs
 	input Open(void) : "Plays the vehicle's open animation and unlocks the vehicle for entry or exit."
@@ -25,12 +25,12 @@
 	input ExitVehicle(void) : "Boots the player out of the vehicle."
 	input Viewlock(boolean) : "Set true to prevent the player from looking around *at all*. Set false to let them look within limits."
 	input SetAnimation(string) : "Force the prop to play an animation. The parameter should be the name of the animation."
-	input SetCanShoot[P2](boolean) : "Set if the driver can shoot their weapon."
-	input SetMaxPitch[P2](float) : "Set max pitch for driver."
-	input SetMinPitch[P2](float) : "Set min pitch for driver."
-	input SetMaxYaw[P2](float) : "Set max yaw for driver."
-	input SetMinYaw[P2](float) : "Set min yaw for driver."
-	input UseAttachmentEyes[P2](boolean) : "Force the view to use the attachment's orientation and position and don't blend in the player's look."
+	input SetCanShoot[since_P2, GMOD](boolean) : "Set if the driver can shoot their weapon."
+	input SetMaxPitch[since_P2, GMOD](float) : "Set max pitch for driver."
+	input SetMinPitch[since_P2, GMOD](float) : "Set min pitch for driver."
+	input SetMaxYaw[since_P2, GMOD](float) : "Set max yaw for driver."
+	input SetMinYaw[since_P2, GMOD](float) : "Set min yaw for driver."
+	input UseAttachmentEyes[since_P2, GMOD](boolean) : "Force the view to use the attachment's orientation and position and don't blend in the player's look."
 
 	// Outputs
 	output OnOpen(void) : "Fired when the vehicle is open enough to enter."

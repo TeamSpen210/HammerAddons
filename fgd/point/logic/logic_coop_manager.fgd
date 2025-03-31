@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(P2) 
+	appliesto(P2, GMOD) 
 	color(0 100 250) 
 	iconsprite("editor/logic_coop_manager.vmt")
  = logic_coop_manager: "Manages two sets of values and can fire outputs based on the state of those values. Useful in coop where you can have players independently setting states on buttons, switches, etc."

@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(since_L4D2, MBase)
+	appliesto(since_L4D2, MBase, GMOD)
 	line(255 255 0, targetname, referencename)
 	line(255 255 0, targetname, filtername)
 	color(0 100 250)

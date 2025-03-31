@@ -25,7 +25,7 @@
 
 	enabled[engine](boolean) : "Is Enabled" : 1 : "The actual keyvalue controlling state, but is overwritten by Start Disabled."
 
-	spawnflags[since_L4D, MBase](flags)  =
+	spawnflags[since_L4D, MBase, GMOD](flags)  =
 		[
 		1: "Master" : 0
 		2: "Client-side simulation" : 0

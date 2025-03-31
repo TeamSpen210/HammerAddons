@@ -51,6 +51,12 @@
 		12: "12 - Sand Barrel" [since_CSGO]
 		]
 
+	spawnflags(flags) =
+		[
+		1: "Trigger on player(s) leaving ground" : 0 [GMOD]
+		2: "Set output activator to the player (Warning: may cause unexpected behavior change)" : 0 [GMOD]
+		]
+
 
 	// Inputs
 	input Enable(void) : "Start watching the player's surface."

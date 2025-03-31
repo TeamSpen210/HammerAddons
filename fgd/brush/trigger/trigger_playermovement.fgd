@@ -8,7 +8,7 @@
 		2048: "Auto-duck while in trigger" : 0
 		4096: "Disable ducking" : 0 [MESA]
 		8192: "Disable movement" : 0 [MESA]
-		4096: "Auto-walk while in trigger" : 0 [MBase, since_L4D]
-		8192 : "Disable jump while in trigger" [MBase, since_L4D2]
+		4096: "Auto-walk while in trigger" : 0 [MBase, since_L4D, GMOD]
+		8192 : "Disable jump while in trigger" [MBase, since_L4D2, GMOD]
 		]
 	]
