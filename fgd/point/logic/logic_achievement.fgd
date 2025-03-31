@@ -11,7 +11,7 @@
 	
 	achievementevent[Mesa](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
-		"ACHIEVEMENT_EVENT_BMS_FLAVOR_TRANSFORMATION"			: "Flavor Transormation"
+		"ACHIEVEMENT_EVENT_BMS_FLAVOR_TRANSFORMATION"			: "Convection Refinement"
 		"ACHIEVEMENT_EVENT_BMS_PRESS_THEIR_BUTTONS"				: "Proverbial Tinkerer"
 		"ACHIEVEMENT_EVENT_BMS_BROWN_MOTION"					: "Brownian Motion"
 		"ACHIEVEMENT_EVENT_BMS_RESONANCE_PROCRASTINATOR"		: "Resonance Procrastinator"
