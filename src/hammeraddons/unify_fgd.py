@@ -106,6 +106,10 @@ FEATURES: dict[str, set[str]] = {
     'P2DES': {'P2', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 
     'PSA': {'P1'},
+    'P2SIXENSE': {'P2'},
+    'P2EDU': {'P2'},
+
+    # who up epicing they edition
     'PEE15': {'P1', 'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
     'PEE2': {'P2', 'HL2', 'EP1', 'EP2', 'INST_IO', 'VSCRIPT'},
 }
