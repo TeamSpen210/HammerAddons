@@ -6,11 +6,28 @@ SET games=p2 p1 hl2 ep1 ep2 gmod csgo tf2 asw l4d l4d2 infra mesa
 :: If set, override the FGD filename generated.
 SET filename.p2=portal2
 SET filename.p1=portal
+SET filename.hl2=halflife2
 SET filename.ep1=episodic
+SET filename.gmod=garrysmod
 SET filename.tf2=tf
+SET filename.asw=swarm
 SET filename.l4d=left4dead
 SET filename.l4d2=left4dead2
 SET filename.mesa=blackmesa
+
+:: Other games supported by tags, but not currently included in builds
+SET filename.dods=dod
+SET filename.css=cstrike
+SET filename.ez1=EntropyZero
+SET filename.ez2=EntropyZero2
+SET filename.kz=kreedzclimbing
+:: No official name for this, but don't want it to just be "psa.fgd"
+SET filename.psa=portal_stillalive
+SET filename.asrd=reactivedrop
+SET filename.p2sixense=portal2_sixense
+:: No official name for this either
+SET filename.p2edu=portal2_edu
+
 SET game=%1
 
 :: Make sure game isn't empty
