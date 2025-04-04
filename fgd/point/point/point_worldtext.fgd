@@ -17,7 +17,7 @@
 
 	message(string) : "Entity Message" : "" : "Text Message. English characters and numbers only! Newline characters are accepted."
 	textsize(float) : "Text Size" : 10 : "Text Size."
-	color[!TF2, !GMOD](color255) : "Color" : "255 255 255" : "Color of the text"
+	color[CSGO](color255) : "Color" : "255 255 255" : "Color of the text"
 	color[TF2, GMOD](color255) : "Color" : "255 255 255 255" : "Color and opacity of the text"
 
 	font[engine, GMOD](integer) : "Font" : 0
@@ -39,7 +39,7 @@
 	]
 
 	orientation[engine](integer) : "Orientation" : 0
-	orientation[TF2, GMOD](choices) : "Orientation" : 0 : "Text orientation mode. Fixed orientation left aligns the text, the others center align it." =
+	orientation[!CSGO](choices) : "Orientation" : 0 : "Text orientation mode. Fixed orientation left aligns the text, the others center align it." =
 	[
 		0 : "Fixed orientation"
 		1 : "Face player"
@@ -54,16 +54,16 @@
 	input SetEnabled[GMOD](boolean) : "Sets the visibility based on in the input parameter"
 	input Enable[!TF2](void) : "Start displaying the message text."
 	input Disable[!TF2](void) : "Stop displaying the message text."
-	input SetMessage[!TF2](string) : "Set the message text."
+	input SetMessage[CSGO](string) : "Set the message text."
 
-	// TF2 Inputs
-	input SetText[TF2, GMOD](string) : "Set the message text."
-	input SetTextSize[TF2, GMOD](float) : "Set the message text size. Setting this to 0 will hide the text. Negative values flip the text upside down."
-	input SetTextSpacingX[TF2, GMOD](float) : "Set the spacing between letters along the X axis. Negative values will invert the text."
-	input SetTextSpacingY[TF2, GMOD](float) : "Set the spacing between letters along the Y axis. Only used when newlines are inserted into the text."
-	input SetColor[TF2, GMOD](color255) : "Set the message color"
+	// SDK 25 Inputs
+	input SetText[!CSGO](string) : "Set the message text."
+	input SetTextSize[!CSGO](float) : "Set the message text size. Setting this to 0 will hide the text. Negative values flip the text upside down."
+	input SetTextSpacingX[!CSGO](float) : "Set the spacing between letters along the X axis. Negative values will invert the text."
+	input SetTextSpacingY[!CSGO](float) : "Set the spacing between letters along the Y axis. Only used when newlines are inserted into the text."
+	input SetColor[!CSGO](color255) : "Set the message color"
 	input SetFont[TF2](integer) : "Set the message font. Accepts values 0-12."
-	input SetOrientation[TF2, GMOD](integer) : "Sets the message orientation type."
-	input SetRainbow[TF2, GMOD](integer) : "Sets rainbow text to be enabled/disabled."
+	input SetOrientation[!CSGO](integer) : "Sets the message orientation type."
+	input SetRainbow[!CSGO](integer) : "Sets rainbow text to be enabled/disabled."
 
 	]
