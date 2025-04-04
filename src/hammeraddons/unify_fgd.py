@@ -93,7 +93,7 @@ FEATURES: dict[str, set[str]] = {
 
     'MBASE': {'VSCRIPT'},
     'MESA': {'HL2', 'INST_IO'},
-    'GMOD': {'HL2', 'EP1', 'EP2'},
+    'GMOD': {'HL2', 'EP1', 'EP2', 'INST_IO'},
     'EZ1': {'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
     'EZ2': {'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
     'KZ': {'HL2'},
