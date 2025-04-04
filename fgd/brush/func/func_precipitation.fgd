@@ -30,12 +30,12 @@
 	minspeed[P2](float) : "Minimum speed (snowfall only)" : 25
 	maxspeed[P2](float) : "Maximum speed (snowfall only)" : 35
 
-	particle_name[GMOD](string) : "Particle System Override (Close)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
+	particle_name[GMOD](particlesystem) : "Particle System Override (Close)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
 	"This is the closest particle system to the player.\r\nYour map should contain the entered particle system by name in one of the PCF files in its manifest.\r\n"+
 	"Control point data for each system is: 1 = World position of the particle, 2=Player position/orientation, 3=Density (X component)"
-	particle_name_inner[GMOD](string) : "Particle System Override (Inner)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
+	particle_name_inner[GMOD](particlesystem) : "Particle System Override (Inner)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
 		"This is the middle particle system.\r\nYour map should contain the entered particle system by name in one of the PCF files in its manifest."
-	particle_name_outer[GMOD](string) : "Particle System Override (Outer)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
+	particle_name_outer[GMOD](particlesystem) : "Particle System Override (Outer)" : "" : "If any of these are set, will override 'Precipitation Type' with a custom particle based one.\r\n"+
 		"This is the farthest particle system from the player.\r\nYour map should contain the entered particle system by name in one of the PCF files in its manifest."
 	particle_dist_inner[GMOD](float) : "Particle System Distance (Inner)" : "180" : "If using custom particle systems, this will be the distance of the middle one from the player."
 	

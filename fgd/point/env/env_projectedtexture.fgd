@@ -61,9 +61,9 @@
 	ProjectedTextureVersion[MBase](integer) readonly : "Projected Texture Version" : 1  : "(Don't change). Differentiates between projected textures built before/outside of Mapbase and projected textures using new features."
 
 	style[engine](integer) : "Appearance" : 0
-	style[since_P2](choices) : "Appearance" : "0" = #snippet LightStyle
+	style[since_P2, GMOD](choices) : "Appearance" : "0" = #snippet LightStyle
 
-	pattern[since_P2](string) : "Custom Appearance" : : "Set a custom pattern of light brightness for this light. " +
+	pattern[since_P2, GMOD](string) : "Custom Appearance" : : "Set a custom pattern of light brightness for this light. " +
 		"Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. " +
 		"i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 	lightviewmodels[INFRA](boolean) : "Light View Models" : 1 : "Control whether flashlight effects view models."
@@ -86,9 +86,9 @@
 	input SpotlightTexture[!CSGO, !P2](string) : "Set the spotlight texture"
 
 	input EnableShadows(boolean) : "Set if the shadows are enabled."
-	input LightColor[since_ASW, MBase](color255) : "Change the light color/brightness"
-	input SetLightStyle[since_P2](integer) : "Change the lightstyle (see Appearance field for possible values)."
-	input SetPattern[since_P2](string) : "Set a custom pattern of light brightness for this light. " +
+	input LightColor[since_ASW, MBase, GMOD](color255) : "Change the light color/brightness"
+	input SetLightStyle[since_P2, GMOD](integer) : "Change the lightstyle (see Appearance field for possible values)."
+	input SetPattern[since_P2, GMOD](string) : "Set a custom pattern of light brightness for this light. " +
 		"The Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. " +
 		"'aaggnnttzz' would be a steppy fade in from dark to light."
 	input SetBrightness[MBase](float) : "Sets brightness."
@@ -105,8 +105,8 @@
 	input StopFollowingTarget[MBase](void)	: "Causes this entity to stop following the target, if it has one"
 	input StartFollowingTarget[MBase](void) : "Causes this entity to start following the target if it was set to not follow it before"
 
-	input SetNearZ[since_P2](float) : "Sets the near Z distance."
-	input SetFarZ[since_P2](float) : "Sets the far Z distance."
+	input SetNearZ[since_P2, GMOD](float) : "Sets the near Z distance."
+	input SetFarZ[since_P2, GMOD](float) : "Sets the far Z distance."
 	input LightOnlyTarget[INFRA](bool) : "Set if the projected texture lights the target only."
 	input LightWorld[INFRA](bool) : "Set if the projected texture lights the world and static geometry."
 	input Ambient[GMod, INFRA](float) : "Set ambient light amount"

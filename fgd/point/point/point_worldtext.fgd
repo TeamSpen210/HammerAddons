@@ -6,7 +6,7 @@
 ]
 
 @PointClass base(BaseEntityPoint, _point_worldtext_tf2) 
-	appliesto(since_CSGO, TF2) 
+	appliesto(since_CSGO, TF2, GMOD) 
 	worldtext() 
 = point_worldtext: "An entity that displays a text message oriented in the world, at its origin."
 	[
@@ -17,10 +17,10 @@
 
 	message(string) : "Entity Message" : "" : "Text Message. English characters and numbers only! Newline characters are accepted."
 	textsize(float) : "Text Size" : 10 : "Text Size."
-	color[!TF2](color255) : "Color" : "255 255 255" : "Color of the text"
-	color[TF2](color255) : "Color" : "255 255 255 255" : "Color and opacity of the text"
+	color[!TF2, !GMOD](color255) : "Color" : "255 255 255" : "Color of the text"
+	color[TF2, GMOD](color255) : "Color" : "255 255 255 255" : "Color and opacity of the text"
 
-	font[engine](integer) : "Font" : 0
+	font[engine, GMOD](integer) : "Font" : 0
 	font[TF2](choices) : "Font" : 0 : "The font to use for the text" =
 	[
 		0 : "TF2 Build"
@@ -60,7 +60,7 @@
 	input SetText[TF2, GMOD](string) : "Set the message text."
 	input SetTextSize[TF2, GMOD](float) : "Set the message text size. Setting this to 0 will hide the text. Negative values flip the text upside down."
 	input SetTextSpacingX[TF2, GMOD](float) : "Set the spacing between letters along the X axis. Negative values will invert the text."
-	input SetTextSpacingY[TF2](float) : "Set the spacing between letters along the Y axis. Only used when newlines are inserted into the text."
+	input SetTextSpacingY[TF2, GMOD](float) : "Set the spacing between letters along the Y axis. Only used when newlines are inserted into the text."
 	input SetColor[TF2, GMOD](color255) : "Set the message color"
 	input SetFont[TF2](integer) : "Set the message font. Accepts values 0-12."
 	input SetOrientation[TF2, GMOD](integer) : "Sets the message orientation type."

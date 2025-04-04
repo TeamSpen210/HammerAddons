@@ -128,15 +128,15 @@
 	ignorenormals(boolean) : "Ignore Surface Normal" : 0 : "When vertex lighting is enabled, ignore the surface normal of faces when calculating the vertex lighting. Useful for thin, translucent objects such as leaves on foliage props."
 	
 	drawinfastreflection[since_L4D](boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
-	enablelightbounce[since_CSGO](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
+	enablelightbounce[since_CSGO, GMOD](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
 	
 	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's origin."
 
 	linedivider_lmap[TF2, MESA, KZ, !engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
-	generatelightmaps[TF2, MESA, KZ](boolean) : "Generate (and use) lightmaps for this static prop" : 0
-	lightmapresolutionx[TF2, MESA, KZ](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
-	lightmapresolutiony[TF2, MESA, KZ](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
+	generatelightmaps[TF2, MESA, KZ, GMOD](boolean) : "Generate (and use) lightmaps for this static prop" : 0
+	lightmapresolutionx[TF2, MESA, KZ, GMOD](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
+	lightmapresolutiony[TF2, MESA, KZ, GMOD](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
 	
 
 	linedivider_fade[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""

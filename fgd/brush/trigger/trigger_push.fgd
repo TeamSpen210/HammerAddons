@@ -31,7 +31,7 @@
 	// Inputs	
 	input SetSpeed[MBase](float) : "Set the speed at which to push entities away."
 	input SetPushDir[MBase](vector) : "Set the angles indicating the direction to push touched entities."
-	input SetPushDirection[ASW](vector) : "Sets the angles indicating the direction to push touched entities."
+	input SetPushDirection[ASW, GMOD](vector) : "Sets the angles indicating the direction to push touched entities."
 	input SetPushSpeed(integer) : "Set the push speed in units / second."
 	
 	@resources []
