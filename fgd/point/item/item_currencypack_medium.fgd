@@ -3,4 +3,13 @@
 	studioprop("models/items/currencypack_medium.mdl") 
 = item_currencypack_medium : "Medium Credits Pickup"
 	[
+	@resources [
+		sound "MVM.MoneyPickup"
+		sound "MVM.MoneyVanish"
+		model "models/items/currencypack_medium.mdl"
+		model "models/items/ammopack_medium_bday.mdl"
+		particle "mvm_cash_embers"
+		particle "mvm_cash_embers_red"
+		particle "mvm_cash_explosion"
+		]
 	]

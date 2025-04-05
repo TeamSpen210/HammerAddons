@@ -5,4 +5,10 @@
 	sphere(fademindist) 
 	sphere(fademaxdist) = item_healthkit_medium: "Health Kit Medium"
 	[
+	@resources [
+		sound "HealthKit.Touch"
+		model "models/items/medkit_medium.mdl"
+		model "models/items/medkit_medium_bday.mdl"
+		model "models/props_halloween/halloween_medkit_medium.mdl"
+		]
 	]

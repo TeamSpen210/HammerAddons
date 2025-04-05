@@ -3,4 +3,10 @@
 	studioprop("models/items/medkit_medium.mdl") 
 = item_healthammokit : "Small AmmoHealthPack Pickup"
 	[
+	@resources [
+		sound "HealthKit.Touch"
+		model "models/items/medkit_medium.mdl"
+		model "models/items/medkit_medium_bday.mdl"
+		model "models/props_halloween/halloween_medkit_medium.mdl"
+		]
 	]

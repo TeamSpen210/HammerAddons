@@ -3,4 +3,13 @@
 	studioprop("models/items/currencypack_large.mdl") 
 = item_currencypack_large : "Large Credits Pickup"
 	[
+	@resources [
+		sound "MVM.MoneyPickup"
+		sound "MVM.MoneyVanish"
+		model "models/items/currencypack_large.mdl"
+		model "models/items/ammopack_large_bday.mdl"
+		particle "mvm_cash_embers"
+		particle "mvm_cash_embers_red"
+		particle "mvm_cash_explosion"
+		]
 	]

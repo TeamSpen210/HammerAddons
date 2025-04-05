@@ -5,4 +5,9 @@
 	sphere(fademindist) 
 	sphere(fademaxdist) = item_ammopack_medium: "Ammo Pack Medium"
 	[
+	@resources [
+		sound "AmmoPack.Touch"
+		model "models/items/ammopack_medium.mdl"
+		model "models/items/ammopack_medium_bday.mdl"
+		]
 	]
