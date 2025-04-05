@@ -3,4 +3,39 @@
 	studio("models/props_halloween/halloween_demoeye.mdl")
 = eyeball_boss : "Monoculus"
 	[
+	@resources	[
+		mdl "models/props_halloween/halloween_demoeye.mdl"
+		mdl "models/props_halloween/eyeball_projectile.mdl"
+
+		snd "Halloween.EyeballBossIdle"
+		snd "Halloween.EyeballBossBecomeAlert"
+		snd "Halloween.EyeballBossAcquiredVictim"
+		snd "Halloween.EyeballBossStunned"
+		snd "Halloween.EyeballBossStunRecover"
+		snd "Halloween.EyeballBossLaugh"
+		snd "Halloween.EyeballBossBigLaugh"
+		snd "Halloween.EyeballBossDie"
+		snd "Halloween.EyeballBossEscapeSoon"
+		snd "Halloween.EyeballBossEscapeImminent"
+		snd "Halloween.EyeballBossEscaped"
+		snd "Halloween.EyeballBossDie"
+		snd "Halloween.EyeballBossTeleport"
+		snd "Halloween.HeadlessBossSpawnRumble"
+		snd "Halloween.EyeballBossBecomeEnraged"
+		snd "Halloween.EyeballBossRage"
+		snd "Halloween.EyeballBossCalmDown"
+		snd "Halloween.spell_spawn_boss_disappear"
+		snd "Halloween.MonoculusBossSpawn"
+		snd "Halloween.MonoculusBossDeath"
+
+		particle "eyeboss_death"
+		particle "eyeboss_aura_angry"
+		particle "eyeboss_aura_grumpy"
+		particle "eyeboss_aura_calm"
+		particle "eyeboss_aura_stunned"
+		particle "eyeboss_tp_normal"
+		particle "eyeboss_tp_escape"
+		particle "eyeboss_team_red"
+		particle "eyeboss_team_blue"
+		]
 	]

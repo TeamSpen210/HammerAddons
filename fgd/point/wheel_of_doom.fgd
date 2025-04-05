@@ -14,4 +14,30 @@
 	// Outputs
 	output OnEffectApplied(void) : "Effect just applied."
 	output OnEffectExpired(void) : "Effect just expired."
+
+	@resources [
+		model "models/props_lakeside_event/buff_plane.mdl"
+		entity wheel_of_doom_sprial
+
+		sound "Halloween.WheelofFate"
+		sound "Halloween.dance_howl"
+		sound "Halloween.dance_loop"
+		sound "Halloween.HeadlessBossAxeHitWorld"
+		sound "Halloween.LightsOn"
+		sound "Weapon_StickyBombLauncher.BoltForward"
+		sound "TFPlayer.InvulnerableOff"
+
+		sound "Halloween.MerasmusWheelSpin"
+		sound "Halloween.MerasmusWheelCrits"
+		sound "Halloween.MerasmusWheelUber"
+		sound "Halloween.MerasmusWheelSuperSpeed"
+		sound "Halloween.MerasmusWheelSuperJump"
+		sound "Halloween.MerasmusWheelBigHead"
+		sound "Halloween.MerasmusWheelShrunkHead"
+		sound "Halloween.MerasmusWheelGravity"
+		sound "Halloween.MerasmusWheelJarate"
+		sound "Halloween.MerasmusWheelBurn"
+		sound "Halloween.MerasmusWheelGhosts"
+		sound "Halloween.MerasmusWheelDance"
+		]
 	]

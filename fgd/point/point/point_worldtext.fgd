@@ -67,4 +67,21 @@
 	input SetOrientation[until_CSGO](integer) : "Sets the message orientation type."
 	input SetRainbow[until_CSGO](integer) : "Sets rainbow text to be enabled/disabled."
 
+	@resources [
+		material "editor/worldtext" [-TF2]
+		// All are required since SetFont can swap at runtime.
+		material "editor/worldtext_1" [+TF2]
+		material "editor/worldtext_2" [+TF2]
+		material "editor/worldtext_3" [+TF2]
+		material "editor/worldtext_4" [+TF2]
+		material "editor/worldtext_5" [+TF2]
+		material "editor/worldtext_6" [+TF2]
+		material "editor/worldtext_7" [+TF2]
+		material "editor/worldtext_8" [+TF2]
+		material "editor/worldtext_9" [+TF2]
+		material "editor/worldtext_10" [+TF2]
+		material "editor/worldtext_11" [+TF2]
+		material "editor/worldtext_12" [+TF2]
+		material "editor/worldtext_13" [+TF2]
+		]
 	]

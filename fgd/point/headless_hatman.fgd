@@ -3,4 +3,34 @@
 	studio("models/bots/headless_hatman.mdl")
 = headless_hatman : "Horseless Headless Horsemann"
 	[
+	@resources [
+		mdl "models/bots/headless_hatman.mdl"
+		mdl "models/weapons/c_models/c_big_mallet/c_big_mallet.mdl"
+		particle "hammer_impact_button"
+		snd "Halloween.HammerImpact"
+		mdl "models/weapons/c_models/c_bigaxe/c_bigaxe.mdl"
+
+		snd "Halloween.HeadlessBossSpawn"
+		snd "Halloween.HeadlessBossSpawnRumble"
+		snd "Halloween.HeadlessBossAttack"
+		snd "Halloween.HeadlessBossAlert"
+		snd "Halloween.HeadlessBossBoo"
+		snd "Halloween.HeadlessBossPain"
+		snd "Halloween.HeadlessBossLaugh"
+		snd "Halloween.HeadlessBossDying"
+		snd "Halloween.HeadlessBossDeath"
+		snd "Halloween.HeadlessBossAxeHitFlesh"
+		snd "Halloween.HeadlessBossAxeHitWorld"
+		snd "Halloween.HeadlessBossFootfalls"
+		snd "Player.IsNowIt"
+		snd "Player.YouAreIt"
+		snd "Player.TaggedOtherIt"
+
+		particle "halloween_boss_summon"
+		particle "halloween_boss_axe_hit_world"
+		particle "halloween_boss_injured"
+		particle "halloween_boss_death"
+		particle "halloween_boss_foot_impact"
+		particle "halloween_boss_eye_glow"
+		]
 	]

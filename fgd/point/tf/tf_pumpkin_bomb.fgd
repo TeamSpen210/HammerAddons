@@ -2,4 +2,11 @@
 	appliesto(TF2) 
 	studio("models/props_halloween/pumpkin_explode.mdl") = tf_pumpkin_bomb: "Pumpkin Bomb"
 	[
+	@resources [
+		model "models/props_halloween/pumpkin_explode.mdl"
+		model "models/props_halloween/pumpkin_explode_teamcolor.mdl"
+		particle "spell_pumpkin_mirv_goop_red"
+		particle "spell_pumpkin_mirv_goop_blue"
+		sound "Halloween.PumpkinExplode"
+		]
 	]

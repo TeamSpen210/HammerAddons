@@ -1,0 +1,10 @@
+@PointClass base(BaseEntityAnimating)
+	appliesto(+engine)
+	studio("models/props_lakeside_event/wof_plane2.mdl")
+= wheel_of_doom_sprial: "Spiral inside the Wheel Of Doom"
+	[
+	@resources
+		[
+		model "models/props_lakeside_event/wof_plane2.mdl"
+		]
+	]   

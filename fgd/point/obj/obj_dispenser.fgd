@@ -28,4 +28,22 @@
 
 	// Outputs
 	output OnDestroyed(void) : "Fired when this entity is destroyed."
+
+	@resources [
+		mdl "models/buildables/dispenser_blueprint.mdl"
+		mdl "models/buildables/dispenser.mdl"
+		mdl "models/buildables/dispenser_light.mdl"
+		mdl "models/buildables/dispenser_lvl2.mdl"
+		mdl "models/buildables/dispenser_lvl2_light.mdl"
+		mdl "models/buildables/dispenser_lvl3.mdl"
+		mdl "models/buildables/dispenser_lvl3_light.mdl"
+
+		// PrecacheVGuiScreen("screen_obj_dispenser_blue")
+		// PrecacheVGuiScreen("screen_obj_dispenser_red")
+		sound "Building_Dispenser.Idle"
+		sound "Building_Dispenser.GenerateMetal"
+		sound "Building_Dispenser.Heal"
+		particle "dispenser_heal_red"
+		particle "dispenser_heal_blue"
+		]
 	]

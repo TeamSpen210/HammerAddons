@@ -78,6 +78,72 @@
 
 	@resources
 		[
+		mdl "models/flag/briefcase.mdl" // Default
+		particle "player_intel_papertrail" // Default
+
+		snd "CaptureFlag.FlagSpawn"
+		snd "CaptureFlag.EnemyStolen"
+		snd "CaptureFlag.EnemyDropped"
+		snd "CaptureFlag.EnemyCaptured"
+		snd "CaptureFlag.EnemyReturned"
+		snd "CaptureFlag.TeamStolen"
+		snd "CaptureFlag.TeamDropped"
+		snd "CaptureFlag.TeamCaptured"
+		snd "CaptureFlag.TeamReturned"
+
+		snd "AttackDefend.Captured"
+		snd "AttackDefend.EnemyStolen"
+		snd "AttackDefend.EnemyDropped"
+		snd "AttackDefend.EnemyCaptured"
+		snd "AttackDefend.EnemyReturned"
+		snd "AttackDefend.TeamStolen"
+		snd "AttackDefend.TeamDropped"
+		snd "AttackDefend.TeamCaptured"
+		snd "AttackDefend.TeamReturned"
+
+		snd "MVM.AttackDefend.EnemyStolen"
+		snd "MVM.AttackDefend.EnemyDropped"
+		snd "MVM.AttackDefend.EnemyCaptured"
+		snd "MVM.AttackDefend.EnemyReturned"
+
+		snd "Invade.EnemyStolen"
+		snd "Invade.EnemyDropped"
+		snd "Invade.EnemyCaptured"
+		snd "Invade.TeamStolen"
+		snd "Invade.TeamDropped"
+		snd "Invade.TeamCaptured"
+		snd "Invade.FlagReturned"
+
+		snd "Resource.FlagSpawn"
+		snd "Announcer.SD_TheirTeamHasFlag"
+		snd "Announcer.SD_TheirTeamDroppedFlag"
+		snd "Announcer.SD_TheirTeamCapped"
+		snd "Announcer.SD_OurTeamHasFlag"
+		snd "Announcer.SD_OurTeamDroppedFlag"
+		snd "Announcer.SD_OurTeamCapped"
+		snd "Announcer.SD_FlagReturned"
+
+		snd "Announcer.SD_Event_TheirTeamHasFlag"
+		snd "Announcer.SD_Event_TheirTeamDroppedFlag"
+		snd "Announcer.SD_Event_OurTeamHasFlag"
+		snd "Announcer.SD_Event_OurTeamDroppedFlag"
+		snd "Announcer.SD_Event_FlagReturned"
+		snd "Announcer.SD_Event_FlagNags"
+		snd "Announcer.SD_Event_CappedRed"
+		snd "Announcer.SD_Event_CappedBlu"
+
+		snd "RD.EnemyStolen"
+		snd "RD.EnemyDropped"
+		snd "RD.EnemyCaptured"
+		snd "RD.EnemyReturned"
+
+		snd "RD.TeamStolen"
+		snd "RD.TeamDropped"
+		snd "RD.TeamCaptured"
+		snd "RD.TeamReturned"
+
+		snd "CaptureFlag.TeamCapturedExcited"
+
 		func item_teamflag // The icon and trail effect automatically append blue/red to the materials.
 		]
 	]

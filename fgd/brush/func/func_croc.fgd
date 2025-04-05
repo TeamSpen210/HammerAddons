@@ -2,8 +2,15 @@
 @SolidClass base(Trigger, TeamNum) 
 	appliesto(TF2) = func_croc: "Crocs live here!"
 	[
+	croc_model(studio) : "Model Override" : : "If set, overrides the crocodile model."
+
 	// Outputs
 	output OnEat(void) : "Sent when the crocs eat a player."
 	output OnEatRed(void) : "Sent when the crocs eat a player on team RED."
 	output OnEatBlue(void) : "Sent when the crocs eat a player on team BLU."
+
+	@resources [
+		model "models/props_island/crocodile/crocodile.mdl"
+		entity entity_croc
+		]
 	]

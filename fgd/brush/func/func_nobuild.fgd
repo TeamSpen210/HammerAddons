@@ -9,4 +9,6 @@
 	input SetActive( void ) : "Set Active"
 	input SetInactive( void ) : "Set InActive"
 	input ToggleActive( void ) : "Toggle Active"
+
+	@resources []
 	]

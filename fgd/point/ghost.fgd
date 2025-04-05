@@ -1,6 +1,13 @@
 @PointClass base(BaseNPC, EnableDisable, TeamNum)
 	appliesto(TF2)
-	studio("models/props_halloween/ghost.mdl")
+	studio("models/props_halloween/ghost_no_hat.mdl")
 = ghost : "Ghost"
 	[
+	@resources	[
+		mdl "models/props_halloween/ghost_no_hat.mdl"
+		particle "ghost_appearation"
+		sound "Halloween.GhostMoan"
+		sound "Halloween.GhostBoo"
+		sound "Halloween.Haunted"
+		]
 	]

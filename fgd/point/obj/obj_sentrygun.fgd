@@ -26,4 +26,39 @@
 
 	// Outputs
 	output OnDestroyed(void) : "Fired when this entity is destroyed."
+
+	@resources [
+		mdl "models/buildables/sentry1_blueprint.mdl"
+		mdl "models/buildables/sentry1.mdl"
+		mdl "models/buildables/sentry1_heavy.mdl"
+		mdl "models/buildables/sentry2.mdl"
+		mdl "models/buildables/sentry2_heavy.mdl"
+		mdl "models/buildables/sentry3.mdl"
+		mdl "models/buildables/sentry3_heavy.mdl"
+		mdl "models/buildables/sentry3_rockets.mdl"
+		mdl "models/effects/sentry1_muzzle/sentry1_muzzle.mdl"
+		mdl "models/buildables/sentry_shield.mdl"
+
+		sound "Building_Sentrygun.Fire"
+		sound "Building_Sentrygun.Fire2"
+		sound "Building_Sentrygun.Fire3"
+		sound "Building_Sentrygun.FireRocket"
+		sound "Building_Sentrygun.Alert"
+		sound "Building_Sentrygun.AlertTarget"
+		sound "Building_Sentrygun.Idle"
+		sound "Building_Sentrygun.Idle2"
+		sound "Building_Sentrygun.Idle3"
+		sound "Building_Sentrygun.Built"
+		sound "Building_Sentrygun.Empty"
+		sound "Building_Sentrygun.ShaftFire"
+		sound "Building_Sentrygun.ShaftFire2"
+		sound "Building_Sentrygun.ShaftFire3"
+		sound "Building_Sentrygun.ShaftLaserPass"
+		sound "Building_MiniSentrygun.Fire"
+
+		particle "sentrydamage_1"
+		particle "sentrydamage_2"
+		particle "sentrydamage_3"
+		particle "sentrydamage_4"
+		]
 	]

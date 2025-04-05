@@ -1,6 +1,14 @@
-@PointClass base(TFPickup)
+@PointClass base(tf_halloween_pickup)
 	appliesto(TF2) 
-	studioprop("models/props_halloween/halloween_gift.mdl")
+	studioprop("models/props_halloween/gargoyle_ghost.mdl")
 = tf_halloween_gift_pickup: "Halloween pickup"
 	[
+	@resources [
+		mdl "models/props_halloween/gargoyle_ghost.mdl"
+		sound "ui/halloween_loot_spawn.wav"
+		sound "ui/halloween_loot_found.wav"
+		sound "sf15.Merasmus.Gargoyle.Spawn"
+		sound "sf15.Merasmus.Gargoyle.Gone"
+		sound "sf15.Merasmus.Gargoyle.Got"
+		]
 	]

@@ -39,4 +39,6 @@
 	output OnAllRedDead(void) : "Sent when the entire RED team is dead."
 	output OnAllBlueDead(void) : "Send when the entire BLU team is dead."
 	output OnSuddenDeathStart(void) : "Sent when sudden death starts."
+
+	@resources[] // Just the score sounds above
 	]

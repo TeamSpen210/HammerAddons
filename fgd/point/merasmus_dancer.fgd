@@ -4,4 +4,10 @@
 = merasmus_dancer: "Dancing Merasmus Animation"
 	[
 	modelscale(float) : "Model Scale" : "1.0" : "A multiplier for the size of the model."
+
+	@resources [
+		model "models/bots/merasmus/merasmus.mdl"
+		sound "Halloween.Merasmus_Hiding_Explode"
+		particle "merasmus_tp"
+		]
 	]

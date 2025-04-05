@@ -4,4 +4,8 @@
 = entity_saucer : "Skybox Saucer"
 	[
 	model(studio) : "Model" : "models/props_teaser/saucer.mdl" : "Change the model to something other than the default model." 
+
+	@resources	[
+		model "models/props_teaser/saucer.mdl"
+		]
 	]

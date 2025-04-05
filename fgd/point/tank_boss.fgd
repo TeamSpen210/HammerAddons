@@ -7,4 +7,34 @@
 	// Inputs
 	input DestroyIfAtCapturePoint(integer) : "Destroy If At CapturePoint"
 	input AddCaptureDestroyPostfix(string) : "Set the postfix for the destroy animation when it's at the capture point"
+
+	@resources [
+		mdl "models/bots/boss_bot/boss_tank.mdl"
+		mdl "models/bots/boss_bot/boss_tank_damage1.mdl"
+		mdl "models/bots/boss_bot/boss_tank_damage2.mdl"
+		mdl "models/bots/boss_bot/boss_tank_damage3.mdl"
+		mdl "models/bots/tw2/boss_bot/boss_tank.mdl"
+		mdl "models/bots/tw2/boss_bot/boss_tank_damage1.mdl"
+		mdl "models/bots/tw2/boss_bot/boss_tank_damage2.mdl"
+		mdl "models/bots/tw2/boss_bot/boss_tank_damage3.mdl"
+
+		mdl "models/bots/boss_bot/tank_track_L.mdl"
+		mdl "models/bots/boss_bot/tank_track_R.mdl"
+		mdl "models/bots/boss_bot/bomb_mechanism.mdl"
+
+		mdl "models/bots/tw2/boss_bot/tank_track_L.mdl"
+		mdl "models/bots/tw2/boss_bot/tank_track_R.mdl"
+		mdl "models/bots/boss_bot/bomb_mechanism.mdl"
+
+		particle "smoke_train"
+		particle "bot_impact_light"
+		particle "bot_impact_heavy"
+		snd "MVM.TankEngineLoop"
+		snd "MVM.TankPing"
+		snd "MVM.TankDeploy"
+		snd "MVM.TankStart"
+		snd "MVM.TankEnd"
+		snd "MVM.TankSmash"
+		entity tank_destruction
+		]
 	]

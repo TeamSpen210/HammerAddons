@@ -35,4 +35,13 @@
 	output OnBlueLastFlagReturned(void) : "Sent when BLU's last stolen flag gets returned."
 
 	input RoundActivate(void) : "Reactivate."
+
+	@resources [
+		sound "Announcer.HowToPlayRD"
+		sound "RD.TeamScoreCore"
+		sound "RD.EnemyScoreCore"
+		sound "RD.EnemyStealingPoints"
+		sound "RD.FlagReturn"
+		sound "RD.FinaleMusic"
+		]
 	]

@@ -12,10 +12,12 @@
 	input TimeUp(void) : "Input this from a round timer or something to indicate the game timer ended with no winner."
 	input SpeedBoostUsed(void) : "For stats tracking."
 	input JumpPadUsed(void) : "For stats tracking."
-	input statica(void) : "???"
-	input staticb(void) : "???"
-	input staticc(void) : "???"
-	input RoomTriggerOnTouch(void) : "???"
+
+	// Obfuscated and deliberately not in the FGD.
+	input statica(void) : "Start touching player slot in the secret room."
+	input staticb(void) : "End touching player slot in the secret room."
+	input staticc(void) : "Plug was damaged in the secret room."
+	input RoomTriggerOnTouch(void) : "Mark !activator player as entering the secret room."
 
 	// Outputs
 	output OnBallFree(void) : "The ball is free - someone was holding it, and now they aren't."
@@ -28,4 +30,43 @@
 	output OnScoreAny(void)
 	output OnBallPowerUp(void) : "Experimental"
 	output OnBallPowerDown(void) : "Experimental"
+
+	@resources	[
+		sound "Passtime.BallIntercepted"
+		sound "Passtime.BallStolen"
+		sound "Passtime.BallDropped"
+		sound "Passtime.BallCatch"
+		sound "Passtime.BallSpawn"
+		sound "Passtime.Crowd.Boo"
+		sound "Passtime.Crowd.Cheer"
+		sound "Passtime.Crowd.React.Neg"
+		sound "Passtime.Crowd.React.Pos"
+		sound "Powerup.Reflect.Reflect"
+		sound "Powerup.Volume.Use"
+
+		sound "Announcer.RoundBegins60seconds"
+		sound "Announcer.RoundBegins30seconds"
+		sound "Announcer.RoundBegins10seconds"
+		sound "Merasmus.RoundBegins5seconds"
+		sound "Merasmus.RoundBegins4seconds"
+		sound "Merasmus.RoundBegins3seconds"
+		sound "Merasmus.RoundBegins2seconds"
+		sound "Merasmus.RoundBegins1seconds"
+
+		sound "sf14.Merasmus.Soccer.GoalRed"
+		sound "sf14.Merasmus.Soccer.GoalBlue"
+		sound "Passtime.Merasmus.Laugh"
+		sound "Announcer.RoundBegins5seconds"
+		sound "Announcer.RoundBegins4seconds"
+		sound "Announcer.RoundBegins3seconds"
+		sound "Announcer.RoundBegins2seconds"
+		sound "Announcer.RoundBegins1seconds"
+		sound "Game.Overtime"
+		sound "Passtime.AskForBall"
+
+		// secret room stuff
+		sound "Passtime.Tv1"
+		sound "Passtime.Tv2"
+		sound "Passtime.Tv3"
+		]
 	]

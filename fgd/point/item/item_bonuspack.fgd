@@ -12,4 +12,8 @@
 		[
 		1073741824: "Never Respawn" : 1
 		]
+	@resources [
+		particle "powercore_embers_red"
+		particle "powercore_embers_blue"
+		]
 	]

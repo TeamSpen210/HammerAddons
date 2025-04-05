@@ -4,4 +4,9 @@
 	sphere(fademindist) 
 	sphere(fademaxdist) = item_powerup_uber: "Temporary Uber Powerup. Powerup effect wears off. Powerup respawns automatically"
 	[
+	// Actually inherits item_powerup_temp
+	@resources [
+		sound "Powerup.PickUpTemp.Uber"
+		mdl	"models/pickups/pickup_powerup_uber.mdl"
+		]
 	]

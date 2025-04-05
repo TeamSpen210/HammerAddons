@@ -26,4 +26,51 @@
 
 	// Outputs
 	output OnDestroyed(void) : "Fired when this entity is destroyed."
+
+	@resources [
+		mdl "models/buildables/teleporter_blueprint_enter.mdl"
+		mdl "models/buildables/teleporter_blueprint_exit.mdl"
+		mdl "models/buildables/teleporter.mdl"
+		mdl "models/buildables/teleporter_light.mdl"
+
+		mdl "models/weapons/c_models/c_bread/c_bread_baguette.mdl"
+		mdl "models/weapons/c_models/c_bread/c_bread_burnt.mdl"
+		mdl "models/weapons/c_models/c_bread/c_bread_cinnamon.mdl"
+		mdl "models/weapons/c_models/c_bread/c_bread_cornbread.mdl"
+		mdl "models/weapons/c_models/c_bread/c_bread_crumpet.mdl"
+		mdl "models/weapons/c_models/c_bread/c_bread_plainloaf.mdl"
+		mdl "models/weapons/c_models/c_bread/c_bread_pretzel.mdl"
+		mdl "models/weapons/c_models/c_bread/c_bread_ration.mdl"
+		mdl "models/weapons/c_models/c_bread/c_bread_russianblack.mdl"
+
+		// Precache Sounds
+		sound "Building_Teleporter.Ready"
+		sound "Building_Teleporter.Send"
+		sound "Building_Teleporter.Receive"
+		sound "Building_Teleporter.SpinLevel1"
+		sound "Building_Teleporter.SpinLevel2"
+		sound "Building_Teleporter.SpinLevel3"
+
+		particle "teleporter_red_charged"
+		particle "teleporter_blue_charged"
+		particle "teleporter_red_entrance"
+		particle "teleporter_blue_entrance"
+		particle "teleporter_red_exit"
+		particle "teleporter_blue_exit"
+		particle "teleporter_arms_circle_red"
+		particle "teleporter_arms_circle_blue"
+		particle "tpdamage_1"
+		particle "tpdamage_2"
+		particle "tpdamage_3"
+		particle "tpdamage_4"
+		particle "teleported_red"
+		particle "player_sparkles_red"
+		particle "teleported_blue"
+		particle "player_sparkles_blue"
+		particle "teleportedin_red"
+		particle "teleportedin_blue"
+
+		particle "teleporter_arms_circle_red_blink"
+		particle "teleporter_arms_circle_blue_blink"
+		]
 	]

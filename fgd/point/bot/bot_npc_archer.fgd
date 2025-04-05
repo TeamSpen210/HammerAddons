@@ -3,4 +3,8 @@
 	studio("models/player/sniper.mdl")
 = bot_npc_archer : "Huntsman Sniper NextBot"
 	[
+	@resources [
+		mdl "models/player/sniper.mdl"
+		mdl "models/weapons/c_models/c_bow/c_bow.mdl"
+		]
 	]

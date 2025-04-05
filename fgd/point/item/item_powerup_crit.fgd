@@ -4,4 +4,9 @@
 	sphere(fademindist) 
 	sphere(fademaxdist) = item_powerup_crit: "Temporary Crit Powerup. Powerup effect wears off. Powerup respawns automatically"
 	[
+	// Actually inherits item_powerup_temp
+	@resources [
+		sound "Powerup.PickUpTemp.Crit"
+		mdl	"models/pickups/pickup_powerup_crit.mdl"
+		]
 	]

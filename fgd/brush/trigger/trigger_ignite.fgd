@@ -6,4 +6,6 @@
 	damage_percent_per_second(float) : "Damage(%) per second" : 10 : "Damage per second while inside the trigger."
 	ignite_particle_name(particlesystem) : "Ignite particle name" : : "Name of the particle that plays when player first touch the trigger."
 	ignite_sound_name(sound) : "Ignite sound name" : : "Name of the sound script that plays when player first touch the trigger."
+
+	@resources [] // Just particle/sound above.
 	]
