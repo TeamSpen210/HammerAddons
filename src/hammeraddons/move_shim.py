@@ -2,7 +2,7 @@
 
 Implement deprecation warnings while keeping that functional.
 """
-from typing import Dict, Optional, Sequence, Union
+from collections.abc import Sequence
 from importlib.abc import Loader, MetaPathFinder
 from importlib.machinery import ModuleSpec
 from importlib.util import module_from_spec, spec_from_loader
@@ -13,7 +13,7 @@ import warnings
 from hammeraddons import bsp_transform, config, mdl_compiler, plugin, propcombine, props_config
 
 
-moves: Dict[str, types.ModuleType] = {
+moves: dict[str, types.ModuleType] = {
     'srctools.bsp_transform': bsp_transform,
     # Loader = none means this acts like a namespace package, which is all we need.
     'srctools.compiler': module_from_spec(ModuleSpec(
@@ -50,7 +50,7 @@ class SwapLoader(Loader):
     def __init__(self, orig: types.ModuleType) -> None:
         self.orig = orig
 
-    def create_module(self, spec: ModuleSpec) -> Optional[types.ModuleType]:
+    def create_module(self, spec: ModuleSpec) -> types.ModuleType | None:
         """Create the proxy."""
         return ModuleProxy(self.orig)
 
@@ -63,9 +63,9 @@ class DeprecatedFinder(MetaPathFinder):
     def find_spec(
         self,
         fullname: str,
-        path: Optional[Sequence[Union[bytes, str]]],
-        target: Optional[types.ModuleType]=None,
-    ) -> Optional[ModuleSpec]:
+        path: Sequence[bytes | str] | None,
+        target: types.ModuleType | None = None,
+    ) -> ModuleSpec | None:
         """If known, return the required spec."""
         try:
             result = moves[fullname]

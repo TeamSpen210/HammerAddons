@@ -3,20 +3,14 @@
 If another task tries retrieving while it's already being computed, the second waits for the existing
 task.
 """
-from typing import Awaitable, Callable, Dict, Generic, Iterator, Tuple, TypeVar, Union
-from typing_extensions import ParamSpec
+from collections.abc import Awaitable, Callable, Iterator
 
 import trio
 
 
-KeyT = TypeVar('KeyT')
-ValueT = TypeVar('ValueT')
-Args = ParamSpec('Args')
-
-
-class ACache(Generic[KeyT, ValueT]):
+class ACache[KeyT, ValueT]:
     """Caches an expensive computation."""
-    _cache: Dict[KeyT, Union[ValueT, trio.Event]]
+    _cache: dict[KeyT, ValueT | trio.Event]
 
     def __init__(self) -> None:
         self._cache = {}
@@ -32,7 +26,7 @@ class ACache(Generic[KeyT, ValueT]):
                 existing.set()
         self._cache[key] = value
 
-    def __iter__(self) -> Iterator[Tuple[KeyT, ValueT]]:
+    def __iter__(self) -> Iterator[tuple[KeyT, ValueT]]:
         """Iterate through the currently cached items."""
         for key, value in self._cache.items():
             if not isinstance(value, trio.Event):
@@ -45,7 +39,7 @@ class ACache(Generic[KeyT, ValueT]):
         """Remove all the contents."""
         self._cache.clear()
 
-    async def fetch(
+    async def fetch[**Args](
         self, key: KeyT, func: Callable[Args, Awaitable[ValueT]],
         /, *args: Args.args, **kwargs: Args.kwargs,
     ) -> ValueT:

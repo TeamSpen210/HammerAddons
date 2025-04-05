@@ -3,13 +3,10 @@
 Each comes with a key, used to identify a previously compiled version.
 We can then reuse already compiled versions.
 """
-import shutil
-from typing import (
-    Any, Awaitable, Callable, Generic, Hashable, List, Optional, Set, Tuple, Type, TypeVar,
-    ContextManager, Union,
-)
-from typing_extensions import Self
+from typing import Self
+from collections.abc import Awaitable, Callable, Hashable
 from pathlib import Path
+import shutil
 import contextlib
 import os
 import pickle
@@ -28,13 +25,10 @@ from hammeraddons.bsp_transform import Context
 
 
 LOGGER = logger.get_logger(__name__)
-ModelKey = TypeVar('ModelKey', bound=Hashable)
-InT = TypeVar('InT')
-OutT = TypeVar('OutT')
 force_regen = False  # If set, force every model to be regenerated.
 
 
-class GenModel(Generic[OutT]):
+class GenModel[OutT]:
     """Tracks information about this model."""
     name: str
     used: bool
@@ -48,7 +42,7 @@ class GenModel(Generic[OutT]):
         return f'<Model "{self.name}, used={self.used}>'
 
 
-class ModelCompiler(Generic[ModelKey, InT, OutT]):
+class ModelCompiler[ModelKey: Hashable, InT, OutT]:
     """Manages the set of merged models that have been generated.
 
     The version number can be incremented to invalidate previous compilations.
@@ -61,14 +55,14 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         map_name: str,
         folder_name: str,
         version: object=0,
-        pack_models: bool=True,
-        compile_dir: Optional[Path] =None,
+        pack_models: bool = True,
+        compile_dir: Path | None = None,
     ) -> None:
         # The models already constructed.
         self._built_models: ACache[ModelKey, GenModel[OutT]] = ACache()
 
         # The random indexes we use to produce filenames.
-        self._mdl_names: Set[str] = set()
+        self._mdl_names: set[str] = set()
 
         self.game: Game = game
         self.model_folder = f'maps/{map_name}/{folder_name}/'
@@ -109,11 +103,11 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         if force_regen:
             return self  # Skip loading.
 
-        data: List[Tuple[ModelKey, str, OutT]]
+        data: list[tuple[ModelKey, str, OutT]]
         version = 0
         try:
             with (self.model_folder_abs / 'manifest.bin').open('rb') as f:
-                result: Any = pickle.load(f)
+                result = pickle.load(f)
                 if isinstance(result, tuple):
                     data, version = result
                 else:  # V0, no number.
@@ -153,15 +147,15 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
 
     def __exit__(
         self,
-        exc_type: Optional[Type[BaseException]],
-        exc_val: Optional[BaseException],
-        exc_tb: Optional[types.TracebackType],
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: types.TracebackType | None,
     ) -> None:
         """Write the constructed models to the cache file and remove unused models."""
         if exc_type is not None or exc_val is not None:
             return
-        data: List[Tuple[ModelKey, str, OutT]] = []
-        used_mdls: Set[str] = set()
+        data: list[tuple[ModelKey, str, OutT]] = []
+        used_mdls: set[str] = set()
         for key, mdl in self._built_models:
             if mdl.used:
                 data.append((key, mdl.name, mdl.result))
@@ -193,7 +187,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         key: ModelKey,
         compile_func: Callable[[ModelKey, Path, str, InT], Awaitable[OutT]],
         args: InT,
-    ) -> Tuple[str, OutT]:
+    ) -> tuple[str, OutT]:
         """Given a model key, either return the existing model, or compile it.
 
         Either way the result is the new model name, which also has been packed.
@@ -252,7 +246,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
                 break
 
         # If compile dir is specified, create the folder/clear it, but don't delete once done.
-        ctx_man: ContextManager[Union[str, Path]]
+        ctx_man: contextlib.AbstractContextManager[str | Path]
         if self.compile_dir is not None:
             path = Path(self.compile_dir, mdl_name)
             ctx_man = contextlib.nullcontext(path)
