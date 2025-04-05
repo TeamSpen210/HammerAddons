@@ -76,7 +76,7 @@ def comp_precache_sound(ctx: Context) -> None:
             if not key.startswith('sound'):
                 continue
             sound_key = sound.casefold().replace('\\', '/').lstrip(SND_CHARS)
-            if sound_key.endswith(('.wav', '.mp3')) and not sound_key.startswith('sound/'):
+            if sound_key.endswith(('.wav', '.mp3', '.ogg')) and not sound_key.startswith('sound/'):
                 sound_key = 'sound/' + sound_key
 
             # Precaching implies packing it.
