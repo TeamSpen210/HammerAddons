@@ -67,7 +67,7 @@ def branch_listener_unique_state(ctx: Context) -> None:
                             break
                     else:
                         LOGGER.warning(
-                            'logic_branch_listener "{}" has no spare slots, '
+                            'logic_branch_listener "{}" used all 16 slots, '
                             'but a UniqueState input was targetted at it!',
                             listener['targetname'],
                         )
