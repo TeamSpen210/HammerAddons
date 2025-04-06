@@ -10,4 +10,6 @@
 
 	// Outputs
 	output OnForceRespawn(void) : "Sent when the entity respawns the players."
+
+	@resources []
 	]

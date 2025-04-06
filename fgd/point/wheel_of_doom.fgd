@@ -17,7 +17,7 @@
 
 	@resources [
 		model "models/props_lakeside_event/buff_plane.mdl"
-		entity wheel_of_doom_sprial
+		entity wheel_of_doom_spiral
 
 		sound "Halloween.WheelofFate"
 		sound "Halloween.dance_howl"

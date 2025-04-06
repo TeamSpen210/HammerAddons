@@ -1,4 +1,6 @@
-@SolidClass base(NavCost) = func_nav_prefer: "Influence bots to prefer this region by decreasing the pathfinding cost within it."
+@SolidClass base(NavCost) 
+	appliesto(HL2, EP1, EP2, P1, TF2)
+= func_nav_prefer: "Influence bots to prefer this region by decreasing the pathfinding cost within it."
 	[
 	@resources []
 	]

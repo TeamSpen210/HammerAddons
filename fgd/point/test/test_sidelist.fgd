@@ -1,7 +1,9 @@
 @PointClass 
 	base(BaseEntityPoint)
-	appliesto(EP1, EP2, HL2, P1, ASW, +complete) 
-= test_sidelist: "Test entity for Ken!"
+	appliesto(EP1, EP2, HL2, P1, ASW, +complete, +engine) 
+= test_sidelist: "'Test entity for Ken!' VBSP parses the side list, then deletes this entity."
 	[
 	sides(sidelist) : "Sides"
+
+	@resources []
 	]

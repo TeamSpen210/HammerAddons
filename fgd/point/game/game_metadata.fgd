@@ -15,4 +15,6 @@
 	
 	input SetRPCState(string) : "Sets the RPC state."
 	input SetRPCDetails(string) : "Sets the RPC details."
+
+	@resources []
 	]

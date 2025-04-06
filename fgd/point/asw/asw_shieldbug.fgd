@@ -58,6 +58,5 @@
 		particle shieldbug_brain_explode
 		particle shieldbug_fountain
 		particle shieldbug_body_explode
-		entity asw_alien
 		]
 	]

@@ -1,7 +1,7 @@
 @PointClass base(BaseEntityAnimating)
-	appliesto(+engine)
+	appliesto(+engine, TF2)
 	studio("models/props_lakeside_event/wof_plane2.mdl")
-= wheel_of_doom_sprial: "Spiral inside the Wheel Of Doom"
+= wheel_of_doom_spiral: "Spiral inside the Wheel Of Doom"
 	[
 	@resources
 		[

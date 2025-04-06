@@ -1,8 +1,4 @@
 @BaseClass base(BaseMesaPickup) appliesto(Mesa) = BaseMesaWeaponPickup
 	[
-	@resources
-		[
-		// These item_weapon_XXX ents should include the relevant weapon script.
-		func weapon_script
-		]
+	@resources []
 	]

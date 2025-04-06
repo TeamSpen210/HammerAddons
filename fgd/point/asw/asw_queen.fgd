@@ -37,6 +37,5 @@
 		sound "ASW_Queen.AttackWave"
 		sound "ASW_Queen.Spit"
 		sound "ASW_Queen.TentacleAttackStart"
-		entity asw_alien
 		]
 	]

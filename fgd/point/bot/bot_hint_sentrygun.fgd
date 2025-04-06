@@ -9,4 +9,6 @@
 
 	// Outputs
 	output OnSentryGunDestroyed(void) : "Fired when a sentry gun built on this hint is destroyed."
+
+	@resources []
 	]

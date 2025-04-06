@@ -6,4 +6,6 @@
 	// Inputs
 	input EndGame(void) : "End the multiplayer game."
 	input EndGameSP[MBase](string) : "End the SP game. String could be a game-specific context."
+
+	@resources []
 	]
