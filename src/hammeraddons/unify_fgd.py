@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from typing import Any
 from collections.abc import Callable, MutableMapping
-from collections import Counter, defaultdict, ChainMap
+from collections import Counter, defaultdict, ChainMap, deque
 from pathlib import Path
 import argparse
 import itertools
@@ -15,7 +15,7 @@ import sys
 from srctools import fgd
 from srctools.fgd import (
     FGD, AutoVisgroup, EntAttribute, EntityDef, EntityTypes, Helper, HelperExtAppliesTo,
-    HelperTypes, KVDef, Snippet, ValueTypes, match_tags, validate_tags,
+    HelperTypes, KVDef, ResourceCtx, Snippet, ValueTypes, match_tags, validate_tags,
 )
 from srctools.filesys import File, RawFileSystem
 from srctools.math import Vec, format_float
@@ -879,6 +879,15 @@ def action_count(
         f'\nMissing: {missing_count}, '
         f'Defined: {defined_count} = {defined_count/(missing_count + defined_count):.2%}, empty={empty_count}\n\n'
     )
+
+    def report_missing_res(msg: str) -> None:
+        """Report errors in resources."""
+        print(f'Ent {ent.classname} res error: {msg}')
+    res_ctx = ResourceCtx(fgd=fgd)
+    for ent in fgd.entities.values():
+        # Get them all, checking validity in the process.
+        deque(ent.get_resources(res_ctx, ent=None, on_error=report_missing_res), maxlen=0)
+    print()
 
     mdl_or_sprites: dict[str, list[str]] = defaultdict(list)
     for ent in fgd:
