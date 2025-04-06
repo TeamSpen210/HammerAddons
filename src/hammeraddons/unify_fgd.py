@@ -867,13 +867,13 @@ def action_count(
 
         if not not_in_engine.isdisjoint(get_appliesto(ent)):
             continue
-        if isinstance(ent.resources, tuple):
+        if ent.resources_defined():
+            defined_count += 1
+            if len(ent.resources) == 0:
+                empty_count += 1
+        else:
             print(clsname, end=', ')
             missing_count += 1
-        else:
-            defined_count += 1
-            if not ent.resources:
-                empty_count += 1
 
     print(
         f'\nMissing: {missing_count}, '
@@ -882,7 +882,7 @@ def action_count(
 
     mdl_or_sprites: dict[str, list[str]] = defaultdict(list)
     for ent in fgd:
-        if ent.type is not EntityTypes.BASE and ent.type is not EntityTypes.BRUSH:
+        if ent.type is not EntityTypes.BASE and ent.type is not EntityTypes.BRUSH and not ent.is_alias:
             check_ent_sprites(ent, mdl_or_sprites)
     for resource, classes in mdl_or_sprites.items():
         if len(classes) > 1:
