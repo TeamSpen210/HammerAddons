@@ -3,4 +3,5 @@
 		"except the runtime collisions use a more bouncy method that avoids " +
 		"the prediction errors normal physics objects get."
 	[
+	@resources []
 	]

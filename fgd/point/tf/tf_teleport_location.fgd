@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(TF2) = tf_teleport_location: "Players teleport locations which will be delete on round start"
+	appliesto(TF2) = tf_teleport_location: "Marks a location to teleport Players to. The location is stored and then deleted on round start."
 	[
+	@resources []
 	]

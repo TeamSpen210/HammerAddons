@@ -18,4 +18,6 @@
 	output OnSpawned(void) : "Sent when an entity has spawned into the environment"
 	output OnExpended(void) : "Sent when the spawner has reached its allowed total of entities spawned"
 	output OnKilled(void) : "Sent when en entity spawned by this spawner has died/been destroyed"
+
+	@resources []
 	]

@@ -1,4 +1,5 @@
 @SolidClass base(NavCost) 
 = func_nav_avoid: "Influence bots to avoid this region by increasing the pathfinding cost within it."
 	[
+	@resources []
 	]

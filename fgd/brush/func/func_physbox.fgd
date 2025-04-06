@@ -72,4 +72,6 @@
 	output OnPlayerUse(void) : "Fired when the player tries to +USE the physbox. " +
 		"This output will fire only if the Generate output on +USE spawnflag is set, " +
 		"but still fires even if not pickup-able."
+
+	@resources [] // Only needs parent breakable brush
 	]

@@ -26,4 +26,11 @@
 	input FireOnce(void) : "Fire once."
 	input FireMultiple(integer) : "Fire multiple projectiles at once."
 	input DetonateStickies(void) : "Detonate stickies."
+
+	@resources	[
+		entity tf_projectile_arrow
+		entity tf_projectile_rocket
+		entity tf_projectile_pipe
+		mdl "models/weapons/w_models/w_stickybomb_d.mdl"
+		]
 	]

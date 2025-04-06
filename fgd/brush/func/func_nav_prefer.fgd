@@ -1,3 +1,4 @@
 @SolidClass base(NavCost) = func_nav_prefer: "Influence bots to prefer this region by decreasing the pathfinding cost within it."
 	[
+	@resources []
 	]

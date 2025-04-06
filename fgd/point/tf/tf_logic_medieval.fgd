@@ -1,5 +1,6 @@
-@PointClass base(BaseEntityPoint, EnableDisable) 
+@PointClass base(BaseEntityPoint) 
 	iconsprite("editor/ficool2/tf_logic_medieval")
 	appliesto(TF2) = tf_logic_medieval: "When present, this enables Medieval mode."
 	[
+	@resources []
 	]

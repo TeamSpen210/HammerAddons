@@ -1,4 +1,5 @@
 @PointClass base(BaseEntityPoint) 
+	studioprop("models/bots/knight/knight.mdl")
 	appliesto(TF2) = boss_alpha: "The Giant Robot Boss"
 	[
 

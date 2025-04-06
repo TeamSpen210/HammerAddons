@@ -30,6 +30,7 @@
 	output OnDestroyed(void) : "Fired when this entity is destroyed."
 
 	@resources [
+		entity dispenser_touch_trigger
 		mdl "models/buildables/dispenser_blueprint.mdl"
 		mdl "models/buildables/dispenser.mdl"
 		mdl "models/buildables/dispenser_light.mdl"

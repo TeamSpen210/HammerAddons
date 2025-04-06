@@ -64,4 +64,6 @@
 	input SetPosY[since_P2, GMOD](float) : "Set the Y position of the text. (0 - 1.0 = top to bottom) (-1 centers)"
 	input SetTextColor[since_P2, GMOD](color255) : "Set color of the front text."
 	input SetTextColor2[since_P2, GMOD](color255) : "Set color of the transition text."
+
+	@resources []
 	]

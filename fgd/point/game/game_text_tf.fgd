@@ -427,4 +427,6 @@
 
 	// Inputs
 	input Display(void) : "Display the message text."
+
+	@resources []
 	]
