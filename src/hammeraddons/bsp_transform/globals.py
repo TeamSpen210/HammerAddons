@@ -1,5 +1,4 @@
 """Apply transformations that work on (almost) all entities."""
-from typing import Dict, List, Tuple
 from collections import defaultdict
 import itertools
 
@@ -81,7 +80,7 @@ def optimise_logic_auto(ctx: Context) -> None:
     """Merge logic_auto entities to simplify the map."""
 
     # (global state) -> outputs
-    states: Dict[Tuple[str, bool], List[Output]] = defaultdict(list)
+    states: dict[tuple[str, bool], list[Output]] = defaultdict(list)
 
     for auto in ctx.vmf.by_class['logic_auto']:
         # If the auto uses any keys that we don't recognise, leave it alone.
@@ -129,7 +128,7 @@ def strip_ents(ctx: Context) -> None:
             ent.remove()
 
     # Strip the divider keyvalues in the FGDs.
-    to_remove: List[str] = []
+    to_remove: list[str] = []
     for ent in ctx.vmf.entities:
         to_remove.clear()
         for key, value in ent.items():

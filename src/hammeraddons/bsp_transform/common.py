@@ -1,10 +1,10 @@
 """Operations that can be reused across different transforms."""
+from typing import final, Literal, Self
+from collections.abc import Callable, Container, Iterator
+from decimal import Decimal, InvalidOperation
 import operator
 import re
-from typing import Callable, Container, Dict, Iterator, Tuple, Union, final
-from decimal import Decimal, InvalidOperation
 
-from typing_extensions import Literal, Self, TypeAlias
 import attrs
 
 from srctools import Entity, FrozenVec, VMF, Vec, conv_bool
@@ -14,15 +14,16 @@ from srctools.logger import get_logger
 
 __all__ = [
     'parse_numeric_specifier', 'check_control_enabled',
-    'ent_description', 'RelayOut', 'get_multimode_value', 'strip_cust_keys'
+    'ent_description', 'RelayOut', 'get_multimode_value', 'strip_cust_keys',
+    'NumericOp', 'NumericSpecifier',
 ]
 
 
 LOGGER = get_logger(__name__)
-NumericOp: TypeAlias = Callable[[Decimal, Decimal], bool]
-NumericSpecifier: TypeAlias = Tuple[NumericOp, Decimal]
+type NumericOp = Callable[[Decimal, Decimal], bool]
+type NumericSpecifier = tuple[NumericOp, Decimal]
 
-OPERATIONS: Dict[str, NumericOp] = {
+OPERATIONS: dict[str, NumericOp] = {
     '<': operator.lt,
     '>': operator.gt,
     '>=': operator.ge,
@@ -39,7 +40,7 @@ OPERATIONS: Dict[str, NumericOp] = {
 OPERATION_RE = re.compile(r'\s*([{}]+)'.format(''.join(map(re.escape, {
     char for key in OPERATIONS for char in key
 }))))
-kv_name_cache: Dict[str, Container[str]] = {}
+kv_name_cache: dict[str, Container[str]] = {}
 
 
 # noinspection PyUnusedLocal
@@ -105,7 +106,7 @@ class RelayOut:
     output: str
 
     @classmethod
-    def create(cls, vmf: VMF, pos: Union[Vec, FrozenVec], name: str) -> Iterator[Self]:
+    def create(cls, vmf: VMF, pos: Vec | FrozenVec, name: str) -> Iterator[Self]:
         """Generates a valid entity along with a free input/output pair."""
         # Could also use func_instance_io_proxy, but only in L4D+, and it might be weird.
         user_outs = [('Trigger', 'OnTrigger')] + [

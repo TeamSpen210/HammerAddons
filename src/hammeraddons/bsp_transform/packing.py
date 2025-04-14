@@ -1,5 +1,4 @@
 """Transformations for packing and precaching resources."""
-from typing import Dict, Set
 import os
 
 from srctools import Entity
@@ -17,7 +16,7 @@ LOGGER = get_logger(__name__, 'trans.packing')
 @trans('comp_precache_model', priority=100)
 def comp_precache_model(ctx: Context) -> None:
     """Force precaching a specific model."""
-    already_done: Set[str] = set()
+    already_done: set[str] = set()
     for ent in ctx.vmf.by_class['comp_precache_model']:
         if not check_control_enabled(ent):
             ent.remove()
@@ -66,7 +65,7 @@ function Precache() {
 def comp_precache_sound(ctx: Context) -> None:
     """Force precaching a set of sounds."""
     # Match normalised sound to the original filename.
-    sounds: Dict[str, str] = {}
+    sounds: dict[str, str] = {}
     for ent in ctx.vmf.by_class['comp_precache_sound']:
         ent.remove()
         if not check_control_enabled(ent):
@@ -186,7 +185,7 @@ def comp_pack_rename(ctx: Context) -> None:
 
     # Optimisation, don't re-read files multiple times.
     # We're storing the data anyway.
-    file_data: Dict[str, bytes] = {}
+    file_data: dict[str, bytes] = {}
 
     for ent in ctx.vmf.by_class['comp_pack_rename']:
         ent.remove()

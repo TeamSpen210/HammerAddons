@@ -1,6 +1,4 @@
 """Instance-related improvements."""
-from typing import Dict, Optional, Tuple
-
 from srctools import Entity
 from srctools.logger import get_logger
 
@@ -51,15 +49,15 @@ def collapse_proxy_relays(ctx: Context) -> None:
 def duplicate_proxy_relays(ctx: Context) -> None:
     """Duplicate proxies when required to allow infinite instance IO."""
     # Proxy name, ProxyRelayX -> new name, new index
-    new_names: Dict[Tuple[str, int], Tuple[str, int]] = {}
+    new_names: dict[tuple[str, int], tuple[str, int]] = {}
 
     # First edit proxy outputs, then edit everything else.
     for orig_proxy in list(ctx.vmf.by_class['func_instance_io_proxy']):
         # Set to max, so the next will be generated immediately.
         cur_num = RELAY_MAX
-        newest_proxy: Optional[Entity] = None
+        newest_proxy: Entity | None = None
         orig_proxy.remove()  # Remove the original, add new ones.
-        proxy_nums: Dict[int, Tuple[Entity, int]] = {}
+        proxy_nums: dict[int, tuple[Entity, int]] = {}
 
         proxy_name = orig_proxy['targetname']
 
