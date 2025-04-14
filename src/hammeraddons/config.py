@@ -191,6 +191,8 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
             if isinstance(fsys, VPKFileSystem):
                 blacklist.add(fsys)
 
+    appid_cache: dict[str, Path] = {}
+
     for kv in opts.get(SEARCHPATHS):
         if kv.has_children():
             raise ValueError('Config "searchpaths" value cannot have children.')
@@ -202,15 +204,19 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
             appid = conv_int(kv.value[1:end])
 
         if appid != -1:
-            LOGGER.info("Mounting appid {}", appid)
             try:
-                info = find_app(appid)
+                app_path = appid_cache[appid]
             except KeyError:
-                LOGGER.warning("No game with appid {} found!", appid)
-            else:
-                LOGGER.info(f"Mounted game {info.name} with path: {info.path}")
-                # If it's '<123>/some/path', the first / is treated as a root which we don't want.
-                kv.value = (info.path / kv.value[end + 1:].lstrip('\\/')).as_posix()
+                LOGGER.info("Mounting appid {}", appid)
+                try:
+                    info = find_app(appid)
+                except KeyError:
+                    LOGGER.warning("No game with appid {} found!", appid)
+                    continue
+                appid_cache[appid] = app_path = info.path
+                LOGGER.info(f"Mounted game {info.name} with path: {app_path}")
+            # If it's '<123>/some/path', the first / is treated as a root which we don't want.
+            kv.value = (app_path / kv.value[end + 1:].lstrip('\\/')).as_posix()
 
         if kv.value.endswith('.vpk'):
             fsys = VPKFileSystem(str(expand_path(kv.value)))
