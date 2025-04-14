@@ -11,7 +11,6 @@ import trio
 LOGGER = init_logging(Path(sys.argv[0]).with_name('postcompiler.log'))
 warnings.filterwarnings(category=DeprecationWarning, module='srctools', action='once')
 
-from typing import Dict, List, Optional
 from collections import defaultdict
 from logging import FileHandler, StreamHandler
 import argparse
@@ -49,7 +48,7 @@ def format_bytesize(val: float) -> str:
     return f'{val:.03f}tB'
 
 
-async def main(argv: List[str]) -> None:
+async def main(argv: list[str]) -> None:
     """Run the postcompiler."""
     parser = argparse.ArgumentParser(
         description="Modifies the BSP file, allowing additional entities "
@@ -182,7 +181,7 @@ async def main(argv: List[str]) -> None:
     conf.fsys.add_sys(ZipFileSystem('<BSP pakfile>', bsp_file.pakfile))
 
     studiomdl_path = conf.opts.get(config.STUDIOMDL)
-    studiomdl_loc: Optional[Path]
+    studiomdl_loc: Path | None
     if studiomdl_path:
         studiomdl_loc = conf.expand_path(studiomdl_path)
         if not studiomdl_loc.exists():
@@ -248,8 +247,8 @@ async def main(argv: List[str]) -> None:
 
     if studiomdl_loc is not None and args.propcombine:
         decomp_cache_path = conf.opts.get(config.PROPCOMBINE_CACHE)
-        decomp_cache_loc: Optional[Path]
-        crowbar_loc: Optional[Path]
+        decomp_cache_loc: Path | None
+        crowbar_loc: Path | None
         if decomp_cache_path is not None:
             decomp_cache_loc = conf.expand_path(decomp_cache_path)
             decomp_cache_loc.mkdir(parents=True, exist_ok=True)
@@ -266,7 +265,7 @@ async def main(argv: List[str]) -> None:
             crowbar_loc = None
 
         LOGGER.info('Combining props...')
-        max_auto_range: Optional[float] = conf.opts.get(config.PROPCOMBINE_MAX_AUTO_RANGE)
+        max_auto_range: float | None = conf.opts.get(config.PROPCOMBINE_MAX_AUTO_RANGE)
         if not max_auto_range:
             max_auto_range = math.inf
         await propcombine.combine(
@@ -336,7 +335,7 @@ async def main(argv: List[str]) -> None:
 
     LOGGER.debug('Packing allowlist={}, blocklist={}', pack_allowlist, pack_blocklist)
 
-    def pack_callback(path: str) -> Optional[bool]:
+    def pack_callback(path: str) -> bool | None:
         """Check the file against the two lists."""
         for pattern in pack_allowlist:
             if pattern.search(path) is not None:
@@ -365,7 +364,7 @@ async def main(argv: List[str]) -> None:
         )
 
     # List out all the files, but group together files with the same extension.
-    ext_for_name: Dict[str, List[str]] = defaultdict(list)
+    ext_for_name: dict[str, list[str]] = defaultdict(list)
     for zip_info in bsp_file.pakfile.infolist():
         filename = Path(zip_info.filename)
         if '.' in filename.name:

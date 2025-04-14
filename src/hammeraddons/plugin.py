@@ -1,7 +1,6 @@
 """Logic for loading all the code in arbitary locations for plugin purposes."""
-from typing import (
-    Callable, Dict, Iterable, Iterator, Optional, Sequence, Set, Tuple, Union, Final, Self,
-)
+from typing import Final, Self
+from collections.abc import Callable, Iterable, Iterator, Sequence
 from collections import deque
 from importlib.abc import MetaPathFinder
 from importlib.machinery import ModuleSpec, SourceFileLoader
@@ -26,7 +25,7 @@ class Source:
     folder: Path  # Folder to look in.
     recursive: bool = False  # If we automatically load recursively or not.
     # If non-empty load only these modules.
-    files: Set[Path] = attrs.Factory(set)
+    files: set[Path] = attrs.Factory(set)
 
     @classmethod
     def parse(cls, kv: Keyvalues, path_parse: Callable[[str], Path]) -> Self:
@@ -71,7 +70,7 @@ class Source:
                 raise ValueError(f"Unknown plugins key {kv.real_name}")
 
 
-def parse_name(prefix: str, name: str) -> Union[Tuple[str, Path], Tuple[None, None]]:
+def parse_name(prefix: str, name: str) -> tuple[str, Path] | tuple[None, None]:
     """Parse out the source index and file path."""
     pref_size = len(prefix) + 1
     first_dot = name.find('.', pref_size)
@@ -113,7 +112,7 @@ def _iter_folder(folder: Path, recursive: bool) -> Iterator[Path]:
 
 class PluginFinder(MetaPathFinder):
     """Loads plugins."""
-    def __init__(self, prefix: str, sources: Dict[str, Source]) -> None:
+    def __init__(self, prefix: str, sources: dict[str, Source]) -> None:
         self.prefix = prefix
         self.sources = sources
         # All names in a package hierarchy need to exist, so we need to produce a module for
@@ -128,9 +127,9 @@ class PluginFinder(MetaPathFinder):
     def find_spec(
         self,
         fullname: str,
-        path: Optional[Sequence[Union[str, bytes]]],
-        target: Optional[types.ModuleType] = None,
-    ) -> Optional[ModuleSpec]:
+        path: Sequence[str | bytes] | None,
+        target: types.ModuleType | None = None,
+    ) -> ModuleSpec | None:
         """Locate the module spec for a module, if it's one of ours."""
         # First check the various roots, and return the namespace package if so.
         try:

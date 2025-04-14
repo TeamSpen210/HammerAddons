@@ -1,6 +1,6 @@
 """Handles user configuration common to the different scripts."""
-from typing import Callable, Dict, Iterator, Optional, Pattern as re_Pattern, Set, Union, Final
-from typing_extensions import TypeAlias
+from typing import Final
+from collections.abc import Callable, Iterator
 from pathlib import Path
 import fnmatch
 import re
@@ -29,7 +29,7 @@ PREDEFINED_PATHS = {PATH_KEY_GAME, PATH_KEY_MAP}
 CUBEMAP_REGEX = r"materials/maps/.*/(c[0-9-]+_[0-9-]+_[0-9-]+|cubemapdefault)(\.hdr)?\.vtf"
 
 # Tags we use in our engine dump.
-USED_PACK_TAGS: Set[str] = {
+USED_PACK_TAGS: set[str] = {
     'hl1', 'hl2', 'episodic',
     'tf2',
     'mapbase', 'entropyzero2',
@@ -50,10 +50,10 @@ PATHS_CONF_STARTER: Final = f'''\
     }}
 '''
 # A function taking a configured path, and expanding |refs| to get the full location.
-Expander: TypeAlias = Callable[[str], Path]
+type Expander = Callable[[str], Path]
 
 
-def make_expander(roots: Dict[str, Path], orig_root: Union[str, Path]) -> Expander:
+def make_expander(roots: dict[str, Path], orig_root: str | Path) -> Expander:
     """Produce a function that expands configs potentially containing || refs."""
     def expander(path: str) -> Path:
         """Expand a reference potentially containing || refs."""
@@ -79,7 +79,7 @@ class Config:
     opts: Options
     game: Game
     fsys: FileSystemChain
-    pack_blacklist: Set[FileSystem]
+    pack_blacklist: set[FileSystem]
     plugins: PluginFinder
     expand_path: Expander
 
@@ -91,7 +91,7 @@ class Config:
         return path
 
 
-def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
+def parse(map_path: Path, game_folder: str | None = '') -> Config:
     """From some directory, locate and parse the config files.
 
     This then constructs and customises each object according to config
@@ -145,7 +145,7 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
         opts.save(f)
 
     # Fetch the additional path config.
-    path_roots: Dict[str, Path] = {}
+    path_roots: dict[str, Path] = {}
     paths_conf_loc = opts.path.with_name(PATHS_NAME)
     LOGGER.info('Paths config: {}', paths_conf_loc)
     try:
@@ -184,7 +184,7 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
 
     fsys_chain = game.get_filesystem()
 
-    blacklist: Set[FileSystem] = set()
+    blacklist: set[FileSystem] = set()
 
     if not opts.get(PACK_VPK):
         for fsys, prefix in fsys_chain.systems:
@@ -235,7 +235,7 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
         else:
             raise ValueError(f'Unknown searchpath key "{kv.real_name}"!')
 
-    sources: Dict[str, PluginSource] = {}
+    sources: dict[str, PluginSource] = {}
 
     if hasattr(sys, 'frozen'):
         builtin_transforms = (Path(sys.executable).parent / 'transforms').resolve()
@@ -273,7 +273,7 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
     )
 
 
-def packfile_filters(block: Keyvalues, kind: str) -> Iterator[re_Pattern[str]]:
+def packfile_filters(block: Keyvalues, kind: str) -> Iterator[re.Pattern[str]]:
     """Convert an allowlist/blocklist block into a bunch of regexes."""
     for kv in block:
         if kv.has_children():
