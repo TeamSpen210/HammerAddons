@@ -209,7 +209,8 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
                 LOGGER.warning("No game with appid {} found!", appid)
             else:
                 LOGGER.info(f"Mounted game {info.name} with path: {info.path}")
-                kv.value = (info.path / kv.value[end + 1:]).as_posix()
+                # If it's '<123>/some/path', the first / is treated as a root which we don't want.
+                kv.value = (info.path / kv.value[end + 1:].lstrip('\\/')).as_posix()
 
         if kv.value.endswith('.vpk'):
             fsys = VPKFileSystem(str(expand_path(kv.value)))
@@ -217,10 +218,13 @@ def parse(map_path: Path, game_folder: Optional[str]='') -> Config:
             fsys = RawFileSystem(str(expand_path(kv.value)))
 
         if kv.name in ('prefix', 'priority'):
+            LOGGER.debug('Added priority searchpath {}', fsys)
             fsys_chain.add_sys(fsys, priority=True)
         elif kv.name == 'nopack':
+            LOGGER.debug('Added nopack searchpath {}', fsys)
             blacklist.add(fsys)
         elif kv.name in ('path', 'pack'):
+            LOGGER.debug('Added searchpath {}', fsys)
             fsys_chain.add_sys(fsys)
         else:
             raise ValueError(f'Unknown searchpath key "{kv.real_name}"!')
