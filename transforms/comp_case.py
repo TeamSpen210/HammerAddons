@@ -1,13 +1,11 @@
 """comp_case is a compile-time collapsible version of logic_case."""
-import math
-from typing import Dict, Iterator, List, Tuple
+from collections.abc import Iterator
 
-import hashlib
-import re
-import struct
-import random
 from decimal import Decimal
 from collections import defaultdict
+import hashlib
+import struct
+import random
 
 from srctools import Entity, Output, conv_bool, conv_float
 from srctools.math import parse_vec_str
@@ -38,11 +36,11 @@ def collapse_case(ctx: Context, case: Entity) -> None:
     hasher_template.update(struct.pack('<x3f', *parse_vec_str(case['origin'])))
 
     # Find all defined outputs and parameters, so we can loop through them.
-    out_cases: Dict[int, List[Output]] = defaultdict(list)
-    out_default: List[Output] = []
-    out_used: List[Output] = []
-    out_matched: List[Output] = []
-    out_missed: List[Output] = []
+    out_cases: dict[int, list[Output]] = defaultdict(list)
+    out_default: list[Output] = []
+    out_used: list[Output] = []
+    out_matched: list[Output] = []
+    out_missed: list[Output] = []
     for out in case.outputs:
         if out.output.casefold().startswith('oncase'):
             try:
@@ -60,7 +58,7 @@ def collapse_case(ctx: Context, case: Entity) -> None:
         elif out.output.casefold() == 'onmissed':
             out_missed.append(out)
 
-    case_params: Dict[int, str] = {}
+    case_params: dict[int, str] = {}
     for k, v in case.items():
         if k.casefold().startswith('case'):
             try:
@@ -95,7 +93,7 @@ def collapse_case(ctx: Context, case: Entity) -> None:
                     yield case_num
     elif mode == 'numeric':
         # Pre-parse "< 5" style values.
-        numeric_cases: List[Tuple[NumericSpecifier, int]] = [
+        numeric_cases: list[tuple[NumericSpecifier, int]] = [
             (parse_numeric_specifier(
                 case_params[case_num],
                 f' for case #{case_num} in {desc}'
@@ -114,20 +112,20 @@ def collapse_case(ctx: Context, case: Entity) -> None:
                     yield case_num
     elif mode == 'randweight':  # Weighted Random, rather different.
         warned_rand_weight = False
-        weight_outs: List[List[Output]] = [
+        weight_outs: list[list[Output]] = [
             # Pre-concatenate, so we don't have to do it each time.
             [*out_cases[case_num], *out_used, *out_matched]
             for case_num in key_out
         ]
         cur_val = 0.0
-        cum_weights: List[float] = [
+        cum_weights: list[float] = [
             cur_val := cur_val + conv_float(case_params.get(case_num, 0.0))
             for case_num in key_out
         ]
         # If we missed, it was used too.
         out_missed += out_used
 
-        def handle_rand_weight(source: Entity, out: Output) -> List[Output]:
+        def handle_rand_weight(source: Entity, out: Output) -> list[Output]:
             """Pick a weighted-random case."""
             rng = make_rng(source)
             if 0.0 < miss_chance < rng.random():
@@ -135,7 +133,7 @@ def collapse_case(ctx: Context, case: Entity) -> None:
             [chosen] = make_rng(source).choices(weight_outs, cum_weights=cum_weights)
             return chosen
 
-        def warn_rand_weight(source: Entity, out: Output) -> List[Output]:
+        def warn_rand_weight(source: Entity, out: Output) -> list[Output]:
             """Warn about invalid use of InValue."""
             nonlocal warned_rand_weight
             if not warned_rand_weight:
@@ -181,7 +179,7 @@ def collapse_case(ctx: Context, case: Entity) -> None:
             for match in matching:
                 yield from out_cases[match]
 
-    def handle_pick_random(source: Entity, out: Output) -> List[Output]:
+    def handle_pick_random(source: Entity, out: Output) -> list[Output]:
         """Handle the PickRandom input."""
         rng = make_rng(source)
         if 0.0 < miss_chance < rng.random():

@@ -1,7 +1,7 @@
 """Implements comp_entity_finder."""
+from enum import Enum
 import itertools
 import math
-from enum import Enum
 
 from srctools import FrozenVec, conv_bool, conv_float, Vec, Entity, Angle
 from srctools.logger import get_logger

@@ -1,5 +1,5 @@
 """Implements an entity which transitions a value from one to another."""
-from typing import Callable, Dict, Iterator
+from collections.abc import Callable, Iterator
 from string import ascii_lowercase
 import math
 
@@ -220,7 +220,7 @@ def ease_func_sine_end(x: float) -> float:
     return 1.0 - math.cos(x * halfpi)
 
 
-EASE_START_FUNC: Dict[str, Callable[[float], float]] = {
+EASE_START_FUNC: dict[str, Callable[[float], float]] = {
     'linear': ease_func_linear,
     'quad': ease_func_power_start(2),
     'cubic': ease_func_power_start(3),
@@ -228,7 +228,7 @@ EASE_START_FUNC: Dict[str, Callable[[float], float]] = {
     'sine': ease_func_sine_start,
 }
 
-EASE_END_FUNC: Dict[str, Callable[[float], float]] = {
+EASE_END_FUNC: dict[str, Callable[[float], float]] = {
     'linear': ease_func_linear,
     'quad': ease_func_power_end(2),
     'cubic': ease_func_power_end(3),

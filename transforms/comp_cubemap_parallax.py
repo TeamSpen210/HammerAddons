@@ -1,6 +1,4 @@
 """Adds keys to generated cubemap materials to map them to the bounds of a cubeoid."""
-from typing import List, Optional, Tuple
-
 import attrs
 
 from srctools import Matrix, Vec, conv_float
@@ -15,7 +13,7 @@ import re
 
 LOGGER = get_logger(__name__)
 # 4x4 matrix, including translation.
-Matrix4 = Tuple[
+type Matrix4 = tuple[
     float, float, float, float,
     float, float, float, float,
     float, float, float, float,
@@ -52,7 +50,7 @@ class Config:
 @trans('comp_cubemap_parallax')
 def comp_cubemap_parallax(ctx: Context):
     """Modify cubemap materials to contain parallax information."""
-    parallax_cubemap_configs: List[Config] = []
+    parallax_cubemap_configs: list[Config] = []
     for parallax in ctx.vmf.by_class['comp_cubemap_parallax']:
         parallax.remove()
 
@@ -115,7 +113,7 @@ def comp_cubemap_parallax(ctx: Context):
 
         cubemap_origin = Vec(int(match.group(1)), int(match.group(2)), int(match.group(3)))
 
-        best_match: Optional[Config] = None
+        best_match: Config | None = None
         best_match_distance_sqr = -1.0
         for config in parallax_cubemap_configs:
             distance_sqr = (cubemap_origin - config.origin).len_sq()

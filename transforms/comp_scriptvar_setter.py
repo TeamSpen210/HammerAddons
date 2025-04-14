@@ -1,9 +1,9 @@
 """Implements comp_scriptvar_setter."""
 from __future__ import annotations
+from collections.abc import Callable
 import re
 from types import EllipsisType
 from collections import defaultdict
-from typing import Dict, TYPE_CHECKING, Optional, Callable, Union
 
 from srctools.fgd import EntityDef, ValueTypes
 from srctools.logger import get_logger
@@ -31,7 +31,7 @@ class VarData:
     """The info stored on a variable."""
     def __init__(self) -> None:
         # Non-array values.
-        self.scalar: Optional[str] = None
+        self.scalar: str | None = None
         # Array values at a specific index.
         self.specified_pos: dict[int, str] = {}
         # Array values at anywhere that fits.
@@ -45,7 +45,7 @@ class VarData:
         """Generate the code for setting this."""
         if self.is_array:
             # First build an array big enough to fit everything.
-            array: list[Optional[str]] = [None] * (
+            array: list[str | None] = [None] * (
                 max(self.specified_pos.keys(), default=0) + 1 +
                 len(self.extra_pos)
             )
@@ -84,7 +84,7 @@ def comp_scriptvar(ctx: Context):
     for comp_ent in ctx.vmf.by_class['comp_scriptvar_setter']:
         comp_ent.remove()
         var_name = comp_ent['variable']
-        index: Union[int, EllipsisType, None] = None
+        index: int | EllipsisType | None = None
 
         if not check_control_enabled(comp_ent):
             continue
@@ -149,7 +149,6 @@ def comp_scriptvar(ctx: Context):
         else:
             code = mode_func(comp_ent, ref_ent)
 
-        ent: Optional[Entity] = None
         for ent in ent_list:
             var_data = set_vars[ent][var_name]
             # Now we've got to match the assignment this is doing
@@ -340,7 +339,7 @@ MODES.update(
 )
 
 # Keyvalue types -> equivalent Squirrel code, if not just stringified.
-KEYVALUES: Dict[ValueTypes, Callable[[str], str]] = {
+KEYVALUES: dict[ValueTypes, Callable[[str], str]] = {
     ValueTypes.VOID: lambda val: 'null',
     ValueTypes.SPAWNFLAGS: str,
 

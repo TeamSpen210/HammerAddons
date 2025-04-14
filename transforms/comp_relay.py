@@ -2,7 +2,7 @@
 import random
 import struct
 
-from srctools import Vec, conv_bool, conv_float
+from srctools import Vec, conv_float
 from srctools.logger import get_logger
 
 from hammeraddons.bsp_transform import trans, Context, check_control_enabled

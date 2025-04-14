@@ -1,5 +1,5 @@
 """Fires on/off inputs repeatedly to simulate a flicker-on effect."""
-from typing_extensions import Final
+from typing import Final
 import random
 
 from hammeraddons.bsp_transform.common import strip_cust_keys
