@@ -11,7 +11,7 @@
 	model[!engine](studio) : "[H] Model" : "models/editor/angle_helper.mdl" : "The model shown in Hammer, to use for positioning."
 	spawnflags(flags)  =
 		[
-		1: "Teleport Home" : 0
+		1: "Teleport to Target's Spawn Position" : 0
 		2: "Into Duck (episodic)" : 0
 		]
 
