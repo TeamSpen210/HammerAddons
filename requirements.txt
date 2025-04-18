@@ -1,7 +1,9 @@
 attrs >= 21.4.0
 typing_extensions >= 4.2.0
-srctools >= 2.4.1
+srctools >= 2.5.0
 trio >= 0.24.0
 pyinstaller >= 6.1.0
 versioningit >= 2.1.0
 pyglet >= 2.1.2
+pyperclip >= 1.9.0
+types-pyperclip >= 1.9.0

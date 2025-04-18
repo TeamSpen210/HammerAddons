@@ -191,7 +191,7 @@ def parse(map_path: Path, game_folder: str | None = '') -> Config:
             if isinstance(fsys, VPKFileSystem):
                 blacklist.add(fsys)
 
-    appid_cache: dict[str, Path] = {}
+    appid_cache: dict[int, Path] = {}
 
     for kv in opts.get(SEARCHPATHS):
         if kv.has_children():

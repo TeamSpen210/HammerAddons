@@ -1,6 +1,8 @@
 """Generate VCD choreo scripts for each character sound."""
+from typing import Protocol
+
+from collections.abc import Awaitable, Callable, Mapping, Sequence
 from collections import defaultdict
-from collections.abc import Callable, Mapping, Sequence
 import argparse
 import io
 import pathlib
@@ -10,14 +12,16 @@ import traceback
 
 from srctools import Keyvalues, choreo, sndscript
 from srctools.tokenizer import Tokenizer
+from pyglet.util import DecodeException as PygletDecode
 import attrs
 import pyglet.media
 import trio
+import pyperclip
 
 
 COMMENT = '// This choreo scene was auto-generated. Remove this comment if modifying this file.\n'
 
-FILES = []
+FILES: list[str] = []
 
 CHOREO_SOUNDS: dict[str, dict[str, sndscript.Sound]] = defaultdict(dict)
 CHOREO_TO_SOUNDSCRIPT = str.maketrans({
@@ -26,7 +30,7 @@ CHOREO_TO_SOUNDSCRIPT = str.maketrans({
     '-': '_',
 })
 SCENES: list[choreo.Entry] = []
-RE_CAPTION_CMD = re.compile('<[^>]+>')
+RE_CAPTION_CMD = re.compile(r'<[^>]+>')
 RE_WORDS = re.compile(r'\S+')
 MANUAL_SOUNDSCRIPTS: set[str] = set()
 
@@ -93,20 +97,6 @@ class Overridable[T]:
             ) from None
 
 
-SOUND_LEVELS = {
-    level.name.upper(): level
-    for level in sndscript.Level
-}
-
-
-def parse_soundlevel(level: str) -> sndscript.Level | float:
-    """Parse a soundlevel definition. TODO: make sndscript.parse_float reusable?"""
-    try:
-        return SOUND_LEVELS[level.upper()]
-    except ValueError:
-        return float(level)
-
-
 @attrs.define(kw_only=True)
 class Settings:
     """General configuration."""
@@ -116,7 +106,10 @@ class Settings:
     # Mixgroup to use, or "" to disable.
     mixgroups: Overridable[str]
     # Soundlevel to use. Looked up from actor ent, not name.
-    soundlevels: Overridable[sndscript.Level | float]
+    soundlevels: Overridable[
+        tuple[sndscript.Level | float, sndscript.Level | float]
+        | sndscript.Level | float
+    ]
     # For subtitle -> choreo, the WPM to use.
     seconds_per_word: float
     # Lists of scenes.image files to merge into ours, with the filenames to add, or None for all
@@ -129,14 +122,16 @@ async def scene_from_sound(settings: Settings, root: trio.Path, filename: trio.P
     """Build a soundscript and scene for a sound."""
     try:
         duration = (await trio.to_thread.run_sync(pyglet.media.load, str(filename))).duration
-    except pyglet.media.DecodeException as exc:
+    except PygletDecode as exc:
         print(f'Could not determine duration for WAV {filename}:')
         traceback.print_exception(type(exc), exc, None)
         return
 
     relative = filename.relative_to(root)
 
-    scene_name = await trio.Path(settings.game_dir, 'scenes', 'npc', relative).with_suffix('.vcd').resolve()
+    scene_name = await trio.Path(
+        settings.game_dir, 'scenes', 'npc', relative,
+    ).with_suffix('.vcd').resolve()
     soundscript_name = str(relative.with_suffix('')).translate(CHOREO_TO_SOUNDSCRIPT).lower()
 
     if soundscript_name.casefold() in MANUAL_SOUNDSCRIPTS:
@@ -200,7 +195,9 @@ async def scene_from_subtitle(settings: Settings, soundscript: str, caption: str
     word_count = sum(1 for _ in RE_WORDS.finditer(stripped))
     duration = settings.seconds_per_word * word_count
     # print(f'Caption: {soundscript} = {word_count} words = {duration}')
-    scene_name = trio.Path(settings.game_dir, 'scenes', 'npc', *soundscript.split('.')).with_suffix('.vcd')
+    scene_name = trio.Path(
+        settings.game_dir, 'scenes', 'npc', *soundscript.split('.')
+    ).with_suffix('.vcd')
     await build_scene(
         settings, scene_name, character, duration, soundscript,
         cc_only=True,
@@ -269,7 +266,9 @@ async def check_existing(settings: Settings, filename: trio.Path) -> None:
     else:
         print(f'"{filename}" is manually authored.')
         data = await filename.read_text()
-        scene = await trio.to_thread.run_sync(choreo.Scene.parse_text, Tokenizer(data, filename))
+        scene = await trio.to_thread.run_sync(
+            choreo.Scene.parse_text, Tokenizer(data, filename)
+        )
         for sound in scene.used_sounds():
             MANUAL_SOUNDSCRIPTS.add(sound.casefold())
         SCENES.append(choreo.Entry.from_scene(
@@ -300,8 +299,8 @@ async def make_soundscript(settings: Settings, actor: str) -> None:
 async def read_settings(path: trio.Path) -> Settings:
     """Read the settings."""
     path = await path.resolve()
-    print(f"Config file path: ", path)
-    with open(path) as f:
+    print("Config file path: ", path)
+    with open(path, encoding='utf8') as f:
         conf = Keyvalues.parse(f)
     wpm = conf.float('wpm', 100.0)
     game_dir = await trio.Path(path, '..', conf['gamedir']).resolve()
@@ -317,7 +316,11 @@ async def read_settings(path: trio.Path) -> Settings:
             'mixgroups', 'mixgroupoverrides',
         ),
         soundlevels=Overridable.parse(
-            conf, parse_soundlevel,
+            conf, lambda text: sndscript.split_float(
+                text,
+                sndscript.SOUND_LEVELS.__getitem__,
+                sndscript.Level.SNDLVL_TALKING
+            ),
             'soundlevels', 'soundleveloverrides',
         ),
         use_operator_stacks=conf.bool('use_operator_stacks', True),
@@ -358,6 +361,13 @@ async def merge_scenes_image(image_path: trio.Path, scenes: list[str] | None) ->
         SCENES.append(entry)
 
 
+class Args(Protocol):
+    """Parsed arguments."""
+    config: str
+    subtitles: str | None
+    func: Callable[[Settings, 'Args'], Awaitable[None]]
+
+
 async def main(argv: list[str]) -> None:
     """Search for files."""
     parser = argparse.ArgumentParser(
@@ -369,12 +379,30 @@ async def main(argv: list[str]) -> None:
         default="../gen_choreo.vdf",
         help="The location of the config file.",
     )
+    subparsers = parser.add_subparsers()
 
-    args = parser.parse_args(argv)
+    parser_gen = subparsers.add_parser('generate')
+    parser_gen.set_defaults(func=rebuild_scenes)
+
+    parser_vscript = subparsers.add_parser('vscript')
+    parser_vscript.set_defaults(func=make_vscript)
+    parser_vscript.add_argument(
+        'subtitles',
+        nargs='?',
+        default=None,
+        help='Subtitles file to read. If unset, read/write from clipboard.'
+    )
+
+    args: Args = parser.parse_args(argv)
 
     settings = await read_settings(trio.Path(args.config))
     print(f'Game folder: {settings.game_dir}')
 
+    await args.func(settings, args)
+
+
+async def rebuild_scenes(settings: Settings, args: Args) -> None:
+    """Rebuild all scenes."""
     print('Removing existing auto scenes...')
     async with trio.open_nursery() as nursery:
         for scene in await (settings.game_dir / 'scenes').rglob('*.vcd'):
@@ -412,8 +440,57 @@ async def main(argv: list[str]) -> None:
             nursery.start_soon(make_soundscript, settings, actor)
 
         await scene_done.wait()
-        print(f'Writing scenes.image...')
+        print('Writing scenes.image...')
         await (settings.game_dir / 'scenes/scenes.image').write_bytes(image_buf.getvalue())
+
+
+async def make_vscript(settings: Settings, args: Args) -> None:
+    """Generate a VScript block to play the subtitles passed in."""
+    sub_fname = args.subtitles
+    if sub_fname:
+        use_clipboard = False
+        async with await trio.open_file(sub_fname, 'r') as f:
+            sub_data = await f.read()
+    else:
+        sub_fname = '<clipboard>'
+        use_clipboard = True
+        sub_data = pyperclip.paste()
+    subtitles = Keyvalues.parse(sub_data, sub_fname)
+    first = subtitles[0].real_name
+    try:
+        [_, *segments, last] = first.split('.')
+    except ValueError:
+        raise ValueError(f'Invalid subtitle key: {first}') from None
+    num_match = re.search(r'[0-9]+$', last)
+    if num_match is None:
+        num_size = 1  # Don't pad.
+    else:
+        num_size = num_match.end() - num_match.start()
+        last = last[:-num_size]  # Strip them.
+    new_names = []
+    segs = '.' + '.'.join(segments) if segments else ''
+    for i, sub in enumerate(subtitles, 1):
+        char = sub.real_name.split('.', 1)[0]
+        new_names.append((char, f'{char}{segs}.{last}{i:0{num_size}}'))
+
+    if any(sub.real_name != name for (c, name), sub in zip(new_names, subtitles)):
+        print('Renumbering: ')
+        for (char, name), sub in zip(new_names, subtitles):
+            print(f'{sub.real_name} -> {name}')
+            sub.name = name
+
+    out = io.StringIO()
+    subtitles.serialise(out)
+    out.write('\n\n')
+    out.write(f'SceneTable["{last}"] <- [\n\t')
+    for (char, name) in new_names:
+        choreo = pathlib.PurePath('scenes', 'npc', *name.split('.')).as_posix()
+        out.write(f'{{\n\t\tvcd=CreateSceneEntity("{choreo}.vcd"),\n\t\tchar="{char}",\n\t}}, ')
+    out.write('\n]')
+    if use_clipboard:
+        pyperclip.copy(out.getvalue())
+    else:
+        sys.stdout.write(out.getvalue())
 
 if __name__ == '__main__':
     trio.run(main, sys.argv[1:])
