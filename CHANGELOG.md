@@ -20,17 +20,18 @@ The postcompiler now requires Windows 8+.
 * Boolean keyvalues (yes/no) can now be set to `!$var`, to invert the value of the variable. 
 * Propcombine will now preserve prop fade distances, by calculating a new distance which encloses the original fade spheres.
 * Warn in the log if propcombine or packing was disabled via command line, so this is detectable later.
+* Add SFX to the Old Aperture cubedropper to simulate the new cube landing.
 * Add option to `comp_adv_output` to have it expand target searches itself.
 * Refer to the "Gravity Gun" in descriptions instead of physgun/physcannon.
 * Floor buttons with `solid=6` will automatically be fixed, since this unintentionally makes them non-solid.
 * The postcompiler will now detect and error if a loop of parents/filters is detected. These will just crash the game in a non-obvious manner.
-* Included a copy of the "Obsolete" sprite used for missing entities, for games that don't include it by default such as Portal 2
+* Included a copy of the "Obsolete" sprite used for missing entities, for games that don't include it by default such as Portal 2.
 * Improved `game_text` keyvalue descriptions and added Mapbase's font keyvalue
-* Updated the icon for `skybox_swapper`
-* Removed `info_paint_sprayer` keyvalues which are set in some Valve maps, but don't actually exist
-* Removed Hammer preview from Mapbase's `vgui_text_display` as it did not actually match the in-game appearance
-* Removed `skybox_swapper` in Mapbase as it doesn't actually work
-* Removed `playtest_manager` entity as it doesn't actually exist in-game
+* Updated the icon for `skybox_swapper`.
+* Removed `info_paint_sprayer` keyvalues which are set in some Valve maps, but don't actually exist.
+* Removed Hammer preview from Mapbase's `vgui_text_display` as it did not actually match the in-game appearance.
+* Removed `skybox_swapper` in Mapbase as it doesn't actually work.
+* Removed `playtest_manager` entity as it doesn't actually exist in-game.
 
 ## Bugfixes
 * Fix a compile failure if prop ropes were placed in a group with no connections.
