@@ -288,7 +288,7 @@ PACK_VPK = Opt.boolean(
 
 PACK_DUMP = Opt.string_or_none(
     'pack_dump',
-    """If set, copy all the packed resoures to this additional location.
+    """If set, copy all the packed resources to this additional location.
     You can also prefix this with a # character to only copy to this 
     destination, not the BSP pakfile.
 """)
@@ -314,7 +314,7 @@ PACK_ALLOWLIST = Opt.block(
     'pack_allowlist', Keyvalues('', []),
     """\
     Allows forcing specific files or folders to be packed. Each key in this block can be
-    either a single file/folder, a glob-style pattern, or an arbitary regex:
+    either a single file/folder, a glob-style pattern, or an arbitrary regex:
     
     * "path" "materials/models/props_expensive/"
     * "path" "scripts/game_sounds_ui.txt"
@@ -381,7 +381,7 @@ MODEL_COMPILE_DUMP = Opt.string(
 
 USE_COMMA_SEP = Opt.boolean_or_none(
     'use_comma_sep',
-    """Before L4D, entity I/O used ',' to seperate the different parts.
+    """Before L4D, entity I/O used ',' to separate the different parts.
 
    Later games used a special symbol to delimit the sections, allowing
    commas to be used in outputs. The compiler will guess which to use
