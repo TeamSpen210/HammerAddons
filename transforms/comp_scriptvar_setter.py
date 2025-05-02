@@ -1,9 +1,9 @@
 """Implements comp_scriptvar_setter."""
 from __future__ import annotations
 from collections.abc import Callable
-import re
 from types import EllipsisType
 from collections import defaultdict
+import re
 
 from srctools.fgd import EntityDef, ValueTypes
 from srctools.logger import get_logger
@@ -19,7 +19,7 @@ MODES: dict[str, Callable[[Entity, Entity], str]] = {}
 
 def vs_vec(vec: Vec) -> str:
     """Convert the provided Vec into a VScript Vector constructor code."""
-    return 'Vector({})'.format(vec.join())
+    return f'Vector({vec.join()})'
 
 
 def squirrel_string(val: str) -> str:
@@ -73,7 +73,7 @@ class VarData:
 
 
 @trans('comp_scriptvar_setter')
-def comp_scriptvar(ctx: Context):
+def comp_scriptvar(ctx: Context) -> None:
     """An entity to allow setting VScript variables to information from the map."""
     # {ent: {variable: data}}
     set_vars: dict[Entity | None, dict[str, VarData]] = defaultdict(lambda: defaultdict(VarData))

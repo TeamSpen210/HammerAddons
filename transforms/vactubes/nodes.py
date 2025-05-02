@@ -1,10 +1,11 @@
 """Implements the various curve types for vactubes."""
+from typing import ClassVar
+from abc import ABC, abstractmethod
+from collections.abc import Iterable, Iterator
+from enum import Enum
 import math
 import bisect
 import random
-from abc import ABC, abstractmethod
-from enum import Enum
-from typing import Tuple, Iterator, Iterable, Dict, Optional, List, ClassVar
 
 import srctools.logger
 from srctools import Vec, Entity, VMF, Output, conv_bool, Matrix, lerp
@@ -19,7 +20,7 @@ CUBE_MODEL = 'models/props/metal_box.mdl'
 SCANNER_LENGTH = 80
 
 # A list of the models the geocable transform generated.
-SPLINES: List['Spline'] = []
+SPLINES: list['Spline'] = []
 
 
 def make_standard_cube(vmf: VMF) -> Entity:
@@ -55,7 +56,7 @@ class DestType(Enum):
             return 'target_tri'
 
 
-def curve_point(radius: float, t: float) -> Tuple[float, float]:
+def curve_point(radius: float, t: float) -> tuple[float, float]:
     """Compute the offset along a curve, in XY.
 
     The curve goes from the [1, 0] direction to the [0, 1] direction.
@@ -79,7 +80,8 @@ class Node(ABC):
     # The outputs the item can use.
     out_types: ClassVar[Iterable[DestType]] = ()
     # If OnPass is present, use this relay for the input.
-    pass_relay: Optional[RelayOut]
+    pass_relay: RelayOut | None
+    outputs: dict[DestType, 'Node | None']
     def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut]) -> None:
         self.origin = Vec.from_str(ent['origin'])
         self.matrix = Matrix.from_angstr(ent['angles'])
@@ -87,7 +89,7 @@ class Node(ABC):
 
         self.has_input = False  # We verify every node has an input if used.
         # DestType -> output.
-        self.outputs: Dict[DestType, Optional[Node]] = dict.fromkeys(self.out_types, None)
+        self.outputs = dict.fromkeys(self.out_types, None)
         # Outputs fired when cubes reach this point.
         self.pass_relay = None
         for out in ent.outputs:
@@ -106,11 +108,9 @@ class Node(ABC):
         return self.ent['targetname']
 
     def __repr__(self) -> str:
-        return '<{} "{}" @ {}, {}>'.format(
-            self.__class__.__name__,
-            self.name,
-            self.origin,
-            self.matrix.to_angle(),
+        return (
+            f'<{self.__class__.__name__} "{self.name}" '
+            f'@ {self.origin}, {self.matrix.to_angle()}>'
         )
 
     @abstractmethod
@@ -190,7 +190,7 @@ class Spawner(Node):
     """The start point of the track."""
     pass_out_name = 'onspawned'
     keep_ent = True
-    out_types = [DestType.PRIMARY]
+    out_types: ClassVar[Iterable[DestType]] = [DestType.PRIMARY]
 
     def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut]) -> None:
         super().__init__(ent, relay_maker)
@@ -262,7 +262,7 @@ class Spline(Node):
     out_types: ClassVar[Iterable[DestType]] = [DestType.PRIMARY]
     _vmf = VMF()
 
-    def __init__(self, origin: Vec, points: List[Vec]) -> None:
+    def __init__(self, origin: Vec, points: list[Vec]) -> None:
         # Create a dummy entity, we don't really need it.
         super().__init__(
             # TODO: Make EntityNode superclass all other nodes use, with these params.
@@ -385,7 +385,7 @@ class Dropper(Destroyer):
 
 class Curve(Node):
     """A simple corner node."""
-    out_types = [DestType.PRIMARY]
+    out_types: ClassVar[Iterable[DestType]] = [DestType.PRIMARY]
 
     def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut], radius: float, reversed: bool) -> None:
         super().__init__(ent, relay_maker)
@@ -428,7 +428,7 @@ class DiagCurve(Node):
 
     This has a lot of precise constants to match a specific model.
     """
-    out_types = [DestType.PRIMARY]
+    out_types: ClassVar[Iterable[DestType]] = [DestType.PRIMARY]
     CURVE_LEN = 155.0  # Manually integrated the curve function.
     STRAIGHT_LEN = 56.0
     TOTAL_LEN = CURVE_LEN + STRAIGHT_LEN
@@ -482,12 +482,12 @@ class Straight(Node):
 
     This also checks for TV scanners being present nearby.
     """
-    out_types = [DestType.PRIMARY]
+    out_types: ClassVar[Iterable[DestType]] = [DestType.PRIMARY]
 
     def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut]) -> None:
         """Convert the entity to have the right logic."""
         self.persist_tv = conv_bool(ent.pop('persist_tv', False))
-        super(Straight, self).__init__(ent, relay_maker)
+        super().__init__(ent, relay_maker)
 
     def path_len(self, dest: DestType = DestType.PRIMARY) -> float:
         """Return the length of this node, which is always 32 units (arbitrarily)."""
@@ -511,7 +511,7 @@ class Straight(Node):
 
 class Splitter(Node):
     """A T-intersection that either randomly routes cubes or directs them to a dropper."""
-    out_types = [DestType.PRIMARY, DestType.SECONDARY]
+    out_types: ClassVar[Iterable[DestType]] = [DestType.PRIMARY, DestType.SECONDARY]
 
     def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut], straight: bool) -> None:
         """If straight is true, the primary dir goes forward."""
@@ -555,7 +555,7 @@ class CrossSplitter(Node):
 
     Primary is left, secondary is forward, tertiary is right.
     """
-    out_types = [DestType.PRIMARY, DestType.SECONDARY, DestType.TERTIARY]
+    out_types: ClassVar[Iterable[DestType]] = [DestType.PRIMARY, DestType.SECONDARY, DestType.TERTIARY]
 
     def __init__(self, ent: Entity, relay_maker: Iterator[RelayOut]) -> None:
         """If straight is true, the primary dir goes forward."""

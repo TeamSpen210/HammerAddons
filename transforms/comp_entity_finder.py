@@ -31,7 +31,7 @@ NEEDS = {
 
 
 @trans('comp_entity_finder')
-def entity_finder(ctx: Context):
+def entity_finder(ctx: Context) -> None:
     """Finds the closest entity of a given type."""
     target_cache: dict[tuple, Entity] = {}
 
@@ -196,7 +196,7 @@ def entity_finder(ctx: Context):
             known_ent: Entity | None = None
             known_ent_name = ''
             if needs_known:
-                known_ent_name = finder['kv{}_known'.format(ind)]
+                known_ent_name = finder[f'kv{ind}_known']
                 if not known_ent_name:
                     LOGGER.warning(
                         'No known entity specified for entity finder at '
@@ -265,4 +265,4 @@ def entity_finder(ctx: Context):
                     if out.target.casefold() == output_name:
                         out.target = found_ent_name
             else:
-                raise AssertionError('Unknown mode {}'.format(kv_mode))
+                raise AssertionError(f'Unknown mode {kv_mode}')

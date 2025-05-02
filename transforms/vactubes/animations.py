@@ -1,6 +1,6 @@
 """Handles generating the animation model for the vactubes."""
+from collections.abc import Iterator
 import math
-from typing import Dict, Iterator, Tuple, List, Optional
 
 
 from . import nodes
@@ -42,7 +42,7 @@ class RotGen:
         self.yaw_sp = yaw
         self.rol_sp = roll
 
-    def __next__(self) -> Tuple[float, float, float]:
+    def __next__(self) -> tuple[float, float, float]:
         self.pit_sp = limit(
             self.pit_sp + self.rand.uniform(-ROT_ACC, ROT_ACC), ROT_LIM)
 
@@ -78,13 +78,13 @@ class Animation:
         [self.move_bone] = self.mesh.bones.values()
         self.cur_frame = 0
         # For nodes with OnPass outputs, the time to fire each of those.
-        self.pass_points: List[Tuple[float, nodes.Node]] = []
+        self.pass_points: list[tuple[float, nodes.Node]] = []
         # For sensors that we're currently inside, the time at which we entered them.
-        self.sensor_enter: Dict[Sensor, float] = {}
+        self.sensor_enter: dict[Sensor, float] = {}
         # Sensors we have passed through, and the start/end time.
-        self.sensors: List[Tuple[float, float, Sensor]] = []
+        self.sensors: list[tuple[float, float, Sensor]] = []
         # Set of nodes in this animation, to prevent loops.
-        self.history: List[nodes.Node] = [start_node]
+        self.history: list[nodes.Node] = [start_node]
         # The kind of curve used for the current node.
         self.curve_type = DestType.PRIMARY
 
@@ -96,7 +96,7 @@ class Animation:
         # Either the start point, or the splitter to move in the secondary direction.
         self.cur_node: nodes.Node = start_node
         # Once done, this is the ending node so that we can determine if it's a dropper or not.
-        self.end_node: Optional[nodes.Destroyer] = None
+        self.end_node: nodes.Destroyer | None = None
         # When branching, the amount we overshot into this node from last time.
         self.start_overshoot = 0.0
 
@@ -134,7 +134,7 @@ class Animation:
         """Return the current duration of the animation."""
         return self.cur_frame / FPS
 
-    def add_point(self, sensors: List[Sensor], pos: Vec) -> None:
+    def add_point(self, sensors: list[Sensor], pos: Vec) -> None:
         """Add the given point to the end of the animation."""
         if self.cur_frame != 0:  # Handle sensors, if we're not the first frame.
             previous = self.mesh.animation[self.cur_frame - 1][0].position
@@ -144,7 +144,7 @@ class Animation:
         ]
         self.cur_frame += 1
 
-    def check_sensors(self, sensors: List[Sensor], pos1: Vec, pos2: Vec) -> None:
+    def check_sensors(self, sensors: list[Sensor], pos1: Vec, pos2: Vec) -> None:
         """Check all our sensors, and update values depending on them."""
         if not sensors:  # No sensors, nothing to do.
             return
@@ -183,7 +183,7 @@ class Animation:
                 self.sensors.append((start_time, end_time, sensor))
                 sensor.used = True
 
-    def vscript_outputs(self) -> Iterator[Tuple[float, Entity, str]]:
+    def vscript_outputs(self) -> Iterator[tuple[float, Entity, str]]:
         """Generate the names the VScript should call."""
         for time, node in self.pass_points:
             if node.pass_relay is not None:
@@ -212,9 +212,9 @@ class Animation:
                 yield enter, sensor.scanner_tv, SKIN_INPUT
 
 
-def generate(sources: List[nodes.Spawner], sensors: List[Sensor]) -> List[Animation]:
+def generate(sources: list[nodes.Spawner], sensors: list[Sensor]) -> list[Animation]:
     """Generate all the animations, one by one."""
-    anims = [Animation(node) for node in sources]
+    anims = [Animation(spawner) for spawner in sources]
 
     for anim in anims:
         node: Node = anim.cur_node
@@ -232,10 +232,11 @@ def generate(sources: List[nodes.Spawner], sensors: List[Sensor]) -> List[Animat
             # If we're secondary, we are the branch off and so don't need to
             # do that again.
             if anim.curve_type is DestType.PRIMARY:
+                # Intentionally adding these, we'll iterate over them later.
                 if DestType.SECONDARY in node.out_types:
-                    anims.append(anim.tee(node, DestType.SECONDARY, overshoot))
+                    anims.append(anim.tee(node, DestType.SECONDARY, overshoot))  # noqa: B909
                 if DestType.TERTIARY in node.out_types:
-                    anims.append(anim.tee(node, DestType.TERTIARY, overshoot))
+                    anims.append(anim.tee(node, DestType.TERTIARY, overshoot))  # noqa: B909
 
             needs_out = node.pass_relay is not None
 

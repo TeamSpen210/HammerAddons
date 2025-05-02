@@ -1,7 +1,7 @@
+from collections.abc import Awaitable, Callable
+from pathlib import Path
 import importlib
 import sys
-from pathlib import Path
-from typing import Awaitable, Callable
 
 import pytest
 

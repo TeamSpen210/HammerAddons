@@ -1,6 +1,4 @@
 """Handles configuration for the objects appearing inside vactubes."""
-from typing import Optional, Tuple, List, Dict, Union
-from typing_extensions import TypeAlias
 from collections import defaultdict
 from fractions import Fraction
 import os.path
@@ -40,12 +38,12 @@ class VacObject:
         obj_id: str,
         group: str,
         model_vac: str,
-        model_drop: Optional[str],
+        model_drop: str | None,
         offset: Vec,
-        weight: Union[Fraction, int] = 1,
-        skin_tv: int=0,
-        skin_drop: int=0,
-        skin_vac: int=0,
+        weight: Fraction | int = 1,
+        skin_tv: int = 0,
+        skin_drop: int = 0,
+        skin_vac: int = 0,
     ) -> None:
         self.id = obj_id
         self.group = group.casefold().strip()
@@ -72,22 +70,22 @@ class VacObject:
         )
 
 
-VacObjectDict: TypeAlias = Dict[Tuple[str, str, int], VacObject]
+type VacObjectDict = dict[tuple[str, str, int], VacObject]
 
 
-def parse(vmf: VMF, pack: PackList) -> Tuple[int, VacObjectDict, Dict[str, str]]:
+def parse(vmf: VMF, pack: PackList) -> tuple[int, VacObjectDict, dict[str, str]]:
     """Parse out the cube objects from the map.
 
     The return value is the number of objects, a dict of objects, and the
     filenames of the script generated for each group.
     The dict is (group, model, skin) -> object.
     """
-    cube_objects: Dict[Tuple[str, str, int], VacObject] = {}
-    vac_objects: Dict[str, List[VacObject]] = defaultdict(list)
+    cube_objects: dict[tuple[str, str, int], VacObject] = {}
+    vac_objects: dict[str, list[VacObject]] = defaultdict(list)
     # To allow decimal weights, parse them as fractions, then multiply them all by every denominator.
     # That'll cancel out the fraction, making them all integer. We then compute the common multiple
     # and reduce down.
-    group_multipliers: Dict[str, int] = defaultdict(lambda: 1)
+    group_multipliers: dict[str, int] = defaultdict(lambda: 1)
 
     for i, ent in enumerate(vmf.by_class['comp_vactube_object']):
         offset = Vec.from_str(ent['origin']) - Vec.from_str(ent['offset'])
@@ -151,7 +149,7 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[int, VacObjectDict, Dict[str, str]]
 
 def find_for_cube(vac_objects: VacObjectDict, group: str, cube: Entity) -> VacObject:
     """Find an object that matches the specified cube entity."""
-    potentials: List[Tuple[str, int]] = []
+    potentials: list[tuple[str, int]] = []
     # Try what's set in the keyvalues first. But if it's a default value, skip so that we use
     # the cube type first.
     model = cube['model'].replace('\\', '/')

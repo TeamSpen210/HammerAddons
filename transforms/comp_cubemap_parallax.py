@@ -48,7 +48,7 @@ class Config:
 
 
 @trans('comp_cubemap_parallax')
-def comp_cubemap_parallax(ctx: Context):
+def comp_cubemap_parallax(ctx: Context) -> None:
     """Modify cubemap materials to contain parallax information."""
     parallax_cubemap_configs: list[Config] = []
     for parallax in ctx.vmf.by_class['comp_cubemap_parallax']:

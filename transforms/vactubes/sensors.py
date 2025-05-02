@@ -1,8 +1,8 @@
 """Entities to allow detecting the motion of vactubes."""
+from typing import final
+from collections.abc import Iterator, Mapping, Sequence
 from enum import Enum
-
 import math
-from typing import Dict, Iterator, List, Mapping, Optional, Sequence, Tuple, final
 
 import attrs
 from srctools import Vec, conv_float, logger
@@ -26,8 +26,8 @@ class OutName(Enum):
 class Sensor:
     """Detects the presence of objects in vactubes."""
     # If from a scanner prop, the relevant entities.
-    scanner_tv: Optional[Entity]
-    scanner_spinner: Optional[Entity]
+    scanner_tv: Entity | None
+    scanner_spinner: Entity | None
     # For each, if their name was initially blank. If we're not used,
     # reset those.
     unnamed_tv: bool = False
@@ -38,7 +38,7 @@ class Sensor:
     origin: Vec
 
     outputs: Mapping[OutName, Sequence[Output]] = attrs.Factory(dict)
-    relays: Dict[OutName, RelayOut] = attrs.field(init=False, factory=dict)
+    relays: dict[OutName, RelayOut] = attrs.field(init=False, factory=dict)
 
     @classmethod
     def parse(cls, vmf: VMF) -> Iterator['Sensor']:
@@ -46,7 +46,7 @@ class Sensor:
         ent: Entity
         for ent in vmf.by_class['comp_vactube_sensor']:
             ent.remove()
-            outputs: Dict[OutName, List[Output]] = {out_kind: [] for out_kind in OutName}
+            outputs: dict[OutName, list[Output]] = {out_kind: [] for out_kind in OutName}
             for out in ent.outputs:
                 try:
                     out_kind = OutName(out.output.casefold())
@@ -64,8 +64,8 @@ class Sensor:
                 outputs=outputs,
             )
 
-        spinners: List[Entity] = []
-        scanners: List[Sensor] = []
+        spinners: list[Entity] = []
+        scanners: list[Sensor] = []
 
         for ent in vmf.by_class['prop_dynamic']:
             model = ent['model'].casefold().replace('\\', '/')
@@ -121,7 +121,7 @@ class Sensor:
         # Only yield now they're linked.
         yield from scanners
 
-    def intersect(self, start: Vec, direction: Vec, dist: float) -> Optional[Tuple[float, float]]:
+    def intersect(self, start: Vec, direction: Vec, dist: float) -> tuple[float, float] | None:
         """Check if a line segment intersects this sensor.
 
         The line is defined by `start + direction * dist`. The return value is None if it doesn't
@@ -153,7 +153,6 @@ class Sensor:
                 if not outs:
                     continue
                 self.relays[out_kind] = relay = next(relay_maker)
-                name = relay.ent['targetname']
                 for out in outs:
                     out.output = relay.output
                 relay.ent.outputs.extend(outs)

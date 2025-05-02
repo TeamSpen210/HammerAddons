@@ -1,12 +1,9 @@
 """Transformations that can be applied to the BSP file."""
-from typing import (
-    Awaitable, Callable, Container, Dict, FrozenSet, List, Mapping, Optional, Protocol, Tuple,
-    TypeVar, Union,
-)
-from typing_extensions import TypeAlias
-import warnings
+from typing import Protocol
+from collections.abc import Awaitable, Callable, Container, Mapping
 from pathlib import Path
 import inspect
+import warnings
 
 import attrs
 import trio.lowlevel
@@ -23,7 +20,7 @@ from hammeraddons.bsp_transform.common import (
 )
 
 LOGGER = get_logger(__name__, 'bsp_trans')
-RemapFunc: TypeAlias = Callable[[Entity, Output], List[Output]]
+type RemapFunc = Callable[[Entity, Output], list[Output]]
 
 __all__ = [
     'Context', 'trans', 'run_transformations',
@@ -47,25 +44,25 @@ class Context:
         bsp: BSP,
         game: Game,
         *,
-        studiomdl_loc: Optional[Path] = None,
-        tags: FrozenSet[str] = frozenset(),
-        modelcompile_dump: Optional[Path] = None,
+        studiomdl_loc: Path | None = None,
+        tags: frozenset[str] = frozenset(),
+        modelcompile_dump: Path | None = None,
     ) -> None:
         self.sys = filesys
         self.vmf = vmf
         self.bsp = bsp
         self.pack = pack
         self.bsp_path = Path(bsp.filename)
-        self._fgd: Optional[FGD] = None
+        self._fgd: FGD | None = None
         self.tags = tags
         self.modelcompile_dump = modelcompile_dump
         self.game = game
         self.studiomdl = studiomdl_loc
         self.config = Keyvalues.root()
 
-        self._io_remaps: Dict[Tuple[str, str], Tuple[List[Union[Output, RemapFunc]], bool]] = {}
+        self._io_remaps: dict[tuple[str, str], tuple[list[Output | RemapFunc], bool]] = {}
         self._allow_remaps = True
-        self._ent_code: Dict[Entity, str] = {}
+        self._ent_code: dict[Entity, str] = {}
 
     @property
     def fgd(self) -> FGD:
@@ -76,7 +73,7 @@ class Context:
 
     def _add_io_remap(
         self, name: str, inp_name: str,
-        value: Union[Output, RemapFunc],
+        value: Output | RemapFunc,
         remove: bool,
     ) -> None:
         if not self._allow_remaps:
@@ -142,9 +139,8 @@ class Context:
             self._ent_code[ent] = f'{existing}\n{code}'
 
 
-TransFunc: TypeAlias = Callable[[Context], Awaitable[None]]
-TransFuncOrSync: TypeAlias = Callable[[Context], Optional[Awaitable[None]]]
-TransFuncT = TypeVar('TransFuncT', bound=Callable[[Context], Optional[Awaitable[None]]])
+type TransFunc = Callable[[Context], Awaitable[None]]
+type TransFuncOrSync = Callable[[Context], Awaitable[None] | None]
 
 
 @attrs.frozen(eq=False)
@@ -155,11 +151,11 @@ class Transform:
     priority: int
 
 
-TRANSFORMS: Dict[str, Transform] = {}
+TRANSFORMS: dict[str, Transform] = {}
 
 
 class TransProto(Protocol):
-    def __call__(self, func: TransFuncT) -> TransFuncT: ...
+    def __call__[Func: TransFuncOrSync](self, func: Func) -> Func: ...
 
 
 def trans(name: str, *, priority: int=0) -> TransProto:
@@ -168,7 +164,7 @@ def trans(name: str, *, priority: int=0) -> TransProto:
     if ',' in name:
         raise ValueError('Commas are not allowed in names!')
 
-    def deco(func: TransFuncT) -> TransFuncT:
+    def deco[Func: TransFuncOrSync](func: Func) -> Func:
         """Stores the transformation."""
         if inspect.iscoroutinefunction(func):
             TRANSFORMS[name.casefold()] = Transform(func, name, priority)
@@ -189,11 +185,11 @@ async def run_transformations(
     pack: PackList,
     bsp: BSP,
     game: Game,
-    studiomdl_loc: Optional[Path] = None,
+    studiomdl_loc: Path | None = None,
     config: Mapping[str, Keyvalues] = EmptyMapping,
-    tags: FrozenSet[str] = frozenset(),
+    tags: frozenset[str] = frozenset(),
     disabled: Container[str] = (),
-    modelcompile_dump: Optional[Path] = None,
+    modelcompile_dump: Path | None = None,
 ) -> None:
     """Run all transformations."""
     context = Context(
@@ -262,7 +258,7 @@ def apply_io_remaps(context: Context) -> None:
                     continue
                 if should_remove:
                     ent.outputs.remove(out)
-                collapsed_remaps: List[Output] = []
+                collapsed_remaps: list[Output] = []
                 out_copy = out.copy()  # Don't allow remapping functions to modify this.
                 for remap in remaps:
                     if isinstance(remap, Output):

@@ -1,6 +1,4 @@
 """Implements various brush entities."""
-from typing import Tuple, Dict
-
 from hammeraddons.bsp_transform.common import strip_cust_keys
 from srctools import Output, conv_bool, conv_float, Vec, Entity, conv_int
 
@@ -8,7 +6,7 @@ from hammeraddons.bsp_transform import trans, Context
 
 
 @trans('P2 Coop Trigger')
-def comp_trigger_coop(ctx: Context):
+def comp_trigger_coop(ctx: Context) -> None:
     """Creates a trigger which only activates with both players."""
     for trig in ctx.vmf.by_class['comp_trigger_coop']:
         trig['classname'] = 'trigger_playerteam'
@@ -63,9 +61,9 @@ def comp_trigger_coop(ctx: Context):
 
 
 @trans('P2 Goo')
-def comp_trigger_goo(ctx: Context):
+def comp_trigger_goo(ctx: Context) -> None:
     """Creates triggers for Toxic Goo."""
-    reloader_cache = {}  # type: Dict[Tuple[float, float, float, float], Entity]
+    reloader_cache: dict[tuple[float, float, float, float], Entity] = {}
 
     for trig in ctx.vmf.by_class['comp_trigger_p2_goo']:
         brush_model = ctx.bsp.bmodels[trig]

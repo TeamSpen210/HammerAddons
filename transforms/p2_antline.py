@@ -4,8 +4,6 @@ This generates env_texturetoggle entities which do the right thing.
 If the one of the target entities is a prop_indicator_panel, it also
 toggles that.
 """
-from typing import List, Set
-
 from srctools import Entity, Output
 from srctools.logger import get_logger
 
@@ -32,7 +30,7 @@ IND_ENTS = {
 
 
 @trans('P2 Antlines')
-def comp_antlines(ctx: Context):
+def comp_antlines(ctx: Context) -> None:
     """Adds indicator name keys to Portal 2 entities."""
     for ent in ctx.vmf.entities:
         try:
@@ -46,15 +44,15 @@ def comp_antlines(ctx: Context):
         # These are the names, not the ents themselves.
 
         # Or brush ents holding overlays.
-        ind_overlays: Set[str] = set()
-        ind_toggles: Set[str] = set()
+        ind_overlays: set[str] = set()
+        ind_toggles: set[str] = set()
         # These need the right inputs.
-        ind_panel_tim: Set[str] = set()
-        ind_panel_check: Set[str] = set()
+        ind_panel_tim: set[str] = set()
+        ind_panel_check: set[str] = set()
 
         # Panels without an indicator set - we can use
         # these instead of a texturetoggle.
-        unused_panels: List[Entity] = []
+        unused_panels: list[Entity] = []
 
         for ind_ent in ctx.vmf.search(ind_name):
             cls = ind_ent['classname']
@@ -101,21 +99,24 @@ def comp_antlines(ctx: Context):
 
         for ind_name in ind_toggles:
             ent.add_out(
-                Output(out_on , ind_name, 'SetTextureIndex', '1'),
+                Output(out_on, ind_name, 'SetTextureIndex', '1'),
                 Output(out_off, ind_name, 'SetTextureIndex', '0'),
             )
             # Add remap to pass through this to the texture toggle, for manually changing the index.
             # Good for "off" skins.
-            ctx.add_io_remap(ent['targetname'], Output('SetTextureIndex', ind_name, 'SetTextureIndex'))
+            ctx.add_io_remap(
+                ent['targetname'],
+                Output('SetTextureIndex', ind_name, 'SetTextureIndex')
+            )
 
         for ind_name in ind_panel_check:
             ent.add_out(
-                Output(out_on , ind_name, 'Check'),
+                Output(out_on, ind_name, 'Check'),
                 Output(out_off, ind_name, 'Uncheck'),
             )
 
         for ind_name in ind_panel_tim:
             ent.add_out(
-                Output(out_on , ind_name, 'Start'),
+                Output(out_on, ind_name, 'Start'),
                 Output(out_off, ind_name, 'Reset'),
             )

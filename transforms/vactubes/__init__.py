@@ -1,12 +1,12 @@
 """Implement customisable vactubes for items."""
-import subprocess
+from collections.abc import Iterable
 from collections import defaultdict
-import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Tuple, Dict, List, Iterable, Optional, Union
 import math
 import random
+import subprocess
+import sys
 
 import trio
 
@@ -59,7 +59,7 @@ def vscript_bool(value: bool) -> str:
 
 
 def find_closest(
-    all_nodes: Iterable[Tuple[Union[Vec, FrozenVec], List[Tuple[Vec, nodes.Node]]]],
+    all_nodes: Iterable[tuple[Vec | FrozenVec, list[tuple[Vec, nodes.Node]]]],
     node: nodes.Node,
     src_type: nodes.DestType,
 ) -> nodes.Node:
@@ -67,7 +67,7 @@ def find_closest(
     src_point = node.vec_point(1.0, src_type)
     src_norm = node.output_norm(src_type)
 
-    best_node: Optional[nodes.Node] = None
+    best_node: nodes.Node | None = None
     best_dist = math.inf
 
     # We're looking for if the point is inside the cylinder projecting out
@@ -101,8 +101,8 @@ def find_closest(
 @trans('Portal 2 Vactubes')
 async def vactube_transform(ctx: Context) -> None:
     """Implements the dynamic Vactube system."""
-    name_to_node: Dict[str, nodes.Node] = {}
-    all_nodes: List[nodes.Node] = []
+    name_to_node: dict[str, nodes.Node] = {}
+    all_nodes: list[nodes.Node] = []
 
     relay_maker = RelayOut.create(ctx.vmf, VAC_POS, '_vac_out')
 
@@ -145,7 +145,7 @@ async def vactube_transform(ctx: Context) -> None:
     # Now join all the nodes to each other.
     # Tubes only have 90 degree bends, so a system should mostly be formed
     # out of about 6 different normals. So group by that.
-    inputs_by_norm: Dict[FrozenVec, List[Tuple[Vec, nodes.Node]]] = defaultdict(list)
+    inputs_by_norm: dict[FrozenVec, list[tuple[Vec, nodes.Node]]] = defaultdict(list)
 
     for node in all_nodes:
         # Spawners have no inputs.
@@ -163,7 +163,7 @@ async def vactube_transform(ctx: Context) -> None:
     # with open(str(ctx.bsp.filename)[:-4] + '_vac.vmf', 'w') as f:
     #     ctx.vmf.export(f, inc_version=False)
 
-    sources: List[nodes.Spawner] = []
+    sources: list[nodes.Spawner] = []
 
     LOGGER.info('Linking nodes...')
     for node in all_nodes:
@@ -176,14 +176,10 @@ async def vactube_transform(ctx: Context) -> None:
                 try:
                     target = name_to_node[override.casefold()]
                 except KeyError:
-                    raise ValueError(f'Unknown node target "{override}" for node {node}!')
+                    raise ValueError(f'Unknown node target "{override}" for node {node}!') from None
                 LOGGER.debug('Override: {} -> {}', node.name, target.name)
             else:
-                target = find_closest(
-                inputs_by_norm.items(),
-                node,
-                dest_type,
-            )
+                target = find_closest(inputs_by_norm.items(), node, dest_type)
             node.outputs[dest_type] = target
 
             # Mark the node as having an input, for sanity checking purposes.
@@ -242,10 +238,10 @@ async def vactube_transform(ctx: Context) -> None:
         for tri in mesh.triangles:
             for point in tri:
                 point.tex_u, point.tex_v = U[point.tex_u], V[point.tex_v]
-        with open(temp_dir + '/ref.smd', 'wb') as mesh_file:
+        with open(f'{temp_dir}/ref.smd', 'wb') as mesh_file:
             mesh.export(mesh_file)
 
-        with open(temp_dir + '/prop.qc', 'w') as qc_file:
+        with open(f'{temp_dir}/prop.qc', 'w', encoding='utf8') as qc_file:
             qc_file.write(QC_TEMPLATE.format(
                 path=anim_mdl_name.as_posix(), 
                 fps=animations.FPS,
@@ -321,13 +317,13 @@ async def vactube_transform(ctx: Context) -> None:
     )
 
     # Group animations by their start point.
-    anims_by_start: Dict[nodes.Spawner, List[animations.Animation]] = defaultdict(list)
+    anims_by_start: dict[nodes.Spawner, list[animations.Animation]] = defaultdict(list)
 
     for anim in all_anims:
         anims_by_start[anim.start_node].append(anim)
 
     # And create a dict to link droppers to the animation they want.
-    dropper_to_anim: Dict[nodes.Dropper, animations.Animation] = {}
+    dropper_to_anim: dict[nodes.Dropper, animations.Animation] = {}
 
     for start_node, anims in anims_by_start.items():
         spawn_maker = start_node.ent
@@ -363,7 +359,6 @@ async def vactube_transform(ctx: Context) -> None:
         code = [f'// Node: {start_node.ent["targetname"]}, {start_node.origin}']
         for anim in anims:
             anim_dest = anim.end_node
-            anim_speed = anim.start_node.speed
             io_code = ','.join([
                 f'Output({time:.2f}, "{ent["targetname"]}", "{inp}")'
                 for time, ent, inp in anim.vscript_outputs()

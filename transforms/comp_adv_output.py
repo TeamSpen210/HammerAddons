@@ -1,12 +1,12 @@
 """Adds a single output to an entity, with precise control over fixup behaviour.
 
 """
-import struct
-import random
-
+from typing import Any
+from collections.abc import Collection, Mapping, Sequence
 import itertools
+import random
 import string
-from typing import Any, Collection, List, Mapping, Sequence, Union
+import struct
 
 from srctools import EmptyMapping, Vec, conv_bool, conv_float, conv_int
 from srctools.vmf import Output, Entity
@@ -18,7 +18,7 @@ from hammeraddons.bsp_transform.common import get_multimode_value, check_control
 
 class SimpleFormatter(string.Formatter):
     """Use 1-based indexes for the args, instead of 0-based."""
-    def get_value(self, key: Union[int, str], args: Sequence[Any], kwargs: Mapping[str, Any]) -> Any:
+    def get_value(self, key: int | str, args: Sequence[Any], kwargs: Mapping[str, Any]) -> Any:
         """Adjust the key."""
         if isinstance(key, int) and key > 0:
             return args[key - 1]
@@ -69,7 +69,7 @@ def advanced_output(ctx: Context) -> None:
             )
             delay = 0.0
 
-        param_args: List[str] = []
+        param_args: list[str] = []
         for ind in itertools.count(1):
             val = get_multimode_value(adv_out, prefix='params_', suffix=str(ind), desc=f'Param {ind}')
             if not val:
