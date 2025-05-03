@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint)
 	appliesto(+P2, +srctools)
-	autovis(Vactubes, Vac Paths)
 	studioprop("models/editor/vactubes/start_point.mdl")
 = comp_vactube_start : "Marks the start point of a vactube. This is where they spawn."
 [

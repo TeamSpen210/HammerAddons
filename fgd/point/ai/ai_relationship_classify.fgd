@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(MBase)
-	autovis(AI, AI Relationship)
 	iconsprite("editor/ai_relationship.vmt") 
 	sphere() = ai_relationship_classify: "AI Relationship - Sets relationships between entire classify classes in the AI."
 	[

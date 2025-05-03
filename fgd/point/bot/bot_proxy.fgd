@@ -1,7 +1,5 @@
-
 @PointClass base(BaseEntityPoint) 
 	appliesto(TF2)
-	autovis(TF2, TFBots, Bot Proxy)
 	iconsprite("editor/ficool2/bot_proxy")
 = bot_proxy: "An entity that spawns a TFBot and relays events to/from it"
 	[

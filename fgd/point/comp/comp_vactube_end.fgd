@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint)
 	appliesto(+P2, +srctools)
-	autovis(Vactubes, Vac Paths)
 	studioprop("models/editor/vactubes/end_point.mdl")
 	sphere()
 = comp_vactube_end : "Marks the end point of a vactube. Objects reaching here will be cleaned up."

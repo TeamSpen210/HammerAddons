@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) 
-	autovis(Entities, Constraints, Motors)
+@PointClass base(BaseEntityPoint)
 	halfgridsnap
 	color(128 128 128) 
 	line(128 128 128, targetname, attach1) 

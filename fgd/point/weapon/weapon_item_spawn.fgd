@@ -1,6 +1,5 @@
 @PointClass appliesto(L4D2) base(WeaponSpawnSingle)
-	iconsprite(editor/weapon_item_spawn) 
-	autovis(Weapons, L4D Weapons, L4D Items)
+	iconsprite(editor/weapon_item_spawn)
 = weapon_item_spawn
 	[
 	item1(integer) : "Ammo pile" : 1

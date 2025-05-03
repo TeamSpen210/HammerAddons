@@ -1,7 +1,6 @@
 @PointClass base(ControlEnables)
 	iconsprite("editor/comp_adv_output")
 	appliesto(srctools)
-	autovis(Postcompiler, Advanced Output)
 = comp_adv_output : "Adds a single output to an entity, with precise control over fixup behaviour."
 	[
 	out_ent(target_destination) : "Outputting Entity" : : "The name of the entity or entities to add the output to."

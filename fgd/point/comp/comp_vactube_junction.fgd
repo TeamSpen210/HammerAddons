@@ -1,6 +1,5 @@
 @PointClass base(Angles)
 	appliesto(+P2, +srctools)
-	autovis(Vactubes, Vac Paths)
 	studioprop()
 = comp_vactube_junction : "Marks a junction in a vactube, where they're forced to change direction. Scanner models near straight nodes will be detected automatically."
 [

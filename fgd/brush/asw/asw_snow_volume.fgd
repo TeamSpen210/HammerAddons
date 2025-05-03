@@ -1,8 +1,7 @@
 // This is actually a clientside only entity, specially parsed with dedicated code out of the ent lump.
 // So only the model, classname and snowtype keyvalues are touched.
 
-@SolidClass appliesto(ASW) 
-	autovis(Clientside, Snow Volume)
+@SolidClass appliesto(ASW)
 = asw_snow_volume: "Causes snow when the marine is inside this volume."
 	[
 	snowtype[engine](integer) : "Snow Type" : 1

@@ -1,6 +1,5 @@
 @PointClass base(Angles)
 	appliesto(+P2, +srctools)
-	autovis(Vactubes, Vac Paths)
 	sphere(radius)
 = comp_vactube_sensor: "Detects vactube objects travelling through a path, and fires outputs."
 	[

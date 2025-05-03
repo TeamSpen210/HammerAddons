@@ -1,7 +1,6 @@
 
 @PointClass base(BaseEntityPoint, Angles, DXLevelChoice, SystemLevelChoice) 
-	appliesto(since_L4D, GMOD) 
-	autovis(Lights, Light FX)
+	appliesto(since_L4D, GMOD)
 	studio("models/editor/cone_helper.mdl") 
 	sphere(spotlightlength) 
 	sphere(spotlightwidth) 

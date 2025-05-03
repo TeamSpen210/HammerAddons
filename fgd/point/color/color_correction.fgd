@@ -1,8 +1,7 @@
 @PointClass base(BaseEntityPoint, EnableDisable)
 	sphere(minfalloff) 
 	sphere(maxfalloff) 
-	iconsprite("editor/color_correction.vmt") 
- 	autovis(Point Entities, Globals, Color Correction)
+	iconsprite("editor/color_correction.vmt")
 = color_correction: "An entity to control the color correction in the map."
 	[
 	minfalloff(float) : "Lookup Falloff Start Distance" : "0.0" : "This is the distance to the start of the falloff region (-1 = everywhere)"

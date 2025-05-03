@@ -3,7 +3,6 @@
 	sphere(fademindist)
 	sphere(fademaxdist)
 	iconsprite("editor/ficool2/env_detail_controller.vmt")
- 	autovis(Point Entities, Globals, Detail Controller)
 = env_detail_controller: "An entity that lets you control override the min and max fade distances for details sprites in the map."
 	[
 	fademindist(float) : "Start Fade Dist/Pixels" : 512 : "The distance at which the detail props will start fading away."

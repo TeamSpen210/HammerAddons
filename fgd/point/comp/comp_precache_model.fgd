@@ -2,7 +2,6 @@
 	iconsprite("editor/comp_precache_model") 
 	studioprop() 
 	appliesto(srctools)
-	autovis(Postcompiler, Precacher)
 	line(255 255 255, targetname, lineent)
 = comp_precache_model:
 	"Force a specific model to load, for runtime switching. Duplicates will be removed."

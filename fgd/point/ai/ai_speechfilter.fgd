@@ -2,7 +2,6 @@
 	appliesto(-L4D, -L4D2)
 	line(255 255 255, targetname, subject)
 	iconsprite("editor/ficool2/ai_speechfilter.vmt")
-	autovis(AI, AI Speech Filter)
 = ai_speechfilter: "An entity that can be used to control the idle speech patterns of a set of NPCs."
 	[
 	subject(target_destination) : "Subject(s)" : : "This is the NPC(s) whose speech we're filtering. May be a targetname or a classname."

@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(since_ASW) 
-	autovis(AI, AI Goal, Fight From Cover Goal)
+	appliesto(since_ASW)
 	iconsprite("editor/ficool2/ai_goal_fightfromcover.vmt") 
 = ai_goal_fightfromcover: "AI Fight from Cover"
 	[

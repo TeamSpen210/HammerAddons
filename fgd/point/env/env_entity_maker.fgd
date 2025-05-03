@@ -1,5 +1,4 @@
 @PointClass base(BaseEntityPoint, Angles)
-	autovis(Templates, Entity Maker)
 	line(255 255 0, targetname, entitytemplate)
 	iconsprite("editor/env_entity_maker.vmt")
 	studio("models/editor/angle_helper.mdl")

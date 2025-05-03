@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(MBase) 
-	autovis(AI, AI Goal) iconsprite("editor/ai_goal_fear.vmt") = ai_goal_fear :
+	iconsprite("editor/ai_goal_fear.vmt") = ai_goal_fear :
 	"AI Goal Fear\n\n" +
 	"Allows player allies to use fear withdrawal points and other fear behavior otherwise unique with npc_hunters. " +
 	"Citizens will still engage in fear behavior with npc_hunters, but this allows them to use it with other NPCs."
