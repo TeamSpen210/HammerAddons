@@ -4,78 +4,10 @@
 	sphere() = ai_relationship_classify: "AI Relationship - Sets relationships between entire classify classes in the AI."
 	[
 	subject[engine](integer) : "Subject(s)" : 0
-	subject(choices) : "Subject(s)" : 0 : "This is the NPC class whose disposition will change." =
-	[
-		0 : "CLASS_NONE"
-		1 : "CLASS_PLAYER"
-		2 : "CLASS_PLAYER_ALLY (Citizens)"
-		3 : "CLASS_PLAYER_ALLY_VITAL (Alyx, Dr. Kleiner, GameEndAlly vorts, etc.)"
-		4 : "CLASS_ANTLION"
-		5 : "CLASS_BARNACLE"
-		6 : "CLASS_BULLSEYE (npc_bullseyes)"
-		7 : "CLASS_CITIZEN_PASSIVE (pre-criminal citizens)"
-		//8 : "CLASS_CITIZEN_REBEL (Unused)"
-		9 : "CLASS_COMBINE (Soldiers, turrets, etc.)"
-		10 : "CLASS_COMBINE_GUNSHIP (Gunships, helicopters, dropships)"
-		//11 : "CLASS_CONSCRIPT (Unused)"
-		12 : "CLASS_HEADCRAB"
-		13 : "CLASS_MANHACK"
-		14 : "CLASS_METROPOLICE"
-		//15 : "CLASS_MILITARY (Unused)"
-		16 : "CLASS_SCANNER"
-		17 : "CLASS_STALKER"
-		18 : "CLASS_VORTIGAUNT (Non-vital vortigaunts only)"
-		19 : "CLASS_ZOMBIE"
-		20 : "CLASS_PROTOSNIPER (npc_snipers)"
-		21 : "CLASS_MISSILE"
-		22 : "CLASS_FLARE"
-		23 : "CLASS_EARTH_FAUNA (crows, seagulls, etc.)"
-		24 : "CLASS_HACKED_ROLLERMINE"
-		25 : "CLASS_COMBINE_HUNTER"
-		26 : "CLASS_ALIEN_FAUNA (EZ2 only: Xen creatures)" [EZ2]
-		27 : "CLASS_ALIEN_PREDATOR (EZ2 only: Bullsquid, etc)" [EZ2]
-		28 : "CLASS_ALIEN_FLORA (EZ2 only: Xen plants)" [EZ2]
-		29 : "CLASS_RACE_X (EZ2 only: Pit Drones, Voltigore)" [EZ2]
-		30 : "CLASS_COMBINE_NEMESIS (EZ2 only: Clone Cop, his manhacks etc)" [EZ2]
-		31 : "CLASS_ARBEIT_TECH (EZ2 only: Wilson, Aperture turrets etc)" [EZ2]
-	]
+	subject(choices) : "Subject(s)" : 0 : "This is the NPC class whose disposition will change." = #snippet NPCClassify
 
 	target[engine](integer) : "Target(s)" : 0
-	target(choices) : "Target(s)" : 0 : "This is the NPC class about whom the Subject class will change their disposition." =
-	[
-		0 : "CLASS_NONE"
-		1 : "CLASS_PLAYER"
-		2 : "CLASS_PLAYER_ALLY (Citizens)"
-		3 : "CLASS_PLAYER_ALLY_VITAL (Alyx, Dr. Kleiner, GameEndAlly vorts, etc.)"
-		4 : "CLASS_ANTLION"
-		5 : "CLASS_BARNACLE"
-		6 : "CLASS_BULLSEYE (npc_bullseyes)"
-		7 : "CLASS_CITIZEN_PASSIVE (pre-criminal citizens)"
-		//8 : "CLASS_CITIZEN_REBEL (Unused)"
-		9 : "CLASS_COMBINE (Soldiers, turrets, etc.)"
-		10 : "CLASS_COMBINE_GUNSHIP (Gunships, helicopters, dropships)"
-		//11 : "CLASS_CONSCRIPT (Unused)"
-		12 : "CLASS_HEADCRAB"
-		13 : "CLASS_MANHACK"
-		14 : "CLASS_METROPOLICE"
-		//15 : "CLASS_MILITARY (Unused)"
-		16 : "CLASS_SCANNER"
-		17 : "CLASS_STALKER"
-		18 : "CLASS_VORTIGAUNT (Non-vital vortigaunts only)"
-		19 : "CLASS_ZOMBIE"
-		20 : "CLASS_PROTOSNIPER (npc_snipers)"
-		21 : "CLASS_MISSILE"
-		22 : "CLASS_FLARE"
-		23 : "CLASS_EARTH_FAUNA (crows, seagulls, etc.)"
-		24 : "CLASS_HACKED_ROLLERMINE"
-		25 : "CLASS_COMBINE_HUNTER"
-		26 : "CLASS_ALIEN_FAUNA (EZ2 only: Xen creatures)" [EZ2]
-		27 : "CLASS_ALIEN_PREDATOR (EZ2 only: Bullsquid, etc)" [EZ2]
-		28 : "CLASS_ALIEN_FLORA (EZ2 only: Xen plants)" [EZ2]
-		29 : "CLASS_RACE_X (EZ2 only: Pit Drones, Voltigore)" [EZ2]
-		30 : "CLASS_COMBINE_NEMESIS (EZ2 only: Clone Cop, his manhacks etc)" [EZ2]
-		31 : "CLASS_ARBEIT_TECH (EZ2 only: Wilson, Aperture turrets etc)" [EZ2]
-	]
+	target(choices) : "Target(s)" : 0 : "This is the NPC class about whom the Subject class will change their disposition." = #snippet NPCClassify
 	disposition[engine](integer) : "Disposition" : 3
 	disposition(choices) : "Disposition" : 3 : "Choose the way the Subject(s) should feel about the Target(s)" =
 		[
