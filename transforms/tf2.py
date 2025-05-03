@@ -7,7 +7,7 @@ from hammeraddons.bsp_transform import trans, Context
 
 # Modified from the portal 2 indicator name transform, this might be able to be slightly cleaner
 @trans('TF2 Control Point Props')
-def comp_control_points(ctx: Context):
+def comp_control_points(ctx: Context) -> None:
     """Adds key to TF2 Control Points to automatically set the skin of the base (or another prop)."""
     for ent in ctx.vmf.entities:
         prop_name = ent.pop('src_propname')

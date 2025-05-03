@@ -9,12 +9,12 @@ import sys
 from srctools import AtomicWriter, Keyvalues, conv_int, logger
 from srctools.filesys import FileSystem, FileSystemChain, RawFileSystem, VPKFileSystem
 from srctools.game import Game
+from srctools.steam import find_app
 import attrs
 
 from .plugin import BUILTIN as BUILTIN_PLUGIN, PluginFinder, Source as PluginSource
 from .props_config import Opt, Options
 
-from srctools.steam import find_app
 
 LOGGER = logger.get_logger(__name__)
 CONF_NAME: Final = 'srctools.vdf'
@@ -367,7 +367,8 @@ SEARCHPATHS = Opt.block(
     The key defines the behaviour:
     * "prefix" "folder/" adds the path to the start, so it overrides all others.
     * "path" "vpk_path.vpk" adds the path to the end, so it is checked last.
-    * "nopack" "folder/" prohibits files in this path from being packed, you'll need to use one of the others also to add the path.
+    * "nopack" "folder/" prohibits files in this path from being packed, 
+      you'll need to use one of the others also to add the path.
 """)
 
 SOUNDSCRIPT_MANIFEST = Opt.boolean(
@@ -415,7 +416,8 @@ USE_COMMA_SEP = Opt.boolean_or_none(
 """)
 
 PROPCOMBINE_QC_FOLDER = Opt.block(
-    'propcombine_qc_folder', Keyvalues('', [Keyvalues('Path', f'|{PATH_KEY_GAME}|../content')]),
+    'propcombine_qc_folder',
+    Keyvalues('', [Keyvalues('Path', f'|{PATH_KEY_GAME}|../content')]),
     """Define where the QC files are for combinable static props.
     This path is searched recursively. This defaults to 
     the 'content/' folder, which is adjacent to the game root.

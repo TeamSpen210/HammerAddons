@@ -344,8 +344,14 @@ async def compile_func(
         assert qc is not None, prop.model
         assert mdl is not None, prop.model
 
-        child_ref = await _mesh_cache.fetch((qc, prop.skin), build_reference, prop, qc, mdl)
-        child_coll = await _coll_cache.fetch((qc.phy_smd, prop.solidity), build_collision, qc, prop, child_ref, volume_tolerance > 0)
+        child_ref = await _mesh_cache.fetch(
+            (qc, prop.skin), build_reference,
+            prop, qc, mdl,
+        )
+        child_coll = await _coll_cache.fetch(
+            (qc.phy_smd, prop.solidity), build_collision,
+            qc, prop, child_ref, volume_tolerance > 0,
+        )
 
         scale = Vec(prop.scale_x, prop.scale_y, prop.scale_z)
         offset = Vec(prop.x, prop.y, prop.z)

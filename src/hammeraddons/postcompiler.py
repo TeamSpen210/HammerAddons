@@ -1,4 +1,5 @@
 """Runs before VRAD, to run operations on the final BSP."""
+# ruff: noqa: E402 - allow non-toplevel imports here
 from pathlib import Path
 import sys
 import warnings

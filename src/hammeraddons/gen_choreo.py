@@ -473,9 +473,9 @@ async def make_vscript(settings: Settings, args: Args) -> None:
         char = sub.real_name.split('.', 1)[0]
         new_names.append((char, f'{char}{segs}.{last}{i:0{num_size}}'))
 
-    if any(sub.real_name != name for (c, name), sub in zip(new_names, subtitles)):
+    if any(sub.real_name != name for (c, name), sub in zip(new_names, subtitles, strict=True)):
         print('Renumbering: ')
-        for (char, name), sub in zip(new_names, subtitles):
+        for (char, name), sub in zip(new_names, subtitles, strict=True):
             print(f'{sub.real_name} -> {name}')
             sub.name = name
 

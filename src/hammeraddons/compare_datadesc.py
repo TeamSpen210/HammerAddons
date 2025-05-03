@@ -1,5 +1,5 @@
 """Compare the FGD database to datadesc dumps."""
-from typing import Dict, FrozenSet, Literal, Optional, Set
+from typing import Literal
 from pathlib import Path
 import re
 
@@ -16,7 +16,7 @@ regex = re.compile(
 )
 
 
-def check_tagsmap(tagsmap: Dict[FrozenSet[str], object], valid_tags: FrozenSet[str]) -> bool:
+def check_tagsmap(tagsmap: dict[frozenset[str], object], valid_tags: frozenset[str]) -> bool:
     """Check if the tagsmap contains something that matches this tag."""
     for tag in tagsmap:
         if match_tags(valid_tags, tag):
@@ -28,7 +28,7 @@ def get_val(
     ent: EntityDef,
     kv_or_io: Literal['keyvalues', 'inputs', 'outputs'],
     name: str,
-) -> Dict[FrozenSet[str], object]:
+) -> dict[frozenset[str], object]:
     """Check this ent and parents for this key/i/o."""
     name = name.casefold()
     try:
@@ -44,13 +44,13 @@ def get_val(
     return getattr(base_ent, kv_or_io)[name]
 
 
-def check_datadesc(filename: str, tags: FrozenSet[str]) -> None:
+def check_datadesc(filename: str, tags: frozenset[str]) -> None:
     """Check a specific datadesc."""
     print(f'\nChecking {filename}datamap.txt ... ')
     tags = expand_tags(tags) | {'ENGINE', 'COMPLETE'}
     print('Expanded tags:', sorted(tags))
 
-    bad_ents: Set[str] = set()
+    bad_ents: set[str] = set()
     message_count = 0
     classname = '?????'
 
@@ -64,7 +64,7 @@ def check_datadesc(filename: str, tags: FrozenSet[str]) -> None:
     filename_datamap = Path(repo_root, 'db', 'datamaps', filename + 'datamap.txt')
     filename_report = Path(repo_root, 'db', 'reports', filename + '.txt')
     with open(filename_datamap, encoding='ascii') as f, open(filename_report, 'w', encoding='utf8') as msgfile:
-        cur_ent: Optional[EntityDef]  # Deliberately uninitialised.
+        cur_ent: EntityDef | None  # Deliberately uninitialised.
         for line in f:
             if line.startswith('//') or not line.strip():
                 continue
