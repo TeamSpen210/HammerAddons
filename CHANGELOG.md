@@ -18,6 +18,8 @@ The postcompiler now requires Windows 8+.
 * Allow `comp_entity_finder` to rotate the target in addition to teleporting.
 * Allow configuring various shadow/fast reflection options for vactube object ents.
 * Boolean keyvalues (yes/no) can now be set to `!$var`, to invert the value of the variable. 
+* Consistently seed the RNG for compiler entities, to produce consistency across compiles. 
+  Relevant entities now all have `seed` parameters to further adjust.
 * Propcombine will now preserve prop fade distances, by calculating a new distance which encloses the original fade spheres.
 * Warn in the log if propcombine or packing was disabled via command line, so this is detectable later.
 * Add SFX to the Old Aperture cubedropper to simulate the new cube landing.
@@ -40,14 +42,14 @@ The postcompiler now requires Windows 8+.
 * Fix overlays not functioning with `material_modify_control` parent searching.
 * Make RunScriptCode \` handling occur after everything else.
 * #274, #277: Force required keyvalue casing for `light_environment`'s `SunSpreadAngle` and `lua_run`'s `Code` keys.
-* Fix hammer_notes text size/color parameters being missing for games before CS:GO
-* Fix mismatched numbering between `logic_random_outputs` KVs and inputs
-* Fix `comp_kv_setter`/`comp_adv_output` position keyvalues not getting transformed by instances in Source 2013
-* Fix `comp_adv_output` string keyvalues getting transformed as entity names
-* Fix not being able to scale props with ctrl+scrollwheel in Hammer++
-* Fix turret FOV preview being incorrect - it's 120 degrees, not 90
-* Fix item entities not rotating their hitboxes in Hammer
-* Fix typos in some movie filenames
+* Fix hammer_notes text size/color parameters being missing for games before CS:GO.
+* Fix mismatched numbering between `logic_random_outputs` KVs and inputs.
+* Fix `comp_kv_setter`/`comp_adv_output` position keyvalues not getting transformed by instances in Source 2013.
+* Fix `comp_adv_output` string keyvalues getting transformed as entity names.
+* Fix not being able to scale props with ctrl+scrollwheel in Hammer++.
+* Fix turret FOV preview being incorrect - it's 120 degrees, not 90.
+* Fix item entities not rotating their hitboxes in Hammer.
+* Fix typos in some movie filenames.
 
 
 --------------------

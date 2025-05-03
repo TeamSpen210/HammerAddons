@@ -4,7 +4,6 @@
 from typing import Any
 from collections.abc import Collection, Mapping, Sequence
 import itertools
-import random
 import string
 import struct
 
@@ -13,7 +12,7 @@ from srctools.vmf import Output, Entity
 from srctools.logger import get_logger
 
 from hammeraddons.bsp_transform import trans, Context
-from hammeraddons.bsp_transform.common import get_multimode_value, check_control_enabled
+from hammeraddons.bsp_transform.common import get_multimode_value, check_control_enabled, rng_get
 
 
 class SimpleFormatter(string.Formatter):
@@ -57,8 +56,7 @@ def advanced_output(ctx: Context) -> None:
 
         delay_max = adv_out['delay_max']
         if delay_max:
-            pos = Vec.from_str(adv_out['origin'])
-            rng = random.Random(b'comp_relay' + struct.pack('<3f', *pos))
+            rng = rng_get('comp_adv_output', adv_out)
             delay = rng.uniform(delay, conv_float(delay_max, delay))
 
         delay += conv_float(adv_out['delay2'])

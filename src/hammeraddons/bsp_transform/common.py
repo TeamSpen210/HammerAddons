@@ -1,19 +1,23 @@
 """Operations that can be reused across different transforms."""
-from typing import final, Literal, Self
+
+from typing import final, Literal, Self, Protocol
 from collections.abc import Callable, Container, Iterator
 from decimal import Decimal, InvalidOperation
+from random import Random
+import hashlib
 import operator
 import re
+import struct
 
 import attrs
 
-from srctools import Entity, FrozenVec, VMF, Vec, conv_bool
+from srctools import Entity, FrozenVec, VMF, Vec, conv_bool, parse_vec_str
 from srctools.fgd import EntityDef
 from srctools.logger import get_logger
 
 
 __all__ = [
-    'parse_numeric_specifier', 'check_control_enabled',
+    'parse_numeric_specifier', 'check_control_enabled', 'rng_hasher', 'rng_get',
     'ent_description', 'RelayOut', 'get_multimode_value', 'strip_cust_keys',
     'NumericOp', 'NumericSpecifier',
 ]
@@ -95,6 +99,26 @@ def ent_description(ent: Entity) -> str:
         return f'"{name}" {classname} @ ({pos})'
     else:
         return f'{classname} @ ({pos})'
+
+
+class _Hasher(Protocol):
+    """This is private in hashlib."""
+    def copy(self) -> '_Hasher': ...
+    def update(self, data: bytes | bytearray, /) -> None: ...
+    def digest(self) -> bytes: ...
+
+
+def rng_hasher(clsname: str, ent: Entity) -> _Hasher:
+    """Create a hasher unique to this entity. Uses a 'seed' keyvalue if present."""
+    hasher = hashlib.sha512()
+    hasher.update(f"{clsname};{ent['seed']};{ent['targetname']}".encode())
+    hasher.update(struct.pack('<x3f', *parse_vec_str(ent['origin'])))
+    return hasher
+
+
+def rng_get(clsname: str, ent: Entity) -> Random:
+    """Return a RNG seeded to be unique to this entity. Uses a 'seed' keyvalue if present."""
+    return Random(rng_hasher(clsname, ent).digest())
 
 
 @final

@@ -1,8 +1,6 @@
-"""Implements simple logic."""
-import random
-import struct
-
-from srctools import Vec, conv_float
+"""Implements the comp_relay entity, which is collapsed into callers."""
+from hammeraddons.bsp_transform.common import rng_get
+from srctools import conv_float
 from srctools.logger import get_logger
 
 from hammeraddons.bsp_transform import trans, Context, check_control_enabled
@@ -12,7 +10,7 @@ LOGGER = get_logger(__name__)
 
 
 @trans('comp_relay', priority=10)
-def comp_relay(ctx: Context):
+def comp_relay(ctx: Context) -> None:
     """Implements comp_relay, allowing zero-overhead relay ents for managing outputs.
 
     These are collapsed into their callers.
@@ -40,8 +38,7 @@ def comp_relay(ctx: Context):
         extra_delay = conv_float(relay['delay'])
         delay_max = relay['delay_max']
         if delay_max:
-            pos = Vec.from_str(relay['origin'])
-            rng = random.Random(b'comp_relay' + struct.pack('<3f', *pos))
+            rng = rng_get('comp_relay', relay)
             extra_delay = rng.uniform(extra_delay, conv_float(delay_max, extra_delay))
 
         LOGGER.debug(

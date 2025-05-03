@@ -9,7 +9,9 @@
     "All inputs/outputs may pass through any parameter, if no override is specified."
     [
     delay(float) : "Delay Min" : 0.0 : "Add this delay to all outputs. This allows you to control this via $fixup values, for instance."
-    delay_max(float) : "Delay Max" : : "If this is also set, the delay will be randomised. This is seeded from the location of this relay."
+	delay_max(float) : "Delay Max" : : "If set, the delay will be randomised between the min and max."
+	seed(string) : "Random Seed" : : "For the delay, the position and name of the comp_relay are used to seed a random number generator, " +
+		"to keep values consistent across compiles. This can be set to further randomise results."
 
     input Trigger(string): "Trigger the relay and fire the output."
     

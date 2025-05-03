@@ -3,10 +3,10 @@ from collections.abc import Iterator
 
 from decimal import Decimal
 from collections import defaultdict
-import hashlib
+from random import Random
 import struct
-import random
 
+from hammeraddons.bsp_transform.common import rng_hasher
 from srctools import Entity, Output, conv_bool, conv_float
 from srctools.math import parse_vec_str
 from srctools.logger import get_logger
@@ -31,9 +31,7 @@ def collapse_case(ctx: Context, case: Entity) -> None:
     miss_chance = conv_float(case['misschance'], 0.0) / 100.0
     desc = f'for comp_case "{case_name}" @ ({case["origin"]})'
 
-    hasher_template = hashlib.sha512()
-    hasher_template.update(f"{case['seed']};{case_name}".encode('utf-8'))
-    hasher_template.update(struct.pack('<x3f', *parse_vec_str(case['origin'])))
+    hasher_template = rng_hasher('comp_case', case)
 
     # Find all defined outputs and parameters, so we can loop through them.
     out_cases: dict[int, list[Output]] = defaultdict(list)
@@ -68,12 +66,12 @@ def collapse_case(ctx: Context, case: Entity) -> None:
                 continue
             case_params[num] = v
 
-    def make_rng(source: Entity) -> random.Random:
+    def make_rng(source: Entity) -> Random:
         """Create a seeded RNG, based on the input source."""
         hasher = hasher_template.copy()
         hasher.update((source['targetname'] or source['classname']).encode('utf8'))
         hasher.update(struct.pack('<x3f', *parse_vec_str(source['origin'])))
-        return random.Random(hasher.digest())
+        return Random(hasher.digest())
 
     # Sort the keys, so we check in order.
     key_out = sorted(out_cases)

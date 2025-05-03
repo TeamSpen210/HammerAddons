@@ -26,6 +26,8 @@
 		]
 	time_val(float) : "Time Value" : 5.0 : "Either the total time or the time between each entity."
 	time_variance(float) : "Time Variance" : 0.0 : "After computing the delay, randomly add/subtract this much from the delay to add noise."
+	seed(string) : "Random Seed" : : "For time variance, the position and name of the comp_sequential_call are used to seed a random number generator, " +
+		"to keep values consistent across compiles. This can be set to further randomise results."
 
 	output OnSeqStart(void) : "Fired at the start of the sequence."
 	output OnSeq(void) : "Fired once for each entity - use !seq to refer to the target."

@@ -1,13 +1,13 @@
 from collections.abc import Iterable
 import itertools
-import random
 import re
 
 from srctools import Vec, Entity, Output, conv_bool, conv_float, lerp
 import srctools.logger
 
 from hammeraddons.bsp_transform import trans, Context
-from hammeraddons.bsp_transform.common import strip_cust_keys
+from hammeraddons.bsp_transform.common import strip_cust_keys, rng_get
+
 
 LOGGER = srctools.logger.get_logger(__name__)
 DIGIT_PATTERN = re.compile('[0-9]+')
@@ -87,7 +87,7 @@ def sequential_call(ctx: Context) -> None:
                 )
         elif time_mode == 'interval':
             # [(ent, time_val * i) for i, ent in enumerate(target_ents)]
-            ent_and_delay = zip(target_ents, map(time_val.__mul__, itertools.count()))
+            ent_and_delay = zip(target_ents, map(time_val.__mul__, itertools.count()), strict=False)
         else:
             raise ValueError(
                 f'Unknown time mode "{time_mode}" for sequential call '
@@ -120,9 +120,10 @@ def sequential_call(ctx: Context) -> None:
 
         target = seq_call['target'].rstrip('*')
         max_delay = 0.0
+        rng = rng_get('comp_sequential_call', seq_call)
         for ent, delay in ent_and_delay:
             if time_variance > 0.0:
-                delay += random.uniform(-time_variance, time_variance)
+                delay += rng.uniform(-time_variance, time_variance)
             max_delay = max(max_delay, delay)
             if make_unique:
                 ent.make_unique(seq_call['targetname'] + '_')
