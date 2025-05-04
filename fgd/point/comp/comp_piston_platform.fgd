@@ -1,0 +1,62 @@
+@PointClass base(StaticTargetName)
+	appliesto(+srctools)
+	iconsprite("editor/comp_piston_platform")
+	line(255 255 255, targetname, piston1)
+	line(255 255 255, targetname, piston2)
+	line(255 255 255, targetname, piston3)
+	line(255 255 255, targetname, piston4)
+	line(255 255 255, targetname, piston5)
+	line(255 0 0, targetname, enable_motion_trig)
+	line(255 0 0, targetname, underside_fizz)
+	line(255 0 0, targetname, underside_hurt)
+= comp_piston_platform: "Generates logic to correctly sequence Portal-style Piston Platforms. " +
+	"func_movelinear or func_door segments have to be placed, parented appropriately, then linked to this."
+	[
+	piston1(target_destination): "Piston 1" : : "The func_movelinear or func_door for the 1st segment from the bottom. May be unset if it never moves."
+	piston2(target_destination): "Piston 2" : : "The func_movelinear or func_door for the 2nd segment from the bottom. May be unset if it never moves."
+	piston3(target_destination): "Piston 3" : : "The func_movelinear or func_door for the 3rd segment from the bottom. May be unset if it never moves."
+	piston4(target_destination): "Piston 4" : : "The func_movelinear or func_door for the 4th segment from the bottom. May be unset if it never moves."
+	piston5(target_destination): "Piston 5" : : "The func_movelinear or func_door for the 5th segment from the bottom. May be unset if it never moves. " +
+		"More can be added with SmartEdit off."
+
+	position_override[engine](integer): "Spawn Position" : 0
+	position_override(choices): "Spawn Position" : 0 : "The compiler automatically detects the position of all platforms based on their movement directions. " +
+		"If this doesn't function, this allows overriding to assume they're all extended or retracted. " +
+		"If set to start extended, the piston should be built to retract when Opened." = 
+		[
+		0: "Autodetect"
+		1: "Fully Retracted"
+		2: "Fully Extended"
+		]
+
+	enable_motion_trig[P2](target_destination): "Enable Motion Trigger" : : "A trigger which is briefly activated whenever the piston moves, " +
+		"to force-wake any reflection cubes."
+	autoconfig_triggers(boolean): "Autoconfigure triggers" : 1 : "If enabled, automatically configure the various triggers, adding outputs and setting keyvalues."
+
+	snd_start(sound): "Start Sound" : "Default.Null" : "Play this sound when the platform starts moving. Set to 'Default.Null' to disable."
+	snd_move(sound): "Move Sound" : "World.PlatformStart" : "Loop this sound while moving. Set to 'Default.Null' to disable."
+	snd_stop(sound): "Stop Sound" : "World.PlatformStop" : "Play this sound when the platform stops. Set to 'Default.Null' to disable."
+
+	use_vscript[+VScript](boolean): "Use VScript" : 0 : "If enabled, control the platform via VScript. " +
+		"This reduces the number of logic entities needed, allows the platform to stop halfway, and enables 'lenient hurting'."
+
+	underside_fizz(target_destination): "Underside Fizzler" : : "If specified, this should be the name of " +
+		"a trigger_multiple or trigger_portal_cleanser on the underside of the platform, to fizzle obstructions. " +
+		"If the option is unset, this can also be the name of a trigger_hurt to kill the player."
+	underside_hurt(target_destination): "Underside Hurt" : : "This should be the name of a trigger_hurt " +
+		"placed on the underside of the platform, to kill the player if they obstruct it."
+	underside_lenient(boolean): "Lenient Hurting" : 0 : "If enabled (and VScript also is), " +
+		"require the platform to be jammed for a second or so before the fizzler/hurt is enabled to clear the obstruction. " +
+		"this ensures incidental contact doesn't fizzle objects."
+
+	input Extend(void): "Extend the platform fully."
+	input Retract(void): "Retract the platform fully."
+	input MoveTo1[+VScript](void): "Extend the platform to 1 segment. Requires VScript."
+	input MoveTo2[+VScript](void): "Extend the platform to 2 segments. Requires VScript."
+	input MoveTo3[+VScript](void): "Extend the platform to 3 segments. Requires VScript."
+	input MoveTo4[+VScript](void): "Extend the platform to 4 segments. Requires VScript."
+	input MoveTo5[+VScript](void): "Extend the platform to 5 segments. Requires VScript. " +
+		"MoveTo6+ work also if such pistons are added."
+
+    @resources [] // VScript is conditionally added.
+	]

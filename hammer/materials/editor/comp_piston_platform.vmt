@@ -1,0 +1,9 @@
+Sprite
+{
+	$baseTexture "editor/comp_piston_platform"
+	$spriteorientation "vp_parallel"
+	// Slightly offset to the left to fit 'piston'.
+	$spriteorigin "[ 0.4765625 0.50 ]"
+	$spriterendermode 2
+	$no_fullbright 1
+}
