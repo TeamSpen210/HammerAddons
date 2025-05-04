@@ -151,38 +151,7 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
 
     LOGGER.debug('Piston configuration: {}', pistons)
 
-    underside_fizz: Entity | None = None
-    underside_hurt: Entity | None = None
-    # Remove duplicates, then remove blanks/unset.
-    for ent_name in filter(None, {
-        logic_ent['underside_fizz'].casefold(),
-        logic_ent['underside_hurt'].casefold(),
-}):
-        for ent in ctx.vmf.search(ent_name):
-            cls = ent['classname'].casefold()
-            # Use a multiple to fire Break/self-destruct inputs,
-            # or just a fizzler to fizzle everything.
-            if cls in ('trigger_multiple', 'trigger_portal_cleanser'):
-                if underside_fizz is not None:
-                    raise ValueError(
-                        '{} found duplicate underside hurt triggers {} and {}!',
-                        desc,
-                        ent_description(underside_fizz), ent_description(ent)
-                    )
-                underside_fizz = ent
-            elif cls == 'trigger_hurt':
-                if underside_hurt is not None:
-                    raise ValueError(
-                        '{} found duplicate underside hurt triggers {} and {}!',
-                        ent_description(logic_ent),
-                        ent_description(underside_hurt), ent_description(ent)
-                    )
-                underside_hurt = ent
-            else:
-                LOGGER.warning(
-                    'Unexpected classname for undersize fizzler/hurt "{}" for piston {}?',
-                    ent['classname'], desc
-                )
+    underside_ents = process_fizzler_set(ctx, logic_ent, desc, 'underside')
 
     enable_motion_trig: Entity | None = None
     if ent_name := logic_ent['enable_motion_trig']:
@@ -193,38 +162,6 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
             [enable_motion_trig] = ents
 
     if conv_bool(logic_ent['autoconfig_triggers', '1'], True):
-        # Configure/create both entities.
-        # We turn on/off both simultaneously so it doesn't matter whether they
-        # have the same name or not.
-        if underside_fizz is None and underside_hurt is not None:
-            underside_fizz = ctx.vmf.create_ent(
-                'trigger_multiple',
-                origin=underside_hurt['origin'],
-                targetname=underside_hurt['targetname'],
-            )
-            ctx.bsp.bmodels[underside_fizz] = ctx.bsp.bmodels[underside_hurt]
-        elif underside_hurt is None and underside_fizz is not None:
-            underside_hurt = ctx.vmf.create_ent(
-                'trigger_hurt',
-                origin=underside_fizz['origin'],
-                targetname=underside_fizz['targetname'],
-            )
-            ctx.bsp.bmodels[underside_hurt] = ctx.bsp.bmodels[underside_fizz]
-
-        # Configure each, if they're present. Could be missing if both are.
-        if underside_fizz is not None:
-            configure_fizzler(underside_fizz, desc)
-        if underside_hurt is not None:
-            underside_hurt['spawnflags'] = 1  # Only players make sense.
-            # We only enable if moving to the bottom, so if extended it should be off.
-            # If retracted, it'll be covered so it doesn't matter.
-            underside_hurt['startdisabled'] = True
-            if conv_int(underside_hurt['damage']) < 100:
-                underside_hurt['damage'] = 100  # Instakill
-            if conv_int(underside_hurt['damagetype']) == 0:
-                # If generic, make it CRUSH. Otherwise, user picked for a reason?
-                underside_hurt['damagetype'] = 1
-
         if enable_motion_trig is not None:
             # This should detect only laser cubes, but any cube is close enough.
             if not enable_motion_trig['filtername']:
@@ -250,13 +187,6 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
                     'OnStartTouch', '!activator', 'ExitDisabledState',
                 ))
 
-    # Extract names, deduplicating. Both logic types don't need to edit the triggers themselves.
-    underside_ents = [
-        ent
-        for ent in [underside_fizz, underside_hurt]
-        if ent is not None
-    ]
-
     if conv_bool(logic_ent['use_vscript']):
         LOGGER.info('Generating VScript logic for piston {}', desc)
         gen_logic_vscript(
@@ -274,6 +204,84 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
             enable_motion_trig=enable_motion_trig,
         )
     return motion_filter
+
+
+def process_fizzler_set(
+    ctx: Context, logic_ent: Entity, desc: str, kind: str,
+) -> list[Entity]:
+    """Locate the entities for a fizzler/hurt set, also configuring if necessary."""
+    fizz: Entity | None = None
+    hurt: Entity | None = None
+    # Remove duplicates, then remove blanks/unset.
+    for ent_name in filter(None, {
+        logic_ent[f'{kind}_fizz'].casefold(),
+        logic_ent[f'{kind}'].casefold(),
+    }):
+        for ent in ctx.vmf.search(ent_name):
+            cls = ent['classname'].casefold()
+            # Use a multiple to fire Break/self-destruct inputs,
+            # or just a fizzler to fizzle everything.
+            if cls in ('trigger_multiple', 'trigger_portal_cleanser'):
+                if fizz is not None:
+                    raise ValueError(
+                        '{} found duplicate {} fizzler triggers {} and {}!',
+                        desc, kind,
+                        ent_description(fizz), ent_description(ent)
+                    )
+                fizz = ent
+            elif cls == 'trigger_hurt':
+                if hurt is not None:
+                    raise ValueError(
+                        '{} found duplicate {} hurt triggers {} and {}!',
+                        desc, kind,
+                        ent_description(hurt), ent_description(ent)
+                    )
+                hurt = ent
+            else:
+                LOGGER.warning(
+                    'Unexpected classname for {} fizzler/hurt "{}" for piston {}?',
+                    kind, ent['classname'], desc
+                )
+
+    if conv_bool(logic_ent['autoconfig_triggers', '1'], True):
+        # Configure/create both entities.
+        # We turn on/off both simultaneously so it doesn't matter whether they
+        # have the same name or not.
+        if fizz is None and hurt is not None:
+            fizz = ctx.vmf.create_ent(
+                'trigger_multiple',
+                origin=hurt['origin'],
+                targetname=hurt['targetname'],
+            )
+            ctx.bsp.bmodels[fizz] = ctx.bsp.bmodels[hurt]
+        elif hurt is None and fizz is not None:
+            hurt = ctx.vmf.create_ent(
+                'trigger_hurt',
+                origin=fizz['origin'],
+                targetname=fizz['targetname'],
+            )
+            ctx.bsp.bmodels[hurt] = ctx.bsp.bmodels[fizz]
+
+        # Configure each, if they're present. Could be missing if both are.
+        if fizz is not None:
+            configure_fizzler(fizz, desc)
+        if hurt is not None:
+            hurt['spawnflags'] = 1  # Only players make sense.
+            # We only enable if moving to the bottom, so if extended it should be off.
+            # If retracted, it'll be covered so it doesn't matter.
+            hurt['startdisabled'] = True
+            if conv_int(hurt['damage']) < 100:
+                hurt['damage'] = 100  # Instakill
+            if conv_int(hurt['damagetype']) == 0:
+                # If generic, make it CRUSH. Otherwise, user picked for a reason?
+                hurt['damagetype'] = 1
+    # Other code doesn't care which is which, only how many there are.
+    ents = []
+    if fizz is not None:
+        ents.append(fizz)
+    if hurt is not None:
+        ents.append(hurt)
+    return ents
 
 
 def configure_fizzler(fizz: Entity, desc: str) -> None:
