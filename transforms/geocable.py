@@ -427,13 +427,23 @@ class Node:
         return f'<Node at {self.pos}>'
 
 
+def save_mesh(mesh: Mesh, path: Path) -> None:
+    """Save a model SMD."""
+    with path.open('wb') as fb:
+        mesh.export(fb)
+
+
 async def build_rope(
     rope_key: tuple[frozenset[NodeEnt], frozenset[tuple[NodeID, NodeID]], tuple[str, ...], VactubeGenPartType],
     temp_folder: Path,
     mdl_name: str,
     args: tuple[Vec, FileSystem],
 ) -> tuple[Vec, CollData, list[SegProp], list[list[Vec]]]:
-    """Construct the geometry for a rope. nodes_and_conn is saved into file system to check if the model needs to be recompiled. args is for information that can be lost after the compile"""
+    """Construct the geometry for a rope.
+
+    :param rope_key: This is saved into file system to check if the model needs to be recompiled.
+    :param args: Information that is only required for this compile
+    """
     LOGGER.info('Building rope {}', mdl_name)
     ents, connections, skins, vacgentype = rope_key
     offset, fsys = args
@@ -453,6 +463,7 @@ async def build_rope(
     if vacgentype != VactubeGenPartType.FRAME:
         mesh.triangles.extend(generate_straights(nodes))
     generate_caps(nodes, mesh, is_coll=False)
+    await trio.lowlevel.checkpoint()
 
     # All or nothing.
     is_vactube = next(iter(nodes)).config.is_vactube
@@ -475,6 +486,7 @@ async def build_rope(
 
         coll_mesh.triangles.extend(generate_straights(coll_nodes))
         generate_caps(coll_nodes, coll_mesh, is_coll=True)
+    await trio.lowlevel.checkpoint()
 
     # Wrap the UVs around to be inside 0-1, if possible.
     for tri in mesh.triangles:
@@ -484,6 +496,7 @@ async def build_rope(
             tri.point1 = tri.point1.with_uv(tri.point1.tex_u - u, tri.point1.tex_v - v)
             tri.point2 = tri.point2.with_uv(tri.point2.tex_u - u, tri.point2.tex_v - v)
             tri.point3 = tri.point3.with_uv(tri.point3.tex_u - u, tri.point3.tex_v - v)
+    await trio.lowlevel.checkpoint()
 
     # Use the node closest to the center. That way
     # it shouldn't be inside walls, and be about representative of
@@ -495,29 +508,28 @@ async def build_rope(
 
     fixed_visual_mesh = Mesh.blank('root')
     fixed_visual_mesh.append_model(mesh, rotation=orient_fix)
+    await trio.lowlevel.checkpoint()
 
-    with (temp_folder / 'cable.smd').open('wb') as fb:
-        fixed_visual_mesh.export(fb)
+    await trio.to_thread.run_sync(save_mesh, fixed_visual_mesh, temp_folder / 'cable.smd')
     if coll_nodes:
         fixed_coll_mesh = Mesh.blank('root')
         fixed_coll_mesh.append_model(coll_mesh, rotation=orient_fix)
-        with (temp_folder / 'cable_phy.smd').open('wb') as fb:
-            fixed_coll_mesh.export(fb)
+        await trio.to_thread.run_sync(save_mesh, fixed_coll_mesh, temp_folder / 'cable_phy.smd')
         del coll_mesh, fixed_coll_mesh
 
     del mesh, fixed_visual_mesh
 
-    with (temp_folder / 'model.qc').open('w') as f:
+    async with await trio.Path(temp_folder / 'model.qc').open('w') as f:
         if is_vactube:
             # Desolation needs this hint.
             if hasattr(Mesh, 'NEED_TRANSLUCENT_MOSTLYOPAQUE') and vacgentype is VactubeGenPartType.ALL:
-                f.write('$mostlyopaque\n')
+                await f.write('$mostlyopaque\n')
             elif vacgentype is VactubeGenPartType.FRAME:
-                f.write('$opaque\n')
+                await f.write('$opaque\n')
 
-        f.write(QC_TEMPLATE.format(path=mdl_name, light_origin=light_origin))
+        await f.write(QC_TEMPLATE.format(path=mdl_name, light_origin=light_origin))
         if skins:
-            f.write('$texturegroup "skinfamilies" {\n')
+            await f.write('$texturegroup "skinfamilies" {\n')
             try:
                 [first_mat] = {node.config.material for node in nodes}
             except ValueError:
@@ -525,12 +537,12 @@ async def build_rope(
                     'Using multiple skins for a rope using different materials '
                     'for different segments is not supported.'
                 ) from None
-            f.write(f'    {{ "{first_mat}" }}\n')
+            await f.write(f'    {{ "{first_mat}" }}\n')
             for mat in skins:
-                f.write(f'    {{ "{mat}" }}\n')
-            f.write('}\n')
+                await f.write(f'    {{ "{mat}" }}\n')
+            await f.write('}\n')
         if coll_nodes:
-            f.write(QC_TEMPLATE_PHYS.format(count=sum(node.next is not None for node in coll_nodes) + 8))
+            await f.write(QC_TEMPLATE_PHYS.format(count=sum(node.next is not None for node in coll_nodes) + 8))
 
     # For visleaf computation, build a list of all the actual segments generated.
     coll_data = [
@@ -678,9 +690,9 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> list[Node]:
             node1.pos + interp_diff * i,
             lerp(i, 0, seg_count + 2, node1.radius, node2.radius),
         )
-        for i in range(0, seg_count + 2)
+        for i in range(seg_count + 2)
     ]
-    springs = list(zip(points, points[1:]))
+    springs = list(itertools.pairwise(points))
 
     time = 0.0
     step = TIME_STEP
@@ -755,9 +767,9 @@ def interpolate_bezier(first_node: Node, last_node: Node, curve_segment_count: i
     return points
 
 
-def de_casteljau(t: float, coefs: list[float]) -> float:
+def de_casteljau(t: float, coefs: Iterable[float]) -> float:
     """Evaluate the polynomial for one axis."""
-    beta = [c for c in coefs]  # values in this list are overridden
+    beta = list(coefs)  # values in this list are overridden
     n = len(beta)
     for j in range(1, n):
         for k in range(n - j):
@@ -822,7 +834,7 @@ def interpolate_all(nodes: set[Node]) -> None:
         func = globals()['interpolate_' + interp_type.name.casefold()]
         points = func(node1, node2, node1.config.segments)
 
-        for a, b in zip(points, points[1:]):
+        for a, b in itertools.pairwise(points):
             a.next = b
             b.prev = a
         points[0].prev = node1 # if segment count is low (like 2) for bezier curve, this will cause error. TODO: Fix this?
@@ -959,7 +971,7 @@ def generate_caps(nodes: Iterable[Node], mesh: Mesh, is_coll: bool) -> None:
 
     We just use a simple fan layout.
     """
-    def make_cap(orig: 'Iterable[Vertex]', norm: Vec):
+    def make_cap(orig: 'Iterable[Vertex]', norm: Vec) -> None:
         # Recompute the UVs to use the first bit of the cable.
         points = [
             Vertex(
@@ -971,7 +983,7 @@ def generate_caps(nodes: Iterable[Node], mesh: Mesh, is_coll: bool) -> None:
             for point in orig
         ]
         mesh.triangles.append(Triangle(mat, points[0], points[1], points[2]))
-        for a, b in zip(points[2:], points[3:]):
+        for a, b in itertools.pairwise(points[2:]):
             mesh.triangles.append(Triangle(mat, points[0], a, b))
 
     for node in nodes:
@@ -1280,7 +1292,10 @@ async def compile_rope(
         is_sep = conf.vac_separate_glass == VactubeGenType.SEPARATE
         # First do the frame, or everything if we're not separating them.
         model_name, (light_origin, coll_data, seg_props, vac_points) = await compiler.get_model(
-            (frozenset(local_nodes), frozenset(connections), (), VactubeGenPartType.FRAME if is_sep else VactubeGenPartType.ALL),
+            (
+                frozenset(local_nodes), frozenset(connections), (),
+                VactubeGenPartType.FRAME if is_sep else VactubeGenPartType.ALL,
+            ),
             build_rope,
             (center, ctx.pack.fsys),
         )
