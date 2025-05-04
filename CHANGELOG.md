@@ -7,6 +7,7 @@ The postcompiler now requires Windows 8+.
 * A new "snippets" system allows FGD files to easily repeat descriptions and other small sections.
 * Add ability to randomise output delay to `comp_relay` and `comp_adv_output`.
 * Added `comp_vactube_sensor`, which allows detecting the presence of vactube objects.
+* Added `comp_piston_platform`, which generates the logic for Portal-style piston platforms.
 * Added a value mode option to `comp_kv_setter` and `comp_adv_output` to more clearly control which key is used.
 * Added textures for 4 rendertargets (camera, water reflection/refraction, full framebuffer). These give a nice preview in Hammer.
 * Added three keyvalues to `ambient_generic`, giving a more user friendly interface to the confusing spawnflags. This also allows them to be configured via fixup values easily.
