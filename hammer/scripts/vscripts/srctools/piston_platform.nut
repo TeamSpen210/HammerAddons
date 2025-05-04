@@ -35,11 +35,9 @@ START_SND <- "";
 STOP_SND <- "";
 
 enable_motion_trig <- null;
-dn_fizz_player <- null;
-dn_fizz_obj <- null;
-dn_fizz_on <- true;
-dn_fizz_allowed <- false;
-dn_fizz_eager <- false;
+fizz_up <- {player=null, obj=null, on=null, allowed=false, name="up"};
+fizz_dn <- {player=null, obj=null, on=null, allowed=false, name="dn"};
+fizz_eager <- false;
 door_pos <- null;
 crush_count <- 0;
 snd_btm_pos <- self.GetOrigin();
@@ -66,37 +64,49 @@ function moveto(new_pos) {
 	if (g_cur_moving == -1) {
 		start();
 	}
-	
+	door_pos = null;
 	if (old_pos < new_pos) {
-		door_pos = null;
-		if (dn_fizz_obj || dn_fizz_player) {
-			dn_fizz_allowed = false;
-			if (dn_fizz_on) {
-				dn_fizz_on = false;
-				if (dn_fizz_obj) {
-					EntFireByHandle(dn_fizz_obj, "Disable", "", 0, self, self);
-				}
-				if (dn_fizz_player) {
-					EntFireByHandle(dn_fizz_player, "Disable", "", 0, self, self);
-				}
-			}
-		}
+		enable_fizz(fizz_up);
+		disable_fizz(fizz_dn);
 		_up();
 	} else if (old_pos > new_pos) {
-		if (dn_fizz_obj || dn_fizz_player) {
-			if(dn_fizz_eager) {
-				dn_fizz_on = true;
-				if (dn_fizz_obj) {
-					EntFireByHandle(dn_fizz_obj, "Enable", "", 0, self, self);
-				}
-				if (dn_fizz_player) {
-					EntFireByHandle(dn_fizz_player, "Enable", "", 0, self, self);
-				}
-			} else {
-				dn_fizz_allowed <- true;
+		enable_fizz(fizz_dn);
+		disable_fizz(fizz_up);
+		_dn();
+	}
+}
+
+function enable_fizz(fizz) {
+	printl("Enable " + fizz.name + " fizz, eager=" + fizz_eager.tostring())
+	if (fizz.obj || fizz.player) {
+		if (fizz_eager) {
+			fizz.on = true;
+			if (fizz.obj) {
+				EntFireByHandle(fizz.obj, "Enable", "", 0, self, self);
+			}
+			if (fizz.player) {
+				EntFireByHandle(fizz.player, "Enable", "", 0, self, self);
+			}
+		} else {
+			fizz.allowed = true;
+			printl(fizz.name + " fizz waiting")
+		}
+	}
+}
+
+function disable_fizz(fizz) {
+	printl("Disable " + fizz.name + " fizz")
+	if (fizz.obj || fizz.player) {
+		fizz.allowed = false;
+		if (fizz.on) {
+			fizz.on = false;
+			if (fizz.obj) {
+				EntFireByHandle(fizz.obj, "Disable", "", 0, self, self);
+			}
+			if (fizz.player) {
+				EntFireByHandle(fizz.player, "Disable", "", 0, self, self);
 			}
 		}
-		_dn();
 	}
 }
 
@@ -113,10 +123,6 @@ function start() {
 		EntFireByHandle(enable_motion_trig, "Enable", "", 0, self, self);
 		EntFireByHandle(enable_motion_trig, "Disable", "", 0.1, self, self);
 	}
-	print("dn_fizz_obj: ")
-	printl(dn_fizz_obj)
-	print("dn_fizz_player: ")
-	printl(dn_fizz_player)
 }
 
 // These two funcs find the first platform in their direction that's wrong,
@@ -129,11 +135,14 @@ function _up() {
 			g_positions[i] = POS_MOVING;
 			EntFireByHandle(g_pistons[i], g_inverted[i] ? "Close" : "Open", "", 0, self, self);
 			g_cur_moving = i;
+			door_pos = g_pistons[i].GetOrigin();
+			crush_count = 0;
 			return;
 		}
 	}
 	// Finished.
 	fix();
+	disable_fizz(fizz_up);
 }
 
 function _dn() {
@@ -150,17 +159,8 @@ function _dn() {
 		}
 	}
 	// Finished.
-	if (dn_fizz_on) {
-		dn_fizz_on = false;
-		dn_fizz_allowed = false;
-		door_pos = null;
-		if (dn_fizz_obj) {
-			EntFireByHandle(dn_fizz_obj, "Disable", "", 0, self, self);
-		}
-		if (dn_fizz_player) {
-			EntFireByHandle(dn_fizz_player, "Disable", "", 0, self, self);
-		}
-	}
+	door_pos = null;
+	disable_fizz(fizz_dn);
 	fix();
 }
 
@@ -211,6 +211,7 @@ function Think() {
 		sum *= 0.5;
 		self.SetOrigin(sum);
 	}
+	printl(format("%s: Think: up=%s, dn=%s", self.GetName(), fizz_up.allowed.tostring(), fizz_dn.allowed.tostring()));
 
 	// Used by pistons that can fizzle objects below them.
 	// If it gets stuck (stops moving), activate.
@@ -220,21 +221,13 @@ function Think() {
 	// * Not already on
 	// * Currently moving
 	// * We have a valid previous position
-    if (dn_fizz_allowed && crush_count < 25 && g_cur_moving != -1 && door_pos != null) {
+    if ((fizz_dn.allowed || fizz_up.allowed) && crush_count < 25 && g_cur_moving != -1 && door_pos != null) {
 		local new_pos = g_pistons[g_cur_moving].GetOrigin();
 		if ((new_pos - door_pos).LengthSqr() < 1) {
 			crush_count++;
 			printl("Crush: " + crush_count);
-			dn_fizz_on = true;
-			if (crush_count == 2 && dn_fizz_obj) {
-				// Stuck, fizzle objects.
-				EntFireByHandle(dn_fizz_obj, "Enable", "", 0, self, self);
-			}
-			if (crush_count == 25 && dn_fizz_player) {
-				// Wait a bit longer for players, so there's time for objects
-				// to dissolve first. It takes 2s to fizzle a cube.
-				EntFireByHandle(dn_fizz_player, "Enable", "", 0, self, self);
-			}
+			fizz_crush(fizz_dn);
+			fizz_crush(fizz_up);
 		} else {
 			crush_count = 0;
 		}
@@ -242,4 +235,20 @@ function Think() {
    		return 0.1;
     }
     return g_cur_moving != -1 ? 0.1 : 0.25;
+}
+
+function fizz_crush(fizz) {
+	if (!fizz.allowed) {
+		return;
+	}
+	fizz.on = true;
+	if (crush_count == 2 && fizz.obj) {
+		// Stuck, fizzle objects.
+		EntFireByHandle(fizz.obj, "Enable", "", 0, self, self);
+	}
+	if (crush_count == 25 && fizz.player) {
+		// Wait a bit longer for players, so there's time for objects
+		// to dissolve first. It takes 2s to fizzle a cube.
+		EntFireByHandle(fizz.player, "Enable", "", 0, self, self);
+	}
 }

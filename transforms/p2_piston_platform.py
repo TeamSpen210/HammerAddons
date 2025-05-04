@@ -152,6 +152,7 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
     LOGGER.debug('Piston configuration: {}', pistons)
 
     underside_fizz, underside_hurt = process_fizzler_set(ctx, logic_ent, desc, 'underside')
+    topside_fizz, topside_hurt = process_fizzler_set(ctx, logic_ent, desc, 'topside')
 
     enable_motion_trig: Entity | None = None
     if ent_name := logic_ent['enable_motion_trig']:
@@ -194,9 +195,16 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
             indices=indices, pistons=pistons,
             underside_fizz=underside_fizz,
             underside_hurt=underside_hurt,
+            topside_fizz=topside_fizz,
+            topside_hurt=topside_hurt,
             enable_motion_trig=enable_motion_trig,
         )
     else:
+        if topside_hurt or topside_fizz:
+            raise ValueError(
+                f'Piston {desc} has topside fizzlers/hurts configured, '
+                f'but this requires VScript to be useful.'
+            )
         LOGGER.info('Generating logic_branch logic for piston {}', desc)
         gen_logic_branches(
             ctx=ctx, logic_ent=logic_ent,
@@ -322,6 +330,8 @@ def gen_logic_vscript(
     indices: range, pistons: dict[int, Piston],
     underside_fizz: Entity | None,
     underside_hurt: Entity | None,
+    topside_fizz: Entity | None,
+    topside_hurt: Entity | None,
     enable_motion_trig: Entity | None,
 ) -> None:
     """Generate VScript logic for pistons."""
@@ -378,39 +388,52 @@ def gen_logic_vscript(
         code.write(f'\tg_pistons[{pist.index}] <- Entities.FindByName(null, "{pist.ent['targetname']}")\n')
     if enable_motion_trig is not None:
         code.write(f'\tenable_motion_trig = Entities.FindByName(null, "{enable_motion_trig['targetname']}")\n')
-    if underside_fizz is not None or underside_hurt is not None:
-        if conv_bool(logic_ent['underside_lenient']):
+    if (underside_fizz is not None or underside_hurt is not None
+        or topside_fizz is not None or topside_hurt is not None
+    ):
+        if conv_bool(logic_ent['hurt_lenient']):
             logic_ent['thinkfunction'] = 'Think'
-            code.write('dn_fizz_eager = false\n')
-        else:
-            code.write('dn_fizz_eager = true\n')
-
-        name_fizz = underside_fizz['targetname'] if underside_fizz is not None else ''
-        name_hurt = underside_hurt['targetname'] if underside_hurt is not None else ''
-
-        if name_hurt:
-            code.write(f'dn_fizz_player = Entities.FindByName(null, "{name_hurt}")\n')
-        if name_fizz.casefold() == name_hurt.casefold():
-            # Both have the same name, we need to do some special handling.
-            code.write(f'dn_fizz_obj = Entities.FindByName(dn_fizz_player, "{name_fizz}")\n')
-            # If they're the wrong order, swap.
-            # TODO: Could we swap their order in the entity lump to handle this?
-            code.write(
-                'if (dn_fizz_obj.GetClassname() == "trigger_hurt") {\n'
-                'local swap = dn_fizz_obj\n'
-                'dn_fizz_obj = dn_fizz_player\n'
-                'dn_fizz_player = swap\n'
-                '}\n'
+            code.write('\tfizz_eager = false\n')
+        elif topside_fizz is not None or topside_hurt is not None:
+            LOGGER.warning(
+                'Piston platform {} is requesting topside fizzlers/hurts, '
+                'but leinient hurting is required for this feature. Enabling.',
+                ent_description(logic_ent),
             )
-        elif name_fizz:
-            code.write(f'dn_fizz_obj = Entities.FindByName(null, "{name_fizz}")\n')
-        # Lenient fizzlers must always start disabled, VScript turns them on briefly only.
-        if underside_fizz is not None:
-            underside_fizz['StartDisabled'] = True
-        if underside_hurt is not None:
-            underside_hurt['StartDisabled'] = True
-        print(underside_fizz)
-        print(underside_hurt)
+            logic_ent['thinkfunction'] = 'Think'
+            code.write('\tfizz_eager = false\n')
+        else:
+            code.write('\tfizz_eager = true\n')
+
+        def write_hurts(fizz: Entity, hurt: Entity, kind: str) -> None:
+            """Write the hurt/fizzler entities into VScript."""
+            name_fizz = fizz['targetname'] if fizz is not None else ''
+            name_hurt = hurt['targetname'] if hurt is not None else ''
+
+            if name_hurt:
+                code.write(f'\tfizz_{kind}.player = Entities.FindByName(null, "{name_hurt}")\n')
+            if name_fizz.casefold() == name_hurt.casefold() and name_hurt:
+                # Both have the same name, we need to do some special handling.
+                code.write(f'\tfizz_{kind}.obj = Entities.FindByName(fizz_{kind}.player, "{name_fizz}")\n')
+                # If they're the wrong order, swap.
+                # TODO: Could we swap their order in the entity lump to handle this?
+                code.write(
+                    f'\tif (fizz_{kind}.obj.GetClassname() == "trigger_hurt") {{\n'
+                    f'\t\tlocal swap = fizz_{kind}.obj\n'
+                    f'\t\tfizz_{kind}.obj = fizz_{kind}.player\n'
+                    f'\t\tfizz_{kind}.player = swap\n'
+                    '\t}\n'
+                )
+            elif name_fizz:
+                code.write(f'\tfizz_{kind}.obj = Entities.FindByName(null, "{name_fizz}")\n')
+            # Lenient fizzlers must always start disabled, VScript turns them on briefly only.
+            if fizz is not None:
+                fizz['startdisabled'] = True
+            if hurt is not None:
+                hurt['startdisabled'] = True
+
+        write_hurts(underside_fizz, underside_hurt, 'dn')
+        write_hurts(topside_fizz, topside_hurt, 'up')
 
     code.write('}\n')
 
@@ -476,7 +499,7 @@ def gen_logic_branches(
             'OnFullyOpen' if pist_first.inverted else 'OnFullyClosed',
             name, 'Disable',
         ))
-    if name and conv_bool(logic_ent['underside_lenient']):
+    if name and conv_bool(logic_ent['hurt_lenient']):
         LOGGER.warning(
             'Piston platform {} is requesting lenient underside fizzlers/hurts, '
             'but VScript must be enabled for this feature.',

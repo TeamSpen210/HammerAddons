@@ -45,7 +45,14 @@
 		"If the option is unset, this can also be the name of a trigger_hurt to kill the player."
 	underside_hurt(target_destination): "Underside Hurt" : : "This should be the name of a trigger_hurt " +
 		"placed on the underside of the platform, to kill the player if they obstruct it."
-	underside_lenient(boolean): "Lenient Hurting" : 0 : "If enabled (and VScript also is), " +
+	topside_fizz[+VScript](target_destination): "Topside Fizzler" : : "If specified, this should be the name of " +
+		"a trigger_multiple or trigger_portal_cleanser on the topside of the platform, to fizzle obstructions. " +
+		"If the option is unset, this can also be the name of a trigger_hurt to kill the player." + 
+		"Requires lenient hurting to be enabled."
+	topside_hurt[+VScript](target_destination): "Topside Hurt" : : "This should be the name of a trigger_hurt " +
+		"placed on the topside of the platform, to kill the player if they obstruct it." +
+		"Requires lenient hurting to be enabled."
+	hurt_lenient[+VScript](boolean): "Lenient Hurting" : 0 : "If enabled (and VScript also is), " +
 		"require the platform to be jammed for a second or so before the fizzler/hurt is enabled to clear the obstruction. " +
 		"this ensures incidental contact doesn't fizzle objects."
 
