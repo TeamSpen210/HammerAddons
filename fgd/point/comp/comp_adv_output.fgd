@@ -5,6 +5,17 @@
 	[
 	out_ent(target_destination) : "Outputting Entity" : : "The name of the entity or entities to add the output to."
 
+	mode[engine](string) : "Mode" : "append"
+	mode(choices) : "Mode" : "append" : "How to add the output. 'Append' mode always adds the output. " +
+		"'Singular' only adds the output if not already present. " +
+		"'Remove' finds a matching output, then removes it. " +
+		"Removals are processed after the other types." =
+		[
+		"append": "Append"
+		"singular": "Singular"
+		"remove": "Remove"
+		]
+
 	out_name(string) : "Output Name" : : "The output name to use."
 
 	target_global(string) : "Target - String" : : "A fixed entity name, !special name or classname to fire inputs at."

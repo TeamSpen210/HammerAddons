@@ -15,6 +15,7 @@ The postcompiler now requires Windows 8+.
 * Added undocumented `ChangeLevelPostFade` input to `point_changelevel`
 * Added `hammer_model` entity to allow placing reference models in Hammer that don't appear in-game
 * Added Portal: Still Alive features (not currently included in releases, but can be built by including the `PSA` tag)
+* Added "singular" and "remove" modes to `comp_kv_setter`.
 * Allow `comp_entity_finder` to rotate the target in addition to teleporting.
 * Allow configuring various shadow/fast reflection options for vactube object ents.
 * Boolean keyvalues (yes/no) can now be set to `!$var`, to invert the value of the variable. 

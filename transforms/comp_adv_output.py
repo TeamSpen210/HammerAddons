@@ -5,9 +5,8 @@ from typing import Any
 from collections.abc import Collection, Mapping, Sequence
 import itertools
 import string
-import struct
 
-from srctools import EmptyMapping, Vec, conv_bool, conv_float, conv_int
+from srctools import EmptyMapping, conv_bool, conv_float, conv_int
 from srctools.vmf import Output, Entity
 from srctools.logger import get_logger
 
@@ -62,10 +61,18 @@ def advanced_output(ctx: Context) -> None:
         delay += conv_float(adv_out['delay2'])
         if delay < 0.0:
             LOGGER.warning(
-                'conv_adv_output at ({}) has a negative delay!',
-                adv_out['origin'],
+                'conv_adv_output at ({}) has a negative delay: {}',
+                adv_out['origin'], delay
             )
             delay = 0.0
+
+        mode = adv_out['mode', 'append'].lower()
+        if mode not in {'append', 'singular', 'remove'}:
+            LOGGER.warning(
+                'comp_adv_output at ({}) has invalid mode "{}"! Using append mode.',
+                adv_out['origin'], mode,
+            )
+            mode = 'append'
 
         param_args: list[str] = []
         for ind in itertools.count(1):
@@ -75,6 +82,10 @@ def advanced_output(ctx: Context) -> None:
             param_args.append(val)
 
         parameter = adv_out['params_fmt']
+        if parameter == '{1}' and not param_args:
+            # We default to this in the FGD, so the first parameter option works out of the box.
+            # But if that's not set, we'll try inserting nothingness.
+            parameter = ''
         if parameter:
             try:
                 parameter = FORMATTER.vformat(parameter, param_args, EmptyMapping)
@@ -106,15 +117,43 @@ def advanced_output(ctx: Context) -> None:
                         found_ent['targetname'], target_name,
                         sorted(targets),
                     )
-            for targ in targets:
-                found_ent.add_out(Output(
-                    output_name,
-                    targ,
-                    input_name,
-                    parameter,
-                    delay,
-                    times=times,
-                ))
+            if mode == 'append':
+                for targ in targets:
+                    found_ent.add_out(Output(
+                        output_name,
+                        targ,
+                        input_name,
+                        parameter,
+                        delay,
+                        times=times,
+                    ))
+            else:
+                folded_out = output_name.casefold()
+                folded_inp = input_name.casefold()
+                for targ in targets:
+                    folded_targ = targ.casefold()
+                    found = False
+                    for out in found_ent.outputs[:]:
+                        if (
+                            out.output.casefold() == folded_out and
+                            out.target == folded_targ and
+                            out.input.casefold() == folded_inp and
+                            out.params == parameter and
+                            abs(out.delay - delay) < 0.01 and
+                            out.times == times
+                        ):
+                            if mode == 'remove':
+                                found_ent.outputs.remove(out)
+                            found = True
+                    if mode == 'singular' and not found:
+                        found_ent.add_out(Output(
+                            output_name,
+                            targ,
+                            input_name,
+                            parameter,
+                            delay,
+                            times=times,
+                        ))
 
         if found_ent is None:
             LOGGER.warning(
