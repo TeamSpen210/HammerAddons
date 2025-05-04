@@ -151,7 +151,7 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
 
     LOGGER.debug('Piston configuration: {}', pistons)
 
-    underside_ents = process_fizzler_set(ctx, logic_ent, desc, 'underside')
+    underside_fizz, underside_hurt = process_fizzler_set(ctx, logic_ent, desc, 'underside')
 
     enable_motion_trig: Entity | None = None
     if ent_name := logic_ent['enable_motion_trig']:
@@ -192,7 +192,8 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
         gen_logic_vscript(
             ctx=ctx, logic_ent=logic_ent,
             indices=indices, pistons=pistons,
-            underside_ents=underside_ents,
+            underside_fizz=underside_fizz,
+            underside_hurt=underside_hurt,
             enable_motion_trig=enable_motion_trig,
         )
     else:
@@ -200,7 +201,8 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
         gen_logic_branches(
             ctx=ctx, logic_ent=logic_ent,
             indices=indices, pistons=pistons,
-            underside_ents=underside_ents,
+            # Don't care which is which.
+            underside_ents=[underside_fizz, underside_hurt],
             enable_motion_trig=enable_motion_trig,
         )
     return motion_filter
@@ -208,14 +210,14 @@ def generate_platform(ctx: Context, motion_filter: Entity | None, logic_ent: Ent
 
 def process_fizzler_set(
     ctx: Context, logic_ent: Entity, desc: str, kind: str,
-) -> list[Entity]:
+) -> tuple[Entity | None, Entity | None]:
     """Locate the entities for a fizzler/hurt set, also configuring if necessary."""
     fizz: Entity | None = None
     hurt: Entity | None = None
     # Remove duplicates, then remove blanks/unset.
     for ent_name in filter(None, {
         logic_ent[f'{kind}_fizz'].casefold(),
-        logic_ent[f'{kind}'].casefold(),
+        logic_ent[f'{kind}_hurt'].casefold(),
     }):
         for ent in ctx.vmf.search(ent_name):
             cls = ent['classname'].casefold()
@@ -275,13 +277,7 @@ def process_fizzler_set(
             if conv_int(hurt['damagetype']) == 0:
                 # If generic, make it CRUSH. Otherwise, user picked for a reason?
                 hurt['damagetype'] = 1
-    # Other code doesn't care which is which, only how many there are.
-    ents = []
-    if fizz is not None:
-        ents.append(fizz)
-    if hurt is not None:
-        ents.append(hurt)
-    return ents
+    return fizz, hurt
 
 
 def configure_fizzler(fizz: Entity, desc: str) -> None:
@@ -324,7 +320,8 @@ def gen_logic_vscript(
     *,
     ctx: Context, logic_ent: Entity,
     indices: range, pistons: dict[int, Piston],
-    underside_ents: list[Entity],
+    underside_fizz: Entity | None,
+    underside_hurt: Entity | None,
     enable_motion_trig: Entity | None,
 ) -> None:
     """Generate VScript logic for pistons."""
@@ -381,28 +378,39 @@ def gen_logic_vscript(
         code.write(f'\tg_pistons[{pist.index}] <- Entities.FindByName(null, "{pist.ent['targetname']}")\n')
     if enable_motion_trig is not None:
         code.write(f'\tenable_motion_trig = Entities.FindByName(null, "{enable_motion_trig['targetname']}")\n')
-    if underside_ents:
+    if underside_fizz is not None or underside_hurt is not None:
         if conv_bool(logic_ent['underside_lenient']):
             logic_ent['thinkfunction'] = 'Think'
             code.write('dn_fizz_eager = false\n')
         else:
             code.write('dn_fizz_eager = true\n')
 
-        underside_names = {ent['targetname'] for ent in underside_ents}
-        if len(underside_ents) == 2 and len(underside_names) == 1:
-            [ent_name] = underside_names
-            # Both have the same name, so we need to loop twice.
+        name_fizz = underside_fizz['targetname'] if underside_fizz is not None else ''
+        name_hurt = underside_hurt['targetname'] if underside_hurt is not None else ''
+
+        if name_hurt:
+            code.write(f'dn_fizz_player = Entities.FindByName(null, "{name_hurt}")\n')
+        if name_fizz.casefold() == name_hurt.casefold():
+            # Both have the same name, we need to do some special handling.
+            code.write(f'dn_fizz_obj = Entities.FindByName(dn_fizz_player, "{name_fizz}")\n')
+            # If they're the wrong order, swap.
+            # TODO: Could we swap their order in the entity lump to handle this?
             code.write(
-                f'local first = Entities.FindByName(null, "{ent_name}")\n'
-                'dn_fizz_ents.push(first);\n'
-                f'dn_fizz_ents.push(Entities.FindByName(first, "{ent_name}"))\n'
+                'if (dn_fizz_obj.GetClassname() == "trigger_hurt") {\n'
+                'local swap = dn_fizz_obj\n'
+                'dn_fizz_obj = dn_fizz_player\n'
+                'dn_fizz_player = swap\n'
+                '}\n'
             )
-        else:
-            for ent_name in underside_names:
-                code.write(f'dn_fizz_ents.push(Entities.FindByName(null, "{ent_name}"))\n')
-        # Leinient fizzlers must always start disabled, VScript turns them on briefly only.
-        for ent in underside_ents:
-            ent['startdisabled'] = True
+        elif name_fizz:
+            code.write(f'dn_fizz_obj = Entities.FindByName(null, "{name_fizz}")\n')
+        # Lenient fizzlers must always start disabled, VScript turns them on briefly only.
+        if underside_fizz is not None:
+            underside_fizz['StartDisabled'] = True
+        if underside_hurt is not None:
+            underside_hurt['StartDisabled'] = True
+        print(underside_fizz)
+        print(underside_hurt)
 
     code.write('}\n')
 
@@ -415,7 +423,7 @@ def gen_logic_branches(
     *,
     ctx: Context, logic_ent: Entity,
     indices: range, pistons: dict[int, Piston],
-    underside_ents: list[Entity],
+    underside_ents: list[Entity | None],
     enable_motion_trig: Entity | None,
 ) -> None:
     """Generate basic logic for pistons, using logic_branch."""
@@ -457,7 +465,8 @@ def gen_logic_branches(
             Output('Retract', enable_motion_trig, 'Disable', delay=0.1),
         )
     # Deduplicate names.
-    for name in {ent['targetname'] for ent in underside_ents}:
+    name = ''  # So the if below can check if the loop ran.
+    for name in {ent['targetname'] for ent in underside_ents if ent is not None}:
         ctx.add_io_remap(
             logic_name,
             Output('Extend', name, 'Disable'),
@@ -467,8 +476,7 @@ def gen_logic_branches(
             'OnFullyOpen' if pist_first.inverted else 'OnFullyClosed',
             name, 'Disable',
         ))
-
-    if underside_ents and conv_bool(logic_ent['underside_lenient']):
+    if name and conv_bool(logic_ent['underside_lenient']):
         LOGGER.warning(
             'Piston platform {} is requesting lenient underside fizzlers/hurts, '
             'but VScript must be enabled for this feature.',

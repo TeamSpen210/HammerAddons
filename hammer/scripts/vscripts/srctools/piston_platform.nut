@@ -35,8 +35,9 @@ START_SND <- "";
 STOP_SND <- "";
 
 enable_motion_trig <- null;
-dn_fizz_ents <- [];
-dn_fizz_on <- false;
+dn_fizz_player <- null;
+dn_fizz_obj <- null;
+dn_fizz_on <- true;
 dn_fizz_allowed <- false;
 dn_fizz_eager <- false;
 door_pos <- null;
@@ -68,22 +69,28 @@ function moveto(new_pos) {
 	
 	if (old_pos < new_pos) {
 		door_pos = null;
-		if (dn_fizz_ents.len() > 0) {
+		if (dn_fizz_obj || dn_fizz_player) {
 			dn_fizz_allowed = false;
 			if (dn_fizz_on) {
 				dn_fizz_on = false;
-				foreach (fizz in dn_fizz_ents) {
-					EntFireByHandle(fizz, "Disable", "", 0, self, self);
+				if (dn_fizz_obj) {
+					EntFireByHandle(dn_fizz_obj, "Disable", "", 0, self, self);
+				}
+				if (dn_fizz_player) {
+					EntFireByHandle(dn_fizz_player, "Disable", "", 0, self, self);
 				}
 			}
 		}
 		_up();
 	} else if (old_pos > new_pos) {
-		if (dn_fizz_ents.len() > 0) {
+		if (dn_fizz_obj || dn_fizz_player) {
 			if(dn_fizz_eager) {
 				dn_fizz_on = true;
-				foreach (fizz in dn_fizz_ents) {
-					EntFireByHandle(fizz, "Enable", "", 0, self, self);
+				if (dn_fizz_obj) {
+					EntFireByHandle(dn_fizz_obj, "Enable", "", 0, self, self);
+				}
+				if (dn_fizz_player) {
+					EntFireByHandle(dn_fizz_player, "Enable", "", 0, self, self);
 				}
 			} else {
 				dn_fizz_allowed <- true;
@@ -106,6 +113,10 @@ function start() {
 		EntFireByHandle(enable_motion_trig, "Enable", "", 0, self, self);
 		EntFireByHandle(enable_motion_trig, "Disable", "", 0.1, self, self);
 	}
+	print("dn_fizz_obj: ")
+	printl(dn_fizz_obj)
+	print("dn_fizz_player: ")
+	printl(dn_fizz_player)
 }
 
 // These two funcs find the first platform in their direction that's wrong,
@@ -143,8 +154,11 @@ function _dn() {
 		dn_fizz_on = false;
 		dn_fizz_allowed = false;
 		door_pos = null;
-		foreach (fizz in dn_fizz_ents) {
-			EntFireByHandle(fizz, "Disable", "", 0, self, self);
+		if (dn_fizz_obj) {
+			EntFireByHandle(dn_fizz_obj, "Disable", "", 0, self, self);
+		}
+		if (dn_fizz_player) {
+			EntFireByHandle(dn_fizz_player, "Disable", "", 0, self, self);
 		}
 	}
 	fix();
@@ -206,23 +220,26 @@ function Think() {
 	// * Not already on
 	// * Currently moving
 	// * We have a valid previous position
-	// It has to trigger twice consecuatively.
-    if (dn_fizz_allowed && !dn_fizz_on && g_cur_moving != -1 && door_pos != null) {
+    if (dn_fizz_allowed && crush_count < 25 && g_cur_moving != -1 && door_pos != null) {
 		local new_pos = g_pistons[g_cur_moving].GetOrigin();
 		if ((new_pos - door_pos).LengthSqr() < 1) {
 			crush_count++;
-			if (crush_count > 2) {
-				// Stuck...
-				dn_fizz_on = true;
-				foreach (fizz in dn_fizz_ents) {
-					EntFireByHandle(fizz, "Enable", "", 0, self, self);
-				}
+			printl("Crush: " + crush_count);
+			dn_fizz_on = true;
+			if (crush_count == 2 && dn_fizz_obj) {
+				// Stuck, fizzle objects.
+				EntFireByHandle(dn_fizz_obj, "Enable", "", 0, self, self);
+			}
+			if (crush_count == 25 && dn_fizz_player) {
+				// Wait a bit longer for players, so there's time for objects
+				// to dissolve first. It takes 2s to fizzle a cube.
+				EntFireByHandle(dn_fizz_player, "Enable", "", 0, self, self);
 			}
 		} else {
 			crush_count = 0;
 		}
 		door_pos = new_pos;
-   		return 0.05;
+   		return 0.1;
     }
     return g_cur_moving != -1 ? 0.1 : 0.25;
 }
