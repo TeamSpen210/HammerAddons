@@ -116,6 +116,8 @@ class Settings:
     scene_imports: Mapping[trio.Path, list[str] | None]
     # Whether stacks are allowed.
     use_operator_stacks: bool
+    # Overrides the captions used for specific soundscripts.
+    caption_override: Mapping[str, str]
 
 
 async def scene_from_sound(settings: Settings, root: trio.Path, filename: trio.Path) -> None:
@@ -219,7 +221,11 @@ async def build_scene(
 
     await scene_name.parent.mkdir(parents=True, exist_ok=True)
 
-    print(f'Writing {scene_name}, cc_only={cc_only}...')
+    caption = settings.caption_override.get(soundscript_name, soundscript_name)
+    if caption == soundscript_name and not cc_only:
+        caption = ''  # Redundant, choreo assumes the sound name.
+
+    print(f'Writing {scene_name}, caption={caption!r}...')
     scene = choreo.Scene(actors=[
         choreo.Actor(
             name=actor_name,
@@ -231,7 +237,7 @@ async def build_scene(
                     flags=choreo.EventFlags.FixedLength | choreo.EventFlags.Active,
                     parameters=('Default.Null' if cc_only else soundscript_name, '', ''),
                     caption_type=choreo.CaptionType.Master,
-                    cc_token=soundscript_name if cc_only else '',
+                    cc_token=caption,
                     ramp=choreo.Curve(),
                 )
             ])],
@@ -331,6 +337,10 @@ async def read_settings(path: trio.Path) -> Settings:
             else image.as_array()
             for image in conf.find_children('image_imports')
         },
+        caption_override={
+            kv.real_name: kv.value
+            for kv in conf.find_children("captionoverrides")
+        }
     )
 
 
@@ -379,7 +389,7 @@ async def main(argv: list[str]) -> None:
         default="../gen_choreo.vdf",
         help="The location of the config file.",
     )
-    subparsers = parser.add_subparsers()
+    subparsers = parser.add_subparsers(title="action", required=True)
 
     parser_gen = subparsers.add_parser('generate')
     parser_gen.set_defaults(func=rebuild_scenes)
