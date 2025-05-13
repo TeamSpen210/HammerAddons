@@ -1,0 +1,48 @@
+@SolidClass base(Targetname,EnableDisable) appliesto(DODS) line(0 128 0, targetname, area_cap_point) = dod_capture_area : "Capture Area"
+[
+	area_allies_cancap(choices) : "Can Allies Cap?" : 1 = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	area_axis_cancap(choices) : "Can Axis Cap?" : 1 = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	area_allies_numcap(choices) : "Number of Allies to cap" : 1 : "Client crash if set above 5. The limit is supposed to be 9." =
+	[
+		1 : "1"
+		2 : "2"
+		3 : "3"
+		4 : "4"
+		5 : "5"
+	]
+	area_axis_numcap(choices) : "Number of Axis to cap" : 1 : "Client crash if set above 5. The limit is supposed to be 9." =
+	[
+		1 : "1"
+		2 : "2"
+		3 : "3"
+		4 : "4"
+		5 : "5"
+	]
+
+	area_time_to_cap(float) : "Time to cap (sec)" : 5 
+	area_cap_point(target_destination) report : "Linked control point" : "" : "Name of the control point this area is linked to"
+
+	output OnAlliesStartCap(void) : "Sent when Allies start capture"
+	output OnAlliesBreakCap(void) : "Sent when Allies break capture"
+	output OnAlliesEndCap(void) : "Sent when Allies end capture"
+
+	output OnAxisStartCap(void) : "Sent when Axis start capture"
+	output OnAxisBreakCap(void) : "Sent when Axis break capture"
+	output OnAxisEndCap(void) : "Sent when Axis end capture"
+
+	output OnStartCap(void) : "Sent when either team starts capture"
+	output OnBreakCap(void) : "Sent when either team break capture"
+	output OnEndCap(void) : "Sent when either team end capture"
+	
+	input RoundInit(void) : "Re-parse the ''area_allies_numcap'', ''area_allies_numcap'', and ''area_time_to_cap'' KVs."
+]

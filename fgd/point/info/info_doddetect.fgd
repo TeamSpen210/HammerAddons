@@ -1,0 +1,27 @@
+@PointClass base(Targetname, EnableDisable) appliesto(DODS) iconsprite("editor/dod_icon.vmt") = info_doddetect : "DoD Gamerules" 
+[  
+	//Respawn factor
+	//==============
+	detect_allies_respawnfactor(string) : "Allies Respawn delay factor" : "1.0" : "Respawn delay multiplier for the Allied team. Regardless of what respawn factor is used, the respawn delay will not go below 5 seconds or above 20 seconds."
+	detect_axis_respawnfactor(string) : "Axis Respawn delay factor" : "1.0" : "Respawn delay multiplier for the Axis team. Regardless of what respawn factor is used, the respawn delay will not go below 5 seconds or above 20 seconds."
+	
+	// default is 5, because that's the actual default used by game code
+	detect_allies_startroundvoice(choices) : "Start round command for Allies" : 5 =
+	[
+		0 : "Attack"
+		1 : "Defend"
+		2 : "Beach"
+		3 : "Timed Attack"
+		4 : "Timed Defend"
+		5 : "Flags"
+	]
+	detect_axis_startroundvoice(choices) : "Start round command for Axis" : 5 =
+	[
+		0 : "Attack"
+		1 : "Defend"
+		2 : "Beach"
+		3 : "Timed Attack"
+		4 : "Timed Defend"
+		5 : "Flags"
+	]
+]

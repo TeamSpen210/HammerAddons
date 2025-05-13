@@ -1,0 +1,9 @@
+// note: also in Insurgency and Day of Infamy
+@SolidClass base(Targetname, Parentname, TeamNum) appliesto(DODS) = func_teamblocker : 
+	"Walls that players of a certain team are unable to pass through.\n\nUnlike func_team_wall, it cannot be loaded via an ENT file, can have its team value changed with an input, and is reset between rounds." 
+[	
+	spawnflags(flags) =
+	[
+		2: "Don't show hint when touched" : 0
+	]
+]

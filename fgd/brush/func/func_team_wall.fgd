@@ -1,0 +1,16 @@
+@SolidClass base(Targetname) appliesto(DODS) = func_team_wall : "Team Blocker Wall.\n\nUnlike func_teamblocker, it is able to be loaded via an ENT file, cannot have its team value changed without AddOutput, and is preserved between rounds."
+[
+	blockteam(choices) : "Team to block" : 0 =
+	[
+		0 : "Neither"
+		2 : "Allies Only"
+		3 : "Axis Only"
+	]
+	warn(choices) : "Show warning" : "" : "Show warning when touching this entity as the enemy team." = 
+	[
+		"" : "No"
+		"1" : "Yes"
+	]
+	mins(vector) : "mins" : : "The uppermost and northernmost point of the bounding box; used instead of bmodel if present."
+	maxs(vector) : "maxs" : : "The bottommost and southernmost point of the bounding box; used instead of bmodel if present."
+]

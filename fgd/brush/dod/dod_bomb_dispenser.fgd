@@ -1,0 +1,9 @@
+@SolidClass base(Targetname,EnableDisable) appliesto(DODS) = dod_bomb_dispenser : "Bomb Dispenser Area."
+[
+	dispense_team(choices) : "Team to give bombs to" : 0 = 
+	[
+		0 : "Both Teams"
+		2 : "Allies Only"
+		3 : "Axis Only"
+	]
+]

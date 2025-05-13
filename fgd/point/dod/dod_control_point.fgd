@@ -1,0 +1,109 @@
+@PointClass base(Targetname, EnableDisable, Angles) appliesto(DODS) studioprop() = dod_control_point : 
+	"A Control Point, representing a capturable objective; there can be up to 8 of these in a map.\n\nCan be the visual representation of the control point, or the model can be disabled and a prop_dynamic be used via this entity's outputs instead."
+[	
+	spawnflags(flags) =
+	[
+		1: "Hide Control Point on HUD" : 0
+		2: "Start with model hidden" : 0
+		4: "Give tick points for bombs remaining" : 0
+	]
+
+	point_printname(string) : "Location name" : "TODO: Set Name" : "The control point name displayed on the Hud when captured. Can be either a regular string or a reference to a localization string."
+	
+	point_timedpoints_axis(integer) : "Time based point value for Axis" : 0 : "Points given to Axis as they own this flag over time."
+	point_timedpoints_allies(integer) : "Time based point value for Allies" : 0 : "Points given to Allies as they own this flag over time."
+	
+	point_default_owner(choices) : "Default owner of the control point" : 0 =
+	[
+		0 : "Neutral"
+		2 : "Allies"
+		3 : "Axis"
+	]
+	point_axis_capsound(sound) : "Axis capture sound" : "Voice.German_FlagCapture" : "Sound made when Axis capture this point"
+	point_allies_capsound(sound) : "Allies capture sound" : "Voice.US_FlagCapture" : "Sound made when Allies capture this point"
+	point_resetsound(sound) : "Sound made when point resets" : ""
+	
+	// first, we define some KVs that are used by Hammer++, but ignored by the game, to get around some editor hardcoding
+	model(studio) : "Editor model" : "models/mapmodels/flags.mdl" : "Model to display in the map editor (no effect in-game). This should match the model used by the default owner."
+	body(choices) : "Editor model bodygroup" : 3 : "Bodygroup to use for the editor model (no effect in-game). This should match the bodygroup used by the default owner (descriptions given are for models/mapmodels/flags.mdl)." =
+	[
+		0 : "0 (Vanilla is German)"
+		1 : "1 (Vanilla is American)"
+		2 : "2 (Vanilla is British)"
+		3 : "3 (Vanilla is Neutral)"
+	]
+	
+	// Then, the actual KVs used in-game
+	point_axis_model(studio) 	: "Axis model" : "models/mapmodels/flags.mdl" : "Model when Axis own the point"
+	point_axis_model_bodygroup(integer) : "Axis model bodygroup" : 0
+
+	point_allies_model(studio) 	: "Allies model" : "models/mapmodels/flags.mdl" : "Model to use when Allies own the point"
+	point_allies_model_bodygroup(integer) : "Allies model bodygroup" : 1
+
+	point_reset_model(studio) 	: "Neutral model" : "models/mapmodels/flags.mdl" : "Model when neither team owns the point"
+	point_reset_model_bodygroup(integer) : "Neutral model bodygroup" : 3
+
+	output OnAxisCap(void) : "Send when owner is changed to Axis (including round resets)"
+	output OnAlliesCap(void) : "Send when owner is changed to Allies (including round resets)"
+	output OnCapReset(void) : "Send when owner is changed to Neutral (including round resets)"
+	
+	output AxisCapturePoint(void) : "Send when Axis capture this point (not triggered on round resets)"
+	output AlliesCapturePoint(void) : "Send when Allies capture this point (not triggered on round resets)"
+
+	point_group(integer) : "Group Index" : 0
+
+	point_index(integer) : "Index of this point (unique)" : 0 : "Unique identifier; used with dod_capture_area"
+
+	point_hud_icon_neutral(material)	: "Hud icon - Neutral" : "sprites/obj_icons/icon_obj_neutral"
+	point_hud_icon_axis(material)	: "Hud icon - Axis" : "sprites/obj_icons/icon_obj_axis"
+	point_hud_icon_allies(material)	: "Hud icon - Allies" : "sprites/obj_icons/icon_obj_allies"
+	point_hud_icon_timercap(material) : "Hud icon - bomb planted" : "sprites/obj_icons/icon_obj_neutral"
+	point_hud_icon_bombed(material) : "Hud icon - point destroyed" : "sprites/obj_icons/icon_obj_neutral"
+	
+	input HideModel(void) : "Hide the control point model"
+	input ShowModel(void) : "Show the control point model"
+	input SetOwner(integer) : "Set the current owner of this point (0=Neutral,2=Allies,3=Axis)"
+	
+	// TODO - probably just an int?
+	point_num_bombs(choices) : "Number of Bombs required to destroy" : 0 : "The number of bomb required to destroy the point, if used as a bomb objective. Ignore if used as a flag." =
+	[
+		0 : "0"
+		1 : "1"
+		2 : "2"
+		3 : "3"
+	]
+	
+	// ===== CBaseAnimating KVs and I/O that aren't overridden by dod_control_point =====
+	solid(choices) : "Collisions" : 0 : "Note that the default model lacks a collision mesh, so VPhysics will be unavailable." =
+	[
+		0 : "Not Solid"
+		2 : "Use Bounding Box"
+		6 : "Use VPhysics"
+	]
+	skin(integer) : "Skin" : : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default.\n\nUse the `skin` input with the `OnAxisCap`, `OnAlliesCap`, and `OnCapReset` outputs if you need to use different skin indices per faction."
+	modelscale(float) : "Model Scale" : : "A multiplier for the size of the model."
+	sequence(integer) : "Animation Sequence" : : "Default animation sequence index for the model to be playing after spawning. (Default 0)"
+	lightingorigin(target_destination) : "Lighting Origin" : : "Name of entity (not info_lighting!) from which to sample lighting instead of this entity's $illumposition."
+
+	disableshadows(choices) : "Disable Shadows" : "" : "Used to disable dynamic shadows on this entity." =
+	[
+		"" : "No"
+		1 : "Yes"
+	]
+	disablereceiveshadows(choices) : "Disable Receiving Shadows" : "" : "Prevent the entity from receiving dynamic shadows on itself."=
+	[
+		"" : "No"
+		1 : "Yes"
+	]
+	shadowcastdist(integer) : "Shadow Cast Distance" : : "Sets how far the entity casts dynamic shadows. 0 or absent means default distance from the shadow_control entity."
+
+	// Inputs
+	input skin(integer) : "Changes the model skin to the specified number."
+	input DisableShadow(void) : "Turn shadow off."
+	input EnableShadow(void) : "Turn shadow on."
+	input AlternativeSorting(bool) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates."
+	input SetModelScale(string) : "Takes two values separated by a space. The first is the target model scale. The second value is the number of seconds the change in scale will be spread over."
+
+	// Outputs
+	output OnIgnite(void) : "Fired when this object catches fire."
+]

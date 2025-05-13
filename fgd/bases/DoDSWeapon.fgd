@@ -1,0 +1,14 @@
+@BaseClass base(Targetname, Angles, Parentname, RenderFields) color(0 0 200) = DoDSWeapon
+[
+	spawnflags(Flags) =
+	[
+		1 : "Start asleep (don't fall to ground)" : 0
+	]
+	ammo(integer) : "Reserve ammo" : : "Ammo to include with the weapon. Default 0."
+
+	output OnPlayerUse(void) : "Fires when the player +uses this weapon"
+	output OnPlayerPickup(void) : "Fires when the player picks up this weapon"
+	
+	input Ignite(void) : "Sets the item on fire."
+	output OnIgnite(void) : "Fired when the item is set ablaze."
+]

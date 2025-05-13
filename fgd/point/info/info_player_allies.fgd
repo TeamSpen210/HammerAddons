@@ -1,0 +1,2 @@
+@PointClass base(Angles,Targetname,EnableDisable) studio("models/editor/american_rifleman.mdl") appliesto(DODS) = info_player_allies :
+	"This entity marks the start point for Allied players.\nPlace 16 units above the ground to prevent spawn from being invalid." []
