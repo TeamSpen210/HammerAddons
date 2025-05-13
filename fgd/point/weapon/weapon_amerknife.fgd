@@ -1,0 +1,1 @@
+@PointClass base(DoDSWeapon) appliesto(DODS) studioprop("models/weapons/w_amerk.mdl") = weapon_amerknife : "Allies Melee Knife.\n\nDespawns after a few seconds; spawn with point_template or VScript." []

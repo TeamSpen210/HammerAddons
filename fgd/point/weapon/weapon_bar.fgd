@@ -1,0 +1,1 @@
+@PointClass base(DoDSWeapon) appliesto(DODS) studioprop("models/weapons/w_bar.mdl") = weapon_bar : "Allies Support's BAR.\n\nDespawns after a few seconds; spawn with point_template or VScript." []

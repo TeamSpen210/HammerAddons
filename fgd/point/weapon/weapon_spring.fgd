@@ -1,0 +1,1 @@
+@PointClass base(DoDSWeapon) appliesto(DODS) studioprop("models/weapons/w_spring.mdl") = weapon_spring : "Allies Sniper's Springfield.\n\nDespawns after a few seconds; spawn with point_template or VScript." []

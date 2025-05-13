@@ -1,0 +1,1 @@
+@PointClass base(DoDSWeapon) appliesto(DODS) studioprop("models/weapons/w_c96.mdl") = weapon_c96 : "Axis C96 Sidearm.\n\nDespawns after a few seconds; spawn with point_template or VScript." []

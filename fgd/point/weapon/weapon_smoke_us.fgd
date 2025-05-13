@@ -1,0 +1,1 @@
+@PointClass base(DoDSWeapon) appliesto(DODS) studioprop("models/weapons/w_smoke_us.mdl") = weapon_smoke_us : "Allies Smoke Grenade.\n\nDespawns after a few seconds; spawn with point_template or VScript." []
