@@ -89,7 +89,6 @@
 		1 : "Low"
 		2 : "Medium"
 		3 : "High"
-		20 : 
 	]
 
 	maxcpulevel[+complete, since_L4D2](choices) : "Maximum CPU Level" : 0 =
