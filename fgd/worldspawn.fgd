@@ -1,17 +1,19 @@
 // Super-extra special, so don't use normal bases.
 @SolidClass base(BaseEntity, ResponseContext) = worldspawn: "This is the world entity. Each map can only contain one, and it's automatically created for you."
-	[
+[
 	world_mins[engine](vector) : "World Minimums" : : "Set by VBSP to the minimum bounds of the map geometry, excluding the 3D skybox (if present)."
 	world_maxs[engine](vector) : "World Maximums" : : "Set by VBSP to the maximum bounds of the map geometry, excluding the 3D skybox (if present)."
-	// "Doesn't seem to be used anywhere anymore." - VDC
-	// message(string) : "Map Description / Title"
+	message[+complete](string) : "Map Description / Title" : : "Leftover from Quake; often used for author credits."
 
 	skyname(string)                : "SkyBox Texture Name" :                       : "Texture used for the 2D skybox."
 	skyname[HL2, EP1, EP2](string) : "SkyBox Texture Name" : "sky_day01_01"        : "Texture used for the 2D skybox."
+	skyname[HLS](string)           : "SkyBox Texture Name" : "desert"              : "Texture used for the 2D skybox."
 	skyname[TF2](string)           : "SkyBox Texture Name" : "sky_tf2_04"          : "Texture used for the 2D skybox."
 	skyname[P2](string)            : "SkyBox Texture Name" : "sky_black_nofog"     : "Texture used for the 2D skybox."
 	skyname[ASW](string)           : "SkyBox Texture Name" : "blacksky"            : "Texture used for the 2D skybox."
+	skyname[CSS](string)           : "SkyBox Texture Name" : "sky_dust_hdr"        : "Texture used for the 2D skybox."
 	skyname[CSGO](string)          : "SkyBox Texture Name" : "sky_dust"            : "Texture used for the 2D skybox."
+	skyname[DODS](string)          : "SkyBox Texture Name" : "sky_dod_01_hdr"      : "Texture used for the 2D skybox."
 	skyname[L4D](string)           : "SkyBox Texture Name" : "sky_l4d_urban01_hdr" : "Texture used for the 2D skybox."
 	skyname[L4D2](string)          : "SkyBox Texture Name" : "sky_l4d_rural02_hdr" : "Texture used for the 2D skybox."
 	
@@ -31,8 +33,8 @@
 
 	newunit[engine](boolean) : "New Level Unit" : 0
 	// Portal 2 force enables this
-	// TODO: we can probably hide it in multiplayer-only games too
-	newunit[!P2](choices) : "New Level Unit" : 0 : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. " +
+	// We can hide it in multiplayer-only games too
+	newunit[!P2,!MPONLY](choices) : "New Level Unit" : 0 : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. " +
 		"Only set it to Yes if the player cannot return to any previous levels." =
 		[
 		0: "No, keep current"
@@ -105,8 +107,8 @@
 		//4 : "Python (Unsupported)"
 		]
 
-	coldworld[DODS](boolean) : "World is cold" : 0 : "Emit steam from players' mouths and similar effects."
-	WaveHeight[engine](float) : "Wave Height" : : "Unused keyvalue, likely to indicate the amount of HL1-style wavy water."
+	coldworld[DODS,+complete](boolean) : "World is cold" : 0 : "Emit gaseous condensation particles from players' mouths (or rather, their heads)."
+	WaveHeight[+complete](float) : "Wave Height" : : "Leftover from HL1, where it controlled the waves of water and other liquids."
 	
 	fixtriggerpushbug[engine](integer) : "Fix contact trigger_push bug" : 1 : "This fixes a bug with very thin contact mode trigger_push pushing downwards. This should be set to Yes unless this is an old map which worked around the bug and needs it in order to work correctly."
 	fixtriggerpushbug[KZ](choices) : "Fix contact trigger_push bug" : 1 : "This fixes a bug with very thin contact mode trigger_push pushing downwards. This should be set to Yes unless this is an old map which worked around the bug and needs it in order to work correctly." =
@@ -123,4 +125,4 @@
 
 	// Inputs
 	input SetChapterTitle[MBase](string) : "Sets the chapter title this map should identify with."
-	]
+]

@@ -36,7 +36,7 @@
 		]
 
 	body(integer) : "Bodygroup" : 0 : "Body Groups allow turning on and off parts of a model, so sections can be shown or hidden dynamically."
-	setbodygroup[complete](integer) : "(Set) Body Group" : 0 :  "Identical to Body Group (body), ask Valve why this is duplicated. Body Groups allow turning on and off parts of a model, so sections can be shown or hidden dynamically."
+	setbodygroup[complete](integer) : "(Set) Body Group" : 0 :  "Identical to Body Group (body), which takes priority. Body Groups allow turning on and off parts of a model, so sections can be shown or hidden dynamically."
 	
 	texframeindex[complete](integer) : "ToggleTexture Frame" : 0 : "The initial texture frame used by the ToggleTexture proxy and controlled by env_texturetoggle."
 	hitboxset[complete](string) : "Hitbox Set" : : "Sets the $hboxset to use for collision testing."
@@ -55,8 +55,9 @@
 
 	linedivider_animbase[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
-	LightingOrigin(target_destination) : "Lighting Origin" :  : "Select any entity (not info_lighting!) from which to sample lighting instead of the entity's origin."
-	LightingOriginHack(target_destination) : "Lighting Origin Offset" :  : "The info_lighting_relative from which to sample lighting instead of the entity's origin."
+	// $illumposition defaults to center of model's bounding box, *not* the origin
+	LightingOrigin(target_destination) : "Lighting Origin" :  : "Select any entity (not info_lighting!) from which to sample lighting instead of the entity's $illumposition."
+	LightingOriginHack(target_destination) : "Lighting Origin Offset" :  : "The info_lighting_relative from which to sample lighting instead of the entity's $illumposition."
 	
 	fademindist(float) : "Start Fade Distance/Pixels" : : "Distance at which the entity starts fading. If <0, the entity will disappear instantly when end fade is hit. The value will scale appropriately if the entity is in a 3D Skybox."
 	fademaxdist(float) : "End Fade Distance/Pixels" : : "Distance at which the entity ends fading. If <0, the entity won't disappear at all. The value will scale appropriately if the entity is in a 3D Skybox."
@@ -90,9 +91,9 @@
 	
 	input AlternativeSorting[SINCE_EP1](boolean) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
 
-	input SetModel[TF2](string) : "Changes the model to the specified path.\nForm of 'models/ammo/ammo_us.mdl'.\nIMPORTANT:\nAbsolutely NO quotes!\nMake sure you use this slash '/'.\nMerasmus says to heed this advice thou shalt corrupt the VMF."
-	input SetCycle[TF2](float) : "Skip to a specific point in the current animation."
-	input SetPlaybackRate[TF2](float) : "Change the animation speed multiplier."
+	input SetModel[TF2BRANCH](string) : "Changes the model to the specified path.\nForm of 'models/ammo/ammo_us.mdl'.\nIMPORTANT:\nAbsolutely NO quotes!\nMake sure you use this slash '/'.\nMerasmus says to heed this advice thou shalt corrupt the VMF."
+	input SetCycle[TF2BRANCH](float) : "Skip to a specific point in the current animation."
+	input SetPlaybackRate[TF2BRANCH](float) : "Change the animation speed multiplier."
 
 	input SetModel[MBase](string) : "Sets this entity's model. Must include 'models/' as well as the extension."
 	input CreateSeparateRagdoll[MBase](void) : "Creates a separate serverside ragdoll at this entity's origin."

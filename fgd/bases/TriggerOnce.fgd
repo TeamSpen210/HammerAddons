@@ -6,8 +6,8 @@
 	[
 	spawnflags(flags)  =
 		[
-		1: "Clients (Players/Bots)" : 1 [TF2, CSGO, CSS, MESA]
-		1: "Clients (Players)" : 1 [!TF2, !CSGO, !CSS, !MESA]
+		1: "Clients (Players/Bots)" : 1 [TF2BRANCH, CSGO, MESA]
+		1: "Clients (Players)" : 1 [!TF2BRANCH, !CSGO, !MESA]
 		2: "NPCs" : 0 [!ASW]
 		2: "Marines and Aliens" : 0 [ASW]
 		4: "func_pushable" : 0
@@ -20,7 +20,7 @@
 		512: "Only clients *not* in vehicles" : 0 [!ASW]
 		1024: "Physics debris" : 0
 		2048: "Only NPCs in vehicles (respects player ally flag)" : 0
-		4096: "Disallow Bots" : 0 [CSGO, TF2, MESA]
+		4096: "Disallow Bots" : 0 [CSGO, TF2BRANCH, MESA]
 		]
 
 	StartDisabled(boolean) : "Start Disabled?" : 0
@@ -54,7 +54,7 @@
     // This I/O does actually exist, but it couldn't ever be used usefully. 
     // Entities that can use them should inherit Trigger instead.
     input EndTouch[engine](void)
-	input DisableAndEndTouch[TF2, engine](void)
+	input DisableAndEndTouch[TF2BRANCH, engine](void)
 	output OnStartTouchAll[engine](void) // Always fires along with OnStartTouch, so useless.
 	output OnEndTouch[engine](void)
 	output OnEndTouchAll[engine](void)

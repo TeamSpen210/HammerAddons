@@ -38,14 +38,15 @@
 
 	solid[engine](integer) : "Collisions": 6
 	solid(choices) : "Collisions" : 6 : "Method of collision for this prop." =
-		[
+	[
+		// only 0, 2, and 6 are valid for static props; any other value will result in being reset to nonsolid
 		0: "None"
-		1: "BSP (QPhysics)" [complete]
+		//1: "BSP (QPhysics)"
 		2: "Bounding Box"
-		3: "Oriented Bounding Box"
-		4: "Oriented Bounding Box, constrained to Yaw only"
+		//3: "Oriented Bounding Box"
+		//4: "Oriented Bounding Box, constrained to Yaw only"
 		6: "VPhysics"
-		]
+	]
 
 	preventpropcombine[PROPCOMBINE](boolean) : "Disable Prop Combine" : 0 : "Prevent this static prop from combining with any other static props in vbsp."
 
@@ -61,58 +62,61 @@
 	// DXlevel is used in v6 and 7 only, the replaced by cpu/gpu for 8+.
 
 	mindxlevel[+complete, since_TF2, until_L4D2, MESA](choices) : "Minimum DX Level" : 0 = 
-		[
-		0 : "default (lowest)"
-		70 : "dx7"
-		80 : "dx8.0 (4600Ti)"
-		81 : "dx8.1 (FX5200)"
-		90 : "dx9 SM2.0"
-		95 : "dx9 SM3.0"
-		]
+	[
+		0 : "Default (lowest)"
+		60 : "60 - DirectX 6"
+		70 : "70 - DirectX 7"
+		80 : "80 - DirectX 8"
+		81 : "81 - DirectX 8.1"
+		90 : "90 - DirectX 9 Shader Model 2.0"
+		95 : "95 - DirectX 9 Shader Model 3.0"
+	]
 	maxdxlevel[+complete, since_TF2, until_L4D2, MESA](choices) : "Maximum DX Level" : 0 = 
-		[
-		0 : "default (highest)"
-		60 : "dx6"
-		70 : "dx7"
-		80 : "dx8.0 (4600Ti)"
-		81 : "dx8.1 (FX5200)"
-		90 : "dx9 SM2.0"
-		95 : "dx9 SM3.0"
-		]
+	[
+		0 : "Default (lowest)"
+		1 : "1 - Never (for invisible nonsolid shadow casters)"
+		60 : "60 - DirectX 6"
+		70 : "70 - DirectX 7"
+		80 : "80 - DirectX 8"
+		81 : "81 - DirectX 8.1"
+		90 : "90 - DirectX 9 Shader Model 2.0"
+		95 : "95 - DirectX 9 Shader Model 3.0"
+	]
 
 	mincpulevel[+complete, since_L4D2](choices) : "Minimum CPU Level" : 0 =
-		[
-		0: "default (low)"
-		1: "low"
-		2: "medium"
-		3: "high"
-		]
+	[
+		0 : "Default (low)"
+		1 : "Low"
+		2 : "Medium"
+		3 : "High"
+		20 : 
+	]
 
 	maxcpulevel[+complete, since_L4D2](choices) : "Maximum CPU Level" : 0 =
-		[
-		0: "default (high)"
-		1: "low"
-		2: "medium"
-		3: "high"
-		]
+	[
+		0 : "Default (low)"
+		1 : "Low"
+		2 : "Medium"
+		3 : "High"
+	]
 
 	mingpulevel[+complete, since_L4D2](choices) : "Minimum GPU Level" : 0 =
-		[
-		0: "default (very low)"
-		1: "very low"
-		2: "low"
-		3: "medium"
-		4: "high"
-		]
+	[
+		0 : "Default (Very Low)"
+		1 : "Very Low"
+		2 : "Low"
+		3 : "Medium"
+		4 : "High"
+	]
 
 	maxgpulevel[+complete, since_L4D2](choices) : "Maximum GPU Level" : 0 =
-		[
-		0: "default (high)"
-		1: "very low"
-		2: "low"
-		3: "medium"
-		4: "high"
-		]
+	[
+		0 : "Default (Very Low)"
+		1 : "Very Low"
+		2 : "Low"
+		3 : "Medium"
+		4 : "High"
+	]
 
 	disablex360[+complete, since_L4D2](boolean) : "Disable on Xbox 360" : 0
 
@@ -123,20 +127,20 @@
 	disableshadowdepth[since_L4D, +complete](boolean) : "No Affecting Proj Texs" : 0 : "Prevent this entity from affecting projected texture shadows."
 	disableflashlight[since_L4D](boolean) : "No Recieving Proj Texs" : 0 : "Prevent this prop from recieving projected texture shadows."
 
-	disablevertexlighting(boolean) : "Disable Vertex lighting" : 0 : "Disable per-vertex lighting on this prop."
-	disableselfshadowing(boolean) : "Disable Self-Shadowing" : 0 : "When vertex lighting is enabled, prevent the geometry from self-shadowing -- casting shadows onto itself."
-	ignorenormals(boolean) : "Ignore Surface Normal" : 0 : "When vertex lighting is enabled, ignore the surface normal of faces when calculating the vertex lighting. Useful for thin, translucent objects such as leaves on foliage props."
+	disablevertexlighting(boolean) : "Disable per-vertex lighting" : 0 : "Disable per-vertex lighting on this prop."
+	disableselfshadowing(boolean) : "Disable Self-Shadowing" : 0 : "When per-vertex lighting is enabled, prevent the geometry from self-shadowing -- casting shadows onto itself."
+	ignorenormals(boolean) : "Ignore Surface Normal" : 0 : "When per-vertex lighting is enabled, ignore the surface normal of faces when calculating the vertex lighting. Useful for thin, translucent objects such as leaves on foliage props."
 	
 	drawinfastreflection[since_L4D](boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
 	enablelightbounce[since_CSGO, GMOD](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
 	
-	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's origin."
+	lightingorigin(target_destination) : "Lighting Origin" : : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's $illumposition. Also used to determine which cubemap is used, even if per-vertex lighting is enabled."
 
 	linedivider_lmap[TF2, MESA, KZ, !engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
-	generatelightmaps[TF2, MESA, KZ, GMOD](boolean) : "Generate (and use) lightmaps for this static prop" : 0
-	lightmapresolutionx[TF2, MESA, KZ, GMOD](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
-	lightmapresolutiony[TF2, MESA, KZ, GMOD](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
+	generatelightmaps[PROPLM](boolean) : "Generate (and use) lightmaps for this static prop" : 0
+	lightmapresolutionx[PROPLM](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
+	lightmapresolutiony[PROPLM](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
 	
 
 	linedivider_fade[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""

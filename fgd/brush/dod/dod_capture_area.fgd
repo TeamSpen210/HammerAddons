@@ -1,4 +1,4 @@
-@SolidClass base(Targetname,EnableDisable) appliesto(DODS) line(0 128 0, targetname, area_cap_point) = dod_capture_area : "Capture Area"
+@SolidClass base(Trigger) appliesto(DODS) line(0 128 0, targetname, area_cap_point) = dod_capture_area : "Capture Area"
 [
 	area_allies_cancap(choices) : "Can Allies Cap?" : 1 = 
 	[
