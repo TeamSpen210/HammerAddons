@@ -1,1 +1,1 @@
-@PointClass base(DoDSWeapon) appliesto(DODS) studioprop("models/weapons/w_stick.mdl") = weapon_frag_ger_live : "Axis Live Frag Grenade.\n\nExplodes after a few seconds; spawn with point_template or VScript." []
+@PointClass base(DoDS) appliesto(DODS) studioprop("models/weapons/w_stick.mdl") = weapon_frag_ger_live : "Axis Live Frag Grenade.\n\nExplodes after a few seconds; spawn with point_template or VScript." []

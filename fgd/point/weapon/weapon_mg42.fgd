@@ -1,1 +1,1 @@
-@PointClass base(DoDSWeapon) appliesto(DODS) studioprop("models/weapons/w_mg42bd.mdl") = weapon_mg42 : "Axis Machine Gunner's MG42.\n\nDespawns after a few seconds; spawn with point_template or VScript." []
+@PointClass base(Weapon) appliesto(DODS) studioprop("models/weapons/w_mg42bd.mdl") = weapon_mg42 : "Axis Machine Gunner's MG42.\n\nDespawns after a few seconds; spawn with point_template or VScript." []

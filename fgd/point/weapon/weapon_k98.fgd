@@ -1,1 +1,1 @@
-@PointClass base(DoDSWeapon) appliesto(DODS) studioprop("models/weapons/w_k98.mdl") = weapon_k98 : "Axis Rifleman's K98k.\n\nDespawns after a few seconds; spawn with point_template or VScript." []
+@PointClass base(Weapon) appliesto(DODS) studioprop("models/weapons/w_k98.mdl") = weapon_k98 : "Axis Rifleman's K98k.\n\nDespawns after a few seconds; spawn with point_template or VScript." []

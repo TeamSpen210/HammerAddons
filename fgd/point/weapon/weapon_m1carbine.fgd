@@ -1,1 +1,1 @@
-@PointClass base(DoDSWeapon) appliesto(DODS) studioprop("models/weapons/w_m1carb.mdl") = weapon_m1carbine : "Allies M1 Carbine.\n\nDespawns after a few seconds; spawn with point_template or VScript." []
+@PointClass base(Weapon) appliesto(DODS) studioprop("models/weapons/w_m1carb.mdl") = weapon_m1carbine : "Allies M1 Carbine.\n\nDespawns after a few seconds; spawn with point_template or VScript." []
