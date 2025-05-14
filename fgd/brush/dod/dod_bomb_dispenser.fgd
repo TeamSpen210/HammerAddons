@@ -10,6 +10,6 @@
 
 	@resources
 	[
-		//entity weapon_basebomb
+		entity weapon_basebomb
 	]
 ]

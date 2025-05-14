@@ -24,5 +24,6 @@
 		// no suffix - armed
 		mdl "models/weapons/w_tnt.mdl"
 		mdl "models/weapons/w_tnt_grey.mdl"
+		mdl "models/weapons/w_tnt_red.mdl"
 	]
 ]
