@@ -35,5 +35,10 @@
 		snd "Voice.US_Beach"
 		snd "Voice.US_ObjectivesAttackTimed"
 		snd "Voice.US_ObjectivesDefendTimed"
+		snd "Voice.German_ObjectivesAttack"
+		snd "Voice.German_ObjectivesDefend"
+		snd "Voice.German_Beach"
+		snd "Voice.German_ObjectivesAttackTimed"
+		snd "Voice.German_ObjectivesDefendTimed"
 	]
 ]
