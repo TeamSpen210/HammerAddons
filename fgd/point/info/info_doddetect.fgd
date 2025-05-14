@@ -6,7 +6,7 @@
 	detect_axis_respawnfactor(string) : "Axis Respawn delay factor" : "1.0" : "Respawn delay multiplier for the Axis team. Regardless of what respawn factor is used, the respawn delay will not go below 5 seconds or above 20 seconds."
 	
 	// default is 5, because that's the actual default used by game code
-	detect_allies_startroundvoice[engine](choices) : "Start round command for Allies" : 5
+	detect_allies_startroundvoice[engine](integer) : "Start round command for Allies" : 5
 	detect_allies_startroundvoice(choices) : "Start round command for Allies" : 5 =
 	[
 		0 : "Attack"
