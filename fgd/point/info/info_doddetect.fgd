@@ -1,4 +1,4 @@
-@PointClass base(BaseEntity, EnableDisable) appliesto(DODS) iconsprite("editor/dod_icon.vmt") = info_doddetect : "DoD Gamerules" 
+@PointClass base(BaseEntity, EnableDisable) appliesto(DODS) iconsprite("editor/syj/dod_icon.vmt") = info_doddetect : "DoD Gamerules" 
 [  
 	//Respawn factor
 	//==============

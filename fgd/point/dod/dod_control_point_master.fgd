@@ -1,4 +1,4 @@
-@PointClass base(BaseEntity,EnableDisable) appliesto(DODS) iconsprite("editor/dod_flag.vmt") = dod_control_point_master : "Control Point Master"
+@PointClass base(BaseEntity,EnableDisable) appliesto(DODS) iconsprite("editor/syj/dod_flag.vmt") = dod_control_point_master : "Control Point Master"
 [
 	cpm_use_timer[engine](boolean) : "Use round timer?" : 0
 	cpm_use_timer(choices) : "Use round timer?" : 0  =
