@@ -101,11 +101,11 @@ FEATURES: dict[str, set[str]] = {
     'KZ': {'HL2', 'PROPLM'},
 
     'L4D2': {'INST_IO', 'VSCRIPT'},
-    'HL2DM': {'VSCRIPT', 'PROPLM', 'TF2BRANCH', 'MPONLY'},
-    'TF2': {'VSCRIPT', 'PROPLM', 'TF2BRANCH', 'MPONLY'},
-    'CSS': {'VSCRIPT', 'PROPLM', 'TF2BRANCH', 'MPONLY'},
-    'DODS': {'VSCRIPT', 'PROPLM', 'TF2BRANCH', 'MPONLY'},
-    'HLDMS': {'HLS', 'VSCRIPT', 'PROPLM', 'TF2BRANCH', 'MPONLY'}, # HLDMS has all HL:S ents, but runs on TF2's engine version
+    'HL2DM': {'VSCRIPT', 'PROPLM', 'TF2ENG', 'MPONLY'},
+    'TF2': {'VSCRIPT', 'PROPLM', 'TF2ENG', 'MPONLY'},
+    'CSS': {'VSCRIPT', 'PROPLM', 'TF2ENG', 'MPONLY'},
+    'DODS': {'VSCRIPT', 'PROPLM', 'TF2ENG', 'MPONLY'},
+    'HLDMS': {'HLS', 'VSCRIPT', 'PROPLM', 'TF2ENG', 'MPONLY'}, # HLDMS has all HL:S ents, but runs on TF2's engine version
     'ASW': {'INST_IO', 'VSCRIPT'},
     'P2': {'INST_IO', 'VSCRIPT'},
     'CSGO': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
