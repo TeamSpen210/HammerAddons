@@ -1,4 +1,4 @@
-@PointClass base(Targetname, EnableDisable, Angles) appliesto(DODS) studioprop() = dod_control_point : 
+@PointClass base(BaseEntityAnimating, EnableDisable) appliesto(DODS) studioprop() = dod_control_point : 
 	"A Control Point, representing a capturable objective; there can be up to 8 of these in a map.\n\nCan be the visual representation of the control point, or the model can be disabled and a prop_dynamic be used via this entity's outputs instead."
 [	
 	spawnflags(flags) =
@@ -13,6 +13,7 @@
 	point_timedpoints_axis(integer) : "Time based point value for Axis" : 0 : "Points given to Axis as they own this flag over time."
 	point_timedpoints_allies(integer) : "Time based point value for Allies" : 0 : "Points given to Allies as they own this flag over time."
 	
+	point_default_owner[engine](integer) : "Default owner of the control point" : 0
 	point_default_owner(choices) : "Default owner of the control point" : 0 =
 	[
 		0 : "Neutral"
@@ -74,38 +75,14 @@
 		3 : "3"
 	]
 	
-	// ===== CBaseAnimating KVs and I/O that aren't overridden by dod_control_point =====
-	// These should be changed to baseclass stuff
-	solid(choices) : "Collisions" : 0 : "Note that the default model lacks a collision mesh, so VPhysics will be unavailable." =
-	[
-		0 : "Not Solid"
-		2 : "Use Bounding Box"
-		6 : "Use VPhysics"
-	]
+	// ===== CBaseAnimating KVs and I/O that aren't overridden by dod_control_point and aren't automatically added by BaseEntityAnimating =====
+	
 	skin(integer) : "Skin" : : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default.\n\nUse the `skin` input with the `OnAxisCap`, `OnAlliesCap`, and `OnCapReset` outputs if you need to use different skin indices per faction."
-	modelscale(float) : "Model Scale" : : "A multiplier for the size of the model."
 	sequence(integer) : "Animation Sequence" : : "Default animation sequence index for the model to be playing after spawning. (Default 0)"
-	lightingorigin(target_destination) : "Lighting Origin" : : "Name of entity (not info_lighting!) from which to sample lighting instead of this entity's $illumposition."
-
-	disableshadows(choices) : "Disable Shadows" : "" : "Used to disable dynamic shadows on this entity." =
-	[
-		"" : "No"
-		1 : "Yes"
-	]
-	disablereceiveshadows(choices) : "Disable Receiving Shadows" : "" : "Prevent the entity from receiving dynamic shadows on itself."=
-	[
-		"" : "No"
-		1 : "Yes"
-	]
+	
 	shadowcastdist(integer) : "Shadow Cast Distance" : : "Sets how far the entity casts dynamic shadows. 0 or absent means default distance from the shadow_control entity."
 
 	// Inputs
-	input skin(integer) : "Changes the model skin to the specified number."
-	input DisableShadow(void) : "Turn shadow off."
-	input EnableShadow(void) : "Turn shadow on."
 	input AlternativeSorting(bool) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates."
 	input SetModelScale(string) : "Takes two values separated by a space. The first is the target model scale. The second value is the number of seconds the change in scale will be spread over."
-
-	// Outputs
-	output OnIgnite(void) : "Fired when this object catches fire."
 ]

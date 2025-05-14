@@ -1,4 +1,4 @@
-@PointClass base(Targetname,EnableDisable) appliesto(DODS) iconsprite("editor/dod_flag.vmt") = dod_control_point_master : "Control Point Master"
+@PointClass base(BaseEntity,EnableDisable) appliesto(DODS) iconsprite("editor/dod_flag.vmt") = dod_control_point_master : "Control Point Master"
 [
 	cpm_use_timer[engine](boolean) : "Use round timer?" : 0
 	cpm_use_timer(choices) : "Use round timer?" : 0  =
@@ -27,5 +27,8 @@
 		// techncially handled by dod_gamerules, but that entity isn't in here yet (since it's handled completely via code)
 		snd "Game.USWin"
 		snd "Game.GermanWin"
+		
+		//entity dod_round_timer
+		//entity dod_gamerules
 	]
 ]

@@ -1,4 +1,4 @@
-@PointClass base(Targetname) appliesto(DODS) iconsprite("editor/dod_location.vmt") =  dod_location : "Location" 
+@PointClass base(BaseEntity) appliesto(DODS) iconsprite("editor/dod_location.vmt") =  dod_location : "Location" 
 [  
 	location_name(string) : "Name of this location" : "TODO: Set Name" : "Max 63 characters."
 ]

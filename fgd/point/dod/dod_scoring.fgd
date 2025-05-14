@@ -1,4 +1,4 @@
-@PointClass base(Targetname,TeamNum) appliesto(DODS) iconsprite("editor/enigma.vmt") = dod_scoring : "Custom Scoring"
+@PointClass base(BaseEntity,TeamNum) appliesto(DODS) iconsprite("editor/enigma.vmt") = dod_scoring : "Custom Scoring"
 [
 	point_give_delay(integer) : "Seconds between point gives" : 60
 	point_give_amount(integer) : "Points to give each time" : 1

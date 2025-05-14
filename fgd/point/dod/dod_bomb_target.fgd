@@ -1,4 +1,4 @@
-@PointClass base(Targetname, Angles, EnableDisable) appliesto(DODS) studioprop("models/weapons/w_tnt_red.mdl") line(0 128 0, targetname, target_control_point) = dod_bomb_target : "Bomb Target.\n\nIf this bomb explodes, it is deactivated for the rest of the round unless set the Enable input."
+@PointClass base(BaseEntityAnimating, EnableDisable) appliesto(DODS) studioprop("models/weapons/w_tnt_red.mdl") line(0 128 0, targetname, target_control_point) = dod_bomb_target : "Bomb Target.\n\nIf this bomb explodes, it is deactivated for the rest of the round unless set the Enable input."
 [
 	target_control_point(target_destination) report : "Target Control Point" : "Control point to help capture. Leave blank if this is not tied to a control point."
 	
