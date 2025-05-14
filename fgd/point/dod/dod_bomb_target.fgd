@@ -2,6 +2,7 @@
 [
 	target_control_point(target_destination) report : "Target Control Point" : "Control point to help capture. Leave blank if this is not tied to a control point."
 	
+	bombing_team[engine](integer) : "Bombing Team" : 2
 	bombing_team(choices) : "Bombing Team" : 2 : "To create a team-agnostic bomb target, place two dod_bomb_targets in the same location with the same angles. Send the `Disable` input to the opposite team's bomb target via `OnBombPlanted`, and send the `Enable` input to the opposite team's bomb target via `OnBombDefused`." =
 	[
 		2 : "Allies"
@@ -15,4 +16,13 @@
 	output OnBombPlanted(void) : "Send when bomb is planted at this target"
 	output OnBombExploded(void) : "Send when timer expires and bomb explodes"
 	output OnBombDefused(void) : "Send when bomb is completely defused"
+
+	@resources
+	[
+		// Red (actually Yellow) - able to plant
+		// Grey - unable to plant
+		// no suffix - armed
+		mdl "models/weapons/w_tnt.mdl"
+		mdl "models/weapons/w_tnt_grey.mdl"
+	]
 ]

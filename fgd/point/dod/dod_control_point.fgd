@@ -24,8 +24,8 @@
 	point_resetsound(sound) : "Sound made when point resets" : ""
 	
 	// first, we define some KVs that are used by Hammer++, but ignored by the game, to get around some editor hardcoding
-	model(studio) : "Editor model" : "models/mapmodels/flags.mdl" : "Model to display in the map editor (no effect in-game). This should match the model used by the default owner."
-	body(choices) : "Editor model bodygroup" : 3 : "Bodygroup to use for the editor model (no effect in-game). This should match the bodygroup used by the default owner (descriptions given are for models/mapmodels/flags.mdl)." =
+	model[-engine](studio) : "Editor model" : "models/mapmodels/flags.mdl" : "Model to display in the map editor (no effect in-game). This should match the model used by the default owner."
+	body[-engine](choices) : "Editor model bodygroup" : 3 : "Bodygroup to use for the editor model (no effect in-game). This should match the bodygroup used by the default owner (descriptions given are for models/mapmodels/flags.mdl)." =
 	[
 		0 : "0 (Vanilla is German)"
 		1 : "1 (Vanilla is American)"
@@ -65,6 +65,7 @@
 	input SetOwner(integer) : "Set the current owner of this point (0=Neutral,2=Allies,3=Axis)"
 	
 	// TODO - probably just an int?
+	point_num_bombs[engine](integer) : "Number of Bombs required to destroy" : 0
 	point_num_bombs(choices) : "Number of Bombs required to destroy" : 0 : "The number of bomb required to destroy the point, if used as a bomb objective. Ignore if used as a flag." =
 	[
 		0 : "0"
@@ -74,6 +75,7 @@
 	]
 	
 	// ===== CBaseAnimating KVs and I/O that aren't overridden by dod_control_point =====
+	// These should be changed to baseclass stuff
 	solid(choices) : "Collisions" : 0 : "Note that the default model lacks a collision mesh, so VPhysics will be unavailable." =
 	[
 		0 : "Not Solid"

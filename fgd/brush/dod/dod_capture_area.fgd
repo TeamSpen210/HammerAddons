@@ -1,17 +1,20 @@
 @SolidClass base(Trigger) appliesto(DODS) line(0 128 0, targetname, area_cap_point) = dod_capture_area : "Capture Area"
 [
+	area_allies_cancap[engine](boolean) : "Can Allies Cap?" : 1
 	area_allies_cancap(choices) : "Can Allies Cap?" : 1 = 
 	[
 		0 : "No"
 		1 : "Yes"
 	]
 
+	area_axis_cancap[engine](boolean) : "Can Axis Cap?" : 1
 	area_axis_cancap(choices) : "Can Axis Cap?" : 1 = 
 	[
 		0 : "No"
 		1 : "Yes"
 	]
 
+	area_allies_numcap[engine](integer) : "Number of Allies to cap" : 1
 	area_allies_numcap(choices) : "Number of Allies to cap" : 1 : "Client crash if set above 5. The limit is supposed to be 9." =
 	[
 		1 : "1"
@@ -20,6 +23,7 @@
 		4 : "4"
 		5 : "5"
 	]
+	area_axis_numcap[engine](integer) : "Number of Axis to cap" : 1
 	area_axis_numcap(choices) : "Number of Axis to cap" : 1 : "Client crash if set above 5. The limit is supposed to be 9." =
 	[
 		1 : "1"
