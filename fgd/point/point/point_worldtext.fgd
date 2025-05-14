@@ -6,7 +6,7 @@
 ]
 
 @PointClass base(BaseEntityPoint, _point_worldtext_tf2) 
-	appliesto(since_CSGO, TF2ENG, GMOD) 
+	appliesto(since_CSGO, 2025MP, GMOD) 
 	worldtext() 
 = point_worldtext: "An entity that displays a text message oriented in the world, at its origin."
 	[
@@ -22,7 +22,7 @@
 	color[until_CSGO](color255) : "Color" : "255 255 255 255" : "Color and opacity of the text"
 
 	font[engine, GMOD](integer) : "Font" : 0
-	font[TF2ENG](choices) : "Font" : 0 : "The font to use for the text" =
+	font[2025MP](choices) : "Font" : 0 : "The font to use for the text" =
 	[
 		0 : "TF2 Build"
 		1 : "TF2 Build (no outline/shadow)"
@@ -47,14 +47,14 @@
 		2 : "Face player, yaw only"
 	]
 
-	textspacingx[TF2ENG, GMOD](float) : "Text Spacing X" : 0 : "Spacing between each letter along the X axis. Negative values will invert the text."
-	textspacingy[TF2ENG, GMOD](float) : "Text Spacing Y" : 0 : "Spacing between each letter along the Y axis. Only used when newlines have been inserted into the text."
-	rainbow[TF2ENG, GMOD](boolean) : "Rainbow text" : 0 : "Enables rainbow text, overriding colors set elsewhere."
+	textspacingx[2025MP, GMOD](float) : "Text Spacing X" : 0 : "Spacing between each letter along the X axis. Negative values will invert the text."
+	textspacingy[2025MP, GMOD](float) : "Text Spacing Y" : 0 : "Spacing between each letter along the Y axis. Only used when newlines have been inserted into the text."
+	rainbow[2025MP, GMOD](boolean) : "Rainbow text" : 0 : "Enables rainbow text, overriding colors set elsewhere."
 
 	// Inputs
 	input SetEnabled[GMOD](boolean) : "Sets the visibility based on in the input parameter"
-	input Enable[!TF2ENG](void) : "Start displaying the message text."
-	input Disable[!TF2ENG](void) : "Stop displaying the message text."
+	input Enable[!2025MP](void) : "Start displaying the message text."
+	input Disable[!2025MP](void) : "Stop displaying the message text."
 	input SetMessage[since_CSGO](string) : "Set the message text."
 
 	// SDK 25 Inputs
@@ -63,25 +63,25 @@
 	input SetTextSpacingX[until_CSGO](float) : "Set the spacing between letters along the X axis. Negative values will invert the text."
 	input SetTextSpacingY[until_CSGO](float) : "Set the spacing between letters along the Y axis. Only used when newlines are inserted into the text."
 	input SetColor[until_CSGO](color255) : "Set the message color"
-	input SetFont[TF2ENG](integer) : "Set the message font. Accepts values 0-12."
+	input SetFont[2025MP](integer) : "Set the message font. Accepts values 0-12."
 	input SetOrientation[until_CSGO](integer) : "Sets the message orientation type."
 	input SetRainbow[until_CSGO](integer) : "Sets rainbow text to be enabled/disabled."
 
 	@resources [
-		material "editor/worldtext" [-TF2ENG]
+		material "editor/worldtext" [-2025MP]
 		// All are required since SetFont can swap at runtime.
-		material "editor/worldtext_1" [+TF2ENG]
-		material "editor/worldtext_2" [+TF2ENG]
-		material "editor/worldtext_3" [+TF2ENG]
-		material "editor/worldtext_4" [+TF2ENG]
-		material "editor/worldtext_5" [+TF2ENG]
-		material "editor/worldtext_6" [+TF2ENG]
-		material "editor/worldtext_7" [+TF2ENG]
-		material "editor/worldtext_8" [+TF2ENG]
-		material "editor/worldtext_9" [+TF2ENG]
-		material "editor/worldtext_10" [+TF2ENG]
-		material "editor/worldtext_11" [+TF2ENG]
-		material "editor/worldtext_12" [+TF2ENG]
-		material "editor/worldtext_13" [+TF2ENG]
+		material "editor/worldtext_1" [+2025MP]
+		material "editor/worldtext_2" [+2025MP]
+		material "editor/worldtext_3" [+2025MP]
+		material "editor/worldtext_4" [+2025MP]
+		material "editor/worldtext_5" [+2025MP]
+		material "editor/worldtext_6" [+2025MP]
+		material "editor/worldtext_7" [+2025MP]
+		material "editor/worldtext_8" [+2025MP]
+		material "editor/worldtext_9" [+2025MP]
+		material "editor/worldtext_10" [+2025MP]
+		material "editor/worldtext_11" [+2025MP]
+		material "editor/worldtext_12" [+2025MP]
+		material "editor/worldtext_13" [+2025MP]
 		]
 	]
