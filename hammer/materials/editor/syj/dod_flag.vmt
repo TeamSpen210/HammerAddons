@@ -1,7 +1,7 @@
 "Sprite"
 {
 	// based upon "sprites/hud/flag_neutral" from DoD:S, with logo multiplied on
-	$basetexture "editor/dod_flag"
+	$basetexture "editor/syj/dod_flag"
 	$no_fullbright 1
 	$alphatest 1
 	

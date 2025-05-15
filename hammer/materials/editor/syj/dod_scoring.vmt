@@ -1,9 +1,9 @@
 "Sprite"
 {
-	// based upon Twemoji U+1F4CD; font courtesy of Mapbase
+	// based upon ts2do's game_score iconsprite
 	$basetexture "editor/syj/dod_location"
 	$no_fullbright 1
-	$alphatest 1
+	$translucent 1
 	
 	$spriteorientation	vp_parallel
 	$spriteorigin	"[ 0.50 0.50 ]"
