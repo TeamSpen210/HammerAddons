@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityAnimating, EnableDisable) appliesto(DODS) studioprop() = dod_control_point : 
-	"A Control Point, representing a capturable objective; there can be up to 8 of these in a map.\n\nCan be the visual representation of the control point, or the model can be disabled and a prop_dynamic be used via this entity's outputs instead."
+	"A Control Point, representing a capturable objective; there can be up to 8 of these in a map.\nUsually used in conjunction with dod_capture_area or dod_bomb_target, but can also be controled with SetOwner.\nCan be the visual representation of the control point, or the model can be disabled and a prop_dynamic be used via this entity's outputs instead."
 [	
 	spawnflags(flags) =
 	[
@@ -8,6 +8,7 @@
 		4: "Give tick points for bombs remaining" : 0
 	]
 
+	// does not have the same length restriction as dod_location
 	point_printname(string) : "Location name" : "TODO: Set Name" : "The control point name displayed on the Hud when captured. Can be either a regular string or a reference to a localization string."
 	
 	point_timedpoints_axis(integer) : "Time based point value for Axis" : 0 : "Points given to Axis as they own this flag over time."
@@ -25,9 +26,13 @@
 	point_resetsound(sound) : "Sound made when point resets" : ""
 	
 	// first, we define some KVs that are used by Hammer++, but ignored by the game, to get around some editor hardcoding
-	model[-engine](studio) : "Editor model" : "models/mapmodels/flags.mdl" : "Model to display in the map editor (no effect in-game). This should match the model used by the default owner."
+	model[engine](string) : "Editor model" : "models/mapmodels/flags.mdl" // non-studio version to prevent postcompiler from autopacking
+	model(studio) : "Editor model" : "models/mapmodels/flags.mdl" : "Model to display in the map editor (no effect in-game). This should match the model used by the default owner."
 	body[-engine](choices) : "Editor model bodygroup" : 3 : "Bodygroup to use for the editor model (no effect in-game). This should match the bodygroup used by the default owner (descriptions given are for models/mapmodels/flags.mdl)." =
 	[
+		// `body` only shows up on modifed versions of Hammer, such as Hammer++. 
+		// While we could include separate editor models, doing so would bloat
+		// HammerAddon's install size for H++ users and non-DoD:S mappers
 		0 : "0 (Vanilla is German)"
 		1 : "1 (Vanilla is American)"
 		2 : "2 (Vanilla is British)"
@@ -65,7 +70,7 @@
 	input ShowModel(void) : "Show the control point model"
 	input SetOwner(integer) : "Set the current owner of this point (0=Neutral,2=Allies,3=Axis)"
 	
-	// TODO - probably just an int?
+	// TODO - doesn't seem to be a limit, even though the original FGD uses `choices`
 	point_num_bombs[engine](integer) : "Number of Bombs required to destroy" : 0
 	point_num_bombs(choices) : "Number of Bombs required to destroy" : 0 : "The number of bomb required to destroy the point, if used as a bomb objective. Ignore if used as a flag." =
 	[
@@ -75,7 +80,8 @@
 		3 : "3"
 	]
 	
-	// ===== CBaseAnimating KVs and I/O that aren't overridden by dod_control_point and aren't automatically added by BaseEntityAnimating =====
+	// CBaseAnimating KVs and I/O that aren't overridden by dod_control_point
+	// and aren't automatically added by BaseEntityAnimating
 	
 	skin(integer) : "Skin" : : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default.\n\nUse the `skin` input with the `OnAxisCap`, `OnAlliesCap`, and `OnCapReset` outputs if you need to use different skin indices per faction."
 	sequence(integer) : "Animation Sequence" : : "Default animation sequence index for the model to be playing after spawning. (Default 0)"

@@ -5,5 +5,5 @@
 	point_give_amount(integer) : "Points to give each time" : 1
 	point_give_max_times(integer) : "Max number of times to give points" : 10
 	
-	input GiveTickPoints(integer) : "Give tick points to the selected team"
+	input GiveTickPoints(integer) : "Give tick points to the selected team (2=Allies,3=Axis)"
 ]
