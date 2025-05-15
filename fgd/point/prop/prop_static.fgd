@@ -107,7 +107,6 @@
 		3 : "Medium"
 		4 : "High"
 	]
-
 	maxgpulevel[+complete, since_L4D2](choices) : "Maximum GPU Level" : 0 =
 	[
 		0 : "Default (Very Low)"
@@ -137,10 +136,41 @@
 
 	linedivider_lmap[TF2, MESA, KZ, !engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
-	generatelightmaps[PROPLM](boolean) : "Generate (and use) lightmaps for this static prop" : 0
-	lightmapresolutionx[PROPLM](integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
-	lightmapresolutiony[PROPLM](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
-	
+	generatelightmaps[PROPLM](boolean) : "Generate lightmaps" : 0 : "Generate (and use) lightmaps for this static prop. The model must have only one material, only one skin, and no overlapping and/or tiling UVs, or else the lighting will be inaccurate."
+	lightmapresolutionx[engine](integer) : "Lightmap Resolution X" : 32
+	lightmapresolutionx[PROPLM](choices) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is enabled)" =
+	[
+		1    : "1"
+		2    : "2" 
+		4    : "4"
+		8    : "8"
+		16   : "16"
+		32   : "32"
+		64   : "64"
+		128  : "128"
+		256  : "256"
+		512  : "512"
+		1024 : "1024"
+		2048 : "2048"
+		4096 : "4096"
+	]
+	lightmapresolutiony[engine](integer) : "Lightmap Resolution Y" : 32
+	lightmapresolutiony[PROPLM](choices) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is enabled)" =
+	[
+		1    : "1"
+		2    : "2" 
+		4    : "4"
+		8    : "8"
+		16   : "16"
+		32   : "32"
+		64   : "64"
+		128  : "128"
+		256  : "256"
+		512  : "512"
+		1024 : "1024"
+		2048 : "2048"
+		4096 : "4096"
+	]
 
 	linedivider_fade[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
