@@ -1,6 +1,6 @@
 "Sprite"
 {
-	// based upon ts2do's game_score iconsprite
+	// based upon ts2do's game_score iconsprite, with font from mapbase
 	$basetexture "editor/syj/dod_location"
 	$no_fullbright 1
 	$translucent 1
