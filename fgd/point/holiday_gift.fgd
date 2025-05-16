@@ -1,3 +1,3 @@
-@PointClass base(BaseEntityAnimating) appliesto(CSS) size(-32 -32 -32, 32 32 32) studio("models/items/cs_gift.mdl") = holiday_gift : "A festive present.\n\nDisappears after 30 seconds; spawn with point_template or vscript." []
-@PointClass base(BaseEntityAnimating) appliesto(DODS) size(-32 -32 -32, 32 32 32) studio("models/items/dod_gift.mdl") = holiday_gift : "A festive present.\n\nDisappears after 30 seconds; spawn with point_template or vscript." []
-@PointClass base(BaseEntityAnimating) appliesto(L4D2) size(-32 -32 -32, 32 32 32) studio("models/items/l4d_gift.mdl") = holiday_gift : "A festive present.\n\nDisappears after 30 seconds; spawn with point_template or vscript." []
+@PointClass base(Item) appliesto(CSS) size(-32 -32 -32, 32 32 32) studio("models/items/cs_gift.mdl") = holiday_gift : "A festive present.\n\nDisappears after 30 seconds; spawn with point_template or vscript." []
+@PointClass base(Item) appliesto(DODS) size(-32 -32 -32, 32 32 32) studio("models/items/dod_gift.mdl") = holiday_gift : "A festive present.\n\nDisappears after 30 seconds; spawn with point_template or vscript." []
+@PointClass base(Item) appliesto(L4D2) size(-32 -32 -32, 32 32 32) studio("models/items/l4d_gift.mdl") = holiday_gift : "A festive present.\n\nDisappears after 30 seconds; spawn with point_template or vscript." []
