@@ -1,2 +1,9 @@
 @PointClass base(BaseEntityPoint,PlayerClass,EnableDisable) studio("models/editor/german_rifleman.mdl") appliesto(DODS) = info_player_axis :
-	"This entity marks the start point for Axis players.\nPlace 16 units above the ground to prevent spawn from being invalid." []
+	"This entity marks the start point for Axis players.\nPlace 16 units above the ground to prevent spawn from being invalid."
+[
+	@resources
+	[
+		// technically spawned via `player`
+		entity dod_ammo_box
+	]
+]
