@@ -1,4 +1,4 @@
-@SolidClass base(BaseEntityBrush) appliesto(DODS) = func_team_wall : "Team Blocker Wall.\n\nUnlike func_teamblocker, it is able to be loaded via an ENT file, cannot have its team value changed without AddOutput, and is preserved between rounds."
+@SolidClass base(BaseEntityBrush, Angles) appliesto(DODS) = func_team_wall : "Team Blocker Wall.\n\nUnlike func_teamblocker, it is able to be loaded via an ENT file, cannot have its team value changed without AddOutput, and is preserved between rounds."
 [
 	blockteam[engine](integer) : "Team to block" : 0
 	blockteam(choices) : "Team to block" : 0 =
@@ -13,6 +13,8 @@
 		"" : "No"
 		"1" : "Yes"
 	]
+	// TODO - might make sense to have a @PointClass version of this entity (e.g. info_team_clip) that gets automatically renamed by postcompiler; this would save bmodel slots.
 	mins(vector) : "mins" : : "The uppermost and northernmost point of the bounding box; used instead of bmodel if present."
 	maxs(vector) : "maxs" : : "The bottommost and southernmost point of the bounding box; used instead of bmodel if present."
+	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "If mins and maxs keyvalues are used, this will rotate the resultant collision."
 ]
