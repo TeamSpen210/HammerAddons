@@ -1,0 +1,18 @@
+@PointClass base(weapon_dod_base)
+	appliesto(+engine,DODS)
+	= weapon_basedodgrenade : "Base C++ class for all grenade weapons in Day of Defeat: Source."
+[
+	@resources
+    [
+		entity grenade
+
+		snd "Weapon_Grenade.Throw"
+
+		mat "sprites/minimap_icons/minimap_riflegren_ger"
+		mat "sprites/minimap_icons/minimap_riflegren_us"
+		mat "sprites/minimap_icons/grenade_hltv"
+		mat "sprites/minimap_icons/stick_hltv"
+		mat "sprites/minimap_icons/minimap_smoke_us"
+		mat "sprites/minimap_icons/minimap_smoke_ger"
+    ]
+]

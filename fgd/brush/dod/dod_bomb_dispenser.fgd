@@ -11,5 +11,6 @@
 	@resources
 	[
 		entity weapon_basebomb
+		entity dod_bomb_dispenser_icon
 	]
 ]

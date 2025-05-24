@@ -24,11 +24,7 @@
 
 	@resources
 	[
-		// techncially handled by dod_gamerules, but that entity isn't in here yet (since it's handled completely via code)
-		snd "Game.USWin"
-		snd "Game.GermanWin"
-		
-		//entity dod_round_timer
-		//entity dod_gamerules
+		entity dod_round_timer
+		entity dod_gamerules
 	]
 ]

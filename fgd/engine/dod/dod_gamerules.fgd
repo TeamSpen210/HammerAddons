@@ -1,0 +1,15 @@
+@PointClass base(BaseEntity)
+    appliesto(+engine,DODS) = dod_gamerules : "Proxy entity for networking game rules. No mapper-setable values."
+[
+    @resources
+    [
+        // round win music
+        snd "Game.USWin"
+		snd "Game.GermanWin"
+
+        // these ents have nothing of note for the postcompiler to care about
+        //entity dod_team_manager
+        //entity dod_team_allies
+        //entity dod_team_axis
+    ]
+]
