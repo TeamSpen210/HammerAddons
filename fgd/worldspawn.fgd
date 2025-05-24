@@ -29,6 +29,7 @@
 		"This would normally be set to ''Yes'' outside of Mapbase."
 
 	startdark(boolean) : "Level Fade In" : 0 : "Fade from black after starting the level or loading a save. If you need something more configurable, use a logic_auto and env_fade instead."
+	gametitle[HLS](boolean) : "Display Game Title" : 0 : "Display the game logo onscreen when this level starts."
 	gametitle[+complete](boolean) : "Display Game Title" : 0 : "Display the game logo onscreen when this level starts. Crashes unless the HL1 logo sprite is ported."
 
 	newunit[engine](boolean) : "New Level Unit" : 0
@@ -67,7 +68,26 @@
 		1: "Check Point"
 		]
 
-	musicpostfix[L4D2](string) : "Music Post-Fix String" : "Waterfront"
+	musicpostfix[engine](string) : Music Post-Fix String" : "Waterfront"
+	musicpostfix[L4D2](choices) : "Music Post-Fix String" : "Waterfront" : "Provided choices are for official soundscripts; custom values can be used for custom soundscripts."=
+	[
+		"Waterfront" : "Waterfront (The Parish, default)"
+		"Mall" : "Mall (Dead Center)"
+		"Fairgrounds" : "Fairgrounds (Dark Carnival)"
+		"Plankcountry" : "Plankcountry (Swamp Fever)"
+		"Milltown" : "Milltown (Hard Rain)"
+		"BigEasy" : "BigEasy (The Parish)"
+		"DeadLight" : "DeadLight (The Passing)"
+		"ThePassing" : "ThePassing (The Passing Finale)"
+		"Sacrifice" : "Sacrifice (The Sacrifice)"
+		"NoMercy" : "NoMercy (No Mercy)"
+		"Garage" : "Garage (Crash Course)"
+		"SmallTown" : "SmallTown (Death Toll)"
+		"Airport" : "Airport (Dead Air)"
+		"Farm" : "Farm (Blood Harvest)"
+		"ColdStream" : "ColdStream (Cold Stream)"
+		"Lighthouse" : "Lighthouse (The Last Stand)"
+	]
 
 	maxoccludeearea(float) : "Max occludee area" : 0 : "Prevents occlusion testing for entities that take up more than X% of the screen."
 	minoccluderarea(float) : "Min occluder area" : 0 : "Prevents occluders from being used if they take up less than X% of the screen."
@@ -107,8 +127,10 @@
 		//4 : "Python (Unsupported)"
 		]
 
-	coldworld[DODS,+complete](boolean) : "World is cold" : 0 : "Emit gaseous condensation particles from players' mouths (or rather, their heads)."
-	WaveHeight[+complete](float) : "Wave Height" : : "Leftover from HL1, where it controlled the waves of water and other liquids."
+	// Vscript idea from VDC
+	coldworld[+complete](boolean) : 0 : "Unused outside of Day of Defeat: Source. Can be used by VScript mods to mimic DoD:S's behavior, where it causes players to emit breath particles."
+	coldworld[DODS](boolean) : "World is cold" : 0 : "Emit breath particles from players' mouths (or rather, their heads)."
+	WaveHeight[+complete](float) : "Wave Height" : : "Unused. Leftover from HL1, where it controlled the waves of water and other liquids."
 	
 	fixtriggerpushbug[engine](integer) : "Fix contact trigger_push bug" : 1 : "This fixes a bug with very thin contact mode trigger_push pushing downwards. This should be set to Yes unless this is an old map which worked around the bug and needs it in order to work correctly."
 	fixtriggerpushbug[KZ](choices) : "Fix contact trigger_push bug" : 1 : "This fixes a bug with very thin contact mode trigger_push pushing downwards. This should be set to Yes unless this is an old map which worked around the bug and needs it in order to work correctly." =
