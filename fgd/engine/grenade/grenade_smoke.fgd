@@ -1,0 +1,11 @@
+@PointClass base(grenade)
+	appliesto(+engine, DODS)
+= grenade_smoke : "Base class for grenade_smoke_us and grenade_smoke_ger."
+[
+	@resources
+	[
+		snd "SmokeGrenade.Bounce"
+		particle "smokegrenade"
+		particle "smokegrenade_jet"
+	]
+]
