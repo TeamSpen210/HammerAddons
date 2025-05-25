@@ -68,8 +68,8 @@
 		1: "Check Point"
 		]
 
-	musicpostfix[engine](string) : Music Post-Fix String" : "Waterfront"
-	musicpostfix[L4D2](choices) : "Music Post-Fix String" : "Waterfront" : "Provided choices are for official soundscripts; custom values can be used for custom soundscripts."=
+	musicpostfix[engine](string) : "Music Post-Fix String" : "Waterfront"
+	musicpostfix[L4D2](choices) : "Music Post-Fix String" : "Waterfront" : "Provided choices are for official soundscripts; custom values can be used for custom soundscripts." =
 	[
 		"Waterfront" : "Waterfront (The Parish, default)"
 		"Mall" : "Mall (Dead Center)"
