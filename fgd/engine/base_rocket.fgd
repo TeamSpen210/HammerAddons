@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityAnimating)
 	appliesto(+engine,DODS)
-= grenade: "Base class for bazooka and panzerschreck projectiles."
+= base_rocket : "Base class for bazooka and panzerschreck projectiles."
 [
 	@resources
 	[
