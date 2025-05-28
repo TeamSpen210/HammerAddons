@@ -3,7 +3,24 @@
 [
 	@resources
 	[
-		// technically spawned via `player`
+		// technically handled via `player`
 		entity dod_ammo_box
+
+		mdl "models/player/american_rifleman.mdl"
+		mdl "models/player/american_assault.mdl"
+		mdl "models/player/american_support.mdl"
+		mdl "models/player/american_sniper.mdl"	
+		mdl "models/player/american_mg.mdl"
+		mdl "models/player/american_rocket.mdl"
+
+		snd "Player.FlashlightOn"
+		snd "Player.FlashlightOff"
+
+		snd "Player.FreezeCam"
+		snd "Camera.SnapShot"
+		snd "Achievement.Earned"
+		snd "Game.Revenge"
+		snd "Game.Domination"
+		snd "Game.Nemesis"
 	]
 ]
