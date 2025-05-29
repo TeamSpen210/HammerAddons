@@ -1147,6 +1147,13 @@ def action_export(
                             else:
                                 value.type = ValueTypes.INT
                             value.val_list = None
+                    elif value.type is ValueTypes.SPAWNFLAGS and isinstance(value, KVDef):
+                        # Strip tags. Just keep duplicates, the only difference possible is name.
+                        value.val_list = [
+                            (mask, name, default, TAGS_EMPTY)
+                            for (mask, name, default, tags) in value.flags_list
+                            if '-ENGINE' not in tags and '!ENGINE' not in tags
+                        ]
 
                     # Check if this is a shared property among all ents,
                     # and if so skip exporting.
@@ -1167,6 +1174,9 @@ def action_export(
                                     f'Base Entity {attr_name[:-1]} '
                                     f'"{key}"  is a choices type!'
                                 )
+                            elif key == 'spawnflags':
+                                # Don't use the blank one in CBaseEntity
+                                pass
                             elif base_value.type is value.type:
                                 del category[key]
                                 continue
@@ -1176,7 +1186,7 @@ def action_export(
                             elif base_value.type is ValueTypes.FLOAT and value.type is ValueTypes.INT:
                                 # Just constraining it down to a whole number.
                                 pass
-                            elif attr_name != 'keyvalues' and base_value.type is ValueTypes.VOID:
+                            elif base_value.type is ValueTypes.VOID:
                                 # Base ignores parameters, but child has some - that's fine.
                                 pass
                             else:
