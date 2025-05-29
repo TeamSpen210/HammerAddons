@@ -405,7 +405,7 @@ def gen_logic_vscript(
         else:
             code.write('\tfizz_eager = true\n')
 
-        def write_hurts(fizz: Entity, hurt: Entity, kind: str) -> None:
+        def write_hurts(fizz: Entity | None, hurt: Entity | None, kind: str) -> None:
             """Write the hurt/fizzler entities into VScript."""
             name_fizz = fizz['targetname'] if fizz is not None else ''
             name_hurt = hurt['targetname'] if hurt is not None else ''

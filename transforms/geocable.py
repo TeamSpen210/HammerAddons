@@ -837,7 +837,7 @@ def interpolate_all(nodes: set[Node]) -> None:
         for a, b in itertools.pairwise(points):
             a.next = b
             b.prev = a
-        points[0].prev = node1 # if segment count is low (like 2) for bezier curve, this will cause error. TODO: Fix this?
+        points[0].prev = node1  # if segment count is low (like 2) for bezier curve, this will cause error. TODO: Fix this?
         points[-1].next = node2
         segments.append(points)
 
@@ -847,8 +847,11 @@ def interpolate_all(nodes: set[Node]) -> None:
 
     for points in segments:
         nodes.update(points)
-        points[0].prev.next = points[0]
-        points[-1].next.prev = points[-1]
+        first, last = points[0], points[-1]
+        assert first.prev is not None, points
+        first.prev.next = first
+        assert last.next is not None, points
+        last.next.prev = last
 
     # Finally, split nodes with too much of an angle between them - we can't smooth.
     # Don't bother if they're real small angles though, that's fine.
@@ -1283,6 +1286,7 @@ async def compile_rope(
             local_nodes.add(attrs.evolve(node, pos=node.pos - center))
             if node.config.coll_side_count >= 3:
                 has_coll = True
+        assert node is not None, 'No nodes??'
 
         # All the configs should be the same, so just use the last node in the set.
         conf = node.config
