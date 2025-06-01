@@ -1,7 +1,7 @@
 @PointClass base(base_rocket)
 	appliesto(+engine, DODS)
 	studioprop("models/weapons/w_panzerschreck_rocket.mdl")
-= rocket_bazooka : "Axis panzerschreck projectile."
+= rocket_pschreck : "Axis panzerschreck projectile."
 [
 	@resources
 	[
