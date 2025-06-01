@@ -1,4 +1,4 @@
-@BaseClass base(Item) size(-32 -32 -32, 32 32 32) appliesto(CSS,DODS,L4D2) = BaseHolidayGift
+@BaseClass base(Item) size(-32 -32 -32, 32 32 32) appliesto(CSS,DODS,L4D2) = _BaseHolidayGift
 [
     @resources
     [
