@@ -3,7 +3,7 @@
 [
     @resources
     [
-        // round win music
+		// round win music
         snd "Game.USWin"
 		snd "Game.GermanWin"
 
@@ -11,5 +11,19 @@
         //entity dod_team_manager
         //entity dod_team_allies
         //entity dod_team_axis
+
+		// techncially precached outside of any class
+		mat "sprites/white.vmt"
+		mat "sprites/physbeam.vmt"
+
+		// technically precached on client
+		mat "effects/stun"
+		mat "effects/blood_gore"
+		mat "effects/blood_drop"
+		mat "effects/blood_puff"
+		mat "sprites/effects/muzzleflash1"
+		mat "sprites/effects/muzzleflash2"
+		mat "effects/fainttracer"
+		mat "effects/spark"
     ]
 ]

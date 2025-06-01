@@ -4,5 +4,7 @@
 	[
 		weapon_script "scripts/weapon_mg42.txt"
 		entity weapon_dod_base_gun
+		mat "sprites/effects/bazookapuff"
+		snd "Weapon_Mg42.OverHeat"
 	]
 ]

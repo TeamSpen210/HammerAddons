@@ -22,5 +22,10 @@
 		snd "Game.Revenge"
 		snd "Game.Domination"
 		snd "Game.Nemesis"
+
+		mat "sprites/glow01.vmt"
+
+		// techically precached outside of any class
+		mdl "models/helmets/helmet_american.mdl"
 	]
 ]
