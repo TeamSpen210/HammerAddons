@@ -1,1 +1,8 @@
-@PointClass base(Weapon) appliesto(DODS) studioprop("models/weapons/w_bar.mdl") = weapon_bar : "Allies Support's BAR.\n\nDespawns after a few seconds; spawn with point_template or VScript." []
+@PointClass base(Weapon) appliesto(DODS) studioprop("models/weapons/w_bar.mdl") = weapon_bar : "Allies Support's BAR.\n\nDespawns after a few seconds; spawn with point_template or VScript."
+[
+	@resources
+	[
+		weapon_script "scripts/weapon_bar.txt"
+		entity weapon_dod_base_gun
+	]
+]

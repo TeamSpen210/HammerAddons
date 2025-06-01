@@ -1,1 +1,8 @@
-@PointClass base(Weapon) appliesto(DODS) studioprop("models/weapons/w_p38.mdl") = weapon_p38 : "Axis Walther P38 Sidearm.\n\nDespawns after a few seconds; spawn with point_template or VScript." []
+@PointClass base(Weapon) appliesto(DODS) studioprop("models/weapons/w_p38.mdl") = weapon_p38 : "Axis Walther P38 Sidearm.\n\nDespawns after a few seconds; spawn with point_template or VScript."
+[
+	@resources
+	[
+		weapon_script "scripts/weapon_p38.txt"
+		entity weapon_dod_base_gun
+	]
+]

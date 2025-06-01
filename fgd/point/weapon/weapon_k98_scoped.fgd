@@ -1,1 +1,8 @@
-@PointClass base(Weapon) appliesto(DODS) studioprop("models/weapons/w_k98s.mdl") = weapon_k98_scoped : "Axis Sniper's K98 Sniper.\n\nDespawns after a few seconds; spawn with point_template or VScript." []
+@PointClass base(Weapon) appliesto(DODS) studioprop("models/weapons/w_k98s.mdl") = weapon_k98_scoped : "Axis Sniper's K98 Sniper.\n\nDespawns after a few seconds; spawn with point_template or VScript."
+[
+	@resources
+	[
+		weapon_script "scripts/weapon_k98_scoped.txt"
+		entity weapon_dod_base_gun
+	]
+]

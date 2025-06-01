@@ -1,1 +1,9 @@
-@PointClass base(Weapon) appliesto(DODS) studioprop("models/weapons/w_frag.mdl") = weapon_frag_us : "Allies Frag Grenade.\n\nDespawns after a few seconds; spawn with point_template or VScript." []
+@PointClass base(Weapon) appliesto(DODS) studioprop("models/weapons/w_frag.mdl") = weapon_frag_us : "Allies Frag Grenade.\n\nDespawns after a few seconds; spawn with point_template or VScript."
+[
+	@resources
+	[
+		weapon_script "scripts/weapon_frag_us.txt"
+		entity weapon_basedodgrenade
+		entity weapon_frag_us_live
+	]
+]
