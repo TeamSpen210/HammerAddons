@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(since_ASW, TF2, PEE15, GMOD) // Mapbase also has it technically, but it doesn't work - should be +complete but we can't make that work right currently
+	appliesto(since_ASW, 2025MP, PEE15, GMOD) // Mapbase also has it technically, but it doesn't work - should be +complete but we can't make that work right currently
 	iconsprite("editor/skybox_swapper") = skybox_swapper: "An entity that precaches skybox materials and swaps them on trigger."
 	[
 	// TODO: perhaps have lists of games' built in skybox textures here and in worldspawn?

@@ -1,7 +1,7 @@
 
 // TF2 hammer has no worldtext() helper, so replace it with a model
 // FIXME: this needs a custom model, vgui_arrows is oriented the wrong way
-@BaseClass studio("models/editor/axis_helper_thick.mdl") appliesto(TF2) = _point_worldtext_tf2
+@BaseClass studio("models/editor/axis_helper_thick.mdl") appliesto(2025MP) = _point_worldtext_tf2
 [
 ]
 
