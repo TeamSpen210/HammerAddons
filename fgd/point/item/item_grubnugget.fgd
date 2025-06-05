@@ -1,8 +1,7 @@
-@BaseClass appliesto(-MBase) studioprop("models/grub_nugget_medium.mdl") = _item_grubnugget_fixed_model []
-@BaseClass appliesto(+MBase) studioprop()                                = _item_grubnugget_variable_model []
-
-@PointClass base(Item, _item_grubnugget_fixed_model, _item_grubnugget_variable_model) 
-	appliesto(EP2) 
+@PointClass base(Item)
+	appliesto(EP2)
+	studioprop[-MBase]("models/grub_nugget_medium.mdl")
+	studioprop[+MBase]()                               
 = item_grubnugget: "Small nuggets dropped by Antlion Grubs. " +
 		"When manually spawned, the size value is not setup so they appear small, but give medium health."
 	[

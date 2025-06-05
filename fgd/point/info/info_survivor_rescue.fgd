@@ -1,5 +1,7 @@
-@PointClass base(BaseEntityPoint, PlayerClass, L4DSurvivorStudio) 
+@PointClass base(BaseEntityPoint, PlayerClass) 
 	appliesto(L4D, L4D2)
+	studio[L4D]("models/survivors/survivor_biker.mdl")
+	studio[L4D2]("models/survivors/survivor_coach.mdl")
 = info_survivor_rescue: "Survivor rescue point"
 	[
 	rescueeyepos(vecline) : "Eye position of survivors waiting for rescue"

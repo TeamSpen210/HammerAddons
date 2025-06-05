@@ -1,29 +1,21 @@
-// Totally different in Mesa and EZ2.
-
-@BaseClass base(BaseNPCAssault) appliesto(Mesa)
-	studio("models/xenians/bullsquid.mdl") 
-= _npc_bullsquid_mesa []
-
-
-@BaseClass base(EZ2PredatorNPC) appliesto(EZ2)
-	studio("models/bullsquid.mdl") 
-	line(255 128 128, targtname, Mate)
-= _npc_bullsquid_ez2 [
-	adultmodel(studio) : "Override Adult Model"
-	babymodel(studio) : "Override Baby Model"
-	eggmodel(studio) : "Override Egg Model"
-
-	IsBaby(boolean) : "Babysquid" : 0 : "Is this a baby squid?" 
-	Mate(target_destination) : "Mate" : "" : "Name of the this squid's mate."
-]
-
+// Different bases in EZ2 versus Mesa.
+@BaseClass base(BaseNPCAssault) appliesto(Mesa) = _npc_bullsquid_mesa []
+@BaseClass base(EZ2PredatorNPC) appliesto(EZ2) = _npc_bullsquid_ez2 []
 
 @NpcClass 
 	appliesto(Mesa, EZ2) 
 	base(_npc_bullsquid_mesa, _npc_bullsquid_ez2)
-	autovis(Entities, NPCs, Xen, Bullsquid)
+	studio[Mesa]("models/xenians/bullsquid.mdl") 
+	studio[EZ2]("models/bullsquid.mdl") 
+	line[EZ2](255 128 128, targtname, Mate)
 = npc_bullsquid: "Bullsquid"
 	[
+	adultmodel[EZ2](studio) : "Override Adult Model"
+	babymodel[EZ2](studio) : "Override Baby Model"
+	eggmodel[EZ2](studio) : "Override Egg Model"
+
+	IsBaby[EZ2](boolean) : "Babysquid" : 0 : "Is this a baby squid?" 
+	Mate[EZ2](target_destination) : "Mate" : "" : "Name of the this squid's mate."
 	@resources
 		[
 		// EZ2/HLS variant, not sure about Black Mesa version.
@@ -56,11 +48,11 @@
 
 		// The bullsquid might spawn an npc_egg, which then spawns bullsquid...
 		// Manually include that, to avoid infinite recursion.
-		model "models/eggs/bullsquid_egg.mdl"
-		sound "npc_bullsquid.egg_alert"
-		sound "npc_bullsquid.egg_hatch"
-		particle "bullsquid_egg_hatch"
+		model "models/eggs/bullsquid_egg.mdl" [EZ2]
+		sound "npc_bullsquid.egg_alert" [EZ2]
+		sound "npc_bullsquid.egg_hatch" [EZ2]
+		particle "bullsquid_egg_hatch" [EZ2]
 
-		func npc_bullsquid // Depending on EZ variant, different models are used.
+		func npc_bullsquid [EZ2] // Depending on EZ variant, different models are used.
 		]
 	]
