@@ -613,17 +613,16 @@ def get_appliesto(ent: EntityDef) -> list[str]:
     found: HelperExtAppliesTo | None = None
     count = 0
     applies_to: set[str] = set()
-    for i, helper in enumerate(ent.helpers):
-        if isinstance(helper, HelperExtAppliesTo):
-            if found is None:
-                found = helper
-            count += 1
-            applies_to.update(helper.tags)
+    for helper in ent.get_helpers(HelperExtAppliesTo):
+        if found is None:
+            found = helper
+        count += 1
+        applies_to.update(helper.applies)
 
     if found is None:
         found = HelperExtAppliesTo([])
         ent.helpers.insert(0, found)
-    found.tags = arg_list = [tag.upper() for tag in applies_to]
+    found.applies = arg_list = [tag.upper() for tag in applies_to]
     arg_list.sort()
     ent.helpers[:] = [
         helper for helper in ent.helpers
