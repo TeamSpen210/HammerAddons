@@ -1069,6 +1069,8 @@ def action_export(
                 helper for helper in ent.helpers
                 if not helper.IS_EXTENSION
             ]
+            for helper in ent.helpers:
+                helper.tags = TAGS_EMPTY
             # Force everything to inherit from CBaseEntity, since
             # we're then removing any KVs that are present on that.
             if ent.is_alias:
@@ -1259,7 +1261,7 @@ def action_export(
         for helper in reversed(ent.helpers):
             if helper in rev_helpers:  # No duplicates here.
                 continue
-            if helper.IS_EXTENSION:
+            if helper.IS_EXTENSION or not match_tags(tags, helper.tags):
                 continue
 
             # For each, it may make earlier definitions obsolete.
@@ -1272,7 +1274,7 @@ def action_export(
             # No duplicates or overridden helpers.
             if helper in rev_helpers or helper.TYPE in overrides:
                 continue
-            if helper.IS_EXTENSION:
+            if helper.IS_EXTENSION or not match_tags(tags, helper.tags):
                 continue
             overrides.update(helper.overrides())
             rev_helpers.append(helper)

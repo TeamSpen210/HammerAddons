@@ -1,12 +1,9 @@
-// Modified models with no animations, so it doesn't loop
-// constantly.
-@BaseClass appliesto(-Mesa, -MBase) studioprop("models/editor/item_health_charger_hl2.mdl") = _item_healthcharger_hl2 []
-@BaseClass appliesto(+Mesa) studioprop("models/editor/item_health_charger_mesa.mdl") = _item_healthcharger_mesa []
-@BaseClass appliesto(+MBase) studioprop() = _item_healthcharger_settable []
-
 @PointClass base(BaseEntityAnimating) 
 	appliesto(EP1, EP2, HL2, P1, Mesa) 
-	base(_item_healthcharger_mesa, _item_healthcharger_hl2, _item_healthcharger_settable)
+	// Modified models with no animations, so it doesn't loop constantly.
+	studioprop[-Mesa, -MBase]("models/editor/item_health_charger_hl2.mdl")
+	studioprop[+Mesa]("models/editor/item_health_charger_mesa.mdl")
+	studioprop[+MBase]() // Model is customisable.
 = item_healthcharger: "Health Charger"
 	[
 	// Unfortunately can't use the custom model then...

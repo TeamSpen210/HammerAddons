@@ -1,4 +1,4 @@
-@BaseClass base(BaseNPC, EZ2Variant) = EZ2PredatorNPC
+@BaseClass appliesto(EZ2) base(BaseNPC, EZ2Variant) = EZ2PredatorNPC
 	[
 	SpawningEnabled(boolean) : "Spawning Enabled" : 1 : "Can this predator NPC produce offspring in the appropriate condtions?"
 	IsBoss(boolean) : "Boss Enemy" : 0 : "This predator NPC is a boss monster rather than a normal monster." 
