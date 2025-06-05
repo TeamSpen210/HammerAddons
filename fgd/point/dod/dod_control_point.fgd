@@ -9,7 +9,7 @@
 	]
 
 	// does not have the same length restriction as dod_location
-	point_printname(string) : "Location name" : "TODO: Set Name" : "The control point name displayed on the Hud when captured. Can be either a regular string or a reference to a localization string."
+	point_printname(string) report : "Location name" : "TODO: Set Name" : "The control point name displayed on the HUD when captured. Can be either a regular string or a reference to a localization string."
 	
 	point_timedpoints_axis(integer) : "Time based point value for Axis" : 0 : "Points given to Axis as they own this flag over time."
 	point_timedpoints_allies(integer) : "Time based point value for Allies" : 0 : "Points given to Allies as they own this flag over time."
