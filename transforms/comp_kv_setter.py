@@ -5,7 +5,7 @@ entity's options can't be set to a fixup variable.
 """
 import re
 
-from srctools import Angle, conv_int, conv_bool, Vec, FGD
+from srctools import Angle, conv_int, conv_bool, Vec
 from srctools.fgd import EntityDef
 from srctools.logger import get_logger
 

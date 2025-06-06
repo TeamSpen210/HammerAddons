@@ -153,12 +153,29 @@ async def vactube_transform(ctx: Context) -> None:
             node.has_input = True
         else:
             inputs_by_norm[node.input_norm().freeze()].append((node.vec_point(0.0), node))
-        #     ctx.vmf.create_ent('prop_dynamic', model='models/editor/cone_helper.mdl', rendercolor='32 32 255', origin=node.vec_point(0), angles=node.input_norm().to_angle())
+        #     ctx.vmf.create_ent(
+        #         'prop_dynamic',
+        #         model='models/editor/cone_helper.mdl',
+        #         rendercolor='32 32 255',
+        #         origin=node.vec_point(0),
+        #         angles=node.input_norm().to_angle(),
+        #     )
         # for out_type in node.out_types:
-        #     ctx.vmf.create_ent('prop_dynamic', model='models/editor/cone_helper.mdl', rendercolor='255 32 32', origin=node.vec_point(1.0, out_type), angles=node.output_norm(out_type).to_angle())
+        #     ctx.vmf.create_ent(
+        #         'prop_dynamic',
+        #         model='models/editor/cone_helper.mdl',
+        #         rendercolor='255 32 32',
+        #         origin=node.vec_point(1.0, out_type),
+        #         angles=node.output_norm(out_type).to_angle(),
+        #     )
         #     count = int(node.path_len(out_type) / 8)
         #     for i in range(1, count):
-        #         ctx.vmf.create_ent('prop_dynamic', model='models/editor/axis_helper.mdl', origin=node.vec_point(i/count, out_type), angles='0 0 0')
+        #         ctx.vmf.create_ent(
+        #             'prop_dynamic',
+        #             model='models/editor/axis_helper.mdl',
+        #             origin=node.vec_point(i/count, out_type),
+        #             angles='0 0 0',
+        #         )
 
     # with open(str(ctx.bsp.filename)[:-4] + '_vac.vmf', 'w') as f:
     #     ctx.vmf.export(f, inc_version=False)

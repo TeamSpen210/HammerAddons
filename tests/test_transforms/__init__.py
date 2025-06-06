@@ -5,7 +5,7 @@ import sys
 
 import pytest
 
-from hammeraddons.bsp_transform import Context, TransFunc, TRANSFORMS
+from hammeraddons.bsp_transform import Context, TRANSFORMS
 from srctools.bsp import BSP
 from srctools.filesys import FileSystemChain
 from srctools.game import Game

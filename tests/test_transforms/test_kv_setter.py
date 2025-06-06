@@ -1,8 +1,8 @@
 """Test the comp_kv_setter."""
 import pytest
 
-from hammeraddons.bsp_transform import Context
-from . import blank_ctx, get_transform_func, TransFunc
+from hammeraddons.bsp_transform import Context, TransFunc
+from . import get_transform_func
 
 
 @pytest.fixture(scope='module')

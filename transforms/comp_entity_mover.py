@@ -10,7 +10,7 @@ LOGGER = get_logger(__name__)
 
 
 @trans('comp_entity_mover')
-def comp_entity_mover(ctx: Context):
+def comp_entity_mover(ctx: Context) -> None:
     """Move an entity to another location."""
     for mover in ctx.vmf.by_class['comp_entity_mover']:
         mover.remove()

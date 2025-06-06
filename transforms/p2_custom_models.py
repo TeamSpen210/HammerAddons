@@ -38,6 +38,7 @@ SUPPORTED_ENTS = [
     # prop_contraption_cube_button (Edu)
 ]
 
+
 @trans('Portal 2 Custom Models')
 def p2_custom_models(ctx: Context) -> None:
     """Add keyvalues to Portal 2 test element entities to automatically handle custom models."""
@@ -59,4 +60,9 @@ def p2_custom_models(ctx: Context) -> None:
                 orig_cube_type = ent['CubeType']
                 ent['CubeType'] = '6'
                 # Revert to the original type on spawn
-                ctx.add_code(ent, 'function OnPostSpawn() { EntFireByHandle(self, "AddOutput", "CubeType ' + orig_cube_type + '", 0, self, self) }')
+                ctx.add_code(
+                    ent,
+                    'function OnPostSpawn() { '
+                    'EntFireByHandle(self, "AddOutput", '
+                    f'"CubeType {orig_cube_type}", 0, self, self) }}'
+                )
