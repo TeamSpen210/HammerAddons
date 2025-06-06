@@ -25,7 +25,8 @@
 		// 2: "Catenary"
 		3: "Bezier"
 		]
-	vac_separateglass(boolean) : "Separate Glass and Frame" : 0 : "Separating glass and frame can help with transparency sorting issue"
+	vac_separateglass(boolean) : "Separate Glass and Frame" : 0 : "Generate as two props, one with the opaque frame and one with the glass. " +
+		"This helps with transparency sorting, and also allows lights/projected textures to cast shadows from the frame."
 
 	// A selection of prop_static's keyvalues, excluding some that are rather irrelevant.
 	linedivider_staticprop[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
