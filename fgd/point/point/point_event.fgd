@@ -6,7 +6,7 @@
 	iconsprite(editor/vizzys/point_event)
 = point_event : "An entity that can listen to events fired from code and fire an output when it happens."
 [
-	EventName(string) : "Event Name" : "" : "The names of the events that you want to listen for. Separated by colon. (e.g. player_hurt:game_init)"
+	EventName(string) report: "Event Name" : "" : "The names of the events that you want to listen for. Separated by colon. (e.g. player_hurt:game_init)"
 	
 	KeyName01(string) : "Key Name 01" : "" : "A keyvalue name to search for in detected events. If an event contains this key, then this entity will fire its respective OutValue output with the value."
 	KeyName02(string) : "Key Name 02" : "" : "A keyvalue name to search for in detected events. If an event contains this key, then this entity will fire its respective OutValue output with the value."

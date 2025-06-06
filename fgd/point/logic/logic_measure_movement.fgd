@@ -9,7 +9,7 @@
 	[
 	measuretarget(target_destination) : "Entity to Measure" : : "Entity whose movement you want to measure."
 	measurereference(target_destination) : "Measure Reference" : : "The movement of Entity to Measure will be measured relative to this entity."
-	target(target_destination) : "Entity to Move" : : "This entity will be moved to mimic the motions of Entity to Measure."
+	target(target_destination) report: "Entity to Move" : : "This entity will be moved to mimic the motions of Entity to Measure."
 	targetreference(target_destination) : "Movement Reference" : : "The Entity to Move will move relative to this entity."
 	targetscale(float) : "Movement scale" : 1 : "A scale to divide the measured movements by, before applying those movements to the Entity to Move. " +
 		"1 = target entity moves as much as the measured entity, " +

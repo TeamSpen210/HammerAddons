@@ -3,7 +3,7 @@
 	iconsprite("editor/ficool2/scripted_target.vmt") = scripted_target: "Scripted Target"
 	[
 	startdisabled(boolean) : "Start Disabled" : 1
-	m_iszentity(npcclass) : "Target NPC"
+	m_iszentity(npcclass) report: "Target NPC"
 	m_flradius(integer) : "Search Radius (0=everywhere)" : 0 : "Radius to search within for an NPC to use. 0 searches everywhere."
 	movespeed(integer) : "Move Speed" : 5
 	pauseduration(integer) : "Pause Duration" : 0

@@ -11,7 +11,7 @@
 	"If you use the optional foreground brush, then it should enclose the window brush. " +
 	"Both brush models will have their drawing disabled as the areaportal will render them itself."
 	[
-	target(target_destination) : "Rendered Window" : : "The name of a brush model to render as the window."
+	target(target_destination) report: "Rendered Window" : : "The name of a brush model to render as the window."
 	FadeStartDist(integer) : "Fade Start Distance" : 128 : "When the viewer is closer than this distance, the alpha is set to 'TranslucencyLimit'."
 	FadeDist(integer) : "Fade End Distance" : 512 : "When the viewer is at this distance, the portal becomes solid and closes off. If set to zero, the window will always be closed."
 	TranslucencyLimit(float) : "Translucency limit" : "0" : "This can be used to limit the translucency of the window, preventing it from becoming entirely invisible. This could be used with an opaque material, acting as a window."

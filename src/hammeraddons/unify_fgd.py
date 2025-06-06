@@ -247,7 +247,7 @@ def _polyfill_scripts(fgd: FGD) -> None:
 
 @_polyfill()
 def _polyfill_ext_valuetypes(fgd: FGD) -> None:
-    # Convert extension types to their real versions.
+    # Convert extension types to the closest standard equivalent.
     decay = {
         ValueTypes.EXT_STR_TEXTURE: ValueTypes.STRING,
         ValueTypes.EXT_ANGLE_PITCH: ValueTypes.FLOAT,
@@ -259,6 +259,18 @@ def _polyfill_ext_valuetypes(fgd: FGD) -> None:
         for tag_map in ent.keyvalues.values():
             for kv in tag_map.values():
                 kv.type = decay.get(kv.type, kv.type)
+
+
+@_polyfill('until_l4d')
+def _polyfill_strip_report(fgd: FGD) -> None:
+    """In HL2's Hammer, the 'report' modifier uses old syntax.
+
+    Strip for now until we can export that version.
+    """
+    for ent in fgd.entities.values():
+        for tag_map_kv in ent.keyvalues.values():
+            for kv in tag_map_kv.values():
+                kv.reportable = False
 
 
 @_polyfill('!P2DES')  # Fixed in VitaminSource.

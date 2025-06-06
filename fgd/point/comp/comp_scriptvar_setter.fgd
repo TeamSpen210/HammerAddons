@@ -10,7 +10,7 @@
 	"All the comp_scriptvars pointing to that variable will be collected into a single array literal, with holes filled by *null*. \n" +
 	"If the brackets are empty, these values will fill those holes and then append to the end in an arbitrary order."
 	[
-	target(target_destination) : "Script Entity" : : "The entity to set a variable on. Alternatively, leave this blank to assign the variable ::globally."
+	target(target_destination) report: "Script Entity" : : "The entity to set a variable on. Alternatively, leave this blank to assign the variable ::globally."
 	variable(string) : "Variable Name" : : "The name of the variable to set. A specific array index can be set with the form 'varname[4]'. Alternatively use 'varname[]' to assign them to the first index available. Holes in the array are set to null. If this is a :;global name, the script entity is ignored." 
 	ref(target_destination) : "Reference Entity" : : "If set, a reference entity to use to obtain data from instead of this one."
 

@@ -12,8 +12,8 @@
 		"If Material Name is set, only materials containing that value will be considered."
 
 	materialname(material): "Material Name" : : "The single material to modify on the parent. 'materials/' and '.vmt' is not required. Maximum of 255 characters allowed."
-	materialvar[-srctools](string): "Variable Name" : : "Material variable to modify, '$frame' for example. Maximum of 255 characters allowed."
-	materialvar[+srctools](string): "Variable Name" : : "Material variable to modify, '$frame' for example. Maximum of 255 characters allowed. " +
+	materialvar[-srctools](string) report: "Variable Name" : : "Material variable to modify, '$frame' for example. Maximum of 255 characters allowed."
+	materialvar[+srctools](string) report: "Variable Name" : : "Material variable to modify, '$frame' for example. Maximum of 255 characters allowed. " +
 		"If the $ is omitted, the postcompiler will add it. This prevents the variable from being detected for instances."
 
 	// Inputs

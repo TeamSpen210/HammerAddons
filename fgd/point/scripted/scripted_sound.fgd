@@ -5,7 +5,7 @@
 = scripted_sound : "Makes a target entity emit a sound directly, which allows lip syncing, " +
 	"interruption from death or other lines, etc. at the cost of most forms of control. Not exclusive to NPCs."
 [
-	message(sound) : "Sound Name" : : "The sound to play. Supports Game Sounds and direct filenames."
+	message(sound) report: "Sound Name" : : "The sound to play. Supports Game Sounds and direct filenames."
 	target(target_destination) : "Target Entity" : : "The entity that should play the sound."
 	
 	GrabAll(boolean) : "Grab All" : 0 : "Makes all entities play the sound instead of just one."

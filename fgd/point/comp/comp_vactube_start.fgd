@@ -3,7 +3,7 @@
 	studioprop("models/editor/vactubes/start_point.mdl")
 = comp_vactube_start : "Marks the start point of a vactube. This is where they spawn."
 [
-	group(string) : "Object Group" : : "Only objects with the same group name will be spawned." +
+	group(string) report: "Object Group" : : "Only objects with the same group name will be spawned." +
 		"This allows multiple vactubes to have a different mix of items. If you don't need this, you can leave the groups blank."
 	speed(float) : "Object Speed" : 800.0 : "Set the speed of the objects produced from here, in units per second."
 	seed(string) : "Rotation Seed" : : "If set, consistently produce the same rotation pattern as the seed. " +

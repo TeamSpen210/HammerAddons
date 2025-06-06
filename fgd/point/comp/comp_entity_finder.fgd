@@ -15,7 +15,7 @@
 	[
 	targetname(target_source) readonly: "Targetname" : "<pack_rename>" : "Fake targetname, used to determine how containing instances are configured."
 	
-	targetcls(string): "Target Classname": : "Classnames of the entity to find. Multiple classnames can be specified seperated by spaces."
+	targetcls(string) report: "Target Classname": : "Classnames of the entity to find. Multiple classnames can be specified seperated by spaces."
 	radius(float): "Search Radius": 64 : "Radius to search inside, or 0 for infinite."
 	searchfov(float): "Search Field Of View" : 180 : "The found entity must be within this many degrees of the direction of the finder."
 	angles(angle): "Search Direction": "0 0 0" : "If Search FOV is used, the direction to compare to."

@@ -7,9 +7,9 @@
 	achievementevent[engine](string) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input."
 	achievementname[engine](string) : "Achievement Name" : : "The name of the achievement to be awarded when this  entity receives a 'FireEvent' input."
 
-	achievementevent(string) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input."
+	achievementevent(string) report: "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input."
 	
-	achievementevent[Mesa](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+	achievementevent[Mesa](choices) report: "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
 		"ACHIEVEMENT_EVENT_BMS_FLAVOR_TRANSFORMATION"			: "Convection Refinement"
 		"ACHIEVEMENT_EVENT_BMS_PRESS_THEIR_BUTTONS"				: "Proverbial Tinkerer"
@@ -142,7 +142,7 @@
 		// "ACHIEVEMENT_EVENT_BMS_PROFILIC_68"	: "Prolific Popper - 68/63"
 		]
 
-	achievementevent[HL2, -EZ2](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+	achievementevent[HL2, -EZ2](choices) report: "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
 		"ACHIEVEMENT_EVENT_HL2_HIT_CANCOP_WITHCAN"             : "Defiant"
 		"ACHIEVEMENT_EVENT_HL2_PUT_CANINTRASH"                 : "Submissive"
@@ -234,7 +234,7 @@
 		// "ACHIEVEMENT_EVENT_HL2_LAMDACACHE_WHITEVAN"           : "Lambda: c17_13 white van in underground garage"	Cut?
 		]
 	
-	achievementevent[EP1, -EZ2](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+	achievementevent[EP1, -EZ2](choices) report: "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
 		"ACHIEVEMENT_EVENT_EP1_BEAT_MAINELEVATOR"                        : "Watch Your Head!"
 		// Early failable version of this achievement?
@@ -253,7 +253,7 @@
 		"ACHIEVEMENT_EVENT_EP1_BEAT_GAME"                                : "Escape From City 17 / TOFB - End" // These use the same event
 		]
 	
-	achievementevent[EP2, -EZ2](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+	achievementevent[EP2, -EZ2](choices) report: "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
 		"ACHIEVEMENT_EVENT_EP2_BEAT_ANTLIONINVASION"                : "Into the Breach"
 		"ACHIEVEMENT_EVENT_EP2_BEAT_ANTLIONGUARDS"                  : "Twofer"
@@ -286,7 +286,7 @@
 		]
 	
 	// Still Alive does not include base P1 achievements
-	achievementevent[P1, !PSA](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+	achievementevent[P1, !PSA](choices) report: "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
 		"ACHIEVEMENT_EVENT_PORTAL_GET_PORTALGUNS"         : "Lab Rat"
 		"ACHIEVEMENT_EVENT_PORTAL_KILL_COMPANIONCUBE"     : "Fratricide"
@@ -294,7 +294,7 @@
 		"ACHIEVEMENT_EVENT_PORTAL_BEAT_GAME"              : "Heartbreaker"
 		]
 
-	achievementevent[PSA](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+	achievementevent[PSA](choices) report: "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
 		"ACHIEVEMENT_EVENT_OUT_OF_THE_BLUE_START" : "Out of the Blue - Start"
 		"ACHIEVEMENT_EVENT_OUT_OF_THE_BLUE_END"   : "Out of the Blue - End"
@@ -305,7 +305,7 @@
 		"ACHIEVEMENT_EVENT_TESTS_LIKE_CHICKEN"    : "Tests Like Chicken"
 		]
 
-	achievementevent[EZ2](choices) : "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
+	achievementevent[EZ2](choices) report: "Achievement Event" : : "Named event is sent to the achievement system when this entity receives a 'FireEvent' input." =
 		[
 		"ACHIEVEMENT_EVENT_EZ2_RECORDING_RG01"      : "Radio Recon - Radio Guy 1/6"
 		"ACHIEVEMENT_EVENT_EZ2_RECORDING_RG02"      : "Radio Recon - Radio Guy 2/6"
@@ -381,7 +381,7 @@
 
 	// INFRA and TSP include P2 as well, so we need to exclude it.
 	// Portal 2 doesn't seem to distinguish between mapevent and non-mapevent achievements, so they can all be given this way
-	achievementname[P2, -INFRA, -STANLEY](choices) : "Achievement Name" : : "The name of the achievement to be awarded when this entity receives a 'FireEvent' input." =
+	achievementname[P2, -INFRA, -STANLEY](choices) report: "Achievement Name" : : "The name of the achievement to be awarded when this entity receives a 'FireEvent' input." =
 		[
 		"ACH.SURVIVE_CONTAINER_RIDE": "Wake Up Call"
 		"ACH.WAKE_UP": "You Monster"
@@ -455,7 +455,7 @@
 
 	// TODO: go through these, I don't have Infra - Kelsey
 	// Also, is this using the same achievement system as portal 2, or are non-mapevent achievements a thing again?
-	achievementname[INFRA](choices) : "Achievement Name" : : "The name of the achievement to be awarded when this entity receives a 'FireEvent' input." =
+	achievementname[INFRA](choices) report: "Achievement Name" : : "The name of the achievement to be awarded when this entity receives a 'FireEvent' input." =
 		[
 		"CHAPTER_1" : "Complete Ch1 - Preparations"
 		"CHAPTER_2" : "Complete Ch2 - Just Another Day at Work"
@@ -551,7 +551,7 @@
 		]
 
 	// TODO: check if these work
-	achievementname[STANLEY](choices) : "Achievement Name" : : "The name of the achievement to be awarded when this entity receives a 'FireEvent' input." =
+	achievementname[STANLEY](choices) report: "Achievement Name" : : "The name of the achievement to be awarded when this entity receives a 'FireEvent' input." =
 		[
 		"TSP_888": "8888888888888888"
 		"TSP_430": "Click on door 430 five times."

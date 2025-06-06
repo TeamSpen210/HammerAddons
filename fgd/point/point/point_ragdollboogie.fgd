@@ -10,7 +10,7 @@
 		131072: "Narrow arcs (must be electrical)" : 0
 		]
 
-	target(target_destination) : "Boogie target(s)" : : "The one(s) that must boogie. " +
+	target(target_destination) report: "Boogie target(s)" : : "The one(s) that must boogie. " +
 		"prop_ragdolls have no hassle, but NPCs will have to break them elbows " +
 		"and become prop_ragdolls themselves (a.k.a. die) in order to boogie."
 	StartTime(float) : "Start time" : "0" : "How long after we've received the 'Activate' input should ragdolls boogie?"

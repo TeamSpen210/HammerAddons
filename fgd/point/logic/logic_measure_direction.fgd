@@ -7,7 +7,7 @@
 	[
 	MeasureTarget(target_destination) : "Entity to Measure" : "" : "Entity whose direction you want to measure."
 	MeasureReference(target_destination) : "Measure Reference" : "" : "The direction of Entity to Measure will be measured from this entity."
-	Target(target_destination) : "Entity to Move" : "" : "This entity will be moved in the direction of the Entity to Measure."
+	Target(target_destination) report: "Entity to Move" : "" : "This entity will be moved in the direction of the Entity to Measure."
 	TargetReference(target_destination) : "Movement Reference" : "" : "The Entity to Move will move relative to this entity."
 	TargetScale(float) : "Trace scale" : "1" : "A scale to *divide* the distance between the Entity to Measure and the trace's endpoint by before applying those movements to the Entity to Move. 1 = target entity moves to the end of the trace, 2 = target entity moves to the middle of the trace (half as far), and 0.5 = target entity moves twice as far as the trace."
 

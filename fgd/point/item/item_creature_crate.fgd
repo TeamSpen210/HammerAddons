@@ -2,7 +2,7 @@
 	appliesto(EZ2)
 = item_creature_crate: "Creature Crate"
 	[
-	model[MBase](studio) : "Model" : "models/animal_box/animal_box.mdl" : "The model of this item_creature_crate. Only works when this crate's appearance is set to use a custom model."
+	model[MBase](studio) report: "Model" : "models/animal_box/animal_box.mdl" : "The model of this item_creature_crate. Only works when this crate's appearance is set to use a custom model."
 
 	idlesound(sound) : "Sound Name" : "NPC_PitDrone.Idle" : "Idle soundscript for the crate to play every 5 to 20 seconds."
 	

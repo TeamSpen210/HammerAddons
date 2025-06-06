@@ -6,7 +6,7 @@
 	[
 	MeasureTarget(target_destination) : "Entity to Measure" : "" : "Entity whose movement you want to measure. (Remote target)"
 	MeasureReference(target_destination) : "Measure Reference" : "" : "The movement of Entity to Measure will be mirrored relative to this entity. (Mirror relative)"
-	Target(target_destination) : "Entity to Move" : "" : "This entity will be mirrored across the motions of Entity to Measure. (Movement target)"
+	Target(target_destination) report: "Entity to Move" : "" : "This entity will be mirrored across the motions of Entity to Measure. (Movement target)"
 	TargetReference(target_destination) : "Movement Reference" : "" : "The Entity to Move will be mirrored relative to this entity. (Mirror target)"
 
 	@resources []

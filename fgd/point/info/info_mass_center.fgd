@@ -9,7 +9,7 @@
 = info_mass_center: "An entity that overrides the mass center of the target physics object, " +
 	"by moving it to the info_mass_center's location. This kills itself on spawn."
 	[
-	target(target_destination) : "Target object" : : "The entity whose mass center will be overridden."
+	target(target_destination) report: "Target object" : : "The entity whose mass center will be overridden."
 
 	@resources []
 	]

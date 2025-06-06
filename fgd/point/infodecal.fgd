@@ -6,7 +6,7 @@
 	"If it has a name specified, it won't apply until it receives the 'Activate' input."
 	[
 	// This is intentionally set to "material" instead of "decal", to suppress auto-filtering
-	texture(material) : "Texture" : : "The texture used for the decal."
+	texture(material) report: "Texture" : : "The texture used for the decal."
 	lowpriority(boolean) : "Low Priority" : 0 : "Allow the decal to be overwritten by other decals when needed. " +
 		"This also makes the decal not persist across savegames."
 	applyentity[since_L4D](target_destination) : "Entity to affect" : : "If specified, the decal will be applied to this entity only."

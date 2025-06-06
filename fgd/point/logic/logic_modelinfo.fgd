@@ -4,7 +4,7 @@
 	line(255 255 255, targetname, target)
 = logic_modelinfo : "Gets and outputs some model information from an entity."
 	[
-	target(target_destination) : "Target" : "" : "The entity whose model will be evaluated."
+	target(target_destination) report: "Target" : "" : "The entity whose model will be evaluated."
 	PoseParameterName(string) : "Pose Parameter Name" : "" : "(Optional) The pose parameter to use for pose parameter-related I/O."
 
 	// Inputs

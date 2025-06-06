@@ -5,7 +5,7 @@
 	line(0 100 250, targetname, target, targetname, lookatname) 
 = point_anglesensor: "An entity that detects if another entity points in a given direction for a period of time."
 	[
-	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angles will be sensed."
+	target(target_destination) report: "Target Entity Name" : : "Name of the entity whose angles will be sensed."
 	lookatname(target_destination) : "Look At Entity" : : "The entity we want to check to see if the Target Entity is looking at."
 	duration(float) : "Duration" : : "The amount of time the Target Entity must look at the 'Look at Entity' to trigger this entity, in seconds."
 	tolerance(integer) : "Tolerance" : : "The tolerance, in degrees, in the checking to determine when the Target Entity is looking at the Look At Entity."

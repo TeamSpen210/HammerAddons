@@ -3,7 +3,7 @@
 	iconsprite("editor/ficool2/ai_goal_assault")
 = ai_goal_assault: "AI Goal Assault"
 	[
-	actor(target_name_or_class) : "Actor(s) to affect" : : "NPC's that should perform this assault"
+	actor(target_name_or_class) report: "Actor(s) to affect" : : "NPC's that should perform this assault"
 	rallypoint(target_destination) : "Rally Point Set" : : "Root name of rally points for this assault. " +
 		"Use an asterisk '*' after the root name to match all with the same root."
 

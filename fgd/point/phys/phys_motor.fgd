@@ -17,7 +17,7 @@
 		4: "Hinge Object" : 1
 		]
 
-	attach1(target_destination) : "Attached Object" : : "Object to apply the force to"
+	attach1(target_destination) report: "Attached Object" : : "Object to apply the force to"
 
 	// Inputs
 	input SetSpeed(float) : "Sets target speed"

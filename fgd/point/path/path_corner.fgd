@@ -10,7 +10,7 @@
 		2: "Teleport to THIS path_corner" : 0
 		]
 
-	target(target_destination) : "Next stop target"
+	target(target_destination) report: "Next stop target"
 	wait(integer) : "Wait here (secs)" : 0
 	speed(integer) : "New Train Speed" : 0
 	yaw_speed(integer) : "New Train rot. Speed" : 0

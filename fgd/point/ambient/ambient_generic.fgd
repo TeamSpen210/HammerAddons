@@ -13,7 +13,7 @@
 		64: "Only play to the activator" : 0 [KZ]
 		]
 
-	message(sound) : "Sound Name" : : "Name of the GameSound entry for the sound to play. Also supports direct .wav filenames."
+	message(sound) report: "Sound Name" : : "Name of the GameSound entry for the sound to play. Also supports direct .wav filenames."
 	health(integer) : "Volume" : 10 : "Sound volume, expressed as a range from 0 to 10, where 10 is the loudest."
 	
 	radius(float) : "Sound Range" : 1250 : "Maximum distance at which this sound is audible. Overriden by soundscripts."

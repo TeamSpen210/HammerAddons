@@ -4,7 +4,7 @@
 = info_snipertarget: "Sniper Target"
 	[
 	speed(integer) : "Sweep to speed" : 2
-	groupname(string) : "Group Name"
+	groupname(string) report: "Group Name"
 	spawnflags(flags) : "spawnflags" =
 		[
 		1: "Shoot Me" : 0

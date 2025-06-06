@@ -2,7 +2,7 @@
 	line(255 255 0, targetname, target)
 = func_monitor: "A monitor that renders the view from a given point_camera entity."
 	[
-	target(target_destination) : "Camera name"
+	target(target_destination) report: "Camera name"
 
 	// Inputs
 	input Toggle(void) : "Toggle - If on, turn off, if off, turn on."

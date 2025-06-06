@@ -4,7 +4,7 @@
 	appliesto(MBase) 
 = point_glow: "Mapbase off-shoot of tf_glow."
 	[
-	target(target_destination) : "Target" : : "One target only."
+	target(target_destination) report: "Target" : : "One target only."
 	GlowColor(color255) : "Glow Color" : "255 0 0 255" : "<r> <g> <b> <a> 0-255"
 	
 	input SetGlowColor(color255) : "<r> <g> <b> <a> 0-255"

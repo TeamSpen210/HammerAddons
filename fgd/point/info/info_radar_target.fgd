@@ -6,7 +6,7 @@
 	radius(float) : "Effective Radius" : 6000 : "How close the Jalopy must be to detect this beacon. If this radius is -1, the range is infinite."
 	
 	type[engine](integer) : "Type of target" : 0
-	type(choices) : "Type of target" : 0 =
+	type(choices) report: "Type of target" : 0 =
 		[
 		0: "Generic Citizen Beacon"
 		1: "Magnussen RDU Beacon"

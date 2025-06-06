@@ -22,7 +22,7 @@
 		2 : "Custom Model (use model keyvalue)" [MBase]
 		]
 
-	itemclass(pointentityclass) : "Item Type" : "item_dynamic_resupply" : "Class name of the entity to spawn when the crate is broken"
+	itemclass(pointentityclass) report: "Item Type" : "item_dynamic_resupply" : "Class name of the entity to spawn when the crate is broken"
 	itemcount(integer) : "Item Count" : 1 : "Number of items to emit upon breakage"
 	specificresupply[!MBase](target_destination) : "Specific resupply" : : "If item type is item_dynamic_resupply, specify a specific one to use instead of the master"
 	SpecificResupply[MBase](target_destination) : "Specific resupply/Target template" : "" : "If item type is item_dynamic_resupply, specify a specific one to use instead of the master. If the crate contains a point_template, this is required to specify which point_template to spawn."

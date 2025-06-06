@@ -11,7 +11,7 @@
 		2: "Convert As Debris" : 0
 		]
 
-	target(target_destination) : "Entity to convert" : : "Name of the entity or entities that will be converted to a physics object when the ConvertTarget input is fired. Maximum of 512 entities."
+	target(target_destination) report: "Entity to convert" : : "Name of the entity or entities that will be converted to a physics object when the ConvertTarget input is fired. Maximum of 512 entities."
 	swapmodel(target_destination) : "Model Swap Entity" : : "If specified, the entity will be switched to use this entity's model instead of its own. Only one entity will be converted."
 	massoverride(float) : "Mass Override" : "0" : "Sets the mass when the object(s) are converted (0 means auto-calculate)"
 

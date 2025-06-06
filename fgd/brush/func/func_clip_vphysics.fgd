@@ -6,7 +6,7 @@
 		2: "Ignore player Grenades/Projectiles" : 1
 		]
 
-	filtername(filterclass) : "Filter Name" : : "Filter to use to see if activator collides with me. " +
+	filtername(filterclass) report: "Filter Name" : : "Filter to use to see if activator collides with me. " +
 		"See filter_activator_name for more explanation. Allow means 'Allow to Block' for this entity."
 
 	startdisabled[MBase](boolean) : "Start Disabled" : 0

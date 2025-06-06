@@ -4,7 +4,7 @@
 	iconsprite("editor/portal_dual.vmt") = linked_portal_door: "A door which is linked by a portal to another 'linked_portal_door' entity. " +
 		"Portal shots will pass through, and no effect appears at the edges."
 	[
-	partnername(target_destination) : "Linked Partner" : : "Another 'linked_portal_door' entity which will link to this one."
+	partnername(target_destination) report: "Linked Partner" : : "Another 'linked_portal_door' entity which will link to this one."
 	width(integer) : "Half-Width  (G)" : 64 : "Half the width of the portal, on the Green axis."
 	height(integer) : "Half-Height (B)" : 64 : "Half the height of the portal, on the Blue axis."
 	startactive(boolean) : "Start Active" : 0 : "Whether to start the linkage as active from the start."

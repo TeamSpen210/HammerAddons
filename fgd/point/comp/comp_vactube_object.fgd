@@ -8,7 +8,7 @@
 	offset(vecline) : "Offset" : : "The centerpoint of the model for positioning. Position this at the center of the model to ensure it doesn't stick out of the tube."
 	weight(int) : "Weight" : 1 : "The number of extra 'chances' for this to spawn. " +
 		"This works like a lottery - each cube has this many 'tickets', and then one is chosen randomly each time. If you have two choices with a weight of 9 and 1, the first will be chosen 90% of the time."
-	group(string) : "Group" : : "A vactube start will only spawn objects with a specified group name, if set. " +
+	group(string) report: "Group" : : "A vactube start will only spawn objects with a specified group name, if set. " +
 		"This allows multiple vactubes to have a different mix of items. If you don't need this, you can leave the groups blank."
 
 	tv_skin[engine](integer) : "TV Skin" : 0

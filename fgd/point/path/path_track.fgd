@@ -20,7 +20,7 @@
 		64: "Part of a downhill path" : 0 [TF2, MESA]
 		]
 
-	target(target_destination) : "Next Stop Target" : : "The next path_track in the path."
+	target(target_destination) report: "Next Stop Target" : : "The next path_track in the path."
 	altpath(target_destination) : "Branch Path" : : "An alternative path_track to be the next node in the path. Useful for making branching paths. " +
 		"Use the ToggleAlternatePath / EnableAlternatePath inputs to make the alternative path active."
 	speed(float) : "New Train Speed" : 0 : "When the train reaches this path_track, it will set its speed to this speed. " +

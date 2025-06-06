@@ -3,7 +3,7 @@
 	line(255 255 255, targetname, respawnpoint) 
  = trigger_legbreak: "A trigger that causes a player to sustain a serious injury and be forced to respawn." 
 	[
-	respawnpoint(target_destination) : "Respawn Target" : "" : "If specified, legbroke players from this legbreak will respawn at this entity."
+	respawnpoint(target_destination) report: "Respawn Target" : "" : "If specified, legbroke players from this legbreak will respawn at this entity."
 	playerspawntime(float) : "Player Respawn Time" : 5 : "How long it takes for a player to respawn from this legbreak. A value of 0 is not allowed, as it is used for backwards compatibility with legacy maps." 
 	allowforcerespawn[engine](integer) : "Allow Early Respawn" : 0 : "Should this trigger_legbreak allow players to respawn early by pressing a key?"
 	allowforcerespawn(choices) : "Allow Early Respawn" : 0 : "Should this trigger_legbreak allow players to respawn early by pressing a key?" =

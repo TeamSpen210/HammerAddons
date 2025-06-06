@@ -5,6 +5,6 @@
 	line(255 255 255, targetname, target, targetname, useentity)
 = infra_use_highlight_hint: "Use highlight hint"
 	[
-	useentity(target_destination) : "Use Entity" : : "The use entity whose use highlights to control."
+	useentity(target_destination) report: "Use Entity" : : "The use entity whose use highlights to control."
 	target(target_destination) : "Target" : : "The entity that receives the use selection outlines when the use entity is selected."
 	]

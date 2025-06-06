@@ -2,5 +2,5 @@
 	appliesto(since_L4D, MBase, GMOD)
 = trigger_tonemap: "Changes tonemap controllers for players touching the trigger."
 	[
-	tonemapname(target_destination) : "Tonemap Name" : : "The name of the tonemap controller entity associated with this trigger."
+	tonemapname(target_destination) report: "Tonemap Name" : : "The name of the tonemap controller entity associated with this trigger."
 	]

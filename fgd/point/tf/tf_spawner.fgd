@@ -7,7 +7,7 @@
 	count(integer) : "Count" : 1 : "Total number of entities to spawn over the lifetime of this spawner."
 	maxactive(integer) : "Max Active" : 1 : "Maximum number of simultaneous active entities created by this spawner."
 	interval(float) : "Interval" : 0 : "Time (in seconds) between spawns"
-	template(target_destination) : "Template to spawn entities from"
+	template(target_destination) report: "Template to spawn entities from"
 
 	// Inputs
 	input Enable(void) : "Begin spawning entities"

@@ -5,7 +5,7 @@
 	"Allows player allies to use fear withdrawal points and other fear behavior otherwise unique with npc_hunters. " +
 	"Citizens will still engage in fear behavior with npc_hunters, but this allows them to use it with other NPCs."
 [
-	actor(target_name_or_class) : "Actor(s) to affect" : "" : "NPC(s) that should engage in fear behavior."
+	actor(target_name_or_class) report: "Actor(s) to affect" : "" : "NPC(s) that should engage in fear behavior."
 	target(target_destination) : "Fear Target" : "" : "Target to fear. Only applies whenever the actors' relationship to the target is D_FR. Supports wildcards and can be a classname or an entity name."
 	searchtype[engine](integer) : "Search Type" : 0
 	searchtype[MBase](choices) : "Search Type" : 0 : "How to search for the entities using the targetname." =

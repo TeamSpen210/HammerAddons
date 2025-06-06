@@ -11,7 +11,7 @@
 		]
 	angles(angle) readonly: "Orientation" : "0 0 0" : "The starting orientation can't be changed, simply move the nodes."
 
-	group(target_source): "Cable Group" : : "Specify the same group name as in a comp_prop_rope/comp_prop_cable. The ropes will be compiled with this entity as their origin."
+	group(target_source) report: "Cable Group" : : "Specify the same group name as in a comp_prop_rope/comp_prop_cable. The ropes will be compiled with this entity as their origin."
 
 	skin1(material) : "Alt Skin 1" : "" : "If set, an alternate material to use for Skin 1. Must be a model material, and the cable must use the same material for the entire prop."
 	skin2(material) : "Alt Skin 2" : "" : "If set, an alternate material to use for Skin 2."

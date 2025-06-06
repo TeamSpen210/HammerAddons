@@ -6,7 +6,7 @@
 = filter_activator_relationship : "A filter that filters by the activator's relationship with another entity. " +
 	"Please note that any entity incapable of supporting relationships is automatically passed if this filter is set to 'Neutral'."
 [
-	target(target_destination) : "Subject" : : "The entity whose relationships we should test with. If empty, the entity using the filter will be used."
+	target(target_destination) report: "Subject" : : "The entity whose relationships we should test with. If empty, the entity using the filter will be used."
 	
 	rank(string) : "Priority" : : "The priority the subject should have with the target. If empty, priority will be disregarded."
 	

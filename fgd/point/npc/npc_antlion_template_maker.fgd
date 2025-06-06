@@ -14,7 +14,7 @@
 		8192: "Try to play blocked effects near the player" : 0
 		]
 
-	templatename(target_destination) : "Name of template NPC"
+	templatename(target_destination) report: "Name of template NPC"
 	spawngroup(string) : "Spawn on Hint Group" : : "If specified, children will spawn on a hint node from this group, nearest the target."
 	spawnradius(float) : "Spawn radius" : 512 : "Target must be within this distance of any node in the hint group specified above. If the target is outside the radius, no NPC will spawn."
 	spawntarget(target_destination) : "Spawn target" : : "Targetname of the entity to try and spawn near."

@@ -15,7 +15,7 @@
 		256: "Use Velocity instead of facing" : 0
 		]
 
-	target(target_destination) : "Look Target" : : "The name of the entity to be looked at."
+	target(target_destination) report: "Look Target" : : "The name of the entity to be looked at."
 	looktime(float) : "LookTime" : "0.5" : "The time, in seconds, that the player must look the target before firing the output. " + 
 		"Resets if player leaves trigger, or looks outside the Field of View threshold."
 	fieldofview(float) : "FieldOfView" : "0.9" : "How close the player has to be looking at the target. " +

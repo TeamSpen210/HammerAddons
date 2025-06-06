@@ -7,7 +7,7 @@
 	"If a Local Destination Landmark is specified, teleported entities are offset from " +
 	"the target by their initial offset from the landmark, and their angles are left alone."
 	[
-	target(target_destination) : "Remote Destination" : : "The entity specifying the point to which entities should be teleported."
+	target(target_destination) report: "Remote Destination" : : "The entity specifying the point to which entities should be teleported."
 	landmark(target_destination) : "Local Destination Landmark" : : "If specified, then teleported entities are offset " +
 		"from the target by their initial offset from the landmark."
 

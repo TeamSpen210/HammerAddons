@@ -2,7 +2,7 @@
 	appliesto(TF2)
 = trigger_capture_area: "Capture Area"
 	[
-	area_cap_point(target_source) : "Control point" : : "Name of the control point this area is linked to."
+	area_cap_point(target_source) report: "Control point" : : "Name of the control point this area is linked to."
 	area_time_to_cap(integer) : "Time to cap (sec)" : 5
 
 	team_cancap_2(boolean) : "Can RED Cap?" : 1

@@ -2,6 +2,6 @@
 	line(255 255 255, targetname, nextkey)
 = KeyFrame
 	[
-	nextkey(target_destination) : "Next KeyFrame" : : "Name of the next keyframe along this keyframe path."
+	nextkey(target_destination) report: "Next KeyFrame" : : "Name of the next keyframe along this keyframe path."
 	movespeed(integer) : "Speed (units per second)" : 64
 	]

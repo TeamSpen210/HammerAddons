@@ -12,7 +12,7 @@
 
 	speed_forward_modifier(float) : "Speed Forward Modifier" : 1 : "Applies the given modifier to all forward speeds. Only used if the watcher is handling the train movement. [0, 1]"
 	env_spark_name(target_destination) : "Train spark sprites" : : "Name of the env_spark entities used under the train for backward movement. They should all have the same entity name. Only used if the watcher is handling the train movement."
-	train(target_destination) : "Train to watch."
+	train(target_destination) report: "Train to watch."
 	start_node(target_destination) : "Node that the path starts at."
 	goal_node(target_destination) : "Node that the path ends at."
 	

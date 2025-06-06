@@ -1,7 +1,7 @@
 @SolidClass base(Trigger) 
 	appliesto(TF2) = trigger_timer_door: "A trigger that will open/close the door base filtered objects."
 	[
-	door_name(string) : "Door Name" : : "Name of the door entity the trigger is attaching to."
+	door_name(string) report: "Door Name" : : "Name of the door entity the trigger is attaching to."
 	area_cap_point(target_source) : "Control point" : : "Name of the control point this area is linked to."
 
 	team_cancap_2(boolean) : "Can RED Cap?" : 1

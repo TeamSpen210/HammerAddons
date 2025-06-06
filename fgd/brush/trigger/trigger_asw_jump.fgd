@@ -2,7 +2,7 @@
 	line(255 255 0, targetname, jumpdestname)
 	appliesto(ASW) = trigger_asw_jump: "A trigger volume that causes Swarm Drones to jump when they come into contact with it"
 	[
-	jumpdestname(target_destination) : "Jump Destination Name" : : "The name of the item Drones should jump to (use an info_target)."
+	jumpdestname(target_destination) report: "Jump Destination Name" : : "The name of the item Drones should jump to (use an info_target)."
 	minmarinedist(float) : "Min. Marine Distance" : 400 : "If a marine is within this distance from the Drone, the Drone will not jump."
 	clearorders(boolean) : "Clear Orders" : "1" : "Clear the jumpers orders when he jumps." 
 	checkenemydirection(boolean) : "Check enemy direction" : "1" : "If the alien has an enemy, check it's in the direction of the jump, else don't jump."

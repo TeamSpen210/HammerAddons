@@ -5,7 +5,7 @@
 	iconsprite("editor/comp_numeric_transition")
 = comp_numeric_transition : "When triggered, animates a keyvalue/input over time with various options."
 	[
-	target(target_destination) : "Entity to Control" : : "The entity which the outputs will be directed to."
+	target(target_destination) report: "Entity to Control" : : "The entity which the outputs will be directed to."
 	opt_name(string) : "Keyvalue/Input Name" : "SetSpeed" : "The name of the keyvalue or input to change." +
 		"If the target is not an entity findable by the postcompiler, IO Type must be set."
 		

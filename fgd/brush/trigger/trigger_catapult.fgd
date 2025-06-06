@@ -6,7 +6,7 @@
 	playerspeed(float) : "Player Speed" : 450 : "Speed at which to launch the players (u/sec)"
 	physicsspeed(float) : "Physics Object Speed" : 450 : "Speed at which to launch physics objects (u/sec)"
 	launchdirection(angle) : "Launch direction" : "0 0 0" : "Direction to launch the player in."
-	launchtarget(target_destination) : "Launch target" : : "Entity to try to 'hit' when we're launched."
+	launchtarget(target_destination) report: "Launch target" : : "Entity to try to 'hit' when we're launched."
 	useexactvelocity(boolean) : "Use Exact Velocity" : 0 : "Try to fling exactly at the speed specified - this prevents the added upward velocity from a launch target."
 
 	exactvelocitychoicetype[engine](integer) : "Exact Solution Method" : 0

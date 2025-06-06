@@ -6,7 +6,7 @@
 	"If 'Teleport Home' spawn flag is set, teleports the target entity to its spawn position instead. " +
 	"If object is physically simulated, simulation is turned off when teleported."
 	[
-	target(target_destination) : "Entity To Teleport" : : "Name of the entity that will be teleported."
+	target(target_destination) report: "Entity To Teleport" : : "Name of the entity that will be teleported."
 	model[engine](string) : "Hammer Preview"
 	model[!engine](studio) : "[H] Model" : "models/editor/angle_helper.mdl" : "The model shown in Hammer, to use for positioning."
 	spawnflags(flags)  =

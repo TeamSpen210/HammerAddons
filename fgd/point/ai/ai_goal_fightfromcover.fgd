@@ -4,7 +4,7 @@
 = ai_goal_fightfromcover: "AI Fight from Cover"
 	[
 	actor(target_destination) : "Actor(s) to affect"
-	goal(target_destination) : "Target Entity" : : "The name of the entity to follow. If blank, and the actor likes the player, then defaults to player"
+	goal(target_destination) report: "Target Entity" : : "The name of the entity to follow. If blank, and the actor likes the player, then defaults to player"
 	directionalmarker(target_destination) : "Directional Marker" : : "Specify the entity that indicates the direction of battle"
 	generichinttype(string) : "Generic Hint Type" : : "Behavior looks for 'generic' hints, and requires a text tag to search for"
 	width(float) : "Zone Width" : 600 : "Width of the hint search area"

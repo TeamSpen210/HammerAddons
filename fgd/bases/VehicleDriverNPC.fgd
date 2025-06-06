@@ -1,7 +1,7 @@
 
 @BaseClass base(BaseNPC) = VehicleDriverNPC
 	[
-	vehicle(target_destination) : "Vehicle to drive"
+	vehicle(target_destination) report: "Vehicle to drive"
 	spawnflags(flags) : "spawnflags" =
 		[
 		65536: "Start Inactive" : 1

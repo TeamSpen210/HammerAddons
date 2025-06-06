@@ -16,7 +16,7 @@
 		2: "Exit"
 		]
 
-	matchingteleporter(target_destination) : "Matching Teleporter" : : "The teleporter linked to this one."
+	matchingteleporter(target_destination) report: "Matching Teleporter" : : "The teleporter linked to this one."
 
 	skin[!engine](choices) : "[H] Team" : 0 : "Team to show in Hammer" =
 	[

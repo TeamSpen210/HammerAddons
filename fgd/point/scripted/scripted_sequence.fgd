@@ -23,7 +23,7 @@
 		 "BeginSequence input is received.\n\n" +
 		"If the sequence has motion extraction in it, set the 'Don't Teleport NPC On End' spawnflag."
 	[
-	m_iszentity(target_destination) : "Target NPC" : : "The name or class name (such as 'npc_zombie') of an NPC to use for this script."
+	m_iszentity(target_destination) report: "Target NPC" : : "The name or class name (such as 'npc_zombie') of an NPC to use for this script."
 	m_iszidle(string) : "Pre Action Idle Animation" : : "The name of the sequence (such as 'idle01') or activity (such as 'ACT_IDLE') to play before the action animation if the NPC must wait for the script to be triggered. Use 'Start on Spawn' flag or MoveToPosition input to play this idle animation."
 	m_iszentry(string) : "Entry Animation" : : "The name of the sequence (such as 'reload02') or activity (such as 'ACT_RELOAD') to play when the sequence starts, before transitioning to play the main action sequence."
 	m_iszplay(string) : "Action Animation" : : "The name of the main sequence (such as 'reload02') or activity (such as 'ACT_RELOAD') to play."

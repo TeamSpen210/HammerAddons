@@ -8,7 +8,7 @@
 		16: "Fade Corpse" : 0
 		]
 
-	npctype(npcclass) : "Class name of spawned NPC"
+	npctype(npcclass) report: "Class name of spawned NPC"
 	npctargetname(string) : "Childrens' Name"
 	npcsquadname(string) : "Childrens' Squad Name"
 	npchintgroup(string) : "Childrens' Hint Group"

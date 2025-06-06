@@ -5,7 +5,7 @@
 	[
 
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/crane.txt"
-	model(studio) : "World Model" : "models/cranes/crane_docks.mdl" : "Set the model used by the crane."
+	model(studio) report: "World Model" : "models/cranes/crane_docks.mdl" : "Set the model used by the crane."
 
 	magnetname(target_destination) : "Magnet entity" : : "A phys_magnet to hang from the end of the crane. Must be set for the crane to spawn."
 

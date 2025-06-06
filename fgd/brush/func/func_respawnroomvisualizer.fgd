@@ -4,7 +4,7 @@
 	"Brushes that become visible to enemy players when they get close. " +
 	"Use them to mark areas that they're unable to enter (i.e. respawn rooms)."
 	[
-	respawnroomname(target_destination) : "Associated Respawn Room" : : "The func_respawnroom that this entity is visualizing. " +
+	respawnroomname(target_destination) report: "Associated Respawn Room" : : "The func_respawnroom that this entity is visualizing. " +
 		"This entity will have its team matched to that for the func_respawnroom, " +
 		"and will have it updated if the func_respawnroom ever changes team."
 

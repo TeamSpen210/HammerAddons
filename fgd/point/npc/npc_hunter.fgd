@@ -4,7 +4,7 @@
 	studio[+MBase]()
 = npc_hunter: "A smaller, faster, strider that can pursue the player into buildings."
 	[
-	followtarget(target_destination) : "Strider to Follow" : : "The name of the strider that this hunter should follow."
+	followtarget(target_destination) report: "Strider to Follow" : : "The name of the strider that this hunter should follow."
 	
 	NoIdlePatrol[engine](boolean) : "Don't patrol while idle" : 0
 	NoIdlePatrol[MBase](choices) : "Patrol while idle" : 0 =
