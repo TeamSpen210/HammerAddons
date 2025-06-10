@@ -1,7 +1,6 @@
 @PointClass base(BaseEntityPoint, PortalBase) 
 	appliesto(P1, P2) 
-	studioprop("models/editor/prop_portal.mdl") 
-	size(-32 -16 -64, 32 16 64) 
+	studioprop("models/editor/prop_portal.mdl")
 = prop_portal: "A portal."
 	[
 	activated[engine](boolean) : "Start Activated" : 0

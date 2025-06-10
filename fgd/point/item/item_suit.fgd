@@ -1,10 +1,8 @@
-@BaseClass appliesto(-mesa,  -ez2) studioprop("models/items/hevsuit.mdl") = _item_hev_suit_hl2 []
-@BaseClass appliesto(+mesa) studioprop("models/props_am/hev_suit.mdl") = _item_hev_suit_mesa []
-@BaseClass appliesto(+ez2) studioprop("models/items/hevsuit_ez.mdl") = _item_hev_suit_ez2 []
-
 @PointClass base(Item, BaseMesaPickup) 
-	appliesto(EP1, EP2, HL2, P1, Mesa) 
-	base(_item_hev_suit_hl2, _item_hev_suit_mesa, _item_hev_suit_ez2)
+	appliesto(EP1, EP2, HL2, P1, Mesa)
+	studioprop[-mesa, -ez2]("models/items/hevsuit.mdl")
+	studioprop[+mesa]("models/props_am/hev_suit.mdl")
+	studioprop[+ez2]("models/items/hevsuit_ez.mdl")
 = item_suit: "HEV Suit"
 	[
 	spawnflags(flags) : "spawnflags" =

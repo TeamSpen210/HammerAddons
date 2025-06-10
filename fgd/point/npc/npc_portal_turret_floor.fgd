@@ -1,12 +1,8 @@
-// Switch the model helper depending on game.
-@BaseClass appliesto(P1) studioprop("models/props/turret_01.mdl")
-	= _npc_portal_turret_floor_p1_mdl []
-@BaseClass appliesto(P2) studioprop()
-	= _npc_portal_turret_floor_p2_mdl []
-
-@PointClass base(BaseNPC, _npc_portal_turret_floor_p1_mdl, _npc_portal_turret_floor_p2_mdl) 
+@PointClass base(BaseNPC)
 	appliesto(P1, P2, -STANLEY) 
 	autovis(Entities, NPCs, Portal Turret)
+	studioprop[P1]("models/props/turret_01.mdl")
+	studioprop[P2]() // Settable in P2, fixed and different in P1.
 	frustum(120, 1, TurretRange, 255 0 0, -1)
 = npc_portal_turret_floor: "Aperture Science Sentry Turret."
 	[

@@ -1,10 +1,8 @@
-@BaseClass appliesto(-mesa, -MBase) studioprop("models/items/ammocrate_rockets.mdl") = _item_ammo_crate_fixed []
-@BaseClass appliesto(+mesa) studioprop() = _item_ammo_crate_settable []
-@BaseClass appliesto(+MBase) studioprop("models/items/ammocrate_empty.mdl") = _item_ammo_crate_mbase []
-
 @PointClass base(BaseEntityAnimating) 
-	appliesto(EP1, EP2, HL2, P1, Mesa) 
-	base(_item_ammo_crate_fixed, _item_ammo_crate_settable, _item_ammo_crate_mbase)
+	appliesto(EP1, EP2, HL2, P1, Mesa) 	
+	studioprop[-mesa, -MBase]("models/items/ammocrate_rockets.mdl")
+	studioprop[+mesa]()
+	studioprop[+MBase]("models/items/ammocrate_empty.mdl")
 = item_ammo_crate: "Ammo Crate"
 	[
 	model[Mesa](studio) : "Model" : "models/items/ammocrate_rockets.mdl" : "Model to use for the ammo crate"

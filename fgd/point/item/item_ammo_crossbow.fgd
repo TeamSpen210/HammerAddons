@@ -1,10 +1,8 @@
-@BaseClass appliesto(-Mesa) studioprop("models/items/CrossbowRounds.mdl") = _item_crossbow_hl2 []
-@BaseClass appliesto(+Mesa) studioprop("models/weapons/w_crossbow_clip.mdl") = _item_crossbow_mesa []
-
 @PointClass base(ItemAmmo, BaseMesaPickup)
-	base(_item_crossbow_hl2, _item_crossbow_mesa)
 	appliesto(EP1, EP2, HL2, P1, Mesa) 
-	studioprop("models/items/CrossbowRounds.mdl") = item_ammo_crossbow: "Box of Crossbow ammo"
+	studioprop[-Mesa]("models/items/CrossbowRounds.mdl")
+	studioprop[+Mesa]("models/weapons/w_crossbow_clip.mdl")
+= item_ammo_crossbow: "Box of Crossbow ammo"
 	[
 	@resources
 		[

@@ -619,17 +619,16 @@ def get_appliesto(ent: EntityDef) -> list[str]:
     found: HelperExtAppliesTo | None = None
     count = 0
     applies_to: set[str] = set()
-    for i, helper in enumerate(ent.helpers):
-        if isinstance(helper, HelperExtAppliesTo):
-            if found is None:
-                found = helper
-            count += 1
-            applies_to.update(helper.tags)
+    for helper in ent.get_helpers(HelperExtAppliesTo):
+        if found is None:
+            found = helper
+        count += 1
+        applies_to.update(helper.applies)
 
     if found is None:
         found = HelperExtAppliesTo([])
         ent.helpers.insert(0, found)
-    found.tags = arg_list = [tag.upper() for tag in applies_to]
+    found.applies = arg_list = [tag.upper() for tag in applies_to]
     arg_list.sort()
     ent.helpers[:] = [
         helper for helper in ent.helpers
@@ -1076,6 +1075,8 @@ def action_export(
                 helper for helper in ent.helpers
                 if not helper.IS_EXTENSION
             ]
+            for helper in ent.helpers:
+                helper.tags = TAGS_EMPTY
             # Force everything to inherit from CBaseEntity, since
             # we're then removing any KVs that are present on that.
             if ent.is_alias:
@@ -1153,6 +1154,13 @@ def action_export(
                             else:
                                 value.type = ValueTypes.INT
                             value.val_list = None
+                    elif value.type is ValueTypes.SPAWNFLAGS and isinstance(value, KVDef):
+                        # Strip tags. Just keep duplicates, the only difference possible is name.
+                        value.val_list = [
+                            (mask, name, default, TAGS_EMPTY)
+                            for (mask, name, default, tags) in value.flags_list
+                            if '-ENGINE' not in tags and '!ENGINE' not in tags
+                        ]
 
                     # Check if this is a shared property among all ents,
                     # and if so skip exporting.
@@ -1173,6 +1181,9 @@ def action_export(
                                     f'Base Entity {attr_name[:-1]} '
                                     f'"{key}"  is a choices type!'
                                 )
+                            elif key == 'spawnflags':
+                                # Don't use the blank one in CBaseEntity
+                                pass
                             elif base_value.type is value.type:
                                 del category[key]
                                 continue
@@ -1182,7 +1193,7 @@ def action_export(
                             elif base_value.type is ValueTypes.FLOAT and value.type is ValueTypes.INT:
                                 # Just constraining it down to a whole number.
                                 pass
-                            elif attr_name != 'keyvalues' and base_value.type is ValueTypes.VOID:
+                            elif base_value.type is ValueTypes.VOID:
                                 # Base ignores parameters, but child has some - that's fine.
                                 pass
                             else:
@@ -1256,7 +1267,7 @@ def action_export(
         for helper in reversed(ent.helpers):
             if helper in rev_helpers:  # No duplicates here.
                 continue
-            if helper.IS_EXTENSION:
+            if helper.IS_EXTENSION or not match_tags(tags, helper.tags):
                 continue
 
             # For each, it may make earlier definitions obsolete.
@@ -1269,7 +1280,7 @@ def action_export(
             # No duplicates or overridden helpers.
             if helper in rev_helpers or helper.TYPE in overrides:
                 continue
-            if helper.IS_EXTENSION:
+            if helper.IS_EXTENSION or not match_tags(tags, helper.tags):
                 continue
             overrides.update(helper.overrides())
             rev_helpers.append(helper)

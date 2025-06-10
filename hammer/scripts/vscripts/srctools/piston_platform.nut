@@ -35,8 +35,8 @@ START_SND <- "";
 STOP_SND <- "";
 
 enable_motion_trig <- null;
-fizz_up <- {player=null, obj=null, on=null, allowed=false, name="up"};
-fizz_dn <- {player=null, obj=null, on=null, allowed=false, name="dn"};
+fizz_up <- {player=null, obj=null, on=null, allowed=false};
+fizz_dn <- {player=null, obj=null, on=null, allowed=false};
 fizz_eager <- false;
 door_pos <- null;
 crush_count <- 0;
@@ -77,7 +77,6 @@ function moveto(new_pos) {
 }
 
 function enable_fizz(fizz) {
-	printl("Enable " + fizz.name + " fizz, eager=" + fizz_eager.tostring())
 	if (fizz.obj || fizz.player) {
 		if (fizz_eager) {
 			fizz.on = true;
@@ -89,13 +88,11 @@ function enable_fizz(fizz) {
 			}
 		} else {
 			fizz.allowed = true;
-			printl(fizz.name + " fizz waiting")
 		}
 	}
 }
 
 function disable_fizz(fizz) {
-	printl("Disable " + fizz.name + " fizz")
 	if (fizz.obj || fizz.player) {
 		fizz.allowed = false;
 		if (fizz.on) {
@@ -211,7 +208,6 @@ function Think() {
 		sum *= 0.5;
 		self.SetOrigin(sum);
 	}
-	printl(format("%s: Think: up=%s, dn=%s", self.GetName(), fizz_up.allowed.tostring(), fizz_dn.allowed.tostring()));
 
 	// Used by pistons that can fizzle objects below them.
 	// If it gets stuck (stops moving), activate.
@@ -225,7 +221,6 @@ function Think() {
 		local new_pos = g_pistons[g_cur_moving].GetOrigin();
 		if ((new_pos - door_pos).LengthSqr() < 1) {
 			crush_count++;
-			printl("Crush: " + crush_count);
 			fizz_crush(fizz_dn);
 			fizz_crush(fizz_up);
 		} else {

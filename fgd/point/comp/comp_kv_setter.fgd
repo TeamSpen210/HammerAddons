@@ -13,7 +13,8 @@
 		"flags": "SpawnFlags"
 	]
 
-	kv_name(string) : "Name / Mask" : : "The name of the keyvalue to set, or the bits to change for spawnflags."
+	kv_name(string) : "Name / Mask" : : "The name of the keyvalue to set, or the bits to change for spawnflags. " + 
+		"Flag bits can be 0b010 binary, 0x1F hex, decimal, or the full name specified in the entity."
 
 	kv_value_mode[engine](string) : "Value Mode" : "legacy"
 	kv_value_mode(choices) : "Value Mode" : "legacy" : "Which value to use. " +

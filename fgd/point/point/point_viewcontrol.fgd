@@ -15,7 +15,7 @@
 	moveto(target_destination) : "Path Corner" : : "The first path corner in a track that the camera should move along once it's activated. " +
 		"If not specified, the camera won't move."
 
-	interpolatepositiontoplayer[EP1, EP2](boolean) : "Interpolate Position To Player" : 0 : "Gradually interpolate player's position to here on start."
+	interpolatepositiontoplayer[P1, EP1, EP2](boolean) : "Interpolate Position To Player" : 0 : "Gradually interpolate player's position to here on start."
 
 	spawnflags(flags)  =
 		[

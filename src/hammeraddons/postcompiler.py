@@ -160,6 +160,9 @@ async def main(argv: list[str]) -> None:
     LOGGER.info('Loading particles...')
     packlist.load_particle_manifest(conf.loc.with_name('srctools_particle_data.dmx'))
     LOGGER.info('Done! ({} particles)', len(packlist.particles))
+    LOGGER.info('Loading choreo scenes...')
+    packlist.load_choreo_scenes()
+    LOGGER.info('Done! ({} scenes)', len(packlist.choreo))
 
     LOGGER.info('Reading BSP...')
     bsp_file = BSP(path)

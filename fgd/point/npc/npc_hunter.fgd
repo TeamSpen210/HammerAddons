@@ -1,9 +1,7 @@
-@BaseClass appliesto(-MBase) studio("models/hunter.mdl") = _npc_hunter_fixed []
-@BaseClass appliesto(+MBase) studio() = _npc_hunter_settable []
-
-@NpcClass base(BaseNPC, _npc_hunter_fixed, _npc_hunter_settable) 
+@NpcClass base(BaseNPC) 
 	appliesto(EP2, P1) 
-	autovis(Entities, NPCs, Combine, Combine Hunter)
+	studio[-MBase]("models/hunter.mdl")
+	studio[+MBase]()
 = npc_hunter: "A smaller, faster, strider that can pursue the player into buildings."
 	[
 	followtarget(target_destination) : "Strider to Follow" : : "The name of the strider that this hunter should follow."

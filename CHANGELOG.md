@@ -18,6 +18,7 @@ The postcompiler now requires Windows 8+.
 * Added Portal: Still Alive features (not currently included in releases, but can be built by including the `PSA` tag)
 * Added "singular" and "remove" modes to `comp_kv_setter`.
 * Allow `comp_entity_finder` to rotate the target in addition to teleporting.
+* `comp_kv_setter`s can now lookup the flags mask based on the name in the FGD.
 * Allow configuring various shadow/fast reflection options for vactube object ents.
 * Boolean keyvalues (yes/no) can now be set to `!$var`, to invert the value of the variable. 
 * Consistently seed the RNG for compiler entities, to produce consistency across compiles. 

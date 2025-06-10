@@ -1,6 +1,8 @@
-@PointClass base(BaseEntityPoint, PlayerClass, L4DSurvivorStudio) 
+@PointClass base(BaseEntityPoint, PlayerClass) 
 	appliesto(L4D, L4D2)
 	color(255 100 100)
+	studio[L4D]("models/survivors/survivor_biker.mdl")
+	studio[L4D2]("models/survivors/survivor_coach.mdl")
 = info_survivor_position: "A point where survivors are placed when escaping the finale"
 	[
 	order(integer) : "Order" : 1 : "Index of spot based on order people got on board. (1-4)"

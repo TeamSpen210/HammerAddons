@@ -42,7 +42,7 @@ a = Analysis(
         'bisect', 'colorsys', 'collections', 'csv', 'datetime', 'contextlib',
         'decimal', 'difflib', 'enum', 'fractions', 'functools',
         'io', 'itertools', 'json', 'math', 'random', 're',
-        'statistics', 'string', 'struct', 'pysteampathprovider',
+        'statistics', 'string', 'struct',
         *collect_submodules('srctools', filter=lambda name: 'scripts' not in name),
         *collect_submodules('attr'),
         *collect_submodules('attrs'),
@@ -50,6 +50,7 @@ a = Analysis(
     ],
     excludes=[
         'IPython',  # Via trio
+        'tkinter',
     ],
     noarchive=False,
 )

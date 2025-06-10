@@ -1,11 +1,8 @@
-// Switch the model used depending on game.
-@BaseClass appliesto(P1) studioprop("models/props_bts/glados_ball_reference.mdl") 
-	= _prop_glados_core_p1_mdl []
-@BaseClass appliesto(P2) studioprop() 
-	= _prop_glados_core_p2_mdl []
-
-@PointClass base(BasePropPhysics, _prop_glados_core_p1_mdl, _prop_glados_core_p2_mdl, SRCModel) 
+@PointClass base(BasePropPhysics, SRCModel) 
 	appliesto(P1, P2)
+	// Switch the model used depending on game.
+	studioprop[P1]("models/props_bts/glados_ball_reference.mdl") 
+	studioprop[P2]()
 = prop_glados_core: "The P1 personality cores for GlaDOS. Resemble little eyeballs with handles. " +
 	"These play lines and look around when near the player. " +
 	"Portal 2 uses the wrong core model, so this will need to be swapped back with VScript."

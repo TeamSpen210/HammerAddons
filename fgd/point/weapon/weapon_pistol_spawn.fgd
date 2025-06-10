@@ -1,14 +1,8 @@
-@BaseClass appliesto(L4D) 
-	studioprop("models/w_models/Weapons/w_pistol_1911.mdl") 
-= _base_pistol_spawn_l4d1 []
-
-@BaseClass appliesto(L4D2) 
-	studioprop("models/w_models/Weapons/w_pistol_a.mdl")
-= _base_pistol_spawn_l4d2 []
-
-@PointClass base(WeaponSpawn, _base_pistol_spawn_l4d1, _base_pistol_spawn_l4d2) 
+@PointClass base(WeaponSpawn)
 	appliesto(L4D, L4D2)
 	autovis(Weapons, L4D Weapons, Weapon Spawners)
+	studioprop[L4D]("models/w_models/Weapons/w_pistol_1911.mdl") 
+	studioprop[L4D2]("models/w_models/Weapons/w_pistol_a.mdl")
 = weapon_pistol_spawn: "Pistols"
 	[
 	@resources

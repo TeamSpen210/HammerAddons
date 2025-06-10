@@ -41,7 +41,7 @@ def comp_trigger_coop(ctx: Context) -> None:
             manager.add_out(out)
         trig.add_out(
             Output('OnStartTouchBluePlayer', man_name, 'SetStateATrue'),
-            Output('OnStartTouchOrangePlayer', man_name, 'SetStateBrue'),
+            Output('OnStartTouchOrangePlayer', man_name, 'SetStateBTrue'),
             Output('OnEndTouchBluePlayer', man_name, 'SetStateAFalse'),
             Output('OnEndTouchOrangePlayer', man_name, 'SetStateBFalse'),
         )

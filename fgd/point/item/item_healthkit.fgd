@@ -1,9 +1,7 @@
-@BaseClass appliesto(-mesa) studioprop("models/items/healthkit.mdl") = _item_healthkit_fixed []
-@BaseClass appliesto(+mesa) studioprop() = _item_healthkit_settable []
-
 @PointClass base(ItemHealth, BaseMesaPickup) 
-	appliesto(EP1, EP2, HL2, P1, Mesa) 
-	base(_item_healthkit_fixed, _item_healthkit_settable)
+	appliesto(EP1, EP2, HL2, P1, Mesa)
+	studioprop[-mesa]("models/items/healthkit.mdl")
+	studioprop[+mesa]()
 = item_healthkit: "Small Health Kit"
 	[
 	model[Mesa](studio): "Model" : "models/weapons/w_medkit.mdl" : "Model to use for the medkit."
