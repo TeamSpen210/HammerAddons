@@ -435,15 +435,41 @@ def save_mesh(mesh: Mesh, path: Path) -> None:
 # The compiler for ropes.
 type RopeBuilder = ModelCompiler[CompKey, CompArgs, CompResult]
 
-# Key for deduplication. Passes each node, the links between, skin materials, and vactube separation type.
-type CompKey = tuple[frozenset[NodeEnt], frozenset[tuple[NodeID, NodeID]], tuple[str, ...], VactubeGenPartType]
-# Additional parameters used during compile, provided new each time. This passes the world origin,
-# plus the filesystem for lookups.
-type CompArgs = tuple[Vec, FileSystem]
+# Key to allow reusing previous compiles. See make_key() below for definition.
+type CompKey = tuple[tuple[NodeEnt, ...], tuple[tuple[NodeID, NodeID], ...], tuple[str, ...], VactubeGenPartType]
+# Additional parameters used during compile, provided new each time. We just pass the filesystem for lookups.
+type CompArgs = tuple[FileSystem]
 # Additional results of the compile, persisted to return later.
 # Returns the lighting origin, collision shape, segments to place, and for vactubes a list of
 # points for each curve, to produce the functional version.
 type CompResult = tuple[Vec, CollData, list[SegProp], list[list[Vec]]]
+
+
+def make_key(
+    nodes: Iterable[NodeEnt],
+    connections: Iterable[tuple[NodeID, NodeID]],
+    skins: Iterable[str], vac_type: VactubeGenPartType,
+) -> CompKey:
+    """Create the key to allow deduplication.
+
+    We have to recalculate the IDs, as the originals are the hammer IDs.
+    :param nodes: All nodes in the model, relative to a model origin.
+    :param connections: Pairs of links between node IDs.
+    :param skins: Skin materials to apply, with the first used in the nodes.
+    :param vac_type: Specifies whether to include the frame/glass part, if separation is used.
+    """
+    id_gen = itertools.count()
+    id_remap: dict[NodeID, NodeID] = {}
+    node_list = sorted(nodes, key=lambda node: tuple(node.pos))
+    new_nodes = []
+    for node in node_list:
+        id_remap[node.id] = new_id = NodeID(format(next(id_gen), 'x'))
+        new_nodes.append(attrs.evolve(node, id=new_id))
+    new_conns = tuple([
+        (id_remap[node1], id_remap[node2])
+        for node1, node2 in connections
+    ])
+    return tuple(new_nodes), new_conns, tuple(skins), vac_type
 
 
 async def build_rope(rope_key: CompKey, temp_folder: Path, mdl_name: str, args: CompArgs) -> CompResult:
@@ -455,8 +481,8 @@ async def build_rope(rope_key: CompKey, temp_folder: Path, mdl_name: str, args: 
     :param args: Information that is only required for this compile
     """
     LOGGER.info('Building rope {}', mdl_name)
-    ents, connections, skins, vacgentype = rope_key
-    offset, fsys = args
+    [ents, connections, skins, vacgentype] = rope_key
+    [fsys] = args
 
     mesh = Mesh.blank('root')
     coll_mesh = Mesh.blank('root')
@@ -556,7 +582,7 @@ async def build_rope(rope_key: CompKey, temp_folder: Path, mdl_name: str, args: 
 
     # For visleaf computation, build a list of all the actual segments generated.
     coll_data = [
-        (node.pos + offset, node.radius, node.next.pos + offset, node.next.radius)
+        (node.pos, node.radius, node.next.pos, node.next.radius)
         for node in nodes
         if node.next
     ]
@@ -1261,10 +1287,10 @@ async def compile_rope(
     """Compile a single rope group."""
     for ent in dyn_ents:
         origin = Vec.from_str(ent['origin'])
-        dyn_nodes: frozenset[NodeEnt] = frozenset({
+        dyn_nodes = [
             node.relative_to(origin)
             for node in nodes
-        })
+        ]
 
         skins = []
         for i in itertools.count(1):
@@ -1280,9 +1306,9 @@ async def compile_rope(
                 origin,
             )
         model_name, _ = await compiler.get_model(
-            (dyn_nodes, frozenset(connections), tuple(skins), VactubeGenPartType.ALL),
+            make_key(dyn_nodes, connections, skins, VactubeGenPartType.ALL),
             build_rope,
-            (origin, ctx.pack.fsys),
+            (ctx.pack.fsys, ),
             prefix='vac' if any(node.config.is_vactube for node in nodes) else 'rope',
         )
         ent['model'] = model_name
@@ -1307,24 +1333,32 @@ async def compile_rope(
         is_sep = conf.vac_separate_glass == VactubeGenType.SEPARATE
         # First do the frame, or everything if we're not separating them.
         model_name, (light_origin, coll_data, seg_props, vac_points) = await compiler.get_model(
-            (
-                frozenset(local_nodes), frozenset(connections), (),
+            make_key(
+                local_nodes, connections, (),
                 VactubeGenPartType.FRAME if is_sep else VactubeGenPartType.ALL,
             ),
             build_rope,
-            (center, ctx.pack.fsys),
+            (ctx.pack.fsys, ),
             prefix=('vac_frm' if is_sep else 'vac') if conf.is_vactube else 'rope',
         )
+        coll_data = [  # Stored local in the model, offset to the real location.
+            (point1 + center, rad1, point2 + center, rad2)
+            for point1, rad1, point2, rad2 in coll_data
+        ]
         modellist = [ModelContainer(model_name, light_origin, coll_data, seg_props, StaticPropFlags.NONE)]
 
         if is_sep:
             # Generate the glass only
             model_name, (light_origin, coll_data, seg_props, _) = await compiler.get_model(
-                (frozenset(local_nodes), frozenset(connections), (), VactubeGenPartType.GLASS),
+                make_key(local_nodes, connections, (), VactubeGenPartType.GLASS),
                 build_rope,
-                (center, ctx.pack.fsys),
+                (ctx.pack.fsys, ),
                 prefix='vac_gls',
             )
+            coll_data = [
+                (point1 + center, rad1, point2 + center, rad2)
+                for point1, rad1, point2, rad2 in coll_data
+            ]
             modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props, StaticPropFlags.NO_SHADOW))
 
         if vac_points and vac_node_mod is not None:
@@ -1332,7 +1366,7 @@ async def compile_rope(
                 vac_node_mod.SPLINES.append(vac_node_mod.Spline(center, track))
 
         # Compute the flags. Just pick a random node, from above.
-        flags = StaticPropFlags.NONE
+        flags: StaticPropFlags = StaticPropFlags.NONE
         if conf.prop_light_bounce:
             flags |= StaticPropFlags.BOUNCED_LIGHTING
         if conf.prop_no_vert_light:
@@ -1474,7 +1508,7 @@ async def comp_prop_rope(ctx: Context) -> None:
     # all connections from it to other nodes.
     todo = set(all_nodes.values())
     compiler: RopeBuilder
-    with ModelCompiler.from_ctx(ctx, 'ropes', version=3) as compiler:
+    with ModelCompiler.from_ctx(ctx, 'ropes', version=4) as compiler:
         async with trio.open_nursery() as nursery:
             while todo:
                 dyn_ents: list[Entity] = []

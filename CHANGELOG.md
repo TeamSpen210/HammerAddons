@@ -12,10 +12,10 @@ The postcompiler now requires Windows 8+.
 * Added textures for 4 rendertargets (camera, water reflection/refraction, full framebuffer). These give a nice preview in Hammer.
 * Added three keyvalues to `ambient_generic`, giving a more user friendly interface to the confusing spawnflags. This also allows them to be configured via fixup values easily.
 * Added line helpers to `env_microphone`, `scripted_sequence`, `path_track`, and `item_item_crate`
-* Added Source 2013's `SetModelScale` input to all animating entities
-* Added undocumented `ChangeLevelPostFade` input to `point_changelevel`
-* Added `hammer_model` entity to allow placing reference models in Hammer that don't appear in-game
-* Added Portal: Still Alive features (not currently included in releases, but can be built by including the `PSA` tag)
+* Added Source 2013's `SetModelScale` input to all animating entities,
+* Added undocumented `ChangeLevelPostFade` input to `point_changelevel`,
+* Added `hammer_model` entity to allow placing reference models in Hammer that don't appear in-game,
+* Added Portal: Still Alive features (not currently included in releases, but can be built by including the `PSA` tag),
 * Added "singular" and "remove" modes to `comp_kv_setter`.
 * Allow `comp_entity_finder` to rotate the target in addition to teleporting.
 * `comp_kv_setter`s can now lookup the flags mask based on the name in the FGD.
@@ -26,12 +26,13 @@ The postcompiler now requires Windows 8+.
 * Propcombine will now preserve prop fade distances, by calculating a new distance which encloses the original fade spheres.
 * Warn in the log if propcombine or packing was disabled via command line, so this is detectable later.
 * Add SFX to the Old Aperture cubedropper to simulate the new cube landing.
+* Multiple prop ropes with the same shape and configuration will share models.
 * Add option to `comp_adv_output` to have it expand target searches itself.
 * Refer to the "Gravity Gun" in descriptions instead of physgun/physcannon.
 * Floor buttons with `solid=6` will automatically be fixed, since this unintentionally makes them non-solid.
 * The postcompiler will now detect and error if a loop of parents/filters is detected. These will just crash the game in a non-obvious manner.
 * Included a copy of the "Obsolete" sprite used for missing entities, for games that don't include it by default such as Portal 2.
-* Improved `game_text` keyvalue descriptions and added Mapbase's font keyvalue
+* Improved `game_text` keyvalue descriptions and added Mapbase's font keyvalue,
 * Updated the icon for `skybox_swapper`.
 * Removed `info_paint_sprayer` keyvalues which are set in some Valve maps, but don't actually exist.
 * Removed Hammer preview from Mapbase's `vgui_text_display` as it did not actually match the in-game appearance.
