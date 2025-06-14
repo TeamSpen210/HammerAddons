@@ -1283,6 +1283,7 @@ async def compile_rope(
             (dyn_nodes, frozenset(connections), tuple(skins), VactubeGenPartType.ALL),
             build_rope,
             (origin, ctx.pack.fsys),
+            prefix='vac' if any(node.config.is_vactube for node in nodes) else 'rope',
         )
         ent['model'] = model_name
 
@@ -1312,6 +1313,7 @@ async def compile_rope(
             ),
             build_rope,
             (center, ctx.pack.fsys),
+            prefix=('vac_frm' if is_sep else 'vac') if conf.is_vactube else 'rope',
         )
         modellist = [ModelContainer(model_name, light_origin, coll_data, seg_props, StaticPropFlags.NONE)]
 
@@ -1321,6 +1323,7 @@ async def compile_rope(
                 (frozenset(local_nodes), frozenset(connections), (), VactubeGenPartType.GLASS),
                 build_rope,
                 (center, ctx.pack.fsys),
+                prefix='vac_gls',
             )
             modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props, StaticPropFlags.NO_SHADOW))
 

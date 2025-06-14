@@ -187,6 +187,8 @@ class ModelCompiler[ModelKey: Hashable, InT, OutT]:
         key: ModelKey,
         compile_func: Callable[[ModelKey, Path, str, InT], Awaitable[OutT]],
         args: InT,
+        *,
+        prefix: str = 'mdl',
     ) -> tuple[str, OutT]:
         """Given a model key, either return the existing model, or compile it.
 
@@ -205,10 +207,13 @@ class ModelCompiler[ModelKey: Hashable, InT, OutT]:
         If the model key is None, a new model will always be compiled.
         The model key and return value must be pickleable, so they can be saved
         for use in subsequent compiles.
+
+        :param prefix: Prefix in the model name, if a fresh model is created.
         """
+        LOGGER.debug('Compiling model with key: {}', key)
         model = await self._built_models.fetch(
             key, ModelCompiler._compile,
-            self, key, compile_func, args,
+            self, key, prefix, compile_func, args,
         )
 
         if not model.used:
@@ -233,6 +238,7 @@ class ModelCompiler[ModelKey: Hashable, InT, OutT]:
     async def _compile(
         self,
         key: ModelKey,
+        prefix: str,
         compile_func: Callable[[ModelKey, Path, str, InT], Awaitable[OutT]],
         args: InT,
     ) -> GenModel[OutT]:
@@ -240,7 +246,7 @@ class ModelCompiler[ModelKey: Hashable, InT, OutT]:
         self.built_count += 1
         # Figure out a name to use.
         while True:
-            mdl_name = f'mdl_{random.getrandbits(16):04x}'
+            mdl_name = f'{prefix}_{random.getrandbits(16):04x}'
             if mdl_name not in self._mdl_names:
                 self._mdl_names.add(mdl_name)
                 break
