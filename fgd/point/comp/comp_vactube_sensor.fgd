@@ -1,5 +1,6 @@
 @PointClass base(Angles)
 	appliesto(+P2, +srctools)
+	iconsprite("editor/comp_vactube_sensor")
 	sphere(radius)
 = comp_vactube_sensor: "Detects vactube objects travelling through a path, and fires outputs."
 	[
