@@ -432,15 +432,25 @@ def save_mesh(mesh: Mesh, path: Path) -> None:
     with path.open('wb') as fb:
         mesh.export(fb)
 
+# The compiler for ropes.
+type RopeBuilder = ModelCompiler[CompKey, CompArgs, CompResult]
 
-async def build_rope(
-    rope_key: tuple[frozenset[NodeEnt], frozenset[tuple[NodeID, NodeID]], tuple[str, ...], VactubeGenPartType],
-    temp_folder: Path,
-    mdl_name: str,
-    args: tuple[Vec, FileSystem],
-) -> tuple[Vec, CollData, list[SegProp], list[list[Vec]]]:
+# Key for deduplication. Passes each node, the links between, skin materials, and vactube separation type.
+type CompKey = tuple[frozenset[NodeEnt], frozenset[tuple[NodeID, NodeID]], tuple[str, ...], VactubeGenPartType]
+# Additional parameters used during compile, provided new each time. This passes the world origin,
+# plus the filesystem for lookups.
+type CompArgs = tuple[Vec, FileSystem]
+# Additional results of the compile, persisted to return later.
+# Returns the lighting origin, collision shape, segments to place, and for vactubes a list of
+# points for each curve, to produce the functional version.
+type CompResult = tuple[Vec, CollData, list[SegProp], list[list[Vec]]]
+
+
+async def build_rope(rope_key: CompKey, temp_folder: Path, mdl_name: str, args: CompArgs) -> CompResult:
     """Construct the geometry for a rope.
 
+    :param temp_folder: Location to write the sources into.
+    :param mdl_name: Full model filename to compile.
     :param rope_key: This is saved into file system to check if the model needs to be recompiled.
     :param args: Information that is only required for this compile
     """
@@ -1243,7 +1253,7 @@ def compute_visleafs(
 
 async def compile_rope(
     ctx: Context,
-    compiler: ModelCompiler,
+    compiler: RopeBuilder,
     nodes: set[NodeEnt],
     dyn_ents: list[Entity],
     connections: set[tuple[NodeID, NodeID]],
@@ -1460,6 +1470,7 @@ async def comp_prop_rope(ctx: Context) -> None:
     # To group nodes, take each group out, then search recursively through
     # all connections from it to other nodes.
     todo = set(all_nodes.values())
+    compiler: RopeBuilder
     with ModelCompiler.from_ctx(ctx, 'ropes', version=3) as compiler:
         async with trio.open_nursery() as nursery:
             while todo:
