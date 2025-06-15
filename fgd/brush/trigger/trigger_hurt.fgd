@@ -29,6 +29,14 @@
 	nodmgforce(boolean) : "Zero Damage Force" : 0 : "Should the damaged entity receive no physics force from this trigger."
 	damageforce[L4D2](vector) : "Damage Force Override"
 
+	ha_knockback_dist[engine](integer) : "[HA] Forgiving Laserfields Distance"
+	ha_knockback_dist[P2, +srctools](choices) : "[HA] Forgiving Laserfields" : 0 : "If set, add additional catapult triggers on either side to knock the player back safely, instead of killing them." +
+	"To determine the direction, this looks for the thinnest face pair, then shifts outward in either direction. When touching, the player is pushed back, and 1 point of damage is applied to produce visual effects. " +
+	"The trigger remains deadly, if the player forces their way through." = [
+		0: "Disabled"
+		8: "Enabled (8 units)"
+	]
+
 	hurtrate[MBase](float) : "Hurt Rate" : "0.5" : "Determines how often entities inside the trigger are hurt. By default this is every 0.5 seconds."
 	thinkalways[L4D2](boolean) : "Always think every frame" : 0 : "Normally triggers think every half second, in some cases you may need to request it to damage every frame. This is expensive!"
 	

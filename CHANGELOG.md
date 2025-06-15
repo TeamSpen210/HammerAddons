@@ -2,19 +2,22 @@
 
 The postcompiler now requires Windows 8+.
 
+# New Features
+* Added `comp_vactube_sensor`, which allows detecting the presence of vactube objects.
+* Added `comp_piston_platform`, which generates the logic for Portal-style piston platforms.
+* Added option to `trigger_hurt` to create the logic for 'forgiving laserfields'.
+* Added `hammer_model` entity to allow placing reference models in Hammer that don't appear in-game.
+
 # Enhancements
 * Update to Mapbase 7.3.
 * A new "snippets" system allows FGD files to easily repeat descriptions and other small sections.
 * Add ability to randomise output delay to `comp_relay` and `comp_adv_output`.
-* Added `comp_vactube_sensor`, which allows detecting the presence of vactube objects.
-* Added `comp_piston_platform`, which generates the logic for Portal-style piston platforms.
 * Added a value mode option to `comp_kv_setter` and `comp_adv_output` to more clearly control which key is used.
 * Added textures for 4 rendertargets (camera, water reflection/refraction, full framebuffer). These give a nice preview in Hammer.
 * Added three keyvalues to `ambient_generic`, giving a more user friendly interface to the confusing spawnflags. This also allows them to be configured via fixup values easily.
 * Added line helpers to `env_microphone`, `scripted_sequence`, `path_track`, and `item_item_crate`
 * Added Source 2013's `SetModelScale` input to all animating entities,
-* Added undocumented `ChangeLevelPostFade` input to `point_changelevel`,
-* Added `hammer_model` entity to allow placing reference models in Hammer that don't appear in-game,
+* Added undocumented `ChangeLevelPostFade` input to `point_changelevel`.
 * Added Portal: Still Alive features (not currently included in releases, but can be built by including the `PSA` tag),
 * Added "singular" and "remove" modes to `comp_kv_setter`.
 * Allow `comp_entity_finder` to rotate the target in addition to teleporting.
@@ -26,7 +29,7 @@ The postcompiler now requires Windows 8+.
 * Propcombine will now preserve prop fade distances, by calculating a new distance which encloses the original fade spheres.
 * Warn in the log if propcombine or packing was disabled via command line, so this is detectable later.
 * Add SFX to the Old Aperture cubedropper to simulate the new cube landing.
-* Multiple prop ropes with the same shape and configuration will share models.
+* Multiple prop ropes with the same shape and configuration will now properly share models.
 * Add option to `comp_adv_output` to have it expand target searches itself.
 * Refer to the "Gravity Gun" in descriptions instead of physgun/physcannon.
 * Floor buttons with `solid=6` will automatically be fixed, since this unintentionally makes them non-solid.
