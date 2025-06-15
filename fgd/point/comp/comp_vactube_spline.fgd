@@ -1,7 +1,7 @@
 @MoveClass base(StaticTargetname, Angles)
 	sphere(radius)
 	animator() keyframe()
-	iconsprite("editor/comp_prop_rope")
+	iconsprite("editor/comp_vactube_spline")
 	appliesto(srctools)
 = comp_vactube_spline: "Constructs a custom vactube model, using a set of path points."
 	[
