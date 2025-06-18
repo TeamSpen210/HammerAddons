@@ -56,7 +56,9 @@ jobs:
           python -m pip install -r requirements.txt
         
       - name: Build FGD patch
-        run: python ./src/hammeraddons/unify_fgd.py -d ./fgd export_pcp -o patch.fgd P2CE
+        run: |
+          cd src
+          python ./src/hammeraddons/unify_fgd.py -d ./fgd export_pcp -o patch.fgd P2CE
       
       - run: git fetch --tags origin
       
