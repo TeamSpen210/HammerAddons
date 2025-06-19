@@ -3,7 +3,6 @@
 This merges static props together, so they can be drawn with a single
 draw call.
 """
-import math
 from typing import Literal
 from collections.abc import Callable, Iterable, Iterator, MutableMapping, Sequence
 from collections import defaultdict
@@ -11,7 +10,9 @@ from enum import Enum
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import fnmatch
+import functools
 import itertools
+import math
 import operator
 import os
 import re
@@ -104,10 +105,24 @@ def unify_mdl(path: str) -> str:
     return path
 
 
+@functools.cache
+def clean_group_name(name: str) -> str:
+    """Normalise the group name, to make sure it's a valid filename.
+
+    It's for debugging really, so it doesn't matter too much if mangled.
+    """
+    if not name:
+        return 'mdl'
+    name = re.sub('[^a-zA-Z0-9]', '_', name)
+    name = re.sub('__+', '_', name)
+    return name[:16]
+
+
 class CombineVolume:
     """Parsed comp_propcombine_* ents."""
     def __init__(self, group_name: str, skinset: frozenset[str], origin: Vec) -> None:
         self.group = group_name
+        self.filename = clean_group_name(group_name)
         self.skinset = skinset
         # For sorting.
         self.volume = 0.0
@@ -196,11 +211,19 @@ type PropCombiner = ModelCompiler[
 
 async def combine_group(
     compiler: PropCombiner,
+    name: str,
     props: list[StaticProp],
     lookup_model: LookupModel,
     volume_tolerance: float,
 ) -> StaticProp:
-    """Merge the given props together, compiling a model if required."""
+    """Merge the given props together, compiling a model if required.
+
+    :param compiler: Compiles/looks up the model.
+    :param name: The name of the volume creating this group, if set and used.
+    :param props: The props to merge, still in world space.
+    :param lookup_model: Function which looks up sources for a model.
+    :param volume_tolerance: If >0, how much tolerence for merging collisions.
+    """
 
     # We want to allow multiple props to reuse the same model.
     # To do this try and match prop groups to each other, by "unifying"
@@ -264,11 +287,13 @@ async def combine_group(
             scale_z,
             coll,
         ))
+
     # We don't want to build collisions if it's not used.
     has_coll = any(pos.solidity is not CollType.NONE for pos in prop_pos)
     mdl_name, _ = await compiler.get_model(
         (frozenset(prop_pos), has_coll),
         compile_func, (lookup_model, volume_tolerance),
+        prefix=name,
     )
 
     # Many of these values we require to be the same, so we can read them
@@ -843,7 +868,7 @@ def group_props_ent(
     brush_models: MutableMapping[Entity, BModel],
     grouper_ents: list[Entity],
     min_cluster: int,
-) -> Iterator[list[StaticProp]]:
+) -> Iterator[tuple[str, list[StaticProp]]]:
     """Given the groups of props, merge props according to the provided ents."""
     # Ents with group names. We have to split those by filter too.
     grouped_sets: dict[tuple[str, frozenset[str]], CombineVolume] = {}
@@ -969,14 +994,14 @@ def group_props_ent(
                     )
                     # Output this prop, then start a new group.
                     if len(actual) >= min_cluster:
-                        yield list(actual)
+                        yield (combine_set.filename, list(actual))
                         for sub_prop in actual:
                             group.remove(sub_prop)
                     actual.clear()
                     total_verts = mdl.total_verts
                 actual.append(prop)
             if len(actual) >= min_cluster:
-                yield list(actual)
+                yield (combine_set.filename, list(actual))
                 for prop in actual:
                     group.remove(prop)
 
@@ -993,7 +1018,7 @@ def group_props_auto(
     min_dist: float,
     max_dist: float,
     min_cluster: int,
-) -> Iterator[list[StaticProp]]:
+) -> Iterator[tuple[str, list[StaticProp]]]:
     """Given the groups of props, automatically find close props to merge."""
     min_dist_sq = min_dist * min_dist
     max_dist_sq = max_dist * max_dist
@@ -1091,13 +1116,13 @@ def group_props_auto(
                         if len(selected_props) >= min_cluster:
                             found_matches = True
                             todo.difference_update(selected_props)
-                            yield selected_props
+                            yield ('auto', selected_props)
                         selected_props = []
                         total_verts = mdl.total_verts
                     selected_props.append(prop)
 
                 if len(selected_props) >= min_cluster:
-                    yield selected_props
+                    yield ('auto', selected_props)
                     todo.difference_update(selected_props)
                     found_matches = True
                 if not found_matches:
@@ -1262,7 +1287,7 @@ async def combine(
 
     # This holds the list of all props we want in the map at the end.
     final_props: list[StaticProp] = []
-    grouper: Iterator[list[StaticProp]]
+    grouper: Iterator[tuple[str, list[StaticProp]]]
     grouper_ents = list(bsp_ents.by_class['comp_propcombine_set'] | bsp_ents.by_class['comp_propcombine_volume'])
     if min_cluster_auto <= 2:
         min_cluster_auto = min_cluster
@@ -1334,15 +1359,15 @@ async def combine(
         compile_dir=compile_dump,
         pack_models=pack_models,
     ) as compiler:
-        async def do_combine(group: list[StaticProp]) -> None:
+        async def do_combine(name: str, group: list[StaticProp]) -> None:
             """Task run to combine one prop."""
-            grouped_prop = await combine_group(compiler, group, get_model, volume_tolerance)
+            grouped_prop = await combine_group(compiler, name, group, get_model, volume_tolerance)
             rejected.difference_update(group)
             final_props.append(grouped_prop)
 
         async with trio.open_nursery() as nursery:
-            for group_ in grouper:
-                nursery.start_soon(do_combine, group_)
+            for name, group in grouper:
+                nursery.start_soon(do_combine, name, group)
                 group_count += 1
 
     final_props.extend(rejected)

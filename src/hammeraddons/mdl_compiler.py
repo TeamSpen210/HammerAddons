@@ -208,12 +208,12 @@ class ModelCompiler[ModelKey: Hashable, InT, OutT]:
         The model key and return value must be pickleable, so they can be saved
         for use in subsequent compiles.
 
-        :param prefix: Prefix in the model name, if a fresh model is created.
+        The prefix parameter is used to name the model file, if a new one is required.
         """
         LOGGER.debug('Compiling model with key: {}', key)
         model = await self._built_models.fetch(
-            key, ModelCompiler._compile,
-            self, key, prefix, compile_func, args,
+            key, self._compile,
+            key, prefix or 'mdl', compile_func, args,
         )
 
         if not model.used:

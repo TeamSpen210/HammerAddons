@@ -27,7 +27,8 @@ The postcompiler now requires Windows 8+.
 * Consistently seed the RNG for compiler entities, to produce consistency across compiles. 
   Relevant entities now all have `seed` parameters to further adjust.
 * Propcombine will now preserve prop fade distances, by calculating a new distance which encloses the original fade spheres.
-* Warn in the log if propcombine or packing was disabled via command line, so this is detectable later.
+* Propcombined models will try and use group names for the filename, if specified.
+* Warn in the log if propcombine or packing was disabled via command line, so this is easier to diagnose.
 * Add SFX to the Old Aperture cubedropper to simulate the new cube landing.
 * Multiple prop ropes with the same shape and configuration will now properly share models.
 * Add option to `comp_adv_output` to have it expand target searches itself.
