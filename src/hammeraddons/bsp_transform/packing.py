@@ -1,5 +1,6 @@
 """Transformations for packing and precaching resources."""
 import os
+import string
 
 from srctools import Entity
 from srctools.logger import get_logger
@@ -153,7 +154,7 @@ def comp_pack(ctx: Context) -> None:
 
             # We allow numeric suffixes for multiple - generic45.
             try:
-                res_type = PACK_TYPES[key.rstrip('0123456789').casefold()]
+                res_type = PACK_TYPES[key.rstrip(string.digits).casefold()]
             except KeyError:
                 LOGGER.warning(
                     'Unknown resource type: "{}" @ {}',

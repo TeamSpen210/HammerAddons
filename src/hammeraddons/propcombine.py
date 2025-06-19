@@ -59,6 +59,7 @@ class QC:
     phy_scale: float  # Scale of collision model.
     is_concave: bool  # If the collision model is known to be concave.
 
+
 QC_TEMPLATE = '''\
 $staticprop
 $modelname "{path}"
@@ -113,8 +114,8 @@ def clean_group_name(name: str) -> str:
     """
     if not name:
         return 'mdl'
-    name = re.sub('[^a-zA-Z0-9]', '_', name)
-    name = re.sub('__+', '_', name)
+    name = re.sub(r'[^a-zA-Z0-9]', '_', name)
+    name = re.sub(r'__+', '_', name)
     return name[:16]
 
 
@@ -667,7 +668,7 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> tuple[
                             # Multiple bodygroups, can't deal with that.
                             LOGGER.debug(
                                 'QC "{}" has multiple bodygroups: {}, {}',
-                                qc_path, ref_smd, (qc_loc /  body_value),
+                                qc_path, ref_smd, (qc_loc / body_value),
                             )
                             return None
                         else:
@@ -1107,7 +1108,7 @@ def group_props_auto(
                         if not warned:
                             bb_min, bb_max = Vec.bbox(prop.origin for prop in cluster)
                             LOGGER.info(
-                                'Hit vert limit for auto group @ ({} - {}) with models {}' ,
+                                'Hit vert limit for auto group @ ({} - {}) with models {}',
                                 bb_min, bb_max,
                                 {prop.model for prop in cluster},
                             )

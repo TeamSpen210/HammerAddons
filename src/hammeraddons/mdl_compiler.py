@@ -33,6 +33,7 @@ class GenModel[OutT]:
     name: str
     used: bool
     result: OutT
+
     def __init__(self, mdl_name: str, result: OutT) -> None:
         self.name = mdl_name  # This is just the filename.
         self.used = False
@@ -54,7 +55,7 @@ class ModelCompiler[ModelKey: Hashable, InT, OutT]:
         pack: PackList,
         map_name: str,
         folder_name: str,
-        version: object=0,
+        version: object = 0,
         pack_models: bool = True,
         compile_dir: Path | None = None,
     ) -> None:
@@ -77,7 +78,7 @@ class ModelCompiler[ModelKey: Hashable, InT, OutT]:
         self.built_count = 0
 
     @classmethod
-    def from_ctx(cls, ctx: Context, folder_name: str, version: object=0) -> 'ModelCompiler':
+    def from_ctx(cls, ctx: Context, folder_name: str, version: object = 0) -> 'ModelCompiler':
         """Convenience method to construct from the context's data."""
         if ctx.studiomdl is None:
             raise ValueError('No StudioMDL!')
@@ -225,13 +226,15 @@ class ModelCompiler[ModelKey: Hashable, InT, OutT]:
                 LOGGER.debug('Packing model {}.mdl:', full_model_path)
                 for ext in MDL_EXTS:
                     try:
-                        with open(str(full_model_path.with_suffix(ext)), 'rb') as fb:
-                            self.pack.pack_file(
-                                f'models/{self.model_folder}{model.name}{ext}',
-                                data=fb.read(),
-                            )
+                        file_data = full_model_path.with_suffix(ext).read_bytes()
                     except FileNotFoundError:
                         pass
+                    else:
+                        self.pack.pack_file(
+                            f'models/{self.model_folder}{model.name}{ext}',
+                            data=file_data,
+                        )
+                        del file_data
 
         return f'models/{self.model_folder}{model.name}.mdl', model.result
 

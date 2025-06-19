@@ -29,7 +29,7 @@ def comp_trigger_coop(ctx: Context) -> None:
 
 
 def add_triggers(
-    ctx,
+    ctx: Context,
     hurter_cache: dict[int, str],
     hurt: Entity, shift_dist: float,
 ) -> None:

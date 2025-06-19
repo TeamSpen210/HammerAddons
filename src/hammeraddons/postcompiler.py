@@ -424,5 +424,6 @@ async def main(argv: list[str]) -> None:
 
     LOGGER.info("HammerAddons postcompiler complete!")
 
+
 if __name__ == '__main__':
     trio.run(main, sys.argv[1:])

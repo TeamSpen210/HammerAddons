@@ -38,6 +38,7 @@ def entity_finder(ctx: Context) -> None:
     for finder in ctx.vmf.by_class['comp_entity_finder']:
         modify_finder(ctx, target_cache, finder)
 
+
 def modify_finder(ctx: Context, target_cache: dict[tuple, Entity], finder: Entity) -> None:
     finder.remove()
     targ_classes = frozenset(finder['targetcls'].split())
