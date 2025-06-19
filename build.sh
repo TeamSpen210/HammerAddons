@@ -10,6 +10,7 @@ copy_hammer_files() {
   mkdir -p build/postcompiler &&
   cp -rf hammer build/hammer &&
   cp -rf instances build/instances &&
+  cp -rf examples build/examples &&
   cp -rf transforms build/postcompiler/transforms &&
   find ./build/instances -iname "*.vmx" -delete # Yes, I know that we could use rsync with a ton of options to do this instead of using cp and then deleting unwanted files. This is FAR nicer imo.
   

@@ -63,5 +63,6 @@ IF /I %game%==ALL (
   echo Copying Hammer files...
   IF %ERRORLEVEL% LSS 8 robocopy hammer build/hammer /S /PURGE
   IF %ERRORLEVEL% LSS 8 robocopy instances build/instances /XF *.vmx /S /PURGE
+  IF %ERRORLEVEL% LSS 8 robocopy examples build/examples *.vmf readme.md /XF *.vmx *.log *.bsp *.prt /S /PURGE
   IF %ERRORLEVEL% LSS 8 EXIT /B 0
   echo Failed copying Hammer files. Exitting. & EXIT
