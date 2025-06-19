@@ -51,6 +51,7 @@ The postcompiler now requires Windows 8+.
 * Make RunScriptCode \` handling occur after everything else.
 * #274, #277: Force required keyvalue casing for `light_environment`'s `SunSpreadAngle` and `lua_run`'s `Code` keys.
 * Fix hammer_notes text size/color parameters being missing for games before CS:GO.
+* Fix an issue with `func_instance_io_proxy` and `comp_` entities.
 * Fix mismatched numbering between `logic_random_outputs` KVs and inputs.
 * Fix `comp_kv_setter`/`comp_adv_output` position keyvalues not getting transformed by instances in Source 2013.
 * Fix `comp_adv_output` string keyvalues getting transformed as entity names.

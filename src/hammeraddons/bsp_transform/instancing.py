@@ -11,7 +11,7 @@ LOGGER = get_logger(__name__)
 RELAY_MAX = 30 + 1
 
 
-@trans('func_instance_io_proxy')
+@trans('func_instance_io_proxy', priority=-100)
 def io_proxy_tweaks(ctx: Context) -> None:
     """Tweak proxy relays to fix issues.
 
@@ -20,6 +20,8 @@ def io_proxy_tweaks(ctx: Context) -> None:
     redundant entity use, but means you can't see the instance boundary in 'developer 2'
     displays or ent_fire the command yourself. It also can duplicate outputs, if many entities
     are triggering the instance.
+
+    This needs to happen before other comp_ ents, so those get the right IO fixups.
 
     Options:
         * collapse: If set, remove func_instance_io_proxy entities from the map
@@ -32,6 +34,7 @@ def io_proxy_tweaks(ctx: Context) -> None:
 
 def collapse_proxy_relays(ctx: Context) -> None:
     """Collapse proxies into their callers."""
+    LOGGER.info('Collapsing IO proxies...')
     for proxy in list(ctx.vmf.by_class['func_instance_io_proxy']):
         proxy_name = proxy['targetname']
         proxy.remove()
@@ -102,6 +105,7 @@ def duplicate_proxy_relays(ctx: Context) -> None:
                 cur_proxy = newest_proxy
                 proxy_nums[index] = cur_proxy, new_index
 
+            LOGGER.debug('Renumbering {} output: {} -> {} for {!r}', proxy_name, index, new_index, out)
             out.output = f'OnProxyRelay{new_index}'
             cur_proxy.add_out(out)
 
@@ -133,5 +137,7 @@ def duplicate_proxy_relays(ctx: Context) -> None:
             except KeyError:
                 LOGGER.warning('Unknown proxy "{}"?', out.target)
                 continue
+            else:
+                LOGGER.debug('Renumbering input: {} -> {} for {!r}', index, new_index, out)
 
             out.input = f'OnProxyRelay{new_index}'
