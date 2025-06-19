@@ -1,20 +1,14 @@
 @BaseClass = CombineScanner
 	[
-	spawnflags(flags) : "spawnflags" =
-		[
-		65536: "No Dynamic Light" : 0
-		131072: "Strider Scout Scanner" : 0
-		]
-
 	CustomFlightSpeed[MBase](float) : "Custom Flight Speed" : "0" : "Overrides the scanner's default speed. 0 = use default"
 
 	spotlightlength(integer) : "Spotlight Length" : 500
 	spotlightwidth(integer) : "Spotlight Width" : 50
 
 	spotlightdisabled(boolean) : "Disable Spotlight" : 0
-	shouldinspect(boolean) : "Should inspect" : 1
-	onlyinspectplayers(boolean) : "Only Inspect Players" : 0
-	neverinspectplayers(boolean) : "Never Inspect Players" : 0
+	shouldinspect(boolean) : "Should inspect" : 1 : "Should the scanner locate and inspect targets on its own?"
+	onlyinspectplayers(boolean) : "Only Inspect Players" : 0 : "If enabled, the scanner will only inspect the player, ignoring citizens. Mutually exclusive with 'Never Inspect Players'."
+	neverinspectplayers(boolean) : "Never Inspect Players" : 0 : "If enabled, the scanner will ignore the player entirely. Mutually exclusive with 'Only Inspect Players'."
 
 	DisablePhotos[MBase](boolean) : "Never take photos" : 0 : "Prevents this scanner from ever taking photos. It may still chase and inspect, but it will never actually take any pictures or flashes."
 
@@ -23,8 +17,8 @@
 	input InspectTargetPhoto(target_destination) : "Tells the scanner to photograph the given entity, named by classname or by target name. !activator or !player works here also."
 	input InspectTargetSpotlight(target_destination) : "Tells the scanner to spotlight the given entity, named by classname or by target name. !activator or !player works here also."
 	input InputSetFlightSpeed(integer) : "Sets the flight speed of the scanner"
-	input InputShouldInspect(integer) : "Set whether should inspect or not"
-	input SetFollowTarget(target_destination) : "Set target to follow until told otherwise"
+	input InputShouldInspect(integer) : "Set whether the scanner should inspect targets on its own."
+	input SetFollowTarget(target_destination) : "Set target to follow until told otherwise."
 	input ClearFollowTarget(void) : "Stop following our target"
 	input SetDistanceOverride(float) : "Override the distance the scanner will attempt to keep between inspection targets and itself"
 
@@ -44,5 +38,7 @@
 		material "materials/sprites/light_glow03.vmt"
 		material "materials/sprites/glow_test02.vmt"
 		entity combine_mine // All scanners *can* deploy mines, city scanners usually don't though.
+		entity spotlight_end // Part of the spotlight.
+		entity beam
 		]
 	]
