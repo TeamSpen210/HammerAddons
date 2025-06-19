@@ -1,4 +1,4 @@
-# Version Dev
+# Version 2.6.0
 
 The postcompiler now requires Windows 8+.
 
