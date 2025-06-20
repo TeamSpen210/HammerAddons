@@ -1,3 +1,17 @@
+@snippet desc mode_desc = "A modification to perform. For Replace Outputs, outputs on the known entity targetting a @name/!name specified in Destination will be switched to point to the found entity."
+@snippet desc known_desc = "The known entity to access."
+@snippet desc source_desc = "Constant value to use or keyvalue name to read from."
+@snippet desc dest_desc = "Keyvalue name to write to or @special/!special name to replace."
+
+@snippet choices modelist = [
+	"": "None"
+	"const2target": "Constant -> Target Ent KV"
+	"const2known": "Constant -> Known Ent KV"
+	"known2target": "Known Ent KV -> Target Ent KV"
+	"target2known": "Target Ent KV -> Known Ent KV"
+	"replacetarget": "Replace !dest Outputs On Known"
+]
+
 @PointClass
     appliesto(srctools)
     iconsprite("editor/comp_entity_finder")
@@ -13,102 +27,63 @@
 	"Outputs from this entity will be moved to the found entity." + 
 	"Further keyvalues can be set manually with SmartEdit off." 
 	[
-	targetname(target_source) readonly: "Targetname" : "<pack_rename>" : "Fake targetname, used to determine how containing instances are configured."
-	
+	// Not actually necessary right now.
+	// targetname(target_source) readonly: "Targetname" : "<pack_rename>" : "Fake targetname, used to determine how containing instances are configured."
+
 	targetcls(string) report: "Target Classname": : "Classnames of the entity to find. Multiple classnames can be specified seperated by spaces."
 	radius(float): "Search Radius": 64 : "Radius to search inside, or 0 for infinite."
-	searchfov(float): "Search Field Of View" : 180 : "The found entity must be within this many degrees of the direction of the finder."
+	searchfov(float): "Search Field Of View" : 180 : "The found entity must be within this many degrees of the direction of the finder. 180 is any direction."
 	angles(angle): "Search Direction": "0 0 0" : "If Search FOV is used, the direction to compare to."
 	targetref(target_destination): "Reference position" : : "If set, look for entities close to this entity instead of the comp_entity_finder."
 	blacklist(target_destination): "Search Blacklist" : : "If set, ignore entities matching this name."
 	teleporttarget(boolean): "Teleport Target To Me" : 0 : "Move the found entity to the location of this entity or that of the reference."
-	rotatetarget(boolean): "Match Target Rotation" : 0 : "Rotate the found entity to match the rotation of this entity or that of the reference."
+	rotatetarget(boolean): "Alter Target Rotation" : 0 : "Rotate the found entity to match the rotation of this entity or that of the reference."
 	makeunique(boolean): "Make Target Unique" : 0 : "Append a numeric suffix to the target's name to make it unique."
-	
-	sep1(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+
+	sep1[!engine](string) readonly: "----------------------------------------------------------------------------------------------------------" : ""
 
 	kv1_mode[engine](string): "1 - Mode"
-	kv1_mode(choices): "1 - Mode": : "The first modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
-		[
-		"": "None"
-		"const2target": "Constant -> Target Ent KV"
-		"const2known": "Constant -> Known Ent KV"
-		"known2target": "Known Ent KV -> Target Ent KV"
-		"target2known": "Target Ent KV -> Known Ent KV"
-		"replacetarget": "Replace Outputs"
-		]
-	kv1_known(target_destination): "1 - Known Entity" : : "The known entity to access."
-	kv1_src(string): "1 - Source" : : "Constant value to use or keyvalue name to read from."
-	kv1_dest(string): "1 - Destination" : : "Keyvalue name to write to or !special name to replace."
-	
-	output OutName(void): "Needed to allow Hammer to add outputs to this."
+	kv1_mode(choices): "1 - Mode": : #snippet mode = #snippet modelist
+	kv1_known(target_destination): "1 - Known Entity" : : #snippet known_desc
+	kv1_src(string): "1 - Source" : : #snippet source_desc
+	kv1_dest(string): "1 - Destination" : : #snippet dest_desc
 
-	sep2(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	output AnyOutputsCopiedToTarget(void): "Dummy output. Any output defined on the finder is copied to the target entity, but at least one must be defined for Hammer to allow adding outputs."
+
+	sep2[!engine](string) readonly: "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Same as above, up to kv5.
 	kv2_mode[engine](string): "2 - Mode"
-	kv2_mode(choices): "2 - Mode": : "The second modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
-		[
-		"": "None"
-		"const2target": "Constant -> Target KV"
-		"const2known": "Constant -> Known KV"
-		"known2target": "Known KV -> Target KV"
-		"target2known": "Target KV -> Known KV"
-		"replacetarget": "Replace Outputs"
-		]
-	kv2_known(target_destination): "2 - Known Entity" : : "The known entity to access."
-	kv2_src(string): "2 - Source" : : "Constant value or keyvalue name to read from."
-	kv2_dest(string): "2 - Destination" : : "Keyvalue name to write to or !special name to replace."
+	kv2_mode(choices): "2 - Mode": : #snippet mode = #snippet modelist
+	kv2_known(target_destination): "2 - Known Entity" : : #snippet known_desc
+	kv2_src(string): "2 - Source" : : #snippet source_desc
+	kv2_dest(string): "2 - Destination" : : #snippet dest_desc
 
-	sep3(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	sep3[!engine](string) readonly: "----------------------------------------------------------------------------------------------------------" : ""
 
 	kv3_mode[engine](string): "3 - Mode"
-	kv3_mode(choices): "3 - Mode": : "The third modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
-		[
-		"": "None"
-		"const2target": "Constant -> Target KV"
-		"const2known": "Constant -> Known Ent KV"
-		"known2target": "Known KV -> Target KV"
-		"target2known": "Target KV -> Known KV"
-		"replacetarget": "Replace Outputs"
-		]
-	kv3_known(target_destination): "3 - Known Entity" : : "The known entity to access."
-	kv3_src(string): "3 - Source" : : "Constant value or keyvalue name to read from."
-	kv3_dest(string): "3 - Destination" : : "Keyvalue name to write to or !special name to replace."
-	
-	sep4(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	kv3_mode(choices): "3 - Mode": : #snippet mode = #snippet modelist
+	kv3_known(target_destination): "3 - Known Entity" : : #snippet known_desc
+	kv3_src(string): "3 - Source" : : #snippet source_desc
+	kv3_dest(string): "3 - Destination" : : #snippet dest_desc
+
+	sep4[!engine](string) readonly: "----------------------------------------------------------------------------------------------------------" : ""
 
 	kv4_mode[engine](string): "4 - Mode"
-	kv4_mode(choices): "4 - Mode": : "The fourth modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
-		[
-		"": "None"
-		"const2target": "Constant -> Target KV"
-		"const2known": "Constant -> Known Ent KV"
-		"known2target": "Known KV -> Target KV"
-		"target2known": "Target KV -> Known KV"
-		"replacetarget": "Replace Outputs"
-		]
-	kv4_known(target_destination): "4 - Known Entity" : : "The known entity to access."
-	kv4_src(string): "4 - Source" : : "Constant value or keyvalue name to read from."
-	kv4_dest(string): "4 - Destination" : : "Keyvalue name to write to or !special name to replace."
-	
-	sep5(string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	kv4_mode(choices): "4 - Mode": : #snippet mode = #snippet modelist
+	kv4_known(target_destination): "4 - Known Entity" : : #snippet known_desc
+	kv4_src(string): "4 - Source" : : #snippet source_desc
+	kv4_dest(string): "4 - Destination" : : #snippet dest_desc
+
+	sep5[!engine](string) readonly: "----------------------------------------------------------------------------------------------------------" : ""
 
 	kv5_mode[engine](string): "5 - Mode"
-	kv5_mode(choices): "5 - Mode": : "The fifth modification to perform. For Replace Outputs, outputs sent to a !name specified in Destination will be switched to point to the found entity." = 
-		[
-		"": "None"
-		"const2target": "Constant -> Target KV"
-		"const2known": "Constant -> Known Ent KV"
-		"known2target": "Known KV -> Target KV"
-		"target2known": "Target KV -> Known KV"
-		"replacetarget": "Replace Outputs"
-		]
-	kv5_known(target_destination): "5 - Known Entity" : : "The known entity to access."
-	kv5_src(string): "5 - Source" : : "Constant value or keyvalue name to read from."
-	kv5_dest(string): "5 - Destination" : : "Keyvalue name to write to or !special name to replace."
-	
+	kv5_mode(choices): "5 - Mode": : #snippet mode = #snippet modelist
+	kv5_known(target_destination): "5 - Known Entity" : : #snippet known_desc
+	kv5_src(string): "5 - Source" : : #snippet source_desc
+	kv5_dest(string): "5 - Destination" : : #snippet dest_desc
+
 	// Code supports infinite number, just continue naming pattern.
-    
+
     @resources []
 	]

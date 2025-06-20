@@ -260,7 +260,9 @@ def modify_finder(ctx: Context, target_cache: dict[tuple, Entity], finder: Entit
             )
         elif kv_mode is FinderModes.OUTPUT_MERGE:
             assert needs_known and known_ent is not None
-            output_name = '!' + kv_dest.lstrip('!').casefold()
+            output_name = kv_dest.casefold()
+            if not output_name.startswith(('!', '@')):
+                output_name = f'!{output_name}'
             LOGGER.debug(
                 'Changing "{}" to "{}" in outputs for "{}"',
                 output_name, found_ent_name, known_ent_name,
