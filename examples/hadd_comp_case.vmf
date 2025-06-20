@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "10247"
-	"mapversion" "60"
+	"mapversion" "61"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -20,7 +20,7 @@ viewsettings
 world
 {
 	"id" "1"
-	"mapversion" "60"
+	"mapversion" "61"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -7545,7 +7545,9 @@ entity
 {
 	"id" "6474"
 	"classname" "hammer_notes"
-	"scale" "0.25"
+	"color" "255 255 255"
+	"scale" "0.5"
+	"textsize" "10"
 	"origin" "232 56 40"
 	editor
 	{
