@@ -3,7 +3,7 @@
 @snippet desc source_desc = "Constant value to use or keyvalue name to read from."
 @snippet desc dest_desc = "Keyvalue name to write to or @special/!special name to replace."
 
-@snippet choices modelist = [
+@snippet choices mode_list = [
 	"": "None"
 	"const2target": "Constant -> Target Ent KV"
 	"const2known": "Constant -> Known Ent KV"
@@ -43,7 +43,7 @@
 	sep1[!engine](string) readonly: "----------------------------------------------------------------------------------------------------------" : ""
 
 	kv1_mode[engine](string): "1 - Mode"
-	kv1_mode(choices): "1 - Mode": : #snippet mode = #snippet modelist
+	kv1_mode(choices): "1 - Mode": : #snippet mode_desc = #snippet mode_list
 	kv1_known(target_destination): "1 - Known Entity" : : #snippet known_desc
 	kv1_src(string): "1 - Source" : : #snippet source_desc
 	kv1_dest(string): "1 - Destination" : : #snippet dest_desc
@@ -54,7 +54,7 @@
 
 	// Same as above, up to kv5.
 	kv2_mode[engine](string): "2 - Mode"
-	kv2_mode(choices): "2 - Mode": : #snippet mode = #snippet modelist
+	kv2_mode(choices): "2 - Mode": : #snippet mode_desc = #snippet mode_list
 	kv2_known(target_destination): "2 - Known Entity" : : #snippet known_desc
 	kv2_src(string): "2 - Source" : : #snippet source_desc
 	kv2_dest(string): "2 - Destination" : : #snippet dest_desc
@@ -62,7 +62,7 @@
 	sep3[!engine](string) readonly: "----------------------------------------------------------------------------------------------------------" : ""
 
 	kv3_mode[engine](string): "3 - Mode"
-	kv3_mode(choices): "3 - Mode": : #snippet mode = #snippet modelist
+	kv3_mode(choices): "3 - Mode": : #snippet mode_desc = #snippet mode_list
 	kv3_known(target_destination): "3 - Known Entity" : : #snippet known_desc
 	kv3_src(string): "3 - Source" : : #snippet source_desc
 	kv3_dest(string): "3 - Destination" : : #snippet dest_desc
@@ -70,7 +70,7 @@
 	sep4[!engine](string) readonly: "----------------------------------------------------------------------------------------------------------" : ""
 
 	kv4_mode[engine](string): "4 - Mode"
-	kv4_mode(choices): "4 - Mode": : #snippet mode = #snippet modelist
+	kv4_mode(choices): "4 - Mode": : #snippet mode_desc = #snippet mode_list
 	kv4_known(target_destination): "4 - Known Entity" : : #snippet known_desc
 	kv4_src(string): "4 - Source" : : #snippet source_desc
 	kv4_dest(string): "4 - Destination" : : #snippet dest_desc
@@ -78,7 +78,7 @@
 	sep5[!engine](string) readonly: "----------------------------------------------------------------------------------------------------------" : ""
 
 	kv5_mode[engine](string): "5 - Mode"
-	kv5_mode(choices): "5 - Mode": : #snippet mode = #snippet modelist
+	kv5_mode(choices): "5 - Mode": : #snippet mode_desc = #snippet mode_list
 	kv5_known(target_destination): "5 - Known Entity" : : #snippet known_desc
 	kv5_src(string): "5 - Source" : : #snippet source_desc
 	kv5_dest(string): "5 - Destination" : : #snippet dest_desc
