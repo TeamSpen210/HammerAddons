@@ -1,14 +1,20 @@
+# Version (dev)
+
+* `comp_entity_finder`s can now use `@names` for replace outputs, so they work in HL2.
+
+-----------------------
+
 # Version 2.6.0
 
 The postcompiler now requires Windows 8+.
 
-# New Features
+## New Features
 * Added `comp_vactube_sensor`, which allows detecting the presence of vactube objects.
 * Added `comp_piston_platform`, which generates the logic for Portal-style piston platforms.
 * Added option to `trigger_hurt` to create the logic for 'forgiving laserfields'.
 * Added `hammer_model` entity to allow placing reference models in Hammer that don't appear in-game.
 
-# Enhancements
+## Enhancements
 * Update to Mapbase 7.3.
 * A new "snippets" system allows FGD files to easily repeat descriptions and other small sections.
 * Add ability to randomise output delay to `comp_relay` and `comp_adv_output`.
