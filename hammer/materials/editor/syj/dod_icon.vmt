@@ -1,0 +1,11 @@
+"Sprite"
+{
+	// existing asset from DoD:S, but wasn't sprite
+	$basetexture "vgui/dod_logosmall"
+	$no_fullbright 1
+	$alphatest 1
+	
+	$spriteorientation	vp_parallel
+	$spriteorigin	"[ 0.50 0.50 ]"
+	%notooltexture 1
+}

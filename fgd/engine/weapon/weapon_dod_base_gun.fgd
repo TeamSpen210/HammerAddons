@@ -1,0 +1,12 @@
+@PointClass base(weapon_dod_base)
+	appliesto(+engine,DODS)
+	= weapon_dod_base_gun : "Base C++ class for all gun weapons in Day of Defeat: Source."
+[
+	@resources
+	[
+		mdl "models/shells/shell_small.mdl"
+		mdl "models/shells/shell_medium.mdl"
+		mdl "models/shells/shell_large.mdl"
+		mdl "models/shells/garand_clip.mdl"
+	]
+]

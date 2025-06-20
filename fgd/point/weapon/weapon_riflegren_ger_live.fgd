@@ -1,0 +1,9 @@
+@PointClass base(Weapon) appliesto(DODS) studioprop("models/weapons/w_k98_rg_grenade.mdl") = weapon_riflegren_ger_live : "Axis Live Rifle Grenade.\n\nExplodes after a few seconds; spawn with point_template or VScript."
+[
+	@resources
+	[
+		weapon_script "scripts/weapon_riflegren_ger_live.txt"
+		entity weapon_basedodgrenade
+		entity grenade_riflegren_ger
+	]
+]

@@ -1,0 +1,21 @@
+@PointClass base(Weapon)
+	appliesto(+engine,DODS)
+	= weapon_dod_base : "Base C++ class for all weapons in Day of Defeat: Source."
+[
+	@resources
+	[
+		snd "Default.ClipEmpty_Rifle"
+
+		particle "muzzle_pistols"
+		particle "muzzle_fullyautomatic"
+		particle "muzzle_rifles"
+		particle "muzzle_rockets"
+		particle "muzzle_mg42"
+
+		particle "view_muzzle_pistols"
+		particle "view_muzzle_fullyautomatic"
+		particle "view_muzzle_rifles"
+		particle "view_muzzle_rockets"
+		particle "view_muzzle_mg42"
+	]
+]

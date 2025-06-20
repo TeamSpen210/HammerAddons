@@ -1,0 +1,11 @@
+@PointClass
+	base(func_team_wall)
+    wirebox(mins, maxs) // change this to `obb(mins, maxs)` if using H++, as it can be rotated
+    //iconsprite() // TODO
+    appliesto(DODS) = comp_team_wall : "Team Blocker Wall.\n\nPoint entity alias for func_team_wall."
+[
+    // override these for updated descriptions
+    mins(vector) : "mins" : : "The uppermost and northernmost point of the bounding box."
+	maxs(vector) : "maxs" : : "The bottommost and southernmost point of the bounding box."
+	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "Rotate the bounding box, for a diagonal wall."
+]

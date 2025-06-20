@@ -1,0 +1,1 @@
+@PointClass base(BaseEntityPoint) appliesto(+engine,DODS) = dod_bomb_dispenser_icon : "Spawned automatically at the center of each dod_bomb_dispenser's bbox to indicate where it is on the minimap. Does not work when spawned directly." []

@@ -48,6 +48,14 @@
 		2 : "HECU"
 		3 : "Scientists"
 		]
+
+	filterteam[DODS](choices) : "Filter Team Number" : 2 : "The team number to filter by.  " +
+		"If the filter mode is Allow, only entities whose team number matches the given team will pass the filter. " +
+		"If the filter mode is Disallow, all entities EXCEPT those whose team number matches the given team will pass the filter." =
+		[
+			2 : "Allies"
+			3 : "Axis"
+		]
 	
 	@resources []
 	]
