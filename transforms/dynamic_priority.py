@@ -135,3 +135,9 @@ def AddLogic(vmf: VMF, pos: Vec):
         Output("OnMapSpawn", "@PC_dynpr", "RunScriptCode", "LoadFromMemory()")
     )
 
+    logic_script.add_out(
+        Output("OnUser1", "!self", "RunScriptCode", "ChangeMode(1)"),
+        Output("OnUser2", "!self", "RunScriptCode", "ChangeMode(0)"),
+        Output("OnUser3", "!self", "RunScriptCode", "ChangeMode(2)")
+    )
+
