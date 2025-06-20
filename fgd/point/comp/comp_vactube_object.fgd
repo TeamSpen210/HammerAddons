@@ -12,7 +12,7 @@
 		"This allows multiple vactubes to have a different mix of items. If you don't need this, you can leave the groups blank."
 
 	tv_skin[engine](integer) : "TV Skin" : 0
-	tv_skin(choices) : "TV Skin" : 0 : "The skin to display on scanner TVs." = 
+	tv_skin(choices) : "TV Skin" : 0 : "The skin to display on scanner TVs. These correspond to the custom _new TV models, since the originals have inconsistent skin layouts." = 
 	[
 		0 : "Blank"
 		1 : "Chair"

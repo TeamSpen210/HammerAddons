@@ -33,7 +33,7 @@
 		"pos_y" : "Position - Y only"
 		"pos_z" : "Position - Z only"
 		"ang" : "Angle (as vector)"
-		"qangle": "Angle (as QAngle)" [L4D2, P2DES]
+		"qangle": "Angle (as QAngle)" [L4D2, TF2, P2DES]
 		"off" : "Offset to Reference"
 		"dist" : "Distance to Reference"
 		"x": "Forward Direction"
