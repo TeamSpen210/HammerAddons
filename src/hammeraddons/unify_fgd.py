@@ -258,7 +258,9 @@ def _polyfill_ext_valuetypes(fgd: FGD) -> None:
     for ent in fgd.entities.values():
         for tag_map in ent.keyvalues.values():
             for kv in tag_map.values():
-                kv.type = decay.get(kv.type, kv.type)
+                # Don't change unknown types.
+                if kv.custom_type is None:
+                    kv.type = decay.get(kv.type, kv.type)
 
 
 @_polyfill('until_l4d')
@@ -427,6 +429,7 @@ def load_database(
                 extra_fsys,
                 extra_fsys[str(file.relative_to(extra_loc))],
                 eval_bases=False,
+                ignore_unknown_valuetype=True,
             )
             print('s', end='', flush=True)
 
@@ -449,6 +452,7 @@ def load_database(
                 extra_fsys,
                 extra_fsys[extra_loc.name],
                 eval_bases=False,
+                ignore_unknown_valuetype=True,
             )
         else:
             print('\nLoading extra files:')
@@ -458,6 +462,7 @@ def load_database(
                         extra_fsys,
                         extra_fsys[str(file.relative_to(extra_loc))],
                         eval_bases=False,
+                        ignore_unknown_valuetype=True,
                     )
                     print('.', end='', flush=True)
     print()
@@ -578,6 +583,7 @@ def load_file(
         file,
         eval_bases=False,
         encoding='utf8',
+        ignore_unknown_valuetype=True,
     )
     for clsname, ent in file_fgd.entities.items():
         if clsname in base_fgd.entities:
