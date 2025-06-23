@@ -27,11 +27,11 @@
 
 	@resources
 		[
-	    sound "VFX.FizzlerLp"
-	    sound "VFX.FizzlerDestroy"
-	    sound "VFX.FizzlerStart"
-	    sound "VFX.FizzlerVortexLp"
-	    sound "Prop.Fizzled"
-		particle cleanser_scanline
+	    sound "VFX.FizzlerLp"       [P2]
+	    sound "VFX.FizzlerDestroy"  [P2]
+	    sound "VFX.FizzlerStart"    [P2]
+	    sound "VFX.FizzlerVortexLp" [P2]
+	    sound "Prop.Fizzled"        [P2]
+		particle cleanser_scanline  [P2]
 		]
 	]
