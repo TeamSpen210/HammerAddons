@@ -1,0 +1,16 @@
+@SolidClass base(Trigger) appliesto(DODS) = dod_bomb_dispenser : "Bomb Dispenser Area."
+[
+	dispense_team[engine](integer) : "Team to give bombs to" : 0
+	dispense_team(choices) : "Team to give bombs to" : 0 = 
+	[
+		0 : "Both Teams"
+		2 : "Allies Only"
+		3 : "Axis Only"
+	]
+
+	@resources
+	[
+		entity weapon_basebomb
+		entity dod_bomb_dispenser_icon
+	]
+]

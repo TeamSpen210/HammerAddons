@@ -1,0 +1,9 @@
+@PointClass base(Weapon) appliesto(DODS) studioprop("models/weapons/w_bazooka.mdl") = weapon_bazooka : "Allies Rocket's Bazooka.\n\nDespawns after a few seconds; spawn with point_template or VScript."
+[
+	@resources
+	[
+		weapon_script "scripts/weapon_bazooka.txt"
+		entity weapon_dodbaserpg
+		entity rocket_bazooka
+	]
+]

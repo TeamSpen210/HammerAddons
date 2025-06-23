@@ -26,6 +26,12 @@
 		2: "P-Body"
 		3: "ATLAS"
 		]
+	teamnum[DODS](choices) : "Team" : 0 =
+	[
+		0 : "Neutral"
+		2 : "Allies"
+		3 : "Axis"
+	]
 		
 	teamnum(integer) : "Team"
 	teamnum[engine](integer): "Team": 0
@@ -33,4 +39,4 @@
 
 	// Inputs
 	input SetTeam(integer) : "Changes the entity's team."
-	]
+]

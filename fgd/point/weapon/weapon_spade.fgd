@@ -1,0 +1,8 @@
+@PointClass base(Weapon) appliesto(DODS) studioprop("models/weapons/w_spade.mdl") = weapon_spade : "Axis Melee Spade.\n\nDespawns after a few seconds; spawn with point_template or VScript."
+[
+	@resources
+	[
+		weapon_script "scripts/weapon_spade.txt"
+		entity weapon_dod_base_melee
+	]
+]

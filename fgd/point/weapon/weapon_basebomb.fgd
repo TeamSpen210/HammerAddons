@@ -1,0 +1,9 @@
+// using grey version instead of normal version for studioprop(), so that it's distinguishable from the static props usually used to designate dod_bomb_dispenser
+@PointClass base(Weapon) appliesto(DODS) studioprop("models/weapons/w_tnt_grey.mdl") = weapon_basebomb : "TNT, ordinarily spawned with dod_bomb_dispenser.\n\nDespawns after a few seconds; spawn with point_template or VScript."
+[
+	@resources
+	[
+		weapon_script "scripts/weapon_basebomb.txt"
+		entity weapon_dod_base
+	]
+]

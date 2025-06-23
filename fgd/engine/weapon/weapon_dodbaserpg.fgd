@@ -1,0 +1,9 @@
+@PointClass base(weapon_dod_base)
+	appliesto(+engine,DODS)
+	= weapon_dodbaserpg : "Base C++ class for all rocket launcher weapons in Day of Defeat: Source."
+[
+	@resources
+	[
+		// nothing to be found here
+	]
+]

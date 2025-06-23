@@ -45,6 +45,8 @@ GAMES_CHRONO: list[tuple[str, str]] = [
 MODS_BRANCHED: dict[str, list[tuple[str, str]]] = {
     'HL2': [
         ('HLS', 'Half-Life: Source'),
+        ('HLDMS', 'Half-Life Deathmatch: Source'),
+        ('HL2DM', 'Half-Life 2 Deathmatch'),
         ('DODS', 'Day of Defeat: Source'),
         ('CSS',  'Counter-Strike: Source'),
     ],
@@ -93,13 +95,17 @@ FEATURES: dict[str, set[str]] = {
 
     'MBASE': {'VSCRIPT'},
     'MESA': {'HL2', 'INST_IO'},
-    'GMOD': {'HL2', 'EP1', 'EP2', 'INST_IO'},
+    'GMOD': {'HL2', 'EP1', 'EP2', 'INST_IO', 'PROPLM'},
     'EZ1': {'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
     'EZ2': {'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
-    'KZ': {'HL2'},
+    'KZ': {'HL2', 'PROPLM'},
 
     'L4D2': {'INST_IO', 'VSCRIPT'},
-    'TF2': {'PROP_SCALING', 'VSCRIPT'},
+    'HL2DM': {'VSCRIPT', 'PROPLM', '2025MP', 'MPONLY'},
+    'TF2': {'VSCRIPT', 'PROPLM', '2025MP', 'MPONLY'},
+    'CSS': {'VSCRIPT', 'PROPLM', '2025MP', 'MPONLY'},
+    'DODS': {'VSCRIPT', 'PROPLM', '2025MP', 'MPONLY'},
+    'HLDMS': {'HLS', 'VSCRIPT', 'PROPLM', '2025MP', 'MPONLY'}, # HLDMS has all HL:S ents, but runs on TF2's engine version
     'ASW': {'INST_IO', 'VSCRIPT'},
     'P2': {'INST_IO', 'VSCRIPT'},
     'CSGO': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},

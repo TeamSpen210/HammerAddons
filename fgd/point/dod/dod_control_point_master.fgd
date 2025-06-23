@@ -1,0 +1,30 @@
+@PointClass base(BaseEntity,EnableDisable) appliesto(DODS) iconsprite("editor/syj/dod_flag.vmt") = dod_control_point_master : "Control Point Master"
+[
+	cpm_use_timer[engine](boolean) : "Use round timer?" : 0
+	cpm_use_timer(choices) : "Use round timer?" : 0  =
+	[ 
+		0 : "No"  
+		1 : "Yes" 
+	] 
+
+	cpm_timer_length(integer) : "Round timer length in seconds" : 300
+
+	cpm_timer_team[engine](integer) : "Which team wins when timer expires" : 2 
+	cpm_timer_team(choices) : "Which team wins when timer expires" : 2 : "Stalemates are *not* permitted; setting this to any value other than 2 or 3 will result in the round continuing after the timer expires."  =
+	[
+		2 : "Allies"
+		3 : "Axis" 
+	] 
+
+	output OnAlliesWin(void) : "Output sent when Allies win the round. Do not use for victory music; overwrite `Game.USWin` soundscript in `maps/<mapname>_sounds.txt` instead."
+	output OnAxisWin(void) : "Output sent when Axis win the round. Do not use for victory music; overwrite `Game.GermanWin` soundscript in `maps/<mapname>_sounds.txt` instead."
+	
+	input AddTimerSeconds(integer) : "Add seconds to the duration of the round timer"
+	input RoundInit(void) : "Re-initializes the round, resetting all control points and capture zones. Does not actually restart the round, so the round timer and any bomb targets are not reset."
+
+	@resources
+	[
+		entity dod_round_timer
+		entity dod_gamerules
+	]
+]

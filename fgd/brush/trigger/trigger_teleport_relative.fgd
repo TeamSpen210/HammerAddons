@@ -1,5 +1,5 @@
 @SolidClass base(Trigger) 
-	appliesto(MBase, TF2) = trigger_teleport_relative: "A trigger volume that teleports entities that touch it. " +
+	appliesto(MBase, 2025MP) = trigger_teleport_relative: "A trigger volume that teleports entities that touch it. " +
 		"Entities are teleported by Offset from their current position. " +
 		"Useful to get objects out of situations where levels or entities suddenly appear intersecting with them."
 	[

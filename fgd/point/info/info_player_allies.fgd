@@ -1,0 +1,31 @@
+@PointClass base(BaseEntityPoint,PlayerClass,EnableDisable) studio("models/editor/american_rifleman.mdl") appliesto(DODS) = info_player_allies :
+	"This entity marks the start point for Allied players.\nPlace 16 units above the ground to prevent spawn from being invalid." 
+[
+	@resources
+	[
+		// technically handled via `player`
+		entity dod_ammo_box
+
+		mdl "models/player/american_rifleman.mdl"
+		mdl "models/player/american_assault.mdl"
+		mdl "models/player/american_support.mdl"
+		mdl "models/player/american_sniper.mdl"	
+		mdl "models/player/american_mg.mdl"
+		mdl "models/player/american_rocket.mdl"
+
+		snd "Player.FlashlightOn"
+		snd "Player.FlashlightOff"
+
+		snd "Player.FreezeCam"
+		snd "Camera.SnapShot"
+		snd "Achievement.Earned"
+		snd "Game.Revenge"
+		snd "Game.Domination"
+		snd "Game.Nemesis"
+
+		mat "sprites/glow01.vmt"
+
+		// techically precached outside of any class
+		mdl "models/helmets/helmet_american.mdl"
+	]
+]

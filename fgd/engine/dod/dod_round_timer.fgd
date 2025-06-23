@@ -1,0 +1,2 @@
+@PointClass base(BaseEntity)
+    appliesto(+engine,DODS) = dod_round_timer : "Round timer. All mapper-side functionality has been folded into dod_control_point_master." []
