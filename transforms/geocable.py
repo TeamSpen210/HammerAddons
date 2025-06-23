@@ -591,8 +591,8 @@ async def build_rope(rope_key: CompKey, temp_folder: Path, mdl_name: str, args: 
 
 
 def build_node_tree(
-    ents: frozenset[NodeEnt],
-    connections: frozenset[tuple[NodeID, NodeID]],
+    ents: Iterable[NodeEnt],
+    connections: Iterable[tuple[NodeID, NodeID]],
 ) -> tuple[set[Node], set[Node]]:
     """Convert the ents/connections definitions into a node tree."""
     # Convert them all into the real node objects.
