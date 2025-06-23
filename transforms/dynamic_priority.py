@@ -1,9 +1,9 @@
 from hammeraddons.bsp_transform import trans, Context
 
 from srctools import VMF, Entity, conv_int, Vec, Output
-import logging
+from srctools.logger import get_logger
 
-LOGGER = logging.getLogger("[Transform][Dynamic Priority]")
+LOGGER = get_logger(__name__)
 
 
 @trans("Dynamic Priority")
@@ -37,11 +37,15 @@ def dynamic_priority(ctx: Context):
     available_styles = list(available_styles - used_styles)
     
     lg0_static_style = available_styles[0]
-    lg0_dynamic_style = available_styles[1]
-    lg1_static_style = available_styles[2]
+    lg1_static_style = available_styles[1]
+    lg0_dynamic_style = available_styles[2]
     lg1_dynamic_style = available_styles[3]
     
     for light in lights:
+
+        if conv_int(light["_lightmode"], 2) == 1: # Convert specular to dynamic
+            LOGGER.info(f"Converting light at {light.get_origin()} to Baked Bounce!")
+            light["_lightmode"] = 2
         
         if conv_int(light["_lightmode"], 2) != 2: # Only Baked Bounce makes sense to have this functionality
             continue
@@ -60,7 +64,7 @@ def dynamic_priority(ctx: Context):
         if dynpr == 2: # On High, don't change since the light is always dynamic
             continue
 
-        LOGGER.info(f"Processing light at {light.get_origin()}")
+        #LOGGER.info(f"Processing light at {light.get_origin()}")
 
         if not added_logic:
             added_logic = True
@@ -70,15 +74,23 @@ def dynamic_priority(ctx: Context):
 
         light_copy = light.copy()
         light_bounce = light.copy()
+        #It turns out, bounce isn't needed, it will get generated from the dynamic light since it doesn't have the style kv
 
         light_bounce["_lightmode"] = 2 # Ensure Bounce is created
-        light_bounce["_removeaftercompile"] = 1 # Make VRAD remove this light after compilation
+        #light_bounce["_removeaftercompile"] = 1 # Make VRAD remove this light after compilation
         # This trick allows us to create artificial bounce-only lights, because named lights don't get bounce lights
+        
+        # Okay it turns out this "trick" works only sometimes and sometimes it crashes the game
+        
+        light_bounce.add_out(
+            Output("OnUser1", "!self", "Kill", "", 0.2)
+        )
 
         # The thing is, even when switching the modes, bounce lights will remain on, because we're switching between groups and not on/off
 
         light["targetname"] = f"light_dynpr_dynamic_{dynpr}"
 
+        #Dynamic lights don't need styles for networking
         if dynpr == 0:
             light["style"] = lg0_dynamic_style
         elif dynpr == 1:
@@ -96,17 +108,18 @@ def dynamic_priority(ctx: Context):
         light_copy["_lightmode"] = 0 # Fully static
 
         # We expect the mode to be medium by default, it also limits the amount of lights being switched at once when changing from this mode on map load
-        if dynpr == 1: # Medium, set the static light to dark
-            spawnflags = conv_int(light_copy["spawnflags", 0])
-            spawnflags |= 1 # Sets Initially Dark to True
-            light_copy["spawnflags"] = spawnflags
-    
-        elif dynpr == 0: # Low, set the dynamic light to dark
-            spawnflags = conv_int(light["spawnflags", 0])
-            spawnflags |= 1 # Sets Initially Dark to True
-            light["spawnflags"] = spawnflags
+        #if dynpr == 1: # Medium, set the static light to dark
+        #    spawnflags = conv_int(light_copy["spawnflags", 0])
+        #    spawnflags |= 1 # Sets Initially Dark to True
+        #    light_copy["spawnflags"] = spawnflags
+        #
+        #elif dynpr == 0: # Low, set the dynamic light to dark
+        spawnflags = conv_int(light["spawnflags", 0])
+        spawnflags |= 1 # Sets Initially Dark to True
+        light["spawnflags"] = spawnflags
 
-        vmf.add_ents([light_copy, light_bounce])
+        vmf.add_ents([light_copy])
+        vmf.add_ents([light_bounce])
 
 
 
@@ -132,7 +145,8 @@ def AddLogic(vmf: VMF, pos: Vec):
     )
 
     logic_auto.add_out(
-        Output("OnMapSpawn", "@PC_dynpr", "RunScriptCode", "LoadFromMemory()")
+        Output("OnMapSpawn", "@PC_dynpr", "RunScriptCode", "LoadFromMemory()"),
+        Output("OnMapSpawn", "light_rt*", "FireUser1", only_once=True) # Kill bounce only lights
     )
 
     logic_script.add_out(
