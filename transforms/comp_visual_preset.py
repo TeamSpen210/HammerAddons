@@ -93,6 +93,21 @@ def visual_preset(ctx: Context) -> None:
                 Output("OnUser1", cc_ent, "Disable")
             )
 
+
+        # Depth of Field
+
+        if (dof_controller := vpreset["dof_controller", None]):
+            for _ in vmf.search(dof_controller):
+                relay_ent.add_out(
+                    Output("OnTrigger", dof_controller, "SetNearBlurDepth", param=vpreset["dof_near_blur", 20]),
+                    Output("OnTrigger", dof_controller, "SetNearFocusDepth", param=vpreset["dof_near_focus", 100]),
+                    Output("OnTrigger", dof_controller, "SetFarFocusDepth", param=vpreset["dof_far_focus", 500]),
+                    Output("OnTrigger", dof_controller, "SetFarBlurDepth", param=vpreset["dof_far_blur", 1000]),
+                    Output("OnTrigger", dof_controller, "SetNearBlurRadius", param=vpreset["dof_near_radius", 8]),
+                    Output("OnTrigger", dof_controller, "SetFarBlurRadius", param=vpreset["dof_far_radius", 8])
+                )
+                break
+
     # End loop
 
 
