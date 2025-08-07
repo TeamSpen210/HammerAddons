@@ -1,0 +1,14 @@
+@BaseClass base(Item) size(-32 -32 -32, 32 32 32) appliesto(CSS,DODS,L4D2) = _BaseHolidayGift
+[
+    @resources
+    [
+        snd "Christmas.GiftDrop"
+        snd "Christmas.GiftPickup"
+    ]
+]
+
+@PointClass base(_BaseHolidayGift) appliesto(CSS) studio("models/items/cs_gift.mdl") = holiday_gift : "A festive present.\n\nDisappears after 30 seconds; spawn with point_template or vscript." []
+
+@PointClass base(_BaseHolidayGift) appliesto(DODS) studio("models/items/dod_gift.mdl") = holiday_gift : "A festive present.\n\nDisappears after 30 seconds; spawn with point_template or vscript." []
+
+@PointClass base(_BaseHolidayGift) appliesto(L4D2) studio("models/items/l4d_gift.mdl") = holiday_gift : "A festive present.\n\nDisappears after 30 seconds; spawn with point_template or vscript." []

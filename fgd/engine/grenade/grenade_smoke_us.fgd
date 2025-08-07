@@ -1,0 +1,10 @@
+@PointClass base(grenade_smoke, BaseEntityAnimating) // Mismatch??
+	appliesto(+engine, DODS)
+	studioprop("models/Weapons/w_smoke_us.mdl")
+= grenade_smoke_us : "Allies smoke grenade, as spawned from weapon_smoke_us."
+[
+	@resources
+	[
+		mdl "models/Weapons/w_smoke_us.mdl"
+	]
+]

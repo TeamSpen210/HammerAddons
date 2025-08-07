@@ -14,6 +14,11 @@
 	@resources [
 		sound "BaseGrenade.Explode"
 
+        particle "grenadetrail" [+dods]
+        particle "riflegrenadetrail" [+dods]
+        particle "explosioncore_midair" [+dods]
+        particle "explosioncore_floor" [+dods]
+
 		particle "ExplosionCore" [+entropyzero2]
 		particle "ExplosionEmbers" [+entropyzero2]
 		particle "ExplosionFlash" [+entropyzero2]

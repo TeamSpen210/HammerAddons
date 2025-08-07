@@ -1,0 +1,10 @@
+@PointClass base(Item)
+    appliesto(+engine,DODS)
+    studioprop("models/ammo/ammo_us.mdl") = dod_ammo_box : "An ammo box. It can only be picked up by members of the same teams as the player who dropped it, and the variable which controls this isn't exposed to keyvalues or even VScript, so there's little reason to place it directly."
+[
+    @resources
+    [
+        mdl "models/ammo/ammo_us.mdl"
+        mdl "models/ammo/ammo_axis.mdl"
+    ]
+]

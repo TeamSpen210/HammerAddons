@@ -1,0 +1,9 @@
+@PointClass base(weapon_dod_base)
+	appliesto(+engine,DODS)
+	= weapon_dod_base_melee : "Base C++ class for all melee weapons in Day of Defeat: Source."
+[
+	@resources
+	[
+		// nothing to be found here
+	]
+]

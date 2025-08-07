@@ -1,0 +1,10 @@
+@PointClass base(base_rocket)
+	appliesto(+engine, DODS)
+	studioprop("models/weapons/w_bazooka_rocket.mdl")
+= rocket_bazooka : "Allies bazooka projectile."
+[
+	@resources
+	[
+		mdl "models/weapons/w_bazooka_rocket.mdl"
+	]
+]

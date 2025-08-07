@@ -1,0 +1,5 @@
+@PointClass base(BaseEntity) appliesto(DODS) iconsprite("editor/syj/dod_location.vmt") =  dod_location :
+	"Location.\n\nTyping %l (lowercase L) in the chat will say the name of the closest dod_location or dod_control_point." 
+[  
+	location_name(string) report : "Name of this location" : "TODO: Set Name" : "Can be either a regular string or a reference to a localization string. Max 63 characters."
+]

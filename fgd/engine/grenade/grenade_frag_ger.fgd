@@ -1,0 +1,11 @@
+@PointClass base(grenade, BaseEntityAnimating) // Mismatch??
+	appliesto(+engine, DODS)
+	studioprop("models/Weapons/w_stick.mdl")
+= grenade_frag_ger : "Axis stick grenade, as spawned from weapon_frag_ger."
+[
+	@resources
+	[
+		mdl "models/Weapons/w_stick.mdl"
+		snd "HEGrenade.Bounce"
+	]
+]
