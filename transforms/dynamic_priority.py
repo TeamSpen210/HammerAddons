@@ -8,6 +8,7 @@ LOGGER = get_logger(__name__)
 
 @trans("Dynamic Priority")
 def dynamic_priority(ctx: Context):
+    return # Will re-enable once p2ce fixes the crucial bugs with lights
     vmf = ctx.vmf
 
     light: Entity
