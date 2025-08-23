@@ -14,6 +14,7 @@ def ptexworkaround(ctx: Context):
 
     logic_auto = Entity(
         vmf, {
+            "classname": "logic_auto",
             "spawnflags": "1",
         }
     )
