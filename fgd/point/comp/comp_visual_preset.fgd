@@ -34,7 +34,7 @@
 	cc_fadein(float) : "CC FadeIn Time" : 1.0
 	cc_fadeout(float) : "CC FadeOut Time" : 1.0
 
-	linedivider_fg[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_dof[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
 
 
 	dof_controller(target_destination) : "env_dof_controller" : "@DOFController" : "Depth of field controller. Needs to be set to use dof presets."

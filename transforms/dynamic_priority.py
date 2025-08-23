@@ -8,6 +8,7 @@ LOGGER = get_logger(__name__)
 
 @trans("Dynamic Priority")
 def dynamic_priority(ctx: Context):
+    return # Will re-enable once p2ce fixes the crucial bugs with lights
     vmf = ctx.vmf
 
     light: Entity
@@ -38,8 +39,6 @@ def dynamic_priority(ctx: Context):
     
     lg0_static_style = available_styles[0]
     lg1_static_style = available_styles[1]
-    lg0_dynamic_style = available_styles[2]
-    lg1_dynamic_style = available_styles[3]
     
     for light in lights:
 
@@ -89,12 +88,7 @@ def dynamic_priority(ctx: Context):
         # The thing is, even when switching the modes, bounce lights will remain on, because we're switching between groups and not on/off
 
         light["targetname"] = f"light_dynpr_dynamic_{dynpr}"
-
-        #Dynamic lights don't need styles for networking
-        if dynpr == 0:
-            light["style"] = lg0_dynamic_style
-        elif dynpr == 1:
-            light["style"] = lg1_dynamic_style
+        light["_lightmode"] = 3 # Make the light fully dynamic, bounce will be handled by another light
 
         
         light_copy["targetname"] = f"light_dynpr_static_{dynpr}"
