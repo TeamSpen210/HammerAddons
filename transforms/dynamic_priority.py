@@ -8,7 +8,6 @@ LOGGER = get_logger(__name__)
 
 @trans("Dynamic Priority")
 def dynamic_priority(ctx: Context):
-    return # Will re-enable once p2ce fixes the crucial bugs with lights
     vmf = ctx.vmf
 
     light: Entity
@@ -39,6 +38,8 @@ def dynamic_priority(ctx: Context):
     
     lg0_static_style = available_styles[0]
     lg1_static_style = available_styles[1]
+    lg0_dynamic_style = available_styles[2]
+    lg1_dynamic_style = available_styles[3]
     
     for light in lights:
 
@@ -95,25 +96,46 @@ def dynamic_priority(ctx: Context):
 
         if dynpr == 0:
             light_copy["style"] = lg0_static_style
+            light["style"] = lg0_dynamic_style
         elif dynpr == 1:
             light_copy["style"] = lg1_static_style
+            light["style"] = lg1_dynamic_style
 
         # Create a static copy
         light_copy["_lightmode"] = 0 # Fully static
 
+        # Static lights are brighter than dynamic, so tweak this value
+        r, g, b, I = light_copy["_light"].split(" ")
+        I = conv_int(I)
+        I *= .5
+        I = int(I)
+        light_copy["_light"] = f"{r} {g} {b} {I}"
+ 
         # We expect the mode to be medium by default, it also limits the amount of lights being switched at once when changing from this mode on map load
-        #if dynpr == 1: # Medium, set the static light to dark
-        #    spawnflags = conv_int(light_copy["spawnflags", 0])
-        #    spawnflags |= 1 # Sets Initially Dark to True
-        #    light_copy["spawnflags"] = spawnflags
-        #
-        #elif dynpr == 0: # Low, set the dynamic light to dark
-        spawnflags = conv_int(light["spawnflags", 0])
-        spawnflags |= 1 # Sets Initially Dark to True
-        light["spawnflags"] = spawnflags
+        if dynpr == 1: # Medium, set the static light to dark
+            spawnflags = conv_int(light_copy["spawnflags", 0])
+            spawnflags |= 1 # Sets Initially Dark to True
+            light_copy["spawnflags"] = spawnflags
+        
+        elif dynpr == 0: # Low, set the dynamic light to dark
+            spawnflags = conv_int(light["spawnflags", 0])
+            spawnflags |= 1 # Sets Initially Dark to True
+            light["spawnflags"] = spawnflags
 
         vmf.add_ents([light_copy])
         vmf.add_ents([light_bounce])
+
+
+        # HACK: Make VRAD skip processing dynamic lights
+        match light["classname"]:
+            case "light_rt_spot":
+                light["classname"] = "_dynpr_rt_spot"
+
+            case "light_rt":
+                light["classname"] = "_dynpr_rt"
+
+            case _:
+                pass
 
 
 
