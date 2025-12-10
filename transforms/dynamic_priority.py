@@ -126,18 +126,6 @@ def dynamic_priority(ctx: Context):
         vmf.add_ents([light_bounce])
 
 
-        # HACK: Make VRAD skip processing dynamic lights
-        match light["classname"]:
-            case "light_rt_spot":
-                light["classname"] = "_dynpr_rt_spot"
-
-            case "light_rt":
-                light["classname"] = "_dynpr_rt"
-
-            case _:
-                pass
-
-
 
 def AddLogic(vmf: VMF, pos: Vec):
     """Add the necessary logic to load the saved state on every map load."""

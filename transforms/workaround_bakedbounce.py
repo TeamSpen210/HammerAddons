@@ -2,18 +2,17 @@
 
 from hammeraddons.bsp_transform import trans, Context
 from srctools.logger import get_logger
-from srctools import Entity, VMF, Output, conv_int
+from srctools import VMF
 
 
 
 LOGGER = get_logger(__name__)
 
-@trans("workaround_bakedbounce")
+@trans("workaround_bakedbounce", priority=-999999) # Run first
 def bbounceworkaround(ctx: Context):
     vmf: VMF = ctx.vmf
     for light in vmf.by_class["light"] | vmf.by_class["light_spot"] | vmf.by_class["light_rt"] | vmf.by_class["light_rt_spot"]:
         if light["targetname", ""] and light["_lightmode", 2] == "2":
-            LOGGER.info(f"Changing light {light["targetname"]}")
             light["_lightmode"] = 3
             light["style"] = 0
         
