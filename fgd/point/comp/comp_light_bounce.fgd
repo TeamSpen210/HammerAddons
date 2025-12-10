@@ -7,7 +7,7 @@
 	sphere(_distance)
 	sphere(_hard_radius_override)
 	clusteredlight(point)
-	appliesto(Postcompiler)
+	appliesto(srctools)
 	autovis(Postcompiler)
 = comp_light_bounce: "Generates bounced lighting (only) without direct lighting. Internally a light_rt."
 	[
