@@ -33,6 +33,9 @@ def sceneset(ctx: Context):
         delay = conv_float(ent['delay'], 0.1)
         only_once = conv_bool(ent['only_once'])
 
+        enable_mic = conv_bool(ent["enable_microphone", False])
+        mic_name = ent["microphone_name", "@ACTOR_MICROPHONE"]
+
         ent.remove()
 
         scene_ents: List[Entity] = []
@@ -49,6 +52,7 @@ def sceneset(ctx: Context):
                 origin=ent['origin'],
                 scenefile=scene,
             )
+
             scene_ents.append(part)
             if i + 1 < len(scenes):
                 part.add_out(Output(
@@ -64,6 +68,21 @@ def sceneset(ctx: Context):
                     Output('OnStart', '!self', 'AddOutput', 'targetname '),
                     Output('OnCompletion', '!self', 'Kill'),
                 )
+
+        if enable_mic:
+            scene_ents[0].add_out(Output(
+                "OnStart",
+                mic_name,
+                "Enable",
+                delay=0,
+            ))
+            
+            scene_ents[-1].add_out(Output(
+                "OnCompletion",
+                mic_name,
+                "Disable",
+                delay=0,
+            ))
 
         for out in ent.outputs:
             if out.output.casefold() == 'onstart':
