@@ -1,4 +1,6 @@
-@BaseClass = ControlEnables: "A pair of keyvalues for specifying if a comp_ entity is enabled."
+@BaseClass
+    appliesto(srctools)
+= ControlEnables: "A pair of keyvalues for specifying if a comp_ entity is enabled."
 	[
 	ctrl_type[engine](boolean) : "Invert Value?" : 0
     ctrl_type(choices) : "Control Type" : 0 : "Controls how the Control Value is interpreted" = 

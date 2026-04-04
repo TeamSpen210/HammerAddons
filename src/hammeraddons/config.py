@@ -444,10 +444,19 @@ def find_conf(map_path: Path) -> tuple[Path, Keyvalues]:
     if not map_path.suffix:
         map_path /= 'unused'
 
-    for folder in map_path.parents:
-        conf_path = folder / MAIN_CONF_NAME
-        if not conf_path.exists():
-            conf_path = folder / CONF_OLD_NAME
+    available_paths: set[Path] = set()
+
+    # If game folder is passed, check it first
+    if game_folder:
+        game_path = Path(game_folder).absolute()
+
+        if game_path.exists():
+            available_paths.update([game_path] + list(game_path.parents))
+
+    available_paths.update(map_path.parents)
+
+    for folder in available_paths:
+        conf_path = folder / CONF_NAME
         if conf_path.exists():
             LOGGER.info('Config path: "{}"', conf_path.absolute())
             with open(conf_path, encoding='utf8') as f:
@@ -1002,7 +1011,7 @@ PACK_BLOCKLIST = Opt.block(
 )
 
 SEARCHPATHS = Opt.block(
-    'searchpaths', Keyvalues('', []),
+    'searchpaths', Keyvalues('', [Keyvalues('nopack', '<620>/portal2'), Keyvalues('nopack', '<620>/portal2_dlc1'), Keyvalues('nopack', '<620>/portal2_dlc2'), Keyvalues('nopack', '<620>/update')]),
     """\
     Specify additional locations to search for files, or configure whether existing locations pack
     or not. Each key-value pair defines a path, with the value either a folder path or a VPK 
@@ -1116,7 +1125,7 @@ PLUGINS = Opt.block(
 """)
 
 DISABLED_TRANSFORMS = Opt.string(
-    'transform_disable', '',
+    'transform_disable', 'TF2 Control Point Props,Portal 2 Custom Models,Fix Laser Catcher Skins,Precache P2 Light Bridge,FGD - Fix key casing',
     """Specify transforms to disable as a comma-separated string."""
 )
 
