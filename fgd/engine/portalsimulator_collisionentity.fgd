@@ -2,4 +2,5 @@
 	appliesto(+engine, P1, P2)
 = portalsimulator_collisionentity: "This contains the modified physics meshes for the static geometry around portals."
 	[
+	@resources []
 	]   

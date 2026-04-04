@@ -8,7 +8,7 @@
 		16: "Fade Corpse" : 0
 		]
 
-	npctype(npcclass) : "Class name of spawned NPC"
+	npctype(npcclass) report: "Class name of spawned NPC"
 	npctargetname(string) : "Childrens' Name"
 	npcsquadname(string) : "Childrens' Squad Name"
 	npchintgroup(string) : "Childrens' Hint Group"
@@ -20,7 +20,7 @@
 		"weapon_glock" : "Glock" [Mesa]
 		"weapon_mp5" : "MP5" [Mesa]
 		"weapon_shotgun" : "Shotgun" [Mesa]
-		"weapon_357" : "357" [Mesa]
+		"weapon_357" : "357" // Both HL2 & BM
 
 		"weapon_pistol": "Pistol" [ASW, EP1, EP2, HL2, P1]
 		"weapon_ar2": "AR2" [ASW, EP1, EP2, HL2, P1]

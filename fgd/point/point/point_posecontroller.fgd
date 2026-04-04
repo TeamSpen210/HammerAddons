@@ -4,7 +4,7 @@
 = point_posecontroller: "An entity that controls a pose parameter of a prop and cycles the pose clientside."
 	[
 	propname(target_destination) : "Target" : : "Name of the prop to control. Can be any animating entity."
-	poseparametername(string) : "Pose Parameter Name" : : "Name of the pose parameter to control. Setting this to an invalid value will crash the game!"
+	poseparametername(string) report: "Pose Parameter Name" : : "Name of the pose parameter to control. Setting this to an invalid value will crash the game!"
 	posevalue(float) : "Pose Parameter Value" : 0 : "Normalized value for the pose parameter from 0.0 and 1.0 (maps to min and max range)."
 	interpolationtime(float) : "Interpolation Time" : 0 : "Number of seconds (0.0 to 10.0) for client to match absolue pose values."
 	interpolationwrap(boolean) : "Interpolation Wrap" : 0 : "Should wrap from 0.0 to 1.0 when interpolating."

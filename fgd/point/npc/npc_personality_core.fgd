@@ -12,21 +12,27 @@
 	skin(choices) : "Model Skin" : 0 : "Sets the skin of the core. If using the alternate model, this sets the eye color. If using the normal model, (0=broken) (1=intact). If using a custom model, any skin number can be entered here. " +
 	"NOTE: Older maps may have the keyvalue ModelSkin set instead, disable SmartEdit and remove it to ensure this value is used." =
 		[
-		0: "[0] Blue Eye / Broken"
-		1: "[1] Green Eye / Intact"
-		2: "[2] Orange Eye / NA"
-		3: "[3] Purple Eye / NA"
+		0: "[0] Wheatley (Damaged)"
+		1: "[1] Wheatley (Normal) / Adventure Core"
+		2: "[2] N/A / Space Core"
+		3: "[3] N/A / Fact Core"
 		]
 
 	// this is still supported by the engine, but shouldn't appear in hammer
 	ModelSkin[engine](integer) : "Model Skin" : 0
 
 	altmodel[engine](boolean) : "Use Alternate Skins" : 0
-	altmodel(choices) : "Use Alternate Skins" : 0 : "Use the model with corrupted skins, instead of the skins in the original model. " =
+	altmodel[-P2CE](choices) : "Use Alternate Skins" : 0 : "Use the model with corrupted skins, instead of the skins in the original model. " =
 		[
 		0: "No"
 		1: "Yes"
 		]
+	altmodel[+P2CE](choices): "Core Model Type" : 0 : "Was 'Use alternate skins'. Now determines which 'core type' to use." =
+ 		[
+		0: "Original"
+		1: "Alternate"
+		2: "Custom"
+ 		]
 
 	model[engine](studio) : "Model"
 	model[-srctools](choices) : "[H] Model" : "models/npcs/personality_sphere/personality_sphere.mdl" : "Choose the model to show in Hammer. Set to the same as Use Alternate Skins." =
@@ -39,7 +45,10 @@
 		"models/npcs/personality_sphere/personality_sphere.mdl": "Original (Wheatley)"
 		"models/npcs/personality_sphere/personality_sphere_skins.mdl": "Alternate (Corrupt Cores)"
 		]
-
+	flashlightcolor[Strata](color255): "Flashlight Color" : "255 255 255 500" : "Specifies this core's flashlight color. See env_projectedtexture for documentation."
+	flashlightfov[Strata](float): "Flashlight FOV" : "85.0f" : "Specifies the field-of-view (FOV) for this core's flashlight. See env_projectedtexture for documentation."
+	flashlightfarz[Strata](float): "Flashlight Far-Z" : "750.0f" : "The maximum range (Far-Z) for this core's flashlight. See env_projectedtexture for documentation."
+ 
 	// Inputs
 	input EnableMotion(void) : "Enable physics motion/collision response."
 	input DisableMotion(void) : "Disable physics motion/collision response."
@@ -53,7 +62,7 @@
 	input PlayLock(void) : "Play the locking animation, used for syncing with the socket's animation."
 	input SetIdleSequence(string) : "Set a sequence to use as an idle sequence."
 	input ClearIdleSequence(void) : "Return to the default idle animation."
-	input Explode(void) : "Explode the sphere, triggering an explosion effect and some gibs."
+	input Explode(void) : "Explodes the sphere, triggering an explosion effect and some gibs. This is purely decorative and does not remove this NPC."
 
 	// Outputs
 	output OnPlayerPickup(void) : "Fired whenever the player picks up the core."

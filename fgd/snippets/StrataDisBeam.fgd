@@ -1,0 +1,11 @@
+// Preset colours for Discouragement Beams
+@snippet choices StrataDisBeamColor = 
+	[
+	"255 255 255 255": "White"
+	"255 0 0 255": "Default Red"
+	"100 255 100 255": "Lethal Green"
+	"32 112 202 255": "Blue"
+	"255 212 91 255": "Yellow"
+	"212 60 146 255": "Pink"
+	"65 97 0 255": "Dark Green"
+	]

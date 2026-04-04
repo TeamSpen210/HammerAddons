@@ -1,4 +1,4 @@
-@PointClass base(Trigger)
+@PointClass base(BaseTrigger) // CBaseVPhysicsTrigger
 	appliesto(+engine, P2)
 = trigger_tractorbeam: "Internal trigger used to implement the region for Excursion Funnels."
 	[

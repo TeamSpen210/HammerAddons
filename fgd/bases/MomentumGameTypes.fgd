@@ -1,0 +1,23 @@
+@BaseClass
+	appliesto(MOMENTUM)
+= MomentumGameTypes
+	[
+	gametype[engine](integer) : "Game Type" : 0
+	gametype(choices) : "Game Type" : 0 : "The game type of the map." =
+		[
+		0 : "Unknown"
+		1 : "Surf"
+		2 : "Bhop"
+		3 : "Bhop (HL1)"
+		4 : "Climb (Mom)"
+		5 : "Climb (KZT)"
+		6 : "Climb (1.6)"
+		7 : "RJ"
+		8 : "SJ"
+		9 : "Ahop"
+		10 : "Conc"
+		11 : "Defrag (CPM)"
+		12 : "Defrag (VQ3)"
+		13 : "Defrag (VTG)"
+		]
+	]

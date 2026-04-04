@@ -1,0 +1,5 @@
+@NPCClass appliesto(EZ2) aliasof(npc_xenlight)
+	autovis(Entities, NPCs, Xen, Xen Deco)
+= npc_lightstalk: "Alt classname for npc_xenlight"
+	[
+	]

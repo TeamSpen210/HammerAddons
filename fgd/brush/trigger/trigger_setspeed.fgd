@@ -1,0 +1,26 @@
+@SolidClass appliesto(Strata)
+base(Trigger)
+= trigger_setspeed : "A trigger volume that sets the exact speed of entities that are touching it." 
+	[
+	HorizontalSpeedMode[engine](integer) : "Vertical Speed Mode" : 0
+	HorizontalSpeedMode(choices) : "Horizontal Speed Mode" : 0 : "Determines how horizontal speed is applied. If direction is not set, the entity's current velocity direction is retained. If the entity has no horizontal speed, its rotation is used for the velocity angle." =
+		[
+		0: "Set exact speed and direction"
+		1: "Set exact speed"
+		2: "Increase only"
+		3: "Decrease only"
+		4: "Ignore"
+		]
+	HorizontalSpeed(float) : "Horizontal Speed" : 500 : "The new horizontal speed to apply. Direction depends on Horizontal Speed Mode."
+	HorizontalSpeedAngle(angle) : "Horizontal Speed Angle (Pitch Yaw Roll)" : "0 0 0" : "If this entity's Horizontal Speed Mode is 'Set exact speed and direction', this angle determines the new horizontal velocity direction. Only the Yaw is used."
+	VerticalSpeedMode[engine](integer) : "Vertical Speed Mode" : 4
+	VerticalSpeedMode(choices) : "Vertical Speed Mode" : 4 : "Determines how vertical speed is applied. 'Increase only' and 'Decrease only' factor in both sign and magnitude. For example, using 'Decrease only' with a speed of -500 will ensure an entity touching this is moving at least 500 units/sec downward." =
+		[
+		1: "Set exact speed"
+		2: "Increase only"
+		3: "Decrease only"
+		4: "Ignore"
+		]
+	VerticalSpeed(float) : "Vertical Speed" : 0 : "The new vertical speed to apply."
+	StrictMode(boolean) : "Strict Mode" : 0 : "When enabled, the entity must enter the trigger while on the ground and without teleporting. If the entity is a player, they: must first touch a brush side which opposes the horizontal speed angle (with 'Set exact speed and direction' mode), are teleported to the exact edge of the trigger, and are prevented from ducking while in the trigger. If there is not enough space to do this, the trigger will not activate."
+	]

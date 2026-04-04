@@ -1,19 +1,20 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
-	appliesto(EP2, HL2, P1, ASW) 
+	appliesto(EP2, P1) 
 	iconsprite("editor/vizzys/info_radar_target.vmt") 
-	sphere(radius) = info_radar_target: "Jalopy Radar Beacon"
+	sphere(radius) = info_radar_target: "A toggleable point entity that serves as a Jalopy radar beacon. Radar targets may be displayed over a set range.\n\n" +
+		"Requires the Jalopy radar to be enabled via prop_vehicle_jeep input EnableRadar() to use this entity. Does not function outside of Episodic."
 	[
 	radius(float) : "Effective Radius" : 6000 : "How close the Jalopy must be to detect this beacon. If this radius is -1, the range is infinite."
 	
 	type[engine](integer) : "Type of target" : 0
-	type(choices) : "Type of target" : 0 =
+	type(choices) report: "Type of target" : 0 :  "The icon to use for this beacon." =
 		[
 		0: "Generic Citizen Beacon"
-		1: "Magnussen RDU Beacon"
+		1: "Magnusson RDU Beacon"
 		2: "Dog"
 		3: "Ally Installation"
 		4 : "Enemy"
-		5 : "Large Enemy (striders)"
+		5 : "Large Enemy (Striders)"
 		]
 
 	mode[engine](integer) : "Mode" : 0

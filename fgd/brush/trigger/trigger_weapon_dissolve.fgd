@@ -2,7 +2,7 @@
 	appliesto(EP1, EP2, HL2, P1, ASW, Mesa) 
 = trigger_weapon_dissolve: "A volumetric trigger that dissolves all weapons within it."
 	[
-	emittername(target_destination) : "Emitter Name" : : "Name of a single or multiple entities to use as the basis for the emitted effects."
+	emittername(target_destination) report: "Emitter Name" : : "Name of a single or multiple entities to use as the basis for the emitted effects."
 
 	// Inputs
 	input StopSound(void) : "Stops all sounds."

@@ -49,6 +49,13 @@
 		11: "11 - Mud" [L4D, L4D2]
 		11: "11 - Steam Pipe" [since_ASW]
 		12: "12 - Sand Barrel" [since_CSGO]
+		13: "13 - Dense Wood" [Strata]
+		]
+
+	spawnflags(flags) =
+		[
+		1: "Trigger on player(s) leaving ground" : 0 [GMOD]
+		2: "Set output activator to the player (Warning: may cause unexpected behavior change)" : 0 [GMOD]
 		]
 
 

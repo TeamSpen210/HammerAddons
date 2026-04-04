@@ -1,0 +1,9 @@
+@PointClass base(Weapon) 
+	appliesto(EZ2) 
+	studioprop("models/weapons/w_arbeit_pistol.mdl") = weapon_arbeit_pistol: "Alternate pistol used by Aerbeit personell."
+	[
+	@resources
+		[
+		weapon_script "scripts/weapon_arbeit_pistol.txt"
+		]
+	]

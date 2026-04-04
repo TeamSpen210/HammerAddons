@@ -1,0 +1,8 @@
+@PointClass base(MomentumPickup)
+	appliesto(MOMENTUM)
+	size(-43 -43 -36, 43 43 66)
+= momentum_pickup_ammo : "Ammo Pickup"
+	[
+	AmmoName(string) : "Ammo Name" : "" : "The type of ammo to give the player."
+	PickupAmmo(integer) : "Pickup Ammo" : 5 : "The amount of ammo to give the player. Any negative value is infinite ammo."
+	]

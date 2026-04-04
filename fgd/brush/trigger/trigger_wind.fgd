@@ -1,4 +1,4 @@
-@SolidClass base(Trigger, Angles) 
+@SolidClass base(BaseTrigger, Angles) 
 	line(255 255 255, targetname, filtername)
 = trigger_wind: "A trigger volume that pushes physics objects that touch it."
 	[

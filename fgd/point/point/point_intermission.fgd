@@ -5,4 +5,5 @@
 
 	// Inputs
 	input Activate(void) : "Activate. Causes the game to end and the intermission to begin."
+	@resources []
 	]

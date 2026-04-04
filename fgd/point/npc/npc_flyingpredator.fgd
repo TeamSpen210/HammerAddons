@@ -1,7 +1,5 @@
-@NpcClass base(EZ2PredatorNPC) appliesto(EZ2)
-	studio("models/stukabat.mdl") 
-	autovis(Entities, NPCs, Xen, Stukabat)
-= npc_flyingpredator: "Stukabat (Generic)"
+@NpcClass aliasof(npc_stukabat) appliesto(EZ2)
+	studio("models/stukabat.mdl")
+= npc_flyingpredator: "Alternate name for npc_stukabat."
 	[
-	model(studio) : "Override Model"
 	]

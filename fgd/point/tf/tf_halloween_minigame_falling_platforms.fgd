@@ -9,4 +9,5 @@
 	// Outputs
 	output OutputSafePlatform(void) : "Sends the index of the SAFE platform."
 	output OutputRemovePlatform(void) : "Sends the index of the platform that shouldn't come back."
+	@resources []
 	]

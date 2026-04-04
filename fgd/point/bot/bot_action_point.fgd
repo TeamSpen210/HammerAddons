@@ -1,7 +1,5 @@
-
 @PointClass base(BaseEntityPoint) 
 	appliesto(TF2)
-	autovis(TF2, TFBots, Action Point)
 	iconsprite("editor/ficool2/bot_action_point")
 	sphere(desired_distance) = bot_action_point: "A potential destination for a bot"
 	[

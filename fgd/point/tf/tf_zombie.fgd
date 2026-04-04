@@ -5,4 +5,24 @@
 	[
 	// Outputs
 	output OnDeath(void) : "Fired when the skeleton is killed."
+
+	@resources [
+		mdl "models/bots/skeleton_sniper/skeleton_sniper.mdl"
+		mdl "models/bots/skeleton_sniper_boss/skeleton_sniper_boss.mdl"
+		mdl "models/player/items/demo/crown.mdl"
+		mdl "models/player/items/all_class/skull_scout.mdl"
+		mdl "models/workshop/player/items/scout/hw2013_boston_bandy_mask/hw2013_boston_bandy_mask.mdl"
+		mdl "models/workshop/player/items/demo/hw2013_blackguards_bicorn/hw2013_blackguards_bicorn.mdl"
+		mdl "models/player/items/heavy/heavy_big_chief.mdl"
+
+		particle "bomibomicon_ring"
+		particle "spell_pumpkin_mirv_goop_red"
+		particle "spell_pumpkin_mirv_goop_blue"
+		particle "spell_skeleton_goop_green"
+
+		sound "Halloween.skeleton_break"
+		sound "Halloween.skeleton_laugh_small"
+		sound "Halloween.skeleton_laugh_medium"
+		sound "Halloween.skeleton_laugh_giant"
+		]
 	]

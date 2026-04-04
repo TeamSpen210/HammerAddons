@@ -1,5 +1,5 @@
 @SolidClass base(func_areaportal)
-	appliesto(MBase)
+	appliesto(MBase, GMOD)
 	color(0 255 255) 
 = func_areaportal_oneway: "An areaportal that is only open when viewed from one direction."
 	[

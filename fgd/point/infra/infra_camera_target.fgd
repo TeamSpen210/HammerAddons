@@ -9,7 +9,7 @@
 	includedintotalcount(boolean) : "Included in Total Count" : 1 : "Is this camera target included in the total camera target count? Awards a point regardless. This can be useful when a single cam" + "era target spans multiple maps, such as the dam in infra_c2_m1_reserve1 and infra_c2_m2_reserve2. We can set the camera target i" + "n infra_c2_m2_reserve2 not to be included in the total."
 
 	type[engine](string) : "Type" : "generic"
-	type(choices) : "Type" : "generic" : "Unless this camera target has a custom line for it, this will affect what Mark has to say about this camera target." =
+	type(choices) report: "Type" : "generic" : "Unless this camera target has a custom line for it, this will affect what Mark has to say about this camera target." =
 		[
 		"generic": "Generic"
 		"waterleak": "Water Leak"

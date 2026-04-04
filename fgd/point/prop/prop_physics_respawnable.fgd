@@ -7,4 +7,5 @@
 	input InputRespawn(void) : "Force respawn."
 
 	output OnMaterialize(void) : "The prop has Materialized"
+	@resources []
 	]

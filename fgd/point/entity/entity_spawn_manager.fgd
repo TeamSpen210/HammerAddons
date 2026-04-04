@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(TF2) 
- 	autovis(Point Entities, Globals,Ent Spawn Manager)
+	appliesto(TF2)
 	iconsprite("editor/ficool2/entity_spawn_manager")
 = entity_spawn_manager: "An entity that spawns stuff at spawn points."
 	[

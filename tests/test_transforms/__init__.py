@@ -1,11 +1,12 @@
+from collections.abc import Awaitable, Callable
+from pathlib import Path
 import importlib
 import sys
-from pathlib import Path
-from typing import Awaitable, Callable
 
 import pytest
 
-from hammeraddons.bsp_transform import Context, TransFunc, TRANSFORMS
+from hammeraddons.bsp_transform import Context, TRANSFORMS
+from hammeraddons.config import GameConfig
 from srctools.bsp import BSP
 from srctools.filesys import FileSystemChain
 from srctools.game import Game
@@ -17,6 +18,21 @@ def blank_ctx(shared_datadir: Path) -> Context:
     """Build a blank context."""
     bsp = BSP(shared_datadir / 'blank.bsp')
     game = Game(shared_datadir)
+    game_conf = GameConfig(
+        tags=frozenset(),
+        steamid=None,
+        io_comma_sep=False,
+        instance_proxies=True,
+        translucent_needs_mostlyopaque=False,
+        pack_vpk=False,
+        searchpaths=(),
+        vscript=True,
+        vscript_quote='',
+        particles_manifest='',
+        studiomdl_path_windows='',
+        studiomdl_path_mac='',
+        studiomdl_path_linux='',
+    )
     fsys = FileSystemChain()
     return Context(
         fsys,
@@ -24,6 +40,7 @@ def blank_ctx(shared_datadir: Path) -> Context:
         PackList(fsys),
         bsp,
         game,
+        game_conf,
     )
 
 

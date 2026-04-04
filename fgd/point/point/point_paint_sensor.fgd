@@ -1,0 +1,20 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(P2CE)
+	color(0 100 250) 
+	line(0 100 250, targetname, target) 
+	line(10 10 10, targetname, filtername)
+	iconsprite("editor/point_gel_sensor.vmt")
+	sidelist()
+	sphere(radius)
+= point_paint_sensor: "An entity that detects when surfaces are painted."
+	[
+	radius(float) : "Search Radius" : 64 : "Radius to search inside, -1 to disable."
+		
+	sides(sidelist) : "Target Brush Faces" : : "Faces on which to watch for paint."
+	target(target_destination) : "Target Entity" : : "Entity for which to watch for paint."
+
+	filtername(filterclass) : "Filter Name" : : "Filter to use to narrow set of findable entities. See filter_activator_name for more explanation."
+
+	// Outputs
+	output OnPainted(integer) : "Gets called when paint is detected. Parameter is set to the paint type index."
+	]

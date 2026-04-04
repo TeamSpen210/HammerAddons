@@ -7,7 +7,7 @@ from hammeraddons.bsp_transform.common import ent_description
 LOGGER = logger.get_logger(__name__)
 
 
-@trans('FGD - Fix key casing')
+@trans('FGD - Fix key casing', inhibit_tags='STRATA')
 def force_case_sensitivity(ctx: Context) -> None:
     """Force case-sensitivity on some keyvalues that require it."""
     fix_casing(ctx.vmf, 'light_environment', 'SunSpreadAngle')

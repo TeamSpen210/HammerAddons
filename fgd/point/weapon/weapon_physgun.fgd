@@ -1,0 +1,6 @@
+@PointClass base(Weapon) 
+	appliesto(EP1, EP2, HL2, P1, +Strata)
+	studioprop("models/weapons/w_physics.mdl") 
+= weapon_physgun: "A gun that can pick up and constrain physics objects."
+	[
+	]

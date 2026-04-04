@@ -21,12 +21,12 @@
 
 	// Don't use studio, we don't want to pack this.
 	model[engine](string) : "Hammer Model" : "models/editor/playerstart.mdl"
-	model(choices) : "[H] Player" : "models/editor/playerstart.mdl" : "The player model to show in Hammer." =
-	[
+	model(choices) : "[H] Player" : "models/editor/playerstart.mdl" : "The player model to show in Hammer." = 
+		[
 		"models/editor/playerstart.mdl" 	: "Default"
-		"models/player/ballbot/ballbot.mdl"	: "ATLAS"
-		"models/player/eggbot/eggbot.mdl"	: "P-Body"
-	]
+		"models/editor/ballbotstart.mdl"	: "ATLAS"
+		"models/editor/eggbotstart.mdl"		: "P-Body"
+		]
 	forcegunonspawn(boolean) : "Force Gun On Spawn" : 0 : "Give the player a Portal Gun on spawn. Coop players always have a Dual Portal Device."
 
 	// Inputs

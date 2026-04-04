@@ -3,4 +3,8 @@
 	appliesto(TF2) = prop_soccer_ball: "Soccer Ball"
 	[
 	trigger_name(string) : "Trigger Name" : : "The name of the trigger(s) to try and touch"
+
+	@resources [
+		sound "BumperCar.HitBall"
+		]
 	]

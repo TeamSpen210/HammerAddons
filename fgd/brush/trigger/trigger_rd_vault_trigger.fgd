@@ -7,4 +7,8 @@
 	output OnPointsStolen(void) : "Sent during every point stealing 'pulse'."
 	output OnPointsStartStealing(void) : "Sent when points start being stolen."
 	output OnPointsEndStealing(void) : "Send when points stop being stolen."
+
+	@resources [
+		sound "Cart.WarningSingle"
+		]
 	]

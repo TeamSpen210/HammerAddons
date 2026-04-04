@@ -1,4 +1,4 @@
-@PointClass appliesto(MBase) 
+@PointClass appliesto(MBase, Strata) 
 	base(BaseEntityPoint, EnableDisable)
 	iconsprite(editor/vizzys/game_globalvars)
 = game_globalvars : "Outputs a few global variables when requested."
@@ -16,4 +16,5 @@
 	output OutFrametime(float) : "Outputs frame time."
 	output OutTickCount(integer) : "Outputs tick count."
 	output OutIntervalPerTick(integer) : "Outputs interval per tick."
+	@resources []
 ]

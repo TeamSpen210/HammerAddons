@@ -1,4 +1,4 @@
-@PointClass appliesto(MBase) 
+@PointClass appliesto(MBase, Strata) 
 	base(BaseEntityPoint)
 	iconsprite("editor/logic_entity_position.vmt") 
 	line(255 255 255, targetname, target)

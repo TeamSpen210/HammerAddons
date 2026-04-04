@@ -4,4 +4,5 @@
  	autovis(Point Entities, Globals, Tonemap Controller)
 = env_tonemap_controller_infected: "An entity that controls the HDR tonemapping for infected players."
 	[
+	@resources []
 	]

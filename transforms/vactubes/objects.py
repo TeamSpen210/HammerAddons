@@ -1,7 +1,7 @@
 """Handles configuration for the objects appearing inside vactubes."""
-from typing import Optional, Tuple, List, Dict, Union
-from typing_extensions import TypeAlias
 from collections import defaultdict
+from operator import itemgetter
+
 from fractions import Fraction
 import os.path
 import math
@@ -40,12 +40,12 @@ class VacObject:
         obj_id: str,
         group: str,
         model_vac: str,
-        model_drop: Optional[str],
+        model_drop: str | None,
         offset: Vec,
-        weight: Union[Fraction, int] = 1,
-        skin_tv: int=0,
-        skin_drop: int=0,
-        skin_vac: int=0,
+        weight: Fraction | int = 1,
+        skin_tv: int = 0,
+        skin_drop: int = 0,
+        skin_vac: int = 0,
     ) -> None:
         self.id = obj_id
         self.group = group.casefold().strip()
@@ -72,22 +72,22 @@ class VacObject:
         )
 
 
-VacObjectDict: TypeAlias = Dict[Tuple[str, str, int], VacObject]
+type VacObjectDict = dict[tuple[str, str, int], VacObject]
 
 
-def parse(vmf: VMF, pack: PackList) -> Tuple[int, VacObjectDict, Dict[str, str]]:
+def parse(vmf: VMF, pack: PackList) -> tuple[int, VacObjectDict, dict[str, str]]:
     """Parse out the cube objects from the map.
 
     The return value is the number of objects, a dict of objects, and the
     filenames of the script generated for each group.
     The dict is (group, model, skin) -> object.
     """
-    cube_objects: Dict[Tuple[str, str, int], VacObject] = {}
-    vac_objects: Dict[str, List[VacObject]] = defaultdict(list)
+    cube_objects: dict[tuple[str, str, int], VacObject] = {}
+    vac_objects: dict[str, list[VacObject]] = defaultdict(list)
     # To allow decimal weights, parse them as fractions, then multiply them all by every denominator.
     # That'll cancel out the fraction, making them all integer. We then compute the common multiple
     # and reduce down.
-    group_multipliers: Dict[str, int] = defaultdict(lambda: 1)
+    group_multipliers: dict[str, int] = defaultdict(lambda: 1)
 
     for i, ent in enumerate(vmf.by_class['comp_vactube_object']):
         offset = Vec.from_str(ent['origin']) - Vec.from_str(ent['offset'])
@@ -105,10 +105,10 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[int, VacObjectDict, Dict[str, str]]
             ent['model'],
             ent['cube_model'],
             offset,
-            weight,
-            srctools.conv_int(ent['tv_skin']),
-            srctools.conv_int(ent['cube_skin']),
-            srctools.conv_int(ent['skin']),
+            weight=weight,
+            skin_tv=srctools.conv_int(ent['tv_skin']),
+            skin_drop=srctools.conv_int(ent['cube_skin']),
+            skin_vac=srctools.conv_int(ent['skin']),
         )
         vac_objects[group].append(obj)
         # Convert the ent into a precache ent, stripping the other keyvalues.
@@ -128,7 +128,7 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[int, VacObjectDict, Dict[str, str]]
     # Generate and pack the vactube object scripts.
     # Each group is the same, so it can be shared among them all.
     codes = {}
-    for group, objects in sorted(vac_objects.items(), key=lambda t: t[0]):
+    for group, objects in sorted(vac_objects.items(), key=itemgetter(0)):
         if (group_mult := group_multipliers[group]) != 1:
             for obj in objects:
                 obj.weight *= group_mult
@@ -151,44 +151,53 @@ def parse(vmf: VMF, pack: PackList) -> Tuple[int, VacObjectDict, Dict[str, str]]
 
 def find_for_cube(vac_objects: VacObjectDict, group: str, cube: Entity) -> VacObject:
     """Find an object that matches the specified cube entity."""
-    potentials: List[Tuple[str, int]] = []
+    potentials: list[tuple[str, int]] = []
     # Try what's set in the keyvalues first. But if it's a default value, skip so that we use
     # the cube type first.
     model = cube['model'].replace('\\', '/')
     if model not in ('', 'models/props/metal_box.mdl'):
         potentials.append((model, conv_int(cube['skin'])))
 
-    if cube['classname'] == 'prop_weighted_cube':
-        model = ''
-        clean = rusty = 0
-        if conv_bool(cube['newskins']):
-            cube_type = conv_int(cube['cubetype'])
-            if cube_type != 6:  # Used for custom cubes, no error.
+    # Then check for what the cube would spawn as.
+    match cube['classname']:
+        case 'prop_weighted_cube':
+            model = ''
+            clean = rusty = 0
+            if conv_bool(cube['newskins']):
+                cube_type = conv_int(cube['cubetype'])
+                if cube_type != 6:  # Used for custom cubes, no error.
+                    try:
+                        model, clean, rusty = CUBE_MODELS_FOR_TYPE[cube_type]
+                    except KeyError:
+                        LOGGER.warning(
+                            'Cube "{}" at ({}) has unknown cube type {}!',
+                            cube['targetname'], cube['origin'], cube_type,
+                        )
+            else:
+                # Old skin-based lookup
+                cube_skin = conv_int(cube['skin'])
                 try:
-                    model, clean, rusty = CUBE_MODELS_FOR_TYPE[cube_type]
+                    model, clean, rusty = CUBE_MODELS_FOR_SKIN[cube_skin]
                 except KeyError:
                     LOGGER.warning(
-                        'Cube "{}" at ({}) has unknown cube type {}!',
-                        cube['targetname'], cube['origin'], cube_type,
+                        'Cube "{}" at ({}) has unknown old-style cube skin {}!',
+                        cube['targetname'], cube['origin'], cube_skin,
                     )
-        else:
-            # Old skin-based lookup
-            cube_skin = conv_int(cube['skin'])
-            try:
-                model, clean, rusty = CUBE_MODELS_FOR_SKIN[cube_skin]
-            except KeyError:
-                LOGGER.warning(
-                    'Cube "{}" at ({}) has unknown old-style cube skin {}!',
-                    cube['targetname'], cube['origin'], cube_skin,
-                )
-        if model:
-            potentials.append((model, rusty if conv_bool(cube['skintype']) else clean))
-    elif cube['classname'] == 'prop_monster_box':
-        # Hardcoded model. Prefer box form.
-        potentials += [
-            ('models/npcs/monsters/monster_a_box.mdl', 0),
-            ('models/npcs/monsters/monster_a.mdl', 0),
-        ]
+            if model:
+                potentials.append((model, rusty if conv_bool(cube['skintype']) else clean))
+        case 'prop_monster_box':
+            # Hardcoded model. Prefer box form.
+            potentials += [
+                ('models/npcs/monsters/monster_a_box.mdl', 0),
+                ('models/npcs/monsters/monster_a.mdl', 0),
+            ]
+        case 'prop_scaled_cube':  # Why not check.
+            potentials += [("models/props/sixense/box/sixensebox.mdl", 0)]
+        case clsname:
+            LOGGER.warning(
+                'Cube "{}" at ({}) is a {}, not a cube?',
+                cube['targetname'], cube['origin'], clsname,
+            )
 
     for model, skin in potentials:
         try:

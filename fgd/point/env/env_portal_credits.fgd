@@ -6,11 +6,25 @@
 	[
 
 	// Inputs
-	input RollCredits(void) : "Start the intro credits rolling."
-	input RollOutroCredits(void) : "Start the outro credits rolling."
-	input ShowLogo(void) : "Show the HL2 logo."
-	input RollPortalOutroCredits(void) : "Start the Portal greenscreen outro credits."
+	input RollCredits[P1](void) : "Start the intro credits rolling."
+	input RollOutroCredits[P1](void) : "Start the outro credits rolling."
+	input ShowLogo[P1](void) : "Show the HL2 logo."
+	input SetLogoLength[P1](float) : "Sets the amount of time the logo is displayed. Default is 5.0."
+	input RollPortalOutroCredits(void) : "Start the Portal outro credits."
+
+	// P2 made these all do the same thing
+	input RollCredits[+P2, +complete](void) : "Functionally identical to RollPortalOutroCredits."
+	input RollOutroCredits[+P2, +complete](void) : "Functionally identical to RollPortalOutroCredits."
+	input ShowLogo[+P2, +complete](void) : "Functionally identical to RollPortalOutroCredits."
+	input SetLogoLength[+P2, +complete](float) : "No effect, but technically exists."
 
 	// Outputs
-	output OnCreditsDone(void) : "Fired when the credits having finished rolling."
+	output OnCreditsDone[P1](void) : "Fired when HL2-style outro credits having finished rolling. Not fired by Portal-style credits."
+	output OnCreditsDone[+P2, +complete](void) : "Doesn't fire, but technically exists."
+
+	@resources
+		[
+		// Credits are in this script file.
+		file "scripts/credits.txt"
+		]
 	]

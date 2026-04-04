@@ -1,7 +1,7 @@
 // So we can arrange the DamageType base class in point_damageinfo
 @BaseClass appliesto(MBase) = PointDamageInfoInit
 	[
-	target(target_destination) : "Target/Victim" : : "The entit(ies) that will take all of this damage. " +
+	target(target_destination) report: "Target/Victim" : : "The entit(ies) that will take all of this damage. " +
 		"This is optional if you're only using the 'ApplyDamageToEntity' input."
 	inflictor(target_destination) : "Inflictor" : : "The entity that actually supposedly dealt the damage. " +
 		"This isn't supposed to be the attacker as much as it's supposed to be their weapon or a projectile from their weapon."

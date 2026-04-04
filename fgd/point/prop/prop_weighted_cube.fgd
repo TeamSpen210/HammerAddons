@@ -11,7 +11,8 @@
 		2: "[2] Discouragement Redirection Cube"
 		3: "[3] Edgeless Safety Cube"
 		4: "[4] Antique Storage Cube"
-		6: "Custom model"
+		5: "[5] Schrodinger's Cube" [Strata]
+		6: "[6] Custom model"
 		]
 
 	skintype[engine](boolean) : "Skin Type" : 0
@@ -28,7 +29,14 @@
 		"models/props/reflection_cube.mdl": "Discouragement Redirection"
 		"models/props_gameplay/mp_ball.mdl": "Edgeless Safety"
 		"models/props_underground/underground_weighted_cube.mdl": "Antique"
+		"models/props/schrodinger_cube.mdl": "Schrodinger" [P2CE]
 		]
+	uselasermodifier[Strata](boolean): "Use Laser Modifier" : 0 : "If enabled, this cube will recolor incoming lasers to the modifier color."
+	reflectmodifycolor[engine](color255) : "Laser Modifier Color" : "255 0 0 255"
+	reflectmodifycolor[Strata](choices): "Laser Modifier Color" : "255 0 0 255" : "Set reflected lasers to this color. Only applicable to reflection and Schrodinger cubes. You can also specify a custom RGBA color here." = #snippet "StrataDisBeamColor"
+	uselaserfilter[Strata](boolean): "Use Laser Filter" : 0 : "If enabled, this cube can only redirect lasers that match the filter color. If disabled, any laser color can be redirected."
+	reflectfiltercolor[engine](color255) : "Laser Filter Color" : "255 0 0 255"
+	reflectfiltercolor[Strata](choices): "Laser Filter Color" : "255 0 0 255" : "Filter reflected lasers by this color. Only applicable to reflection and Schrodinger cubes. You can also specify a custom RGBA color here." = #snippet "StrataDisBeamColor"
 
 	comp_custom_model_type[srctools, -engine](choices) : "[HA] Custom Model Type" : 0 : "Automatically handles various methods of setting custom cube models. " + 
 		"Cube Type sets the behavior and which skin numbers are used for gel, and the Model keyvalue sets the actual model. " +
@@ -42,4 +50,17 @@
 	skin(integer) : "Skin" : 0 : "The old skin property, mainly to show in Hammer. "
 
 	newskins(integer) readonly : "Use new skins" : 1 : "Use the values in the Cube Type and Skin Type fields instead of the Skin(OLD) field. You shouldn't need to touch this."
+
+	// Inputs
+	input ExitDisabledState(void) : "Exits the disabled state of a reflective cube."
+	input SetReflectModifyColor[Strata](color255) : "Changes the laser modifier colour of the cube."
+	input SetReflectFilterColor[Strata](color255) : "Changes the laser filter colour of the cube."
+	input EmitLaser[Strata](bool) : "Makes this cube emit or stop emitting its own laser."
+	input LockEmitState[Strata](bool) : "Locks the current laser state of the cube. Can still be changed with EmitLaser."
+
+	// Outputs
+	output OnPowered[Strata](void) : "Cube got powered by a laser."
+	output OnUnpowered[Strata](void) : "Cube is no longer powered by a laser."
+	output OnActivated[Strata](void) : "Fired when a cube is placed on a button."
+	output OnDeactivated[Strata](void) : "Fired when a cube is removed from a button."
 	]

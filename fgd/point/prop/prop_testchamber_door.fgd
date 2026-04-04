@@ -2,7 +2,8 @@
 	appliesto(P2) 
 	// Non-animating model, which prevents it continually opening 
 	// and fixes collision display.
-	studioprop("models/editor/prop_testchamber_door.mdl") 
+	studioprop[-P2CE]("models/editor/prop_testchamber_door.mdl") 
+	studioprop[+P2CE]()
 	line(255 255 0, targetname, areaPortalWindow) 
 	line(255 255 0, targetname, lightingorigin) 
 	sphere(AreaPortalFadeStart) 
@@ -15,6 +16,12 @@
 	areaportalfadestart(float) : "Fade Start Distance" : 0 : "The distance at which the area portal starts fading out."
 	areaportalfadeend(float) : "Fade End Distance" : 0 : "The distance at which the area portal turns completely opaque."
 
+	open[P2CE](boolean): "Start Open" : 0 : "If set, the door starts in the open state."
+	locked[P2CE](boolean): "Start Locked" : 0 : "If set, the door starts locked and can no longer change open or closed state."
+	skin[P2CE](integer): "Skin" : 0 : "Skin to use in game"
+	model[P2CE](studio): "Model" : "models/props/portal_door_combined.mdl" : "Model to use in-game"
+	defaultanim[P2CE](string) readonly editor: "<Default Animation>" : "idleclose" : "Ignore, needed to prevent the close animation from looping in Hammer"
+ 
 	// Inputs
 	input Open(void) : "Open the door and cause the areaportal to return to fading."
 	input Close(void) : "Close the door and cause the areaportal to close."

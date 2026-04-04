@@ -7,14 +7,15 @@
 	worldtext()
 = hammer_notes: "Fake entity to store notes and comments inside. Won`t spawn."
 	[
-	// If not in CSGO or Hammer++, this isn't going to do anything so change help.
-	// FIXME: We could maybe replace the hammerplusplus_fgd.fgd file to make these only appear when actually using hammer++
-	message[until_CSGO](string) : "Message" : : "A text field for entering any notes. If you are using Hammer++, this will also appear in the 3D view."
-	textsize[until_CSGO](float) : "Text Size" : 10 : "Size of the text in the 3D view (Hammer++)"
-	color[until_CSGO](color255) : "Color" : "255 255 255" : "Color of the text in the 3D view (Hammer++)"
-	message[since_CSGO](string) : "Display Message" : : "Text to display in the 3D view"
-	textsize[since_CSGO](float) : "Text Size" : 10 : "Size of the text in the 3D view"
-	color[since_CSGO](color255) : "Color" : "255 255 255" : "Color of the text in the 3D view"
+	// If not in CSGO, this isn't going to do anything without a custom build of hammer (e.g. Hammer++), so change help.
+	// TODO: We could maybe replace use the hammer++ ExtendClass functionality to make these only appear when using it
+	message[until_CSGO](string) : "Message" : : "A text field for entering any notes. This will also appear in the 3D view if you are using a version of Hammer that supports this feature."
+	textsize[until_CSGO](float) : "Text Size" : 10 : "Size of the text in the 3D view (if supported)"
+	color[until_CSGO](color255) : "Color" : "255 255 255" : "Color of the text in the 3D view (if supported)"
+	message[since_CSGO](string) : "Display Message" : : "Text to display in the 3D view."
+	textsize[since_CSGO](float) : "Text Size" : 10 : "Size of the text in the 3D view."
+	color[since_CSGO](color255) : "Color" : "255 255 255" : "Color of the text in the 3D view."
+	angles[since_CSGO](angle) : "Orientation" : "0 0 0" : "The orientation of the text in the 3D view."
 	scale(float) : "Scale" : "0.25" : "Changes the icon size, to allow seeing this from further away."
 	
 	linename1(target_destination) : "White Related Entity" : : "Add entity names to have lines drawn to them."

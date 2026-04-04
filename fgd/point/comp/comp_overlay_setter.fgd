@@ -1,0 +1,39 @@
+@PointClass base(ControlEnables)
+	iconsprite("editor/comp_overlay_setter")
+	sphere(radius)
+	appliesto(srctools)
+= comp_overlay_setter : "Locates a nearby overlay, then swaps the material according to fixup values."
+	[
+	radius(float) : "Max Distance" : 64 : "Overlays must be this close to be found."
+	mat_filter(material) : "Filter Material" : : "If set, the overlay must have this material."
+	name_filter(target_destination) : "Search Name" : : "If set, match overlays with the specified name."
+
+	sep_overlay(string) readonly editor: "---------------------------------------------------------"
+
+	remove(boolean) : "Remove Overlay" : 0 : "Delete found overlays instead of modifying them. " +
+		"Good when used with the 'Control Value' option to conditionally apply the setter."
+
+	set_material(material) : "New Material" : : "Set the material to this one."
+
+	set_renderorder[engine](integer) : "Render Order" : 0
+	set_renderorder(choices) : "Render Order" : -1 : "Override the render order." =
+		[
+		-1 : "Don't change"
+		0: "First"
+		1: "Second"
+		2: "Third"
+		3: "Fourth"
+		]
+
+	set_umin(float) : "U Min Override" : : "If set, overrides the min U coordinate."
+	set_umax(float) : "U Max Override" : : "If set, overrides the max U coordinate."
+	set_vmin(float) : "V Min Override" : : "If set, overrides the min V coordinate."
+	set_vmax(float) : "V Max Override" : : "If set, overrides the max V coordinate."
+
+	set_fademindist(float) : "Start Fade Override" : : "If set, override the fade start distance."
+	set_fademaxdist(float) : "End Fade Dist" : : "If set, override the fade end distance."
+
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
+    @resources []
+	]

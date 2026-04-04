@@ -45,4 +45,9 @@
 	input SetTextAlignment(integer) : "Set text alignment by enum number."
 	input SetResolution(integer) : "Set the resolution. Might affect screen size."
 	input SetPanelSize(float) : "Set the text panel size."
+
+	@resources
+		[
+		// vgui screen: text_display_panel
+		]
 	]

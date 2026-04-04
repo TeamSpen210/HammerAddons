@@ -4,7 +4,7 @@
 	line(255 255 0, targetname, functankname)
 = info_player_ping_detector: "Detects a specific Co-op player's pings, and optionally rotates a func_tank to face towards them (as seen in the Calibration Course)"
 	[
-	functankname(target_destination) : "Func_Tank Entity" : : "Name of the func_tank that will be told to look at the ping location when detected."
+	functankname(target_destination) report: "Func_Tank Entity" : : "Name of the func_tank that will be told to look at the ping location when detected."
 	
 	teamtolookat[engine](integer) : "Player to Observe" : 2
 	teamtolookat(choices) : "Player to Observe" : 2 : "Which player's pings to look at." =

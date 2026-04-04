@@ -3,4 +3,5 @@
 	studio("models/player/sniper.mdl")
 = bot_npc_decoy : "Spy NextBot"
 	[
+	@resources [] // Copies from owner.
 	]

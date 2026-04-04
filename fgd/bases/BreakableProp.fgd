@@ -1,4 +1,4 @@
-@BaseClass base(_Breakable, EZ2Displacement, DamageFilter) = BreakableProp
+@BaseClass base(_Breakable, EZ2Displacement) = BreakableProp
 	[
 	spawnflags(flags)  =
 		[

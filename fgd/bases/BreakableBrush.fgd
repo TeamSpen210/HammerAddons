@@ -7,7 +7,6 @@
 		4: "Break on Pressure" : 0
 		512: "Break immediately on Physics" : 0
 		1024: "Don't take physics damage" : 0
-		2048: "Don't allow bullet penetration" : 0
 		]
 
 	propdata[engine](integer) : "Prop Data" : 0

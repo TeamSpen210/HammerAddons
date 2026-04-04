@@ -4,4 +4,8 @@
 = entity_bird : "entity_bird"
 	[
 	modelscale(float) : "Model Scale" : "1.0" : "A multiplier for the size of the model."
+
+	@resources [
+		model "models/props_forest/bird.mdl"
+		]
 	]

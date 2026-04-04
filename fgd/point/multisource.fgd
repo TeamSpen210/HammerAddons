@@ -1,5 +1,4 @@
 @PointClass base(BaseEntityPoint) 
-	autovis(HL1) 
 	iconsprite("editor/multisource")
 	appliesto(complete)
 = multisource: "Goldsource-era entity for combining multiple inputs. Superceded by the I/O system, and logic_branch_listener." +

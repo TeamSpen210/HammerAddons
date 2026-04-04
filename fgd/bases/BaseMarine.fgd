@@ -1,4 +1,4 @@
-@BaseClass base(BaseNPC, RappelNPC) = BaseMarine
+@BaseClass base(RappelNPC) = BaseMarine
 	[
 	input Assault(string) : "Start an assault. Parameter passed in should be the name of the rally point."
 

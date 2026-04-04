@@ -1,0 +1,9 @@
+@SolidClass appliesto(MOMENTUM)
+= zone_timer_checkpoint : "Zone used to denote progress in a linear map. zone_timer_start is automatically checkpoint (zone number) 1!" 
+	[
+	filter_name(filterclass) : "Filter Name" : : "filter_activator entity to use for this zone."
+	track_number(integer) : "Track Number" : 0 : "Track number that this entity belongs to. 0 = main map, 1+ = bonus (of that number)."
+	stage_number(integer) : "Stage Number" : 1 : "The stage this checkpoint is part of. If this track has no stages, leave this as Stage 1."
+	checkpoint_number(integer) : "Checkpoint Number" : 2 : "The checkpoint number of this zone within its respective stage. NOTE: 1 is reserved for the stage start! 2+ are free for your checkpoint zones, so start at 2!"
+	restart_destination(target_destination) : "Restart Destination (Optional)" : : "The entity specifying the point to which the player should be teleported when teleporting to this checkpoint. The player is not allowed to teleport to checkpoints during a run, but specifying the associated destination may have some use in the future."
+	]

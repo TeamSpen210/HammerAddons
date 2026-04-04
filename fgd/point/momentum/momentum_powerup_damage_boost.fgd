@@ -1,0 +1,7 @@
+@PointClass base(MomentumPickup)
+	appliesto(MOMENTUM)
+	size(-43 -43 -36, 43 43 66)
+= momentum_powerup_damage_boost : "Damage Boost Powerup"
+	[
+	DamageBoostTime(float) : "Damage Boost Time" : "30" : "The amount of time in seconds the damage boost effect lasts. Any negative value is infinite duration."
+	]

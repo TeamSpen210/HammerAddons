@@ -1,16 +1,16 @@
-from typing import Iterable, List, Dict, Tuple
+from collections.abc import Iterable
 import itertools
-import random
 import re
 
 from srctools import Vec, Entity, Output, conv_bool, conv_float, lerp
 import srctools.logger
 
 from hammeraddons.bsp_transform import trans, Context
-from hammeraddons.bsp_transform.common import strip_cust_keys
+from hammeraddons.bsp_transform.common import strip_cust_keys, rng_get
+
 
 LOGGER = srctools.logger.get_logger(__name__)
-DIGIT_PATTERN = re.compile('[0-9]+')
+DIGIT_PATTERN = re.compile(r'[0-9]+')
 
 
 def num_suffix(ent: Entity) -> int:
@@ -20,6 +20,7 @@ def num_suffix(ent: Entity) -> int:
         return int(numbers[-1])
     else:
         return 0
+
 
 KEYVALUES = [
     'time_val', 'time_variance', 'time_mode',
@@ -33,7 +34,7 @@ def sequential_call(ctx: Context) -> None:
     for seq_call in ctx.vmf.by_class['comp_sequential_call']:
         seq_call['classname'] = 'logic_relay'
 
-        target_ents: List[Entity] = list(ctx.vmf.search(seq_call['target']))
+        target_ents: list[Entity] = list(ctx.vmf.search(seq_call['target']))
         if not target_ents:
             LOGGER.warning(
                 'Sequential call "{}" at {} could find no target entities named "{}"!',
@@ -49,7 +50,7 @@ def sequential_call(ctx: Context) -> None:
         origin = Vec.from_str(seq_call['origin'])
 
         if order_mode.startswith('dist'):
-            dist_to_ent: Dict[Entity, float] = {
+            dist_to_ent: dict[Entity, float] = {
                 ent: (Vec.from_str(ent['origin']) - origin).mag()
                 for ent in target_ents
             }
@@ -68,7 +69,7 @@ def sequential_call(ctx: Context) -> None:
                 f'"{seq_call["targetname"]}" at ({seq_call["origin"]}).'
             )
 
-        ent_and_delay: Iterable[Tuple[Entity, float]]
+        ent_and_delay: Iterable[tuple[Entity, float]]
         if max_dist < 1e-6 or time_val == 0.0:
             # No total delay, skip computation and any divide by zero.
             ent_and_delay = zip(target_ents, itertools.repeat(0.0))
@@ -87,16 +88,16 @@ def sequential_call(ctx: Context) -> None:
                 )
         elif time_mode == 'interval':
             # [(ent, time_val * i) for i, ent in enumerate(target_ents)]
-            ent_and_delay = zip(target_ents, map(time_val.__mul__, itertools.count()))
+            ent_and_delay = zip(target_ents, map(time_val.__mul__, itertools.count()), strict=False)
         else:
             raise ValueError(
                 f'Unknown time mode "{time_mode}" for sequential call '
                 f'"{seq_call["targetname"]}" at ({seq_call["origin"]}).'
             )
 
-        outputs_rep: List[Output] = []
-        outputs_final: List[Output] = []
-        outputs_other: List[Output] = []
+        outputs_rep: list[Output] = []
+        outputs_final: list[Output] = []
+        outputs_other: list[Output] = []
         for out in seq_call.outputs:
             out_name = out.output.casefold()
             if out_name == 'onseq':
@@ -120,9 +121,10 @@ def sequential_call(ctx: Context) -> None:
 
         target = seq_call['target'].rstrip('*')
         max_delay = 0.0
+        rng = rng_get('comp_sequential_call', seq_call)
         for ent, delay in ent_and_delay:
             if time_variance > 0.0:
-                delay += random.uniform(-time_variance, time_variance)
+                delay += rng.uniform(-time_variance, time_variance)
             max_delay = max(max_delay, delay)
             if make_unique:
                 ent.make_unique(seq_call['targetname'] + '_')
@@ -131,6 +133,7 @@ def sequential_call(ctx: Context) -> None:
                 out.delay = round(out.delay + delay, 2)
                 if out.target.casefold() == '!seq' or out.target == target:
                     out.target = ent['targetname']
+                out.params = out.params.replace('!seq', ent['targetname'])
                 seq_call.outputs.append(out)
         for out in outputs_final:
             out.delay = round(out.delay + max_delay, 2)

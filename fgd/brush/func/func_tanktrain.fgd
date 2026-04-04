@@ -7,4 +7,6 @@
 
 	// Outputs
 	output OnDeath(void) : "Fired when the tank is killed."
+
+	@resources []
 	]

@@ -32,4 +32,6 @@
 
 	// Outputs
 	output OnRoundWin[TF2](void) : "Sent when the entity tells the game rules the round is over."
+
+	@resources []
 	]

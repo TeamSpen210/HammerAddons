@@ -1,44 +1,53 @@
 """Generate entity sprite text images."""
 from pathlib import Path
-
-from PIL import Image, ImageChops
-from srctools import conv_bool
-from collections import namedtuple
-
 import sys
 
-try:
-    text = sys.argv[1]
-except IndexError:
-    text = input('Enter text to produce: ')
+from PIL import Image, ImageChops
+import attrs
 
-golden = text.startswith("comp_")
-print('Gold' if golden else 'White', 'text selected')
 
-Char = namedtuple('Char', 'img width')
+@attrs.frozen
+class Char:
+    """A character."""
+    img: Image.Image
+    width: int
 
-LETTERS = {}
 
-for file in Path('text').glob('*.png'):
-    letter = file.name[0]
-    img = Image.open(file)
-    img.load()
-    if golden:
-        img = ImageChops.multiply(img, Image.new('RGBA', img.size, (224, 174, 0, 255)))
-    LETTERS[letter] = Char(img, img.width-1)
+def main() -> None:
+    """Generate text."""
+    try:
+        text = sys.argv[1]
+    except IndexError:
+        text = input('Enter text to produce, prefix with GOLD to make it gold: ')
 
-chars = list(map(LETTERS.__getitem__, text.lower()))
+    golden = text.startswith("comp_")
+    if text.startswith('GOLD'):
+        golden = True
+        text = text.removeprefix('GOLD').lstrip()
+    print('Gold' if golden else 'White', 'text selected')
 
-width = sum(c.width for c in chars) + 1
-height = max(c.img.height for c in chars)
+    LETTERS: dict[str, Char] = {}
 
-img = Image.new('RGBA', (width, height), (0, 0, 0, 0))
+    for file in Path('text').glob('*.png'):
+        letter = file.name[0]
+        img = Image.open(file)
+        img.load()
+        if golden:
+            img = ImageChops.multiply(img, Image.new('RGBA', img.size, (224, 174, 0, 255)))
+        LETTERS[letter] = Char(img, img.width-1)
 
-offset = 0
-for ch in chars:
-    img.alpha_composite(ch.img, (offset, 0))
-    offset += ch.width
+    chars = [LETTERS[x] for x in text.lower()]
 
-img.save(text + '.png')
+    width = sum(c.width for c in chars) + 1
+    height = max(c.img.height for c in chars)
 
-print('Done!')
+    img = Image.new('RGBA', (width, height), (0, 0, 0, 0))
+
+    offset = 0
+    for ch in chars:
+        img.alpha_composite(ch.img, (offset, 0))
+        offset += ch.width
+
+    img.save(f'{text}.png')
+
+    print('Done!')

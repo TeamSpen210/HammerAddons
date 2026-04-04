@@ -4,4 +4,8 @@
 [
 	output OnStartTouchBoth(void) : "Both players have entered the trigger."
 	output OnEndTouchBoth(void) : "One player left the trigger."
+
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
+	@resources []
 ]

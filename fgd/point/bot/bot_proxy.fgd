@@ -1,14 +1,13 @@
-
 @PointClass base(BaseEntityPoint) 
-	appliesto(TF2)
-	autovis(TF2, TFBots, Bot Proxy)
+	appliesto(TF2, HL2, -Strata)
 	iconsprite("editor/ficool2/bot_proxy")
 = bot_proxy: "An entity that spawns a TFBot and relays events to/from it"
 	[
 	bot_name(string) : "Bot Name" : "TFBot" : "The bot's player name"
 
 	team[engine](string) : "Team" : "auto"
-	team(choices) : "Team" : "auto" : "Team" =
+	team[-TF2](string) : "Team" : "" // TODO?
+	team[TF2](choices) : "Team" : "auto" : "Team" =
 		[
 		"auto": "Any"
 		"red": "RED"
@@ -16,7 +15,7 @@
 		]
 
 	class[engine](string) : "Class" : "auto"
-	class(choices) : "Class" : "auto" : "Class" =
+	class[TF2](choices) : "Class" : "auto" : "Class" =
 		[
 		"auto": "Any"
 		"scout": "Scout"
@@ -36,8 +35,10 @@
 	action_point(target_destination) : "Action Point" : : "Put the name of a bot_action_point here to tell the bot to move to it when it spawns in."
 
 	// Inputs
-	input SetTeam(string) : "Change the bot's team (auto, red, blue)"
-	input SetClass(string) : "Change the bot's class (auto, soldier, pyro, etc)"
+	input SetTeam[engine](string) : "Change the bot's team"
+	input SetTeam[-TF2](string) : "Change the bot's team"
+	input SetTeam[TF2](string) : "Change the bot's team (auto, red, blue)"
+	input SetClass[TF2](string) : "Change the bot's class (auto, soldier, pyro, etc)"
 	input SetMovementGoal(target_destination) : "Tell the bot to move to the given goal"
 	input Spawn(void) : "Spawn a TFBot at this position"
 	input Delete(void) : "Delete the existing TFBot"

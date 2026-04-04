@@ -1,0 +1,9 @@
+@PointClass base(Weapon) 
+	appliesto(P2CE)
+	studioprop("models/weapons/w_portalgun.mdl") 
+= weapon_paintgun: "A paint sprayer gun.\n\n" +
+	"This weapon can optionally have paint powers automatically assigned via info_portal_gamerules and/or have a limited amount of ammo (globally or per-paint) as dictated by ConVars paintgun_ammo_type and paintgun_max_ammo." +
+	"\n\nBy default, the paint gun does not have any powers assigned on pickup, and powers are given to the player using dedicated pickups (via item_paint_power_pickup). If paint ammo is enabled in-game, invoking the +attack2 bind will clean all sprayed paint and refund all spent ammo; otherwise, the Cleansing Gel will be sprayed instead."
+	[
+		// We don't have any keyvalues or IO yet
+	]

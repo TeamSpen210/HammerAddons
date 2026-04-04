@@ -23,7 +23,8 @@
 		"randweight" : "Weighted Random"
 		]
 
-	seed(string) : "Random Seed" : : "For the PickRandom input, the position and name of the input entity and the case are used to seed a random number generator. This can be set to further randomise the chosen case."
+	seed(string) : "Random Seed" : : "For the PickRandom input, the position and name of both the input entity and the case are used to seed a random number generator, " +
+		"to keep values consistent across compiles. This can be set to further randomise the chosen case."
 	misschance(float) : "Miss Chance (%)" : 0 : "If nonzero, PickRandom will skip picking cases entirely this often. Only OnUsed and OnMissed will be fired."
 
 	case01(string) : "Case 01" : : "Fires OnCase01 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
@@ -42,6 +43,9 @@
 	case14(string) : "Case 14" : : "Fires OnCase14 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
 	case15(string) : "Case 15" : : "Fires OnCase15 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
 	case16(string) : "Case 16" : : "Fires OnCase16 if the InValue parameter matches this value. In Numeric mode, comparison operators such as <, >, =, !=, >=, or <= may be put at the start of the value. In Weighted Random mode, this instead is the chance that this case will be picked."
+
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
 
 	// Inputs
 	input InValue(string) : "Replaced by whichever case matches the parameter. Does nothing in Weighted Random mode."

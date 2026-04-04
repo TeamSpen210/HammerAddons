@@ -22,19 +22,61 @@
 
 @PointClass base(BaseTFProjectile) appliesto(TF2)
 	studioprop("models/weapons/w_models/w_arrow.mdl") 
-= tf_projectile_arrow : "" []
+= tf_projectile_arrow : ""
+	[
+	@resources [
+		mdl "models/weapons/w_models/w_arrow.mdl"
+		mdl "models/weapons/w_models/w_repair_claw.mdl"
+		mdl "models/weapons/w_models/w_arrow_xmas.mdl"
+		mdl "models/workshop/weapons/c_models/c_crusaders_crossbow/c_crusaders_crossbow_xmas_proj.mdl"
+		mat "materials/effects/arrowtrail_red.vmt"
+		mat "materials/effects/arrowtrail_blu.vmt"
+		mat "materials/effects/healingtrail_red.vmt"
+		mat "materials/effects/healingtrail_blu.vmt"
+		mat "materials/effects/repair_claw_trail_red.vmt"
+		mat "effects/repair_claw_trail_blue.vmt"
+		particle "repair_claw_heal_blue"
+		particle "repair_claw_heal_red"
+		snd "Weapon_Arrow.ImpactFlesh"
+		snd "Weapon_Arrow.ImpactMetal"
+		snd "Weapon_Arrow.ImpactWood"
+		snd "Weapon_Arrow.ImpactConcrete"
+		snd "Weapon_Arrow.Nearmiss"
+		snd "Weapon_Arrow.ImpactFleshCrossbowHeal"
+		]
+	]
 
 @PointClass base(BaseTFProjectile) appliesto(TF2)
 	studioprop("models/weapons/c_models/c_xms_festive_ornament.mdl")
-= tf_projectile_ball_ornament : "" []
+= tf_projectile_ball_ornament : "" [
+	@resources [
+		mdl "models/weapons/c_models/c_xms_festive_ornament.mdl"
+		snd "BallBuster.OrnamentImpactRange"
+		snd "BallBuster.OrnamentImpact"
+		snd "BallBuster.HitBall"
+		snd "BallBuster.HitFlesh"
+		snd "BallBuster.HitWorld"
+		snd "BallBuster.DrawCatch"
+		snd "BallBuster.Ornament_DrawCatch"
+		snd "BallBuster.Ball_HitWorld"
+	]
+]
 
 @PointClass base(BaseTFProjectile) appliesto(TF2)
 	iconsprite("editor/ficool2/tf_projectile_balloffire")
 = tf_projectile_balloffire : "Dragon's Fury's Flame" []
 
-@PointClass base(BaseTFProjectile) appliesto(TF2)
+@PointClass base(tf_projectile_jar) appliesto(TF2)
 	studioprop("models/weapons/c_models/c_sd_cleaver/c_sd_cleaver.mdl")
-= tf_projectile_cleaver : "" []
+= tf_projectile_cleaver : "" [
+	@resources [
+		mdl "models/workshop_partner/weapons/c_models/c_sd_cleaver/c_sd_cleaver.mdl"
+		snd "Cleaver.ImpactFlesh"
+		snd	"Cleaver.ImpactWorld"
+		particle "peejar_trail_blu_glow"
+		particle "peejar_trail_red_glow"
+	]
+]
 
 @PointClass base(BaseTFProjectile) appliesto(TF2)
 	iconsprite("editor/ficool2/tf_projectile_energy_ball")
@@ -58,15 +100,29 @@
 
 @PointClass base(BaseTFProjectile) appliesto(TF2)
 	studioprop("models/weapons/c_models/urinejar.mdl")
-= tf_projectile_jar : "Jarate" []
+= tf_projectile_jar : "Jarate" [
+	@resources [
+	mdl "models/weapons/c_models/urinejar.mdl"
+	mdl "models/weapons/c_models/c_xms_urinejar.mdl"
+	mdl "models/weapons/c_models/c_breadmonster/c_breadmonster.mdl"
+	snd "Jar.Explode"
+	particle "peejar_trail_blu"
+	particle "peejar_trail_red"
+	]
+]
 
 @PointClass base(BaseTFProjectile) appliesto(TF2)
 	studioprop("models/weapons/c_models/c_gascan/c_gascan.mdl")
 = tf_projectile_jar_gas : "Gas Passer Projectile" []
 
-@PointClass base(BaseTFProjectile) appliesto(TF2)
+@PointClass base(tf_projectile_jar) appliesto(TF2)
 	studioprop("models/weapons/c_models/c_madmilk/c_madmilk.mdl")
-= tf_projectile_jar_milk : "Mad Milk Projectile" []
+= tf_projectile_jar_milk : "Mad Milk Projectile" [
+	@resources [
+		mdl "models/workshop/weapons/c_models/c_madmilk/c_madmilk.mdl"
+		mdl "models/weapons/c_models/c_breadmonster/c_breadmonster_milk.mdl"
+	]
+]
 
 @PointClass base(BaseTFProjectile) appliesto(TF2)
 	studioprop("models/weapons/w_models/w_grenade_grenadelauncher.mdl")

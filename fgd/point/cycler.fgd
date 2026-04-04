@@ -1,5 +1,5 @@
 @PointClass base(BaseNPC, SetModel, SetSkin) 
-	appliesto(-L4D, -L4D2)
+	appliesto(-L4D, -L4D2, -Momentum)
 	studio()
 = cycler: "An entity used to display a model for testing purposes. Shooting it will cycle through the model's animations."
 	[

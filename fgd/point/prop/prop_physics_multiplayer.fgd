@@ -14,4 +14,6 @@
 		2: "Non-Solid, Server-side"
 		3: "Non-Solid, Client-side"
 		]
+
+	@resources []
 	]

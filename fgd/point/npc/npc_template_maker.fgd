@@ -15,7 +15,7 @@
 		512: "Don't preload template models" : 0
 		]
 
-	templatename(target_destination) : "Name of template NPC" : : "Template NPC that this maker should be creating clones of."
+	templatename(target_destination) report: "Name of template NPC" : : "Template NPC that this maker should be creating clones of."
 	radius(float) : "Radius" : 256 : "Radius around this maker within which NPCs are to be placed. Spawned NPCs will try and find empty space within this radius to spawn."
 	destinationgroup(target_destination) : "Name of Destination Group" : : "If you'd like spawned NPCs to be created at an info_npc_spawn_destination entity, enter the name of that entity here. If you have more than one destination entity by that name, the Destination Criteria will be used to select one from the group."
 

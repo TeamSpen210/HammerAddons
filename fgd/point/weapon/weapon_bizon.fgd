@@ -1,7 +1,4 @@
-
-@PointClass base(Weapon) 
-	appliesto(CSGO) 
-	autovis(Weapons, CSGO Weapons, CS Submachine Guns)
+@PointClass base(Weapon) appliesto(CSGO)
 	studioprop("models/weapons/w_smg_bizon_dropped.mdl") = weapon_bizon: "PP-Bizon"
 	[
 	]

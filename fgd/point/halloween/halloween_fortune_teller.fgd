@@ -16,4 +16,12 @@
 	output OnFortuneTold(void) : "Sent when a fortune is told."
 	output OnFortuneCurse(void) : "Sent when a fortune curse all players"
 	output OnFortuneEnd(void) : "Sent when a fortune is ended."
+
+	@resources 
+		[
+		mdl "models/bots/merasmus/merasmas_misfortune_teller.mdl"
+		snd "Announcer.SD_Event_BigHeadCurse"
+		snd "Announcer.SD_Event_NoGunsCurse"
+		snd "Announcer.SD_Event_SwimmingCurse"
+		]
 	]

@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint, RenderFields) 
-	color(255 255 255) 
-	color(200 200 0) 
+	color(255 255 255)
 	studioprop("models/editor/spot_cone_fixed.mdl")
 	// Frustum is actually fairly accurate for this
 	frustum(spreadspeed, 1, jetlength, rendercolor, -1)

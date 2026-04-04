@@ -1,6 +1,5 @@
 @PointClass base(FollowGoal) 
 	appliesto(EP2, P1)
-	autovis(AI, AI Goal)
 	iconsprite("editor/ficool2/ai_goal_injured_follow.vmt") = ai_goal_injured_follow: "Special goal for Alyx's injured behaviour in Episode Two."
 	[
 	@resources []

@@ -3,12 +3,12 @@
 	appliesto(EP1, EP2, Mesa)
 	base(BaseEntityAnimating, SetModel)
 	studioprop() 
-= prop_scalable: "Scalable Prop"
+= prop_scalable: "A resizable prop."
 	[
 	// Inputs
-	input SetScaleX(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
-	input SetScaleY(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
-	input SetScaleZ(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
+	input SetScaleX(vector) : "Scales this prop by its X axis over a given time. Parameters: <New Size> <Time>"
+	input SetScaleY(vector) : "Scales this prop by its Y axis over a given time. Parameters: <New Size> <Time>"
+	input SetScaleZ(vector) : "Scales this prop by its Z axis over a given time. Parameters: <New Size> <Time>"
 
 	@resources []
 	]

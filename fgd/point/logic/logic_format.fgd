@@ -1,4 +1,4 @@
-@PointClass appliesto(MBase) 
+@PointClass appliesto(MBase, Strata) 
 	base(BaseEntityPoint)
 	iconsprite("editor/logic_format.vmt")
 = logic_format : "Formats a line of text akin to C# String.Format.\n" +

@@ -1,0 +1,8 @@
+@FilterClass base(filter_base)
+	appliesto(MOMENTUM)
+= filter_momentum_timer_progress : "A filter that filters by the player's current track, stage, and checkpoint."
+	[
+	track_number(integer) : "Track Number" : 0 : "The track number to check for. 0 = main map, 1+ = bonus number."
+	stage_number(integer) : "Stage Number" : 0 : "The stage number to check for. 0 = ignore, 1+ = stage number."
+	checkpoint_number(integer) : "Checkpoint Number" : 0 : "The checkpoint number to check for. 0 = ignore, 1 = stage start, 2+ = checkpoint number."
+	]

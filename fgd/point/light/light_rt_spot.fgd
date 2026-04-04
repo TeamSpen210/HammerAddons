@@ -1,0 +1,7 @@
+@PointClass appliesto(Strata)
+	base(BaseSpotLight, BaseClusteredDynLight)
+	clusteredlight(spot)
+	sphere(nearz)
+= light_rt_spot: "An invisible and directional realtime spotlight."
+	[
+	]

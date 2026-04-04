@@ -5,4 +5,5 @@
 = info_intermission: "An entity that defines an intermission spot where dead players will float until they respawn."
 	[
 	target(target_destination) : "Entity to look at" : : "Name of entity that dead players will face while in intermission at this spot."
+	@resources []
 	]

@@ -8,4 +8,5 @@
 
 	// Inputs
 	input SetSequence(string) : "Sets the script model's sequence."
+	@resources [] // The animation events are handled generically.
 	]

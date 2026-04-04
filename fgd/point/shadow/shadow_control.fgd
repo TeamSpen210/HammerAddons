@@ -4,14 +4,15 @@
 	sphere(distance) 
 = shadow_control: "An entity to control the shadows in the map."
 	[
-	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "80 30 0" : "This is the shadow direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotati" + "on around the X axis."
+	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "80 30 0" : "This is the shadow direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis."
 	color(color255) : "Shadow Color" : "128 128 128" : "This is the color of the shadows."
 	distance(float) : "Maximum Distance" : 75 : "This is the maximum distance the shadow is allowed to cast, in Source units."
 	disableallshadows(boolean) : "All Shadows Disabled" : 0
 
 	ForceBlobShadows[MESA](boolean) : "Force Blob shadows" : 1
 
-	enableshadowsfromlocallights[since_L4D](boolean) : "Enable Shadows From Local Lights" : 1
+	enableshadowsfromlocallights[since_L4D](boolean) : "Enable Shadows From Local Lights" : 1 : "Enables RTT dynamic shadow angles, " +
+		"which cause shadows to face away from the nearest light source instead of always using this entity's direction. "
 	enableshadowsfromlocallights[MBase, GMod](boolean) : "Enable Local Light Shadows" : 0 : "Enables RTT dynamic shadow angles, " +
 		"which cause shadows to face away from the nearest light source instead of always using this entity's direction. " +
 		"This is a new feature and the original Half-Life 2 had no dynamic shadow angles. " +
@@ -25,4 +26,5 @@
 	input SetShadowsDisabled(integer) : "Set shadows disabled state."
 	input SetForceBlobsEnabled[MESA](integer) : "Set shadows blob state."
 	input SetShadowsFromLocalLightsEnabled[MBase, GMod, since_L4D](integer) : "Set local light shadows enabled state."
+	@resources []
 	]

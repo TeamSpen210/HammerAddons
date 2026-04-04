@@ -13,4 +13,5 @@
 	// Inputs
 	input SetMaxPieces(integer) : "Set the max gib count."
 	input SetMaxPiecesDX8(integer) : "Set the max gib count under DX8."
+	@resources []
 	]

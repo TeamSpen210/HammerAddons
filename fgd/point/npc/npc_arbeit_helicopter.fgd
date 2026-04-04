@@ -33,4 +33,11 @@
 
 	// Outputs
 	output OnSpawnNPC(ehandle) : "Fires when this helicopter spawns a NPC."
+	@resources 
+		[
+		mdl "models/props_vehicles/arbeit_heli_stationary.mdl"
+		snd "NPC_ArbeitHelicopter.RotorBlast"
+		snd "NPC_ArbeitHelicopter.RotorsLoud"
+		snd "NPC_ArbeitHelicopter.Rotors"
+		]
 	]

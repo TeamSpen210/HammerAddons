@@ -1,6 +1,4 @@
 """Add a set of new inputs to branch listeners, which generate the branches automatically."""
-from typing import Dict, Optional, Set
-
 from srctools import Entity, Output, logger
 
 from hammeraddons.bsp_transform import trans, Context
@@ -24,12 +22,12 @@ def branch_listener_unique_state(ctx: Context) -> None:
     These generate a logic_branch unique to the specific ent.
     """
     # For each listener, specifies the smallest index we haven't checked.
-    listener_ind: Dict[Entity, int] = {}
+    listener_ind: dict[Entity, int] = {}
 
     for ent in ctx.vmf.entities:
-        branch: Optional[Entity] = None
+        branch: Entity | None = None
         # Track which listeners the branch has been added to.
-        cur_listeners: Set[Entity] = set()
+        cur_listeners: set[Entity] = set()
         for out in ent.outputs[:]:
             try:
                 inp_name, inp_parm = LISTENER_INPUTS[out.input.casefold()]
@@ -67,7 +65,7 @@ def branch_listener_unique_state(ctx: Context) -> None:
                             break
                     else:
                         LOGGER.warning(
-                            'logic_branch_listener "{}" has no spare slots, '
+                            'logic_branch_listener "{}" used all 16 slots, '
                             'but a UniqueState input was targetted at it!',
                             listener['targetname'],
                         )

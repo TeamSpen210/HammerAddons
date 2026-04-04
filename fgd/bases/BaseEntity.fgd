@@ -14,6 +14,6 @@
 		"Additional Init Code keyvalues can be added with SmartEdit off."
 	// etc
 
-	linedivider_base[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_base[!engine](string) readonly editor : "----------------------------------------------------------------------------------------------------------" : ""
 
 	]

@@ -1,8 +1,9 @@
 @PointClass base(BaseEntityAnimating)
 	appliesto(EP1, EP2, Mesa)
 	studio("models/props_combine/coreball.mdl") 
-= prop_coreball: "Special version of prop_scalable, used for EP1's Combine Dark Energy Reactor. " + 
-		"To be rendered correctly, this must be placed at (2688, 12139, 517)."
+= prop_coreball: "A specialized version of prop_scalable used by the Combine Dark Energy Reactor in the Half-Life 2: Episode One chapter \"Direct Intervention\"." +
+	"This entity will always spawn with model name \"models/props_combine/coreball.mdl\". " +
+	"To be rendered correctly, this must be placed at (2688, 12139, 517) in standard Episodic."
 	[
 
 	// Inputs

@@ -1,45 +1,45 @@
 
-@BaseClass appliesto(complete) = SystemLevelChoice
+@BaseClass appliesto(since_L4D) = SystemLevelChoice
 	[
-	mincpulevel(choices) : "Minimum CPU Level" : 0 =
+	mincpulevel(choices) : "Minimum Effect Detail Level" : 0 : "Prevents this entity from rendering if the user's Effect Detail setting is lower than the specified value." =
 		[
-		0: "default (low)"
-		1: "low"
-		2: "medium"
-		3: "high"
+		0: "Default (Low)"
+		1: "Low"
+		2: "Medium"
+		3: "High"
 		]
 
-	maxcpulevel(choices) : "Maximum CPU Level" : 0 =
+	maxcpulevel(choices) : "Maximum Effect Detail Level" : 0 : "Prevents this entity from rendering if the user's Effect Detail setting is higher than the specified value." =
 		[
-		0: "default (high)"
-		1: "low"
-		2: "medium"
-		3: "high"
+		0: "Default (High)"
+		1: "Low"
+		2: "Medium"
+		3: "High"
 		]
 
-	mingpulevel(choices) : "Minimum GPU Level" : 0 =
+	mingpulevel(choices) : "Minimum Shader Detail Level" : 0 : "Prevents this entity from rendering if the user's Shader Detail setting is lower than the specified value." =
 		[
-		0: "default (very low)"
-		1: "very low"
-		2: "low"
-		3: "medium"
-		4: "high"
+		0: "Default (Low)"
+		1: "Low"
+		2: "Medium"
+		3: "High"
+		4: "Very High"
 		]
 
-	maxgpulevel(choices) : "Maximum GPU Level" : 0 =
+	maxgpulevel(choices) : "Maximum Shader Detail Level" : 0 : "Prevents this entity from rendering if the user's Shader Detail setting is higher than the specified value." =
 		[
-		0: "default (high)"
-		1: "very low"
-		2: "low"
-		3: "medium"
-		4: "high"
+		0: "Default (Very High)"
+		1: "Low"
+		2: "Medium"
+		3: "High"
+		4: "Very High"
 		]
 
-	disablex360(boolean) : "Disable X360" : 0
+	mincpulevel[engine](integer): "Minimum Effect Detail Level": 0
+	maxcpulevel[engine](integer): "Maximum Effect Detail Level": 0
+	mingpulevel[engine](integer): "Minimum Shader Detail Level": 0
+	maxgpulevel[engine](integer): "Maximum Shader Detail Level": 0
 
-
-	mincpulevel[engine](integer): "Minimum CPU Level": 0
-	maxcpulevel[engine](integer): "Maximum CPU Level": 0
-	mingpulevel[engine](integer): "Minimum GPU Level": 0
-	maxgpulevel[engine](integer): "Maximum GPU Level": 0
+	// Most modders won't need this...
+	disablex360[complete](boolean) : "Disable on Xbox 360" : 0 : "Prevents this entity from rendering if the game is running on Xbox 360."
 	]

@@ -5,7 +5,8 @@
 	[
 
 	// Inputs
-	input Command(string) : "Command to execute."
+	input Command[-MOMENTUM](string) : "Command to execute."
+	input Command[+MOMENTUM](string) : "Command(s) to execute, separated by semicolons."
 
 	@resources []
 	]

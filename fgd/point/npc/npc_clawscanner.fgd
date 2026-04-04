@@ -4,6 +4,12 @@
 	autovis(Entities, NPCs, Combine, Combine Claw Scannner)
 = npc_clawscanner: "Claw Scanner"
 	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		65536: "No Dynamic Light" : 0
+		131072: "Strider Scout (more aggressive, notifies striders of photographed enemies)" : 0
+		]
+
 	input DeployMine(void) : "Drop landmine (if carrying one)"
 	input EquipMine(void) : "Equip with landmine"
 

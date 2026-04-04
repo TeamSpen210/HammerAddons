@@ -4,7 +4,7 @@
 	iconsprite("editor/point_proximity_sensor.vmt") 
 = point_proximity_sensor: "An entity that detects another entity's proximity to a target position."
 	[
-	target(target_destination) : "Target Entity Name" : : "Name of the entity whose position will be sensed."
+	target(target_destination) report: "Target Entity Name" : : "Name of the entity whose position will be sensed."
 	spawnflags(flags) =
 		[
 		1: "Test the distance as measured along the axis specified by our direction." : 0
@@ -13,7 +13,7 @@
 
 	// Inputs
 	input Toggle(void) : "Toggle the sensor between enabled and disabled."
-	input SetTargetEntity[MBase](target_destination) : "Sets the entity whose angles will be sensed."
+	input SetTargetEntity[MBase, Strata](target_destination) : "Sets the entity whose angles will be sensed."
 
 	// Outputs
 	output Distance(float) : "Distance of the target entity away from this entity."

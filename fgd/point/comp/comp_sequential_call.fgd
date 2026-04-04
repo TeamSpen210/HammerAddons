@@ -5,7 +5,7 @@
 	iconsprite("editor/comp_sequential_call")
 = comp_sequential_call : "Finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order. To use, define OnSeq outputs, firing inputs at '!seq'."
 	[
-	target(target_destination) : "Entities to Sequence" : : "The entities which will be ordered and inputs fired at. This should refer to multiple entities, probably with a *-wildcard."
+	target(target_destination) report: "Entities to Sequence" : : "The entities which will be ordered and inputs fired at. This should refer to multiple entities, probably with a *-wildcard."
 
 	order_mode[engine](string) : "Ordering Mode" : "dist"
 	order_mode(choices) : "Ordering Mode" : "dist": "Choose how entities are ordered. Numeric suffix finds numbers at the end of the entity name, and sorts by that order." =
@@ -26,10 +26,14 @@
 		]
 	time_val(float) : "Time Value" : 5.0 : "Either the total time or the time between each entity."
 	time_variance(float) : "Time Variance" : 0.0 : "After computing the delay, randomly add/subtract this much from the delay to add noise."
+	seed(string) : "Random Seed" : : "For time variance, the position and name of the comp_sequential_call are used to seed a random number generator, " +
+		"to keep values consistent across compiles. This can be set to further randomise results."
 
 	output OnSeqStart(void) : "Fired at the start of the sequence."
 	output OnSeq(void) : "Fired once for each entity - use !seq to refer to the target."
 	output OnSeqEnd(void) : "Fired once all delayed outputs are complete."
-    
+
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
     @resources []
 	]

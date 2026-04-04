@@ -4,10 +4,11 @@
 	line(255 255 255, targetname, lightingorigin) 
 = env_shooter: "An entity that shoots models, or sprites, out of its origin."
 	[
-	shootmodel(studio) : "Model" : : "Thing to shoot out. Can be a .mdl or a .vmt."
+	shootmodel[engine](string): "Model" // Can also be material, so not useful to assume.
+	shootmodel(studio) : "Model" : : "Thing to shoot out. If it ends in .vmt it's a material, otherwise a model."
 
 	shootsounds[engine](integer): "Material Sound" : -1
-	shootsounds(choices) : "Material Sound" : "-1" =
+	shootsounds(choices) : "Material Sound" : -1 : "Controls which sound the gib makes on impact." =
 		[
 		-1: "None"
 		0: "Glass"
@@ -17,10 +18,11 @@
 		4: "Concrete"
 		]
 
-	skin(integer) : "Gib Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin on all gi" + "bs produced by this shooter."
+	skin(integer) : "Gib Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin on all gibs produced by this shooter."
 	spawnflags(flags)  =
 		[
 		2: "On fire" : 0
+		4: "Strict remove after lifetime" : 0
 		]
 
 	nogibshadows(boolean) : "Disable Shadows on Gibs" : 0

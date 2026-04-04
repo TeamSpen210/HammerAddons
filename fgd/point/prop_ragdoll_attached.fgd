@@ -1,0 +1,5 @@
+@PointClass base(prop_ragdoll) appliesto(+engine)
+= prop_ragdoll_attached: "Ragdoll variant which is spawned by code with a physics constaint. Used by striders/barnacles to impale ragdolls."
+	[
+	@resources [] // All inherited.
+	]

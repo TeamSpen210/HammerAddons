@@ -1,0 +1,11 @@
+@SolidClass base(Trigger)
+	appliesto(MOMENTUM)
+	line(255 255 255, targetname, filtername)
+= trigger_stick_explosive : "Conc grenades, stickybombs, and other explosives will stick when colliding with anything inside this area."
+	[
+	// Inputs
+	input Stick(void) : "Sticks all explosives in this area"
+	input Unstick(void) : "Unsticks all explosives in this area"
+	input Explode(void) : "Explodes all explosives in this area"
+	input Fizzle(void) : "Fizzles all explosives in this area"
+	]

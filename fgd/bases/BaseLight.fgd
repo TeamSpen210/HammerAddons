@@ -5,16 +5,22 @@
 	color(255 255 0)
 = BaseLight: "Parameters common to light and light_spot."
 	[
-	_light(color255) : "Brightness" : "255 255 255 200" : "Color and brightness of the light."
-	_lightHDR(color255) : "BrightnessHDR" : "-1 -1 -1 1"
-	_lightscaleHDR(float) : "BrightnessScaleHDR" : "1" : "Amount to scale the light by when compiling for HDR."
+	_light(color255) : "Brightness" : "255 255 255 200" : #snippet LightColorBright + " If Constant/Linear/Quadratic ratios are used, this actually sets the brightness at a range of 100 units from the light."
+	_lightHDR(color255) : "HDR Brightness" : "-1 -1 -1 1" : "If set (all >= 0), overrides Brightness in HDR mode, including the second set of values if 8 are set."
+	_lightscaleHDR(float) : "HDR Brightness Scale" : "1" : "Amount to scale the light by when compiling for HDR."
 
-	_constant_attn(string)	: "Constant" : "0"
-	_linear_attn(string)	: "Linear" : "0"
-	_quadratic_attn(string)	: "Quadratic" : "1"
+	_constant_attn(string)	: "Constant Falloff Ratio" : "0" : "Constant/Linear/Quadratic define a ratio which determines the falloff behaviour. " +
+		"The constant term causes the light to remain at a constant brightness."
+	_linear_attn(string)	: "Linear Falloff Ratio" : "0": "Constant/Linear/Quadratic define a ratio which determines the falloff behaviour. " +
+		"The linear term falls off at a constant rate depending on the distance travelled."
+	_quadratic_attn(string)	: "Quadratic Falloff Ratio" : "1" : "Constant/Linear/Quadratic define a ratio which determines the falloff behaviour. " +
+		"The quadratic term falls off by the square of the distance. This is how light works in reality."
+	_distance(integer) : "Maximum Distance" : 0 : "If Constant/Linear/Quadratic ratios are used, this specifies a hard maximum limit. " +
+		"May cause unrealistic lighting if not used carefully, but can be useful to limit the faces affected by named lights."
+
 	_fifty_percent_distance(string) : "50 percent falloff distance" : "0": "Distance at which brightness should fall off to 50%. If set, overrides linear constant and quadratic paramaters."
 	_zero_percent_distance(string) : "0 percent falloff distance" : "0": "Distance at which brightness should fall off to negligible (1/256)%. Must set _fifty_percent_distance to use."
-	_hardfalloff(integer) : "Hard Falloff" : 0 : "If set, causes lights to fall to exactly zero beyond the zero percent distance. May cause unrealistic lightijng if not used carefully."
-
-	_distance(integer) : "Maximum Distance" : 0 : "The distance that light is allowed to cast."
+	_hardfalloff(boolean) : "Hard Falloff" : 0 : "Only has effect if 50%/0% falloffs are used. If set, causes the light to fade to exactly zero through the last 1/4 of the 50->0 range. May cause unrealistic lighting if not used carefully."
+	_hard_radius_threshold[Strata](float) : "Hard radius minimum brightness threshold" : 32
+	_hard_radius_override[Strata](float) : "Hard radius override" : 0
 	]

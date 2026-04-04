@@ -1,0 +1,12 @@
+@SolidClass appliesto(MOMENTUM)
+= zone_timer_stage : "Starting zone for each stage of a map. zone_timer_start is automatically stage 1!" 
+	[
+	stage_name(string) : "Stage Name" : : "A custom name for this stage (optional)."
+	filter_name(filterclass) : "Filter Name" : : "filter_activator entity to use for this zone."
+	stage_number(integer) : "Stage Number" : 2 : "The stage number of this zone. NOTE: 1 is reserved for start! 2+ are free for your stage zones, so start at 2!"
+	checkpoints_required(boolean) : "Checkpoints Required" : 1 : "Is the player required to activate all checkpoints before progressing to the next stage? Otherwise, checkpoint zones may be skipped for this stage."
+	checkpoints_ordered(boolean) : "Checkpoints Ordered" : 1 : "Do the checkpoints in this segment have a logical order, even if the player is not required to activate them all?"
+	limit_ground_speed(boolean) : "Limit ground speed" : 1 : "Limit ground speed to walking speed (prevents bunny hopping)."
+	safe_height(float) : "Safe Height" : 0 : "Height that the player must be under to start a run of this stage track. Safe height is not a factor in activating the stage when running the full main track. -1 = full zone, 0 = base of zone, > 0 = custom height."
+	restart_destination(target_destination) : "Restart Destination (Required)" : : "The entity specifying the point to which the player should be teleported when restarting a stage. The player will be placed directly on the ground below this point if possible."
+	]

@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(since_P2, Mesa) 
+	appliesto(since_P2, Mesa, GMOD) 
 	color(200 0 0) 
 	studioprop("models/editor/camera.mdl") 
 	line(255 255 0, targetname, proxy) 
@@ -40,7 +40,8 @@
 	input Enable(void) : "Enable the view proxy, and start modifying the player's view."
 	input Disable(void) : "Disable the view proxy, and start modifying the player's view."
 	input TeleportPlayerToProxy(void) : "Move the player to the view proxy."
-	input OffsetToPlayerAndEnable(void) : "Enable the viewproxy, but alter the offset such that it doesn't move the camera."
+	// TODO: this might not actually be infra only but I don't see it in any games I own - Kelsey
+	input OffsetToPlayerAndEnable[INFRA](void) : "Enable the viewproxy, but alter the offset such that it doesn't move the camera."
 
 	@resources []
 	]

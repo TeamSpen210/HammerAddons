@@ -1,8 +1,7 @@
 // This is actually a clientside only entity, specially parsed with dedicated code out of the ent lump.
 // So only the model, classname and angtype keyvalues are touched.
 
-@SolidClass appliesto(ASW) 
-	autovis(Clientside, Camera Control)
+@SolidClass appliesto(ASW)
 = asw_camera_control: "The camera will change when marines are inside this volume."
 	[
 	angtype[engine](integer) : "Angle Type" : 0

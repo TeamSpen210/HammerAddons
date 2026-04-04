@@ -1,0 +1,6 @@
+@FilterClass base(filter_base)
+	appliesto(MOMENTUM)
+= filter_momentum_collectibles : "Filter that checks to see if the player is at or above the given collectible count"
+	[
+	player_collectibles(integer) : "Minimum req. collectible count" : 0 : "The minimum collectible count that the player needs to be at in order for the filter to accept them."
+	]

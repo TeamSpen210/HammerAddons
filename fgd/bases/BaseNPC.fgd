@@ -1,4 +1,4 @@
-@BaseClass base(BaseLogicalNPC, ToggleDraw) 
+@BaseClass base(BaseLogicalNPC) 
 	color(0 200 200) 
 	line(255 255 255, targetname, target) 
 = BaseNPC: "Behaviour only applicable to visible NPCs."
@@ -15,7 +15,7 @@
 	]
 	visiblewhenasleep[ASW](boolean) : "Visible when asleep" : 0 : "If true, this alien will still get drawn even when asleep (useful for aliens you see far below you)."
 
-	linedivider_npc[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_npc[!engine](string) readonly editor : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs
 	input SetBodyGroup(integer) : "HACK: Sets this NPC's body group (from 0 - n). You'd better know what you are doing!"

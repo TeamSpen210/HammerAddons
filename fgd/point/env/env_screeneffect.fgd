@@ -9,6 +9,8 @@
 		0: "Advisor Stun"
 		1: "Intro Blur"
 		2: "Groggy Vision"
+		100 : "Chromatic Blur (Mapbase)" [MBase]
+		101 : "Chromatic Aberration (Mapbase)" [MBase]
 		]
 
 	// Inputs

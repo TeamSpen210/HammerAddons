@@ -1,0 +1,7 @@
+@PointClass appliesto(Strata)
+	base(BaseEntityPoint, BaseLight, BaseClusteredDynLight)
+	clusteredlight(point)
+	sphere(nearz)
+= light_rt: "An invisible omnidirectional realtime light-source."
+	[
+	]

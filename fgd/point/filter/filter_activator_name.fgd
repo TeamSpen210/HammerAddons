@@ -4,7 +4,7 @@
 	line(0 255 0, targetname, filtername) 
 = filter_activator_name: "A filter that filters by the name of the activator."
 	[
-	filtername(target_destination) : "Filter Name" : : "The name to filter by. If the filter mode is Allow, " +
+	filtername(target_destination) report: "Filter Name" : : "The name to filter by. If the filter mode is Allow, " +
 		"only entities whose name matches the given string will pass the filter. If the filter mode is Disallow, " +
 		"all entities EXCEPT those whose name matches the string will pass the filter."	
 	

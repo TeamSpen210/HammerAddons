@@ -1,0 +1,5 @@
+@SolidClass base(Trigger, EnableDisable)
+	appliesto(MOMENTUM)
+= trigger_bounce_stickybombs: "Stickybombs bounce when hitting anything in this trigger"
+	[
+	]

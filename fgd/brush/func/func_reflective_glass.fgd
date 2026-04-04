@@ -30,4 +30,5 @@
 	// Inputs
 	input SetReflectRenderTarget[MBase](string) : "Sets the reflection render target."
 	input SetRefractRenderTarget[MBase](string) : "Sets the refraction render target."
+	@resources []
 	]

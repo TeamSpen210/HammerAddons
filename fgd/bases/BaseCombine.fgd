@@ -1,4 +1,4 @@
-@BaseClass base(BaseNPC, RappelNPC) = BaseCombine : "Metropolice and Overwatch Soldiers share a common baseclass."
+@BaseClass base(RappelNPC) = BaseCombine : "Metropolice and Overwatch Soldiers share a common baseclass."
 	[
 	@resources	
 		[

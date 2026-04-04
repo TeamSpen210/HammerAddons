@@ -14,10 +14,15 @@ def optimise_areaportals(ctx: Context) -> None:
     for ap_ent in ctx.vmf.by_class['func_areaportalwindow']:
         if ap_ent['target']:
             for fade_ent in ctx.vmf.search(ap_ent['target']):
-                if fade_ent['classname'] in ['prop_dynamic', 'prop_dynamic_override']:
-                    fade_ent['solid'] = '0'
-                elif fade_ent['classname'] in ['func_brush']:
-                    fade_ent['solidity'] = '1'  # Never Solid
+                match fade_ent['classname']:
+                    case 'prop_dynamic' | 'prop_dynamic_override':
+                        fade_ent['solid'] = '0'
+                    case 'func_brush':
+                        fade_ent['solidity'] = '1'  # Never Solid
+                    case 'func_illusionary':
+                        pass  # Already always non-solid.
+                    case _:
+                        continue  # Unknown behaviour, don't modify for safety.
 
                 try:
                     bmodel = ctx.bsp.bmodels[fade_ent]

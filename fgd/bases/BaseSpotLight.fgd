@@ -1,0 +1,19 @@
+@BaseClass base(BaseEntityPoint, BaseLight, LightPattern, LightShadows, BaseClusteredLight)
+	lightprop("models/editor/spot.mdl") 
+	lightcone() 
+	line(255 255 255, targetname, target)
+= BaseSpotLight
+	[
+	spawnflags(flags)  =
+		[
+		1: "Initially dark" : 0
+		2: "Shadowed" : 0 [Strata]
+		]
+	target(target_destination) : "Entity to point at" : : "The name of an entity in the map that the spotlight will point at. " +
+		"This will override the spotlight's angles."
+	_inner_cone(integer) : "Inner (bright) angle" : 30
+	_cone(integer) : "Outer (fading) angle" : 45
+	_exponent(integer) : "Focus" : 1
+	_removeaftercompile[Strata](boolean) : "Remove After Compile" : 0 : "If set, removes this entity after processing the map with VRAD"
+	pitch(angle_negative_pitch) : "Pitch" : -90
+	]

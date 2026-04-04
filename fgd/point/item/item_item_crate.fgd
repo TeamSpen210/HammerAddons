@@ -1,9 +1,9 @@
-@BaseClass appliesto(-MBase) studioprop("models/items/item_item_crate.mdl") = _item_item_crate_fixedmodel []
-@BaseClass appliesto(+MBase) studioprop() = _item_item_crate_anymodel []
-
-@PointClass base(BasePropPhysics, Angles, DamageFilter, BaseFadeProp, EZ2Variant, _item_item_crate_anymodel, _item_item_crate_fixedmodel) 
+@PointClass base(BasePropPhysics, DamageFilter, BaseFadeProp, EZ2Variant)
 	appliesto(EP1, EP2, HL2, P1)
-= item_item_crate: "Item Crate"
+	studioprop[-MBase]("models/items/item_item_crate.mdl")
+	studioprop[+MBase]()
+	line(255 255 0, targetname, specificresupply)
+= item_item_crate: "A small crate that holds an item inside. Resupply crates can have a specific item defined or automatically grant specific items based on the player's health, suit armor and remaining ammunition."
 	[
 	model[MBase](studio) : "Model" : "models/items/item_item_crate.mdl" : "The model of this item_item_crate. Only works when this crate's appearance is set to use a custom model."
 
@@ -15,14 +15,14 @@
 		]
 
 	crateappearance[engine](integer) : "Crate Appearance" : 0
-	crateappearance(choices) : "Crate Appearance" : 0 =
+	crateappearance(choices) : "Crate Appearance" : 0 : "Changes the appearance of the crate." =
 		[
 		0: "Default Appearance"
 		1: "Radar Beacon Crate"
 		2 : "Custom Model (use model keyvalue)" [MBase]
 		]
 
-	itemclass(pointentityclass) : "Item Type" : "item_dynamic_resupply" : "Class name of the entity to spawn when the crate is broken"
+	itemclass(pointentityclass) report: "Item Type" : "item_dynamic_resupply" : "Class name of the entity to spawn when the crate is broken"
 	itemcount(integer) : "Item Count" : 1 : "Number of items to emit upon breakage"
 	specificresupply[!MBase](target_destination) : "Specific resupply" : : "If item type is item_dynamic_resupply, specify a specific one to use instead of the master"
 	SpecificResupply[MBase](target_destination) : "Specific resupply/Target template" : "" : "If item type is item_dynamic_resupply, specify a specific one to use instead of the master. If the crate contains a point_template, this is required to specify which point_template to spawn."

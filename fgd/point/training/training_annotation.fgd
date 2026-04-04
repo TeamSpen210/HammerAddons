@@ -10,4 +10,8 @@
 	// Inputs
 	input Show(void) : "Show the annotation."
 	input Hide(void) : "Hide the annotation."
+	@resources
+		[
+		particle "ping_circle"
+		]
 	]

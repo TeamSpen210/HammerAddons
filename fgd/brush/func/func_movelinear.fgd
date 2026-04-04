@@ -11,7 +11,9 @@
 	startposition(float) : "Start Position" : 0 : "Position of brush when spawned, where 0 is the starting position and 1 is the opened position. " +
 		"Negatives will position it in the opposite direction."
 	speed(float) : "Speed" : 100 : "The speed that the brush moves, in units per second."
-	movedistance(float) : "Move Distance" : 100 : "The distance from the starting point that the brush should move."
+	movedistance(float) : "Move Distance" : 100 : "The distance from the starting point that the brush should move. " +
+		"If zero, the width of the brush in the movement direction is used, like func_door."
+	lip(float) : "Lip" : 0.0 : "If Move Distance is zero, this is subtracted from the calculated movement distance."
 	blockdamage(float) : "Block Damage" : 0 : "The amount of damage to do to any entity that blocks the brushes, per frame."
 	startsound(sound) : "Start Sound" : : "Sound played when the brush starts moving."
 	startsoundvolume[KZ](float) : "Start sound volume" : 1 : "How loud to play the start sound (0-1)"

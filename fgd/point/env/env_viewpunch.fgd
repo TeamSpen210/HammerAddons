@@ -15,4 +15,5 @@
 
 	// Inputs
 	input ViewPunch(void) : "Performs the view punch."
+	@resources []
 	]

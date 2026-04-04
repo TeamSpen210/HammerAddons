@@ -3,4 +3,12 @@
 	appliesto(TF2) 
 = halloween_souls_pack : "GARGOYLE SOUL"
 	[
+	@resources [
+		sound "Player.ReceiveSouls"
+		particle "halloween_pickup_active_red"
+		particle "halloween_pickup_active"
+		particle "halloween_pickup_active_green"
+		particle "eb_beam_angry_ring01"
+		particle "soul_trail"
+		]
 	]

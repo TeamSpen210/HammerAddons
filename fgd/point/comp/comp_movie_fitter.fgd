@@ -1,0 +1,33 @@
+@PointClass base(BaseEntityPoint)
+	iconsprite("editor/comp_movie_fitter")
+	appliesto(since_P2, srctools)
+	line(255 255 255, targetname, target)
+= comp_movie_fitter : "Calculates the UVs for a vgui_movie_display to tile with neighbours."
+	[
+	target(target_destination) report: "Lower Left Display" : : "The movie display on the lower-left of the first desired tiling. This controls where the movie starts."
+
+	tile_width(int) : "Tiling Width" : -1 : "Stretch the movie across this many screens, tiling across any additional ones. If -1, stretch across the whole group."
+	tile_height(int) : "Tiling Height" : -1 : "Stretch the movie across this many screens, tiling across any additional ones. If -1, stretch across the whole group."
+	tile_once(boolean) : "Tile Once" : 0 : "If true, stop after a single complete movie, and ignore movies to the left/below the target. " +
+		"Requires Tiling Width/Height set. This allows different tile patterns to be used on different screens."
+
+	mode[engine](string) : "Mode" : "spawn"
+	mode[-STRATA](choices) : "Mode" : "spawn" : "If On Spawn, this will be applied immediately with a logic_auto. " +
+		"If On Trigger, the Trigger input on this entity will apply the pattern, allowing switching between multiple patterns." =
+		[
+		"spawn" : "On Spawn"
+		"trigger": "On Trigger"
+		]
+	mode[+STRATA](choices) : "Mode" : "spawn" : "If On Spawn, this will set keyvalues to apply immediately. " +
+		"If On Trigger, the Trigger input on this entity will apply the pattern, allowing switching between multiple patterns." =
+		[
+		"spawn" : "On Spawn"
+		"trigger": "On Trigger"
+		]
+
+	input Trigger(void) : "If mode is On Trigger, this applies the fitted values."
+
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
+	@resources []
+	]

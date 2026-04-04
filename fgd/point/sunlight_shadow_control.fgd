@@ -27,4 +27,9 @@
 	input SetNorthOffset(float) : "Sets the north offset."
 	input SetTexture(string) : "Set the texture cookie of the sunlight."
 	input EnableShadows(boolean) : "Set the if shadows are enabled"
+	@resources
+		[
+		texture "materials/effects/flashlight_border.vtf" // XBox only
+		texture "materials/effects/flashlight001.vtf"
+		]
 	]

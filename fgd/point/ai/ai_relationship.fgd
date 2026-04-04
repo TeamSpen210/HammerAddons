@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint)
 	appliesto(-L4D, -L4D2, -CSGO)
-	autovis(AI, AI Relationship)
 	iconsprite("editor/ai_relationship.vmt") 
 	line(255 255 255, targetname, subject)
 	line(255 255 255, targetname, subject, targetname, target)

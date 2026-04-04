@@ -1,0 +1,15 @@
+@PointClass base(BaseEntityAnimating) 
+	appliesto(P2CE) 
+	studioprop("models/props/water_bottle/water_bottle.mdl")
+= item_paint_power_pickup: "Gives the player a paint power on touch. Requires the paint gun to be equipped."
+	[
+		PaintType[engine](integer) : "Paint Type" : 0
+		PaintType(choices) : "Paint Type" : 0 : "The type of paint power to grant when touched." =
+		[
+			0 : "Bounce (Repulsion Gel)"
+			1 : "Reflect"
+			2 : "Speed (Propulsion Gel)"
+			3 : "Portal (Conversion Gel)"
+			5 : "Stick (Adhesion Gel)"
+		]
+	]

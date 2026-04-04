@@ -1,13 +1,9 @@
-// Switch the model helper depending on game.
-@BaseClass appliesto(P1) studioprop("models/props/turret_01.mdl")
-	= _npc_portal_turret_floor_p1_mdl []
-@BaseClass appliesto(P2) studioprop()
-	= _npc_portal_turret_floor_p2_mdl []
-
-@PointClass base(BaseNPC, _npc_portal_turret_floor_p1_mdl, _npc_portal_turret_floor_p2_mdl) 
+@PointClass base(BaseNPC)
 	appliesto(P1, P2, -STANLEY) 
 	autovis(Entities, NPCs, Portal Turret)
-	frustum(90, 1, TurretRange, 255 0 0, -1)
+	studioprop[P1]("models/props/turret_01.mdl")
+	studioprop[P2]() // Settable in P2, fixed and different in P1.
+	frustum(120, 1, TurretRange, 255 0 0, -1)
 = npc_portal_turret_floor: "Aperture Science Sentry Turret."
 	[
 	damageforce(boolean) : "Damage Pushes Player" : 0 : "Being hit by this turret will push the player back."
@@ -33,7 +29,7 @@
 		]
 
 	skinnumber[engine](integer) : "Skin" : 0 
-	skinnumber[P1](integer) readonly: "Skin" : 0 : "Which skin to use for this turret. Aperture Turrets have no variants."
+	skinnumber[P1](integer) readonly editor: "Skin" : 0 : "Which skin to use for this turret. Aperture Turrets have no variants."
 	skinnumber[P2](choices) : "Skin" : 0 : "Set the skin used for the turret. Only useful on normal (for a destroyed variant) or custom turrets." =
 		[
 		0: "Normal"
@@ -67,7 +63,7 @@
 
 	skin[P2](integer) : "[H] Skin" : 0 : "The skin to show, mainly for the normal model."
 
-	turretrange[P1, !engine](integer) readonly : "<Maximum Range>" : 1500 : "How far the turret will be able to see targets. Always 1500 in Portal 1, but this keyvalue is needed to display the preview."
+	turretrange[P1, !engine](float) readonly editor: "<Maximum Range>" : 1500 : "How far the turret will be able to see targets. Always 1500 in Portal 1, but this keyvalue is needed to display the preview."
 
 	// Inputs
 	input FireBullet(string) : "Causes the turret to instantly fire at the specified entity."

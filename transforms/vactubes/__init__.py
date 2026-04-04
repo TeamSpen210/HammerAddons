@@ -1,12 +1,12 @@
 """Implement customisable vactubes for items."""
-import subprocess
+from collections.abc import Iterable
 from collections import defaultdict
-import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Tuple, Dict, List, Iterable, Optional, Union
 import math
 import random
+import subprocess
+import sys
 
 import trio
 
@@ -17,6 +17,7 @@ from srctools import FrozenVec, Vec, Output, conv_int
 
 from hammeraddons.bsp_transform.common import RelayOut
 from hammeraddons.bsp_transform import trans, Context
+from hammeraddons.mdl_compiler import executable_args
 from . import nodes, animations, objects
 from .sensors import Sensor
 
@@ -24,7 +25,7 @@ from .sensors import Sensor
 LOGGER = srctools.logger.get_logger(__name__)
 # For culling, ignore points with normals offset more than this.
 ANG_THRESHOLD = math.cos(math.radians(30))
-# Arbitary location to place all the vactube ents.
+# Arbitrary location to place all the vactube ents.
 VAC_POS = FrozenVec(-16384, 0, 1024)
 
 QC_TEMPLATE = '''\
@@ -59,7 +60,7 @@ def vscript_bool(value: bool) -> str:
 
 
 def find_closest(
-    all_nodes: Iterable[Tuple[Union[Vec, FrozenVec], List[Tuple[Vec, nodes.Node]]]],
+    all_nodes: Iterable[tuple[Vec | FrozenVec, list[tuple[Vec, nodes.Node]]]],
     node: nodes.Node,
     src_type: nodes.DestType,
 ) -> nodes.Node:
@@ -67,8 +68,10 @@ def find_closest(
     src_point = node.vec_point(1.0, src_type)
     src_norm = node.output_norm(src_type)
 
-    best_node: Optional[nodes.Node] = None
+    best_node: nodes.Node | None = None
     best_dist = math.inf
+    # Vactube radius, smaller if skybox.
+    radius = (64./16)**2 if node.is_skybox else 64.**2
 
     # We're looking for if the point is inside the cylinder projecting out
     # of the node.
@@ -87,7 +90,7 @@ def find_closest(
                 continue
             # Now project the point onto the target's plane.
             # If inside, we've found it.
-            if (off + dist * targ_norm).mag_sq() <= (64*64):
+            if (off + dist * targ_norm).mag_sq() <= radius:
                 best_node = targ
                 best_dist = dist
 
@@ -101,8 +104,8 @@ def find_closest(
 @trans('Portal 2 Vactubes')
 async def vactube_transform(ctx: Context) -> None:
     """Implements the dynamic Vactube system."""
-    name_to_node: Dict[str, nodes.Node] = {}
-    all_nodes: List[nodes.Node] = []
+    name_to_node: dict[str, nodes.Node] = {}
+    all_nodes: list[nodes.Node] = []
 
     relay_maker = RelayOut.create(ctx.vmf, VAC_POS, '_vac_out')
 
@@ -124,8 +127,10 @@ async def vactube_transform(ctx: Context) -> None:
     if ctx.studiomdl is None:
         raise ValueError(
             'Vactubes present, but no studioMDL path provided! '
-            'Set the path to studiomdl.exe in srctools.vdf.'
+            'Update hammeraddons_game.vdf.'
         )
+    if not ctx.game_conf.vscript:
+        raise ValueError('Vactubes currently require VScript to operate.')
 
     obj_count, vac_objects, objects_code = objects.parse(ctx.vmf, ctx.pack)
     groups = set(objects_code)
@@ -145,7 +150,7 @@ async def vactube_transform(ctx: Context) -> None:
     # Now join all the nodes to each other.
     # Tubes only have 90 degree bends, so a system should mostly be formed
     # out of about 6 different normals. So group by that.
-    inputs_by_norm: Dict[FrozenVec, List[Tuple[Vec, nodes.Node]]] = defaultdict(list)
+    inputs_by_norm: dict[FrozenVec, list[tuple[Vec, nodes.Node]]] = defaultdict(list)
 
     for node in all_nodes:
         # Spawners have no inputs.
@@ -153,17 +158,34 @@ async def vactube_transform(ctx: Context) -> None:
             node.has_input = True
         else:
             inputs_by_norm[node.input_norm().freeze()].append((node.vec_point(0.0), node))
-        #     ctx.vmf.create_ent('prop_dynamic', model='models/editor/cone_helper.mdl', rendercolor='32 32 255', origin=node.vec_point(0), angles=node.input_norm().to_angle())
+        #     ctx.vmf.create_ent(
+        #         'prop_dynamic',
+        #         model='models/editor/cone_helper.mdl',
+        #         rendercolor='32 32 255',
+        #         origin=node.vec_point(0),
+        #         angles=node.input_norm().to_angle(),
+        #     )
         # for out_type in node.out_types:
-        #     ctx.vmf.create_ent('prop_dynamic', model='models/editor/cone_helper.mdl', rendercolor='255 32 32', origin=node.vec_point(1.0, out_type), angles=node.output_norm(out_type).to_angle())
+        #     ctx.vmf.create_ent(
+        #         'prop_dynamic',
+        #         model='models/editor/cone_helper.mdl',
+        #         rendercolor='255 32 32',
+        #         origin=node.vec_point(1.0, out_type),
+        #         angles=node.output_norm(out_type).to_angle(),
+        #     )
         #     count = int(node.path_len(out_type) / 8)
         #     for i in range(1, count):
-        #         ctx.vmf.create_ent('prop_dynamic', model='models/editor/axis_helper.mdl', origin=node.vec_point(i/count, out_type), angles='0 0 0')
+        #         ctx.vmf.create_ent(
+        #             'prop_dynamic',
+        #             model='models/editor/axis_helper.mdl',
+        #             origin=node.vec_point(i/count, out_type),
+        #             angles='0 0 0',
+        #         )
 
     # with open(str(ctx.bsp.filename)[:-4] + '_vac.vmf', 'w') as f:
     #     ctx.vmf.export(f, inc_version=False)
 
-    sources: List[nodes.Spawner] = []
+    sources: list[nodes.Spawner] = []
 
     LOGGER.info('Linking nodes...')
     for node in all_nodes:
@@ -171,19 +193,14 @@ async def vactube_transform(ctx: Context) -> None:
         if isinstance(node, nodes.Destroyer):
             continue
         for dest_type in node.out_types:
-            override = node.ent[dest_type.manual_targ]
-            if override:
+            if isinstance(node, nodes.EntityNode) and (override := node.ent[dest_type.manual_targ]):
                 try:
                     target = name_to_node[override.casefold()]
                 except KeyError:
-                    raise ValueError(f'Unknown node target "{override}" for node {node}!')
+                    raise ValueError(f'Unknown node target "{override}" for node {node}!') from None
                 LOGGER.debug('Override: {} -> {}', node.name, target.name)
             else:
-                target = find_closest(
-                inputs_by_norm.items(),
-                node,
-                dest_type,
-            )
+                target = find_closest(inputs_by_norm.items(), node, dest_type)
             node.outputs[dest_type] = target
 
             # Mark the node as having an input, for sanity checking purposes.
@@ -210,7 +227,7 @@ async def vactube_transform(ctx: Context) -> None:
         if not node.has_input:
             raise ValueError(
                 'No source found for junction '
-                f'{node.ent["targetname"]} at ({node.origin})!'
+                f'{node.name} at ({node.origin})!'
             )
 
     LOGGER.info('Generating animations...')
@@ -227,11 +244,13 @@ async def vactube_transform(ctx: Context) -> None:
     # Now generate the animation model.
     # First wipe the model.
     full_loc = ctx.game.path / 'models' / anim_mdl_name
-    for ext in MDL_EXTS:
+    for file in full_loc.parent.glob("vac_anim_*"):
         try:
-            full_loc.with_suffix(ext).unlink()
+            file.unlink()
         except FileNotFoundError:
             pass
+        else:
+            LOGGER.debug('Removing {}', file)
 
     with TemporaryDirectory(prefix='vactubes_') as temp_dir:
         # Make the reference mesh.
@@ -242,10 +261,10 @@ async def vactube_transform(ctx: Context) -> None:
         for tri in mesh.triangles:
             for point in tri:
                 point.tex_u, point.tex_v = U[point.tex_u], V[point.tex_v]
-        with open(temp_dir + '/ref.smd', 'wb') as mesh_file:
+        with open(f'{temp_dir}/ref.smd', 'wb') as mesh_file:
             mesh.export(mesh_file)
 
-        with open(temp_dir + '/prop.qc', 'w') as qc_file:
+        with open(f'{temp_dir}/prop.qc', 'w', encoding='utf8') as qc_file:
             qc_file.write(QC_TEMPLATE.format(
                 path=anim_mdl_name.as_posix(), 
                 fps=animations.FPS,
@@ -259,7 +278,7 @@ async def vactube_transform(ctx: Context) -> None:
                     anim.mesh.export(mesh_file)
 
         args = [
-            str(ctx.studiomdl),
+            *executable_args(ctx.studiomdl),
             '-nop4', '-i',  # Ignore warnings.
             '-game', str(ctx.game.path),
             temp_dir + '/prop.qc',
@@ -321,13 +340,13 @@ async def vactube_transform(ctx: Context) -> None:
     )
 
     # Group animations by their start point.
-    anims_by_start: Dict[nodes.Spawner, List[animations.Animation]] = defaultdict(list)
+    anims_by_start: dict[nodes.Spawner, list[animations.Animation]] = defaultdict(list)
 
     for anim in all_anims:
         anims_by_start[anim.start_node].append(anim)
 
     # And create a dict to link droppers to the animation they want.
-    dropper_to_anim: Dict[nodes.Dropper, animations.Animation] = {}
+    dropper_to_anim: dict[nodes.Dropper, animations.Animation] = {}
 
     for start_node, anims in anims_by_start.items():
         spawn_maker = start_node.ent
@@ -363,7 +382,6 @@ async def vactube_transform(ctx: Context) -> None:
         code = [f'// Node: {start_node.ent["targetname"]}, {start_node.origin}']
         for anim in anims:
             anim_dest = anim.end_node
-            anim_speed = anim.start_node.speed
             io_code = ','.join([
                 f'Output({time:.2f}, "{ent["targetname"]}", "{inp}")'
                 for time, ent, inp in anim.vscript_outputs()

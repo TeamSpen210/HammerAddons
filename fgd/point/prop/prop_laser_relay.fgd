@@ -1,4 +1,4 @@
-@PointClass base(BaseEntityAnimating, SRCIndicator, SetSkin) 
+@PointClass base(BaseEntityAnimating, SetSkin, SRCIndicator) 
 	appliesto(P2) 
 	autovis(Test Elements, Dis. Beam, Laser Relay)
 	studioprop() 
@@ -6,6 +6,13 @@
 		"The entity will fire outputs when struck and unstruck."
 	[
 	model(studio) : "Laser Relay Model" : "models/props/laser_receptacle.mdl" : "Choose a custom model for the relay."
+
+	uselaserfilter[Strata](boolean): "Use Laser Filter" : 0 : "If enabled, this relay can only be activated by the specified laser color."
+	filtercolor[engine](color255) : "Laser Filter Color" : "255 255 255 255"
+	filtercolor[Strata](choices): "Laser Filter Color" : "255 255 255 255" : "Filter lasers by this color. You can also specify a custom RGBA color here." = #snippet StrataDisBeamColor
+
+	// Input
+	input SetFilterColor[Strata](color255) : "Changes the laser filter colour."
 
 	// Outputs
 	output OnPowered(void) : "Fired when a laser hits the target."

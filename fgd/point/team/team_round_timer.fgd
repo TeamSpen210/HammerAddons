@@ -56,4 +56,32 @@
 
 	output OnSetupStart(void) : "Sent when the setup time begins."
 	output OnSetupFinished(void) : "Sent when the setup time is finished."
+
+	@resources	[
+		sound "Announcer.RoundEnds60seconds"
+		sound "Announcer.RoundEnds30seconds"
+		sound "Announcer.RoundEnds10seconds"
+		sound "Announcer.RoundEnds5seconds"
+		sound "Announcer.RoundEnds4seconds"
+		sound "Announcer.RoundEnds3seconds"
+		sound "Announcer.RoundEnds2seconds"
+		sound "Announcer.RoundEnds1seconds"
+		sound "Announcer.RoundBegins60Seconds"
+		sound "Announcer.RoundBegins30Seconds"
+		sound "Announcer.RoundBegins10Seconds"
+		sound "Announcer.RoundBegins5Seconds"
+		sound "Announcer.RoundBegins4Seconds"
+		sound "Announcer.RoundBegins3Seconds"
+		sound "Announcer.RoundBegins2Seconds"
+		sound "Announcer.RoundBegins1Seconds"
+		sound "Merasmus.RoundBegins5Seconds"
+		sound "Merasmus.RoundBegins4Seconds"
+		sound "Merasmus.RoundBegins3Seconds"
+		sound "Merasmus.RoundBegins2Seconds"
+		sound "Merasmus.RoundBegins1Seconds"
+		sound "Ambient.Siren"
+		sound "Announcer.TimeAdded"
+		sound "Announcer.TimeAddedForEnemy"
+		sound "Announcer.TimeAwardedForTeam"
+		]
 	]

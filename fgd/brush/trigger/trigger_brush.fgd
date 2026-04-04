@@ -31,4 +31,6 @@
 	output OnStartTouch(void) : "Fired when something touches us."
 	output OnEndTouch(void) : "Fired when something stops touching us."
 	output OnUse(void) : "Fired when the player (or I/O) USEs us."
+
+	@resources []
 	]

@@ -3,4 +3,5 @@
 = func_forcefield: "Brushes that become visible to enemy players when they get close. " +
 	"Use them to mark areas that they're unable to enter."
 	[
+	@resources [] // Just the brush itself
 	]

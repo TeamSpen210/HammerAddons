@@ -1,0 +1,7 @@
+@SolidClass base(Trigger)
+	appliesto(MOMENTUM)
+= trigger_momentum_progress : "A trigger volume that sets the teleport destination the player will be sent to when they activate a progress teleport."
+	[
+	teleport_destination(target_destination) : "Progress Teleport Destination" : : "The player will be teleported to this entity's location when activating a progress teleport."
+	progress_number(integer) : "Progress Number" : 0 : "The progress value of this trigger. If the player touches a trigger_momentum_progress with a Progress Number that is lower than the last one they activated, it will be ignored. A trigger with a Progress Number of 0 will always activate."
+	]

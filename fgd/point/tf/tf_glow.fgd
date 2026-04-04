@@ -3,7 +3,7 @@
 	iconsprite("editor/ficool2/tf_glow")
 	appliesto(TF2) = tf_glow
 	[
-	target(target_destination) : "Target - ONE TARGET ONLY"
+	target(target_destination) report: "Target - ONE TARGET ONLY"
 	glowcolor(color255) : "Glow Color" : "255 0 0 255" : "<r> <g> <b> <a> 0-255"
 	
 	mode[engine](integer) : "Visibility Mode" : 0

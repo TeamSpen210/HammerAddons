@@ -53,8 +53,8 @@ def test_check_control_backward_compatiblity() -> None:
 def test_numeric_parsing_good(caplog: pytest.LogCaptureFixture) -> None:
     """Test the numeric parsing function, with good values."""
     caplog.set_level(logging.WARNING)
-    assert parse_numeric_specifier('  42 ') == (operator.eq, Decimal('42'))
-    assert parse_numeric_specifier('<3') == (operator.lt, Decimal('3'))
+    assert parse_numeric_specifier('  42 ') == (operator.eq, Decimal(42))
+    assert parse_numeric_specifier('<3') == (operator.lt, Decimal(3))
     assert parse_numeric_specifier(' > 45.872_67') == (operator.gt, Decimal('45.87267'))
     assert parse_numeric_specifier('>= -0892.930') == (operator.ge, Decimal('-892.93'))
     assert parse_numeric_specifier('=4') == (operator.eq, Decimal(4))

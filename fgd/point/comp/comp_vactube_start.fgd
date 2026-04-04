@@ -1,12 +1,18 @@
 @PointClass base(BaseEntityPoint)
 	appliesto(+P2, +srctools)
-	autovis(Vactubes, Vac Paths)
-	studioprop("models/editor/vactubes/start_point.mdl")
+	studioprop()
 = comp_vactube_start : "Marks the start point of a vactube. This is where they spawn."
 [
-	group(string) : "Object Group" : : "Only objects with the same group name will be spawned." +
+	// Not studio, we don't want to pack these.
+	model[engine](string) : "Type" : "models/editor/vactubes/start_point.mdl"
+	model(choices) : "Type" : "models/editor/vactubes/start_point.mdl" : "Whether this is standard size or 1/16 skybox scale." = [
+		"models/editor/vactubes/start_point.mdl" : "Regular"
+		"models/editor/vactubes/start_point_sky.mdl" : "Skybox"
+	]
+
+	group(string) report: "Object Group" : : "Only objects with the same group name will be spawned." +
 		"This allows multiple vactubes to have a different mix of items. If you don't need this, you can leave the groups blank."
-	speed(float) : "Object Speed" : 800.0 : "Set the speed of the objects produced from here, in units per second."
+	speed(float) : "Object Speed" : 800.0 : "Set the speed of the objects produced from here, in units per second. In skybox mode, the speed is automatically divided by 16 to match."
 	seed(string) : "Rotation Seed" : : "If set, consistently produce the same rotation pattern as the seed. " +
 		"If not set, a random seed will be selected (and printed to the compile log)."
 
@@ -20,7 +26,7 @@
 	time_min(float) : "Minimum Time" : 0.15 : "The minimum time between objects."
 	time_max(float) : "Maximum Time" : 0.5 : "The maximum time between objects."
 
-	linedivider_vacvisual[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_vacvisual[!engine](string) readonly editor : "----------------------------------------------------------------------------------------------------------" : ""
 
 	prop_fast_reflection(boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes the vactube object props to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
 	prop_disable_shadows(boolean) : "Disable Producing Cheap Shadows?" : 1 : "If set, prevent the vactube object props from creating cheap render-to-texture/dynamic shadows."
@@ -34,5 +40,7 @@
 	input DisableTimer(void) : "Disable the automatic timer."
 	output OnSpawned(void) : "Fired when an object spawns. The object entity is NOT passed as !activator."
 
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
     @resources []
 ]

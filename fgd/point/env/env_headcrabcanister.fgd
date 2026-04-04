@@ -24,6 +24,7 @@
 		0: "Normal headcrabs"
 		1: "Fast Headcrabs"
 		2: "Poison Headcrabs"
+		-1 : "Random" [MBase]
 		]
 
 	headcrabcount(integer) : "Headcrab count" : 6 : "Number of headcrabs to spawn on impact"

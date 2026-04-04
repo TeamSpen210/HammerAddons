@@ -1,6 +1,10 @@
 @PointClass base(Item) 
 	appliesto(TF2) 
-	studio("models/items/car_battery01.mdl") 
+	studioprop("models/items/car_battery01.mdl") 
 = item_armor : "Unused Armor"
 	[
+	@resources	[
+		sound "Armor.Touch"
+		model "models/items/car_battery01.mdl"
+		]
 	]

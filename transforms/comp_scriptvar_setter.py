@@ -1,10 +1,9 @@
 """Implements comp_scriptvar_setter."""
 from __future__ import annotations
-import re
+from collections.abc import Callable
+from types import EllipsisType
 from collections import defaultdict
-from typing import Dict, TYPE_CHECKING, Optional, Callable, Union
-
-from typing_extensions import TypeAlias
+import re
 
 from srctools.fgd import EntityDef, ValueTypes
 from srctools.logger import get_logger
@@ -16,15 +15,11 @@ from hammeraddons.bsp_transform import trans, Context, check_control_enabled
 
 LOGGER = get_logger(__name__)
 MODES: dict[str, Callable[[Entity, Entity], str]] = {}
-if TYPE_CHECKING:
-    EllipsisType: TypeAlias = ellipsis  # Fake name before 3.10
-else:
-    EllipsisType = type(...)
 
 
 def vs_vec(vec: Vec) -> str:
     """Convert the provided Vec into a VScript Vector constructor code."""
-    return 'Vector({})'.format(vec.join())
+    return f'Vector({vec.join()})'
 
 
 def squirrel_string(val: str) -> str:
@@ -36,7 +31,7 @@ class VarData:
     """The info stored on a variable."""
     def __init__(self) -> None:
         # Non-array values.
-        self.scalar: Optional[str] = None
+        self.scalar: str | None = None
         # Array values at a specific index.
         self.specified_pos: dict[int, str] = {}
         # Array values at anywhere that fits.
@@ -50,7 +45,7 @@ class VarData:
         """Generate the code for setting this."""
         if self.is_array:
             # First build an array big enough to fit everything.
-            array: list[Optional[str]] = [None] * (
+            array: list[str | None] = [None] * (
                 max(self.specified_pos.keys(), default=0) + 1 +
                 len(self.extra_pos)
             )
@@ -78,7 +73,7 @@ class VarData:
 
 
 @trans('comp_scriptvar_setter')
-def comp_scriptvar(ctx: Context):
+def comp_scriptvar(ctx: Context) -> None:
     """An entity to allow setting VScript variables to information from the map."""
     # {ent: {variable: data}}
     set_vars: dict[Entity | None, dict[str, VarData]] = defaultdict(lambda: defaultdict(VarData))
@@ -89,7 +84,7 @@ def comp_scriptvar(ctx: Context):
     for comp_ent in ctx.vmf.by_class['comp_scriptvar_setter']:
         comp_ent.remove()
         var_name = comp_ent['variable']
-        index: Union[int, EllipsisType, None] = None
+        index: int | EllipsisType | None = None
 
         if not check_control_enabled(comp_ent):
             continue
@@ -154,7 +149,6 @@ def comp_scriptvar(ctx: Context):
         else:
             code = mode_func(comp_ent, ref_ent)
 
-        ent: Optional[Entity] = None
         for ent in ent_list:
             var_data = set_vars[ent][var_name]
             # Now we've got to match the assignment this is doing
@@ -345,7 +339,7 @@ MODES.update(
 )
 
 # Keyvalue types -> equivalent Squirrel code, if not just stringified.
-KEYVALUES: Dict[ValueTypes, Callable[[str], str]] = {
+KEYVALUES: dict[ValueTypes, Callable[[str], str]] = {
     ValueTypes.VOID: lambda val: 'null',
     ValueTypes.SPAWNFLAGS: str,
 

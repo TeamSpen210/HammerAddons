@@ -14,7 +14,8 @@
 	skyname[CSGO](string)          : "SkyBox Texture Name" : "sky_dust"            : "Texture used for the 2D skybox."
 	skyname[L4D](string)           : "SkyBox Texture Name" : "sky_l4d_urban01_hdr" : "Texture used for the 2D skybox."
 	skyname[L4D2](string)          : "SkyBox Texture Name" : "sky_l4d_rural02_hdr" : "Texture used for the 2D skybox."
-	
+	skyname[P2CE](string)          : "SkyBox Texture Name" : "sky_black_nofog"     : "Texture used for the 2D skybox."
+
 	chaptertitle[-MBase](string) : "Chapter Title" : : "Chapter Title that appears onscreen when this level starts."
 	chaptertitle[+MBase](string) : "Chapter/Savegame Title" : "" : "A ''chapter'' title that this map should identify with. " +
 		"Outside of Mapbase, this is used to make the chapter title appear onscreen when the level starts, " +
@@ -42,7 +43,7 @@
 	underwaterparticle[engine](string) : "Under Water Particles": "underwater_default"
 	underwaterparticle[Mesa](choices) : "Under Water Particles" : "underwater_default" : "" =
 		[
-		"underwater_default" : "Rubish"
+		"underwater_default" : "Rubbish"
 		"underwater_ion" : "Blue Ions"
 		"underwater_tentacle_water" : "Tentacle Shit Water"	
 		]
@@ -77,8 +78,8 @@
 	minpropscreenwidth(float) : "End Fade Pixels" : 0 : "Minimum number of pixels wide at which the prop is visible (0 = don't fade out). " +
 		"This number is ignored if the prop has a specific fade distance specified."
 	
-	detailvbsp(string)      : "Detail.vbsp file"  : "detail.vbsp"       : "Detail .vbsp file to use for emitting detail props (found in directory <root>/modname)"
-	detailvbsp[TF2](string) : "Detail .vbsp file" : "detail_2fort.vbsp" : "Detail .vbsp file to use for emitting detail props (found in directory <root>/modname)"
+	detailvbsp(string)      : "Detail.vbsp file" : "detail.vbsp"       : "Detail .vbsp file to use for emitting detail props (found in directory <root>/modname)"
+	detailvbsp[TF2](string) : "Detail.vbsp file" : "detail_2fort.vbsp" : "Detail .vbsp file to use for emitting detail props (found in directory <root>/modname)"
 
 	detailmaterial(material)    : "Detail material file" : "detail/detailsprites"       : "Material for detail sprites to use for drawing detail props"
 	detailmaterial[TF2](material) : "Detail material file" : "detail/detailsprites_2fort" : "Material for detail sprites to use for drawing detail props"
@@ -117,6 +118,7 @@
 
 	paintinmap[P2](boolean) : "Enable Paint" : 0 : "Enable code for spreading paint on surfaces, and bouncing physics objects around."
 	maxblobcount[P2](integer) : "Gel Blob Limit" : 250 : "Number of Gel blobs that can exist. Maximum is 250."
+	maxprojectedtextures[Strata](integer): "Maximum Projected Textures" : 8 : "Maximum number of env_projectedtexture entities that can be enabled at once. Maximum is 8."
 
 	loadvscriptstatefromlastlevel[INFRA](boolean) : "Load VScript State from Last Level" : 0
 	destalphascale[INFRA](float) : "Dest Alpha Scale (Soft Particle Distance)" : 1024

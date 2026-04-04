@@ -1,6 +1,19 @@
 @NpcClass base(npc_manhack) 
-	appliesto(Mapbase)
+	appliesto(EZ2)
 	studio("models/skeleton/skeleton_torso3.mdl")
-= npc_lost_soul : "Lost Soul"
+= npc_lost_soul : "A frightening flying creature with the appearance of a burning skull. May be familiar to first person shooter fans."
 	[
+	health(integer) : "Health" : 0 : "If >0, override the health specified by sk_lostsoul_health."
+
+	@resources
+		[
+		mdl "models/skeleton/skeleton_torso3.mdl"
+		snd "NPC_LostSoul.Die"
+		snd "NPC_LostSoul.Burn"
+		snd "NPC_LostSoul.Float"
+		snd "NPC_LostSoul.ChargeAnnounce"
+		snd "NPC_LostSoul.ChargeEnd"
+		snd "NPC_LostSoul.Stunned"
+		snd "NPC_LostSoul.Bat"
+		]
 	]

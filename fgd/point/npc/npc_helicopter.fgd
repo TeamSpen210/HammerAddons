@@ -51,8 +51,6 @@
 
 	input ResetIdleTime(void) : "Allows the helicopter to fire immediately if it's not in the middle of charging or firing."
 	input SetAngles(string) : "Instantly snaps the orientation of the helicopter (Pitch Yaw Roll)"
-	input BecomeIndestructible(void) : "Makes the helicopter take no more damage"
-
 
 	input DropBomb(void) : "Immediately drops a bomb based on normal bomb dropping rules"
 	input DropBombStraightDown(void) : "Immediately drops a bomb directly downwards"
@@ -61,6 +59,7 @@
 	input DropBombDelay(float) : "Add a delay before the next bomb is dropped"
 	input StartBombExplodeOnContact(void) : "Make future bombs explode on impact."
 	input StopBombExplodeOnContact(void) : "Stop future bombs from exploding on impact."
+	input BecomeIndestructible(void) : "Makes the helicopter take no more damage"
 
 	input DisablePathVisibilityTests(void) : "When the helicopter moves, it will not check for visibility from the path_track to the enemy to cull out path_tracks"
 	input EnablePathVisibilityTests(void) : "When the helicopter moves, it will only move to path_tracks that have line-of-sight to the enemy"
@@ -75,6 +74,7 @@
 
 	@resources
 		[
+		// TODO: If non-combat is set, don't need most of these resources. Same with Arbeit helicopter (subclass)
 		model "models/combine_helicopter.mdl"
 		model "models/combine_helicopter_broken.mdl"
 		material "materials/sprites/redglow1.vmt"
@@ -82,5 +82,22 @@
 		entity helicopter_chunk
 		entity grenade_helicopter
 		entity npc_helicoptersensor
+
+		snd "NPC_AttackHelicopter.ChargeGun"
+		snd "NPC_AttackHelicopter.RotorsLoud" // Only if 'loud rotor wash' set
+		snd "NPC_AttackHelicopter.Rotors" // Only if not ^^ unset
+		snd "NPC_AttackHelicopter.DropMine"
+		snd "NPC_AttackHelicopter.BadlyDamagedAlert"
+		snd "NPC_AttackHelicopter.CrashingAlarm1"
+		snd "NPC_AttackHelicopter.MegabombAlert"
+
+		snd "NPC_AttackHelicopter.RotorBlast"
+		snd "NPC_AttackHelicopter.EngineFailure"
+		snd "NPC_AttackHelicopter.FireGun"
+		snd "NPC_AttackHelicopter.Crash"
+		snd "HelicopterBomb.HardImpact"
+
+		snd "ReallyLoudSpark"
+		snd "NPC_AttackHelicopterGrenade.Ping"
 		]
 	]

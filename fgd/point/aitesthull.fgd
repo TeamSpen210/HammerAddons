@@ -1,0 +1,9 @@
+@PointClass base(BaseLogicalNPC) 
+	appliesto(+engine) 
+= aitesthull: "A dummy NPC, used to test movement between nodes during graph construction."
+	[
+	@resources 
+		[
+		mdl "models/player.mdl"
+		]
+	]

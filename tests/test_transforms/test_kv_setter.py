@@ -1,8 +1,8 @@
 """Test the comp_kv_setter."""
 import pytest
 
-from hammeraddons.bsp_transform import Context
-from . import blank_ctx, get_transform_func, TransFunc
+from hammeraddons.bsp_transform import Context, TransFunc
+from . import get_transform_func
 
 
 @pytest.fixture(scope='module')
@@ -42,7 +42,7 @@ async def test_basic_flags(blank_ctx: Context, function: TransFunc) -> None:
             kv_value_local='1',
         )
         await function(blank_ctx)
-        assert not vmf.by_class['comp_kv_setter']  # Is removed from the map.
+        assert not vmf.by_class['comp_kv_setter']
 
         assert target['spawnflags'] == '48'
 
@@ -56,8 +56,24 @@ async def test_basic_flags(blank_ctx: Context, function: TransFunc) -> None:
             kv_value_local='0',
         )
         await function(blank_ctx)
-        assert not vmf.by_class['comp_kv_setter']  # Is removed from the map.
+        assert not vmf.by_class['comp_kv_setter']
         assert target['spawnflags'] == '32'
+
+
+async def test_flags_lookup(blank_ctx: Context, function: TransFunc) -> None:
+    """Test looking up flags from FGD."""
+    vmf = blank_ctx.vmf
+    target = vmf.create_ent('logic_relay', targetname='a_relay', spawnflags=0)
+    vmf.create_ent(
+        'comp_kv_setter',
+        target='a_relay',
+        mode='flags',
+        kv_name='allow fast retrigger',
+        kv_value_local='1',
+    )
+    await function(blank_ctx)
+    assert not vmf.by_class['comp_kv_setter']
+    assert target['spawnflags'] == '2'
 
 
 async def test_modes(blank_ctx: Context, function: TransFunc) -> None:

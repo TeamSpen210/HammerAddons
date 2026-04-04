@@ -1,7 +1,5 @@
 @PointClass base(BaseEntityPoint) 
 	iconsprite("editor/comp_choreo_sceneset.vmt")
-	autovis(Postcompiler, Sceneset)
-	autovis(Sounds, Choreo Scenes)
 	appliesto(srctools)
 = comp_choreo_sceneset:
 "Chains a set of choreographed scenes together."
@@ -47,7 +45,10 @@
 	scene18(scene): "Scene 18" : ""
 	scene19(scene): "Scene 19" : ""
 	scene20(scene): "Scene 20" : ""
-	
+
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
+
 	input Start(void): "Start the choreo sequence playing."
 	input Cancel(void): "Stop the choreo sequence at any point."
 	output OnStart(void): "Fired when the sequence starts."

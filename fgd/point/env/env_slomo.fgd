@@ -8,4 +8,5 @@
 	// Inputs
 	input StartSlomo(void) : "Start the slomo."
 	input StopSlomo(void) : "Stop the slomo."
+	@resources []
 	]

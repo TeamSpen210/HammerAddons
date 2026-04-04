@@ -1,12 +1,12 @@
 @PointClass base(BaseEntityAnimating)
-	appliesto(EP1, EP2, HL2, P1) 
+	appliesto(EP1, EP2, HL2, P1, -MESA) 
 	size(-4 -4 -4, 4 4 4) 
 	line(255 255 255, targetname, enemyfilter)
 	line(255 255 255, targetname, friendfilter)
 	studio("models/props_combine/combine_mine01.mdl") = combine_mine: "Combine Land Mine"
 	[
 	bounce(boolean) : "Bounce" : 1 : "Whether the mine should bounce up in the air before exploding." 
-	ExplosionDelay[MBase](float) : "Delay" : "0.5" : "The delay after being triggered before this mine bounces, or before it explodes if bouncing is disabled. Does not apply to the cavern type."
+	ExplosionDelay[MBase, Strata](float) : "Delay" : "0.5" : "The delay after being triggered before this mine bounces, or before it explodes if bouncing is disabled. Does not apply to the cavern type."
 	locksilently(boolean) : "Lock Silently" : 1 : "Prevents the mine from making any clamping sound when it plants itself for the first time, after which it makes sound again."
 
 	// Replaced by Initial State
@@ -19,7 +19,7 @@
 		2 : "Captive (locked in physgun)"
 		3 : "Planted"
 		4 : "Triggered (bounce, explode on touch)"
-		5 : "Physgun Launch (no bounce, explode on touch)"
+		5 : "Gravity Gun Launch (no bounce, explode on touch)"
 		]
 
 	CheapWarnSound[MBase](boolean) : "Cheap Warn Sound" : 0 : "Makes the mine's warn sound use generic sound methods instead of a sound patch, " +
@@ -65,7 +65,7 @@
 	input SetPlantOrientationRaw[MBase](vector) : "Sets the mine's plant orientation as a direction vector."
 
 	// Outputs
-	output OnPulledUp(void) : "Fires when this mine is uprooted with physgun."
+	output OnPulledUp(void) : "Fires when this mine is uprooted with the Gravity Gun."
 	output OnTriggered[MBase](void) : "Fires when this mine is triggered by an enemy."
 	output OnExplode[MBase](void) : "Fires when this mine actually explodes."
 

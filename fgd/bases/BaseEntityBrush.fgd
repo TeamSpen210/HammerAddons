@@ -11,7 +11,7 @@
 	parentname[srctools](target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
 	parent_attachment_point[srctools](string) : "[HA] Attachment Point" : : "If set, attach to this attachment point on the parent during spawn. The relative offset will be preserved."
 
-	linedivider_vscript[+VSCRIPT, -engine](string) readonly : "-------------------------------------------------------------------------------------------------------" : ""
+	linedivider_vscript[+VSCRIPT, -engine](string) readonly editor : "-------------------------------------------------------------------------------------------------------" : ""
 
 	vscripts[VSCRIPT](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
 	thinkfunction[VSCRIPT](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
@@ -28,7 +28,7 @@
 		"You need to supply the tool class names, the names of the .lua files of those tools.\n" +
 		"This also includes the context menu properties!"
 
-	linedivider_base[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_base[!engine](string) readonly editor : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// We could have wirebox() for these, but don't. That messes up if these are unset.
 	// This is a pretty advanced feature, so it's fine that it has no preview.
@@ -54,7 +54,7 @@
 		6: "VPhysics"
 	]
 
-	linedivider_basebrush[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_basebrush[!engine](string) readonly editor : "----------------------------------------------------------------------------------------------------------" : ""
 
 	input SetParent(target_destination) : "Changes the entity's parent in the movement hierarchy."
 	input SetParentAttachment(string) : "Change this entity to attach to a specific attachment point on its parent. Entities must be parented before being sent this input. The parameter passed in should be the name of the attachment."

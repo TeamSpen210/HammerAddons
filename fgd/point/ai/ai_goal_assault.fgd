@@ -1,10 +1,9 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(-L4D, -L4D2)
-	autovis(AI, AI Goal)
 	iconsprite("editor/ficool2/ai_goal_assault")
 = ai_goal_assault: "AI Goal Assault"
 	[
-	actor(target_name_or_class) : "Actor(s) to affect" : : "NPC's that should perform this assault"
+	actor(target_name_or_class) report: "Actor(s) to affect" : : "NPC's that should perform this assault"
 	rallypoint(target_destination) : "Rally Point Set" : : "Root name of rally points for this assault. " +
 		"Use an asterisk '*' after the root name to match all with the same root."
 
@@ -33,8 +32,8 @@
 		2: "Priority, Furthest"
 		]
 
-	branchingmethod[engine](integer) : "Branching Assault Selection Method" : 0
-	branchingmethod[P2](choices) : "Branching Assault Selection Method" : 0 =
+	branchmethod[engine](integer) : "Branching Assault Selection Method" : 0
+	branchmethod[since_ASW](choices) : "Branching Assault Selection Method" : 0 =
 		[
 		0: "Random (default)"
 		1: "Closest"

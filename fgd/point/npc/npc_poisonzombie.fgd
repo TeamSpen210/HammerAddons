@@ -10,4 +10,27 @@
 		2: "2 Crabs"
 		3: "3 Crabs"
 		]
+	@resources
+		[
+		mdl "models/zombie/poison.mdl"
+		mdl "models/headcrabblack.mdl"
+		mdl "models/zombie/classic_torso.mdl" // Is loaded, shouldn't happen though.
+		entity npc_headcrab_black
+
+		snd "NPC_PoisonZombie.Die"
+		snd "NPC_PoisonZombie.ThrowWarn"
+		snd "NPC_PoisonZombie.Throw"
+		snd "NPC_PoisonZombie.Idle"
+		snd "NPC_PoisonZombie.Pain"
+		snd "NPC_PoisonZombie.Alert"
+		snd "NPC_PoisonZombie.FootstepRight"
+		snd "NPC_PoisonZombie.FootstepLeft"
+		snd "NPC_PoisonZombie.Attack"
+
+		snd "NPC_PoisonZombie.FastBreath"
+		snd "NPC_PoisonZombie.Moan1"
+
+		snd "Zombie.AttackHit"
+		snd "Zombie.AttackMiss"
+		]
 	]

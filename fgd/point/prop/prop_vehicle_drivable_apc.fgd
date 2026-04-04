@@ -25,4 +25,21 @@
 	// Outputs
 	output OnOverturned(void) : "Fired when the APC is overturned."
 	output OnObjectAttached(void) : "Fired when an object is attached to the APC."
+
+	@resources
+		[
+		snd "Weapon_AR2.Single"
+		snd "PropAPC.FireRocket"
+		snd "combine.door_lock"
+
+		snd "PropAPC.AttachEntity"
+		snd "PropAPC.DetachEntity"
+		snd "PropAPC.RipEntityOff"
+
+		snd "Airboat_headlight_on"
+		snd "Airboat_headlight_off"
+
+		mat "materials/sprites/redglow1.vmt"
+		entity "point_spotlight"
+		]
 	]

@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(engine)
+= player_pickup: "Spawned when objects are grabbed to simulate the physics."
+	[
+	@resources []
+	]

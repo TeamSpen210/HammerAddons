@@ -1,0 +1,19 @@
+@SolidClass appliesto(MOMENTUM)
+= zone_timer_start : "Zone that starts the timer for a main map track or bonus track." 
+	[
+	stage_name(string) : "Stage/Bonus Name" : : "A custom name for Stage 1 if this is a main track start, or a custom name for this track if it is a bonus start (optional)."
+	filter_name(filterclass) : "Filter Name" : : "filter_activator entity to use for this zone."
+	track_number(integer) : "Track Number" : 0 : "Track number that this entity belongs to. 0 = main map, 1+ = bonus (of that number)."
+	stage_end_zones[engine](integer) : "Stage End Zones" : 1
+	stage_end_zones(choices) : "Stage End Zones" : 1 : "If the map has stages, which zones should be used as stage end zones?" = 
+		[
+		0 : "Last Checkpoint"
+		1 : "Next Stage"
+		]
+	checkpoints_required(boolean) : "Checkpoints Required" : 1 : "Is the player required to activate all checkpoints before progressing? Otherwise, checkpoint zones may be skipped. If there are multiple stages, this only applies to Stage 1."
+	checkpoints_ordered(boolean) : "Checkpoints Ordered" : 1 : "Do the checkpoints in this segment have a logical order, even if the player is not required to activate them all? If there are multiple stages, this only applies to Stage 1."
+	safe_height(float) : "Safe Height" : 0 : "Height that the player must be under to start a run of this stage track. Safe height is not a factor in activating the stage when running the full main track. -1 = full zone, 0 = base of zone, > 0 = custom height."
+	max_velocity(float) : "Max Velocity" : -1 : "Maximum speed that the player can move at. -1 = gamemode default, 0 = unlimited, > 0 = custom limit."
+	bhop_enabled(boolean) : "Force Enable Bhop" : 0 : "Overrides the game mode's settings to allow bhopping on this track. If disabled, zone_allowbhop can be used to allow bhopping in specified regions."
+	restart_destination(target_destination) : "Restart Destination (Required)" : : "The entity specifying the point to which the player should be teleported when restarting a run."
+	]

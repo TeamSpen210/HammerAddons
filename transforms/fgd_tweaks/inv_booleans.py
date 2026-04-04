@@ -1,6 +1,4 @@
 """Allow boolean keyvalues to be inverted by prefixing them with !"""
-from typing import Dict, Tuple
-
 from srctools.fgd import EntityDef, ValueTypes
 import srctools
 
@@ -14,7 +12,7 @@ LOGGER = srctools.logger.get_logger(__name__)
 def invertable_booleans(ctx: Context) -> None:
     """Look for !0/!1 in boolean keyvalues."""
     # classname, keyvalue -> is boolean.
-    ent2is_bool: Dict[Tuple[str, str], bool] = {}
+    ent2is_bool: dict[tuple[str, str], bool] = {}
 
     for ent in ctx.vmf.entities:
         clsname = ent['classname']

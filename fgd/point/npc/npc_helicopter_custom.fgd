@@ -12,4 +12,5 @@
 	
 	RotorSound(sound) : "Rotor Sound" : "NPC_AttackHelicopter.Rotors" : "The helicopter's looping rotor sound. Supports Game Sounds and direct filenames."
 	RotorBlast(sound) : "Rotor Blast" : "NPC_AttackHelicopter.RotorBlast" : "The helicopter's rotor blast sound, which plays when the helicopter is pushing away physics objects under it. Supports Game Sounds and direct filenames."
+	@resources []
 	]

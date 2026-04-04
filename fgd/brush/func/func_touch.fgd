@@ -1,0 +1,6 @@
+@SolidClass base(BaseEntityVisBrush, trigger_multiple)
+	appliesto(Strata)
+= func_touch: "A brush entity that triggers touch events."
+	[
+	
+	]

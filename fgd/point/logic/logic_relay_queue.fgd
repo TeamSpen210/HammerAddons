@@ -1,7 +1,7 @@
-@PointClass appliesto(MBase) 
+@PointClass appliesto(MBase, Strata) 
 	base(BaseentityPoint, EnableDisable) 
 	iconsprite("editor/logic_relay_queue.vmt") 
-= logic_relay_queue :
+= logic_relay_queue:
 	"A special variant of logic_relay designed to queue trigger inputs. " +
 	"If the relay is still handling its I/O connections after being triggered, additional Trigger inputs will be queued and automatically fire when the relay is able to be re-fired. Activator, output ID, and parameter are all kept and saved. " +
 	"Inputs are added to the queue each time Trigger or TriggerWithParameter are received while the relay is disabled or still handling its current I/O connections. The first one in the queue will trigger the moment an opportunity becomes available and the next one in the queue will wait for that one.\n\n" +

@@ -1,0 +1,47 @@
+@PointClass base(StaticTargetName)
+	iconsprite("editor/comp_multi_command.vmt") 
+	color(100 100 100)
+    appliesto(srctools)
+= comp_multi_command: "Single entity for triggering a sequence of commands. Allows you to insert 16 individual commands."
+[
+    type[engine](string) : "Command Type" : "server"
+    type(choices) : "Command Type" : "server" : "Client Command issues the commands as the point_clientcommand. "+
+    "Server Command issues a command as the server. "+
+    "Broadcast Command broadcasts the commands to each valid client's console, as if it was typed in by that player locally." =
+    [
+        "client" : "Client Command"
+        "server" : "Server Command"
+        "multiplayer" : "Broadcast Command"
+    ]
+
+    mode[engine](string) : "Mode" : "trigger"
+	mode(choices) : "Mode" : "trigger" : "If On Spawn, this will fire the commands immediately. " +
+		"If On Trigger, the Trigger input on this entity will fire the commands." =
+		[
+		"spawn" : "On Spawn"
+		"trigger": "On Trigger"
+		]
+
+    command_0(string) : "Command 1": :"Command to execute."
+    command_1(string) : "Command 2": :"Command to execute."
+    command_2(string) : "Command 3": :"Command to execute."
+    command_3(string) : "Command 4": :"Command to execute."
+    command_4(string) : "Command 5": :"Command to execute."
+    command_5(string) : "Command 6": :"Command to execute."
+    command_6(string) : "Command 7": :"Command to execute."
+    command_7(string) : "Command 8": :"Command to execute."
+    command_8(string) : "Command 9": :"Command to execute."
+    command_9(string) : "Command 10": :"Command to execute."
+    command_10(string) : "Command 11": :"Command to execute."
+    command_11(string) : "Command 12": :"Command to execute."
+    command_12(string) : "Command 13": :"Command to execute."
+    command_13(string) : "Command 14": :"Command to execute."
+    command_14(string) : "Command 15": :"Command to execute."
+    command_15(string) : "Command 16": :"Command to execute."
+
+    input Trigger(void) : "Fires the commands."
+
+    #snippet keyvalue CompVersion
+    #snippet keyvalue CompV1
+    @resources []
+]

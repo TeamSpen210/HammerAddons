@@ -1,23 +1,23 @@
 @NpcClass base(TalkNPC, PlayerCompanion) 
 	appliesto(EP1, EP2, HL2, P1) 
 	autovis(Entities, NPCs, Rebels, Alyx)
-	studio() = npc_alyx: "Alyx"
+	studio() = npc_alyx: "Alyx Vance. Behaves identically to Citizens in standard Half-Life 2, but supports a variety of unique behaviors in Episodic mode such as Zombie-Alyx combat interactions, boarding vehicles, et al."
 	[
 	model(studio) : "World model" : "models/alyx.mdl"
 
 	additionalequipment[engine](string) : "Weapons" : "weapon_alyxgun"
-	additionalequipment(choices) : "Weapons" : "weapon_alyxgun" =
+	additionalequipment(choices) : "Weapons" : "weapon_alyxgun" : "What weapon should Alyx have? Select None for scripted sequences." =
 		[
 		"weapon_alyxgun": "Alyx Gun"
 		"weapon_shotgun": "Shotgun"
 		"weapon_pistol" : "Pistol" [MBase]
 		"weapon_smg1" : "SMG1" [MBase]
 		"weapon_ar2" : "AR2" [MBase]
-		"0": "Nothing"
+		"0": "None"
 		]
 
-	dontpickupweapons(boolean) : "Prevent picking up weapons?" : 1 : "If yes, this NPC will NOT be allowed to pick up weapons they find on the ground."
-	shouldhaveemp(boolean) : "Should Alyx have her EMP?" : 1
+	dontpickupweapons(boolean) : "Prevent picking up weapons?" : 1 : "Prevents Alyx from picking up weapons off the ground."
+	shouldhaveemp(boolean) : "Enable Multi-Tool/EMP" : 1 : "Enables Alyx's multi-tool/EMP prop."
 
 	// Inputs
 	input AllowInteraction(void) : "Allow Alyx's 'hacking' AI to run."
@@ -25,7 +25,7 @@
 	input AllowDarknessSpeech(boolean) : "Enables or disables Alyx's darkness speech ('where are you', etc)."
 	input SetAnimLockedEntity(string) : "Sets Alyx to take her animation and cycle position from another entity."
 	input ClearAnimLockedEntity(void) : "Stops Alyx from taking her animation locking from another character."
-	input GiveEMP(boolean) : "Gives or removes the EMP tool."
+	input GiveEMP(boolean) : "Controls multi-tool/EMP prop visibility."
 	input EnterVehicle(string) : "Make Alyx enter the vehicle specified by name."
 	input EnterVehicleImmediately(string) : "Make Alyx enter the vehicle specified by name immediately via teleportation."
 	input ExitVehicle(void) : "Make Alyx exit the vehicle she's in."

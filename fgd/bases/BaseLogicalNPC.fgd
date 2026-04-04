@@ -1,4 +1,4 @@
-@BaseClass base(BaseEntityAnimating, DamageFilter) 
+@BaseClass base(BaseEntityAnimating) 
 	color(0 200 200) 
 	line(255 0 0, targetname, enemyfilter) 
 = BaseLogicalNPC: "NPC behaviours, split out so npc_bullseye doesn't have model-related stuff."

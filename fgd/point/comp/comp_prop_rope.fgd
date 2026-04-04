@@ -6,7 +6,7 @@
 	appliesto(srctools)
 = comp_prop_rope: "Generates ropes using a static prop. comp_prop_cable is an alternate name, they can be interchanged."
 	[
-	group(target_source): "Group" : : "If set, all ropes with the same group will be compiled to one model."
+	group(target_source) report: "Group" : : "If set, all ropes with the same group will be compiled to one model."
 	nextkey(target_destination) : "Next Rope" : : "Name of the next rope along this path."
 
 	slack(integer) : "Slack" : 25 : "How much extra length the rope has, for 'catenary' mode (by default it has the length between its two endpoints in the editor)."
@@ -53,7 +53,7 @@
 	bunting(target_destination) : "Bunting Definition" : : "Set to the name of a comp_prop_rope_bunting, to define models which will be placed at each segment across the rope."
 
 	// A selection of prop_static's keyvalues, excluding some that are rather irrelevant.
-	linedivider_staticprop[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_staticprop[!engine](string) readonly editor : "----------------------------------------------------------------------------------------------------------" : ""
 
 	renderamt[since_L4D](integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
 	rendercolor[since_L4D](color255) : "Color (R G B)" : "255 255 255"
@@ -78,7 +78,9 @@
 	drawinfastreflection[since_L4D](boolean) : "Render in Fast Reflections" : 0 : "If enabled, causes this entity/prop to to render in fast water reflections (i.e. when a water material specifies $reflectonlymarkedentities) and in the world impostor pass."
 	enablelightbounce[since_CSGO](boolean) : "Enable Bounced Lighting" : 0 : "Whether VRAD should create indirect lighting from this prop."
 
-	movespeed(integer) readonly: "Speed (unused)" : 1 : "This key needs to be greater than zero to show the preview in Hammer, ignore it."
+	movespeed(integer) readonly editor: "Speed (unused)" : 1 : "This key needs to be greater than zero to show the preview in Hammer, ignore it."
 
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
     @resources [] // Converted to static prop and packed normally.
 	]

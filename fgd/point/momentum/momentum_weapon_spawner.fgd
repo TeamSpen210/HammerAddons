@@ -1,0 +1,8 @@
+@PointClass base(MomentumPickup)
+	appliesto(MOMENTUM)
+	size(-43 -43 -36, 43 43 66)
+= momentum_weapon_spawner : "Weapon Spawner"
+	[
+	WeaponName(string) : "Weapon Name" : "" : "The name of the weapon to give the player."
+	PickupAmmo(integer) : "Pickup Ammo" : 0 : "The amount of ammo to give the player when they pick up this weapon. Any negative value is infinite ammo."
+	]

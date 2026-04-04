@@ -1,4 +1,3 @@
-
 @SolidClass base(Trigger, TeamNum) 
 	appliesto(TF2) = func_capturezone: "TF flag capture zone (set Team to 'any' for Territory Control maps)."
 	[
@@ -14,4 +13,5 @@
 	output OnCapTeam2(void) : "Sent when BLU captures a flag in this zone."
 	output OnCapTeam1_PD(void) : "Sent when RED captures a point in this zone during Player Destruction mode."
 	output OnCapTeam2_PD(void) : "Sent when BLU captures a point in this zone during Player Destruction mode."
+	@resources []
 	]

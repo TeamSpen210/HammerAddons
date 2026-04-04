@@ -3,13 +3,10 @@
 Each comes with a key, used to identify a previously compiled version.
 We can then reuse already compiled versions.
 """
-import shutil
-from typing import (
-    Any, Awaitable, Callable, Generic, Hashable, List, Optional, Set, Tuple, Type, TypeVar,
-    ContextManager, Union,
-)
-from typing_extensions import Self
+from typing import Self
+from collections.abc import Awaitable, Callable, Hashable
 from pathlib import Path
+import shutil
 import contextlib
 import os
 import pickle
@@ -23,22 +20,21 @@ from srctools.mdl import MDL_EXTS
 from srctools.packlist import PackList
 import trio
 
+from hammeraddons import WIN
 from hammeraddons.acache import ACache
 from hammeraddons.bsp_transform import Context
 
 
 LOGGER = logger.get_logger(__name__)
-ModelKey = TypeVar('ModelKey', bound=Hashable)
-InT = TypeVar('InT')
-OutT = TypeVar('OutT')
 force_regen = False  # If set, force every model to be regenerated.
 
 
-class GenModel(Generic[OutT]):
+class GenModel[OutT]:
     """Tracks information about this model."""
     name: str
     used: bool
     result: OutT
+
     def __init__(self, mdl_name: str, result: OutT) -> None:
         self.name = mdl_name  # This is just the filename.
         self.used = False
@@ -48,7 +44,16 @@ class GenModel(Generic[OutT]):
         return f'<Model "{self.name}, used={self.used}>'
 
 
-class ModelCompiler(Generic[ModelKey, InT, OutT]):
+def executable_args(exe: Path) -> list[str]:
+    """Determine the parameters for running an executable."""
+    if not WIN and exe.suffix.casefold() == '.exe':
+        # It's an EXE, assume this means we need WINE to run it.
+        return ['wine', str(exe)]
+    else:
+        return [str(exe)]
+
+
+class ModelCompiler[ModelKey: Hashable, InT, OutT]:
     """Manages the set of merged models that have been generated.
 
     The version number can be incremented to invalidate previous compilations.
@@ -60,15 +65,15 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         pack: PackList,
         map_name: str,
         folder_name: str,
-        version: object=0,
-        pack_models: bool=True,
-        compile_dir: Optional[Path] =None,
+        version: object = 0,
+        pack_models: bool = True,
+        compile_dir: Path | None = None,
     ) -> None:
         # The models already constructed.
         self._built_models: ACache[ModelKey, GenModel[OutT]] = ACache()
 
         # The random indexes we use to produce filenames.
-        self._mdl_names: Set[str] = set()
+        self._mdl_names: set[str] = set()
 
         self.game: Game = game
         self.model_folder = f'maps/{map_name}/{folder_name}/'
@@ -83,7 +88,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         self.built_count = 0
 
     @classmethod
-    def from_ctx(cls, ctx: Context, folder_name: str, version: object=0) -> 'ModelCompiler':
+    def from_ctx(cls, ctx: Context, folder_name: str, version: object = 0) -> 'ModelCompiler':
         """Convenience method to construct from the context's data."""
         if ctx.studiomdl is None:
             raise ValueError('No StudioMDL!')
@@ -107,18 +112,20 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         os.makedirs(self.model_folder_abs, exist_ok=True)
 
         if force_regen:
+            LOGGER.error('Forcing regen!!')
             return self  # Skip loading.
 
-        data: List[Tuple[ModelKey, str, OutT]]
+        data: list[tuple[ModelKey, str, OutT]]
         version = 0
         try:
             with (self.model_folder_abs / 'manifest.bin').open('rb') as f:
-                result: Any = pickle.load(f)
+                result = pickle.load(f)
                 if isinstance(result, tuple):
                     data, version = result
                 else:  # V0, no number.
                     data = result
         except FileNotFoundError:
+            LOGGER.info('No such file: models/{}/manifest.bin', self.model_folder)
             return self
         except Exception:
             LOGGER.warning(
@@ -131,6 +138,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
 
         if version != self.version:
             # Different version, ignore the data.
+            LOGGER.info('Version mismatch: {} != {}', version, self.version)
             return self
 
         for mdl_name in self.model_folder_abs.glob('*.mdl'):
@@ -140,11 +148,14 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
             try:
                 key, name, mdl_result = tup
                 if not isinstance(name, str):
+                    LOGGER.warning('tup[2] (name) is not a string in existing model: {}', tup)
                     continue
             except ValueError:
+                LOGGER.warning('Invalid existing model: {}', tup)
                 continue  # Malformed, ignore.
             if name in self._mdl_names:
                 self._built_models.load(key, GenModel(name, mdl_result))
+                LOGGER.debug('Existing model: {} = {!r}', name, key)
             else:
                 LOGGER.warning('Model in manifest but not present: {}', name)
 
@@ -153,15 +164,15 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
 
     def __exit__(
         self,
-        exc_type: Optional[Type[BaseException]],
-        exc_val: Optional[BaseException],
-        exc_tb: Optional[types.TracebackType],
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: types.TracebackType | None,
     ) -> None:
         """Write the constructed models to the cache file and remove unused models."""
         if exc_type is not None or exc_val is not None:
             return
-        data: List[Tuple[ModelKey, str, OutT]] = []
-        used_mdls: Set[str] = set()
+        data: list[tuple[ModelKey, str, OutT]] = []
+        used_mdls: set[str] = set()
         for key, mdl in self._built_models:
             if mdl.used:
                 data.append((key, mdl.name, mdl.result))
@@ -193,7 +204,9 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         key: ModelKey,
         compile_func: Callable[[ModelKey, Path, str, InT], Awaitable[OutT]],
         args: InT,
-    ) -> Tuple[str, OutT]:
+        *,
+        prefix: str = 'mdl',
+    ) -> tuple[str, OutT]:
         """Given a model key, either return the existing model, or compile it.
 
         Either way the result is the new model name, which also has been packed.
@@ -211,10 +224,13 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         If the model key is None, a new model will always be compiled.
         The model key and return value must be pickleable, so they can be saved
         for use in subsequent compiles.
+
+        The prefix parameter is used to name the model file, if a new one is required.
         """
+        LOGGER.debug('Compiling model with key: {}', key)
         model = await self._built_models.fetch(
-            key, ModelCompiler._compile,
-            self, key, compile_func, args,
+            key, self._compile,
+            key, prefix or 'mdl', compile_func, args,
         )
 
         if not model.used:
@@ -226,19 +242,22 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
                 LOGGER.debug('Packing model {}.mdl:', full_model_path)
                 for ext in MDL_EXTS:
                     try:
-                        with open(str(full_model_path.with_suffix(ext)), 'rb') as fb:
-                            self.pack.pack_file(
-                                f'models/{self.model_folder}{model.name}{ext}',
-                                data=fb.read(),
-                            )
+                        file_data = full_model_path.with_suffix(ext).read_bytes()
                     except FileNotFoundError:
                         pass
+                    else:
+                        self.pack.pack_file(
+                            f'models/{self.model_folder}{model.name}{ext}',
+                            data=file_data,
+                        )
+                        del file_data
 
         return f'models/{self.model_folder}{model.name}.mdl', model.result
 
     async def _compile(
         self,
         key: ModelKey,
+        prefix: str,
         compile_func: Callable[[ModelKey, Path, str, InT], Awaitable[OutT]],
         args: InT,
     ) -> GenModel[OutT]:
@@ -246,13 +265,13 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
         self.built_count += 1
         # Figure out a name to use.
         while True:
-            mdl_name = f'mdl_{random.getrandbits(16):04x}'
+            mdl_name = f'{prefix}_{random.getrandbits(16):04x}'
             if mdl_name not in self._mdl_names:
                 self._mdl_names.add(mdl_name)
                 break
 
         # If compile dir is specified, create the folder/clear it, but don't delete once done.
-        ctx_man: ContextManager[Union[str, Path]]
+        ctx_man: contextlib.AbstractContextManager[str | Path]
         if self.compile_dir is not None:
             path = Path(self.compile_dir, mdl_name)
             ctx_man = contextlib.nullcontext(path)
@@ -268,7 +287,7 @@ class ModelCompiler(Generic[ModelKey, InT, OutT]):
             path = Path(folder)
             result = await compile_func(key, path, f'{self.model_folder}{mdl_name}.mdl', args)
             studio_args = [
-                str(self.studiomdl_loc),
+                *executable_args(self.studiomdl_loc),
                 '-nop4',
                 '-game', str(self.game.path),
                 str(path / 'model.qc'),

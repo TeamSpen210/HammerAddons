@@ -4,7 +4,7 @@
 = trigger_soundscape: "Soundscape trigger. It is not necessary to create outputs for this trigger. " +
 	"It automatically will trigger the soundscape referred to by its 'Soundscape' property."
 	[
-	soundscape(target_source) : "Soundscape"
+	soundscape(target_destination) report: "Soundscape"
 	
 	@resources []
 	]

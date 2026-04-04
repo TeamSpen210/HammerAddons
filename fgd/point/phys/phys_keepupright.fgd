@@ -10,7 +10,7 @@
 		1: "Start inactive" : 0
 		]
 
-	attach1(target_destination) : "Target Entity" : : "The entity to align to the desired angles."
+	attach1(target_destination) report: "Target Entity" : : "The entity to align to the desired angles."
 	angularlimit(float) : "Angular Limit" : 15 : "The maximum angular velocity that this controller can compensate for, in degrees per second."
 
 	// Inputs

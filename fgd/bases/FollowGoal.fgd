@@ -35,11 +35,11 @@
 		7: "Hunter"
 		8: "Vortigaunt"
 		]
-	NormalMemoryDiscard[MBase](boolean) : "Disable short memory discard" : 0 : "Actors currently following a target normally forget about enemies if they don't see them after 5 seconds. " +
+	NormalMemoryDiscard[MBase, Strata](boolean) : "Disable short memory discard" : 0 : "Actors currently following a target normally forget about enemies if they don't see them after 5 seconds. " +
 		"Use this to disable that behavior when memories are important."
 
 	// Inputs
 	input Activate(void) : "Begin the follow behavior"
 	input Deactivate(void) : "Cease the follow behavior"
-	input UpdateActors[MBase](void) : "Forces an update on this goal's actors."
+	input UpdateActors[MBase, Strata](void) : "Forces an update on this goal's actors."
 	]

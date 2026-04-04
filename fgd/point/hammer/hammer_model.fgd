@@ -5,6 +5,15 @@
 	[
 	model(studio) : "World Model" : : "The model to display."
 	skin(integer) : "Skin" : 0
+	angles(angle) : "Pitch Yaw Roll (X Y Z)" : "0 0 0" : "This entity's orientation in the world. " +
+    	"Roll is the rotation around the X axis, " +
+    	"pitch is rotation around the Y axis and " +
+    	"yaw is the rotation around the Z axis."
+
+	// These will only work in specific engine branches or community Hammer forks (e.g. Hammer++)
+	defaultanim(string) : "Animation" : : "The animation to display. Not supported by some versions of Hammer, you can use the Model tab instead to set the animation non-persistently."
+	body(integer) : "Body Group" : 0 : "Body groups to display. Not supported by most versions of Hammer."
+	modelscale(float) : "Model Scale" : 1.0 : "The scale to display the model at. Not supported by most versions of Hammer."
 
 	@resources [] // Doesn't exist.
 	]

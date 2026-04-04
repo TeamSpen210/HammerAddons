@@ -36,4 +36,15 @@
 	output SquadDetectedEnemy(string) : "Outputs enemy entity when squad finds and starts tracking enemy"
 	output SquadLostEnemy(string) : "Outputs enemy entity when squad loses enemy that it's tracking, if entity still exists"
 	output LightPosition(string) : "Position of the end of the spotlight beam"
+
+	@resources
+		[
+		mdl "models/player.mdl" // Used as a dummy.
+		mat "materials/sprites/spotlight.vmt"
+		mat "materials/sprites/blueflare1.vmt"
+		entity spotlight_end
+		// Precaches, but never actually uses.
+		mdl "models/combot.mdl"
+		mdl "models/gibs/combot_gibs.mdl"
+		]
 	]

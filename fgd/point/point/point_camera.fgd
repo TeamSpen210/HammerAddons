@@ -9,8 +9,8 @@
 		]
 
 	// Not a texture type, these are managed by code, not on disk!
-	rendertarget[engine](string) : "Render Target" : "_rt_Camera"
-	rendertarget[Mesa](choices) : "Render Target" : "_rt_Camera" =
+	rendertarget[engine](string) report: "Render Target" : "_rt_Camera"
+	rendertarget[Mesa](choices) report: "Render Target" : "_rt_Camera" =
 		[
 		"_rt_Camera" : "_rt_Camera"
 		"_rt_Camera2" : "_rt_Camera2"
@@ -18,7 +18,7 @@
 		"_rt_Camera4" : "_rt_Camera4"
 		"_rt_Camera5" : "_rt_Camera5"
 		]	
-	RenderTarget[MBase](choices) : "Render target" : "" : "Makes this camera target a specific RT texture instead of just _rt_Camera, allowing for multiple active point_cameras. " +
+	RenderTarget[MBase](choices) report: "Render target" : "" : "Makes this camera target a specific RT texture instead of just _rt_Camera, allowing for multiple active point_cameras. " +
 		"Monitors for this camera must use materials which draw the target texture." +
 		"You can manually type in any RT texture name if you know what you're doing." =
 		[

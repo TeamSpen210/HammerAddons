@@ -1,6 +1,6 @@
 @PointClass base(BaseMesaPickup)
 	appliesto(Mesa) 
-	studio("models/weapons/w_gaussammo.mdl") 
+	studioprop("models/weapons/w_gaussammo.mdl") 
 = item_ammo_energy : "Uranium" 
 	[
 	]

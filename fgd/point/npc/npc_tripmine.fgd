@@ -1,4 +1,4 @@
-@PointClass appliesto(MBase)
+@PointClass appliesto(MBase, Strata)
 	base(BaseEntityAnimating, Angles, DamageFilter) 
 	studio( "models/weapons/w_slam.mdl" ) 
 	sphere(DmgRadius)

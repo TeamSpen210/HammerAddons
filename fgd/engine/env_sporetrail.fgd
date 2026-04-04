@@ -1,0 +1,10 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(+engine, EP1, EP2, HL2, P1, ASW) 
+	iconsprite("editor/ficool2/env_sporeexplosion.vmt")
+= env_sporetrail: "Unused additional Bugbait Spore Trail effect"
+	[
+	@resources
+		[
+		material "materials/particle/particle_noisesphere.vmt"
+		]
+	]

@@ -8,8 +8,8 @@
 	output OnKilled[MBase, L4D](void) : "Fired when the entity is killed and removed from the game."
 
     // Mapbase Outputs
-	output OutUser1[MBase](string) : "Fires in response to PassUser1 input, with the parameter passed through unchanged."
-	output OutUser2[MBase](string) : "Fires in response to PassUser2 input, with the parameter passed through unchanged."
-	output OutUser3[MBase](string) : "Fires in response to PassUser3 input, with the parameter passed through unchanged."
-	output OutUser4[MBase](string) : "Fires in response to PassUser4 input, with the parameter passed through unchanged."
+	output OutUser1[MBase, Strata](string) : "Fires in response to PassUser1 input, with the parameter passed through unchanged."
+	output OutUser2[MBase, Strata](string) : "Fires in response to PassUser2 input, with the parameter passed through unchanged."
+	output OutUser3[MBase, Strata](string) : "Fires in response to PassUser3 input, with the parameter passed through unchanged."
+	output OutUser4[MBase, Strata](string) : "Fires in response to PassUser4 input, with the parameter passed through unchanged."
 ]

@@ -19,7 +19,6 @@
 	input Burrow(void) : "Burrow into the ground"
 	input BurrowImmediate(void) : "Burrow into the ground immediately"
 
-	input Unburrow[Mesa](void) : "Unburrow"
 	output OnLeap[MBase](void) : "Fires when the headcrab leaps at an enemy. !activator is the target."
 
 	@resources

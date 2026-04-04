@@ -17,16 +17,28 @@
 		[
 		0: "192 Model"
 		1: "128 Model (PeTI)"
+		2: "Custom Model" [Strata]
 		]
 
-	model(choices) : "[H] Model" : "models/props/tractor_beam_emitter.mdl" : "Sets the model to appear as in Hammer." =
+	model[-Strata](choices) : "[H] Model" : "models/props/tractor_beam_emitter.mdl" : "Sets the model to appear as in Hammer." =
 		[
 		"models/props/tractor_beam_emitter.mdl": "192 Model"
 		"models/props_ingame/tractor_beam_128.mdl": "128 Model (PeTI)"
 		]
-
+	model[Strata](choices) : "Model Name" : "models/props/tractor_beam_emitter.mdl" : "The model to show in Hammer, or a custom model when 'Custom Model' is selected." =
+		[
+		"models/props/tractor_beam_emitter.mdl": "192 Model"
+		"models/props_ingame/tractor_beam_128.mdl": "128 Model (PeTI)"
+		]
 	model[engine](string): "Hammer Preview" : "models/props/tractor_beam_emitter.mdl"
 
+	skin[Strata](integer): "Skin" : 0 : "The skin to use if you are using a custom model."
+	primarycolor[Strata](color255): "Primary Color (R G B A)" : "10 160 255 255" : "Colour of the funnel when it is moving forwards."
+	secondarycolor[Strata](color255): "Secondary Color (R G B A)" : "255 160 32 255" : "Colour of the funnel when it is moving backwards."
+ 
+
 	// Inputs
-	input SetLinearForce(float) : "Set the speed of the Funnel, and therefore the direction."
+	input SetLinearForce(float) : "Set the speed of the funnel, and therefore the direction."
+	input SetPrimaryColor[Strata](color255) : "Changes the primary colour of the funnel."
+	input SetSecondaryColor[Strata](color255) : "Changes the secondary colour of the funnel."
 	]

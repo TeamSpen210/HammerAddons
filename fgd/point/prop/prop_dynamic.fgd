@@ -6,4 +6,5 @@
 	"If the model used by the prop is configured to be used as a prop_physics (i.e. it should be physically simulated) then it cannot normally " + 
 	" be used as a prop_dynamic. Upon level load it will display a warning in the console and remove itself. Use a prop_dynamic_override instead."
 	[
+	@resources [] // In prop_dynamic_base
 	]

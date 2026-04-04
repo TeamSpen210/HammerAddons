@@ -98,7 +98,12 @@
 		1: "Backward"
 		]
 
-	solidbsp(boolean) : "Solid BSP" : 0 : "If set, use the SOLID_BSP collision type."
+	solidbsp[engine](boolean) : "Use SOLID_BSP" : 0
+	solidbsp(choices): "Solid Type" : 1 : "How to calculate collisions. BSP is more rudimentarty but allows more stable collision with players." =
+		[
+		0: "VPhysics"
+		1: "BSP"
+		]
 
 	glow[L4D](target_destination) : "Glow Entity" : : "The name of an entity that will get the +use glow for this button."
 

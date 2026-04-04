@@ -1,5 +1,5 @@
 @NpcClass base(TalkNPC) 
-	appliesto(EP2, P1) 
+	appliesto(EP2) 
 	autovis(Entities, NPCs, Rebels, Dr. Magnusson)
 	studio() = npc_magnusson: "Magnusson"
 	[

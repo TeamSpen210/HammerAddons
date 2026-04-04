@@ -1,5 +1,5 @@
 @PointClass base(BaseNPC, SetModel) 
-	appliesto(CSGO) 
+	appliesto(since_CSGO) 
 	autovis(Entities, NPCs, Danger Listener)
 	studio() 
 = npc_heardanger: "A Generic NPC entity that hears and reports 'danger' and is not preserved on round restart. " +
@@ -11,4 +11,6 @@
 	output OnHearWorld(void) : "Fired when this NPC hears a sound (other than combat or the player)."
 	output OnHearPlayer(void) : "Fired when this NPC hears the player."
 	output OnHearCombat(void) : "Fired when this NPC hears combat sounds."
+
+	@resources []
 	]

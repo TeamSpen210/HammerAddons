@@ -3,4 +3,11 @@
 	autovis(Entities, NPCs, Xen, Ichthyosaur)
 	studio("models/ichthyosaur.mdl") = npc_ichthyosaur: "Ichthyosaur."
 	[
+	@resources
+		[
+		model "models/ichthyosaur.mdl"
+		snd "NPC_Ichthyosaur.Bite"
+		snd "NPC_Ichthyosaur.BiteMiss"
+		snd "NPC_Ichthyosaur.AttackGrowl"
+		]
 	]

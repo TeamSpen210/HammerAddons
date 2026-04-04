@@ -1,0 +1,733 @@
+<!-- dmx encoding keyvalues2 1 format HAGame 1 -->
+// This file specifies the behaviours for each engine branch, so the compilers can do the right things.
+// See src/hammeraddons/config.py -> GamesConfig for what options are available.
+"DmeRootElement"
+	{
+	"name" "string" "GamesList"
+
+	// ------------------------------------------------
+	// ----------------- Valve Games ------------------
+	// ------------------------------------------------
+
+	"Half-Life 2" "Game"
+		{
+		"name" "string" "Half-Life 2"
+		"steamid" "int" "220"
+		"aliases" "string_array"
+			[
+			"HL2",
+			"Half Life 2"
+			]
+
+		"tags" "string_array" ["hl2"]
+
+		"io_comma_sep" "bool" "1"
+		"instance_proxies" "bool" "0"
+		"translucent_needs_mostlyopaque" "bool" "0"
+		"vscript"      "bool" "0"
+		"vscript_quote"      "string" ""
+		"particles_manifest" "string" "particles/particles_manifest.txt"
+		"studiomdl_path_windows" "string" "bin/studiomdl.exe"
+
+		"pack_vpk" "bool" "0"
+		"searchpaths" "element_array" [
+			"SearchFolder" {
+				"path" "string" "hl2_complete/"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2_complete/hl2_complete_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "platform/platform_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "hl2/"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_sound_vo_*.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_pak.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_textures.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_misc.vpk"
+				"pack" "bool" "0"
+			},
+		]
+		}
+
+	"Half-Life 2 Episodic" "Game" // Both episodes are the same code.
+		{
+		"name" "string" "Half-Life 2 Episodic"
+		"steamid" "int" "220"
+		"aliases" "string_array"
+			[
+			"Episodic",
+			"ep1", 
+			"ep2",
+			"Episode1",
+			"Episode2",
+			"Episode 1",
+			"Episode 2"
+			]
+
+		"tags" "string_array" ["hl2", "episodic"]
+
+		"io_comma_sep" "bool" "1"
+		"instance_proxies" "bool" "0"
+		"translucent_needs_mostlyopaque" "bool" "0"
+		"vscript"      "bool" "0"
+		"vscript_quote"      "string" ""
+		"particles_manifest" "string" "particles/particles_manifest.txt"
+		"studiomdl_path_windows" "string" "bin/studiomdl.exe"
+
+		"pack_vpk" "bool" "0"
+		"searchpaths" "element_array" [
+			"SearchFolder" {
+				"path" "string" "hl2_complete/"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2_complete/hl2_complete_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "platform/platform_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "ep2/"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "ep2/ep2_pak.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "episodic/"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "episodic/ep1_pak.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "hl2/"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_sound_vo_*.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_pak.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_textures.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_misc.vpk"
+				"pack" "bool" "0"
+			},
+		]
+		}
+
+	"Portal 1" "Game"
+		{
+		"name" "string" "Portal 1"
+		"steamid" "int" "400"
+		"aliases" "string_array" ["P1", "Portal"]
+
+		"tags" "string_array" ["hl2", "episodic"]
+
+		"io_comma_sep" "bool" "1"
+		"instance_proxies" "bool" "0"
+		"translucent_needs_mostlyopaque" "bool" "0"
+		"vscript"      "bool" "0"
+		"vscript_quote"      "string" ""
+		"particles_manifest" "string" "particles/particles_manifest.txt"
+		"studiomdl_path_windows" "string" "bin/studiomdl.exe"
+
+		"pack_vpk" "bool" "0"
+		"searchpaths" "element_array" [
+			"SearchFolder" {
+				"path" "string" "portal/"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "portal/portal_pak.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "hl2/"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_sound_vo_*.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_pak.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_textures.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_misc.vpk"
+				"pack" "bool" "0"
+			},
+		]
+		}
+
+	"Team Fortress 2" "Game"
+		{
+		"name" "string" "Team Fortress 2"
+		"steamid" "int" "440"
+		"aliases" "string_array"
+			[
+			"TF2"
+			]
+
+		"tags" "string_array" ["tf2"]
+
+		"io_comma_sep" "bool" "1"
+		"instance_proxies" "bool" "0"
+		"translucent_needs_mostlyopaque" "bool" "0"
+		"vscript"      "bool" "1"
+		"vscript_quote"      "string" "`"
+		"particles_manifest" "string" "maps/<map name>_particles.txt"
+		"studiomdl_path_windows" "string" "bin/studiomdl.exe"
+
+		"pack_vpk" "bool" "0"
+		}
+
+	"Portal 2" "Game"
+		{
+		"name" "string" "Portal 2"
+		"steamid" "int" "620"
+		"aliases" "string_array"
+			[
+			"Portal2", "P2"
+			]
+
+		"tags" "string_array" ["p2"]
+
+		"io_comma_sep" "bool" "0"
+		"instance_proxies" "bool" "1"
+		"translucent_needs_mostlyopaque" "bool" "0"
+		"vscript"      "bool" "1"
+		"vscript_quote"      "string" ""
+		"particles_manifest" "string" "maps/<map name>_particles.txt"
+		"studiomdl_path_windows" "string" "bin/studiomdl.exe"
+
+		"pack_vpk" "bool" "0"
+		"searchpaths" "element_array" 
+			[
+			"SearchFolder" {
+				"path" "string" "update/"
+				"pack" "bool" "0"
+				"priority" "bool" "1"
+			},
+
+			"SearchVPK" {
+				"path" "string" "portal2_dlc2/pak01_dir.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "portal2_dlc1/pak01_dir.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "portal2/pak01_dir.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "portal2_dlc2/"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "portal2_dlc1/"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "portal2/"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "platform/"
+				"pack" "bool" "0"
+			},
+			]
+		}
+
+	// --------------------------------------------
+	// ----------------- Mods ---------------------
+	// --------------------------------------------
+
+	"Mapbase HL2" "Game"
+		{
+		"name" "string" "Mapbase HL2"
+		"aliases" "string_array"
+			[
+			"MapBase Half Life 2",
+			"MapBase Half-Life 2"
+			]
+
+		"tags" "string_array" ["mapbase", "hl2"]
+
+		"io_comma_sep" "bool" "1"
+		"instance_proxies" "bool" "0"
+		"translucent_needs_mostlyopaque" "bool" "0"
+		"vscript"      "bool" "1"
+		"vscript_quote"      "string" "''"
+		"particles_manifest" "string" "particles/particles_manifest.txt"
+		"studiomdl_path_windows" "string" "<243730>bin/studiomdl.exe"
+
+		"pack_vpk" "bool" "0"
+		"searchpaths" "element_array" [
+			"SearchFolder" {
+				"path" "string" "<243730>/platform/"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "."
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "content/hl2_mapbase_content.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "content/hl2_materials.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "content/hl2_scenes.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "content/lostcoast_materials.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "../mapbase_shared/shared_misc/"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "../mapbase_shared/shared_content*"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "<243730>/hl2/hl2_textures.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "<243730>/hl2/hl2_sound_vo_english.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "<243730>/hl2/hl2_sound_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "<243730>/hl2/hl2_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "<243730>/sourcetest/sourcetest_pak.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "<243730>/platform/platform_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "<243730>/hl2/"
+				"pack" "bool" "0"
+			},
+		]
+		}
+
+	"Mapbase Episodic" "Game"
+		{
+		"name" "string" "Mapbase Episodic"
+		"aliases" "string_array"
+			[
+			"MapBase Ep1", 
+			"MapBase Ep2",
+			"MapBase Episode 1",
+			"MapBase Episode 2"
+			]
+
+		"tags" "string_array" ["mapbase", "hl2", "episodic"]
+
+		"io_comma_sep" "bool" "1"
+		"instance_proxies" "bool" "0"
+		"translucent_needs_mostlyopaque" "bool" "0"
+		"vscript"      "bool" "1"
+		"vscript_quote"      "string" "''"
+		"particles_manifest" "string" "particles/particles_manifest.txt"
+		"studiomdl_path_windows" "string" "<243730>bin/studiomdl.exe"
+
+		"pack_vpk" "bool" "0"
+		"searchpaths" "element_array" [
+			"SearchFolder" {
+				"path" "string" "<243730>/platform/"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "."
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "../mapbase_episodic/content/episodic_mapbase_content.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "../mapbase_episodic/content/episodic_materials.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "../mapbase_episodic/content/episodic_scenes.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "../mapbase_hl2/"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "../mapbase_hl2/content/lostcoast_materials.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "../mapbase_hl2/content/hl2_mapbase_content.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "../mapbase_hl2/content/hl2_materials.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "../mapbase_hl2/content/hl2_scenes.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "../mapbase_hl2/content/lostcoast_materials.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "../mapbase_shared/shared_content*"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "<243730>/ep2/ep2_pak.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "<243730>/episodic/ep1_pak.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "<243730>/hl2/hl2_textures.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "<243730>/hl2/hl2_sound_vo_english.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "<243730>/hl2/hl2_sound_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "<243730>/hl2/hl2_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "<243730>/sourcetest/sourcetest_pak.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "<243730>/platform/platform_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "<243730>/ep2/"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "<243730>/episodic/"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "<243730>/hl2/"
+				"pack" "bool" "0"
+			},
+		]
+		}
+
+	"Entropy Zero 2" "Game"
+		{
+		"name" "string" "Entropy Zero 2"
+		"steamid" "int" "1583720"
+		"aliases" "string_array"
+			[
+			"EZ2",
+			"Entropy: Zero 2"
+			]
+
+		"tags" "string_array" ["mapbase", "hl2", "episodic", "entropyzero2"]
+
+		"io_comma_sep" "bool" "1"
+		"instance_proxies" "bool" "0"
+		"translucent_needs_mostlyopaque" "bool" "0"
+		"vscript"      "bool" "1"
+		"vscript_quote"      "string" "''"
+		"particles_manifest" "string" "particles/particles_manifest.txt"
+		"studiomdl_path_windows" "string" "bin/studiomdl.exe"
+
+		"pack_vpk" "bool" "0"
+		"searchpaths" "element_array" [
+			"SearchVPK" {
+				"path" "string" "entropyzero2/ez2/ez2.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "entropyzero2/"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "mapbase/episodic/episodic_mapbase_content.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "mapbase/episodic/episodic_materials.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "mapbase/episodic/episodic_scenes.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "mapbase/hl2/hl2_mapbase_content.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "mapbase/hl2/hl2_materials.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "mapbase/hl2/hl2_scenes.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "mapbase/hl2/lostcoast_materials.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "mapbase/css_weapons_in_hl2/content/css_weapons_in_hl2_content.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "mapbase/css_weapons_in_hl2/"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "mapbase/shared/shared_content_v7_0.vpk"
+				"pack" "bool" "0"
+			},
+
+			"SearchVPK" {
+				"path" "string" "platform/platform_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "ep2/"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "ep2/ep2_pak.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "episodic/"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "episodic/ep1_pak.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "hl2/"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_sound_vo_*.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_pak.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_textures.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_misc.vpk"
+				"pack" "bool" "0"
+			},
+		]
+		}
+
+	"Black Mesa" "Game"
+		{
+		"name" "string" "Black Mesa"
+		"steamid" "int" "362890"
+		"aliases" "string_array" [ "Mesa", "BMS", "BM:S", "Black Mesa Source"]
+
+		"tags" "string_array" ["hl2", "mesa"]
+
+		"io_comma_sep" "bool" "0"
+		"instance_proxies" "bool" "1"
+		"translucent_needs_mostlyopaque" "bool" "0"
+		"vscript"      "bool" "0"
+		"vscript_quote"      "string" ""
+		"particles_manifest" "string" "" // Not sure.
+		"studiomdl_path_windows" "string" "bin/studiomdl.exe"
+
+		"pack_vpk" "bool" "0"
+		"searchpaths" "element_array" [
+			"SearchVPK" {
+				"path" "string" "bms/bms_textures.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "bms/bms_materials.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "bms/bms_models.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "bms/bms_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "bms/bms_sounds_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "bms/bms_sound_*_english.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_sounds_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_textures.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_materials.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "hl2/hl2_models.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "platform/platform_misc.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "bms/"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "hl2/"
+				"pack" "bool" "0"
+			},
+		]
+		}
+
+	"INFRA" "Game"
+		{
+		"name" "string" "INFRA"
+		"steamid" "int" "251110"
+		"aliases" "string_array" []
+
+		"tags" "string_array" ["p2"]
+
+		"io_comma_sep" "bool" "0"
+		"instance_proxies" "bool" "1"
+		"translucent_needs_mostlyopaque" "bool" "0"
+		"vscript"      "bool" "1"
+		"vscript_quote"      "string" ""
+		"particles_manifest" "string" "maps/<map name>_particles.txt"
+		"studiomdl_path_windows" "string" "bin/studiomdl.exe"
+
+		"pack_vpk" "bool" "0"
+		"searchpaths" "element_array" 
+			[
+			"SearchVPK" {
+				"path" "string" "infra/pak01_dir.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchVPK" {
+				"path" "string" "infra/pak02_dir.vpk"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "infra/"
+				"pack" "bool" "0"
+			},
+			"SearchFolder" {
+				"path" "string" "platform/"
+				"pack" "bool" "0"
+			},
+			]
+		}
+
+	"Portal 2 Community Edition" "Game"
+		{
+		"name" "string" "Portal 2 Community Edition"
+		"steamid" "int" "440000"
+		"aliases" "string_array" [
+			"P2CE", "P2:CE",
+			"Strata", "Strata Source"
+		]
+
+		"tags" "string_array" ["strata", "p2"]
+
+		"io_comma_sep" "bool" "0"
+		"instance_proxies" "bool" "1"
+		"translucent_needs_mostlyopaque" "bool" "0"
+		"vscript"      "bool" "1"
+		"vscript_quote"      "string" "\""
+		"particles_manifest" "string" "maps/<map name>_particles.txt"
+		"studiomdl_path_windows" "string" "bin/win64/studiomdl.exe"
+
+		"pack_vpk" "bool" "0"
+		}
+	}

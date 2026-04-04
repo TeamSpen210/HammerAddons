@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	iconsprite("editor/ambient_generic.vmt") 
-	autovis(Sounds, Generic Sound)
+	iconsprite("editor/ambient_generic.vmt")
 	sphere(radius) 
 	line(255 255 0, targetname, sourceEntityName) 
 = ambient_generic: "Universal ambient sound. Use it to play and control a single sound."
@@ -14,12 +13,11 @@
 		64: "Only play to the activator" : 0 [KZ]
 		]
 
-	message(sound) : "Sound Name" : : "Name of the GameSound entry for the sound to play. Also supports direct .wav filenames."
+	message(sound) report: "Sound Name" : : "Name of the GameSound entry for the sound to play. Also supports direct .wav filenames."
 	health(integer) : "Volume" : 10 : "Sound volume, expressed as a range from 0 to 10, where 10 is the loudest."
 	
-	radius(float) : "Sound Range" : 1250 : "Maximum distance at which this sound is audible. Overriden by soundscripts."
-	
-	pitch(integer) : "Pitch" : 100 : "Sound pitch, expressed as a range from 1(low) to 255(high), where 100 is the sound's default pitch. Overriden by soundscripts."
+	radius(float) : "Sound Range" : 1250 : "Maximum distance at which this sound is audible. Overridden by soundscripts."
+	pitch(integer) : "Pitch" : 100 : "Sound pitch, expressed as a range from 1(low) to 255(high), where 100 is the sound's default pitch. Overridden by soundscripts."
 
 	sourceentityname(target_destination) : "Source Entity" : : "If an entity is specified, sound will come from this named entity instead of the location of ambient_generic."
 
@@ -54,9 +52,9 @@
 	soundflags[MBase](choices) : "Sound Flags" : 0 : "Additional options for your sound." =
 	[
 		0: "None"
-		128: "Pause when game is paused"
-		256: "Ignore phonemes (no lip-syncing)"
-		1024: "Don't overwrite existing sound on channel (untested)"
+		128: "[128] Pause when game is paused"
+		256: "[256] Ignore phonemes (no lip-syncing)"
+		1024: "[1024] Don't overwrite existing sound on channel (untested)"
 
 		384: "Pause and ignore phonemes"
 		1280: "Ignore phonemes and don't overwrite"

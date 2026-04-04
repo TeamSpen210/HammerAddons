@@ -8,7 +8,7 @@
 	input SetPickupTarget(string) : "Sets the target entity for dog to pickup."
 	input StartCatchThrowBehavior(string) : "Tells d0g to start playing with the player. You can pass in the name of the object you want him to play with otherwise he'll find the closes phys_object."
 	input StopCatchThrowBehavior(string) : "Stop the catch and throw behavior."
-	input PlayerPickupObject(void) : "Tells d0g the physgun just picked up an object."
+	input PlayerPickupObject(void) : "Tells d0g the Gravity Gun just picked up an object."
 	input StartWaitAndCatch(void) : "Tells d0g to wait for the player to throw an object at him."
 	input StopWaitAndCatch(void) : "Tells d0g to stop waiting for the player."
 	input SetThrowArcModifier(float) : "Used to pass in a modifier for d0g's object flight arc."

@@ -4,7 +4,7 @@
 	line(255 255 255, targetname, target)
 = infra_use_highlight_control: "Use highlight control"
 	[
-	target(target_destination) : "Target" : : "The model whose use highlights to control. " +
+	target(target_destination) report: "Target" : : "The model whose use highlights to control. " +
 		"Not necessarily the use entity. " +
 		"For example, for momentary_rot_buttons use the prop_dynamic parented to it, not the momentary_rot_button itself."
 	highlightsenabled(boolean) : "Start with Use Highlights Enabled" : 1 : "Are the use highlights enabled by default?"

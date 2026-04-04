@@ -1,6 +1,7 @@
 // Descriptions for the Buttons.snd* soundscripts.
 
 @snippet choices "Buttons.snd" = [
+	-1: "Use custom sound" [Strata]
 	0: "None (Silent)"
 
 	40: "(BM) Vending Machine Button" [MESA]

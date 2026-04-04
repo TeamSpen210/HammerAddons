@@ -8,4 +8,8 @@
 	// Outputs
 	output OnTriggeredByTeam1(void) : "Sent when RED triggers the alert."
 	output OnTriggeredByTeam2(void) : "Sent when BLU triggers the alert."
+	@resources
+		[
+		snd "Announcer.SecurityAlert"
+		]
 	]

@@ -1,4 +1,5 @@
-@SolidClass base(BaseEntityBrush) 
-	appliesto(TF2) = func_proprrespawnzone: "Zone that handles respawning and distribution of clientside physics props."
+@SolidClass appliesto(-engine)  // Clientside only.
+= func_proprrespawnzone: "Zone that handles respawning and distribution of clientside physics props."
 	[
+	@resources []
 	]

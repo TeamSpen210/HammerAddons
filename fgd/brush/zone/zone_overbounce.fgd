@@ -1,0 +1,4 @@
+@SolidClass appliesto(MOMENTUM)
+= zone_overbounce : "Zone that allows the player to overbounce inside of its volume. This is used in Defrag modes only." 
+	[
+	]

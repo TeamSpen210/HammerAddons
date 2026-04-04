@@ -8,4 +8,5 @@
 	// Inputs
 	input DisablePlayerCollision(void) : "Disable collisions against the player."
 	input EnablePlayerCollision(void) : "Enable collisions against the player."
+	@resources []
 	]

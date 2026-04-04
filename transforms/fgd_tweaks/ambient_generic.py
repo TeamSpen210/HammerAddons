@@ -28,30 +28,30 @@ def ambient_generic_kvs(ctx: Context) -> None:
             ('haddons_enabled', 'Enabled', FLAG_START_SILENT),
             ('haddons_mode', 'Mode', FLAG_NOT_LOOPED),
         ]:
-            value = conv_int(ent[name])
-            if value == -1:
-                pass  # Keep spawnflag
-            elif value == 0:
-                flags |= flag
-            elif value == 1:
-                flags &= ~flag
-            else:
-                LOGGER.warning(
-                    '{} value "{}" is invalid for {}: must be -1, 0 or 1!',
-                    pretty, ent[name], ent_description(ent),
-                )
+            match conv_int(ent[name], -1):
+                case -1:
+                    pass  # Keep spawnflag
+                case 0:
+                    flags |= flag
+                case 1:
+                    flags &= ~flag
+                case _:
+                    LOGGER.warning(
+                        '{} value "{}" is invalid for {}: must be -1, 0 or 1!',
+                        pretty, ent[name], ent_description(ent),
+                    )
 
         # Non-inverted
-        value = conv_int(ent['haddons_infrange'])
-        if value == -1:
-            pass  # Keep spawnflag
-        elif value == 0:
-            flags &= ~FLAG_INFINITE
-        elif value == 1:
-            flags |= FLAG_INFINITE
-        else:
-            LOGGER.warning(
-                '{} value "{}" is invalid for {}: must be -1, 0 or 1!',
-                'Infinite Range', ent['haddons_infrange'], ent_description(ent),
-            )
+        match conv_int(ent['haddons_infrange'], -1):
+            case -1:
+                pass  # Keep spawnflag
+            case 0:
+                flags &= ~FLAG_INFINITE
+            case 1:
+                flags |= FLAG_INFINITE
+            case _:
+                LOGGER.warning(
+                    '{} value "{}" is invalid for {}: must be -1, 0 or 1!',
+                    'Infinite Range', ent['haddons_infrange'], ent_description(ent),
+                )
         ent['spawnflags'] = flags

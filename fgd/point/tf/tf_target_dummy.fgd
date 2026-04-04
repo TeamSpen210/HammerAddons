@@ -3,4 +3,11 @@
 	appliesto(TF2) 
 = tf_target_dummy : "Red Demoman Target"
 	[
+	@resources [
+		model "models/props_training/target_engineer.mdl"
+		model "models/props_training/target_demoman.mdl"
+		particle "target_break"
+		particle "lowV_debrischunks"
+		sound "Halloween.Merasmus_Hiding_Explode"
+		]
 	]

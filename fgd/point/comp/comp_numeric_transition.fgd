@@ -5,7 +5,7 @@
 	iconsprite("editor/comp_numeric_transition")
 = comp_numeric_transition : "When triggered, animates a keyvalue/input over time with various options."
 	[
-	target(target_destination) : "Entity to Control" : : "The entity which the outputs will be directed to."
+	target(target_destination) report: "Entity to Control" : : "The entity which the outputs will be directed to."
 	opt_name(string) : "Keyvalue/Input Name" : "SetSpeed" : "The name of the keyvalue or input to change." +
 		"If the target is not an entity findable by the postcompiler, IO Type must be set."
 		
@@ -28,7 +28,7 @@
 		"light" : "Light Pattern"
 	]
 	
-	line_trans2(string) readonly : "-------------------------------------------"
+	line_trans2(string) readonly editor : "-------------------------------------------"
 	
 	beat_interval(float) : "Beat Interval" : "0.1" : "Time between each output. Smaller values are more accurate, but increase the outputs generated."
 	delay(float) : "Start Delay" : "0.0" : "Wait this amount of time after being triggered before animating."
@@ -36,7 +36,7 @@
 	startval(float) : "Start Value" : 0 : "Starting value. If the Value Type is Light Pattern, these may be a-z letters."
 	endval(float): "Ending Value" : 100 : "Ending value. If the Value Type is Light Pattern, these may be a-z letters."
 
-	line_trans3(string) readonly : "-------------------------------------------"
+	line_trans3(string) readonly editor : "-------------------------------------------"
 	
 	easing_start[engine](string) : "Easing Start" : "linear"
 	easing_start(choices) : "Easing Start" : "linear" : "Controls how the animation begins." =
@@ -61,6 +61,8 @@
 		]
 
 	output OnFinished(void) : "Fired once the transition has completed."
-    
+
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
     @resources []
 	]

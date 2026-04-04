@@ -6,4 +6,6 @@
 	// Outputs
 	output OnBallEnter(void)
 	output OnBallExit(void)
+
+	@resources []
 	]

@@ -1,5 +1,5 @@
 @PointClass base(BaseEntityPoint)
-	appliesto(since_L4D, -ASW)
+	appliesto(since_L4D, -ASW, Mesa, GMOD)
 	color(200 0 0) 
 	studioprop("models/editor/camera.mdl") 
 	frustum(fov, 1, 1024, 255 255 255, -1) 
@@ -29,6 +29,26 @@
 		1: "Spectators" [+complete]
 		2: "Terrorists"
 		3: "Counter-Terrorists"
+		]
+	target_team[Mesa](choices) : "Target Team" : -1 : "Which team (or all) to take over the camera for." =
+		[
+		-1: "All players"
+		0: "Singleplayer/Unassigned"
+		1: "Spectators" [+complete]
+		2: "Marines"
+		3: "Scientists"
+		]
+
+	// GMod can have different teams depending on the game mode being played
+	// The official FGD just shows the portal 2 teams with numbers added, so I'll copy that
+	// Maybe we should add like TTT role names here instead or something...
+	target_team[Mesa](choices) : "Target Team" : -1 : "Which team (or all) to take over the camera for." =
+		[
+		-1: "All players"
+		0: "[0] Singleplayer/Unassigned"
+		1: "[1] Spectators"
+		2: "[2] Portal 2 P-Body"
+		3: "[3] Portal 2 ATLAS"
 		]
 
 	spawnflags(flags)  =

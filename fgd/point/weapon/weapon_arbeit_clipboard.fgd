@@ -1,0 +1,9 @@
+@PointClass base(Weapon) 
+	appliesto(EZ2) 
+	studioprop("models/weapons/w_clipboard.mdl") = weapon_arbeit_clipboard: "A clipboard NPCs hold during scripted sequences."
+	[
+	@resources
+		[
+		weapon_script "scripts/weapon_arbeit_clipboard.txt"
+		]
+	]

@@ -1,15 +1,19 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(since_ASW, MBase) 
 	color(200 200 0) 
-	studioprop("models/editor/vgui_arrows.mdl") 
-	sphere(width) 
-	sphere(height) 
+	studio[+Strata]("models/editor/angle_helper.mdl")
+	orientedwidthheight[+Strata](width, height)
+	studio[-Strata]("models/editor/vgui_arrows.mdl")
+	sphere[-Strata](width)
+	sphere[-Strata](height)
 = vgui_movie_display: "Movie Display"
 	[
-	displaytext(string) : "Display Text"
+	startenabled[Strata](boolean): "Start enabled" : 0 : "Whether or not the video should start enabled."
+	startpaused[Strata](boolean): "Start paused" : 0 : "Whether or not the video should start paused."
+ 	displaytext(string) : "Display Text"
 	MovieFilename(string) : "Movie To display" : "media/filename.bik" : "The movie to display."
 	MovieFilename[engine](string) : "Movie To display" : "media/filename.bik" : "The movie to display."
-	MovieFilename[P2](choices) : "Movie to display" : "media/aperture_logo.bik" : "The movie to display. You can also type in the filename of a custom movie here." =
+	MovieFilename[P2, -P2CE](choices) : "Movie to display" : "media/aperture_logo.bik" : "The movie to display. You can also type in the filename of a custom movie here." =
 		[
 		"media/coop_black_screen.bik"		: "Black Screen"
 		"media/aperture_logo.bik"			: "Aperture Logo"
@@ -54,8 +58,8 @@
 		"media/coop_bts_blueprints.bik"		: "Coop Disc: Blueprints"
 		"media/coop_bts_powergrid_01.bik"	: "Coop Disc: Power Grid 1"
 		"media/coop_bts_powergrid_02.bik"	: "Coop Disc: Power Grid 2"
-		"media/coop_bts_radar_01.bik"		: "Coop Disc: Radar 1"
-		"media/coop_bts_radar_02.bik"		: "Coop Disc: Radar 2"
+		"media/coop_bts_radar_1.bik"		: "Coop Disc: Radar 1"
+		"media/coop_bts_radar_2.bik"		: "Coop Disc: Radar 2"
 		"media/coop_bts_security_01.bik"	: "Coop Disc: Security 1"
 		"media/coop_bts_security_02.bik"	: "Coop Disc: Security 2"
 		"media/coop_bts_radar.bik"			: "Coop Disc: Unused Radar"
@@ -73,9 +77,74 @@
 		"media/attract_panels.bik"			: "Extras: Panels"
 		"media/attract_turrets.bik"			: "Extras: Turrets"
 		]
+	// Webm upgrade!
+	MovieFilename[P2CE](choices) : "Movie to display" : "media/aperture_logo.webm" : "The movie to display. You can also type in the filename of a custom movie here." =
+		[
+		"media/coop_black_screen.webm"		: "Black Screen"
+		"media/aperture_logo.webm"			: "Aperture Logo"
+		
+		// Elevator videos
+		"media/animalking.webm"				: "Animal King"
+		"media/aperture_appear_horiz.webm" 	: "Aperture Appear (Horizontal)"
+		"media/aperture_appear_vert.webm" 	: "Aperture Appear (Vertical)"
+		"media/bluescreen.webm"				: "Blue Screen Of Death"
+		"media/exercises_horiz.webm"		: "Evacuation Training (Horizontal)"
+		"media/exercises_vert.webm"			: "Evacuation Training (Vertical)"
+		"media/faithplate.webm"				: "Aerial Faith Plate"
+		"media/fizzler.webm"				: "Emancipation Grid"
+		"media/hard_light.webm"				: "Light Bridge"
+		"media/laser_danger_horiz.webm"		: "Laser Danger (Horizontal)"
+		"media/laser_danger_vert.webm"		: "Laser Danger (Vertical)"
+		"media/laser_portal.webm"			: "Laser Through Portal"
+		"media/plc_blue_horiz.webm"			: "Please Remain Calm (Horizontal)"
+		"media/plc_blue_vert.webm"			: "Please Remain Calm (Vertical)"
+		"media/turret_colours_type.webm"	: "Turret Case Options"
+		"media/turret_dropin.webm"			: "Turret Drop In"
+		"media/turret_exploded_grey.webm"	: "Exploded Turret"
+		
+		// Single player
+		"media/menu_act01.webm"				: "Menu Background: Act 1"
+		"media/menu_act02.webm"				: "Menu Background: Act 2"
+		"media/menu_act03.webm"				: "Menu Background: Act 3"
+		"media/menu_act04.webm"				: "Menu Background: Act 4"
+		"media/menu_act05.webm"				: "Menu Background: Act 5"
+		"media/sp_30_a4_finale5.webm"		: "SP Ending"
+		"media/sp_credits_bg.webm"			: "Want You Gone Background"
+		"media/sp_a5_credits.webm"			: "Space"
+		"media/sp_ending_callback.webm"		: "Space Wheatley"
+		
+		// Coop
+		"media/coop_bluebot_load.webm"		: "ATLAS Schematic"
+		"media/coop_orangebot_load.webm"	: "P-Body Schematic"
+		"media/coop_bots_load.webm"			: "Conveyor Bots"
+		"media/coop_bots_load_wave.webm"	: "Waving Bots"
+		"media/coop_intro.webm"				: "Coop Intro"
+		"media/coop_outro.webm"				: "Coop Outro"
+		"media/coop_bts_blueprints.webm"	: "Coop Disc: Blueprints"
+		"media/coop_bts_powergrid_01.webm"	: "Coop Disc: Power Grid 1"
+		"media/coop_bts_powergrid_02.webm"	: "Coop Disc: Power Grid 2"
+		"media/coop_bts_radar_1.webm"		: "Coop Disc: Radar 1"
+		"media/coop_bts_radar_2.webm"		: "Coop Disc: Radar 2"
+		"media/coop_bts_security_01.webm"	: "Coop Disc: Security 1"
+		"media/coop_bts_security_02.webm"	: "Coop Disc: Security 2"
+		"media/coop_bts_radar.webm"			: "Coop Disc: Unused Radar"
+		"media/coop_bts_security.webm"		: "Coop Disc: Unused Security"
+		"media/insert_disk.webm"			: "Insert Disc"
+		"media/dlc1_endmovie.webm"			: "Art Therapy Outro"
+		
+		// Other
+		"media/community_bg1.webm"			: "Community Maps Background"
+		"media/intro_movie.webm"			: "Community Maps Intro"
+		"media/attract01.webm"				: "Extras: Coop Trailer"
+		"media/attract02.webm"				: "Extras: SP Trailer"
+		"media/attrct_boots.webm"			: "Extras: Long Fall Boots"
+		"media/attract_bot_trust.webm"		: "Extras: Bot Trust"
+		"media/attract_panels.webm"			: "Extras: Panels"
+		"media/attract_turrets.webm"		: "Extras: Turrets"
+		]
 	groupname(string) : "Group Name"
 	looping(boolean) : "Loop Movie" : 0
-	muted[MBase](boolean) : "Mute Movie" : 1
+	muted[MBase, -Strata](boolean) : "Mute Movie" : 1
 	
 	width(integer) : "Panel Width in World (Green)" : 256 : "Width of the panel in units."
 	height(integer) : "Panel Height in World (Blue)" : 128 : "Height of the panel in units."
@@ -83,9 +152,20 @@
 	forcedslave[since_P2](boolean) : "Forced slave" : 0
 	forceprecache[since_P2, !CSGO](boolean) : "Force precache" : 0 : "Precache the movie referred to by Movie Filename on entity spawn."
 
+	noscanline[Strata](boolean): "Disable Scanline Overlay" : 0 : "Disables the default scanline overlay."
+	custom_uv[Strata](boolean): "Use Custom UVs" : 0 : "Enables custom uv coordinates to be used."
+	u_min[Strata](float): "U Min" : 0 : "U Min (Left) Coordinate (0-1). Needs Custom UVs to be enabled!"
+	u_max[Strata](float): "U Max" : 0 : "U Max (Right) Coordinate (0-1). Needs Custom UVs to be enabled!"
+	v_min[Strata](float): "V Min" : 1 : "V Min (Top) Coordinate (0-1). Needs Custom UVs to be enabled!"
+	v_max[Strata](float): "V Max" : 1 : "V Max (Bottom) Coordinate (0-1). Needs Custom UVs to be enabled!"
+	volume[Strata](integer): "Audio Volume" : 0 : "Audio volume to use for video playback. 0-10"
+ 
 	// Inputs
 	input Enable(void) : "Make movie visible."
 	input Disable(void) : "Make movie invisible."
+	input Pause[Strata](void) : "Pauses the video playback."
+	input Resume[Strata](void) : "Resumes the video playback."
+	input SetPaused[Strata](bool) : "Sets the playback state using the parameter."
 	input SetDisplayText(string) : "Sets the display text."
 	input SetMovie[since_P2](string) : "Sets the movie to display."
 	input SetUseCustomUVs[since_P2](boolean) : "Use custom UVs."

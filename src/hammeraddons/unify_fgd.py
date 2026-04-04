@@ -3,17 +3,20 @@
 This allows sharing definitions among different engine versions.
 """
 from __future__ import annotations
-from typing import Any, TypeVar, Callable
-from collections.abc import MutableMapping
+
+from typing import Any
+from collections.abc import Callable, Iterator
 from collections import Counter, defaultdict, ChainMap
 from pathlib import Path
 import argparse
+import itertools
 import sys
+import re
 
 from srctools import fgd
 from srctools.fgd import (
-    FGD, AutoVisgroup, EntAttribute, EntityDef, EntityTypes, Helper, HelperExtAppliesTo,
-    HelperTypes, KVDef, Snippet, ValueTypes, match_tags, validate_tags,
+    FGD, AutoVisgroup, EntAttribute, EntityDef, EntityTypes, TagsSet, Helper, HelperExtAppliesTo,
+    HelperTypes, KVDef, Snippet, ValueTypes, match_tags, validate_tags
 )
 from srctools.filesys import File, RawFileSystem
 from srctools.math import Vec, format_float
@@ -27,15 +30,16 @@ GAMES_CHRONO: list[tuple[str, str]] = [
     ('EP1', 'Half-Life 2: Episode One'),
     ('EP2', 'Half-Life 2: Episode Two'),
 
-    ('TF2',   'Team Fortress 2'),
-    ('P1',    'Portal'),
-    ('L4D',   'Left 4 Dead'),
-    ('L4D2',  'Left 4 Dead 2'),
-    ('ASW',   'Alien Swarm'),
-    ('P2',    'Portal 2'),
-    ('CSGO',  'Counter-Strike: Global Offensive'),
+    ('TF2', 'Team Fortress 2'),
+    ('P1', 'Portal'),
+    ('L4D', 'Left 4 Dead'),
+    ('L4D2', 'Left 4 Dead 2'),
+    ('ASW', 'Alien Swarm'),
+    ('P2', 'Portal 2'),
+    ('CSGO', 'Counter-Strike: Global Offensive'),
+    ('STRATA', 'Strata Source'),
 
-    ('SFM',   'Source Filmmaker'),
+    ('SFM', 'Source Filmmaker'),
     ('DOTA2', 'Dota 2'),
 ]
 
@@ -44,7 +48,8 @@ MODS_BRANCHED: dict[str, list[tuple[str, str]]] = {
     'HL2': [
         ('HLS', 'Half-Life: Source'),
         ('DODS', 'Day of Defeat: Source'),
-        ('CSS',  'Counter-Strike: Source'),
+        ('CSS', 'Counter-Strike: Source'),
+        ('HL2DM', 'Half-Life 2: Deathmatch'),
     ],
     'EP2': [
         ('MESA', 'Black Mesa'),
@@ -54,6 +59,7 @@ MODS_BRANCHED: dict[str, list[tuple[str, str]]] = {
         ('KZ', 'Kreedz Climbing'),
     ],
     'P1': [
+        ('PSA', 'Portal: Still Alive'),
         ('PEE15', 'Portal Epic Edition 1.5'),
     ],
     'ASW': [
@@ -68,6 +74,10 @@ MODS_BRANCHED: dict[str, list[tuple[str, str]]] = {
     ],
     'CSGO': [
         ('P2DES', 'Portal 2: Desolation'),
+    ],
+    'STRATA': [
+        ('P2CE', 'Portal 2: Community Edition'),
+        ('MOMENTUM', 'Momentum Mod'),
     ],
 }
 MOD_TO_BRANCH = {
@@ -90,7 +100,7 @@ FEATURES: dict[str, set[str]] = {
 
     'MBASE': {'VSCRIPT'},
     'MESA': {'HL2', 'INST_IO'},
-    'GMOD': {'HL2', 'EP1', 'EP2'},
+    'GMOD': {'HL2', 'EP1', 'EP2', 'INST_IO'},
     'EZ1': {'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
     'EZ2': {'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
     'KZ': {'HL2'},
@@ -101,9 +111,18 @@ FEATURES: dict[str, set[str]] = {
     'P2': {'INST_IO', 'VSCRIPT'},
     'CSGO': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
     'P2DES': {'P2', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
+    'STRATA': {'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
+    'P2CE': {'P2', 'HL2', 'EP1', 'EP2', 'STRATA', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
+    'MOMENTUM': {'STRATA', 'INST_IO', 'PROP_SCALING', 'VSCRIPT', 'PROPCOMBINE'},
 
+    'PSA': {'P1'},
+    'P2SIXENSE': {'P2'},
+    'P2EDU': {'P2'},
+
+    # who up epicing they edition
     'PEE15': {'P1', 'HL2', 'EP1', 'EP2', 'MBASE', 'VSCRIPT'},
     'PEE2': {'P2', 'HL2', 'EP1', 'EP2', 'INST_IO', 'VSCRIPT'},
+
 }
 
 ALL_FEATURES = {
@@ -134,8 +153,10 @@ ALL_TAGS = {
 }
 
 # If the tag is present, run to backport newer FGD syntax to older engines.
-POLYFILLS: list[tuple[frozenset[str], Callable[[FGD], None]]] = []
-PolyfillFuncT = TypeVar('PolyfillFuncT', bound=Callable[[FGD], None])
+type PolyFill = Callable[[FGD, TagsSet], None]
+POLYFILLS: list[tuple[TagsSet, PolyFill]] = []
+# Ones which should run in the engine dump
+POLYFILLS_ENGINE: list[PolyFill] = []
 
 # This ends up being the C1 Reverse Line Feed in CP1252,
 # which Hammer displays as nothing. We can suffix visgroups with this to
@@ -169,17 +190,22 @@ SNIPPET_KINDS = [
 SNIPPET_USED: set[str] = set()
 
 
-def _polyfill(*tags: str) -> Callable[[PolyfillFuncT], PolyfillFuncT]:
+def _polyfill[Func: PolyFill](
+    *tags: str,
+    engine: bool = False,
+) -> Callable[[Func], Func]:
     """Register a polyfill, which backports newer FGD syntax to older engines."""
-    def deco(func: PolyfillFuncT) -> PolyfillFuncT:
+    def deco(func: Func) -> Func:
         """Registers the function."""
         POLYFILLS.append((frozenset(tag.upper() for tag in tags), func))
+        if engine:
+            POLYFILLS_ENGINE.append(func)
         return func
     return deco
 
 
 @_polyfill('until_asw', 'mesa')
-def _polyfill_boolean(fgd: FGD) -> None:
+def _polyfill_boolean(fgd: FGD, _: TagsSet) -> None:
     """Before Alien Swarm's Hammer, boolean was not available as a keyvalue type.
 
     Substitute with choices.
@@ -196,7 +222,7 @@ def _polyfill_boolean(fgd: FGD) -> None:
 
 
 @_polyfill('until_asw')
-def _polyfill_particlesystem(fgd: FGD) -> None:
+def _polyfill_particlesystem(fgd: FGD, _: TagsSet) -> None:
     """Before Alien Swarm's Hammer, the particle system viewer was not available.
 
     Substitute with just a string.
@@ -209,7 +235,7 @@ def _polyfill_particlesystem(fgd: FGD) -> None:
 
 
 @_polyfill('until_asw')
-def _polyfill_node_id(fgd: FGD) -> None:
+def _polyfill_node_id(fgd: FGD, _: TagsSet) -> None:
     """Before Alien Swarm's Hammer, node_id was not available as a keyvalue type.
 
     Substitute with integer.
@@ -222,7 +248,7 @@ def _polyfill_node_id(fgd: FGD) -> None:
 
 
 @_polyfill('until_l4d2', '!tf2')
-def _polyfill_scripts(fgd: FGD) -> None:
+def _polyfill_scripts(fgd: FGD, _: TagsSet) -> None:
     """Before L4D2's Hammer (except TF2), the vscript specific types were not available.
 
     Substitute with just a string.
@@ -239,8 +265,11 @@ def _polyfill_scripts(fgd: FGD) -> None:
 
 
 @_polyfill()
-def _polyfill_ext_valuetypes(fgd: FGD) -> None:
-    # Convert extension types to their real versions.
+def _polyfill_ext_valuetypes(fgd: FGD, tags: TagsSet) -> None:
+    """Convert extension types to the closest standard equivalent.
+
+    Does not apply to engine builds, those accept our custom types.
+    """
     decay = {
         ValueTypes.EXT_STR_TEXTURE: ValueTypes.STRING,
         ValueTypes.EXT_ANGLE_PITCH: ValueTypes.FLOAT,
@@ -248,14 +277,20 @@ def _polyfill_ext_valuetypes(fgd: FGD) -> None:
         ValueTypes.EXT_VEC_DIRECTION: ValueTypes.VEC,
         ValueTypes.EXT_VEC_LOCAL: ValueTypes.VEC,
     }
+    if 'STRATA' not in tags:
+        decay[ValueTypes.EXT_SOUNDSCAPE] = ValueTypes.STRING
+
     for ent in fgd.entities.values():
         for tag_map in ent.keyvalues.values():
             for kv in tag_map.values():
-                kv.type = decay.get(kv.type, kv.type)
+                # Don't change unknown types.
+                if kv.custom_type is None:
+                    kv.type = decay.get(kv.type, kv.type)
 
 
-@_polyfill('!P2DES')  # Fixed in VitaminSource.
-def _polyfill_frustum_literals(fgd: FGD) -> None:
+# This is supported in VitaminSource. We want to remove in engine, so these keys get defined.
+@_polyfill('!P2DES', engine=True)
+def _polyfill_frustum_literals(fgd: FGD, _: TagsSet) -> None:
     """The frustum() helper does not support literal values, only keyvalues."""
     keys = [
         ('fov', '_frustum_fov', '<Frustum FOV>'),
@@ -277,7 +312,6 @@ def _polyfill_frustum_literals(fgd: FGD) -> None:
                 while name in ent.keyvalues:
                     i += 1
                     name = f'{name_base}{i}'
-                # This should be !ENGINE, but we don't run polyfills in engine mode.
                 ent.keyvalues[name] = {frozenset(): KVDef(
                     name,
                     type=ValueTypes.COLOR_255 if attr == 'color' else ValueTypes.FLOAT,
@@ -285,6 +319,7 @@ def _polyfill_frustum_literals(fgd: FGD) -> None:
                     default=str(Vec(value)) if isinstance(value, tuple) else format_float(value),
                     desc='Ignore, this is necessary to display the preview frustum.',
                     readonly=True,
+                    editor_only=True,
                 )}
                 setattr(helper, attr, name)
 
@@ -302,7 +337,7 @@ def format_all_tags() -> str:
      )
 
 
-def expand_tags(tags: frozenset[str]) -> frozenset[str]:
+def expand_tags(tags: TagsSet) -> TagsSet:
     """Expand the given tags, producing the full list of tags these will search.
 
     This adds since_/until_ tags, and values in FEATURES.
@@ -380,12 +415,41 @@ def load_database(
 
     # Classname -> filename
     ent_source: dict[str, str] = {}
+    extra_fsys: RawFileSystem | None
+
+    if extra_loc is not None:
+        if single_extra := extra_loc.is_file():
+            # One file.
+            extra_fsys = RawFileSystem(str(extra_loc.parent))
+        else:
+            extra_fsys = RawFileSystem(str(extra_loc))
+    else:
+        extra_fsys = None
+        single_extra = False
+
+    print('\n Loading snippets:')
 
     fsys = RawFileSystem(str(dbase))
     # First, load the snippets files.
     for file in dbase.rglob("snippets/*.fgd"):
         rel_loc = file.relative_to(dbase)
         load_file(fgd, ent_source, fsys, fsys[str(rel_loc)], is_snippet=True, fgd_vis=fgd_vis)
+
+    # Load snippets from extras if available. Not supported for singular files.
+    if extra_loc is not None and not single_extra:
+        assert extra_fsys is not None
+        print('\n Loading extra snippets:')
+        for file in extra_loc.rglob("snippet_*.fgd"):
+            fgd.parse_file(
+                extra_fsys,
+                extra_fsys[str(file.relative_to(extra_loc))],
+                eval_bases=False,
+                ignore_unknown_valuetype=True,
+            )
+            print('s', end='', flush=True)
+
+    print('\n Loading main entities:')
+
     # Then, everything else.
     for file in dbase.rglob("*.fgd"):
         rel_loc = file.relative_to(dbase)
@@ -395,25 +459,27 @@ def load_database(
     load_visgroup_conf(fgd, dbase)
 
     if extra_loc is not None:
-        print('\nLoading extra file:')
-        if extra_loc.is_file():
+        assert extra_fsys is not None
+        if single_extra:
             # One file.
-            fsys = RawFileSystem(str(extra_loc.parent))
+            print('\nLoading extra file:')
             fgd.parse_file(
-                fsys,
-                fsys[extra_loc.name],
+                extra_fsys,
+                extra_fsys[extra_loc.name],
                 eval_bases=False,
+                ignore_unknown_valuetype=True,
             )
         else:
             print('\nLoading extra files:')
-            fsys = RawFileSystem(str(extra_loc))
             for file in extra_loc.rglob("*.fgd"):
-                fgd.parse_file(
-                    fsys,
-                    fsys[str(file.relative_to(extra_loc))],
-                    eval_bases=False,
-                )
-                print('.', end='', flush=True)
+                if not Path(file).stem.startswith('snippet_'):
+                    fgd.parse_file(
+                        extra_fsys,
+                        extra_fsys[str(file.relative_to(extra_loc))],
+                        eval_bases=False,
+                        ignore_unknown_valuetype=True,
+                    )
+                    print('.', end='', flush=True)
     print()
 
     fgd.apply_bases()
@@ -495,7 +561,7 @@ def load_visgroup_conf(fgd: FGD, dbase: Path) -> None:
 
             elif bulleted:  # Entity.
                 ent_name = line[1:].strip('\t `')
-                for vis_parent, vis_name in zip(cur_path, cur_path[1:]):
+                for vis_parent, vis_name in itertools.pairwise(cur_path):
                     visgroup = fgd.auto_visgroups[vis_name.casefold()]
                     visgroup.ents.add(ent_name)
 
@@ -504,7 +570,7 @@ def load_file(
     base_fgd: FGD,
     ent_source: dict[str, str],
     fsys: RawFileSystem,
-    file: File,
+    file: File[RawFileSystem],
     *,
     is_snippet: bool,
     fgd_vis: bool,
@@ -532,6 +598,7 @@ def load_file(
         file,
         eval_bases=False,
         encoding='utf8',
+        ignore_unknown_valuetype=True,
     )
     for clsname, ent in file_fgd.entities.items():
         if clsname in base_fgd.entities:
@@ -579,17 +646,16 @@ def get_appliesto(ent: EntityDef) -> list[str]:
     found: HelperExtAppliesTo | None = None
     count = 0
     applies_to: set[str] = set()
-    for i, helper in enumerate(ent.helpers):
-        if isinstance(helper, HelperExtAppliesTo):
-            if found is None:
-                found = helper
-            count += 1
-            applies_to.update(helper.tags)
+    for helper in ent.get_helpers(HelperExtAppliesTo):
+        if found is None:
+            found = helper
+        count += 1
+        applies_to.update(helper.applies)
 
     if found is None:
         found = HelperExtAppliesTo([])
         ent.helpers.insert(0, found)
-    found.tags = arg_list = [tag.upper() for tag in applies_to]
+    found.applies = arg_list = [tag.upper() for tag in applies_to]
     arg_list.sort()
     ent.helpers[:] = [
         helper for helper in ent.helpers
@@ -598,7 +664,7 @@ def get_appliesto(ent: EntityDef) -> list[str]:
     return arg_list
 
 
-def add_tag(tags: frozenset[str], new_tag: str) -> frozenset[str]:
+def add_tag(tags: TagsSet, new_tag: str) -> TagsSet:
     """Modify these tags such that they allow the new tag."""
     is_inverted = new_tag.startswith(('!', '-'))
 
@@ -619,254 +685,41 @@ def add_tag(tags: frozenset[str], new_tag: str) -> frozenset[str]:
     return frozenset(tag_set)
 
 
-def check_ent_sprites(ent: EntityDef, used: dict[str, list[str]]) -> None:
-    """Check if the specified entity has a unique sprite."""
-    mdl: str | None = None
-    sprite: str | None = None
-    for helper in ent.helpers:
-        if type(helper) in UNIQUE_HELPERS:
-            return  # Specialised helper is sufficient.
-        if isinstance(helper, fgd.HelperModel):
-            if helper.model is None and 'model' in ent.kv:
-                return  # Model is customisable.
-            mdl = helper.model
-        if isinstance(helper, fgd.HelperSprite):
-            if helper.mat is None:
-                print(f'{ent.classname}: {helper}???')
-            sprite = helper.mat
-    # If both model and sprite, allow model to be duplicate.
-    if mdl and sprite:
-        display = sprite
-    elif mdl:
-        display = mdl
-    elif sprite:
-        display = sprite
-    else:
-        tags = get_appliesto(ent)
-        if 'ENGINE' not in tags and '+ENGINE' not in tags:
-            print(f'{ent.classname}: No sprite/model? {", ".join(map(repr, ent.helpers))}')
-        return
-    used[display].append(ent.classname)
+def iter_tags(fgd: FGD) -> Iterator[str]:
+    """Iterate over all tags defined in the FGD."""
+    for ent in fgd:
+        for helper in ent.get_helpers(HelperExtAppliesTo):
+            yield from helper.applies
+        for kv_map in ent.keyvalues.values():
+            for tags, kv in kv_map.items():
+                yield from tags
+                if kv.val_list is not None:
+                    for tup in kv.val_list:
+                        yield from tup[-1]
+        for io_map in itertools.chain(ent.inputs.values(), ent.outputs.values()):
+            for tags in io_map:
+                yield from tags
 
 
-def action_count(
+def action_report(
     dbase: Path,
     extra_db: Path | None,
+    report_dir: Path,
     factories_folder: Path,
 ) -> None:
-    """Output a count of all entities in the database per game."""
+    """Output various reports on the database, to help pinpoint improvements."""
+    report_dir.absolute()
+    print('Report dir: ', report_dir)
+    from hammeraddons import fgd_reports
+    report_dir.mkdir(parents=True, exist_ok=True)
     fgd, base_entity_def = load_database(dbase, extra_db)
+    print('Database loaded.')
 
-    count_base: dict[str, int] = Counter()
-    count_point: dict[str, int] = Counter()
-    count_brush: dict[str, int] = Counter()
-
-    all_tags = set()
-
-    ent: EntityDef
-    for ent in fgd:
-        for tag in get_appliesto(ent):
-            all_tags.add(tag.lstrip('+-!').upper())
-
-    games = (ALL_GAMES | ALL_MODS) & all_tags
-
-    print('Done.\nGames: ' + ', '.join(sorted(games)))
-
-    expanded: dict[str, frozenset[str]] = {
-        # Opt into complete list, since we're checking against engine dumps.
-        game: expand_tags(frozenset({game, 'COMPLETE'}))
-        for game in ALL_GAMES | ALL_MODS
-    }
-    expanded['ALL'] = frozenset()
-
-    game_classes: MutableMapping[tuple[str, str], set[str]] = defaultdict(set)
-    base_uses: MutableMapping[str, set[str]] = defaultdict(set)
-    all_ents: MutableMapping[str, set[str]] = defaultdict(set)
-
-    kv_counts: dict[tuple, list[tuple]] = defaultdict(list)
-    inp_counts: dict[tuple, list[tuple]] = defaultdict(list)
-    out_counts: dict[tuple, list[tuple]] = defaultdict(list)
-    desc_counts: dict[tuple, list[tuple]] = defaultdict(list)
-    val_list_counts: dict[tuple, list[tuple]] = defaultdict(list)
-
-    for ent in fgd:
-        if ent.type is EntityTypes.BASE:
-            counter = count_base
-            typ = 'Base'
-            # Ensure it's present, so we detect 0-use bases.
-            base_uses[ent.classname]  # noqa
-        elif ent.type is EntityTypes.BRUSH:
-            counter = count_brush
-            typ = 'Brush'
-        else:
-            counter = count_point
-            typ = 'Point'
-        appliesto = get_appliesto(ent)
-
-        has_ent = set()
-
-        for base in ent.bases:
-            assert isinstance(base, EntityDef)
-            base_uses[base.classname].add(ent.classname)
-
-        for game, tags in expanded.items():
-            if match_tags(tags, appliesto):
-                counter[game] += 1
-                game_classes[game, typ].add(ent.classname)
-                has_ent.add(game)
-            # Allow explicitly saying certain ents aren't in the actual game
-            # with the "engine" tag, or only adding them to this + the binary dump.
-            if ent.type is not EntityTypes.BASE and match_tags(tags | {'ENGINE'}, appliesto):
-                all_ents[game].add(ent.classname.casefold())
-
-        has_ent.discard('ALL')
-
-        if has_ent == games:
-            # Applies to all, strip.
-            game_classes['ALL', typ].add(ent.classname)
-            counter['ALL'] += 1
-            if appliesto:
-                print('ALL game: ', ent.classname)
-            for game in games:
-                counter[game] -= 1
-                game_classes[game, typ].discard(ent.classname)
-
-        if ent.classname in SNIPPET_USED:
-            # This entity does use snippets already, don't count it.
-            continue
-
-        for name, kv_map in ent.keyvalues.items():
-            for tags, kv in kv_map.items():
-                if 'ENGINE' in tags or '+ENGINE' in tags or kv.type is ValueTypes.SPAWNFLAGS:
-                    continue
-                if kv.desc:  # Blank is not a duplicate!
-                    desc_counts[kv.desc, ].append((ent.classname, name))
-                kv_counts[
-                    kv.name, kv.type, (tuple(kv.val_list) if kv.val_list is not None else ()), kv.desc, kv.default,
-                ].append((ent.classname, name, kv.desc))
-                if kv.val_list is not None:
-                    val_list_counts[tuple(kv.val_list)].append((ent.classname, name))
-        for name, io_map in ent.inputs.items():
-            for tags, io in io_map.items():
-                if 'ENGINE' in tags or '+ENGINE' in tags:
-                    continue
-                inp_counts[io.name, io.type, io.desc].append((ent.classname, name, io.desc))
-        for name, io_map in ent.outputs.items():
-            for tags, io in io_map.items():
-                if 'ENGINE' in tags or '+ENGINE' in tags:
-                    continue
-                out_counts[io.name, io.type, io.desc].append((ent.classname, name, io.desc))
-
-    all_games: set[str] = {*count_base, *count_point, *count_brush}
-
-    def ordering(game: str) -> tuple:
-        """Put ALL at the start, mods at the end."""
-        if game == 'ALL':
-            return (0, 0)
-        try:
-            return (1, GAME_ORDER.index(game))
-        except ValueError:
-            return (2, game)  # Mods
-
-    game_order = sorted(all_games, key=ordering)
-
-    row_temp = '{:^9} | {:^6} | {:^6} | {:^6}'
-    header = row_temp.format('Game', 'Base', 'Point', 'Brush')
-
-    print(header)
-    print('-' * len(header))
-
-    for game in game_order:
-        print(row_temp.format(
-            game,
-            count_base[game],
-            count_point[game],
-            count_brush[game],
-        ))
-
-    print('\n\nBases:')
-    for base, count in sorted(base_uses.items(), key=lambda x: (len(x[1]), x[0])):
-        ent = fgd[base]
-        if ent.type is EntityTypes.BASE and (
-            ent.keyvalues or ent.outputs or ent.inputs
-        ):
-            print(base, len(count), count if len(count) == 1 else '...')
-
-    print('\n\nEntity Dumps:')
-    for dump_path in factories_folder.glob('*.txt'):
-        with dump_path.open() as f:
-            dump_classes = {
-                cls.casefold().strip()
-                for cls in f
-                if not cls.isspace()
-            }
-        game = dump_path.stem.upper()
-        tags = frozenset(game.split('_'))
-
-        defined_classes = {
-            cls
-            for tag in tags
-            for cls in all_ents.get(tag, ())
-            if not cls.startswith('comp_')
-        }
-        if not defined_classes:
-            print(f'No dump for tags "{game}"!')
-            continue
-
-        extra = defined_classes - dump_classes
-        missing = dump_classes - defined_classes
-        if extra:
-            print(f'{game} - Extraneous definitions: ')
-            print(', '.join(sorted(extra)))
-        if missing:
-            print(f'{game} - Missing definitions: ')
-            print(', '.join(sorted(missing)))
-
-    print('\n\nMissing Class Resources:')
-
-    missing_count = defined_count = empty_count = 0
-    not_in_engine = {'-ENGINE', '!ENGINE', 'SRCTOOLS', '+SRCTOOLS'}
-    for clsname in sorted(fgd.entities):
-        ent = fgd.entities[clsname]
-        if ent.type is EntityTypes.BASE or ent.is_alias:
-            continue
-
-        if not not_in_engine.isdisjoint(get_appliesto(ent)):
-            continue
-        if isinstance(ent.resources, tuple):
-            print(clsname, end=', ')
-            missing_count += 1
-        else:
-            defined_count += 1
-            if not ent.resources:
-                empty_count += 1
-
-    print(
-        f'\nMissing: {missing_count}, '
-        f'Defined: {defined_count} = {defined_count/(missing_count + defined_count):.2%}, empty={empty_count}\n\n'
-    )
-
-    mdl_or_sprites: dict[str, list[str]] = defaultdict(list)
-    for ent in fgd:
-        if ent.type is not EntityTypes.BASE and ent.type is not EntityTypes.BRUSH:
-            check_ent_sprites(ent, mdl_or_sprites)
-    for resource, classes in mdl_or_sprites.items():
-        if len(classes) > 1:
-            classes.sort()
-            print(f'Reused {resource}: {classes}')
-
-    for kind_name, count_map in (
-        ('keyvalues', kv_counts),
-        ('inputs', inp_counts),
-        ('outputs', out_counts),
-        ('val list', val_list_counts),
-        ('desc', desc_counts)
-    ):
-        print(f'Duplicate {kind_name}:')
-        for key, info in sorted(count_map.items(), key=lambda v: len(v[1]), reverse=True):
-            if len(info) <= 2:
-                continue
-            print(f'{len(info):02}: {key[:64]!r} -> {info}')
+    all_ents = fgd_reports.report_counts(fgd, report_dir)
+    fgd_reports.report_factories(all_ents, report_dir=report_dir, factories_folder=factories_folder)
+    fgd_reports.report_helper_reuse(fgd, report_dir)
+    fgd_reports.report_missing_resources(fgd, report_dir)
+    fgd_reports.report_undefined_resources(fgd, report_dir)
 
 
 def action_import(
@@ -917,7 +770,7 @@ def action_import(
                     ent.helpers.append(helper)
 
             for cat in ('keyvalues', 'inputs', 'outputs'):
-                cur_map: dict[str, dict[frozenset[str], EntityDef]] = getattr(ent, cat)
+                cur_map: dict[str, dict[TagsSet, EntityDef]] = getattr(ent, cat)
                 new_map = getattr(new_ent, cat)
                 new_names = set()
                 for name, tag_map in new_map.items():
@@ -976,7 +829,7 @@ def action_import(
 def action_export(
     dbase: Path,
     extra_db: Path | None,
-    tags: frozenset[str],
+    tags: TagsSet,
     output_path: Path,
     as_binary: bool,
     engine_mode: bool,
@@ -1003,6 +856,16 @@ def action_export(
 
     print(f'Map size: ({fgd.map_size_min}, {fgd.map_size_max})')
 
+    # Gather all the tags used by entities, make sure there aren't unrecognised ones - typos etc.
+    used_tags = {
+        tag.lstrip('!-+').upper()
+        for tag in iter_tags(fgd)
+    }
+    print(f'{len(used_tags)}/{len(ALL_TAGS)} tags used in DB.')
+    extra_tags = used_tags - ALL_TAGS
+    if extra_tags:
+        raise ValueError(f'Unknown tags: {extra_tags}')
+
     aliases: dict[EntityDef, str | EntityDef] = {}
     if engine_mode or collapse_bases:
         # In engine mode, we don't care about specific games.
@@ -1027,6 +890,8 @@ def action_export(
                 helper for helper in ent.helpers
                 if not helper.IS_EXTENSION
             ]
+            for helper in ent.helpers:
+                helper.tags = TAGS_EMPTY
             # Force everything to inherit from CBaseEntity, since
             # we're then removing any KVs that are present on that.
             if ent.is_alias:
@@ -1035,8 +900,8 @@ def action_export(
                 ent.bases = [base_entity_def]
 
             value: EntAttribute
-            category: dict[str, dict[frozenset[str], EntAttribute]]
-            base_cat: dict[str, dict[frozenset[str], EntAttribute]]
+            category: dict[str, dict[TagsSet, EntAttribute]]
+            base_cat: dict[str, dict[TagsSet, EntAttribute]]
             for attr_name in ['inputs', 'outputs', 'keyvalues']:
                 # Unsafe cast, we're not going to insert the wrong kind of attribute though.
                 category = getattr(ent, attr_name)
@@ -1046,11 +911,12 @@ def action_export(
                 # If there's an "ENGINE" tag, that's specifically for us.
                 # Otherwise, warn if there's a type conflict.
                 # If the final value is choices, warn too (not really a type).
+                from_engine = False
                 for key, orig_tag_map in list(category.items()):
                     # Remake the map, excluding non-engine tags.
                     # If any are explicitly matching us, just use that
                     # directly.
-                    tag_map: dict[frozenset[str], EntAttribute] = {}
+                    tag_map: dict[TagsSet, EntAttribute] = {}
                     for tags, value in orig_tag_map.items():
                         if 'ENGINE' in tags or '+ENGINE' in tags:
                             if value.type is ValueTypes.CHOICES:
@@ -1059,9 +925,12 @@ def action_export(
                                 )
                             # Use just this.
                             tag_map = {TAGS_EMPTY: value}
+                            from_engine = True
                             break
                         elif '-ENGINE' not in tags and '!ENGINE' not in tags:
                             tag_map[tags] = value
+                        elif isinstance(value, KVDef) and value.editor_only:
+                            tag_map[tags - {'-ENGINE', '!ENGINE'}] = value
 
                     if not tag_map:
                         # All were set as non-engine, so it's not present.
@@ -1079,7 +948,7 @@ def action_export(
                                 ent.classname,
                                 key,
                                 ', '.join([typ.value for typ in types])
-                            ))
+                            ), file=sys.stderr)
                         # Pick the one with the shortest tags arbitrarily.
                         _, value = min(
                             tag_map.items(),
@@ -1091,7 +960,8 @@ def action_export(
                     if value.type is ValueTypes.CHOICES:
                         print(
                             f'{ent.classname}.{key} uses CHOICES type, '
-                            'provide ENGINE tag!'
+                            'provide ENGINE tag!',
+                            file=sys.stderr,
                         )
                         if isinstance(value, KVDef):
                             assert value.val_list is not None
@@ -1104,6 +974,19 @@ def action_export(
                             else:
                                 value.type = ValueTypes.INT
                             value.val_list = None
+                    elif value.type is ValueTypes.SPAWNFLAGS and isinstance(value, KVDef):
+                        # Strip tags. Just keep duplicates, the only difference possible is name.
+                        value.val_list = [
+                            (mask, name, default, TAGS_EMPTY)
+                            for (mask, name, default, tags) in value.flags_list
+                            if '-ENGINE' not in tags and '!ENGINE' not in tags
+                        ]
+                    if (
+                        isinstance(value, KVDef) and value.editor_only
+                        and re.fullmatch(r"-{4,}", value.disp_name) is not None
+                    ):
+                        # It's a divider, set a specific length, or blank it in engine mode.
+                        value.disp_name = '-' if engine_mode else ('-' * 80)
 
                     # Check if this is a shared property among all ents,
                     # and if so skip exporting.
@@ -1122,8 +1005,14 @@ def action_export(
                             if base_value.type is ValueTypes.CHOICES:
                                 print(
                                     f'Base Entity {attr_name[:-1]} '
-                                    f'"{key}"  is a choices type!'
+                                    f'"{key}"  is a choices type!',
+                                    file=sys.stderr,
                                 )
+                            if from_engine:
+                                pass  # Ours is set as engine, we always export it.
+                            elif key == 'spawnflags':
+                                # Don't use the blank one in CBaseEntity
+                                pass
                             elif base_value.type is value.type:
                                 del category[key]
                                 continue
@@ -1133,11 +1022,15 @@ def action_export(
                             elif base_value.type is ValueTypes.FLOAT and value.type is ValueTypes.INT:
                                 # Just constraining it down to a whole number.
                                 pass
-                            elif attr_name != 'keyvalues' and base_value.type is ValueTypes.VOID:
+                            elif base_value.type is ValueTypes.VOID:
                                 # Base ignores parameters, but child has some - that's fine.
                                 pass
                             else:
-                                print(f'{ent.classname}.{key}: {value.type} != base {base_value.type}')
+                                print(
+                                    f'{ent.classname}.{key}: '
+                                    f'{value.type} != base {base_value.type}',
+                                    file=sys.stderr,
+                                )
 
                     # Blank this, it's not that useful.
                     value.desc = ''
@@ -1182,14 +1075,18 @@ def action_export(
                 if not match_tags(tags, get_appliesto(base)):
                     ent.bases.remove(base)
 
-    if not engine_mode:
-        print('Applying polyfills:')
+    print('Applying polyfills:')
+    if engine_mode:
+        for polyfill in POLYFILLS_ENGINE:
+            print(f' - {polyfill.__name__.removeprefix('_polyfill_')}')
+            polyfill(fgd, tags)
+    else:
         for poly_tag, polyfill in POLYFILLS:
             if match_tags(tags, poly_tag):
-                print(f' - {polyfill.__name__[10:]}: Applying')
-                polyfill(fgd)
+                print(f' - {polyfill.__name__.removeprefix('_polyfill_')}: Applying')
+                polyfill(fgd, tags)
             else:
-                print(f' - {polyfill.__name__[10:]}: Not required')
+                print(f' - {polyfill.__name__.removeprefix('_polyfill_')}: Not required')
 
     print('Applying helpers to child entities and optimising...')
     for ent in fgd.entities.values():
@@ -1207,7 +1104,7 @@ def action_export(
         for helper in reversed(ent.helpers):
             if helper in rev_helpers:  # No duplicates here.
                 continue
-            if helper.IS_EXTENSION:
+            if helper.IS_EXTENSION or not match_tags(tags, helper.tags):
                 continue
 
             # For each, it may make earlier definitions obsolete.
@@ -1220,7 +1117,7 @@ def action_export(
             # No duplicates or overridden helpers.
             if helper in rev_helpers or helper.TYPE in overrides:
                 continue
-            if helper.IS_EXTENSION:
+            if helper.IS_EXTENSION or not match_tags(tags, helper.tags):
                 continue
             overrides.update(helper.overrides())
             rev_helpers.append(helper)
@@ -1295,6 +1192,12 @@ def action_export(
         for tag, classnames in res_tags.items():
             print(f'- {tag}: {len(classnames)} ents')
 
+    # Check for any failure to apply an extend class, and throw an error if we find any
+    # These will break Hammer if they sneak through!
+    for ent in fgd.entities.values():
+        if ent.type == EntityTypes.EXTEND:
+            raise RuntimeError(f'Found unmatched @ExtendClass "{ent.classname}"!')
+
     print(f'Exporting {output_path}...')
 
     if as_binary:
@@ -1304,7 +1207,12 @@ def action_export(
             serialise(fgd, bin_f)
     else:
         with open(output_path, 'w', encoding='iso-8859-1') as txt_f:
-            fgd.export(txt_f, custom_syntax=False)
+            fgd.export(
+                txt_f,
+                custom_syntax=False,
+                # HL2/episodes require the old syntax.
+                old_report='UNTIL_L4D' in tags,
+            )
             # BEE2 compatibility, don't make it run.
             if 'P2' in tags:
                 txt_f.write('\n// BEE 2 EDIT FLAG = 0 \n')
@@ -1354,7 +1262,7 @@ def action_visgroup(dbase: Path, extra_loc: Path | None, dest: Path) -> None:
                 f.write(f'{child_indent}* `{child}`\n')
 
     print('Writing...')
-    with dest.open('w') as f:
+    with dest.open('w', encoding='utf8') as f:
         write_vis(AutoVisgroup('Auto', ''), '')
 
 
@@ -1375,15 +1283,21 @@ def main(args: list[str] | None = None) -> None:
         "--extra",
         dest="extra_db",
         default=None,
-        help="If specified, an additional folder to read FGD files from. "
-             "These override the normal database.",
+        help="If specified, an additional file or folder to read FGD files from. "
+             "These are parsed after the regular database, overriding it. "
+             "Files named 'snippet_X.fgd' will be parsed before all entities, to allow replacing "
+             "builtin snippets.",
     )
     subparsers = parser.add_subparsers(dest="mode")
 
-    subparsers.add_parser(
-        "count",
-        help=action_count.__doc__,
-        aliases=["c"],
+    parser_report = subparsers.add_parser(
+        "report",
+        help=action_report.__doc__,
+        aliases=["c", "count"],  # Former name
+    )
+    parser_report.add_argument(
+        'output',
+        help='Folder to write reports to.',
     )
 
     parser_exp = subparsers.add_parser(
@@ -1508,13 +1422,17 @@ def main(args: list[str] | None = None) -> None:
             tags,
             Path(result.output).resolve(),
             result.binary,
-            result.engine | result.binary, # Binary mode forces --engine
+            result.engine | result.binary,  # Binary mode forces --engine
             result.map_size,
             result.srctools_only,
             result.collapse_bases,
         )
-    elif result.mode in ("c", "count"):
-        action_count(dbase, extra_db, factories_folder=Path(repo_dir, 'db', 'factories'))
+    elif result.mode in ("report", "c", "count"):
+        action_report(
+            dbase, extra_db,
+            factories_folder=Path(repo_dir, 'db', 'factories'),
+            report_dir=Path(result.output),
+        )
     elif result.mode in ("visgroup", "v", "vis"):
         action_visgroup(dbase, extra_db, result.output)
     else:

@@ -1,7 +1,7 @@
 @PointClass base(Item)
  	appliesto(INFRA)
  	autovis(Point Entities, Items, D Batteries)
-	studio("models/items/batterypack_002.mdl")
+	studioprop("models/items/batterypack_002.mdl")
 = item_d_batteries: "Box of flashlight batteries"
 	[
 	]

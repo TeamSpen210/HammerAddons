@@ -1,0 +1,9 @@
+@SolidClass base(func_brush)
+	appliesto(MOMENTUM)
+= func_slide: "A brush entity the player will slide on like a surf ramp, even at shallow angles. Ducking and unducking while sliding work the same as when on normal ground."
+	[
+	linedivider_slide(string) readonly : "----------------------------------------------------------------------------------------------------------"
+	stayonslide(boolean) : "Keep player on slide surface" : 0 : "Keep the player attached to the slide surface (for example, when sliding down ground of increasing steepness)."
+	allowjump(boolean) : "Allow jumping" : 1 : "Allow the player to jump while sliding. The player is still required to be on a surface that is not too steep to stand on in order to jump."
+	disablegravity(boolean) : "Disable gravity" : 0 : "Disable gravity while sliding."
+	]

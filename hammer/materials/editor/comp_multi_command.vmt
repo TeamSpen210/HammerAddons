@@ -1,0 +1,7 @@
+Sprite
+{
+	$baseTexture "editor/comp_multi_command"
+	$spriteorientation "vp_parallel"
+	$spriteorigin "[.5 .5]"
+	$no_fullbright 1
+}

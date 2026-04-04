@@ -26,4 +26,6 @@
 	// Inputs
 	input HalloweenSetUsingSpells(integer) : "Disable/Enable spells for this map. Only works on Halloween maps. (0 disable, 1 enable)"
 	input Halloween2013TeleportToHell(string) : "Teleport all players to hell."
+
+	@resources [] // All elsewhere.
 	]

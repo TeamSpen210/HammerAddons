@@ -1,0 +1,18 @@
+@BaseClass appliesto(Strata) = BaseClusteredLight
+	[
+	_lightmode[engine](integer) : "Light Mode" : 2
+	_lightmode(choices) : "Light mode" : 0 : "The level of dynamic lighting to use for this light. 'Static' lights have no dynamic or specular lighting, and produce direct and bounced static lightmaps. 'Specular' lights have specular lighting, and produce direct and bounced static lightmaps. 'Static Bounce' lights have dynamic direct and specular lighting, and produce only bounced static lightmaps. 'Fully Dynamic' lights have dynamic direct and specular lighting, and produce no static lightmaps." = 
+		[
+		0: "Static"
+		1: "Specular"
+		2: "Static Bounce"
+		3: "Fully Dynamic"
+		]
+		
+	_dynamicshadowallocation(boolean) : "Use dynamic shadow allocation" : 0 : "Determines whether the map (static) or the engine (dynamic) should dictate the size of the shadows for this light."
+	_initialshadowsize(integer) : "Initial Shadow Size" : 3 : "The initial static shadow resolution exponent. Only relevant for static shadow allocation. Adding 1 to this value doubles both dimensions of the shadowmap."
+	_shadowscale(float) : "Shadow Size Scale" : "1.0" : "Scales the shadowmap resolution exponent. Only relevant for dynamic shadow allocation. For example, a scale of 3.0 will give this light shadowmaps 8 (2^3) times as large as they would usually be."
+	nearz(float) : "Near Z" : 4.0 : "Near Z for this light. Determines where shadows start to be cast. Inside the nearz radius, the light is still visible, but anything inside it won't cast shadows"
+
+	input SetShadowSize(integer) : "Set the size exponent of this light's shadowmap(s)."
+	]

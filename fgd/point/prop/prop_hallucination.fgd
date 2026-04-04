@@ -12,4 +12,8 @@
 	input Disable(void) : "Disable the hallucination algorithm"
 	input SetVisibleTime(float) : "Set Visible Time"
 	input SetRechargeTime(float) : "Set Recharge Time"
+	@resources
+		[
+		mat "materials/engine/occlusionproxy.vmt"
+		]
 	]

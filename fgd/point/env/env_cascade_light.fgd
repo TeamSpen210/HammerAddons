@@ -1,9 +1,11 @@
 @PointClass base(BaseEntityPoint, EnableDisable) 
 	appliesto(since_CSGO, MESA) 
-	iconsprite("editor/shadow_control.vmt") 
+	iconsprite[-Strata]("editor/shadow_control.vmt") 
+	iconsprite[+Strata]("editor/env_cascade_light.vmt")
+	lightprop("models/editor/spot.mdl")
 = env_cascade_light: "An entity to control the sunlight that casts cascaded shadows in the map."
 	[
-	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "50 40 0" : "This is the shadow casting direction. " +
+	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "50 43 0" : "This is the shadow casting direction. " +
 		"Pitch is rotation around the Y axis, " +
 		"yaw is the rotation around the Z axis, and " +
 		"roll is the rotation around the X axis. " +
@@ -34,7 +36,7 @@
 	ViewModelSlopescaledepthbias[MESA](float) : "ViewModelSlopescaledepthbias" : "0.9" : "DepthBias for viewmodel cascade"
 	
 	CSMVolumeMode[engine](integer) : "Volume Mode"
-	CSMVolumeMode(choices) : "CSM_Volume_Mode" : 0 : "CSM Volume Modes " +
+	CSMVolumeMode[-Strata](choices) : "CSM_Volume_Mode" : 0 : "CSM Volume Modes " +
 		"- Auto: Static cache will update once every 10 frames (approx) covering max shadow distance or whole map around player. " +
 		"Manual : Static cache area coverage and updates are managed via csm volumes i/o. \n " +
 		"Use Manual mode for better quality and performence. \n " +
@@ -46,6 +48,7 @@
 
 	// Inputs
 	input LightColor(color255) : "Set the light color."
+	input LightColorScale[Strata](integer) : "Set the light color scale"
 	input SetAngles(string) : "Set the sun direction."
 	
 	input SetCSMVolume[MESA](void) : "Set CSM Volume via trigger volume"

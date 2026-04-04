@@ -18,7 +18,7 @@
 		128: "Small Sound Radius" : 0
 		256: "Medium Sound Radius" : 0
 		512: "Large Sound Radius" : 1
-		1024: "Client-side Animation" : 0 [ASW, MBase]
+		1024: "Client-side Animation" : 0 [ASW, MBase, Strata]
 		]
 
 	dmg(integer) : "Blocking Damage" : 0 : "Damage done to any entity that blocks the rotation, per frame."
@@ -27,7 +27,7 @@
 	maxpitch[MBase](integer) : "Maximum Sound Pitch" : 100 : "Maximum pitch for the rotating sound when it plays based on the speed of the rotating brush."
 
 	solidbsp[engine](boolean) : "Use SOLID_BSP" : 0
-	solidbsp(choices) : "Solid Type" : 0 =
+	solidbsp(choices) : "Solid Type" : 1 : "How to calculate collisions. BSP is more rudimentarty but allows more stable collision with players." =
 		[
 		0: "VPhysics"
 		1: "BSP"
@@ -43,11 +43,11 @@
 	input StartBackward(void) : "Start the rotator rotating backward at maximum speed."
 	input Toggle(void) : "Toggle the rotator between rotating and not rotating."
 	input Reverse(void) : "Reverse the direction of rotation of the rotator, preserving the current speed."
-	input GetSpeed[since_P2](void) : "Causes the func_rotating to fire its OnGetSpeed output with its current speed."
-	input SnapToStartPos[L4D2](void) : "Snap to the initial position and stop moving."
+	input GetSpeed[since_P2, GMOD](void) : "Causes the func_rotating to fire its OnGetSpeed output with its current speed."
+	input SnapToStartPos[L4D2, GMOD](void) : "Snap to the initial position and stop moving."
 
 	// Outputs
-	output OnGetSpeed[since_P2](integer) : "Fired when the GetSpeed input is called.  The current speed of the func_rotating is passed with this output."
+	output OnGetSpeed[since_P2, GMOD](integer) : "Fired when the GetSpeed input is called.  The current speed of the func_rotating is passed with this output."
 
 	@resources
 		[

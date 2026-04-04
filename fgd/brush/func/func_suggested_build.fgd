@@ -1,4 +1,3 @@
-
 @SolidClass base(Trigger, TeamNum) 
 	appliesto(TF2) = func_suggested_build: "Engineer suggested build area."
 	[
@@ -29,4 +28,5 @@
 	output OnBuildInsideArea(void) : "Sent when the player builds an appropriate object inside a suggested area."
 	output OnBuildNotFacing(void) : "Sent when the player builds an appropriate object inside a suggested area, but it has a bad orientation."
 	output OnBuildingUpgraded(void) : "Sent when a building in this area is upgraded."
+	@resources []
 	]

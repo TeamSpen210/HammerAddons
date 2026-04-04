@@ -6,13 +6,13 @@
 	studio("models/editor/info_paint_sprayer.mdl") = info_paint_sprayer: "An entity that sprays Gel."
 	[
 	maxblobcount(integer) : "Max number of blobs" : 250 : "Max number of blobs that sprayer can spawn in the world (1-250)."
-	light_position_name(target_destination) : "Light Position Name" : : "Name of the entity we want to use as blobs light position."
-	start_active(boolean) : "Start Active?" : 0
-	silent(boolean) : "Silent?" : 0 : "If this flag is true, blobs will only paint, appearing entirely invisible."
+	light_position_name(target_destination): "Light Position Name" : : "The entity to use for the blobs' lighting origins."
+	start_active(boolean): "Start Active?" : 0 : "Should this entity start shooting gel upon spawning?"
+ 	silent(boolean) : "Silent?" : 0 : "If this flag is true, blobs will only paint, appearing entirely invisible."
 	drawonly(boolean) : "Draw Only?" : 0 : "If this flag is true, blobs will only render, vanishing on contact with surfaces."
 
 	rendermode[engine](integer) : "Render Mode" : 0
-	rendermode(choices) : "Render Mode" : 0 : "The mode to render blobs. Appears non-functional." =
+	rendermode[+complete](choices) : "Render Mode" : 0 : "The mode to render blobs. Appears non-functional." =
 		[
 		0: "Blobulator"
 		1: "Fast Sphere"
@@ -49,4 +49,18 @@
 	input Start(void) : "Start shooting Gel."
 	input Stop(void) : "Stop shooting Gel."
 	input ChangePaintType(integer) : "Change the type of Gel being sprayed. Values between 0-4, higher values are unstable."
+
+	@resources [
+		particle "paint_splat_bounce_01"
+		particle "paint_splat_stick_01"
+		particle "paint_splat_speed_01"
+		particle "paint_splat_portal_01"
+		particle "paint_splat_erase_01"
+		sound "Paintblob.Inception"
+		sound "Paintblob.Impact"
+		sound "Paintblob.ImpactDrip"
+		sound "Paint.Drip"
+		sound "Paint.MediumFlow"
+		sound "Paint.HeavyFlow"
+		]
 	]

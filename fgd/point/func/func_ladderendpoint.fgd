@@ -9,7 +9,7 @@
 
 		"Note: This entity is non-functional in Counter-Strike: Source. In CS:S, use func_ladder instead."
 	[
-	target(target_destination) : "Other" : : "A ladder goes between any two func_ladderendpoints pointing at each other."
+	target(target_destination) report: "Other" : : "A ladder goes between any two func_ladderendpoints pointing at each other."
 	
 	@resources
 		[

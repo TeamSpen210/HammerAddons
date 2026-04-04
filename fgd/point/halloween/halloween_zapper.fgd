@@ -16,4 +16,5 @@
 
 	// Inputs
 	input ZapTouching(void) : "Zap all touching players."
+	@resources []
 	]

@@ -1,0 +1,6 @@
+@PointClass base(logic_choreographed_scene)
+	appliesto(+engine)
+= instanced_scripted_scene: "Special variant of choreo scenes spawned to play one-off scenes, then self destructs once done."
+	[
+	@resources []
+	]   

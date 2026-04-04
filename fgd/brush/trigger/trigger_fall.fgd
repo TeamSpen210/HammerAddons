@@ -3,4 +3,6 @@
 	[
 	StayLethal(boolean) : "Stay Lethal" : 0 : "Causes players who touch this trigger to be marked for death by " +
 		"fall damage even after they leave the volume."
+
+	@resources []
 	]

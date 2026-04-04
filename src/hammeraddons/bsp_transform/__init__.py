@@ -1,17 +1,16 @@
 """Transformations that can be applied to the BSP file."""
-from typing import (
-    Awaitable, Callable, Container, Dict, FrozenSet, List, Mapping, Optional, Protocol, Tuple,
-    TypeVar, Union,
-)
-from typing_extensions import TypeAlias
-import warnings
+from typing import Protocol
+
+from collections.abc import Awaitable, Callable, Container, Mapping, Iterable
 from pathlib import Path
+from warnings import deprecated
 import inspect
 
 import attrs
 import trio.lowlevel
 
-from srctools import FGD, VMF, EmptyMapping, Entity, FileSystem, Keyvalues, Output
+from hammeraddons.config import GameConfig
+from srctools import FGD, VMF, EmptyMapping, Entity, FileSystem, Keyvalues, Output, FileSystemChain
 from srctools.bsp import BSP
 from srctools.game import Game
 from srctools.logger import get_logger
@@ -21,16 +20,18 @@ from hammeraddons.bsp_transform.common import (
     check_control_enabled, ent_description,
     parse_numeric_specifier, NumericSpecifier, NumericOp
 )
+from hammeraddons.props_config import Options as Config, Opt as ConfOpt
 
 LOGGER = get_logger(__name__, 'bsp_trans')
-RemapFunc: TypeAlias = Callable[[Entity, Output], List[Output]]
+type RemapFunc = Callable[[Entity, Output], list[Output]]
 
 __all__ = [
     'Context', 'trans', 'run_transformations',
     'TransFunc', 'TRANSFORMS',
-    # Utils:
+    # Utils & re-exports:
     'check_control_enabled', 'ent_description',
     'parse_numeric_specifier', 'NumericOp', 'NumericSpecifier',
+    'Config', 'ConfOpt',
 ]
 
 
@@ -46,37 +47,55 @@ class Context:
         pack: PackList,
         bsp: BSP,
         game: Game,
+        game_conf: GameConfig,
         *,
-        studiomdl_loc: Optional[Path] = None,
-        tags: FrozenSet[str] = frozenset(),
-        modelcompile_dump: Optional[Path] = None,
+        studiomdl_loc: Path | None = None,
+        modelcompile_dump: Path | None = None,
     ) -> None:
         self.sys = filesys
         self.vmf = vmf
         self.bsp = bsp
         self.pack = pack
         self.bsp_path = Path(bsp.filename)
-        self._fgd: Optional[FGD] = None
-        self.tags = tags
+        self._fgd: FGD | None = None
         self.modelcompile_dump = modelcompile_dump
-        self.game = game
         self.studiomdl = studiomdl_loc
-        self.config = Keyvalues.root()
+        self.game = game
+        self.game_conf = game_conf
 
-        self._io_remaps: Dict[Tuple[str, str], Tuple[List[Union[Output, RemapFunc]], bool]] = {}
+        self._io_remaps: dict[tuple[str, str], tuple[list[Output | RemapFunc], bool]] = {}
         self._allow_remaps = True
-        self._ent_code: Dict[Entity, str] = {}
+        self._ent_code: dict[Entity, str] = {}
 
     @property
+    def fsys(self) -> FileSystemChain:
+        return self.pack.fsys
+
+    @property
+    @deprecated("Use EntityDef.engine_def() if possible.", category=DeprecationWarning)
     def fgd(self) -> FGD:
-        warnings.warn("Use EntityDef.engine_def() if possible.")
+        """Removed attribute, EntityDef.engine_def() provides this directly."""
         if self._fgd is None:
             self._fgd = FGD.engine_dbase()
         return self._fgd
 
+    @property
+    @deprecated("Use ctx.game_conf.tags, not ctx.tags", category=DeprecationWarning)
+    def tags(self) -> frozenset[str]:
+        """This was moved to game_conf."""
+        return self.game_conf.tags
+
+    @property
+    @deprecated(
+        "No longer used."
+        "Define a CONFIG global set to a bsp_transform.Config() instance.", category=DeprecationWarning)
+    def config(self) -> Keyvalues:
+        """Deprecated attribute."""
+        return Keyvalues.root()
+
     def _add_io_remap(
         self, name: str, inp_name: str,
-        value: Union[Output, RemapFunc],
+        value: Output | RemapFunc,
         remove: bool,
     ) -> None:
         if not self._allow_remaps:
@@ -92,7 +111,7 @@ class Context:
             if old_remove and not remove:
                 self._io_remaps[key] = (out_list, False)
 
-    def add_io_remap(self, name: str, *outputs: Output, remove: bool=True) -> None:
+    def add_io_remap(self, name: str, *outputs: Output, remove: bool = True) -> None:
         """Register an output to be replaced.
 
         This is used to convert inputs to comp_ entities into their real
@@ -142,9 +161,8 @@ class Context:
             self._ent_code[ent] = f'{existing}\n{code}'
 
 
-TransFunc: TypeAlias = Callable[[Context], Awaitable[None]]
-TransFuncOrSync: TypeAlias = Callable[[Context], Optional[Awaitable[None]]]
-TransFuncT = TypeVar('TransFuncT', bound=Callable[[Context], Optional[Awaitable[None]]])
+type TransFunc = Callable[[Context], Awaitable[None]]
+type TransFuncOrSync = Callable[[Context], Awaitable[None] | None]
 
 
 @attrs.frozen(eq=False)
@@ -153,31 +171,50 @@ class Transform:
     func: TransFunc
     name: str
     priority: int
+    inhibit_tags: set[str | tuple[str, ...]]
 
 
-TRANSFORMS: Dict[str, Transform] = {}
+TRANSFORMS: dict[str, Transform] = {}
 
 
 class TransProto(Protocol):
-    def __call__(self, func: TransFuncT) -> TransFuncT: ...
+    def __call__[Func: TransFuncOrSync](self, func: Func) -> Func: ...
 
 
-def trans(name: str, *, priority: int=0) -> TransProto:
-    """Add a transformation procedure to the list."""
+def trans(
+    name: str, *,
+    priority: int = 0,
+    inhibit_tags: Iterable[str | tuple[str, ...]] = (),
+) -> TransProto:
+    """Add a transformation procedure to the list.
+
+    :param name: Unique identifier for the transform, used to identify it.
+    :param priority: Controls execution order. Larger numbers execute after smaller ones.
+    :param inhibit_tags: If any of these tags are set in the game config, this transform is disabled.
+       This is used to indicate when the game has implemented the transform natively.
+       If a value is a tuple, this entire group must be defined to succeed.
+    """
     name = name.strip()
     if ',' in name:
         raise ValueError('Commas are not allowed in names!')
+    inhibit_tags_set: set[str | tuple[str, ...]]
+    if isinstance(inhibit_tags, str):
+        inhibit_tags_set = {inhibit_tags}
+    else:
+        inhibit_tags_set = set(inhibit_tags)
 
-    def deco(func: TransFuncT) -> TransFuncT:
+    def deco[Func: TransFuncOrSync](func: Func) -> Func:
         """Stores the transformation."""
+        if (key := name.casefold()) in TRANSFORMS:
+            raise ValueError(f'Duplicate transform {name!r}!')
         if inspect.iscoroutinefunction(func):
-            TRANSFORMS[name.casefold()] = Transform(func, name, priority)
+            TRANSFORMS[key] = Transform(func, name, priority, inhibit_tags_set)
         else:
             async def async_wrapper(ctx: Context) -> None:
                 """Just freeze all other tasks to run this."""
                 await trio.lowlevel.checkpoint()
                 func(ctx)
-            TRANSFORMS[name.casefold()] = Transform(async_wrapper, name, priority)
+            TRANSFORMS[key] = Transform(async_wrapper, name, priority, inhibit_tags_set)
         return func
     return deco
 
@@ -189,30 +226,42 @@ async def run_transformations(
     pack: PackList,
     bsp: BSP,
     game: Game,
-    studiomdl_loc: Optional[Path] = None,
+    game_conf: GameConfig,
     config: Mapping[str, Keyvalues] = EmptyMapping,
-    tags: FrozenSet[str] = frozenset(),
     disabled: Container[str] = (),
-    modelcompile_dump: Optional[Path] = None,
+    *,
+    modelcompile_dump: Path | None = None,
+    studiomdl_path: Path | None = None,
 ) -> None:
     """Run all transformations."""
     context = Context(
         filesys, vmf, pack, bsp, game,
-        studiomdl_loc=studiomdl_loc, tags=tags,
+        game_conf=game_conf,
         modelcompile_dump=modelcompile_dump,
+        studiomdl_loc=studiomdl_path,
     )
 
     for transform in sorted(TRANSFORMS.values(), key=lambda trans: trans.priority):
         if transform.name.casefold() in disabled:
-            LOGGER.info('Skipping "{}"', transform.name)
+            LOGGER.info('Skipping "{}" (user)', transform.name)
             continue
+        disable = False
+        for inhibit in transform.inhibit_tags:
+            if isinstance(inhibit, tuple):
+                if all(map(game_conf.check_tag, inhibit)):
+                    disable = True
+                    break
+            elif game_conf.check_tag(inhibit):
+                disable = True
+                break
+        if disable:
+            LOGGER.info('Skipping "{}" (redundant)', transform.name)
+            continue
+
         LOGGER.info('Running "{}"...', transform.name)
-        try:
-            context.config = config[transform.name.casefold()]
-        except KeyError:
-            context.config = Keyvalues(transform.name, [])
-        LOGGER.debug('Config: {!r}', context.config)
         await transform.func(context)
+
+    apply_io_remaps(context)
 
     if context._ent_code:
         LOGGER.info('Injecting VScript code...')
@@ -227,8 +276,6 @@ async def run_transformations(
                 code = 'OnPostSpawn<-Precache<-function(){}\n' + code
             init_scripts.append(pack.inject_vscript(code.replace('`', '"')))
             ent['vscripts'] = ' '.join(init_scripts)
-
-    apply_io_remaps(context)
 
 
 # noinspection PyProtectedMember
@@ -262,7 +309,7 @@ def apply_io_remaps(context: Context) -> None:
                     continue
                 if should_remove:
                     ent.outputs.remove(out)
-                collapsed_remaps: List[Output] = []
+                collapsed_remaps: list[Output] = []
                 out_copy = out.copy()  # Don't allow remapping functions to modify this.
                 for remap in remaps:
                     if isinstance(remap, Output):
@@ -292,7 +339,8 @@ def _load() -> None:
     This loads the transformations. We do it in a function to allow discarding
     the output.
     """
-    from . import globals, instancing, packing  # noqa
+    # TODO: Make these standard external transforms
+    from . import globals, packing  # noqa
 
 
 _load()

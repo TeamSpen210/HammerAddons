@@ -2,7 +2,6 @@
 	base(ControlEnables)
 	iconsprite("editor/comp_pack_rename")
     appliesto(srctools)
-	autovis(Postcompiler, Packing)
 = comp_pack_rename:
 	"Pack a file into the BSP, under a different name than it starts with."
 	[
@@ -20,6 +19,8 @@
 		"TEXTURE": "Texture"
 		"MODEL": "Model"
 		]
-    
+
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
     @resources [] // Done via transform.
 	]

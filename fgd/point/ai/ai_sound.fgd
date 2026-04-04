@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2) 
-	autovis(AI, AI Sound)
+	appliesto(ASW, EP1, EP2, HL2, P1, P2)
 	sphere(volume) 
 	line(255 255 255, targetname, locationproxy)
 	line(255 255 255, targetname, target, targetname, locationproxy)

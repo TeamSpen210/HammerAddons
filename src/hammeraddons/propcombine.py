@@ -3,18 +3,15 @@
 This merges static props together, so they can be drawn with a single
 draw call.
 """
-import math
-from typing import (
-    Callable, Dict, FrozenSet, Iterable, Iterator, List, Literal, MutableMapping, Optional, Set,
-    Tuple, Union, Sequence,
-)
-from typing_extensions import TypeAlias, Unpack
+from typing import Literal
+from collections.abc import Callable, Iterable, Iterator, MutableMapping, Sequence
 from collections import defaultdict
 from enum import Enum
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import fnmatch
 import itertools
+import math
 import operator
 import os
 import re
@@ -30,12 +27,13 @@ from srctools.math import Angle, Matrix, Vec, quickhull
 from srctools.mdl import MDL_EXTS, Model, Flags as ModelFlags
 from srctools.packlist import PackList
 from srctools.smd import Bone, Mesh, Triangle, Vertex
-from srctools.tokenizer import Token, Tokenizer
+from srctools.tokenizer import Token, TokenSyntaxError, Tokenizer
 import attrs
 import trio
 
 from .acache import ACache
-from .mdl_compiler import ModelCompiler
+from .bsp_transform.common import build_filename
+from .mdl_compiler import ModelCompiler, executable_args
 
 
 LOGGER = get_logger(__name__)
@@ -56,10 +54,11 @@ class QC:
     """The relevant we need from a QC."""
     path: str  # QC path.
     ref_smd: str  # Absolute location of main visible geometry.
-    phy_smd: Optional[str]  # Absolute location of collision model, or None
+    phy_smd: str | None  # Absolute location of collision model, or None
     ref_scale: float  # Scale of main model.
     phy_scale: float  # Scale of collision model.
     is_concave: bool  # If the collision model is known to be concave.
+
 
 QC_TEMPLATE = '''\
 $staticprop
@@ -89,8 +88,8 @@ MAX_VERTS = 65536//3 - 64
 
 # Cache of the SMD models we have already parsed, so we don't need
 # to parse them again. For the collision model, we store them pre-split.
-_mesh_cache: ACache[Tuple[QC, int], Mesh] = ACache()
-_coll_cache: ACache[Tuple[Optional[str], CollType], List[Mesh]] = ACache()
+_mesh_cache: ACache[tuple[QC, int], Mesh] = ACache()
+_coll_cache: ACache[tuple[str | None, CollType], list[Mesh]] = ACache()
 
 # Limit the amount of decompile/recompiles we do simultaneously.
 LIM_PROCESS = trio.CapacityLimiter(8)
@@ -109,16 +108,17 @@ def unify_mdl(path: str) -> str:
 
 class CombineVolume:
     """Parsed comp_propcombine_* ents."""
-    def __init__(self, group_name: str, skinset: FrozenSet[str], origin: Vec) -> None:
+    def __init__(self, group_name: str, skinset: frozenset[str], origin: Vec) -> None:
         self.group = group_name
+        self.filename = build_filename(group_name) or 'mdl'
         self.skinset = skinset
         # For sorting.
         self.volume = 0.0
         self.used = False
-        self.mins: Optional[Vec] = None
-        self.maxes: Optional[Vec] = None
+        self.mins: Vec | None = None
+        self.maxes: Vec | None = None
         # Each volume in the group, specifying its collision behaviour.
-        self.collision: List[Callable[[Vec], bool]] = []
+        self.collision: list[Callable[[Vec], bool]] = []
 
         if group_name:
             self._desc_start = f'group "{group_name}"'
@@ -184,14 +184,14 @@ class PropPos:
 
 
 # Function called to get info about a model.
-LookupModel: TypeAlias = Callable[[str], Union[Tuple[QC, Model], Tuple[None, None]]]
+type LookupModel = Callable[[str], tuple[QC, Model] | tuple[None, None]]
 # Key used to group props. None is an un-combinable prop. The first item is the skinset, all others
 # are opaque values.
-PropGroup: TypeAlias = Optional[Tuple[FrozenSet[str], Unpack[Tuple[object, ...]]]]
-PropCombiner: TypeAlias = ModelCompiler[
-    Tuple[FrozenSet[PropPos], bool],  # Key for deduplication.
+type PropGroup = tuple[frozenset[str], *tuple[object, ...]] | None
+type PropCombiner = ModelCompiler[
+    tuple[frozenset[PropPos], bool],  # Key for deduplication.
     # Additional parameters used during compile
-    Tuple[LookupModel, float],
+    tuple[LookupModel, float],
     # Result of the function
     None,
 ]
@@ -199,11 +199,19 @@ PropCombiner: TypeAlias = ModelCompiler[
 
 async def combine_group(
     compiler: PropCombiner,
-    props: List[StaticProp],
+    name: str,
+    props: list[StaticProp],
     lookup_model: LookupModel,
     volume_tolerance: float,
 ) -> StaticProp:
-    """Merge the given props together, compiling a model if required."""
+    """Merge the given props together, compiling a model if required.
+
+    :param compiler: Compiles/looks up the model.
+    :param name: The name of the volume creating this group, if set and used.
+    :param props: The props to merge, still in world space.
+    :param lookup_model: Function which looks up sources for a model.
+    :param volume_tolerance: If >0, how much tolerence for merging collisions.
+    """
 
     # We want to allow multiple props to reuse the same model.
     # To do this try and match prop groups to each other, by "unifying"
@@ -217,7 +225,7 @@ async def combine_group(
     avg_lighting = Vec()
     avg_yaw = 0.0
 
-    visleafs: Set[VisLeaf] = set()
+    visleafs: set[VisLeaf] = set()
 
     for prop in props:
         avg_pos += prop.origin
@@ -267,11 +275,13 @@ async def combine_group(
             scale_z,
             coll,
         ))
+
     # We don't want to build collisions if it's not used.
     has_coll = any(pos.solidity is not CollType.NONE for pos in prop_pos)
     mdl_name, _ = await compiler.get_model(
         (frozenset(prop_pos), has_coll),
         compile_func, (lookup_model, volume_tolerance),
+        prefix=name,
     )
 
     # Many of these values we require to be the same, so we can read them
@@ -302,10 +312,10 @@ async def combine_group(
 
 
 async def compile_func(
-    mdl_key: Tuple[FrozenSet[PropPos], bool],
+    mdl_key: tuple[frozenset[PropPos], bool],
     temp_folder: Path,
     mdl_name: str,
-    args: Tuple[LookupModel, float],
+    args: tuple[LookupModel, float],
 ) -> None:
     """Build this merged model."""
     LOGGER.info('Compiling {}...', mdl_name)
@@ -313,9 +323,9 @@ async def compile_func(
     lookup_model, volume_tolerance = args
 
     # Unify these properties.
-    surfprops: Set[str] = set()
-    cdmats: Set[str] = set()
-    contents: Set[int] = set()
+    surfprops: set[str] = set()
+    cdmats: set[str] = set()
+    contents: set[int] = set()
     combined_flags = ModelFlags(0)
 
     for prop in prop_pos:
@@ -340,15 +350,21 @@ async def compile_func(
     coll_mesh = Mesh.blank('static_prop')
     [coll_bone] = coll_mesh.bones.values()
     bone_link = [(coll_bone, 1.0)]
-    coll_groups: Dict[Mesh, float] = {}
+    coll_groups: dict[Mesh, float] = {}
 
     for prop in prop_pos:
         qc, mdl = lookup_model(prop.model)
         assert qc is not None, prop.model
         assert mdl is not None, prop.model
 
-        child_ref = await _mesh_cache.fetch((qc, prop.skin), build_reference, prop, qc, mdl)
-        child_coll = await _coll_cache.fetch((qc.phy_smd, prop.solidity), build_collision, qc, prop, child_ref, volume_tolerance > 0)
+        child_ref = await _mesh_cache.fetch(
+            (qc, prop.skin), build_reference,
+            prop, qc, mdl,
+        )
+        child_coll = await _coll_cache.fetch(
+            (qc.phy_smd, prop.solidity), build_collision,
+            qc, prop, child_ref, volume_tolerance > 0,
+        )
 
         scale = Vec(prop.scale_x, prop.scale_y, prop.scale_z)
         offset = Vec(prop.x, prop.y, prop.z)
@@ -466,10 +482,7 @@ async def build_reference(prop: PropPos, qc: QC, mdl: Model) -> Mesh:
 
     if prop.skin != 0 and prop.skin < len(mdl.skins):
         # We need to rename the materials to match the skin.
-        swap_skins = dict(zip(
-            mdl.skins[0],
-            mdl.skins[prop.skin]
-        ))
+        swap_skins = dict(zip(mdl.skins[0], mdl.skins[prop.skin], strict=True))
         for tri in mesh.triangles:
             tri.mat = swap_skins.get(tri.mat, tri.mat)
 
@@ -483,7 +496,7 @@ async def build_reference(prop: PropPos, qc: QC, mdl: Model) -> Mesh:
     return mesh
 
 
-async def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh, needs_split: bool) -> List[Mesh]:
+async def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh, needs_split: bool) -> list[Mesh]:
     """Get the correct collision mesh for this model."""
     if prop.solidity is CollType.NONE:  # Non-solid
         return []
@@ -520,14 +533,14 @@ async def build_collision(qc: QC, prop: PropPos, ref_mesh: Mesh, needs_split: bo
 
 def optimise_collision(
     tolerance: float,
-    bone_link: List[Tuple[Bone, float]],
+    bone_link: list[tuple[Bone, float]],
     coll_mesh: Mesh,
-    groups: Dict[Mesh, float],
+    groups: dict[Mesh, float],
 ) -> None:
     """Attempt to merge together collision groups."""
-    todo: Set[Mesh] = set(groups)
+    todo: set[Mesh] = set(groups)
     # Pairs we know don't combine correctly.
-    failures: Set[Tuple[Mesh, Mesh]] = set()
+    failures: set[tuple[Mesh, Mesh]] = set()
     zero_norm = Vec()
     while todo:
         mesh1 = todo.pop()
@@ -564,7 +577,7 @@ def optimise_collision(
             coll_mesh.triangles += mesh1.triangles
 
 
-def load_qcs(qc_folder: Path) -> Iterator[Tuple[str, QC]]:
+def load_qcs(qc_folder: Path) -> Iterator[tuple[str, QC]]:
     """Parse through all the QC files to match to compiled models."""
     for dirpath, dirnames, filenames in os.walk(str(qc_folder)):
         qc_loc = Path(dirpath)
@@ -573,10 +586,16 @@ def load_qcs(qc_folder: Path) -> Iterator[Tuple[str, QC]]:
                 continue
             qc_path = qc_loc / fname
 
-            qc_result = parse_qc(qc_loc, qc_path)
+            LOGGER.debug('Parsing provided QC "{}"...', qc_path)
+            try:
+                qc_result = parse_qc(qc_loc, qc_path)
+            except TokenSyntaxError as exc:
+                LOGGER.warning('Could not parse QC file:', exc_info=exc)
+                continue
 
             if qc_result is None:
                 # It's a dynamic QC, we can't combine.
+                LOGGER.debug('QC "{}" is not a static prop, ignoring.', qc_path)
                 continue
 
             (
@@ -595,20 +614,20 @@ def load_qcs(qc_folder: Path) -> Iterator[Tuple[str, QC]]:
                 continue
 
             yield unify_mdl(model_name), QC(
-                str(qc_path).replace('\\', '/'),
-                str(ref_smd).replace('\\', '/'),
-                str(phy_smd).replace('\\', '/') if phy_smd else None,
+                qc_path.as_posix(),
+                ref_smd.as_posix(),
+                phy_smd.as_posix() if phy_smd else None,
                 ref_scale,
                 phy_scale,
                 is_concave,
             )
 
 
-def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
+def parse_qc(qc_loc: Path, qc_path: Path) -> tuple[
     str, bool,
     float, Path,
-    float, Optional[Path],
-]]:
+    float, Path | None,
+] | None:
     """Parse a single QC file."""
     model_name = ref_smd = phy_smd = None
     scale_factor = ref_scale = phy_scale = 1.0
@@ -636,7 +655,7 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
                             # Multiple bodygroups, can't deal with that.
                             LOGGER.debug(
                                 'QC "{}" has multiple bodygroups: {}, {}',
-                                qc_path, ref_smd, (qc_loc /  body_value),
+                                qc_path, ref_smd, (qc_loc / body_value),
                             )
                             return None
                         else:
@@ -668,7 +687,10 @@ def parse_qc(qc_loc: Path, qc_path: Path) -> Optional[Tuple[
                 elif token_value in ('$collisionmodel', '$collisionjoints'):
                     phy_smd = qc_loc / tok.expect(Token.STRING)
                     phy_scale = scale_factor
-                    next_typ, next_val = next(tok.skipping_newlines())
+                    try:
+                        next_typ, next_val = next(tok.skipping_newlines())
+                    except StopIteration:
+                        raise tok.error(Token.EOF) from None
                     if next_typ is Token.BRACE_OPEN:
                         for body_value in tok.block(token_value, consume_brace=False):
                             if body_value.casefold() == '$concave':
@@ -719,7 +741,7 @@ async def decompile_model(
     crowbar: Path,
     filename: str,
     checksum: bytes,
-) -> Optional[QC]:
+) -> QC | None:
     """Use Crowbar to decompile models directly for propcombining."""
     cache_folder = cache_loc / Path(filename).with_suffix('')
     info_path = cache_folder / 'info.kv'
@@ -751,7 +773,7 @@ async def decompile_model(
                 )
             # Otherwise, re-decompile.
     LOGGER.info('Decompiling {}...', filename)
-    qc: Optional[QC] = None
+    qc: QC | None = None
 
     # Extract out the model to a temp dir.
     async with LIM_PROCESS:
@@ -768,25 +790,36 @@ async def decompile_model(
                         shutil.copyfileobj(src, dest)
             LOGGER.debug('Extracted "{}" to "{}"', filename, tempdir)
             args = [
-                str(crowbar), 'decompile',
+                *executable_args(crowbar),
                 '-i', str(Path(tempdir, stem + '.mdl')),
                 '-o', str(cache_folder),
             ]
             LOGGER.debug('Executing {}', ' '.join(args))
             result = await trio.run_process(args, capture_stdout=True, check=False)
+            result_out = result.stdout.replace(b'\r\n', b'\n').decode('ascii', 'backslashescape')
             if result.returncode != 0:
                 LOGGER.warning('Could not decompile "{}"!', filename)
-                LOGGER.debug('{}', result.stdout.replace(b'\r\n', b'\n').decode('ascii', 'replace'))
+                LOGGER.debug('{}', result_out)
                 return None
     # There should now be a QC file here.
+    failed = False
     for qc_path in cache_folder.glob('*.qc'):
         LOGGER.debug('Parse decompiled QC "{}"...', qc_path)
-        qc_result = await trio.to_thread.run_sync(parse_qc, cache_folder, qc_path)
+        try:
+            qc_result = await trio.to_thread.run_sync(parse_qc, cache_folder, qc_path)
+        except TokenSyntaxError as exc:
+            LOGGER.warning('Could not parse QC file:', exc_info=exc)
+            failed = True
+            continue
         break
-    else:  # not found.
-        LOGGER.warning('No QC outputted into {}', cache_folder)
+    else:  # not found or couldn't be parsed.
+        if not failed:  # Don't produce both errors.
+            LOGGER.warning('No QC outputted into {}', cache_folder)
+            failed = True
         qc_result = None
         qc_path = Path()
+    if failed:
+        LOGGER.debug('Crowbar output for {}:\n{}', filename, result_out)
 
     cache_kv = Keyvalues('qc', [])
     cache_kv['checksum'] = checksum.hex()
@@ -822,17 +855,17 @@ async def decompile_model(
 
 
 def group_props_ent(
-    prop_groups: Dict[PropGroup, List[StaticProp]],
+    prop_groups: dict[PropGroup, list[StaticProp]],
     get_model: LookupModel,
     brush_models: MutableMapping[Entity, BModel],
-    grouper_ents: List[Entity],
+    grouper_ents: list[Entity],
     min_cluster: int,
-) -> Iterator[List[StaticProp]]:
+) -> Iterator[tuple[str, list[StaticProp]]]:
     """Given the groups of props, merge props according to the provided ents."""
     # Ents with group names. We have to split those by filter too.
-    grouped_sets: Dict[Tuple[str, FrozenSet[str]], CombineVolume] = {}
+    grouped_sets: dict[tuple[str, frozenset[str]], CombineVolume] = {}
     # Skinset filter -> volumes that match.
-    sets_by_skin: Dict[FrozenSet[str], List[CombineVolume]] = defaultdict(list)
+    sets_by_skin: dict[frozenset[str], list[CombineVolume]] = defaultdict(list)
 
     empty_fs = frozenset('')
 
@@ -939,7 +972,7 @@ def group_props_ent(
             if not found:  # No point checking an empty list.
                 continue
 
-            actual: List[StaticProp] = []
+            actual: list[StaticProp] = []
             total_verts = 0
             for prop in found:
                 qc, mdl = get_model(prop.model)
@@ -953,14 +986,14 @@ def group_props_ent(
                     )
                     # Output this prop, then start a new group.
                     if len(actual) >= min_cluster:
-                        yield list(actual)
+                        yield (combine_set.filename, list(actual))
                         for sub_prop in actual:
                             group.remove(sub_prop)
                     actual.clear()
                     total_verts = mdl.total_verts
                 actual.append(prop)
             if len(actual) >= min_cluster:
-                yield list(actual)
+                yield (combine_set.filename, list(actual))
                 for prop in actual:
                     group.remove(prop)
 
@@ -972,16 +1005,16 @@ def group_props_ent(
 
 
 def group_props_auto(
-    prop_groups: Dict[PropGroup, List[StaticProp]],
+    prop_groups: dict[PropGroup, list[StaticProp]],
     get_model: LookupModel,
     min_dist: float,
     max_dist: float,
     min_cluster: int,
-) -> Iterator[List[StaticProp]]:
+) -> Iterator[tuple[str, list[StaticProp]]]:
     """Given the groups of props, automatically find close props to merge."""
     min_dist_sq = min_dist * min_dist
     max_dist_sq = max_dist * max_dist
-    neighbours: Dict[StaticProp, Sequence[StaticProp]] = {}
+    neighbours: dict[StaticProp, Sequence[StaticProp]] = {}
 
     def find_neighbours(start: StaticProp) -> Sequence[StaticProp]:
         """Find props within dist from the specified one."""
@@ -1006,7 +1039,7 @@ def group_props_auto(
             continue
 
         # DBSCAN algorithm.
-        labels: Dict[StaticProp, Union[int, Literal['noise', 'unset']]] = dict.fromkeys(group, UNSET)
+        labels: dict[StaticProp, int | Literal['noise', 'unset']] = dict.fromkeys(group, UNSET)
         neighbours.clear()
         cluster_ind = 0
 
@@ -1036,7 +1069,7 @@ def group_props_auto(
 
         neighbours.clear()  # Discard, no longer useful.
 
-        clusters: Dict[int, List[StaticProp]] = defaultdict(list)
+        clusters: dict[int, list[StaticProp]] = defaultdict(list)
         for prop, key in labels.items():
             if isinstance(key, int):
                 clusters[key].append(prop)
@@ -1052,7 +1085,7 @@ def group_props_auto(
                 central_prop = max(todo, key=lambda prop: (prop.origin - average_pos).mag_sq())
 
                 total_verts = 0
-                selected_props: List[StaticProp] = []
+                selected_props: list[StaticProp] = []
                 found_matches = False
                 for prop in list(todo):
                     # Exceeds the max radius?
@@ -1066,7 +1099,7 @@ def group_props_auto(
                         if not warned:
                             bb_min, bb_max = Vec.bbox(prop.origin for prop in cluster)
                             LOGGER.info(
-                                'Hit vert limit for auto group @ ({} - {}) with models {}' ,
+                                'Hit vert limit for auto group @ ({} - {}) with models {}',
                                 bb_min, bb_max,
                                 {prop.model for prop in cluster},
                             )
@@ -1075,13 +1108,13 @@ def group_props_auto(
                         if len(selected_props) >= min_cluster:
                             found_matches = True
                             todo.difference_update(selected_props)
-                            yield selected_props
+                            yield ('auto', selected_props)
                         selected_props = []
                         total_verts = mdl.total_verts
                     selected_props.append(prop)
 
                 if len(selected_props) >= min_cluster:
-                    yield selected_props
+                    yield ('auto', selected_props)
                     todo.difference_update(selected_props)
                     found_matches = True
                 if not found_matches:
@@ -1099,10 +1132,10 @@ async def combine(
     game: Game,
     studiomdl_loc: Path,
     *,
-    qc_folders: Optional[List[Path]] = None,
-    crowbar_loc: Optional[Path] = None,
-    decomp_cache_loc: Optional[Path] = None,
-    compile_dump: Optional[Path] = None,
+    qc_folders: list[Path] | None = None,
+    crowbar_loc: Path | None = None,
+    decomp_cache_loc: Path | None = None,
+    compile_dump: Path | None = None,
     blacklist: Iterable[str] = (),
     min_auto_range: float = 0.0,
     max_auto_range: float = math.inf,
@@ -1138,7 +1171,7 @@ async def combine(
         qc_folders = [game.path.parent.parent / 'content']
 
     # Parse through all the QC files.
-    qc_map: Dict[str, Union[QC, None]] = {}
+    qc_map: dict[str, QC | None] = {}
     if qc_folders:
         LOGGER.info('Parsing QC files. Paths: \n{}', '\n'.join(map(str, qc_folders)))
         for qc_folder in qc_folders:
@@ -1149,11 +1182,11 @@ async def combine(
     map_name = Path(bsp.filename).stem
 
     # Holds the QC and mdl for a prop, if available.
-    mdl_map: Dict[str, Tuple[QC, Model]] = {}
+    mdl_map: dict[str, tuple[QC, Model]] = {}
     # Wipe these, if they're being used again.
     _mesh_cache.clear()
     _coll_cache.clear()
-    missing_qcs: Set[str] = set()
+    missing_qcs: set[str] = set()
 
     async def load_model(key: str, filename: str) -> None:
         """Given a filename, load/parse the QC and MDL data."""
@@ -1199,7 +1232,7 @@ async def combine(
         }.items():
             nursery.start_soon(load_model, key_, filename_)
 
-    def get_model(filename: str) -> Union[Tuple[QC, Model], Tuple[None, None]]:
+    def get_model(filename: str) -> tuple[QC, Model] | tuple[None, None]:
         """Fetch the parsed model and QC, or None if not possible."""
         try:
             return mdl_map[unify_mdl(filename)]
@@ -1239,14 +1272,14 @@ async def combine(
     prop_count = 0
 
     # First, construct groups of props that can possibly be combined.
-    prop_groups: Dict[PropGroup, List[StaticProp]] = defaultdict(list)
+    prop_groups: dict[PropGroup, list[StaticProp]] = defaultdict(list)
     for prop in bsp.props:
         prop_groups[get_grouping_key(prop)].append(prop)
         prop_count += 1
 
     # This holds the list of all props we want in the map at the end.
-    final_props: List[StaticProp] = []
-    grouper: Iterator[List[StaticProp]]
+    final_props: list[StaticProp] = []
+    grouper: Iterator[tuple[str, list[StaticProp]]]
     grouper_ents = list(bsp_ents.by_class['comp_propcombine_set'] | bsp_ents.by_class['comp_propcombine_volume'])
     if min_cluster_auto <= 2:
         min_cluster_auto = min_cluster
@@ -1305,7 +1338,7 @@ async def combine(
     rejected = set(itertools.chain.from_iterable(prop_groups.values()))
     group_count = 0
     compiler: PropCombiner
-    with PropCombiner(
+    with ModelCompiler(
         game,
         studiomdl_loc,
         pack,
@@ -1318,15 +1351,15 @@ async def combine(
         compile_dir=compile_dump,
         pack_models=pack_models,
     ) as compiler:
-        async def do_combine(group: List[StaticProp]) -> None:
+        async def do_combine(name: str, group: list[StaticProp]) -> None:
             """Task run to combine one prop."""
-            grouped_prop = await combine_group(compiler, group, get_model, volume_tolerance)
+            grouped_prop = await combine_group(compiler, name, group, get_model, volume_tolerance)
             rejected.difference_update(group)
             final_props.append(grouped_prop)
 
         async with trio.open_nursery() as nursery:
-            for group_ in grouper:
-                nursery.start_soon(do_combine, group_)
+            for name, group in grouper:
+                nursery.start_soon(do_combine, name, group)
                 group_count += 1
 
     final_props.extend(rejected)

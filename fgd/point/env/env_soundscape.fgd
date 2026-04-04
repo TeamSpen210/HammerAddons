@@ -14,7 +14,9 @@
 	[
 	radius(integer) : "Radius" : 128 : "If set to -1, then the player can hear the soundscape as long as they can see it (regardless of distance to it)."
 
-	soundscape[engine](string) : "Soundscape" : "" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the scripts/ directory." 
+	// Strata and srctools support this, to dynamically figure out the names.
+	soundscape[engine](soundscape) : "Soundscape" : "" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the scripts/ directory."
+	soundscape[STRATA](soundscape) : "Soundscape" : "" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the scripts/ directory."
 	soundscape(choices) : "Soundscape" : "Nothing" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the scripts/ directory." =
 		[
 		"Nothing": "Nothing"
@@ -25,7 +27,7 @@
 		]
 
 
-    // up to date as of 04/01/2019 - Ficool/Pinsplash
+    // up to date as of 04/01/2019
 	soundscape[tf2](choices) : "Soundscape" : "tf2.general_ambient" : "The name of the soundscape to use. Corresponds to an entry in the soundscapes*.txt file in the scripts/ directory." =
 		[
 		"tf2.general_ambient" : "General Ambience"
@@ -505,8 +507,8 @@
 		"goalie_interior_01": "Goalie Interior 1"
 		"hall01.paint_longjump": "Paint LongJump Hall"
 		"hallway_short01.instance": "Short Hallway"
-		"industrial_gen_01": "Industrial Generator"
-		"jb2_catwalksection_01": "Jailbreak 2 catwalk 1"
+		"industrial_gen_01": "Industrial Generic 1"
+		"jb2_catwalksection_01": "Jailbreak 2 Catwalk 1"
 		"jb2_catwalksection_end_room": "Jailbreak 2 Catwalk End Room"
 		"jb3_catwalksection_01": "Jailbreak 3 Catwalk 1"
 		"jb_catwalksection_01": "Jailbreak 1 Catwalk 1"
@@ -602,4 +604,5 @@
 
 	// Outputs
 	output OnPlay(void) : "Fired when this soundscape becomes the active one."
+	@resources [] // Just the soundscape.
 	]

@@ -5,7 +5,7 @@
 	sphere(fademindist) 
 	sphere(fademaxdist) 
 = prop_physics_override: "A variant of prop_physics which will permit using models that do not have physics data compiled into them, " +
-	"like static or dynamic models. Health and physics data can be overridden on this version, to subsitute for the missing info."
+	"like static or dynamic models. Health and physics data can be overridden on this version, to substitute for the missing info."
 	[
 	health(integer) : "Health" : 0 : "Number of points of damage to take before breaking.  0 means don't break."
 
@@ -29,10 +29,12 @@
 	]
 
 	preferredcarryangles[MBase](angle) : "Preferred Player-carry Angles" : "0" : "The angle which the object should orient to when the player picks it up " +
-		"with the physgun or +USE. Overrides the prop's own QC carry angles if it has any. " +
+		"with the Gravity Gun or +USE. Overrides the prop's own QC carry angles if it has any. " +
 		"'0' doesn't override the carry angles."
 
 	// Inputs
 	input SetInteraction[MBase](integer) : "Adds an interaction to this entity."
 	input RemoveInteraction[MBase](integer) : "Removes an interaction from this entity."
+
+	@resources []
 	]

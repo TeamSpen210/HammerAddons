@@ -4,7 +4,7 @@
 	color(200 0 0) 
 	iconsprite("editor/logic_playerproxy.vmt")
  	autovis(Point Entities, Globals, Player Proxy)
- 	appliesto(HL2, P1, P2) // Also in Alien Swarm and CS:GO, but it doesn't work in those games
+ 	appliesto(HL2, P1, P2, INFRA) // Also in Alien Swarm and CS:GO, but it doesn't work in those games
 = logic_playerproxy: "An entity that is used to relay inputs/outputs to the player and back to the world."
 	[
 	SetMaxInputArmor[MBase](integer) : "Max Input Armor" : 100 : "Sets the maximum armor a player can receive from the " +
@@ -62,6 +62,25 @@
 	input ResetGrabControllerBehavior[P2](void) : "Resets the grab controller used by the player to its default behavior."
 	input SetMotionBlurAmount[P2](float) : "Forces the motion blur effect on the player. Set to < 0 to disable this override."
 	input PaintPlayerWithPortalPaint[P2](void) : "Displays a Conversion Gel splashing effect on the player's screen."
+
+	// Portal 2: Community Edition
+	input GivePortalGunFull[P2CE](void) : "Gives the player a portal gun with both colors. (Overrides if player is already holding one)"
+	input GivePortalGunPrimary[P2CE](void) : "Gives the player a portal gun with primary color. (Overrides if player is already holding one)"
+	input GivePortalGunSecondary[P2CE](void) : "Gives the player a portal gun with only secondary color. (Overrides if player is already holding one)"
+	input GivePortalGunNone[P2CE](void) : "Gives the player a portal gun with no activated colors. (Overrides if player is already holding one)"
+	input GiveBoots[P2CE](void) : "Gives the player long fall boots."
+	input RemoveBoots[P2CE](void) : "Removes long fall boots from the player, if they have them."
+	input GivePaintGunFull[P2CE](void) : "Gives the player a fully upgraded paint gun."
+	input GivePaintGunBasic[P2CE](void) : "Gives the player a non-upgraded paint gun."
+	input RemovePortalGun[P2CE](void) : "Removes the portal gun from the player, if they have it."
+	input RemovePaintGun[P2CE](void) : "Removes the paint gun from the player, if they have it."
+	input LowerWeapon[P2CE](void) : "Lowers the weapon, setting it to a disabled state."
+	input ReadyWeapon[P2CE](void) : "Raises the weapon, setting it to the default enabled state."
+	input SetFallDamageEnabled[P2CE](bool) : "Whether or not fall damage is enabled"
+
+	// Still Alive leaderboard inputs
+	input OnPlayerStartedGame[PSA](void) : "Indicates that the player started the game from the beginning and leaderboard stats should be tracked."
+	input OnPlayerBeatGame[PSA](void) : "Saves the current time, portal, and step scores to the leaderboard if OnPlayerStartedGame was fired previously."
 
 	// Outputs
 	output OnFlashlightOn[HL2, P1](float) : "Fired when the player turns on their flashlight. This output has the value of how much energy the player had when this happened [0..1]."

@@ -6,4 +6,6 @@
 	[
 	cameraname(string) : "Camera Name" : : "Used as the name of the directory to store screenshots from this camera. Must be unique within the level."
 	fov(integer) : "Camera FOV" : 75 : "FOV of this camera."
+
+	@resources []
 	]

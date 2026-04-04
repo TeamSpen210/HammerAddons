@@ -1,0 +1,6 @@
+@PointClass base(Weapon)
+	appliesto(MOMENTUM)
+	studioprop("models/weapons/w_mom_grenade.mdl") 
+= weapon_momentum_grenade : "Grenade" 
+	[
+	]

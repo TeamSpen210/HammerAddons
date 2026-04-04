@@ -4,12 +4,27 @@
 	studio("models/editor/cone_helper.mdl")
 = point_energy_ball_launcher: "Launches Aperture Science High Energy Pellets. "
 	[
+	spawnflags(flags) =
+		[
+		1: "[1] Override ball material" : 0 [Strata]
+		]
 	ballcount(integer) : "Ball count" : 1 : "The number of Pellets that are alive at once."
 	maxspeed(float) : "Max ball speed" : 150.0 : "The maximum starting speed."
 	minspeed(float) : "Min ball speed" : 150.0 : "The minimum starting speed."
+	balltype[engine](integer) readonly: "Ball Type" : 0 
+	balltype(choices) readonly: "Ball Type" : 0 : "Has no effect." =
+		[
+		0: "HEP"
+		]
 
+	maxballbounces[Strata](integer): "Ball Bounces" : -1 : "Sets on which bounce the ball should explode. For example, if set to 4, the ball will explode on the 4th bounce."
 	balllifetime(float) : "Ball Lifetime" : 12 : "The time in seconds the ball will live before self-destructing. A negative value will give infinite life, appearing green."
-	minlifeafterportal(float) : "Min life after portal transition" : 6 : "When energy balls created by this launcher pass through a portal their life is refreshed to be this number at minimum."
+	balldamage[Strata](float): "Ball Damage" : 1500 : "The amount of damage to deal to the player on contact."
+	ballexplodeplayer[Strata](boolean): "Ball explodes on player contact" : 1 : "Whether or not the ball should interact with the player."
+	ballmaterial1[Strata](material): "Ball body material override" : "effects/eball_infinite_life" : "Override the main ball material. Remember to enable the flag! Default material behavior is used if the flag is not set!!!"
+	ballmaterial2[Strata](material): "Ball flicker material override" : "effects/combinemuzzle1" : "Override the other ball material. Remember to enable the flag! Default material behavior is used if the flag is not set!!!"
+	ballknockback[Strata](float): "Ball knockback multiplier" : 0 : "The ball's velocity is multiplied by this value to determine how strongly to knockback hit objects. Use 1 for 1:1 speed = knockback radio."
+ 	minlifeafterportal(float) : "Min life after portal transition" : 6 : "When energy balls created by this launcher pass through a portal their life is refreshed to be this number at minimum."
 
 	// Inputs
 	input LaunchBall(void) : "Launch a ball from the spawner."

@@ -4,7 +4,8 @@
 = point_servercommand: "An entity that issues commands to the server console."
 	[
 	// Inputs
-	input Command(string) : "Command to execute."
+	input Command[-MOMENTUM](string) : "Command to execute."
+	input Command[+MOMENTUM](string) : "Command(s) to execute, separated by semicolons."
 
 	@resources []
 	]

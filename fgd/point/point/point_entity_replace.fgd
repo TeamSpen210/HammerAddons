@@ -6,7 +6,7 @@
 	iconsprite("editor/point_entity_replace.vmt") 
 = point_entity_replace : "An entity that replaces one entity with another."
 	[
-	Target(target_destination) : "Entity to be replaced" : : "The entity that should be replaced. " +
+	Target(target_destination) report: "Entity to be replaced" : : "The entity that should be replaced. " +
 		"This is optional if you're only using the 'ReplaceEntity' input."
 
 	// Todo: instances might need special handling for this, depending on type.

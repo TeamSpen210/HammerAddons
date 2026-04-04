@@ -1,6 +1,5 @@
 @NpcClass base(EZ2PredatorNPC) appliesto(EZ2)
-	studio("models/stukabat.mdl") 
-	autovis(Entities, NPCs, Xen, Stukabat)
+	studio("models/stukabat.mdl")
 = npc_stukabat: "Stukabat"
 	[
 	model(studio) : "Override Model"
@@ -12,5 +11,27 @@
 		2 : "Falling"
 		4 : "Flying"
 		5 : "On Ceiling"
+		]
+
+	@resources 
+		[
+		mdl "models/stukabat.mdl"
+		mdl "models/stukapup.mdl"
+		particle "blood_impact_blue_01" // TODO: If radiation
+		particle "blood_impact_yellow_01" // Otherwise
+		particle "bullsquid_explode"
+
+		snd "NPC_FlyingPredator.Idle"
+		snd "NPC_FlyingPredator.Pain"
+		snd "NPC_FlyingPredator.Alert"
+		snd "NPC_FlyingPredator.Death"
+		snd "NPC_FlyingPredator.Attack1"
+		snd "NPC_FlyingPredator.FoundEnemy"
+		snd "NPC_FlyingPredator.Growl"
+		snd "NPC_FlyingPredator.TailWhip"
+		snd "NPC_FlyingPredator.Bite"
+		snd "NPC_FlyingPredator.Eat"
+		snd "NPC_FlyingPredator.Explode"
+		snd "NPC_FlyingPredator.Flap"
 		]
 	]

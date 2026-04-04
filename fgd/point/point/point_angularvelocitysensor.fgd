@@ -4,7 +4,7 @@
 	line(0 100 250, targetname, target) 
 = point_angularvelocitysensor: "An entity that detects if another entity's angular velocity meets or exceeds a threshold value."
 	[
-	target(target_destination) : "Target Entity Name" : : "Name of the entity whose angular velocity will be sensed."
+	target(target_destination) report: "Target Entity Name" : : "Name of the entity whose angular velocity will be sensed."
 	threshold(float) : "Threshold Velocity" : 0 : "The threshold angular velocity to compare against, in degrees per second."
 	fireinterval(float) : "Fire Interval" : 0.2 : "Angular velocity must cross the threshold for at least this long to fire."
 	axis(vecline) : "Axis"

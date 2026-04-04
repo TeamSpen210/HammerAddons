@@ -1,7 +1,7 @@
 @NpcClass base(BaseZombie) 
 	appliesto(EP1, EP2, P1) 
 	autovis(Entities, NPCs, Zombies, Zombine)
-	studio("models/Zombie/zombie_soldier.mdl") = npc_zombine: "Combine Soldier Zombie"
+	studio("models/Zombie/zombie_soldier.mdl") = npc_zombine: "A combine soldier infested by a headcrab. Heavily-armored, can charge towards enemies and/or explode."
 	[
 
 	NumGrenades[engine](integer) : "Number of Grenades" : 1

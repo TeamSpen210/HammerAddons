@@ -1,6 +1,6 @@
 @PointClass base(BaseMesaPickup)
 	appliesto(Mesa) 
-	studio("models/weapons/w_shotbox.mdl") 
+	studioprop("models/weapons/w_shotbox.mdl") 
 = item_ammo_shotgun : "Shotgun Shells" 
 	[
 	]

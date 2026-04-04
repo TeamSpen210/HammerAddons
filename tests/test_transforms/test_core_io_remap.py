@@ -1,11 +1,12 @@
 """Test the IO remapping behaviour."""
 from srctools import Output
-from . import blank_ctx, Context
+from . import Context
 
-from hammeraddons.bsp_transform import apply_io_remaps  # noqa
+from pytest_regressions.file_regression import FileRegressionFixture
+from hammeraddons.bsp_transform import apply_io_remaps  # noqa  # private
 
 
-def test_simple_remap(blank_ctx: Context, file_regression) -> None:
+def test_simple_remap(blank_ctx: Context, file_regression: FileRegressionFixture) -> None:
     """Test some basic remaps."""
     rl_source = blank_ctx.vmf.create_ent('some_ent', targetname='rl_source')
     rl_source.add_out(

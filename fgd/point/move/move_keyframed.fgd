@@ -5,4 +5,5 @@
 	animator()
 = move_keyframed: "Keyframed Move Behavior"
 	[
+	@resources []
 	]

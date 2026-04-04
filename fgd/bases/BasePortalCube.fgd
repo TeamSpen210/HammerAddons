@@ -24,12 +24,12 @@
 	
 	input Dissolve(void) : "Fizzles the cube, firing the OnFizzled output."
 	input SilentDissolve(void) : "Kills the cube immediately and fires its OnFizzled output."
-	input ExitDisabledState(void) : "Exits the disabled state of a reflective cube."
 
 	// Outputs
 	output OnOrangePickUp(void) : "P-Body picked up the cube."
 	output OnBluePickUp(void) : "ATLAS picked up the cube."
 	output OnPlayerPickup(void) : "Any player picked up the cube."
 	output OnPhysGunDrop(void) : "Any player dropped the cube."
-	output OnPainted(void) : "Cube got painted, only if the state changed."
+	output OnPainted[-Strata](void) : "Cube got painted, only if the state changed."
+	output OnPainted[Strata, engine](integer) : "Cube got painted, only if the state changed. Has the paint type as parameter."
 ]

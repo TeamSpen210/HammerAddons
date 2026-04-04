@@ -4,4 +4,7 @@
 	iconsprite("editor/ficool2/test_traceline")
 = test_traceline: "A debugging tool for testing tracelines. Pretty much useless for other people. This spins wildly, tracing lines to the closest brush."
 	[
+	@resources [
+		material "shadertest/wireframevertexcolor"
+		]
 	]

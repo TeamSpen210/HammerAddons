@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityPoint)
+	appliesto(+engine, P2)
+= cube_rotationcontroller: "Internal motion controller to reorient reflection cubes."
+	[
+	@resources []
+	]

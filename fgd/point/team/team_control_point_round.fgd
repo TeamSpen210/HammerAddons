@@ -25,4 +25,6 @@
 	output OnEnd(void) : "Sent when this round is finished."
 	output OnWonByTeam1(void) : "Sent when RED wins this round."
 	output OnWonByTeam2(void) : "Sent when BLU wins this round."
+
+	@resources []
 	]

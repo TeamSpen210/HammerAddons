@@ -1,5 +1,4 @@
-@PointClass base(BaseEntityPoint) appliesto(Mesa) 
-	autovis(AI, AI Goal)
+@PointClass base(BaseEntityPoint) appliesto(Mesa)
 	iconsprite("editor/ai_goal_standoff.vmt") 
 = ai_goal_throw_prop : "AI Goal Throw Prop"
 	[

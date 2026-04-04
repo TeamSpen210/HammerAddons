@@ -1,0 +1,20 @@
+@FilterClass appliesto(Strata) base(filter_base)
+= filter_velocity : "Filter that checks the player's velocity"
+	[
+	SpeedThreshold(float) : "Speed Threshold" : 500 : ""
+	Dimension[engine](integer) : "Dimension" : 0	
+	Dimension(choices) : "Dimension" : 0 : "Which component of the entity's velocity to check" =
+		[
+		0 : "Horizontal Speed (Actual)"
+		1 : "Horizontal Speed (Along Specified Yaw Angle)"
+		2 : "Vertical Speed"
+		3 : "All Axes"
+		]
+	MatchMode[engine](integer) : "Match Mode" : 0
+	MatchMode(choices) : "Match Mode" : 0 : "How the entity's speed should be compared to the threshold" =
+		[
+		0 : "Match when at or above speed"
+		1 : "Match when at or below speed"
+		]
+	YawAngle(float) : "Check Horizontal Speed Along Yaw Angle" : 0 : "In Specified Yaw Angle mode, compare against the component of the entity's horizontal velocity in this direction."
+	]

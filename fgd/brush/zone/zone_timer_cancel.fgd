@@ -1,0 +1,7 @@
+@SolidClass appliesto(MOMENTUM)
+= zone_timer_cancel : "Zone that cancels the timer."
+	[
+	filter_name(filterclass) : "Filter Name" : : "filter_activator entity to use for this zone."
+	track_number(integer) : "Track Number" : 0 : "Track number that this entity belongs to. -1 = all tracks, 0 = main map, 1+ = bonus (of that number)."
+	stage_number(integer) : "Stage Number" : 1 : "The stage this cancel zone is part of. If this track has no stages, leave this as Stage 1."
+	]

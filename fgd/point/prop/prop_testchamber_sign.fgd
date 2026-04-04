@@ -1,0 +1,105 @@
+@snippet choices Signs = [
+	""							: "Empty"
+	"cube_drop" 				: "Cube Drop"
+	"cube_button" 				: "Cube Button"
+	"cube_bonk" 				: "Cube Bonk"
+	"drink_water" 				: "Drink Water"
+	"goop" 						: "Goop"
+	"crushers" 					: "Crushers"
+	"laser_cube" 				: "Laser Cube"
+	"laser_power" 				: "Laser Power"
+	"turret" 					: "Turret"
+	"turret_burn" 				: "Turret Burn"
+	"portal_fling" 				: "Portal Fling 1"
+	"portal_fling_2" 			: "Portal Fling 2"
+	"plate_fling" 				: "Plate Fling"
+	"bridges" 					: "Bridges"
+	"bridge_block" 				: "Bridge Block"
+	"grinders" 					: "Grinders"
+	"tbeams" 					: "Tractor Beam"
+	"tbeam_polarity" 			: "Tractor Beam Polarity"
+	"paint_bounce" 				: "Paint Bounce"
+	"paint_speed" 				: "Paint Speed"
+	"handoff" 					: "Coop Handoff"
+	"button_stand" 				: "Button Stand"
+	"danger_field" 				: "Danger Field"
+]
+
+@PointClass base(BaseEntityPoint) 
+	appliesto(P2CE)
+	studioprop("models/editor/prop_testchamber_sign.mdl")
+= prop_testchamber_sign: "Configurable test chamber sign."
+	[
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: 		"Icon 0 active" : 0
+		2: 		"Icon 1 active" : 0
+		4: 		"Icon 2 active" : 0
+		8: 		"Icon 3 active" : 0
+		16: 	"Icon 4 active" : 0
+		32: 	"Icon 5 active" : 0
+		64: 	"Icon 6 active" : 0
+		128: 	"Icon 7 active" : 0
+		256: 	"Icon 8 active" : 0
+		512: 	"Icon 9 active" : 0
+		]
+
+	enabled(boolean) : "Enabled" : 1 : "Whether or not to start on"
+	use_mod_config(boolean) : "Use Global Config" : 0 : "For mods. When enabled, read data from the mod's chamber sign config to allow central configuration."
+	mod_config_sign_id(integer) : "Global Config: Sign ID" : 0 : "Set a sign ID unique to this map. This allows configuring multiple signs in global config for a map."
+	separator(string) readonly editor: "------------------------------------------------" : 0 : ""
+
+	sign_levelname(string) : "Level name" : : "Name of the puzzle to display above the main number"
+	sign_startup_sequence[engine](string) : "Default Startup Sequence" : "Normal Flicker" : "Name of the startup sequence to use"
+	sign_startup_sequence(choices) : "Default Startup Sequence" : "Normal Flicker" : "Name of the startup sequence to use" =
+		[
+		"normal_flicker"			: "Normal Flicker"
+		"dirty_flicker"				: "Dirty Flicker"
+		"broken_flicker"			: "Broken Flicker"
+		]
+	sign_current(integer) : "Current level number" : : "Number of the level you are currently in"
+	sign_total(integer) : "Total level number" : : "Number of levels in the testing track"
+	sign_dirt[engine](integer) : "Dirt amount" : -1 : "How dirty the sign should be"
+	sign_dirt(choices) : "Dirt amount" : -1 : "How dirty the sign should be" =
+		[
+		-1 : "Clean"
+		0 : "Not very dirty"
+		1 : "A bit dirty"
+		2 : "Very dirty"
+		]
+	sign_icon0name[engine](string) : "Icon 0 Type"
+	sign_icon1name[engine](string) : "Icon 1 Type"
+	sign_icon2name[engine](string) : "Icon 2 Type"
+	sign_icon3name[engine](string) : "Icon 3 Type"
+	sign_icon4name[engine](string) : "Icon 4 Type"
+	sign_icon5name[engine](string) : "Icon 5 Type"
+	sign_icon6name[engine](string) : "Icon 6 Type"
+	sign_icon7name[engine](string) : "Icon 7 Type"
+	sign_icon8name[engine](string) : "Icon 8 Type"
+	sign_icon9name[engine](string) : "Icon 9 Type"
+
+	sign_icon0name(choices) : "Icon 0 Type" : : "" = #snippet Signs
+	sign_icon1name(choices) : "Icon 1 Type" : : "" = #snippet Signs
+	sign_icon2name(choices) : "Icon 2 Type" : : "" = #snippet Signs
+	sign_icon3name(choices) : "Icon 3 Type" : : "" = #snippet Signs
+	sign_icon4name(choices) : "Icon 4 Type" : : "" = #snippet Signs
+	sign_icon5name(choices) : "Icon 5 Type" : : "" = #snippet Signs
+	sign_icon6name(choices) : "Icon 6 Type" : : "" = #snippet Signs
+	sign_icon7name(choices) : "Icon 7 Type" : : "" = #snippet Signs
+	sign_icon8name(choices) : "Icon 8 Type" : : "" = #snippet Signs
+	sign_icon9name(choices) : "Icon 9 Type" : : "" = #snippet Signs
+
+
+	// Inputs
+	input TurnOn(string) : "Turns the sign on. You can optionally set the startup sequence as the parameter. (normal_flicker, dirty_flicker, broken_flicker)"
+	input TurnOff(void) : "Turns the sign off."
+
+	input SetCurrentLevel(integer) : "Sets the current level number."
+	input SetTotalLevel(integer) : "Sets the total level number."
+	input SetLevelName(string) : "Sets the name of the level to show."
+	input SetDirt(integer) : "Sets the amount of dirt."
+
+	input SetIconActive(integer) : "Turns the specified icon on"
+	input SetIconInactive(integer) : "Turns the specified icon off"
+	]

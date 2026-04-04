@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(L4D, L4D2)
-	autovis(Commantary, Comm. Zombie Spawner)
 	studio("models/infected/smoker.mdl")
 = commentary_zombie_spawner: "Zombie Manual Spawning Point"
 	[

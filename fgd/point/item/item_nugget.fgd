@@ -1,6 +1,7 @@
 @PointClass base(BaseEntityAnimating) 
 	appliesto(P2, -STANLEY) 
-	studioprop("models/effects/cappoint_hologram.mdl") = item_nugget: "Aperture Incentivizing Nugget. Useless."
+	studioprop("models/effects/cappoint_hologram.mdl") 
+= item_nugget: "A respawnable token that grants score points to the player on touch, if playing in multiplayer/coop mode. Functionally useless due to Portal 2 lacking teamplay modes."
 	[
 	groupname(string) : "Group Name" : : "Giving nuggets a group name hints the game that they are intended to be a group"
 	respawntime(float) : "Respawn Time" : 30 : "Number of seconds between when a nugget is collected and when it respawns"

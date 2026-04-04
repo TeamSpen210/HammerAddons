@@ -1,16 +1,17 @@
 @PointClass base(Angles)
 	appliesto(srctools)
 	iconsprite("editor/comp_propcombine_set")
-	autovis(Postcompiler, Propcombine)
 	wirebox(mins, maxs)
 = comp_propcombine_set : "Specifies a group of props that will be combined together."
 	[
 	mins(vector) : "BBox Mins" : "-32 -32 -32": "Minimum offset from the entity, defining the shape."
 	maxs(vector) : "BBox Maxes" : "32 32 32": "Maximum offset from the entity, defining the shape."
-	name(string) : "Name" : : "Two sets with the same name will be treated as one."
+	name(string) report: "Name" : : "Two sets with the same name will be treated as one. The name is also used in the filename, if possible."
 
 	prop(studio) : "Model Filter" : : "If set, a combinable model used to filter which others will be combined. The propcombine set will only apply to models which could be combined with this one."
 	skin(integer) : "Skin Filter" : 0 : "The skin for the Model Filter."
 
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
     @resources []
 	]

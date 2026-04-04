@@ -5,7 +5,7 @@
 	[
 
 	// Inputs
-	input AttachToVehicle(string) : "Attach to the jeep with the specified name."
+	input AttachToVehicle(string) : "Attach this fast zombie to a Jalopy with a specified name."
 
 	@resources
 		[

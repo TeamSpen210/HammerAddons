@@ -1,16 +1,13 @@
 """Compile static prop cables, instead of sprites."""
-from typing import (
-    Optional, List, Tuple, FrozenSet, TypeVar, MutableMapping, NewType, Set, Iterable, Dict,
-    Iterator, Callable,
-)
-from typing_extensions import Final, Self, TypeAlias
+from typing import NewType, Final, Self
+from collections import defaultdict
+from collections.abc import Callable, MutableMapping, Iterable, Iterator
+from enum import Enum
+from pathlib import Path
+from random import Random
 import itertools
 import math
 import struct
-from random import Random
-from collections import defaultdict
-from enum import Enum
-from pathlib import Path
 
 import attrs
 import trio
@@ -19,6 +16,7 @@ from srctools import (
     FrozenVec, logger, conv_int, conv_float, conv_bool,
     Vec, Entity, Matrix, Angle, lerp, FileSystem,
 )
+from srctools.vmf import VMF
 from srctools.bsp import StaticProp, StaticPropFlags, VisLeaf, VisTree
 from srctools.smd import Mesh, Vertex, Triangle, Bone
 
@@ -28,10 +26,9 @@ from hammeraddons.splines import parallel_transport
 
 LOGGER = logger.get_logger(__name__)
 NodeID = NewType('NodeID', str)
-Number = TypeVar('Number', int, float)
 
 try:
-    from .vactubes import nodes as vac_node_mod  # type: ignore
+    from .vactubes import nodes as vac_node_mod  # type: ignore  # noqa
 except ImportError:
     LOGGER.exception('No vactube transform:')
     vac_node_mod = None
@@ -153,7 +150,8 @@ VAC_RADIUS: Final = 45.0
 VAC_COLL_RADIUS: Final = 52.0
 VAC_MAT: Final = 'models/props_backstage/vacum_pipe'
 # Pos/radius pairs defining cylinders, for visleaf computation.
-CollData: TypeAlias = List[Tuple[Vec, float, Vec, float]]
+type CollData = list[tuple[Vec, float, Vec, float]]
+
 
 @attrs.define
 class SegProp:
@@ -169,7 +167,7 @@ class ModelContainer:
     model_name: str
     light_origin: Vec
     coll_data: CollData
-    seg_props: List[SegProp]
+    seg_props: list[SegProp]
     flags: StaticPropFlags
 
 
@@ -189,7 +187,7 @@ class Config:
     flip_uv: bool
     coll_segments: int
     coll_side_count: int
-    seg_props: FrozenSet[SegPropConf]
+    seg_props: frozenset[SegPropConf]
     prop_rendercolor: FrozenVec
     prop_renderalpha: int
     prop_no_shadows: bool
@@ -202,7 +200,7 @@ class Config:
     vac_separate_glass: VactubeGenType
 
     @staticmethod
-    def _parse_min(ent: Entity, keyvalue: str, minimum: Number, message: str) -> Number:
+    def _parse_min[Number: (int, float)](ent: Entity, keyvalue: str, minimum: Number, message: str) -> Number:
         """Helper for passing all the numeric keys."""
         converter: Callable[[str, Number], Number] = (
             conv_float if isinstance(minimum, float) else conv_int  # type: ignore[assignment]
@@ -219,7 +217,7 @@ class Config:
         return self.type.is_vactube
 
     @classmethod
-    def parse(cls, ent: Entity, name_to_segprops: Dict[str, FrozenSet[SegPropConf]]) -> Self:
+    def parse(cls, ent: Entity, name_to_segprops: dict[str, frozenset[SegPropConf]]) -> Self:
         """Parse from an entity."""
         segments = cls._parse_min(
             ent, 'segments', 0,
@@ -388,13 +386,13 @@ class Node:
     pos: Vec
     config: Config
     radius: float = attrs.Factory(lambda s: s.config.radius, takes_self=True)
-    prev: Optional['Node'] = None
-    next: Optional['Node'] = None
+    prev: 'Node | None' = None
+    next: 'Node | None' = None
     # Orientation of the segment up to the next.
     orient: Matrix = attrs.Factory(Matrix)
     # The points for the cylinder, on these sides.
-    points_prev: List[Vertex] = attrs.Factory(list)
-    points_next: List[Vertex] = attrs.Factory(list)
+    points_prev: list[Vertex] = attrs.Factory(list)
+    points_next: list[Vertex] = attrs.Factory(list)
 
     @classmethod
     def from_ent(cls, ent: NodeEnt) -> 'Node':
@@ -431,42 +429,117 @@ class Node:
         return f'<Node at {self.pos}>'
 
 
-async def build_rope(
-    rope_key: Tuple[FrozenSet[NodeEnt], FrozenSet[Tuple[NodeID, NodeID]], Tuple[str, ...], VactubeGenPartType],
-    temp_folder: Path,
-    mdl_name: str,
-    args: Tuple[Vec, FileSystem],
-) -> Tuple[Vec, CollData, List[SegProp], List[List[Vec]]]:
-    """Construct the geometry for a rope. nodes_and_conn is saved into file system to check if the model needs to be recompiled. args is for information that can be lost after the compile"""
+def save_mesh(mesh: Mesh, path: Path) -> None:
+    """Save a model SMD."""
+    with path.open('wb') as fb:
+        mesh.export(fb)
+
+
+@attrs.frozen(kw_only=True, hash=True)
+class CompKey:
+    """Key to allow reusing previous compiles."""
+    entities: tuple[NodeEnt, ...]
+    connections: frozenset[tuple[NodeID, NodeID]]
+    skins: tuple[str, ...]
+    vac_type: VactubeGenPartType
+    # TODO: Pass these as a single shared value?
+    dump_debug_info: bool
+    translucent_needs_mostlyopaque: bool
+
+    @classmethod
+    def create(
+        cls,
+        nodes: Iterable[NodeEnt],
+        connections: Iterable[tuple[NodeID, NodeID]],
+        skins: Iterable[str], vac_type: VactubeGenPartType,
+        *,
+        dump_debug_info: bool,
+        set_mostlyopaque: bool,
+    ) -> 'CompKey':
+        """Create the key to allow deduplication.
+
+        We have to recalculate the IDs, as the originals are the hammer IDs.
+        :param nodes: All nodes in the model, relative to a model origin.
+        :param connections: Pairs of links between node IDs.
+        :param skins: Skin materials to apply, with the first used in the nodes.
+        :param vac_type: Specifies whether to include the frame/glass part, if separation is used.
+        :param dump_debug_info: Whether modelcompile_dump is set, and therefore should we dump
+            debugging information.
+        :param set_mostlyopaque: Whether to set $mostlyopaque for translucent models.
+        """
+        id_gen = itertools.count()
+        id_remap: dict[NodeID, NodeID] = {}
+        node_list = sorted(nodes, key=lambda node: tuple(node.pos))
+        new_nodes = []
+        for node in node_list:
+            id_remap[node.id] = new_id = NodeID(format(next(id_gen), 'x'))
+            new_nodes.append(attrs.evolve(node, id=new_id))
+        new_conns = frozenset([
+            (id_remap[node1], id_remap[node2])
+            for node1, node2 in connections
+        ])
+        return cls(
+            entities=tuple(new_nodes),
+            connections=new_conns,
+            skins=tuple(skins),
+            vac_type=vac_type,
+            dump_debug_info=dump_debug_info,
+            translucent_needs_mostlyopaque=set_mostlyopaque,
+        )
+
+
+# The compiler for ropes.
+type RopeBuilder = ModelCompiler[CompKey, CompArgs, CompResult]
+# Additional parameters used during compile, provided new each time. We just pass the filesystem for lookups.
+type CompArgs = tuple[FileSystem]
+# Additional results of the compile, persisted to return later.
+# Returns the lighting origin, collision shape, segments to place, and for vactubes a list of
+# points for each curve, to produce the functional version.
+type CompResult = tuple[Vec, CollData, list[SegProp], list[list[Vec]]]
+
+
+async def build_rope(rope_key: CompKey, temp_folder: Path, mdl_name: str, args: CompArgs) -> CompResult:
+    """Construct the geometry for a rope.
+
+    :param temp_folder: Location to write the sources into.
+    :param mdl_name: Full model filename to compile.
+    :param rope_key: This is saved into file system to check if the model needs to be recompiled.
+    :param args: Information that is only required for this compile
+    """
     LOGGER.info('Building rope {}', mdl_name)
-    ents, connections, skins, vacgentype = rope_key
-    offset, fsys = args
+    [fsys] = args
 
     mesh = Mesh.blank('root')
     coll_mesh = Mesh.blank('root')
     [bone] = mesh.bones.values()
 
-    nodes, coll_nodes = build_node_tree(ents, connections)
+    nodes, coll_nodes = build_node_tree(rope_key.entities, rope_key.connections)
 
     interpolate_all(nodes)
     compute_orients(nodes)
     compute_verts(nodes, bone, is_coll=False)
 
-    # compile_rope uses VactubeGenPartType.ALL for all other rope generation
-    # skip this when only generating frame
-    if vacgentype != VactubeGenPartType.FRAME:
-        mesh.triangles.extend(generate_straights(nodes))
-    generate_caps(nodes, mesh, is_coll=False)
+    # Skip generating the actual rope if side count is <3 (useful to place just the seg props.
+    if any(node.config.side_count >= 3 for node in nodes):
+        # compile_rope uses VactubeGenPartType.ALL for all other rope generation
+        # skip this when only generating frame
+        if rope_key.vac_type != VactubeGenPartType.FRAME:
+            mesh.triangles.extend(generate_straights(nodes))
+        generate_caps(nodes, mesh, is_coll=False)
+    await trio.lowlevel.checkpoint()
 
     # All or nothing.
     is_vactube = next(iter(nodes)).config.is_vactube
-    vac_points: List[List[Vec]] = []
-    if is_vactube and (vacgentype == VactubeGenPartType.FRAME or vacgentype == VactubeGenPartType.ALL):
+    vac_points: list[list[Vec]] = []
+    if is_vactube and (
+        rope_key.vac_type == VactubeGenPartType.FRAME or
+        rope_key.vac_type == VactubeGenPartType.ALL
+    ):
         mesh.triangles.extend(generate_vac_beams(nodes, bone, vac_points))
 
     # appends rings to the tube model
     # skip this when only generating glass
-    if vacgentype != VactubeGenPartType.GLASS:
+    if rope_key.vac_type != VactubeGenPartType.GLASS:
         seg_props = list(place_seg_props(nodes, fsys, mesh))
     else:
         seg_props = []
@@ -479,6 +552,7 @@ async def build_rope(
 
         coll_mesh.triangles.extend(generate_straights(coll_nodes))
         generate_caps(coll_nodes, coll_mesh, is_coll=True)
+    await trio.lowlevel.checkpoint()
 
     # Wrap the UVs around to be inside 0-1, if possible.
     for tri in mesh.triangles:
@@ -488,6 +562,7 @@ async def build_rope(
             tri.point1 = tri.point1.with_uv(tri.point1.tex_u - u, tri.point1.tex_v - v)
             tri.point2 = tri.point2.with_uv(tri.point2.tex_u - u, tri.point2.tex_v - v)
             tri.point3 = tri.point3.with_uv(tri.point3.tex_u - u, tri.point3.tex_v - v)
+    await trio.lowlevel.checkpoint()
 
     # Use the node closest to the center. That way
     # it shouldn't be inside walls, and be about representative of
@@ -499,29 +574,27 @@ async def build_rope(
 
     fixed_visual_mesh = Mesh.blank('root')
     fixed_visual_mesh.append_model(mesh, rotation=orient_fix)
+    await trio.lowlevel.checkpoint()
 
-    with (temp_folder / 'cable.smd').open('wb') as fb:
-        fixed_visual_mesh.export(fb)
+    await trio.to_thread.run_sync(save_mesh, fixed_visual_mesh, temp_folder / 'cable.smd')
     if coll_nodes:
         fixed_coll_mesh = Mesh.blank('root')
         fixed_coll_mesh.append_model(coll_mesh, rotation=orient_fix)
-        with (temp_folder / 'cable_phy.smd').open('wb') as fb:
-            fixed_coll_mesh.export(fb)
+        await trio.to_thread.run_sync(save_mesh, fixed_coll_mesh, temp_folder / 'cable_phy.smd')
         del coll_mesh, fixed_coll_mesh
 
     del mesh, fixed_visual_mesh
 
-    with (temp_folder / 'model.qc').open('w') as f:
+    async with await trio.Path(temp_folder / 'model.qc').open('w') as f:
         if is_vactube:
-            # Desolation needs this hint.
-            if hasattr(Mesh, 'NEED_TRANSLUCENT_MOSTLYOPAQUE') and vacgentype is VactubeGenPartType.ALL:
-                f.write('$mostlyopaque\n')
-            elif vacgentype is VactubeGenPartType.FRAME:
-                f.write('$opaque\n')
+            if rope_key.translucent_needs_mostlyopaque and rope_key.vac_type is VactubeGenPartType.ALL:
+                await f.write('$mostlyopaque\n')
+            elif rope_key.vac_type is VactubeGenPartType.FRAME:
+                await f.write('$opaque\n')
 
-        f.write(QC_TEMPLATE.format(path=mdl_name, light_origin=light_origin))
-        if skins:
-            f.write('$texturegroup "skinfamilies" {\n')
+        await f.write(QC_TEMPLATE.format(path=mdl_name, light_origin=light_origin))
+        if rope_key.skins:
+            await f.write('$texturegroup "skinfamilies" {\n')
             try:
                 [first_mat] = {node.config.material for node in nodes}
             except ValueError:
@@ -529,16 +602,25 @@ async def build_rope(
                     'Using multiple skins for a rope using different materials '
                     'for different segments is not supported.'
                 ) from None
-            f.write(f'    {{ "{first_mat}" }}\n')
-            for mat in skins:
-                f.write(f'    {{ "{mat}" }}\n')
-            f.write('}\n')
+            await f.write(f'    {{ "{first_mat}" }}\n')
+            for mat in rope_key.skins:
+                await f.write(f'    {{ "{mat}" }}\n')
+            await f.write('}\n')
         if coll_nodes:
-            f.write(QC_TEMPLATE_PHYS.format(count=sum(node.next is not None for node in coll_nodes) + 8))
+            # Convex count should be one item per segment, but add a buffer just in case.
+            await f.write(QC_TEMPLATE_PHYS.format(
+                count=sum(node.next is not None for node in coll_nodes) + 8
+            ))
+
+    if rope_key.dump_debug_info:
+        vmf = dump_rope_nodes(nodes, mdl_name)
+        LOGGER.info('Writing debug info to {}', temp_folder / 'debug.vmf')
+        with (temp_folder / 'debug.vmf').open('w', encoding='utf8') as f2:
+            vmf.export(f2)
 
     # For visleaf computation, build a list of all the actual segments generated.
     coll_data = [
-        (node.pos + offset, node.radius, node.next.pos + offset, node.next.radius)
+        (node.pos, node.radius, node.next.pos, node.next.radius)
         for node in nodes
         if node.next
     ]
@@ -546,15 +628,49 @@ async def build_rope(
     return (light_origin, coll_data, seg_props, vac_points)
 
 
+def dump_rope_nodes(nodes: Iterable[Node], mdl_name: str) -> VMF:
+    # Dump some useful data to a VMF object.
+    vmf = VMF()
+    debug_name = {
+        node: f'node_{i}'
+        for i, node in enumerate(nodes)
+    }
+    vmf.create_ent('prop_static', origin='0 0 0', model='models/' + mdl_name)
+    group_next = vmf.create_visgroup('points_next')
+    group_prev = vmf.create_visgroup('points_prev')
+    for node, name in debug_name.items():
+        vmf.create_ent(
+            'path_track',
+            targetname=name,
+            target=debug_name[node.next] if node.next is not None else '',
+            origin=node.pos,
+            angles=format(node.orient.to_angle(), '.20'),
+            radius=node.radius,
+        ).comments = repr(node.orient)
+        for point in node.points_next:
+            ent = vmf.create_ent(
+                'info_target',
+                origin=point.pos, name=name + '_next')
+            ent.vis_shown = False
+            ent.visgroup_ids.add(group_next.id)
+        for point in node.points_prev:
+            ent = vmf.create_ent(
+                'info_target',
+                origin=point.pos, name=name + '_prev')
+            ent.vis_shown = False
+            ent.visgroup_ids.add(group_prev.id)
+    return vmf
+
+
 def build_node_tree(
-    ents: FrozenSet[NodeEnt],
-    connections: FrozenSet[Tuple[NodeID, NodeID]],
-) -> Tuple[Set[Node], Set[Node]]:
+    ents: Iterable[NodeEnt],
+    connections: Iterable[tuple[NodeID, NodeID]],
+) -> tuple[set[Node], set[Node]]:
     """Convert the ents/connections definitions into a node tree."""
     # Convert them all into the real node objects.
-    id_to_node: Dict[str, Tuple[Node, Optional[Node]]] = {}
-    vis_nodes: Set[Node] = set()
-    coll_nodes: Set[Node] = set()
+    id_to_node: dict[str, tuple[Node, Node | None]] = {}
+    vis_nodes: set[Node] = set()
+    coll_nodes: set[Node] = set()
     for node_ent in ents:
         vis_node = Node(node_ent.pos.copy(), node_ent.config)
         vis_nodes.add(vis_node)
@@ -565,7 +681,7 @@ def build_node_tree(
             coll_node = None
         id_to_node[node_ent.id] = (vis_node, coll_node)
 
-    def maybe_split(nodes: Set[Node], node: Node, direction: str) -> Node:
+    def maybe_split(nodes: set[Node], node: Node, direction: str) -> Node:
         """Split nodes to ensure they only have 1 or 2 connections.
 
         If it has more, or multiple in one side, it will be converted
@@ -617,7 +733,7 @@ def build_node_tree(
     return vis_nodes, coll_nodes
 
 
-def interpolate_straight(node1: Node, node2: Node, seg_count: int) -> List[Node]:
+def interpolate_straight(node1: Node, node2: Node, seg_count: int) -> list[Node]:
     """Simply interpolate in a straight line."""
     diff = (node2.pos - node1.pos) / (seg_count + 1)
     return [
@@ -626,7 +742,7 @@ def interpolate_straight(node1: Node, node2: Node, seg_count: int) -> List[Node]
     ]
 
 
-def interpolate_catmull_rom(node1: Node, node2: Node, seg_count: int) -> List[Node]:
+def interpolate_catmull_rom(node1: Node, node2: Node, seg_count: int) -> list[Node]:
     """Interpolate a spline curve, matching Valve's implementation."""
     # If no points are found, extrapolate out the line.
     diff = (node2.pos - node1.pos).norm()
@@ -644,7 +760,7 @@ def interpolate_catmull_rom(node1: Node, node2: Node, seg_count: int) -> List[No
     t1 = t0 + (p1-p0).mag()
     t2 = t1 + (p2-p1).mag()
     t3 = t2 + (p3-p2).mag()
-    points: List[Node] = []
+    points: list[Node] = []
     for i in range(1, seg_count + 1):
         t = lerp(i, 0, seg_count + 1, t1, t2)
         A1 = (t1-t)/(t1-t0)*p0 + (t-t0)/(t1-t0)*p1
@@ -662,7 +778,7 @@ def interpolate_catmull_rom(node1: Node, node2: Node, seg_count: int) -> List[No
     return points
 
 
-def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
+def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> list[Node]:
     """Compute the move_rope style hanging points.
 
     This uses a quite unusual implementation in Source, doing a physics simulation.
@@ -682,9 +798,9 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
             node1.pos + interp_diff * i,
             lerp(i, 0, seg_count + 2, node1.radius, node2.radius),
         )
-        for i in range(0, seg_count + 2)
+        for i in range(seg_count + 2)
     ]
-    springs = list(zip(points, points[1:]))
+    springs = list(itertools.pairwise(points))
 
     time = 0.0
     step = TIME_STEP
@@ -729,17 +845,17 @@ def interpolate_rope(node1: Node, node2: Node, seg_count: int) -> List[Node]:
     ]
 
 
-def interpolate_bezier(first_node: Node, last_node: Node, curve_segment_count: int) -> List[Node]:
+def interpolate_bezier(first_node: Node, last_node: Node, curve_segment_count: int) -> list[Node]:
     """Interpolate a bezier curve, for better 90 degrees turn."""
     # reference:
     # https://en.wikipedia.org/wiki/De_Casteljau%27s_algorithm
-    points: List[Node] = []
+    points: list[Node] = []
     increment = 1 / curve_segment_count
     # Only the segment count set in the first spline object counts
     curve_x = []
     curve_y = []
     curve_z = []
-    curnode: Optional[Node] = first_node
+    curnode: Node | None = first_node
     while curnode is not None:
         curve_x.append(curnode.pos.x)
         curve_y.append(curnode.pos.y)
@@ -759,9 +875,9 @@ def interpolate_bezier(first_node: Node, last_node: Node, curve_segment_count: i
     return points
 
 
-def de_casteljau(t: float, coefs: List[float]) -> float:
+def de_casteljau(t: float, coefs: Iterable[float]) -> float:
     """Evaluate the polynomial for one axis."""
-    beta = [c for c in coefs]  # values in this list are overridden
+    beta = list(coefs)  # values in this list are overridden
     n = len(beta)
     for j in range(1, n):
         for k in range(n - j):
@@ -771,9 +887,9 @@ def de_casteljau(t: float, coefs: List[float]) -> float:
 
 def find_all_connected_exclude_firstlast(
     node: Node,
-) -> Tuple[Node, List[Node], Node]:
+) -> tuple[Node, list[Node], Node]:
     """Trace backward and forward from a node to find a full chain, extracting the first/last."""
-    node_list: List[Node] = [node]
+    node_list: list[Node] = [node]
     cur_back: Node = node
     cur_forward: Node = node
 
@@ -794,17 +910,17 @@ def find_all_connected_exclude_firstlast(
     return cur_back, node_list, cur_forward
 
 
-def interpolate_all(nodes: Set[Node]) -> None:
+def interpolate_all(nodes: set[Node]) -> None:
     """Produce nodes in-between each user-made node."""
     # Create the nodes and put them in a separate list, then add them
     # to the actual nodes list second. This way sections that have been interpolated
     # don't affect the interpolation of neighbouring sections.
 
-    seen_bezier_nodes: Set[Node] = set()
+    seen_bezier_nodes: set[Node] = set()
     # Add None in here to make code simpler to handle - we always ignore missing endpoints.
-    seen_bezier_nodes_ignore: Set[Optional[Node]] = {None}
+    seen_bezier_nodes_ignore: set[Node | None] = {None}
 
-    segments: List[List[Node]] = []
+    segments: list[list[Node]] = []
     for node1 in nodes:
         if node1.next is None or node1.config.segments <= 0:
             continue
@@ -826,21 +942,24 @@ def interpolate_all(nodes: Set[Node]) -> None:
         func = globals()['interpolate_' + interp_type.name.casefold()]
         points = func(node1, node2, node1.config.segments)
 
-        for a, b in zip(points, points[1:]):
+        for a, b in itertools.pairwise(points):
             a.next = b
             b.prev = a
-        points[0].prev = node1 # if segment count is low (like 2) for bezier curve, this will cause error. TODO: Fix this?
+        points[0].prev = node1  # if segment count is low (like 2) for bezier curve, this will cause error. TODO: Fix this?
         points[-1].next = node2
         segments.append(points)
 
     for removenode in seen_bezier_nodes:
-        LOGGER.debug("Removing Bezier Keyframe Node ",removenode)
+        LOGGER.debug("Removing Bezier Keyframe Node", removenode)
         nodes.remove(removenode)
 
     for points in segments:
         nodes.update(points)
-        points[0].prev.next = points[0]
-        points[-1].next.prev = points[-1]
+        first, last = points[0], points[-1]
+        assert first.prev is not None, points
+        first.prev.next = first
+        assert last.next is not None, points
+        last.next.prev = last
 
     # Finally, split nodes with too much of an angle between them - we can't smooth.
     # Don't bother if they're real small angles though, that's fine.
@@ -861,8 +980,8 @@ def compute_orients(nodes: Iterable[Node]) -> None:
     """Compute the appropriate orientation for each node."""
     # This is based on the info at:
     # https://janakiev.com/blog/framing-parametric-curves/
-    tangents: Dict[Node, Vec] = {}
-    all_nodes: Set[Node] = set()
+    tangents: dict[Node, Vec] = {}
+    all_nodes: set[Node] = set()
     for node in nodes:
         if node.prev is node.next is None:
             continue
@@ -963,7 +1082,7 @@ def generate_caps(nodes: Iterable[Node], mesh: Mesh, is_coll: bool) -> None:
 
     We just use a simple fan layout.
     """
-    def make_cap(orig: 'Iterable[Vertex]', norm: Vec):
+    def make_cap(orig: 'Iterable[Vertex]', norm: Vec) -> None:
         # Recompute the UVs to use the first bit of the cable.
         points = [
             Vertex(
@@ -975,7 +1094,7 @@ def generate_caps(nodes: Iterable[Node], mesh: Mesh, is_coll: bool) -> None:
             for point in orig
         ]
         mesh.triangles.append(Triangle(mat, points[0], points[1], points[2]))
-        for a, b in zip(points[2:], points[3:]):
+        for a, b in itertools.pairwise(points[2:]):
             mesh.triangles.append(Triangle(mat, points[0], a, b))
 
     for node in nodes:
@@ -989,7 +1108,7 @@ def generate_caps(nodes: Iterable[Node], mesh: Mesh, is_coll: bool) -> None:
             make_cap(node.points_prev, node.orient.forward())
 
 
-def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: List[List[Vec]]) -> Iterator[Triangle]:
+def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: list[list[Vec]]) -> Iterator[Triangle]:
     """Generate the 4 beams surrounding vactubes.
 
     Also save off the vactube points for functional tubes.
@@ -997,7 +1116,6 @@ def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: List[List[
     bone_weight = [(bone, 1.0)]
     todo = set(nodes)
     length_scale = 1 / (2*math.pi*VAC_RADIUS)
-    rand = Random()
     # From original model, the V positions in the texture.
     VERT_START = 0.260
     VERT_MID = 0.626
@@ -1013,9 +1131,8 @@ def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: List[List[
     BEAM_IN = 39.3218
     BEAM_OUT = 51.75
     BEAM_WID = 2.17316
-    node_pos: Vec
 
-    def vert_node1(y: float, z: float, norm: Tuple[float, float, float], u: float) -> Vertex:
+    def vert_node1(y: float, z: float, norm: tuple[float, float, float], u: float) -> Vertex:
         """Helper for generating at the first node."""
         return Vertex(
             pos1 + (0.0, y, z) @ orient1,
@@ -1024,7 +1141,7 @@ def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: List[List[
             bone_weight,
         )
 
-    def vert_node2(y: float, z: float, norm: Tuple[float, float, float], u: float) -> Vertex:
+    def vert_node2(y: float, z: float, norm: tuple[float, float, float], u: float) -> Vertex:
         """Helper for generating a vert at the second node."""
         return Vertex(
             pos2 + (0.0, y, z) @ orient2,
@@ -1039,7 +1156,7 @@ def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: List[List[
         if start.next is None or not start.config.is_vactube:
             continue
 
-        points: Optional[List[Vec]]
+        points: list[Vec] | None
         if start.config.type is RopeType.VAC_FUNCTIONAL:
             points = []
             vac_points.append(points)
@@ -1128,15 +1245,15 @@ def generate_vac_beams(nodes: Iterable[Node], bone: Bone, vac_points: List[List[
 
 def place_seg_props(nodes: Iterable[Node], fsys: FileSystem, mesh: Mesh) -> Iterator[SegProp]:
     """Place segment props, across the nodes."""
-    mesh_cache: Dict[str, Mesh] = {}
-    prop_dists: Dict[SegPropConf, float] = {}
+    mesh_cache: dict[str, Mesh] = {}
+    prop_dists: dict[SegPropConf, float] = {}
     for start_node in nodes:
         # Find start nodes, we then loop in order over the nodes.
         if start_node.prev is not None:
             continue
         prop_dists.clear()
         for i, node in enumerate(start_node.follow_no_endpoints()):
-            weights: List[SegPropConf] = []
+            weights: list[SegPropConf] = []
             assert node.next is not None  # follow_no_endpoints() checks this.
             dist = (node.pos - node.next.pos).mag()
             for conf in node.config.seg_props:
@@ -1200,22 +1317,23 @@ def place_seg_props(nodes: Iterable[Node], fsys: FileSystem, mesh: Mesh) -> Iter
 
 
 def compute_visleafs(
-    coll_data: List[Tuple[Vec, float, Vec, float]],
+    coll_data: list[tuple[Vec, float, Vec, float]],
     vis_tree_top: VisTree,
-) -> Set[VisLeaf]:
+) -> set[VisLeaf]:
     """Compute the visleafs this rope is present in."""
     # Each tree node defines a plane. For each side we touch, we need to
     # continue looking down that side of the tree for visleafs.
     # We need to do this individually for each segment pair. That way
     # we correctly handle cases like ropes encircling a room without entering it.
-    used_leafs: Set[VisLeaf] = set()
+    used_leafs: set[VisLeaf] = set()
 
     # Check if we collide with either side of the tree (or both).
     # This just involves doing a sphere-plane check with each side of the node.
     # If both are on one side, the whole segment cannot cross.
     for point1, radius1, point2, radius2 in coll_data:
-        todo_trees: List[VisTree] = [vis_tree_top]
-        for tree in todo_trees:
+        todo_trees: list[VisTree] = [vis_tree_top]
+        while todo_trees:
+            tree = todo_trees.pop()
             off1 = Vec.dot(tree.plane.normal, point1) - tree.plane.dist
             off2 = Vec.dot(tree.plane.normal, point2) - tree.plane.dist
             if off1 >= -radius1 or off2 >= -radius2:
@@ -1234,18 +1352,20 @@ def compute_visleafs(
 
 async def compile_rope(
     ctx: Context,
-    compiler: ModelCompiler,
-    nodes: Set[NodeEnt],
-    dyn_ents: List[Entity],
-    connections: Set[Tuple[NodeID, NodeID]],
+    compiler: RopeBuilder,
+    nodes: set[NodeEnt],
+    dyn_ents: list[Entity],
+    connections: set[tuple[NodeID, NodeID]],
 ) -> None:
     """Compile a single rope group."""
+    dump_debug_info = ctx.modelcompile_dump is not None
+    set_mostlyopaque = ctx.game_conf.translucent_needs_mostlyopaque
     for ent in dyn_ents:
         origin = Vec.from_str(ent['origin'])
-        dyn_nodes: FrozenSet[NodeEnt] = frozenset({
+        dyn_nodes = [
             node.relative_to(origin)
             for node in nodes
-        })
+        ]
 
         skins = []
         for i in itertools.count(1):
@@ -1261,22 +1381,27 @@ async def compile_rope(
                 origin,
             )
         model_name, _ = await compiler.get_model(
-            (dyn_nodes, frozenset(connections), tuple(skins), VactubeGenPartType.ALL),
+            CompKey.create(
+                dyn_nodes, connections, skins, VactubeGenPartType.ALL,
+                dump_debug_info=dump_debug_info, set_mostlyopaque=set_mostlyopaque,
+            ),
             build_rope,
-            (origin, ctx.pack.fsys),
+            (ctx.pack.fsys, ),
+            prefix='vac' if any(node.config.is_vactube for node in nodes) else 'rope',
         )
         ent['model'] = model_name
 
     if not dyn_ents:  # Static prop.
         bbox_min, bbox_max = Vec.bbox(node.pos for node in nodes)
         center = (bbox_min + bbox_max) / 2
-        node: Optional[NodeEnt] = None
+        node: NodeEnt | None = None
         has_coll = False
-        local_nodes: Set[NodeEnt] = set()
+        local_nodes: set[NodeEnt] = set()
         for node in nodes:
             local_nodes.add(attrs.evolve(node, pos=node.pos - center))
             if node.config.coll_side_count >= 3:
                 has_coll = True
+        assert node is not None, 'No nodes??'
 
         # All the configs should be the same, so just use the last node in the set.
         conf = node.config
@@ -1286,27 +1411,44 @@ async def compile_rope(
         is_sep = conf.vac_separate_glass == VactubeGenType.SEPARATE
         # First do the frame, or everything if we're not separating them.
         model_name, (light_origin, coll_data, seg_props, vac_points) = await compiler.get_model(
-            (frozenset(local_nodes), frozenset(connections), (), VactubeGenPartType.FRAME if is_sep else VactubeGenPartType.ALL),
+            CompKey.create(
+                local_nodes, connections, (),
+                VactubeGenPartType.FRAME if is_sep else VactubeGenPartType.ALL,
+                dump_debug_info=dump_debug_info, set_mostlyopaque=set_mostlyopaque,
+            ),
             build_rope,
-            (center, ctx.pack.fsys),
+            (ctx.pack.fsys, ),
+            prefix=('vac_frm' if is_sep else 'vac') if conf.is_vactube else 'rope',
         )
+        coll_data = [  # Stored local in the model, offset to the real location.
+            (point1 + center, rad1, point2 + center, rad2)
+            for point1, rad1, point2, rad2 in coll_data
+        ]
         modellist = [ModelContainer(model_name, light_origin, coll_data, seg_props, StaticPropFlags.NONE)]
 
         if is_sep:
             # Generate the glass only
             model_name, (light_origin, coll_data, seg_props, _) = await compiler.get_model(
-                (frozenset(local_nodes), frozenset(connections), (), VactubeGenPartType.GLASS),
+                CompKey.create(
+                    local_nodes, connections, (), VactubeGenPartType.GLASS,
+                    dump_debug_info=dump_debug_info, set_mostlyopaque=set_mostlyopaque,
+                ),
                 build_rope,
-                (center, ctx.pack.fsys),
+                (ctx.pack.fsys, ),
+                prefix='vac_gls',
             )
+            coll_data = [
+                (point1 + center, rad1, point2 + center, rad2)
+                for point1, rad1, point2, rad2 in coll_data
+            ]
             modellist.append(ModelContainer(model_name, light_origin, coll_data, seg_props, StaticPropFlags.NO_SHADOW))
 
         if vac_points and vac_node_mod is not None:
             for track in vac_points:
-                vac_node_mod.SPLINES.append(vac_node_mod.Spline(center, track))
+                vac_node_mod.SPLINES.append(vac_node_mod.Spline(center, model_name, track))
 
         # Compute the flags. Just pick a random node, from above.
-        flags = StaticPropFlags.NONE
+        flags: StaticPropFlags = StaticPropFlags.NONE
         if conf.prop_light_bounce:
             flags |= StaticPropFlags.BOUNCED_LIGHTING
         if conf.prop_no_vert_light:
@@ -1359,15 +1501,15 @@ async def comp_prop_rope(ctx: Context) -> None:
     # id -> node.
     all_nodes: MutableMapping[NodeID, NodeEnt] = {}
     # Given a targetname, all the nodes with that name.
-    name_to_nodes: MutableMapping[str, List[NodeEnt]] = defaultdict(list)
+    name_to_nodes: MutableMapping[str, list[NodeEnt]] = defaultdict(list)
     # Group name -> nodes with that group.
-    group_to_node: Dict[str, List[NodeEnt]] = defaultdict(list)
+    group_to_node: dict[str, list[NodeEnt]] = defaultdict(list)
     # Store the node/next-key pairs for linking after they're all parsed.
-    temp_conns: List[Tuple[NodeEnt, str]] = []
+    temp_conns: list[tuple[NodeEnt, str]] = []
     # Dynamic ents which will be given the static props.
-    group_dyn_ents: Dict[str, List[Entity]] = defaultdict(list)
+    group_dyn_ents: dict[str, list[Entity]] = defaultdict(list)
     # Name -> segprop configurations.
-    name_to_segprops_lst: Dict[str, List[SegPropConf]] = defaultdict(list)
+    name_to_segprops_lst: dict[str, list[SegPropConf]] = defaultdict(list)
 
     for ent in ctx.vmf.by_class['comp_prop_rope_bunting']:
         ent.remove()
@@ -1382,7 +1524,7 @@ async def comp_prop_rope(ctx: Context) -> None:
 
     # Put into a set, so they're immutable and have no ordering.
     # We use that to identify the same config in previous compiles.
-    name_to_segprops_set: Dict[str, FrozenSet[SegPropConf]] = {
+    name_to_segprops_set: dict[str, frozenset[SegPropConf]] = {
         name: frozenset(lst)
         for name, lst in name_to_segprops_lst.items()
     }
@@ -1428,11 +1570,11 @@ async def comp_prop_rope(ctx: Context) -> None:
         LOGGER.warning('Ropes cannot be compiled, no StudioMDL.exe found!')
         return
 
-    connections_to: Dict[NodeID, List[NodeEnt]] = defaultdict(list)
-    connections_from: Dict[NodeID, List[NodeEnt]] = defaultdict(list)
+    connections_to: dict[NodeID, list[NodeEnt]] = defaultdict(list)
+    connections_from: dict[NodeID, list[NodeEnt]] = defaultdict(list)
 
     for node, target in temp_conns:
-        found: List[NodeEnt] = []
+        found: list[NodeEnt] = []
         if target.endswith('*'):
             search = target[:-1]
             for name, node_list in name_to_nodes.items():
@@ -1447,16 +1589,17 @@ async def comp_prop_rope(ctx: Context) -> None:
     # To group nodes, take each group out, then search recursively through
     # all connections from it to other nodes.
     todo = set(all_nodes.values())
-    with ModelCompiler.from_ctx(ctx, 'ropes', version=3) as compiler:
+    compiler: RopeBuilder
+    with ModelCompiler.from_ctx(ctx, 'ropes', version=5) as compiler:
         async with trio.open_nursery() as nursery:
             while todo:
-                dyn_ents: List[Entity] = []
+                dyn_ents: list[Entity] = []
                 node = todo.pop()
-                connections: Set[Tuple[NodeID, NodeID]] = set()
+                connections: set[tuple[NodeID, NodeID]] = set()
                 # We need the set for fast is-in checks, and the list
                 # so we can loop through while modifying it.
-                nodes: Set[NodeEnt] = {node}
-                unchecked: List[NodeEnt] = [node]
+                nodes: set[NodeEnt] = {node}
+                unchecked: list[NodeEnt] = [node]
                 while unchecked:
                     node = unchecked.pop()
                     # Three links to others - connections to/from, and groups.

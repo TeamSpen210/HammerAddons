@@ -11,4 +11,7 @@
 	// Inputs
 	input Enable(void) : "Start/Show countdown."
 	input Disable(void) : "Hide coundown, will not reset."
-	]
+	input SetTime[Strata](float) : "Set time of countdown."
+	input Pause[Strata](void) : "Pauses the timer without hiding the panel."
+	input Resume[Strata](void) : "Resumes the paused timer."
+ 	]

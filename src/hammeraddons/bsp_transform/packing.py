@@ -1,6 +1,6 @@
 """Transformations for packing and precaching resources."""
-from typing import Dict, Set
 import os
+import string
 
 from srctools import Entity
 from srctools.logger import get_logger
@@ -17,7 +17,7 @@ LOGGER = get_logger(__name__, 'trans.packing')
 @trans('comp_precache_model', priority=100)
 def comp_precache_model(ctx: Context) -> None:
     """Force precaching a specific model."""
-    already_done: Set[str] = set()
+    already_done: set[str] = set()
     for ent in ctx.vmf.by_class['comp_precache_model']:
         if not check_control_enabled(ent):
             ent.remove()
@@ -66,7 +66,7 @@ function Precache() {
 def comp_precache_sound(ctx: Context) -> None:
     """Force precaching a set of sounds."""
     # Match normalised sound to the original filename.
-    sounds: Dict[str, str] = {}
+    sounds: dict[str, str] = {}
     for ent in ctx.vmf.by_class['comp_precache_sound']:
         ent.remove()
         if not check_control_enabled(ent):
@@ -76,7 +76,7 @@ def comp_precache_sound(ctx: Context) -> None:
             if not key.startswith('sound'):
                 continue
             sound_key = sound.casefold().replace('\\', '/').lstrip(SND_CHARS)
-            if sound_key.endswith(('.wav', '.mp3')) and not sound_key.startswith('sound/'):
+            if sound_key.endswith(('.wav', '.mp3', '.ogg')) and not sound_key.startswith('sound/'):
                 sound_key = 'sound/' + sound_key
 
             # Precaching implies packing it.
@@ -86,6 +86,9 @@ def comp_precache_sound(ctx: Context) -> None:
 
     if not sounds:
         return
+    if not ctx.game_conf.vscript:
+        # TODO: Just spawn ambient generics?
+        raise NotImplementedError("Needs VScript for now")
 
     # This VScript function forces a script to be precached.
     lines = SND_CACHE_FUNC % '\n'.join([
@@ -154,7 +157,7 @@ def comp_pack(ctx: Context) -> None:
 
             # We allow numeric suffixes for multiple - generic45.
             try:
-                res_type = PACK_TYPES[key.rstrip('0123456789').casefold()]
+                res_type = PACK_TYPES[key.rstrip(string.digits).casefold()]
             except KeyError:
                 LOGGER.warning(
                     'Unknown resource type: "{}" @ {}',
@@ -186,7 +189,7 @@ def comp_pack_rename(ctx: Context) -> None:
 
     # Optimisation, don't re-read files multiple times.
     # We're storing the data anyway.
-    file_data: Dict[str, bytes] = {}
+    file_data: dict[str, bytes] = {}
 
     for ent in ctx.vmf.by_class['comp_pack_rename']:
         ent.remove()

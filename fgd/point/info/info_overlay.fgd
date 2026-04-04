@@ -24,6 +24,7 @@
 		3: "Fourth"
 		]
 
+	tint[Strata](color255): "Tint Color" : "255 255 255 255" : "Applies a color tint using multiply mix mode. Color will be put as $color shader parameter. Alpha will be put as $alpha shader parameter, so make sure the overlay's material allows the use of those parameters."
 	startu(float) : "U Start" : 0.0 : "A value between 0-1, defining the starting X axis position in the overlay material."
 	endu(float) : "U End" : 1.0 : "A value between 0-1, defining the ending X axis position in the overlay material."
 	startv(float) : "V Start" : 0.0 : "A value between 0-1, defining the starting Y axis position in the overlay material."

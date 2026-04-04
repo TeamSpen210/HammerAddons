@@ -1,0 +1,6 @@
+@SolidClass 
+	appliesto(+MOMENTUM, -engine) 
+= func_slick: "An entity that enables defrag's slick mechanic on selected brushes."
+	[
+	] 
+  

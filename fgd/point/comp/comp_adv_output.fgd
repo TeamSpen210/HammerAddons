@@ -1,10 +1,20 @@
 @PointClass base(ControlEnables)
 	iconsprite("editor/comp_adv_output")
 	appliesto(srctools)
-	autovis(Postcompiler, Advanced Output)
 = comp_adv_output : "Adds a single output to an entity, with precise control over fixup behaviour."
 	[
-	out_ent(target_destination) : "Outputting Entity" : : "The name of the entity or entities to add the output to."
+	out_ent(target_destination) report: "Outputting Entity" : : "The name of the entity or entities to add the output to."
+
+	mode[engine](string) : "Mode" : "append"
+	mode(choices) : "Mode" : "append" : "How to add the output. 'Append' mode always adds the output. " +
+		"'Singular' only adds the output if not already present. " +
+		"'Remove' finds a matching output, then removes it. " +
+		"Removals are processed after the other types." =
+		[
+		"append": "Append"
+		"singular": "Singular"
+		"remove": "Remove"
+		]
 
 	out_name(string) : "Output Name" : : "The output name to use."
 
@@ -17,8 +27,10 @@
 	inp_name(string) : "Input Name" : : "The input to fire."
 
 	delay(float) : "Delay Min" : "0.0": "A delay to add to the output."
-	delay_max(float) : "Delay Max" : : "If set, the delay will be randomised between the min and max. This is seeded from the location of this entity."
-	delay2(float) : "Extra Delay" : "0.0" : "A second delay to add to the first delay. Useful for instance parameters."
+	delay_max(float) : "Delay Max" : : "If set, the delay will be randomised between the min and max."
+	delay2(float) : "Extra Delay" : "0.0" : "A second delay to add to the first delay. This is not randomised. Useful for instance parameters."
+	seed(string) : "Random Seed" : : "For the delay, the position and name of the comp_adv_output are used to seed a random number generator, " +
+		"to keep values consistent across compiles. This can be set to further randomise results."
 
 	times(integer) : "Times to Fire" : -1 : "The number of times this output can fire, or -1 for infinite. Hammer normally only allows setting this to 1 or -1."
 
@@ -65,6 +77,9 @@
 	params_global5(string) : "Parameter 5 - String" : : "A value which will replace {5} in the parameter."
 	params_local5(target_destination) : "Parameter 5 - Ent Name" : : "If set, this is a fixed up entity name which will be used in the parameter, replacing {5}."
 	params_pos5(origin) : "Parameter 5 - Position" : : "If set, this is a XYZ position which will be used in the parameter, replacing {5}. This will be offset by instancing."
+
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
 
 	@resources []
 	]

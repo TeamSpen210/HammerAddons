@@ -1,6 +1,4 @@
 """Implement comp_choreo_sceneset."""
-from typing import List
-
 from srctools import Entity, Output, conv_bool, conv_float
 from srctools.logger import get_logger
 
@@ -10,14 +8,14 @@ LOGGER = get_logger(__name__)
 
 
 @trans('comp_choreo_sceneset')
-def sceneset(ctx: Context):
+def sceneset(ctx: Context) -> None:
     """Chains a set of choreographed scenes together."""
     ent: Entity
     for ent in ctx.vmf.by_class['comp_choreo_sceneset']:
         scenes = [
-            ent['scene{:02}'.format(i)]
+            ent[f'scene{i:02}']
             for i in range(1, 21)
-            if ent['scene{:02}'.format(i)]
+            if ent[f'scene{i:02}']
         ]
         if not scenes:
             LOGGER.warning(
@@ -35,7 +33,7 @@ def sceneset(ctx: Context):
 
         ent.remove()
 
-        scene_ents: List[Entity] = []
+        scene_ents: list[Entity] = []
 
         name = ent.make_unique('_choreo')['targetname']
         for i, scene in enumerate(scenes):

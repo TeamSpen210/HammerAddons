@@ -9,4 +9,5 @@
 	
 	// Inputs
 	input SetHealthAmount(float) : "Sets the amount of health this item gives."
+	@resources []
 	]

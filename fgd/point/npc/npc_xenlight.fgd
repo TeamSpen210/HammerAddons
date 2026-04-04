@@ -1,7 +1,15 @@
 @NPCClass base(EZ2XenFlora) appliesto(EZ2) 
 	studio("models/light.mdl")
 	autovis(Entities, NPCs, Xen, Xen Deco)
-= npc_xenlight : "Light Stalk"
+= npc_xenlight : "Glowing Xen plants that retract into the ground and go dark when threatened. They are able to alert squadmates when an intruder is near."
 	[
 	lightcolor(color255) : "Light Color" : "255 255 255 100" : "Light Color RGB-Intensity"
+
+	@resources
+		[
+		mdl "models/light.mdl"
+		mat "sprites/light_glow02.vmt"
+		snd "npc_lightstalk.extend"
+		snd "npc_lightstalk.retract"
+		]
 	]

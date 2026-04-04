@@ -1,0 +1,11 @@
+@NpcClass base(BaseEntityAnimating) 
+	appliesto(EP1, EP2, HL2, P1) 
+	autovis(Entities, NPCs, Hand Grenade)
+	studio("models/Weapons/w_grenade.mdl") = npc_contactgrenade: "Grenade which explodes on contact. Can be launched by combine soldiers with the right input."
+	[
+	@resources
+		[
+		model "models/Weapons/w_grenade.mdl"
+		entity grenade // Actual base class.
+		]
+	]

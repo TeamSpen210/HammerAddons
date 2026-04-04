@@ -2,4 +2,10 @@
 	[
 	output OnLower(void) : "Fired when lightstalk is lowered"
 	output OnRise(void) : "Fired when lightstalk is risen"
+
+	@resources
+		[
+		particle "blood_impact_blue_01" // TODO - only if radiation type
+		particle "blood_impact_yellow_01"
+		]
 	]

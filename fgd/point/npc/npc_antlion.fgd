@@ -19,9 +19,9 @@
 	unburroweffects(boolean) : "Suppress unburrow effects" : 0
 	startburrowed(boolean) : "Start Burrowed" : 0
 	
-	model(studio) : "Override Model"
+	model[EZ2](studio) : "Override Model"
 	noglow[engine](boolean) : "Disable Glowing Butt" : 0
-	noglow(choices) : "Glowing Butt" : 0 =
+	noglow[EZ2](choices) : "Glowing Butt" : 0 =
 		[
 		0 : "Glow"
 		1 : "Don't glow"

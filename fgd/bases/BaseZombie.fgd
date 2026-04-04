@@ -2,15 +2,17 @@
 	[
 	Headless[Mbase](boolean) : "Headcrab-less" : 0 : "Toggles whether this zombie should have a headcrab on their head. They usually should."
 
-	model[MBase](studio): "Override Model"
-	torsomodel[MBase](studio) : "Override Torso Model"
-	legsmodel[MBase](studio) : "Override Legs Model"
+	MeleeReach[MBase](float) : "Melee Reach" : : "Overrides the maximum distance in which this zombie should be able to swat at enemies. Default is 55"
+	MaxDistToSwat[MBase](float) : "Max Distance to Swat Props" : : "Overrides the maximum distance in which this zombie should be able to swat props at enemies. Default is 1000"
+	MaxObjMassToSwat[MBase](float) : "Max Object Mass to Swat" : : "Overrides the maximum mass this zombie should consider when choosing props to swat. Default is 60"
 	
 	spawnflags(Flags) = 
 		[
 		65536 : "Never spawn headcrab" : 0 [Mesa]
 		32768 :  "Never turn into a torso" : 0 [Mbase]
+		65536 :  "Never release headcrab" : 0 [MBase]
 		]
+
 	input BecomeTorso[Mesa](void) : "BecomeTorso"
 
 	output OnSwattedProp[Mbase](ehandle) : "Fires when this NPC swats a prop, passing the prop as the activator and parameter."

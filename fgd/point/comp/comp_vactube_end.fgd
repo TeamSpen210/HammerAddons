@@ -1,20 +1,29 @@
 @PointClass base(BaseEntityPoint)
 	appliesto(+P2, +srctools)
-	autovis(Vactubes, Vac Paths)
-	studioprop("models/editor/vactubes/end_point.mdl")
+	studioprop()
 	sphere()
-= comp_vactube_end : "Marks the end point of a vactube. Objects reaching here will be cleaned up."
+= comp_vactube_end : "Marks the end point of a vactube. Objects reaching here will be cleaned up. This also has special functionality for integrating with a dropper."
 [
-	radius(float) : "Cube Radius" : 0 : "The radius to search for cubes in for droppers. If zero, this is a regular endpoint, and the rest of the options have no effect."
-	autorespawn(boolean) : "Auto Respawn" : 1 : "Automatically respawn cubes when destroyed."
+	// Not studio, we don't want to pack these.
+	model[engine](string) : "Type" : "models/editor/vactubes/end_point.mdl"
+	model(choices) : "Type" : "models/editor/vactubes/end_point.mdl" : "Whether this is standard size or 1/16 skybox scale." = [
+		"models/editor/vactubes/end_point.mdl" : "Regular"
+		"models/editor/vactubes/end_point_sky.mdl" : "Skybox"
+	]
 
-	filtername(target_destination) : "Filter + Reference" : : "The filter_activator_name to set to point at the cube. This is also used as the location to determine the distance to the cube."
-	template(target_destination) : "Template" : : "The point_template to set to spawn the cube."
+	radius(float) : "Cube Radius" : 0 : "The radius to search for cubes in for droppers. If zero, this is a regular endpoint, and the other cube options have no effect."
+	autorespawn(boolean) : "Dropper - Auto Respawn" : 1 : "Automatically respawn cubes when destroyed."
+
+
+	filtername(target_destination) : "Dropper - Filter + Reference" : : "The filter_activator_name to set to point at the cube. This is also used as the location to determine the distance to the cube."
+	template(target_destination) : "Dropper - Template" : : "The point_template to set to spawn the cube."
 
 	input RequestSpawn(void) : "Request a cube to be spawned and routed here."
 	input FireCubeUser1(void) : "FireUser1 at the cube, for dissolving existing ones."
 	output OnCubeArrived(void) : "Triggered when the cube has arrived to be dispensed."
 	output OnFizzled(void) : "Fired when the cube is fizzled, and autorespawn is enabled."
-    
+
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
     @resources []
 ]

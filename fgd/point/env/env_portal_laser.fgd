@@ -29,10 +29,20 @@
 		1: "Rusted"
 		]
 
+	beamcolor[engine](color255) : "Laser Beam Color" : "255 0 0 255"
+	beamcolor[Strata](choices): "Laser Beam Color" : "255 0 0 255" : "The color of the laser. You can also specify a custom RGBA color here." = #snippet "StrataDisBeamColor"
+	DisablePlayerCollision[engine](boolean): "Player Collision" : 0
+	DisablePlayerCollision[Strata](choices): "Player Collision" : 0 : "Override to disable player collision for this laser. If set to 0 (default), sv_player_collide_with_laser will determine whether or not to collide. If 1, laser collision will be disabled." =
+		[
+		0: "Default Behavior"
+		1: "Force Off"
+		]
+
 	// Inputs
 	input Toggle(void) : "Toggle the laser on and off."
 	input TurnOn(void) : "Turn the laser on."
 	input TurnOff(void) : "Turn the laser off."
+	input SetBeamColor[Strata](color255) : "Changes the laser colour."
 
 	@resources // We know it needs at least these.
 		[

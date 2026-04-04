@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityAnimating)
+	appliesto(+engine, P1, P2, INFRA) 
+= baseanimating_projectile: "Base class for prop-based projectiles"
+	[
+	@resources []
+	]

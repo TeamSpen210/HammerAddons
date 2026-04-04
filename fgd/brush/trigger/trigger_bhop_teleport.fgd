@@ -5,7 +5,7 @@
 	line(0 255 0, target, landmark) 
 = trigger_bhop_teleport: "A trigger that only allows a player to be inside it for the specified amount of time before they are teleported to a destination. Used primarily for bhop platforms."
 	[
-	target(target_destination) : "Remote Destination" : : "The entity specifying the point to which entities should be teleported."
+	target(target_destination) report: "Remote Destination" : : "The entity specifying the point to which entities should be teleported."
 	allowedtime(float) : "Maximum Allowed Time" : "0.05" : "The maximum allowed time a player can be inside this trigger before being teleported. The best height for this time frame would be 2 unit high blocks over your bhops."
 	landmark(target_destination) : "Local Destination Landmark" : : "If specified, then teleported entities are offset " +
 		"from the target by their initial offset from the landmark."

@@ -4,4 +4,12 @@
 = tank_destruction: "Tank Boss Destruction Animation"
 	[
 	modelscale(float) : "Model Scale" : "1.0" : "A multiplier for the size of the model."
+
+	@resources [
+		mdl "models/bots/boss_bot/boss_tank_part1_destruction.mdl"
+		mdl "models/bots/tw2/boss_bot/boss_tank_part1_destruction.mdl"
+		particle "explosionTrail_seeds_mvm"
+		particle "fluidSmokeExpl_ring_mvm"
+		sound "MVM.TankExplodes"
+		]
 	]

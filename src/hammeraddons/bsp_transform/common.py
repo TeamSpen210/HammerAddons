@@ -1,28 +1,35 @@
 """Operations that can be reused across different transforms."""
+
+from typing import final, Literal, Self, Protocol
+from collections.abc import Callable, Container, Iterator
+from decimal import Decimal, InvalidOperation
+from random import Random
+import functools
+import hashlib
 import operator
 import re
-from typing import Callable, Container, Dict, Iterator, Tuple, Union, final
-from decimal import Decimal, InvalidOperation
+import struct
 
-from typing_extensions import Literal, Self, TypeAlias
 import attrs
 
-from srctools import Entity, FrozenVec, VMF, Vec, conv_bool
+from srctools import Entity, FrozenVec, VMF, Vec, conv_bool, parse_vec_str
 from srctools.fgd import EntityDef
 from srctools.logger import get_logger
 
 
 __all__ = [
-    'parse_numeric_specifier', 'check_control_enabled',
-    'ent_description', 'RelayOut', 'get_multimode_value', 'strip_cust_keys'
+    'parse_numeric_specifier', 'check_control_enabled', 'build_filename',
+    'rng_hasher', 'rng_get', 'ent_description', 'RelayOut',
+    'get_multimode_value', 'strip_cust_keys',
+    'NumericOp', 'NumericSpecifier',
 ]
 
 
 LOGGER = get_logger(__name__)
-NumericOp: TypeAlias = Callable[[Decimal, Decimal], bool]
-NumericSpecifier: TypeAlias = Tuple[NumericOp, Decimal]
+type NumericOp = Callable[[Decimal, Decimal], bool]
+type NumericSpecifier = tuple[NumericOp, Decimal]
 
-OPERATIONS: Dict[str, NumericOp] = {
+OPERATIONS: dict[str, NumericOp] = {
     '<': operator.lt,
     '>': operator.gt,
     '>=': operator.ge,
@@ -39,7 +46,7 @@ OPERATIONS: Dict[str, NumericOp] = {
 OPERATION_RE = re.compile(r'\s*([{}]+)'.format(''.join(map(re.escape, {
     char for key in OPERATIONS for char in key
 }))))
-kv_name_cache: Dict[str, Container[str]] = {}
+kv_name_cache: dict[str, Container[str]] = {}
 
 
 # noinspection PyUnusedLocal
@@ -48,7 +55,7 @@ def op_always_fail(a: Decimal, b: Decimal, /) -> Literal[False]:
     return False
 
 
-def parse_numeric_specifier(text: str, desc: str='') -> NumericSpecifier:
+def parse_numeric_specifier(text: str, desc: str = '') -> NumericSpecifier:
     """Parse case values like "> 5" into the operation and number."""
     operation: NumericOp
     if (match := OPERATION_RE.match(text)) is not None:
@@ -96,6 +103,53 @@ def ent_description(ent: Entity) -> str:
         return f'{classname} @ ({pos})'
 
 
+@functools.cache
+def build_filename(*seeds: str, max_under: int = 4, length: int = 16) -> str:
+    """Try to create a valid filename from the provided seed strings.
+
+    This is for debugging purposes, so we can try to make generated files
+    identifiable. If we cannot safely do so, skip.
+    :parameter seeds: Each of these strings is tried in turn.
+    :parameter length: The filename is trimmed to this long at most.
+    :parameter max_under: Try removing underscores to stay under the limit,
+        if there's more than this many present.
+    """
+    for seed in seeds:
+        # Replace all non-printables with underscores
+        name = re.sub(r'[^a-zA-Z0-9]', '_', seed)
+        # Then merge any adjacient ones.
+        name = re.sub(r'__+', '_', name)
+        if 3 < len(name) <= length:
+            return name
+        if name.count('_') >= max_under:
+            under_trimmed = name.replace('_', '')
+            if len(under_trimmed) < max_under:
+                return under_trimmed
+        if len(name) < 2 * length:
+            return name[:length]
+    return ''
+
+
+class _Hasher(Protocol):
+    """This is private in hashlib."""
+    def copy(self) -> '_Hasher': ...
+    def update(self, data: bytes | bytearray, /) -> None: ...
+    def digest(self) -> bytes: ...
+
+
+def rng_hasher(clsname: str, ent: Entity) -> _Hasher:
+    """Create a hasher unique to this entity. Uses a 'seed' keyvalue if present."""
+    hasher = hashlib.sha512()
+    hasher.update(f"{clsname};{ent['seed']};{ent['targetname']}".encode())
+    hasher.update(struct.pack('<x3f', *parse_vec_str(ent['origin'])))
+    return hasher
+
+
+def rng_get(clsname: str, ent: Entity) -> Random:
+    """Return a RNG seeded to be unique to this entity. Uses a 'seed' keyvalue if present."""
+    return Random(rng_hasher(clsname, ent).digest())
+
+
 @final
 @attrs.frozen
 class RelayOut:
@@ -105,7 +159,7 @@ class RelayOut:
     output: str
 
     @classmethod
-    def create(cls, vmf: VMF, pos: Union[Vec, FrozenVec], name: str) -> Iterator[Self]:
+    def create(cls, vmf: VMF, pos: Vec | FrozenVec, name: str) -> Iterator[Self]:
         """Generates a valid entity along with a free input/output pair."""
         # Could also use func_instance_io_proxy, but only in L4D+, and it might be weird.
         user_outs = [('Trigger', 'OnTrigger')] + [
@@ -122,7 +176,7 @@ class RelayOut:
                 yield cls(ent, inp, out)
 
 
-def get_multimode_value(ent: Entity, *, prefix: str='', suffix: str='', desc: str) -> str:
+def get_multimode_value(ent: Entity, *, prefix: str = '', suffix: str = '', desc: str) -> str:
     """Read from differerent typed keyvalues, specified by a mode option.
 
     The mode was originally not present, which is why local/global is doubled up.
@@ -159,8 +213,8 @@ def strip_cust_keys(ent: Entity) -> None:
             LOGGER.warning('Unknown classname "{}"!', classname)
             names = ()
         else:
-            names = set(ent_def.kv)
+            names = {name.casefold() for name in ent_def.kv}
         kv_name_cache[classname] = names
     for key in list(ent):
-        if key not in names:
+        if key.casefold() not in names:
             del ent[key]

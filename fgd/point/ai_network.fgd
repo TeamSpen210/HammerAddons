@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(+engine, ASW, EP1, EP2, HL2, P1) 
+= ai_network: "Manages saving/loading and rebuilding the AI nodegraph."
+	[
+	@resources []
+	]

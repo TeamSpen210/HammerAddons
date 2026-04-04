@@ -1,6 +1,6 @@
 @SolidClass base(BaseEntityBrush) 
-	appliesto(since_L4D)
-= func_precipitation_blocker: "A brush entity that prevents rain and snow inside its volume."
+	appliesto(since_L4D, GMOD)
+= func_precipitation_blocker: "A brush entity that prevents rain and snow from func_precipitation inside its volume."
 	[
 	@resources []
 	]

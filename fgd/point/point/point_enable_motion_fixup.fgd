@@ -4,4 +4,5 @@
 = point_enable_motion_fixup: "An entity used to move a motion-disabled prop when it enables motion. " +
 	"Parent this entity to the prop, and when the prop has its motion enabled, it will immediately teleport to the origin of this entity."
 	[
+	@resources []
 	]

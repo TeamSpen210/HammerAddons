@@ -41,6 +41,11 @@
 	failsafe_delay(float): "Failsafe delay": "1.0" : "Delay after which non-cube entities will be killed."
 	dissolve_filter(filterclass): "Physics Filter" : : "Set to a filter entity to prevent certain entities from dissolving."
 
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
+
+	// Outputs
 	output OnKillPlayer(void): "Fired when players touch the trigger."
 	output OnDissolvePhysics(void): "Fired when physics objects touch the trigger (and will be dissolved/killed soon)."
+	@resources []
 	]

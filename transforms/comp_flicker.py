@@ -1,10 +1,8 @@
 """Fires on/off inputs repeatedly to simulate a flicker-on effect."""
-from typing_extensions import Final
-import random
+from typing import Final
 
-from hammeraddons.bsp_transform.common import strip_cust_keys
 from srctools import Output, lerp, logger, conv_float
-
+from hammeraddons.bsp_transform.common import strip_cust_keys, rng_get
 from hammeraddons.bsp_transform import trans, Context
 
 LOGGER = logger.get_logger(__name__)
@@ -34,38 +32,38 @@ def comp_flicker(ctx: Context) -> None:
         ctx.add_io_remap(
             ent_name,
             Output('TurnOff', ent_name, INP_TURN_OFF),
-            Output('TurnOn',  ent_name, INP_TURN_ON),
+            Output('TurnOn', ent_name, INP_TURN_ON),
             Output('FlickerOff', ent_name, INP_FLICK_OFF),
-            Output('FlickerOn',  ent_name, INP_FLICK_ON),
+            Output('FlickerOn', ent_name, INP_FLICK_ON),
         )
 
         for out in ent.outputs:
-            out_name = out.output.casefold()
-            if out_name.startswith('onuser'):
-                LOGGER.warning(
-                    'comp_flicker "{}" uses Fire/OnUserX outputs, which are being used by the '
-                    "entity logic! It probably won't work properly.",
-                    ent_name,
-                )
-            elif out_name == 'onturnedoff':
-                out.output = OUT_TURN_OFF
-            elif out_name == 'onturnedon':
-                out.output = OUT_TURN_ON
-            elif out_name == 'onflickeroffstart':
-                out.output = OUT_FLICK_OFF
-            elif out_name == 'onflickeronstart':
-                out.output = OUT_FLICK_ON
-            elif out_name == 'onflickeroffend':
-                out.output = OUT_FLICK_OFF
-                out.delay += total_time
-            elif out_name == 'onflickeronend':
-                out.output = OUT_FLICK_ON
-                out.delay += total_time
-            else:
-                LOGGER.warning(
-                    'Unknown comp_flicker output "{}" for "{}"',
-                    out.output, ent_name,
-                )
+            match out.output.casefold():
+                case 'onuser1' | 'onuser2' | 'onuser3' | 'onuser4':
+                    LOGGER.warning(
+                        'comp_flicker "{}" uses Fire/OnUserX outputs, which are being used by the '
+                        "entity logic! It probably won't work properly.",
+                        ent_name,
+                    )
+                case 'onturnedoff':
+                    out.output = OUT_TURN_OFF
+                case 'onturnedon':
+                    out.output = OUT_TURN_ON
+                case 'onflickeroffstart':
+                    out.output = OUT_FLICK_OFF
+                case 'onflickeronstart':
+                    out.output = OUT_FLICK_ON
+                case 'onflickeroffend':
+                    out.output = OUT_FLICK_OFF
+                    out.delay += total_time
+                case 'onflickeronend':
+                    out.output = OUT_FLICK_ON
+                    out.delay += total_time
+                case _:
+                    LOGGER.warning(
+                        'Unknown comp_flicker output "{}" for "{}"',
+                        out.output, ent_name,
+                    )
 
         mdl_name = ent['target_mdl']
         if mdl_name:
@@ -73,6 +71,8 @@ def comp_flicker(ctx: Context) -> None:
                 Output(OUT_TURN_ON, mdl_name, 'Skin', ent['mdl_skin_on']),
                 Output(OUT_TURN_OFF, mdl_name, 'Skin', ent['mdl_skin_off']),
             )
+        rng = rng_get('comp_flicker', ent)
+
         strip_cust_keys(ent)
 
         for out_name, start_state, min_point, max_point in [
@@ -91,7 +91,7 @@ def comp_flicker(ctx: Context) -> None:
                 ))
 
                 delay = lerp(time, min_point, max_point, flicker_min, flicker_max)
-                time += delay + random.uniform(-variance, variance)
+                time += delay + rng.uniform(-variance, variance)
 
                 delay = lerp(
                     time,
@@ -99,7 +99,7 @@ def comp_flicker(ctx: Context) -> None:
                     flicker_min, flicker_max,
                 )
                 # Clamp to specified min/max.
-                delay = min(flicker_max, max(flicker_min, delay)) + random.uniform(-variance, variance)
+                delay = min(flicker_max, max(flicker_min, delay)) + rng.uniform(-variance, variance)
                 # And enforce monotonicity.
                 if delay < 0.01:
                     delay = 0.01

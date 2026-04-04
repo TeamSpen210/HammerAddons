@@ -1,6 +1,6 @@
 @NpcClass aliasof(npc_headcrab_black) 
 	appliesto(EP1, EP2, HL2, P1, Mesa) 
 	autovis(Entities, NPCs, Headcrabs, Poison Headcrab)
-	studio("models/Headcrabblack.mdl") = npc_headcrab_poison: "Black Poison Headcrab"
+	studio("models/Headcrabblack.mdl") = npc_headcrab_poison: "Alias for npc_headcrab_black. A headcrab that applies temporary poison damage against enemies."
 	[
 	]

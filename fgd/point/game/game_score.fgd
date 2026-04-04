@@ -12,7 +12,8 @@
 	points(integer) : "Points to add (+/-)" : 1
 
 	// Inputs
-	input ApplyScore(void) : "Add score to player."
+	input ApplyScore(void) : "Add score. !activator must be a player."
 	input AddScoreTerrorist[CSGO](void) : "Add score to team TERRORIST."
 	input AddScoreCT[CSGO](void) : "Add score to team COUNTER TERRORIST."
+	@resources []
 	]

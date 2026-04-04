@@ -7,13 +7,13 @@
 	"If a Local Destination Landmark is specified, teleported entities are offset from " +
 	"the target by their initial offset from the landmark, and their angles are left alone."
 	[
-	target(target_destination) : "Remote Destination" : : "The entity specifying the point to which entities should be teleported."
-	landmark(target_destination) : "Local Destination Landmark" : : "If specified, then teleported entities are offset " +
-		"from the target by their initial offset from the landmark."
+	target(target_destination) report: "Remote Destination" : : "The entity specifying the point to which entities should be teleported."
+	landmark(target_destination) : "Local Destination Landmark" : : "In landmark mode, teleported entities are offset from the target by their initial offset from the landmark. " +
+		"Angles and velocity are also reoriented to the destination if enabled."
 
 	// This clearly moved from flag to keyvalue.
 	uselandmarkangles[since_ASW](boolean) : "Use Landmark Angles" : 0 : "Forces the teleported object to snap to the angles of the destination landmark."
-	spawnflags[until_ASW](flags)  =
+	spawnflags[until_ASW, MOMENTUM](flags)  =
 		[
 		32: "Preserve angles even when a local landmark is not specified" : 0
 
@@ -24,6 +24,7 @@
 		4: "func_pushable" : 0 [!KZ]
 		8: "Physics Objects" : 0 [!KZ]
 		8192: "Items  (weapons, items, projectiles)" : 0 [MBase]
+		8192: "Allow ghosts to fire this trigger" : 0 [MOMENTUM]
 		16: "Only player ally NPCs" : 0 [!KZ]
 		64: "Everything (not including physics debris)" : 0 [!KZ] // KZ changes these out
 		512: "Only clients *not* in vehicles" : 0 [!KZ]
@@ -42,10 +43,26 @@
 		4096: "All players may teleport by default until removed from the active list." : 0 [KZ]
 		8192: "Redirect velocity to the direction of the destination (portal mode) (Requires Preserve Movement Velocity UNTICKED)." : 0 [KZ]
 		]
-	checkdestifclearforplayer[since_CSGO](boolean) : "Only Spawn-Valid Destinations" : 0 : "Only teleport if there is a clear teleport destination."
+	checkdesticlearforplayer[since_CSGO](boolean): "Only Spawn-Valid Destinations" : 0 : "Only teleport if there is a clear teleport destination."
+	TeleportOnEndTouch[engine](boolean): "Teleport On End Touch" : 0
+	TeleportOnEndTouch[Strata](choices): "Teleport On" : 0 =
+		[
+		0: "Start Touch"
+		1: "End Touch"
+		]
+	VelocityMode[engine](integer) : "Velocity Mode" : 0
+	VelocityMode[Strata](choices): "Velocity Mode" : 0 =
+		[
+		0: "Keep Velocity"
+		1: "Reset Velocity"
+		2: "Keep Negative Z Velocity Only"
+		3: "Redirect Velocity"
+		]
+	SetSpeed[Strata](float): "Redirect Velocity Speed" : 400 : "If Velocity Mode is set to Redirect Velocity, the entity's speed will be set to this amount when teleported. " +
+		"When this speed is <= 0, use the entity's current speed instead."
 
 	// Inputs
-	input SetRemoteDestination[P2](string) : "Set a new target to teleport to."
+	input SetRemoteDestination[P2](string) : "Set a new remote teleport destination."
 	input AddAllowedPlayer[KZ](void) : "Enable a player to use this teleporter."
 	input AddAllowedTeam[KZ](void) : "Enable a multiplayer timer set team to use this teleporter."
 	input RemoveAllowedPlayer[KZ](void) : "Make a player unable to this this teleporter."

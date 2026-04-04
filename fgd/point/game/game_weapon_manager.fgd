@@ -7,9 +7,10 @@
 	[
 	weaponname(string) : "Weapon Classname" : : "Classname of the weapon type to limit."
 	maxpieces(integer) : "Max Allowed in Level" : 0 : "The maximum amount of the specified weapon type allowed in the world."
-	ammomod(float) : "Ammo modifier" : 1 : "Modifier for ammount of ammo dropped by a weapon."
+	ammomod(float) : "Ammo modifier" : 1 : "Modifier for the amount of ammo dropped by a weapon."
 
 	// Inputs
-	input SetMaxPieces(float) : "Adjust the maximum amount of the weapon allowed."
 	input SetAmmoModifier(float) : "Adjust the ammo modifier."
+	input SetMaxPieces(float) : "Set the max amount of weapons of the specified type allowed to be in the world."
+	@resources [] // Does have a Spawn() function, but that's unused?
 	]

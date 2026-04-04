@@ -1,10 +1,12 @@
 @PointClass base(BaseEntityPoint)
 	// size(-4 -4 -4, 4 4 4) 
 	color(200 200 0) 
-	studioprop("models/editor/vgui_arrows.mdl")
-	iconsprite(editor/vizzys/vgui_screen) 
-	sphere(width) 
-	sphere(height) 
+	iconsprite(editor/vizzys/vgui_screen)
+	studio[+Strata]("models/editor/angle_helper.mdl")
+	orientedwidthheight[+Strata](width, height)
+	studio[-Strata]("models/editor/vgui_arrows.mdl")
+	sphere[-Strata](width)
+	sphere[-Strata](height)
 = vgui_screen: "A VGUI screen. Useful for in-world monitors."
 	[
 	panelname(string) : "Panel Name" : : "The type of display to show."

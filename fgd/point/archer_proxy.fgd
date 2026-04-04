@@ -3,4 +3,12 @@
 	studio("models/weapons/w_models/w_arrow.mdl")
 = archer_proxy : "Fires arrows at enemies." 
 	[
+	@resources [
+		// "don't need to precache, since player does this for us"
+		mdl "models/weapons/w_models/w_arrow.mdl"
+		sound "Weapon_CompoundBow.Single"
+
+		entity tf_projectile_arrow
+		// entity tf_projectile_pipe (Unused code?)
+		]
 	]

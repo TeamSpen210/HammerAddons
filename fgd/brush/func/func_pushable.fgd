@@ -23,4 +23,5 @@
 
 	friction(float) : "Friction" : 50 : "This determines the amount of resistance the brush will give when the player pushes it. " +
 		"Range is 0 to 400, where 400 is the most resistance."
+	@resources []
 	]

@@ -3,14 +3,14 @@
 	iconsprite("editor/vizzys/info_target_gunshipcrash.vmt") 
 	studio("models/editor/axis_helper.mdl") 
 	halfgridsnap
-= info_target_gunshipcrash: "Gunship Crash Target"
+= info_target_gunshipcrash: "A special version of info_target used to direct Combine gunships to their intended crash destination."
 	[
 	// Inputs
 	input Enable(void) : "Enable the crash target."
 	input Disable(void) : "Disable the crash target."
 
 	// Outputs
-	output OnCrashed(void) : "Fired when the gunship crashed on target."
+	output OnCrashed(void) : "Fired when the Gunship crashes at this target."
 
 	@resources []
 	]

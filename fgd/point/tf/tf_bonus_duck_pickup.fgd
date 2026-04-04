@@ -1,6 +1,16 @@
-@PointClass base(TFPickup) 
+@PointClass base(tf_halloween_pickup) 
 	appliesto(TF2) 
 	studioprop("models/workshop/player/items/pyro/eotl_ducky/eotl_bonus_duck.mdl") 
 = tf_bonus_duck_pickup : "EOTL Bonus Ducks"
 	[
+	@resources [
+		model "models/workshop/player/items/pyro/eotl_ducky/eotl_bonus_duck.mdl"
+		particle "superrare_beams1"
+		particle "duck_collect_trail_red"
+		particle "duck_collect_trail_blue"
+		particle "duck_collect_trail_special_red"
+		particle "duck_collect_trail_special_blue"
+		particle "duck_pickup"
+		sound "Duck.Quack"
+		]
 	]

@@ -1,0 +1,29 @@
+@PointClass appliesto(Strata)
+	base(BaseEntityPoint)
+	size(-4 -4 -4, 4 4 4) 
+	color(200 200 0) 
+	orientedwidthheight(width, height)
+	studio("models/editor/angle_helper.mdl")
+= panorama_screen: "An entity that exposes a user-defined Panorama panel to the world. Supports running custom JavaScript code and modifying CSS classes."
+	[
+	layout(string) : "Layout File" : : "Panorama layout file to display. Example: file://{resources}/layout/mycoollayout.xml"
+
+	width(integer) : "Panel Width in World (Green)" : 128 : "Width of the panel in units."
+	height(integer) : "Panel Height in World (Blue)" : 128 : "Height of the panel in units."
+	panel_scale(float) : "Panel Scale" : 32 : "Scale of the panel."
+
+	panel_class_name(string) : "Panel Class" : "" : "Class to append to the panel."
+	panel_id(string) : "Panel ID" : "" : "ID to append to the panel."
+
+	start_active(boolean) : "Start Active" : "1" : "Whether or not the screen will start active."
+	ignore_input(boolean) : "Ignore Input" : "0" : "NOTE: Does nothing right now!"
+	interact_distance(float) : "Interact Distance" : "8" : "NOTE: Does nothing right now!"
+
+	// Inputs
+	input SetActive(void) : "Show this world panel."
+	input SetInactive(void) : "Hide this world panel."
+
+	input RunJSScript(string) : "Runs the specified JavaScript code or function on the panel."
+	input AddCSSClass(string) : "Add a CSS class to the panel."
+	input RemoveCSSClass(string) : "Remove a CSS class from the panel."
+	]

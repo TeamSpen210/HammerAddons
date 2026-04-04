@@ -14,6 +14,9 @@
 	input Explode(void) : "Explodes the bomb."
 	input Dissolve(void) : "Fizzles the bomb. Doesn't fire the OnFizzled output."
 
+	// Outputs
+	output OnExplode(void) : "Called when the bomb explodes."
+
 	@resources // Assumed
 		[
 		model "models/npcs/personality_sphere_angry.mdl"

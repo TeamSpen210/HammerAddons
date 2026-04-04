@@ -8,4 +8,6 @@
 	
 	defaultwelcome(boolean) : "Is Welcome Point?" : 0 : "This marks this point as a welcome point. Players use this when connectig to servers the first time."
 	match_summary(boolean) : "Is Match Summary?" : 0 : "Marks this point as a camera for the match summary."
+
+	@resources []
 	]

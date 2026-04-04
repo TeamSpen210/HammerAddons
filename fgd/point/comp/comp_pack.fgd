@@ -2,7 +2,6 @@
 	base(ControlEnables)
 	iconsprite("editor/comp_pack")
 	appliesto(srctools)
-	autovis(Postcompiler, Packing)
 = comp_pack:
 	"Explicitly identify resources to pack into the map. If more are needed, add additional keyvalues with SmartEdit off."
 	[
@@ -41,6 +40,8 @@
 	soundscript3(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
 	soundscript4(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
 	soundscript5(string): "SoundScript" : : "Pack a soundscript file, and include in the manifest."
-    
+
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
     @resources [] // Done via transform.
 	]

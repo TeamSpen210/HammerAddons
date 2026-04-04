@@ -52,4 +52,5 @@
 	output OnLockedUse(void) : "Fired whenever the button is interacted with while locked."
 	output OnIn(void) : "Fired whenever the prop completes its 'In' animation."
 	output OnOut(void) : "Fired whenever the prop completes its 'Out' animation."
+	@resources []
 	]

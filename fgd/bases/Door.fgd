@@ -8,7 +8,7 @@
 	noise2(sound) : "Stop Sound" : : "Sound to play when the door stops moving."
 	startclosesound(sound) : "Start Close Sound" : : "(Optional) Sound to play when the door starts closing. If not set, the Start Sound will be used instead."
 	closesound(sound) : "Stop Close Sound" : : "(Optional) Sound to play when the door stops closing. If not set, the Stop Sound will be used instead."
-	loopmovesound(boolean) : "Loop Moving Sound?" : 0 : "If set to true, the door's 'Start Sound' will be continually looped until the door finishes moving."
+	loopmovesound(boolean) : "Replay Moving Sound?" : 0 : "If set to true, the door's 'Start Sound' will be re-triggered whenever finished until the door finishes moving. Not necessary if the sound loops normally."
 
 	wait(integer) : "Delay Before Reset (-1 stay)" : -1 : "Amount of time, in seconds, after the door has opened before it closes. " +
 		"Once it has closed, it can be used again. If the value is set to -1, the door never closes itself."
@@ -21,6 +21,13 @@
 		"if the player tries to block them with objects."
 	ignoredebris(boolean) : "Ignore Debris" : 0 : "If set this will change the door's collision group to one that ignore collisions with debris objects " +
 		"(note that this is not compatible with the non-solid-to-player spawnflag)."
+
+	solidbsp[engine](boolean): "Solid BSP" : 0
+	solidbsp[Strata](choices): "Solid Type" : 1 : "How to calculate collisions. BSP is more rudimentarty but allows more stable collision with players." =
+		[
+		0: "VPhysics"
+		1: "BSP"
+		]
 
 	health(integer) : "Door Health" : : "The health of the door (allows someone to shoot it open). 0 means invincible."
 
@@ -41,13 +48,14 @@
 		8: "Passable" : 0
 		32: "Toggle" : 0
 		256: "Use Opens" : 0
-		512: "NPCs Can't" : 0
-		1024: "Touch Opens" : 0
+		512: "NPCs Can't Open" : 0
+		1024: "Touch Opens" : 0 [-Momentum]
+		1024: "Touch Opens" : 1 [+Momentum]
 		2048: "Starts locked" : 0
 		4096: "Door Silent" : 0
 		131072: "Block Infected nav when closed" : 0 [L4D, L4D2]
 		262144: "Block Survivor nav when closed" : 0 [L4D, L4D2]
-		65536: "New +USE rules - Allow +USE only when when the door is closed/closing or is open/opening and can be manually closed" : 0
+		65536: "New +USE rules - Allow +USE only when when the door is closed/closing or is open/opening and can be manually closed" : 1
 		]
 
 	locked_sentence[engine](integer) : "Locked Sentence" : 0

@@ -1,13 +1,13 @@
 @PointClass base(Angles)
 	appliesto(+P2, +srctools)
-	autovis(Vactubes, Vac Paths)
 	studioprop()
 = comp_vactube_junction : "Marks a junction in a vactube, where they're forced to change direction. Scanner models near straight nodes will be detected automatically."
 [
 	targetname(target_source): "Junction Name" : : "Although junctions are linked automatically, this can be used to precisely link two junctions. You can use also this to help with identifying problems since the compiler will output it."
 	// Not studio, we don't want to pack these.
 	model[engine](string) : "Type" : "models/editor/vactubes/straight.mdl"
-	model(choices) : "Type" : "models/editor/vactubes/straight.mdl" : "The size and type of junction. Splitters split the tube into multiple paths. You can simply overlap two junctions to join paths, however." = [
+	model(choices) : "Type" : "models/editor/vactubes/straight.mdl" : "The size and type of junction. Splitters split the tube into multiple paths. " +
+		"You can simply overlap two junctions to join paths, however. Skybox variants are 1/16 scaled. Skybox juncions, curves over 6 and the 45 degree vactube all need custom models." = [
 		"models/editor/vactubes/straight.mdl" : "Straight / Scanner"
 		"models/editor/vactubes/curve_1.mdl" : "Curve: 1"
 		"models/editor/vactubes/curve_2.mdl" : "Curve: 2"
@@ -20,6 +20,40 @@
 		"models/editor/vactubes/splitter_straight.mdl" : "Splitter: Straight"
 		"models/editor/vactubes/splitter_sides.mdl" : "Splitter: Left/Right"
 		"models/editor/vactubes/splitter_triple.mdl" : "Splitter: Triple"
+
+		"models/editor/vactubes/straight_sky.mdl" : "(Skybox) Straight / Scanner"
+		"models/editor/vactubes/curve_1_sky.mdl" : "(Skybox) Curve: 1"
+		"models/editor/vactubes/curve_2_sky.mdl" : "(Skybox) Curve: 2"
+		"models/editor/vactubes/curve_3_sky.mdl" : "(Skybox) Curve: 3"
+		"models/editor/vactubes/curve_4_sky.mdl" : "(Skybox) Curve: 4"
+		"models/editor/vactubes/curve_5_sky.mdl" : "(Skybox) Curve: 5"
+		"models/editor/vactubes/curve_6_sky.mdl" : "(Skybox) Curve: 6"
+		"models/editor/vactubes/diag_curve_sky.mdl" : "(Skybox) Curve: 45 Deg"
+		"models/editor/vactubes/diag_curve_mirror_sky.mdl" : "(Skybox) Curve: 45 Deg (Mirror)"
+		"models/editor/vactubes/splitter_straight_sky.mdl" : "(Skybox) Splitter: Straight"
+		"models/editor/vactubes/splitter_sides_sky.mdl" : "(Skybox) Splitter: Left/Right"
+		"models/editor/vactubes/splitter_triple_sky.mdl" : "(Skybox) Splitter: Triple"
+
+		"models/editor/vactubes/curve_7.mdl" : "Curve: 7"
+		"models/editor/vactubes/curve_7_sky.mdl" : "(Skybox) Curve: 7"
+		"models/editor/vactubes/curve_8.mdl" : "Curve: 8"
+		"models/editor/vactubes/curve_8_sky.mdl" : "(Skybox) Curve: 8"
+		"models/editor/vactubes/curve_9.mdl" : "Curve: 9"
+		"models/editor/vactubes/curve_9_sky.mdl" : "(Skybox) Curve: 9"
+		"models/editor/vactubes/curve_10.mdl" : "Curve: 10"
+		"models/editor/vactubes/curve_10_sky.mdl" : "(Skybox) Curve: 10"
+		"models/editor/vactubes/curve_11.mdl" : "Curve: 11"
+		"models/editor/vactubes/curve_11_sky.mdl" : "(Skybox) Curve: 11"
+		"models/editor/vactubes/curve_12.mdl" : "Curve: 12"
+		"models/editor/vactubes/curve_12_sky.mdl" : "(Skybox) Curve: 12"
+		"models/editor/vactubes/curve_13.mdl" : "Curve: 13"
+		"models/editor/vactubes/curve_13_sky.mdl" : "(Skybox) Curve: 13"
+		"models/editor/vactubes/curve_14.mdl" : "Curve: 14"
+		"models/editor/vactubes/curve_14_sky.mdl" : "(Skybox) Curve: 14"
+		"models/editor/vactubes/curve_15.mdl" : "Curve: 15"
+		"models/editor/vactubes/curve_15_sky.mdl" : "(Skybox) Curve: 15"
+		"models/editor/vactubes/curve_16.mdl" : "Curve: 16"
+		"models/editor/vactubes/curve_16_sky.mdl" : "(Skybox) Curve: 16"
 	]
 
 	skin[engine](boolean) : "Reverse Curve?" : 0
@@ -40,5 +74,7 @@
 
 	output OnPass(void) : "Fired when an object passes the midpoint of the junction. The entity is NOT passed as !activator."
 
+	#snippet keyvalue CompVersion
+	#snippet keyvalue CompV1
     @resources []
 ]

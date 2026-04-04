@@ -1,6 +1,6 @@
 @PointClass base(BaseEntityPhysics, BasePaintType) 
 	appliesto(P2, -STANLEY) 
-	studio("models/editor/prop_paint_bomb.mdl") = prop_paint_bomb: "Large blob of gel which explodes on impact. Respawn with a point_template."
+	studio("models/editor/prop_paint_bomb.mdl") = prop_paint_bomb: "Large blob of gel which explodes on impact. Use in conjunction with a point_template to respawn this entity."
 	[
 	bombtype[engine](boolean) : "Bomb Type" : 0
 	bombtype(choices) : "Bomb Type" : 0 : "The type of explosion." =
@@ -10,20 +10,37 @@
 		]
 
 	allowfunnel(boolean) : "Allow Portal Funneling" : 1 : "Whether or not this object should auto-funnel into a portal."
-	allowsilentdissolve(boolean) : "Allow SilentDissolve input" : 0 : "Allow the SilentDissolve input to dissolve this bomb."
+	// Fizzle I/O is in BaseEntityAnimating.
+	allowsilentdissolve[-Strata](boolean) : "Allow SilentDissolve input" : 0 : "Allow the SilentDissolve input to dissolve this bomb."
 	playspawnsound(boolean) : "Play Spawn Sound" : 1 : "Whether or not this bomb should play a sound on spawn (PaintBlob.Inception)."
 	
 
 	model[engine](string) : "" // Not actually a model it really loads.
-	model(studio) readonly : "Model" : "models/props/futbol.mdl" : "Paint bombs need a model set to suppress a warning message. This model gets loaded already."
+	model(studio) readonly : "Model" : "models/error.mdl" : "Paint bombs need a model set to suppress a warning message. This model would be loaded already."
 
 	// Inputs
-	input Dissolve(void) : "Dissolves the paint bomb."
-	input SilentDissolve(void) : "Kills the paint bomb and fires its OnFizzled output."
+	input Dissolve[-Strata](void) : "Dissolves the paint bomb."
+	input SilentDissolve[-Strata](void) : "Kills the paint bomb and fires its OnFizzled output."
 	input EnablePortalFunnel(void) : "Enable portal funneling behavior."
 	input DisablePortalFunnel(void) : "Disable portal funneling behavior."
 
 	// Outputs
-	output OnFizzled(void) : "Fired when a paint bomb is fizzled (by trigger_paint_cleanser?)."
+	output OnFizzled[-Strata](void) : "Fired when a paint bomb is fizzled (by trigger_paint_cleanser?)."
 	output OnExploded(void) : "Fired when a paint bomb explodes."
+
+	@resources [
+		model "models/props/futbol.mdl" 
+		model "models/props/futbol_gib01.mdl"
+		model "models/props/futbol_gib02.mdl"
+		model "models/props/futbol_gib03.mdl"
+		model "models/props/futbol_gib04.mdl"
+        sound "Paintblob.Inception"
+        sound "Paintblob.Impact"
+
+        material "paintblobs/blob_surface_bounce"
+        material "paintblobs/blob_surface_stick" [P2CE, P2DES]
+        material "paintblobs/blob_surface_speed"
+        material "paintblobs/blob_surface_portal"
+        material "paintblobs/blob_surface_erase"
+		]
 	]

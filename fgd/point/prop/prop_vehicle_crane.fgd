@@ -1,11 +1,11 @@
 @PointClass base(BasePropPhysics, BaseDriveableVehicle) 
-	appliesto(EP1, EP2, HL2, P1, ASW) 
+	appliesto(EP1, EP2, HL2, P1) 
 	autovis(Vehicles, Crane)
 	studioprop() = prop_vehicle_crane: "Driveable studiomodel crane."
 	[
 
 	vehiclescript(string) : "Vehicle Script File" : "scripts/vehicles/crane.txt"
-	model(studio) : "World Model" : "models/cranes/crane_docks.mdl" : "Set the model used by the crane."
+	model(studio) report: "World Model" : "models/cranes/crane_docks.mdl" : "Set the model used by the crane."
 
 	magnetname(target_destination) : "Magnet entity" : : "A phys_magnet to hang from the end of the crane. Must be set for the crane to spawn."
 

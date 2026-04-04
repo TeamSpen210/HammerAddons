@@ -1,6 +1,5 @@
 @PointClass
-	base(BaseEntityPoint) 
-	appliesto(until_L4D)
+	base(BaseEntityPoint)
 	line(255 255 255, targetname, lightinglandmark)
 	iconsprite("editor/ficool2/info_lighting_relative.vmt") 
 	halfgridsnap

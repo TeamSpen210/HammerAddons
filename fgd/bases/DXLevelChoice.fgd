@@ -1,27 +1,35 @@
-@BaseClass = DXLevelChoice
+// Basically obsolete at this point, even the slowest systems will support DX9.
+// Black Mesa is deferred, these probably don't do anything there...
+@BaseClass appliesto(+complete, until_L4D, !Mesa) = DXLevelChoice
 	[ 
-	mindxlevel[engine](integer) : "Minimum DX Level" : 0
-	mindxlevel[complete](choices) : "Minimum DX Level" : 0 = 
+	mindxlevel(choices) : "Minimum DirectX Level" : 0 : "Prevents this entity from rendering if the user's DirectX level is lower than the specified value." = 
 		[
-		 0 : "Default (lowest)"
-		60 : "DirectX 6.0"	
+		0 : "Default (Lowest)"
+		60 : "DirectX 6.0"
 		70 : "DirectX 7.0"
-		80 : "DirectX 8.0 (4600Ti)"
-		81 : "DirectX 8.1 (FX5200)"
-		90 : "DirectX 9.0 SM2.0"
-		95 : "DirectX 9.5 SM3.0"
-		100: "DirectX 10.0"
+		80 : "DirectX 8.0"
+		81 : "Directx 8.1"
+		90 : "DirectX 9.0"
+		92 : "Mac/Linux (''9.2'')"
+		95 : "DirectX 9.0c (''9.5'')"
+		// Only relevant in P2 and later which don't have this keyvalue
+		// 97 : "PlayStation 3 (''97'')"
+		98 : "Xbox 360 (''9.8'')"
 		]
-	maxdxlevel[engine](integer) : "Maximum DX Level" : 0
-	maxdxlevel[complete](choices) : "Maximum DX Level" : 0 = 
+	maxdxlevel(choices) : "Maximum DirectX Level" : 0 : "Prevents this entity from rendering if the user's DirectX level is higher than the specified value." = 
 		[
-		0: "Default (lowest)"
-		60: "DirectX 6.0"	
-		70: "DirectX 7.0"
-		80: "DirectX 8.0 (4600Ti)"
-		81: "DirectX 8.1 (FX5200)"
-		90: "DirectX 9.0 SM2.0"
-		95: "DirectX 9.5 SM3.0"
-		100: "DirectX 10.0"
+		0 : "Default (Highest)"
+		60 : "DirectX 6.0"
+		70 : "DirectX 7.0"
+		80 : "DirectX 8.0"
+		81 : "Directx 8.1"
+		90 : "DirectX 9.0"
+		92 : "Mac/Linux (''9.2'')"
+		95 : "DirectX 9.0c (''9.5'')"
+		// 97 : "PlayStation 3 (''97'')"
+		98 : "Xbox 360 (''9.8'')"
 		]
+
+	mindxlevel[engine](integer): "Minimum DirectX Level": 0
+	maxdxlevel[engine](integer): "Maximum DirectX Level": 0
 	]

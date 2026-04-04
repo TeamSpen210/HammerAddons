@@ -1,7 +1,8 @@
 @PointClass base(Weapon) 
 	appliesto(EP1, EP2, HL2, P1) 
 	autovis(Weapons, HL2 Weapons, Shotgun)
-	studioprop("models/weapons/w_shotgun.mdl") = weapon_shotgun: "Shotgun"
+	studioprop("models/weapons/w_shotgun.mdl") = weapon_shotgun: "Standard-issue SPAS-12 shotgun." +
+		"\n\nAssigning this entity to npc_alyx in Episodic will enable special combat behaviors against zombies."
 	[
 	@resources
 		[

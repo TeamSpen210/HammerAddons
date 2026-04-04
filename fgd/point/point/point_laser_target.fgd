@@ -8,7 +8,8 @@
 	terminalpoint(boolean) : "Terminal Point" : 1 : "Whether to behave like a laser catcher or a relay. " +
 		"When on, lasers will auto-aim towards this, and lasers that hit it will not show end sparks or be able to activate " +
 		"later laser targets. When off, these behaviors do not occur, and it has a taller hitbox to match a laser relay."
-
+	filtercolor[Strata](color255): "Laser Filter Color (R G B A)" : "255 255 255 255" : "Filter lasers by this colour."
+ 
 	// Outputs
 	output OnPowered(void) : "Fired when a laser hits the target."
 	output OnUnpowered(void) : "Fired when a laser has stopped hitting the target."

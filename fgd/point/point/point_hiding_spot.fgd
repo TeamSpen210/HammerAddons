@@ -2,4 +2,5 @@
 	appliesto(since_CSGO) 
 	sphere(radius) = point_hiding_spot: "Adds a hiding spot to the nav mesh at this location."
 	[
+	@resources []
 	]

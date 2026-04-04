@@ -1,0 +1,13 @@
+@PointClass appliesto(MOMENTUM)
+= info_defrag_bonus: "Adds a Defrag bonus using the specified spawnflags."
+	[
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Haste" : 0
+		2: "Slick" : 0
+		4: "Damage Boost" : 0
+		8: "Rocket Launcher" : 0
+		16: "Plasma Gun" : 0
+		32: "BFG" : 0
+		]
+	]

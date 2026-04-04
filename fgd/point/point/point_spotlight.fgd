@@ -17,10 +17,11 @@
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
 	renderamt(integer) : "Alpha" : "255" : "Amount of alpha to use for the spotlight."
 	hdrcolorscale(float) : "HDR color scale." : "0.7" : "float value to multiply sprite color by when running in HDR mode."
-	haloscale[since_L4D2, MBase](float) : "Halo size scale." : 60 : "float value to determine the size of the halo."
+	haloscale[since_L4D2, MBase, -Strata](float) : "Halo size scale." : 60 : "float value to determine the size of the halo."
 
-	ignoresolid[TF2](boolean) : "Ignore Solid" : 0 : "If set, this spotlight won't trace for solids."
-
+	ignoresolid[TF2,MBase,Strata](boolean) : "Ignore Solid" : 0 : "If set, this spotlight won't trace for solids."
+	brightness[Strata](integer): "Brightness" : 64 : "Integer value representing spotlight brightness (0-255)"
+ 
 	HaloMaterial[MBase](sprite) : "Halo material" : "sprites/light_glow03.vmt" : "Material to use for the halo."
 	SpotlightMaterial[MBase](sprite) : "Spotlight beam material" : "sprites/glow_test02.vmt" : "Material to use for the spotlight's beam."
 
@@ -31,6 +32,7 @@
 	input LightToggle[MBase](void) : "Toggles the spotlight on or off"
 	input SetColor[since_ASW, GMod](color255) : "Change the color of the spotlight."
 	input ForceUpdate[since_ASW, GMod](void) : "Force an update of the spotlight position and orientation."
+	input SetBrightness(integer) : "Set the brightness of the spotlight."
 
 	// Outputs
 	output OnLightOn(void) : "Fires when light turns on."

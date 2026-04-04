@@ -13,4 +13,5 @@
 
 	// Inputs
 	input GenerateGameEvent(void) : "Generate my game event. (This entity is sent as the SUBJECT)"
+	@resources []
 	]

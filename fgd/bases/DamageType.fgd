@@ -39,11 +39,12 @@
 		4194304 : "Slowfreeze"
 		8388608 : "Gravity Gun"
 		16777216 : "Ignite (no after-burn damage)" [TF2]
+		16777216: "Plasma" [until_L4D2, -TF2]
 		16777216 : "Force Gibs" [L4D2]
 		33554432 : "Airboat"
 		67108864 : "Dissolve"
 		268435464 : "Being on fire"  // DMG_BURN | DMG_DIRECT (268435456)
-		536870912 : "Shotguns" [TF2]
+		536870912 : "Shotguns" [Strata, TF2]
 		]
 
 	damagepresets[engine](integer) : "Damage Presets" : 0

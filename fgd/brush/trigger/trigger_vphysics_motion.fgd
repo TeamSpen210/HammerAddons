@@ -1,4 +1,4 @@
-@SolidClass base(Trigger) 
+@SolidClass base(BaseTrigger) 
 = trigger_vphysics_motion: "A volumetric trigger that affects the motion of vphysics objects that touch it."
 	[
 	spawnflags(flags) : "spawnflags" =

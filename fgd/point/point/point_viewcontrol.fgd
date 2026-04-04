@@ -6,7 +6,8 @@
 	line(255 255 0, targetname, moveto) 
 = point_viewcontrol: "A camera entity that controls the player's view. While it's active, the player will see out of the camera."
 	[
-	target(target_destination) : "Entity to Look At" : : "Name of the entity that the camera should point at and track while active."
+	target(target_destination) : "Entity to Look At" : : "Name of the entity that the camera should point at and track while active. " +
+		"The 'set target to player' spawnflag overrides this to use the player's feet."
 	targetattachment(string) : "Target Attachment Name" : : "If set, the camera will focus on the specified attachment on the 'Entity to Look At'."
 
 	wait(integer) : "Hold Time" : 10 : "The amount of time the camera should control the player's view for, after which it deactivates itself. " +
@@ -15,12 +16,12 @@
 	moveto(target_destination) : "Path Corner" : : "The first path corner in a track that the camera should move along once it's activated. " +
 		"If not specified, the camera won't move."
 
-	interpolatepositiontoplayer[EP1, EP2](boolean) : "Interpolate Position To Player" : 0 : "Gradually interpolate player's position to here on start."
+	interpolatepositiontoplayer[P1, EP1, EP2, -Strata](boolean) : "Interpolate Position To Player" : 0 : "Gradually interpolate player's position to here on start."
 
 	spawnflags(flags)  =
 		[
 		1: "Start At Player" : 0
-		2: "Follow Player" : 0
+		2: "Set Target to Player" : 0
 		4: "Freeze Player" : 1
 		8: "Infinite Hold Time" : 1
 		16: "Snap to goal angles" : 0

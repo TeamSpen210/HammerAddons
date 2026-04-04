@@ -6,4 +6,6 @@
 	[
 	breakparticleeffect(particlesystem) : "Break Effect" : : "Choose what effect to spawn when the prop breaks."
 	breaksound(sound) : "Break Sound" : "ASWBarrel.Explode" : "Choose what sound to play when the prop breaks."
+
+	@resources []
 	]

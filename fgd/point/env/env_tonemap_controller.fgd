@@ -4,28 +4,42 @@
 	color(200 0 0)
 = env_tonemap_controller: "An entity that controls the HDR tonemapping for the player. Think of it as a method of controlling the exposure of the player's eyes."
 	[
-	spawnflags[since_L4D, MBase](flags) : "spawnflags" =
+	spawnflags[since_L4D, MBase, GMOD](flags) : "spawnflags" =
 		[
 		1: "Master (Has priority if multiple env_tonemap_controllers exist)" : 0
 		]
 
-	TonemapScale[MBase](float) : "Tonemap Scale" : "-1" : "The tonemap scale. This should be a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open. -1 = use default" // 1.0
-	TonemapRate[MBase](float) : "Tonemap Rate" : "-1" : "The rate for auto exposure adjustment. -1 = use default" // 1.0
-	AutoExposureMin[MBase](float) : "Auto Exposure Minimum" : "-1" : "Sets a custom tonemap auto exposure minimum. -1 = use default" // 0.5
-	AutoExposureMax[MBase](float) : "Auto Exposure Maximum" : "-1" : "Sets a custom tonemap auto exposure maximum. -1 = use default" // 2.0
-	BloomScale[MBase](float) : "Bloom Scale" : "-1" : "Sets a custom bloom scale. -1 = use default" // 1.0
+	TonemapScale[MBase](float) : "Tonemap Scale" : -1 : "The tonemap scale. This should be a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open. -1 = use default" // 1.0
+	TonemapRate[MBase](float) : "Tonemap Rate" : -1 : "The rate for auto exposure adjustment. -1 = use default" // 1.0
+	AutoExposureMin[MBase](float) : "Auto Exposure Minimum" : -1 : "Sets a custom tonemap auto exposure minimum. -1 = use default" // 0.5
+	AutoExposureMax[MBase](float) : "Auto Exposure Maximum" : -1 : "Sets a custom tonemap auto exposure maximum. -1 = use default" // 2.0
+	BloomScale[MBase](float) : "Bloom Scale" : -1 : "Sets a custom bloom scale. -1 = use default" // 1.0
+	BloomScale[engine](string) : "[HA] Bloom Scale" // Mismatch of types.
 
 	bUseNextGenBloom[MESA](boolean) : "Use Next Gen Bloom" : 0	
 	bUseCustomBloomNextGen_Threshold[MESA](boolean) : "Use Custom Next Gen Bloom Threshold" : 0
 	
-	fCustomBloomNextGen_Threshold[MESA](float)	: "Custom Next Gen Bloom Threshold": 0 : "Threshold for bright pass filter."
+	fCustomBloomNextGen_Threshold[MESA](float) : "Custom Next Gen Bloom Threshold": 0 : "Threshold for bright pass filter."
 	
 	bUseCustomBloomNextGen_tintExponent[MESA](boolean) : "Use Custom Next Gen Bloom Tint Exponent" : 0 
 	
-	m_fCustomBloomNextGen_r[MESA](float)	: "Custom Bloom Tint (R)": "1.0" : "m_fCustomBloomNextGen_r"
-	m_fCustomBloomNextGen_g[MESA](float)	: "Custom Bloom Tint (G)": "1.0" : "m_fCustomBloomNextGen_g"
-	m_fCustomBloomNextGen_b[MESA](float)	: "Custom Bloom Tint (B)": "1.0" : "m_fCustomBloomNextGen_b"
+	m_fCustomBloomNextGen_r[MESA](float) : "Custom Bloom Tint (R)": "1.0" : "m_fCustomBloomNextGen_r"
+	m_fCustomBloomNextGen_g[MESA](float) : "Custom Bloom Tint (G)": "1.0" : "m_fCustomBloomNextGen_g"
+	m_fCustomBloomNextGen_b[MESA](float) : "Custom Bloom Tint (B)": "1.0" : "m_fCustomBloomNextGen_b"
 	m_fCustomBloomNextGen_exponent[MESA](float)	: "Custom Bloom Tint Exponent": "1.0" : "m_fCustomBloomNextGen_exponent"
+
+	// KVs that set outputs. MBase doesn't need those.
+	TonemapScale[-MBase, +srctools](float) : "[HA] Tonemap Scale" : -1 : "Set the tonemap scale on spawn, via a logic_auto. This should be a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
+	TonemapRate[-MBase, +srctools](float) : "[HA] Tonemap Rate" :: "Set the rate for auto exposure adjustment on spawn, via a logic_auto."
+	AutoExposureMin[-MBase, +srctools](float) : "[HA] Auto Exposure Minimum" :: "Set a custom tonemap auto exposure minimum on spawn, via a logic_auto."
+	AutoExposureMax[-MBase, +srctools](float) : "[HA] Auto Exposure Maximum" :: "Set a custom tonemap auto exposure maximum on spawn, via a logic_auto."
+	BloomScale[-MBase, +srctools, +until_ASW](float) : "[HA] Bloom Scale" :: "Sets a custom bloom scale on spawn, via a logic_auto."
+	BloomScale[+srctools, +since_ASW](string) : "[HA] Bloom Scale" :: "Sets a custom bloom scale on spawn, via a logic_auto. If two values are provided, it sets '<max> <min>' values."
+	BloomExponent[+srctools, +since_L4D](float) : "[HA] Bloom Exponent" :: "Sets a custom bloom exponent on spawn, via a logic_auto."
+	BloomSaturation[+srctools, +since_L4D](float) : "[HA] Bloom Saturation" :: "Sets a custom bloom saturation on spawn, via a logic_auto."
+	PercentBrightPixels[+srctools, +since_L4D2](float) : "[HA] % Brightness Pixels" :: "Sets a target for percentage of pixels above a certain brightness, via a logic_auto."
+	PercentBrightTarget[+srctools, +since_L4D2](float) : "[HA] Brightness Target" :: "Sets a custom brightness target, via a logic_auto."
+	MinAvgLum[+srctools, +since_L4D2](float) : "[HA] Minimum Average Luminosity" :: "Sets a 'custom tonemapping param (ask Alex for details)', via a logic_auto."
 
 	// Inputs
 	input SetTonemapScale(integer) : "Set the player's tonemap scale. It should be a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
@@ -49,4 +63,6 @@
 	input InputSetBloomNxtGen_TintG[MESA](float) : "InputSetBloomNxtGen_TintG"
 	input InputSetBloomNxtGen_TintB[MESA](float) : "InputSetBloomNxtGen_TintB"
 	input InputSetBloomNxtGen_Exponent[MESA](float) : "InputSetBloomNxtGen_Exponent"
+
+	@resources []
 	]

@@ -12,4 +12,5 @@
 	// Inputs
 	input SetCheapWaterStartDistance(float) : "Set the distance that water starts transitioning to cheap water."
 	input SetCheapWaterEndDistance(float) : "Set the distance that water finishes transitioning to cheap water."
+	@resources []
 	]

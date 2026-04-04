@@ -9,7 +9,7 @@
 	"to the entity which uses that material, and the 'PointCamera' field to the point_camera you want to have " +
 	"appear on that entity's material."
 	[
-	target(target_destination) : "Entity Whose Material Uses _rt_camera"
+	target(target_destination) report: "Entity Whose Material Uses _rt_camera"
 	pointcamera(target_destination) : "Camera Name" : : "The name of a point_camera entity in the map that the material should be rendered from."
 
 	// Inputs

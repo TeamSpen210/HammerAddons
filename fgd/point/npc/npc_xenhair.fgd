@@ -1,6 +1,12 @@
 @NPCClass base(EZ2XenFlora) appliesto(EZ2) 
 	studio("models/hair.mdl")
 	autovis(Entities, NPCs, Xen, Xen Deco)
-= npc_xenhair : "Xen Hair"
+= npc_xenhair : "Xen Hair. When approached, hides underground."
 	[
+	@resources
+		[
+		mdl "models/hair.mdl"
+		mdl "npc_xenhair.extend"
+		mdl "npc_xenhair.retract"
+		]
 	]

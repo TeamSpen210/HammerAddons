@@ -1,0 +1,7 @@
+@PointClass base(BaseEntityPoint) appliesto(+engine, HL2)
+= info_Target_command_point: "This ent is used as the target for citizens to move towards when commanded by the player."
+	[
+	input OutsideTransition(void): "Causes all members of the player squad to silently switch to following the player. This is fired during level transitions if the command point isn't in the transition volume."
+
+	@resources []
+	]

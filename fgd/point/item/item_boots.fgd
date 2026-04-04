@@ -1,0 +1,6 @@
+@PointClass base(Item) 
+	appliesto(P2CE) 
+	studio("models/items/item_boots.mdl")
+= item_boots: "A pair of Long Fall Boots. Picking this item up will disable player fall damage."
+	[
+	]

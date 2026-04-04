@@ -11,7 +11,7 @@ def parallel_transport(orient1: Matrix, tanj1: Vec, tanj2: Vec) -> Matrix:
     The code is based on the info at: https://janakiev.com/blog/framing-parametric-curves/.
     """
     b = Vec.cross(tanj1, tanj2)
-    if b.mag_sq() < 0.001:
+    if b.mag_sq() < 1e-15:
         # Aligned, yield the same orientation.
         return orient1.copy()
     else:

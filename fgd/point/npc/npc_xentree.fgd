@@ -1,18 +1,11 @@
 // Two different versions, one from Black Mesa, one from Entropy Zero...
-@BaseClass 
-	appliesto(Mesa) 
-	base(BaseNPC)
-	studio("models/props_xen/foliage/hacker_tree.mdl")
-= _npc_xentree_mesa []
-
-@BaseClass 
-	appliesto(EZ2) 
-	base(EZ2XenFlora)
-	studio("models/tree.mdl")
-= _npc_xentree_ez2 []
+@BaseClass appliesto(Mesa) base(BaseNPC) = _npc_xentree_mesa []
+@BaseClass appliesto(EZ2) base(EZ2XenFlora) = _npc_xentree_ez2 []
 
 @NPCClass base(_npc_xentree_mesa, _npc_xentree_ez2)
 	appliesto(Mesa, EZ2)
+	studio[Mesa]("models/props_xen/foliage/hacker_tree.mdl")
+	studio[EZ2]("models/tree.mdl")
 	autovis(Entities, NPCs, Xen, Xen Deco)
 = npc_xentree : "Xen Tree"
 	[

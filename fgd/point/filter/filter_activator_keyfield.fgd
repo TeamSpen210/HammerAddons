@@ -1,8 +1,8 @@
 @FilterClass base(filter_base) 
 	autovis(Logic, Filters)
-	appliesto(MBase)
+	appliesto(MBase, Strata)
 	iconsprite("editor/filter_keyfield.vmt") 
-= filter_activator_keyfield : "A filter that filters by the activator's keyfields."
+= filter_activator_keyfield : "A filter that checks for the activator to have a keyfield set to a particular value."
 [
 	keyname(string) : "Key" : : "The key name to filter by. Please note that certain keyvalues, particularly " +
 		"targetnames and base values related to clientside rendering (e.g. render mode), cannot be found by this filter."

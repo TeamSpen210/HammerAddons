@@ -1,0 +1,6 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(engine)
+= reserved_spot: "Has a player-sized collision volume, spawned at the destination of player animations to ensure the space remains free."
+	[
+	@resources []
+	]

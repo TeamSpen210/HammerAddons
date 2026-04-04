@@ -1,5 +1,5 @@
 @SolidClass base(Trigger, RenderFields, Reflection) 
-	appliesto(P1, P2) = trigger_portal_cleanser: "A trigger volume that disolves any entities that touch it and fizzles active portals when the player touches it.|||An Aperture Science Material Emancipation Grid."
+	appliesto(P1, P2) = trigger_portal_cleanser: "An Aperture Science Material Emancipation Grid, dissolves any entities that touch it and fizzles active portals when the player touches it."
 	[
 	spawnflags(flags)  =
 		[
@@ -23,15 +23,17 @@
 	// Outputs
 	output OnDissolve(void) : "Fired whenever an entity is dissolved."
 	output OnFizzle(void) : "Fired whenever an portals are fizzled."
-	output OnDissolveBox(void) : "This cleanser dissolved an entity with a targetname of 'Box.'"
-
+	output OnDissolveBox(void) : "This cleanser dissolved an entity with a targetname of 'box.'"
+	output OnPrimaryHit[Strata](void) : "Fired whenever the primary portal hits the cleanser."
+	output OnSecondaryHit[Strata](void) : "Fired whenever the secondary portal hits the cleanser."
+ 	
 	@resources
 		[
-	    sound "VFX.FizzlerLp"
-	    sound "VFX.FizzlerDestroy"
-	    sound "VFX.FizzlerStart"
-	    sound "VFX.FizzlerVortexLp"
-	    sound "Prop.Fizzled"
-		particle cleanser_scanline
+	    sound "VFX.FizzlerLp"       [P2]
+	    sound "VFX.FizzlerDestroy"  [P2]
+	    sound "VFX.FizzlerStart"    [P2]
+	    sound "VFX.FizzlerVortexLp" [P2]
+	    sound "Prop.Fizzled"        [P2]
+		particle cleanser_scanline  [P2]
 		]
 	]

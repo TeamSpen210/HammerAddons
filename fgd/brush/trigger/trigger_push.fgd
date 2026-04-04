@@ -29,10 +29,10 @@
 	triggeronstarttouch[L4D2](boolean) : "Trigger on Start Touch" : 0 : "Trigger on start touch instead of on touch."
 
 	// Inputs	
-	input SetSpeed[MBase](float) : "Set the speed at which to push entities away."
+	input SetSpeed[MBase, Strata](float) : "Set the speed at which to push entities away."
 	input SetPushDir[MBase](vector) : "Set the angles indicating the direction to push touched entities."
-	input SetPushDirection[ASW](vector) : "Sets the angles indicating the direction to push touched entities."
-	input SetPushSpeed(integer) : "Set the push speed in units / second."
+	input SetPushDirection[since_ASW, GMOD](vector) : "Sets the angles indicating the direction to push touched entities."
+	input SetPushSpeed[GMOD](integer) : "Set the push speed in units / second."
 	
 	@resources []
 	]

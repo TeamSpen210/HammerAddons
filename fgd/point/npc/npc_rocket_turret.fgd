@@ -1,13 +1,11 @@
-// Switch the model helper depending on game, since P1 can't swap models.
-@BaseClass appliesto(P1) studioprop("models/props_bts/rocket_sentry.mdl")
-	= _npc_rocket_turret_p1 []
-@BaseClass appliesto(P2) studioprop() line(0 0 255, targetname, TripwireAimTarget) 
-	= _npc_rocket_turret_p2 []
-
-@PointClass base(BaseNPC, ResponseContext, _npc_rocket_turret_p1, _npc_rocket_turret_p2, SRCModel) 
+@PointClass base(BaseNPC, ResponseContext, SRCModel) 
 	appliesto(P1, P2) 
-	autovis(Entities, NPCs, Portal Rocket Turret)
-	sphere(_sphere_radius)
+	// Switch the model helper depending on game, since P1 can't swap models.
+	studioprop[P1]("models/props_bts/rocket_sentry.mdl")
+	studioprop[P2]()
+	line[P2](0 0 255, targetname, TripwireAimTarget) 
+	sphere[-Strata](_sphere_radius)
+	sphere[Strata](turretrange)
 = npc_rocket_turret: "Portal 1 rocket sentry, aims a rocket at a target. " +
 		"In Portal 2, the rocket spawns with a speed of 0 and sometimes gets " +
 		"stuck inside the model, so this will need to be worked around."
@@ -22,10 +20,13 @@
 
 	rocketspeed[P2](float) : "Rocket Speed" : 450 : "Speed the rocket will travel at."
 	rocketlifetime[P2](float) : "Rocket Lifetime" : 20 : "The rocket will automatically detonate after this number of seconds."
-	TripwireMode[P2](boolean) : "Tripwire Mode" : 0 : "Makes the turret aim in a specific direction instead of following the target. When the beam is crossed, a rocket instantly fires."
+	FireCooldown[Strata](float): "Fire Cooldown" : 4 : "The time it takes for the rocket turret to reset after firing a rocket."
+	LockonTime[Strata](float): "Lockon Time" : "1.5" : "The time it takes for the rocket turret to fire a rocket after locking onto a target."
+ 	TripwireMode[P2](boolean) : "Tripwire Mode" : 0 : "Makes the turret aim in a specific direction instead of following the target. When the beam is crossed, a rocket instantly fires."
 	TripwireAimTarget[P2](target_destination) : "Tripwire Aim Target" : : "In tripwire mode, the entity to aim at."
 
-	_sphere_radius[!engine](integer) readonly : "<Maximum Range>" : 8192 : "How far the turret will be able to see targets. Always 8192, but this keyvalue is needed to display the preview."
+	_sphere_radius[!engine, -Strata](integer) readonly editor: "<Maximum Range>" : 8192 : "How far the turret will be able to see targets. Always 8192, but this keyvalue is needed to display the preview."
+	turretrange[Strata](float): "Maximum Range" : 8192 : "How far the turret will be able to see targets."
 	// Hammer automatically adds this when selecting a model, this prevents it from appearing as invalid
 	skin[P2](integer) readonly : "<Skin>" : 0 : "Skin on the model to use. The game overrides this based on the rocket turret's firing state, so changing it here has no effect."
 
@@ -35,6 +36,7 @@
 	input Disable(void) : "Deactivate and retract the Rocket Turret."
 	input SetTarget(target_destination) : "Sets the target for this turret to attack."
 	input Destroy(void) : "Sets this turret to it's destroyed state."
+	input ForceFire[Strata](void) : "Makes the turret immediately fire a rocket where it is pointing."
 
 	// Outputs
 	output OnFoundTarget(void) : "Fired when the rocket turret finds an unobstructed target."

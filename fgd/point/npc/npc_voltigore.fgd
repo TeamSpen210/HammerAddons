@@ -5,4 +5,24 @@
 	[
 	model(studio) : "Override Model"
 	IsBaby(boolean) : "Baby Voltigore" : 0 : "Is this a baby voltigure? (No code / assets available yet)"
+
+	@resources
+		[
+		mdl "models/voltigore.mdl"
+		mdl "models/pit_drone.mdl"
+		snd "NPC_Voltigore.Idle"
+		snd "NPC_Voltigore.Pain"
+		snd "NPC_Voltigore.Alert"
+		snd "NPC_Voltigore.Death"
+		snd "NPC_Voltigore.Attack1"
+		snd "NPC_Voltigore.FoundEnemy"
+		snd "NPC_Voltigore.Growl"
+		snd "NPC_Voltigore.TailWhip"
+		snd "NPC_Voltigore.Bite"
+		snd "NPC_Voltigore.Eat"
+		snd "NPC_Voltigore.Explode"
+		particle blood_impact_blue_01 // TODO: Only if radiation
+		particle blood_impact_yellow_01 
+		entity npc_voltigore_projectile
+		]
 	]

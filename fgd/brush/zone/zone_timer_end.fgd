@@ -1,0 +1,6 @@
+@SolidClass appliesto(MOMENTUM)
+= zone_timer_end : "Zone that finishes the timer."
+	[
+	filter_name(filterclass) : "Filter Name" : : "filter_activator entity to use for this zone."
+	track_number(integer) : "Track Number" : 0 : "Track number that this entity belongs to. 0 = main map, 1+ = bonus (of that number)."
+	]

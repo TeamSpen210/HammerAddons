@@ -1,9 +1,10 @@
 @SolidClass base(CombineBallSpawners) = func_combine_ball_spawner: "Spawns Combine balls."
 	[
+	input Destroy[MBase](void) : "Releases all balls from the spawner as if they were punted out by the gravity gun."
 
 	// Outputs
 	output OnBallReinserted(void) : "Fired when a combine ball is reinserted into the field (only gets triggered when Combine Power supply is checked)"
-	output OnLastBallGrabbed(void) : "Fired when the last combine ball is grabbed from the field by a mega physcannon"
+	output OnLastBallGrabbed(void) : "Fired when the last combine ball is grabbed from the field by a Gravity Gun"
 
 	@resources
 		[

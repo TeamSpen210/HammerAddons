@@ -4,21 +4,22 @@
 	studioprop() 
 	sphere(fademindist) 
 	sphere(fademaxdist) 
-	studioprop("models/magnusson_device.mdl") = weapon_striderbuster: "Strider Buster"
+	studioprop("models/magnusson_device.mdl") = weapon_striderbuster: "A sticky grenade that kills Striders.\n\n" +
+		"\"We call it the Magnusson Device. Not my chosen label, you understand, but it seemed to please the personnel.\" - Dr. Arne Magnusson"
 	[
 	spawnflags(flags) : "spawnflags" =
 		[
 		8388608: "Don't use game_weapon_manager" : 0
 		]
 
-	dud(boolean) : "Dud Bomb" : 0 : "This striderbuster is not armed (to be used for training)."
+	dud(boolean) : "Dud Bomb" : 0 : "Is this Magnusson Device nonfunctional? Select \"Yes\" to prevent it from destroying Striders."
 
 
 	// Outputs
-	output OnAttachToStrider(void) : "Fired when the striderbuster successfully attaches to a strider."
-	output OnDetonate(void) : "Fired when the striderbuster detonates."
-	output OnShatter(void) : "Fired when the striderbuster shatters without detonating."
-	output OnShotDown(void) : "Fired when the striderbuster shatters after being shot down by Hunters."
+	output OnAttachToStrider(void) : "Fires when this Magnusson Device is attached to a Strider."
+	output OnDetonate(void) : "Fires when this Magnusson Device detonates."
+	output OnShatter(void) : "Fires when this Magnusson Device is accidentally dropped."
+	output OnShotDown(void) : "Fires when this Magnusson Device has been shot down by Hunters."
 
 	@resources
 		[

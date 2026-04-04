@@ -24,5 +24,5 @@
 
 
 	// Outputs
-	output OnItemSpawn[L4D1](void) : "Fired if this object is spawned on the map. If the weapon is removed during the weapon spawn pass, this will not fire."
+	output OnItemSpawn[L4D](void) : "Fired if this object is spawned on the map. If the weapon is removed during the weapon spawn pass, this will not fire."
 	]

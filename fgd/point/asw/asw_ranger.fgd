@@ -36,6 +36,5 @@
 		sound "ASW_Ranger_Projectile.Spawned"
 		particle ranger_projectile_main_trail
 		particle ranger_projectile_hit
-		entity asw_alien
 		]
 	]

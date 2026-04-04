@@ -7,8 +7,7 @@
 	sphere(near_blur) 
 	sphere(near_focus) 
 	sphere(far_blur) 
-	sphere(far_radius) 
- 	autovis(Point Entities, Globals, DOF Controller)
+	sphere(far_radius)
 = env_dof_controller: "An entity that controls the depth of field settings for the player. Depth of field simulates camera blur of out-of-focus regions" + " of the scene."
 	[
 	enabled[since_ASW, MBase](boolean) : "Enabled" : 0 : "Whether the effect should be active"

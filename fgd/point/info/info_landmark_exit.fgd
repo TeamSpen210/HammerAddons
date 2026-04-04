@@ -1,7 +1,11 @@
 @PointClass base(BaseEntityPoint) 
  	autovis(Point Entities, Globals, Landmarks)
 	appliesto(P2, -INFRA) 
-	iconsprite("editor/info_landmark") = info_landmark_exit: "Exit landmark"
+	iconsprite("editor/info_landmark") = info_landmark_exit: "Portal 2 exit landmark. Paired with point_changelevel and info_landmark_entry to make seamless transitions"
 	[
+	
+	// TODO: change this to string when baseclass collapsing is implemented
+	targetname(target_source) readonly : "Name" : "__p2_landmark" : "The name that other entities refer to this entity by. Forced to this on spawn, other names can only be set via AddOutput."
+
 	@resources []
 	]

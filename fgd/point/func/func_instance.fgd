@@ -9,7 +9,7 @@
 	"Then just use the $variable name inside of the instance contents on any value portion of a key/value pair."
 	[
 	targetname(target_source) : "Fix Up Name" : : "The name that all entities will be fixed up with based upon the fix up style."
-	file(instance_file) : "VMF Filename" : : "This indicates a map file relative to the map's file name. " +
+	file(instance_file) report: "VMF Filename" : : "This indicates a map file relative to the map's file name. " +
 		"This is also looked up relative to sdk_content/maps/, if the current map is located inside those."
 
 	fixup_style[engine](integer) : "Entity Name Fix Up" : 0

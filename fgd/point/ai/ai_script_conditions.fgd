@@ -5,8 +5,7 @@
 ]
 
 @PointClass base(BaseEntityPoint) 
-	appliesto(ASW, EP1, EP2, HL2, P1, P2, Mesa) 
-	autovis(AI, AI Script Conditions)
+	appliesto(ASW, EP1, EP2, HL2, P1, P2, Mesa)
 	sphere(PlayerActorProximity) 
 	sphere(ActorTargetProximity) 
 	sphere(PlayerTargetProximity) 

@@ -16,7 +16,7 @@
 		]
 
 	target(target_destination) : "target" : : "target"
-	dontfollowtarget[MBase](boolean) : "Don't Follow Target" : 0 : "Prevents this entity from trying to point at its target, if it has one. Intended for when you want to use 'Light Only Target' without the entity trying to point to it."
+	dontfollowtarget[MBase, -Strata](boolean) : "Don't Follow Target" : 0 : "Prevents this entity from trying to point at its target, if it has one. Intended for when you want to use 'Light Only Target' without the entity trying to point to it."
 	lightfov(float) : "FOV" : 90.0 : "FOV"
 	nearz(float) : "NearZ" : 4.0 : "Specifies the distance at which shadow casting begins. Ideally increase this until just before any objects." 
 	farz(float) : "FarZ" : 750.0 : "Specifies the distance at which shadow casting finishes. Increase this to cover the most distant surfaces."
@@ -29,7 +29,10 @@
 		0: "Low"
 		1: "High"
 		]
-	shadowfilter[MBase](float) : "Shadow Filter Size" : "0.5" : "The amount to filter the shadows. This blurs shadows to make them appear less pixelated, but higher values may have more visible noise."
+	shadowfilter[MBase, -Strata](float) : "Shadow Filter Size" : "0.5" : "The amount to filter the shadows. This blurs shadows to make them appear less pixelated, but higher values may have more visible noise."
+	_dynamicshadowallocation[Strata](boolean): "Use dynamic shadow allocation" : 0 : "Determines whether the map (static) or the engine (dynamic) should dictate the size of the shadows for this light."
+	_initialshadowsize[Strata](integer): "Initial Shadow Size" : 7 : "The initial static shadow resolution exponent. Only relevant for static shadow allocation. Adding 1 to this value doubles both dimensions of the shadowmap."
+	_shadowscale[Strata](float): "Shadow Size Scale" : "1.0" : "Scales the shadowmap resolution exponent. Only relevant for dynamic shadow allocation. For example, a scale of 3.0 will give this light shadowmaps 8 (2^3) times as large as they would usually be."
 	
 	lightonlytarget(boolean) : "Light Only Target" : 0 : "Limit flashlight effect to only effect target entity."
 	lightworld(boolean) : "Light World" : 1 : "Control whether flashlight effects static world geometry."
@@ -43,10 +46,10 @@
 
 	colortransitiontime[since_ASW](float) : "Color Transition Speed" : 0.5 : "Controls the speed the transition takes. 1.0 means the color can change by a full 255 over 1 second."
 
-	constant_attn[MBase, TF2](float) : "Constant" : "0" : "The light's constant attenuation, giving the light no falloff. (This value is internally corrected with x*0.5)"
-	linear_attn[MBase, TF2](float) : "Linear" : "1" : "The light's linear attenuation, giving the light linear decline. This is the most common attenuation for projected textures. (This value is internally corrected with x*100)"
-	quadratic_attn[MBase, TF2](float) : "Quadratic" : "0" : "The light's quadratic attenuation, giving the light exponentially decreasing falloff. (This value is internally corrected with x*10000)"
-	shadowatten[MBase, TF2](float) : "Shadow Atten" : "0.0" : "The attenuation of the shadows, " +
+	constant_attn[MBase, TF2, -Strata](float) : "Constant" : "0" : "The light's constant attenuation, giving the light no falloff. (This value is internally corrected with x*0.5)"
+	linear_attn[MBase, TF2, -Strata](float) : "Linear" : "1" : "The light's linear attenuation, giving the light linear decline. This is the most common attenuation for projected textures. (This value is internally corrected with x*100)"
+	quadratic_attn[MBase, TF2, -Strata](float) : "Quadratic" : "0" : "The light's quadratic attenuation, giving the light exponentially decreasing falloff. (This value is internally corrected with x*10000)"
+	shadowatten[MBase, TF2, -Strata](float) : "Shadow Atten" : "0.0" : "The attenuation of the shadows, " +
 		"or how much the shadows should fade into the light of the projected texture, if at all. " +
 		"The player's flashlight uses 0.35 by default, " +
 		"although higher values may be needed for a visible effect."
@@ -55,15 +58,18 @@
 	texturename(texture) : "Texture Name" : "effects/flashlight001" : "VTF Texture to 'project' onto the enviroment. " + 
 		"Please note that env_projectedtexture uses .vtf files directly and does not use .vmt files. " +
 		"The material browser is only available here to assist with finding textures since materials typically have the same name as their textures."
+	moviename[Strata](string): "Movie Name" : : ".webm file used in place of the texture."
 	textureframe(integer) : "Texture Frame" : 0 : "If the VTF is multi-frame, specify the frame to use."
 
-	alwaysdraw[MBase](boolean)	: "Always Draw" : 0 : "Always draws the projected texture, regardless of whether the player can see its frustum. Use this for projected textures that can be seen on monitors or in the skybox."
-	ProjectedTextureVersion[MBase](integer) readonly : "Projected Texture Version" : 1  : "(Don't change). Differentiates between projected textures built before/outside of Mapbase and projected textures using new features."
+	alwaysdraw[MBase, -Strata](boolean)	: "Always Draw" : 0 : "Always draws the projected texture, regardless of whether the player can see its frustum. Use this for projected textures that can be seen on monitors or in the skybox."
+	ProjectedTextureVersion[MBase, -Strata](integer) readonly : "Projected Texture Version" : 1  : "(Don't change). Differentiates between projected textures built before/outside of Mapbase and projected textures using new features."
+	volumetric[Strata](boolean): "Enable Volumetrics" : 0 : "Enables/disables volumetrics from this projected texture."
+	volumetricintensity[Strata](float): "Volumetric Intensity" : "1.0" : "Sets the intensity of the volumetric lighting."
 
 	style[engine](integer) : "Appearance" : 0
-	style[since_P2](choices) : "Appearance" : "0" = #snippet LightStyle
+	style[since_P2, GMOD](choices) : "Appearance" : "0" = #snippet LightStyle
 
-	pattern[since_P2](string) : "Custom Appearance" : : "Set a custom pattern of light brightness for this light. " +
+	pattern[since_P2, GMOD](string) : "Custom Appearance" : : "Set a custom pattern of light brightness for this light. " +
 		"Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. " +
 		"i.e. 'aaggnnttzz' would be a steppy fade in from dark to light."
 	lightviewmodels[INFRA](boolean) : "Light View Models" : 1 : "Control whether flashlight effects view models."
@@ -84,32 +90,41 @@
 
 	// Disabled by Valve in the code, emits console message.
 	input SpotlightTexture[!CSGO, !P2](string) : "Set the spotlight texture"
+	input SpotlightTexture[Strata](string) : "Set the spotlight texture"
+	input SetSpotlightTextureFrame[Strata](integer) : "Sets the spotlight texture frame"
 
 	input EnableShadows(boolean) : "Set if the shadows are enabled."
-	input LightColor[since_ASW, MBase](color255) : "Change the light color/brightness"
-	input SetLightStyle[since_P2](integer) : "Change the lightstyle (see Appearance field for possible values)."
-	input SetPattern[since_P2](string) : "Set a custom pattern of light brightness for this light. " +
+	input LightColor[since_ASW, MBase, GMOD](color255) : "Change the light color/brightness"
+	input SetLightStyle[since_P2, GMOD](integer) : "Change the lightstyle (see Appearance field for possible values)."
+	input SetPattern[since_P2, GMOD](string) : "Set a custom pattern of light brightness for this light. " +
 		"The Pattern format is a string of characters, where 'a' is total darkness, 'z' fully bright. i.e. " +
 		"'aaggnnttzz' would be a steppy fade in from dark to light."
-	input SetBrightness[MBase](float) : "Sets brightness."
-	input SetColorTransitionTime[MBase](float)	: "Sets the color transition time."
+	input SetBrightness[MBase, -Strata](float) : "Sets brightness."
+	input SetColorTransitionTime[MBase, -Strata](float)	: "Sets the color transition time."
 
-	input SetConstant[MBase](float)    : "Sets the constant attenuation."
-	input SetLinear[MBase](float)      : "Sets the linear attenuation."
-	input SetQuadratic[MBase](float)   : "Sets the quadratic attenuation."
-	input SetFilter[MBase](float)      : "Sets the shadow filter."
-	input SetShadowAtten[MBase](float) : "Sets the shadow attenuation."
-	input SetSpotlightFrame[MBase](string) : "Sets the spotlight texture frame."
-	input AlwaysDrawOn[MBase](void) : "Turns off BBox culling (for skybox or monitor lights)"
-	input AlwaysDrawOff[MBase](void) : "Turns on BBox culling if it was off before"
-	input StopFollowingTarget[MBase](void)	: "Causes this entity to stop following the target, if it has one"
-	input StartFollowingTarget[MBase](void) : "Causes this entity to start following the target if it was set to not follow it before"
+	input SetConstant[MBase, -Strata](float)    : "Sets the constant attenuation."
+	input SetLinear[MBase, -Strata](float)      : "Sets the linear attenuation."
+	input SetQuadratic[MBase, -Strata](float)   : "Sets the quadratic attenuation."
+	input SetFilter[MBase, -Strata](float)      : "Sets the shadow filter."
+	input SetShadowAtten[MBase, -Strata](float) : "Sets the shadow attenuation."
+	input SetSpotlightFrame[MBase, -Strata](string) : "Sets the spotlight texture frame."
+	input AlwaysDrawOn[MBase, -Strata](void) : "Turns off BBox culling (for skybox or monitor lights)"
+	input AlwaysDrawOff[MBase, -Strata](void) : "Turns on BBox culling if it was off before"
+	input StopFollowingTarget[MBase, -Strata](void)	: "Causes this entity to stop following the target, if it has one"
+	input StartFollowingTarget[MBase, -Strata](void) : "Causes this entity to start following the target if it was set to not follow it before"
 
-	input SetNearZ[since_P2](float) : "Sets the near Z distance."
-	input SetFarZ[since_P2](float) : "Sets the far Z distance."
+	input SetNearZ[since_P2, GMOD](float) : "Sets the near Z distance."
+	input SetFarZ[since_P2, GMOD](float) : "Sets the far Z distance."
 	input LightOnlyTarget[INFRA](bool) : "Set if the projected texture lights the target only."
 	input LightWorld[INFRA](bool) : "Set if the projected texture lights the world and static geometry."
 	input Ambient[GMod, INFRA](float) : "Set ambient light amount"
+
+	input LightOnlyTarget[Strata](bool) : "Set if the projected texture lights the target only."
+	input LightWorld[Strata](bool) : "Set if the projected texture lights the world and static geometry."
+	input EnableVolumetrics[Strata](bool) : "Set if the volumetrics are enabled."
+	input SetVolumetricIntensity[Strata](float) : "Sets the volumetric lighting's intensity."
+	input SetBrightnessScale[Strata](float) : "Sets the brightness."
+	input SetShadowSize[Strata](integer) : "Set the size exponent of this light's shadowmap."
 
 	@resources []
 	]

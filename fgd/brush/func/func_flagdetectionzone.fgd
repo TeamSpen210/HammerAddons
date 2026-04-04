@@ -12,4 +12,5 @@
 	output OnEndTouchFlag(void) : "Sent when a flag or flag carrier stops touching the zone."
 	output OnDroppedFlag(void) : "Sent when a flag is dropped in the zone."
 	output OnPickedUpFlag(void) : "Sent when a flag is picked up in the zone."
+	@resources []
 	]

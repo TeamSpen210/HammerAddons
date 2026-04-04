@@ -8,4 +8,6 @@
 	input TurnOffDisplay(void) : "Turn off display of particle simulation benchmark"
 	input StartMeasuring(void) : "Start measuring particle simulation speed"
 	input StopMeasuring(void) : "Stop measuring particle simulation speed"
+
+	@resources []
 	]

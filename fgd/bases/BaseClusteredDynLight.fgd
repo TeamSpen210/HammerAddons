@@ -1,0 +1,23 @@
+@BaseClass base(BaseClusteredLight) = BaseClusteredDynLight
+	[
+	spawnflags(flags)  =
+		[
+		1: "Initially dark" : 0
+		2: "Shadowed" : 0
+		4: "Always Update": 0
+		]
+	_lightmode[engine](integer) : "Light Mode" : 2
+	_lightmode(choices) : "Light mode" : 2 = 
+		[
+		0: "Static"
+		1: "Specular"
+		2: "Static Bounce"
+		3: "Fully Dynamic"
+		]
+		
+	texturename(string) : "Cookie Texture Name" : "" : "The cookie texture to use for the light. An empty value means no cookie texture."
+	textureframe(integer) : "Cookie Texture Frame" : 0 : "The frame of the cookie texture to use for the light."
+	
+	input SetCookieTexture(string) : "Set the cookie texture of this light. An empty value means no cookie texture."
+	input SetCookieTextureFrame(integer) : "Set the frame texture of the cookie texture for this light."
+	]

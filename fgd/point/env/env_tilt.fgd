@@ -18,4 +18,5 @@
 	// Inputs
 	input StartTilt(void) : "Start the shake."
 	input StopTilt(void) : "Stop the tilt."
+	@resources []
 	]

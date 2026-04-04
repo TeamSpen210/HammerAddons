@@ -188,5 +188,6 @@
 		sound "NPC_Citizen.FootstepRight"
 		sound "NPC_Citizen.Die"
 		func npc_citizen // Complex rules controls which model is used.
+		entity info_target_command_point
 		]
 	]

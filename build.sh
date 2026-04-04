@@ -1,5 +1,5 @@
 #!/bin/sh
-games="p2 p1 hl2 ep1 ep2 gmod csgo tf2 asw l4d l4d2 infra mesa"
+games="p2 p1 hl2 ep1 ep2 gmod csgo tf2 asw l4d l4d2 infra mesa p2ce momentum"
 game=$1
 if [ $# -eq 0 ]; then
   echo Games: "${games[*]}" & echo Enter game to build. Use ALL to build every game. & read -p "" game
@@ -10,6 +10,7 @@ copy_hammer_files() {
   mkdir -p build/postcompiler &&
   cp -rf hammer build/hammer &&
   cp -rf instances build/instances &&
+  cp -rf examples build/examples &&
   cp -rf transforms build/postcompiler/transforms &&
   find ./build/instances -iname "*.vmx" -delete # Yes, I know that we could use rsync with a ton of options to do this instead of using cp and then deleting unwanted files. This is FAR nicer imo.
   

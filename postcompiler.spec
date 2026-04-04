@@ -3,14 +3,33 @@ from pathlib import Path
 import shutil
 import importlib.metadata
 
+from srctools.dmx import Element as DMXElem
 from PyInstaller.utils.hooks import collect_submodules
 import versioningit
+
+from hammeraddons.config import GameConfig
 
 # PyInstaller-injected.
 SPECPATH: str
 workpath: str
 
 root = Path(SPECPATH)  # noqa
+
+# Resave the games config as a binary DMX.
+with open(root / 'games.dmx', 'rb') as f:
+    print('Reading: ', f.name)
+    games_conf, games_fmt_name, games_fmt_ver = DMXElem.parse(f)
+
+# Validate all the options, by parsing them.
+for game_attr in games_conf.values():
+    if game_attr.name != 'name':
+        try:
+            GameConfig.parse(game_attr.val_elem)
+        except Exception as exc:
+            exc.add_note(f'Bad config: {game_attr!r}')
+            raise
+# Then merge search path entries to simplify.
+GameConfig.optimise(games_conf)
 
 version = versioningit.get_version(SPECPATH, {
     'vcs': {'method': 'git'},
@@ -42,7 +61,7 @@ a = Analysis(
         'bisect', 'colorsys', 'collections', 'csv', 'datetime', 'contextlib',
         'decimal', 'difflib', 'enum', 'fractions', 'functools',
         'io', 'itertools', 'json', 'math', 'random', 're',
-        'statistics', 'string', 'struct', 'pysteampathprovider',
+        'statistics', 'string', 'struct',
         *collect_submodules('srctools', filter=lambda name: 'scripts' not in name),
         *collect_submodules('attr'),
         *collect_submodules('attrs'),
@@ -50,6 +69,7 @@ a = Analysis(
     ],
     excludes=[
         'IPython',  # Via trio
+        'tkinter',
     ],
     noarchive=False,
 )
@@ -87,3 +107,45 @@ for file in (root / 'transforms').rglob('*.py'):
     print(file, '->', dest)
     dest.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy(file, dest)
+
+with open(app_folder / 'binaries' / 'games.dmx', 'wb') as f:
+    print('Writing: ', f.name)
+    games_conf.export_binary(f, fmt_name=games_fmt_name, fmt_ver=games_fmt_ver, unicode='format')
+
+
+gen_choreo = Analysis(
+    ['src/hammeraddons/gen_choreo.py'],
+    binaries=[],
+    datas=[],
+    hiddenimports=[],
+    excludes=[
+        'IPython',  # Via trio
+    ],
+    noarchive=False,
+)
+
+gen_choreo_pyz = PYZ(gen_choreo.pure, gen_choreo.zipped_data)
+gen_choreo_exe = EXE(
+    gen_choreo_pyz,
+    gen_choreo.scripts,
+    [],
+    exclude_binaries=True,
+    name='gen_choreo',
+    debug=False,
+    bootloader_ignore_signals=False,
+    # Don't use bin/, in case someone puts this right in a game dir.
+    contents_directory='binaries',
+    strip=False,
+    upx=True,
+    console=True,
+    icon="postcompiler.ico",
+)
+gen_choreo_coll = COLLECT(
+    gen_choreo_exe,
+    gen_choreo.binaries,
+    gen_choreo.zipfiles,
+    gen_choreo.datas,
+    strip=False,
+    upx=True,
+    name='gen_choreo'
+)

@@ -1,0 +1,22 @@
+@FilterClass base(filter_base)
+	appliesto(MOMENTUM)
+= filter_momentum_surface_collision : "A filter that filters by the player's current collision state"
+	[
+	filter_mode[engine](integer) : "Filter Mode" : 0
+	filter_mode(choices) : "Filter Mode" : 0 =
+		[
+		0 : "Touching anything"
+		1 : "Touching standable surfaces"
+		2 : "Touching surfable surfaces"
+		3 : "Touching material"
+		]
+
+	material_name(string) : "Material Name" : : "The name of the material to check for when the filter mode is set to 'Touching material'"
+
+	spawnflags(flags) : "spawnflags" =
+		[
+		1: "Include interactions with brushes" : 1
+		2: "Include interactions with displacements" : 1
+		4: "Include interactions with models" : 1
+		]
+	]

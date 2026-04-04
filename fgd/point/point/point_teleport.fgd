@@ -6,14 +6,28 @@
 	"If 'Teleport Home' spawn flag is set, teleports the target entity to its spawn position instead. " +
 	"If object is physically simulated, simulation is turned off when teleported."
 	[
-	target(target_destination) : "Entity To Teleport" : : "Name of the entity that will be teleported."
+	target(target_destination) report: "Entity To Teleport" : : "Name of the entity that will be teleported."
 	model[engine](string) : "Hammer Preview"
 	model[!engine](studio) : "[H] Model" : "models/editor/angle_helper.mdl" : "The model shown in Hammer, to use for positioning."
 	spawnflags(flags)  =
 		[
-		1: "Teleport Home" : 0
+		1: "Teleport to Target's Spawn Position" : 0
 		2: "Into Duck (episodic)" : 0
 		]
+
+	UseDestinationAngles[MOMENTUM](boolean) : "Use Destination Angles" : 0 : "Forces the teleported object to snap to the angles of the destination."
+
+	VelocityMode[engine](integer) : "Velocity Mode"
+	VelocityMode[MOMENTUM](choices) : "Velocity Mode" : 0 =
+		[
+		0 : "Keep Velocity"
+		1 : "Reset Velocity"
+		2 : "Keep Negative Z Velocity Only"
+		3 : "Redirect Velocity"
+		]
+
+	SetSpeed[MOMENTUM](float) : "Redirect Velocity Speed" : 400 : "If Velocity Mode is set to Redirect Velocity, the entity's speed will be set to this amount when teleported. When this speed is <= 0, use the entity's current speed instead."
+
 
 	// Inputs
 	input Teleport(void) : "Teleport the target entity."

@@ -6,3 +6,9 @@
 	"local": "Entity Name"
 	"position": "Position"
 ]
+
+// Allows identifying older versions of entities in the future if we make backwards incompatible changes.
+@snippet keyvalue CompVersion = ent_version[engine](integer) : "Version" : 0
+@snippet keyvalue CompV1 = ent_version(choices): "Version" : 1 : "Should always be 1, indicates the version of this postcompiler entity." = [
+	1: "Version 1"
+]

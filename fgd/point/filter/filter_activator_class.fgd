@@ -1,7 +1,5 @@
 @FilterClass base(filter_base)
-	autovis(Logic, Filters)
 	iconsprite("editor/filter_class.vmt")
-	autovis(Logic, Filters)
 = filter_activator_class: "A filter that filters by the class name of the activator."
 	[
 	filterclass(string) : "Filter Classname" : : "The class name to filter by. " +

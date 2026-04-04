@@ -1,0 +1,27 @@
+@PointClass base(BaseEntityPoint) 
+	appliesto(P2CE)
+	iconsprite("editor/info_portal_gamerules.vmt")
+= info_portal_gamerules: "Dictates specific gameplay aspects in Portal."
+	[
+	enableregen(boolean) : "Enable health regeneration" : 1 : "Enabling this will allow players to restore health over time."
+	equipboots(boolean) : "Equip long-fall boots" : 1 : "Controls fall damage. Enabling this will make the player immune to fall damage."
+	equipportalgun[engine](integer) : "Equip Portal Gun" : 0
+	equipportalgun(choices) : "Equip Portal Gun" : 0 : "Automatically grants the player a portal gun based on type, if enabled." =
+		[
+		0: "None"
+		2: "Blue portal only"
+		1: "Orange portal only"
+		3: "Dual Portal Device"
+		4: "Dual Portal Device (PotatOS attached)"
+		]
+	equippaintgun[engine](integer) : "Equip Paint Gun" : 0
+	equippaintgun(choices) : "Equip Paint Gun" : 0 : "Automatically grants the player a paint gun if enabled.\n\n" +
+		"The \"basic paint gun\" option will give the player a paint gun with no powers assigned by default - paint powers must be obtained by touching an item_paint_power_pickup entity. " +
+		"Selecting the \"Fully-upgraded paint gun\" option will give the player all applicable paint powers for the paint gun." =
+		[
+		0: "None"
+		1: "Basic paint gun"
+		2: "Fully-upgraded paint gun"
+		]
+	maxhealth(integer) : "Maximum player health" : 100 : "Specifies the maximum health limit for players."
+	]

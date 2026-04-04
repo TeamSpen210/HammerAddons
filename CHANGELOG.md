@@ -1,18 +1,83 @@
-# Version Dev
+# Version (dev)
 
-# Enhancements
+## New Features
+* Added `comp_movie_fitter`, which calculates UVs for `vgui_movie_display`.
+* Added `comp_multi_command`, which allows executing console commands in bulk more conveniently.
+
+## Enhancements
+* Upgraded config handling:
+  * Files have been renamed to `hammeraddons.vdf` etc, instead of `srctools`. Old names are still loaded.
+  * Config files will no longer be rewitten. Instead any changes will produce a new file, which
+    should be merged with any comments in the old one, then copied over.
+  * Plugin scripts can now register their own config options, in addition to builtin ones.
+  * Searchpaths 'nopack' option now allows wildcards for disabling locations in bulk.
+* Moved options specifying the behaviour of the current game branch to a dedicated file, 
+  so users only need to pick from presets.
+* Update internal Crowbar to version 0.75. This is used decompile models for propcombine.
+* Added 1/16 scale skybox mode for vactube system. You'll need to provide your own models or use prop scaling.
+* Added vactube curves 7-16. You'll need to provide your own models though.
+* `comp_entity_finder`s can now use `@names` for replace outputs, so they work in HL2.
+* Allow `<appid>` references to be used everywhere `|srctools_paths|` references can be used.
+* `env_tonemap_controller` options can be set by keyvalues, generating a `logic_auto` automatically.
+* Added rotation, scale, animation, and bodygroup keyvalues to `hammer_model`. Some of these require a custom Hammer fork (e.g. Hammer++) to be visible.
+* Added a 'version number' to all postcompiler entities. This allows backwards-incompatible changes to occur in the future.
+* Added `OnPressedPlayer`/`OnPressedCube` outputs to Portal 2 floor button entities, implemented by spawning a filter entity.
+
+## Bugfixes
+* Fix vactube objects appearing to rapidly move from end to start positions in some cases.
+* Fix an issue where vactube objects might have the wrong model, overlap each other, etc.
+* Improved handling of more complex `gameinfo.txt` files like Mapbase's.
+* Automatically remove old generated vactube animation models.
+* Fix an issue where prop ropes generated with slight angles on straight sections.
+* Fix prop ropes not reusing existing compiled versions.
+* Fix `trigger_vphysics_motion`/`trigger_wind` having `OnStartTouch` etc outputs, which they don't have.
+
+-----------------------
+
+# Version 2.6.0
+
+The postcompiler now requires Windows 8+.
+
+## New Features
+* Added `comp_vactube_sensor`, which allows detecting the presence of vactube objects.
+* Added `comp_piston_platform`, which generates the logic for Portal-style piston platforms.
+* Added option to `trigger_hurt` to create the logic for 'forgiving laserfields'.
+* Added `hammer_model` entity to allow placing reference models in Hammer that don't appear in-game.
+
+## Enhancements
+* Update to Mapbase 7.3.
 * A new "snippets" system allows FGD files to easily repeat descriptions and other small sections.
 * Add ability to randomise output delay to `comp_relay` and `comp_adv_output`.
-* Added `comp_vactube_sensor`, which allows detecting the presence of vactube objects.
 * Added a value mode option to `comp_kv_setter` and `comp_adv_output` to more clearly control which key is used.
 * Added textures for 4 rendertargets (camera, water reflection/refraction, full framebuffer). These give a nice preview in Hammer.
 * Added three keyvalues to `ambient_generic`, giving a more user friendly interface to the confusing spawnflags. This also allows them to be configured via fixup values easily.
+* Added line helpers to `env_microphone`, `scripted_sequence`, `path_track`, and `item_item_crate`.
+* Added Source 2013's `SetModelScale` input to all animating entities,
+* Added undocumented `ChangeLevelPostFade` input to `point_changelevel`.
+* Added Portal: Still Alive features (not currently included in releases, but can be built by including the `PSA` tag),
+* Added "singular" and "remove" modes to `comp_kv_setter`.
 * Allow `comp_entity_finder` to rotate the target in addition to teleporting.
+* `comp_kv_setter`s can now lookup the flags mask based on the name in the FGD.
 * Allow configuring various shadow/fast reflection options for vactube object ents.
 * Boolean keyvalues (yes/no) can now be set to `!$var`, to invert the value of the variable. 
+* Consistently seed the RNG for compiler entities, to produce consistency across compiles. 
+  Relevant entities now all have `seed` parameters to further adjust.
 * Propcombine will now preserve prop fade distances, by calculating a new distance which encloses the original fade spheres.
-* Warn if propcombine or packing was disabled via command line.
+* Propcombined models will try and use group names for the filename, if specified.
+* Warn in the log if propcombine or packing was disabled via command line, so this is easier to diagnose.
+* Add SFX to the Old Aperture cubedropper to simulate the new cube landing.
+* Multiple prop ropes with the same shape and configuration will now properly share models.
 * Add option to `comp_adv_output` to have it expand target searches itself.
+* Refer to the "Gravity Gun" in descriptions instead of physgun/physcannon.
+* Floor buttons with `solid=6` will automatically be fixed, since this unintentionally makes them non-solid.
+* The postcompiler will now detect and error if a loop of parents/filters is detected. These will just crash the game in a non-obvious manner.
+* Included a copy of the "Obsolete" sprite used for missing entities, for games that don't include it by default such as Portal 2.
+* Improved `game_text` keyvalue descriptions and added Mapbase's font keyvalue,
+* Updated the icon for `skybox_swapper`.
+* Removed `info_paint_sprayer` keyvalues which are set in some Valve maps, but don't actually exist.
+* Removed Hammer preview from Mapbase's `vgui_text_display` as it did not actually match the in-game appearance.
+* Removed `skybox_swapper` in Mapbase as it doesn't actually work.
+* Removed `playtest_manager` entity as it doesn't actually exist in-game.
 
 ## Bugfixes
 * Fix a compile failure if prop ropes were placed in a group with no connections.
@@ -21,6 +86,15 @@
 * Fix overlays not functioning with `material_modify_control` parent searching.
 * Make RunScriptCode \` handling occur after everything else.
 * #274, #277: Force required keyvalue casing for `light_environment`'s `SunSpreadAngle` and `lua_run`'s `Code` keys.
+* Fix hammer_notes text size/color parameters being missing for games before CS:GO.
+* Fix an issue with `func_instance_io_proxy` and `comp_` entities.
+* Fix mismatched numbering between `logic_random_outputs` KVs and inputs.
+* Fix `comp_kv_setter`/`comp_adv_output` position keyvalues not getting transformed by instances in Source 2013.
+* Fix `comp_adv_output` string keyvalues getting transformed as entity names.
+* Fix not being able to scale props with ctrl+scrollwheel in Hammer++.
+* Fix turret FOV preview being incorrect - it's 120 degrees, not 90.
+* Fix item entities not rotating their hitboxes in Hammer.
+* Fix typos in some movie filenames.
 
 
 --------------------

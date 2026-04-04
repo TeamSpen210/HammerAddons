@@ -1,6 +1,5 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(TF2)
-	autovis(TF2, TFBots, Bot Controller)
 	iconsprite("editor/ficool2/bot_controller")
  = bot_controller: "An entity used to create a bot, and then issue commands to it."
 	[

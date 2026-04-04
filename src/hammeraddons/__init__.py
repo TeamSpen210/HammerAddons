@@ -3,7 +3,7 @@ from pathlib import Path
 import sys
 
 
-__all__ = ['BINS_PATH', 'FROZEN', 'HADDONS_VER', 'SRCTOOLS_VER']
+__all__ = ['BINS_PATH', 'FROZEN', 'HADDONS_VER', 'SRCTOOLS_VER', 'WIN', 'MAC', 'LINUX']
 
 
 try:
@@ -25,3 +25,7 @@ except AttributeError:
     # Root directory is up thrice from postcompiler.py.
     BINS_PATH = Path(sys.argv[0], '..', '..', '..').resolve()
     FROZEN = False
+
+WIN = sys.platform.startswith('win')
+MAC = sys.platform.startswith('darwin')
+LINUX = sys.platform.startswith('linux')

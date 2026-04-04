@@ -1,7 +1,7 @@
 @PointClass base(BaseNPC, SetSkin) 
 	appliesto(P2) 
 	autovis(NPCs, Wheatley)
-	studioprop() = npc_wheatley_boss: "Wheatley NPC stub"
+	studioprop() = npc_wheatley_boss: "Generic NPC stub for Wheatley during Act 4."
 	[
 	model(studio) : "Model" : "models/npcs/glados/glados_wheatley_boss.mdl"
 	]

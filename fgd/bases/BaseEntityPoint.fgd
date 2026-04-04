@@ -14,7 +14,7 @@
 	parentname[srctools](target_destination) : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
 	parent_attachment_point[srctools](string) : "[HA] Attachment Point" : : "If set, attach to this attachment point on the parent during spawn. The relative offset will be preserved."
 
-	linedivider_vscript[+VSCRIPT, !engine](string) readonly : "-------------------------------------------------------------------------------------------------------" : ""
+	linedivider_vscript[+VSCRIPT, !engine](string) readonly editor : "-------------------------------------------------------------------------------------------------------" : ""
 
 	vscripts[VSCRIPT](scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
 	thinkfunction[VSCRIPT](string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
@@ -31,7 +31,7 @@
 		"You need to supply the tool class names, the names of the .lua files of those tools.\n" +
 		"This also includes the context menu properties!"
 
-	linedivider_base[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_base[!engine](string) readonly editor : "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs
 	input SetParent(target_destination) : "Changes the entity's parent in the movement hierarchy."
@@ -43,18 +43,17 @@
 	input SetAbsAngles[MBase](vector) : "Set this entity's angles, always relative to the world origin."
 
 	// Mapbase BaseEntity changes:
-	input FreeChildren[MBase](void) : "Unparents all direct children of this entity."
-	input SetLocalVelocity[MBase](vector) : "Sets this entity's current velocity."
-	input SetLocalAngularVelocity[MBase](vector) : "Sets this entity's current angular velocity."
+	input FreeChildren[MBase, Strata](void) : "Unparents all direct children of this entity."
+	input SetLocalVelocity[MBase, Strata](vector) : "Sets this entity's current velocity."
+	input SetLocalAngularVelocity[MBase, Strata](vector) : "Sets this entity's current angular velocity."
 	
-	input SetHealth[MBase](integer) : "Sets this entity's health."
-	input AddHealth[MBase](integer) : "Adds to this entity's health."
-	input RemoveHealth[MBase](integer) : "Removes from this entity's health."
+	input SetHealth[MBase, Strata](integer) : "Sets this entity's health."
+	input AddHealth[MBase, Strata](integer) : "Adds to this entity's health."
+	input RemoveHealth[MBase, Strata](integer) : "Removes from this entity's health."
+	input SetMaxHealth[MBase, Strata](integer) : "Sets this entity's max health."
 	
-	input SetMaxHealth[MBase](integer) : "Sets this entity's max health."
-	
-	input SetEntityName[MBase](target_destination) : "Sets this entity's name that other entities should refer to it by."
-	input SetTarget[MBase](target_destination) : "Sets this entity's target. This is specific to certain entities, particularly logic entities that involve a target."
-	input SetOwnerEntity[MBase](target_destination) : "Sets this entity's owner entity. This has nothing to do with parenting and has more to do with collision and kill credits."
-	input Touch[MBase](target_destination) : "Simulates this entity touching the specified entity."
+	input SetEntityName[MBase, Strata](target_destination) : "Sets this entity's name that other entities should refer to it by."
+	input SetTarget[MBase, Strata](target_destination) : "Sets this entity's target. This is specific to certain entities, particularly logic entities that involve a target."
+	input SetOwnerEntity[MBase, Strata](target_destination) : "Sets this entity's owner entity. This has nothing to do with parenting and has more to do with collision and kill credits."
+	input Touch[MBase, Strata](target_destination) : "Simulates this entity touching the specified entity."
 	]

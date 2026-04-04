@@ -55,4 +55,6 @@
 	output OnBlueScoreChanged(float) : "Send when score changes, and is a value representing total progress from [0..1]."
 	output OnCountdownTimerExpired(void) : "Sent when the countdown timer expires."
 	input RoundActivate(void) : "Reactivate."
+
+	@resources [] // Sounds above.
 	]

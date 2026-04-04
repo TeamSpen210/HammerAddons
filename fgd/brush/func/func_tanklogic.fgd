@@ -9,4 +9,6 @@
 	output OnFire_BarrelPos(vector) : "Fires each time this func_tank would fire a bullet. Passes the barrel's current position."
 	output OnFire_ShootPos(vector) : "Fires each time this func_tank would fire a bullet. Passes the position which said bullet would hit, spread applied."
 	output OnFire_FirstEnt(ehandle) : "Fires each time this func_tank would fire a bullet. Passes the first entity that would be hit, if any."
+
+	@resources []
 	]

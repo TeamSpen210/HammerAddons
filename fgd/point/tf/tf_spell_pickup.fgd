@@ -1,6 +1,6 @@
 @PointClass base(Item) 
 	appliesto(TF2) 
-	studio("models/props_halloween/hwn_spellbook_flying.mdl") 
+	studio("models/props_halloween/hwn_spellbook_upright.mdl") 
 = tf_spell_pickup: "Spell"
 	[
 	tier[engine](integer) : "Spell Tier" : 0
@@ -8,5 +8,14 @@
 		[
 		0: "Common"
 		1: "Rare"
+		]
+
+	@resources [
+		mdl "models/items/crystal_ball_pickup_major.mdl"
+		mdl "models/items/crystal_ball_pickup.mdl"
+		mdl "models/props_halloween/hwn_spellbook_upright_major.mdl"
+		mdl "models/props_halloween/hwn_spellbook_upright.mdl"
+		sound "Halloween.spell_pickup"
+		sound "Halloween.spell_pickup_rare"
 		]
 	]

@@ -4,23 +4,23 @@
 = BaseEntityAnimating
 	[
 	effects[engine](integer) : "Effect Flags" : 0
-	effects[complete](choices) : "Effect Flags" : 0 : "For configuring visual effects. If you want to combine effects, turn SmartEdit off and add the effect numbers together, i.e. 64 + 8 = 72." =
+	effects(choices) : "Effect Flags" : 0 : "For configuring visual effects. If you want to combine effects, turn SmartEdit off and add the effect numbers together, i.e. 64 + 8 = 72." =
 		[
 		0 : "None"
-		1 : "Bonemerge always, very expensive!!"
+		1 : "Bonemerge always, very expensive!!" [complete] // Probably not useful
 		2 : "Bright, dynamic light at entity origin"
 		4 : "Dim, dynamic light at entity origin"
 		8 : "No movement interpolation"
-		16 : "Don't cast shadows"
+		16 : "Don't cast shadows" [complete] // Covered by separate KV
 		32 : "Don't draw entity (entity is fully ignored by clients, NOT server)"
-		64 : "Don't receive dynamic shadows"
-		128 : "Bonemerge only in PVS, better performance but prone to disappearing. Use with Bonemerge."
-		256 : "Blinking glow"
-		512 : "Flag parent as always animating and realign each frame"	
+		64 : "Don't receive dynamic shadows" [complete] // Covered by separate KV
+		128 : "Bonemerge only in PVS, better performance but prone to disappearing. Use with Bonemerge." [complete] // Probably not useful
+		256 : "Blinking glow" [complete] // Doesn't seem to do anything?
+		512 : "Flag parent as always animating and realign each frame" [complete] // Probably not useful
 		// Via Pinsplash
-		1024 : "Mark for fast reflections" [since_P2]
-		2048 : "No shadow depth, for use with env_cascade_light" [since_P2]
-		4096 : "No projected textures" [since_P2]
+		1024 : "Mark for fast reflections" [since_P2, +complete] // Covered by separate KV
+		2048 : "No shadow depth, for use with env_cascade_light" [since_P2, +complete] // Covered by separate KV
+		4096 : "No projected textures" [since_P2, +complete] // Covered by separate KV
 		]
 	
 	solid[engine](integer) : "Collisions": 6
@@ -52,8 +52,9 @@
 	sequence[engine](integer) : "Sequence Number" : 0 : "Stores the index of the currently playing animation. Can be set manually via AddOutput, but care must be used."
 	
 	suppressanimsounds[since_P2](boolean) : "Suppress Anim Sounds" : 0 : "If set, the prop will not play any sounds that are embedded in animations it plays."
-
-	linedivider_animbase[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	AllowSilentDissolve[P2CE](boolean): "Allow SilentDissolve input" : 1 : "Allow the SilentDissolve input to dissolve this object."
+	
+	linedivider_animbase[!engine](string) readonly editor: "----------------------------------------------------------------------------------------------------------" : ""
 
 	LightingOrigin(target_destination) : "Lighting Origin" :  : "Select any entity (not info_lighting!) from which to sample lighting instead of the entity's origin."
 	LightingOriginHack(target_destination) : "Lighting Origin Offset" :  : "The info_lighting_relative from which to sample lighting instead of the entity's origin."
@@ -62,30 +63,15 @@
 	fademaxdist(float) : "End Fade Distance/Pixels" : : "Distance at which the entity ends fading. If <0, the entity won't disappear at all. The value will scale appropriately if the entity is in a 3D Skybox."
 	fadescale(float) : "Fade Scale" : : "If specified in the worldspawn, or if the engine is running below DirectX 8, entities will fade out even if the fade distances above aren't specified. This value gives more control over when this happens: numbers smaller than 1 cause the entity to fade out at further distances, and greater than 1 cause it to fade out at closer distances. Using 0 turns off the forced fade altogether."	
 	
-	shadowcastdist[complete](integer) : "Shadow Cast Distance" : 0 : "Sets how far the entity casts dynamic shadows, in units. 0 means default distance from the shadow_control entity."
+	#snippet keyvalue ShadowControl
 
-	// Disambiguate from projected textures if present.
-	disableshadows[until_L4D](boolean) : "Disable Producing Shadows?" : 0 : "Prevent the entity from creating cheap render-to-texture/dynamic shadows."
-	disableshadows[since_L4D](boolean) : "Disable Producing Cheap Shadows?" : 0 : "Prevent the entity from creating cheap render-to-texture/dynamic shadows."
-
-	disablereceiveshadows(boolean) : "Disable Receiving Shadows?" : 0 : "Prevents shadows (cheap & projected texture) from appearing on this entity."
-	disableshadowdepth[since_L4D](boolean) : "No Affecting Proj Texs"  : 0 : "Prevent this entity from affecting projected texture shadows."
-	shadowdepthnocache[since_L4D, +complete](choices) : "Projected Texture Cache" : "0" : "Used to hint projected texture system whether it is sufficient to cache shadow volume of this entity or to force render it every frame instead." =
-		[
-		0: "Default"
-		1: "No cache = render every frame"
-		2: "Cache it = render only once"
-		]
-	shadowdepthnocache[engine](integer): "Projected Texture Cache": 0
-	disableflashlight[since_L4D, MBase](boolean) : "No Recieving Proj Texs" : 0 : "Used to disable flashlight (env_projectedtexture) lighting and shadows on this entity."
-
-	linedivider_anim[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_anim[!engine](string) readonly editor: "----------------------------------------------------------------------------------------------------------" : ""
 
 	// Inputs
 	input Skin(integer) : "Changes the model skin to the specified number."
 	input SetBodyGroup(integer) : "Change the model's bodygroup to the specified index number."
 	// 2013 only
-	input SetModelScale[until_L4D, !GMod](vector) : "Set the scale of the entity's model. Takes two values separated by a space. The first is the target model scale. " +
+	input SetModelScale[until_L4D, !GMod, Strata](vector) : "Set the scale of the entity's model. Takes two values separated by a space. The first is the target model scale. " +
 		"The second value is the number of seconds the change in scale will be spread over."
 
 	input Ignite(void) : "Makes the entity catch on fire indefinitely."
@@ -113,7 +99,9 @@
 	input CreateSeparateRagdoll[MBase](void) : "Creates a separate serverside ragdoll at this entity's origin."
 	input CreateSeparateRagdollClient[MBase](void) : "Creates a separate clientside ragdoll at this entity's origin."
 	input SetPoseParameter[MBase](string) : "Sets the specified pose parameter to the specified value (e.g. ''aim_yaw 45'')."
-
+	input Dissolve[+P2, +Strata](void) : "Fizzles the object, firing the OnFizzled output."
+	input SilentDissolve[+P2, +Strata](void) : "Kills the object immediately, firing the OnFizzled output."
+ 
 	// Outputs
 	output OnIgnite(void) : "Fired when this object catches fire."
 	output OnServerRagdoll[MBase](ehandle) : "Fires when this object becomes/creates a serverside ragdoll. Passes the ragdoll."

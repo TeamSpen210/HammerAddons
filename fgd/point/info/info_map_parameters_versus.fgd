@@ -8,7 +8,7 @@
 	molotovdensity(float) : "Molotov density" : "6.48" : "Molotov density per sq 100 yards"
 	pipebombdensity(float) : "Pipe Bomb density" : "6.48" : "Pipe Bomb density per sq 100 yards"
 	pistoldensity(float) : "Pistol density" : "6.48" : "Pistol density per sq 100 yards"
-	weapondensity[L4D1](float) : "Weapon density" : "6.48" : "Weapon (non-pistol) density per sq 100 yards"
+	weapondensity[L4D](float) : "Weapon density" : "6.48" : "Weapon (non-pistol) density per sq 100 yards"
 	gascandensity(float) : "Gas Can density" : "6.48" : "Gas Can density per sq 100 yards"
 	oxygentankdensity(float) : "Oxygen Tank density" : "6.48" : "Oxygen Tank density per sq 100 yards"
 	propanetankdensity(float) : "Propane Tank density" : "6.48" : "Propane Tank density per sq 100 yards"

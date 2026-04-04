@@ -26,6 +26,7 @@
 		0: "Energy"
 		1: "Heavy electrical"
 		2: "Light electrical"
+		3: "Core" [-MESA]
 		3 : "Fade" [MESA]
 		4 : "Remove Now" [MESA]
 		5 : "Gluon Dissolve" [MESA]
@@ -37,7 +38,7 @@
 	input TurnOff(void) : "Turns the beam off."
 	input Toggle(void) : "Toggles the beam between on and off."
 
-	input Noise[MBase](float) : "Set the noise of the beam, in pixels."
+	input Noise(float) : "Set the noise of the beam, in pixels."
 	input Width(float) : "Set the width of the beam, in pixels."
 	input ScrollSpeed(float) : "Set the scroll speed in units per second (0 - 100)."
 	input Alpha(integer) : "Sets the beam's alpha (0 - 255)."
