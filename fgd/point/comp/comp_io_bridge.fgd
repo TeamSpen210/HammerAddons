@@ -1,0 +1,21 @@
+@PointClass
+	iconsprite("editor/comp_io_bridge")
+	appliesto(srctools)
+	autovis(Postcompiler, Comp IO Bridge)
+= comp_io_bridge : "Make an Input/Output bridge between entities of this class. " +
+"Any output fired to this entity will get relayed to the link entity (same classname and targetname). " +
+"So for example firing 'Something' to this entity will make every link entity output 'Something', like in 'Something' > target_ent > Enable ..."
+    [
+        targetname(target_source) : "Name" : : "The name that other entities refer to this entity by. Entities with this name are linked together."
+
+        input Relay1(void) : "Example input, for convenience."
+        input Relay2(void) : "Example input, for convenience."
+        input Relay3(void) : "Example input, for convenience."
+        input Relay4(void) : "Example input, for convenience."
+
+        output Relay1(void) : "Fired in response to Relay1 input on any linked entity (not us)."
+	    output Relay2(void) : "Fired in response to Relay2 input on any linked entity (not us)."
+	    output Relay3(void) : "Fired in response to Relay3 input on any linked entity (not us)."
+	    output Relay4(void) : "Fired in response to Relay4 input on any linked entity (not us)."
+
+    ]

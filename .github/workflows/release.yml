@@ -1,0 +1,128 @@
+name: Release
+on:
+  push:
+    branches:
+      - psc
+      
+  workflow_dispatch:
+
+jobs:
+  create-release:
+
+    runs-on: ubuntu-latest
+    name: Create Release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - run: git fetch --tags origin
+      
+      - name: Get previous tag
+        id: previoustag
+        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Next Monotonic Release version
+        id: next
+        uses: WyriHaximus/github-action-next-release-version@08a7476c98e8095fad1cce0e2344c7892e17d111
+        with:
+          version: ${{ steps.previoustag.outputs.tag }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        if: ${{ github.event.inputs.version == '' }}
+        with:
+          tag_name: ${{ steps.next.outputs.version }}
+      
+  
+  build-fgd:
+    runs-on: ubuntu-latest
+    needs: create-release
+    if: ${{ always() && !cancelled() && needs.create-release.result == 'success' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+          cache-dependency-path: 'requirements.txt'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install -r requirements.txt
+        
+      - name: Build FGD patch
+        run: python ./src/hammeraddons/unify_fgd.py -d ./fgd export_pcp -o patch.fgd P2CE
+      
+      - run: git fetch --tags origin
+      
+      - name: Get previous tag
+        id: previoustag
+        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        if: ${{ github.event.inputs.version == '' }}
+        with:
+          tag_name: ${{ steps.previoustag.outputs.tag }}
+          files: patch.fgd
+          fail_on_unmatched_files: true
+
+
+  
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+    
+    needs: create-release
+    if: ${{ always() && !cancelled() && needs.create-release.result == 'success' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+          cache-dependency-path: 'requirements.txt'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install -r requirements.txt
+  
+      - run: |
+          cd src
+          python -m PyInstaller --distpath ../dist/ --workpath ../pc_build -y ../postcompiler.spec
+        shell: bash
+
+      - name: Pack files
+        uses: TheDoctor0/zip-release@0.7.6
+        with:
+          filename: Release-${{ runner.os }}.zip
+          directory: ./dist/
+
+      - run: git fetch --tags origin
+      
+      - name: Get previous tag
+        id: previoustag
+        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        if: ${{ github.event.inputs.version == '' }}
+        with:
+          tag_name: ${{ steps.previoustag.outputs.tag }}
+          files: dist/Release-${{ runner.os }}.zip
+          fail_on_unmatched_files: true

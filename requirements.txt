@@ -1,6 +1,6 @@
 attrs >= 21.4.0
 typing_extensions >= 4.2.0
-srctools == 2.6.2
+git+https://github.com/Project-Collapse-Studios/srctools.git
 trio >= 0.24.0
 pyinstaller >= 6.1.0
 versioningit >= 2.1.0
