@@ -289,7 +289,7 @@ def mode_ang(comp_ent: Entity, ent: Entity) -> str:
 
 def mode_qangle(comp_ent: Entity, ent: Entity) -> str:
     """Return the angle of the entity, as a Qangle for newer engines.."""
-    return 'Qangle({})'.format(Vec.from_str(ent['angles']).join())
+    return 'QAngle({})'.format(Vec.from_str(ent['angles']).join())
 
 
 def mode_off(comp_ent: Entity, ent: Entity) -> str:
