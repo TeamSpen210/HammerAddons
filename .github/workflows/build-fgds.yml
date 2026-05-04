@@ -10,6 +10,12 @@ on:
       - 'fgd/**'
   workflow_dispatch:
     # Allow triggering manually whenever it's useful.
+    inputs:
+      srctools-dev:
+        description: 'Use the latest commit for srctools'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -28,8 +34,11 @@ jobs:
           python-version: '3.13'
           cache: 'pip'
           cache-dependency-path: 'requirements.txt'
-      - name: Install srctools
+      - name: Install dependencies
         run: python -m pip install -r requirements.txt
+      - name: Install dev srctools
+        if: inputs.srctools-dev
+        run: python -m pip install srctools @ git+ssh://git@github.com:TeamSpen210/srctools.git
       - name: FGD build and folder copy
         run: bash ./build.sh all
       - name: Artifact upload
@@ -50,8 +59,11 @@ jobs:
           python-version: '3.13'
           cache: 'pip'
           cache-dependency-path: 'requirements.txt'
-      - name: Install srctools
+      - name: Install dependencies
         run: python -m pip install -r requirements.txt
+      - name: Install dev srctools
+        if: inputs.srctools-dev
+        run: python -m pip install srctools @ git+ssh://git@github.com:TeamSpen210/srctools.git
       - name: FGD engine dump
         run: python src/hammeraddons/unify_fgd.py exp --engine --binary -o fgd.lzma
       - name: Artifact upload
