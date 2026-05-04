@@ -23,6 +23,7 @@ from .props_config import Opt, Options
 
 __all__ = [
     "Expander", "Config", "GameConfig", "parse", 'make_expander',
+    'MAIN_CONF_NAME', 'PATHS_CONF_NAME', 'GAMES_CONF_NAME',
 
     # Options
     "VERSION", "GAMEINFO", "AUTO_PACK", "PACK_DUMP", "PACK_STRIP_CUBEMAPS",

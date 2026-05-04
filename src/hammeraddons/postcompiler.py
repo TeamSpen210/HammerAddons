@@ -225,7 +225,7 @@ async def main(argv: list[str]) -> None:
             # All builtin definitions should have a correct path, so this should be a user one.
             raise ValueError(
                 'Cannot propcombine, no studioMDL path provided! '
-                'Update hammeraddons_game.vdf.'
+                f'Update {config.GAMES_CONF_NAME}.'
             )
         decomp_cache_path = conf.opts.get(config.PROPCOMBINE_CACHE)
         decomp_cache_loc: Path | None
@@ -303,7 +303,7 @@ async def main(argv: list[str]) -> None:
             if not man_name:
                 raise ValueError(
                     'Packing particle manifest requested, but filename not known. '
-                    'Update hammeraddons_game.vdf, or report as a bug!'
+                    f'Update {config.GAMES_CONF_NAME}, or report as a bug!'
                 )
             LOGGER.info('Writing particle manifest "{}"...', man_name)
             packlist.write_particles_manifest(man_name)
