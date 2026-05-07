@@ -27,9 +27,9 @@ jobs:
     name: Build FGDs
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.13'
           cache: 'pip'
@@ -44,7 +44,7 @@ jobs:
       - name: FGD build and folder copy
         run: bash ./build.sh all
       - name: Artifact upload
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: build-${{ github.sha }}
           path: ./build/*.fgd
@@ -54,9 +54,9 @@ jobs:
     name: Build Engine Dump
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.13'
           cache: 'pip'
@@ -69,10 +69,10 @@ jobs:
           python -m pip uninstall --yes srctools
           python -m pip install srctools@git+https://github.com/TeamSpen210/srctools.git
       - name: FGD engine dump
-        run: python src/hammeraddons/unify_fgd.py exp --engine --binary -o fgd.lzma
+        run: 'python src/hammeraddons/unify_fgd.py exp --engine --binary -o "dump_${{ github.sha }}.lzma"'
       - name: Artifact upload
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: build-engine-${{ github.sha }}
-          path: fgd.lzma
+          archive: false
+          path: 'dump_${{ github.sha }}.lzma'
           if-no-files-found: error
