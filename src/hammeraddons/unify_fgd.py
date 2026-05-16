@@ -623,6 +623,11 @@ def load_file(
     for tags, mat_list in file_fgd.tagged_mat_exclusions.items():
         base_fgd.tagged_mat_exclusions[tags] |= mat_list
 
+    for (name, tags), colorvar in file_fgd.color_vars.items():
+        if (name, tags) in base_fgd.color_vars:
+            raise ValueError(f'Duplicate "{name}" colorvar in "{path}"!')
+        base_fgd.color_vars[name, tags] = colorvar
+
     dest: ChainMap[str, Snippet[Any]]
     if is_snippet:
         for attr_name, disp_name in SNIPPET_KINDS:
@@ -856,6 +861,11 @@ def action_export(
     fgd, base_entity_def = load_database(dbase, extra_loc=extra_db, map_size=map_size)
 
     print(f'Map size: ({fgd.map_size_min}, {fgd.map_size_max})')
+
+    try:
+        base_spawnflags: KVDef | None = base_entity_def.kv['spawnflags']
+    except KeyError:
+        base_spawnflags = None
 
     # Gather all the tags used by entities, make sure there aren't unrecognised ones - typos etc.
     used_tags = {
@@ -1183,6 +1193,11 @@ def action_export(
         visgroup.ents.intersection_update(valid_ents)
         if not visgroup.ents:
             del fgd.auto_visgroups[key]
+
+    print('Culling colorvars...')
+    for name, colorvar_tags in list(fgd.color_vars.keys()):
+        if not match_tags(tags, colorvar_tags):
+            del fgd.color_vars[name, colorvar_tags]
 
     if engine_mode:
         res_tags: dict[str, set[str]] = defaultdict(set)
