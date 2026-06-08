@@ -37,27 +37,28 @@ jobs:
             arch: 'x64'
             os: 'ubuntu-latest'
     runs-on: ${{ matrix.os }}
+    name: Build postcompiler-${{ matrix.artifact-name }}
     steps:
       # Build dev on schedule, since it's actually changing.
       - name: Checkout Dev
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         if: github.event_name == 'schedule'
         with:
           ref: dev
       # Always build the exact tag that's pushed.
       - name: Checkout Tag
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         if: github.event_name == 'create'
         with:
           ref: ${{ github.event.ref }}
       - name: Checkout Ref
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         if: github.event_name == 'workflow_dispatch'
         with:
           ref: ${{ inputs.ref }}
 
       - name: Set up Python ${{ matrix.python-version }}-${{ matrix.arch }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           architecture: ${{ matrix.arch }}
@@ -71,14 +72,14 @@ jobs:
         run: python -m PyInstaller --distpath ../build/ -y ../postcompiler.spec
         working-directory: ./src/
       - name: Artifact upload (tag)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: github.event_name == 'create'
         with:
           name: hammeraddons_${{ github.event.ref }}_${{ matrix.artifact-name }}
           path: ./build/
           if-no-files-found: error
       - name: Artifact upload (hash)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: github.event_name != 'create'
         with:
           name: hammeraddons_${{ github.sha }}_${{ matrix.artifact-name }}
