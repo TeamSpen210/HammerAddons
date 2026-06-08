@@ -9,7 +9,7 @@
 		[
 		1: "Infinite Range" : 0
 		16: "Start Silent" : 1
-		32: "Is NOT Looped" : 1
+		32: "Do not loop" : 1
 		64: "Do NOT Pause when game is Paused": 0 [MESA]
 		64: "Only play to the activator" : 0 [KZ]
 		]
