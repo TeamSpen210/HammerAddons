@@ -12,7 +12,7 @@
 		]
 
 	startingteam[engine](int) : "Team" : 0
-	startingteam(choices) : "Player" : 0 : "Which player to spawn." =
+	startingteam(choices) : "Player" : 0 : "Which player/''team'' to spawn." =
 		[
 		0: "Any"
 		2: "P-Body"
@@ -24,10 +24,12 @@
 	model(choices) : "[H] Player" : "models/editor/playerstart.mdl" : "The player model to show in Hammer." = 
 		[
 		"models/editor/playerstart.mdl" 	: "Default"
-		"models/editor/ballbotstart.mdl"	: "ATLAS"
 		"models/editor/eggbotstart.mdl"		: "P-Body"
+		"models/editor/ballbotstart.mdl"	: "ATLAS"
 		]
-	forcegunonspawn(boolean) : "Force Gun On Spawn" : 0 : "Give the player a Portal Gun on spawn. Coop players always have a Dual Portal Device."
+
+	// No effect normally since the paint gun was cut, but technically exists
+	forcegunonspawn[P2CE, complete](boolean) : "Force Gun On Spawn" : 0 : "Force ATLAS to start with a portal gun and P-Body to start with a paint gun in 2Guns maps."
 
 	// Inputs
 	input Enable(void) : "Enable the spawn point to be used."
