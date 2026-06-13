@@ -3,7 +3,7 @@
 	color(200 200 0) 
 	studio[+Strata]("models/editor/angle_helper.mdl")
 	orientedwidthheight[+Strata](width, height)
-	studio[-Strata]("models/editor/vgui_arrows.mdl")
+	studioprop[-Strata]("models/editor/vgui_arrows.mdl")
 	sphere[-Strata](width)
 	sphere[-Strata](height)
 = vgui_movie_display: "Movie Display"

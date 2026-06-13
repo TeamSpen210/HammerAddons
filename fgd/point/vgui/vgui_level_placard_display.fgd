@@ -1,6 +1,9 @@
 
 @PointClass base(BaseEntityPoint) 
-	appliesto(P2) 
-	studioprop("models/editor/vgui_arrows.mdl") = vgui_level_placard_display: "Pre-level display placard entity."
+	appliesto(P2, +complete) 
+	color(200 200 0) 
+	iconsprite(editor/vizzys/vgui_screen)
+	studioprop("models/editor/vgui_arrows.mdl")
+	 = vgui_level_placard_display: "Weird cut entity for showing level number/title signs. Doesn't work in the final game."
 	[
 	]

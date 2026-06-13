@@ -4,7 +4,7 @@
 	iconsprite(editor/vizzys/vgui_screen)
 	studio[+Strata]("models/editor/angle_helper.mdl")
 	orientedwidthheight[+Strata](width, height)
-	studio[-Strata]("models/editor/vgui_arrows.mdl")
+	studioprop[-Strata]("models/editor/vgui_arrows.mdl")
 	sphere[-Strata](width)
 	sphere[-Strata](height)
 = vgui_screen: "A VGUI screen. Useful for in-world monitors."
@@ -13,22 +13,28 @@
 	panelname[engine](string) : "Panel Name" : : "The type of display to show."
 	panelname[P2](choices) : "Panel Name" : : "The type of display to show." =
 		[
-		"sp_progress_sign": "SP/Workshop Level Placard"
-		"mp_progress_sign": "Coop Level Placard"
+		"sp_progress_sign": "SP/Workshop Chamber Sign"
+		"mp_progress_sign": "Coop Chamber Sign"
 		"mp_coop_credits_screen": "Coop Credits Screen"
-		"mp_hub_screen_branch_1": "Coop Hub: Branch 1"
-		"mp_hub_screen_branch_2": "Coop Hub: Branch 2"
-		"mp_hub_screen_branch_3": "Coop Hub: Branch 3 "
-		"mp_hub_screen_branch_4": "Coop Hub: Branch 4"
-		"mp_hub_screen_branch_5": "Coop Hub: Branch 5"
-		"mp_hub_screen_branch_6": "Coop Hub: Branch 6"
-		"mp_select_screen_branch_1": "Coop Selector: 1"
-		"mp_select_screen_branch_2": "Coop Selector: 2"
-		"mp_select_screen_branch_3": "Coop Selector: 3"
-		"mp_select_screen_branch_4": "Coop Selector: 4"
-		"mp_select_screen_branch_5": "Coop Selector: 5"
-		"mp_select_screen_branch_6": "Coop Selector: 6"
-		"mp_select_screen_branch_dlc": "Coop Selector: Art Therapy"
+		"mp_hub_screen_branch_1": "Coop Status - Course 1"
+		"mp_hub_screen_branch_2": "Coop Status - Course 2"
+		"mp_hub_screen_branch_3": "Coop Status - Course 3 "
+		"mp_hub_screen_branch_4": "Coop Status - Course 4"
+		"mp_hub_screen_branch_5": "Coop Status - Course 5"
+		"mp_hub_screen_branch_6": "Coop Status - Course 6"
+		"mp_select_screen_branch_1": "Coop Selector - Course 1"
+		"mp_select_screen_branch_2": "Coop Selector - Course 2"
+		"mp_select_screen_branch_3": "Coop Selector - Course 3"
+		"mp_select_screen_branch_4": "Coop Selector - Course 4"
+		"mp_select_screen_branch_5": "Coop Selector - Course 5"
+		"mp_select_screen_branch_6": "Coop Selector - Course 6"
+		"mp_select_screen_branch_dlc": "Coop DLC Selector"
+		"mp_lobby_screen1": "Coop Jumbotron - Steps Taken"
+		"mp_lobby_screen2": "Coop Jumbotron - Portals Placed"
+		"mp_lobby_screen3": "Coop Jumbotron - Portals Traveled"
+		"mp_lobby_screen4": "Coop Jumbotron - Hugs"
+		"mp_lobby_screen5": "Coop Jumbotron - Disasters Averted"
+		"mp_lobby_screen6": "Coop Jumbotron - Science Collab. Points"
 		]
 
 	overlaymaterial(material) : "Overlay Material" : : "Name of a material to overlay over the top of the VGUI screen. NOTE: This material must write Z for the VGUI screen to work."
