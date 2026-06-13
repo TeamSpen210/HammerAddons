@@ -9,9 +9,9 @@
 	sphere[-Strata](height)
 = vgui_screen: "A VGUI screen. Useful for in-world monitors."
 	[
-	panelname(string) : "Panel Name" : : "The type of display to show."
-	panelname[engine](string) : "Panel Name" : : "The type of display to show."
-	panelname[P2](choices) : "Panel Name" : : "The type of display to show." =
+	panelname(string) : "Panel Name" : : "The name of the panel from vgui_screens.txt to show."
+	panelname[engine](string) : "Panel Name" : : "The name of the panel from vgui_screens.txt to show."
+	panelname[P2](choices) : "Panel Name" : : "The type of display to show. You can also type in a custom name from vgui_screens.txt here." =
 		[
 		"sp_progress_sign": "SP/Workshop Chamber Sign"
 		"mp_progress_sign": "Coop Chamber Sign"
@@ -28,7 +28,9 @@
 		"mp_select_screen_branch_4": "Coop Selector - Course 4"
 		"mp_select_screen_branch_5": "Coop Selector - Course 5"
 		"mp_select_screen_branch_6": "Coop Selector - Course 6"
+		"mp_select_screen_branch_motionpack": "Coop Selector - MotionPack" [P2SIXENSE]
 		"mp_select_screen_branch_dlc": "Coop DLC Selector"
+		"mp_select_screen_branch_sixense": "Coop DLC Selector (MotionPack)" [P2SIXENSE]
 		"mp_lobby_screen1": "Coop Jumbotron - Steps Taken"
 		"mp_lobby_screen2": "Coop Jumbotron - Portals Placed"
 		"mp_lobby_screen3": "Coop Jumbotron - Portals Traveled"
@@ -40,7 +42,8 @@
 	overlaymaterial(material) : "Overlay Material" : : "Name of a material to overlay over the top of the VGUI screen. NOTE: This material must write Z for the VGUI screen to work."
 	width(integer) : "Panel Width in World (Green)" : 256 : "Width of the panel in units."
 	height(integer) : "Panel Height in World (Blue)" : 128 : "Height of the panel in units."
-	istransparent(boolean) : "Is Transparent?" : 0 : "Set this to true if you would like your background to be invisible instead of a black fill."
+	istransparent[since_P2](boolean) : "Is Transparent?" : 0 : "Set this to true if you would like your background to be invisible instead of a black fill. " +
+	"Might be overridden by the selected panel."
 
 	// Inputs
 	input SetActive(void) : "Make the vgui screen visible."
