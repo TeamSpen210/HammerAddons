@@ -101,18 +101,18 @@ def make_expander(roots: ExpanderRoots, orig_root: Path) -> Expander:
         if path.startswith('|'):
             try:
                 _, ref, path = path.split('|', 2)
-            except ValueError:
-                LOGGER.warning('Invalid |ref| path prefix in {!r}', path)
+            except ValueError as exc:
+                raise ValueError('Invalid |ref| path prefix in {!r}', path) from exc
             else:
                 path = path.lstrip('\\/')  # Make |loc|/blah/ allowed, don't treat as a root.
                 try:
                     found_root = roots[ref.casefold()]
                 except KeyError:
-                    LOGGER.warning(
-                        '|{}| is not defined in {}! Assuming {}\nKnown: {}',
-                        ref, PATHS_CONF_NAME, root,
-                        ', '.join(sorted(roots)),
-                    )
+                    raise ValueError(
+                        f'|{ref}| is not defined in {PATHS_CONF_NAME}!\n'
+                        f'Add this entry to properly define "{orig_path}"\n'
+                        f'Known: {", ".join(sorted(roots))}'
+                    ) from None
                 else:
                     # Two special cases, detected by specific constants being set. Use identity
                     # compare, we're putting the exact values in, users should never set these.
@@ -127,10 +127,9 @@ def make_expander(roots: ExpanderRoots, orig_root: Path) -> Expander:
                         # Using game loc in a plugin, but game dir isn't set. We're only doing
                         # this to create/update the config file, this would only happen if the user
                         # messed up.
-                        LOGGER.warning(
-                            '|{}| used in plugin filenames, but no game folder provided! '
-                            'Plugins will not load correctly!',
-                            PATH_KEY_GAME,
+                        raise ValueError(
+                            f'|{PATH_KEY_GAME}| used in plugin filenames, but no game folder provided! '
+                            'Plugins will not load correctly!'
                         )
                     else:  # All good.
                         root = found_root
@@ -147,7 +146,7 @@ def make_expander(roots: ExpanderRoots, orig_root: Path) -> Expander:
                 try:
                     info = find_app(appid)
                 except KeyError:
-                    LOGGER.warning("No game with appid {} found!", appid)
+                    raise ValueError(f"No game with appid {appid} found!") from None
                 else:
                     appid_cache[appid] = root = info.path
                     LOGGER.info(f"Mounted game {info.name} with path: {root}")
