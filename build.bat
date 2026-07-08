@@ -1,7 +1,7 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-SET games=p2 p1 hl2 ep1 ep2 gmod csgo tf2 asw l4d l4d2 infra mesa p2ce momentum
+SET games=p2 p1 hl2 ep1 ep2 gmod csgo tf2 asw l4d l4d2 infra mesa p2ce momentum psc
 
 :: If set, override the FGD filename generated.
 SET filename.p2=portal2
