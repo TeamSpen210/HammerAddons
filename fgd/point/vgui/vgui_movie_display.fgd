@@ -3,7 +3,7 @@
 	color(200 200 0) 
 	studio[+Strata]("models/editor/angle_helper.mdl")
 	orientedwidthheight[+Strata](width, height)
-	studio[-Strata]("models/editor/vgui_arrows.mdl")
+	studioprop[-Strata]("models/editor/vgui_arrows.mdl")
 	sphere[-Strata](width)
 	sphere[-Strata](height)
 = vgui_movie_display: "Movie Display"
@@ -71,11 +71,16 @@
 		"media/community_bg1.bik"			: "Community Maps Background"
 		"media/intro_movie.bik"				: "Community Maps Intro"
 		"media/attract01.bik"				: "Extras: Coop Trailer"
-		"media/attract02.bik"				: "Extras: SP Trailer"
+		"media/attract02.bik"				: "Extras: SP Trailer" [!P2SIXENSE]
+		"media/attract02.bik"				: "Extras: MotionPack Trailer" [P2SIXENSE] // Swapped this out...
 		"media/attrct_boots.bik"			: "Extras: Long Fall Boots"
 		"media/attract_bot_trust.bik"		: "Extras: Bot Trust"
 		"media/attract_panels.bik"			: "Extras: Panels"
 		"media/attract_turrets.bik"			: "Extras: Turrets"
+		"media/valve.bik"					: "Valve Intro"
+		"media/valve_ps3_legals.bik"		: "Valve Intro (PS3)"
+		"media/valve_xbox_legals.bik"		: "Valve Intro (Xbox)"
+		"media/sixense_credit.bik"			: "Sixense Intro" [P2SIXENSE]
 		]
 	// Webm upgrade!
 	MovieFilename[P2CE](choices) : "Movie to display" : "media/aperture_logo.webm" : "The movie to display. You can also type in the filename of a custom movie here." =
@@ -141,6 +146,7 @@
 		"media/attract_bot_trust.webm"		: "Extras: Bot Trust"
 		"media/attract_panels.webm"			: "Extras: Panels"
 		"media/attract_turrets.webm"		: "Extras: Turrets"
+		"media/strata.webm"					: "Strata Intro"
 		]
 	groupname(string) : "Group Name"
 	looping(boolean) : "Loop Movie" : 0

@@ -63,11 +63,16 @@
 		"community_bg1.bik"			: "Community Maps Background"
 		"intro_movie.bik"			: "Community Maps Intro"
 		"attract01.bik"				: "Extras: Coop Trailer"
-		"attract02.bik"				: "Extras: SP Trailer"
+		"attract02.bik"				: "Extras: SP Trailer" [!P2SIXENSE]
+		"attract02.bik"				: "Extras: MotionPack Trailer" [P2SIXENSE] // Swapped this out...
 		"attrct_boots.bik"			: "Extras: Long Fall Boots"
 		"attract_bot_trust.bik"		: "Extras: Bot Trust"
 		"attract_panels.bik"		: "Extras: Panels"
 		"attract_turrets.bik"		: "Extras: Turrets"
+		"valve.bik"					: "Valve Intro"
+		"valve_ps3_legals.bik"		: "Valve Intro (PS3)"
+		"valve_xbox_legals.bik"		: "Valve Intro (Xbox)"
+		"sixense_credit.bik"		: "Sixense Intro" [P2SIXENSE]
 		]
 
 	allowskip(boolean) : "Allow User to Skip" : 0 : "Whether or not the user may skip the video with common keys."

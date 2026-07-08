@@ -18,6 +18,7 @@ from srctools import FrozenVec, Vec, Output, conv_int
 from hammeraddons.bsp_transform.common import RelayOut
 from hammeraddons.bsp_transform import trans, Context
 from hammeraddons.mdl_compiler import executable_args
+from hammeraddons.config import GAMES_CONF_NAME
 from . import nodes, animations, objects
 from .sensors import Sensor
 
@@ -127,7 +128,7 @@ async def vactube_transform(ctx: Context) -> None:
     if ctx.studiomdl is None:
         raise ValueError(
             'Vactubes present, but no studioMDL path provided! '
-            'Update hammeraddons_game.vdf.'
+            f'Update {GAMES_CONF_NAME}.'
         )
     if not ctx.game_conf.vscript:
         raise ValueError('Vactubes currently require VScript to operate.')

@@ -1,7 +1,13 @@
 
 @PointClass base(BaseEntityPoint)
 	appliesto(P1, P2) 
-	studioprop("models/editor/vgui_arrows.mdl") 
+	color(200 200 0) 
+	iconsprite(editor/vizzys/vgui_screen)
+	studio[+Strata]("models/editor/angle_helper.mdl")
+	orientedwidthheight[+Strata](width, height)
+	studioprop[-Strata]("models/editor/vgui_arrows.mdl")
+	sphere[-Strata](width)
+	sphere[-Strata](height)
 = vgui_neurotoxin_countdown: "Neurotoxin Countdown display. AddOutput can be used to change/reset timer countdown."
 	[
 	width(integer) : "Panel width" : 256 : "Width of the screen in units."

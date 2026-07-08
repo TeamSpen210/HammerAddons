@@ -1,5 +1,6 @@
 @PointClass base(BaseEntityPoint) 
 	appliesto(MBase) 
+	color(200 200 0) 
 	studioprop("models/editor/vgui_arrows.mdl") 
 	sphere(textsize) 
 	// Causes rotation doubling and doesn't match up with the ingame appearance

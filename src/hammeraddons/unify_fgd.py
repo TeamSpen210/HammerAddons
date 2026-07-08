@@ -16,10 +16,11 @@ import re
 from srctools import fgd
 from srctools.fgd import (
     FGD, AutoVisgroup, EntAttribute, EntityDef, EntityTypes, TagsSet, Helper, HelperExtAppliesTo,
-    HelperTypes, KVDef, Snippet, ValueTypes, match_tags, validate_tags
+    HelperTypes, KVDef, KVOption, Snippet, ValueTypes, match_tags, validate_tags,
 )
 from srctools.filesys import File, RawFileSystem
 from srctools.math import Vec, format_float
+import attrs
 
 
 # Chronological order of games.
@@ -221,9 +222,9 @@ def _polyfill_boolean(fgd: FGD, _: TagsSet) -> None:
             for kv in tag_map.values():
                 if kv.type is ValueTypes.BOOL:
                     kv.type = ValueTypes.CHOICES
-                    kv.val_list = [
-                        ('0', 'No', TAGS_EMPTY),
-                        ('1', 'Yes', TAGS_EMPTY)
+                    kv.options = [
+                        KVOption(value='0', name='No'),
+                        KVOption(value='1', name='Yes')
                     ]
 
 
@@ -628,6 +629,11 @@ def load_file(
     for tags, mat_list in file_fgd.tagged_mat_exclusions.items():
         base_fgd.tagged_mat_exclusions[tags] |= mat_list
 
+    for (name, tags), colorvar in file_fgd.color_vars.items():
+        if (name, tags) in base_fgd.color_vars:
+            raise ValueError(f'Duplicate "{name}" colorvar in "{path}"!')
+        base_fgd.color_vars[name, tags] = colorvar
+
     dest: ChainMap[str, Snippet[Any]]
     if is_snippet:
         for attr_name, disp_name in SNIPPET_KINDS:
@@ -699,9 +705,9 @@ def iter_tags(fgd: FGD) -> Iterator[str]:
         for kv_map in ent.keyvalues.values():
             for tags, kv in kv_map.items():
                 yield from tags
-                if kv.val_list is not None:
-                    for tup in kv.val_list:
-                        yield from tup[-1]
+                if kv.options is not None:
+                    for opt in kv.options:
+                        yield from opt.tags
         for io_map in itertools.chain(ent.inputs.values(), ent.outputs.values()):
             for tags in io_map:
                 yield from tags
@@ -862,6 +868,11 @@ def action_export(
 
     print(f'Map size: ({fgd.map_size_min}, {fgd.map_size_max})')
 
+    try:
+        base_spawnflags: KVDef | None = base_entity_def.kv['spawnflags']
+    except KeyError:
+        base_spawnflags = None
+
     # Gather all the tags used by entities, make sure there aren't unrecognised ones - typos etc.
     used_tags = {
         tag.lstrip('!-+').upper()
@@ -970,22 +981,23 @@ def action_export(
                             file=sys.stderr,
                         )
                         if isinstance(value, KVDef):
-                            assert value.val_list is not None
+                            assert value.options is not None
                             try:
-                                for choice_val, name, tagset in value.choices_list:
-                                    int(choice_val)
+                                for opt in value.options:
+                                    int(opt.value)
                             except ValueError:
                                 # Not all are ints, it's a string.
                                 value.type = ValueTypes.STRING
                             else:
                                 value.type = ValueTypes.INT
-                            value.val_list = None
+                            value.options = None
                     elif value.type is ValueTypes.SPAWNFLAGS and isinstance(value, KVDef):
+                        assert value.options is not None
                         # Strip tags. Just keep duplicates, the only difference possible is name.
-                        value.val_list = [
-                            (mask, name, default, TAGS_EMPTY)
-                            for (mask, name, default, tags) in value.flags_list
-                            if '-ENGINE' not in tags and '!ENGINE' not in tags
+                        value.options = [
+                            attrs.evolve(opt, tags=TAGS_EMPTY)
+                            for opt in value.options
+                            if '-ENGINE' not in opt.tags and '!ENGINE' not in opt.tags
                         ]
                     if (
                         isinstance(value, KVDef) and value.editor_only
@@ -1187,6 +1199,11 @@ def action_export(
         visgroup.ents.intersection_update(valid_ents)
         if not visgroup.ents:
             del fgd.auto_visgroups[key]
+
+    print('Culling colorvars...')
+    for name, colorvar_tags in list(fgd.color_vars.keys()):
+        if not match_tags(tags, colorvar_tags):
+            del fgd.color_vars[name, colorvar_tags]
 
     if engine_mode:
         res_tags: dict[str, set[str]] = defaultdict(set)

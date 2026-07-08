@@ -12,6 +12,11 @@ on:
         required: true
         type: string
         default: 'dev'
+      srctools-dev:
+        description: 'Use the latest commit for srctools'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -41,46 +46,51 @@ jobs:
     steps:
       
       - name: Checkout Main
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         if: github.event_name == 'push'
         with:
           ref: main
 
       # Always build the exact tag that's pushed.
       - name: Checkout Tag
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         if: github.event_name == 'create'
         with:
           ref: ${{ github.event.ref }}
       - name: Checkout Ref
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         if: github.event_name == 'workflow_dispatch'
         with:
           ref: ${{ inputs.ref }}
 
       - name: Set up Python ${{ matrix.python-version }}-${{ matrix.arch }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
           architecture: ${{ matrix.arch }}
           cache: 'pip'
           cache-dependency-path: 'requirements.txt'
-      - name: Install srctools
+      - name: Install requirements
         run: |
           python -m pip install -U setuptools pip wheel
           python -m pip install -r requirements.txt
+      - name: Install dev srctools
+        if: inputs.srctools-dev
+        run: |
+          python -m pip uninstall --yes srctools
+          python -m pip install srctools@git+https://github.com/TeamSpen210/srctools.git
       - name: Freeze application
         run: python -m PyInstaller --distpath ../build/ -y ../postcompiler.spec
         working-directory: ./src/
       - name: Artifact upload (tag)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: github.event_name == 'create'
         with:
           name: hammeraddons_${{ github.event.ref }}_${{ matrix.artifact-name }}
           path: ./build/
           if-no-files-found: error
       - name: Artifact upload (hash)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: github.event_name != 'create'
         with:
           name: hammeraddons_${{ github.sha }}_${{ matrix.artifact-name }}
