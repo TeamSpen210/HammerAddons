@@ -790,7 +790,7 @@ async def decompile_model(
                         shutil.copyfileobj(src, dest)
             LOGGER.debug('Extracted "{}" to "{}"', filename, tempdir)
             args = await executable_args(
-                crowbar,
+                crowbar, 'decompile',
                 '-i', Path(tempdir, stem + '.mdl'),
                 '-o', cache_folder,
             )
