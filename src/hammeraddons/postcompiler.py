@@ -9,7 +9,7 @@ import trio
 
 
 # Put the logs in the executable folders.
-LOGGER = init_logging(Path(sys.argv[0]).with_name('postcompiler.log'))
+LOGGER = init_logging(Path(sys.argv[0]).resolve().with_name('postcompiler.log'))
 warnings.filterwarnings(category=DeprecationWarning, module='srctools', action='once')
 
 from collections import defaultdict
