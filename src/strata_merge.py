@@ -3,9 +3,10 @@ from pathlib import Path
 import io
 import difflib
 
-from srctools.fgd import EntityTypes
+from srctools.fgd import EntityTypes, EntityDef, KVDef, KVOption
 from srctools.filesys import RawFileSystem
 from srctools import FGD
+from sys import argv
 
 MERGED = {  # Set of classnames we have checked already and know the diff is fine.
     'baseentityvisbrush', 'baselight', 'baseentityinputs', 'baseentityphysics', 'basepropphysics',
@@ -90,12 +91,17 @@ MERGE_DIR = Path(REPORT_DIR, 'merged').resolve()
 
 def main() -> None:
     """Check all the FGDs."""
-    fsys = RawFileSystem('F:/SteamLibrary/SteamApps/common/Portal 2 Community Edition/p2ce')
+    if len(argv) < 3:
+        raise RuntimeError("Please specify paths to the base FGD (P2CE) and compare with FGD (HA).")
+
+    path1 = Path(argv[1])
+    path2 = Path(argv[2])
+    fsys = RawFileSystem(path1.parent)
     strata_fgd = FGD()
-    strata_fgd.parse_file(fsys, fsys['p2ce.fgd'], encoding='iso-8859-1')
-    fsys = RawFileSystem('../build/')
+    strata_fgd.parse_file(fsys, fsys[path1.name], encoding='iso-8859-1')
+    fsys = RawFileSystem(path1.parent)
     ha_fgd = FGD()
-    ha_fgd.parse_file(fsys, fsys['p2ce.fgd'], encoding='iso-8859-1')
+    ha_fgd.parse_file(fsys, fsys[path2.name], encoding='iso-8859-1')
 
     MERGE_DIR.mkdir(parents=True, exist_ok=True)
     for fname in REPORT_DIR.iterdir():
@@ -113,63 +119,167 @@ def main() -> None:
         if ent.type is EntityTypes.BASE
     }
 
-    classes = (strata_fgd.entities.keys() | ha_fgd.entities.keys())
+    # We're comparing strictly the attributes of entities
+    # Defining which property belongs to which base should be determined by the merger
+    ha_fgd.collapse_bases()
+    strata_fgd.collapse_bases()
+
+    classes = set(strata_fgd.entities.keys()) | set(ha_fgd.entities.keys())
     print(f'{len(classes)} entities defined, {len(MERGED)} suppressed.')
-    strata_master = strata_fgd['masterent']
+    #strata_master = strata_fgd['masterent']
     added = []
     removed = []
     count = 0
+
+    all_good = True
+    all_good_internal1 = True # Used for comparing internal data
+
+    #Short aliases for less typing
+    def mdirty():
+        nonlocal all_good
+        if all_good:
+            print("\n")
+            all_good = False
+
+    def mdirty_internal1(msg):
+        nonlocal all_good_internal1
+        if all_good_internal1:
+            print(msg)
+            all_good_internal1 = False
+
     for classname in classes:
+        classname: str
+        all_good = True
+        print(f"Checking classname: {classname} ... ", end="")
+
         try:
-            ha_ent = ha_fgd[classname]
+            pent: EntityDef = strata_fgd[classname]
         except KeyError:
-            if classname not in MERGED and classname not in bases:
-                added.append(classname)
-            continue
-        try:
-            strata_ent = strata_fgd[classname]
-        except KeyError:
-            if classname not in MERGED and classname not in bases:
-                removed.append(classname)
+            if classname.startswith("comp_"):
+                print("New postcompiler entity skipped! All Good!")
+                continue
+
+            mdirty()
+            print("|-> Not present in FGD 1! Possibly removed?")
             continue
 
-        # We added this to lots of ents, but that's not in strata.
-        for tags_map in ha_ent.keyvalues.values():
-            for kv in tags_map.values():
-                kv.reportable = False
-        # Sort helpers, color() ones in particular are misordered.
-        ha_ent.helpers.sort(key=repr)
-        strata_ent.helpers.sort(key=repr)
         try:
-            strata_ent.bases.remove(strata_master)
-        except ValueError:
-            pass
-        if classname == 'info_portal_gamerules':
-            print()
-        with io.StringIO() as ha_buf:
-            ha_ent.export(ha_buf)
-            ha_text = ha_buf.getvalue()
-        with io.StringIO() as strata_buf:
-            strata_ent.export(strata_buf)
-            strata_text = strata_buf.getvalue()
-        if ha_text.casefold() == strata_text.casefold():
-            if classname in MERGED:
-                print('Already matched: ', classname)
+            hent: EntityDef = ha_fgd[classname]
+        except KeyError:
+            mdirty()
+            print("|-> New entity (not present in FGD 2)!")
             continue
 
-        folder = MERGE_DIR if classname in MERGED else REPORT_DIR
-        with open(folder / f'{classname}.diff', 'w', encoding='utf8') as f:
-            f.writelines(difflib.unified_diff(
-                ha_text.splitlines(keepends=True), strata_text.splitlines(keepends=True),
-                'HammerAddons', 'Strata', n=999,
-            ))
-        if folder is REPORT_DIR:
-            count += 1
-    added.sort()
-    removed.sort()
-    print(f'Conflicts: {count}')
-    print(f'Added: {added}')
-    print(f'Removed: {removed}')
+        # KEYVALUES
+
+        all_keys = set(pent.keyvalues.keys()) | set(hent.keyvalues.keys())
+        
+        for key in all_keys:
+            all_good_internal1 = True
+
+            try:
+                pkv = pent.keyvalues[key]
+            except KeyError:
+                mdirty()
+                print(f"|-> Keyvalue '{key}' definition missing in FGD 1, not implemented?")
+                continue
+
+            try:
+                hkv = hent.keyvalues[key]
+            except KeyError:
+                mdirty()
+                print(f"|-> New keyvalue (not present in FGD 2): '{key}'")
+                continue
+
+            if len(pkv.keys()) != 1 or len(hkv.keys()) != 1:
+                raise RuntimeError("You can only use already compiled (untagged) FGDs!")
+
+            pkv: KVDef = list(pkv.values())[0]
+            hkv: KVDef = list(hkv.values())[0]
+            
+            
+            
+            # Step 0 - Name checking - already done
+            # Step 1 - Kv type
+            if pkv._type != hkv._type:
+                mdirty()
+                mdirty_internal1(f"|-> Keyvalue '{key}': ")
+                print(f"    |-> Different kv type | FGD 1: {pkv._type} <=> FGD 2: {hkv._type}")
+
+            # Step 2 - Default value
+            if pkv.default != hkv.default:
+                mdirty()
+                mdirty_internal1(f"|-> Keyvalue '{key}': ")
+                print(f"    |-> Different default value | FGD 1: {pkv.default} <=> FGD 2: {hkv.default}")
+
+            # Step 3 - Choices
+            pkv_choices: list[KVOption] = pkv.options
+            hkv_choices: list[KVOption] = hkv.options
+
+            if pkv_choices is not None and hkv_choices is not None:
+                pkv_choices_d = {x.value: x for x in pkv_choices}
+                hkv_choices_d = {x.value: x for x in hkv_choices}
+
+                allchoices = set([x.value for x in pkv_choices]) | set([x.value for x in hkv_choices])
+
+                for ch in allchoices:
+                    try:
+                        pkvch = pkv_choices_d[ch]
+                    except KeyError:
+                        mdirty()
+                        mdirty_internal1(f"|-> Keyvalue '{key}': ")
+                        print(f"    |-> [Choices] Value {ch} does not exist in FGD 1!")
+                        continue
+
+                    try:
+                        hkvch = hkv_choices_d[ch]
+                    except KeyError:
+                        mdirty()
+                        mdirty_internal1(f"|-> Keyvalue '{key}': ")
+                        print(f"    |-> [Choices] New value: '{ch}' -> '{pkvch.name}'")
+                        continue
+
+                    if pkvch.name != hkvch.name:
+                        mdirty()
+                        mdirty_internal1(f"|-> Keyvalue '{key}': ")
+                        print(f"    |-> [Choices] Different names for value '{ch}' | FGD 1: '{pkvch.name}' | FGD 2: '{hkvch.name}' ")
+
+        # End: keyvalues
+
+        # INPUTS
+
+        all_inputs_names = set(pent.inputs.keys()) | set(hent.inputs.keys())
+        for inp in all_inputs_names:
+
+            if not inp in pent.inputs.keys():
+                mdirty()
+                print(f" |-> Missing input in FGD 1: {inp}")
+                continue
+
+            if not inp in hent.inputs.keys():
+                mdirty()
+                print(f"|-> New input: {inp}")
+
+        all_outputs_names = set(pent.outputs.keys()) | set(hent.outputs.keys())
+        for inp in all_outputs_names:
+
+            if not inp in pent.outputs.keys():
+                mdirty()
+                print(f" |-> Missing output in FGD 1: {inp}")
+                continue
+
+            if not inp in hent.outputs.keys():
+                mdirty()
+                print(f"|-> New output: {inp}")
+                
+
+
+        if all_good:
+            print("All Good!")
+
+        print("\n")
+        
+
 
 
 if __name__ == '__main__':
