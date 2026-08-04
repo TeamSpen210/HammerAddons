@@ -88,6 +88,8 @@ MERGED = {  # Set of classnames we have checked already and know the diff is fin
 REPORT_DIR = Path('..', 'strata_merge').resolve()
 MERGE_DIR = Path(REPORT_DIR, 'merged').resolve()
 
+# Report things only missing in FGD2, not present in FGD2 but missing in FGD1
+ONLY_MISSING_IN_FGD2 = True
 
 def main() -> None:
     """Check all the FGDs."""
@@ -150,13 +152,16 @@ def main() -> None:
     for classname in classes:
         classname: str
         all_good = True
+
+        if classname.startswith("comp_"): # Skip all postcomp entities
+            continue
+
         print(f"Checking classname: {classname} ... ", end="")
 
         try:
             pent: EntityDef = strata_fgd[classname]
         except KeyError:
-            if classname.startswith("comp_"):
-                print("New postcompiler entity skipped! All Good!")
+            if ONLY_MISSING_IN_FGD2:
                 continue
 
             mdirty()
@@ -177,9 +182,22 @@ def main() -> None:
         for key in all_keys:
             all_good_internal1 = True
 
+
+            # SPECIAL CASES
+
+            # 1. linedivider_broken and linedivider_vscript are the same
+
+            if key in ("linedivider_broken", "linedivider_vscript"):
+                continue
+
+            # END SPECIAL CASES
+
             try:
                 pkv = pent.keyvalues[key]
             except KeyError:
+                if ONLY_MISSING_IN_FGD2:
+                    continue
+
                 mdirty()
                 print(f"|-> Keyvalue '{key}' definition missing in FGD 1, not implemented?")
                 continue
@@ -240,6 +258,11 @@ def main() -> None:
                         continue
 
                     if pkvch.name != hkvch.name:
+
+                        # Special cases: Some kvs have their names changed (like grammatical changes)
+                        if key in ("renderfx", "mincpulevel", "mingpulevel", "maxgpulevel", "maxcpulevel"):
+                            continue
+
                         mdirty()
                         mdirty_internal1(f"|-> Keyvalue '{key}': ")
                         print(f"    |-> [Choices] Different names for value '{ch}' | FGD 1: '{pkvch.name}' | FGD 2: '{hkvch.name}' ")
@@ -252,6 +275,9 @@ def main() -> None:
         for inp in all_inputs_names:
 
             if not inp in pent.inputs.keys():
+                if ONLY_MISSING_IN_FGD2:
+                    continue
+
                 mdirty()
                 print(f" |-> Missing input in FGD 1: {inp}")
                 continue
@@ -264,6 +290,9 @@ def main() -> None:
         for inp in all_outputs_names:
 
             if not inp in pent.outputs.keys():
+                if ONLY_MISSING_IN_FGD2:
+                    continue
+                
                 mdirty()
                 print(f" |-> Missing output in FGD 1: {inp}")
                 continue
