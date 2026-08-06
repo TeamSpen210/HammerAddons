@@ -53,7 +53,7 @@
 	bunting(target_destination) : "Bunting Definition" : : "Set to the name of a comp_prop_rope_bunting, to define models which will be placed at each segment across the rope."
 
 	// A selection of prop_static's keyvalues, excluding some that are rather irrelevant.
-	linedivider_staticprop[!engine](string) readonly editor : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_staticprop[!engine](string) readonly editor : "---------------------------------Static Prop Options----------------------------------" : : "Since comp_prop_cables are static props in game, these are options to configure their static prop properties."
 
 	renderamt[since_L4D](integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
 	rendercolor[since_L4D](color255) : "Color (R G B)" : "255 255 255"

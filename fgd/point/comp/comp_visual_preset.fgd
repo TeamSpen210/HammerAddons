@@ -8,7 +8,7 @@
 
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	
-	linedivider_tgname[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_tgname[!engine](string) readonly : "-------------------------------------Tonemapping--------------------------------------" : : "Options for env_tonemap_controller."
 
     tm_enable(boolean) : "Set Tonemap" : 0 : "Change the tonemap to the values below."
 	tonemapper(target_destination) : "env_tonemap_controller" : "@Tonemapper" : "Tonemapper entity used. Needs to be set to use tonemap presets."
@@ -16,7 +16,7 @@
 	tm_autoexposuremin(float) 	: "Auto Exposure Min" 	: 0.5 : "Set the auto exposure minimum."
 	tm_bloomscale(float)		: "Bloom Scale"			: 1 : "Set the bloom scale."
 
-	linedivider_tm[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_tm[!engine](string) readonly : "-----------------------------------------Fog------------------------------------------" : : "Options for the fog."
 
     fog_enable(boolean) : "Set Fog" : 0 : "Change fog to the values below."
 	fog_controller(target_destination) : "env_fog_controller" : "@FogController" : "Env_fog_controller entity used to set tonemap presets. Should have master flag checked."
@@ -26,14 +26,14 @@
 	fog_max_density(float) : "Fog Max Density" : 1.0
 	use_lerp(boolean) : "Use Lerp" : 1 : "Use lerping instead of instant changing of fog values. Requires lerp time on the fog controller entity to be set."
 
-	linedivider_fg[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_fg[!engine](string) readonly : "-----------------------------------Color Correction-----------------------------------" : : "Color Correction options."
 
     cc_enable(boolean) : "Set Color Correction" : 0 : "Change color correction to the .raw file specified below, with the fadein/fadeout times."
 	cc_filename(string) : "CC Filename" : : "The filename used by color correction for this preset (if set), e.g. 'cc_RECYCLED_TEST'."
 	cc_fadein(float) : "CC FadeIn Time" : 1.0
 	cc_fadeout(float) : "CC FadeOut Time" : 1.0
 
-	linedivider_dof[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_dof[!engine](string) readonly : "------------------------------------Depth of Field------------------------------------" : : "Depth of Field options."
 
     dof_enable(boolean) : "Set Depth of Field" : 0 : "Change depth of field to the values below."
 	dof_controller(target_destination) : "env_dof_controller" : "@DOFController" : "Depth of field controller. Needs to be set to use dof presets."
