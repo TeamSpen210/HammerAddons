@@ -11,7 +11,17 @@
 	texturename(string) : "Cookie Texture Name" : "" : "The cookie texture to use for the light. Must be a greyscale VTF file. " +
 	"An empty value means no cookie texture. This light will project the specified texture (aka making artificial shadows)."
 	textureframe(integer) : "Cookie Texture Frame" : 0 : "If cookie texture specified is multi-frame, this frame will be used for the light."
+	volumetric_lightscale(float) : "Volumetric Light Scale" : "1.0" : "The amount to scale the light\'s contribution in volumetric lighting"
+	volumetric_density(float) : "Volumetric Density" : "0.0" : "The volumetric density \'created\' by the light. If a light would light an area of space, it adds this density to that area."
 
 	input SetCookieTexture(string) : "Set the cookie texture of this light. An empty value means no cookie texture."
 	input SetCookieTextureFrame(integer) : "Set the frame texture of the cookie texture for this light."
+	
+	input SetLightColor(color255) : "Sets the light color. Light scale is set separately."
+	input SetLightScale(float) : "Sets the light scale."
+	input SetLightFalloff(vector) : "Vector of (Constant, Linear, Quadratic) falloff parameters for the light."
+	
+	input SetVolumetricLightScale(float) : "Set the volumetric light scale of this light."
+	input SetVolumetricDensity(float) : "Set the volumetric density of this light."
+	
 	]

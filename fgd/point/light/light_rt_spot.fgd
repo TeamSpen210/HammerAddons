@@ -1,7 +1,11 @@
 @PointClass appliesto(Strata)
-	base(BaseSpotLight, BaseClusteredDynLight)
+	base(BaseEntityPoint, BaseClusteredDynLight, BaseSpotLight)
 	clusteredlight(spot)
 	sphere(nearz)
 = light_rt_spot: "An invisible and directional realtime spotlight."
 	[
+
+		input SetInnerAngle(float) : "Sets the inner angle (if this is a spotlight)."
+		input SetOuterAngle(float) : "Sets the outer angle (if this is a spotlight)."
+	
 	]

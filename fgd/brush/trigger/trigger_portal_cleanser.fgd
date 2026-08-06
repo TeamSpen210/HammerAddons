@@ -16,9 +16,20 @@
 		
 	visible[P2](boolean) : "Visible" : 1 : "If the fizzler is visible. This controls whether sounds will play."
 	usescanline[P2](boolean) : "Use Scanline" : 1 : "If the field uses a scanline particle effect."
+	
+	scanlinecolor[P2CE](color255) : "Scanline Color" : "106 178 198 15" : "The color to use for the scanline particle effect."
+	blockportalshots[P2CE](boolean) : "Block Portal Shots" : 1 : "Whether the fizzler will block portal shots."
+	obstructportals[P2CE](boolean) : "Obstruct Portals" : 1 : "Whether the fizzler will act like a portal bumper, and fizzle portals when enabled."
+	loopsound[P2CE](sound) : "Looping Sound" : "VFX.FizzlerLp" : "Sound played continuously while the fizzler is active."
+	startsound[P2CE](sound) : "Start Sound" : "VFX.FizzlerStart" : "Sound played when the fizzler turns on."
+	stopsound[P2CE](sound) : "Stop Sound" : "VFX.FizzlerStop" : "Sound played when the fizzler turns off."
 
 	// Inputs
 	input FizzleTouchingPortals[P2](void) : "Cause any portals in our volume to immediately fizzle."
+	input SetBlockPortalShots[P2CE](bool) : "Set whether the fizzler will block portal shots."
+	input SetObstructPortals[P2CE](bool) : "Set whether the fizzler will act like a portal bumper, and fizzle portals when enabled."
+	input SetScanlineColor[P2CE](color255) : "Set the color to use for the scanline particle effect."
+
 
 	// Outputs
 	output OnDissolve(void) : "Fired whenever an entity is dissolved."

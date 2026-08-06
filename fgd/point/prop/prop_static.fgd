@@ -51,7 +51,7 @@
 
 	preventpropcombine[PROPCOMBINE](boolean) : "Disable Prop Combine" : 0 : "Prevent this static prop from combining with any other static props in vbsp."
 
-	linedivider_light[!engine](string) readonly editor : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_light[!engine](string) readonly editor : "---------------------------------------Lighting---------------------------------------" : : "Options for how the prop is being lit by lights."
 
 	disableshadows(boolean) : "Disable Shadows" : 0 : "Prevent this prop from obstructing light to cast shadows."
 	// Doesn't appear to work?
@@ -74,7 +74,7 @@
 	lightmapresolutiony[TF2, MESA, KZ, GMOD](integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
 	
 
-	linedivider_fade[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_fade[!engine](string) readonly : "---------------------------Rendering Optimization - Fading----------------------------" : : ""
 
 	screenspacefade[until_ASW](boolean) : "Screen Space Fade" : 0 : "The method by which the fading distance should be determined. If 'No', the fade distances is the distance from the player's view to the object, in inches. " +
 		"If 'Yes', the fade distance is the size of the object onscreen, in pixels."
@@ -91,7 +91,7 @@
 
 
 	// Needs to appear post-L4D, or if complete mode is enabled
-	linedivider_levels[!engine, since_L4D, complete](string) readonly editor : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_levels[!engine, since_L4D, complete](string) readonly editor : "---------------------------Rendering Optimization - Levels----------------------------" : : ""
 
 	// DXlevel KVs were added in Orange Box (lump v6) and removed in L4D (lump v8).
 	// All pre-Orange Box games have since been updated.

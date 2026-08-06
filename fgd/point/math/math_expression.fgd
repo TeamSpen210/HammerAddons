@@ -1,0 +1,55 @@
+@PointClass base(BaseEntityPoint, EnableDisable) 
+    appliesto(Strata)
+	iconsprite("editor/math_expression.vmt")
+= math_expression: "Evaluates a custom math expression, even more advanced version of math_counter_advanced."
+	[
+	spawnflags(flags)  =
+		[
+		1: "[1] Evaluate manually" : 0
+		]
+	Expression0(string) : "Expression 0" : : "Output0 is fired with the result of this expression."
+	Expression1(string) : "Expression 1" : : "Output1 is fired with the result of this expression."
+	Expression2(string) : "Expression 2" : : "Output2 is fired with the result of this expression."
+	Expression3(string) : "Expression 3" : : "Output3 is fired with the result of this expression."
+	Input0(float) : "in0 =" : 0 : "Set the intial value for the variable 'in0'."
+	Input1(float) : "in1 =" : 0 : "Set the intial value for the variable 'in1'."
+	Input2(float) : "in2 =" : 0 : "Set the intial value for the variable 'in2'."
+	Input3(float) : "in3 =" : 0 : "Set the intial value for the variable 'in3'."
+	Input4(float) : "in4 =" : 0 : "Set the intial value for the variable 'in4'."
+	Input5(float) : "in5 =" : 0 : "Set the intial value for the variable 'in5'."
+	Input6(float) : "in6 =" : 0 : "Set the intial value for the variable 'in6'."
+	Input7(float) : "in7 =" : 0 : "Set the intial value for the variable 'in7'."
+	Input8(float) : "in8 =" : 0 : "Set the intial value for the variable 'in8'."
+	Input9(float) : "in9 =" : 0 : "Set the intial value for the variable 'in9'."
+	Input10(float) : "in10 =" : 0 : "Set the intial value for the variable 'in10'."
+	Input11(float) : "in11 =" : 0 : "Set the intial value for the variable 'in11'."
+	Input12(float) : "in12 =" : 0 : "Set the intial value for the variable 'in12'."
+	Input13(float) : "in13 =" : 0 : "Set the intial value for the variable 'in13'."
+	Input14(float) : "in14 =" : 0 : "Set the intial value for the variable 'in14'."
+	Input15(float) : "in15 =" : 0 : "Set the intial value for the variable 'in15'."
+
+	// Inputs
+	input Eval(void) : "Evaluates all expressions."
+	input SetInput0(float) : "Set 'in0' to a new value."
+	input SetInput1(float) : "Set 'in1' to a new value."
+	input SetInput2(float) : "Set 'in2' to a new value."
+	input SetInput3(float) : "Set 'in3' to a new value."
+	input SetInput4(float) : "Set 'in4' to a new value."
+	input SetInput5(float) : "Set 'in5' to a new value."
+	input SetInput6(float) : "Set 'in6' to a new value."
+	input SetInput7(float) : "Set 'in7' to a new value."
+	input SetInput8(float) : "Set 'in8' to a new value."
+	input SetInput9(float) : "Set 'in9' to a new value."
+	input SetInput10(float) : "Set 'in10' to a new value."
+	input SetInput11(float) : "Set 'in11' to a new value."
+	input SetInput12(float) : "Set 'in12' to a new value."
+	input SetInput13(float) : "Set 'in13' to a new value."
+	input SetInput14(float) : "Set 'in14' to a new value."
+	input SetInput15(float) : "Set 'in15' to a new value."
+
+	// Outputs
+	output Output0(float) : "Fired in response to any of the inputs changing with value calculated from expression 0."
+	output Output1(float) : "Fired in response to any of the inputs changing with value calculated from expression 1."
+	output Output2(float) : "Fired in response to any of the inputs changing with value calculated from expression 2."
+	output Output3(float) : "Fired in response to any of the inputs changing with value calculated from expression 3."
+	]
