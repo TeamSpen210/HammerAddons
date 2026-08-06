@@ -92,5 +92,6 @@
 	output OnStart(void) : "Fired when the train starts moving in either direction."
 	// The default FGD mislabels this as OnNext
 	output OnNextPoint(string) : "Fires continuously every frame when the train is moving to its next destination."
+	output OnArrivedAtNode[P2CE](void) : "Fired when this train arrives at a node on its path."
 	output OnArrivedAtDestinationNode[since_P2, GMod](void) : "Fired when this train arrives at a destination that was specified by the MoveToPathNode Input."
 	]

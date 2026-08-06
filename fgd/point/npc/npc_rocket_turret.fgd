@@ -17,14 +17,28 @@
 
 	model[P2, -srctools](studio) : "[H] Model" : "models/props_bts/rocket_sentry.mdl" : "The model to display in Hammer. VScript must be used to set the in-game model."
 	model[P2, +srctools](studio) : "[HA] Custom Model" : "models/props_bts/rocket_sentry.mdl" : "The model to display in Hammer, and the custom model to use if Override Model is enabled."
+	beamcolor[P2CE](color255) : "Beam Color" : "100 100 255 100" : "The color and brightness of the laser beam and glow sprite. The default beam material is not tintable."
+	beammaterial[P2CE](sprite) : "Beam Material" : "effects/bluelaser1.vmt" : "Material to use for the laser beam."
+	glowmaterial[P2CE](sprite) : "Glow Material" : "sprites/light_glow03.vmt" : "Material to use for the glow sprite at the end of the laser beam."
+	
 
 	rocketspeed[P2](float) : "Rocket Speed" : 450 : "Speed the rocket will travel at."
 	rocketlifetime[P2](float) : "Rocket Lifetime" : 20 : "The rocket will automatically detonate after this number of seconds."
 	FireCooldown[Strata](float): "Fire Cooldown" : 4 : "The time it takes for the rocket turret to reset after firing a rocket."
 	LockonTime[Strata](float): "Lockon Time" : "1.5" : "The time it takes for the rocket turret to fire a rocket after locking onto a target."
- 	TripwireMode[P2](boolean) : "Tripwire Mode" : 0 : "Makes the turret aim in a specific direction instead of following the target. When the beam is crossed, a rocket instantly fires."
+ 	LockonSound[P2CE](sound) : "Lockon Sound" : "RocketTurret.LockonBeep" : "The sound played when locking onto a target."
+	AcquireEnemies[P2CE](boolean) : "Acquire Enemies" : 0 : "If enabled, the turret will automatically find enemies with a HATE relationship."
+	AllowShootThroughPortals[P2CE](choices) : "Shooting Through Portals" : 0 : "Determines which enemies the turret will shoot at through portals." =
+		[
+		0: "Disabled"
+		1: "Players Only"
+		2: "Players + NPCs"
+		]
+	
+	TripwireMode[P2](boolean) : "Tripwire Mode" : 0 : "Makes the turret aim in a specific direction instead of following the target. When the beam is crossed, a rocket instantly fires."
 	TripwireAimTarget[P2](target_destination) : "Tripwire Aim Target" : : "In tripwire mode, the entity to aim at."
-
+	TripwireFilter[P2CE](filterclass) : "Tripwire Filter" : : "If set, overrides which entities trigger rockets in tripwire mode. For normal mode, use an ai_relationship and \'Acquire Enemies\'."
+	
 	_sphere_radius[!engine, -Strata](integer) readonly editor: "<Maximum Range>" : 8192 : "How far the turret will be able to see targets. Always 8192, but this keyvalue is needed to display the preview."
 	turretrange[Strata](float): "Maximum Range" : 8192 : "How far the turret will be able to see targets."
 	// Hammer automatically adds this when selecting a model, this prevents it from appearing as invalid
@@ -35,14 +49,24 @@
 	input Enable(void) : "Activate Rocket Turret, and allow it to begin scanning."
 	input Disable(void) : "Deactivate and retract the Rocket Turret."
 	input SetTarget(target_destination) : "Sets the target for this turret to attack."
+	input SetAutoTarget[P2CE](void) : "Allow this turret to automatically find enemies."
 	input Destroy(void) : "Sets this turret to it's destroyed state."
 	input ForceFire[Strata](void) : "Makes the turret immediately fire a rocket where it is pointing."
+	input SetTripwireTarget[P2CE](target_destination) : "Set the aim target for tripwire mode."
+	input SetTripwireFilter[P2CE](string) : "Set the filter to determine which entities trigger the tripwire. Pass nothing to revert to default."
+	input ToggleTripwire[P2CE](void) : "Toggle tripwire mode on and off."
+	input EnableTripwire[P2CE](void) : "Enable tripwire mode."
+	input DisableTripwire[P2CE](void) : "Disable tripwire mode."
 
 	// Outputs
 	output OnFoundTarget(void) : "Fired when the rocket turret finds an unobstructed target."
 	output OnLostTarget(void) : "Fired when turret's target is blocked."
 	output OnDeath(void) : "Fired after this turret finishes it's destroy think and begins it's death think."
-
+	output OnTripped[P2CE](void) : "Fired when the beam intersects an enemy, and is either locking on or immediately firing for tripwire mode. The target is passed as !activator."
+	output OnRocketFired[P2CE](void) : "Triggers when a rocket is fired, passing the rocket as !activator."
+	output OnRocketFizzled[P2CE](void) : "Triggers when a rocket hits a fizzler, or the turret itself."
+	output OnRocketExploded[P2CE](void) : "Triggers when a rocket impacts something."
+	
 	@resources
 		[
 		model "models/props_bts/rocket_sentry.mdl"

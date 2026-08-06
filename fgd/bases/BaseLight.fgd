@@ -5,6 +5,11 @@
 	color(255 255 0)
 = BaseLight: "Parameters common to light and light_spot."
 	[
+	spawnflags(flags)  =
+		[
+		1: "Initially dark" : 0
+		2: "Shadowed" : 0 [Strata]
+		]
 	_light(color255) : "Brightness" : "255 255 255 200" : #snippet LightColorBright + " If Constant/Linear/Quadratic ratios are used, this actually sets the brightness at a range of 100 units from the light."
 	_lightHDR(color255) : "HDR Brightness" : "-1 -1 -1 1" : "If set (all >= 0), overrides Brightness in HDR mode, including the second set of values if 8 are set."
 	_lightscaleHDR(float) : "HDR Brightness Scale" : "1" : "Amount to scale the light by when compiling for HDR."
@@ -23,4 +28,5 @@
 	_hardfalloff(boolean) : "Hard Falloff" : 0 : "Only has effect if 50%/0% falloffs are used. If set, causes the light to fade to exactly zero through the last 1/4 of the 50->0 range. May cause unrealistic lighting if not used carefully."
 	_hard_radius_threshold[Strata](float) : "Hard radius minimum brightness threshold" : 32
 	_hard_radius_override[Strata](float) : "Hard radius override" : 0 : "The distance that light is allowed to cast."
+	_removeaftercompile[Strata](boolean) : "Remove After Compile" : 0 : "If set, removes this entity after processing the map with VRAD"
 	]
