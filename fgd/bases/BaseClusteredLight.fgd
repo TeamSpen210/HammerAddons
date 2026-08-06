@@ -38,9 +38,6 @@
 	_shadoworiginoffset(vector) : "Entity shadow offset" : "0 0 0" : "A world-space offset applied to the shadow origin, in units. X Y Z."
 	_castentityshadow(boolean) : "Cast Entity Shadows" : 1 : "Objects illuminated by this light will cast a directional shadow."
 
-
-	_nocubemapsprite(boolean) : "No Sprite in Cubemap" : 1 : "If set, this light will not draw a sprite during cubemap building"
-
 	input TurnOn(void) : "Turn the light on."
 	input TurnOff(void) : "The the light off."
 	input Toggle(void) : "Toggle the light's current state."

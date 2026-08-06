@@ -36,4 +36,5 @@
 	linedivider_misc[!engine](string) readonly editor : "-----------------------------------------Misc-----------------------------------------" : ""
 	_hard_radius_override[Strata](float) : "Hard radius override" : 0 : "The distance that light is allowed to cast."
 	_removeaftercompile[Strata](boolean) : "Remove After Compile" : 0 : "If set, removes this entity after processing the map with VRAD"
+	_nocubemapsprite[Strata](boolean) : "No Sprite in Cubemap" : 1 : "If set, this light will not draw a sprite during cubemap building"
 	]
