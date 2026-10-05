@@ -44,12 +44,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: Build postcompiler-${{ matrix.artifact-name }}
     steps:
-      # Build dev on schedule, since it's actually changing.
-      - name: Checkout Dev
+      
+      - name: Checkout Main
         uses: actions/checkout@v6
-        if: github.event_name == 'schedule'
+        if: github.event_name == 'push'
         with:
-          ref: dev
+          ref: main
+
       # Always build the exact tag that's pushed.
       - name: Checkout Tag
         uses: actions/checkout@v6

@@ -1,5 +1,6 @@
 @PointClass appliesto(Strata)
 	base(BaseEntityPoint, BaseLight, BaseClusteredDynLight)
+	iconsprite("editor/light.vmt")
 	clusteredlight(point)
 	sphere(nearz)
 = light_rt: "An invisible omnidirectional realtime light-source."

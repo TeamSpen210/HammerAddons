@@ -1,0 +1,28 @@
+@PointClass base(BaseEntityPoint) 
+    appliesto(Strata)
+	size(-4 -4 -4, 4 4 4)
+	orientedboundingbox(width, height, depth)
+= obb_volumefog: "An oriented bounding box containing volumetric fog"
+	[
+	width(float) : "Half-Width (G)" : 256 : "Width of the OBB, on the Green axis."
+	height(float) : "Half-Height (B)" : 256 : "Height of the OBB, on the Blue axis."
+	depth(float) : "Half-Depth (R)" : 256 : "Depth of the OBB, on the Red axis."
+	spheroid_volume(boolean) : "Spheroid" : 0 : "Use a spheroid rather than an OBB for the volume"
+	emissive_color(color255) : "Emissive Color" : "0 0 0 255" : "Emissive color and brightness of the fog material"
+	density(float) : "Density" : "0.1" : "Density of the fog material"
+	scattering_color(color255) : "Scattering Color" : "255 255 255 255" : "Scattering color and scale of the fog material"
+	phase(float) : "Phase" : "0.0" : "Phase coefficient of the fog material"
+	texture_name(string) : "Texture Name" : : "3D-in-2D VTF Texture containing color (RGB) and density (A) for the volume. Leave empty for no texture.Please note that obb_volumefog uses .vtf files directly and does not use .vmt files. The material browser is only available here to assist with finding textures since materials typically have the same name as their textures."
+	texture_slices_x(integer) : "Texture Slices (X)" : 16 : "The number of slices over the texture\'s X-axis."
+	texture_slices_y(integer) : "Texture Slices (Y)" : 16 : "The number of slices over the texture\'s Y-axis."
+
+	// Inputs
+	input Toggle(void) : "Toggle the fog volume."
+	input TurnOn(void) : "Turn on the fog volume."
+	input TurnOff(void) : "Turn off the fog volume."
+	input SetHalfSize(vector) : "Set the half-size of the bounding box, before rotation."
+	input SetEmissiveColor(vector) : "Set the emissive color of the fog."
+	input SetDensity(float) : "Set the density of the fog."
+	input SetScatteringColor(vector) : "Set the scattering color of the fog."
+	input SetPhase(float) : "Set the phase of the fog."
+	]

@@ -1,4 +1,4 @@
-@PointClass base(BaseSpotLight)
+@PointClass base(BaseEntityPoint, BaseSpotLight, LightPattern, LightShadows)
 = light_spot: "An invisible and directional spotlight."
 	[
 	spawnflags(flags)  =

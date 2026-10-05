@@ -36,7 +36,11 @@
 	// Inputs
 	input Skin(integer) : "Set the skin of the catcher manually."
 	input SetFilterColor[Strata](color255) : "Changes the laser filter colour."
- 
+ 	input Lock[P2CE](void) : "Locks the current state of activation of the catcher."
+	input Unlock[P2CE](void) : "Unlocks the catcher to be updated freely."
+	input ForcePowered[P2CE](color255) : "Locks the catcher in a powered state with the provided pseudo beam color."
+	input ForceUnpowered[P2CE](void) : "Locks the catcher in an unpowered state, unable to be activated by lasers."
+
 	// Outputs
 	output OnPowered(void) : "Fired when a laser hits the target."
 	output OnUnpowered(void) : "Fired when a laser has stopped hitting the target."

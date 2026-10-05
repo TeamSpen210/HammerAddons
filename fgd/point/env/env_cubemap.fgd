@@ -21,6 +21,7 @@
 		10: "512x512"
 		11: "1024x1024"
 		12: "2048x2048"
+		13: "4096x4096" [P2CE]
 		]
 
 	sides(sidelist) : "Brush faces" : : "(Optional) Brushes faces to directly attach to the env_cubemap. Press Pick then click on faces in the 3D View to select them. Use CTRL while clicking to add or remove from the selection."
