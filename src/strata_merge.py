@@ -9,19 +9,19 @@ from srctools import FGD
 from sys import argv
 
 MERGED = {  # Set of classnames we have checked already and know the diff is fine.
-    "info_player_start", "env_soundscape", "momentary_rot_button",
-    "ai_script_conditions", "logic_script", "trigger_hierarchy",
-    "prop_under_button", "npc_bullseye", "paint_sphere",
-    "damagetype", "env_sprite", "info_landmark_entry", "info_landmark_exit",
-    "env_alyxemp", "env_laser", "logic_timer", 
+    #"info_player_start", "env_soundscape", "momentary_rot_button",
+    #"ai_script_conditions", "logic_script", "trigger_hierarchy",
+    #"prop_under_button", "npc_bullseye", "paint_sphere",
+    #"damagetype", "env_sprite", "info_landmark_entry", "info_landmark_exit",
+    #"env_alyxemp", "env_laser", "logic_timer", 
 
     "scripted_scene", # Legacy entity
 
-    "light", "light_spot", # I belive that in order to avoid confusion, we should
+    #"light", "light_spot", # I belive that in order to avoid confusion, we should
     # omit the dynamic settings on `light`
 
-    "light_directional",
-    "prop_portal", "prop_wall_projector", "prop_weighted_cube",
+    #"light_directional",
+    #"prop_portal", "prop_wall_projector", "prop_weighted_cube",
 
 
 }
@@ -29,8 +29,9 @@ MERGED = {  # Set of classnames we have checked already and know the diff is fin
 REPORT_DIR = Path('..', 'strata_merge').resolve()
 MERGE_DIR = Path(REPORT_DIR, 'merged').resolve()
 
-# Report things only missing in FGD2, not present in FGD2 but missing in FGD1
+# Report things only missing in FGD2, not: present in FGD2 but missing in FGD1
 ONLY_MISSING_IN_FGD2 = True
+SKIP_LINEDIVIDERS = True
 
 def main() -> None:
     """Check all the FGDs."""
@@ -127,6 +128,9 @@ def main() -> None:
             # SPECIAL CASES
 
             # 1. linedivider_broken and linedivider_vscript are the same
+
+            if key.startswith("linedivider") and SKIP_LINEDIVIDERS:
+                continue
 
             if key in ("linedivider_broken", "linedivider_vscript"):
                 continue
