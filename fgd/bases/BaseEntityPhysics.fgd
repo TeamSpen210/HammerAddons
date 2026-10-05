@@ -1,6 +1,6 @@
 // Stripped down version of BaseAnimating for physically-simulated objects, which do not have some keyvalues
 
-@BaseClass base(BaseEntityPoint, RenderFields, Reflection, DamageFilter) 
+@BaseClass base(BaseEntityPoint, RenderFields, GlowStrata, Reflection, DamageFilter) 
 	sphere(fademindist) sphere(fademaxdist)
 = BaseEntityPhysics
 	[
@@ -34,6 +34,36 @@
 		4: "Oriented Bounding Box, constrained to Yaw only"
 		5: "Custom (defined per-entity, if not defined the entity will have bizarre collision behavior)" [complete]
 		6: "VPhysics"
+		]
+	
+	collisiongroup[Strata](choices) : "Collision Group" : 0 : "The collision group for this entity. This defines how VPhysics sees this entity, which will in turn change what other entities it will collide with. See developer.valvesoftware.com/wiki/Collision_groups for descriptions of each type." =
+		[
+		0: "Default"
+		1: "Debris"
+		2: "Debris Trigger"
+		3: "Interactive Debris"
+		4: "Interactive"
+		5: "Player"
+		6: "Breakable Glass"
+		7: "Vehicle"
+		8: "Player Movement"
+		9: "NPC"
+		10: "In Vehicle"
+		11: "Weapon"
+		12: "Vehicle Clip"
+		13: "Projectile"
+		14: "Door Blocker"
+		15: "Passable Door"
+		16: "Dissolving"
+		17: "Push Away"
+		18: "NPC Actor"
+		19: "NPC Scripted"
+		20: "PZ Clip"
+		21: "Camera Blocker"
+		22: "Placement Blocker"
+		23: "Held Object"
+		24: "Weighted Cube"
+		25: "Projectile Debris (Broken)"
 		]
 
 	body(integer) : "Bodygroup" : 0 : "Sets the body group index for the model, starting with 0, if available."

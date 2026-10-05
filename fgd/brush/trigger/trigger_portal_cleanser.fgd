@@ -22,7 +22,7 @@
 	obstructportals[P2CE](boolean) : "Obstruct Portals" : 1 : "Whether the fizzler will act like a portal bumper, and fizzle portals when enabled."
 	loopsound[P2CE](sound) : "Looping Sound" : "VFX.FizzlerLp" : "Sound played continuously while the fizzler is active."
 	startsound[P2CE](sound) : "Start Sound" : "VFX.FizzlerStart" : "Sound played when the fizzler turns on."
-	stopsound[P2CE](sound) : "Stop Sound" : "VFX.FizzlerStop" : "Sound played when the fizzler turns off."
+	stopsound[P2CE](sound) : "Stop Sound" : "VFX.FizzlerDestroy" : "Sound played when the fizzler turns off."
 
 	// Inputs
 	input FizzleTouchingPortals[P2](void) : "Cause any portals in our volume to immediately fizzle."
