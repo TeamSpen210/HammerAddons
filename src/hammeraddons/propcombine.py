@@ -1384,8 +1384,8 @@ async def combine(
     LOGGER.info(
         'Combined {} props into {} groups ({} this compile):\n'
         ' - {} grouped models\n'
-        ' - {} ineligible\n'
-        ' - {} failed to combine',
+        ' - {} ineligible (no sources or disabled)\n'
+        ' - {} failed to combine (no nearby props)',
         prop_count,
         len(final_props),
         compiler.built_count,
