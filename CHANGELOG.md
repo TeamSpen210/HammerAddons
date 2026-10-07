@@ -26,6 +26,7 @@
 ## Bugfixes
 * Fix vactube objects appearing to rapidly move from end to start positions in some cases.
 * Fix an issue where vactube objects might have the wrong model, overlap each other, etc.
+* Fix `func_instance_io_proxy` transform breaking when multiple proxies have the same name.
 * Improved handling of more complex `gameinfo.txt` files like Mapbase's.
 * Automatically remove old generated vactube animation models.
 * Fix an issue where prop ropes generated with slight angles on straight sections.

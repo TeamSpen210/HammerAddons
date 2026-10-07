@@ -76,18 +76,19 @@ def collapse_proxy_relays(ctx: Context) -> None:
 
 def duplicate_proxy_relays(ctx: Context) -> None:
     """Duplicate proxies when required to allow infinite instance IO."""
-    # Proxy name, ProxyRelayX -> new name, new index
-    new_names: dict[tuple[str, int], tuple[str, int]] = {}
+    # Proxy name, ProxyRelayX -> new proxy, new index
+    new_proxy: dict[tuple[str, int], tuple[Entity, int]] = {}
 
     # First edit proxy outputs, then edit everything else.
     for orig_proxy in list(ctx.vmf.by_class['func_instance_io_proxy']):
         # Set to max, so the next will be generated immediately.
         cur_num = RELAY_MAX
         newest_proxy: Entity | None = None
+        cur_proxy: Entity
         orig_proxy.remove()  # Remove the original, add new ones.
-        proxy_nums: dict[int, tuple[Entity, int]] = {}
 
         proxy_name = orig_proxy['targetname']
+        LOGGER.debug('Proxy: {}', orig_proxy)
 
         for out in orig_proxy.outputs:
             if not out.output.casefold().startswith('onproxyrelay'):
@@ -112,7 +113,7 @@ def duplicate_proxy_relays(ctx: Context) -> None:
 
             # Have we already assigned the proxy for this?
             try:
-                cur_proxy, new_index = proxy_nums[index]
+                cur_proxy, new_index = new_proxy[proxy_name, index]
             except KeyError:
                 # We need to assign it to one.
                 if cur_num == RELAY_MAX:
@@ -128,13 +129,11 @@ def duplicate_proxy_relays(ctx: Context) -> None:
                     assert newest_proxy is not None
                 cur_num += 1
                 cur_proxy = newest_proxy
-                proxy_nums[index] = cur_proxy, new_index
+                new_proxy[proxy_name, index] = cur_proxy, new_index
 
             LOGGER.debug('Renumbering {} output: {} -> {} for {!r}', proxy_name, index, new_index, out)
             out.output = f'OnProxyRelay{new_index}'
             cur_proxy.add_out(out)
-
-            new_names[proxy_name, index] = cur_proxy['targetname'], new_index
 
     for ent in ctx.vmf.entities:
         for out in list(ent.outputs):
@@ -158,11 +157,12 @@ def duplicate_proxy_relays(ctx: Context) -> None:
                 continue
 
             try:
-                out.target, new_index = new_names[out.target, index]
+                cur_proxy, new_index = new_proxy[out.target, index]
             except KeyError:
                 LOGGER.warning('Unknown proxy "{}"?', out.target)
                 continue
             else:
+                out.target = cur_proxy['targetname']
                 LOGGER.debug('Renumbering input: {} -> {} for {!r}', index, new_index, out)
 
             out.input = f'OnProxyRelay{new_index}'
