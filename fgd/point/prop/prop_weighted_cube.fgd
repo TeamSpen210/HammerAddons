@@ -97,6 +97,7 @@
 
 	skin(integer) : "Skin" : 0 : "The old skin property, mainly to show in Hammer. "
 
+	newskins[engine](integer) readonly : "Use new skins" : 1
 	newskins[-Strata](integer) readonly : "Use new skins" : 1 : "Use the values in the Cube Type and Skin Type fields instead of the Skin(OLD) field. You shouldn't need to touch this."
 
 	newskins[+Strata](choices) : "Configuration Mode" : 2 : "How cube models and behaviors are selected. This determines which of the other keyvalues are used and is present for backwards compatibility." =
