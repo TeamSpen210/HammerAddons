@@ -2,7 +2,7 @@
     <img src="logo/icon_256.png" alt="Hammer Addons" width=256 height=256 />
 	<br>
 	<br>
-	<p> <b>Teamspen's Hammer Addons </b></p>
+	<p> <b>PCS HammerSDK, a fork of Teamspen's Hammer Addons </b></p>
 </div>
 
 <hr>
@@ -53,7 +53,7 @@ Below are short explanations, see the "Help" display on the entity properties in
 | `comp_vactube_sensor`                              | Triggers outputs when a vactube object passes close by.                                                                                                                      |
 | `comp_vactube_spline`                              | Generates a dynamic vactube model following a set of points.                                                                                                                 |
 | `comp_vactube_start`                               | Marks the start point of a vactube. This is where they spawn.                                                                                                                |
-
+| `comp_visual_preset`                               | A helper entity that contains configurations for fog, color correction, tonemapping and more. Represents a specific preset of such settings, and handles transitioning from one to another seamlessly. |
 
 ## Installation
 
@@ -62,6 +62,7 @@ Below are short explanations, see the "Help" display on the entity properties in
 
 ## Credits
 
+* [TeamSpen210's HammerAddons](https://github.com/TeamSpen210/HammerAddons)
 * Mapbase's FGDs have been imported as a submodule.
 * Some entity sprites are taken from: 
   * [The TF2 Ultimate Mapping Resource Pack][tf2]

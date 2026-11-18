@@ -28,7 +28,7 @@
 		"This helps with transparency sorting, and also allows lights/projected textures to cast shadows from the frame."
 
 	// A selection of prop_static's keyvalues, excluding some that are rather irrelevant.
-	linedivider_staticprop[!engine](string) readonly editor : "----------------------------------------------------------------------------------------------------------" : ""
+	linedivider_staticprop[!engine](string) readonly editor : "---------------------------------Static Prop Options----------------------------------" : : "Since comp_vactube_spline's models are static props in game, these are options to configure their static prop properties."
 
 	renderamt[since_L4D](integer) : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque."
 	rendercolor[since_L4D](color255) : "Color (R G B)" : "255 255 255"

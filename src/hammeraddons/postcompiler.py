@@ -61,7 +61,7 @@ async def main(argv: list[str]) -> None:
         "--config",
         dest="config",
         default="",
-        help="Specify the location of hammeraddons.vdf, overriding calculation from the map path.",
+        help="Specify the location of hammeraddons.vdf, overriding calculation from the map path. Overrides -game as a config path.",
     )
 
     parser.add_argument(
@@ -70,7 +70,7 @@ async def main(argv: list[str]) -> None:
         default="",
         help="Specify the folder containing gameinfo.txt, and thus the "
              "location of the game. This overrides the option specified "
-             "in hammeraddons.vdf.",
+             "in hammeraddons.vdf. Additionally, the program will try to load hammeraddons.vdf from this location.",
     )
 
     parser.add_argument(
@@ -146,7 +146,9 @@ async def main(argv: list[str]) -> None:
     LOGGER.addHandler(handler)
     LOGGER.info("Map path is {}", path)
 
-    conf = config.parse(path, args.config, args.game_folder)
+    conf_path = args.config if args.config != "" else args.game_folder
+
+    conf = config.parse(path, conf_path, args.game_folder)
 
     packlist = PackList(conf.fsys)
     studiomdl_path = conf.game_conf.resolve_studiomdl(conf.expand_path)

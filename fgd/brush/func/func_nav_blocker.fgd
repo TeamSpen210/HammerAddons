@@ -4,5 +4,7 @@
 	[
 	StartDisabled(boolean) : "Start Disabled" : 0 : "Whether the blocker starts inactive."
 
+	input BlockNav[P2CE](string) : "Starts blocking nav areas."
+	input UnblockNav[P2CE](void) : "Stops blocking nav areas."
 	@resources []
 	]

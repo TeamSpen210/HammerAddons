@@ -25,6 +25,17 @@
 		]
 
 	tint[Strata](color255): "Tint Color" : "255 255 255 255" : "Applies a color tint using multiply mix mode. Color will be put as $color shader parameter. Alpha will be put as $alpha shader parameter, so make sure the overlay's material allows the use of those parameters."
+	colorvar[P2CE](choices) : "Paint Tinting" : : "If enabled, override the $color tint by the color of the specified paint type." =
+	[
+		"": "Disabled"
+		"paint_bounce": "Repulsion Gel"
+		"paint_reflect": "Reflection Gel"
+		"paint_speed": "Propulsion Gel"
+		"paint_portal": "Conversion Gel"
+		"paint_erase": "Cleansing Gel"
+		"paint_stick": "Adhesion Gel"
+	]
+	
 	startu(float) : "U Start" : 0.0 : "A value between 0-1, defining the starting X axis position in the overlay material."
 	endu(float) : "U End" : 1.0 : "A value between 0-1, defining the ending X axis position in the overlay material."
 	startv(float) : "V Start" : 0.0 : "A value between 0-1, defining the starting Y axis position in the overlay material."

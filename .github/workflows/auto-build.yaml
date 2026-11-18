@@ -1,0 +1,99 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+      
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: main
+        
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+          cache: 'pip'
+          cache-dependency-path: 'requirements.txt'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install -r requirements.txt
+  
+      - name: Build Postcompiler
+        run: python -m PyInstaller --distpath ../build/ -y ../postcompiler.spec
+        working-directory: ./src/
+
+      - name: Build the rest of the application
+        run: ./build.sh ALL
+        shell: bash
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          archive: true
+          path: ./build/
+          if-no-files-found: error
+          name: Release-${{ runner.os }}
+
+  create-release:
+
+    runs-on: ubuntu-latest
+    name: Create Release
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - run: git fetch --tags origin
+      
+      - name: Get previous tag
+        id: previoustag
+        uses: 'actions-ecosystem/action-get-latest-tag@v1'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+      - name: Next Monotonic Release version
+        id: next
+        uses: actions-ecosystem/action-bump-semver@v1
+        with:
+          current_version: ${{ steps.previoustag.outputs.tag }}
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: ./downloads/
+          merge-multiple: true
+          skip-decompress: true
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v3
+        if: ${{ github.event.inputs.version == '' }}
+        with:
+          tag_name: ${{ steps.next.outputs.new_version }}
+          generate_release_notes: true
+          previous_tag: ${{ steps.previoustag.outputs.tag }}
+          files: ./downloads/*
+
+      - name: Dispatch FGD build
+        run: |
+          curl -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.DISPATCH_WORKFLOW_PAT }}" \
+            -H "X-GitHub-Api-Version: 2026-03-10" \
+            https://api.github.com/repos/Project-Collapse-Studios/PrivateFGDs/dispatches \
+            -d '{"event_type":"build-fgd","client_payload":{"unit":false,"integration":true}}'
+
+          

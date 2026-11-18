@@ -1,0 +1,12 @@
+@PointClass base(BaseEntity) 
+	appliesto(P2CE)
+    iconsprite("editor/info_campaign_manager.vmt")
+= info_campaign_manager: "Management entity for campaign/workshop maps. Used to transition to other maps or change campaign state."
+	[
+
+	// Inputs
+	input PreviousMap(void) : "Immediately load the previous map in the campaign script."
+	input NextMap(void) : "Immediately load the next map in the campaign script."
+	input MarkCampaignComplete(void) : "Mark the campaign as completed. Will unlock all chapters."
+	input ExitGame(void) : "Trigger the evaluation screen where a player can vote on your campaign/map."
+	]

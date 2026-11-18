@@ -13,6 +13,10 @@
 
 	// Input
 	input SetFilterColor[Strata](color255) : "Changes the laser filter colour."
+	input Lock[P2CE](void) : "Locks the current state of activation of the relay."
+	input Unlock[P2CE](void) : "Unlocks the relay to be updated freely."
+	input ForcePowered[P2CE](color255) : "Locks the relay in a powered state with the provided pseudo beam color."
+	input ForceUnpowered[P2CE](void) : "Locks the relay in an unpowered state, unable to be activated by lasers."
 
 	// Outputs
 	output OnPowered(void) : "Fired when a laser hits the target."

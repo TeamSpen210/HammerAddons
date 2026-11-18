@@ -847,13 +847,15 @@ def parse(map_path: Path, cmd_config_loc: str | None = '', game_folder: str | No
 
     if not game_folder:
         game_folder = opts.get(GAMEINFO)
+        game_folder = expand_path(game_folder) # Only expand the folder if it wasn't passed via -game
+        # -game should be considered as valid without expansion
 
     game: Game | None = None
 
     if game_folder:
         # Marker to ensure gameinfo doesn't try to recurse.
         path_roots[PATH_KEY_GAME] = GAMEINFO_RECURSION_KEY
-        game = Game(expand_path(game_folder))
+        game = Game(game_folder)
         LOGGER.info('Game folder: {}', game.path)
         # Now we located it, other definitions can use this loc.
         path_roots[PATH_KEY_GAME] = game.path

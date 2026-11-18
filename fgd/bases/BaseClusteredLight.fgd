@@ -1,9 +1,14 @@
 @BaseClass appliesto(Strata) = BaseClusteredLight
 	[
-	_lightmode[engine](integer) : "Light Mode" : 2 // Legacy
-	_specularmode[engine](integer): "Specular light mode" : 2
-	_directmode[engine](integer): "Direct light mode" : 2
-	_indirectmode[engine](integer): "Indirect light mode" : 1
+	//_lightmode[engine](integer) : "Light Mode" : 2 // Legacy
+	//_specularmode[engine](integer): "Specular light mode" : 2
+	//_directmode[engine](integer): "Direct light mode" : 2
+	//_indirectmode[engine](integer): "Indirect light mode" : 1
+
+	// Bug: for some reason having these ^ here makes unify_fgd misplace the linedivider below?
+
+	linedivider_clustered[!engine](string) readonly : "-------------------------------------Light Modes--------------------------------------" : : "These are basic configuration options for your light."
+
 	_specularmode(choices) : "Specular light mode" : 2 : "The type of specular lighting to use for the light." = 
 		[
 		0: "None"
@@ -20,11 +25,21 @@
 		0: "None"
 		1: "Static Only"
 		]
+	_volumetricmode(choices) : "Volumetric light mode" : 2 : "The type of volumetric lighting to use for the light." =
+		[
+		0: "None"
+		2: "Dynamic Only"
+		]
 
-	linedivider_clus2[!engine](string) readonly : "----------------------------------------------------------------------------------------------------------" : : "Oops, you must've misclicked."
+	linedivider_shadows[!engine](string) readonly : "------------------------------------Dynamic Shadow------------------------------------" : : "These are settings that define how the shadow should look, only applicable for lights that are have dynamic shadows enabled."
 
 	_initialshadowsize(integer) : "Initial Shadow Size" : 3 : "The initial static shadow resolution exponent. Only relevant for static shadow allocation. Adding 1 to this value doubles both dimensions of the shadowmap."
 	nearz(float) : "Near Z" : 4.0 : "Near Z for this light. Determines where shadows start to be cast. Inside the nearz radius, the light is still visible, but anything inside it won't cast shadows"
+	_shadoworiginoffset(vector) : "Entity shadow offset" : "0 0 0" : "A world-space offset applied to the shadow origin, in units. X Y Z."
+	_castentityshadow(boolean) : "Cast Entity Shadows" : 1 : "Objects illuminated by this light will cast a directional shadow."
 
+	input TurnOn(void) : "Turn the light on."
+	input TurnOff(void) : "The the light off."
+	input Toggle(void) : "Toggle the light's current state."
 	input SetShadowSize(integer) : "Set the size exponent of this light's shadowmap(s)."
 	]

@@ -22,10 +22,12 @@
 	modelindex[P2](choices) : "Model" : 0 : "Which model the turret uses. The skeleton turret is still functional." =
 		[
 		0: "Normal"
-		1: "Custom Model"
+		1: "Custom Model" [!P2CE]
+		1: "Custom Model (old gel skins)" [P2CE]
 		2: "Box"
 		3: "Backwards"
 		4: "Skeleton"
+		5: "Custom Model (new gel skins)" [P2CE]
 		]
 
 	skinnumber[engine](integer) : "Skin" : 0 
