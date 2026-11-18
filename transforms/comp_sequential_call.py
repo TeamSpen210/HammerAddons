@@ -31,16 +31,14 @@ KEYVALUES = [
 @trans('comp_sequential_call')
 def sequential_call(ctx: Context) -> None:
     """Finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order."""
+    # If make-unique is enabled, the entity names are changed meaning other sequential calls won't
+    # reliably find them. Store off the ents that resulted for a search, to allow multiple
+    # sequential_calls to use the same pool.
+    # This is mutable, but we're only sorting the entities, so we're fine there.
+    unique_ents: dict[str, list[Entity]] = {}
+
     for seq_call in ctx.vmf.by_class['comp_sequential_call']:
         seq_call['classname'] = 'logic_relay'
-
-        target_ents: list[Entity] = list(ctx.vmf.search(seq_call['target']))
-        if not target_ents:
-            LOGGER.warning(
-                'Sequential call "{}" at {} could find no target entities named "{}"!',
-                seq_call['targetname'], seq_call['origin'], seq_call['target'],
-            )
-            continue
 
         time_val = conv_float(seq_call['time_val'])
         time_variance = abs(conv_float(seq_call['time_variance']))
@@ -48,6 +46,24 @@ def sequential_call(ctx: Context) -> None:
         order_mode = seq_call['order_mode'].casefold()
         make_unique = conv_bool(seq_call['uniquify'])
         origin = Vec.from_str(seq_call['origin'])
+        search_name = seq_call['target']
+
+        target_ents: list[Entity]
+
+        if make_unique:
+            try:
+                target_ents = unique_ents[search_name.casefold()]
+            except KeyError:
+                target_ents = unique_ents[search_name.casefold()] = list(ctx.vmf.search(search_name))
+        else:
+            target_ents = list(ctx.vmf.search(search_name))
+
+        if not target_ents:
+            LOGGER.warning(
+                'Sequential call "{}" at {} could find no target entities named "{}"!',
+                seq_call['targetname'], seq_call['origin'], seq_call['target'],
+            )
+            continue
 
         if order_mode.startswith('dist'):
             dist_to_ent: dict[Entity, float] = {
@@ -58,6 +74,9 @@ def sequential_call(ctx: Context) -> None:
         else:
             dist_to_ent = {}
             max_dist = 1.0  # Ensure divide-by-zero check ignores this.
+
+        # In case entities have identical positions, use their ID as a tiebreaker.
+        target_ents.sort(key=lambda ent: ent.id)
 
         if order_mode.startswith('dist'):
             target_ents.sort(key=dist_to_ent.__getitem__, reverse=order_mode.endswith('_inv'))
@@ -119,7 +138,7 @@ def sequential_call(ctx: Context) -> None:
                 seq_call['targetname'], seq_call['origin'],
             )
 
-        target = seq_call['target'].rstrip('*')
+        target = search_name.rstrip('*')
         max_delay = 0.0
         rng = rng_get('comp_sequential_call', seq_call)
         for ent, delay in ent_and_delay:

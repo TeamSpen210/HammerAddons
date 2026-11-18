@@ -15,7 +15,8 @@
 		"suffix" : "Numeric Suffix, Ascending"
 		"suffix_inv": "Numeric Suffix, Decending"
 		]
-	uniquify(boolean) : "Make Entities Unique?" : 0 : "Append a suffix to ensure all entities are unique. Should be enabled if not using a *-wildcard."
+	uniquify(boolean) : "Make Entities Unique?" : 0 : "Append a suffix to ensure all entities are unique. Should be enabled if not using a *-wildcard. " +
+		"If multiple comp_sequential_call have identical \"Entities To Sequence\" and are set to make entities unique, they will all target the same group of entities."
 
 	time_mode[engine](string) : "Time Mode" : "total"
 	time_mode(choices) : "Time Mode" : "total" : "How Time Value is interpreted. If this is set to Total Time and the ordering mode is Distance, " +
