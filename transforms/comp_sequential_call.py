@@ -126,10 +126,11 @@ def sequential_call(ctx: Context) -> None:
                 out.output = 'OnTrigger'
                 outputs_final.append(out)
             else:
+                # Collect other outputs for !seq processing, but leave the output alone.
                 if out_name == 'onseqstart':
                     out.output = 'OnTrigger'
                 outputs_other.append(out)
-        seq_call.outputs[:] = outputs_other
+        seq_call.outputs.clear()
 
         if not outputs_rep:
             LOGGER.warning(
@@ -156,6 +157,29 @@ def sequential_call(ctx: Context) -> None:
                 seq_call.outputs.append(out)
         for out in outputs_final:
             out.delay = round(out.delay + max_delay, 2)
-            seq_call.outputs.append(out)
+
+        # For final and all other outputs, expand !seq to target all entities if defined.
+        outputs_other += outputs_final
+        for out in outputs_other:
+            change_name = out.target.casefold() == '!seq' or out.target == target
+            in_params = '!seq' in out.params
+            if change_name or in_params:
+                if make_unique:
+                    # Need to expand for each entity.
+                    for ent in target_ents:
+                        new_out = out.copy()
+                        if change_name:
+                            new_out.target = ent['targetname']
+                        if in_params:
+                            new_out.params = new_out.params.replace('!seq', ent['targetname'])
+                        seq_call.outputs.append(new_out)
+                else:  # Can just modify directly.
+                    if out.target.casefold() == '!seq':
+                        out.target = search_name
+                    if in_params:
+                        out.params = out.params.replace('!seq', search_name)
+                    seq_call.outputs.append(out)
+            else:
+                seq_call.outputs.append(out)
 
         strip_cust_keys(seq_call)

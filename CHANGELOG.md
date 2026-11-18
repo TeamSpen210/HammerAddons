@@ -22,7 +22,7 @@
 * Added rotation, scale, animation, and bodygroup keyvalues to `hammer_model`. Some of these require a custom Hammer fork (e.g. Hammer++) to be visible.
 * Added a 'version number' to all postcompiler entities. This allows backwards-incompatible changes to occur in the future.
 * Added `OnPressedPlayer`/`OnPressedCube` outputs to Portal 2 floor button entities, implemented by spawning a filter entity.
-* `comp_sequential_call` has special handling for multiple ents with the same search name, and 'make unique' enabled. These will now target the same group of entities.
+* `comp_sequential_call` has special handling for multiple ents with the same search name, and 'make unique' enabled. These will now target the same group of entities. `!seq` is now also applied to all outputs, like `OnUserX`.
 
 ## Bugfixes
 * Fix vactube objects appearing to rapidly move from end to start positions in some cases.

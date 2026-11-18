@@ -3,9 +3,9 @@
 	base(logic_relay) 
 	line(255 255 255, targetname, target)
 	iconsprite("editor/comp_sequential_call")
-= comp_sequential_call : "Finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order. To use, define OnSeq outputs, firing inputs at '!seq'."
+= comp_sequential_call : "Finds a sequence of entities (by distance or numeric suffix), then fires inputs delayed in order. It fires OnSeq outputs for each target - you'll need to use !seq to target the appropriate entity."
 	[
-	target(target_destination) report: "Entities to Sequence" : : "The entities which will be ordered and inputs fired at. This should refer to multiple entities, probably with a *-wildcard."
+	target(target_destination) report: "Entities to Sequence" : : "The entities which will be ordered and inputs fired at. This should refer to multiple entities, probably with a *-wildcard. In outputs, use !seq in output names or parameters to refer to these."
 
 	order_mode[engine](string) : "Ordering Mode" : "dist"
 	order_mode(choices) : "Ordering Mode" : "dist": "Choose how entities are ordered. Numeric suffix finds numbers at the end of the entity name, and sorts by that order." =
@@ -30,9 +30,9 @@
 	seed(string) : "Random Seed" : : "For time variance, the position and name of the comp_sequential_call are used to seed a random number generator, " +
 		"to keep values consistent across compiles. This can be set to further randomise results."
 
-	output OnSeqStart(void) : "Fired at the start of the sequence."
-	output OnSeq(void) : "Fired once for each entity - use !seq to refer to the target."
-	output OnSeqEnd(void) : "Fired once all delayed outputs are complete."
+	output OnSeqStart(void) : "Fired at the start of the sequence. If !seq is used, this is duplicated if necessary to target all entities."
+	output OnSeq(void) : "Copied and fired once for each entity at the desired time - use !seq to refer to the target."
+	output OnSeqEnd(void) : "Fired once all delayed outputs are complete. If !seq is used, this is duplicated if necessary to target all entities."
 
 	#snippet keyvalue CompVersion
 	#snippet keyvalue CompV1
